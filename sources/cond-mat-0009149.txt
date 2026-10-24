@@ -1,0 +1,1113 @@
+              Generalized  Lanczos  Algorithm  for Variational  Quantum  Monte  Carlo
+
+                                                                   Sandro Sorella
+Istituto Nazionale per la Fisica della Materia and International School for Advanced Studies Via Beirut 4, 34013 Trieste, Italy
+                                                                 (October 23, 2018)
+
+                 We  show  that  the  standard  Lanczos  algorithm  can  be  eﬃciently  implemented  statistically  and
+                self  consistently  improved,  using  the  stochastic  reconﬁguration  method,  which  has  been  recently
+                introduced  to  stabilize  the Monte  Carlo  sign  problem  instability.  With  this scheme  a few  Lanczos
+                steps  over  a  given  variational  wavefunction  are  possible  even  for  large  size  as  a  particular  case  of
+                a more general and more accurate technique that allows  to obtain lower  variational energies.  This
+                method  has  been  tested  extensively  for  a  strongly  correlated  model  like  the  t-J  model.   With  the
+                standard  Lanczos  technique  it  is  possible  to  compute  any  kind  of  correlation  functions,  with  no
+                particular computational eﬀort.  By using that the variance <H 2 > −<H >2  is zero for an exact
+                eigenstate,  we  show  that  the approach  to  the exact  solution  with  few  Lanczos  iterations  is  indeed
+                possible even for ∼ 100 electrons for reasonably good initial wavefunctions.
+                The  variational  stochastic  reconﬁguration  technique  presented  here  allows  in  general  a  many-
+                parameter energy optimization  of any computable many-body wavefunction, including for instance
+                generic long range Jastrow factors and arbitrary site dependent orbital determinants.  This scheme
+                improves further the accuracy of the calculation, especially for long distance correlation  functions.
+
+                 02.70.Lq,75.10.Jm,75.40.Mg
+
+                      I.  INTRODUCTION                                         the exact Green functionG, ‘ with the approximate state
+                                                                               ψ′n+1(x), determined by the following conditions.  A given
+   The  GFMCSR  was introduced recently1  as  a  method                        set ofp+1 operators {Ok}, not restricted to be Hermitian
+to  stabilize  the  sign  problem  instability  in  the  Monte                 operator, satisfy the following equalities:
+Carlo  simulation,  for  -so  called-  projection  techniques,                    <ψG|Ok|ψ′n+1>=<ψG|Ok|ψn+1 >    for k = 0, · · ·p
+aiming to determine the ground state (GS) wavefunction
+ψ0  of a given HamiltonianH.                                                                                                                          (2)
+   In the  statistical approach the  electron GS wavefunc-
+tion  is  sampled  over  a  set  of  conﬁgurations  {|x>},  de-                where O0  for k  =  0  being  the  identity  here  for  simpler
+noting  spins  and  electron  positions  ,  and  belonging  to                 and  more  compact  notations, ψ′n+1  = rxψf (x), ψf  be-
+a  complete  basis  with  large  or  even  inﬁnite  dimension.                 ing  a  reference  state  known  exactly  (e.g.   the  standard
+The  ground  state  component ψ0  of  a  given  trial  state                   variational approach) or statistically (e.g.  the ﬁxed node
+ψG- henceforth assumed to be non zero on each conﬁgu-                          approximate state) on each conﬁgurationx and
+rationx- is ﬁltered out by applying to it some projection
+operatorGn for large numbern of power iterations.  The                                                             p∑
+matrix G  maybe  given  by G  = e−H∆t  for  short  imagi-                                                 rx =        αkOkx                                (3)
+nary time ∆t, as is the case for the conventional diﬀusion                                                       k=0
+Monte Carlo for continuous models, or the one that will                                         where Okx = <ψG|Ok|x>
+be considered in the following sections:                                                                            <ψG|x>                            (4)
+
+                        G = (ΛI −H)kp                                 (1)      and  the  constants αk  are  determined  by  the  conditions
+for  lattice  models,  where  a  suitably  large  constant shift               (2)
+Λ allows convergence to the ground state (Λ = 0 is used                                        αi = ∑     s−1
+for  the  t-J  model  considered  later  on).   The  integer kp,                                            i,k <ψG|Ok|ψn+1>                    (5)
+determining the number of powers of the Hamiltonian in                                                 k
+the Green function, maybe in principle larger than one2,                       where the covariance matrix is given by
+but  in  the  following  we  avoid this  complication  and  we
+consider kp  ﬁxed at its minimum value: kp = 1.                                                 si,k = ∑     ψG(x)ψf (x)OixOkx.                      (6)
+   In order to  perform stable  simulations with  large sig-                                              x
+nal to noise ratio even for large n the many-body prop-
+agation ψn  → Gn|ψG >  needs  to  be  stabilized  at  each                        In this way the SR can be considered a projectionPSR
+iteration, using an approximation that can be eﬃciently                        of  the  exactly  propagated  wavefunction ψn+1   = Gψn
+implemented statistically by means of the stochastic re-                       onto  a  subspace  spanned  by  the  states  |ψkf >,  deﬁned
+conﬁguration (SR) scheme.2                                                     by < x|ψkf >= Okxψf (x),  for k  =  0, · · ·p.   Notice  also
+   The  essential  step  in  the  SR  is  to  replace  the  many-              that only when ψf  =ψG, ψkf  = (Ok)†|ψG > ,namely ψkf
+body state ψn+1(x) =Gψn, obtained by applying to ψn
+
+                                                                            1
+is  obtained by  applying the  operator (Ok)†  to  the  state                 amplitudes  without changing the  nodes  in the  reference
+ψG.                                                                           wavefunction (8).
+  Solving  the  linear  system  determined  by  the  SR  con-                    For  fermion  systems,  due  to  the  above  diﬃculty  to
+ditions  (2)  we  obtain  a  close  expression  for  the  linear              determine  a  nodal  surface  which  is  weakly  modiﬁed  by
+operator PSR, which explicitly depends on the state ψG                        correlation eﬀects, it appears at the moment diﬃcult to
+and the reference state ψf :                                                  avoid a sizable ”nodal” error in energies and correlation
+                                                                              functions.   Therefore  in  this  case  it  is  extremely  impor-
+               PSR = ∑        s−1i,j |ψif ><ψG|Oj                      (7)    tant that any approximation is at least controlled by the
+                          i,j                                                 variational principle.   In  this  way  an  approach diﬀerent
+  The  operator PSR  is  not  a  true  projection  operator,                  from the one proposed before1 can be used.  The ﬁrst step
+                                                                              to obtain a rigorous variational method is to consider the
+Though  it  satisﬁes  the  simple  requirement  (i) P 2SR   =                 reference wavefunctionψf  ﬁxed to the variational or the
+PSR, (ii) P †SR =PSR  is not generally satisﬁed.  The way                     ﬁxed node state.8,9
+to implement statistically this ”pseudo”-projection oper-
+ator  in  the  large  number  of  walker  limit,  was  discussed
+in ref.2.                                                                                II.  FIXED  REFERENCE  DYNAMIC
+  After each reconﬁguration the state ψn  is replaced by
+ψ′n =PSRψn, but also the reference stateψf  is changed.                          In the GFMC propagation a large numberM  of walk-
+In  fact  in  the  original  formulation1,2  also  the  reference             ers is used, thejth walker is characterized by two weights
+state  explicitly  depends  on n  and  is  updated  after  each               wfj,wj,  acting  on  a  conﬁguration  state xj,  e.g.   a  state
+SR:                                                                           with deﬁnite electron positions and spins.  The reference
+               ψfn(x) → sgn (ψG(x))|ψ′n(x)|.                     (8)          weightswfj  sample statistically the reference stateψfn(x)
+                                                                              whereas the weights wj  refers to the state ψn(x) propa-
+The reason of the choice (8) is to optimize the reference                     gated  by  the  exact  Green  function ψn  = Gψn−1.   More
+state  and  obtain  more  accurate  results,  as  explained  in               precisely,  taking  into  account  the  importance  sampling
+the forthcoming paragraphs.                                                   transformation2:
+  With  the  restriction  of  a  stable  simulation  the  signs                            <<wf
+of the reference wavefunction have to be ﬁxed, otherwise                                           jδx,xj >>  =ψfn(x)ψG(x)                     (9)
+the  average  sign  will  drop  exponentially  to  zero  in  the                            <<wjδx,xj >>  =ψn(x)ψG(x)                   (10)
+simulation, Therefore in Eq.(8)ψf  has been restricted to                                                                                         (11)
+have the  same  signs (or  the  same  nodes) of  the  guiding
+wavefunction ψG.   On  the  other  hand  the  amplitude  of                   where  the  brackets <<>>  indicate  both  the  statistical
+the  reference  wavefunction ψf  can  be  considerably  im-                   average  and  the  one  over  the  number  of  walkers,  at  a
+proved from our best variational guess ψG, since during                       given Markov iterationn.  The two wavefunctionsψfn and
+the exact dynamic the stateψn gets closer to the ground                       ψn  are  propagated,  using  the  statistical  approach.   For
+state  wavefunction.   The  optimal  choice  for  the  ampli-                 the  ﬁrst  state  a  reference  Green  function Gfx′,x  with  all
+tudes has naturally led to the deﬁnition (8).                                 positive matrix elements is used, whereas the  latter one
+  This  technique,  with  the  choice  (8),  has  been  shown                 is propagated by means of the exact Green function (1)
+to  be  remarkably  accurate  for  frustrated  spin  or  bo-                  which is related to the reference one by a simple relation
+son  systems,  allowing  in  many  test-cases  to  obtain  es-                Gx′,x =sx′,xGfx′,x with ﬁnite and known matrix elements
+sentially  exact  results  within  statistical  errors.3,4  How-              sx′,x:
+ever for fermion problems the situation is much diﬀerent.
+Though this technique allows a signiﬁcant improvement                                 ψn+1(x′)ψG(x′) = ∑Gx′,xψn(x)ψG(x)             (12)
+in the energy and correlation function calculations5,6; the                                                    x
+bias  remains still  sizable and diﬃcult  to  eliminate  com-                         ψf                           Gf
+pletely by increasing the number of correlation functions                               n+1(x′)ψG(x′) = ∑            x′,xψfn(x)ψG(x)            (13)
+used  in  the  SR  technique.   Due  to  the  antisymmetry  of                                                 x
+the fermion many body wavefunction it appears that the                        The  reference  Green  function Gf
+nodes in this case play a much more important role.                           ten  in  terms  of  a  stochastic  matrix px′,x  (px′,x  ≥ 0  andx′,x  = px′,xbx  is  writ-
+  It  is  instructive  to  consider  the  case  of  continuous                ∑
+models.   In  this  case,  for  fermion  systems,  nodes  have                   x′px′,x = 1) times anx dependent normalization factor
+to  appear  in  the  many-body  wavefunction  just  by  anti-                 bx  =  ∑x′Gfx′,x,  so  that  a  statistical  implementation  of
+symmetry considerations.  On the other hand symmetry                          the iteration (12) is possible.  Namely given the conﬁgura-
+alone does not restrict the nodal surface (the locus where                    tionxj of thejth walker a new conﬁgurationx′j is selected
+the wavefunctionψ0(x) vanishes), implying that correla-                       statistically with probability px′j,xj  (notice ∑
+tion eﬀects can signiﬁcantly change the nodal surface.  In                                                                              x′ px′j,xj  = 1
+this  case  it  maybe  useless  or  irrelevant  to  improve  the              by deﬁnition):
+
+
+                                                                           2
+             x′j =x′  with probability px′,xj.                  (14)          which is required to calculate the RHS of the SR condi-
+                                                                              tions (2).  At the end of the bin newαk can be computed
+Then the reference weight:                                                    by  solving  the  linear  system  (2).   It  is  understood  that
+                          wf                                                  even inside the bin a branching scheme at ﬁxed number
+                            j  →bxjwfj                                    (15)of walkers7 and with a ﬁxed number of correcting factors
+is  scaled  by  the  normalization  factor bxj ,  whereas  the                can be used to improve importance sampling.  Whenever
+weight related to the exact Green function G,                                 the length of the bin is so large that the statistical ﬂuc-
+                                                                              tuations can be neglected, the algorithm is deterministic
+                      wj  →sx′j,xjbxjwj                               (16)    inside  the  statistical  uncertainties,  and  becomes  much
+                                                                              more eﬃcient compared to the original scheme1,2, where
+is further multiplied by the sx′j,xj  matrix element.                         the  SR conditions  where  applied at  each step  (Lb  = 1).
+  According  to  the  above  Markov  iteration  ,  deﬁned                     We have found instead that the most eﬃcient scheme is
+by  Eqs.(14-16) all  the  walkers  propagate  independently                   to  change  these  constants αk  only  when  the  SR  condi-
+each  others,  The  reference  weights wf  remain  positive,                  tions  (2)  are  not  satisﬁed  within  statistical  errors  (e.g.
+whereas  the  ones wj,  related  to  the  exact  propagation,                 they  are  oﬀ by  more than  three  error bars),  by  increas-
+accumulate  many  sign changes ,  leading,  for  large n,  to                 ing systematically the bin length at each iteration.  This
+an exponential increase of the signal-to noise ratio.  This                   scheme allows also to eliminate the bias due to the ﬁnite
+is  in  fact  determined  by  the  corresponding  exponential                 number  of  walkers M,  which  was  rather  sizable  in  the
+                                                      ∑                       original formulation2.
+drop of the  average walker sign < s >=               ∑ |wj|  (the  in-jwj       After the SR, say at the iteration n0, in order to con-
+famous ”sign problem”).  The stochastic reconﬁguration                        tinue  the  power  method  iteration  for n > n0,  the  new
+allows to alleviate this disease, by implementing statisti-                   approximate  state ψ′n0  = PSRψn0  replaces ψn0  but  the
+cally the operatorPSR described in the previous section.                      reference state ψf  is still arbitrary.  Instead of changing
+In  practice the  weights wj  are  replaced by  approximate                   the  reference  weights  with  the  choice1,2 wfj  = |pj|,  (im-
+weights pj,  but  with  much  larger  average  sign < s >.                    plying  Eq.8  in  the  large  number  of  walker  limits)  it  is
+The weights pj  sample statistically ψ′n(x)ψG(x) and are                      instead possible to remain with the same reference state
+determined  by  solving  the  corresponding  linear  system                   ψfn0, without changing it in the statistical sense.  This is
+(2).  This is done at a given Markov iteration by averag-                     obtained  by  the  following  simple  scheme.  After  the  SR
+ing Eq.(2) only over the walker samples.  This means that                     new conﬁgurationsx′i =xj(i)  are selected among the old
+there exists a bias due to the statistical uncertainty of the                 ones xj  according to the probability Πj  =       |pj|∑
+quantum  averages  in  Eq.(2).   This  bias  however  can  be                                                                             k |pk|.  This
+controlled eﬃciently2  because for large number of walk-                      scheme naturally deﬁnes the random index table j(i)7,2,
+ers it vanishes as 1/M.  In this limitrx in Eq.(3) depends                    used to improve importance sampling- as in the branch-
+only on the conﬁgurationx as the statistical ﬂuctuations                      ing  scheme  for  the  standard  diﬀusion  Monte  Carlo11-.
+of the constantsαk  can be neglected for M >>p.                               and  allows  to  continue  the  simulation  more  eﬃciently
+  Another  method  to  control much  more  eﬃciently  the                     with  equally weighted walkers |w′i| ≃ Const..  In fact  in
+statistical ﬂuctuations of the constants {αk}, without us-                    order  to  sample  statistically  the  states ψ′n  and ψf  with
+ing a too large number of walkers, is to perform the SR                       corresponding new weights w′i  and wf ′i  :
+scheme  only  after  applying,  at  each  iteration n  a  large                 ψ′n(x)ψG(x) =<<piδx,xi >>=<<w′iδx,x′i >>
+number Lb  of  statistical  steps  deﬁned  in  Eqs.(14-16) In
+this way the statistical averages in Eq.(2) have only small                     ψfn(x)ψG(x) =<<wfiδx,xi >>=<<wf ′i δx,x′i >>    (17)
+ﬂuctuations ∝      1√Lb  that can be neglected in the limit of
+large bin lengthLb, even when a small number of walkers                       it  is  enough  to  use  the  so  called  reweighting  method,
+is used.  In each bin we are considering only the iteration                   which makes the above equations exact in the statistical
+n  → n + 1  of  the  power  method  when  the  parameters                     sense:
+αk  of the wavefunctionPSRψn are known and computed{}                                          w′i =  ¯w Sgnpj(i)                                         (18)
+in  the  previous  iteration.    Thus         wfj     evolve  statisti-
+cally  according  to Gf  (Eqs.14,15),  and  new  conﬁgura-                                   wf ′i   =  ¯w wfj(i)/|pj(i)| =  |w′i||rx′i|                       (19)
+tions  {xj}  are  generated  for  the  statistical  sampling  of                                  ∑
+ψG(x) ψf (x) =<<wfjδx,xj >>, whereas, inside the bin,                         where   ¯w  =    1
+                                                                                               M     j |pj|  is  a  constant  common  to  all  the
+the  weights  {wj}  are  always  initialized  to wj  = rxjwfj -               walker weights and Sgn a = ±1 represents the sign of the
+i.e.  with the same conﬁgurations and a simple scaling of                     numbera.  The correcting factor  ¯w is taken into account
+the weights it is possible to sample the propagated state                     only for a ﬁnite numberL of past iterations, starting e.g.
+PSRψn  in all the Lb  statistical steps.  Then at each step                   fromn −L + 1, otherwise the weights of the walkers may
+inside the bin the exact Green functionG is applied sta-                      increase or decrease exponentially leading to a divergent
+tistically  (Eq.16)  in  order  to  sample ψn+1  = GPSRψn,                    variance.  This introduces a systematic bias that vanishes
+
+
+                                                                           3
+however  exponentially  in L  and  decreases  as  1/M.2  In                   Thus the above Green function can be used to generate
+practice for large number of walkers it is enough to con-                     statistically  conﬁgurations  (  see  Eqs.14,15)  distributed
+sider only few (or even none) ”correcting” factors in the                     according  to ψG(x)2  with  a  stochastic  matrix px′,x  =
+statistical averages, as common practice in Green Func-                       Gfx′,xzx′/zx.
+tion Monte Carlo.11.  From the reweighting method it is                          The  advantage  of  using  the  reference  Green  function
+also clear that the choice of the probability function Πj                     (21) is evident when we consider its very simple relation
+is  not  restricted  to  be  proportional to pj.  In  particular              with the exact Green function, namely:
+we have found more convenient to use the weights corre-
+sponding  to Gψn  determined  after  applying  Eq.(16),  so                                    sx′,x =Gx′,x/Gfx′,x = ±zx′                       (23)
+that the choice Πj  =      |wj|∑ |wk|  further improves importance
+sampling, with a minor change in Eqs(18,19).                                  where the sign ± is given by the sign of the Green func-
+                                                                              tion matrix element Λδx′,x −ψG(x′)Hx′,x/ψG(x), and de-
+                           w′i =  ¯w pj(i)                                    pends of course onx andx′.  Using the ﬁxed reference al-
+                                      |wj(i)|                                 gorithm in Eq.(19)ψf  =ψG and the operatorPSR repre-
+                                                                              sents in this special case a true projector oneP †SR =PSR.
+                          wf ′i   =  |w′i||rx′i|                              Thus in this case the method is rigorously variational as
+                                                                              pointed out in the last part of the previous section.
+             ∑ |wj|                                                              We notice also an important property of this method.
+with  ¯w =     M    .                                                         If in the SR conditions (2) only operators deﬁned by pow-
+  Using  the  previous  scheme  the  reference  state  equili-                ers of the hamiltonian Ok  =Hk  are used, the  projector
+brates  necessarily  to  the  largest  right  eigenstate  of  the             PSR acts on the same Krilov basis (spanned byHk|ψG >
+reference  matrix Gf .  At  equilibrium  the  state ψSR  has                  ,k = 0,...,p) of the well known Lanczos algorithm.  Thus
+therefore  a  very  well  compact  and  clear  deﬁnition.    It               (PSRGPSR)n|ψG >  ﬁlters  out  the  lowest  energy  varia-
+represents the maximum right eigenstate of the matrix                         tional  state  in  this  Krilov  basis,  i.e.   by  deﬁnition  the
+                                                                              state  obtained  by  applying p  Lanczos  iterations  to ψG.
+                     PSR (ΛI −H)PSR,                             (20)         We recover in particular a known property of the Lanczos
+                                                                              algorithm, valid also for the  SR method:  the  method is
+with givenψf  in the deﬁnition of PSR  (7).                                   exact if p equals the dimension of the Hilbert space.
+  The method is therefore rigorously variational provided                        Due to the equivalence of the Lanczos algorithm with
+the  pseudo  projector PSR.is  a  true  projector  operator,                  the  SR  technique  it  is  clear  why,  with  the  latter  tech-
+namely  for ψf  = ψG  when P †SR  = PSR,  as  implied  by                     nique,  it  is  possible  to  obtain  rather  good  approximate
+Eq.(7).   In  this  case  in  fact  by  standard  linear  algebra,            ground  state  with p  reasonably  small.13,3–6  In  fact  the
+the maximum right eigenstate of the operator (20) is the                      convergence  of  the  Lanczos  algorithm  is  at  least  expo-
+best variational state ofH belonging to the subspace de-                      nential in p.14
+ﬁned by the projectorPSRi (see Appendix A).                                      We have therefore derived that the Lanczos algorithm
+                                                                              can  be  implemented  statistically  using  the  SR  method.
+                                                                              This  allows  to  perform easily  two  Lanczos iterations on
+          A.  Variational  energy  when PSR =P †SR                            a given variational wavefunction for fairly large size sys-
+                                                                              tems.   Furthermore  the  SR  method  allows  to  put  sev-
+  In  the  original  formulation  of  the  SR  the  reference                 eral  correlation  functions  in  the  (2).   Since  the  method
+Green  function  was  deﬁned  with  a  slight  generalization                 is  strictly  variational,  the  variational  energy  has  neces-
+of  the  ﬁxed  node  Green  function1.   The  Green  function                 sarily to decrease by increasing the mentioned number of
+proposed  by  Hellberg  and  Manusakis12  is  instead  more                   correlation functions.
+appropriate  in  this  context  and  much  more  convenient
+from  the  practical  point  of  view  of  reducing  statistical
+ﬂuctuations:                                                                             B.   Improving  the  variational  energy
+
+       Gfx′,x =   1zx′ |Λδx′,x −ψG(x′)Hx′,x/ψG(x)|          (21)                 Following15,   by  applying  a  ﬁnite  number  of  exact
+                                                                              Green  function  iterations  to  the  wavefunction ψSR,  the
+where zx  =  ∑                                                                corresponding quantum average,
+                 x′  |Λδx′,x −ψG(x′)Hx′,x/ψG(x)|,  |a|  mean-
+ing  the  absolute  value  of  the  number a.   It  is  simple  to                          EkSR = <ψSR|GkHGk|ψSR >
+show that, by applying the power method with the above                                                   <ψSR|G2k|ψSR >                       (24)
+Green  function,  convergence is  reached  when  the  maxi-
+mum right eigenvectorψG(x)2  is ﬁltered out:                                  remains obviously variational for any k.
+                ∑                                                                Taking  into  account  2k  statistical  factors sx′,x,  the
+                     Gfx′,xψG(x)2 =ψG(x′)2                      (22)          above  quantum  averages  can  be  statistically  evaluated
+                  x
+
+                                                                           4
+with  the  same  Markov  chain  for  which ESR  (k  =  0)  is                    Forr ⁄= 0 we assume that the inﬁnite number of walk-
+computed.                                                                     ers  or  large  bin Lb  is  taken  so  that  the  parameters αk
+  The sign problem can be controlled for not too largek                       in  the  deﬁnition  of rx  (3)  can  be  considered  constants
+and systematically improved variational energies can be                       for  large n.    In  this  case,  if  we  take  into  account  the
+obtained compared to the k = 0 result.  However experi-                       reweighting  (26),  the  reference  wavefunction ψf  is  ob-
+ence has shown that it is very diﬃcult to have signiﬁcant                     tained as the right eigenvectorψR(x) =<<wf ′i δx,xi >>
+improvement over the k = 0 result for large system size.                      with maximum eigenvalue of the renormalized reference
+                                                                              Green function  ¯Gf :
+
+ III.  VARIATIONAL  ENERGY  WHEN PSR ⁄=P †SR                                                         ¯Gfx′,x = |rx′|rGfx′,x                              (28)
+
+  We have seen that by changing the deﬁnition of the ref-                     ,namely as ψf (x) = |rx|−rψR(x)/ψG(x)
+erence weight after the SR was applied (19) the method                           Then the SR state ψSR(x) =rxψf (x) is simply given
+is rigorously variational.  However , as we have explained                    in terms of this right eigenvector:
+in  the  introduction,  a  better  choice  is  to  continue  after                          ψSR(x) =RxψR(x)                                       (29)
+the SR withwf ′  = |w′|.  The rational of this choice being
+that the wavefunction ψ′ =PSRψ  has much better am-                                       with Rx = |rx|1−r/ψG(x) Sgnrx                  (30)
+plitudes  than the  variational wavefunction ψG.  This al-
+lows to improve self-consistently the reference wavefunc-                     Thus  even  when r  ⁄=  0  the SR  state  can  be  uniquely
+tion in order to be as close as possible to the true ground                   determined.   It  is  also  clear  that,  since rx  is  not  neces-
+state.   In  this  way  however ψf  ⁄= ψG  and  the  method                   sarily positive or negative, the nodes can be changed and
+is  no  longer  variational  in  the  sense  that  the  SR  state             improved  with  respect  to  the  nodes  of  the  initial  guess
+deﬁned  by  the  right eigenstate with  maximum modulus                       ψG, both forr = 0 with the standard Lanczos algorithm
+|Λ −ESR| eigenvalue of the matrix :                                           and  for r >  0.   If  the  nodes  of ψG  are  exact  and  the
+                                                                              hamiltonian is  not  frustrated  it  is  also  possible  to  show
+    PSR (ΛI −H)PSR|ψSR >= (Λ −ESR)|ψSR >     (25)                             that r = 1 and Λ → ∞ provide the exact result, with rx
+is  no  longer  the  lowest  energy  one  in  the  basis  deﬁned              positive deﬁnite.
+by  |ψkf >  ,k  =  0, 1,...,p  and ESR  does  not  necessarily                   It  is  possible  to  compute  correlation  functions  over
+bound the ground state energy.                                                ψSR?
+  A  compromise  between  the  two  methods,  is  to  intro-                     As  it  is  shown in  App.(B)  the  answer  is  yes,  and not
+duce  a  parameter r  that  interpolates  smoothly  the  two                  only for correlation functions diagonal in the basisx , as
+limits.  This parameter enters in the reweighting relation                    in the standard forward walking technique7, but also for
+                                                                              all the ones  with  oﬀ diagonal elements  contained in  the
+(19) in a very simple manner:                                                 non-zero hamiltonian matrix elements.  In particular it is
+                                                                              possible to compute :
+                       wf ′i   ==     |w′i||rx′i|1−r                                (26)            <ψSR|H|ψSR>≥E0
+
+Notice  that,   when  we  release  the  ﬁxed  reference  dy-                  i.e.  the  expectation  value  over  the  state  deﬁned  by  the
+namic  for r  ⁄=  0  and  when  for  large n  the  constants                  SR conditions.  This estimate is obviously variational and
+{αk}  converge  to  non  zero  values,  the  reference  wave-                 can be further improved, by applying a ﬁnite number of
+function ψf   is  not  given  by  averaging  the  conﬁgura-                   exact Green function powers to the right and to the left
+tions  with  the  weights wf   since  the  relation ψSR   =                   of the hamiltonian ,as in the power-Lanczos algorithm15,
+PSRψn(x) = rxψf (x)  is  implied by  the deﬁnition of the                     with  the  diﬀerence  that  in  this  case  Eq.(24)  has  to  be
+projector PSR  in  Eq.(7).   In  fact,  by  using  Eq.(26)  and               evaluated  with  the  ”forward walking  technique”,  as  de-
+that <<w′iδx,xi >>=ψSR(x)ψG(x) =rxψf (x)ψG(x), it                             scribed in the App.(B).  In Fig.(2) we plot the evolution of
+is simple to derive that:                                                     the expectation value of the energy over the stateψSR as
+                                                                              a function of the number of iterationsn, required by the
+    <<wf ′i δx,xi >>  = |rx|r−1Sgnrx <<w′iδx,xi >>                            forward walking to ﬁlter out fromψG its component over
+                           = |rx|r−1SgnrxψSR(x)ψG(x)                          ψSR,  leading  to  a  true  variational energy  estimate.  We
+                           = |rx|rψf (x)ψG(x)                     (27)        see  that  for r  =  1,  within  the  original  SR  technique1,2,
+                                                                              the  energy  expectation  value  can  be  much  higher  than
+  For r = 0 the  method is rigorously variational, in the                     the corresponding ”mixed average” estimate (n = 0).
+sense described before.  It is reasonable to expect a sim-                       This behavior can be understood in the following way
+ilar behavior for r << 1 when P †                                             ,  for r  =  1  and  for  Λ  → ∞  there  is  no  way  to  improve
+                                          SR  ≃ PSR, r = 1 being              the  sign  of  the  wavefunction  over ψG  because rx  →  1
+the  optimal  choice  for  the  amplitudes  of  the  reference                (G and Gf  tend to the identity up to a constant and so
+wavefunctionψf .                                                              the  correction rx  to ψf  ≃ ψ  for r  =  1  has  to  became
+
+
+                                                                           5
+unity up to O( 1Λ )), whereas for r = 0 the Lanczos algo-
+rithm  ,  which  is  Λ  independent,  certainly  modiﬁes  and                                0.026
+improves the nodes.  For fermion systems therefore it ap-                                    0.024                           VMC
+pears important to work with smallr because the nodes                                                                         FN+Lanczos step
+of  the  wavefunction  play  a  particular  important  role  in                              0.022                           Two Lanczos steps
+                                                                                                                              SR  best energy
+determining a good variational energy.                                                       0.020                           SR  standard
+   A  diﬀerent  behavior  is  seen  for  correlation  functions.                                                              Exact
+For  large J/t  =  1  when  a  four  particle  bound  state  is                              0.018
+likely  to  be  formed,  our  Jastrow-Slater  wavefunction  is                               0.016
+not appropriate enough, and the large distance behavior
+is not exactly reproduced (see Fig.1) even when we apply                                     0.014     4 holes J/t=1
+to  it  a  couple  of  Lanczos  iterations,  that,  remarkably,                              0.012
+provide a very accurate variational energy (see table).                                           1.0            1.5            2.0            2.5            3.0            3.5
+   That the qualitative behavior of this correlation func-                                                                  |R|
+tion  is  diﬀerent  from  the  variational  starting  wavefunc-
+tion,  can  be  understood  only  when  the  algorithm  with                         FIG. 1.     Hole-hole  correlations  for  the  26  site t −J  clus-
+r> 0 or the FN (which is worse in energy) are used.  Es-                          ter for various methods.  ”SR standard” indicates the original
+pecially successfull is the original techniquer = 1, which                        GFMCSR implementation (r = 1 here)1,2, ,whereas ”SR best
+improves  by  a  factor  of  two  the  important  long  range                     energy”  indicates  the  optimal  variational  SR-wavefunction
+behavior  of N(|R|),  clearly  displaying  the  features  of  a                   obtained  with r  =  0.25.   The  ”VMC  ”  is  the  lowest  energy
+genuine  bound  state,  by  a  decaying  probability  to  have                    Jastrow-Slater variational singlet wavefunction as discussed in
+holes at larger and larger distances.  For correlation func-                      Sec.(V), FN+Lanczos step the ﬁxed node over the one Lanc-
+tions diagonal in the chosen basis the nodes do not play                          zos step wavefunction.
+any  role  and r  =  1  or  the  FN  itself,  are  likely  to  pro-
+vide  much  better  correlation  functions.   However  from
+the previous argument about the impossibility to correct
+the nodes forr = 1 andG,Gf  ∼I we expect indeed that
+for large size the Green functionG tends to the identity,                                                                                         FNLS
+either because Λ ∝L, as required by the power method                                            -1.171
+to converge, or because the gap to the ﬁrst excited state                                                        J/t=1 4 holes/26 Sites          2 LS
+decreases and a power iteration ψn+1 =Gψn  is less and                                          -1.172                             r=1/4
+less eﬀective for changing the wavefunction.  Thus r  has                                                                           r=1
+to  scale to  zero for large size  if we  do  not want to  spoil                                -1.173
+too much the variational expectation value of the energy                                        -0.685                                          FN LS
+(see Fig.2).  It is remarkable that the gain in variational                                                     J/t=0.4 14 holes/98 Sites
+energy  is  larger  and  larger  when  the  size  is  increased.                                -0.686                                           2 LS
+Thus  the r >  0  technique  seems  to  overcome,  at  least                                    -0.687
+partially,  a  serious  limitation  of  the  Lanczos  algorithm,
+namely that in the thermodynamic limit the energy per                                           -0.688
+site cannot be improved by a technique which is not size                                                          r=1/10         r=1/4
+                                                                                                -0.6890             20            40            60            80           100
+consistent.   The  gain  in  energy  with r >  0  can  instead
+be  size  consistent,  since,  as  shown in the  appendix  (B),                                                            n
+r> 0 corresponds to modify the reference Green function
+Gf  →  ¯Gf ,  similarly  to  what the  Fixed  node  algorithm-                       FIG. 2.    Energy per site as a function of the forward iter-
+which is size consistent for size consistentψG- does.                             ation n  as  described  in  the  App.(B)  for  the  26  sites  4  holes
+                                                                                  case and the 98 site 14 hole case.  The value of the variational
+                                                                                  parameter r is also indicated.
+
+
+                                                                                          IV.   NUMERICAL  IMPLEMENTATION
+
+                                                                                     In order to  put  eﬃciently a  ﬁnite  number p  of hamil-
+                                                                                  tonian  powers  in  the  SR  scheme  it  is  by  far  more  con-
+                                                                                  venient  to  use  an  importance  sampling  strategy  (see
+                                                                                  e.g.  App.C), by using information of the previous p − 1
+                                                                                  Lanczos iterations.  A guiding wavefunction correspond-
+                                                                                  ing  to  the  previous  (p − 1)  approximation ψ′G(x)  =<
+
+
+
+                                                                              6
+   p−1∑                                                                                    A.  The  variational  wavefunction
+x|
+  k=0αkHk|ψG >= rp−1(x)ψG(x)  can  be  used.34  With
+this new guiding function the powers of the hamiltonian                         The  Jastrow-Slater  variational  wavefunction  can  be
+can  be  put  in  the  SR  conditions  by  computing  corre-                 generally written as:
+sponding mixed average estimators:
+                                                                                                      |ψG⟩ =  ˆJ|S⟩.                                  (32)
+                    Okx = <ψG|Hk|x><ψ′G|x>                                (31)where  |S⟩  is  a  determinant  wavefunction,  that  can  be
+                                                                             obtained as an exact ground state of a generic one-body
+for k = 0, · · ·p.                                                           hamiltonian of the bilinear form19 H1 −BODY  ≃c†c... +
+  The  advantage  of  using  the  SR  scheme  is  clear  even                c†c†... + h.c. whereas the Jastrow factor
+when  we  restrict  this  method  only  to  the  evaluation  of                    ˆJ =exp(∑
+the  ﬁrst  few  Lanczos  iterations.   In  order  to  perform p                                   v(i,j)ninj)exp(∑         vz(i,j)σziσzj )       (33)
+Lanczos iterations, it is enough to compute onlyp hamil-                                      i,j                      i,j
+tonian powers on a given conﬁgurationx.  In the conven-                      introduces arbitrary Gaussian correlations between local
+tional variational method it is always necessary to com-
+pute the expectation value of the hamiltonian amounting                      chargesni = ∑σc†i,σ.ci,σ and local spins along the z-axis:
+to  2p + 1  powers of the  hamiltonian,  leading to  a  much                 σzi   = c†i,↑.ci,↑ −c†i,↓.ci,↓  Both  operators  are  deﬁned  on
+more demanding numerical eﬀort.  It is also important to                     each conﬁguration {x} of the chosen Hilbert space.  The
+emphasize that within this technique the parametersαk                        reason of the exponential form in the Jastrow wavefunc-
+deﬁning the SR state, are given at the end of the SR sim-                    tion comes from size-consistency considerations, implying
+ulationn → ∞.  Once the {αk} are determined it is then                       that  for  macroscopic  and  disconnected  regions  of  space
+convenient  to  compute  correlation  functions  with  ﬁxed                  A  and  B  the  wavefunction factorizes ψA,B  = ψA ⨂ψB,
+constants {αk}, by performing statistical averages over a                    this factorization being fulﬁlled by the exponential form.
+large  bin Lb  without  applying  the  SR  conditions  (2)  as                  Considering thet−J model the restriction of no doubly
+discussed in Sec.(II).  This method signiﬁcantly improves                    occupied  sites  can  be  thought  of  an  inﬁnitely  negative
+the statistical ﬂuctuations of the quantum averages over                     v(i,i)  =  −∞  charge  correlation,  whereas  restriction  at
+the variational state PSR|ψG >.                                              ﬁxed  number N  of  particles  in  a  ﬁnite  size L,  can  be
+                                                                             thought of another singular Jastrow termexp(−∞(Ntot−
+  V.   ENERGY  OPTIMIZATION  FOR  A  MANY                                    N)2)  where Ntot  =  ∑ini  is  the  total  charge  operator.
+PARAMETER  VARIATIONAL  WAVEFUNCTION                                         The  latter  two  singular  terms  in  the  Jastrow factor  are
+                                                                             simply a restriction on the Hilbert space that can be very
+                                                                             easily implemented without numerical instabilities.
+  The most important advantage of the SR technique is                           We now consider how the symmetries of the ﬁnite size
+that many variational parameters can be handled at a lit-                    t-J  model  drastically  restrict  the  still  too  large  num-
+tle expense of solving a linear system (5) of correspond-                    ber of variational parameters in the Jastrow-Slater wave-
+ing  size.   The  few  Lanczos  step  technique,  as  we  have               function.    Translation  invariance  implies  that  the  Jas-
+discussed  before,  is  determined  only  by  few  coeﬃcients                trow  potential  depends  only  on  the  distance v(i,j)  =
+due to the diﬃculty for large size to compute many pow-                      v(|Ri −Rj|), whereasvz = 0 for a singlet wavefunction.
+ers of the hamiltonian on a given conﬁgurationx, which                          The   singlet   and   translation   symmetry   imply   also
+is required for the evaluation of the corresponding mixed                    strong restrictions to the one-body hamiltonian.  deﬁning
+estimator Okx = <ψG|Hk|x><ψG|x>   .                                          the Slater determinant.  This hamiltonian can be gener-
+  Clearly the method discussed in Sec.(II) is not limited                    ally written:
+only  to  the  hamiltonian  momenta  correlation functions,                         ˆHS =  ˆH0 + ( ˆ∆† +  ˆ∆)                                              (34)
+but  remains  variational  for  arbitrary  ones.   In  particu-                     ˆ∆† =  ∑                                           )          (35)
+lar many kind of correlation functions can be thought to                                         ∆(⃗τ)(˜c†R,↑˜c†R+⃗τ,↓ + ˜c†R+⃗τ,↑˜c†R,↓
+be a renormalization of the guiding wavefunctionψG, al-                                    ⟨R,⃗τ⟩
+lowing  a  powerful  multi-parameter  energy  optimization
+similar to16,  where the  variance was instead minimized.                    where  ˆH0 = ∑           k,σ˜ck,σ  is the free electron tight bind-
+In the present chapter we assume for simplicity  that all                                    k,σǫk ˜c†
+the correlation functions are used for the purpose of opti-                  ing  nearest-neighbor  Hamiltonian, ǫk   =   −2t(coskx  +
+mizing the variational wavefunction ψG, and we restrict                      cosky) −µ, µ is the free-electron chemical potential and
+our very general analysis to variational wavefunctions of                     ˆ∆†  creates all possible  pairs at the  various distances |τ|
+the Jastrow-Slater form for a strongly correlated system                     with  deﬁnite  rotation-reﬂection  symmetry  (e.g. dx2−y2
+such as the t-J model.17,18                                                  implies ∆(1, 0) = −∆(0, 1))
+                                                                                For  a  generic  Jastrow-Slater  singlet  state,  satisfying
+                                                                             all  symmetries  of  the  t-J  model,  a  quite  large  number
+
+
+                                                                          7
+of  variational  parameters  are  therefore  available  corre-                      Thus  for  |αk|  small,  (1 + ∑kαkOk)|ψG >≃   ˆJ  ×
+sponding  to v(|τ|)  and D(τ)  for  all  distances  |τ|.   Not                      exp(∑kαkOk1 −BODY )|S >  which  remains  a  Jas-
+all  these  parameters  are  independent,  namely  the  sub-                        trow  Slater  wavefunction  of  the  same  form JS′
+stitution v(|τ|)  → v(|τ|) + const.  does  not  change  the                         with S′  = exp(∑kαkOk1 −BODY )|S >  Since  one
+wavefunction up to a constant, so that v(|τ|) can be as-                            body  operators  are  bilinear  (e.g. c†c)  in  fermion
+sumed to be  zero at the  maximum distance.  Analogous                              second-quantization operators‘S′ remains a Slater
+dependence exists between the various parameters ∆(⃗τ),                             determinant.19  In  the  Jastrow-Slater  case  for  the
+since after projecting it at ﬁxed number of particles, the                          t −J  model  considered  here  the  one-body  opera-
+ground state of the Slater determinant hamiltonian (34)                             tors read:
+can be written:                                                                                                                                          )
+                                                    ))N/2|0>  (36)                  Ok1 −BODY  =        ∑           S(τ)(˜c†R,↑˜c†R+τ,↓ + ˜c†R+τ,↑˜c†R,↓
+|S >= (∑       f(⃗τ)(˜c†R,↑˜c†R+⃗τ,↓ + ˜c†R+⃗τ,↑˜c†R,↓                                               R,τ ∈Shell#k
+           R,τ
+                                                                                                                                               (38)
+wheref(τ) is the pairing wavefunction simply related to
+∆(τ) in Fourier transform:                                                          where the signS(τ) = ±1 is determined by symme-
+                                                                                    try.   Also  the  bar  kinetic  energy H0  is  considered
+                    f(k) =          ∆(k)          .                                 in  this  approach.   According  to  the  previous  dis-
+                              ǫk + √∆2k +ǫ2k                                        cussion the chemical potentialµ is ﬁxed to the free
+                                                                                    electron one in H0.
+whereǫk in the above expression is not limited to nearest                        •  the  second  class  of  correlation  functions  are  the
+neighbor hopping.                                                                   ones  that  appear  in  the  Jastrow  factor.     They
+  Thus  if  we  scale f(τ)  →  const.f(τ)  the  many  body                          are  the  diagonal  operators Ok  –  density-density
+wavefunction (36) remains unchanged, implying that the                              ∑
+number of independent parameters is equal toNshell − 1,                             sen  basis x  of  conﬁgurations  with  ﬁxed  spins  andRnRnR+τ  or spin-spin ∑RσzRσzR+τ  – in the cho-
+where Nshell   is  the  number  of  independent  shells  at                         electron  positions.  Again  for  small α  they  can  be
+|τ|> 0 consistent with the rotation-reﬂection symmetry                              considered a renormalization of the Jastrow factor:
+of f.   Notice  that,  once  in  the  determinant  part  of  the                    J →Jexp(∑
+wavefunctionNshell − 1 variational parameters are inde-                                              kαkOk).
+pendently  varied,  it  is  useless  to  consider  other  terms,                The   multi-parameter   minimization   method   can   be
+such  as,  for  instance,  the  chemical  potential µ  or  next-             summarized as follows:
+nearest neighbor  hopping  in H0:  they  always  provide a
+suitable renormalization off  that can be sampled by the                         •  after each reconﬁguration the factorrx = ∑kαkOkx
+ﬁrst Nshell − 1  parameters.   Moreover  by  performing  a                          is  computed  with  given αk,  whose  statistical  ﬂuc-
+particle-hole transformation in Eq.(34) on the spin down                            tuations can be arbitrary reduced by increasing the
+˜c†i,↓  →  (−1)i˜ci,↓,  the  ground  state  of  the  Hamiltonian                    number of walkers or the bin lengthLb as described
+(34) is just a Slater-determinant withN  =L particles20.                            in Sec.(II).  In this  case of non linear optimization
+This is the reason why this variational wavefunction rep-                           the bin technique is particular important because it
+resents a generic Jastrow-Slater state, a standard varia-                           allows to avoid, for large enough bin lengthLb, un-
+tional wavefunction used in QMC. Using the particle-hole                            physical ﬂuctuations of the guiding wavefunction.
+transformation, it is  also possible  to control exactly the                        After an exact Green function step a wavefunction
+spurious ﬁnite system divergences related to the nodes of                           better thanψG  is obtained and is parametrized by
+the d-wave order parameter.                                                         the coeﬃcientαk contained in the factorrx:  In fact
+
+                                                                                             PSRψn+1 =PSRGPSRψn =rxψG(x)
+                 B.  Stochastic  minimization
+                                                                                    has  to  be  by  deﬁnition  a  variational  state  better
+  Among  the  correlation  functions  important  to  deﬁne                          than PSRψn21,  which  in  turn  is  better  than ψG,
+the  variational  wavefunction  two  classes  are  important                        since for instance we can assumeψn=0 =ψG.
+for guiding functions of the Jastrow-Slater form (32).                           •  It is therefore convenient to change at each iteration
+    •  the  ﬁrst  class  of  operators  renormalize  the  Slater                    n the guiding wavefunction:
+       determinant and have been identiﬁed by Filippi and                                                        p∑
+       Fahy10, Ok  are  deﬁned  by  means  of  one body  op-                                   |ψ′G >→exp(           ¯αkOk)|ψG >               (39)
+       eratorsOk1 −BODY  by the following relation:                                                             k=1
+
+         Okx = <x|Ok|ψG >                                                           In  the  above  equation  we  have  introduced  new
+                   <x|ψG >     = <x|Ok1 −BODY |S ><x|S >             (37)           scaled coeﬃcients  ¯αk =αk/C simply related to the
+
+                                                                         8
+ones αk  deﬁned  by  the  SR  conditions  (2).    This
+is obtained by recasting rx  in a form that is more
+suitable for exponentiation:                                                  0.8
+                   [        p∑                  ]                             0.4
+          rx =C      1 +       ¯αk(Okx −  ¯Ok)              (40)              0.0
+
+                          k=1                                                -0.4
+where                                                                        -0.8
+             ∑
+                                                                                                                          ##
+     ¯Ok =     ∑xψG(x)2Okx                                                 -0.70                 4 holes 26 sites J/t=0.5
+                                          jOkxδx,xj >>
+                  xψG(x)2    =<<wf
+and C  =  1 + ∑pk=1αk ¯Ok.    The  above  exponen-                         -0.75
+tiation  is  justiﬁed,  provided  ψ′||ψ′G         ||ψG||.   This                  0          500       1000      1500      2000      2500
+                                         G||  ≃  ψG
+is  certainly  fulﬁlled  at  equilibrium  when  for  large                                    Stochastic Reconfiguration steps
+n ψ′n+1  = PSRψn+1  ∝ PSRψn  ∝ ψ∗G, ψ∗G  being
+the Jastrow-Slater wavefunction with lowest energy                       FIG. 3.  Energy per site and evolution of the pairing ampli-
+expectation  value.   In  fact  at  equilibrium  the  SR               tudes for 4 holes in  the t-J model at J/t = 0.5 as a function
+conditions  turn  exactly  to  the  Euler  equations  of               of the stochastic power method iterationn.  Here 200 walkers
+minimum energy for ψ∗G:                                                were used.  Upper panel:  triangles and circles denote nearest
+                                                                       neighbor ∆(τ) amplitudes in Eq.(34) along x and y directions
+      <ψ∗G|Ok|ψ∗G >                                                    respectively.  Lower  panel:  the arrows  indicate  the  power  it-
+         <ψ∗G|ψ∗G >     = <ψ∗G|OkH|ψ∗G><ψ∗G|H|ψ∗G >            (41)    erations  when  the  Monte  Carlo  bin  length Lb  has  increased
+                                                                       from 10 to 100 (left arrow) and from 100 to 500 (right arrow)
+as  implied  by  (2)  for ψ′n+1   = ψ∗G  and ψn+1   =                  Monte Carlo steps.
+Gψ′n  ∝ Gψ∗G,  and  taking  also  into  account  that                      •  In  order  to  continue  with  the  new  guiding  wave-
+here for simplicity O0  is the identity.                                      function  (39)  without  another  long  equilibration,
+This implies that ψ∗G  is a lowest energy wavefunc-                           walker  weights wj  and wf
+tion of the Jastrow-Slater form.  There maybe many                            reweighted as follows:             j   in  Eqs.(9,10)  can  be
+local minima when the Euler’s equations are iden-
+tically  satisﬁed.   In  this  case  the  SR  represents  a                                  wj  →wj(ψ′G(xj)/ψG(xj))
+very  useful  tool  for  global  minimization.   In  fact                                    wf
+the bin lengthLb or the number of walkersM  rep-                                               j  →wfj (ψ′G(xj)/ψG(xj))2
+resent at each iteration n an eﬀective inverse tem-                                                                                        (42)
+perature that can be increased gradually following
+the  well  known  ”simulated  annealing”  statistical                         in  order  that  the  new  weights  acting  on  the  same
+algorithm.22 As it is shown in Fig.(3) we apply this                          conﬁgurationsx represent statistically Eq,(9) with
+technique  with  very  short  bin  length  using  a  full                     ψf  = ψG  = ψ′G  and Eq.(10) with the  new guiding
+translation  invariant  singlet  wavefunction  and  us-                       wavefunctionψ′G.
+ing x,y reﬂection symmetries without rotation sym-
+metry.    This  amounts  to  24  independent  param-                       •  For  large n  the  one-body  operators  correspond-
+eters  for  a  26  site  cluster  (Nshell  =  13).   In  the                  ing   to   the   Slater-determinant  may  became   lin-
+plot we show the evolution of the short range BCS                             early dependent becauseD may approach an eigen-
+parameters ∆(1, 0), ∆(0, 1) ,when at the beginning                            state  of  a  one  body  hamiltonian  ∑hkOk1 −BODY ,
+ψn=0  = ψG  was  set  with  no  Jastrow  term v  =  0                         ∑hkOk1 −BODY |S >= E|S >,  with  suitable  con-
+and the  s-wave symmetric determinant deﬁned  by                              stants hk  and E.  Thus the covariance matrix sk,k′
+∆(1, 0) = ∆(0, 1) = 0.1t, ∆τ  = 0 for |τ| > 1.  The                           quickly become singular, leading to a numerical in-
+s-wave symmetric solution is locally stable, but for                          stability which is diﬃcult to control statistically.  A
+short  enough  bin  there  is  a  ﬁnite  tunneling  prob-                     stable method to overcome this diﬃculty was found
+ability  to  cross the  barrier and  stabilize the  much                      by Filippi and Fahy10, essentially by taking out one
+lower energy solution with d-wave symmetry.                                   operator  (the  one  body  kinetic  energy)  from  the
+                                                                              ones  used  in  the  linear  system  (2).   Here  we  have
+                                                                              found  more  convenient  to  solve  the  linear  system
+                                                                              (2):
+                                                                                        ∑sk,k′αk′  =<ψG|OkG|ψn >=fk
+
+
+
+                                                                   9
+       by diagonalizing ﬁrst the symmetric matrix                                  the region J/t<∼ 0.5 where pairs with d-wave symmetry
+                                                                                   repel each other and  do  not form many-particle bound-
+                        sk,k′  = ∑     Uk,jΛjUk′,j                     (43)        states as is the case for largeJ/t when phase separation
+                                    j                                              occurs.
+                                                                                      For  the  32  site  cluster  the  spin-translation  symmetry
+       and taking out the  lowest eigenvalue Λ0  ≥ 0 com-                          has  to  be  explicitly  broken in  the  variational wavefunc-
+       ponent  of  the  positive  deﬁnite  matrix s.     This                      tion  by  introducing  a  staggered  magnetization H0   →
+       is  equivalent  to  select  in  the  SR  another  set  of                   H0 − ∆AF ∑R(−1)RσzR along the z axis.  The best wave-
+       p − 1 operators which are no longer singularly de-                          function  compatible  with  reﬂection-rotation  and  trans-
+       pendent.    This  is  a  perfectly  legal  operation  for                   lation with  spin interchange (↑↔↓) can be  conveniently
+       Λ0  ∼  0,  since  as  shown  in2,  for  the  singular  op-                  parametrized by ∆AF  and a next neighbor hopping t′in
+       erator O∗  =  ∑kUk,0Ok,  such  that O∗|ψG⟩  =  0,                           the Slater  determinant27  and  also a spin  Jastrow factor
+       the  SR  condition  (2)  is  identically  satisﬁed.  Thus                   is  allowed  within  this  class  of  wavefunctions.   Even  in
+       the resulting linear system is no longer aﬀected by                         this case, as shown in the corresponding Fig(5), the hole-
+       the above numerical instability:                                            hole  correlations  are  almost  exactly  reproduced  by  the
+                                                                                   strong  attractive  Jastrow  term  at  long  distance.   This
+                           Λjα′j  = ∑Uk,jfk                         (44)           means  that  in  this  small  doping  regime  it  is  important
+                                        k                                          to have a broken symmetry ground state, which suppress
+                                                                                   the d-wave BCS order parameter.
+       with α′0 = 0 and
+
+                            αk = ∑Uk′,jα′j                           (45)             0.025
+                                    j>0
+                                                                                      0.020
+       Finally  we  obtain  a  much  more  stable  determina-
+       tion of αk,  which  does  not aﬀect the  result at the                         0.015            VMC
+                                                                                                        VMC with Jastrow             4 holes J/t=0.5
+       equilibrium,  where  Λ0  →  0  and  the  correct  Euler                                          Exact
+       equations are satisﬁed.  With  this  scheme also the                           0.010
+       optimization  of  the  Jastrow  parameters  together                              0.0
+       with the  Slater determinant ones  is possible  with-
+       out too much eﬀort.                                                              -0.1
+     •  We   have   found   that   the   generic   situation   for                      -0.2     4 holes J/t=0.3                           BCS d-wave
+       Jastrow-Slater  wavefunctions  is  that  the  optimal                                                                                 Density-Jastrow
+       determinant  is  actually  the  ground  state  of  a  one                        -0.3
+                                                                                            1                             2                            3                             41                             2                             3                             4
+       body  hamiltonian H1−BODY   =  ∑khkOk1 −BODY ,                                                      |R|                                 |R|
+       a  particular  linear  combination  of  the  chosen  one
+       body operators used in the SR conditions.  This is                            FIG.  4.   Hole-hole  correlations   (upper  panels)  and  Jas-
+       in  agreement  with  the  Filippi-Fahy  ansatz10.   Oc-                     trow-Slater  parameters  (lower  panels)  for  the  optimal  varia-
+       casionally however, the optimal determinant turns                           tional singlet wavefunctions with pairing wavefunctionf  with
+       out to  be  an excited  state of  a  one body  hamilto-                     d-wave symmetry in a 26 site cluster t-J model
+       nian.
+   In Fig.(4) and Fig.(5) we show the full Jastrow-Slater
+optimization  for  the  t-J  model  in  the  largest  size  cases
+where  the  exact solution  is  known 4  holes  in  26  sites23.
+and  2  holes  in  32  sites24,  respectively,  We  display  the
+hole-hole  correlation  functions N(R)  =<  (1 −n0)(1 −
+nR) >  on  the  variational  wavefunction  with  and  with-
+out  the  Jastrow  factor.   We  see  that  the  improvement
+towards the exact solution is crucially dependent on the
+Jastrow  density-density  factor  especially  at  long  range
+distance.  This behavior seem to be analogous to the one
+dimensional  case  where  long  range  Jastrow-factors  are
+enough  to  determine  the  anomalous  long  range  behav-
+ior of correlation functions in one dimensional Luttinger
+liquids25,26.    The  remarkable  accuracy  of  the  Jastrow-
+Slater wavefunctions is clearly limited (see e.g.  Fig.1) to
+
+
+                                                                              10
+                                                                                     FIG. 6.     Energy  per  site  as  a  function  of  the  number  of
+                 0.4                                                             Lanczos steps p = 0 (higher energy-variance) p = 1 (medium
+                                                                                  energy-variance) andp = 2 (lowest energy with non zero vari-
+                 0.2                                                             ance) starting  from  the optimal  Jastrow-Slater  wavefunction
+                                                                                  for  4  holes  in  the  26  site  clusters  and  several J/t.   Only  for
+                 0.0                                                             J/t = 0 the broken symmetry solution (with the spin Jastrow
+                                           Density-Jastrow                      factor vz  ⁄=  0)  is  better  than  the  best  singlet  wavefunction
+                -0.2                      Spin-Jastrow                         (triangles).  The  arrows  indicate  the  exact  energies,  whereas
+               0.006                                                             the zero variance energies are the extrapolated results with a
+                            2 holes J/t=0.3                                      quadratic  ﬁt  (continuous  lines).   For J/t  =  0.5  we  show  the
+
+               0.004                        VMC                                 corresponding  variational p  =  0  energy  and  variance  for  the
+                                             VMC with Jastrow                    wavefunction without Jastrow term.
+               0.002                        Exact
+                                                                                     Whenever on a ﬁnite system a broken symmetry vari-
+               0.000                                                             ational  solution  has  much  lower  energy  than  the  fully
+                    1                  2                  3                  4symmetric  one,  the  Lanczos  method  is  less  eﬀective  to
+                                         |R|                                     extrapolate to the exact value.  This is shown for instance
+                                                                                  for the 26 sites atJ/t = 0 Fig.(6) or in the 32 site 2 hole
+  FIG.  5.      Same  as  in  Fig.4  for  the  32  site  cluster,  with           case Fig.(7).  In the latter case we show also the  energy
+a  broken  symmetry  Slater  determinant  wavefunction  with                      as a function of the variance for the fully symmetric solu-
+∆AF  = 0.2t ∆BCS  = 0.1t and t′/t = −0.15.                                        tion.  We see in this case, that the approach to the exact
+                                                                                  solution for a singlet wavefunction is rather diﬃcult but
+   The  next  step  is  to  perform  few  Lanczos  steps  over                    indeed possible.
+these  variational  wavefunctions  which  have  been  shown                          On a ﬁnite system there is always a small energy gain
+to  be  very  accurate  but  not  an  exact  representation  of                   to recover a state with deﬁnite spin.  It is very diﬃcult to
+the ground state many body wavefunction.  In the singlet                          obtain this  residual energy with few Lanczos step itera-
+case with no broken symmetry the  energy as a function                            tions, since in order to average over the various directions
+of the variance of the energy per site:                                           of  the  order  parameter  many  hamiltonian  power  itera-
+     <ψG|(H/L)2|ψG >                (<ψG|H/L|ψG>)2                                tions  are  required.  However this  residual energy should
+                                                                       (46)       vanish in the thermodynamic limit if the symmetry is in-
+           <ψG|ψG >        −              <ψG|ψG >                                deed spontaneously broken.  Therefore we conclude that
+is indeed smoothly related to the exact ground state en-                          the small discrepancy between exact results and extrap-
+ergy.  The reason is that for a good variational state the                        olated  ones  in  Figs.(6,7)  is  irrelevant  within  the  above
+variance  approaches  zero  as  the  energy  becomes  exact,                      assumption, which is conﬁrmed by simulations on much
+by increasing the number of Lanczos iterations.29                                 larger size, showing antiferromagnetic long range order at
+                                                                                  small doping7  and ferromagnetism for the J  = 0 case28.
+                                                                                  In any case the variance extrapolation with few Lanczos
+         -1.13                           -0.61                                  steps  provide always  a  much  more  accurate estimate  of
+                                                                                  the  exact  ground  state  energy  compared  to  the  lowest
+         -1.14   J/t=1                  -0.62   J/t=0.3                       variational estimate.
+
+         -1.15
+         -1.16                           -0.63
+
+         -1.17                           -0.64
+
+        -0.400                           -0.75
+                  J/t=0                          J/t=0.5    no Jastrow
+                                          -0.76
+        -0.425
+                                          -0.77
+        -0.450                                               with Jastrow
+                                          -0.78
+        -0.475
+            0.000    0.002    0.004    0.0060.000               0.002               0.004
+                                     Variance
+
+
+
+
+
+
+
+
+
+
+                                                                              11
+                                                                               the  FN  state.   We  do  not  know  exactly  how  much  this
+        -0.43                                                                 will  lower  the  energy  in  favor of  the  FN  technique,  but
+                                                                               we  expect  that  this  should  be  only  a  minor  correction,
+        -0.44                                                                 especially for large sizes.
+                                                                                  As  shown  in  the  table  the  variational  energy  can  be
+        -0.45                            2 holes J/t=0.3                     further  improved  by  using  the r >  0  technique,  which,
+                                                                               within the formalism of the present paper, can be thought
+        -0.46                                                                 as  a  self-consistent  improvement  of  the  amplitudes  and
+                                                                               the nodes of the few Lanczos step variational wavefunc-
+        -0.47                                                                 tion.    For r  =  1  the  original  SR  scheme  is  recovered,
+                               Best singlet VMC                               which  as  seen  in  Fig.(2),  maybe  not  the  optimal  choice
+        -0.48                 AF VMC with broken SU(2)                       from the variational point of view.1,2.  As far as the vari-
+                                                                               ational energy is  concerned the  self-consistent approach
+             0.000                  0.001                  0.002            (r> 0) is not very eﬀective (the improvement is between
+                                                                               20%  and  30%  on  small  size  systems)  for  small  system
+                                   Variance                                   sizes  but  appears  to  be  more  and  more  important  as
+                                                                               the  size  is  increased.   Also  correlation  functions  maybe
+  FIG. 7.     Energy  per  site  as  a  function  of  the  number  of          qualitatively improved (Fig.1) by  the  self-consistent ap-
+Lanczos  steps p  =  0  (higher  energy  with  non  zero  variance)            proach, especially when a many-particle bound state ap-
+p = 1 (medium energy with non zero variance) andp = 2 (low-                    pears (”stripes” or phase separation in this model) which
+est energy with non zero variance) starting from the optimal                   is not contained at the variational level.
+Jastrow-Slater  wavefunction  for  a  32-site  t-J  square  lattice.              An  important  advantage  of  the  standard  variational
+The arrows indicate the exact energies, whereas the zero vari-                 approach  (r  =  0)  is  that  the  error  in  the  ground  state
+ance  energies  are  the  extrapolated  results  with  a  quadratic            energy and correlation functions can be estimated using
+ﬁt  (continuous  lines).   The  broken  symmetry  solution  is  de-            that the variance of the energy per site (46) in an exact
+scribed  in  Fig.(5)  whereas  the  best  singlet  wavefunction  is            calculation  should  be  zero.    The  variance  can  be  esti-
+obtained by optimizing only the density-density Jastrow and                    mated  systematically  with  high  statistical  accuracy  for
+the d-wave parameters as in Eq.(34).                                           the ﬁrst p Lanczos steps acting on the initial variational
+                                                                               wavefunctionψG.  We show that the approach to the ex-
+                                                                               act result maybe smooth, even for large system size and
+            VI.  RESULTS  AND  DISCUSSION                                      number  of  electrons,  even  when ψG  is  not  particularly
+                                                                               close  to  the  exact  result.   Obvious  exceptions  exist  and
+   The variational approach is certainly limited and ”bi-                      are shown here in Fig.1 for correlation functions, whereas
+ased”  by  the  ”human”  choice  of  the  variational  wave-                   the energy seems always better behaved (see Fig.6).
+function, ”believed” to be the correct one for the physi-                         We   have   tested   this   simple   scheme   in   the   2D-
+cal problem considered.  In this paper we have described                       Heisenberg model where an exact solution of energies and
+a variational approach that improves systematically any                        correlation functions is easily available by using standard
+given variational wavefunction with a couple (and in prin-                     techniques.   The  2D-Heisenberg  model  has  oﬀ-diagonal
+ciple  more)  Lanczos  steps,  with  a  reasonable  computa-                   long-range order in the ground state, the order parame-
+tional  eﬀort.   This  approach  is  certainly  limited,  espe-                ter
+cially for large size, when few Lanczos iterations cannot                                                    ∑    ⃗SR ·⃗SR′(−1)R−R′
+remove  the  possible  large  bias  of  the  initial  variational                               m2 =   1L2
+guess.  However for 2D fermionic system on a lattice, in                                                    R,R′
+the  strong correlation regime, i.e.  close to  a  Mott  insu-                 being  ﬁnite  in  the  thermodynamic  limit L  →  ∞.   We
+lator  state,  it  is  very  diﬃcult  to  improve  the  best  vari-            start  with  the  variational  wavefunction  in  Eq.(34)  ob-
+ational wavefunction obtained with the Lanczos scheme                          tained  by  projecting  out  the  doubly  occupied  states
+(see  table).   This  result  is  particularly  meaningful  if  we             to   a   wavefunction   with   d-wave   n.n.      BCS   pairing
+consider that in principle the FN technique is size consis-                    correlations30,  but  without  any  explicit  antiferromag-
+tent  (lowers  the  energy  per  site  of  the  variational guess              netic order parameter.
+even in the thermodynamic limit) and the LS technique                             This wavefunction represents an accurate wavefunction
+with  ﬁxed  number  of  iterations p  is  not.    Thus,  close                 for  the  quantum  antiferromagnet  as  far  as  the  energy
+to  a  Mott  insulator,  it  is  very  important  to  change  the              is  concerned,  but  certainly  has  not  the  right  behavior
+nodes  of  the  wavefunction  -that  the  Lanczos  technique                   at  large  distance,  and  maybe  considered an  RVB  disor-
+allows-  rather  than  improving  only  the  amplitudes-  as                   dered variational wavefunction17 After applying only two
+in  the  FN  technique.   It  is  worth  mentioning,  however,                 Lanczos iterations the 18 site size is almost exactly repro-
+that the  FN energy reported in the table is only an up-                       duced by this simple wavefunction, showing that at short
+per bound of the expectation value of the hamiltonian on                       distance the quantum antiferromagnetic wavefunction is
+
+
+                                                                           12
+almost  indistinguishable  from  an  RVB  one.31  As  we  in-                         FIG.  9.   Order  parameter m   =   √S(π,π)/L  in  the  ﬁ-
+crease  the  size,  the  variational  energy  calculation  (see                    nite-size  Heisenberg  model  (S(π,π)  being  the  spin  isotropic
+Fig.8)  looses  clearly  accuracy,  since  the  gap  to  the  ﬁrst                 antiferromagnetic  structure factor).  Comparison  of exact re-
+excited  state  scales  to  zero  and  the  Lanczos  algorithm                     sults  (indicated  by  arrows)  and  the  approximate p  =  0, 1, 2
+becomes  correspondingly  less  eﬀective.   This  loss  of  ac-                    Lanczos  step  iterations  over  the projected  d-wave wavefunc-
+curacy is however not dramatic (asymptotically it scales                           tion.   Continuous  lines  are  quadratic  ﬁt  of  the  data.   Inset:
+as       1√                                                                        ﬁnite-size  scaling  with  the  variational  (BCS  d-wave)  wave-
+       L ), as shown by the similar quantitative agreement                         function and with the variance extrapolated one.
+with the exact result obtained both with the 50 and the
+98 site lattice (Fig.8).                                                              As anticipated the estimate of the variational error, by
+                                                                                   using  that  the  variance  has  to  approach  zero  in  an  ex-
+
+              -1.14                                                               act calculation, is really eﬀective in this case, and shows
+                                                                                   that , even for large size it is possible to reach very good
+
+              -1.15                                                               quantitative  estimates  of  energies  and  correlation  func-
+                                                                                   tions (see29), even when the starting wavefunction is not
+              -1.16
+                                                     L=18                         particularly  close  to  the  exact  one.   In  the  Lanczos  al-
+
+              -1.17                                                               gorithm the variance becomes zero only when the lowest
+                                                     L=50                         energy state non orthogonal to the initial wavefunction is
+
+              -1.18                                 L=98                         reached.  However we expect that the variance may reach
+                                                                                   very small values close to a ”quasi eigenstate”, implying
+              -1.19
+                                                                                   the failure of the variance variational error estimate.  In
+                0.000                             0.001                             0.002fact,  in  this  case  the  energy optimization  Lanczos  tech-
+                                    Variance                                      nique is trapped in a local minimum, with no possibility
+                                                                                   of  tunneling  to  the  true  global  minimum  energy.   (see
+  FIG. 8.  Energy per site of the ﬁnite-size Heisenberg model.                     ﬁg.10).
+Comparison  of  exact  results  (indicated  by  arrows)  and  the
+approximate p = 0, 1, 2 Lanczos step iterations  over the pro-
+jected  d-wave  wavefunction.   Continuous  lines  are  quadratic                                 -0.66
+ﬁt of the data.                                                                                   -0.67   L=50  8 holes J/t=0.4
+
+   Also remarkable is the correct trend of long range cor-                                        -0.68
+relation functions as we increase the number of Lanczos                                           -0.69
+iterations.   As  shown  in  the  inset  of  Fig.(9)  the  linear                                 -0.70
+extrapolation with the variance, which is valid for corre-                                        -0.71
+lation  functions  averaged  over  the  system  volume  (  see                                    -0.72             Projected Fermi gas
+App.D), is capable to detect almost the right long range                                          -0.73             Projected d-wave BCS
+magnetic order in the Heisenberg model.  This is remark-                                          -0.74
+able  if  we  consider  that  the  starting  wavefunction ψG                                         0.000         0.001         0.002         0.003
+is  disordered,  as  also  shown  in  the  same  inset.   We  re-                                                       Variance
+mark  also  that  in  this  particular  case  the  original  SR
+algorithm1,2 forr = 1 and Λ → ∞ is exact since the nodes                              FIG. 10.  Energy per site vs.  variance for two diﬀerent ini-
+of the variational wavefunction are the correct ones.                              tial  wavefunctions  (highest  energy  dots)  after  applying  one
+                                                                                   (medium energy points) and two Lanczos steps (lowest  ener-
+                                                                                   gies points) Lines are quadratic ﬁt to the data.
+                0.50
+                                  0.60                                               Clearly this is a well known problem in numerical opti-
+                0.45                                                              mization and the only possibility, when the exact solution
+                                  0.45
+                0.40             0.30    Exact                                  is  not known, is  to  check the  various candidates for  the
+                                  0.15 BCS-dw                                    ground state, and determine the one with the lowest en-
+                0.35             0.000.0         0.2         0.4              ergy.   From  another  point  of  view,  this  property  of  the
+                                             1/L1/2       L=18                  Lanczos  algorithm  maybe  useful  to  estimate  physically
+                0.30                                       L=50                  observable  quantities,  such  as  the  condensation  energy
+                                                            L=98
+                0.25                                                              for a metal to became superconductor, which is just the
+                  0.000          0.002          0.004          0.006           macroscopic diﬀerence in energy between two thermody-
+                                       Variance                                   namically  stable  states.   From  Fig.(10)  an  estimate  of
+                                                                                   this condensation energy is 0.02t ∼ 100K, in reasonable
+                                                                                   agreement with experiments on HTc cuprates32, suggest-
+                                                                                   ing  that  the  main  features  of  d-wave  superconductivity
+
+
+                                                                               13
+can be understood with this simple model.                                        variational  energy  on  the  reference  wavefunction:
+  At the moment, the approach we have presented here                             < ψG|H|ψG >  simply  because ψG  belongs  to  this
+has to be limited to very few Lanczos iterations for large                       subspace.
+size  with  the  given  computer  resources.  Nevertheless  it                 •  Since ψG  belongs  to  the  subspace  projected  by
+is  certainly  systematic  and  unbiased  as  far  as  the  ap-                  PSR, < ψG|HPSR   =< ψG|PSRH.     Therefore
+proach to the ground state is concerned:  the corrections                        the mixed average estimate-statistically much more
+to the initial guiding function depend only on the hamil-                        convenient-
+tonianH and no other biased approximation.  Compared
+to the standard FN technique, it allows a systematic im-
+provement  of  the  starting  variational  wavefunction ψG,                      EMA = <ψG|H|ψSR ><ψG|ψSR>    = <ψG|PSRHPSR|ψSR><ψG|PSR|ψSR >
+by correcting not only its amplitudes but also the nodes.                                =ESR
+  The extension of this technique to continuous models is
+straightforward.  For the reference dynamic (given byGf
+in Eq.21) one can use the Langevin dynamic, as it is done                        ,  coincides  with  the  variational bound ESR  of  the
+in33, so that it is possible to determine the lowest energy                      ground state energy.  as ψSR  is an exact eigenstate
+state obtained by applying toψG few Lanczos steps with                           of PSRHPSR  with eigenvalueESR.
+(r >  0)  or  without  self-consistency(r  =  0)  or  by  using
+a many parameter variational wavefunction, with a  non
+linear optimization as described in Sec.(V).                                       APPENDIX  B:  FORWARD  WALKING
+
+                                                                             In order to compute correlation functions over ψSR  it
+                 ACKNOWLEDGMENTS                                          is necessary to use a slight generalization of the forward
+                                                                          walking technique, generalized to non-symmetric matrix
+  I am deeply in debt with V. Leuveen who convinced me                    such as (28).  Moreover since in the meaningful SR limit
+in CECAM-Toulose about the importance to have a rig-                      of  large  number  of  walkers  or  bin  length Lb  →  ∞  the
+orous variational method for the ground state of strongly                 parameters αk  can be assumed constants in rx  (3), it is
+correlated systems.  I am also particularly grateful to D.                much more convenient to implement the forward walking
+Poilblanc and  P. W.  Leung  who  kindly  sent me  unpub-                 technique  without  allowing  any  ﬂuctuations  of  the  ran-
+lished data on the 26 and 32 site t-J model, respectively.                dom variablesαk.  This can be done easily by ﬁrst evalu-
+Special thanks to F. Becca, L. Capriotti, M. Capone , A.                  ating the expectation value ratios  ¯αk =<αk >/<α0 >
+Parola and G. Santoro for many useful comments about                      k = 1,...p with the standard SR algorithm , i.e.  allow-
+this paper.  This work was partially supported by INFM                    ing theαk ﬂuctuations for each Markov iterationn.  The
+and MURST (COFIN99).                                                      second step is to perform a diﬀerent simulation, usually
+                                                                          much more eﬃcient as far as the error bars are concerned,
+                                                                          with rx  determined by non random constants  ¯αk:
+        APPENDIX  A:  PROPERTIES  OF  THE                                                                   p∑
+               OPERATOR PSR (ΛI −H)PSR                                                         rx = 1 +        ¯αkOkx                             (B1)
+
+                                                                                                          k=1
+  In  this  appendix  we  focus  on  some  properties  of  the
+matrix PSR (ΛI −H)PSR:  deﬁned in Eq.(20).                                If  the  ¯αk  are  determined  accurately for M,Lb  large  the
+    •  the  maximum  eigenvalue  Λ −ESR  of  the  Hermi-                  SR conditions (2) will be automatically veriﬁed within er-
+       tian matrix PSR (ΛI −H)PSR  is certainly smaller                   ror bars.  The statistical or systematic error related to the
+       than  the  corresponding  one  Λ  − E0   of  the  ex-              determination of the constants ¯αk is also not much impor-
+       act  Green  function  ΛI  − H.    In  fact  be ψSR  =              tant.  In fact even assuming that with the ﬁrst simulation
+       PSRψSR  the  normalized  eigenstate  of PSR (ΛI  −                 the  constants  ¯αk  are  determined  with  a  non-negligible
+                                                                          statistical error and an unavoidable systematic bias due
+       H)PSR  with  eigenvalue ESR,  then P †SR   = PSR                   to the ﬁnite number of walkers, the method that we will
+       implies  that ESR  =< ψSR|PSRHPSR|ψSR >=<                          describe in the following will provide also in such a case
+       ψSR|H|ψSR >≥ E0,  as ψSR  can  be  considered  a                   a variational estimate of the energy with the chosen con-
+       variational state  of  the  exact  hamiltonian H  with             stants  ¯αk.  The analogy of this method with the Lanczos
+       energyESR.                                                         method  is  evident  also  in  this  case.   Even  in  the  latter
+    •  Since ψSR  is obtained by applying                                 technique, a ﬁrst run is usually implemented to determine
+       [PSR (ΛI −H)PSR]n   to  a  given  trial  wavefunc-                 the coeﬃcients of the ground state  ¯αk in the Krilov basis
+       tion.   For n  →  ∞  such  propagated  wavefunction                spanned by the initial wavefunctionψG and the powers of
+       will  converge  therefore  to  the  lowest  energy  state          the hamiltonian applied to itψ0 =ψG+  ∑
+                                                                                                                           k=1,pαkHk|ψG >
+       in  the  subspace  projected  by PSR.    This  implies             (with some more technical ingredient to work with an or-
+       clearly thatESR is lower or at most equal than the                 thonormal basis).  Then correlation functions overψ0 are
+
+
+                                                                      14
+computed  by  recovering  the  ground  state  wavefunction                     The  statistical  algorithm  used  to  evaluate  the  ratio  in
+in this basis using the determined coeﬃcients  ¯αk.                            Eq.(B8)  is  very  similar  to  the  standard  ”forward  walk-
+  Let  us  now  focus  on  the  implementation  of  the  for-                  ing”  technique7  for  diagonal  operators.   The  few  diﬀer-
+ward  walking  technique  within  the  SR  scheme  at  ﬁxed                    ences are:
+constants  ¯αk.  Since  ¯Gf  in  Eq.(28)  is  not  symmetric  its                  •  also  the  denominator  in  Eq.(B8)  has  to  be  ”for-
+left eigenvector<ψL| ∝   limn→∞<ψG|( ¯Gf )n does not nec-                             ward”  propagated  for n  iterations,  since  in  this
+essarily coincide with the corresponding right eigenvector                            case the diagonal elements of  ¯I are not trivially one
+ψR.  Fortunately the matrix  ¯Gf  can be easily written in                            (since Lx ⁄=R−1x   ).  The error bars have to be then
+terms of a symmetric matrix G0                                                        calculated taking into account that the numerator
+                     ¯Gf                                                              and the denominator are very much correlated.
+                      x′,x =αx′G0x′,x/αx                            (B2)
+with                                                                               •  oﬀ  diagonal  operators  can  be  computed  without
+                                                                                      performing  another  simulation,  provided  the  ma-
+                                                                                      trix  elements  of  the  operator O  are  contained  in
+           αx =  |ψG(x)||rx|r/2√zx                                                 (B3)the non vanishing ones of the Green functionG (or
+                                                                                      some power ofG if the operator is evaluated statis-
+        G0x′,x =  |rx|r/2|rx′|r/2√                                                    tically).  In particular the expectation value of the
+                          zxzx′      |Λδx′,x −Hx′,x|              (B4)                hamiltonian and the even more accurate ones (24)
+                                                                                      can  be  computed  altogether  with  a  single  Markov
+Therefore  the  right  and  the  left  eigenvectors  of   ¯Gf  are                    chain.
+easily written in terms of the maximum eigenstate φ0  of                           •  similarly the accuracy of diagonal and oﬀ diagonal
+the symmetric matrix G0, namelyψR(x) =αxφ0(x) and                                     operators can be further improved by computing
+ψL(x)  = φ0(x)/α(x).   Then  using  the  deﬁnition  of  the
+SR  state (29)  it  follows that  also  the  left  eigenvector of¯Gf  can be written in terms of ψSR:    <ψSR|GkOGk|ψSR>
+                                                                                                          <ψSR|G2k|ψSR >.
+             ψSR(x) =LxψL(x)                                       (B5)               In  fact  an  important  advantage  of  the  SR  tech-
+           with Lx =ψG(x)rx/zx                                  (B6)                  nique  is  that  the  reference  Green  function Gf
+                                                                                                                                                    x′,x
+            and Rx = |rx|1−r/ψG(x) Sgnrx                  (B7)                        is  non  zero  for  all  non-zero  elements  of  the  exact
+  After  applying  several  times  the  Green  function   ¯Gf                         Green  function G,  (whereas  in  the  FN  technique
+the walkers wf,x determine the state ψR(x).  Then it is                               the  matrix  elements  with  negative  sign  are  sup-
+possible  to  evaluate  expectation  values  of  any  operator                        pressed).   Thus  the  exact  sampling  of  the  Green
+O with given matrix elements Ox′,x  by applying the fol-                              functionG can be done with the standard reweight-
+lowing  relation,  which  correspond to  propagate n  times                           ing method, requiring only the ﬁnite multiplicative
+forwardψR(x):                                                                         factors sx′,x  = Gx′,x/Gfx′,x,  calculated for  each it-
+                                  ∑                                                   eration n  and  each  walker  of  the  Markov  chain.
+ <ψSR|O|ψSR >                                                                         The  same  technique  can  be  obviously  generalized
+                                  ∑x′,′,x′,x( ¯Gf )nx′′,x′ ¯Ox′,xψR(x)                when the reference Green function Gf  is the ﬁxed
+ <ψSR|I|ψSR >  =  limn→∞             x′,′,x′,x( ¯Gf )nx′′,x′ ¯Ix′,xψR(x)              node  one-slightly generalized to  have  the  possibil-
+                                                                   (B8)               ity  to  cross  the  nodes2-,  simply  replacing Gf  and
+                                                                                      zx = 1 in the above expressions.  However the sta-
+where the matrix elements ofO and the identityI are re-                               tistical accuracy for  the  determination of the  con-
+placed by the ones of the left-right transformed matrices                             stants {αk} is vary bad with the FN reference Gf ,
+¯O and  ¯I  respectively.  The explicit matrix elements of  ¯O                        about an order of magnitude less eﬃcient than the
+and  ¯I  in the RHS of the above equation are given by:                               Eq.(21) one,  without a signiﬁcant improvement in
+                    ¯Ox′,x =Lx′Ox′,xRx                              (B9)              variational  energies.   The  reason  of  such  bad  be-
+                                                                                      havior (or the successful one for 21) is not clear at
+                     ¯Ix′,x =LxRxδx′,x                              (B10)             present.
+
+This   means   that   in   the   standard   forward   walking
+technique7,   instead  of  using  the  importance  sampled                      APPENDIX  C:  EFFICIENT  CALCULATION  OF
+matrix  elements  obtained  with Lx   = ψG(x)  =  1/Rx                         THE  SINGLE  LANCZOS  STEP  WAVEFUNCTION
+in  Eq.(B9),  the  slightly  more  involved  ones  (B9,B10)
+have  to  be  considered.   In  fact  by  simple  substitutions                   In  this  Appendix  we  describe  an  eﬃcient  way  to  ﬁnd
+of  these  matrix  elements  into  Eq.(B8),  using  also  that                 the optimal LS wavefunction |ψα⟩ = (1+αH)|ψ⟩, starting
+∑′,′                                                                           from a chosen variational guess |ψ⟩, i.e., to calculate the
+   x ( ¯Gf )nx′,′,x′  ∝ ψL(x′)  = ψSR(x′)/Lx′  (B5)  and  that
+ψR(x)   = ψSR(x)/Rx  (29),  Eq.(B8)  is  easily  veriﬁed.                      value of α for which the energy
+
+                                                                          15
+        E(α) =  ⟨ψG|(1 +αH)H(1 +αH)|ψG⟩                                     where the above sign ± is such to minimize E(α∗).
+                         ⟨ψG|(1 +αH)2|ψG⟩                     (C1)            The analytic minimization ofE(α) (C3), given the val-
+has a minimum.  A standard method is to calculate sta-                      ues of χ, h1  and E(α) itself, provides the exact value of
+tistically the various powers of the hamiltonian                            α∗ in Eq.  (C4) within the statistical uncertainties.  They
+                                                                            become smaller and smaller wheneverα ∼α∗.  Typically
+                    hn =  ⟨ψG|Hn|ψG⟩                                        two  or  at  most  three  attempts  are  enough  to  reach  an
+                              ⟨ψG|ψG⟩  ,                            (C2)    accurate determination of α∗  when the condition:
+
+using  conﬁgurations x  generated  by  the  Metropolis  al-                                      χ =            1
+gorithm  according  to  the  weight ψG(x)2.   This  method                                             1 +α∗E(α∗)                              (C5)
+is   however   ineﬃcient   since   much   better   importance               is exactly fulﬁlled.  This condition is true in general only
+sampling  is  obtained  when  conﬁgurations  are  instead                   for the eigenstates of the Hamiltonian, but remains valid
+generated  according  to  the  optimal  Lanczos  wavefunc-                  for the single Lanczos step wavefunction.
+tion ψα∗(x)   =   (1 +α∗eψG(x))ψG(x),   where eψ(x)   =
+⟨ψ|H|x⟩
+ ⟨ψ|x⟩   34  is  the  local  energy  corresponding  to  a  generic
+guiding wavefunctionψ, andα∗ minimizes the above ex-                         APPENDIX  D:  VARIANCE  ESTIMATE OF  THE
+pectation value (C1) for α =α∗.  This wavefunctionψα∗                               ERROR  ON  ”BULK“  CORRELATION
+maybe  much better  leading to  much lower variances es-                                              FUNCTIONS
+pecially for the higher momenta h2  and h3.
+  In  this  Appendix  we  describe  an eﬃcient  way  to  ﬁnd                  In this  appendix  we  estimate  the  error on correlation
+the optimal LS wavefunction |ψα∗⟩, starting from a cho-                     functions  assuming  that  the  ground  state  |ψ0 >  is  ap-
+sen variational guess |ψα⟩ with energy:                                     proximated with the wavefunction ψp > distant ǫp  from
+               E(α) = h1 + 2αh2 +α2h3                                       |ψ0> Namely.  with no loss of generality we write:
+                           1 + 2αh1 +α2h2                        (C3)                        |ψ0 >= |ψp > +ǫp|ψ′>                         (D1)
+easily written in terms of the energy momenta hn.                           with < ψp|ψp >=< ψ′|ψ′ >=   1, ψ′,  representing  a
+  In order to minimize (C3), given an arbitrary value of
+α, it is convenient ﬁrst to compute the energy expectation                  normalized  wavefunction  orthogonal  to  the  exact  one
+value h1  with the standard statistical method and then,                    < ψ0|ψ′ >=  0.    We  restrict  our  analysis  to  thermo-
+in place of the remaining hamiltonian higher momentah2                      dynamically  averaged  correlation  functions O,  the  ones
+andh3, generate statistically conﬁgurations according to                    which  can  be  written  as  a  bulk  average  of  local  opera-∑
+ψα(x)2  and compute:                                                        tors OR: O =   1L      ROR.  This class of operators include
+                                                                            for  instance  the  average  kinetic  or  potential  energy  or
+                E(α) =  ⟨ψα|H|ψα⟩                                           the spin-spin correlation function at a given distance τ¿
+                             ⟨ψα|ψα⟩                                        OR =SR ·SR+τ .  If we use periodic boundary conditions
+                     χ =  ⟨ψα|(1 +αH)−1|ψα⟩                                 the  expectation  value  of OR  on  a  state  with  given  mo-
+                                   ⟨ψα|ψα⟩     ,                            mentum does not even depend onR and the bulk average
+                                                                            does not represents an approximation
+E(α)  is  obtained  by  averaging  over  the  chosen  conﬁg-                         <ψ0|OR|ψ0>
+urations  the  local  energy  corresponding  to ψα,  namely
+< eψα >  whereas χ  is  obtained  by  averaging  over  the                              <ψ0|ψ0 >     = <ψ0|O|ψ0 ><ψ0|ψ0>    =C.             (D2)
+same conﬁgurations< (1 +αeψG(x))−1 >.  Given χ it is                          We  show  here  that  the  expectation  value  of  bulk  av-
+straightforward to compute                                                  eraged operators O  on the  approximate state ψp  satisfy
+              h2 = [(χ−1 − 2)(1 +αh1) + 1]/α2                               the following relation:
+,    and    therefore   given h1    and h2,    the    value   of                       <ψp|O|ψp >=C +O(ǫ2p,ǫp/√L)                (D3)
+E(α)  implicitly  deﬁnes  the  highest  momentum h3   =
+E(α)(1+2αh1+α2h2)−h1−2αh2                                                   thus implying that for large enough size the expectation
+               α2                      .   Notice  that  the  most  diﬃ-
+cult  energy  momentum h3  is  given  by  sampling  an  en-                 value  (D3)  approaches the  exact  correlation function C
+ergy expectation value, which is by far statistically more                  linearly with the variance.  This allows to obtain a good
+accurate compared to the direct determination ofh3.                         accuracy with a good variational calculation, that is not
+  It is then possible to minimize analyticallyE(α), yield-                  easy to obtain if a term ∼ǫp dominates.
+ing:                                                                          The  validity  of the  above statement is  very simple to
+                              (h3 −h1h2)2 − 4(h2 −h21)(h1h3 −h22)show under very general grounds.  In fact by deﬁnition:
+α∗ =  −(h3 −h1h2) ± √             2(h1h3 −h22)                               <ψp|O|ψp >=C + 2ǫp<ψ′|O|ψ0 > +ǫ2p<ψ′|O|ψ′ >
+
+                                                                 (C4)                                                                       (D4)
+
+                                                                       16
+The term proportional toǫ in the above equation can be                            21 This  is  strictly  valid  provided G  is  a  positive  deﬁnite  op-
+easily bounded by use of the Schwartz inequality:                                    erator,  which  generally  holds  for  large  enough  Λ.  In  fact
+                                                                                     by  the  Schwartz  inequality:  it  is  simple  to  show  that  the
+|<ψ′|O|ψ0 > |2 = |<ψ′|O −C|ψ0 > |2 ≤<ψ0|(O −C)2|ψ0>expectation value of the energy on PSRψn+1  is lower or at
+                                                                      (D5)           most equal than the one overPSRψn.
+                                                                                  22 S.  Kirkpatrick,  C.D.  Gelatt,Jr.  and  M.  P.  Vecchi,  Science
+The ﬁnal term in the latter inequality can be estimated                              220, 671 (1983).
+                                                                                  23 D. Poilblanc Phys. Rev. B 52, 9201 (1995).
+under the general assumption that correlation functions                           24 A.L.  Chernyshev,  P.  W.  Leung  and  R.  J.  Gooding  Phys.
+C(τ) =< (OR −C)(OR+τ  −C)> decay suﬃciently fast                                     Rev. B 58,13594 (1998).
+with  distance  |τ|,  as  a  consequence  of  the  cluster  prop-                 25 C.S. Hellberg and E.J. Mele Phys. Rev. Lett. , 2080 (1991);
+erty:                                                                                R. Valenti and C. Gros Phys. Rev. Lett. 68,2402 (1992).
+                                                      ∑                           26 F.  Franjic  and  S.  Sorella,  Mod.  Phys.  Lett.  B  10,  873
+         <ψ0|(O −C)2|ψ0>= (1 +ǫ2) 1L                       C(τ).                     (1996).
+                                                        τ                         27 A. Himeda and M. Ogata, preprint, cond-mat/0003278.
+                                                                                  28 F. Becca and S. Sorella in preparation.
+This  concludes  the  proof  of  the  statement  of  this  ap-                    29 F. Becca, L. Capriotti and S. Sorella to be published in the
+pendix, provided ∑τC(τ) is ﬁnite for L → ∞.                                          prooceedings of Bled 2000 conference, cond-mat/006353.
+
+                                                                                  30 C. Gros, Phys. Rev. B 38, 931 (1988).
+                                                                                  31 S. Liang, B. Doucot and P. W. Anderson Phys. Rev. Lett.
+                                                                                     61, 365 (1988).
+                                                                                  32 see  e.g.  M.  R.  Norman,  M.  Randeira,  B.  Janko,  J.  C.
+                                                                                     Campuzano  Phys.  Rev. B  61,14742  (2000)  and  references
+ 1 S. Sorella, Phys. Rev. Lett. 80, 4558 (1998).                                     therein.
+                                                                                  33 S. Baroni and S. Moroni Phys. Rev. Lett. 82, 4745 (1999).
+ 2 S. Sorella and L. Capriotti, Phys. Rev. B 61, 2599 (2000).                     34 If  there  exist  conﬁgurations x  such  that ψG(x)  =  0  and
+ 3 L.  Capriotti,  A.  E.  Trumper  and  S.  Sorella,  Phys.  Rev.
+   Lett. 82, 3899 ( 1999).                                                           ψ′G(x)  ⁄=  0,  it  is  computationally  convenient  to  regular-
+ 4 L.  Capriotti  and  S.  Sorella  Phys.  Rev.  Lett.  84,   3173                   ize  the  given  guiding  function  by  adding  to  it  a  random
+   (2000).                                                                           noise which  maybe arbitrary  small  within  computer accu-
+ 5 M. Calandra, F. Becca and S. Sorella, Phys. Rev. Lett. 81,                        racy, thus preventing the above pathology with probability
+   5185 (1998).                                                                      one.  By  reducing  this  noise  to  zero  the  ”clean”  limit  can
+ 6 M. Calandra and S. Sorella Phys. Rev. B 61, 11894 (2000).                         be easily  achieved without too much eﬀort or complicated
+ 7 M. Calandra and S. Sorella, Phys. Rev. B 57, 11446 (1998).                        changes in the algorithm.12
+
+ 8 D.  F.  B.  ten  Haaf,  H.  J.  M.  van  Bemmel,  D.  F.  B.  ten
+   Haaf,  J.  M.J.  van  Leeuwen,  W.  van  Saarloos,  and  D.  M.
+   Ceperley, Phys. Rev. B 51, 13039 (1995).
+ 9 H. J. M. van Bemmel, W. van Saarlos, J. M.J. van Leeuwen,
+   and G. An, Phys. Rev. Lett. 72, 2442 (1994).
+10 C. Filippi and S. Fahy J. Chem Phys. 112, 3523 (2000).
+11 see  e.g.  N.  Trivedi  and  D.M.  Ceperley  Phys.  Rev.  B  41,
+   4552 (1990).
+12 C.S. Hellberg and E. Manousakis, Phys. Rev. B 61, 11787
+   (2000).
+13 E. S. Heeb and T. M. Rice, Europhys. Lett. 27, 673 (1994).
+14 see  e.g.  J.K.  Cullum  and  R.A.  Willoughby  Lanczos  al-
+   gorithm   for   large   symmetric   eigenvalue   computations,
+   Birkhauser (1985).
+15 C.  T.  Shih,  Y.  L.  Chen  and  T.  K.  Lee,  Phys.  Rev.  B  57,
+   627 (1998).
+16 C. J. Umrigar, K. G. Wilson and J. W. Wilkins Phys. Rev.
+   Lett. 60, 1719 (1988).
+17 G.  Baskaran,   Z.  Zou,  and  P.W.  Anderson,  Solid  State
+   Comm. 63, 973 (1987).
+18 F.C. Zhang and T.M. Rice, Phys. Rev. B 37, 3759 (1988).
+19 In this paper we adopt a more general deﬁnition for a Slater
+   determinant,  as  any  state  which  is  an  eigenstate  of  a  one
+   body hamiltonian, not necessarily commuting with the par-
+   ticle number.
+20 H.  Yokoyama  and  H.  Shiba,  J.  Phys.  Soc.  Jpn.  57,  2482
+   (1988).
+
+                                                                              17
+N L  J/t      VMC      VMC+LS   VMC+FN  VMC+2 LS  VMC+LS +FN   Best SR   Best r      Exact
+22  26  0.3  -0.6138(1)  -0.6332(1)   -0.6277(1)     -0.6381(1)         -0.6371(1)       -0.6387(1)   0.375    -0.64262
+22  26  0.5  -0.7647(1)  -0.7812(1)   -0.7759(1)     -0.7852(1)         -0.7841(1)       -0.7855(1)    0.25     -0.78812
+22  26  1.0  -1.1476(1)  -1.1672(1)   -1.1608(1)     -1.1719(1)         -1.1706(1)       -1.1724(1)    0.25     -1.17493
+30  32  0.3  -0.4543(1)  -0.4628(1)   -0.4611(1)   -0.46522(3)       -0.46524(3)      -0.4661(1)   0.375   -0.470175
+84  98  0.4  -0.6653(1)  -0.6807(1)   -0.6777(1)     -0.6865(1)        -0.68530(5)      -0.6879(2)     0.1      -0.692(1)
+50  98  0.4  -0.9656(1)  -0.9832(1)  -0.98225(5)    -0.9886(1)        -0.98781(6)      -0.9901(2)     0.1     -0.9920(5)
+
+   TABLE I.  Energy per site in the t-J model for various vari-
+ational  methods.   VMC  is  the  standard  variational  method,
+VMC+LS  is   obtained  by  applying  to  it  a  Lanczos   step,
+VMC+FN  is  the  lattice  ﬁxed  node  approach9,8,   VMC+2
+LS  indicate  the  two  Lanczos  step  variational  wavefunction,
+VMC+LS+FN,  is  the  ﬁxed  node  over  the  VMC+LS  wave-
+function, and the ”Best r” is<psiSR|H|ψSR >, computed by
+”forward walking” as described in App.(B), by optimizing the
+parameterr.  The exact energy values for the largest size was
+estimated  by the variance extrapolation.  On the 98 sites,the
+FNLS computation takes 10 hour CPU time on a Pentium-II
+400MHz,  whereas  the  VMC+2LS  wavefunction  takes  about
+40  hours  with M  = 500  walkers  for  a  statistical  accuracy  of
+10−4t  on  the  energy  per  site,  the  ”best  SR”  another  factor
+8  more  due to  the  forward  walking.  The  computation  of  di-
+agonal  correlation  functions  instead  takes  a  similar  amount
+of time for all the methods, thus it is safer to compute them
+with  the best variational  method.Error  bars are indicated in
+brackets.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                  18

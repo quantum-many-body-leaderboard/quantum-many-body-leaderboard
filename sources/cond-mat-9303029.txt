@@ -1,0 +1,1009 @@
+                                                                                                 LPQTH-93/01
+
+
+                  Binding of holes and  pair  spectral function
+                                               in the t-J model
+
+
+
+
+                                                   Didier POILBLANC∗
+
+
+
+                                           Laboratoire  de Physique Quantique,
+
+                                                  Universit´e Paul Sabatier,
+
+                                                 31062  Toulouse, France∗∗
+
+
+                                               (Received                                 )
+
+
+
+
+                  Clusters  of  the two-dimensionnal  t–J  model with 2  holes  and up to 26  sites  are
+
+             diagonalized  using a Lanczos  algorithm.  The behaviour of  the binding energy  with
+
+             system size suggests the existence of a ﬁnite critical value of J above which binding
+
+             occurs in the bulk.  Only the d-wave pair ﬁeld operator acting on the Heisenberg GS
+
+             has a ﬁnite overlap with the 2 hole ground state for all the clusters considered.  The
+
+             related  spectral function  associated  with the propagation  of  a d-wave  (singlet)  pair
+
+             of  holes  in  the  antiferromagnetic  background  is  calculated.   The  quasiparticle  peak
+
+             at the bottom of  the spectrum as well  as some structure appearing above  the peak
+
+             survive with increasing cluster size.  Although no simple scaling law was found for the
+
+             quasiparticle  weight  the  data  strongly  suggest  that  this  weight  is  ﬁnite in  the  bulk
+
+             limit and is roughly proportional to the antiferromagnetic coupling J (for J  < 1).
+
+
+
+             PACS numbers:  75.10.Jm, 74.65.+n, 75.40.Mg, 74.20.-z
+
+
+
+
+Typeset Using REVTEX
+
+                                                                1
+                                            I. INTRODUCTION
+
+
+    The  possibility  that  high-temperature  superconductivity  in  the  quasi-two  dimensional
+
+cuprates would be a new phenomenon based on purely electronic interactions [1] has moti-
+
+vated a huge theoretical eﬀort to better understand the physics of two dimensional strongly
+
+correlated electrons.  The Hubbard model and its large coupling version  the t–J model are
+
+one  of  the  simplest  theoretical  models  used  to  describe  the  low-energy  excitations  of  the
+
+copper oxide planes.  Although it is diﬃcult to develop a satisfactory perturbative analysis
+
+in the case of strongly repulsive interactions, numerical methods can often provide useful in-
+
+formations on both static and dynamical properties of these systems.  Exact diagonalization
+
+(ED) studies do not suﬀer from random noise problems like stochastic Monte Carlo methods
+
+in particular in the vicinity of the antiferromagnetic Mott insulator phase.  ED are therefore
+
+well adapted to the calculations of dynamical correlation functions at small doping density.
+
+However, so far ED have been restricted to fairly small clusters (typically 4 × 4).  Recently,
+an attempt was made to handle larger sizes (up to 26 sites) in order to perform a ﬁnite size
+
+analysis  of  the  data  [2–4]  in  the  close  vicinity  of  the  insulator  magnetic  phase.   Although
+
+this analysis was restricted to the special limit of a single hole in the antiferromagnet (AF)
+
+it gives some hints about the hole propagation at small but ﬁnite doping fraction [2,3] in the
+
+region where the antiferromagnetic correlation length is still larger than the spatial extention
+
+of  the  hole  wavefunction.   This  work  strongly  suggested  that  the  quasiparticle  (QP)  peak
+
+seen at the bottom of the spectral function survive in the thermodynamic limit [3].  However
+
+this  analysis  neglects  the  role  of  a  possible  hole-hole  eﬀective  attraction  that  might  occur
+
+for  more  than  a  single  hole  in  the  AF.  The  purpose  of  the  present  work  is  then  to  study
+
+the  case  of  2 holes  ie  the  simplest  case  that  nevertheless  include  the  eﬀect  of  the  eﬀective
+attraction between the holes.  The issue of binding is of great importance in the search for
+
+superconductivity in models of strongly correlated fermions.  By a similar ﬁnite size analysis
+
+I shall attempt to give an estimate of the binding energy and of the pair spectral function
+
+in the thermodynamic limit.  Partial results for the binding energy and the QP weight have
+
+been  reported  elsewhere  [5].   The  emphasis  is  put  here  on  the  energy  dependence  of  the
+
+complete spectral function A2h(ω) and on its behavior with system size.
+
+                                                          2
+    In standard notations the t–J Hamiltonian reads
+
+                         H = J∑{(Szi Szi+⃗ǫ − 14nini+⃗ǫ) + 12(S+i  S−i+⃗ǫ + S−i  S+i+⃗ǫ)}
+                                   i,⃗ǫ
+                              − t ∑(˜c†i,σ˜ci+⃗ǫ,σ + h.c.).                                                                      (1.1)
+                                  i,⃗ǫ,σ
+The  ﬁrst  term  is  the  usual  antiferromagnetic  coupling  between  spins  which  splits  into  a
+
+diagonal part and a spin ﬂip part.  The second  term describes  the hopping of the holes (ie
+
+where  spins  are  missing).   The  sum  over  i,⃗ǫ  is  restricted  to  nearest  neighbor  bonds  along
+
+⃗x  and  ⃗y  on  a  2D  square  lattice,  ˜c†i,σ  =  (1 − ni,−σ)ci,σ  is  the  hole  creation  operator  and
+ni = ∑σ c†i,σci,σ.  So far t will set the energy scale.
+
+    The Hamiltonian (1.1) with 0, 1 and 2 holes is diagonalized on cluster of increasing sizes
+
+by  a standart Lanczos  procedure.  It is important in this  analysis  that all the cluster  have
+
+the same shape namely a square.  One should expect in this case a smoother extrapolation
+
+to  the  thermodynamic  limit.   If  the  (integer)  coordinates  of  the  cluster  periods  are  (n, m)
+
+and  (−m, n)  the  cluster  contains  N  =  n2 + m2  sites.   The  following  analysis  is  based  on
+
+clusters  of  sizes  4 × 4,  √18 × √18,  √20 × √20  and  √26 × √26.   In  order  to  be  able  to
+
+handle the largest size (26 sites) use of complete translation and rotation symmetries (for 0
+
+and 2 holes) as well as time reversal (for an even number of fermions) is necessary and the
+
+hamiltonian is diagonalized in each symmetry sector.  The size of the Hilbert space increases
+
+exponantially fast with the cluster size.  In the relevant symmetry sector (for discussion about
+GS  symmetry  see  Sec.  2) the  Hilbert  space  for 2 holes  contains  after symmetry  reduction
+
+3 332, 13 858, 58 274 and 4 229 236 states for N  = 16, 18, 20 and 26 sites respectively.
+
+
+
+                         II. GROUND  STATE  ENERGY  AND  BINDING
+
+
+    Symmetry  properties  of  the  Heisenberg  GS  |  ΨN0   >  and  of  the  two-hole  (singlet)  GS
+
+|  ΨN−20      >  are  summarized  for various  cluster  sizes  in  Tables  1A  and  1B  respectively.   The
+
+symmetries  of the  half ﬁlled  GS are exactly  known  [6] but  they  depend  on  the  convention
+
+to  represent  the  spins.   In  the  following  I  use  the  fermion  representation  including  at  half
+
+ﬁlling.  | ΨN0  > and | ΨN−20      > are both invariant under lattice translations (total momentum
+
+K = 0)  and even  (odd) under  spin  reversal  for 4p (4p+2) fermions.  This  last  feature is  a
+
+                                                            3
+simple consequence of the singlet nature of these states.  Although, at half ﬁlling, in the spin
+
+language  the  GS  is  always  invariant  under  a  90o  rotation  around  any  lattice  site  (s-wave)
+
+[6], fermion reordering can lead to an extra minus sign, eg for N  = 4 [7] or N  = 20 the half
+
+ﬁlled GS becomes d-wave in the fermion convention (see Table 1A). It is worth noticing that
+
+in such a case the 2 hole GS is s-wave (see Table 1B). However in most cases the half ﬁlled
+
+GS is s-wave and the 2 hole GS is d-wave.
+
+    The physical idea of an eﬀective attraction between the holes can be simply understood
+
+in the Ising limit of Hamiltonian (1.1) ie when the spin ﬂip term is neglected.  In this case
+
+the  half  ﬁlled  GS  is  the  simple  classical  N´eel  state  and  obviously  two  holes  added  in  this
+
+background  can  minimize  the  magnetic  energy  cost  by  sitting  on  nearest  neighbor  sites.
+
+Although this crude explaination neglects the delocalisation energy of the holes (t term) this
+picture was indeed shown numerically to be correct provided that J > 0.18 [8].  The situation
+
+is not so clear in the fully quantum case (1.1) where spin ﬂuctuations are included.  Numerical
+
+calculations of the binding energy on the 4 × 4 [9–12], √18 × √18 [13] and √20 × √20 [14]
+
+clusters  suggested  that binding  still occur but above a slightly  larger critical  value of J  as
+
+expected.  From a recent calculation of the hole density correlation functions in a restricted
+
+Hilbert space on clusters with up to 26 sites Prelov˘sek and Zotos quote a critical value of J
+
+of order 0.2.  However this technique gives a poor accuracy for the GS energy and can not be
+
+applied to calculate directly the binding energy (see later).  On the other hand, Boninsegni
+
+and  Manousakis  [16]  using  Green  Function  Monte  Carlo  simulations  carried  out  on  large
+
+clusters at J ≥ 0.4 and extrapolated to the bulk limit and smaller J/t ratios report a critical
+
+value of J  of order 0.28.
+    The GS energies of a single hole EN−10      − EN0   as well as the corresponding GS quantum
+
+numbers have been reported elsewhere [2].  The two hole GS energies EN−20      − EN0   are listed
+
+in  Table  2  for  various  cluster  sizes  and  J  values.  I  note  that  the  size  dependence  is  weak.
+
+The data of the 26 site cluster conﬁrm the J ν  dependence, ν ∼ 0.9, reported earlier for the
+
+4 × 4 cluster [11].
+
+    The binding energy is deﬁned quantitatively by
+
+
+                                     ∆2h = EN−20      + EN0  − 2EN−10     .                                                  (2.1)
+
+                                                           4
+Binding  occurs  when  ∆2h  <  0  in  the  bulk.   In  this  case  |  ∆2h  |  gives  the  magnitude  of
+
+the attractive potential between the two holes.  The simple (crude) arguments stated above
+
+would give an attraction of the order of a fraction of J.  On the contrary, if binding does not
+
+take place one would expect ∆2h → 0 when N  → ∞.
+
+    ∆2h  vs  J  is  shown  in  Fig.   1a  and  the  corresponding  data  are  listed  in  Table  3.   For
+
+N  = 26 Fig.  1a shows  a signiﬁcant increase  of the critical value of J  above which  binding
+
+occurs,  Jc  ∼  0.125  for  N  =  26.   In  Fig.   2a  the  same  data  are  plotted  vs  1/N.   Although
+
+∆2h  is a small number  corresponding  to the  diﬀerence  between  two quantities  of the same
+
+magnitude its behavior with system size is rather smooth (although not monotonic).  Note
+
+that the jump of the single hole GS momentum [2,17] between the diﬀerent clusters may be
+
+responsible for a small systematic error.  Fig.  2a shows unambiguously that binding occurs
+for, let say, J > 0.5.  However the strong size dependence at smaller J does not unable to give
+
+any accurate estimation of the critical value of J for the bulk.  I simply note that even for the
+
+largest size considered here ∆2h ∼ −J while one would expect a somewhat smaller (absolute)
+
+value in the bulk.  This means that these numbers might still be far from the expected ones
+
+in the  thermodynamic  limit  and it is diﬃcult  then  to perform any extrapolations.  On the
+
+basis of these data I can nevertheless speculate that the critical value of J lies in the range
+
+0.3 - 0.5.  This is of central importance since binding of holes is a necessary condition (not
+
+suﬃcient) for the appearance of superconductivity.
+
+    In this work I have not studied the transition (with increasing J) towards phase separation
+
+[19] ie when the holes tend to cluster in a separate region of space and separate from the spins
+
+rather than bind by pairs (if long range Coulomb repulsion is neglected).  In fact, according
+to previous work [10,15] the hole delocalization energy prevents the transition towards phase
+
+separation to occur at the same critical value of J at which binding ﬁrst appears but rather
+
+leads  to  phase  separation  at  a  larger  value  of  J.  Therefore,  in  this  scenario,  there  exists
+
+a  ﬁnite  range  of  J  where  holes  do  form  pairs  but  do  not  phase  separate  from  the  spins.
+
+Further  work  is  clearly  needed  and  diagonalization  of  4  holes  on  26  sites  would  certainly
+
+help to clarify this issue.  This is left for future work.
+
+
+
+
+                                                          5
+             III. QUASIPARTICLE  WEIGHT  AND  SPECTRAL  FUNCTION
+
+
+    Let me now consider dynamical correlations.  To study the propagation of a pair of holes
+
+in the underlying AF background it is useful to deﬁne the pair spectral function,
+
+
+                     A2h(ω) = ∑             m     | ∆† | ΨN0 ⟩ |2 δ(ω + EN0  − EN−2m    ).                            (3.1)
+                                   m  | ⟨ΨN−2
+
+As  deﬁned  above  |  ΨN0 ⟩  is  the  antiferromagnetic  GS  at  half  ﬁlling  (N  spins  on  N  sites).
+
+The  sum  is  performed  over  a  complete  set  of  eigenstates  {ΨN−2m    }  of  the  two  hole  sector
+
+(N-2 spins), with corresponding energies EN−2m    .  In the numerical results below, for plotting
+
+purposes, the δ–functions are replaced by sharp Lorentzians of small width ǫ ≃ 0.02.  ∆†  is
+
+the usual pair creation operator,
+
+                                       ∆† =    1√    ∑   F(⃗ǫ) ˜c†
+                                                 N               i,↑˜c†i+⃗ǫ,↓.                                                   (3.2)
+                                                     i,⃗ǫ
+
+where  the  form  factor  F(⃗ǫ)  (=  ±1)  can  have  s-  or  d-wave  symmetry.   As  seen  previously,
+it is remarkable that the half ﬁlled and two hole GS have systematically opposite quantum
+
+numbers (ie ±1) under a 90o rotation (around a lattice site).  Therefore it is clear that only
+
+the d-wave pair operator (ie F(±⃗x) = 1 and F(±⃗y) = −1) has a non-zero matrix element
+
+between the two GS. For this reason, I shall restrict myself to this choice so far.  Note that
+
+the pair operator (3.2) is odd under spin reversal and is invariant under lattice translations
+
+so  that,  in  addition  to  its  d-wave  nature,  it  has  precisely  the  right  translation  and  spin
+
+symmetries  (it is a singlet) to connect the two GS. In the right hand side  of Eq.  (3.1) the
+
+sum is then restricted to the states of the same symmetry class as the 2 hole GS.
+
+    The calculation of the spectral function (3.1) is done in three steps.  First the Heisenberg
+
+GS  is  calculated.   In  practice  the  number  of  Lanczos  iterations  required  to  obtain  a  good
+
+accuracy  of the GS increases  slowly  with the system  size  (crudely  it is proportional to the
+system size).  Typically, for the Heisenberg GS I have reached a high accuracy after 60, 150,
+
+400  and  600  iterations  for  N  =  16,  18,  20  and  26  respectively.   Note  that  the  GS  energy
+
+converges in much less iterations than the corresponding wavefunction, in any case less than
+
+50 iterations.  In the second step the pair operator is applied on the Heisenberg GS. Lastly the
+
+vector generated in the second step is used as the initial vector of a second Lanczos run in the
+
+                                                           6
+2 hole subspace.  The spectral function can be generated by a continued fraction expension
+
+that can be truncated after Nit  iterations [18].  I have  carefully studied  the convergence  of
+
+the spectral function as a function of Nit.  Fig.  3 shows the behavior of A2h for increasing Nit
+
+in the case of the 26 site cluster.  At small Nit  the spectral weight is distributed on a small
+
+number of δ-functions.  It is important to note that the low energy part of the spectrum is
+
+the  ﬁrst  to  converge  when  Nit  is  increased.   Fig.  3  shows  that  a  complete  convergence  on
+
+the whole physically  relevant energy range can be obtained after a rather small number of
+
+iterations much smaller than the size of the Hilbert space.  Empirically I have noticed that
+
+the value of Nit  required to obtain a good convergence does not grow much faster than, let
+
+say, the system  size N. For example,  Nit = 200, 400, 500 and 450 iterations are needed for
+
+16, 18, 20 and 26 sites.
+    The spectral function is plotted in Fig.  4 for increasing cluster size and for J  = 0.1, 0.3
+
+and 1.  I observe that most of the features of the 4 × 4 cluster [20] survive when the cluster
+
+size is increased; (i) a QP peak lies at the bottom of the band and (ii) a signiﬁcant amount
+
+of spectral weight is spread at higher energy over a range of a few t (for details see discussion
+
+below).   This  is  very  similar  to  the  single  hole  spectral  function  [2,3].  I  note  that  the  few
+
+peaks seen in the case of the smallest size (16 sites) are smeared out when N is increased and
+
+eventually merge into an almost perfect continuous background for N=26 except for J = 1.
+
+It is also remarkable that the various local maxima in the background (at ω ∼ 0.8 in Fig.  4d
+
+or ω ∼ 0.5 , 2 and 4 in Fig.  4h) are located at almost the same frequencies for the various
+
+sizes  N  considered.   However  it  is  not  clear  whether  the  secondary  peaks  (of  ﬁnite  width)
+
+observed  immediately  above  the  QP  peak  in  Figs.   4h  and  4l  are  still  ﬁnite  size  eﬀects  or
+whether they are related to any physical low energy resonances (see later for discussion).  It
+
+should be noted that, similarly to the single hole case [4], Figs.  4 suggest that no real gap
+
+separates the QP peak from the rest of the spectrum at higher energy.
+
+    Let me now study more quantitatively the behavior of the weight of the QP peak.  Simi-
+
+larily to the one-hole case, I can deﬁne the Z-factor as the square of the overlap [21],
+
+                                      Z2h =  | ⟨ΨN−20      | ∆† | ΨN0 ⟩ |2
+                                                 ⟨ΨN0  | ∆∆† | ΨN0 ⟩    .                                                  (3.3)
+The  denominator  is  a  simple  normalization  factor  [22]  so  that  Z2h  represents  the  relative
+
+                                                           7
+spectral weight (between 0 and 1) located in the QP peak.
+
+    One  of  the  key  issues  of  the  problem  of  strongly  correlated  fermions  is  the  possibility
+
+that  spin  and  charge  decoupling  which  takes  place  in one  dimension  [23] would  also  occur
+
+in two dimensions as proposed by Anderson [24] and others [25].  If such a scenario is valid
+
+then, as a simple consequence of the spin-charge separation, one would expect the absence of
+
+sharp QP. It is then crutial to test this hypothesis.  Previous calculations [2,3] suggested that
+
+the single  hole Green function  in the AF background  does  exhibit  an undumped  QP pole.
+
+However,  since this approach neglected any possible hole-hole interaction it is necessary to
+
+re-examine the same problem when more than a single hole is present.  The case of two holes
+
+considered here is the ﬁrst step towards the ﬁnite hole density.
+
+    Z2h is plotted in Fig.  1b as a function of J. Fig.  1b shows that Z2h varies almost linearly
+with J in the range 0.1 < J < 1.  It is also interesting to compare these data with the single
+
+hole QP weight Z1h obtained recently on the same clusters [3],
+
+                                  Z1h = ∑            0,σ    | ˜c†K,σ | ΨN0 ⟩ |2,                                               (3.4)
+                                            σ   | ⟨ΨN−1
+K stands for the ﬁnite momentum of the one hole GS [17].  Table 4 shows the data for Z2h
+
+for the various clusters as well as (Z1h)2 on 26 sites.  We note that, to a good approximation,
+
+Z2h ≃ (Z1h)2.
+
+    Although Z2h is quite small in the physically interesting range 0.1 < J < 0.5 only a ﬁnite
+
+size analysis can tell whether or not it vanishes in the bulk.  The data for Z2h are plotted in
+
+Fig.  2b as a function of 1/N.  It should be noted that, contrary to the one hole case [3,17]
+
+the GS momentum is identical for all the clusters and equal to 0.  No simple scaling law can
+
+be deduced from these plots.  However, the numbers at N=26 seem to indicate a convergence
+
+towards a ﬁnite number in the bulk.
+    Lastly, let me consider the behavior of the spectral function vs the coupling constant J as
+
+shown in Figs.  5a-f.  There are many similarities with the behavior of the single hole spectral
+
+function calculated on the 4 × 4 [26] and larger clusters [4].  In the limit J=0 the spectrum
+
+in  Fig.   5a  is  symmetric  around  ω  =  0.   This  is  in  fact  easy  to  understand.   The  change
+
+ω  → −ω  is  equivalent  to  t →  −t  ie  ˜ci,σ  → −˜ci,σ  for,  let  say,  the  even  sites.  Under  such  a
+
+transformation one can easily check that ∆† → −∆†  so that eventually  A2h(ω) = A2h(−ω)
+
+                                                          8
+for J=0.  The  spectral  density  is almost  constant  over  an  energy  range of ∼ 13 t.  A sharp
+
+peak  (actually  a  δ-function)  can  be  seen  at  ω  =  0.  When  J  is  turned  on  (Figs.  5b,c)  the
+
+spectrum  is  no  longer  symmetric  with  respect  to  ω  and  no  longer  (rigourously)  bounded
+
+from above (strictly speaking in the bulk) since there now exist states with excitation up to
+
+a magnetic energy ∝ N J, N being the system size.  However, in pratice, the matrix elements
+
+in (3.1) decrease exponantially fast with increasing energy outside an energy range of a few
+
+t (∼ 10 – 12 t).  As seen above a QP peak of weight ∝ J  appears at the bottom of the band.
+
+However  for small  J  most  of the  spectral  weight  lies  above.  The  sharp  ω  = 0  peak  of the
+
+J → 0 limit is rapidly broaden by J. Reminiscence of this peak can still be clearly seen up to
+
+J=0.2.  If J is increased further (ﬁgs.  5d-f) most of the features of the J = 0 limit vanish.  On
+
+the other hand, sharp peaks (nevertheless of ﬁnite width) appear right above the QP peak.
+These structures are characteristic of the J  ≃ t region and might be related to the internal
+
+structure of the pair.  Indeed, the 2 holes (for suﬃciently large J) are conﬁned on neighboring
+
+sites by some eﬀective potential which naively increases linearly with the hole separation (if
+
+spin ﬂuctuations are not considered).  It is interesting to note that the appearance of these
+
+resonances coincide with the approximate J value at which binding sets up (see Sec.  II).
+
+
+
+                                             IV.  CONCLUSION
+
+
+    In  this  paper,  calculations  of  the  binding  energy  as  well  as  of  the  pair  ﬁeld  spectral
+
+function  (of  d-wave  symmetry)  have  been  reported  for  the  t–J  model.   By  diagonalising
+
+clusters  with  up  to  26  sites  and  2  holes  it  has  been  deﬁnitely  established  that  binding
+
+between holes occurs only above a critical threshold of J in agreement with previous work.
+I estimate this critical value to be in the range 0.3 – 0.5.  The spectral function of the pair
+
+operator shows unambiguously a QP peak at the bottom of the band which does not seem
+
+to broaden  or disappear  when  the system  size  is  increased.  Its  weight  grows  almost  like  J
+
+for J  < 1.  In the physical region 0.1 < J  < 0.5 most of the spectral weight is spread above
+
+the peak on a wide energy range of the order of a few t.  Two qualitatively diﬀerent regimes
+
+are found:  (i) for J  ≤ 0.25, the  spectral  function exhibits  a pronounced  bump around the
+
+band center which eventually merges into a sharp ω = 0 peak when J=0; (ii) for J  > 0.25,
+
+                                                          9
+especially  J  ∼  1,  sharp  (small)  resonances  are  seen  above  the  QP  peak.  These  structures
+
+might be related to the internal nature of the pair bound by some eﬀective potential.
+
+    The numerical calculations were done on the CRAY–2 of Centre de Calcul Vectoriel pour
+
+la Recherche (CCVR), Palaiseau, France.  I am particularly greatful to the CCVR staﬀ for
+
+helpful assistance.  I also wish to thank the Supercomputer Computation Research Institute
+
+(Tallahassee) for hospitality at an early stage of this work and acknowledge my co-workers
+
+E.  Dagotto,  J.  Riera,  A.  Moreo  and  M.  Novotny  for  many  fruitful  discussions.   I  am  also
+
+indebted to J. Riera for providing me with many data to check the computer codes.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                        10
+                                            REFERENCES
+
+
+
+∗      E-mail:  didier@occitana.ups-tlse.fr
+
+
+
+∗∗     Laboratoire Associ´e au Centre National de la Recherche Scientiﬁque (URA 505)
+
+
+ [1] P. W. Anderson and J. R. Schrieﬀer, Physics Today 44, no 6, pp 54-61 (1991).
+
+ [2] D. Poilblanc, H. J. Schulz, and T. Ziman, Phys. Rev. B 46, 6435 (1992).
+
+ [3] D. Poilblanc, H. J. Schulz, and T. Ziman, Phys. Rev. B 47, 3273 (1993).
+
+ [4] D. Poilblanc, T. Ziman, H. J. Schulz and E. Dagotto, Phys. Rev. B, in press (1993).
+
+ [5] D. Poilblanc, J. Riera, and E. Dagotto, submitted to Phys. Rev. Letters.
+
+ [6] W. Marshall, Proc. R. Soc. London A232, 48 (1955).
+
+ [7] For clusters of size N  = M × M, the half ﬁlled GS of the Hubbard or Heisenberg model
+
+     is,  in  the  fermion  representation,  s-wave  when  M/2  is  even  and  d-wave  when  M/2  is
+
+     odd. See A. Moreo and E. Dagotto, Phys. Rev. B41, 9488 (1990).
+
+ [8] J. Riera and E. Dagotto, SCRI–FSU preprint.
+
+ [9] E. Kaxiras and E. Manousakis, Phys. Rev. B38, 566 (1988).
+
+[10] J. Bon¸ca, P. Prelov˘sek, and I. Sega, Phys. Rev. B39, 7074 (1989).
+
+[11] Y. Hasegawa and D. Poilblanc, Phys. Rev. B40, 9035 (1989).
+
+[12] J. Riera, Phys. Rev. B40, 833 (1989).
+
+[13] J. Riera, Phys. Rev. B43, 3681 (1991).
+
+[14] T. Itoh, M. Arai, and T. Fujiwara, Phys. Rev. B42, 4834 (1990); H. Fehske,  V. Waas,
+
+     H. R¨oder and H. B¨uttner, Phys. Rev. B44, 8473 (1991).
+
+[15] P. Prelov˘sek and X. Zotos, Phys. Rev. B, in press.
+
+[16] M. Boninsegni and E. Manousakis, FSU-SCRI preprint (1992).
+
+[17] For  most  clusters  (except  4 × 4)  the  one  hole  momentum  (π/2, π/2)  does  not  belong
+
+                                                       11
+     to the  reciprocal  space  of  the  cluster  so  that the  actual  GS momentum  is  the  allowed
+
+     wavevector in the closest vicinity of (π/2, π/2).
+
+[18] R. Haydock,  V. Heine,  and M.  J. Kelly,  J. Phys.  C8 2591 (1975);  E. R. Gagliano and
+
+     C. A. Balseiro, Phys. Rev. Lett. 59 2999 (1987).
+
+[19] V. Emery, S. Kivelson and H. Q. Lin, Phys. Rev. Lett. 64, 475 (1990).
+
+[20] E. Dagotto, J. Riera and A. P. Young, Phys. Rev. B42, 2347 (1990).
+
+[21] E. Dagotto and J. R. Schrieﬀer, Phys. Rev. B43, 8705 (1991).
+
+[22] This  normalization factor is equal  to the integral  of the spectral  function over  ω. It is
+
+     almost independent of system size. I found 2.403 56, 2.387 97, 2.381 62 and 2.368 90 for
+     N  = 16, 18, 20 and 26 respectively.
+
+[23] F. D. M. Haldane, J. Phys. C. 14, 2585 (1981).
+
+[24] P. W. Anderson, Phys. Rev. Lett. 64, 1839 (1990).
+
+[25] C. M. Varma et al., Phys. Rev. Lett. 63, 1996 (1989).
+
+[26] E. Dagotto, R. Joynt, A. Moreo, S. Bacci and E. Gagliano, Phys. Rev. B41, 9049 (1990).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                        12
+                                                                          TABLE 1A
+
+
+
+
+
+                                          4                 8                10               16               18               20               26
+
+Sz → −Sz                                +1              +1              −1              +1              −1              +1              −1
+       K                              (0, 0)          (0, 0)          (0, 0)          (0, 0)          (0, 0)          (0, 0)          (0, 0)
+
+     R90o                                 d                 s                  s                  s                 s                 d                 s
+
+
+
+
+
+
+                                                                          TABLE 1B
+
+
+
+
+                                                      10                     16                     18                     20                     26
+
+Sz → −Sz                                              +1                    −1                    +1                    −1                    +1
+
+       K                                            (0, 0)                 (0, 0)                 (0, 0)                 (0, 0)                 (0, 0)
+     R90o                                              d                       d                       d                        s                        d
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                13
+                                                            TABLE 2
+
+
+
+
+
+
+               0.1                 0.15                 0.2                  0.3                  0.5                 0.75                 1
+
+16        −5.211929     −4.761848     −4.366113     −3.651412     −2.370082     −0.922098     0.422346
+
+18        −5.372725     −4.989488     −4.622850     −3.925908     −2.635292     −1.154138     0.227037
+
+20        −5.391175     −5.002799     −4.632916     −3.932952     −2.644911     −1.174090     0.195934
+
+26        −5.293633     −4.873587     −4.489433     −3.786540     −2.527792     −1.099776     0.235903
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                              14
+                                                              TABLE 3
+
+
+
+
+
+
+              0.1                 0.15                 0.2                 0.3                  0.5                 0.75                  1
+
+16       −0.121909     −0.133874     −0.169305    −0.257734     −0.437502     −0.661252    −0.887262
+
+18       0.016983∗     −0.098624∗    −0.194140    −0.323806     −0.535906     −0.757922    −0.988101
+
+20       −0.036409     −0.115937     −0.182936    −0.295488    −0.4798095    −0.681616     −0.871744
+
+26        0.059531                             −0.051799    −0.154960     −0.340200                            −0.738611
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                               15
+                                                                 TABLE 4
+
+
+
+
+
+
+                    0.1                0.15                0.2                 0.3                 0.5                0.75                 1
+
+16              0.017334       0.043994       0.069076       0.112460       0.193285       0.286379       0.376510
+
+18              0.028308       0.039858       0.052372       0.080068       0.142729       0.225824       0.306358
+
+20              0.011259       0.027350       0.038865       0.066018       0.130332       0.214760        0.294387
+
+26              0.014675       0.031535       0.050113       0.089192       0.164575       0.248636        0.322983
+26∗                                                                       0.081419       0.155884                              0.318740
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                   16
+                                              TABLE CAPTIONS
+
+
+
+
+
+Table  1
+
+Symmetry  properties  of  the  half  ﬁlled  (A)  and  two  hole  (B)  GS.  The  fermion  convention  is
+
+used.
+
+
+Table  2
+
+Two  hole  ground  state  energies  of  the  t–J  model  EN−20      − EN0   on  clusters  4 × 4,  √18 × √18,
+√20 × √20 and √26 × √26 for several values of J (0.1 to 1).
+
+
+Table  3
+
+Binding energies in the t–J model on clusters 4 × 4, √18 × √18, √20 × √20 and √26 × √26
+
+for several values of J (0.1 to 1).  Note that for 18 sites a level crossing appears in the one hole
+
+sector (indicated by  ∗).
+
+
+Table  4
+
+Spectral weight Z2h  of the QP peak in the pair spectral function of the t–J model on clusters
+
+4 × 4, √18 × √18, √20 × √20 and √26× √26 for several values of J (0.1 to 1).  For comparison,
+
+Z21h corresponding to the one hole GS on 26 sites is also listed on the last line (marked by  ∗).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                        17
+                                              FIGURE CAPTIONS
+
+
+
+
+
+Figure  1
+
+Binding  energy  ∆2h  (a)  and  spectral  weight  Z2h  (b)  vs  J.  The  symbols  corresponding  to  the
+
+diﬀerent clusters are shown on the plot.
+
+
+Figure  2
+
+Binding energy ∆2h (a) and spectral weight Z2h (b) plotted (arbitrarily) vs inverse system size
+1/N.  The value of J corresponding to each set of points is indicated on the plot on the left side
+
+of the corresponding data.
+
+
+Figure  3
+
+Spectral  function  of  the  d-wave  pair  operator  vs  frequency  (in  unit  of  t)  for  N  =  26  and
+
+J  =  0.3.   The  Lanczos  iteration  number  Nit  used  to  calculate  the  continued  fraction  of  the
+
+spectral function is shown on the plots.
+
+
+Figure  4
+
+Spectral function of the d-wave pair operator vs frequency for increasing cluster sizes.  J = 0.1
+
+(a – d), 0.3 (e – h) and 1 (i – l).  The frequency ω is measured in unit of t.
+
+
+Figure  5
+
+Spectral function of the d-wave pair operator vs frequency on the √26×√26 cluster for various
+J  values.   ω  is  measured  in  unit  of  t.   The  continued  fraction  expension  was  truncated  after
+
+Nit = 450 iterations (except for J = 0 where Nit = 550).
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                         18

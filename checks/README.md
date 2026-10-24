@@ -413,3 +413,81 @@ rule of 2026-09-30, ruled for these rows 2026-10-24); the agreeing rows are veri
 **Reproduce.** `python gen.py` writes `bonds/`; `gcc -O3 -fopenmp ed.c -o ed -lm`; `run_small.sh` (Kitaev tori,
 16 and 20 sites, seconds), `run_ss32.sh <J>` (about 30 min per J on 32 threads, 16 GB);
 `python kitaev_majorana.py` for the free-Majorana energies.
+
+## `tj-ed-2026-10/`: do the t-J sources mean the Hamiltonian, cluster and boundary QMBL files them under?
+
+**Question.** The first t-J pass (SWEEP.md, 2026-10-22) files exact energies from sources that print
+their exchange term, boundary or cluster only in words or in a figure. Does the instance definition
+(RULES.md §2.1: -t sum P(c+c + h.c.)P + J sum (S_i.S_j - n_i n_j / 4), t = 1) reproduce them?
+
+**Design.** `tj_ed.py`: sparse Lanczos (SciPy `eigsh`) in the full space of fixed N_up and N_dn, no
+lattice symmetry, on a server. Bonds are listed explicitly, with a sign of -1 on hoppings across an
+antiperiodic boundary. The jobs and their output are in `results.jsonl` (energies in units of t).
+
+**Result.** Each printed exact energy is reproduced to its printed digits:
+
+| instance | QMBL | printed |
+|---|---|---|
+| `tJ/square_18_P_h2_J0.4` (cluster (3, 3), (3, -3)) | -0.6590431107 per site | -0.65904 (arXiv:cond-mat/0006353) |
+| `tJ/square_16_O_h2_J0.4` | -0.564366793 per site | -0.56436 (arXiv:1908.10000) |
+| `tJ/ladder-3x6_18_A_h1_J0.5` | -10.4075745288 | -10.40757 (arXiv:cond-mat/9706147) |
+| `tJ/ladder-3x6_18_A_h2_J0.5` | -11.8068024851 | -11.80680 (same) |
+| `tJ/ladder-2x11_22_P_h2_J0.5` | -12.9997844296 | -12.99978 (arXiv:cond-mat/0010072) |
+| `tJ/honeycomb-flake24_24_O_h1_J0.333333` | -8.2605976752 (x 3 = -24.78179 in units of J) | -24.782 (arXiv:2406.16865) |
+
+This fixes the -n_i n_j / 4 term, the boundaries, the 7-hexagon flake and the factor 3 of the t/J = 3
+source. The diagonalizations are unrestricted in momentum and spin, so each energy is the ground state
+at its electron number. Not checked: the 26-site cluster (12 instances; about 3e7 states per momentum
+sector need a symmetry-adapted code), the 2 x 13 ladder and the 32-site cluster with t' and t''.
+
+
+## `tj-exact-recompute-2026-10/`: which printed t-J exact energies are QMBL's value rounded?
+
+**Question.** The verification pass of 2026-10-23 recomputed every exact row of the t-J family
+(23 rows on 23 instances; checks/tj-ed-2026-10/ had reproduced six). Does each printed value come from the instance as defined, and to how many
+digits?
+
+**Design.** `tjk.c`: C/OpenMP Lanczos in a basis adapted to the lattice translations and the
+point-group operations with one-dimensional characters, converged to |dE| < 1e-13 per step. `gen.py`
+writes the clusters (bonds listed once) and the symmetry sectors; `spec.py` lists the sets. `bf.py`
+is an independent brute-force diagonalization of the full space at fixed N_up and N_dn; it agrees with
+`tjk.c` to 1e-10 on 12 small clusters (`results/bf-*.txt`, `results/cmp-test.txt`, `results/test*.jsonl`).
+The production runs (2026-10-23, 16 threads) are `results/<set>.jsonl`, one line per sector;
+`summary.json` compares each instance's lowest sector with the printed value in its printed form.
+
+**Result.** 22 of the 23 printed energies are reproduced to their printed digits (energies in units
+of t, totals):
+
+| instance | QMBL | printed | sectors |
+|---|---|---|---|
+| `tJ/honeycomb-flake24_24_O_h1_J0.333333` | -8.260597675193 | -24.782 (E_tot in units of J (t/J = 3)) | 4 of 4 |
+| `tJ/honeycomb-flake24_24_O_h2_J0.333333` | -9.944599589435 | -29.834 (E_tot in units of J (t/J = 3)) | 4 of 4 |
+| `tJ/ladder-2x11_22_P_h2_J0.5` | -12.999784429648 | -12.99978 (E_GS total, units of t) | 12 of 12 |
+| `tJ/ladder-2x13_26_P_h2_J0.5` | -14.907654276052 | -14.90765 (E_GS total, units of t) | 14 of 14 |
+| `tJ/ladder-3x6_18_A_h1_J0.5` | -10.407574528812 | -10.40757 (total, units of t) | 1 of 1 |
+| `tJ/ladder-3x6_18_A_h2_J0.5` | -11.806802485145 | -11.80680 (total, units of t) | 1 of 1 |
+| `tJ/square_16_O_h2_J0.4` | -9.029868687223 | -0.56436 (E_ED per site) | 1 of 1 |
+| `tJ/square_18_P_h2_J0.4` | -11.862775993031 | -0.65904 (E0/L, p = infinity) | 13 of 14 |
+| `tJ/square_26_P_h2_J0.3` | -13.025267202995 | -0.50097 (E/L) | 14 of 14 |
+| `tJ/square_26_P_h2_J0.4` | -15.457434662825 | -0.59452 (E/L) | 14 of 14 |
+| `tJ/square_26_P_h2_J0.5` | -17.925669794311 | -0.68945 (E/L) | 14 of 14 |
+| `tJ/square_26_P_h2_J0.6` | -20.419736257759 | -0.78537 (E/L) | 14 of 14 |
+| `tJ/square_26_P_h2_J0.8` | -25.463200957002 | -0.97935 (E/L) | 14 of 14 |
+| `tJ/square_26_P_h2_J1` | -30.559852374433 | -1.17538 (E/L) | 14 of 14 |
+| `tJ/square_26_P_h4_J0.3` | -16.708026076752 | -0.64262 (E/L) | 6 of 14 |
+| `tJ/square_26_P_h4_J0.4` | -18.573539395453 | -0.71437 (E/L) | 1 of 14 |
+| `tJ/square_26_P_h4_J0.5` | -20.491228545965 | -0.78812 (E/L) | 1 of 14 |
+| `tJ/square_26_P_h4_J0.6` | -22.447652574704 | -0.86337 (E/L) | 1 of 14 |
+| `tJ/square_26_P_h4_J0.8` | -26.450585746393 | -1.01733 (E/L) | 1 of 14 |
+| `tJ/square_26_P_h4_J1` | -30.548073706468 | -1.17493 (E/L) | 1 of 14 |
+| `tJ/square_32_P_h1_J0.3_tp0.3_tpp-0.2` | -13.913615604089 | -13.913616 (E_Nc total) | the 4 at k = (π, 0), the source's ground-state sector |
+| `tJ/square_32_P_h2_J0.3_tp0.3_tpp-0.2` | -16.601689053076 | -16.601689 (E_Nc total) | the 1 at k = 0, d_x2-y2, the source's ground-state sector |
+
+The 26-site energies confirm the (5, 1) cluster the 12 instances use (ruled 2026-10-24). With 2 holes all 14 sectors were computed, so those are ground states; with 4
+holes, and on the 32-site cluster, only the sectors in the last column were, so the ground-state
+claim there rests on the source. The 18-site, 3 x 6 and open 4 x 4 runs include the full space at
+their electron number. The open 4 x 4 value -0.56436 per site is the recomputed
+-0.5643667930 truncated, not rounded; every other printed value is the recomputed one rounded. Under
+RULES.md §11 the exact rows carry these digits, the printed value kept in their `corrections`
+(`scripts/corrections.mjs`, ruled 2026-10-24). Not recomputed: the 32-site cluster with 4 carriers
+(about 5.6e9 states in its zero-momentum sector without spin inversion), whose row stays as printed.

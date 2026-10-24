@@ -1,0 +1,315 @@
+                Truncated Lanczos  method  :  application  to hole-doped  spin  ladders
+
+                                                 O. Chiappa, S. Capponi and D. Poilblanc
+                          Laboratoire  de Physique  Quantique & UMR–CNRS 5626, Universit´e  Paul  Sabatier
+                                                            F-31062  Toulouse,  France
+                                                                (November 5, 2018)
+
+                 The truncated Lanczos method using a variational scheme based on Hilbert space reduction as well
+                as a local basis change (Dagotto et al., Phys. Rev. B 58, 12063 (1998)) is re-examined .  The energy
+                is extrapolated as a power law function of the Hamiltonian variance.  This systematic extrapolation
+                procedure is tested quantitatively on the two-leg t-J  ladder doped with two holes.  For this purpose,
+                we have carried out calculations of the spin gap and of the pair dispersion up to size 2 × 15.
+
+
+   The  variational  approach  of  the  truncated  Lanczos                        a.   Geometry:    We  will  consider  closed  systems  that
+method  (TLM)1,2  is  based  ﬁrst  on  a  proper  choice  of                   can be formally described like a chain of a ﬁnite number
+the local basis, and then on Hilbert space reduction and                       of  interacting  ﬁnite  size  sub-systems  or  clusters.   Each
+exact  diagonalizations  by  the  Lanczos  algorithm  in  the                  cluster  Si  is  described  by  a  numerically  soluble  cluster
+successive  subspaces.    This  variational  technique  is  a                  Hamiltonian  Hi0  and  two  near-neighbor  clusters  Si  and
+good  alternative  to  the  density  matrix  renormalization                   Sj  are  interacting  through  the  transverse  Hamiltonian
+group  (DMRG)  calculations3  and  the  pure  exact  diag-                     Hij⊥.  The cluster Hamiltonian operator Hi0 acts on the ith-
+onalization  technique  (ED)  for  the  study  of  models  re-                 cluster Hilbert space Ei0 while the transverse Hamiltonian
+lated  to  high  temperature  superconductivity.   Another                     operator Hij⊥ acts on the direct product Ei0⊗Ej0.  Typically,
+well known method to study numerically the low energy                          Hij
+physics  of  fermionic  models  on  medium  size  clusters  is                 interaction  terms  (one-electron  hopping  integral).    For⊥ contains Heisenberg (magnetic couplings) and kinetic
+the  Quantum Monte  Carlo algorithm (QMC)4  hindered                           example,  in  two  chain  ladders,  that  we  will  consider  in
+by  the  famous  sign  problem.   On  the  other  hand,  the                   the following, Si  is simply a rung with two lattice sites.
+DMRG calculations provide only properties of the lowest                        The  Hamiltonian  of  the  global  system  is  thus  a  sum  of
+energy sector and operate on lattice systems with speciﬁc                      two terms H = H0 + H⊥ with H0 = ⨁
+boundary conditions.  The TLM goes beyond these tech-                          ∑                                                i=1,N Hi0 and H⊥ =
+nical limitations  and allows us  to  use the ED technique                     the whole system.<i,j> Hij⊥ , N  being the number of clusters constituting
+on larger fermionic  systems.  This  approach is very use-                        b.    Change  of  basis:    We  begin  with  the  exact  di-
+ful  e.g.   to  study  momentum-dependence  of  the  observ-                   agonalization  of  Hi0  of  all  the  clusters  Si.    The  eigen-
+ables and calculate dynamical properties of Hubbard-like                       states  of  the  ith-cluster  Hamiltonian  Hi0  are  classiﬁed
+models or t-J  model on large size systems (compared to                        according  to  their  quantum  number  (ﬁlling,  transverse
+standart  ED  techniques)  of  various  geometries.  The  is-                  and  longitudinal  momentum,  Sz  spin  component).   Let
+sue we shall adress here is the control of the convergence                     Bi0  = {|φip  >} p=1,...,P0  with P0  = dim Ei0  denote  the  lo-
+of  the  energy.   For  this  purpose,  we  will  exploit  an  in-             cal  basis  set  of  the  eigenstates  of  Hi0  in  Ei0.   The  direct
+teresting  behaviour  of  the  energy  with  the  Hamiltonian
+variance,  deﬁned  as  the  measure  of  the  ﬂuctuations  of                  product E0 = E10 ⊗ E20 ⊗ ... ⊗ EN0   of the N  cluster Hilbert
+the  energy  around  its  average.   We  will  show  that  the                 spaces Ei0  deﬁnes the Hilbert space of the whole system.
+energy extrapolates with a second order power law func-                        The initial basis set B0 of E0 in a given sector of symmetry
+tion with the  variance5, such that the extrapolations to                      is thus deﬁned by the following set of N -tensorial product{}
+the  zero-variance  limit  are  accurate  estimations  of  the                 vectors     |Φq  >= ⨂i=1,N |φipi  >           reduced to  the  states
+approximate  variational  energy  in  a  speciﬁed  sector  of                  consistent  with  the  quantum  numbers  implemented  for
+symmetry.   This  unbiased  extrapolating  procedure  pro-                     the  global  system  (in  practice  Q0  =  card B0  ≪  P N0  ).
+vides  more  control  on  the  accuracy  of  the  results.   The               Typically, use of  translational symmetry in  the  longitu-
+applications  to  the  2 × L  hole-doped  spin  ladder6  (for                  dinal direction provides a signiﬁcant reduction of B0.  We
+which  many  exact  calculations  can  be  performed  up  to                   notice that H0 is naturally diagonal in B0.  Its eigenvalues
+L  =  13)  show  that  the  error  made  on  the  exact  val-                  are just the sum h0,{p1,...,pN } = h10,p1 + h20,p2 + ... + hN0,pN
+ues  are  small  compared to  the  degree  of  approximation                   where the set {p1, ..., pN } is labelling a particular set of
+made.  This article begins ﬁrst with a detailed description                    cluster Hamiltonian’s eigenstates (hi0,pi  is the eigenvalue
+of the method, followed by a discussion on the eﬃciency                        of Hi0  associated to |φipi  >).
+of the TLM through applications to the two-hole doped                             c.    Expansion  and  truncation  of  the  Hilbert  spaces:
+t-J  model  on  the  2 × L  ladder  geometry  with  periodic                   We  have  represented  on  Fig.  1  a  picture  of  the  itera-
+boundary conditions for the  sizes L = 13, which can be                        tive scheme.  Although B0 can be formally constructed it
+handled exactly, and L = 15.                                                   would be impossible to diagonalize exactly the Hamilto-
+                                                                               nian in this basis for sizes of interest, so that a truncation
+
+                                                                           1
+procedure is necessary.  Keeping a small identical subset                         where  In′  is  the  set  containing  the  indexes  of  the  ba-
+of the  states in all the  local basis Bi0  would be  in fact a                   sis  states  |Φq  >  that  belong  to  the  reduced  basis  B′n.
+quite poor approximation and we shall use a better pro-                           The  DMRG  method  also  use  such  approximations.   In
+cedure.   The  ﬁrst  step  consists  in  choosing  a  subset  B′0                 order  to  select  the  best  states  we  deﬁne  a  parameter
+of B0.  A simple choice is to restrict ourselves to the few                       ǫ  ∈  [0, 1], such that a state |Φq > belongs to the reduced
+low  energy  states  of  Bi0.   The  exact  diagonalization  by                   basis  if  the  associated  weight  obeys  to  || α(n)q    || 2  ≥  ǫ.
+the Lanczos algorithm of the Hamiltonian H = H0 + H⊥                              The  actual  value  of  ǫ  at  each  iterative  step  can  be  de-
+in  B′0  gives  the  energy  e′0  in  a  ﬁxed  sector  of  symme-                 termined  by  three  diﬀerent  methods  :  (i)  by  specifying
+try  at  the  zeroth-order  of  the  iterative  expansion.   The                  the  minimum  value  of  the  overlap  O   = <  Ψn|T Ψn  >
+zeroth-order approximation of the ground state is then a                          =  ∑                q    || 2,  (ii)  by  ﬁxing  the  fraction  η  of  the
+normalized  linear  combination  of  the  vectors  in  B′0.   At                          q ∈ In′ || α(n)
+the  ﬁrst order, the  expanded variational basis B1  is cal-                      states  of  Bn  kept  in  the  reduced  basis  set  B′n  and  (iii)
+culated by applying the transverse part H⊥ on the states                          by  ﬁxing  an  expansion  parameter  λ   >   1  such  that
+in B′0 (card B1  ≫  card B′0).  Like previously, we calculate                     dim E′n  =  λ · dim E′n−1.  In the following, procedure (iii)
+the  ﬁrst  order  of  the  variational  energy  e1  by  an  exact                 is  used  (for  n  ≥  2)  since  it  gives  more  control  on  the
+diagonalization of H in the Hilbert space E1 generated by                         size growth of the Hamiltonian matrix and on the CPU
+B1  (of course e1  < e′0).  Then  the  best  states  (see  later)                 time  of  the  calculation.   The  ﬁrst  reduced  space  E′1  is
+in B1  which constitute the new reduced basis B′1  are se-                        obtained by  using  the  criterium of minimum overlap, ie
+lected.   The  reduction  of  the  Hilbert  space  E1  ends  the                  < Ψ1|T Ψ1 >= O1  ≥  Omin.  Note that for moderate ex-
+ﬁrst iteration.  The  rest of  the  calculation has the  same                     pansion parameter λ (see table I), a rather large fraction
+loop-structure.   Let  us  brieﬂy  recall  the  scheme  of  the                   of the weight is preserved at each step.
+(n − 1)th  iteration (Fig. 1).  It consists in two steps :  (i)
+Expanding B′n−1 by applying H⊥.  Let Bn denote the new), (ii) Truncating                                λ  =  2.27                         λ  =  1.51
+expanded basis (card Bn  ≫  card B′n−1                                            nth loop      O       dim E ′n      dim En       O       dim E ′n      dim En
+the generated basis Bn, which give the reduced basis B′n.                             0          -         2 048    33 804 460      -          2048     33 804 460
+                                                                                      1      0.9990   10 278       21 504       0.9991   10 278       21 504
+                                                                                      2      0.9967   23 299       83 679       0.9927   15 476       83 679
+                                                       ε                              3      0.9959   52 939      169 045       0.9869   23 320      126 031
+                                 n                        n+1                         4      0.9961  119 996     327 084        0.9812   35 099      174 257
+     ε            εn-1                                                                5          -             -                 -0.9761   52 846      245 066
+                                                                                      6          -             -                 -0.9772   79 599      347 059
+                                                                                      7          -             -                 -0.9826  119 967     472 799
+                                                                                     TABLE I.  Evolution of the Hilbert space dimensions with
+               T                       T                                          the truncation criteria λ  =  2.27 and λ  =  1.51, for the 2 × 13
+                                                                                  two-hole doped spin ladder in the (Sz = 0, K = (0, 0)) sector.
+                         H                          H                             We reported also in the ﬁrst column the overlap O (deﬁned in
+                                                                                  the text).  The basis  B′0  is  built  with  the 2048  lowest  energy
+                                                                                  eigenstates  of  H0  in  B0  (with  two  holes  on  the  same  rung
+               ε              ε                                                   and  particles  on  the  other  sites)  compatible  with  the  global
+                  n-1’                       ’n                                   quantum numbers.
+
+  FIG. 1.  Schematic  picture  of  the  successive  Hilbert  space                   d.  Extrapolation  procedure:    As it will be clear in the
+truncation  and  expansion  procedures.   The  operator  T   acts                 following, it is very useful to deﬁne the Hamiltonian vari-
+on the Hilbert spaces En to obtain the reduced spaces E ′n.  We                   ance σn  at the nth  iteration :
+described  precisely  in  the  text  the  action  of  the  non-unitary                σn  =    1
+operator T .                                                                                   N 2 {< Ψ′n| H 2 |Ψ′n > − < Ψ′n| H |Ψ′n >2}     (2)
+   The normalized variational eigenvector |Ψn > at order                          where  N  is  the  number  of  sites  on  the  lattice  and  the
+n of the truncation procedure is a linear combination of                          new wave function |Ψ′n > is the normalized eigenstate of
+the Qn = dim En vectors of the subset Bn of B0.  In order                         H in the truncated basis B′n with the lowest eigenenergy.
+to reduce the dimension of the Hilbert space En ( n ≥ 1 )                         The  calculation of σn  does not need any approximation
+we use a systematic procedure to select the best states in                        and  can  be  exactly  evaluated.   <  Ψ′n| H 2 |Ψ′n  >  is  cal-
+|Ψn >.  Let T  denotes the non-unitary truncation opera-                          culated  by  expressing  the  vector  H |Ψ′n  >  in  Bn+1  and
+tor deﬁned by the following Hilbert spaces morphism :                             evaluating  its  norm,  while  < Ψ′n| H |Ψ′n  >2  is  easily  ob-
+        T   :     En −→ E′n                                                       tained by the exact diagonalization of H in B′n.  σn  mea-
+                                                                                  sures the quadratic deviations of the energy from its aver-
+           |Ψn >  −→ |T Ψn > =   ∑                q    |Φq >             (1)      aged value at the nth iteration.  We have tried four kinds
+                                          q∈In′ α(n)                              of  extrapolation  of  the  energy  versus  the  Hamiltonian
+
+                                                                               2
+variance :  (i) en vs σn, (ii) e′n vs σn, (iii) en+1 vs σn  and                     +  t  ∑(c†i,λ,sci+1,λ,s + h.c.) + t ∑(c†i,1,sci,2,s + h.c.)
+(iv) e′n+1 vs σn  where  en  = <  Ψn| H |Ψn  >,  with  |Ψn  >                              i,λ,s                                 i,s
+the normalized eigenwave function associated to the low-
+est  eigenenergy  of  H  in  Bn,  and  e′n   = <  Ψ′n| H |Ψ′n  >.                Here  c†
+The  zero-variance limits  of the  extrapolation curves are                               i,λ,s  creates  an  electron  of  spin  s  on  site  i  of
+approximations of the exact energy.  Note that each value                        leg  λ  =  1  or  2,  Si,λ  =  (c†i,λ,s  σss′ci,λ,s′)/2  and  ni,λ  =
+of the variance corresponds in fact to a distribution of en-                     Σsc†i,λ,sci,λ,s.  We  have  taken  both  the  nearest-neighbor
+ergies since two variational states of same energies might                       leg and rung one-electron hopping matrix elements equal
+have diﬀerent variances.  Although we did not explicitely                        to  t  =  −1.    The  exchange  interaction  J   is  taken  as
+evaluate  this  distribution  of  energy,  this  uncertainty  is                 isotropic between nearest-neighbor leg and rung sites as
+directly connected to the (estimated) diﬀerence between                          well  and  throughout  J/t  =  0.5.   Extrapolations  of  the
+e′n  and  en  for  the  same  variance.   Hence,  this  gives  a                 energy  versus  the  Hamiltonian  variance  are  shown  on
+procedure  to  take  into  account  this  uncertainty  in  en-                   Fig.  2  for  the  2 × 13  and  2 × 15  two-hole  doped  ladder
+ergy while extrapolating our results and we shall discuss                        in the sector (Sz = 0, K = (0, 0)).  These extrapolations
+quantitatively the precision of this technique through ap-                       are mainly linear, with a quadratic correction at low vari-
+plications to the t-J  model deﬁned on the two-leg ladder                        ance.   The  energies  corresponding  to  the  zero-variance
+geometry.                                                                        limit  on  these  curves  should  be  compared  to  the  exact
+                                                                                 ground-state (GS) ones EGS  (for sizes 2 × 11 and 2 × 13
+    −10                                                                          see  Ref.7).   For  the  2 × 13  ladder,  we  noticed  ﬁrst  that
+               e’n for Sz=0, K=(0,0)                                             there is no signiﬁcative diﬀerence between the extrapola-
+    −11        e’n for Sz=0, K=(10π/11,0)                                        tions corresponding either to 5,6,7 and 8 iterations, but
+                                                      (a) 2x11                   also  for  those  associated  to  ﬁnal  Hilbert  space  sizes  of
+    −12                                           GS
+    −13                                                                          120 000 and 200 000 states.  The stability of the extrapo-
+                                                                                 lations with variations of these parameters is an indica-
+                en                                                               tion of a good precision on the approximate energy.  The
+    −13         en’                                    (b)  2x13                 two best approximations of the  variational energy come
+    −14                                                                          from the extrapolations of en+1 and e′n+1 vs σn.  We min-
+                                            1st excited state                    imize the error by averaging the two values of the energy
+    −15                                       GS                                 obtained  by  these  extrapolations.   For  the  2 × 13  sys-
+                                                                                 tem, this  procedure leads to an error on the energy less
+                en                                    (c) 2x15                   than  1.85%  of  the  energy  gap  between  the  ﬁrst  excited
+    −15         e’n                                                              level  and  the  fundamental  (0.005  compared  to  ≃  0.27),
+    −16                                                                          while  we  took  into  account  only  0.37%  of  the  states  in
+    −17                                                                          the Hilbert space of the whole system.  This means that
+          0                                  0.005                               0.01only a negligible fraction of the basis states in the funda-
+                                     σn                                          mental wave function have a non-negligible contribution
+                                                                                 to the total weight.  The calculations on the 2 × 15 lad-
+  FIG. 2.  Energy  of  a  2 × 11  (a),  2 × 13  (b)  and  2 × 15  (c)            der with the same parameter λ generate an averaged ex-
+ladder with two holes extrapolated as a quadratic function of                    trapolation with more uncertainty (≃ 0.2) than the  one
+the Hamiltonian variance compared to ED results when avail-                      observed for smaller system sizes.  This is mainly due to
+able.   We  made  the  calculations  for  6  iterations  with  a  ﬁnal           the  decreasing  of  the  overlap of  the  truncated  states  at
+Hilbert  size  ﬁxed  to  120 000  symmetric  states  in  the  sector             each step  of  the  calculation,  so  that  we  should  increase
+(Sz = 0, K = (0, 0)) for the (b) and (c) cases, while in (a) we                  the  dimension  of  the  ﬁnal  Hilbert  size  in  order  to  com-
+plotted  the results for  8  iterations  with  a  ﬁnal Hilbert  space            pensate  this  loss in precision.  Meanwhile,  the  evolution
+quite  equal  to  the  complete  Hilbert  space  of  the  2 × 11  lad-           of the error bars give us an information on the accuracy
+der with two holes (1 940 064 states without the spin inversion                  of  the  extrapolated  values  of  the  variational  energy,  in
+symmetry) in the sectors (Sz  = 0, K = (Kx, 0)) with Kx = 0                      such  a  way  that  we  are  able  to  adjust  the  initial  para-
+and Kx ≃ π.                                                                      maters to reduce the error margin.  We have attempted a
+   e.   Applications  to  the  2 × L  hole-doped  ladder:    In                  systematic extrapolation procedure within  this  method.
+this section, we apply the TLM to the t-J  model on the                          As  a  test,  we  will  complete  calculations  of the  spin  gap
+2 × L Heisenberg spin ladder with two holes and periodic                         and  of  the  pair  dispersion  of  the  low  lying  Sz  =  0  pair
+boundary conditions.  The Hamiltonian is deﬁned by                               state for two-hole doped 2 × L ladders up to size L = 15.
+                                                                                 As in a preceeding work on the evolution of the spin gap
+   H = J ∑(Si,λ · Si+1,λ − 1                                                     upon  doping  a  2-leg  ladder8  we  deﬁned  the  spin  gap as
+             i,λ                      4ni,λni+1,λ)                       (3)     ∆S  =  E0 (nh = 2, S = 1) − E0 (nh = 2, S = 0).   In  this
+                                                                                 paper, we used the ED Lanczos method on 2 × L ladders
+      + J ∑(Si,1 · Si,2 − 1                                                      of  maximum  size  L  =  13.   With  a  less  important  nu-
+              i                   4 ni,1ni,2)                                    merical eﬀort,  we  expect  improving the  precision of  the
+
+
+                                                                             3
+TLM by comparing the spin gap obtained with the TLM                               the whole space) and we made 6 iterations.  Let us recall
+for L = 13 with the exact calculations.  Our data follow                          that the error bars correspond to the diﬀerence between
+in general a power law behaviour (Fig. 3).  Note that in                          the extrapolations to the zero-variance limit of en+1 and
+the  sector  (Sz = 0, K = (Kx, 0))  the  extrapolations  are                      e′n+1 in function of σn.  The loss of accuracy on the aver-
+dominated  by  the  linear  behaviour  for  low  momentum                         aged value of the extrapolated energies is  obvious when
+while  they  are  rather  quadratic  for  higher  momentum                        the ladder size is increased for the same number of states
+in  the  same  sector  and  for  (Sz = 1, K = (π, π)).   Thus,                    in  the  last  truncated  Hilbert  space,  and  we  notice  also
+the spin gap appears logically to be extrapolated by the                          that the error on the extrapolated energies for the 2 × 15
+polynomial function ∆S = a0 + a1 σn + a2 σ2n.  The aver-                          ladder  is  also  increasing from  0.2  to  0.6  for  Kx  >  π/2.
+aged values in the zero-variance limit are ∆S  = 0.14 for                         For  small  sizes,  the  extrapolated  pair  dispersion  coin-
+L = 13 and ∆S  = 0.10 for  size L = 15, while  the  exact                         cides  with  the  exact  one  in  the  low  momentum  sector
+value is ∆Sexact = 0.19 for L = 13.  The lost in accuracy                         (Kx  ≤  π/2).  For high momentum (Kx  >  π/2), we no-
+of  ∆S  for  L  =  15  is  connected  to  the  increased  uncer-                  tice  on  the  three  ﬁgures  a  separation  between  the  pair
+tainty  of  the  average  of  the  extrapolated  values  due  to                  dispersion  obtained  with  the  variational  energies  which
+the  decrease of the  proportion of states  kept in the  last                     remains  close  to  the  exact  one  and  the  average  of  the
+truncated Hilbert space.                                                          extrapolated  energies.   This  fact  is  probably  related  to
+                                                                                  the proximity of the continuum of the excitated states in
+        2                                                                         high  momentum  sectors.   The  dispersion  of  energies  for
+                                                                                  each value of the variance is increasing, so that our punc-
+      1.8          Sz=0, K=(0,0)                                                  tual extrapolations become less accurate than in the low
+                   Sz=1, K=(π,π)                                                  momentum  sector.  Clearly  this  point  needs  to  be  more
+      1.6          2x13                                                           precisely elucidated.
+                   2x15
+      1.4
+      1.2                                                                                          Variational : e7
+∆e      1                                                                             −12.4        2x11 Exact
+                                                                                                   2x11 TLM
+      0.8                                                                             −12.8
+      0.6                                                                             −13.2
+      0.4                                                exact                                     Variational : e7
+                                                      ∆S                              −14.4        2x13 Exact
+                                                                                                   2x13 TLM
+      0.2                                                                         E
+                                                                                      −14.8
+        0  0                                           0.005
+
+                                                                                      −15.2
+                                        σn                                            −16.2         2x15 TLM
+                                                                                                    Variational : e6
+
+                                                                                      −16.6
+   FIG. 3.    Extrapolations  of  ∆e = (en + e′n)/2 − e∞  where
+e∞  is  the  zero-variance  limit  of  the  averaged  GS  energy  for                  −17
+the  2 × 13  and  2 × 15  ladders  with  two  holes  in  the  sectors                              0                                        π/2                                         π
+(Sz = 0, K = (0, 0)) and (Sz = 1, K = (π, π)).  We made the                                                             KX
+extrapolation  of  the  energy  calculated  for  6  iterations  with                 FIG. 4.  Pair dispersion calculated with the truncated Lanc-
+120 000  symmetric  states in  the last  truncated  Hilbert  space                zos method on the 2 × 11, 2 × 13 and 2 × 15 ladders with two
+(0.37% and 0.0021%  of the whole Hilbert space of the 2 × 13                      holes in the sector (Sz = 0, Ky = 0) (see the text for details).
+and  2 × 15  ladders).    ∆S  is  obtained  as  the  zero-variance
+extrapolation of the upper curves and compared to ED result                          To  conclude,  we  have  described  and  tested  a  trunca-
+for 2 × 13.
+                                                                                  tion  procedure  which  can  be  applied  to  a  large  class  of
+   Lastly  we  apply  this  systematic  extrapolation  pro-                       strongly correlated systems.  This  is  a  tool  to  construct
+cedure   to   study   the   pair   dispersion   in   the   sector                 variational approximations of the exact ground state by
+(Sz = 0, Ky = 0).  The results obtained within the TLM                            only keeping a small fraction of the whole Hilbert space.
+for L = 11, L = 13 and L = 15 are shown on Fig. 4.  For                           Here,  we  have  focussed on the  reliability  of  the  method
+the 2 × 11 and 2 × 13 ladders with two holes, we plot the                         to  produce  accurate  energies,  an  issue  not  addressed  in
+variational energies en  obtained at the n = 7th  iteration                       details in the litterature so far.  We have discovered an in-
+for  ﬁnal  truncated Hilbert  space sizes  ﬁxed respectively                      teresting behavior of the variational energy as a function
+to 120 000 and 1 300 000 states, which correspond approx-                         of the variance of its corresponding state which enables to
+imatively to the same proportion of the complete Hilbert                          quantitatively estimate error bars.  The method has been
+space  sizes  (6.5%  and  4%  respectively).   In  the  case  of                  tested in the case of a two-hole doped two-leg ladders and
+the 2 × 15 ladder, we kept 120 000 states (≃  0.0021% of                          we have found that the accuracy depends strongly on de-
+
+                                                                              4
+tails of the  excitation spectrum (presence of a gap, of a
+continuum...).  In particular, the accuracy of the two-hole
+pair dispersion is better for momenta where the ground-
+state  is  well  separated  from  the  continuum.   Although,
+the method is certainly not as accurate as e.g.  the DMRG
+technique, we believe it can oﬀer a complementary anal-
+ysis  in  case  where  the  DMRG  is  less  eﬃcient  (e.g.   for
+systems with periodic boundaries) while enabling to use
+symmetry  analysis  as  in  standard  exact  diagonalisation
+methods.  Systems where part of the charge or spin ﬂuc-
+tuations are selectively suppressed by external potential
+(e.g.  stripe potential, etc...)  are best candidates for this
+method.
+   We  thank  IDRIS  (Orsay)  for  allocation  of  CPU  time
+on the NEC SX5.
+
+
+
+
+
+
+
+
+
+
+
+1 J.  Riera  and  E.  Dagotto,  Phys.  Rev.  B  47,  15  346  (1993);
+  48, 9515 (1993).
+2 E.  Dagotto,   G.B.  Martins,   J.  Riera,   A.L.  Malvezzi  and
+  C.  Gazza,  Phys.  Rev.  B  58,  12  063  (1998);  G.  Martins,
+  C. Gazza and E. Dagotto, Phys. Rev. B 59, 13 596 (1999).
+3 S.R. White, Phys. Rev. Lett. 69, 2863 (1992).
+4 R.    Blankenbecler,     D.J.    Scalapino    and    R.L.    Sugar,
+  Phys. Rev. D 24, 2278 (1981).
+5 S. Sorella, cond-mat/0009149.
+6 For  a  review  on  spin  ladders  see  for  e.g.  E.  Dagotto  and
+  T.M. Rice, Science, 271, 618 (1996).
+7 The ground-state energies of the 2 × 11 and 2 × 13 spin lad-
+  ders  with  two  holes  in  the  sector  (S = 0, K = (0, 0))  have
+  been  obtained  from  ED  on  Hilbert  spaces  with  16 902 230
+  and  969 969  states  respectively  (taking  the  spin  inversion
+  symmetry  into  account):    E2×11GS         =       −  12.99978   and
+  E2×13GS      =   − 14.90765.
+8 D.   Poilblanc,   O.   Chiappa,   J.   Riera,   S.R.   White   and
+  D.J. Scalapino, Phys. Rev. B 62, Rxxx (1 december, 2000).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                              5

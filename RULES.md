@@ -28,7 +28,8 @@ row moves to the instance of that sector and does not compete here.
 
 An instance id reads `Model/lattice_N_boundary_couplings`, the form VarBench uses:
 `J1J2/square_100_P_0.5`. The boundary is `P` (periodic), `O` (open), `PO` (a cylinder, periodic in
-one direction and open in the other) or `PA`. A lattice name with a cluster after a hyphen
+one direction and open in the other), `PA`, or `A` (antiperiodic along a ladder's legs and open
+across them, the t-J family below). A lattice name with a cluster after a hyphen
 (`kagome-36a`, `rectangular-10x20`, `honeycomb-4x4`) names a cluster. The cluster's shape is part
 of the instance, because two clusters with the same site count are two Hamiltonians.
 
@@ -57,12 +58,56 @@ by an overall factor share one instance:
 - Kitaev: |K| = 1. The id keeps the sign of K (`K-1`, `K1`), and J and Γ are in units of |K|.
 - Shastry-Sutherland: Jd = 1 on the dimer bond, and J is the ratio J/Jd.
 - Honeycomb J1-J2-J3: J1 = 1.
+- t-J: t = 1 (below).
 
 A source whose Hamiltonian is the instance's times a factor prints its energies times that
 factor. A source that writes Pauli matrices with coupling c has |K| = 4|c| in the S = σ/2 form.
 The loader divides the energy, its error bar and its variance by the factor, never by hand. The
 row keeps the factor and the source's couplings in `normalised`, and `reported_as` keeps the
 printed number.
+
+The t-J family (2026-10-22):
+
+The t-J model, with nearest-neighbour hopping t and, where a source has them, next-nearest (t') and
+third-neighbour (t'') hopping:
+
+`H = -t sum_<ij>,s P(c+_is c_js + h.c.)P - t' sum_<<ij>>,s P(...)P - t'' sum_<<<ij>>>,s P(...)P + J sum_<ij> (S_i.S_j - n_i n_j / 4)`
+
+P removes doubly occupied sites and S = sigma/2. A model with any further term (three-site hopping,
+ring exchange, a J2 spin coupling, phonons, a flux, disorder, Jz anisotropy, a Coulomb V, SU(N)
+spins, bosons) is not in the family. Zero holes is the Heisenberg model, not a t-J instance.
+
+- Id: `tJ/<lattice>_N_<b>_h<holes>_J<J>[_tp<t'>][_tpp<t''>]`, for example `tJ/square_26_P_h2_J0.4`.
+  The electron numbers are N_up = N_dn, or N_up = N_dn + 1 for an odd electron count; the ground
+  state of every total spin S has a member there, so the instance's energy is the ground state at
+  that electron number.
+- Couplings are normalised to t = 1 (2026-10-22, as for the families above): J, t' and t'' are
+  ratios to t. A source in units of J (t/J = 3) has a Hamiltonian t times the instance's; the loader
+  divides its energies, error bars and variances by that factor and the row keeps it in
+  `normalised`. Never by hand.
+- Signs: the id carries t' and t'' for H written as above with t > 0. On a bipartite cluster the
+  gauge c_i -> (-1)^i c_i changes the sign of t and of no same-sublattice hopping, so a source with
+  t < 0 maps onto t = 1 with its t' and t'' unchanged. An electron-doped model written through the
+  electron-hole transformation (hole operators, all t_ij reversed) is a t-J model with one particle
+  per carrier fewer than half filling; its carriers are the instance's holes.
+- The exchange term carries -n_i n_j / 4. With more than one hole, or one hole on a cluster whose
+  sites differ in coordination, the sum of n_i n_j over bonds is not a constant, so a source that
+  writes J sum S_i.S_j alone is a different Hamiltonian, not a shifted one. Its rows wait for
+  instances of their own (§5); none is created yet.
+- Clusters: `chain`, `ladder-WxL` (W legs, L rungs, open across the legs), `rectangular-WxL`
+  (VarBench's naming; `PO` is periodic along W), `square` and `triangular` for square-shaped
+  clusters, and a cluster named for its source otherwise (`honeycomb-flake24`). A periodic square
+  cluster of N sites where N = a^2 + b^2 has one square shape is that cluster, with edge vectors
+  (a, b) and (-b, a): 18 is (3, 3), 26 is (5, 1), 32 is (4, 4). The instance's `cluster` field states
+  the shape and where the source defines it. A cluster or boundary the source does not state creates
+  no instance; its rows wait until it is known (SWEEP.md, 2026-10-22).
+- Boundary: `P`, `O` and `PO` as in VarBench, and `A`: antiperiodic along a ladder's legs and open
+  across them. Periodic means the hopping across the boundary has the sign of every other hopping in
+  the Hamiltonian as written; a source that applies a phase at the boundary (0 or pi, a twist) states
+  which one, or its rows wait.
+- Not rows: energies per hole relative to the undoped cluster (e_h = [E(N_h) - E(0)] / N_h),
+  binding energies, extrapolations to infinite size, and sector minima other than the ground state
+  (§6).
 
 ## 3. Required fields
 
@@ -152,11 +197,19 @@ Stored conventions follow VarBench and are asserted per instance, not per row:
 - Spin models are written with Pauli matrices and stored as totals. Papers quote
   `E/N` in the `S.S` convention: `E/N = energy / (4 * n_sites)`.
 - Hubbard and t-V are stored as totals; papers quote per site.
-- `dof` is the spin count for spin models, `N_up + N_dn` for Hubbard, and the particle
+- t-J is stored as the total energy in units of t, with the exchange term J (S_i.S_j - n_i n_j / 4)
+  (§2.1; 2026-10-22). Papers quote per site, as totals, or in units of J; the loader converts each,
+  and a source in units of J carries its factor in `normalised`. A source whose exchange term is
+  J S_i.S_j alone is converted only where the sum of n_i n_j over bonds is a constant: zero holes
+  (not a t-J instance), or one hole on a cluster where every site has the same coordination z, where
+  the shift is -(J / 4)(N_bonds - z). No row read so far needs it, so the loader has no such
+  conversion yet.
+- `dof` is the spin count for spin models, `N_up + N_dn` for Hubbard and t-J, and the particle
   count for spinless t-V.
 - `einf` is `0` for traceless spin Hamiltonians, `U * N_up * N_dn / n_sites` for the plain
   Hubbard model. Hopping terms are traceless, so a `t'` variant keeps the same `einf`;
-  extra density-density terms do not.
+  extra density-density terms do not. The t-J exchange term is not traceless in the projected space
+  and no source states E_inf, so t-J has no `einf` and no V-score.
 - The honeycomb and Shastry-Sutherland families (2026-10-20) are written with spin-1/2 operators
   S = σ/2. They are stored like Heisenberg and J1-J2, as totals in the Pauli form (4 times the
   S-operator energy). `E/N = energy / (4 * n_sites)` is therefore the energy per site of the

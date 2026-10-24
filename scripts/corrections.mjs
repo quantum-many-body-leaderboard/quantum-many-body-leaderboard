@@ -23068,4 +23068,777 @@ export const CORRECTIONS = [
     "reason": "Rule for exact rows QMBL recomputed (2026-09-30; ruled for this row 2026-10-24): at J/Jd = 1/2 the dimer-singlet product state is a proven ground state (H splits into triangles h_t = (Jd/2) S1.S2 + J (S1.S3 + S2.S3), each bounded below by -3J/4 and saturated by the dimer state, also on the 6 x 6 torus), so E0 = -54 exactly (18 dimers x -3/4 x 4); the printed -0.374999999999425 per site carries the source's Lanczos residual (5.75e-13 per site). The row carries the exact value; the printed value stays here. See checks/exact-recompute-2026-10-families/.",
     "source_entry": "famE-exact-recompute#19, famP2-10-1142-s0129183106009709#11 (qmbl-verify 2026-10-23); rule for recomputed exact rows, 2026-09-30, ruled for these rows 2026-10-24"
   },
+  // qmbl-verify 2026-10-23 (t-J branch), rulings of 2026-10-24: sampled false on the exact Lanczos-step
+  // rows of arXiv:cond-mat/0006353 (11), and the exact rows QMBL recomputed carry its digits, the printed
+  // value kept (rule of 2026-09-30; checks/tj-exact-recompute-2026-10/) (22; the 32-site row with four
+  // carriers was not recomputed and stays as printed); sampled false on the exact rows labelled Lanczos,
+  // E_ex (Lanczos), E_ED or Exact (...) (15).
+  {
+    "match": {
+      "instance": "tJ/square_18_P_h2_J0.4",
+      "method": "exact p-LS, p = 1, Δ_BCS = 0.20",
+      "energy": -11.7756
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "Table 1.1 caption: 'obtained with the exact and the statistical (FLST) application of p Lanczos steps'",
+    "location": "arXiv Table 1.1 = journal Table 1, row N = 16, Delta_BCS = 0.20, p = 1, column E0/L (Exact) (exact application of p Lanczos steps)",
+    "version_read": "journal version (Springer/Kluwer 2001, NATO Science Series II vol. 15, pp. 173-185, publisher PDF via ETH access, pypdf layout mode on the publisher's OCR text layer: sources/tj18-dl/springer-978-94-010-0771-9_18.pdf) and arXiv:cond-mat/0006353v1 (only version; pypdf layout mode, sources/tj18-dl/layout.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: the energy of p Lanczos steps applied exactly, or of the exact ground state, carries no statistical error, and the method string matches none of isSampled's deterministic markers, so the row would read as a sampled energy without an error bar. The generator's reading already states sampled: false; the loader does not carry the field, so it is stated here (ruled 2026-10-24).",
+    "source_entry": "tjP4-10-1007-978-94-010-0771-9-18#1 (qmbl-verify 2026-10-23); ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_18_P_h2_J0.4",
+      "method": "p-LS, p = 0, Δ_BCS = 0.00",
+      "energy": -11.49246
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "Table 1.2 caption: 'obtained applying exactly p Lanczos steps on the variational wavefunction of Eq. (1.3)'",
+    "location": "arXiv Table 1.2 = journal Table 2, row N = 16, Delta_BCS = 0.00, p = 0",
+    "version_read": "journal version (Springer/Kluwer 2001, NATO Science Series II vol. 15, pp. 173-185, publisher PDF via ETH access, pypdf layout mode on the publisher's OCR text layer: sources/tj18-dl/springer-978-94-010-0771-9_18.pdf) and arXiv:cond-mat/0006353v1 (only version; pypdf layout mode, sources/tj18-dl/layout.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: the energy of p Lanczos steps applied exactly, or of the exact ground state, carries no statistical error, and the method string matches none of isSampled's deterministic markers, so the row would read as a sampled energy without an error bar. The generator's reading already states sampled: false; the loader does not carry the field, so it is stated here (ruled 2026-10-24).",
+    "source_entry": "tjP4-10-1007-978-94-010-0771-9-18#4 (qmbl-verify 2026-10-23); ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_18_P_h2_J0.4",
+      "method": "p-LS, p = 0, Δ_BCS = 0.55",
+      "energy": -11.62062
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "Table 1.2 caption: 'obtained applying exactly p Lanczos steps on the variational wavefunction of Eq. (1.3)'",
+    "location": "arXiv Table 1.2 = journal Table 2, row N = 16, Delta_BCS = 0.55, p = 0",
+    "version_read": "journal version (Springer/Kluwer 2001, NATO Science Series II vol. 15, pp. 173-185, publisher PDF via ETH access, pypdf layout mode on the publisher's OCR text layer: sources/tj18-dl/springer-978-94-010-0771-9_18.pdf) and arXiv:cond-mat/0006353v1 (only version; pypdf layout mode, sources/tj18-dl/layout.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: the energy of p Lanczos steps applied exactly, or of the exact ground state, carries no statistical error, and the method string matches none of isSampled's deterministic markers, so the row would read as a sampled energy without an error bar. The generator's reading already states sampled: false; the loader does not carry the field, so it is stated here (ruled 2026-10-24).",
+    "source_entry": "tjP4-10-1007-978-94-010-0771-9-18#6 (qmbl-verify 2026-10-23); ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_18_P_h2_J0.4",
+      "method": "p-LS, p = 1, Δ_BCS = 0.55",
+      "energy": -11.81484
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "Table 1.2 caption: 'obtained applying exactly p Lanczos steps on the variational wavefunction of Eq. (1.3)'",
+    "location": "arXiv Table 1.2 = journal Table 2, row N = 16, Delta_BCS = 0.55, p = 1",
+    "version_read": "journal version (Springer/Kluwer 2001, NATO Science Series II vol. 15, pp. 173-185, publisher PDF via ETH access, pypdf layout mode on the publisher's OCR text layer: sources/tj18-dl/springer-978-94-010-0771-9_18.pdf) and arXiv:cond-mat/0006353v1 (only version; pypdf layout mode, sources/tj18-dl/layout.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: the energy of p Lanczos steps applied exactly, or of the exact ground state, carries no statistical error, and the method string matches none of isSampled's deterministic markers, so the row would read as a sampled energy without an error bar. The generator's reading already states sampled: false; the loader does not carry the field, so it is stated here (ruled 2026-10-24).",
+    "source_entry": "tjP4-10-1007-978-94-010-0771-9-18#8 (qmbl-verify 2026-10-23); ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_18_P_h2_J0.4",
+      "method": "p-LS, p = 2, Δ_BCS = 0.55",
+      "energy": -11.84868
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "Table 1.2 caption: 'obtained applying exactly p Lanczos steps on the variational wavefunction of Eq. (1.3)'",
+    "location": "arXiv Table 1.2 = journal Table 2, row N = 16, Delta_BCS = 0.55, p = 2 (also Table 1.1 / Table 1, p = 2, column Exact: -0.65826)",
+    "version_read": "journal version (Springer/Kluwer 2001, NATO Science Series II vol. 15, pp. 173-185, publisher PDF via ETH access, pypdf layout mode on the publisher's OCR text layer: sources/tj18-dl/springer-978-94-010-0771-9_18.pdf) and arXiv:cond-mat/0006353v1 (only version; pypdf layout mode, sources/tj18-dl/layout.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: the energy of p Lanczos steps applied exactly, or of the exact ground state, carries no statistical error, and the method string matches none of isSampled's deterministic markers, so the row would read as a sampled energy without an error bar. The generator's reading already states sampled: false; the loader does not carry the field, so it is stated here (ruled 2026-10-24).",
+    "source_entry": "tjP4-10-1007-978-94-010-0771-9-18#10 (qmbl-verify 2026-10-23); ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_18_P_h2_J0.4",
+      "method": "p-LS, p = 3, Δ_BCS = 0.55",
+      "energy": -11.85876
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "Table 1.2 caption: 'obtained applying exactly p Lanczos steps on the variational wavefunction of Eq. (1.3)'",
+    "location": "arXiv Table 1.2 = journal Table 2, row N = 16, Delta_BCS = 0.55, p = 3",
+    "version_read": "journal version (Springer/Kluwer 2001, NATO Science Series II vol. 15, pp. 173-185, publisher PDF via ETH access, pypdf layout mode on the publisher's OCR text layer: sources/tj18-dl/springer-978-94-010-0771-9_18.pdf) and arXiv:cond-mat/0006353v1 (only version; pypdf layout mode, sources/tj18-dl/layout.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: the energy of p Lanczos steps applied exactly, or of the exact ground state, carries no statistical error, and the method string matches none of isSampled's deterministic markers, so the row would read as a sampled energy without an error bar. The generator's reading already states sampled: false; the loader does not carry the field, so it is stated here (ruled 2026-10-24).",
+    "source_entry": "tjP4-10-1007-978-94-010-0771-9-18#12 (qmbl-verify 2026-10-23); ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_18_P_h2_J0.4",
+      "method": "p-LS, p = 4, Δ_BCS = 0.55",
+      "energy": -11.86164
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "Table 1.2 caption: 'obtained applying exactly p Lanczos steps on the variational wavefunction of Eq. (1.3)'",
+    "location": "arXiv Table 1.2 = journal Table 2, row N = 16, Delta_BCS = 0.55, p = 4",
+    "version_read": "journal version (Springer/Kluwer 2001, NATO Science Series II vol. 15, pp. 173-185, publisher PDF via ETH access, pypdf layout mode on the publisher's OCR text layer: sources/tj18-dl/springer-978-94-010-0771-9_18.pdf) and arXiv:cond-mat/0006353v1 (only version; pypdf layout mode, sources/tj18-dl/layout.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: the energy of p Lanczos steps applied exactly, or of the exact ground state, carries no statistical error, and the method string matches none of isSampled's deterministic markers, so the row would read as a sampled energy without an error bar. The generator's reading already states sampled: false; the loader does not carry the field, so it is stated here (ruled 2026-10-24).",
+    "source_entry": "tjP4-10-1007-978-94-010-0771-9-18#14 (qmbl-verify 2026-10-23); ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_18_P_h2_J0.4",
+      "method": "p-LS, p = 5, Δ_BCS = 0.55",
+      "energy": -11.86236
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "Table 1.2 caption: 'obtained applying exactly p Lanczos steps on the variational wavefunction of Eq. (1.3)'",
+    "location": "arXiv Table 1.2 = journal Table 2, row N = 16, Delta_BCS = 0.55, p = 5",
+    "version_read": "journal version (Springer/Kluwer 2001, NATO Science Series II vol. 15, pp. 173-185, publisher PDF via ETH access, pypdf layout mode on the publisher's OCR text layer: sources/tj18-dl/springer-978-94-010-0771-9_18.pdf) and arXiv:cond-mat/0006353v1 (only version; pypdf layout mode, sources/tj18-dl/layout.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: the energy of p Lanczos steps applied exactly, or of the exact ground state, carries no statistical error, and the method string matches none of isSampled's deterministic markers, so the row would read as a sampled energy without an error bar. The generator's reading already states sampled: false; the loader does not carry the field, so it is stated here (ruled 2026-10-24).",
+    "source_entry": "tjP4-10-1007-978-94-010-0771-9-18#16 (qmbl-verify 2026-10-23); ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_18_P_h2_J0.4",
+      "method": "p-LS, p = 6, Δ_BCS = 0.55",
+      "energy": -11.86272
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "Table 1.2 caption: 'obtained applying exactly p Lanczos steps on the variational wavefunction of Eq. (1.3)'",
+    "location": "arXiv Table 1.2 = journal Table 2, row N = 16, Delta_BCS = 0.55, p = 6",
+    "version_read": "journal version (Springer/Kluwer 2001, NATO Science Series II vol. 15, pp. 173-185, publisher PDF via ETH access, pypdf layout mode on the publisher's OCR text layer: sources/tj18-dl/springer-978-94-010-0771-9_18.pdf) and arXiv:cond-mat/0006353v1 (only version; pypdf layout mode, sources/tj18-dl/layout.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: the energy of p Lanczos steps applied exactly, or of the exact ground state, carries no statistical error, and the method string matches none of isSampled's deterministic markers, so the row would read as a sampled energy without an error bar. The generator's reading already states sampled: false; the loader does not carry the field, so it is stated here (ruled 2026-10-24).",
+    "source_entry": "tjP4-10-1007-978-94-010-0771-9-18#18 (qmbl-verify 2026-10-23); ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_18_P_h2_J0.4",
+      "method": "p-LS, p = 7, Δ_BCS = 0.55",
+      "energy": -11.86272
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "Table 1.2 caption: 'obtained applying exactly p Lanczos steps on the variational wavefunction of Eq. (1.3)'",
+    "location": "arXiv Table 1.2 = journal Table 2, row N = 16, Delta_BCS = 0.55, p = 7",
+    "version_read": "journal version (Springer/Kluwer 2001, NATO Science Series II vol. 15, pp. 173-185, publisher PDF via ETH access, pypdf layout mode on the publisher's OCR text layer: sources/tj18-dl/springer-978-94-010-0771-9_18.pdf) and arXiv:cond-mat/0006353v1 (only version; pypdf layout mode, sources/tj18-dl/layout.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: the energy of p Lanczos steps applied exactly, or of the exact ground state, carries no statistical error, and the method string matches none of isSampled's deterministic markers, so the row would read as a sampled energy without an error bar. The generator's reading already states sampled: false; the loader does not carry the field, so it is stated here (ruled 2026-10-24).",
+    "source_entry": "tjP4-10-1007-978-94-010-0771-9-18#20 (qmbl-verify 2026-10-23); ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_18_P_h2_J0.4",
+      "method": "exact (p = ∞)",
+      "energy": -11.86272
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "Table 1.2: p = infinity, variance 0.0, Z_p = 1.0000 (Lanczos to convergence, exact)",
+    "location": "arXiv Table 1.2 = journal Table 2, row N = 16, Delta_BCS = 0.55, p = infinity (OCR of the journal scan reads '00'), Z_p = 1.0000, Delta E_p x L^2 = 0.0",
+    "version_read": "journal version (Springer/Kluwer 2001, NATO Science Series II vol. 15, pp. 173-185, publisher PDF via ETH access, pypdf layout mode on the publisher's OCR text layer: sources/tj18-dl/springer-978-94-010-0771-9_18.pdf) and arXiv:cond-mat/0006353v1 (only version; pypdf layout mode, sources/tj18-dl/layout.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: the energy of p Lanczos steps applied exactly, or of the exact ground state, carries no statistical error, and the method string matches none of isSampled's deterministic markers, so the row would read as a sampled energy without an error bar. The generator's reading already states sampled: false; the loader does not carry the field, so it is stated here (ruled 2026-10-24).",
+    "source_entry": "tjP4-10-1007-978-94-010-0771-9-18#22 (qmbl-verify 2026-10-23); ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/honeycomb-flake24_24_O_h1_J0.333333",
+      "method": "ED",
+      "energy": -8.26066666667
+    },
+    "field": "energy",
+    "to": -8.260597675193,
+    "reported_as": "-24.782 (E_tot in units of J (t/J = 3))",
+    "location": "Table I, E_tot, row ED, 24-site cluster, t/J = 3 (line 159)",
+    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
+    "conversion": "-24.782 / 3 (units of J, t/J = 3) = -8.26066666667 (stored); recomputed -8.260597675193 = -24.78179303 in the printed form, which rounds to the printed digits",
+    "checked_on": "2026-10-23",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 4 of 4 symmetry sectors, lowest sector cor_h1_J1o3_l2, dimension 5408312), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
+    "source_entry": "tjE-exact-recompute#0 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/honeycomb-flake24_24_O_h2_J0.333333",
+      "method": "ED",
+      "energy": -9.94466666667
+    },
+    "field": "energy",
+    "to": -9.944599589435,
+    "reported_as": "-29.834 (E_tot in units of J (t/J = 3))",
+    "location": "Table III, E_tot, row ED, 24-site cluster, t/J = 3 (line 362)",
+    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
+    "conversion": "-29.834 / 3 (units of J, t/J = 3) = -9.94466666667 (stored); recomputed -9.944599589435 = -29.83379877 in the printed form, which rounds to the printed digits",
+    "checked_on": "2026-10-23",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 4 of 4 symmetry sectors, lowest sector cor_h2_J1o3_l2, dimension 32449872), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
+    "source_entry": "tjE-exact-recompute#1 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/ladder-2x11_22_P_h2_J0.5",
+      "method": "ED (sector S = 0, K = (0,0))",
+      "energy": -12.99978
+    },
+    "field": "energy",
+    "to": -12.999784429648,
+    "reported_as": "-12.99978 (E_GS total, units of t)",
+    "location": "footnote 7: E_GS of the 2 x 11 ladder with two holes, sector (S = 0, K = (0, 0)), J/t = 0.5 (line 288)",
+    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
+    "conversion": "-12.99978 (total) = -12.99978 (stored); recomputed -12.999784429648 = -12.9997844296 in the printed form, which rounds to the printed digits",
+    "checked_on": "2026-10-23",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 12 of 12 symmetry sectors, lowest sector lad2x11P_h2_J0.5_n0_p+, dimension 1940064), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
+    "source_entry": "tjE-exact-recompute#2 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/ladder-2x13_26_P_h2_J0.5",
+      "method": "ED (sector S = 0, K = (0,0))",
+      "energy": -14.90765
+    },
+    "field": "energy",
+    "to": -14.907654276052,
+    "reported_as": "-14.90765 (E_GS total, units of t)",
+    "location": "footnote 7: E_GS of the 2 x 13 ladder with two holes, sector (S = 0, K = (0, 0)), J/t = 0.5 (line 289)",
+    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
+    "conversion": "-14.90765 (total) = -14.90765 (stored); recomputed -14.907654276052 = -14.9076542761 in the printed form, which rounds to the printed digits",
+    "checked_on": "2026-10-23",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 14 of 14 symmetry sectors, lowest sector lad2x13P_h2_J0.5_n0_p+, dimension 33802412), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
+    "source_entry": "tjE-exact-recompute#3 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/ladder-3x6_18_A_h1_J0.5",
+      "method": "Lanczos",
+      "energy": -10.40757
+    },
+    "field": "energy",
+    "to": -10.407574528812,
+    "reported_as": "-10.40757 (total, units of t)",
+    "location": "Table I, 3 x 6 isotropic ladder, 1 hole, lowest entry of the column (k = π/2, R = -1) (line 609)",
+    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
+    "conversion": "-10.40757 (total) = -10.40757 (stored); recomputed -10.407574528812 = -10.4075745288 in the printed form, which rounds to the printed digits",
+    "checked_on": "2026-10-23",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; the full space at its electron number, lowest sector lad3x6A_h1_J0.5_full, dimension 437580), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
+    "source_entry": "tjE-exact-recompute#4 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/ladder-3x6_18_A_h2_J0.5",
+      "method": "Lanczos",
+      "energy": -11.8068
+    },
+    "field": "energy",
+    "to": -11.806802485145,
+    "reported_as": "-11.80680 (total, units of t)",
+    "location": "Table I, 3 x 6 isotropic ladder, 2 holes, lowest entry of the column (k = 0, R = +1) (line 599)",
+    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
+    "conversion": "-11.80680 (total) = -11.8068 (stored); recomputed -11.806802485145 = -11.8068024851 in the printed form, which rounds to the printed digits",
+    "checked_on": "2026-10-23",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; the full space at its electron number, lowest sector lad3x6A_h2_J0.5_full, dimension 1969110), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
+    "source_entry": "tjE-exact-recompute#5 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_16_O_h2_J0.4",
+      "method": "E_ED",
+      "energy": -9.02976
+    },
+    "field": "energy",
+    "to": -9.029868687223,
+    "reported_as": "-0.56436 (E_ED per site)",
+    "location": "text: E_ED of the 4 x 4 lattice with 2 holes, J/t = 0.4, open boundaries (line 94)",
+    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
+    "conversion": "-0.56436 x 16 = -9.02976 (stored); recomputed -9.029868687223 = -0.5643667930 in the printed form, which truncates to the printed digits",
+    "checked_on": "2026-10-23",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value truncated (rounding would print -0.56437) to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; the full space at its electron number, lowest sector sq16O_h2_J0.4_full, dimension 411840), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
+    "source_entry": "tjE-exact-recompute#6 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_18_P_h2_J0.4",
+      "method": "exact (p = ∞)",
+      "energy": -11.86272
+    },
+    "field": "energy",
+    "to": -11.862775993031,
+    "reported_as": "-0.65904 (E0/L, p = infinity)",
+    "location": "Table 1.2, L = 18, N = 16, J = 0.4, p = ∞ (the exact ground state) (line 305)",
+    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
+    "conversion": "-0.65904 x 18 = -11.86272 (stored); recomputed -11.862775993031 = -0.6590431107 in the printed form, which rounds to the printed digits",
+    "checked_on": "2026-10-23",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; the full space at its electron number, lowest sector sq18P_h2_J0.4_full, dimension 1969110), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
+    "source_entry": "tjE-exact-recompute#7 (qmbl-verify 2026-10-23), tjP4-10-1007-978-94-010-0771-9-18#21 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J0.3",
+      "method": "E_ex (Lanczos)",
+      "energy": -13.02522
+    },
+    "field": "energy",
+    "to": -13.025267202995,
+    "reported_as": "-0.50097 (E/L)",
+    "location": "Table I, J/t = 0.3, column E_ex (Lanczos) (line 383)",
+    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
+    "conversion": "-0.50097 x 26 = -13.02522 (stored); recomputed -13.025267202995 = -0.5009718155 in the printed form, which rounds to the printed digits",
+    "checked_on": "2026-10-23",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 14 of 14 symmetry sectors, lowest sector sq26P_h2_J0.3_k0-0_l2_star1, dimension 8450824), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
+    "source_entry": "tjE-exact-recompute#8 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J0.4",
+      "method": "E_ex (Lanczos)",
+      "energy": -15.45752
+    },
+    "field": "energy",
+    "to": -15.457434662825,
+    "reported_as": "-0.59452 (E/L)",
+    "location": "Table I, J/t = 0.4, column E_ex (Lanczos) (line 384)",
+    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
+    "conversion": "-0.59452 x 26 = -15.45752 (stored); recomputed -15.457434662825 = -0.5945167178 in the printed form, which rounds to the printed digits",
+    "checked_on": "2026-10-23",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 14 of 14 symmetry sectors, lowest sector sq26P_h2_J0.4_k0-0_l2_star1, dimension 8450824), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
+    "source_entry": "tjE-exact-recompute#9 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J0.5",
+      "method": "E_ex (Lanczos)",
+      "energy": -17.9257
+    },
+    "field": "energy",
+    "to": -17.925669794311,
+    "reported_as": "-0.68945 (E/L)",
+    "location": "Table I, J/t = 0.5, column E_ex (Lanczos) (line 385)",
+    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
+    "conversion": "-0.68945 x 26 = -17.9257 (stored); recomputed -17.925669794311 = -0.6894488382 in the printed form, which rounds to the printed digits",
+    "checked_on": "2026-10-23",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 14 of 14 symmetry sectors, lowest sector sq26P_h2_J0.5_k0-0_l2_star1, dimension 8450824), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
+    "source_entry": "tjE-exact-recompute#10 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J0.6",
+      "method": "E_ex (Lanczos)",
+      "energy": -20.41962
+    },
+    "field": "energy",
+    "to": -20.419736257759,
+    "reported_as": "-0.78537 (E/L)",
+    "location": "Table I, J/t = 0.6, column E_ex (Lanczos) (line 386)",
+    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
+    "conversion": "-0.78537 x 26 = -20.41962 (stored); recomputed -20.419736257759 = -0.7853744715 in the printed form, which rounds to the printed digits",
+    "checked_on": "2026-10-23",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 14 of 14 symmetry sectors, lowest sector sq26P_h2_J0.6_k0-0_l2_star1, dimension 8450824), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
+    "source_entry": "tjE-exact-recompute#11 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J0.8",
+      "method": "E_ex (Lanczos)",
+      "energy": -25.4631
+    },
+    "field": "energy",
+    "to": -25.463200957002,
+    "reported_as": "-0.97935 (E/L)",
+    "location": "Table I, J/t = 0.8, column E_ex (Lanczos) (line 387)",
+    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
+    "conversion": "-0.97935 x 26 = -25.4631 (stored); recomputed -25.463200957002 = -0.9793538830 in the printed form, which rounds to the printed digits",
+    "checked_on": "2026-10-23",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 14 of 14 symmetry sectors, lowest sector sq26P_h2_J0.8_k0-0_l2_star1, dimension 8450824), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
+    "source_entry": "tjE-exact-recompute#12 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J1",
+      "method": "E_ex (Lanczos)",
+      "energy": -30.55988
+    },
+    "field": "energy",
+    "to": -30.559852374433,
+    "reported_as": "-1.17538 (E/L)",
+    "location": "Table I, J/t = 1, column E_ex (Lanczos) (line 388)",
+    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
+    "conversion": "-1.17538 x 26 = -30.55988 (stored); recomputed -30.559852374433 = -1.1753789375 in the printed form, which rounds to the printed digits",
+    "checked_on": "2026-10-23",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 14 of 14 symmetry sectors, lowest sector sq26P_h2_J1_k0-0_l2_star1, dimension 8450824), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
+    "source_entry": "tjE-exact-recompute#13 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.3",
+      "method": "Exact (D. Poilblanc, unpublished)",
+      "energy": -16.70812
+    },
+    "field": "energy",
+    "to": -16.708026076752,
+    "reported_as": "-0.64262 (E/L)",
+    "location": "Table I, N = 22, L = 26, J/t = 0.3, column Exact",
+    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
+    "conversion": "-0.64262 x 26 = -16.70812 (stored); recomputed -16.708026076752 = -0.6426163876 in the printed form, which rounds to the printed digits",
+    "checked_on": "2026-10-23",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 6 of 14 symmetry sectors, lowest sector sq26P_h4_J0.3_k0-0_l0_star1, dimension 101410008), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
+    "source_entry": "tjE-exact-recompute#14 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.4",
+      "method": "E_ex (Lanczos)",
+      "energy": -18.57362
+    },
+    "field": "energy",
+    "to": -18.573539395453,
+    "reported_as": "-0.71437 (E/L)",
+    "location": "Table II, J/t = 0.4, column E_ex (Lanczos) (line 394)",
+    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
+    "conversion": "-0.71437 x 26 = -18.57362 (stored); recomputed -18.573539395453 = -0.7143668998 in the printed form, which rounds to the printed digits",
+    "checked_on": "2026-10-23",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 1 of 14 symmetry sectors, lowest sector sq26P_h4_J0.4_k0-0_l0_star1, dimension 101410008), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
+    "source_entry": "tjE-exact-recompute#15 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.5",
+      "method": "Exact (D. Poilblanc, unpublished)",
+      "energy": -20.49112
+    },
+    "field": "energy",
+    "to": -20.491228545965,
+    "reported_as": "-0.78812 (E/L)",
+    "location": "Table I, N = 22, L = 26, J/t = 0.5, column Exact",
+    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
+    "conversion": "-0.78812 x 26 = -20.49112 (stored); recomputed -20.491228545965 = -0.7881241748 in the printed form, which rounds to the printed digits",
+    "checked_on": "2026-10-23",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 1 of 14 symmetry sectors, lowest sector sq26P_h4_J0.5_k0-0_l0_star1, dimension 101410008), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
+    "source_entry": "tjE-exact-recompute#16 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.6",
+      "method": "E_ex (Lanczos)",
+      "energy": -22.44762
+    },
+    "field": "energy",
+    "to": -22.447652574704,
+    "reported_as": "-0.86337 (E/L)",
+    "location": "Table II, J/t = 0.6, column E_ex (Lanczos) (line 396)",
+    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
+    "conversion": "-0.86337 x 26 = -22.44762 (stored); recomputed -22.447652574704 = -0.8633712529 in the printed form, which rounds to the printed digits",
+    "checked_on": "2026-10-23",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 1 of 14 symmetry sectors, lowest sector sq26P_h4_J0.6_k0-0_l0_star1, dimension 101410008), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
+    "source_entry": "tjE-exact-recompute#17 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.8",
+      "method": "E_ex (Lanczos)",
+      "energy": -26.45058
+    },
+    "field": "energy",
+    "to": -26.450585746393,
+    "reported_as": "-1.01733 (E/L)",
+    "location": "Table II, J/t = 0.8, column E_ex (Lanczos) (line 397)",
+    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
+    "conversion": "-1.01733 x 26 = -26.45058 (stored); recomputed -26.450585746393 = -1.0173302210 in the printed form, which rounds to the printed digits",
+    "checked_on": "2026-10-23",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 1 of 14 symmetry sectors, lowest sector sq26P_h4_J0.8_k0-0_l0_star1, dimension 101410008), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
+    "source_entry": "tjE-exact-recompute#18 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J1",
+      "method": "Exact (D. Poilblanc, unpublished)",
+      "energy": -30.54818
+    },
+    "field": "energy",
+    "to": -30.548073706468,
+    "reported_as": "-1.17493 (E/L)",
+    "location": "Table I, N = 22, L = 26, J/t = 1, column Exact",
+    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
+    "conversion": "-1.17493 x 26 = -30.54818 (stored); recomputed -30.548073706468 = -1.1749259118 in the printed form, which rounds to the printed digits",
+    "checked_on": "2026-10-23",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 1 of 14 symmetry sectors, lowest sector sq26P_h4_J1_k0-0_l0_star1, dimension 101410008), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
+    "source_entry": "tjE-exact-recompute#19 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_32_P_h1_J0.3_tp0.3_tpp-0.2",
+      "method": "exact diagonalization",
+      "energy": -13.913616
+    },
+    "field": "energy",
+    "to": -13.913615604089,
+    "reported_as": "-13.913616 (E_Nc total)",
+    "location": "Table I, E_Nc for Nc = 1 charge carriers of the electron-doped model (t = -1, t' = 0.3, t'' = -0.2, J = 0.3) (line 68)",
+    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
+    "conversion": "-13.913616 (total) = -13.913616 (stored); recomputed -13.913615604089 = -13.91361560409 in the printed form, which rounds to the printed digits",
+    "checked_on": "2026-10-23",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 4 symmetry sectors (the source's ground-state sector), lowest sector sq32P_h1_J0.3_tp0.3_tpp-0.2_k0-16_pg4++++_star2, dimension 75165879), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
+    "source_entry": "tjE-exact-recompute#20 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_32_P_h2_J0.3_tp0.3_tpp-0.2",
+      "method": "exact diagonalization",
+      "energy": -16.601689
+    },
+    "field": "energy",
+    "to": -16.601689053076,
+    "reported_as": "-16.601689 (E_Nc total)",
+    "location": "Table I, E_Nc for Nc = 2 charge carriers of the electron-doped model (t = -1, t' = 0.3, t'' = -0.2, J = 0.3) (line 69)",
+    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
+    "conversion": "-16.601689 (total) = -16.601689 (stored); recomputed -16.601689053076 = -16.60168905308 in the printed form, which rounds to the printed digits",
+    "checked_on": "2026-10-23",
+    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 1 symmetry sector (the source's ground-state sector), lowest sector sq32P_h2_J0.3_tp0.3_tpp-0.2_k0-0_pg8+-+--+-+_star1, dimension 300535476), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
+    "source_entry": "tjE-exact-recompute#21 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
+  },
+  {
+    "match": {
+      "instance": "tJ/ladder-3x6_18_A_h1_J0.5",
+      "method": "Lanczos",
+      "energy": -10.40757
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-10.40757",
+    "location": "Table I, 3 x 6 isotropic ladder, 1 hole, lowest entry of the column (k = π/2, R = -1) (line 609)",
+    "version_read": "the row's published method string; the exact diagonalization is recomputed in checks/tj-exact-recompute-2026-10/",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"Lanczos\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar (the README marked it); ruled 2026-10-24.",
+    "source_entry": "tjE-exact-recompute#4 (qmbl-verify 2026-10-23); ruled 2026-10-24 (exact rows whose label reads as sampled)"
+  },
+  {
+    "match": {
+      "instance": "tJ/ladder-3x6_18_A_h2_J0.5",
+      "method": "Lanczos",
+      "energy": -11.8068
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-11.80680",
+    "location": "Table I, 3 x 6 isotropic ladder, 2 holes, lowest entry of the column (k = 0, R = +1) (line 599)",
+    "version_read": "the row's published method string; the exact diagonalization is recomputed in checks/tj-exact-recompute-2026-10/",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"Lanczos\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar (the README marked it); ruled 2026-10-24.",
+    "source_entry": "tjE-exact-recompute#5 (qmbl-verify 2026-10-23); ruled 2026-10-24 (exact rows whose label reads as sampled)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_16_O_h2_J0.4",
+      "method": "E_ED",
+      "energy": -9.02976
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.56436",
+    "location": "text: E_ED of the 4 x 4 lattice with 2 holes, J/t = 0.4, open boundaries (line 94)",
+    "version_read": "the row's published method string; the exact diagonalization is recomputed in checks/tj-exact-recompute-2026-10/",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"E_ED\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar (the README marked it); ruled 2026-10-24.",
+    "source_entry": "tjE-exact-recompute#6 (qmbl-verify 2026-10-23); ruled 2026-10-24 (exact rows whose label reads as sampled)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J0.3",
+      "method": "E_ex (Lanczos)",
+      "energy": -13.02522
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.50097",
+    "location": "Table I, J/t = 0.3, column E_ex (Lanczos) (line 383)",
+    "version_read": "the row's published method string; the exact diagonalization is recomputed in checks/tj-exact-recompute-2026-10/",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"E_ex (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar (the README marked it); ruled 2026-10-24.",
+    "source_entry": "tjE-exact-recompute#8 (qmbl-verify 2026-10-23); ruled 2026-10-24 (exact rows whose label reads as sampled)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J0.4",
+      "method": "E_ex (Lanczos)",
+      "energy": -15.45752
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.59452",
+    "location": "Table I, J/t = 0.4, column E_ex (Lanczos) (line 384)",
+    "version_read": "the row's published method string; the exact diagonalization is recomputed in checks/tj-exact-recompute-2026-10/",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"E_ex (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar (the README marked it); ruled 2026-10-24.",
+    "source_entry": "tjE-exact-recompute#9 (qmbl-verify 2026-10-23); ruled 2026-10-24 (exact rows whose label reads as sampled)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J0.5",
+      "method": "E_ex (Lanczos)",
+      "energy": -17.9257
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.68945",
+    "location": "Table I, J/t = 0.5, column E_ex (Lanczos) (line 385)",
+    "version_read": "the row's published method string; the exact diagonalization is recomputed in checks/tj-exact-recompute-2026-10/",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"E_ex (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar (the README marked it); ruled 2026-10-24.",
+    "source_entry": "tjE-exact-recompute#10 (qmbl-verify 2026-10-23); ruled 2026-10-24 (exact rows whose label reads as sampled)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J0.6",
+      "method": "E_ex (Lanczos)",
+      "energy": -20.41962
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.78537",
+    "location": "Table I, J/t = 0.6, column E_ex (Lanczos) (line 386)",
+    "version_read": "the row's published method string; the exact diagonalization is recomputed in checks/tj-exact-recompute-2026-10/",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"E_ex (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar (the README marked it); ruled 2026-10-24.",
+    "source_entry": "tjE-exact-recompute#11 (qmbl-verify 2026-10-23); ruled 2026-10-24 (exact rows whose label reads as sampled)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J0.8",
+      "method": "E_ex (Lanczos)",
+      "energy": -25.4631
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.97935",
+    "location": "Table I, J/t = 0.8, column E_ex (Lanczos) (line 387)",
+    "version_read": "the row's published method string; the exact diagonalization is recomputed in checks/tj-exact-recompute-2026-10/",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"E_ex (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar (the README marked it); ruled 2026-10-24.",
+    "source_entry": "tjE-exact-recompute#12 (qmbl-verify 2026-10-23); ruled 2026-10-24 (exact rows whose label reads as sampled)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h2_J1",
+      "method": "E_ex (Lanczos)",
+      "energy": -30.55988
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-1.17538",
+    "location": "Table I, J/t = 1, column E_ex (Lanczos) (line 388)",
+    "version_read": "the row's published method string; the exact diagonalization is recomputed in checks/tj-exact-recompute-2026-10/",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"E_ex (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar (the README marked it); ruled 2026-10-24.",
+    "source_entry": "tjE-exact-recompute#13 (qmbl-verify 2026-10-23); ruled 2026-10-24 (exact rows whose label reads as sampled)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.3",
+      "method": "Exact (D. Poilblanc, unpublished)",
+      "energy": -16.70812
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.64262",
+    "location": "Table I, N = 22, L = 26, J/t = 0.3, column Exact",
+    "version_read": "the row's published method string; the exact diagonalization is recomputed in checks/tj-exact-recompute-2026-10/",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"Exact (D. Poilblanc, unpublished)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar (the README marked it); ruled 2026-10-24.",
+    "source_entry": "tjE-exact-recompute#14 (qmbl-verify 2026-10-23); ruled 2026-10-24 (exact rows whose label reads as sampled)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.4",
+      "method": "E_ex (Lanczos)",
+      "energy": -18.57362
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.71437",
+    "location": "Table II, J/t = 0.4, column E_ex (Lanczos) (line 394)",
+    "version_read": "the row's published method string; the exact diagonalization is recomputed in checks/tj-exact-recompute-2026-10/",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"E_ex (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar (the README marked it); ruled 2026-10-24.",
+    "source_entry": "tjE-exact-recompute#15 (qmbl-verify 2026-10-23); ruled 2026-10-24 (exact rows whose label reads as sampled)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.5",
+      "method": "Exact (D. Poilblanc, unpublished)",
+      "energy": -20.49112
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.78812",
+    "location": "Table I, N = 22, L = 26, J/t = 0.5, column Exact",
+    "version_read": "the row's published method string; the exact diagonalization is recomputed in checks/tj-exact-recompute-2026-10/",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"Exact (D. Poilblanc, unpublished)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar (the README marked it); ruled 2026-10-24.",
+    "source_entry": "tjE-exact-recompute#16 (qmbl-verify 2026-10-23); ruled 2026-10-24 (exact rows whose label reads as sampled)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.6",
+      "method": "E_ex (Lanczos)",
+      "energy": -22.44762
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.86337",
+    "location": "Table II, J/t = 0.6, column E_ex (Lanczos) (line 396)",
+    "version_read": "the row's published method string; the exact diagonalization is recomputed in checks/tj-exact-recompute-2026-10/",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"E_ex (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar (the README marked it); ruled 2026-10-24.",
+    "source_entry": "tjE-exact-recompute#17 (qmbl-verify 2026-10-23); ruled 2026-10-24 (exact rows whose label reads as sampled)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.8",
+      "method": "E_ex (Lanczos)",
+      "energy": -26.45058
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-1.01733",
+    "location": "Table II, J/t = 0.8, column E_ex (Lanczos) (line 397)",
+    "version_read": "the row's published method string; the exact diagonalization is recomputed in checks/tj-exact-recompute-2026-10/",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"E_ex (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar (the README marked it); ruled 2026-10-24.",
+    "source_entry": "tjE-exact-recompute#18 (qmbl-verify 2026-10-23); ruled 2026-10-24 (exact rows whose label reads as sampled)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J1",
+      "method": "Exact (D. Poilblanc, unpublished)",
+      "energy": -30.54818
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-1.17493",
+    "location": "Table I, N = 22, L = 26, J/t = 1, column Exact",
+    "version_read": "the row's published method string; the exact diagonalization is recomputed in checks/tj-exact-recompute-2026-10/",
+    "conversion": "none",
+    "checked_on": "2026-10-24",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"Exact (D. Poilblanc, unpublished)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar (the README marked it); ruled 2026-10-24.",
+    "source_entry": "tjE-exact-recompute#19 (qmbl-verify 2026-10-23); ruled 2026-10-24 (exact rows whose label reads as sampled)"
+  },
 ];

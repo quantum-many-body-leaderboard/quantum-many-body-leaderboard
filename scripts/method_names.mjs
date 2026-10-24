@@ -855,6 +855,65 @@ for (const [c, label] of [["(i)", "EP state"], ["(ii)", "switch plaquette"], ["(
   ["(ix)", "small potential"], ["(x)", "no Δ2"], ["(xi)", "splitting Néel phase"], ["(xii)", "splitting Néel, no large t2"], ["(xiii)", "splitting Néel, no Néel order"]])
   NAMES[`Gutzwiller-projected parton state, case ${c} ${label}`] = ["VMC", `Gutzwiller-projected partons, Table VI case ${c}: ${label}`];
 
+// Pass 2026-10-22-tj (SWEEP.md): the first rows of the t-J family, the labels its generator writes
+// (scripts/tj_2026_10_22.mjs). arXiv:cond-mat/0606659 Tables I-II (RVB and Pfaffian states, lattice
+// fixed node, the finite-difference estimate of Eq. 15), cond-mat/0009149 Table I (Lanczos steps and
+// fixed node on the projected BCS state), cond-mat/0006353 Tables 1.1-1.2 (p Lanczos steps on the
+// projected BCS + Jastrow state, statistical FLST or exact), cond-mat/0110460, cond-mat/0104067
+// (power-Lanczos levels PL0-PL2 on the d-wave RVB state), cond-mat/0010072, cond-mat/9706147,
+// 1908.10000, cond-mat/0103096, 2602.21206, 2406.16865, cond-mat/0508035. Names follow the method/ansatz
+// split (splitName, 2026-10-23): a lattice fixed-node row names its trial state in the slot (RVB, Pfaffian,
+// or the VMC state of the same paper, read as Gutzwiller); the Pfaffian VMC state is ansatz Pfaffian; the
+// hole states of Cui, Zhao & Weng are ansatz "phase string" or "Bloch wave", the sources' names.
+Object.assign(NAMES, {
+  "E_VMC^RVB": ["VMC", "RVB (projected BCS + Jastrow, no antiferromagnetic field)", { family: "classic VMC" }],
+  "E_FN^RVB": ["Fixed-node GFMC", "lattice fixed node; trial state: RVB, projected BCS + Jastrow", { family: "AFQMC / GFMC" }],
+  "E_VMC^Pfaff": ["Pfaffian", "projected BCS + antiferromagnetic field + Jastrow", { family: "backflow / Pfaffian" }],
+  "E_FN^Pfaff": ["Fixed-node GFMC", "lattice fixed node; trial state: Pfaffian, projected BCS + antiferromagnetic field + Jastrow", { family: "AFQMC / GFMC" }],
+  // Eq. 15 estimates <H> over the fixed-node state, not the fixed-node energy (ruled 2026-10-24).
+  "Ẽ_Ψ0^γ=0 (Eq. 15, Pfaff)": ["Fixed-node GFMC", "trial state: Pfaffian; Eq. (15) finite-difference estimate, from fixed-node runs at γ = 0 and γ̃ = 1, of the expectation value of H over the γ = 0 fixed-node ground state (an upper bound to it)", { family: "AFQMC / GFMC" }],
+  "E_ex (Lanczos)": ["ED", "Lanczos"],
+  "Exact (D. Poilblanc, unpublished)": ["ED", ""],
+  "VMC+LS": ["VMC", `projected BCS + Jastrow, ${LANCZOS(1)}`, { family: "classic VMC" }],
+  "VMC+2LS": ["VMC", `projected BCS + Jastrow, ${LANCZOS(2)}`, { family: "classic VMC" }],
+  "VMC+FN": ["Fixed-node GFMC", "lattice fixed node; trial state: VMC, projected BCS + Jastrow", { family: "AFQMC / GFMC" }],
+  "VMC+LS+FN": ["Fixed-node GFMC", `lattice fixed node; trial state: VMC, projected BCS + Jastrow, ${LANCZOS(1)}`, { family: "AFQMC / GFMC" }],
+  "Best SR": ["VMC", "stochastic reconfiguration state at the best r, energy by forward walking", { family: "classic VMC" }],
+  "FN+2LS": ["Fixed-node GFMC", `lattice fixed node; trial state: VMC, projected BCS + Jastrow, ${LANCZOS(2)}`, { family: "AFQMC / GFMC" }],
+  "zero variance extrapolation": ["VMC", "projected BCS + Jastrow with Lanczos steps; extrapolated: variance → 0", { family: "classic VMC" }],
+  "exact (p = ∞)": ["ED", "Lanczos"],
+  // The source names these E_GS, the ground state, computed in the sector S = 0, K = (0, 0) (footnote 7).
+  "ED (sector S = 0, K = (0,0))": ["ED", "Lanczos in the sector S = 0, K = (0, 0), named the ground state by the source"],
+  "Lanczos": ["ED", "Lanczos"],
+  "E_ED": ["ED", ""],
+  "exact diagonalization": ["ED", ""],
+  // Dc as the journal version states it (arXiv v1: Dc = 48).
+  "E_fPEPS (D = 12, Dc = 56)": ["fPEPS", "gradient optimisation with Monte Carlo sampling, contraction dimension Dc = 56", { bond_dimension: 12, family: "tensor network" }],
+  "SU(2) DMRG, m = 500": ["DMRG", "symmetric: SU(2)", { bond_dimension: 500 }],
+  "SU(2) DMRG, m = 800": ["DMRG", "symmetric: SU(2)", { bond_dimension: 800 }],
+  "SU(2) DMRG, m = 1200": ["DMRG", "symmetric: SU(2)", { bond_dimension: 1200 }],
+  "SU(2) DMRG, m → ∞ (zero truncation error)": ["DMRG", "symmetric: SU(2); extrapolated: truncation error → 0"],
+  "VMC (single-hole ansatz with antimeron, Eq. 6)": ["phase string", "single-hole phase-string state with an antimeron", { family: "classic VMC" }],
+  "|Ψ_Bloch⟩_1h": ["Bloch wave", "single-hole Bloch-wave state", { family: "classic VMC" }],
+  "|Ψ_Lanczos⟩_1h": ["Bloch wave", `single-hole Bloch-wave state, ${LANCZOS(1)}`, { family: "classic VMC" }],
+  "|Ψ_0⟩_1h": ["Bloch wave", "single-hole Bloch-wave-like state, m = 0", { family: "classic VMC" }],
+  "|Ψ_±1⟩_1h": ["phase string", "single-hole phase-string state, m = ±1", { family: "classic VMC" }],
+  "|Ψ̃_±1⟩_1h": ["phase string", "single-hole phase-string state, m = ±1, with longitudinal spin-polaron factor", { family: "classic VMC" }],
+  "|Ψ_0⟩_2h": ["Bloch wave", "two-hole Bloch-wave-like state, m = 0", { family: "classic VMC" }],
+  "|Ψ_±1⟩_2h": ["phase string", "two-hole phase-string state, m = ±1", { family: "classic VMC" }],
+  "|Ψ̃_±1⟩_2h": ["phase string", "two-hole phase-string state, m = ±1, with longitudinal spin-polaron factor", { family: "classic VMC" }],
+});
+for (const [p, d] of [[1, "0.20"], [2, "0.55"]]) {
+  NAMES[`FLST, p = ${p}, Δ_BCS = ${d}`] = ["VMC", `projected BCS + Jastrow, Δ_BCS = ${d}, ${LANCZOS(p)} (statistical, FLST)`, { family: "classic VMC" }];
+}
+NAMES["exact p-LS, p = 1, Δ_BCS = 0.20"] = ["VMC", `projected BCS + Jastrow, Δ_BCS = 0.20, ${LANCZOS(1)} (applied exactly)`, { family: "classic VMC" }];
+for (const [p, d] of [[0, "0.00"], ...[0, 1, 2, 3, 4, 5, 6, 7].map(k => [k, "0.55"])])
+  NAMES[`p-LS, p = ${p}, Δ_BCS = ${d}`] = ["VMC", `projected BCS + Jastrow, Δ_BCS = ${d}${p ? `, ${LANCZOS(p)}` : ""} (applied exactly)`, { family: "classic VMC" }];
+for (const [lv, pows] of [["PL0", [0, 2, 4, 6, 8]], ["PL1", [0, 2, 4, 6, 8]], ["PL2", [0, 2, 4]]]) {
+  for (const n of pows) NAMES[`${lv}, power = ${n}`] = ["Power-Lanczos", `${lv} on the d-wave RVB state with antiferromagnetic correlation, power ${n}`, { family: "AFQMC / GFMC" }];
+  NAMES[`${lv}, power → ∞ (exponential fit)`] = ["Power-Lanczos", `${lv} on the d-wave RVB state, exponential fit of the energies to infinite power`, { family: "AFQMC / GFMC" }];
+}
+
 // Systematic families of strings, matched when no exact entry exists.
 export const PATTERNS = [
   [/^DMRG \(chi = (\d+)\), QMBL cost-to-reproduce run$/, m => ["DMRG", "QMBL run", { bond_dimension: +m[1] }]],
@@ -890,8 +949,10 @@ export function lookup(published) {
 const NO_ANSATZ = new Set(["DMRG", "ED", "SSE QMC", "QMC", "CT-QMC", "Exact solution", "AFQMC", "VAFQMC", "TPS", "PEPS",
   "VQE", "CCD", "CCSD", "CCSDT", "CCSDTQ", "CCSDTQ5", "DCD", "TC-CCD", "TC-DCD", "lmCCD", "lmrCCD", "mCCD", "rmCCD",
   "rxmCCD", "MP2", "dRPA", "dRPA + SOSEX", "FCIQMC", "Transcorrelated FCIQMC", "CP-AFQMC", "ph-AFQMC",
-  // An isometric tensor network optimised by its own sweeps (arXiv:2112.08394), not by VMC.
-  "isoTNS"]);
+  // An isometric tensor network optimised by its own sweeps (arXiv:2112.08394), not by VMC; a
+  // fermionic PEPS (arXiv:1908.10000), named as a tensor network like PEPS; the power-Lanczos
+  // projection of arXiv:cond-mat/0104067, which names its RVB start state in the detail.
+  "isoTNS", "fPEPS", "Power-Lanczos"]);
 // Projector algorithms by their short names.
 const PROJECTOR = { "Fixed-node DMC": "FN-DMC", "Fixed-node GFMC": "FN-GFMC", "Fixed-phase DMC": "FP-DMC" };
 // Short ansatz names; a name not listed is its own short name.

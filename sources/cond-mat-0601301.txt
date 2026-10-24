@@ -1,0 +1,569 @@
+  Bond-order  modulated  staggered  ﬂux  phase  for the t−J  model  on  the square  lattice
+
+                C´edric Weber,1  Didier  Poilblanc,2, 3, ∗  Sylvain  Capponi,4  Fr´ed´eric Mila,3  and  Cyril  Jaudet4
+    1  Institut  Romand  de  Recherche  Num´erique  en  Physique  des  Mat´eriaux  (IRRMA),  PPH-Ecublens,  CH-1015  Lausanne
+                                              2  Laboratoire  de  Physique  Th´eorique  UMR  5152,
+                                     C.N.R.S.  &  Universit´e  de  Toulouse,  F-31062  Toulouse,  France
+   3  Institute  of  Theoretical  Physics,  Ecole  Polytechnique  F´ed´erale  de  Lausanne,  BSP  720,  CH-1015  Lausanne,  Switzerland
+                                              4  Laboratoire  de  Physique  Th´eorique  UMR  5152,
+                                    C.N.R.S.  &  Universit´e  Paul  Sabatier,  F-31062  Toulouse,  France
+                   Motivated by the observation of inhomogeneous patterns in some high-Tc cuprate compounds, sev-
+                eral variational Gutzwiller-projected wave-functions with built-in charge and bond order parameters
+                are proposed for the extended t−J −V  model on the square lattice at low doping.  First, following a
+                recent Gutzwiller-projected mean-ﬁeld approach by one of us (Phys. Rev. B. 72, 060508(R) (2005)),
+                we  investigate,  as  a  function  of  doping  and  Coulomb  repulsion,  the  stability  of  the  staggered  ﬂux
+                phase  with  respect  to  small  spontaneous  modulations  of  squared  unit  cells  ranging  from  2 × 2  to
+                √32×√32.  It is found that a 4×4 bond-order (BO) modulation appears spontaneously on top of the
+
+                staggered ﬂux pattern for hole doping around 1/8.  A related wave-function is then constructed and
+                optimized accurately and its properties studied extensively using an approximation-free variational
+                Monte  Carlo  scheme.  Finally,  the  competition  of  the  BO-modulated  staggered  ﬂux  wave-function
+                w.r.t.   the  d-wave  RVB  wave-function  or  the  commensurate  ﬂux  state  is  investigated.   It  is  found
+                that  a  short  range  Coulomb  repulsion  penalizes  the  d-wave  superconductor  and  that  a  moderate
+                Coulomb repulsion brings them very close in energy.  Our results are discussed in connection to the
+                STM observations in the under-doped regime of some cuprates.
+
+                PACS numbers:  74.72.-h,71.10.Fd,74.25.Dw
+
+
+I.     INTRODUCTION:  MODELS  AND  METHODS                                     the t−J  model was investigated extensively by unbiased
+                                                                               numerical techniques3 as well as by mean-ﬁeld4 and vari-
+   The   observation   of   a   d-wave   superconducting   gap                 ational Monte-Carlo approaches5,6.  All approaches found
+in  the  high-Tc  cuprate  superconductors  suggests1  that                    a  d-wave  superconducting  phase  and  a  phase  diagram
+strong  correlations  are  responsible  for  their  unconven-                  which accounts for most of the  experimental features of
+tional  properties  and  superconducting  behavior.    The                     the high-Tc cuprates7,8.  In the limit of vanishing doping
+two-dimensional (2D) t−J  model  is  one  of  the  simplest                    (half-ﬁlling),  such  a  state can  be  viewed as  an  (insulat-
+eﬀective  models  proposed2  to  describe  the  low  energy                    ing) resonating valence bond (RVB) or spin liquid  state.
+physics of these materials,                                                    In fact,  such a  state can also be  written (after  a  simple
+                                      (                   )                    gauge transformation) as a staggered ﬂux state (SFP)4,9,
+              Ht−J   =  −t  ∑           c†i,σcj,σ +h.c.                        i.e.  can be mapped to a problem of free fermions hopping
+                               ⟨i,j⟩,σ                                         on a square lattice thread by a staggered magnetic ﬁeld.
+                           +J ∑      Si · Sj                                 (1)  Upon   ﬁnite   doping,   although   such   a   degeneracy
+                                ⟨i,j⟩                                          breaks   down,   the   SFP   remains   a   competitive   (non-
+                                                                               superconducting)  candidate  with  respect  to  the  d-wave
+The electrons are hopping between nearest neighbor sites                       RVB  superconductor10.     In  fact,   it  was  proposed  by
+of a square lattice leading to a kinetic energy term (ﬁrst                     P.A. Lee and collaborators11,12,13 that such a state bears
+term of 1) as well as an exchange energy due to their spin                     many  of  the  unconventional  properties  of  the  pseudo-
+interaction (second term),  where  Si  denotes  the spin  at                   gap normal  phase of the cuprate superconductors.  This
+sitei:  Si =  1                                                                simple  mapping  connecting  a  free  fermion  problem  on
+               2c†i,α⃗σα,βci,β and⃗σ is the vector of Pauli ma-                a  square  lattice  under  magnetic  ﬁeld14  to  a  correlated
+trices.  ⟨i,j⟩ stands for a pair of nearest neighbors. Ht−J                    wave-function (see later for details) also enabled to con-
+operates  only  in  the  subspace  where  there  are  no  dou-                 struct  more  exotic  ﬂux  states  (named  as  commensurate
+bly  occupied  sites,  which  can  be  formally  implemented                   ﬂux states) where the ﬁctitious ﬂux could be uniform and
+by a Gutzwiller projector (see later).  In the following we                    commensurate with the particle density15,16.  In this par-
+set  |t|  =  1  (unless  speciﬁed  otherwise)  and  we  adopt  a               ticular case, the unit-cell of the tight-binding problem is
+generic value of t/J  = 3 throughout the paper.  Because                       directly related to the rational value of the commensurate
+of  the  particle-hole  symmetry  in  the  square  lattice  the                ﬂux.
+sign of t does not play any role.  Although this model is
+formulated in a very simple form, the nature of the quan-                         With  an  increasing  number  of  materials  and  novel
+tum correlations makes its physics very rich, and even the                     experimental  techniques  of  constantly  improving  reso-
+ground state of thet−J  hamiltonian was not yet charac-                        lution,  novel  features  in  the  global  phase  diagram  of
+terized for ﬁnite doping and large cluster size.  However,                     high-Tc  cuprate superconductors have emerged.  One of
+                                                                                                                                                    2
+
+the  most  striking  is  the  observation,  in  some  systems,               energy  leads  to  the χ0  and  ∆i,j  order  parameters.   In
+of  a  form  of  local  electronic  ordering,  especially  around            this respect, we expect that the BCS wave-function is a
+1/8 hole doping.  Indeed, recent scanning tunnelling mi-                     good starting  point  to  approximate  the  ground state  of
+croscopy/spectroscopy  (STM/STS)  experiments  of  un-                       thet−J model.  However, such a wave-function obviously
+derdoped  Bi2Sr2CaCu2O8+δ  (BSCO)  in  the  pseudogap                        does not fulﬁll the constraint of no-doubly occupied site
+state  have  shown  evidence  of  energy-independent  real-                  (as  in  the t−J  model).   This  can  be  easily  achieved,  at
+space  modulations  of  the  low-energy  density  of  states                 least at the formal level, by applying the full Gutzwiller
+(DOS)17,18,19,20  with  a  spatial  period  close  to  four  lat-            operator23 PG = ∏i(1−ni↑ni↓) to the BCS wave-function
+tice spacings.  A similar spatial variation of the electronic                |ψBCS⟩:
+states has also been observed in the pseudogap phase of                                            |ψRVB⟩ = PG |ψBCS⟩ .                         (5)
+Ca2−xNaxCuO2Cl2  single crystals (x = 0.08 ∼ 0.12) by
+similar STM/STS techniques21.  Although it is not clear                      The main diﬃculty to deal with projected wave-functions
+yet whether  such phenomena are either  generic features                     is  to  treat correctly the  Gutzwiller  projection PG.  This
+or really happening in the bulk of the system, they nev-                     can be done numerically using a conceptually exact vari-
+ertheless raise important theoretical questions about the                    ational Monte Carlo (VMC) technique5,6,7 on large clus-
+stability  of such  structures  in  the  framework of our  mi-               ters.    It  has  been  shown  that  the  magnetic  energy  of
+croscopic strongly correlated models.                                        the  variational  RVB  state  at  half-ﬁlling  is  very  close
+  In this paper, we analyze the stability and the proper-                    to  the  best  exact  estimate  for  the  Heisenberg  model.
+ties of new inhomogeneous phases (which may compete in                       Such  a  scheme  also  provides,  at  ﬁnite  doping,  a  semi-
+certain conditions with the d-wave superconducting RVB                       quantitative  understanding  of  the  phase  diagram of  the
+state)  by  extending  the  previous  mean-ﬁeld  and  varia-                 cuprate superconductors and of their experimental prop-
+tional  treatments  of  the  RVB  theory.   In  addition,  we                erties.  Novel results using a VMC technique associated to
+shall also consider an extension of the simplet−J model,                     inhomogeneous wave-functions will be  presented in Sec-
+thet−J −V  model, containing a Coulomb repulsion term                        tion III.
+written as,                                                                     Another  route  to  deal  with  the  Gutzwiller  projection
+           V  =  1 ∑V (|i −j|) (ni −n) (nj −n) ,          (2)                is  to  use  a  renormalized  mean-ﬁeld  (MF)  theory24  in
+                 2                                                           which the kinetic and superexchange energies are renor-
+                    i⁄=j                                                     malized by diﬀerent doping-dependent factors gt  and gJ
+where n  is  the  electron density  (Ne/N, Ne  electrons  on                 respectively.  Further mean-ﬁeld treatments of the inter-
+a N-site  cluster).    Generically,  we  assume  a  screened                 action  term  can  then  be  accomplished  in  the  particle-
+Coulomb potential :                                                          particle  (superconducting)  channel.    Crucial,  now  well
+                                                                             established,  experimental observations such  as  the  exis-
+                                                                             tence of a pseudo-gap and nodal quasi-particles and the
+                      V (r) =V0 exp−r/ℓ0r   ,                          (3)   large renormalization of the Drude weight are remarkably
+                                                                             well explained by this early MF RVB theory8.  An exten-
+where  we  will  consider  two  typical  values ℓ0  =  2, 4  and             sion  of  this  approach25,26  will  be  followed  in  Section  II
+V0  ∈ [0, 5] and where the  distance r  is deﬁned (to mini-                  to  investigate  inhomogeneous  structures  with  checker-
+mize ﬁnite size eﬀects) as the periodized  distance on the                   board patterns involving a decoupling in the particle-hole
+torus22.  The inﬂuence of this extra repulsive term in the                   channel.  As (re-) emphasized recently by Anderson and
+competition between the d-wave RVB state and some in-                        coworkers8, this general procedure, via the eﬀective MF
+homogeneous phases is quite subtle and will be discussed                     Hamiltonian,  leads  to  a  Slater  determinant  |ΨMF⟩  from
+in the following.                                                            which a  correlated wave-function PG |ΨMF⟩  can  be  con-
+  To illustrate  our future  strategy, let us  recall in more                structed  and  investigated  by  VMC.  Since  the  MF  ap-
+details  the  simple  basis  of  the  RVB  theory.   It  is  based           proach  oﬀers  a  reliable  guide  to  construct  translational
+on a mean-ﬁeld hamiltonian which is of BCS type,                             symmetry-breaking projected variational wave-functions,
+                     (                      )                                we will present ﬁrst the MF approach in section II before
+  HBCS =   ∑           −χ0c†                                                 the more involved VMC calculations in Section III.
+                             iσcjσ +h.c.
+              ⟨i,j⟩,σ
+                        (                     )                               II.     GUTZWILLER-PROJECTED  MEAN-FIELD
+                + ∑       ∆i,jc†i↑c†j↓ +h.c.     −µ ∑ni,σ ,    (4)                                         THEORY
+                   ⟨i,j⟩                              i,σ
+where χ0 is a constant variational parameter and ∆i,j  is                         A.     Gutzwiller  approximation  and  mean-ﬁeld
+a  nearest  neighbor  d-wave  pairing  (with  opposite  signs                                              equations
+on the vertical and horizontal bonds) andµ is the chem-
+ical  potential.  As  a  matter  of  fact,  the  BCS  mean-ﬁeld                 We  start  ﬁrst  with  the  simplest  approach  where  the
+hamiltonian  can  be  obtained  after  a  mean-ﬁeld  decou-                  action  of  the  Gutzwiller  projector  PG  is  approximately
+pling  of  the t−J  model,  where  the  decoupled  exchange                  taken care of using a Gutzwiller approximation scheme23.
+                                                                                                                                                        3
+
+We  generalize the  MF  approach of  Ref.  25,  to  allow for
+non-uniform  site  and  bond  densities.   Recently,  such  a
+procedure  was  followed  in  Ref.  26  to  determine  under
+which conditions a 4 × 4 superstructure might be stable
+for hole doping close to 1/8.  We extend this investigation
+to  arbitrary small  doping  and other  kinds  of  supercells.
+In particular, we  shall also consider 45-degree tilted  su-
+percells such as √2 × √2, √8 × √8 and √32 × √32.
+   The  weakly  doped  antiferromagnet  is  described  here                                                            1          3
+by the renormalizedt−J  model Hamiltonian,                                                                                   2          6
+                    ∑                                 ∑
+  Hrent−J  = −tgt        (c†i,σcj,σ +h.c.) +JgJ            Si · Sj    (6)                                                          4
+                    ⟨ij⟩σ                             ⟨ij⟩
+where  the  local  constraints  of  no  doubly  occupied  sites                                                                         5
+are   replaced   by   statistical   Gutzwiller   weights gt    =
+2x/(1 +x)  and gJ  =  4/(1 +x)2,  where x  is  the  hole                       FIG.  1:   4 × 4  unit-cell  used  in  both  the  MF  approach  and
+doping.  A typical value of t/J = 3 is assumed hereafter.                      the  variational  wave-function.   Note  the  existence  of  6  inde-
+   Decoupling in both particle-hole and (singlet) particle-                    pendent bonds (bold bonds), that for convenience are labelled
+particle channels can be considered simultaneously lead-                       from 1 − 6, and of 3 a priori non-equivalent sites.  The center
+ing to the following MF hamiltonian,                                           of  the  dashed  plaquette  is  the  center  of  the  (assumed)  C4V
+                                                                               symmetry.  Other sizes of the same type of structure are con-
+                                                                               sidered  in  the  MF  case,  respectively  :  2 × 2,  √8 × √8,  and
+     HMF = −t ∑          gtij(c†i,σcj,σ +h.c.) + ∑ǫini,σ                       √32 × √32 unit cells.
+                   ⟨ij⟩σ                              iσ
+
+             − 34J  ∑     gJi,j(χjic†i,σcj,σ +h.c. − |χij|2)       (7)
+                    ⟨ij⟩σ
+                                                                               the  on-site fugacities.  However, we  believe  that  the  en-
+         − 34J  ∑     gJi,j(∆jic†i,σc†j,−σ +h.c. − |∆ij|2),                    ergy  gain  is  too  small  to  be  really  conclusive  (certainly
+                ⟨ij⟩σ                                                          below  the  accuracy  one  can  expect  from  such  a  simple
+                                                                               MF approach).  We argue that we can safely neglect the
+where  the  previous  Gutzwiller  weights  have  been  ex-                     spatial variation ofµ in ﬁrst approximation, and this will
+pressed   in   terms   of   local   fugacities zi   =   2xi/(1  +              be conﬁrmed by the more accurate VMC calculations in
+xi)   (xi   is   the   local   hole   density   1  −  ⟨ni⟩), gti,j    =        Section III.  Incidently, Ref. 28 emphasizes a deep connec-
+√zizj  and gJi,j   =  (2 − zi)(2 − zj),  to  allow  for  small                 tion  between  the  stability  of  checkerboard  structures26
+non-uniform  charge  modulations27.   The  Bogoliubov-de                       and the instability of the SFP due to nesting properties
+Gennes  self-consistency  conditions  are  implemented  as                     of some parts of its Fermi surface29.
+χji = ⟨c†j,σci,σ⟩ and ∆ji = ⟨cj,−σci,σ⟩ = ⟨ci,−σcj,σ⟩.
+   In  principle,  this  MF  treatment  allows  a  description
+of modulated phases with coexisting superconducting or-                                       B.     Mean-ﬁeld  phase  diagrams
+der, namely supersolid phases.  Previous investigations26
+failed to stabilize such phases in the case of the pure 2D                        In principle, the mean-ﬁeld equations could be solved
+square  lattice  (i.e.   defect-free).   Moreover,  in  this  Sec-             in  real  space  on  large  clusters  allowing  for  arbitrary
+tion,  we  will  restrict  ourselves  to  ∆ij   =  0.    The  case             modulations  of  the  self-consistent  parameters.   In  prac-
+where both ∆ij  and χij  are non-zero is left for a future                     tice,  such  a  procedure  is  not  feasible  since  the  number
+work, where the eﬀect of a defect, such as for instance a                      of  degrees  of  freedom  involved  is  too  large.   We  there-
+vortex, will be studied.                                                       fore  follow  a  diﬀerent  strategy.   First,  we  assume  ﬁxed
+   In the case of ﬁnite V0  , the on-site terms ǫi  may vary                   (square shaped) supercells and a given symmetry within
+spatially as −µ+ei, whereµ is the chemical potential and                       the super-cell (typically invariance under 90-degrees rota-
+ei are on-site energies which are self-consistently given by,                  tions) to reduce substantially the number of parameters
+                                                                               to optimize.  Incidently, the assumed periodicity allows us
+                         ei = ∑     Vi,j⟨nj⟩.                             (8)  to conveniently rewrite the meanﬁeld equations in Fourier
+                                j⁄=i                                           space  using  a  reduced  Brillouin  zone  with  a  very  small
+                                                                               mesh.  In this way, we can converge to either an absolute
+In that case, a constant ∑i⁄=jVi,j(⟨ni⟩⟨nj⟩ +n2) has to                        or a local minimum.  Therefore, in a second step, the MF
+be added to the MF energy.  Note that we assume here a                         energies  of  the  various  solutions  are  compared  in  order
+ﬁxed chemical potentialµ.  In a recent work28, additional                      to draw an overall phase diagram.
+degrees  of  freedom  where  assumed  (for V0  =  0)  imple-                      In previous MF calculations26, stability of an inhomo-
+menting  an unconstrained minimization with  respect to                        geneous solution with the 4 × 4 unit-cell shown in Fig. 1
+                                                                                                                                                           4
+
+was found around x = 1/8.  Here, we investigate its sta-                                        3
+bility for arbitrary doping and extend the calculation to
+another  possible  competing  solution  with  a  twice-larger                                                  SFP
+(square)  unit-cell  containing  32  sites.   The  general  so-
+lutions  with  diﬀerent  phases  and/or  amplitudes  on  the                                    2
+independent links will be refered to as bond-order (BO)
+phases30.    Motivated  by  experiments17,21,  a C4V   sym-
+metry  of  the  inhomogeneous  patterns  around  a  central                                     1    2   2                                                     FL
+plaquette  will  again  be  assumed  for  both  cases.   Note                                                          4   4
+that such a feature greatly reduces the number of varia-
+tional parameters and  hence  speeds  up  the  convergence                                      0
+of the MF equations.  Starting from a central plaquette,                                         0                0.05             0.1             0.15             0.2
+like in Fig. 1, a  larger √32 × √32 unit-cell (not shown)                                                                doping
+can easily  be  constructed with  10  non-equivalent bonds
+(with both independent real and imaginary parts) and a
+priori 6 non-equivalent sites.  Note that this new unit-cell
+is now tilted by 45 degrees.                                                                  1.5
+   At  this  point,  it  is  important to  realize  that  patterns
+with  a  smaller  number  of  non-equivalent  bonds  or  sites
+are in fact subsets of the more general modulated struc-                                        1
+tures  described  above.   For  example,  the  SFP  is  obvi-
+ously  a  special  case  of  such  patterns,  where  all  the χi,j
+are  equal  in  magnitude  with  a  phase  oriented  to  form                                 0.5     2   2                        4   4SFPFL
+staggered  currents,  and  where  all  the  sites  are  equiva-
+lent.  This example clearly indicates that the actual struc-
+ture obtained after full convergence of the MF equations                                                                       32
+could have higher  symmetry than the one postulated in                                          0 0                0.05             0.1             0.15             0.2
+the initial conﬁguration which assumes a random choice                                                                    doping
+for  all independent  parameters.  In  particular, the  equi-
+librium  unit-cell  could  be  smaller  than  the  original  one
+and  contain  a  fraction  (1/2  or  1/4)  of  it.   This  fact  is              FIG.  2:  Mean-ﬁeld  phase  diagrams  obtained  by  solving  self-
+illustrated  in  Fig.  2  showing  two  phase  diagrams  pro-                    consistently  the  mean-ﬁeld  equations  on  a  128 × 128  lattice
+duced by using diﬀerent initial conditions, namely 4 × 4                         (for  ℓ0  =  4)  vs  hole  doping  x  and  repulsion  V0  (in  units  of
+(top) and √32×√32 (bottom) unit-cells.  Both diagrams                            J).  Top:  results obtained assuming a 4 × 4 unit cell; Bottom:
+show  consistently  the  emergence  of  the  SFP  at  dopings                    same with a √32 × √32 tilted unit cell.  In both cases, a C4v
+around  6%  and  a  plaquette  phase  (2 × 2  unit-cell  with                    symmetry is assumed (see text).
+two  types  of  bonds)  at  very  small  doping31,32.   In  ad-
+dition,  a  phase  with  a  √8 × √8  super-cell  is  obtained
+for  a  speciﬁc  range  of  doping  and V0  (see  Fig.  2  on  the               pect an homogeneous Fermi Liquid (FL) phase (all bonds
+top).   Interestingly  enough,  all  these  BO  phases  can  be                  are real and equal), as indeed seen in Fig. 2 on the bot-
+seen  as  bond-modulated  SFP  with  2,  4,  8  and  up  to  16                  tom.    On  the  contrary,  Fig.  2  on  the  top  reveals,  for
+non-equivalent  (staggered)  plaquettes  of  slightly  diﬀer-                    V0/J ∈ [1.5, 3], a modulated √8 × √8 structure, which is
+ent amplitudes.  This would be  consistent with the SFP                          an artefact due to the presence of a local minimum (see
+instability  scenario29  which  suggests  that  the  wavevec-                    next).
+tor of the modulation should vary continuously with the                             Since the MF procedure could accidentally give rise to
+doping.  Although this picture might hold when V0 = 0,                           local  minima,  it  is  of  interest  to  compare  the  MF  en-
+our  results  show  that  the  system  prefers  some  peculiar                   ergies  obtained  by  starting  with  random  values  of  all
+spatial periodicities (like the ones investigated here) that                     independent  parameters  within  the  two  previously  dis-
+deﬁnitely take place at moderate V0.                                             cussed  unit-cells.  For  convenience,  we  have  substracted
+   Let us now compare the two phase diagrams.  We ﬁnd                            from all data either the FL (in Fig. 3(a)) or the SFP (in
+that, except in some doping regions, the various solutions                       Fig. 3(b)) reference energy.  From Figs. 3(a,b) we see that
+obtained  with  the  4 × 4  unit-cell  are  recovered starting                   we can converge towards a local energy minimum, often
+from a twice larger unit-cell.  Note that, due to the larger                     modulated in space, which is not the absolute minimum.
+number of parameters, the minimization procedure start-                          Indeed,  over  a  large  doping  range,  the  lowest  energy  of
+ing  from a larger unit-cell explores a larger phase space                       the  all solutions we  have  found is  obtained for  homoge-
+and it is expected to be more likely to converge to the ab-                      neous  densities  and bond  magnitudes.  Nevertheless,  we
+solute minimum.  This is particularly clear (although not                        see  that  the  4 × 4  modulated  phase  is  (i)  locally  sta-
+always realized) at large doping x = 0.14, where  we ex-                         ble  and  (ii)  is  very  close  in  energy  to  the  homogeneous
+                                                                                                                                                          5
+
+                                                                                (SFP)  phase  which,  often,  has  a  slightly  lower  energy.
+                                                                                Note  that,  around x  ≃  1/8,  the  states  with  √8 × √8
+                                                                                and  √32 × √32  supercells  are  clearly  metastable  solu-
+   0.05     (a)              NSC=8                                              tions (and using a larger initial unit-cell is not favorable
+                                                                                in the latter  case).  In contrast, in this  range of doping,
+                                                                                the  4 × 4  checkerboard  state  is  very  competitive  w.r.t.
+       0                                                                        the SFP. Therefore, it makes it a strong candidate to be
+                    NSC=4x4                                                     realized either in the true ground state of the model, or
+                                                                                present as very low excited state33.  In fact,  considering
+   −0.05                                                                        such small energy diﬀerences, it is clear that an accurate
+                                                                                comparison is beyond the accuracy of the MF approach.
+                                      SFP           V0=2J (=0.67t)              We therefore move to the approximation-free  way of im-
+    −0.1                                                                        plementing the Gutzwiller projection with the VMC tech-
+                              NSC=2x2               SFP (or FL)                 nique,  that  allows  a  detailed  comparison  between  these
+   −0.15                                                                        variational homogeneous and inhomogeneous states.
+        0                    0.05                   0.1                   0.15                   0.2
+                                     doping
+                                                                                         III.     VARIATIONAL  MONTE  CARLO
+                                                                                  SIMULATIONS  OF  4 × 4  SUPERSTRUCTURES
+
+                                                                                   Motivated by the previous mean-ﬁeld results we have
+                                                                                carried  out  extensive  Variational  Monte  Carlo  simula-
+   0.02                                                                         tions.  In this approach, the action of the Gutzwiller pro-
+                                                      NSC=32                    jection operator is taken care of exactly, although one has
+                4x4  (V0=0)                                                     to deal with ﬁnite clusters.  In order to get rid of discon-
+                32 sites  (V0=0)                                                tinuities  in  the  d-wave  RVB  wave-function,  we  consider
+                                                                                (anti-)periodic boundary conditions along ey  (ex).  As  a
+   0.01                                                                         matter of fact, it is also found that the energy is lower for
+                                 SFP                                            twisted boundary conditions, hence  conﬁrming the  rele-
+                                                                  FL(*)         vance of this choice of boundaries.  We have considered a
+                   NSC=2x2                                                      16 × 16 square cluster ofN  = 256 sites.  We also focus on
+       0                                                                        the 1/8 doping case which corresponds here toNe = 224
+                                                                                electrons on the 256 site cluster.  Following the previous
+                                         NSC=4x4(b)                             MF  approach,  we  consider  the  same  generic  mean-ﬁeld
+                                                                                hamiltonian,
+        0                             0.05                           0.1                           0.15(                       )
+                                     doping                                        HMF =   ∑           − ˜ti,jc†iσcjσ +h.c.      + ∑     ǫic†iσciσ,    (9)
+                                                                                              ⟨i,j⟩,σ                                iσ
+
+FIG. 3:  (Color online) (a) Energy per site (in units of J  and                 where the complex bond amplitudes ˜ti,j can be written as
+for t = 3J) obtained by solving the mean-ﬁeld equations using                   ⏐⏐˜ti,j⏐⏐eiθi,j , andθi,j is a phase oriented on the bondi →j.
+the  initial  4 × 4  unit-cell  (see  text)  for  a  moderate  value  of        The on-site termsǫi allow to control the magnitude of the
+V0.   The  SFP  energy  is  also  shown  for  comparison.   The  FL             charge density wave.  However, the energy was found to
+energy  has  been  substracted  from  all  data  for  clarity.    (b)           be minimized for all theǫi equal to the same value in the
+Comparison of the energies (for V0 = 0) using diﬀerent initial
+conditions  (see  text),  a  4 × 4  or  a  √32 × √32  unit-cell;  due           rangeV0 = [0, 5] and for the two parametersℓ0 = 2, 4.  In
+to  very  small  energy  diﬀerences,  the  SFP  energy  is  used  as            fact,  we  ﬁnd  that  strong  charge  ordered  wave-functions
+a  reference  for  an  easier  comparison.    The  diﬀerent  phases             are not stabilized in this model30.
+speciﬁed by arrows and characterized by the number of sites                        In this Section, we shall restrict ourselves to the 4 × 4
+NSC  of their actual supercells refer to the ones in Fig. 2.  For               unit-cell  where  all  independent  variational  parameters
+doping  x  =  0.14,  the  minimization  leads  to  a  solution  with            are to be determined from an energy minimization.  This
+small  imaginary  parts  (of  order  10−4)  very  similar  to  a  FL            is motivated both by experiments17,21  and by the previ-
+phase, which we call FL∗.                                                       ous MF results showing the particular stability of such a
+                                                                                structure (see also Ref. 26).  As mentioned in the previous
+                                                                                Section, we also impose that the phases and amplitudes
+                                                                                respect the C4V  symmetry within the unit-cell (with re-
+                                                                                spect to  the  center of the  middle  plaquette,  see Fig. 1),
+                                                                                reducing the numbers of independent links to 6.  To avoid
+                                                                                spurious  degeneracies  of  the  MF  wave-functions  related
+                                                                                                                                                       6
+
+to multiple choices of the ﬁlling of the discrete k-vectors                    TABLE I: Set of energies per lattice site for V0 = 1 and ℓ0 =
+in the Brillouin Zone (at the Fermi surface), we add very                      4  for  diﬀerent  wave-functions.   The  best  commensurate  ﬂux
+small  random  phases  and  amplitudes  (10−6)  on  all  the                   phase in the Landau gauge with ﬂux per plaquette p/16 was
+links in the 4 × 4 unit cell.                                                  found  for  p  =  7.  We  also  show  the  energy  of  the  CFP  with
+  Let us  note that commensurate ﬂux phase (CFP) are                           ﬂux 7/16 written with another choice of gauge.  We show the
+also  candidate  for  this  special  1/8  doping.   In  a  previ-              total energy per site (Etot), the kinetic energy per site (ET),
+ous study, a subtle choice of the phasesθi,j  (correspond-                     the  exchange  energy  per  site  (EJ)  and  the  Coulomb  energy
+ing  to  a  gauge  choice  in  the  corresponding  Hofstadter                  per site (EV).
+problem14)  was  proposed16,  which  allows  to  write  the                     wave-function         Etot          ET           EJ            EV
+φ  = p/16  (p <  16)  ﬂux  per  plaquette  wave-function                              F S         -0.4486(1)    -0.3193(1)   -0.1149(1)    -0.0144(1)
+within the same proposed unit-cell16 and is also expected                        CF P  7/161      -0.3500(1)    -0.1856(1)   -0.1429(1)    -0.0216(1)
+to lead to a better kinetic energy than the Landau gauge                         CF P  7/162      -0.4007(1)    -0.2369(1)   -0.1430(1)    -0.0208(1)
+(in  the  Landau  gauge  the  unit-cell  would  be  a  line  of                      SF P         -0.4581(1)    -0.3106(1)   -0.1320(1)    -0.0155(1)
+16  sites).   However, we  have  found  that  the  CFP  wave-                         BO          -0.4490(1)    -0.3047(1)   -0.1302(1)    -0.0141(1)
+functions  turned  out  not  to  be  competitive  for  our  set                      RV B         -0.4564(1)    -0.3080(1)   -0.1439(1)    -0.0043(1)
+of parametersV0, due to their quite poor kinetic energy,                            SF P/J        -0.4601(1)    -0.3116(1)   -0.1315(1)    -0.0169(1)
+although  they  have  very  good  Coulomb  and  exchange                            BO/J          -0.4608(1)    -0.3096(1)   -0.1334(1)    -0.0177(1)
+energies.  We argue that such CFP wave-functions would                             RV B/J         -0.4644(1)    -0.3107(1)   -0.1440(1)    -0.0086(1)
+become relevant in the large Coulomb and/orJ  regimes                          1  Landau gauge
+(see table I).                                                                 2  Gauge of Ref.16
+  In order to further improve the  energy, we also add a
+nearest-neighbor spin-independent Jastrow34 term to the
+wave-function,
+                                                                             TABLE II: Order parameters for the diﬀerent wave-functions
+                                 α ∑            ,                    (10)    for V0 = 1.5 and ℓ0 = 4.  We depict the following order param-
+                    PJ  = exp              ninj                                eters:  ti,j × eiφi,j ,  where  ti,j  (φi,j)  is  the  amplitude  (phase)
+                                      ⟨i,j⟩                                    of  ⟨c+i  cj⟩,  and  the  exchange  energy  ⟨Si.Sj⟩,  for  the  6  inde-
+                                                                               pendent  bonds  labelled  for  convenience  according  to  Fig.  1.
+where α is an additional variational parameter.  Finally,                      The  sign  of  φi,j  is  according  to  the  staggered  ﬂux  pattern
+since thet−J model allows at most one fermion per site,                        (see arrows in Fig.  9).  We note that the RV B/J  is uniform
+we discard all conﬁgurations with doubly occupied sites                        by  construction.   The  variational  superconducting  order  pa-
+by applying the  complete Gutzwiller projector PG.  The                        rameter  is  ∆RV B  =  0.3  for  the  RV B/J  wave-function  and
+wave-function we use as an input to our variational study                      ∆RV B = 0 for the SF P/J  and BO/J  wave-functions.
+is therefore given by,
+                      |ψvar⟩ = PGPJ |ψMF⟩                        (11)                       bond 1     bond 2     bond 3     bond 4      bond 5     bond 6
+                                                                                   ti,j
+In the following, we shall introduce simple notations for                      RV B/J      0.077(1)   0.077(1)   0.077(1)    0.077(1)   0.077(1)   0.077(1)
+denoting the  various variational wave-functions, BO  for                       SF P/J     0.085(1)   0.085(1)   0.085(1)    0.085(1)   0.085(1)   0.085(1)
+the bond-order wave function,SFP for the staggered ﬂux                          BO/J       0.082(1)   0.083(1)   0.093(1)    0.088(1)   0.086(1)   0.084(1)
+phase,RVB for the d-wave RVB superconducting phase,                               |φi,j|
+FS  for the  simple projected Fermi-Sea, and we will  use                      RV B/J          0           0          0          0          0          0
+the notationMF/J  (MF  =BO,SFP,RVB,FS) when                                     SF P/J     0.438(1)   0.438(1)   0.438(1)    0.438(1)   0.438(1)   0.438(1)
+the  Jastrow  factor  is  applied  on  the  mean-ﬁeld  wave-                    BO/J       0.527(1)   0.502(1)   0.473(1)    0.390(1)   0.338(1)   0.384(1)
+function.   Finally,  it  is  also  convenient  to  compare  the               −⟨Si.Sj⟩
+energy  of  the  diﬀerent  wave-functions  with  respect  to                   RV B/J      0.215(1)   0.215(1)   0.215(1)    0.215(1)   0.215(1)   0.215(1)
+the  energy  of  the  simple  projected  Fermi-Sea  (i.e.   the                 SF P/J     0.197(1)   0.197(1)   0.197(1)    0.197(1)   0.197(1)   0.197(1)
+correlated  wave-function  corresponding  to  the  previous                     BO/J       0.215(1)   0.207(1)   0.215(1)    0.187(1)   0.186(1)   0.170(1)
+FL mean-ﬁeld phase), therefore we deﬁne a condensation
+energy  as ec =evar −eF S.
+  In  Fig.  4  we  present  the  energies  of  the  three  wave-
+functionsBO/J ,SFP/J  andRVB/J  for Coulomb po-                                V0  ≈ 5 or 10 seems realistic.  Independently  of the  rela-
+tential V0  ∈  [0, 5].   We  ﬁnd  that  for  both ℓ0  =  2  and
+ℓ0 = 4 the RVB  phase is not the best variational wave-                        tive  stability  of  both  wave-functions,  the  superconduct-
+function  when  the  Coulomb  repulsion  is  strong.    The                    ing  d-wave  wave-function  itself  is  strongly  destabilized
+bond-order wave-function has a lower energy for V0 > 2                         by the Coulomb repulsion as indicated by the decrease of
+and ℓ0   =  2  (V0 >  1.5  and ℓ0   =  4).    Note  that  the                  the variational gap parameter for  increasing V0  and the
+(short  range)  Coulomb  repulsion  in  the  cuprates  is  ex-                 suppression of superconductivity atV0 ≃ 7 (see Fig. 5).
+pected to be comparable to the HubbardU, and therefore                            Nevertheless, we observe that the diﬀerence in energy
+                                                                                                                                                       7
+
+         0                                                        0                     0                                                       0
+              l0=2                         l0=4
+
+
+    -0.02
+
+                                                                  -0.02
+
+    -0.04
+
+
+                                                                                             l0=2                        l0=4
+    -0.06012345012345-0.04                                                        -0.0030     1    2    3    4    5    0    1    2    3    4    5-0.003
+                       V0                           V0                                               V0                           V0
+
+FIG.  4:    Energy  per  lattice  site  of  the  RV B/J ,  SF P/J              FIG. 6:  Total energy per site of the BO/J  minus the energy
+and BO/J  wave-functions minus the energy of the projected                     of the SF P/J  wave-functions.
+Fermi-Sea wave-function.
+
+
+      0.04                                                                      -0.4424
+                          0.4                                                               V0=0                          V0=5
+              l0=4
+      0.02                                                                                                                                      -0.538
+                            00                           10                     -0.4428
+
+          0
+                   Kinetic energy
+                   Exchange energy                                              -0.4432                                                         -0.54
+     -0.02
+
+
+     -0.040        1        2        3        4        5        6        7              0.1           0.2            0.1  0.2  0.3  0.4  0.5
+                                      V                                                               φ                           φ
+                                         0
+FIG. 5:  Kinetic and exchange energy per site of the RV B/J                    FIG. 7:  Total energy per site of the BO/J  variational wave-
+wave-function minus the respective exchange and kinetic en-                    function  with  variational  parameters  Im (˜ti,j)  =  ±φ  on  the
+ergy  of  the  simple  projected  Fermi-Sea.   Inset:  value  of  the          bonds 1, 2, 3, and Im (˜ti,j) = ±0.149 on the bonds 4, 5, 6.  The
+variational d-wave gap.                                                        sign  of  Im (˜ti,j)  is  oriented  according  to  the  staggered  ﬂux
+                                                                               pattern.  We have chosen  for  all  the links  Re ( ˜ti,j) = 0.988.
+                                                                               Results for V0 = 0 and V0 = 5 with ℓ0 = 4 are shown.
+
+between the bond-order wave-function and the staggered
+ﬂux  phase  remains very  small.  We  show in  table II  the
+order  parameters  measured  after  the  projection  for  the                  local  minima  of  the  energy  functional  at  zero  Coulomb
+RVB/J , SFP/J   and BO/J   wave-functions.   As  ex-                           potential (see Fig. 7), which are very close in energy (the
+pected the RVB/J  and the SFP/J  wave-functions are                            BO/J  wave-function is slightly lower in energy than the
+homogenous within the unit-cell.  In contrast, theBO/J                         SFP/J ) and are separated by a quite small energy bar-
+wave-function shows signiﬁcant modulations (expected to                        rier.  Note that in Fig. 7 we consider the variational bond
+be measurable experimentally) of the various bond vari-                        order parameters and not the projected quantities.
+ables w.r.t their values in the homogeneous SFP. In Fig. 6                        When  the  repulsion  is  switched  on,  the  height  of  the
+we  show the  small energy diﬀerence  (see  scale) between                     energy  barrier  increases  and  the SFP/J  wave-function
+the  two  wave-functions.   Interestingly,  the  diﬀerence  is                 does  not  correspond  anymore  to  the  second  local  min-
+increasing with the strength of the potential.  We notice                      ima.  Indeed, when V0 > 0 the  second local energy min-
+that  the  two  wave-functions  correspond  to  two  nearby                    ima shifts  continuously from the point corresponding to
+                                                                                                                                                    8
+
+      0.008                                                     0.008        very  poor  Coulomb  energy)  nor  a  bulk  static  checker-
+              l0=2                         l0=4                              board  SFP  at  too  small  Coulomb  energy.   However,  for
+                                                                             moderate Coulomb repulsion for which the d-wave RVB
+      0.004                                                     0.004        remains globally stable, sizeable regions of checkerboard
+                                                                             SFP  could  be  easily  nucleated  e.g.   by  defects.   This  is-
+                                                                             sue will be addressed using renormalized MF theory in a
+           0                                                    0            future work.  An extension of our VMC study with simul-
+                                                                             taneous inhomogeneous bond-order and singlet pair order
+                                                                             parameters (as required to treat such a problem) is diﬃ-
+                                                                             cult and also left for a future work.  Note also that low-
+     -0.004       Kinetic energy                                -0.004       energy dynamic  ﬂuctuations of checkerboard (and SFP)
+                  Coulomb energy                                             characters could also exist within the d-wave RVB state
+                  Exchange energy                                            but this is beyond the scope of this paper.
+     -0.0080     1    2    3    4    5  0    1    2    3    4    5-0.008        The  properties  of  the BO/J   staggered  ﬂux  wave-
+                        V                          V0                        function are summarized in Fig. 9  showing the  real and
+                          0                                                  imaginary  parts  of  the  measured  hopping  term  ⟨c+i cj⟩
+                                                                             between  every  nearest  neighbor  sites  of  our  candidate
+FIG. 8:  Kinetic, exchange and Coulomb energy per site of the                BO/J   wave-function.    We  also  present  the  exchange
+BO/J  wave-function minus the respective associated  energy                  term  on  each  bonds  of  the  lattice,  and  the  local  on-
+of the SF P/J  wave-function.                                                site  charge density.   We  ﬁnd  that  the  bond-order  wave-
+                                                                             function  has  both  (spin-spin)  bond  density  wave  and
+                                                                             (small)  charge  density  wave  components.   Nonetheless,
+                                                                             the  charge  modulations  are  very  small  (the  maximum
+the simpleSFP/J  wave-function.  The metastable wave-                        charge deviation from the  mean  on-site charge is  of  the
+function lying at this second local minima is a weak bond-                   order  of  2%)  ,  and  the  charge  density  is  a  little  bit
+order (SFP-like) wave-function that preserves better the                     larger  in  the  center  of  the  unit-cell.   As  expected,  the
+large  kinetic  energy  while  still  being  able  to  optimize              SFP/J  has homogeneous hopping and exchange bonds
+better the  Coulomb energy than the homogeneous SFP.                         within  the  unit-cell.    Therefore,  we  conclude  that  af-
+Moreover,  to  understand  better  the  stabilization  of  the               ter  projection  the  modulated  variational  wave-function
+BO-modulated  staggered  ﬂux  wave-functions  w.r.t  the                     diﬀers  quantitatively  from  the  uniform  one:  the BO/J
+homogeneous one, we have plotted in Fig. 8 the diﬀerence                     staggered ﬂux wave-function is quite inhomogeneous (al-
+in the respective kinetic energy, the exchange energy and                    though with a very small charge modulation) leading to
+the  Coulomb  energy  of  the SFP/J   and BO/J   wave-                       an increased magnetic energy gain while still preserving
+functions.  We conclude that the two wave-functions, al-                     a  competitive  kinetic  energy,  a  characteristic  of  the  ho-
+though  qualitatively  similar  (they  both  exhibit  an  un-                mogeneousSFP/J  wave-function.
+derlying  staggered  ﬂux  pattern),  bear  quantitative  dif-
+ferences:  the staggered ﬂux phase (slightly) better opti-
+mizes  the  kinetic  energy  whereas  the  bond-order  wave-                                       IV.     CONCLUSION
+function (slightly) better optimizes the Coulomb and ex-
+change energies so that a small overall energy gain is in                       In  conclusion,  in  this  work  we  have  investigated  the
+favor of the modulated phase.  Therefore, we unambigu-                       t−J−V  model using both mean-ﬁeld calculations as well
+ously conclude that, generically, bond-order modulations                     as  more  involved  variational  Monte-Carlo  calculations.
+should spontaneously appear on top of the staggered ﬂux                      Both  approaches  have  provided  strong  evidence  that
+pattern for moderate doping.                                                 bond-order wave-functions (of underlying staggered ﬂux
+  Finally,   we   emphasize   that   the   bond-order   wave-                character) are  stabilized  at  zero  and  ﬁnite  Coulomb  re-
+function is not stabilized by the Coulomb repulsion alone                    pulsion for doping close to 1/8.  In particular, variational
+(like for a usual electronic Wigner cristal) exhibiting co-                  Monte-Carlo calculations  show that  a  bond  modulation
+existing  bond  order  and  (small)  charge  density  wave.                  appears spontaneously on top of the staggered ﬂux phase.
+Moreover,  the  variational  parameters ǫi  in  Eq.  (9)  are                This is in agreement with the work of Wang et al.29 pre-
+found after minimizing the projected energy to be set to                     dicting  an  instability  of  staggered  ﬂux  type.   We  have
+equal  values  on  every  site  of  the  unit-cell.   Let  us  also          also  shown  that  the  modulated  and  homogeneous  SFP,
+emphasize  that  the  bond-order wave-function is  not  su-                  although nearby in parameter space, are nevertheless sep-
+perconducting  as  proposed  in  some  scenarios27.   In  the                arated from each other by a small energy barrier.  While
+actual variational framework, we  do  not  consider bond-                    both  staggered  ﬂux  wave-functions  provide  an  optimal
+order  wave-function  embedded  in  a  sea  of  d-wave  spin                 kinetic energy, the bond-modulated one exhibits a small
+singlet pairs.                                                               extra  gain  of  the  exchange  energy.   On  the  other  hand,
+  In  fact,  we  do  not  expect  a  bulk  d-wave  RVB  state                a  short  range  Coulomb  repulsion  favors  both  staggered
+to  be  stable  at  large  Coulomb  repulsion  (because  of  its             ﬂux  wave-function  w.r.t  the  d-wave  RVB  superconduc-
+                                                                                                                                                               9
+
+
+ (a)                                     (b)                                      (c)                                     (d)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  9:   (Color  online)  Local  expectation  values  (a,b,c)  of  the  kinetic  and  exchange  energies  of  the  projected  BO/J   wave-
+functions  on  each  of  the  bonds  within  the  unit-cell.   Width  of  ﬁlled  square  symbols  is  proportional  to  the  (a)  real  and  (b)
+imaginary part of ⟨c+i  cj⟩, and (c) to the local exchange energy ⟨Si · Sj⟩.  The sign of the imaginary part of the hopping bonds
+is  according  to  the  staggered  ﬂux  pattern  (arrows).   The  wave-function  has  small  charge  density  variations  (d),  therefore  we
+subtract  the  mean  value  n  to  the  local  density:  size  of  circles  are  proportional  to  ⟨ni − n⟩,  and  circles  are  open  (ﬁlled)  for
+negative (positive) sign.  The biggest circle corresponds to an on-site charge deviation of 2%.  All the above results are for l0 = 4
+and V0 = 5.
+
+
+tors and brings them close in energy.                                              this region.
+   Finally, it would be interesting to study if the checker-
+board pattern could spontaneously appear in the vicinity
+of a vortex in the mixed phase of the cuprates.  Such an                                                     Acknowledgments
+issue could be addressed by studying the t−J−V  model
+on  a  square  lattice  extending  our  variational  scheme  to
+include simultaneously nearest neighbor pairing and bond                              We  are  grateful  to  Thierry  Giamarchi  and  Andreas
+modulated staggered currents.  It is expected that, while                          L¨auchli for  very  useful  discussions.  This  work  was  par-
+the pairing is suppressed in the vicinity of the vortex, the                       tially  supported  by  the  Swiss  National  Fund  and  by
+checkerboard pattern might be variationally stabilized in                          MaNEP.
+
+
+
+
+
+
+
+ ∗  Electronic address:  didier.poilblanc@irsamc.ups-tlse.fr                       15  P.W.    Anderson,    B.S.    Shastry    and    D.    Hristopulos,
+ 1  P.W. Anderson, Science 235, 1196 (1987).                                           Phys.  Rev.  B.  40,  8939  (1989);   D.  Poilblanc,  ibid.  40,
+ 2  F. C. Zhang and T. M. Rice, 37, 3759 (1988).                                       R7376  (1989);  P.  Lederer,  D.  Poilblanc  and  T.M.  Rice,
+ 3  E. Dagotto, Rev. of Mod. Phys. 66, 763 (1994).                                     Phys. Rev. Lett. 63, 1519 (1989); For related results using
+ 4  G.  Kotliar,  Phys. Rev. B 37,  3664  (1988).  This  state  can                    slave boson  MF techniques see e.g.  F. Nori, E. Abrahams
+   also be written as a projected s+id  spin liquid.                                   and G.T. Zimanyi, Phys. Rev. B. 41, R7277 (1990).
+ 5  H.  Yokoyama  and  H.  Shiba,  J.  Phys.  Soc.  Jpn.  57,  2482                16  D. Poilblanc, Y. Hasegawa and T. M. Rice, Phys. Rev. B.
+   (1988).                                                                             41, 1949 (1990).
+ 6  C. Gros, Phys. Rev. B 38, R931 (1988); For recent estima-                      17  M.  Vershinin,  S.  Misra,  S.  Ono,  Y.  Abe,  Y.  Ando,  and
+   tions see e.g. A. Paramekanti, M. Randeria and N. Trivedi,                          A. Yazdani, Science 303,  1995  (2004).  Note that the ﬁrst
+   Phys. Rev. Lett. 87, 217002 (2001).                                                 observation  was  made  around  a  vortex  core  in  J.E.  Hoﬀ-
+ 7  A. Paramekanti, M. Randeria and N. Trivedi, Phys. Rev. B                           man, E.W. Hudson, K.M. Lang, V. Madhavan, H. Eisaki,
+   70 , 054504 (2004).                                                                 S. Uchida, and J.C. Davis, Science 295, 466 (2002).
+ 8  P.W.   Anderson,   P.A.   Lee,   M.   Randeria,   T.M.   Rice,                 18  Note that the energy-dependent spatial modulations of the
+   N. Trivedi and F.C.  Zhang, J  Phys. Condens. Matter  16,                           tunneling  conductance  of  optimally  doped  BSCO  can  be
+   R755-R769 (2004).                                                                   understood  in  terms  of  elastic  scattering  of  quasiparti-
+ 9  I.  Aﬄeck  and  J.B.  Marston,  Phys.  Rev.  B.  37,  R3774                        cles. See J.E. Hoﬀman, K. McElroy, D.H. Lee, K.M. Lang,
+   (1988); J.B. Marston and I. Aﬄeck, ibid. 39, 11538 (1989).                          H.  Eisaki,  S.  Uchida,  and  J.C.  Davis  Science  297  1148
+10  D.A.  Ivanov,  Phys.  Rev.  B.  70,  104503  (2004)  and  ref-                     (2002).
+   erences  therein;  see  also  D.  Poilblanc  and  Y.  Hasegawa,                 19  G.  Levy,  M.  Kugler,  A.A.  Manuel,  O.  Fischer  and  M.  Li
+   Phys. Rev. B 41, 6989 (1990).                                                       Phys. Rev. Lett. 95, 257005 (2005).
+11  P.A.   Lee,    N.   Nagaosa,    T.K.   Ng   and   X.G.   Wen   ,               20  A.   Hashimoto,    N.   Momono,    M.   Oda,    and   M.   Ido,
+   Phys. Rev. B 57, 6003 (1998).                                                       cond-mat/0512496.
+12  X.G. Wen and P.A. Lee, Phys. Rev. Lett. 76, 503 (1996).                        21  T. Hanaguri et al., Nature 430, 1001 (2004).
+13  M.U. Ubbens and P.A. Lee, Phys. Rev. B 46, 8434 (1992).                        22  The Manhattan distance of Ref. 26 is used.
+14  D.R. Hofstadter, Phys. Rev. B. 14, 2239 (1976).                                23  M.C. Gutzwiller, Phys. Rev. Lett. 10, 159 (1963); D. Voll-
+                                                                                                                                                               10
+
+   hardt, Rev. Mod. Phys. 56, 99 (1984).                                            30  Note   that   the   bond   modulation   itself   leads   to   non-
+24  F.C.  Zhang,  C.  Gros,  T.M.  Rice  and  H.  Shiba,  Super-                        equivalent   sites   which,   strictly   speaking,   should   have
+   cond. Sci. Technol. 1, 36 (1988).                                                    slightly  diﬀerent electron  densities (although the ǫi  might
+25  D. Poilblanc, Phys. Rev. B. 41, R4827 (1990); note that, in                         be constant).
+   this early  treatment,  uniform  Gutzwiller  parameters  were                    31  Note that, in this regime, antiferromagnetism is expected.
+   assumed although the bond variables were allowed to vary                             Such a competition is not considered here.
+   spatially.                                                                       32  Also  found  in  SU(2N)  mean-ﬁeld  theory;  see  M.  Vojta,
+26  D. Poilblanc, Phys. Rev. B. 72, 060508(R)  (2005).                                  Y. Zhang  and  S. Sachdev, Phys. Rev. B.  62,  6721  (2000)
+27  Such  a  formulation  should  be  appropriate  as  long  as  the                    and references therein.
+   deviations of ⟨ni⟩  from  the average density remain  small.                     33  Our 4 × 4  solution  bears  some  similarities  with  those  ob-
+   See P.W. Anderson, cond-mat/0406038;  B.A. Bernevig et                               tained  within  SU(2N)/Sp(2N)  mean  ﬁeld  theories;   see
+   al., cond-mat/0312573.                                                               M. Vojta, Phys. Rev. B. 66, 104505 (2002). Note however
+28  C. Li, S. Zhou and Z. Wang, cond-mat/0510596.                                       that the large-N Sp(2N) scheme implies a superconducting
+29  Z.  Wang,  G.  Kotliar  and  X.F.  Wang,  Phys.  Rev.  B.  42,                      state.
+   R8690  (1990);   note  that  the  Fermi  surface  of  the  SFP                   34  R. Jastrow, Phys. Rev. 98, 1479 (1955).
+   is made of  four small  elliptic-like pockets  centered  around
+   (±π/2, ±π/2).

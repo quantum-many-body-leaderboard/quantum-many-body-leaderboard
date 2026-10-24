@@ -1,0 +1,1255 @@
+                 Stability  of  RVB hole  stripes in  high-temperature  superconductors
+
+                                  Manuela  Capello,   1  Marcin  Raczkowski,   2  Didier  Poilblanc   1
+                                             1  Laboratoire  de  Physique  Th´eorique  UMR  5152,
+                                    CNRS  and  Universit´e  Paul  Sabatier,  F-31062  Toulouse,  France
+         2  Marian  Smoluchowski  Institute  of  Physics,  Jagellonian  University,  Reymonta  4,  PL-30059  Krak´ow,  Poland
+                                                           (Dated:  October 31, 2018)
+                   Indications  of  density-wave  states  in  underdoped  cuprates,  coming  from  recent  STM  (scanning
+                tunneling microscopy) and Hall-resistance measurements, have raised new concerns whether stripes
+                could  be  stabilized  in  the  superconducting  phase  of  cuprate  materials,  even  in  the  absence  of  an-
+                tiferromagnetism.  Here,  we  investigate  this issue  using state-of-the-art  quantum Monte  Carlo  cal-
+                culations  of  a  t − J  model.   In  particular  we  consider  the  stability  of  unidirectional  hole  domains
+                in a modulated superconducting background, by taking into account the eﬀect of tetragonal-lattice
+                distortions, next-nearest neighbor hopping and long-range Coulomb repulsion.
+
+
+                     I.     INTRODUCTION                                      produced by a tilt of the oxygen octahedra that leads to a
+                                                                              diﬀerent electronic hopping and exchange integral along
+  The   physics   of   high-temperature   superconductors                     the  two  planar  directions.   Previous  calculations  found
+(HTSC) is characterized by the presence of several com-                       that spatial anisotropy could stabilize antiferromagnetic-
+peting  orders.    Besides  antiferromagnetism  and  super-                   stripe  phases11,12.   Therefore,  in  view  of  what  is  found
+conductivity,   it  is  now  widely  accepted  that  the  un-                 in experiments, it is important to understand if a similar
+derdoped   region  of  the   HTSC   phase   diagram  shows                    eﬀect occurs for superconducting modulated states.
+a  pseudogap  phase1,2  and  occasionally  the  presence  of
+spatially-ordered states3,4  at special dopings,  character-
+ized by charge domain walls separated by antiferromag-                           In  this  paper,  we  study  the  competition  among  ho-
+netic  regions.     Recently,   accurate  STM  experiments5                   mogeneous and non-uniform superconducting  states, by
+have revealed modulations  of the  local density  of  states                  taking into account the presence of spatial lattice distor-
+in  the  form  of  unidirectional  domains  for  two  diﬀerent                tions,  next-nearest  neighbors  hopping  terms  and  long-
+underdoped  HTSC  materials,   Ca2−δNaδCuO2Cl2   and                          range  Coulomb  repulsion.    As  a  prototype  model  for
+Bi2Sr2CaCu2O8+δ,  where  spatial  ordering  was  not  de-                     cuprate superconductors, we investigate the t−J model13
+tected before.  These ﬁndings highlight the importance of                     in  two  dimensions,  by  using  state-of-the-art Variational
+inhomogeneous states as a general feature of HTSC, and                        Monte Carlo techniques (supplemented by mean-ﬁeld ap-
+extend  the  idea  of  quasi-one  dimensional  order  beyond                  proaches).    Following  Anderson  idea14,  the  variational
+the original spin-stripe picture6, with superconductivity                     approach,  based  on  the  resonating-valence-bond  (RVB)
+coexisting with charge modulation, in the absence of anti-                    wavefunction,   has  successfully  described  most  of  the
+ferromagnetism.  Moreover, recent measurements of Hall                        features  of  HTSC15,16.     However,  to  tackle  spatially-
+resistance7 on underdoped YBa2Cu3Oδ and YBa2Cu4O8                             inhomogeneous  superconducting  states  like  those  found
+give  evidence  of  a  reconstruction  of  the  Fermi  surface                by experiments, more involved calculations, including the
+caused by the onset of a density-wave phase in the large-                     possibility  of  local  modulations  in  the  superconducting
+ﬁeld  induced  normal  state,  indicating  that  spatial  sym-                state,  are  required.   Here,  we  accomplish  this  task  and
+metry breaking is a common characteristic of underdoped                       show  that,  generically,  half-ﬁlled  hole  stripes  can  form
+cuprates.                                                                     easily  in  a  RVB  superconductor  at  quite  small  energy
+  Theoretically, it  is challenging to  characterize a  mod-                  cost.   Interestingly  enough,  lattice  distortion  and  long-
+ulated state that could mimic the experimental ﬁndings,                       range Coulomb repulsion are proved to play a key role.
+and to identify the key microscopic parameters that could
+induce this kind of non-uniform superconducting phases.
+Indeed,  besides  the  strong,  local  repulsion  among  elec-
+trons,  that  leads  to  antiferromagnetism,  the  low-energy                    This paper is organized as follows.  In Section II we in-
+physics  of  cuprates  is  often  determined  by  additional                  troduce the model and the variational approach, present-
+hopping  integrals  among  next-nearest  neighbor  copper                     ing the two families of modulated wavefunctions that we
+atoms,  and  by  a  long-range  Coulomb  repulsion  among                     study, the π-phase shift and inphase domain RVB wave-
+electrons.  These terms have been studied in the past for                     functions.  In Section III we characterize in detail the new
+diﬀerent inhomogeneous states and were found to stabi-                        inphase domain RVB state, introduced in this paper, for
+lize  modulated  superstructures8,9.   Also  of  relevance,  is               the  t − J  model.  In  Section IV, V  and VI  we  show the
+the  role  played  by  structural  instabilities,  a  feature  un-            eﬀect of lattice distortion, next-nearest neighbor hopping
+doubtedly present in many HTSC compounds, in stabiliz-                        and  long-range  Coulomb  repulsion,  respectively,  on  the
+ing modulated superstructures.  Indeed, HTSC are often                        stabilization  of  modulated  superconducting  states.   Fi-
+characterized  by  a  low-temperature  tetragonal  phase10,                   nally, in Section VII we draw our conclusions.
+                                                                                                                                                        2
+
+        II.     MODEL  AND  WAVEFUNCTIONS                                            1           2           34             5           6           7           8y
+
+   The  t − J  Hamiltonian is deﬁned,  using standard no-                                                                                               x
+tations, as13:                                                                 a)
+                                                                                                                                          BC−DRVB
+ Ht−J  = −t  ∑         αij(˜c†iσ˜cjσ + h.c.) + J ∑      α2ijSi · Sj  (1)
+                ⟨i,j⟩σ                             ⟨i,j⟩                             1           2           3           4           5           6           7           8y
+
+where  ˜c†iσ  =  (1 − ni −σ)c†iσ  acts  on  the  reduced  Hilbert              b)                                                                       x
+space with no double occupancies.  For non-distorted lat-
+tices we take αij = αx = αy = 1 for all nearest neighbors.                                                                                SC−DRVB
+Instead,  tetragonal  distortion  is  set  by  taking  diﬀerent
+hopping and exchange parameters along the x and y  di-                         FIG.  1:    (Color  online)  Cartoon  of  the  (a)  bond-centered
+rection,  according  to  the  position  of  the  tilt  axis.   This            and  (b)  site-centered  domain  RVB  (DRVB)  stripes.    Non-
+implies  αx  ⁄=  αy,  with  αx  <  1  (αy  <  1)  and  αy  =  1                equivalent bonds have diﬀerent colors.  Thicker (larger) bonds
+(αx  =  1)  respectively  for  the  tilt  axis  along  the  y  (x)             (circles) have larger pairing (hole) densities.  Dashed lines in-
+direction.  Here,  we  mainly focus  on the physically rele-                   dicate bonds where ∆ij  is set to zero.
+vant case t/J  = 3  (if  not speciﬁed otherwise) at doping
+δ = 1/8.
+   In the following, we make use of the Variational Monte
+Carlo  techniques  (VMC),  using  clusters  of  N  =  8 × 8,                      Here, we study possible instabilities of the RVB state
+128  (45  degree  82 + 82  tilted  lattice)  and  16 × 16  sites               towards  spatial  modulations,  allowing  the  RVB  bonds
+with  periodic-boundary  conditions.   Moreover,  to  have                     ∆ij to become inhomogeneous.  In particular, it is known
+access  to  larger  sizes  that  can  approach  the  thermody-                 from experiments that one-dimensional hole-rich regions
+namic limit, we compare our variational results with pre-                      are generally  spaced by  1/(2δ),  implying  half-ﬁlled  hole
+dictions coming from the renormalized mean-ﬁeld theory                         domains  with  an  average of  one  hole  every  1/δ  sites  in
+(RMFT)17, on a 128×128 cluster, using unit cell transla-                       the direction where translational symmetry is broken.  At
+tion symmetry18 (for more details on the RMFT results,                         a  doping  of  δ  =  1/8,  this  corresponds  to  a  periodicity
+see Ref.19).  In the variational procedure, the RVB state                      of  four  lattice  spacings  4a.   Remarkably,  we  found  such
+is derived from the BCS mean-ﬁeld state by incorporating                       states, where hole-rich stripes coexist with modulated su-
+the eﬀect of correlation via the so-called Gutzwiller pro-                     perconducting domains, whose energy per site is only of
+jector  Pg,  that  can be  treated exactly  within  the  quan-                 a very small fraction of J  higher than its uniform coun-
+tum  Monte  Carlo  scheme.  Indeed,  given the  mean-ﬁeld                      terpart.  The hierarchy of phases is therefore expected to
+Hamiltonian:                                                                   be very sensitive to the details of the microscopic Hamil-
+                                                                               tonian.
+                HMF  = ∑(χijc†iσcjσ + h.c.) +                                     In  a  previous  paper22,   we  considered  a  variational
+                           i,jσ                                                domain-RVB state that contains a π-phase shift in the su-
+            + ∑(∆ijc†i↑c†j↓ + h.c.) + µ ∑            niσ                 (2)   perconducting order parameter between regions of four-
+               ⟨i,j⟩                             iσ                            lattice  spacings  width  (πDRVB).  The  phase  shifts  cre-
+                                                                               ate  domain  walls  with  vanishing  pairing  amplitude  and
+we   construct   the   variational   state   by   applying   the               a consequent concentration of holes.  The πDRVB states
+Gutzwiller projector to the ground state |D⟩ of Eq. (2):                       turned out to be competitive with respect to the homo-
+                                                                               geneous RVB state, and could explain the copper-oxygen
+             |ΨG⟩ = Pg|D⟩ = ∏(1 − ni↑ni↓)|D⟩             (3)                   layer decoupling found in La2−xBaxCuO4, accompanied
+                                     i                                         by a depression of Tc  at 1/8 doping23,24.  Here, we com-
+                                                                               plete the characterization of πDRVB states, by consider-
+where niσ counts the number of electrons of spin σ on site                     ing the eﬀect of lattice distortion, nearest-neighbor hop-
+i.  The  terms  χij,  ∆ij  and µ in Eq. (2)  correspond to  a                  ping  term,  and  long-range  Coulomb  repulsion.    More-
+set of parameters that are optimized in order to minimize                      over, since the presence of the antiphase domains implies
+the variational energy, according to the stochastic mini-                      a  certain  amount of  energy,  in  the  following  we  investi-
+mization algorithm20.  In the simple case of the uniform                       gate  an  alternative  strategy  to  tackle  the  problem,  and
+RVB state, the independent parameters reduce to µ and                          propose another  possible  candidate for  superconducting
+∆ij  =  ±∆  for  nearest  neighbors,  with  the  sign  follow-                 stripes,  where  domains  are  inphase:   the  domain  RVB
+ing the d-wave symmetry.  Moreover, another competing                          state  (DRVB).  Starting  from  the  RVB  state,  we  inves-
+homogeneous state, the staggered-ﬂux phase21  (SFP), is                        tigate  the  energy  cost  associated  to  the  introduction  of
+obtained  by  allowing  the  hopping  parameters  χij  to  be                  line defects in the uniform state, in the form of unidirec-
+complex, leading to staggered currents circulating in op-                      tional hole domains.  This is done by imposing a vanish-
+posite directions in the neighboring plaquettes.                               ing pairing amplitude ∆ij  = 0 along one direction, with
+                                                                                                                                                           3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                                                                             0.14
+TABLE  I:  VMC  and  RMFT  energy  per  site  (in  units  of  t)                       0.14
+for  diﬀerent  projected  wavefunctions  for  the  t − J  model  at                            (a)                            (b)
+doping 1/8.                                                                            0.13                                                                  0.13
+                    |D⟩              EV MC  [ t ]   ERMF T  [ t ]
+                   RVB            -0.45564(3)  −0.4549(1)
+
+
+                                                                                                                                                             0.12
+                   SFP            -0.44630(3)  −0.4286(1)                              0.12                                              t/J=3
+            πDRVB [Ref.22]  -0.44529(3)  −0.4413(1)                                                                                      t/J=1
+                BC-DRVB       -0.45490(3)  −0.4511(1)                                                                                  t/J=0.5
+
+
+
+
+
+
+
+
+                                                                                                                                                             0.11
+                SC-DRVB       -0.45525(3)  −0.4507(1)                                  0.11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                                                                            -0.19
+                                                                                      -0.19
+                                                                                               (c)                            (d)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                                                                            -0.2
+a periodicity that, at doping 1/8, corresponds to 4a.  In                              -0.2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                                                                            -0.21
+Figure  1  we  show  the  two  possible  modulations  of  the                         -0.21
+inphase DRVB state derived from the above arguments.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                                                                            -0.22
+In Figure 1(a) stripes are bond-centered (BC), with the                               -0.22
+RVB  bonds  characterized  by  a  periodicity  of  4a  along
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                                                                            -0.23
+the x  direction.  The  pairing ﬁeld  ∆ij  associated to  one                         -0.23                                                       t/J=3
+type of horizontal bonds is set to zero.  Alternatively, in
+Figure 1(b) the stripes are site-centered (SC), where the
+lines of vertical bonds with ∆ij  = 0 are separated by 4a                                      (e)                            (f)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                                                                            -0.15
+along the x direction.                                                                -0.15
+   Besides  the  π-shift  domain  RVB  stripes,  which  could
+give  a  natural  explanation  to  the  decoupling  among
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                                                                            -0.16
+superconducting-layers,  this  second  class  of  supercon-                           -0.16
+ducting  hole  stripes, the  DRVB  states, could be  related
+to the STM experimental ﬁndings of inhomogeneous su-
+perconducting states.                                                                                                                             t/J=3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                                                                            -0.17
+                                                                                      -0.17
+                                                                                              1   2   3   4   5   6   7   8 1    2   3   4    5   6   7   8
+    III.     DRVB  STRIPES  IN  THE  t − J  MODEL                                                         site                            site
+
+
+   In this section we characterize the new inphase domain                        FIG. 2:  (Color online) Top panel:  Hole distribution in DRVB
+RVB  states  for  the  t − J  model,  showing  that,  among                      states  for  diﬀerent  values  of  t/J  as  shown  in  graph.  Middle
+the superconducting stripe states22,25, they constitute a                        and  bottom  panel:  Magnetic  (in  units  of  J)  and  kinetic  (in
+valid candidate for a strongly-competing, inhomogeneous                          units of t) bond energy within the unitary cell of Figure 1 for
+state.  We start by considering the variational energies of                      t/J  =  3.   Squares  indicate  energies  associated  to  horizontal
+the diﬀerent stripe states, together with the correspond-                        bonds (located between two sites), triangles to vertical bonds.
+                                                                                 Left  panels  refer  to  the  BC-DRVB  state  and  right  panels  to
+ing RMFT values in Table I.  Both approaches show that,                          the SC-DRVB state.  All quantities are calculated for a cluster
+with  respect  to  the  SFP  and  the  πDRVB22  states,  the                     of 16x16 sites.
+DRVB  states  are  one  order  of  magnitude  closer  in  en-
+ergy to the homogeneous RVB phase.  Note that the site-
+centered  variational  energy  approaches  the  RVB  state
+very  closely.   However,  in  both  cases  the  small  energy
+diﬀerence indicates both DRVB states as very promising                           unitary cell is non-uniform, the hole density being larger
+candidates  for  a  competing  inhomogeneous  state.   Re-                       along the regions where ∆ij  = 0 (notice that the magni-
+markably,  within  the  DRVB  geometry,  the  suppression                        tude of  the hole  modulation increases with J/t).  More-
+of  some  of  the  RVB  bonds  does  not  imply  signiﬁcant                      over, the  magnetic  and  kinetic  energies  follow the  same
+energy  costs.   Notice  that,  at  the  variational  level,  the                modulation than the charge.  Indeed, along the  ∆ij  = 0
+optimal wavefunctions preserve the d-wave symmetry of                            bonds the kinetic energy is enhanced, while the magnetic
+the  pairing  ﬁeld  in  the  regions  where  ∆ij  ⁄=  0,  with  a                energy is  suppressed, as expected.  Note  that  the  bonds
+small  modulation  that  depends  upon  the  type  of  bond                      presenting the largest modulation are the horizontal (ver-
+(see Figure 1).                                                                  tical) ones for the BC (SC) wavefunction, i.e., the bonds
+   To prove that the non-homogeneous DRVB wavefunc-                              along  the  direction  where  some of  the  pairing  ﬁelds  are
+tions that we have constructed indeed correspond to spa-                         suppressed.
+tially modulated states, we show in Figure 2 typical pro-
+ﬁles  in  the  bond-  and  site-centered  states.   It  turns  out                  Finally, to characterize the superconducting properties
+that the hole distribution along the diﬀerent sites of the                       of our variational states, we calculate the singlet pairing
+                                                                                                                                                                4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                               0.12
+      0.12    (a) 0.1                          (b)                                       1.5⋅10-3
+                                                   0.1                                                                     6⋅10-4
+                                                                                                           8x8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                               0.1                                         3⋅10-4                           8
+        0.1                                                                                                82+82
+                    0                                0                                                     16x16                0
+                       0         0.1N-1/2               0        0.1 N-1/2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                               0.08
+      0.08                                                                                                                -3⋅10-4
+                                                                                         1.0⋅10-3                                 0   5% distortion 10 15 20 6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                               0.06
+      0.06
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                               0.04
+      0.04                                                                                                                                                  4
+
+                                                                                           5⋅10-4
+
+
+
+
+
+                                                                               0.02
+      0.02
+                                                                                                                                                            2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                               0
+          0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                               0.3
+       0.3    (c)                               (d)                                              0                                                          0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                               0.2
+       0.2                                                                                         0.7      0.8      0.9       1 αx/αy 1.1      1.2      1.3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                               0.1
+       0.1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                               0
+          0                                                                        FIG.  4:   (Color  online)  Energy  diﬀerence  between  the  BC-
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                              -0.1
+      -0.1                                                                         DRVB  (SC-DRVB)  and  the  homogeneous  RVB  state27  as
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                              -0.2 a  function  of  the  lattice  distortion  αx/αy,  shown  by  ﬁlled
+      -0.2                                                                         (empty) symbols.  Charge stripes are arranged along the y di-
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                              -0.3
+      -0.3                                                                         rection in all cases.  Energies (per site) are reported in units of
+             1   2   3    4   5   6   7    8  1   2    3   4   5   6    7   8      t, for the case t/J  = 3.  The right axis is a temperature scale,
+                          site                             site                    assuming  J  =  2000K.   The  points  considered  correspond  to
+                                                                                   distortions of 10% and 20% in the two directions.  Inset:  En-
+                                                                                   ergy  diﬀerence  among  the  two  possible  stripe  arrangements,
+FIG.  3:   (Color  online)  Top  panel:   Pairing  order  parameter                parallel  and  perpendicular  to  the  tilt  axis,  for  BC  and  SC
+(ﬁlled points for VMC, empty points for RMFT) for the BC-                          wavefunctions.   Arrows  correspond  to  the  predictions  given
+DRVB  (left)  and  SC-DRVB  (right)  states  along  the  8  inde-                  by the Hellman-Feynman theorem for the largest system.
+pendent  sites  of  Figure  1.   Squares  correspond  to  horizontal
+bonds (located between two sites), triangles to vertical bonds.
+The  blue  line  corresponds  to  the  pairing  order  parameter  in               is not accurate in this case.  The resulting picture consists
+the homogeneous RVB state.  Inset:  size scaling of the pairing                    of  two  diﬀerent  types  of  bonds,  some  associated  to  the
+order parameter as a function of the inverse-squared number                        hole-rich  region,  and  others  where  the  superconducting
+of  sites.   Colors  refer  to  the  corresponding  colored  bonds  of             order parameter, although slightly enhanced or depressed
+Figure  1.   Stars  correspond  to  the  projected  Fermi  sea,  for               locally, is very close the one found for the homogeneous
+comparison.  Bottom panel:  corresponding pairing variational                      RVB state.  This feature, together with the non-uniform
+parameters for the diﬀerent bonds.                                                 charge distribution, has strong similarities with the pic-
+                                                                                   ture which could be derived from the STM experimental
+correlations:                                                                      ﬁndings of Ref.5.
+
+                   P 2s (r) =  ⟨ΨG| ˜∆†s+r ˜∆s|ΨG⟩
+                                      ⟨ΨG|ΨG⟩        ,                    (4)                      IV.     LATTICE DISTORTION
+
+where  ˜∆†s  = c†s,↑c†s+ˆa,↓ − c†s,↓c†s+ˆa,↑  creates a  singlet pair
+of  electrons  among  nearest  neighbors  for  each  indepen-                         Considering  the  t − J  Hamiltonian  of  Eq. (1),  lattice
+dent  site  s  of  the  unitary  cell  in  Figure  1  and  ˆa  is  the             distortion is set by imposing two diﬀerent αij along the x
+unit vector, that speciﬁes the bond direction (along x or                          and y direction.  We ﬁnd that setting αx ⁄= αy further in-
+y).  We extract the pairing order parameter by taking the                          creases the stabilization of the non-homogeneous states.
+square root Ps(rmax) of the pairing correlation function                           This  feature,  that  was  already  observed  in  the  context
+(4)  at  the  maximum  distance  rmax  for  diﬀerent  cluster                      of  spin-stripes11,12,  extends  its  validity  in  the  quite  dif-
+sizes,  for  all  independent  sites.   Notice  that  the  VMC                     ferent case of superconducting-stripe states.  Considering
+and  RMFT  proﬁles  are  in  agreement.   However,  within                         the case of DRVB states, we ﬁnd that the bond-centered
+VMC, we ﬁnd, for all diﬀerent bonds, that the pairing or-                          stripes  gain  a  remarkable  amount  of  energy  upon  dis-
+der parameter is ﬁnite, see Figure 3.  Remarkably, this is                         tortion,  see  Figure  4.    In  particular,  we  ﬁnd  that  the
+the case also for the bond where the variational parame-                           superconducting inphase domain stripes are stabilized26
+ter ∆ij  = 0, signaling that the Gutzwiller approximation                          when  the  ∆ij  =  0  bonds  lie  along  the  direction  of  the
+                                                                                                                                                          5
+
+
+         1.2⋅10-2
+         1.0⋅10-2     πDRVB                                                             -0.43
+
+
+           8⋅10-3
+                                                                                        -0.44
+           6⋅10-3
+
+           4⋅10-3                                                                       -0.45                                         RVB
+           2⋅10-3                                       BC                                                                   BC-πDRVBBC-DRVB
+                                                        SC
+                 0 0.7     0.8     0.9       1      1.1     1.2     1.3                 -0.46    0      0.1      0.2      0.3      0.4      0.5      0.6
+
+                                         αx/αy                                                                            t’/t
+
+FIG.  5:   (Color  online)  Energy  diﬀerence  between  the  BC-                FIG.  6:  (Color  online)  t − t′ − J  model:  Variational  energy
+πDRVB (SC-πDRVB) and  the homogeneous  RVB state27  as                          (in  units  of  t)  vs.    t′/t  for  the  uniform  RVB  (circles),  the
+a  function  of  the  lattice  distortion  αx/αy,  shown  by  ﬁlled             BC-πDRVB  (squares)  and  the  BC-DRVB  (triangles)  wave-
+(empty)  symbols.   Charge  stripes  are  arranged  along  the  y               functions.
+direction in all cases.  Energies (per site) are reported in units
+of t.  The points considered  correspond to distortions of 10%
+and 20% in the two directions.
+
+                                                                                                          V.     ROLE  OF  t′
+
+
+                                                                                   Since the energies of the stripe states are very close to
+                                                                                the  homogeneous  RVB  state,  some  further  contribution
+                                                                                to the microscopic Hamiltonian could ﬁnally stabilize the
+tilt axis, where the hopping and exchange parameters are                        bond-centered hole-stripe states as found in experiments.
+the largest.  Assuming by convention the hole-stripe ﬁxed                       Here, we consider an additional hopping integral among
+along the y direction, we indeed found the bond-centered                        next-nearest  neighbor  copper  atoms,  which  is  relevant,
+hole stripes favored for αx  > αy  (tilt axis along x,  with                    in many cuprates, for a correct description of their Fermi
+the stripe perpendicular to it) and the site-centered hole                      surface.  The t − t′ − J  Hamiltonian is obtained from the
+stripes  favored for  αx  <  αy  (tilt  axis  along  y,  i.e.,  par-            t − J  model of Eq.  (1) by adding:
+allel  to  the  stripes,  similarly  to  what  found  for  antifer-
+romagnetic  stripes  in  Ref.11).   The  stability  of  the  two
+possible  stripe  arrangements  is  evident  in  the  inset  of                          Ht−t′−J  = HtJ + t′    ∑           (c†
+Figure 4, where ∆E, i.e., the energy of the stripe parallel                                                                   iσcjσ + h.c.)           (5)
+to  the  tilt  axis  minus  the  energy  of  the  stripe  perpen-                                                  ⟨⟨i,j⟩⟩ σ
+dicular  to  it,  shows a  diﬀerent  behavior for  BC  and SC
+stripes.   Note  that  all  data  are  in  agreement  with  cal-
+culations  using  the  Hellman-Feynman  theorem  (provid-                       where  ⟨⟨i, j⟩⟩  denotes  next-nearest  neighbors.   Here,  we
+ing  directly the  slopes in the  limit  αx(y)  → 1),  valid for                take  t′  >  0  and  t/J  =  3,  being  relevant  for  hole-doped
+small  deformations,  which  gives  ∆E/t  =  0.00520∆t/t                        cuprates.    In  the  presence  of  t′,  a  further  variational
+for  bond-centered  stripes  and  ∆E/t  =  −0.00167∆t/t                         hopping parameter χ′ij  among next-nearest neighbors is
+for  site-centered  stripes.    Remarkably,  the  RMFT  ap-                     added  to  the  mean-ﬁeld  Hamiltonian  of  Eq.  (2).   Con-
+proach  also  conﬁrms  that  these  superconducting  mod-                       sidering the uniform RVB state, χ′ij  is homogeneous for
+ulated states are stabilized by tetragonal distortion (not                      all sites.  Instead, in the case of stripe states, four diﬀer-
+shown).   Instead,  in  the  case  of  π-shift  domain  stripes,                ent χ′ij are optimized, according to the symmetries of the
+which  involves  higher  energy  scales,  there  is  no  appre-                 πDRVB  and  DRVB  unitary  cells.   In  Figure  6  we  com-
+ciable  diﬀerence  in  the  behavior  of  the  bond-  and  site-                pare the variational energies of the two candidate stripe
+centered  geometries  with  respect  to  the  distortion  axis,                 states, the  π-phase domain RVB  stripe and the  inphase
+see  Figure  5.    Indeed,  lattice  deformation  lowers  the                   domain RVB stripe, with the energy of the homogeneous
+πDRVB energy in both cases with respect to the uniform                          RVB  state  for  diﬀerent  t′.  It  turns  out  that  the  DRVB
+RVB  state,  with  a  slightly  more  favorable  contribution                   stripe  is  the  most  stable  inhomogeneous  state,  but,  in
+when the distortion axis lies on the y  direction, i.e.  par-                   both cases, the eﬀect of t′  is irrelevant for the stabiliza-
+allel to the stripes.                                                           tion of superconducting stripes.
+                                                                                                                                                          6
+
+      -0.35                                                                                 0
+       -0.4                            0.01                                             -0.5
+      -0.45                                0                                               -1
+       -0.5                           -0.01
+                                              0    2   4   6    8                       -1.5
+      -0.55                                           V/t                                  -2
+       -0.6                                                                             -2.5
+      -0.65          short-range Jastrow                                                   -3                                            V/t=0
+                     long-range Jastrow                                                                                                  V/t=2
+       -0.7                                                                             -3.5                                             V/t=8
+              0             2             4            6             8                             2        4       6        8       10      12       14
+                                        V/t                                                                               r
+
+FIG. 7:  (Color online) Energy of the homogeneous RVB state                     FIG.  8:   (Color  online)  Jastrow  parameter  vs.   distance  for
+as  a  function  of  the  Coulomb-repulsion  strength  V/t,  in  the            two  tilted  lattices  on  242  (stars)  and  338  sites  (circles)  and
+presence  of  a  short-range  Jastrow  factor  (stars)  and  a  long            diﬀerent values of V/t.
+range  Jastrow  (squares).   Inset:   Energy  diﬀerence  between
+the  SFP  and  the  homogeneous  RVB  state  as  a  function  of
+the Coulomb-repulsion strength V/t.  Both wavefunctions are
+optimized  in  the  presence  of  a  short-range  (long-range)  Jas-            increasing  V/t,  the  long-range  correlation  term  plays  a
+trow  factor,  the energy  diﬀerence  being represented  by stars               fundamental role in lowering the energy of the RVB vari-
+(squares).                                                                      ational state.  Therefore,  the  addition  of  the  long-range
+                                                                                Jastrow term can strongly inﬂuence the hierarchy of vari-
+      VI.     ROLE  OF  NON-LOCAL  COULOMB                                      ational phases stabilized at large V/t.  Indeed, consider-
+                            REPULSION                                           ing relative stability of the SFP with respect to the RVB
+                                                                                state  (see  inset  of  Figure  7),  it  turns  out  that,  with  a
+   Finally, we consider the eﬀect of a long-range Coulomb                       short-range Jastrow, the  SFP  is  the  lowest-energy state
+repulsion, which could play an important role in the STM                        already  for  V   ≃  3t,  while  the  addition  of  a  long-range
+measurements.  To this purpose we consider the t−J −V                           Jastrow  stabilizes  the  RVB  state  up  to  very  large  val-
+model:                                                                          ues of the Coulomb repulsion.  To better understand the
+                                                                                role played by  the  Jastrow factor  in  the  presence of  Vr,
+      Ht−J−V  = HtJ + ∑            V|i−j|(ni − ¯n)(nj − ¯n)         (6)         we  optimize  the  RVB  wavefunction  for  larger  clusters.
+                                                                                In  Figure  8  we  plot  the  resulting  Jastrow  parameters
+                               ij                                               in  real  space.    By  increasing  V ,  the  correlation  terms
+where  ¯n  is  the  average density of electrons.  The  poten-                  vr  increase,  as  expected.   In  particular,  notice  that  the
+tial V|i−j|  has the form of a screened Coulomb repulsion                       part  at  long  distances  is  non-negligible  even  for  r  >  l0.
+Vr  =  V  exp(−r/l0)                                                            Since a uniform Jastrow can promote the stability of uni-
+                r        ,  r  being  the  periodized  distance  be-            form states and mask possible instabilities towards mod-
+tween  diﬀerent  lattice  sites.   In  the  following,  we  have                ulated states, we optimize the Jastrow parameters up to
+ﬁxed  l0  =  4  and  considered  the  properties  of  the  sys-                 the next-nearest neighbor distance independently on the
+tem as a function of V .  At the variational level, we ﬁnd                      nonequivalent bonds (i.e.  here the vij depend on i and j).
+that,  in  the  presence  of  a  non-local Coulomb  repulsion,                  The resulting energies are shown in Figure 9 where, even
+a long-range Jastrow factor acting on the fully-projected                       though  the  stripe  energies  approach  the  uniform  RVB
+mean-ﬁeld state |ΨG⟩ is needed:                                                 wavefunction by  increasing  V/t,  the  homogeneous  state
+                           |ΨJ⟩ = PJ|ΨG⟩                               (7)      still  remains  the  most  stable.   Notice  that  the  presence
+                      [                   ]                                     of a long-range Jastrow factor stabilizes the BC-πDRVB
+                        1 ∑                                                     state  w.r.t.   the  SFP,  at  V   =  0,  contrarily  to  the  val-
+where  PJ  =  exp       2    ij vijninj    ,  with  vij  = v|i−j|  vari-        ues reported in Table I.  However, by increasing V/t the
+ational  parameters  which  depend  only  on  the  distance                     SFP  wavefunction  gains  energy  and  approaches  closely
+|i − j|  and  |ΨG⟩  is  deﬁned  in  Eq.  (3).   This  term  takes               the  uniform  RVB  state.   Moreover,  considering  the  in-
+into account the two-body correlations along all possible                       phase  DRVB  state,  it  turns  out  that  for  ﬁnite  V/t  the
+distances, and is necessary to get accurate wavefunctions                       energy  diﬀerence  with  respect  to  the  RVB  state  is  very
+in  the  presence  of  Vr.       In  Figure  7  we  show  the  en-              small,  of  the  order  of  the  error  bars.   Unfortunately,  in
+ergy  of  the  homogeneous  RVB  state,  optimized  with  a                     the presence of a non-local Coulomb repulsion, the main
+short-range  (i.e.,  up  to  nearest-neighbors)  and  a  long-                  limit of this approach corresponds to the necessity of in-
+range Jastrow factor, respectively.  It turns out that, by                      corporating  long-range Jastrow  terms  in  order  to  reach
+                                                                                                                                                         7
+
+      1.4⋅10-2                                                                  gest already that long-range Coulomb repulsion can be a
+      1.2⋅10-2                                          SFP                     driving force for the stabilization of modulated states.
+      1.0⋅10-2                                  BCπDRVB
+        8⋅10-3
+        6⋅10-3                                                                         VII.     SUMMARY  AND  CONCLUSIONS
+        4⋅10-3                                                                     In summary, we have shown that unidirectionally mod-
+        2⋅10-3                                                                  ulated superconducting states are remarkably close in en-
+              0   0     1      2     3      4     5     6      7     8          ergy  to  the  uniform  RVB  state.   This  is  the  case  both
+                                          V/t                                   for  π-phase  shift  domain  RVB  stripes  and  for  inphase
+                                                                                domain  RVB  stripes.    Their  properties  reﬂect  the  re-
+      1.2⋅10-3                                                                  cent STM observations, both concerning the  modulated
+      1.0⋅10-3                                  BC-DRVB                         charge and superconducting features.  Besides the lattice
+                                                                                distortion, long-ranged Coulomb repulsion further stabi-
+        8⋅10-4                                                                  lizes the non-uniform superconducting stripe phases.  In-
+        6⋅10-4                                                                  stead,  next-nearest  neighbor  hopping  does  not  seem  to
+        4⋅10-4                                                                  play  any  role  in  the  hierarchy  of  phases  studied  here.
+                                                                                However, although the stripe energies can approach very
+        2⋅10-4                                                                  closely  that  of  the  homogeneous  RVB  state,  so  far  the
+              0                                                                 uniform solution remains the most stable.  In particular,
+                  0     1      2     3      4     5     6      7     8          we  have  found  that  a  π-phase  shift  costs  more  energy
+                                          V/t                                   than  the  inphase  counterpart  having  simple  ∆  =  0  do-
+                                                                                mains.  Experiments suggest that the real stabilization of
+FIG.  9:  (Color  online)  Energy  diﬀerence  w.r.t.   the  uniform             hole-stripes might imply some further factors than those
+RVB  state  of  the  SFP,  πDRVB  stripe  state  (top)  and  the                investigated here.
+DRVB state (bottom), as a function of V/t.  All wavefunctions                      Besides  the  perturbations  to  the  t − J  Hamiltonian
+are optimized in the presence of a long-range Jastrow factor.                   considered in this paper, it would be interesting to study
+                                                                                the eﬀect of disorder in HTSC materials which, according
+                                                                                to  recent calculations28,  could  be  relevant in  stabilizing
+a  good  accuracy.   Since  the  energies  into  play  are  very                this kind of superstructures.
+small,  the  restriction  of  homogeneous  Jastrow  terms  at                      We thank F. Becca and S. Sorella for important discus-
+large  distances,  which  governs  the  low-energy  physics,                    sions.  M. C. and D. P. acknowledge the Agence Nationale
+could  ultimately  favor  the  uniform  RVB  state  and  bias                   de la Recherche (France) for support.  M. R. thanks the
+our  variational  outcome.   In  other  words,  it  might  not                  Foundation for Polish Science (FNP) and the Polish Min-
+be suﬃcient to assume inhomogeneous Jastrow terms at                            istry of Science and Education under Project No.  N202
+short  distances.   However,  these  variational  results  sug-                 068 32/1481 for support.
+
+
+
+
+
+
+
+ 1  K.  Tanaka,  W.  S.  Lee,  D.  H.  Lu,  A.  Fujimori,  T.  Fujii,              B. Bonnemaison, N. E. Hussey, L. Balicas, B. J. Ramshaw,
+   Risdiana, I. Terasaki, D. J. Scalapino, T. P. Devereaux, Z.                     R. Liang, D. A. Bonn, W. N. Hardy, S. Adachi, C. Proust,
+   Hussain, and Z.-X. Shen, Science 314, 1910 (2006).                              and L. Taillefer, Nature 450, 533 (2007).
+ 2  K. M. Shen, F. Ronning, D. H. Lu, F. Baumberger, N. J. C.                    8  A.  Himeda,  T.  Kato,  M.  Ogata,   Phys.  Rev.  Lett.  88,
+   Ingle, W. S. Lee, W. Meevasana, Y. Kohsaka, M. Azuma,                           117001 (2002).
+   M.  Takano,  H.  Takagi,  and  Z.-X.  Shen,  Science  307,  901               9  C.  Weber,  D.  Poilblanc,   S.  Capponi,   F.  Mila,   and  C.
+   (2005).                                                                         Jaudet, Phys. Rev. B 74, 104506 (2006).
+ 3  J. M. Tranquada, B. J. Sternlieb, J. D. Axe, Y. Nakamura,                   10  B.  B¨uchner,  M.  Breuer,  A.  Freimuth,  and  A.  P.  Kampf,
+   and S. Uchida, Nature 375, 561 (1995).                                          Phys. Rev. Lett. 73, 1841 (1994).
+ 4  J.  A.  Robertson,  S.  A.  Kivelson,  E.  Fradkin,  A.  C.  Fang,          11  A. P. Kampf, D. J. Scalapino, and S. R. White, Phys. Rev.
+   and A. Kapitulnik, Phys. Rev. B 74, 134507 (2006).                              B 64, 052509 (2001).
+ 5  Y. Kohsaka, C. Taylor, K. Fujita, A. Schmidt, C. Lupien,                    12  F. Becca, L. Capriotti, and S. Sorella, Phys. Rev. Lett. 87,
+   T. Hanaguri, M. Azuma, M. Takano, H. Eisaki, H. Takagi,                         167005 (2001).
+   S. Uchida, and J. C. Davis, Science 315, 1380 (2007).                        13  F. C. Zhang and T. M. Rice Phys. Rev. B 37, 3759 (1988).
+ 6  J.  Zaanen  and  O.  Gunnarsson,  Phys.  Rev.  B  40,  7391                 14  P. W. Anderson, Science 235, 1196 (1987).
+   (1989);  K.  Machida,  Physica  C  158,  192  (1989);  D.  Poil-             15  S. Sorella, G. B. Martins, F. Becca, C. Gazza, L. Capriotti,
+   blanc, and T. M. Rice, ibid. 39, 9749 (1989).                                   A.  Parola,  and  E.  Dagotto,  Phys.  Rev.  Lett.  88,  117002
+ 7  D. LeBoeuf, N. Doiron-Leyraud, J. Levallois, R. Daou, J.-                      (2002).
+                                                                                                                                                                  8
+
+
+16  L. Spanu, M. Lugas,  F. Becca,  and S. Sorella,  Phys. Rev.                         Oganesyan, J. M. Tranquada, and S. C. Zhang, Phys. Rev.
+   B 77, 024510 (2008).                                                                 Lett. 99, 127003 (2007); see also Ref.8.
+17  F.  C.  Zhang,  C.  Gros,  T.  M.  Rice,  and  H.  Shiba,  Super-               25  M. Vojta and O. R¨osch, Phys. Rev. B 77,  094504  (2008);
+   cond. Sci. Technol. 1, 36 (1988).                                                    S. Baruch and D. Orgad, Phys. Rev. B 77, 174502 (2008).
+18  M. Raczkowski, D. Poilblanc, R. Fr´esard, and A. M. Ole´s,                      26  Indeed,  considering  that  decreasing  J   along  one  direc-
+   Phys. Rev. B 75, 094505 (2007).                                                      tion  leads  to  smaller  ∆ij  for  the  bonds  in  that  direction,
+19  M.  Raczkowski,  M.  Capello,  and  D.  Poilblanc,  submitted                       whereas decreasing t produces the opposite, we deduce that
+   to Acta Phys. Pol. A.                                                                the  kinetic  contribution  dominates  this  competition  (the
+20  S. Sorella, Phys. Rev. B 64, 024512 (2001).                                         same  eﬀect  occurs  also  in  the  RVB  state  with  rotational
+21  I.  Aﬄeck  and  J.  B.  Marston,  Phys.  Rev.  B  37,  R3774                        symmetry breaking).
+   (1988).                                                                          27  In presence of lattice distortion, diﬀerent vertical and hor-
+22  M. Raczkowski, M. Capello, D. Poilblanc, R. Fr´esard, and                           izontal  bonds are  assumed  for  the reference  homogeneous
+   A. M. Ole´s, Phys. Rev. B 76, 140505(R) (2007).                                      RVB state.
+23  Q.  Li,  M.  H¨ucker,  G.  D.  Gu,  A.  M.  Tsvelik,  and  J.  M.               28  M. A. Metlitski and S. Sachdev, Phys. Rev. B 77, 054411
+   Tranquada, Phys. Rev. Lett. 99, 067001 (2007).                                       (2008).
+24  E.   Berg,   E.   Fradkin,   E.-A.   Kim,   S.   A.   Kivelson,   V.

@@ -1,0 +1,768 @@
+ Revisit  Phase  Separation  of  the Two-Dimensional  t − J  model  by the  Power-Lanczos
+                                                                    Method
+
+                                                C.T. Shih1, Y.C. Chen2, and T.K. Lee3,4
+              1Division of  Science Application, National  Center  for High-Performance  Computing,  Hsinchu, Taiwan
+                                           2Dept.  of Physics,  Tunghai  Univ., Taichung,  Taiwan
+                                      3  Inst.  of Physics,  Academia Sinica, Nankang,  Taipei, Taiwan
+                                       4National  Center for Theoretical  Sciences,  Hsinchu,  Taiwan
+                                                               (November 3, 2018)
+                 The  power-Lanczos  (PL)  method  is  one  kind  of  Green’s  function  Monte-Carlo  simulation,  which
+                is improved by Lanczos iterations.  The ground state energies of strongly-correlated  models can be
+                evaluated  by  this  method  quite  accurately.  In  this  report,  the  boundary  of  phase  separation  (PS)
+                of the two-dimensional t − J  model is investigated by the power-Lanczos method and Maxwell con-
+                struction.  The energies are compared with the results evaluated by other methods.  Our conclusion
+                is that there is no phase separation for J/t ≤ 0.4.
+
+                PACS numbers:  74.20.-z, 71.27.+a, 74.25.Dw
+
+                     I.  INTRODUCTION                                        δ ≤ 0.06 below Tps ≈ 300K  into the nearly stoichiomet-
+                                                                             ric antiferromagnetic La2CuO4+δ1  with δ1 less than 0.02
+  It  is  believed  that  several  key  features  of  the  high-             and  N´eel  temperature  TN  ≈  250K,  and  a  metallic  su-
+temperature  superconductors  (HTSC)  can  be  described                     perconducting oxygen-rich phase La2CuO4+δ2  with δ2 ≈
+by the two-dimensional (2D) t − J  model on square lat-                      0.06  and  superconducting  transition  temperature  Tc  ≈
+tices.  The Hamiltonian is:                                                  34K.   In  a  recent  transmission  electron  microscopy  ex-
+                                                                             periment,  an  incommensurate modulation was  observed
+H = −t   ∑        (˜c+iσ˜cjσ + h.c.) + J  ∑      (Si · Sj − 14ninj),         directly in a phase separated Cu-rich La2CuO4.00312.  J.
+          <i,j>σ                          <i,j>                              H.  Cho  et  al.13  measured the  magnetic  susceptibility  of
+                                                                    (1)      the Sr doped compound La2−xSrxCuO4+δ.  For x ≤ 0.03,
+                                                                             they also found macroscopic phase separation into super-
+where < i, j > is the nearest-neighbor pairs and                             conducting La2−xSrxCuO4+δ′  (δ′ ≈ 0.08) and nonsuper-
+                                                                             conducting  La2−xSrxCuO4+δ′′  (δ′′  ≈  0.00)  phases.   For
+                     ˜ciσ = ciσ(1 − ni,−σ)                             (2)   x  ≤  0.02,  the  later  phase  is  antiferromagnetically  or-
+                                                                             dered.   The  long  range  order  disappears  and  the  phase
+One of the important questions on this model is whether                      becomes spin-glass-like for 0.02 ≤ x ≤ 0.028.  The doped
+the  density  distribution  of  charge  carriers  in  the  CuO2              holes in the AF (or spin-glass) phase La2−xSrxCuO4+δ′′
+planes  is  uniform  or  not.    There  are  several  types  of              (0  ≤  x  ≤  0.03,  δ′′  ≈  0.00)  condense  into  walls  separat-
+non-uniform  phase  such  as  macroscopic  phase  separa-                    ing  microscopic  undoped  domains.   The  phase  becomes
+tion which is separated into a hole-free antiferromagnetic                   inhomogeneous electronically and magnetically.
+(AF)  region  and  a  hole-rich  region1,  and  the  stripe2–5                  On the other hand, the well known La2−xSrxCuO4 su-
+phase which holes form domain walls separating AF re-                        perconductor  does  not  phase  separate  macroscopically
+gions.  The ground state is determined by the competition                    because  the  Sr+2  ions  are  immobile  and  can  not  phase
+of the kinetic (t) and exchange (J) terms.  The t term fa-                   separate  along  with  the  doped  holes.   In  1989,  A.  Wei-
+vors  the  uniform  phase  to  minimize  the  kinetic  energy,               dinger et al.14 observed coexistence of magnetic ordering
+while  J  term  tend  to  attract  the  electrons  together  to              and superconductivity by muon spin rotation (µ+SR) ex-
+lower the magnetic energy.                                                   periments performed on this material with 0 ≤ x ≤ 0.15.
+  PS  state  and  superconductivity  are  closely  related.                  Later  D.  R.  Harshman  et  al.15   interpreted  it  as  the
+Some  groups  argued  that  the  driving  mechanism  of  su-                 phase separation into an antiferromagnetic ordered phase
+perconductivity is the same as that of phase separation6                     and a superconducting phase as in La2CuO4+δ discussed
+or  superconductivity  comes  from  the  frustrated  phase                   above.    J.  H.  Cho  et  al.16  measured  the  spin  dynam-
+separation7.    On  the  other  hand,  if  PS  occurs  in  the               ics  of  this  material  with  0.02  ≤  x  ≤  0.08  by  the  139La
+physical regime, the system will become insulating, and                      nuclear  quadrupole  resonance  (NQR)  spin-lattice  relax-
+of  course,  no  superconductivity.   Hence  it  is  extremely               ation rates (NSLR) experiments in 1992.  They concluded
+important  to  determine  the  phase  separation  boundary                   that  the  doped  holes  were  inhomogeneously  distributed
+of the 2D t − J  model to resolve these issues.                              mesoscopically and  segregated into  walls  separating  the
+  Experimentally,   phase   separation   of   the   supercon-                hole-poor antiferromagnetic domains with size ≈ a/√x ≈
+ducting  La2CuO4+δ   compound  are  observed  by  neu-                       10 − 100˚A.  Later µ+SR and NQR experiments also sup-
+tron  powder  diﬀraction8,   139La  NMR9,10  and  magnetic                   port this conclusion17,18.  Recent NQR experiment shows
+susceptibility11.  La2CuO4+δ  phase separates for  0.01 ≤                    that in single crystal La2CuO4.02 there are three diﬀerent
+
+
+                                                                          1
+regions with diﬀerent oxygen concentrations19.                                have been studied so far.  The same lattices and bound-
+  The    measurements    of    the    superconducting    dia-                 ary conditions as those used by HM23 are studied also in
+magnetic   moments   for   underdoped   and   overdoped                       this report.  It can be shown that our data calculated by
+La2−xSrxCuO4 single crystals show that the underdoped                         the PL method, which is a rigorous upper bound of the
+sample has only one transition corresponding to Hc2, and                      ground  state  energies,  are  still  lower  than  extrapolated
+the overdoped one has two transitions with the higher one                     GFMC data reported by HM in the physically interested
+at Hc2.  The authors proposed that in the two-step tran-                      regime.  Based on the variational argument we show that
+sition comes from the phase separation in the overdoped                       there is no phase separation in this physical regime34.  In
+regime20.                                                                     this report, we will focus on the competition of the uni-
+  Several groups have studied the issue of PS by analyt-                      form state  and PS  state.  The  stripe  phase  is  not  taken
+ical  or  numerical  methods.   In  the  low  electron  density               into account.
+region, the theoretical results studied by diﬀerent meth-
+ods  are  consistent.  Hellberg  et  al.   determined  very  ac-
+curately that the critical J/t for phase separation at low                                    II.  NUMERICAL  METHOD
+electron density limit is J/t = 3.436721.
+  But the theoretical results in the low-doping and small                        The numerical method used here is the “power-Lanczos
+J/t  region  are  still  conﬂicting.   Emery  et  al.1  used  the             method”,  which  is  a  revised  version  of  Green  Function
+exact  diagonalization  (ED)  to  study  the  4 × 4  cluster.                 Monte  Carlo  (GFMC)  method35,  and  improved  by  the
+The  Maxwell  construction  leads  to  the  conclusion  that                  Lanczos iterations such that the ground state properties
+PS occurs for all values of J/t.  Hellberg and Manousakis                     can be calculated more exactly.
+(HM)22,23  investigated this problem by the Green Func-                          The  trial  wave  functions  we  used  in  this  report  is
+tion  Monte  Carlo  (GFMC)  method  and  Maxwell  con-                        the  d-wave  RVB  (resonating  valence  bond)  with  AF
+struction for larger clusters and reached the similar con-                    correlation36,
+clusion that the t−J model phase separates for all values                                                       ∏
+of  J/t  in  the  low  doping  regime.   The  U(1)  slave-boson                      | ΨT ⟩ = exp(hSM )Pd           (uk + vkc†k↑c†−k↓|0⟩         (3)
+functional  integral  results  reach  the  conclusion  that  for                                                  k
+0 < J/t < 0.2 PS occurs for hole density between 0 and
+0.124.                                                                        with
+  However, the contradictory results are also claimed by
+several groups.  Quantum  Monte  Carlo (QMC)25,26  and                          u2k =  12 (1 −  ǫkEk ),  v2k =  12 (1 +  ǫkEk )
+ED27  results  on  the  Hubbard  model,  which  should  be                                                                     √
+consistent with the t − J  model for small J/t, didn’t give                      ǫk = −2(coskx + cosky) − µ,  Ek =                (ǫ2k + ∆2k)      (4)
+PS  signal.    Putikka  et  al.    studied  this  problem  using
+the high-temperature series expansion and found that at                       where  ∆k  and  h  are  variational  parameters  controlling
+zero  temperature,  PS  does  not  occur  for  J/t  <  1.2  at                the  magnitude  of  superconductivity  and  antiferromag-
+any  electron  density28,29.   Prelovˇsek  et  al.3  used  ED  to             netism.   SM  =  ∑i(−1)xi+yiSiz,  which  is  the  staggered
+study  the  two-point  and  four-point  density  correlations                 magnetization.  Pd operator excludes the states with dou-
+on clusters  of size  18 and 20 sites.  They  found that  for                 bly  occupied sites from the  wave function  to satisfy  the
+J/t > 1.5 the holes form domain walls along (1,0) or (0,1)                    constraint of Eq.(2).  By tuning the two parameters, the
+direction, and phase separate into a hole-rich and a hole-                    variational energy  can  be  minimized  and  the  trial  wave
+free phase for even larger J/t > 2.5.  Poilblanc calculated                   function corresponding to the best set of parameters will
+the energy of 2 and 4 holes by ED on several clusters up                      be the starting point of the power-Lanczos projection.
+to  26  sites.  The  phase  diagram includes  a  d-wave hole-                    The “power method”  is the simpliﬁed Green function
+pairing state for J/t ≥ 0.2, a liquid of four-hole droplets                   Monte  Carlo  (GFMC)  method,  which  projects  the  trial
+(quartets) for larger J/t ≥ 0.5, and at even larger J/t, an                   wave  function  determined  variationally  toward  the  true
+instability  towards  PS30.   Yokoyama et  al.   investigated                 ground  state  wave  function  of  the  Hamiltonian  system-
+the phase diagram by the variational Monte Carlo (VMC)                        atically.
+method31.   The  critical  J/t  for  phase  separation  at  the                  Suppose the optimal trial wave function is | ΨT ⟩.  The
+high density  limit  they  found is  1.5,  which is  consistent               eigenstates of Hamiltonian are | Ψi⟩ and Ei  are the cor-
+with Putikka et al.                                                           responding eigenenergies.  | Ψ0⟩ denotes the ground state
+  The  theoretical  results  of  diﬀerent  groups  discussed                  wave function.  {| Ψi⟩} form a complete set of wave func-
+above  are  consistent  at  the  large  J/t  and  low  electron               tions and | ΨT ⟩ can be expanded as
+density region.  But in the physical regime of high Tc su-
+perconductors, 0.3 < J/t < 0.5 and high electron density                                            | ΨT ⟩ = ∑      ai | Ψi⟩                             (5)
+0.75  <  ne  <  0.95,  they  are  conﬂicting  with  each  other.                                                 i
+We have used the power-Lanczos (PL) method32,33 to ob-
+tain the best estimate of the ground state energy in this                     Applying the operator (W − H)p  on | ΨT ⟩, we get
+physical  regime  for  the  largest  cluster  (122  sites)  that
+
+                                                                          2
+    | Ψ(p)⟩ = (W − H)p | ΨT ⟩ = ∑(W − Ei)pai | Ψi⟩                                The ﬁrst step is to generate the sequence of Ntotal con-
+                                            i                                  ﬁgurations | ai⟩, 1 ≤ i ≤ Ntotal, by Metropolis algorithm
+             = (W − E0)p ∑( W − Ei                                             which  is  distributed  as  the  weight  P (i)  corresponding
+                                     W − E0 )pai | Ψi⟩             (6)         to the trial wave function optimized by VMC method37.
+                                 i                                             Our task now is to calculate the matrix elements
+where W  is some constant.  If W  is properly chosen such
+that                                                                                ⟨O(p)⟩0 =  ⟨ΨT  | HpOHp | ΨT ⟩⟨ΨT  | ΨT ⟩          = ∑P (i)O(p)(i)
+                                                                                                                                   i
+                    | W − E0 |>| W − Ei |                           (7)
+                                                                                        P (i) =      | Ci |2∑
+for  all  i  ⁄=  0,  the  weight  of  excited  states  will  become                               ∑i′  | Ci′  |2
+smaller  and  smaller  when  the  power  p  is  increasing.                          O(p)(i) =       i′⟨ai | HpOHp | ai′⟩Ci′
+In  the  p  →  ∞  limit,  all  ( W −Ei⁄=0W −E0  )p  become  zero  and                                            Ci                                           (11)
+| Ψ(p)⟩ →| Ψ0⟩.  The  trial wave function  is  projected  to                   where Ci is the amplitude of the conﬁguration | ai⟩ of the
+the ground state by applying inﬁnite powers of (W − H).                        trial  wave  function  ΨT ⟩.   The  operator  O  equals  to  the
+For  the  t − J  model,  Eq.(7)  can  be  satisﬁed  by  setting                Hamiltonian  operator  H  when  we  measure  the  energy.
+W  =  0.   If  |  ΨT ⟩  has  the  same  quantum  numbers  (S,                  The  ﬁrst  task  is  to  calculate  ⟨Hn⟩  which  will  be  useful
+Sz, k,  etc.)  as the  ground state  | Ψ0⟩,  and | ΨT ⟩ is not                 for  calculating  energy  (n  =  2p + 1),  and  normalization
+orthogonal to | Ψ0⟩, i.e., a0 ⁄= 0, | Ψ(p)⟩ = Hp | ΨT ⟩ will                   factor  (n  =  2p).   Expanding  the  matrix  element  in  the
+approach to the ground state as p → ∞.  For a physical                         following form
+quantity O the expectation value of power p is
+                ⟨Ψ(p) | O | Ψ(p)⟩/⟨Ψ(p) | Ψ(p)⟩ =                              ⟨ai | Hn | af ⟩ =          ∑           ⟨ai | H | m1⟩⟨m1H | m2⟩ . . .
+         ⟨ΨT  | HpOHp | ΨT ⟩/⟨ΨT  | H2p | ΨT ⟩               (8)                                     m1,m2,...,mn−1
+                                                                                                     ⟨mn−2 | H | mn−1⟩⟨mn−1 | H | af ⟩    (12)
+   Theoretically  we  can  always  get  the  ground  state  by
+the power method if we have the trial wave function with                       Deﬁne
+correct quantum numbers.  However, there are two diﬃ-
+culties  with this  method.  First, the number of interme-                                       Pαβ = P|α⟩→|β⟩ =   1Zα Hαβ                       (13)
+diate states grow exponentially with powers.  Second, the
+statistical error bar grows exponentially with the applied                     with Zα = ∑        βHαβ  and Hαβ  = ⟨α | H | β⟩.  Eq.(12) can
+power due to the famous ‘sign’ problem of the Fermionic                        be rewritten as
+system.  We will discuss these two problems below.
+   A conﬁguration | a⟩ in real space is deﬁned as                              ⟨ai | Hn | af ⟩ =          ∑           (Paim1Zai)(Pm1m2Zm1) . . .
+                                                                                                     m1,m2,...,mn−1
+                          Ne/2∏      Ne/2∏
+                 | a⟩ =         c†         c†                                                        (Pmn−1af Zmn−1)                                  (14)
+                                 ri↑        rj↓ | 0⟩                      (9)
+                           i=1        j=1                                      To    calculate    this    exactly    all    the    possible    paths
+where ri and rj  represent the positions of the ith up and                     {m1, m2, . . . , mn−1} connecting the initial and ﬁnal con-
+jth down spins, respectively.  |a⟩ satisﬁes                                    ﬁguration | ai⟩ and | af⟩ have to be  taken into account.
+                                                                               Since there are about N ne  terms, it is impossible to sum
+                H | a⟩ = ∑                                                     all the terms.  Instead we make use of the  random walk
+                             a′   | a′⟩⟨a′ | H | a⟩                     (10)   procedure.
+                                                                                  Starting from the initial conﬁguration | ai⟩, use Paim′1
+From  Eq.(1),  we  see  that  there  are  three  kinds  of  |  a′⟩             deﬁned in Eq.(13) to be the probability of transition from
+such  that  the  coeﬃcient  ⟨a′  |  H  |  a⟩  ⁄=  0:   ﬂipping  a              |  ai⟩  to  |  m′1⟩  state.    There  are  many  possible  |  m′i⟩
+nearest-neighbor  pair  of  spin  up  and  down,  moving  an                   of  three  types  corresponding  to  nearest  neighbor  spin-
+electron from an occupied site to an empty site, and |a⟩                       ﬂipping, hole-hopping, and diagonal terms as mentioned
+itself.  The number of such |a′⟩ is of order Ne, the number                    earlier  in  this  section.   For  these  types  the  correspond-
+of electrons.  When we apply the next H on it, H|a′⟩ will                      ing matrix elements Haim′1  are −t, −J/2, and −J/2, re-
+become a summation of about order Ne terms again.  To                          spectively.   Choose  one  of  these  |  m′1⟩  to  be  the  |  m1⟩
+measure the expectation value of some physical quantity                        randomly  with  the  transition  probability  Paim′1.   Then
+O  to the pth power, there are ∼ N 2pe    terms to be calcu-                   use the same procedure to  generate the  next  intermedi-
+lated.  So it is impossible to calculate physical quantities                   ate state  | m2⟩.  Repeat  this  n  times,  we  can arrive the
+for large power p.  To avoid this diﬃculty, we will not sum                    ﬁnal state | af ⟩ of this path.  The measurement of ⟨Hn⟩
+all the O(N 2pe  ) intermediate states for the chosen conﬁg-                   for this path is
+urations.  Only the important part of them are taken into
+account by using Monte Carlo method.                                                   Mi = (Zai · Zm1 · Zm2 · · · Zmn−1)CTaf /CTai          (15)
+
+
+                                                                            3
+This  is  only  one  term  in  the  summation  of  Eq.(14).  Of                 for  higher  electron  density.   For  the  high  density  cases
+course the error will be large if we use this value to esti-                    10/16 and  26/36, the  absolute  value  of  negative  part  is
+mate the summation in Eq.(14).  To reduce the error, we                         almost  the  same  as  the  positive  part  for  ⟨H20⟩.   Thus  |
+generate many paths by the procedure above and average                          ⟨H20⟩ |≪| ⟨H20⟩± | and the statistical error of ⟨H20⟩ will
+the measurement                                                                 be  largely  increased.  For  example,  the  negative ratio  is
+                 Npath                                                          about 79% for 10/36, 87% for 18/36, and 97% for 26/36.
+                  ∑                                           CTak
+  ¯Mi =      1          ZaiZmk1 Zmk2 Zmk3 · · · Zmkn−1 ·         f   (16)
+         Npath    k=1                                         CTai
+
+Npath  is total number of paths of random walk with the
+same  initial  conﬁguration  |ai⟩.   {|mk1⟩, |mk2, . . . , |akf ⟩}  is
+the intermediate and ﬁnal states of the kth path.  Npath
+should  be  large  enough  to  get  good  statistics.   Typical
+Npath  is of order 102 ∼ 103.  Together with Eq.(11), and
+Eq.(16) we get
+
+                                         Ntotal∑
+           ⟨Hn⟩ = ⟨M⟩ =      1                   ¯Mi ± δ                (17)
+                                Ntotal    i=1
+
+with
+                           √     1
+                     δ =      Ntotal (⟨M 2⟩ − ⟨M⟩2)
+
+                                    Ntotal∑
+                ⟨M 2⟩ =      1              ¯Mi2                           (18)
+                           Ntotal    i=1
+
+Now  we  can  calculate  ⟨Hn⟩.    With  this  it  is  straight-
+forward  to  calculate  the  energy  of  pth  power  E(p)   =
+⟨H2p+1⟩/⟨H2p⟩.                                                                     FIG. 1.    Negative sign ratio which is deﬁned as the ratio of
+   Another diﬃculty is the ‘fermionic sign problem’.  The                       the absolute value of negative and positive parts of ⟨H n⟩ for
+matrix elements of Hamiltionian ⟨α | H | β⟩ are not pos-                        (a) diﬀerent electron densities:  10/16 (open circle), 10/36 (full
+itive  or  negative  deﬁnite.   That  is,  some  of  the  weight                circle), 18/36 (open triangle) and 26/36 (full triangle) and (b)
+Eq.(15)  of  the  Npath  paths  are  positive  and  others  are                 diﬀerent J/t values:  J/t = 0 (open circle), 0.4 (full circle), 0.8
+negative.  The summation in Eq.(16), or Eq.(17) will be-                        (open triangle),  1.2 (full triangle),  1.6 (open square) and 2.0
+come a summation of a positive part and a negative part                         (full square).
+
+       ⟨HpOHp⟩ = (O(p)+   + O(p)−  ) ± (σ(p)+   + σ(p)−  )          (19)           If we  choose Ntotal  and Npath  large enough to  reduce
+                                                                                the error bars of ⟨H20⟩±  to be as small as 0.1%, the cor-
+where O(p)+   and O(p)−   are the positive and negative parts                   responding  error  bars  of  ⟨H20⟩  of  these  three  electron
+of the summation in Eq.(17).                                                    densities will be 1%, 1.5%, and 6.7%.  So no matter how
+   For smaller powers, the portion of positive part is much                     large  Ntotal  and  Npath  are,  and  how  accurate  O(p)±    are,
+larger than the negative part.  It is because that a step of                    the  sign  problem  always  prevents  us  to  do  calculations
+random walk  only  ﬂips  a  pair  of  nearest neighbor  spins                   for  large  powers,  especially  in  the  high  electron  density
+or moves an electron to the nearest neighbor empty site,                        regime.  The largest power we use is usually 6 or 8 for high
+and the probability of crossing the nodes of the trial wave                     electron densities.  The negative ratio is about 80%∼90%.
+function and resulting a negative matrix element is small.                      Beyond this the statistical errors are too large to be reli-
+For large powers, the probability of crossing the nodes of                      able.  The energies varies with power for diﬀerent densi-
+the  trial  wave  function  will  be  accumulated  during  the                  ties are plotted in the Fig.2 (open circles) for J/t = 0.4.
+long  path  of  random walk  and  the  negative  part  in  the                  In  Fig.1(b)  the  negative  ratio  for  diﬀerent  J/t  value  of
+summation  Eq.(16)  and  Eq.(17)  will  grow  larger.   The                     26/36 system is  shown.  By  comparing Fig.1(a) and (b)
+larger the  negative portion (absolute value closer to the                      we see the negative ratio depends on the electron density
+positive portion) the larger the error bars of the physical                     much more sensitive than J/t.
+measurements  will be.  In  Fig.1(a) we  show the  ratio of                        The  sign  problem  is  the  intrinsic  limitation  of  the
+the negative and positive portions varies with power for                        power  method.    It  is  almost  impossible  to  project  the
+J/t = 0.4 and electron density ne = 10/16, 10/36, 18/36,                        trial wave function  to  be  very close to  the  ground state
+and 26/36.  It is clear that the negative portion is larger                     by  applying  large  powers  on  it,  especially  in  the  physi-
+
+
+                                                                            4
+cal  interested  region  with  high  electron  density.   Other                zos iteration method usually used in the exact diagonal-
+methods  like  QMC  or  GFMC  also  encounter  a  similar                      ization (ED) for the small clusters.  Hence it was named
+problem.   To  overcome  this  limitation,  we  have  modi-                    as  ‘power-Lanczos  method’.   Lanczos  iteration  method
+                                                                               was  ﬁrst  proposed  by  Heeb  and  Rice  to  improve  the
+                                                                               trial wave function systematically33.  The eﬀectiveness of
+                                                                               the method is demonstrated on the two-dimensional an-
+                                                                               tiferromagnetic Heisenberg model and later on the  two-
+                                                                               dimensional t−J model38.  We will describe their method
+                                                                               below.
+                                                                                  Starting  from  a  trial  wave  function  |  φ0⟩  (which  we
+                                                                               called  it  |   ΨT ⟩  above)  optimized   by  the   variational
+                                                                               method.  Apply the Hamiltonian H  on | φ0⟩.  Since | φ0⟩
+                                                                               is not an eigenstate of H, it becomes
+
+                                                                                               H | φ0⟩ = a0 | φ0⟩ + b1 | φ1⟩                     (20)
+
+                                                                               with
+
+                                                                                                         ⟨φ0 | φ1⟩ = 0                                   (21)
+
+                                                                               which means | φ0⟩  and | φ1⟩  are orthogonal.  a0  = ⟨φ0  |
+                                                                               H  | φ0⟩ = E0,  which  is  the  expectation  value  of  energy
+                                                                               of the trial wave function.  And
+
+                                                                                             b1 = ⟨φ1 | H | φ0⟩
+
+                                                                                                 =  1b1 ⟨φ0 | (H − E0)H | φ0⟩                     (22)
+
+                                                                               This formalism is similar to the Lanczos iteration for ex-
+                                                                               act diagonalization, which the recurrence relation is
+
+                                                                                   H | φ0⟩ = a0 | φ0⟩ + b1 | φ1⟩
+                                                                                  H | φn⟩ = an | φn⟩ + bn | φn−1⟩ + bn+1 | φn+1⟩      (23)
+
+  FIG. 2.     Energy  vs power  for  J/t = 0.4  for  10/16,  10/36,            For small systems, n can be as large as the number of all
+18/36, and 26/36 (from the top to the bottom, open circles).                   the  possible  conﬁgurations  in  real  space  and  H  can  be
+The full circles are the PL1 data.                                             diagonalized exactly in the  basis {| φ0⟩, | φ1⟩, . . . , | φn⟩}
+                                                                               and the eigenstate corresponding the lowest eigenenergy
+ﬁed the power method.  Here we will introduce the more                         is  just  the  ground  state  we  need.    The  largest  cluster
+powerful power-Lanczos method32.                                               solved by this method exactly is 32 sites39.  Although for
+   An  inappropriately  chosen  trial  wave  function  would                   larger clusters it is impossible to use this method to solve
+require a lot of computer time to converge to the ground                       the  exact  ground  state,  we  can  truncate  the  recurrence
+state  because  it  is  necessary  to  apply  many  powers  on                 relation  Eq.(23)  at  n  which  is  small  enough  such  that
+the  trial  wave  function.   Hence  large  Ntotal  and  Npath                 we  can  calculate  at large  systems,  and  then  diagonalize
+will  be  necessary  to  reduce  the  statistical  error  due  to              the  Hamiltonian  by  the  incomplete  basis.   The  lowest-
+the random walk approximation and the fermionic nega-                          energy  eigenstate  will  not  be  the  ground  state  because
+tive sign problem.  Since  the  negative sign problem pre-                     the basis is incomplete but it will be much closer to the
+vents us to do large powers to get the results close to the                    ground state than the original trial wave function even n
+ground state in the physically interested high density re-                     is small.
+gion, another solution is to make our starting point, the                         Now  consider  the  ﬁrst  order  iteration  (n  =  1)  which
+trial wave function closer to the ground state.  If our trial                  we call it ‘PL1’ in Eq.(23)
+wave  function  is  closer  to  the  ground  state,  it  will  not
+be  necessary  to  apply  many  powers.   And  the  negative                            H | φ0⟩ = a0 | φ0⟩ + b1 | φ1⟩
+impact of sign problem can be reduced.  Here we use the                                 H | φ1⟩ = a1 | φ1⟩ + b1 | φ0⟩ + b2 | φ2⟩              (24)
+Lanczos  algorithm  to  improve  our  trial  wave  function,
+and then  apply  powers of Hamiltonian on the  new  trial                      where ⟨φ2 | φ0⟩ = 0 and ⟨φ2 | φ1⟩ = 0.  Since we truncate
+wave  function.   The  method  is  a  combination  of  power                   the  recurrence  relation  Eq.(23)  at  n  =  1  here,  the  last
+method introduced in the previous section and the Lanc-                        term in Eq.(24) is dropped and the Hamiltonian can be
+
+
+                                                                            5
+written  in  the  space  spanned  by  the  basis  {| φ0⟩, | φ1⟩}                | P L1⟩ can be calculated from Eq.(27).  However, in this
+as                                                                              method a1  and b1 have to be calculated very accurately.
+                   ( H00   H01     )     ( E0   b1    )                         A  small  error  will  produce  large  uncertainty  in  E1  and
+            H =       H10   H11       =      b1   a1                 (25)       | P L1⟩.  The statistical error is inevitable since they are
+                                                                                calculated by  Monte  Carlo  method.   Here  we  choose  an
+where  E0  =  a0.   Remember  that  this  is  the  ﬁrst  order                  alternative.  Since | P L1⟩ in Eq.(27) has not been prop-
+approximation because we drop the second order term in                          erly normalized.  All the a(1)i    can be divided by a constant
+Eq.(24).  Under this approximation, a1  in Eq.(24) is                           (1 −      E0E1−a1 ) and Eq.(30) becomes
+
+         a1 = ⟨φ1 | H | φ1⟩                                                                   a(1)i  = 1 + C1    ∑⟨i | H | j⟩a(0)j                    (31)
+             =  1b21 ⟨φ0 | (H − E0)H(H − E0) | φ0⟩                                            a(0)i                j               a(0)i
+
+             =  ⟨φ0 | (H − E0)H(H − E0) | φ0⟩                                   with
+                      ⟨φ0 | (H − E0)H | φ0⟩                       (26)                                C1 =            1
+Diagonalize  the   Hamiltonian   in   Eq.(25),   the   smaller                                                E1 − a1 − E0                             (32)
+eigenvalue and the corresponding eigenstate is                                     Note  that  C1  is  a  constant  once  the  trial  wave  func-
+                                        √                                       tion  | P L0⟩ =| φ0⟩  is  chosen.  Instead  of  calculating  C1
+               E1 =  12[E0 + a1 −          (E0 − a1)2 + b21]                    by  using  a1  and  b1  obtained  by  Monte  Carlo  method,
+                                                                                we  treat  C1  as  a  variational  parameter  to  optimize  the
+          | P L1⟩ = | φ0⟩ +      b1                                             energy.  The  optimized energy is  just E1.  For each con-
+                                 E1 − a1  | φ1⟩                        (27)     ﬁguration the PL0 weight of the trial wave function has
+We have to know the weight of each conﬁguration in real                         to  be  calculated ﬁrst  and the  PL1  weight can  be  evalu-
+space of the new trial wave function | P L1⟩.  If                               ated by using  Eq.(31).  This procedure largely increases
+                                                                                the computer time (approximately of order Ne).  To save
+                | P L0⟩ =| φ0⟩ = ∑          a(0)                                computer time Ceperley’s algorithm for ratio of weight37
+                                             i    | i⟩                     (28) is  used  for  calculating  a(0)j   /a(0)i     where  |  i⟩  and  |  j⟩  are
+                                        i                                       connected  by  H.   It  is  important  to  check  the  ratio  of
+and                                                                             determinant to prevent the divergence of the ratio.  a(0)j
+                     | P L1⟩ = ∑       a(1)                                     and  a(0)i     should  be  calculated  directly  if  their  ratio  ob-
+                                        i    | i⟩                           (29)tained by Ceperley’s method is too large or too small, for
+                                    i
+                                                                                example,  larger  than  108  or  less  than  10−8.   Otherwise
+where a(0)i     is the amplitude of | i⟩.  Then                                 the results evaluated by using Ceperley’s method might
+                                                                                be in err.
+              a(1)                                                                 To  estimate  the  possible  range of  C1  = 1/(E1 − a1 −
+               i    = ⟨i | P L1⟩                                                E0), from Eq.(26) it is easy to show
+                   = ⟨i | (| P L0⟩ +      b1E1 − a1  | φ1⟩)
+                                                                                              a1 =  ⟨φ0 | (H − E0)3 | φ0⟩⟨φ0 | (H − E0)2 | φ0⟩ + E0                  (33)
+                   = a0i  +      b1E1 − a1 ⟨i | φ1⟩
+                                                                                If our trial wave function is not too bad, roughly we can
+From Eq.(20) we know b1 | φ1⟩ = (H − E0) | P L0⟩.  Thus                         estimate  that  E1  ≈  E0  and  a1  ≈  E0.   So  the  range  we
+                                                                                tuning  C1  is  around −1/E0.  Typical  behavior of  E1  vs
+  a(1)                                                                          C1  is shown in Fig.3.
+    i    = a(0)i    +       1E1 − a1 ⟨i | (H − E0) | P L0⟩                         From    our    experience    of    PL1    calculation,     the
+        = a(0)                                    ∑⟨i | H | j⟩a(0)              PL1power=0 energy E1  is approximately equal to the en-
+             i   (1 −      E0E1 − a1 ) +       1E1 − a1              j          ergy of  PL0power=4  or  PL0power=5.  Our  new  trial wave
+                                                    j                           function  |  P L1⟩  is  much  better  than  the  original  trial
+Thus the ratio of the weight of | P L1⟩ and | P L0⟩ corre-                      wave  function  | P L0⟩.  The  next  step  is  to  improve  the
+sponding the same conﬁguration | i⟩ is                                          wave function further.  There are two ways to achieve this
+                                                                                purpose:  (1) using power method introduced in the pre-
+   a(1)                                     ∑                                   vious section, applying powers on | P L1⟩ and projecting
+    i    = 1 −      E0                          ⟨i | H | j⟩a(0)j     (30)       it to the ground state systematically; (2) using the next
+   a(0)i          E1 − a1  +       1E1 − a1  j               a(0)i              order of Lanczos iteration, i.e., the ‘PL2’.
+                                                                                   First  let’s  see  the  ﬁrst  method:  ‘PL1-power’  calcula-
+Heeb and Rice33  proposed to calculate a1  and b1  by us-                       tion.   We  can  use  the  same  procedure  introduced  pre-
+ing  Monte  Carlo  technique.    With  a1  and  b1,  E1  and                    viously  to  apply  Hp  on  the  new  wave  function  |  P L1⟩.
+
+                                                                             6
+  FIG.  3.   PL1power=0  energy  dependence  of  C1  for  26/36,                  FIG. 4.    PL1 negative sign ratio which is deﬁned as the ra-
+J/t = 0.4.  the horizontal dotted line represents the energy of                tio of the absolute value of negative and positive parts of ⟨H n⟩
+PL0power=0.                                                                    for diﬀerent electron densities:  10/16 (open circle), 10/36 (full
+                                                                               circle), 18/36 (open triangle) and 26/36 (full triangle).
+
+The  only  diﬀerence  is  that  the  weight  of  the  conﬁgura-                                    ∑
+tions has to be changed from PL0 to PL1 (Eq.(31)).  As                                  + C1C2         ⟨i | H | j⟩⟨j | H | k⟩a(0)k                  (35)
+in the PL0-power calculation, the PL1-power calculation                                             jk                            a(0)i
+is  suﬀered  from  the  fermionic  sign  problem.    In  Fig.4
+the negative sign ratio vs power for | P L1⟩ is shown for                      The | P L2⟩ will be closer to the ground state than | P L1⟩,
+J/t = 0.4 in 10/16, 10/36, 18/36, and 26/36 lattices.  It                      and in principle we can apply powers of H  on | P L2⟩ to
+is clear that the behavior of negative sign ratio vs power                     project  it  toward the  ground state.   The  PL2-power re-
+for | P L0⟩ and | P L1⟩ are almost the same, which means                       sults should be better than that of PL1-power.  With the
+the maximum power under the limitation of negative sign                        similar  rough  estimation  as  for  PL1  C1,  C1  and  C2  in
+problem is the  same for both | P L0⟩ and | P L1⟩.  Since                      Eq.(35)  are  near  the  value  1/E0.   Chen  and  Lee32  cal-
+| P L1⟩ is closer to the ground state than | P L0⟩, the best                   culated  PL2  in  16  sites.   The  PL2  energy  is  very  close
+PL1-power energy will be lower than that of PL0.  Fig.2                        to  the  ground  state  energy.   In  practice,  for  larger  lat-
+shows  the  PL0  and  PL1-power  energy  for  J/t  =  0.4  in                  tices, it is quite diﬃcult to ﬁnd the optimal values of C1
+10/16, 10/36, 18/36, and  26/36 sites  (full  circles).  It  is                and C2  by using the VMC method because the behavior
+clear that PL1 always yields lower energies.                                   of  variational  energy  in  the  two-dimensional  parameter
+   Another  way  to  improve  the  wave  function  further  is                 space  {C1, C2}  is  much  more  complicated  than  the  1-
+to  do  PL2.  Since  we  have  the  equations  for  | P L1⟩,  we               parameter case  in  PL1  calculation.  Another  problem is
+can  follow  the  same  procedure  which  evaluates  |  P L1⟩                  that the PL2 calculation costs much more computer time
+from  |  P L0⟩  to  generate  |  P L2⟩  from  |  P L1⟩.    For  a              than PL0 and PL1.  We  are searching for ways to  carry
+conﬁguration | i⟩ the weight corresponding | P L2⟩ is                          out  the  PL2  calculation  more  eﬃciently.   In  this  paper,
+                                  ∑                                            most data are evaluated from the PL0 and PL1 calcula-
+            a(2)i    = a(1)i    + C2  ⟨i | H | j⟩a(1)j                    (34) tions.
+                                   j                                              Note   that   the   energy   calculated   from   the   power-
+which is completely in the same form as Eq.(31).                               Lanczos  method  is  still  a  variational  estimate  and  an
+                                                                               upper bound of the ground state energy.
+   Using Eq.(31) to replace a(1)i    by the expression of a(0)i                   Here  we  demonstrate  an  example  of  the  energies  cal-
+we get                                                                         culated by the PL method, and compare that with some
+                         ∑                                                     recent data by other groups.  For 50 electrons in an 8 × 8
+   a(2)i    = a(0)i    + C1  ⟨i | H | k⟩a(0)k                                  lattice and J/t = 0.2, the PL energies are shown in TA-
+                          k                                                    BLE I.
+         + C2   ∑⟨i | H | j⟩(a(0)              ∑⟨j | H | k⟩a(0)                   It  can  be  seen  from TABLE  I  that  the  PL1  and  PL2
+                                    j    + C1                     k   )        energies  converge  much  faster  than  PL0  (GFMC)  ones.
+                  j                             k                              The upper  bound of the ground state energy can be  es-
+   a(2)i = 1 + (C1 + C2) ∑⟨i | H | k⟩a(0)k                                     timated  with  less  powers  such  that  the  fermionic  sign
+   a(0)i                        k               a(0)i                          problem is also reduced signiﬁcantly.
+                                                                                  Another interesting point is the ratio of spin (Es) and
+
+                                                                           7
+kinetic  (Ek)  energies.   Fig.5  shows  the  two  portions  of                   TABLE I.  Power-Lanczos energies of J/t = 0.2 for 50 elec-
+energy  of  diﬀerent  powers  for  50/64,  J/t  =  0.2.   It  can              trons in a 8 × 8 lattice.
+be  seen  that  Es  is  overestimated while  Ek  is  underesti-                 power               PL0                   PL1                   PL2
+mated in the trial wave function.  From our experiences,                           0            -0.6443(1)            -0.6709(1)            -0.6819(11)
+Es  is  usually  overestimated  for  the  sake  of  minimizing                     2            -0.6573(4)            -0.6768(2)            -0.6833(11)
+the energy of the trial wave function in the physical inter-                       4            -0.6657(6)            -0.6803(6)            -0.6851(29)
+ested  region of  the  parameter  space.  The  choice causes                       6            -0.6735(9)            -0.6820(8)
+misjudgements  of  other  physical  quantities.   For  exam-                       8           -0.6769(12)           -0.6855(13)
+ple,  the  superconducting  long  range  pairing  correlation
+function will be  strongly overestimated if we choose the
+energy-optimized RVB wave function40.  From the behav-                         to  calculate  energies  of  all  diﬀerent  powers  in  the  same
+ior of Es  and Ek, we see that it is a very important task                     time.  The energies of diﬀerent powers calculated by HM
+to ﬁnd a new trial wave function having more reasonable                        are  close  to  our  PL0-power  data.   It  can  be  seen  that
+Es/Ek  value, as well as having lower trial energy.                            the  extrapolated  GFMC  energy  is  still  higher  than  the
+                                                                               variational  upper  bound  determined  by  PL1power=8  or
+                                                                               PL2power=4 from TABLE I.  Our energy vs.  power curves
+                                                                               for PL0 and PL1 are ﬁtted by an exponential function:
+
+                                                                                                       E = E0 + ae−bp                                (36)
+
+                                                                                The results are shown in Fig.6.  For PL0 data, the ﬁtting
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  FIG. 5.  (a)  Es,  Ek  and  (b)  Es/Ek  for  diﬀerent  powers  in               FIG.  6.   Power-Lanczos  energies  of  50  electrons  in  8 × 8
+50/64, J/t = 0.2.                                                              lattice, J/t = 0.2.  The PL0 (PL1, PL2) data are represented
+                                                                               by open  circles (full  circles,  open  triangles).  The dotted and
+   In  conclusion  of  this  section,  we  proposed  a  powerful               dashed  curves  ﬁt  the  PL0  and  PL1  data,  respectively,  and
+method which is a combination of Lanczos iteration and                         the  horizontal  dotted  and  dashed  lines  are  the  extrapolated
+power method.  The Lanczos iteration is used to improve                        values of power = ∞.  The horizontal solid line is the ground
+the  starting  point  of  the  power  method  which  projects                  state value estimated by HM.
+the new (PL) trial wave function toward the ground state.                      parameters are  E0  = −0.6881(35), a  = 0.0438(33), and
+The ground state properties can be estimated more accu-                        a = 0.174(26).  And E0  = −0.6904(48), a = 0.0193(46),
+rately under the limitation of the fermionic sign problem.                     and b = 0.158(70) for PL1 energies.  The most important
+                                                                               parameter  is  E0,  the  values  for  PL0  and  PL1  data  are
+    III.  EXTRAPOLATION  OF  THE  ENERGIES                                     consistent, which are both much smaller than HM result.
+                                                                               Since  the  ground  state  energy  must  be  lower  than  the
+   From TABLE I we conclude that the ground state en-                          lowest  power-Lanczos  energy,  their  extrapolated data  is
+ergy  of  this  system  is  lower  than  −0.6855  by  the  vari-               clearly inaccurate.
+ational  principle.   HM23  gives  −0.6825(23)  by  extrapo-                      In  TABLE  II,  we  show  J/t = 0.2  energies for  several
+lating  the  GFMC  data.   They  used  a  diﬀerent  method                     electron densities.  The lattices and boundary conditions
+
+
+                                                                            8
+are chosen exactly the same as those chosen by Hellberg                          The energy approaches the ground state as the power
+et al.23.                                                                     increases  in  our  PL  method.   Although  in  the  physical
+  Eextrap  are  the  data  extrapolated  from  GFMC  and                      regime most of our best data have not yet converged to
+Elanc  are  the  quoted  values  for  Lanczos iterations23.  It               the exact ground state values, the systematic variation of
+can be  seen that for this  J/t,  EP L,  the PL energies are                  energies is enough for us to give a variational estimate of
+lower than Eextrap  for higher densities, and higher than                     the  lower bound  of  the  phase  separation boundary.  We
+Eextrap  for intermediate ones (50/90 and 50/72).                             will use the lowest PL energies in the following discussion.
+  We  emphasize  here  that  in  the  cases  of  high  density
+and small coupling constant, it is diﬃcult to get accurate
+enough energies for powers larger than 8 because the sign
+problem  enlarges the  statistical  error bar  for  such  large
+powers.  Thus  it  is  unreliable to  extrapolate the  GFMC
+data  to  estimate  the  ground  energy  in  this  regime  for
+larger  clusters,  even  though  the  method  works  well  in
+the small clusters like 4 × 4, or at low density and large
+J/t  regime  because  the  energies  can  be  calculated  very
+accurately for more powers, and the convergence in these
+cases is  much faster  than  the  high  density,  small  J/t in
+large clusters.  For example, the diﬀerence between exact
+energy and the number evaluated by PL1-power=10 for
+10/16 is about only 0.1%.
+
+  TABLE II.  Energies  of  J/t = 0.2  for  several densities  and
+lattices  evaluated  by  PL  method  EP L,  extrapolated  GFMC
+Eextrap, and Lanczos iterations Elanc.
+Ne/Ns               EP L                Eextrap                Elanc             FIG. 7.  The ground state energies of diﬀerent electron den-
+ 50/90          -0.9184(13)           -0.9246(35)          -0.9211(54)        sities  in  50  site  lattice  for  J/t  =  2.5.   The  energies  are  sub-
+ 50/72          -0.8074(11)           -0.8103(28)          -0.8098(32)        tracted  by  the  perfect  PS  energy  eHne.    The  straight  line
+ 50/64          -0.6855(13)           -0.6825(23)          -0.6826(27)        shows  the  ground  state  energy  of  the  PS  state  by  Maxwell
+ 50/56           -0.4708(8)           -0.4681(18)          -0.4717(23)        construction.  The onset of PS state is at ne = 0.320.
+ 60/64           -0.3710(6)           -0.3701(17)           -0.3693(7)
+                                                                                 Fig.7 shows the energy-density curve of J/t = 2.5 in 50
+                                                                              sites.  The energies are subtracted by eHne, where eH  is
+                                                                              the Heisenberg energy and ne the electron density.  eHne
+                                                                              is energy of the “perfect phase separation state”, which
+           IV.  DETERMINATION  OF  PHASE                                      separates into a hole-free Heisenberg antiferromagnet and
+   SEPARATION:  MAXWELL  CONSTRUCTION                                         an electron-free vacuum phases.  This is the ground state
+                                                                              of the inﬁnite  J/t limit if  the  quantum ﬂuctuation near
+  There  are  several  criteria  to  determine  the  boundary                 the boundary of the two regions is not taken into account.
+of  PS.  The  standard  one  is  to  ﬁnd  the  density  of  di-               Thus it is also a good reference state for large J/t cases.
+vergence of the compressibility (the second derivative of                        Fig.7  shows  the  PS  phase  boundary  determined  by
+the  energy-density  curve).  This  method  is  successful  in                Maxwell construction.  It is clear that the curve become
+determining the phase boundary of the one-dimensional                         convex  for  the  larger  densities  and  the  phase  separates
+t − J model, which phase separates into one electron-free                     into a hole-free Heisenberg antiferromagnet and a region
+region  and  another  one  containing  both  electrons  and                   with  density  ne  = 0.320.  The  energy  of the  PS  state is
+holes41.                                                                      the linear combination of the two phases, which is repre-
+  For the 2D t−J model, the PS state contains one hole-                       sented by the solid line.  The results are consistent with
+free  Heisenberg  AF  region  and  another  hole-containing                   Hellberg et al.23, whose critical ne = 0.296.
+one.  The ﬁnite size eﬀect from the “surface energy” be-                         For  smaller  J/t,  it  is  more diﬃcult  to  deﬁne  the  tan-
+tween the  hole-free Heisenberg region of the PS state is                     gent line  to  ﬁnd  the  critical ne  as we  did  in  Fig.7.  The
+signiﬁcant (of the  order 1/√Ns,  where Ns  is the  size of                   J/t = 0.6 data are shown in Fig.8(a).  It can be seen that
+the  lattice),  and  this  surface  energy  will  push  the  PS               the energy-density curve is almost a straight line for this
+state  to  much  larger  J/t  value.    If  we  use  the  inverse             coupling  strength.  The  curve  is  ﬁtted  by  a  linear  func-
+compressibility  method  in  the  2D  t − J  model,  we  will                 tion, which is shown by the dotted line in Fig.8(a).  And
+get wrong results due to this eﬀect.  Thus we have to use                     the deviations of the data points from the line are shown
+the Maxwell construction method to ﬁnd the PS bound-                          in Fig.8(b).  We see that the deviations are of the  order
+ary from the energies of the ﬁnite-size, uniform systems.                     of magnitude of the statistical error bars.  Since the sub-
+                                                                              traction of a linear function won’t change the  convexity
+
+
+                                                                           9
+                                                                                the  ground  state  energies  are  very  diﬃcult  to  calculate
+                                                                                (or estimate) accurately.  It will be quite unreliable to es-
+                                                                                timate the critical ne and to judge whether there is PS or
+                                                                                not by extrapolation and curve ﬁtting.  Therefore we will
+                                                                                follow  Emery  et  al.1  by  examining  a  more  well-deﬁned
+                                                                                value e(x), the energy per hole for hole density x.
+                                                                                   The energy of the PS state can be separated into two
+                                                                                parts:
+                                                                                               E × Ns = (Ns − N)eH + Neh                    (37)
+                                                                                where Ns is the total number of sites and N is the number
+                                                                                of sites in the hole-rich phase.  The ﬁrst term of the right-
+                                                                                hand side of Eq.(37) is the energy of the hole-free Heisen-
+                                                                                berg region and the second term is that of the  hole-rich
+                                                                                part.  eH  = −1.169J  denotes the  Heisenberg energy per
+                                                                                site43.  And eh is energy per site in the uniform hole-rich
+                                                                                phase, which is a function of the hole density x = Nh/N.
+                                                                                Nh is the number of holes.  E can be rearranged into the
+                                                                                form:
+                                                                                                 E × Ns = NseH + Nhe(x)                       (38)
+                                                                                where
+                                                                                                   e(x) ≡ [−eH + eh(x)]/x                         (39)
+  FIG. 8.    (a) Energy-density curve for J/t = 0.6 in 50 sites,                e(x)  can  be  interpreted  as  the  energy  per  hole  relative
+it can be ﬁtted very well by a straight line.  (b) Deviation of                 to the half-ﬁlled Heisenberg state.  If e(x) of a particular
+the  energy  from  the  line  in  (a),  the  values  are  of  the  same         J/t  has  a  minimum  at  x  =  xm  and  the  hole  density
+magnitude of the error bars.                                                    of  the  total  system  is  smaller  than  xm,  the  system  will
+                                                                                adjust the size of the hole-rich phase N such that Nh/N is
+                                                                                equal to xm and it minimizes the total energy in Eq.(38).
+or concavity of the curve, the Maxwell construction can                         Since Ns, eH, and Nh  are all constants, the total energy
+be  applied  on  the  curve  in  Fig.8(b)  as  we  did  in  Fig.7.              is minimized as e(x) is minimized.  Thus xm is the critical
+A polynomial is used to ﬁt the  E − Elinear  points.  The                       density for phase separation at this J/t.
+curve  is  always  concave and  there  is  no  PS  at  this  J/t.                  We  calculated  e(x)  from  the  energy  of  the  uniform
+An interesting point is that one can always ﬁnd another                         states eh(x) by the PL method and found the minimum
+ﬁtting function gives PS because the E − Elinear  value of                      of  e(x)  on  several  sizes  of  lattices  for  several  densities
+ne  = 0.96 is  larger than those of ne  = 0.92 and ne  = 1.                     and  J/t.   The  largest  one  is  the  √122 × √122  cluster.
+Since the  E − Elinear  values are all so small, the ﬁtting                     It is very diﬃcult to get the converged ground state en-
+is  somewhat  arbitrary  within  the  error  bars.   And  the                   ergy in the physical regime due to the sign problem.  But
+energy-density  curve  is  almost  linear.   It  is  very  likely               from the systematic PL procedure, we can see the trend
+that J/t = 0.6 is just the PS phase boundary of vanish-                         of the  change of e(x)  and estimate  the  boundary  of the
+ing hole density for 50 sites.                                                  PS  state.   The  PL-1  power=4  (for  82  and  122  sites)  or
+   Another possibility is the formation of stripe state sug-                    PL-1 power=6 (for  50  and 36 sites)  energy is  used  here
+gested by S. R. White  et  al.42.  For the stripe state, the                    as  the  eh(x).   It  is  about  2  ∼  4  percent  lower  than  the
+holes  adjust themselves  to  form stripes  to  minimize  the                   variational  energy.   We  estimate  the  diﬀerence  between
+total  energy  and  does  not  have  the  problem  of  the  sur-                the  best  PL  energy  is  within  one  or  two  percentage  of
+face  energy  as  in  the  PS  state.   The  adjustment  makes                  the true ground state energy.
+the  energy-density  curves  linear.   But  since  we  use  the                    In Fig.9 we show the e(x) of J/t = 2.5 in 50 sites cor-
+uniform trial wave functions and periodic boundary con-                         responding to Fig.7.  The data are ﬁtted by a polynomial
+dition here, it is diﬃcult to get signals of the stripes state.                 and  the  minimum  of  e(x)  is  at  x  =  0.68,  which  is  ex-
+This will be our future work.                                                   actly agree with the density ne  = 0.32 determined from
+   From the two previous examples, we see that it is dif-                       Fig.7.   Thus  the  two  versions  of  Maxwell  construction
+ﬁcult  to  read  out  the  slope  variation  from  the  energy-                 are  consistent.   The  advantage  of  the  latter  one  is  that
+density plots to do the  Maxwell construction, especially                       the critical density for PS state will be determined much
+for  small  J/t  values.   For  such  J/t,  the  possible  critical             more accurately if the energy-density curve is almost lin-
+ne  of  PS  (if  there  is)  is  close  to  1.   In  this  regime,  the         ear.  This  is  the  case  for  the  physical interested regime.
+energy-density curve is  very close  to  a  straight line  and                  So we will use the e(x) to determine the PS boundary in
+                                                                                this report.
+
+                                                                            10
+  FIG. 9.  e(x) vs hole density x of J/t = 2.5 in 50 sites.  The
+minimum of the ﬁtted curve is at x = 0.68.
+                                                                                  FIG.  10.   Phase  separation  boundary  on  the  phase  dia-
+            V.  RESULTS  AND  DISCUSSION                                       gram  of  the  two-dimensional  t − J  model  evaluated  by  the
+                                                                               power-Lanczos  method  (open  circles),  GFMCSR  method  by
+   Using  the  Maxwell  construction  we  determined  the                      M. Calandra  et  al.  (open squares),  and GFMC  with  extrap-
+phase  boundary  of  PS  state  for  several  J/t.    The  re-                 olation by C. S. Hellberg et al.  (full circles).
+sults are shown in Fig.10.  The results evaluated by using
+Green  function  Monte  Carlo  with  stochastic  reconﬁgu-                     in Fig.12(a) is very close to a straight line and it will be
+ration  (GFMCSR)  by  M.  Calandra  et  al.44  and  Green                      dangerous to ﬁt the curve and draw the tangent line from
+function  Monte  Carlo  with  extrapolation  by  HM23  are                     the half-ﬁlled point.
+also shown in the ﬁgure.                                                          In Fig.12(b) we show the e(x) vs.  hole density x curves
+   From  Fig.10  we  see  that  in  the  physical  regime,  our                for diﬀerent level of projection.  As the  power increases,
+data are consistent with the GFMCSR results that there                         the energy decreases and approaches to the ground state
+is  a  lower  bound  of  the  J/t  value  for  PS  state.    This              energy, and e(x) also decreases.  It is interesting that e(x)
+is also the case in our previous study45.  In contrast, the                    of smaller x drops much faster than those of large x.  In
+extrapolated GFMC results show that PS state occurs at                         this case, at the PL0power=0 level, the minimal e(x) will
+all values of J/t.  In the large J/t and low electron density                  occur at x larger than 0.0656 (8 holes in 122 sites).  While
+region, all the results are qualitatively consistent.                          at the  PL1power=0  level,  the  curve  becomes  almost ﬂat.
+   There are several possible reasons for the inconsistence                    For PL1power=4, the smallest density x = 0.0164 (2 holes)
+in the physical region.  First, the energies calculated are                    becomes the lowest one.  Note that the energies have not
+not  accurate  enough.   The  energy-density  curve  is  very                  yet  converged.   From  the  trend  of  e(x)  with  increasing
+close to a straight line in this region, so a small error in                   power,  we  expect  the  minimum  of  e(x)  at  x  =  0.0164
+energy will cause a completely diﬀerent result of Maxwell                      will  be  even  deeper.    That  is,  the  PS  state  occurs  at
+construction  because  the  method  is  related  to  the  sec-                 x  ≤  0.0164,  while  a  much  larger  value  xP S  =  0.123  is
+ond derivative  of the  curve.  Fig.11 shows the  PS phase                     reported by HM.
+boundaries determined by energies evaluated by diﬀerent                           The changes of energies and e(x) with respect to pow-
+projection levels.  It  is clear that as the powers increase                   ers are shown in Fig.13.  It is clear that e(x) drops faster
+(that is, the energies closer to the ground state energies),                   for  at  lower  hole  densities  with  increasing  powers.   The
+the PS phase boundary will be pushed to larger J/t value                       reason is  that  the hole  density  is  at  the  denominator of
+and electron densities.  This feature appears in all of our                    the  deﬁnition  of  e(x).   From  the  curves  in  Fig.13,  it  is
+calculation on diﬀerent lattices.  It is strongly suggestive                   clear that the energies have not converged yet.  And the
+that  the  PS  phase  boundary  determined  from  our  vari-                   trend of the curves strongly suggests that the e(x) of the
+ational  calculation is  a  lower  bound  of  J/t  and  electron               smaller  x  cases  will  be  much  more  reduced  than  those
+densities of the real boundary.                                                of the  larger ones.  That  is,  if  the  ground state energies
+   In TABLE II we show that our PL energies are lower                          are calculated more accurately, the PS boundary will be
+than  the  extrapolated  GFMC  values.    And  since  PL                       pushed  toward  the  higher  density  or  larger  J/t.   Thus
+method is a variational one, the true ground state ener-                       the true  phase boundary will be at the upper  right side
+gies will be even lower.  We use J/t = 0.3 in 122 sites as an                  of our variational result in Fig.10.
+example to  demonstrate the  eﬀect of the non-converged                           Fig.14 shows the similar plots for J/t = 0.4.  The  be-
+energies  in  more  detail.   Again  the  energy-density  plot                 havior is  a little subtle  in this  value of J/t.  The e(x) is
+
+
+                                                                           11
+  FIG. 11.  PS phase boundaries determined by diﬀerent PL
+levels.  It can be seen that for larger powers, the boundary is
+pushed to larger J/t and electron density ne.
+
+
+ﬂatter  than  the  J/t  =  0.3  case.   The  minimal  value  is
+also  at x = 0.0164 point,  but  within  error bar  with  the
+x =  0.0328 (4  holes)  point.  Again  the  energies  are  still
+well  above  the  ground  state  values,  we  expect  the  e(x)
+for x = 0.0164 will be even lower.
+   Note  that  in  Fig.12(b)  and  Fig14(b)  the  Heisenberg
+energy used is the  thermodynamic limit eH  = −1.169J.
+And eH  = −1.1713J  for ﬁnite system with 122 sites are
+used for Fig.12(c) and Fig14(c).  The later case will make
+the  e(x)  values  larger.   And  in  the  J/t  =  0.4  case,  the
+PL1power=4  curve  becomes  almost  ﬂat.   This  ﬁnite-size
+eﬀect will shift the phase boundary a little but the main
+results will be unchanged.                                                         FIG.  12.   (a)Energy  vs.   hole  density  x  for  J/t  =  0.3  in
+   Another  way  to  understand  the  ﬁnite-size  eﬀect  is                     122  sites.  (b)PL0power=0  (open  circle),  PL1power=0  (full  cir-
+to  use  ﬁnite-size  scaling.    For  example,  in  the  case  of               cle), and PL1power=4 (open triangle) e(x) calculated by using
+J/t  =  0.4  in  98  sites  shown  in  Fig.20  in23  (calculated                eH  = −1.169J  and (c)eH  = −1.1713J.
+by  M.  Calandra  et  al.),  the  minimum  of  e(x)  is  at  the
+xm = 0.041 (4 holes) point.  It is possible that PS occurs
+at this  hole  density.  But together with  the 50  site data                   of electrons (with the same ﬁlled shell) in diﬀerent sizes
+in the same ﬁgure, the xm = 0.08, also for 4 holes.  The                        of lattices and diﬀerent boundary conditions to avoid this
+xm  becomes a half as the size of lattice is doubled.  This                     eﬀect.  But  there are still other  ﬁnite  size  eﬀects  in  this
+scaling  behavior  is  consistent  with  that  reported  in  our                way due  to  the diﬀerent sizes  and boundary  conditions.
+previous paper45.  And the scaling behavior to even larger                      The  only  way  to  eliminate  the  ﬁnite  size  eﬀects  is  to
+lattices is also shown in Fig.3 of Ref.44.  Note that all the                   study this problem in diﬀerent, and large enough sizes of
+energies used in these references are upper bounds of the                       lattices.
+ground  state  energies.   We  expect  that  e(x)  for  smaller                     For J/t ≤ 0.4, the minimal e(x) is always at two holes
+hole  density  x  will  become  even  lower,  and  the  phase                   for  lattices  of  diﬀerent  sizes  (up  to  122).   This  may  be
+boundary  of  PS  state  will  be  pushed  to  larger  electron                 resulted from the two-hole bound state27  but not PS at
+density  and  larger  J/t.   Thus  in  contrast  with  the  con-                xm = 2/Ns.  If there were PS, xm  would be at the same
+clusion by in Ref.23, we conclude that PS does not occur                        (or nearby) density rather than the same number of holes.
+at J/t = 0.4 for any density.                                                       In conclusion, from the analysis of the energies evalu-
+   Another  ﬁnite   size  eﬀect  comes  from  the  diﬀerent                     ated  from  the  PL  method,  we  conclude  that  J/t  =  0.4
+shell  for  diﬀerent  electron  density.    The  eﬀect  makes                   is  a  lower  bound  for  PS.  The  phases  will  not  separate
+the  energy-density  curves  jagged  and  diﬃcult  to  ana-                     for  J/t  smaller  than  this  value.   From  the  trend  of  the
+lyze.   HM  calculated  the  energies  for  the  same  number
+
+
+                                                                            12
+  FIG. 13.  (a)  e(x)  of  J/t  =  0.3  for  diﬀerent  powers  in  122
+sites.  The  electron  numbers are  120  (open  circles),  118  (full
+circles), 116 (open triangles), and 114 (full triangles).  (b)The
+ratios  of  power  energies  EP L  and  variational  (P L0power=0)
+energy E0.  (c)The diﬀerences between e(x) of diﬀerent powers
+and the variational value.                                                         FIG.  14.   (a)Energy  vs.   hole  density  x  for  J/t  =  0.4  in
+                                                                                122  sites.  (b)PL0power=0  (open  circle),  PL1power=0  (full  cir-
+energies  and  e(x)  functions,  this  lower  bound  may  be                    cle), and PL1power=4 (open triangle) e(x) calculated by using
+pushed to even larger J/t.  The extrapolation of ground                         eH  = −1.169J  and (c)eH  = −1.1713J.
+state energies  and energy-density curves  may  be  unreli-
+able and misleading in the physical interesting regime.  F.                     M-321-001.   Part  of  the  computations  were  performed
+Becca et al.  give upper and lower bounds for the ground                        on the IBM SP2 Power3 and PC Linux cluster of the Na-
+state energy of the inﬁnite-U  2D Hubbard model, which                          tional  Center  for  High-Performance  Computing  in  Tai-
+is  equivalent  to  the  J/t  =  0  case  for  the  t − J  model.               wan.  We are grateful for their support.
+Their  analysis  on  this  case  ruled  out  the  possibility  of
+PS for the electron density less than half-ﬁlled46.  By the
+way, from the ﬁnite size analysis of the exact diagonaliza-
+tion data for one and two holes in smaller clusters (up to
+32 sites) gives the results that there is no two-hole bound
+state for  J/t ≤ 0.640,47,48.  Thus  it  seems  the  attractive
+interaction is not strong enough to be the mechanism to                           1 V.  J.  Emery,  S.  A.  Kivelson,  and  H.  Q.  Lin,  Phys.  Rev.
+cause the PS state for small J/t values.                                           Lett. 64, 475 (1990).
+   We thank M. Calandra, S. Sorella, and P. W. Leung for                          2 J. M. Tranquada, B. J. Sternlieb, J. D. Axe, Y. Nakamura,
+their  kindness to  give us  their  data and very useful dis-                      S. Uchida, Nature 375, 561 (1995).
+cussions.  This work is supported by the National Science                         3 P. Prelovˇsek, and X. Zotos, Phys. Rev. B 47, 5984 (1993).
+Council of Republic of China, Grants No.  NSC89-2112-                             4 S. R. White and D. J. Scalapino, Phys. Rev. Lett. 80, 1272
+M-001-103,  NSC89-2112-M-029-004,  and  NSC89-2112-                                (1998).
+
+
+                                                                            13
+ 5 S. R. White and D. J. Scalapino, Phys. Rev. Lett. 81, 3227                     45 C.T. Shih, Y.C. Chen, and T.K. Lee, Phys. Rev. B57, 627
+   (1998).                                                                           (1998).
+ 6 E. Dagotto et al., Phys. Rev. B 49, 3548 (1994).                               46 F.  Becca,  L.  Capriotti,  and  S.  Sorella,  cond-mat/0009359
+ 7 V.  J.  Emery,  and  S.  A.  Kivelson,  Physica  C  209,  597                     (2000).
+   (1993).                                                                        47 D. Poilblanc, Phys. Rev. B48, 3368 (1993).
+ 8 J. D. Jorgensen et al, Phys. Rev. B 38, 11337 (1988).                          48 A. L. Chernyshev, P. W. Leung, and R. J. Gooding, Phys.
+ 9 P. C. Hammel et al., Phys. Rev. B 42, 6781 (1990)                                 Rev. B58, 13594 (1998).
+10 P. C. Hammel et al., Physica C 185-189, 1095 (1991).
+11 F. C. Chou et al., Phys. Rev. B 54, 572 (1996).
+12 X. L. Dong et al., Phys. Rev. Lett. 80, 2701 (1998).
+13 J. H. Cho et al., Phys. Rev. Lett. 70, 222 (1993).
+14 A. Weidinger, Ch. Niedermayer, A. Golnik, R. Simon, and
+   E. Recknagel, Phys. Rev. Lett. 62, 102 (1989).
+15 D.  R.  Harshman,  G.  Aeppli,  B.  Batlogg,  G.  P.  Espinosa,
+   R. J. Cava, A. S. Copper, L. W. Rupp, E. J. Ansaldo, and
+   D. Ll. Williams, Phys. Rev. Lett. 63, 1187 (1989).
+16 J. H. Cho et al., Phys. Rev. B 46, 3179 (1992).
+17 F. Borsa et al., Physica C 235-240, 1713 (1994).
+18 F. Borsa et al., Phys. Rev. B 52, 7334 (1995).
+19 E.  G.  Nikolaev,  H.  B.  Brom,  and  A.  A.  Zakharov,  Phys.
+   Rev. B 62, 3050 (2000).
+20 H. H. Wen, X. H. Chen, W. L. Yang, and Z. X. Zhao, Phys.
+   Rev. Lett. 85, 2805 (2000).
+21 C. S. Hellberg, and E. Manousakis, Phys. Rev. B 52, 4639
+   (1995).
+22 C.  S.  Hellberg,  and  E.  Manousakis,  Phys.  Rev.  Lett.  78,
+   4609 (1997).
+23 C. S. Hellberg, and E. Manousakis, Phys. Rev. B 61, 11787
+   (2000).
+24 Tae-Hyoung  Gimm,  and  Sung-Ho  Suck  Salk,  Phys.  Rev.
+   B62, 13930 (2000).
+25 A. Moreo et  al., Phys. Rev. B 43, 11442 (1991).
+26 F.  Becca,  M.  Capone,  and  S.  Sorella,  Phys.  Rev.  B  62,
+   12700 (2000).
+27 E. Dagotto et al., Phys. Rev. B 45, 10741 (1992).
+28 W. O. Putikka, M. U. Luchini, and T. M. Rice, Phys. Rev.
+   Lett. 68, 538 (1992).
+29 W. O. Putikka, and M. U. Luchini, Phys. Rev. B 62, 1684
+   (2000).
+30 D. Poilblanc, Phys. Rev. B 52, 9201 (1995).
+31 H.  Yokoyama  and  M.  Ogata,  J.  Phys.  Soc.  Jpn  65,  3615
+   (1996).
+32 Y. C. Chen, and T. K. Lee, Phys. Rev. B51, 6723 (1995).
+33 E. S. Heeb, and T. M. Rice, Z. Phys. B 90, 73 (1993).
+34 M. Khono, Phys. Rev. B 55, 1435 (1997).
+35 W. von der Linden, Phys. Rep. 220, 53 (1992).
+36 T. K. Lee, and Shiping Feng, Phys. Rev. B38, 11809 (1988).
+37 D. Ceperley,  G.  V. Chester,  and  M.  H. Kalos,  Phys.  Rev.
+   B16, 3081 (1977).
+38 E. S. Heeb, and T. M. Rice, Europhys. Lett. 27, 673 (1994).
+39 P.  W.  Leung,  and  R.  J.  Gooding,  Phys.  Rev.  B52,  15771
+   (1995).
+40 C.  T.  Shih,  Y.  C.  Chen,  H.  Q.  Lin,  and  T.  K.  Lee,  Phys.
+   Rev. Lett. 81, 1294 (1998).
+41 C. S. Hellberg, and E. J. Mele, Phys. Rev. B 48, 646 (1993).
+42 S.  R.  White,  and  D.  J.  Scalapino,  Phys.  Rev.  B61,  6320
+   (2000).
+43 A. Sandvik, Phys. Rev. B 56, 11678 (1997).
+44 M.  Calandra,  F.  Becca,  and  S.  Sorella,  Phys.  Rev.  Lett.
+   81, 5185 (1998).
+
+
+                                                                              14

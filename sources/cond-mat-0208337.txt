@@ -1,0 +1,251 @@
+        Charge  density  correlations in  t-J ladders  investigated  by  the CORE  method
+
+                                                   Sylvain  Capponi  and  Didier  Poilblanc
+                       Groupe  de  Physique  Th´eorique,  Laboratoire  de  Physique  Quantique,  UMR–CNRS  5626
+                                            Universit´e  Paul  Sabatier,  F-31062  Toulouse,  France∗
+                                                             (Dated:  October 27, 2018)
+
+                   Using  4-site  plaquette  or  rung  basis  decomposition,  the  CORE  method  is  applied  to  2-leg  and
+                4-leg t-J ladders and cylinders.  Resulting range-2 eﬀective hamiltonians are studied numerically on
+                periodic  rings  taking  full  advantage  of  the  translation  symmetry  as  well  as  the  drastic  reduction
+                of  the  Hilbert  space.  We investigate  the role  of  magnetic  and  fermionic  degrees  of  freedom.  Spin
+                gaps, pair binding energies and charge correlations are computed and compared to available ED and
+                DMRG data for the full Hamiltonian.  Strong evidences for short  range  diagonal stripe correlations
+                are found in periodic  4-leg t-J ladders.
+
+                PACS numbers:  75.10.-b 71.27.+a 75.50.Ee 75.40.Mg
+
+
+   Competition   between   superconducting   correlations
+and  charge  ordering  has  long  been  a  challenge  to  nu-                                                                              (a)
+merical  computations  [1,  2]  of  low-dimensional strongly
+correlated  electron  systems.   Spin  and  hole-doped  lad-
+ders [3] oﬀer an ideal system to investigate the cross-over
+between one to two dimensions.  The 2-leg ladder for ex-
+ample is known to exhibit a robust spin gap at and close
+to  half-ﬁlling  as  well  as  hole  pair  binding  [4,  5].   Domi-
+nant power-law dx2−y2-like pairing and 4kF  charge den-
+sity wave (CDW) correlations at small doping are charac-
+teristic of a Luther-Emery (LE) liquid regime [6, 7].  How-                                         (b)                                                  (c)
+ever, the spin gap magnitude drops sharply as the num-
+ber  of  legs  is  increased,  e.g.   from  0.50 J  in  the  Heisen-            FIG.  1:  CORE  decomposition  in  term  of  plaquette  or  rung
+berg 2-leg ladder to 0.190 J  in the Heisenberg 4-leg lad-                      sub-systems;  (a)  2-leg  ladder  split  in  plaquettes;  (b)  4-leg
+der  [8].   Both  the  increase  of  the  magnetic  correlation                 ladder  split  in  2 × 2  plaquettes;  (c)  4-leg  cylinder  split  in
+length (of the undoped ladder) as well as the drastic re-                       4-site rungs.
+duction  of  the  available ladder  length  for  increasing  leg
+number restrict enormously the accuracy of standard nu-                            We shall consider here a generic n-leg t-J ladder,
+merical techniques like  Exact Diagonalisation (ED)  and                                       ∑                              ∑
+Density Matrix Renormalisation (DMRG) techniques.  In                             H  = Jleg         ⃗Si,a · ⃗Si+1,a + Jrung        ⃗Si,a · ⃗Si,a+1          (1)
+addition,  the  DMRG  method  is  limited  (in  pratice)  to                                    i,a                            i,a
+Open Boundary Condition (OBC) in the leg direction.                               +   tleg ∑(c†                                  ∑(c†
+                                                                                                  i,aci+1,a + h.c.) + trung            i,aci,a+1 + h.c.) ,
+   In this Rapid Communication, we use the Contractor                                       i,a                                  i,a
+Renormalisation  (CORE)  method  [9,  10]  to  investigate
+hole-doped 2-leg and 4-leg ladders [12].  Our aim is to get                     where ci,a  are projected hole fermionic operators.  Open
+further  insights  on  the  issue  of  pairing  and  density  cor-              (ladders)  or  closed  systems  (cylinders)  along  the  rungs
+relations from the investigation of large enough systems                        with  isotropic  coupling,  tleg   =  trung   =  1  and  Jleg   =
+with Periodic Boundary Conditions  (PBC) in the ladder                          Jrung = J, will be of interest here.
+direction.  Such investigations are greatly needed to com-                         In  order  to  implement  the  CORE  algorithm  the  lad-
+plement  available  DMRG  calculations  using  OBC.  Our                        ders  are  decomposed  in  small  4-site  sub-units  as  shown
+approach is  done in two  steps;  (i)  ﬁrst,  using  an appro-                  in Fig. 1 whose M  low-energy states are kept to deﬁne a
+priate partition into small subsystems, we use the CORE                         reduced Hilbert  space.  The  full  hamiltonian (1)  is  then
+method to construct an eﬀective hamiltonianx which in-                          diagonalised  on  N  connected  units  (with  OBC)  to  re-
+tegrates out quantum ﬂuctuations at short length scales;                        tain  its  M N  low-energy  states.   These  true  eigenstates
+(ii)  we  use  ED  techniques  (supplemented  by  ﬁnite  size                   are then projected on the  reduced Hilbert space (tenso-
+analysis)  to  compute  various  physical  properties  (pair                    rial  product  of  the  M  states  of  each  unit)  and  Gram-
+binding,  spin  gaps,  etc...)   and  compare  them  to  those                  Schmidt  orthonormalized  [9,  10].   An  eﬀective  hamilto-
+of the original model.  The method provides new results                         nian  containing  N-body  interactions  with  identical  low-
+such  as  e.g.   strong  evidences  for  stripes  correlations  in              energy spectrum can then be constructed in terms of the
+translationally invariant  4-leg ladders.                                       reduced basis by a unitary transformation [11].  For sake
+                                                                                                                                                               2
+
+of  simplicity,  we  shall  restrict  ourselves  to  the  range-2                           0.5
+approximation(N = 2) [12].                                                                               (a)
+   At  half-ﬁlling,  retaining  in  each  4-site  unit  only  the                           0.4
+lowest singlet and triplet states (4 states) gives excellent                           ∆P
+results [12].  Away from half-ﬁlling, the simplest trunca-                                  0.3
+tion, referred to as “B” approximation, is to include,  in
+addition, the lowest singlet hole pair on the 4-site unit (of                               0.2
+d-wave symmetry in the  case of a plaquette).  Formally,                                   0.28           (b)
+one  can  deﬁne  4  hard-core  bosonic  (plaquette  or  rung)                          ∆S0.24
+operators  describing  the  4  possible  transitions  from  the
+singlet half-ﬁlled GS (vacuum) to one component of the                                      0.2
+triplet state, tα,i, or to  the  hole pair state, bi  (Ref.  13).                          0.16           ED
+The  eﬀective  B-hamiltonian HB  can then be  written as
+a  sum  of  a  simple  bilinear  kinetic  term  Hb + Ht  and  a                            0.25           (c)
+quartic interaction Hint  (Refs. 10, 12),                                              ∆S
+                            ∑                 ∑    (                )                       0.2                                              ED (even L)
+                                                                                                                                             ED (odd L)
+         Hb   =  ǫ0 + ǫb          b†i bi − Jb        b†i bj + H.c.       (2)               0.15                                              B
+                              i               ⟨ij⟩                                                                                           BF
+                      ∑                    ∑                                                0.10                                  0.05                                0.1
+         Ht   =  ǫt        t†αitαi − Jt2        (t†αitαj + H.c.)                                                            1/L
+                       iα                  α⟨ij⟩
+                              ∑                                                    FIG.  2:   Finite  size  scaling  analysis  vs  1/L  for  a  periodic
+                      − Jtt2        (t†αit†αj + H.c.) ,                     (3)    2-leg  2 × L  t-J  ladder  at  J  =  0.5  using  the  decomposition
+                              α⟨ij⟩                                                of  Fig.  1(a)  and  the eﬀective  B-  or  BF-  hamiltonians  (as  in-
+      Hint   =  Vb    ∑    nbinbj + ∑        [V0(titj)†                            dicated on plot).  DMRG & ED data for the original t-J lad-
+                                                         0(titj)0                  der  are  also  shown  for  comparison.   ED  data  obtained  with
+                       ⟨ij⟩             ⟨ij⟩                                       odd ladder lengths are averaged over boundary conditions (see
+                   +V1(titj)†1(titj)1 + V2(titj)†2(titj)2]                         [18]).  DMRG data and L → ∞ ED extrapolations are shown
+                   −Jbt   ∑    (b†                                                 by arrows.  (a)  Pair-binding energy  ∆P .  (b) Spin  gap  of  the
+                                  i bjt†αjtαi + h.c.)                              2-hole doped ladder.  (c) Spin gap of the 1/8-doped ladder.
+                          ⟨ij⟩α
+                          ∑                                                                                                                nh=2 BF
+                   +Vbt         (b†i bit†αjtαj + b†jbjt†αitαi) ,         (4)                                                               nh=4
+                          ⟨ij⟩α                                                                                        (a)                 nh=6
+where (titj)†                                                                                                                              nh=8
+                S  creates two triplets on plaquettes i and j,                             0.5
+which  are  coupled  into  total  spin  S.   Such  an  eﬀective
+hamiltonian may serve for analytic and numerical treat-
+ments.  Its parameters listed for J = 0.35 and J = 0.5 in
+table I are consistent with those found for the Hubbard
+model[10].  Although, HB gives already a faithful descrip-                                   0
+tion  of  the  physics  of  the  original  model,  a  systematic
+improvement can  be  done  by  adding  to  the  above  local                               0.5                          (b)
+basis 4 extra “fermionic” states corresponding to the de-                                  0.4                                                L=20
+generate (Sz  = ±1/2, even  and  odd  chirality  or  parity)                                                                                  L=24
+                                                                                           0.3
+single hole GS of the 4-site unit (hereafter referred to as
+“BF” approximation).                                                                       0.2
+   The 2-leg t-J ladder oﬀers an ideal system to test the                                  0.1
+eﬃciency  of  the  CORE  method  and  the  choice  of  the                                   0
+plaquette  decomposition.   As  seen  from  the  behavior  of                                 0                 2                 4                 6                 8                10               12
+the  pair-binding  energy  ∆P  =  2E0(nh  =  1) − E0(nh  =                                                                  r
+2) − E0(nh  =  0)  plotted  in  Fig.  2(a)  and  from  the  pla-                   FIG. 3:  Correlations as a function of distance (in units of the
+quette charge density-density correlation in the two hole                          original  bond  length)  up  to  r  =  L/2  in  2×L  t-J  ladder  at
+GS of the  BF-hamiltonian plotted in Fig 3(a), pairs are                           J  = 0.5.  (a) Plaquette charge density correlations for L = 24.
+found to be strongly bound and localized almost on a sin-                          The BF-hamiltonian (B-hamiltonian) is used for nh = 2 holes
+gle plaquette.  This conﬁrms a posteriori  the relevance of                        (otherwise).  (b) Hole pair density-Sz correlation in the lowest
+CORE and of the local basis.  Furthermore, the ﬁnite size                          triplet excited state of 2×20 and 2×24 2 hole-doped ladders
+scaling of the spin gap for a ﬁxed number of nh = 2 holes                          using the B-hamiltonian.
+                                                                                                                                                                                                                                                                       1
+
+                                                                                                                                                                    3
+
+      J        ǫ0         ǫb         ǫt        Jt         Jtt        Jb                                  ♣                 q                t              ✈             t              q
+    0.35    -3.8895   -3.5340     0.1379     0.2128    0.2319     0.2139
+     0.5    -5.5564   -3.0919     0.1970     0.304     0.3112     0.2174                  (a)
+    0.35    -3.5564   -3.6579     0.4733    -0.4836    -0.4336    0.4855                                 ⑥         ♣                 t              ✉              t              ♣
+      J       Jbt         Vb        V0         V1         V2         Vbt
+    0.35    -0.0709    1.0345    -0.1244    -0.0928    0.0412     -0.3298
+     0.5    -0.1044    0.8326    -0.1777    -0.1326    0.0588     -0.3325                                ♣                 ③           r               q                r               ③
+    0.35    0.2887     1.4164    -0.2158    -0.0202    0.0149     -0.2489
+TABLE I:  Parameters of HB  (in units of t) computed for the                              (b)
+t-J ladder model using range-2 CORE with 2 plaquettes (row                                               ⑥         ♣                 ✇            s               ✇            ♣
+
+1 and 2) or 2 4-site rungs (row 3).
+                                                                                                         ♣                 ④          t              ✇            t              ④
+
+       0.4                   (a)
+                                                                                          (c)
+    ∆P0.3                                                                                                ⑥         ♣                 ①            ✉              ①            ♣
+
+       0.2
+       0.1                                                                            FIG. 5:  Hole-pair density-density correlation on a 4 × 12 lad-
+                                                                                      der  at  J/t  =  0.35.   PBC  are  used  in  the  leg  direction  and
+         0                                                                            correlations are measured from the reference plaquette on the
+        0.4                                                                           lower  left  corner.   From  top  to  bottom,  nh  =  4, 6, 8.   The
+                              (b)
+        0.3                                                                           surfaces of the dots are proportional to the values of the cor-
+    ∆S  0.2                                                                           relations.
+
+
+        0.1
+
+          0                                                                           picture as can be seen from the charge correlations shown
+        0.2                   (c)                                                     in Fig.3(a); we observe the characteristic 4kF -CDW spa-
+       0.15                                                  ED J=0.35                tial oscillations of the LE phase showing the same number
+    ∆S                                                       B                        of  maxima  as  the  number  of  hole  pairs.  Let  us  empha-
+        0.1                                                  BF
+                                                             B                        size  that  this  is  also  in  agreement  with  DMRG  calcu-
+       0.05                                                                           lations  [17].   Our  approach  performed  on  ﬁnite  homo-
+
+          00                        0.05                       0.1                       0.15                       0.2geneous  systems  is  then  complementary  to  the  DMRG
+                                         1/L                                          technique using OBC.
+                                                                                         Although  the  agreement  with  the  hard-core  charged
+FIG.  4:   Finite  size  scaling  analysis  vs  1/L  for  a  periodic                 boson model is qualitatively good, we believe that includ-
+4-leg  4 × L  t-J  ladder  (open  symbols)  using  the  decomposi-                    ing magnetic triplet excitations in the local basis is never-
+tion of Fig. 1(b) for J = 0.35 (full lines) and J  = 0.5 (dashed                      theless important to describe interplay between magnetic
+lines).   Data  are  also  shown  in  the  case  of  a  periodic  cylin-              and pairing  correlations.  For  example,  it  is  known that
+der  (ﬁlled  symbols)  for  J  = 0.35  using the decomposition  of                    the  lowest  triplet  excitation  in  a  2  hole  doped  (or  very
+Fig.  1(c).  Symbols and notations similar  to Figs. 2(a-c).  (a)                     weakly doped) t-J ladder consists of a hole pair-magnon
+Pair-binding  energy  ∆P .   (b)  Spin  gap  of  the  2-hole  doped                   boundstate  [18].   Indeed,  the  extrapolated  value  of  the
+system.  (c) Spin gap of the 1/8-doped system.
+                                                                                      spin gap in the presence of 2 holes (see Fig. 2(b)) is lower
+                                                                                      than that of the undoped ladder (0.5J) and than the hole
+(see  Fig.  2(b))  or  at  1/8  hole  density  (Fig.  2(c))  gives                    pair  binding  energy  (shown  in  Fig.  2(a)).   Moreover,  as
+gaps with 10-20% accuracy in comparison to existing nu-                               seen  in  Fig.3(b),  the  correlation  between  the  hole  pair
+merical data [18].  Due to the small size of the hole pairs,                          density  and  the  plaquette  Sz-component  clearly  shows
+accurate results  are  obtained even when  fermionic  exci-                           an enhancement at short distance [14].
+tations are not included.  Note that the eﬀective models                                 We ﬁnish the investigation of the 2-leg ladder by using
+lead to  a  smooth ﬁnite  size  behavior, in contrast to  the                         the eﬀective  Hamiltonian to calculate  the  Luttinger  liq-
+original t-J model  where “band-ﬁlling” eﬀects  may  lead                             uid parameter Kρ which governs the long distance power-
+to oscillatory behaviors as seen in Figs. 2.                                          law  behavior  of  the  charge  correlations  related  to  the
+   We  point  out  the  qualitative  agreement  between  our                          unique  massless  charge  mode.   Some  values  of  Kρ  ob-
+results and those of Siller et al. [17] who used a more in-                           tained from the Drude weight D and the compressibility
+volved hard-core charged boson model with longer range                                κ  [15]  as  Kρ  =  π√Dκ/2  are  listed  in  table  II.   In  ad-
+repulsive interactions (giving rise to a Luttinger liquid be-                         dition,  we  also list  here  the  charge velocity uρ  obtained
+havior), but neglected both fermionic and gapped triplet                              from the relation uρ = πD/Kρ  and which agrees within
+excitations [17].  Our more systematic and general treat-                             a  few  percents  to  the  values  obtained  directly  from  the
+ment using the B-hamiltonian gives a similar qualitative                              linear  dispersion  of  the  charge  mode.    Note  also  that
+                                                                                                                                                          4
+
+these  values  compare  very  well  to  existing  ED  [7]  and                  enables unbiased (since calculated on translationnaly in-
+DMRG [17] data.                                                                 variant clusters) analysis of hole pair density correlations.
+                                                                                While 4kF -CDW correlations are found in 2-leg ladders,
+ doping   14.3%b    12.5%a     10.7%b   8.3%a    7.1%b    4.2%a   3.6%b         our computations provide clear evidences in favor of short
+   Kρ       0.559     0.602     0.668    0.753   0.798    0.914    0.920        range diagonal stripes in 4-leg ladders.
+    uρ      0.881     0.779     0.652    0.445   0.399    0.188    0.180
+TABLE  II:  Parameters  Kρ  and  uρ  as  a  function  of  dop-                     We  thank IDRIS (Orsay) for allocation of CPU time.
+ing  computed  on  2 × 24  (a)  and  2 × 28  (b)  ladder  with  B-              We also acknowledge useful discussions with E. Altman,
+hamiltonian and J/t = 0.5.                                                      A. Auerbach and S.C. Zhang.
+   We now turn to the investigation of the 4-leg t-J lad-
+der (with OBC along rungs) or cylinder (with PBC along
+rungs), for which the best choices of unit decomposition
+are depicted in Fig. 1(b) and Fig. 1(c) respectively.  Re-                         ∗  URL: http://w3-phystheo.ups-tlse.fr
+sults  for  pair  binding  energies  and  spin  gaps  are  shown                  [1]  E.   Dagotto   et   al.,   Phys.   Rev.   B   45   10741   (1992);
+in Fig. 4(a-c).  Results for ladders and cylinders are sim-                           S. Sorella et al., Phys. Rev. Lett. 88, 117002 (2002).
+ilar  although  the  hole  pair  binding  is  much  stronger  in                  [2]  J.  Zaanen  and  O.  Gunnarsson,  Phys.  Rev.  B40,  7391
+cylinders where hole pairs are preferably formed on cross-                            (1989);   D.  Poilblanc  and  T.M.  Rice,  Phys.  Rev.  B39
+sectional plaquettes (periodic rungs) rather than on “sur-                            9749 (1989); H.J. Schulz, Phys. Rev. Lett. 64, 1445-1448
+face”  plaquettes.    Generically  we  found  that  the  pair                         (1990).
+binding  energy  is  larger  than  the  spin  gap  of  the  un-                   [3]  E. Dagotto and T.M. Rice, Science 271, 618 (1996).
+doped (Heisenberg) system (0.190J for the 4 × L ladder).                          [4]  E. Dagotto, J. Riera, and D.J. Scalapino,  Phys. Rev. B,
+                                                                                      45, 5744 (1992).
+Therefore, the lowest triplet state in the 2-hole doped (or                       [5]  C. A. Hayward et al., Phys. Rev. Lett. 75, 926 (1995).
+very lightly doped) 4-leg ladder is similar to a Heisenberg                       [6]  D. Poilblanc, D.J. Scalapino, and W. Hanke, Phys. Rev.
+ladder  magnon,  which  may  be  (or  may  not  be)  loosely                          B, 52, 6796 (1995).
+bound  to  a  hole  pair  depending  whether  its  excitation                     [7]  M.  Troyer,  H.  Tsunetsugu,  and  T.M.  Rice,  Phys.  Rev.
+energy  is  lower or  equals  the  magnon energy  of  the  un-                        B,  53,   251  (1996);   C.A.  Hayward  and  D.  Poilblanc,
+doped system.  Since the data shown on Fig. 4(b) are not                              Phys. Rev. B, 53, 11721 (1996).
+fully  conclusive  we  have  computed  in  addition  the  hole                    [8]  S.R. White, R.M. Noack and D.J. Scalapino, Phys. Rev.
+pair  density-Sz  correlation  and  found,  as  for  the  2-leg                       Lett.  73,  886  (1994);  See  also  D.  Poilblanc,  H.  Tsunet-
+                                                                                      sugu and T.M. Rice, Phys. Rev. B 50 6511 (1994).
+ladder  case,  an  enhancement  of  the  spin  density  on  the                   [9]  C.  J.  Morningstar  and  M.  Weinstein,  Phys.  Rev.  D  54
+neighboring sites of the hole pair suggesting, indeed, the                            4131 (1996).
+existence of a hole pair-magnon boundstate.                                     [10]  For  applications  to  Hubbard models  see  E.  Altman  and
+   Upon  increasing  doping,  as  seen  from  the  hole-pair                          A. Auerbach, Phys. Rev. B 65, 104508 (2002).
+density-density correlation shown in Fig.5, we observe a                        [11]  A local basis change is also used in the Truncated Lanczos
+clear tendency of the hole pairs to align along the diago-                            Method;  see  e.g.  E.  Dagotto  et  al.,  Phys.  Rev.  B  58,
+nal (1, ±1) directions with a periodicity corresponding to                            12063 (1998); O. Chiappa, S. Capponi and D. Poilblanc,
+                                                                                      Phys. Rev. B 63, 115120 (2001).
+one pair every two plaquettes, a behavior also reported in                      [12]  Details and extensions will be reported elsewhere; S. Cap-
+DMRG calculations[16, 19] and reminiscent of the picture                              poni et al., in preparation.
+of diagonal stripes.  Note that real space charge correla-                      [13]  A similar procedure uses a decomposition  in terms of 2-
+tions are fully consistent with the power law decay found                             site rungs; see J. Riera, cond-mat/0207065.
+in the eﬀective charge boson model [19].                                        [14]  Within  the  2-site  rung  decoupling  scheme  no  hole  pair-
+   To conclude, the CORE method is a powerful method                                  magnon  boundstate  is  found  [13]  in  contradiction  with
+                                                                                      numerical  results  [18].  However  this  result  might  apply
+to  extract  eﬀective  hamiltonians  for  strongly  correlated                        to anisotropic ladders (J. Riera, private communication).
+models.  It allows numerical simulations on signiﬁcantly                        [15]  D and κ−1  are deﬁned as second order corrections of the
+larger systems than those available for the original model.                           GS  energy (per site)  to a phase twist  of  the PBC and  a
+We show that including charge and  spin bosonic excita-                               change of the particle density respectively; See e.g. [7].
+tions gives reliable results as long as the hole pair binding                   [16]  S.R. White and D.J. Scalapino, Phys. Rev. B 55, R14701
+energy  is  not  too  small.  Results  for  the  eﬀective  model                      (1997).
+of  the  2-leg  t-J  ladder  are  in  excellent  agreement  with                [17]  T.  Siller,  M.  Troyer,  T.M.  Rice  and  S.R.  White,  Phys.
+known analytic and numerical data.  Within the eﬀective                               Rev. B 63, 195106 (2001).
+                                                                                [18]  D. Poilblanc et al., Phys. Rev. B 62, R14633 (2000).
+models hole pair-triplet bound states form for both 2-leg                       [19]  T.  Siller,  M.  Troyer,  T.M.  Rice  and  S.R.  White,  Phys.
+and 4-leg ladders, a key feature to be compared to SO(5)                              Rev. B 65, 205109 (2002).
+phenomenological theories[20].  In  addition,  the  method                      [20]  S.C. Zhang, Science 275, 1089 (1997).

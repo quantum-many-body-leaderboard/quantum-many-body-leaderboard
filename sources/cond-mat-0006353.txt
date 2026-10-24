@@ -1,0 +1,600 @@
+Chapter 1
+
+STABILITY OF D-WAVE SUPERCONDUCTIVITY
+IN THE t−J MODEL
+
+
+Federico Becca, Luca Capriotti, and Sandro Sorella
+Istituto Nazionale per la Fisica della Materia (INFM) and International School for Advanced
+Studies (SISSA), Via Beirut 4, I-34013 Trieste, Italy
+
+
+Abstract          We use a recently developed technique, which allows to perform few Lanczos
+                 steps  on  a given  wavefunction  even  for  large  system  sizes,  to  investigate  the
+                 t−J  model in the physical parameter  region and to check the stability of the
+                 BCS d-wave variational  wavefunction [1].   Our statistical Lanczos algorithm,
+                 which  extends  and  improves  the  one  Lanczos  step  proposed  in  Ref.  [2],  has
+                 been extensively tested on the small L = 18 sites cluster where many Lanczos
+                 iterations  can  be  performed  exactly.    In  this  case,  at  doping  δ  ∼  10%  the
+                 BCS  wavefunction  represents  a  very  good  initial  state  to  achieve  extremely
+                 accurate  energies  and  correlation  functions  with  few  Lanczos  iterations.   For
+                 large  sizes  (L  ≤  98)  the  behavior  is  similar:   the  low-energy  d-wave  order
+                 parameter Pd  is weakly affected by a couple of Lanczos iterations in the low
+                 doping  δ  ∼  10%  region,  whereas  the energy  is considerably  lowered.   As  a
+                 further test of our calculation we have computed the variance of the Hamiltonian
+                 ∆Ep = (⟨ ˆH 2⟩ − ⟨ ˆH⟩2)/L2 on the BCS wavefunction with p = 0, 1, 2 Lanczos
+                 steps.  For large p, when the Lanczos algorithm converges to the exact ground
+                 state,  the variance  vanishes  exponentially  with increasing p.   The remarkable
+                 reduction  of  the  variance,  observed  for  p  =  1, 2  Lanczos  steps  even  for  the
+                 largest lattice size considered, suggests a smooth and rapid convergence to the
+                 exact ground state. These results support the existence of off-diagonal long-range
+                 d-wave superconducting order in the two-dimensional t−J model.
+
+1.         INTRODUCTION
+   One of the most important  question  raised after the discovery  of high-Tc
+superconductivity  is whether a simple model of strongly correlated electrons
+can capture the low-energy physics of real materials.  In particular it is still a very
+much debated issue whether a purely repulsive electronic interaction can give
+rise to a d-wave superconducting ground state by doping an antiferromagnetic
+Mott insulator with a small amount of holes. The simplest model that has been
+                                                     1
+2
+
+proposed  immediately  after the discovery  of high-Tc superconductors  is the
+t−J model [3, 4]
+                                (                      )
+                  ˆH =J ∑         ˆSi · ˆSj − 14 ˆniˆnj   −t   ∑      ˜c†i,σ˜cj,σ,               (1.1)
+
+                           ⟨i,j⟩                               ⟨i,j⟩,σ
+
+where ˜c†i,σ  =  ˆc†i,σ (1 − ˆni,¯σ),  ˆni  =  ∑σ ˆni,σ  is the electron density on site i,
+ˆSi  =  ∑σ,σ′ ˜c†i,στσ,σ′˜ci,σ′  is the spin operator andτσ,σ′  are Pauli matrices.  In
+the following we putt = 1.
+   After  many years  of  intense  numerical  and  theoretical  efforts  there  is no
+general consensus on the properties of this simple Hamiltonian and of the re-
+lated Hubbard model.  From the numerical point of view, the density matrix
+renormalization group (DMRG) [5] predicts that a charge density wave insta-
+bility [6], nowadays called striped-phase for its one dimensional character, is
+strongly  competing  with  pairing  and  superconductivity  [7].   Within  DMRG
+it  appears  therefore  difﬁcult  to  explain  Copper-Oxide  superconductors  with
+a simple one-band model,  especially  because,  in order to be consistent  with
+photoemission experiments [8], a negative next-nearest-neighbor hopping am-
+plitude t′ has to be included in the model.  In fact, the negativet′ suppresses
+even further superconductivity,  so that thet−J  model becomes unrealistic to
+describe  the  low-energy  physics  of high-Tc  superconductors.   However,  the
+DMRG results, though quite accurate, are not exact in two dimensions.  More-
+over, for technical reasons it is possible to consider only particular boundary
+conditions (open in one direction and periodic in the other),  which certainly
+make the DMRG calculation still far to be representative of the thermodynamic
+limit.
+   Quantum  Monte  Carlo  (QMC)  is  an  appealing  alternative  numerical  ap-
+proach.   This numerical method is still severely limited for two-dimensional
+fermionic systems by the well-known sign problem and is consequently biased
+by the initial guess of the ground state used to control this numerical instability
+[9, 10, 11].  However this technique has the important advantage to work very
+well with periodic boundary conditions since translation invariance can be ex-
+plicitly used to improve the efﬁciency of QMC algorithms.   In particular,  an
+approximate ground state can be obtained starting from a translation invariant
+wavefunction |ψG⟩ by applying exactly few powers of the Hamiltonian (− ˆH)p
+[12] or many approximate ones (by using for instance the Fixed-Node FN ap-
+proximation [9]).  However, within various QMC schemes the situation is still
+controversial.  First Heeb [2] and Khono [13] have found d-wave superconduc-
+tivity in a reasonable parameter range.  Later Shih and co-workers [14], using a
+very similar method, have excluded drastically this possibility.  The latter results
+were obtained within the monotonic-behavior assumption of the off-diagonal
+superconducting order parameter as a function of the numberp of Hamiltonian
+                           Stability of d-wave superconductivity in thet−J model      3
+
+powers applied to the initial wavefunction.  This assumption, although reason-
+able, is highly questionable.  By contrast, in a recent QMC work [15], a clear
+tendency to d-wave superconductivity in thet−J model was found. Moreover,
+very recently, an almost realistic phase diagram with a corresponding high-Tc
+d-wave superconducting  transition has been obtained for the Hubbard model
+within the Dynamical Mean Field Approximation  [16, 17].   Furthermore,  in
+the contest of the Hubbard model, also a weak-coupling renormalization group
+approach [18, 19] gives rise to a d-wave order parameter in a large region of
+the phase diagram.  The latter results strongly support the relevance of a single
+band model for the explanation of high-Tc superconductivity.
+
+2.         NUMERICAL METHOD
+   In this work we make a further attempt to clarify the controversial numerical
+ﬁndings  on  the  issue  of  d-wave  superconductivity  in  the t−J  model,  using
+the statistical few Lanczos-step technique (FLST), efﬁciently implemented by
+means of the stochastic reconﬁguration (SR) [10, 11]. Within the latter scheme
+all kind of correlation functions can be computed efﬁciently without any mixed
+average [11] approximation:  an enormous advantage compared to the FN or
+to the original SR technique [10, 11].  In these cases this bias can be removed
+at the price of adding a small ﬁeld coupled to the desired correlation function
+[15].  However, it turns out that it is extremely difﬁcult and computationally
+demanding to work in the small ﬁeld limit when unbiased correlation functions
+can be obtained. FLST is instead a very good compromise that solves efﬁciently
+this numerical problem of QMC methods.
+   The wavefunctions that we are able to sample statistically read:
+
+
+                                       (        p∑
+                              |ψp⟩ =     1 +       αk ˆHp)|ψG⟩                               (1.2)
+                                              k=1
+
+
+with  parameters  {αk}  for k  =  1, · · ·,p  minimizing  the  energy  expectation
+value ⟨ψp| ˆH|ψp⟩/⟨ψp|ψp⟩.  For anyp it is simple to show that the wavefunc-
+tion (1.2) corresponds exactly to applyp Lanczos step iterations to the initial
+wavefunction  |ψG⟩.   This wavefunction  is sampled  statistically  with the  SR
+technique,  by  using  in  the  reconﬁguration  scheme  the  ﬁrst p  powers  of  the
+Hamiltonian.  Unlike the previous method [10, 11] the reference wavefunction
+|ψf ⟩ is not evolved during the Markov iteration.  |ψf ⟩ is instead kept statistically
+equal to the initial wavefunction |ψG⟩ using the variational scheme proposed by
+Hellberg and Manousakis [20], which highly reduce the statistical ﬂuctuations
+related to the SR technique.  The equivalence of FLST to the standard Lanczos
+algorithm will be discussed in a forthcoming paper [21].
+4
+
+   The initial wavefunction to which FLST will be applied can be written as
+follows [1]:
+                              |ψG⟩ = |ψp=0⟩ =  ˆP0  ˆPN ˆJ|D⟩.                              (1.3)
+where |D⟩ is a BCS wavefunction, which is an exact eigenstate of the following
+Hamiltonian:
+
+                        ˆHBCS    =     ˆH0 + ∆BCS2     ( ˆ∆† +  ˆ∆)                             (1.4)
+
+                             ˆ∆†    =    ∑   Mi,j(˜c†i,↑˜c†j,↓ + ˜c†j,↑˜c†i,↓)                      (1.5)
+
+                                        ⟨i,j⟩
+
+where  ˆH0  =  ∑          k,σ˜ck,σ is the free electron tight binding nearest-neighbor
+                 k,σǫk ˜c†
+Hamiltonian, ǫk  = −2(coskx + cosky) −µ, µ is the free-electron chemical
+potential  and  ˆ∆†  creates  all possible  nearest-neighbor  singlet  bonds  with d-
+wave symmetry beingMi,j +1 or −1 if the bond ⟨i,j⟩ is in thex ory direction,
+respectively.    ˆPN  and  ˆP0  are  the projectors  over the subspaces  with a ﬁxed
+numberN of particles and no doubly occupied states. Finally the Jastrow factor()
+ˆJ  = exp    γ/2 ∑i,jv(i −j)ˆniˆnj           couples the holes via the density operators
+ˆni  and  contains  another  variational  parameter γ  ∼  1 which  scales  an  exact
+analytic form, obtained by approximating the holes with hard-core bosons at
+the same density, and applying the spin-wave theory to the correspondingXY
+model [22].  We note here that by performing a particle-hole transformation on
+the spin down ˜c†i,↓  →  (−1)i˜ci,↓, the ground state of the BCS Hamiltonian is
+just a Slater-determinant withN  = L particles [23].  This is the reason why
+this variational wavefunction can be considered of the generic Jastrow-Slater
+form, a standard variational wavefunction used in QMC. Using the particle-hole
+transformation, it is also possible to control exactly the spurious ﬁnite system
+divergences related to the nodes of the d-wave order parameter.
+
+3.         NUMERICAL TESTS
+   In this section we show the accuracy of FLST applied to the BCS wavefunc-
+tion (1.3) on a small 18-site cluster, where exact results are available.
+   Our main task is to compute the order parameter at ﬁnite system size
+
+                                 Pd =  1L⟨ψN+2p      | ˆ∆†|ψNp  ⟩,                                   (1.6)
+
+where |ψNp  ⟩ and |ψN+2p      ⟩ are the states withN andN +2 particles, respectively.
+IfPd is ﬁnite in the thermodynamic limit this necessarily implies off-diagonal
+long-range order in the ground state.  Following Ref. [15], it is convenient with
+an approximate technique to calculate a short-range quantity likePd, instead
+                            Stability of d-wave superconductivity in thet−J model      5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 1.1    Ground-state energy per site E0/L and d-wave order parameter Pd as a function
+of  the  variance  for  N   =  16,  L  =  18,  J  =  0.4:   full  dots  (optimal  ∆BCS),  empty  dots
+(∆BCS  → 0). Dashed lines are quadratic ﬁts of the estimates with p = 0, 1, 2.
+
+of the more conventional long-range expectation value ⟨ψNp  | ˆ∆ ˆ∆†|ψNp  ⟩/L2. In
+Table 1.1 we show a comparison between FLST and the exact results for 18
+and 16 electrons atJ = 0.4.
+   In Table 1.2 we showPd as a function of the number of Lanczos step iterations
+for the 18-site cluster atJ  = 0.4.  In the same Table we have computed also
+the  variance  ∆Ep  =  (⟨ψp| ˆH2|ψp⟩ − ⟨ψp| ˆH|ψp⟩2)/L2,  the  overlap  squared
+Zp  =  |⟨ψp|ψ0⟩|2  of the FLST wavefunction with the true ground state |ψ0⟩,
+and the average sign of the FLST wavefunction:
+
+                        ⟨Sp⟩ = ∑⟨x|ψ0⟩2Sgn (⟨x|ψp⟩⟨x|ψ0⟩) ,                      (1.7)
+                                    x
+where  |x⟩  denotes  conﬁgurations  with  deﬁnite  electron  positions  and  spins.
+For an exact calculation, namelyp>> 1, bothZp → 1 andSp → 1, whereas
+6
+
+N     ∆BCS  p  E0/L (FLST)  Pd (FLST)  E0/L (Exact)  Pd (Exact)
+
+18      0.55      1       -0.4765(1)                                 -0.47668
+18      0.55      2       -0.4775(1)                                 -0.47749
+16      0.20      1       -0.6541(1)        0.1074(4)         -0.65420          0.10730
+16      0.55      2       -0.6583(1)         0.122(1)          -0.65826          0.12135
+
+
+Table 1.1    Comparison between the estimates of the ground-state energy per site E0/L and of
+the d-wave order parameter Pd obtained with the exact and the statistical (FLST) application of
+p Lanczos steps on the variational wavefunction of Eq. (1.3). L = 18, N  = 16, 18 and J = 0.4.
+
+
+
+∆Ep → 0.  The variance thus represents a very important tool to estimate the
+‘distance’  from the exact ground state when the latter one is not known.   In
+particular wheneverZp ≃ 1 the energy approaches the exact result linearly with
+the variance ∆Ep, allowing us to estimate the error in the variational energy.
+   This can be achieved by plotting the variational energies Ep as a function
+of  the  corresponding  variance  ∆Ep,  and  performing  a  very  stable  linear  or
+quadratic  ﬁt to the ∆Ep  =  0 exact limit (see Fig. 1.1).   Similar ﬁts can be
+attempted for correlation functions though, in this case, also a term ∝ √∆Ep
+is expected for ∆Ep → 0.  This term is however negligible for quantities like
+Pd that are averaged bulk correlation functions in a large system size (see the
+Appendix).   In practice even in the small 18-site  cluster the non-linear  term
+turns out to be negligible (see Fig. 1.1). We believe that, being the convergence
+of the Lanczos algorithm particularly well behaved and certainly unbiased, the
+variance extrapolation method is in this case particularly useful and reliable.
+However for bad initial wavefunction (e.g., randomly generated) or very large
+sizes the approach to zero of the variance may behave rather wildly, requiring
+many Lanczos steps to reach the regime where the extrapolation is possible.
+   As shown in Table 1.2 the quality of the variational BCS wavefunction (1.2)
+is exceptionally good, especially in the dopedN  = 16 case.  HereZp is larger
+than 0.9 even at the simplestp = 0 variational level, and is drastically improved
+with really few Lanczos step iterations.  Remarkable is also the behavior of the
+average signSp which measures directly the accuracy of the BCS wavefunction
+phases, without caring about the amplitudes.  In the undoped case the signs of
+the BCS wavefunction ⟨S0⟩ can be proven to be exact, i.e., ⟨S0⟩ = 1, having the
+BCS state the well-known Marshall signs, i.e., the phases of the exact ground
+state of Heisenberg model.  For the two-hole case, the BCS nodes change in
+a non trivial way.  Nevertheless, ⟨S0⟩ remains very close to 1 and it is much
+higher  than  the  average  sign  of  the  corresponding  Gutzwiller  wavefunction
+(∆BCS  → 0), also shown in the table for comparison.
+                               Stability of d-wave superconductivity in thet−J model      7
+
+
+
+
+
+
+
+
+
+
+
+N     ∆BCS  p       ⟨Sp⟩    Zp        ∆Ep ×L2   E0/L
+
+18      0.00       0     1.0000    0.6898         1.194         -0.43833
+16      0.00       0     0.9656    0.8306         1.174         -0.63847
+18      0.80       0     1.0000    0.8850         0.335         -0.46639
+18      0.80       1     1.0000    0.9915         0.042         -0.47662
+18      0.80       2     1.0000    0.9995         0.004         -0.47752
+18      0.80       3     1.0000    1.0000        0.0003        -0.47759
+18      0.80       4     1.0000    1.0000       0.00002       -0.47759
+18      0.80      ∞    1.0000    1.0000           0.0           -0.47759
+16      0.55       0     0.9891    0.9260         0.940         -0.64559
+16      0.55       1     0.9988    0.9814         0.191         -0.65638
+16      0.55       2     0.9999    0.9942         0.060         -0.65826
+16      0.55       3     1.0000    0.9983         0.018         -0.65882
+16      0.55       4     1.0000    0.9995         0.005         -0.65898
+16      0.55       5     1.0000    0.9999         0.002         -0.65902
+16      0.55       6     1.0000    0.9999        0.0005        -0.65904
+16      0.55       7     1.0000    1.0000        0.0001        -0.65904
+16      0.55      ∞    1.0000    1.0000           0.0           -0.65904
+
+
+Table 1.2    Average sign ⟨Sp⟩, overlap squared on the exact ground state Zp and variance times
+the volume squared ∆Ep × L2  obtained applying exactly p Lanczos steps on the variational
+wavefunction of Eq. (1.3). L = 18, N  = 16, 18 and J = 0.4.
+8
+
+   These results suggest that there is a tendency to d-wave BCS pairing in the
+t−J model at ∼ 10% doping andJ  ∼ 0.4, and that the BCS wavefunction is a
+particularly accurate wavefunction to describe the small and even zero doping
+region of thet−J model.
+4.         LARGER SIZE CALCULATIONS
+   Though  few  Lanczos  steps  may  appear  inadequate  for  large  system  size,
+this simple scheme is instead providing us very good variational energies up
+to L  ∼  100 sites in the t−J  model,  even when this variational  energies are
+compared with more complicated schemes like the FN. In order to show that
+the Lanczos scheme remains effective for larger sizes it is useful to consider
+ﬁrst a relevant case where a numerically exact solution is possible:  the zero
+doping  limit of the t−J  model,  i.e.,  the Heisenberg  model.   In Fig. 1.2 we
+plot the energy results calculated  for few Lanczos steps as a function of the
+variance.   The fact that the energy  is approaching  the exact result  smoothly
+with the variance  both  in the 50- and 98-site  clusters  (with a slightly  larger
+curvature  in  the  latter  case)  indicates  that  the  projected  BCS  wavefunction
+should  have  a substantially  large  overlap  squared Zp  with the  exact  ground
+state of the Heisenberg model even on these large system sizes.  This is also
+conﬁrmed  by  the  behavior  of  the  square  order  parameter  (Fig.  1.3),  which
+is  considerably  improved  by  few  Lanczos  steps.   This  result  is  particularly
+important since the starting BCS wavefunction has not antiferromagnetic long-
+range order, whereas the two-dimensional Heisenberg model is widely believed
+to be antiferromagnetically ordered.
+   The above  test  represents  also  a  further  strong  evidence  that  the ground-
+state  wavefunction  of  the  Heisenberg  model  is  smoothly  connected  to  a  d-
+wave BCS superconducting wavefunction.  This circumstance represents a very
+interesting  numerical  fact that clearly  supports  the experimental  observation
+of high-Tc  d-wave  superconductivity  coming  just  upon  a small  doping  of  a
+quantum antiferromagnet.
+   Within the Lanczos approximate states |ψp⟩ (p = 0, 1, 2) acting on the best
+variational BCS wavefunction, we have performed a ﬁnite-size scaling of the
+order  parameter Pd  as  deﬁned  in  Eq.  (1.6),  at  a  ﬁxed  doping δ  =  13.3%
+(corresponding toN  = 84 on the largest sizeL = 98).  SincePd is computed
+between two states withN andN +2 particle numbers, we assume that it refers
+to the intermediate dopingδ = 1 − (N + 1)/L.  For smaller sizes the doping
+δ  = 13.3% is not possible and we have interpolated linearly Pd between the
+two ﬁllings closest to this doping.  The main results of this paper is then shown
+in the Fig. 1.4. Here the size scaling forp = 0, 1, 2 Lanczos steps and for their
+zero-variance extrapolation clearly indicates a ﬁnitePd in the thermodynamic
+limit.  The stability of the BCS variational wavefunction is evident from this
+                            Stability of d-wave superconductivity in thet−J model      9
+
+
+
+
+
+                -1.14
+
+
+                -1.15
+
+
+                -1.16
+                                                                     L=18
+                -1.17
+                                                                     L=50
+
+                -1.18                                               L=98
+
+
+
+                -1.19
+
+
+                   0.000                             0.001                             0.002
+                                               Variance
+
+
+
+Figure 1.2    Energy per site of the ﬁnite-size Heisenberg model.  Comparison of exact results
+(indicated by arrows) and the approximate p = 0, 1, 2 Lanczos step iterations over the projected
+d-wave wavefunction.  Continuous lines are quadratic ﬁt of the data.
+
+
+ﬁgure: Pd remains much larger than the corresponding value of the Gutzwiller
+(∆BCS  → 0) metallic state.  Instead, as shown in Fig. 1.5 and similarly to the
+undoped case, the energy is very much lowered by FLST, suggesting that the
+method remains effective even for large sizes and ﬁnite doping.
+
+5.         CONCLUSIONS
+   In conclusion we have provided evidences in favor of the stability of d-wave
+pairing  correlations  in  the t−J  model.   Our  result  disagrees  with  a  recent
+QMC  calculation  [14],  for  which,  however,  the  self-consistent  assumption
+mentioned  in  the  introduction  leads  to  a  very  poor,  high-energy  variational
+state.   Furthermore,  also the DMRG results  provide  a qualitatively  different
+scenario, namely that stripes suppress d-wave superconductivity [7].  In order
+to clarify this disagreement, we have performed a simulation atJ  = 0.4 for a
+cluster withL = 6 × 12, 8 holes, and open boundary conditions on the long
+direction,  as usually done within DMRG. Our accuracy is in this case worse
+than with periodic  boundary  condition,  especially  for quantities  that are not
+bulk average correlation functions (see the Appendix).  ForPd instead we have
+found  that,  even  at  the  simplest  variational  level  open  boundary  conditions
+strongly suppressPd by more than 30%, much more than the difference found
+10
+
+
+
+
+
+
+
+
+             0.50
+
+                                0.5
+             0.45               0.4
+                                0.3       Exact
+                                0.2           BCS-dw
+             0.40               0.1
+                                0.00.0    0.1     0.2    0.3
+
+
+                                                 1/2
+             0.35                            1/L
+                                                                        L=18
+                                                                        L=50
+             0.30                                                       L=98
+
+
+
+             0.25
+                0.000    0.001     0.002     0.003     0.004     0.005     0.006
+                                          Variance
+
+
+Figure 1.3   Order parameterm = √S(π, π)/L in the ﬁnite-size Heisenberg model (S(π, π)
+being the spin isotropic antiferromagnetic structure factor).  Comparison of exact results (in-
+dicated by arrows) and the approximatep = 0, 1, 2 Lanczos step iterations over the projected
+d-wave wavefunction.  Continuous lines are quadratic ﬁt of the data.  Inset:  ﬁnite-size scaling
+with the variational (BCS d-wave) wavefunction and with thevariance extrapolated one.
+
+in Fig. (1.4). Thus we ﬁnd that boundary conditions play a very important role
+and may strongly destabilize the uniform BCS d-wave ground state, as obtained
+within DMRG. This is consistent with experimental ﬁndings [24],  showing
+that any small asymmetry in the CuO planes, acting in our point of view as
+a distorted boundary condition, may enhance the tendency tostripe formation
+and then suppressing superconductivity.  Our results instead support the recent
+numerical works [16, 17, 18, 19], indicating that d-wave superconductivity can
+be obtained in a one band model with repulsive electron interaction.
+
+Appendix:  Variance estimate of the error on bulk correlation
+functions
+   In this Appendix we estimate the error on correlation functions assuming
+that the ground state|ψ0⟩ is approximated with the wavefunction|ψp⟩:
+
+                                   |ψ0⟩ = |ψp⟩ +ǫp|ψ′⟩                              (1.A.1)
+
+where ⟨ψp|ψp⟩ = ⟨ψ′|ψ′⟩ = 1, and |ψ′⟩ represents a normalized wavefunction
+orthogonal to the exact one,⟨ψ0|ψ′⟩ = 0.  We restrict our analysis to thermo-
+                           Stability of d-wave superconductivity in thet−J model       11
+
+              0.20
+
+              0.15              δ=13.3%
+                                 J/t=0.4
+
+              0.10
+
+
+                                                                       VMC
+              0.05                                                     1 LS+VMC
+                                                                       2 LS+VMC
+                                                                       Variance ext
+                                                                       Gutzwiller
+              0.000.00          0.05        0.10        0.15        0.20         0.25
+
+                                                    1/L1/2
+
+
+
+Figure 1.4   Superconducting d-wave order parameterPd in the t−J model as deﬁned in the
+text in Eq. (1.6). These results were obtained starting by the variational wavefunction (triangles)
+deﬁned in Eq. (1.3) and by applying to it one (squares) or two (dots) Lanczos steps. Black dots
+are obtained by quadratic extrapolation to the zero variance exact limit in order to estimate the
+size dependent error of the approximate variational calculations. The stars refer to the Gutzwiller
+wavefunction with∆BCS → 0 and γ = 1 in Eq. (1.3). Continuous lines are quadratic ﬁt of the
+data.
+
+dynamically averaged correlation functionsˆO, the ones which can be written
+as a bulk average of local operatorsˆOi:  ˆO = ∑i  ˆOi/L. This class of operators
+includes for instance the average kinetic or potential energy or the spin-spin
+correlation function at a given distanced, namely  ˆOi =  ˆSi · ˆSi+d.  If we use
+periodic boundary conditions the expectation value ofˆOi on a state with given
+momentum does not depend oni and the bulk average does not represents an
+approximation
+                              ⟨ψ0| ˆOi|ψ0⟩
+                                ⟨ψ0|ψ0⟩    = ⟨ψ0| ˆO|ψ0⟩⟨ψ0|ψ0⟩   =C.                       (1.A.2)
+We show here that the expectation value of bulk-averaged operators  ˆO on the
+approximate state|ψp⟩ satisfy the following relation:
+
+                            ⟨ψp| ˆO|ψp⟩ =C +O(ǫ2p,ǫp/√L),                      (1.A.3)
+
+thus  implying  that  for  large  enough  size  the  expectation  value  (1.A.3)  ap-
+proaches  the  exact  correlation  functionC  linearly  with  the  variance.   The
+12
+
+
+                              -0.63
+
+                                         J=0.4
+                              -0.64
+
+
+
+                              -0.65
+
+
+
+                              -0.66                98 Sites 86 electrons
+                                                    50 Sites 44 electrons
+
+
+                                   0.000                0.001
+                                                   Variance
+
+
+Figure 1.5    Energy per site of the t − J model for 44 electrons on 50 sites (triangles) and 86
+electrons on 98 sites (squares), J  = 0.4, for the approximate p = 0, 1, 2 Lanczos step iterations
+over the projected d-wave wavefunction Eq. (1.3). Continuous lines are quadratic ﬁt of the data.
+
+
+validity  of  the  above  statement  is  very  simple  to  show  under  very  general
+grounds.  In fact by deﬁnition:
+
+                   ⟨ψp| ˆO|ψp⟩ =C + 2ǫp⟨ψ′| ˆO|ψ0⟩ +ǫ2p⟨ψ′| ˆO|ψ′⟩.            (1.A.4)
+
+The term proportional toǫp in the above equation can be easily bounded by use
+of the Schwartz inequality:
+
+        |⟨ψ′| ˆO|ψ0⟩|2 = |⟨ψ′| ˆO −C|ψ0⟩|2 ≤ ⟨ψ0|( ˆO −C)2|ψ0⟩.           (1.A.5)
+
+The ﬁnal term in the latter inequality can be estimated under the general assump-
+tion that correlation functionsC(d) = ⟨ψ0|( ˆOi −C)( ˆOi+d −C)|ψ0⟩/⟨ψ0|ψ0⟩
+decay sufﬁciently  fast with the distance  |d|,  as a consequence  of the cluster
+property:
+                       ⟨ψ0|( ˆO −C)2|ψ0⟩ = (1 +ǫ2p) 1              ∑C(d).
+                                                                L    d
+
+This concludes the proof of the statement of this Appendix, provided ∑dC(d)
+is ﬁnite forL → ∞.
+                         Stability of d-wave superconductivity in thet−J model       13
+Acknowledgments
+
+   This work was partially supported by MURST (COFIN99) and INFM. Useful discussions
+with T.M. Rice, M. Troyer, C. di Castro, A. Parola, M. Calandra, and M. Capone are gratefully
+acknowledged.
+
+References
+
+ [1]  C. Gros, Phys. Rev. B 38, 931 (1988).
+ [2]  E.S. Heeb and T.M. Rice, Europhys. Lett. 27, 673 (1994).
+ [3]  G.  Baskaran,  Z.  Zou,  and  P.W. Anderson,  Solid  State  Comm.  63,  973
+      (1987).
+ [4]  F.C. Zhang and T.M. Rice, Phys. Rev. B 37, 3759 (1988).
+ [5]  S.R. White, Phys. Rev. Lett. 69, 2863 (1992).
+ [6]  S.R. White and D. Scalapino, Phys. Rev. Lett. 80, 1272 (1998).
+ [7]  S.R. White and D. Scalapino, Phys. Rev. B 60, 753 (1999); S.R. White
+      and D. Scalapino, e-print cond-mat/0006071.
+ [8]  D.S. Dessau, Z.X. Shen, D.M. King, D.S. Marshall, L.W. Lombardo, P.H.
+      Dickinson, A.G. Loeser, J. Di Carlo, C.H. Park, A. Kapitulnik, and W.E.
+      Spicer, Phys. Rev. Lett. 71, 2781 (1993); D.S. Marshall, D.S. Dessau, A.G.
+      Loeser, C.H. Park, A.Y. Matsuura, J.N. Eckstein, I. Bosovic, P. Fournier,
+      A.  Kapitulnik,  W.E. Spicer,  and  Z.X.  Shen,  Phys.  Rev.  Lett.  76,  4841
+      (1996).
+ [9]  H.J.M.  van  Bemmel,  D.F.B.  ten  Haaf,  W.  van  Saarloos,  J.M.J.  van
+      Leeuwen, and G. An, Phys. Rev. Lett. 72, 2442 (1994); D.F.B. ten Haaf,
+      H.J.M. van  Bemmel, J.M.J.  van  Leeuwen,  W. van  Saarloos,  and  D.M.
+      Ceperley, Phys. Rev B 51, 13039 (1995).
+[10]  S. Sorella, Phys. Rev. Lett. 80, 4558 (1998).
+[11]  S. Sorella and L. Capriotti, Phys. Rev. B 61, 2599 (2000).
+[12]  Y.C. Chen and T.K. Lee, Phys. Rev. B 51, 6723 (1995).
+[13]  M. Kohno, Phys. Rev. B 55, 1435 (1997).
+[14]  C.T. Shih, Y.L. Chen, and T.K. Lee, Phys. Rev. B 57, 627 (1998).
+[15]  M. Calandra and S. Sorella, Phys. Rev. B 61, 11894 (2000).
+[16]  A.L. Lichtenstein and M.I. Katsnelson, e-print cond-mat/9911320.
+[17]  Th.  Maier,   M.  Jarrell,   Th.   Pruschke,   and   J.   Keller,   e-print   cond-
+      mat/0002352.
+[18]  N. Furukawa, T.M. Rice, and M. Salmhofer,  Phys. Rev. Lett. 81, 3195
+      (1998).
+[19]  C.J. Halboth and W. Metzner, Phys. Rev. B 61, 7364 (2000).
+14
+
+[20]  C.S. Hellberg and E. Manousakis, Phys. Rev. B 61, 11787 (2000).
+[21]  S. Sorella, in preparation.
+[22]  F. Franjic and S. Sorella, Mod. Phys. Lett. B 10, 873 (1996).
+[23]  H. Yokoyama and H. Shiba, J. Phys. Soc. Jpn. 57, 2482 (1988).
+[24]  J. M. Tranquada, B.J. Sternlieb, J.D. Axe, Y. Nakamura, and S. Uchida,
+      Nature 375, 561 (1995).

@@ -1,0 +1,261 @@
+                              Superconductivity  in  the two-dimensional  t-J  model
+
+               S. Sorella,1 G.B. Martins,2 F. Becca,3 C. Gazza,4 L. Capriotti,5 A. Parola,6 and E. Dagotto2
+                           1  Istituto  Nazionale per  la Fisica della Materia,  and SISSA, I-34014 Trieste,  Italy
+     2  National  High Magnetic  Field Lab and Department  of  Physics,  Florida State  University,  Tallahassee,  Florida 32306
+                     3  Institut  de Physique Th´eorique,  Universit´e  de Lausanne,  CH-1015 Lausanne,  Switzerland
+                     4  Instituto  de Fisica Rosario  (CONICET) and Universidad Nacional  de Rosario,  Argentina
+                5  Istituto  Nazionale per la Fisica della Materia,  Unit`a di Ricerca di  Firenze,  I-50125 Firenze,  Italy
+ 6  Istituto  Nazionale per la Fisica della Materia and Dipartimento  di Scienze,  Universit`a  dell’Insubria, I-22100  Como, Italy
+                                                                 (October 24, 2018)
+                 Using computational  techniques, it  is shown  that  pairing is  a robust  property of hole  doped anti-
+                ferromagnetic  (AF)  insulators.  In  one  dimension  (1D)  and  for  two-leg  ladder  systems,  a  BCS-like
+                variational  wave  function  with  long-bond  spin-singlets  and  a  Jastrow  factor  provides  an  accurate
+                representation of the ground state of the t-J model, even though strong quantum ﬂuctuations destroy
+                the  oﬀ-diagonal  superconducting  (SC)  long-range  order  in  this  case.   However,  in  two  dimensions
+                (2D) it is argued – and numerically conﬁrmed using several techniques, especially  quantum Monte
+                Carlo (QMC) – that quantum ﬂuctuations are not strong enough to suppress superconductivity.
+
+                74.20.Mn,  71.10.Fd, 71.10.Pm,  71.27.+a
+
+   The  nature  of  high  temperature  superconductors  re-                     proach,  it  is  possible  to  further  improve  the  variational
+mains an important unsolved problem in condensed mat-                           and  FN  accuracy  by  applying  a  few  (p  ≤  2)  Lanczos
+ter physics.  Strong electronic correlations are widely be-                     steps  to  the  variational  (p  =  0)  wave  function  |ΨV ⟩,
+lieved  to  be  crucial  for  the  understanding  of  these  ma-                |Ψp⟩  =  (1 + ∑pk=1 αkHk)|ΨV ⟩  [6].   Non-variational  es-
+terials.   Among  the  several  proposed  theories  are  those                  timates  of  energy  and  correlation functions  can  also  be
+where antiferromagnetism induces pairing in the  dx2−y2                         extracted with the variance-extrapolation method [6].
+channel [1].  These approaches include the following two                           Our BCS variational wave function is deﬁned as
+classes:   (i)  theories  based  on  Resonant  Valence  Bond                              |ΨV ⟩ = PN PGJ exp(∑fi,jc†
+(RVB) wave functions, with electrons paired in long spin                                                                        i,↑c†j,↓)|0⟩,             (2)
+singlets in all possible arrangements [2,3], and (ii) theo-                                                           i,j
+ries based on two-hole dx2−y2  bound states at inﬁnitesi-                       where PN  is the projector onto the subspace of N  parti-
+mal doping, formed to minimize the damage of individual                         cles,  PG  is  the  Gutzwiller  projector, which  forbids  dou-
+holes to the AF order parameter, which condense at ﬁnite                        bly  occupied sites,  and J  = exp(∑i,j vi,jhihj) is a  Jas-
+pair  density  into  a  superconductor [4].  However, recent                    trow factor,  deﬁned  in  terms  of  the  hole  density  at  site
+density  matrix  renormalization group (DMRG)  calcula-                         i,  with  hi  =  (1 − ni↑)(1 − ni↓),  and  vi,j  being  varia-
+tions  have  seriously  questioned  these  approaches  since                    tional parameters.  The Fourier transform fk of the pair-
+non-SC striped ground states were reported for realistic                        ing  amplitude,  fi,j,  satisﬁes  [3]:   fk   =  ∆k/(ǫk  − µ +
+couplings  and densities  in the  t-J  model  [5].  Clearly  to                 √(ǫk − µ)2 + ∆2k),  where  ǫk  is  the  free  electron  disper-
+make progress in the understanding of copper oxides, the                        sion,  µ  is  the  chemical  potential,  and  ∆k  is  the  BCS
+2D t-J  model ground state must be fully understood, to                         SC  gap  function.    In  particular,  it  is  known  that  for
+distinguish among the many proposals.                                           square lattices and periodic boundary conditions (PBC),
+   In  this  paper,  using  a  variety  of  powerful  numerical                 the  most  relevant  contribution  to  ∆k  has  dx2−y2  sym-
+techniques,  the  properties  of  the  t-J  model  are  investi-                metry,  namely  ∆k  =  ∆(cos kx  − cos ky)  [3].    For  lad-
+gated.  Our main result is that in the realistic regime of                      ders,  ∆k  =  ∆x cos kx  + ∆y cos ky  was  used  (the  opti-
+couplings the 2D t-J model supports a dx2−y2 SC ground                          mized  ∆x  and  ∆y  have  opposite  signs),  whereas  in  the
+state, conﬁrming theories of Cu-oxides based on AF cor-                         1D  case  ∆k  =  ∆1 cos k + ∆3 cos 3k.   In  the  following,
+relations.  The t-J  model used here is                                         VMC  denotes  results  obtained  with  |ΨV ⟩,  VMC+pLS
+ H = J ∑(Si · Sj − 1                             ˜c†                            (with  p  =  1, 2)  those  obtained  with  |Ψp⟩,  and  FN  and
+                            4ninj) − t  ∑         i,σ˜cj,σ + H.c.,  (1)         FN+pLS  results  obtained  using  the  FN  approximation
+          ⟨i,j⟩                            ⟨i,j⟩σ                               with  |ΨV ⟩  and  |Ψp⟩  as  guiding  wave  function,  respec-
+where   ˜ci,σ=ci,σ (1 − ni,¯σ),    ⟨. . .⟩   stands   for   nearest-            tively.  Finally, 0 variance indicates results obtained with
+neighbor  sites,  and  ni  and  Si  are  the  electron  density                 the variance extrapolation method.
+and  spin  at  site  i,  respectively.   Our  study  focuses  on                   The  wave  function  Eq.  (2)  describes  preformed  elec-
+the  low  hole-doping  region  of  chains,  two-leg  ladders,                   tron pairs, expected to become SC within the RVB sce-
+and square clusters, using diﬀerent numerical techniques:                       nario  [2,3].   An  important  component  of  Eq.(2)  is  the
+QMC  (pure  variational  and  ﬁxed-node  (FN)  approxi-                         Gutzwiller  projector,   which  at  half-ﬁlling  freezes  the
+mations),  DMRG,  and  Lanczos.   Within  our  QMC  ap-                         charge  dynamics,  establishing  quasi-long-range  AF  or-
+
+
+                                                                            1
+der  [7].   This  shows  that  the  projected  BCS  wave  func-           studies.   It  seems  that  Gutzwiller  projecting  the  BCS
+tion describes magnetic regimes as well.  In addition, the                wave function allows for a quantitative description of AF
+SC order parameter is not simply related to the pair am-                  correlations in low-dimensional systems [11].
+plitude ∆, as in weak-coupling BCS. In fact, at low hole-                   Since undoped systems with short-range AF correla-
+doping,  it  is  proportional  to  the  number  of  holes,  and           tions  appear  properly  described  by  the  wave  function
+not  to  the  number  of  electrons.   This  result  is  natural          Eq. (2), consider now hole-doped AF systems where su-
+in  hole-pairing  theories  [4],  where  superconductivity  at            perconductivity  should  emerge  according to  some  the-
+half-ﬁlling  is  not  possible,  suggesting  that  such theories          ories  [1–4].    For  this  purpose  the  pairing  correlation
+maybe  similar  to  the  RVB  approach if  the  latter  incor-            function  ∆µ,νi   (r)=Si+r,µS†i,ν  was  studied.   HereS†i,µ=
+porates long-range singlets, and no-double occupancy is                   (˜c†
+enforced.  Moreover, it was observed that the variational                 the neighboring sites (i, i+ µ).  Oﬀ-diagonal long-rangei,↑˜c†i+µ,↓ − ˜c†i,↓˜c†i+µ,↑) creates an electron singlet pair in
+parameter  ∆  decreases  with  increasing  hole  doping  [8],             order (ODLRO) is implied ifPd = 2 limr→∞√|∆µ,ν
+suggesting a relation of this quantity with the pseudogap                 remains  ﬁnite  in  the  thermodynamic  limit.    In  1D,i   (r)|
+of underdoped cuprates [9].  In hole-pair based theories,                 ODLRO  is  suppressed  by  quantum  ﬂuctuations,  but
+a similar result is obtained with the hole binding energy,                ∆µ,ν
+ﬁnite even at half-ﬁlling, playing the role of ∆ [4].                     the wave function Eq.(2) can be assessed, the FN pro-i   (r) is ﬁnite at short distances and the accuracy of
+
+                                                                          viding exact results in 1D. As shown in Fig. 1c, the 1D
+
+                                                                          pairing correlations are indeed non-zero, although rapidly
+       1.6       E   /J = -0.6924             E   /J = -0.9506
+                  Gutz.                        VMC                        decaying with distance.  Our variational wave function
+       1.2       EVMC/J  = -0.69335           E   /J = -0.9530
+                                               Exact                      reproduces accurately the pairing correlations, butonly
+                 EExact/J = -0.69348                  q =ππ
+       0.8                                   2 Chains  y                  when a long-range Jastrow factor is included, otherwise
+           (a)    1 Chain              (b)      50x2
+       0.4        50 sites                                 qy=0           the tendency  to pairing is overemphasized.   The accu-
+
+       0.00          ππ/2  q      ππ   0          ππ/2        ππ          racy of the variational wave function is excellent also for
+                                                         qx               small 2D clusters, where the exact solution can be ob-
+        10        VMC - no Jastrow                   VMC        0.025
+                  VMC                                VMC + 1LS  0.020     tained by Lanczos. In this case the quantum ﬂuctuations
+       0.1        Exact (QMC)                        VMC + 2LS  0.015     appear not strong enough to destroy superconductivity,
+                                                     0 variance           see Fig. 1d.
+                                                     Exact      0.010
+      1E-3                                                      0.005
+                                             4 holes J/t=0.5
+      1E-5 (c)                         (d)     26 sites (2D)    0.000                                                                0.1
+               8 holes J/t=0.4                                  -0.005           0.28                   (a)                      (b)
+      1E-7       50-sites ring                                  -0.010
+          0     5     10    15    20  1        2       3       4                 0.26
+                   Distance                    Distance
+                                                                                 0.24
+  FIG. 1.  Sz(q) and energies for (a) 1D and (b) two-leg lad-                    0.22
+ders at zero hole doping. The numerically exact result (open
+circles) was obtained with the FN method.  Pairing correla-                      0.20
+tions for thet-J model in (c) 1D (absolute value) and (d) on                     0.18                                  DMRG
+a tilted 2D cluster for parallel (upper points) and orthogonal                                                         VMC           0.01
+(lower points) singlets.                                                         0.16                                  FN
+                                                                                                                       FN+1LS
+                                                                                 0.141      10      20     30  1                 10
+  To show that the wave function Eq. (2) accurately de-                                           r                       r
+scribes  not  just  a  SC  state  but  several  magnetic  sys-
+tems  as  well,  consider  the  half-ﬁlled  model  on  chains               FIG. 2.     (a)  Average  rung  hole  density  and  (b)  pairing
+and ladders.  In the ﬁrst case, the ground state is quasi-correlations for a 30×2 ladder, with 12 holes,J=t and OBC.
+antiferromagnetically ordered, with zero staggered mag-In (b) the distancer runs from the center of the ladder.
+netization and power-law spin correlations, while in the
+second case there is a ﬁnite spin gap in the spectrum,                      Now we consider doped two-leg ladders.  In Fig. 2, re-
+and exponentially decreasing spin correlations [10].  Thesults on a 30× 2 ladder with open boundary conditions
+spin structure factorSz(q) = 1/L∑i,jeiq(Ri−Rj)⟨Szi Szj⟩                   (OBC)  andJ=t are  presented  [12].   Our  results  show
+shows a cusp atq  = π in 1D, and a broad maximum                          that in this case the ground state is qualitatively well de-
+at q = (π, π) for two-leg ladders.  These features are re-                scribed by a projected BCS wave function with a density
+markably well reproduced by our variational wave func-Jastrow  term,  although  charge  oscillations  induced  by
+tion (Fig. 1a-b), which generates robust AF correlationshole-pair formation are strong in DMRG (here considered
+at short distances.   The state used is also surprisinglyas exact), but considerably weaker with VMC. However,
+accurate in energy compared to work based on a pure                       it is remarkable that the FN approach gives the correct
+Gutzwiller  wave  function  [3],  and  on  numerical  exactrung density proﬁle, showing that, even in a non-trivial
+
+
+                                                                      2
+system such as a two-leg ladder with hole pairs, the cor-             6×6 cluster FN does not provide qualitative changes in
+relation functions can be well-controlled by QMC meth-                the pairing correlations with respect to the VMC out-
+ods.  In  general,  it  is  observed that  whenever  the  VMC         come, and the FN+2LS and VMC+2LS correlations are
+method is not quantitatively accurate, the proper corre-              close.  In addition, them=1200 DMRG results lead to
+lation functions are obtained by applying the FN approx-              similar  correlations.   The  agreement among  the  many
+imation [13].  Therefore, this  QMC approach combining                methods suggests that the QMC method correctly repro-
+VMC and FN methods  represents a novel powerful tool                  duces ground state properties also in 2D systems, where
+to assess the reliability of a variational state [13], and to         the Jastrow term does not suppress the ODLRO present
+obtain accurate properties of t-J models for cuprates [14].           in the VMC, providing sizable long-range pairing.
+
+                                                                         The most natural boundaries without spurious symme-
+          (a)                      (b)      6x6  OBC    -22           try breaking are PBC, since the ﬁnite-cluster eigenstates
+        1     6x6 CBC  J/t=0.4
+                       6 holes              6x6  CBC                  have all the lattice symmetries. Therefore, here the sub-
+                    DMRG                    6x6  PBC    -23           sequent eﬀort building toward the main result of the pa-
+                    VMC                                               per focuses on PBC clusters.  For these boundary con-
+                    VMC+1LS
+      0.1           VMC+2LS                             -24           ditions, our improved variational calculation is accurate
+                    0 variance                                        and no sign of static stripes has been found at the cou-
+                    FN+2LS                                            plings investigated, although dynamical eﬀects are still
+                                                        -25           possible (see below). For 8 holes on the 8×8 lattice and
+     0.01                                                             J/t=0.4, our best variational energy per site (FN+2LS)
+                                            FN+2LS      -26           is E=−0.66672(6)t,  close  to  the  zero  variance extrap-
+                                            0 variance
+          0   1   2   3   4    5 0.000    0.001    0.002              olationE=−0.671(1)t, and much better than the pure
+                    r                      1/m                        variational calculation,E=−0.64266(8)t.
+
+  FIG. 3.    Pairing correlations (a) and total energy (b) for                     0.18
+various techniques on 6×6 lattices.m is the number of states                              J/t = 0.4              VMC
+in the DMRG approach. In (a) the distancer runs along the                          0.16                  0.6    FN+2LS
+center of the cylinder in the periodic direction.                                  0.14                  0.4
+
+                                                                                   0.12                  0.2       δ = 0.1875
+  After testing the numerical methods, let us now ad-                                                       0  π/4π/23π/4π
+dress the main subject of the paper, i.e.  the possibility                         0.10                             qx
+of SC in the 2Dt-J model. For this case no exact solution                          0.08        VMC
+(analytical or numerical) is available and, therefore, it is                                    FN+1LS            8x8  empty
+                                                                                   0.06        FN+2LS            242    full
+crucial to perform a careful computational analysis, com-                          0.04        0 variance
+paring the results of diﬀerent techniques. While DMRG
+allows for an almost exact ground-state characterization                             0.1          0.2          0.3          0.4          0.5
+for 1D systems and two-leg ladders, unfortunately in 2D                                                   δ
+the  results  appear  to  depend  on  the  boundary  condi-
+tions [13]. In order to compare the performances of QMC                  FIG. 4.     Superconducting  order  parameterPd  vs δ  at
+and DMRG (withm states kept), not only the standard                   J/t=0.4, using the techniques and cluster sizes shown.  In-
+PBC have been considered, for which reliable DMRG cal-set showsSz(q) at optimal density.
+culations on large 2D clusters presently are not possi-
+ble, but also the cylindrical boundary conditions (CBC),                 The main result of our paper is in Fig. 4, where the
+open (periodic) in thex (y) direction, and OBC in both                SC order parameterPd is shown for clusters of 64 sites
+directions.  To reduce the number of variational param-at several densities and 242 sites close to optimal dop-
+eters with CBC and OBC, the Jastrow factor was re-ing. These results, stable among the many methods used
+stricted to depend only on the distance between sites, i.e.,here and with weak size eﬀects, are indicative of a ro-
+vi,j = vi−j.  Site dependent chemical potentialsµi were               bust SC ground state away from half-ﬁlling in thet-J
+also used as additional variational parameters to considermodel.  In view of the success of the present QMC tech-
+possible non-uniform charge distributions.  To test theniques to  reproduce known results for chains,  ladders,
+stability of our variational wave function directly in 2D,and OBC 2D clusters,  it is reasonable to consider the
+a 6×6 lattice with 6 holes was considered.  In Fig. 3, adata in Fig. 4 as accurate.  In addition, the results are
+comparison among diﬀerent numerical techniques for sev-in good qualitative agreement with experimental tenden-
+eral boundary conditions is shown. The large-m extrap-                cies, including an optimal doping atδ∼0.18.  The spin
+olated energies of DMRG are remarkably similar to thosestructure factor  in Fig. 4  (inset) has a  broad peak at
+of QMC for CBC and OBC, but not for PBC where QMC(π,π), concomitant with exponentially decaying AF cor-
+produces substantially better energies. As in 1D, for therelations in real space.  A slight tendency toward spin
+
+
+                                                                   3
+incommensurability (SI) appears in the FN+2LS results                and unveils unexpected similarities between the Jastrow
+at optimal density.  At other densities δ, such as 0.25, a           corrected long-singlet RVB [2,3] and the hole-pair ap-
+similar mild tendency toward SI was also observed.  Then,            proaches [4], both producing closely related results.
+it is conceivable that the SC state may contain very weak               In conclusion, robust indications of superconductiv-
+dynamical stripe tendencies, as recently observed in the             ity have been found in the 2Dt-J model.  The results
+spin-fermion  model  [15].   Alternatively,  band  eﬀects  or        were obtained with an RVB wave function with Jastrow
+AF correlations across-holes [16] could be responsible for           factors, ﬂexible enough to reproduce DMRG results for
+the SI structure.  In this doping region, the charge struc-          chains and ladders and to produce tight hole pairs at low
+ture factor N(q) is found to be basically featureless.               hole density, in agreement with other techniques.  The
+  In  addition,  a  low-density  of  8  holes  on  a  tilted  242-   present eﬀort substantially improves on previous calcu-
+site  cluster  was  also  analyzed  to  investigate  coexistent      lations whered-wave superconductivity was predicted to
+antiferromagnetism and superconductivity, as seen in re-             exist at intermediateJ/t[3,4], and highlights the power
+cent experiments for underdoped YBCO [17].  The  pure                of the recently developed QMC methods [6].
+variational approach shows a small SC order parameter,                  This  work  was  partially  supported  by  MURST
+and a vanishing small AF order (Fig. 5).  Indeed, at half-           (COFIN  99),  NSF  (DMR-9814350),  the  NHMFL  In-
+ﬁlling,  the  projected  dx2−y2  BCS  state  underestimates          House Research Program, Fundaci´on Antorchas, and the
+the magnetic order since it has zero magnetization with              PICT grant N03-03833 (ANPCYT).
+a logarithmically divergent Sz(π, π) [7], and hole doping
+reduces further the AF correlations.  Remarkably, the FN
+approach  enhances  both  the  SC  and  AF  tendencies.   In
+particular,  the  spin correlations show robust long-range            [1] D.J. Scalapino, Phys. Rep.250, 331 (1995).
+order implying that antiferromagnetism survives a small               [2] P.W. Anderson, Science235, 1196 (1987).
+density  range  [18,19],  as  in  experiments  [17].   The  FN        [3] C. Groset al., Z. Phys. B68, 425 (1987); R. Valenti and
+energies (not shown) for 0,8,24 and 40 holes in 242 sites                 C. Gros, Phys. Rev. Lett.68, 2402 (1992).
+are clearly stable against phase separation, but are quite            [4] E. Dagotto, Rev. Mod. Phys.66, 763 (1994) and refer-
+close to it [20].                                                         ences therein.
+                                                                      [5] S.R. White and D.J. Scalapino, Phys. Rev. Lett.80, 1272
+                                      (b) hole-hole                       (1998).
+       0.10 (a)                    1                                  [6] S. Sorella, Phys. Rev. B64, 024512 (2001); E. Dagotto
+
+                                      0.003                               and A. Moreo, Phys. Rev. D31, 865 (1985).
+       0.05                                                           [7] L. Capriottiet al., unpublished.
+                                  0.1 0.002                           [8] A. Paramekantiet al., cond-mat/0101121.
+       0.00                           0.001                           [9] See for example T. Timusk and B. Statt, Rep. Prog.
+                                                         24               Phys.62, 61 (1999) and references therein.
+                                          -4-20        -20
+      -0.05                     0.01            2  4  -4             [10] E. Dagotto and T.M. Rice, Science271, 618 (1996).
+                                                                     [11] Eq.(2) is qualitatively diﬀerent from spin-gapped short-
+      -0.10          VMC                                                  range RVB states involving only nearest-neighbor sin-
+                     FN         1E-3                                      glets. This is evident fromfi,j, which is nonzero even
+      -0.15                                                               at large distances, allowing for AF correlations.
+            2   4  6   8  10        0   2  4  6  8  10               [12] For two-leg ladders, phase separation occurs at largerJ’s
+               Distance                  Distance
+                                                                          [S. Rommeret al., Phys. Rev. B61, 13424 (2000)].
+  FIG. 5.   Spin-spin correlations (a) and pairing (b) versus[13] F. Beccaet al., to appear in Phys. Rev. Lett. (2001).
+distance.  In the inset of (b) are the hole-hole correlations.       [14] The FN wave function is not a simple variational state,
+The cluster has 242 sites, 8 holes, andJ=0.4t.                            but is the ground state of a realistic FN Hamiltonian
+                                                                          [D.F.B. ten Haafet al., Phys. Rev. B51, 13039 (1995)].
+                                                                     [15] Recently, a mixture of dynamical stripes and supercon-
+  Moreover, hole-hole correlations display sharp peaksductivity has been identiﬁed in the spin-fermion model,
+at hole distance√2 (see Fig. 5), indicating the tendency                  see A. Moraghebi, S. Yunoki and A. Moreo, preprint.
+to have short-range hole-pairs in the low hole-density[16] G.B. Martinset al., Phys. Rev. Lett.84, 5844 (2000).
+ground state [4].  These pairs were identiﬁed in previ-[17] Y. Sidiset al., Phys. Rev. Lett.86, 4100 (2001). See also
+ous studies [21], illustrating the good agreement amongS. Onoet al., Phys. Rev. Lett.85, 638 (2000).
+diﬀerent techniques. Using the present QMC method the[18] M.  Calandra  and  S.  Sorella,  Phys.  Rev. B61,  11894
+PBC 6×6 two-holes ground state was also analyzed. The(2000).
+results (not shown) once again indicated a clear signal at[19] G.J. Chenet al., Phys. Rev. B42, 2662 (1990).
+distance√2, which always emerges upon Jastrow and/or[20] This result is in agreement with SO(5) predictions [S.C.
+FN improvement from an RVB wave function, where elec-Zhanget al., Phys. Rev. B60, 13070 (1999)].
+                                                                     [21] S.R. White and D.J. Scalapino, Phys. Rev. B55, 6504
+trons rather than holes naively appear to be paired. This(1997).
+result illustrates the ﬂexibility of the QMC approach,
+
+
+                                                                  4
