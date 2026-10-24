@@ -17,7 +17,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
 import { perSiteDivisor, perSiteLabel, boundLabel, stochasticExact, publishedMethod, methodLabel, methodDetail, BEST_CLASSES } from "./units.mjs";
-import { collect, classBest, shownBest, bestTagOf, lowestOf, noRecordKey, summarize, rowId } from "./summary.mjs";
+import { collect, classBest, shownBest, bestTagOf, lowestOf, noRecordKey, summarize, rowId, sameExactRows } from "./summary.mjs";
 import { THEMES, W } from "./chart.mjs";
 import { citeRef, codeRef, libraryRef, paperYear } from "./cite.mjs";
 import { sources } from "./enrich_sources.mjs";
@@ -909,13 +909,14 @@ function searchIndex(inst, name) {
 // no best.
 const classRef = (inst, r) => r.defect || !r.bound_type ? null : classBest(inst)[r.bound_type] ?? null;
 
-// Distance to the best of the row's class, per site: 0 on the best, the gap to it for an
+// Distance to the best of the row's class, per site: 0 on the best and on every
+// diagonalization that states the exact energy shown to its own printed digits, the gap to it for an
 // unflagged row of that class, n/a elsewhere. A row below the best (one the automatic flag
 // passes over, RULES.md 6.2) shows a negative distance. Classes are different claims and are
 // not measured against each other. The Table's opened row and the instance page use it.
 function distanceCell(r, inst) {
   const ref = classRef(inst, r);
-  if (r === ref) return "0";
+  if (r === ref || sameExactRows(inst).includes(r)) return "0";
   if (!ref) return '<span class="muted">n/a</span>';
   const f = perSiteDivisor(inst) ?? 1, decimals = quoteRow(ref, inst).decimals;
   if (r.energy < ref.energy) return esc(`−${gapAbove(r, ref, f, decimals).replace(/^\+/, "")}`);
@@ -923,18 +924,34 @@ function distanceCell(r, inst) {
 }
 
 // An instance's rows in the order the lists print them: by class (BOUND_ORDER), then energy.
-const byClass = inst => BOUND_ORDER.flatMap(b => inst.rows.filter(r => (r.bound_type ?? null) === b).sort((x, y) => x.energy - y.energy));
+// Diagonalizations that state the exact energy shown follow it, oldest first (RULES.md 6).
+const byClass = inst => {
+  const ex = classBest(inst).exact, same = sameExactRows(inst);
+  const at = r => same.includes(r) ? ex.energy : r.energy;
+  const order = r => r === ex ? -Infinity : yearCell(r) ?? Infinity;
+  return BOUND_ORDER.flatMap(b => inst.rows.filter(r => (r.bound_type ?? null) === b)
+    .sort((x, y) => at(x) - at(y) || (same.includes(x) && same.includes(y) ? order(x) - order(y) : 0) || x.energy - y.energy));
+};
+
+// The earliest of several diagonalizations that state the exact energy shown, null where
+// there is only one (RULES.md 6).
+const FIRST_TAG = '<span class="tag first" title="the earliest of the listed calculations of this exact energy">first</span>';
+function firstExact(inst) {
+  const same = sameExactRows(inst);
+  return same.length > 1 ? [...same].sort((a, b) => (yearCell(a) ?? Infinity) - (yearCell(b) ?? Infinity))[0] : null;
+}
 
 // Every row of the instance by class, the shown values marked, with sigma and the distance to
-// the best of the row's class. Var(E) and the V-score are on the instance page; the method detail
-// shows on hover.
+// the best of the row's class. A diagonalization that states the exact energy shown prints as it
+// does (a total rounded to fewer digits can round the other way per site). Var(E) and the
+// V-score are on the instance page; the method detail shows on hover.
 function allRows(inst) {
   const shown = shownBest(inst).length > 0;
   const rows = byClass(inst).map(r => {
     const ref = classRef(inst, r), isBest = r === ref;
     const { sigma } = perSite(r, inst);
     return `<tr id="${rowId(inst, r)}" class="${rowClass(inst, r)}">
-      <td class="record">${isBest || !ref ? bareEnergyCell(r, inst) : energyCell(r, inst, quoteRow(ref, inst).decimals)}${bestTag(inst, r)}</td>
+      <td class="record">${isBest || !ref ? bareEnergyCell(r, inst) : sameExactRows(inst).includes(r) ? bareEnergyCell(ref, inst) : energyCell(r, inst, quoteRow(ref, inst).decimals)}${bestTag(inst, r)}${r === firstExact(inst) ? FIRST_TAG : ""}</td>
       <td class="num">${distanceCell(r, inst)}</td>
       <td class="num">${sigma == null ? '<span class="muted">n/a</span>' : sigma.toExponential(1)}</td>
       <td><span class="badge">${boundLabel(r)}</span>${r.defect ? ` ${flagBadge(r)}` : ""}${isBelow(inst, r) ? ` ${belowBadge()}` : ""}</td>
@@ -1105,7 +1122,7 @@ function rowTable(rows, inst) {
     ].filter(Boolean).join(" ");
     const { sigma } = perSite(r, inst);
     return `<tr id="${rowId(inst, r)}" class="${rowClass(inst, r)}">
-      <td class="record">${bareEnergyCell(r, inst)}${bestTag(inst, r)}</td>
+      <td class="record">${bareEnergyCell(r, inst)}${bestTag(inst, r)}${r === firstExact(inst) ? FIRST_TAG : ""}</td>
       <td class="num">${distanceCell(r, inst)}</td>
       <td class="num">${sigma == null ? '<span class="muted">n/a</span>' : sigma.toExponential(1)}</td>
       <td class="num">${r.energy_variance == null ? '<span class="muted">n/a</span>' : r.energy_variance.toExponential(2)}</td>
@@ -1491,6 +1508,7 @@ td.record .num { font-weight: 600; color: var(--record); }
 .tag { white-space: nowrap; }
 .tag.tie { color: var(--muted); }
 .leaderboard td.kind { font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
+.tag.first { color: var(--ink2); border: 1px solid currentColor; padding: 0 0.25rem; }
 .badges { margin-top: 0.3rem; display: flex; flex-wrap: wrap; gap: 0.3rem; }
 .badge {
   font-size: 0.7rem; color: var(--ink2); border: 1px solid var(--grid);

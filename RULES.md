@@ -137,9 +137,17 @@ own best value.
   each other class is shown beside it, with its distance to it.
 - Among several exact rows the most precise is the exact energy shown. Exact rows are estimates of
   one number, so the lowest of them is not the best: exact diagonalization (no error bar)
-  comes before sign-problem-free QMC, and a smaller error bar comes before a larger one. Two
-  exact rows that disagree beyond their stated precision are a `defect` to raise on the row
-  (§11).
+  comes before sign-problem-free QMC, and a smaller error bar comes before a larger one.
+  Between diagonalizations, the one printed to more digits comes first. Two exact rows that
+  disagree beyond their stated precision are a `defect` to raise on the row (§11).
+- Every published calculation of the exact energy is a row (2026-10-24). A source that
+  diagonalized the cluster itself and printed the same energy as an earlier or later source
+  adds a row of its own; a source that quotes another source's value does not (§8). The rows
+  that state the exact energy shown to their own printed digits are listed beside it, and
+  where there are several the earliest listed is marked "first". Case:
+  `Heisenberg/square_40_P`, diagonalized in Richter, Schulenburg & Honecker, Lect. Notes
+  Phys. 645 (2004), Table 2.1, to seven decimals, and in Richter & Schulenburg, EPJB 73
+  (2010), Table 1, to eight; the 2010 row is the exact energy shown and the 2004 row is first.
 - Sector-resolved exact diagonalization is the exact energy only in the ground-state sector. A
   row such as `Exact Diagonalization 0.C1.A -1` states the lowest energy in one symmetry
   sector. That is the ground-state energy only if the sector is the ground state's. Case:
@@ -487,8 +495,9 @@ under the removal rules below.
 A row that duplicates another, or is not an energy of its instance, is removed, with the
 reason listed in `scripts/removals.mjs`. A row declared `exact` that independent
 recomputation places above the ground-state energy, by more than the precision it is printed
-to, is removed in the same way. The table carries one exact energy per instance, and a number
-that is not that energy states nothing an exact row may claim. The same holds below the
+to, is removed in the same way. The table carries one exact energy per instance, possibly
+printed by several sources (§6), and a number that is not that energy states nothing an exact
+row may claim. The same holds below the
 ground state where a per-site rounding was multiplied back to a total (case: the 4x4 Hubbard
 rows at half filling). The removal names the recomputation and the value that stands. Where
 no other exact row carries that value, QMBL's recomputed row does

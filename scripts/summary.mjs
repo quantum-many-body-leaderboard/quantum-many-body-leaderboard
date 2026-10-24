@@ -78,11 +78,23 @@ export function lowestOf(inst) {
 
 // The most precise eligible exact row: exact rows are estimates of one number, so precision
 // orders them first. Exact diagonalization (no error bar) outranks sign-problem-free QMC, and
-// a smaller error bar outranks a larger one; then the energy orders them. Two exact rows that
-// disagree beyond their stated precision are a defect to raise on the row.
+// a smaller error bar outranks a larger one; between diagonalizations, more printed digits
+// (a smaller `precision`, DATA.md) outrank fewer; then the energy orders them. Two exact rows
+// that disagree beyond their stated precision are a defect to raise on the row.
 export function exactRecordOf(inst) {
   return inst.rows.filter(exactEligible)
-    .sort((a, b) => (a.sigma ?? 0) - (b.sigma ?? 0) || a.energy - b.energy)[0] ?? null;
+    .sort((a, b) => (a.sigma ?? 0) - (b.sigma ?? 0) || (a.precision ?? 0) - (b.precision ?? 0) || a.energy - b.energy)[0] ?? null;
+}
+
+// The deterministic exact rows that state the exact energy shown to their printed digits: the
+// shown row itself and every other diagonalization of the instance that agrees with it within
+// the coarser of the two precisions (RULES.md 6). The site lists them beside it and
+// marks the earliest.
+export function sameExactRows(inst) {
+  const rec = exactRecordOf(inst);
+  if (!rec || rec.sigma != null) return [];
+  return inst.rows.filter(r => exactEligible(r) && r.sigma == null &&
+    Math.abs(r.energy - rec.energy) <= Math.max(r.precision ?? 0, rec.precision ?? 0) * (1 + 1e-9));
 }
 
 // Lowest unflagged energy that is not exact (variational, projected or extrapolated; an
