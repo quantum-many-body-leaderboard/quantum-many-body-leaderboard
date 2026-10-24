@@ -1,0 +1,92 @@
+name: About a row
+description: Correct a row, object to it, send its error bar or its cost, or comment on it.
+title: "[row] "
+labels: ["submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The pencil next to a row on [qmbl.org/instances](https://qmbl.org/instances/) opens
+        this form with the row filled in. An objection must be specific and technical;
+        [rules §10](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/blob/main/RULES.md#10-review-and-objections)
+        lists the admissible grounds. Rows are corrected in place and keep the finding
+        ([rules §11](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/blob/main/RULES.md#11-corrections)).
+
+  - type: input
+    id: row
+    attributes:
+      label: Row
+      description: The row's anchor id on qmbl.org/instances. The pencil fills it in.
+      placeholder: r-J1J2_square_100_P_0_5-1a2b3c4d
+    validations:
+      required: true
+
+  - type: input
+    id: instance
+    attributes:
+      label: Instance
+      description: The instance id as shown on qmbl.org or in `data/`.
+      placeholder: J1J2/square_100_P_0.5
+    validations:
+      required: true
+
+  - type: textarea
+    id: shown
+    attributes:
+      label: The row as QMBL shows it
+      description: The pencil fills this in. Leave it as it is.
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What this is about
+      options:
+        - the energy is wrong
+        - the error bar is wrong or missing
+        - the bound_type is wrong
+        - the method is wrong
+        - the source or attribution is wrong
+        - an objection (rules §10)
+        - what this row cost
+        - other
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What it should be
+      description: What is wrong and what it should be. For an error bar, give the value and how it was estimated. For a cost, give any of GPU-hours × device, parameter count, samples, iterations and wall-clock ([format](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/blob/main/DATA.md#what-a-number-cost-the-compute-block)).
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Where the source says so (optional)
+      description: Paper, and the table, figure or equation in it, for each number you give.
+      placeholder: "arXiv:2211.07749v2, Table II, row 4"
+
+  - type: dropdown
+    id: submitted_by
+    attributes:
+      label: Who made this submission (optional)
+      description: An AI system may submit under the same rules ([CONTRIBUTING.md](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/blob/main/CONTRIBUTING.md#ai-systems)). This is not a reason to reject it.
+      options:
+        - a person
+        - an AI system, checked by a person
+        - an AI system, not checked by a person
+
+  - type: input
+    id: system
+    attributes:
+      label: AI system (optional)
+      description: Model name and version, if an AI system made the submission.
+      placeholder: "model name, version"
+
+  - type: checkboxes
+    id: own_work
+    attributes:
+      label: Authorship
+      options:
+        - label: I am an author of the paper this row cites.

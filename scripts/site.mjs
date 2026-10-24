@@ -271,6 +271,25 @@ function codeHtml(row) {
   return `<span class="muted lib" title="${esc(`${l.more || l.shown.length > 1 ? "Libraries" : "Library"} the authors used: ${l.all}. They published no code of their own for this result.`)}">uses ${links}${l.more ? ` +${l.more}` : ""}</span>`;
 }
 
+// The pencil at the end of a row opens the "About a row" issue form
+// (.github/ISSUE_TEMPLATE/row-feedback.yml) with the row filled in. GitHub fills a form's text
+// fields from the URL but not its dropdowns, so the contributor picks what the issue is about.
+const PENCIL = `<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" d="M10.5 2.5l3 3-8 8H2.5v-3zM8.5 4.5l3 3"/></svg>`;
+function rowIssueUrl(r, inst) {
+  const id = rowId(inst, r), c = citeRef(r, cache);
+  const shown = [
+    `${perSiteLabel(inst)}: ${quoteRow(r, inst).text} (stored: ${r.energy}${r.sigma == null ? "" : ` ± ${r.sigma}`})`,
+    `bound type: ${boundLabel(r)}`,
+    `method: ${methodLabel(r)} (as published: ${publishedMethod(r)})`,
+    `source: ${c.text}${c.url ? ` ${c.url}` : ""}`,
+    `on qmbl.org: https://qmbl.org/instances/#${id}`,
+  ].join("\n");
+  const q = new URLSearchParams({ template: "row-feedback.yml", title: `[row] ${inst.instance_id}, ${methodLabel(r)}: `, row: id, instance: inst.instance_id, shown });
+  return `${REPO}/issues/new?${q}`;
+}
+const editCell = (r, inst) =>
+  `<td class="edit"><a href="${esc(rowIssueUrl(r, inst))}" title="Report a problem or comment on this row" aria-label="Report a problem or comment on this row">${PENCIL}</a></td>`;
+
 // What the instance page says about its own currency: when the newest number here was
 // published and, where the instance has a `coverage` entry (DATA.md), when its literature
 // was last checked, how, and what that check found.
@@ -886,12 +905,13 @@ function allRows(inst) {
       <td>${citeHtml(r)}</td>
       <td class="code">${codeHtml(r)}</td>
       <td class="num">${yearCell(r) ?? '<span class="muted">n/a</span>'}</td>
+      ${editCell(r, inst)}
     </tr>`;
   }).join("");
   return `${rec ? "" : `
     <p class="muted">No record: ${esc(noRecordReason(inst))}.</p>`}
-    <table class="next"><thead><tr><th>${perSiteLabel(inst)}</th><th>distance to record</th><th>&sigma;</th><th>bound type</th><th>method</th><th>source</th><th>code</th><th>year</th></tr></thead><tbody>${rows}</tbody></table>
-    <p class="links"><a href="${jsonUrl(inst)}">JSON</a></p>`;
+    <table class="next"><thead><tr><th>${perSiteLabel(inst)}</th><th>distance to record</th><th>&sigma;</th><th>bound type</th><th>method</th><th>source</th><th>code</th><th>year</th><th><span class="sr">comment</span></th></tr></thead><tbody>${rows}</tbody></table>
+    <p class="links"><a href="${jsonUrl(inst)}">JSON</a><a href="${REPO}/issues/new?template=new-result.yml&amp;instance=${encodeURIComponent(inst.instance_id)}">add a result</a></p>`;
 }
 
 // The Table's energy column: the record, or on an instance without one the lowest unflagged
@@ -1030,7 +1050,7 @@ reveal();
 // ---------------------------------------------------------------------- instance page
 function rowTable(rows, inst) {
   const head = `<thead><tr><th>${perSiteLabel(inst)}</th><th>distance to record</th><th>&sigma;</th><th>Var(E)</th><th>V-score</th>
-    <th>method</th><th>source</th><th>code</th><th>year</th></tr></thead>`;
+    <th>method</th><th>source</th><th>code</th><th>year</th><th><span class="sr">comment</span></th></tr></thead>`;
   const body = rows.map(r => {
     const rec = recordOf(inst) === r;
     const badges = [
@@ -1054,6 +1074,7 @@ function rowTable(rows, inst) {
       <td>${citeHtml(r)}</td>
       <td class="code">${codeHtml(r)}</td>
       <td class="num">${yearCell(r) ?? '<span class="muted">n/a</span>'}</td>
+      ${editCell(r, inst)}
     </tr>`;
   }).join("");
   return `<div class="scroll"><table class="rows">${head}<tbody>${body}</tbody></table></div>`;
@@ -1194,8 +1215,10 @@ function contributePage() {
   For a lattice model, give the Hamiltonian, cluster, boundaries, couplings and sector. For the
   homogeneous electron gas, give the dimension, cell, electron numbers, <code>rs</code> and twist
   (<a href="${RULES}#121-instance">rules &sect;12.1</a>). In both cases, give the paper that defines it.</li>
-  <li>If a number is wrong or attributed to the wrong paper, name the instance and what it
-  should be. Rows are corrected in place; git keeps the history.</li>
+  <li>To correct a row, send its error bar or its cost, or comment on it, open the row on the
+  <a href="/instances/">Table</a> page and click the pencil at its end. It opens the
+  <a href="${REPO}/issues/new?template=row-feedback.yml">about-a-row form</a> with the row filled in.
+  Rows are corrected in place; git keeps the history.</li>
   <li>If you know an error bar we could not find, tell us. ${b.rows} sampled energies on ${b.instances}
   instances are listed without one, because the source we read gives none. They rank like
   any other row; with an error bar, results that agree within it share a rank
@@ -1444,6 +1467,12 @@ tr.more p { margin: 0.4rem 0; font-size: 0.88rem; }
 tr.more p.links a { margin-right: 1rem; }
 table.next { width: auto; min-width: 60%; font-size: 0.85rem; margin: 0.4rem 0 0.6rem; }
 table.next th, table.next td { padding: 0.35rem 1.2rem 0.35rem 0; }
+/* The pencil opens the "About a row" issue form; quiet until the row is hovered. */
+td.edit { padding-right: 0; }
+td.edit a { color: var(--muted); opacity: 0.45; display: inline-block; line-height: 0; padding: 0.15rem; }
+tr:hover > td.edit a, td.edit a:focus-visible { opacity: 1; }
+td.edit a:hover { color: var(--accent); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 table.next tr.is-flagged td:first-child { box-shadow: inset 3px 0 0 var(--flag); }
 table.next tr.is-record td { background: color-mix(in srgb, var(--accent) 7%, transparent); }
 table.next tr.target > td, .rows tr:target > td {
