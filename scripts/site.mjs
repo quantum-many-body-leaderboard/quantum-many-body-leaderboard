@@ -924,22 +924,14 @@ function distanceCell(r, inst) {
 }
 
 // An instance's rows in the order the lists print them: by class (BOUND_ORDER), then energy.
-// Diagonalizations that state the exact energy shown follow it, oldest first (RULES.md 6).
+// The later diagonalizations that state the exact energy shown (the earliest, RULES.md 6)
+// follow it, oldest first.
 const byClass = inst => {
   const ex = classBest(inst).exact, same = sameExactRows(inst);
   const at = r => same.includes(r) ? ex.energy : r.energy;
-  const order = r => r === ex ? -Infinity : yearCell(r) ?? Infinity;
   return BOUND_ORDER.flatMap(b => inst.rows.filter(r => (r.bound_type ?? null) === b)
-    .sort((x, y) => at(x) - at(y) || (same.includes(x) && same.includes(y) ? order(x) - order(y) : 0) || x.energy - y.energy));
+    .sort((x, y) => at(x) - at(y) || (same.includes(x) && same.includes(y) ? same.indexOf(x) - same.indexOf(y) : 0) || x.energy - y.energy));
 };
-
-// The earliest of several diagonalizations that state the exact energy shown, null where
-// there is only one (RULES.md 6).
-const FIRST_TAG = '<span class="tag first" title="the earliest of the listed calculations of this exact energy">first</span>';
-function firstExact(inst) {
-  const same = sameExactRows(inst);
-  return same.length > 1 ? [...same].sort((a, b) => (yearCell(a) ?? Infinity) - (yearCell(b) ?? Infinity))[0] : null;
-}
 
 // Every row of the instance by class, the shown values marked, with sigma and the distance to
 // the best of the row's class. A diagonalization that states the exact energy shown prints as it
@@ -951,7 +943,7 @@ function allRows(inst) {
     const ref = classRef(inst, r), isBest = r === ref;
     const { sigma } = perSite(r, inst);
     return `<tr id="${rowId(inst, r)}" class="${rowClass(inst, r)}">
-      <td class="record">${isBest || !ref ? bareEnergyCell(r, inst) : sameExactRows(inst).includes(r) ? bareEnergyCell(ref, inst) : energyCell(r, inst, quoteRow(ref, inst).decimals)}${bestTag(inst, r)}${r === firstExact(inst) ? FIRST_TAG : ""}</td>
+      <td class="record">${isBest || !ref ? bareEnergyCell(r, inst) : sameExactRows(inst).includes(r) ? bareEnergyCell(ref, inst) : energyCell(r, inst, quoteRow(ref, inst).decimals)}${bestTag(inst, r)}</td>
       <td class="num">${distanceCell(r, inst)}</td>
       <td class="num">${sigma == null ? '<span class="muted">n/a</span>' : sigma.toExponential(1)}</td>
       <td><span class="badge">${boundLabel(r)}</span>${r.defect ? ` ${flagBadge(r)}` : ""}${isBelow(inst, r) ? ` ${belowBadge()}` : ""}</td>
@@ -1122,7 +1114,7 @@ function rowTable(rows, inst) {
     ].filter(Boolean).join(" ");
     const { sigma } = perSite(r, inst);
     return `<tr id="${rowId(inst, r)}" class="${rowClass(inst, r)}">
-      <td class="record">${bareEnergyCell(r, inst)}${bestTag(inst, r)}${r === firstExact(inst) ? FIRST_TAG : ""}</td>
+      <td class="record">${bareEnergyCell(r, inst)}${bestTag(inst, r)}</td>
       <td class="num">${distanceCell(r, inst)}</td>
       <td class="num">${sigma == null ? '<span class="muted">n/a</span>' : sigma.toExponential(1)}</td>
       <td class="num">${r.energy_variance == null ? '<span class="muted">n/a</span>' : r.energy_variance.toExponential(2)}</td>
@@ -1508,7 +1500,6 @@ td.record .num { font-weight: 600; color: var(--record); }
 .tag { white-space: nowrap; }
 .tag.tie { color: var(--muted); }
 .leaderboard td.kind { font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
-.tag.first { color: var(--ink2); border: 1px solid currentColor; padding: 0 0.25rem; }
 .badges { margin-top: 0.3rem; display: flex; flex-wrap: wrap; gap: 0.3rem; }
 .badge {
   font-size: 0.7rem; color: var(--ink2); border: 1px solid var(--grid);
