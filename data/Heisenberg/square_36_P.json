@@ -1071,7 +1071,7 @@
       }
     },
     {
-      "energy": -97.7575896,
+      "energy": -97.7575895972357,
       "sigma": null,
       "energy_variance": null,
       "dof": 36,
@@ -1095,7 +1095,21 @@
         "note": "Table 2.1 (p. 102), row N = 36, edge vectors (6, 0), (0, 6), column E0. The caption says the N = 36 results agree with Schulz et al. [55]; the stored ED energy -97.7575895972 is this value to its printed digits. | Spin-1/2 Heisenberg antiferromagnet H = J sum_<ij> S_i . S_j on the square lattice, J = 1, periodic boundaries on the finite lattice defined by the two edge vectors printed in the row (Betts construction, Sec. 2.4.1); E0 is the total singlet ground-state energy in S.S units, stored as the Pauli total 4 E0. Version read: publisher PDF (Springer, a scan), Table 2.1 on p. 102 read from the page image; identical to Table 1 of the arXiv text cond-mat/0412662. Peer review: a chapter of an edited lecture-notes volume, not a refereed journal.",
         "secondary_of": null
       },
-      "precision": 4.0032e-7
+      "precision": 4.0032e-7,
+      "corrections": [
+        {
+          "field": "energy",
+          "to": -97.7575895972357,
+          "reported_as": "E0 = -24.4393974 (total, S.S units, J = 1), N = 36, edge vectors (6, 0), (0, 6)",
+          "location": "Table 2.1 (p. 102), row N = 36, column E0",
+          "version_read": "Lect. Notes Phys. 645, 85 (2004), publisher PDF (Springer, a scan), Table 2.1 on p. 102 read from the page image rendered at 200 %; arXiv:cond-mat/0412662 Table 1 (pypdf layout and plain) prints the same digits",
+          "conversion": "-24.4393974 x 4 = -97.7575896 (stored); VarBench's ED on this instance, -97.7575895972357 = -24.4393973993 S.S total, rounds to the printed seven decimals",
+          "checked_on": "2026-10-24",
+          "reason": "Rule for exact rows that state a more precise published exact energy (2026-10-24): the printed value is the more precise diagonalization's value rounded to the printed digits, so the row keeps its citation and carries those digits, and as the earliest diagonalization of the instance it is the exact energy shown (RULES.md 6, 11); the printed value stays here. The more precise value is VarBench's exact diagonalization of the same 6 x 6 torus (run script ed_lattice_symmetries.sh, Wu et al., Science 386, 296 (2024)).",
+          "source_entry": "rule 2026-10-24: earlier diagonalizations carry the more precise digits",
+          "from": -97.7575896
+        }
+      ]
     }
   ],
   "coverage": [

@@ -82,11 +82,11 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square 6x6, open | exact | -0.6035218 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_36_O/ed_lattice_symmetries.sh) |
 |  | best variational | -0.6035218 &#9675; (+<1e-7) | DMRG [Huang et al. (2016)](https://doi.org/10.48550/arxiv.1611.09574) |  |
 |  | best extrapolated | -0.60351496(1) (+6.9e-6) | VMC (2D RNN) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) | [mschuylermoss/HeisenbergRNN](https://github.com/mschuylermoss/HeisenbergRNN) |
-| square 6x6 | exact | -0.6788721 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_36_P/ed_lattice_symmetries.sh) |
+| square 6x6 | exact | -0.6788721 | ED [Richter et al. (2004)](https://doi.org/10.1007/bfb0119592) |  |
 |  | best variational | -0.678871(3) (+1.1e-6) | VMC (CNN BF + RBM) [Hendry et al. (2025)](https://doi.org/10.48550/arxiv.2507.10287) | *uses [NetKet](https://www.netket.org/)* |
 |  | best extrapolated | -0.67887177(7) (+3.8e-7) | VMC (2D RNN) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) | [mschuylermoss/HeisenbergRNN](https://github.com/mschuylermoss/HeisenbergRNN) |
 | square, 38 sites | exact | -0.6779156 | ED [Richter et al. (2004)](https://doi.org/10.1007/bfb0119592) |  |
-| square, 40 sites | exact | -0.6773713 | ED [Richter & Schulenburg (2009)](https://doi.org/10.48550/arxiv.0909.3723) |  |
+| square, 40 sites | exact | -0.6773713 | ED [Richter et al. (2004)](https://doi.org/10.1007/bfb0119592) |  |
 | square, 50 sites | exact | -0.675102 | ED [Wietek & Läuchli (2018)](https://doi.org/10.1103/physreve.98.033309) |  |
 | square 8x8, open | exact (stochastic) | -0.6190371(2) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
 |  | best variational | -0.619034(6) (+2.7e-6) | VMC (2D RNN) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) | [mschuylermoss/HeisenbergRNN](https://github.com/mschuylermoss/HeisenbergRNN) |

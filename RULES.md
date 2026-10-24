@@ -142,12 +142,12 @@ own best value.
   disagree beyond their stated precision are a `defect` to raise on the row (§11).
 - Every published calculation of the exact energy is a row (2026-10-24). A source that
   diagonalized the cluster itself and printed the same energy as an earlier or later source
-  adds a row of its own; a source that quotes another source's value does not (§8). The rows
-  that state the exact energy shown to their own printed digits are listed beside it, and
-  where there are several the earliest listed is marked "first". Case:
-  `Heisenberg/square_40_P`, diagonalized in Richter, Schulenburg & Honecker, Lect. Notes
-  Phys. 645 (2004), Table 2.1, to seven decimals, and in Richter & Schulenburg, EPJB 73
-  (2010), Table 1, to eight; the 2010 row is the exact energy shown and the 2004 row is first.
+  adds a row of its own; a source that quotes another source's value does not (§8). Where
+  several diagonalizations state the most precise exact energy to their own printed digits,
+  the earliest published is the exact energy shown and the later ones are listed below it.
+  Case: `Heisenberg/square_40_P`, diagonalized in Richter, Schulenburg & Honecker, Lect.
+  Notes Phys. 645 (2004), Table 2.1, to seven decimals, and in Richter & Schulenburg, EPJB 73
+  (2010), Table 1, to eight; the 2004 row is the exact energy shown.
 - Sector-resolved exact diagonalization is the exact energy only in the ground-state sector. A
   row such as `Exact Diagonalization 0.C1.A -1` states the lowest energy in one symmetry
   sector. That is the ground-state energy only if the sector is the ground state's. Case:
@@ -511,6 +511,12 @@ site. At J2 = 0.2, 0.55 and 0.65 they are the recomputed energies rounded, and t
 the full values (`checks/exact-recompute-2026-09/`). At J2 = 0.1 the printed -0.638096 is
 neither (the recomputation gives -0.638095436). That row keeps the paper's value, and the
 recomputation is recorded on its verification.
+
+The same holds where the more precise value is another source's diagonalization of the same
+cluster (2026-10-24): the earlier row keeps its citation, carries the more precise digits and
+is the exact energy shown (§6), and its printed value goes to `corrections`. Case: Richter,
+Schulenburg & Honecker (2004) print -24.4393974 for the 6 x 6 torus; VarBench's
+-24.4393973993 rounds to it.
 
 Every other correction keeps the old value on the row, listed with its source and reason in
 `scripts/corrections.mjs`. This holds for imported rows and for rows QMBL added itself; for

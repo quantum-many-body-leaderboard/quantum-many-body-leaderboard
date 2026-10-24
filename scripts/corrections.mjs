@@ -22725,4 +22725,38 @@ export const CORRECTIONS = [
     "reason": "QMBL no longer flags an error bar for the way it was estimated. For many methods, extrapolations above all, there is no agreed way to estimate the error of an energy, so a stated sigma is kept as published and is read with its definition. The finding, kept on the row in `from`, says what this sigma measures. The energy, sigma and bound_type are unchanged.",
     "source_entry": "rule 2026-10-24: all 14 sigma-understated flags lifted"
   },
+  // Earlier diagonalizations that print a more precise published exact energy rounded: the
+  // more precise digits, the printed value kept (rule of 2026-10-24, RULES.md 6 and 11)
+  {
+    "match": {
+      "instance": "Heisenberg/square_36_P",
+      "method": "ED",
+      "energy": -97.7575896
+    },
+    "field": "energy",
+    "to": -97.7575895972357,
+    "reported_as": "E0 = -24.4393974 (total, S.S units, J = 1), N = 36, edge vectors (6, 0), (0, 6)",
+    "location": "Table 2.1 (p. 102), row N = 36, column E0",
+    "version_read": "Lect. Notes Phys. 645, 85 (2004), publisher PDF (Springer, a scan), Table 2.1 on p. 102 read from the page image rendered at 200 %; arXiv:cond-mat/0412662 Table 1 (pypdf layout and plain) prints the same digits",
+    "conversion": "-24.4393974 x 4 = -97.7575896 (stored); VarBench's ED on this instance, -97.7575895972357 = -24.4393973993 S.S total, rounds to the printed seven decimals",
+    "checked_on": "2026-10-24",
+    "reason": "Rule for exact rows that state a more precise published exact energy (2026-10-24): the printed value is the more precise diagonalization's value rounded to the printed digits, so the row keeps its citation and carries those digits, and as the earliest diagonalization of the instance it is the exact energy shown (RULES.md 6, 11); the printed value stays here. The more precise value is VarBench's exact diagonalization of the same 6 x 6 torus (run script ed_lattice_symmetries.sh, Wu et al., Science 386, 296 (2024)).",
+    "source_entry": "rule 2026-10-24: earlier diagonalizations carry the more precise digits"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_40_P",
+      "method": "ED",
+      "energy": -108.3794012
+    },
+    "field": "energy",
+    "to": -108.379401,
+    "reported_as": "E0 = -27.0948503 (total, S.S units, J = 1), N = 40, edge vectors (2, 6), (-6, 2)",
+    "location": "Table 2.1 (p. 102), row N = 40, column E0",
+    "version_read": "Lect. Notes Phys. 645, 85 (2004), publisher PDF (Springer, a scan), Table 2.1 on p. 102 read from the page image rendered at 200 %; arXiv:cond-mat/0412662 Table 1 (pypdf layout and plain) prints the same digits",
+    "conversion": "-27.0948503 x 4 = -108.3794012 (stored); Richter & Schulenburg's -27.09485025 x 4 = -108.379401 rounds to the printed seven decimals",
+    "checked_on": "2026-10-24",
+    "reason": "Rule for exact rows that state a more precise published exact energy (2026-10-24): the printed value is the more precise diagonalization's value rounded to the printed digits, so the row keeps its citation and carries those digits, and as the earliest diagonalization of the instance it is the exact energy shown (RULES.md 6, 11); the printed value stays here. The more precise value is Richter & Schulenburg, Eur. Phys. J. B 73, 117 (2010), Table 1, row J2 = 0, -27.09485025, on the mirror image of the same cluster.",
+    "source_entry": "rule 2026-10-24: earlier diagonalizations carry the more precise digits"
+  },
 ];

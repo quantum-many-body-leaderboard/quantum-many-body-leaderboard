@@ -5,6 +5,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
 import { recordEligible, approximateEligible, exactEligible, classEligible, belowExact, tiedAt2Sigma, BEST_CLASSES, isSampled, noErrorMetrics, publishedMethod, methodLabel } from "./units.mjs";
+import { paperYear } from "./cite.mjs";
 
 export function collect() {
   const instances = [];
@@ -32,7 +33,8 @@ export function rowId(inst, r) {
 
 // What an instance shows (RULES.md 6, since 2026-10-22): its exact energy where it has one,
 // then one best value per bound type. Eligibility is defined once, in units.mjs.
-//   exact         the most precise eligible exact row (exactRecordOf), or null
+//   exact         the most precise eligible exact row, the earliest where several state it
+//                 (exactRecordOf), or null
 //   variational, projected, extrapolated, approximate
 //                 the lowest row of that class that is unflagged (6.1) and not caught by the
 //                 automatic flag (6.2), or null
@@ -76,25 +78,37 @@ export function lowestOf(inst) {
   return exactRecordOf(inst) ?? lowestEnergyOf(inst);
 }
 
-// The most precise eligible exact row: exact rows are estimates of one number, so precision
-// orders them first. Exact diagonalization (no error bar) outranks sign-problem-free QMC, and
-// a smaller error bar outranks a larger one; between diagonalizations, more printed digits
-// (a smaller `precision`, DATA.md) outrank fewer; then the energy orders them. Two exact rows
-// that disagree beyond their stated precision are a defect to raise on the row.
+// The exact energy an instance shows. Exact rows are estimates of one number, so precision
+// orders them first: exact diagonalization (no error bar) outranks sign-problem-free QMC, a
+// smaller error bar outranks a larger one, and between diagonalizations more printed digits
+// (a smaller `precision`, DATA.md) outrank fewer; then the energy orders them. Where several
+// diagonalizations state that energy to their own printed digits, the earliest published is
+// the one shown (RULES.md 6). Two exact rows that disagree beyond their stated precision are
+// a defect to raise on the row.
 export function exactRecordOf(inst) {
+  const same = sameExactRows(inst);
+  if (same.length) return same[0];
+  return mostPreciseExact(inst);
+}
+
+function mostPreciseExact(inst) {
   return inst.rows.filter(exactEligible)
     .sort((a, b) => (a.sigma ?? 0) - (b.sigma ?? 0) || (a.precision ?? 0) - (b.precision ?? 0) || a.energy - b.energy)[0] ?? null;
 }
 
-// The deterministic exact rows that state the exact energy shown to their printed digits: the
-// shown row itself and every other diagonalization of the instance that agrees with it within
-// the coarser of the two precisions (RULES.md 6). The site lists them beside it and
-// marks the earliest.
+// The diagonalizations that state the most precise exact energy to their own printed digits
+// (it among them), oldest first: every other one agrees with it within the coarser of the two
+// precisions. Empty where the most precise exact row has an error bar.
+const SAME = new WeakMap();
 export function sameExactRows(inst) {
-  const rec = exactRecordOf(inst);
-  if (!rec || rec.sigma != null) return [];
-  return inst.rows.filter(r => exactEligible(r) && r.sigma == null &&
-    Math.abs(r.energy - rec.energy) <= Math.max(r.precision ?? 0, rec.precision ?? 0) * (1 + 1e-9));
+  if (SAME.has(inst)) return SAME.get(inst);
+  const top = mostPreciseExact(inst);
+  const year = r => paperYear(r) ?? Infinity;
+  const same = !top || top.sigma != null ? [] : inst.rows.filter(r => exactEligible(r) && r.sigma == null &&
+    Math.abs(r.energy - top.energy) <= Math.max(r.precision ?? 0, top.precision ?? 0) * (1 + 1e-9))
+    .sort((a, b) => year(a) - year(b) || (a.precision ?? 0) - (b.precision ?? 0));
+  SAME.set(inst, same);
+  return same;
 }
 
 // Lowest unflagged energy that is not exact (variational, projected or extrapolated; an
