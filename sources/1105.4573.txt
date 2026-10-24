@@ -1,0 +1,458 @@
+                               Physical solutions of the Kitaev honeycomb model
+
+                                     Fabio  L.  Pedrocchi,1  Stefano  Chesi,1, 2  and  Daniel  Loss1
+                 1Department  of  Physics,  University  of  Basel,  Klingelbergstrasse  82,  CH-4056  Basel,  Switzerland
+                         2Department  of  Physics,  McGill  University,  Montreal,  Quebec,  Canada  H3A  2T8
+
+                   We  investigate  the  exact  solution  of  the  honeycomb  model  proposed  by  Kitaev  and  derive  an
+                explicit formula for the projector onto the physical subspace.  The physical states are simply char-
+                acterized by the parity of the total occupation of the fermionic eigenmodes.  We consider a general
+                lattice  on  a  torus  and  show  that  the  physical  fermion  parity  depends  in  a  nontrivial  way  on  the
+                vortex conﬁguration and the choice of boundary conditions.  In the vortex-free case with a constant
+                gauge ﬁeld we are able to obtain an analytical expression of the parity.  For a general conﬁguration
+                of the gauge ﬁeld the parity can be easily evaluated numerically, which allows the exact diagonal-
+                ization of large spin models.  We consider physically relevant quantities, as in particular the vortex
+                energies, and show that their true value and associated states can be substantially diﬀerent from
+                the one calculated in the unprojected space, even in the thermodynamic limit.
+
+                PACS numbers:  75.10.Jm,71.10.Pm,03.67.Lx,05.30.Pr
+
+
+                    I.    INTRODUCTION                                        for  the  exact  numerical  study  via  Kitaev’s  exact  map-
+                                                                              ping of large spin systems, especially if one wants to go
+  The Kitaev honeycomb model, with several variations,                        beyond the small system sizes of about 20−100 spins cur-
+has  attracted  a  lot  of  attention  over  the  last  years.1–25            rently accessible to various numerical approaches such as
+Many diﬀerent interesting aspects of it have been studied                     direct  diagonalization16–18  or  density  matrix  renormal-
+in detail in the original work of Kitaev.1 There, an exact                    ization  group  (DMRG).19  These  numerical  approaches
+method of solution of the model based on the mapping to                       become necessary if exact fermionization techniques are
+Majorana fermion operators is discussed. Although alter-                      not applicable.
+native mappings and approximation techniques exist,2–4                           The paper is organized as follows.  In Sec.  II we brieﬂy
+Kitaev’s  method  is  widely  applied,  being  ideally  suited                review the honeycomb model and the exact mapping to
+to  this  class  of  spin  models.   Further,  the  presence  of              Majorana  fermions  introduced  by  Kitaev.1  In  Sec.   III
+an abelian and a non-abelian phase (in the presence of                        we compute the parity of physical fermions with periodic
+an external magnetic perturbation) was demonstrated.1                         boundary conditions and a generic vortex conﬁguration,
+The  Kitaev  honeycomb  model  has  a  wide  spectrum  of                     which  represents  our  main  result.   Section  IV  contains
+physical  applications,  ranging  from  the  description  of                  some applications to speciﬁc cases and Sec.  V our ﬁnal
+strongly correlated materials5 to the analytical study of                     remarks.
+critical  quantum  spin  liquids.6  It  is  also  of  central  im-
+portance in the context of quantum information theory
+since its gapped phase provides a perturbative realization                            II.    MODEL AND EXACT MAPPING
+of the toric code.7  Extensions of the honeycomb model
+have  been  lately  proposed  as  promising  candidates  for                     The Kitaev honeycomb model is a quantum compass
+the realization of a topological quantum memory.8,9 Al-                       model26 deﬁned on an hexagonal lattice Λ as follows
+though very challenging, its physical realization has be-
+come closer to reality thanks to recent proposals.10,11                                             H =∑       Jαijσαij
+  In this paper we examine the projection to the physi-                                                               i σαijj ,                      (1)
+cal subspace of the exact mapping to Majorana fermions                                                    ⟨i,j⟩
+proposed by Kitaev.1 As brieﬂy discussed in Refs.  12–14,                     where  σi  are  the  Pauli  spin  operators  at  site i ∈  Λ
+unprojected and projected models have diﬀerent physical                       (i  =  1,..., 2N).   In  Eq.  (1),  the  sum  runs  over  all  the
+properties, especially the parity of fermions.  We derive                     pairs of nearest-neighbor sites and the directions of the
+here  for  the  ﬁrst  time  an  explicit  and  immediately  ap-               Ising interactions are determined by the orientations of
+plicable  representation  of  the  projector  in  terms  of  the              the corresponding links (αij  = x,y,z  for x-, y-, z-links
+parity of physical fermions.  As it turns out, the physical                   respectively, see Fig. 1).
+fermion parity depends in a nontrivial way on the conﬁg-                         To solve this spin model in an extended Hilbert space
+uration of vortices and on the lattice topology.  Applying                    ~L, one can associate at each site i four Majorana modes
+the projection to speciﬁc cases, we ﬁnd large diﬀerences                      ci,bxi,by
+between  projected  and  unprojected  physical  quantities                    tonian in Eq. (1) is mapped toi,bzi .1 By deﬁning~σαi  =ibαici, the original Hamil-
+(e.g.  ground state and vortex energies, or spin-spin cor-
+relation functions).  Such discrepancies exist both in the                                             ~H =i∑       ˆAijcicj,                          (2)
+gapped and gapless phase and can also survive the ther-
+modynamic limit.  Our analysis is consequently essential                                                       ⟨i,j⟩
+                                                                                                                                                    2
+
+                                                                             However, the ﬁnal spectrum and eigenstates are in the ex-
+                                                                             tended Hilbert space ~L, and a projectionP to the phys-
+                                                                             ical  subspace  is  necessary.1  The  physical  states  satisfy
+                                                                             Di|Ψ⟩ =|Ψ⟩ for all the gauge operators Di  = bxibyibzici
+                                                                             and the explicit form ofP  is1
+
+                                                                                               2N∏(1 +Di      )           ∑     ∏
+                                                                                        P =              2       =    122N           Di,          (6)
+                                                                                               i=1                         {i} i∈{i}
+
+                                                                             where  the  summation  runs  over  all  possible  subsets  of
+                                                                             indices{i}⊆ Λ.  Within the physical subspace the~σx,y,z
+                                                                             operators satisfy the usual algebra of Pauli matrices and
+                                                                             therefore H and ~H are equivalent.
+FIG. 1.  Honeycomb lattice, with basis vectors e1,2.  The di-                   To  establish  a  more  explicit  formula  for P  one  can
+rections  of x, y, z-links  are  indicated,  as  well  as  the  vector       note  that,  in  the  summation  appearing  in  Eq.  (6),  the
+τ  joiningB and Asublattices (white and black dots, respec-                  two terms corresponding to a subset{i} and its comple-
+tively).  The most general torus on the lattice can be speciﬁed              mentary  set  Λ\{i}  simply  diﬀer  by  a  factor ∏2Ni=1Di.
+by L1e1  and L2e2 + Me1  (here L1 = 4, L2 = M  = 2).  The                    Therefore,P  factorizes as follows13,14:
+numbers  1, 2, . . . 16  label  the  sites  as  described  in  the  main                                         (                  )
+text, see Eq. (8).                                                                             ∑
+                                                                              P =       1         ′ ∏     Di·       1 +∏2Ni=1Di        =S·P0,
+                                                                                       22N−1    {i}  i∈{i}                   2
+where for nearest-neighbor sites ˆAij =Jαijˆuij  and                                                                                             (7)
+                     ˆuij =ibαij                                             where the prime indicates that the summation inS  (in
+                               i bαijj    =−ˆuji.                      (3)   the ﬁrst parenthesis) is restricted to half of all possible
+These operators satisfy ˆu2ij  = 1.  Furthermore,  they all                  subset of indices:  if{i} is included, then Λ\{i} is not.
+commute with each other and also with ~H.  Therefore,                           We then consider∏2Ni=1Di in the projectorP0 [the sec-
+the extended Hilbert space splits into ~L =⊕u~Lu, where                      ond parenthesis of Eq. (7)].  From the deﬁnition of Di, it
+u  represents  a  conﬁguration  of uij  =±1.   Notice  that                  clearly consists of a product of all the ci  and bx,y,zi       op-
+uij =−uji.  So, whenever we specify the values ofuij, we                     erators.  By applying the anticommutation rules we can
+assume conventionally that i is in the A sublattice (see                     pair corresponding bx,y,zi       operators, and express them in
+Fig.  1).   In  each  subspace ~Lu,  the  operator  matrix ˆAij              terms  of  the  conserved  quantities uij.  To  do  this,  it  is
+are replaced by numbers Aui,j  and Eq. (2) thus describes                    necessary to know the topology of the lattice, from which
+non-interacting Majorana fermions.                                           the  correct  pairing  is  determined.   We  consider  here  a
+  The eigenmodes can be easily obtained with a canoni-                       model  deﬁned  on  a  torus  with  basis  vectors L1e1  and
+cal transformation Qu to new Majorana operators                              L2e2 +Me1,  as  illustrated  in  Fig.  1  for  a  special  case
+                                                                             (L1 = 4,L2 =M = 2).  This represents the most general
+
+               ′   ′′      ′    ′′                                           choice of periodic boundary conditions and N  = L1L2.
+             (b1,b1,...,bN,bN) = (c1,...,c2N)Qu,            (4)              It  is  also  necessary  to  ﬁx  the  correspondence  between
+which  for  the  speciﬁc  conﬁguration u  brings ~H  to  the                 i = 1,..., 2N  and lattice sites.  We ﬁx the labeling as in
+form ~Hu  = i      ∑         ′   ′′                                          Fig. 1.  By taking the origin on site i = 1 (on the B sub-
+                 2    mϵmbmbm,  where ϵm  are  the  positive                 lattice) the position ri of the sites with odd values ofi is
+eigenvalues of 2iAu.  By introducing the fermion opera-                      given by
+                    ′       ′′
+tors am = 1/2(bm +ibm) and nm =a†mam we obtain                                              (i− 1              )        (i− 1         )
+                    ~Hu =∑ϵm (nm− 1/2),                    (5)                        ri =       2    modL1       e1 +       2 \L1       e2,      (8)
+
+                            m
+with  ground  state  energy E0  =−1/2∑                                       where (a\b) indicates the integer division and (a modb)
+                                                     mϵm.   The  or-         the reminder.  For even i, the position is ri  = ri−1 + τ
+thogonal matrixQu will have a crucial role in the follow-                    (see Fig. 1).After pairing the  bx,y,zi       operators into the
+ing to obtain the projection operator.                                       uij, the result is proportional to the parity operator ˆπc =
+                                                                             (−i)N∏ici.  We then express this quantity in terms of
+         III.    PHYSICAL FERMION PARITY                                     the eigenmodes:
+
+                                                                                                       ˆπc = det(Qu) ˆπ,                           (9)
+  The key advantage of Kitaev’s solution is to reduce the
+problem  of  ﬁnding  the  eigenvalues  of  a  22N× 22N  ma-                  where  ˆπ  = ∏Nm=1(1− 2nm)  is  the  parity  of  the  eigen-
+trix to the diagonalization of the 2N× 2N  matrices Au.                      modesam.  A proof of Eq. (9) is provided in Appendix A.
+                                                                                                                                                 3
+
+Finally, we ﬁnd forP0,
+             2P0 = 1 + (−1)θ det(Qu) ˆπ∏            uij,           (10)
+                                               ⟨i,j⟩
+where θ  = L1 +L2 +M(L1−M)and  ˆπ  has  eigenval-
+ues  +1(−1)  if  the  total  number  of  physical  fermions  is
+even (odd).  A complete derivation of Eq. (10) is given
+in Appendix B. It is important to notice that, in apply-
+ing Eq. (10), the labeling of the lattice described above
+should  be  used.   For  example,  det(Qu)  depends  on  the
+choice of the labeling.
+  We would like to point out now the diﬀerences between
+Eq.  (10)  and  other  discussions  in  the  literature.12–15
+Firstly, the parity of physical fermions (the only relevant
+ones) ˆπ is the parity of the eigenmodesam and not simply                   FIG.  2.   An  illustration  of  the  partitioning  into  Ω, Ω±  de-
+ˆπc which is of no calculational use.  Eq. (9) shows now the                scribed in the main text.  The vectors b1,2 deﬁne the recipro-
+precise relation between ˆπ and ˆπc:  for a certain conﬁgu-                 cal lattice and the hexagon is the ﬁrst Brillouin zone. The four
+ration u, the two parities are diﬀerent if det(Qu) =−1.                     square points are wavevectors in Ω while the dots and crosses
+We note also that  ˆπc  is not a gauge invariant quantity,                  are in Ω+ and Ω−, respectively.  In this example L1 = L2 = 6
+while the physical parity ˆπ obviously is, i.e., [ˆπ,Di] = 0.               and M = 0.
+Therefore Eq. (9) allows one to form the gauge invariant
+quantity  det(Qu)∏⟨i,j⟩uij.   A  second  feature  revealed                     For an arbitrary conﬁguration of the uij, the Fourier
+by our analysis is that  ˆπ  (and  ˆπc  as well) depends in a               transformation cannot be used to calculate analytic re-
+nontrivial way on the boundary conditions through the                       sults.  However, det(Qu) can be determined numerically
+factor (−1)θ, which does not appear in Refs. 14 and 15.                     with  negligible  computational  eﬀort.   This  allows  us  to
+  Being directly applicable to the eigenstates|Ψ⟩u∈ ~Lu,                    obtain  the  exact  numerical  solution  of  the  spin  Hamil-
+identiﬁed by their occupation numbers (1− 2nm) =±1,                         tonian at very large values N  and to explore the eﬀect
+Eq. (10) is extremely convenient:  it immediately shows                     of the projection when approaching the thermodynamic
+whetherP0  gives 0 or 1 on the eigenstate|Ψ⟩u.  In the                      limit.
+former case, the state is clearly unphysical.  In the sec-
+ond case,P|Ψ⟩u =S|Ψ⟩u⁄= 0 since, as seen in Eq. (7),
+the  22N−1  terms  ofS  all  correspond  to  diﬀerent  con-                                     A.    Vortex-free sector
+ﬁgurations  of uij.   In  conclusion,  Eq.  (10)  is  suﬃcient
+to determine if|Ψ⟩u has some overlap with the physical                         In the vortex-free sector with uij  = 1 we can proceed
+subspace or lies completely outside of it, and makes clear                  as in Ref. 1 by making use of the Fourier transform on
+that the crucial quantity is the parity of physical fermions                the lattice
+ˆπ:  physical states have either even or odd occupation of                                                    ∑
+the eigenmodes am depending on  both  the conﬁguration                                       aqB =     1√2N         e−iq·rici,
+u and the choice of boundary condition.                                                                       i odd∑
+                                                                                             aqA =     1√2N        e−iq·rici+1,               (11)
+IV.    EXAMPLES OF PROJECTED STATES AND                                                                      i odd
+                           ENERGIES                                         where the positions ri of the B lattice sites are given in
+                                                                            Eq. (8).We now consider a partition of the   N  possible
+  We discuss in this section a few examples illustrating                    values of q (ﬁxed by the periodicity of the lattice) in three
+the  diﬀerence  between  physical  and  unphysical  results.                sets:  Ω and Ω±.  We say that q∈ Ω if±q are the same
+These examples should make clear that it is not suﬃcient                    (up to reciprocal lattice vectors).  Ω contains at most four
+to calculate the properties of the system in the extended                   wave vectors, depending onL1,2 andM, and always con-
+space,  but  the  projection  must  be  carefully  applied  to              tains 0.  The remaining wavevectors can be partitioned
+take advantage of all the power of Kitaev’s exact map-                      in a way that±q always belong to two distinct sets Ω±.
+ping.  While we focus here on the ground state and vortex                   An example of such partitioning is illustrated in Fig. 2
+excitation  energy,  we  expect  that  similar  discrepancies               for the special case L1 =L2 = 6 and M  = 0.  We deﬁne
+exist for other physical quantities.                                        new Majorana modes as γλq =√2aqλ for q∈ Ω and
+  By applying Eq. (10), the only factor which is not im-
+mediately found is det(Qu) and we show in the following                           γλq,1 =aqλ +a−qλ,  γλq,2 =i(aqλ−a−qλ),       (12)
+how it can be explicitly evaluated when uij = 1.  The ﬁ-
+nal result, Eq. (18), nicely complements Eq. (10) for this                  for  q ∈  Ω+,  where λ  = A,B  refers  to  the  sublattice
+vortex-free sector.                                                         (see  Fig.  1).This  canonical  transformation  of  the   ci
+                                                                                                                                                   4
+
+can be constructed in two steps.  First we rearrange the
+(c1,c2,...,c2N) into
+
+              (c2,c4,...,c2N,c1,c3,...,c2N−1),            (13)
+
+a  transformation  which  has  determinant  (−1)N(N+1)/2.
+Notice that,  in Eq. (13),  the modes are partitioned be-
+tween A (ﬁrst half) and B  (second half).  Furthermore,
+for each sublattice the same order of z-dimers appears,
+sinceci andci+1 (with oddi) belong to the same z-dimer
+(see Fig. 1).  Because of this structure, the second trans-
+formation [from Eq. (13) to the γλq,γλq,α modes]has two
+identical blocks labeled byλ = A, B and the determinant                     FIG. 3.  Physical (solid line) and unphysical (dashed line) ﬁ-
+is simply 1.                                                                nite size corrections to the thermodynamic energy of a vortex-
+  The Hamiltonian, rewritten in terms of the new Majo-                      free conﬁguration uij  = 1 for L1  = L2  = L.  The main plot
+rana modes, is diagonal in q and its coeﬃcients are given                   a) refers to the gapless phase with M = 0, Jx = Jy = Jz = 1,
+by f(q)  =  2(Jxeiq·e1 +Jyeiq·e2 +Jz)  and  its  complex                    and ε0≃−1.5746.1  The inset b) corresponds to the gapped
+conjugate.  A further diagonalization with respect to the                   phase with M = 1, Jx = Jy = 0.2, Jz = 1, and ε0≃−1.0202.
+index α  of γλq,α  is  achieved  with  the  rotation  of  the B
+operators:                                                                  is the energy per unit cell in the thermodynamic limit.
+           (~γBq,1~γBq,2)(  cos(φq)    sin(φq))(γBq,1γBq,2)                 We  consider  in  Fig.  3  a  square  lattice  (L1  = L2  = L)
+                     =    − sin(φq)  cos(φq)                      (14)      with uij = 1 and two diﬀerent choices of boundary con-
+                                                                            ditions and couplings, and plotδE(N) as a function ofL
+where φq  is  the  phase  of f(q),  i.e., f(q)  =|f(q)|eiφq.                (N  = L2  in this case).  The original result calculated in
+This transformation has again determinant 1 and brings                      Ref. 1 is reproduced in the main panel of Fig. 3 (dashed
+~Hu to                                                                      lines) and evidently refers to the unphysical energy, which
+                                                                          always  underestimates  the  correct  result.    The  physi-
+                                                                            cal  and  unphysical  energies  are  always  distinct,  unless
+ ~Hu = i   ∑       |f(q)| ∑       γAq,α~γBq,α +∑     f(q)γAqγBq   .       ϵm  =  0  for  some  fermion  mode.   Being  in  the  gapless
+        2    q∈Ω+           α=1,2                q∈Ω                        phase, the diﬀerence approaches zero at large system size
+                                                                  (15)      as 1/L.  The inset represents an example in the gapped
+Finally, as discussed below Eq. (4),Qu brings the Hamil-                    phase:  remarkably, since there is always one fermion in
+tonian to the form ~Hu  = i        ∑           ′  ′′                        the  physical  ground  state,  the  diﬀerence  between  pro-
+                                 2    qϵ(q)bqbq  with ϵ(q)≥ 0.              jected (solid line) and unprojected (dashed line) results
+This can be achieved in Eq. (15) by relabeling the Majo-                    survive the thermodynamic limit where the true energy
+rana operators.  If q∈ Ω+:                                                  correction  does  not  vanish.   That  the  state  with  zero
+
+                        ′            ′′                                     fermions is never physical for any L is immediate from
+                       bq =γAq,1,bq =~γBq,1,                      (16)      our  analytic  result  Eq.  (18)  since χ  =  0  in  the  gapped
+
+                      ′              ′′                                     phase [f(q)> 0].  On the other hand, projected and un-
+                     b−q =γAq,2,b−q =~γBq,2.                    (17)        projected  states  are  diﬀerent  (have  diﬀerent  parity)  in
+
+
+                                                                 ′′         the thermodynamic limit in both the gapless and gapped
+If  q ∈  Ω  and f(q) ≥  0(<  0): b′q   = γA(B)q     , bq   =                phases.   Therefore  our  projection  protocol  is  necessary
+γB(A)q     .   The  determinant  of  this  last  transformation  is         to determine the physical quantities of the model in both
+(−1)χ+N(N−1)/2, whereχ is the number of reciprocal lat-                     the gapless and gapped phase even in the thermodynamic
+tice vectors q∈ Ω such thatf(q)< 0.  By combining this                      limit.
+factor with the one from Eq. (13) we obtain
+
+            det (Qu) = (−1)χ+N2    for  uij = 1.         (18)
+                                                                                        B.    Energy of two adjacent vortices
+Notice thatχ depends in a non trivial way on the bound-
+ary conditions L1,2,M, and the couplings Jx,y,z.  Never-                       We consider next the energy to create vortices in the
+theless, for a given choice of the model, it can be easily                  system.  These are present on hexagonal cells for which
+computed.                                                                   the product of the six uij  is−1.  As an interesting ex-
+  Following Ref. 1 we examine now the ﬁnite size correc-                    ample  we  study  conﬁgurations  with  two  adjacent  vor-
+tion δE(N) = E0(N)−ε0N  to the ground-state energy                          tices, obtained by settinguij =−1 for a single link.  The
+E0(N) with uij = 1, where                                                   ground state energy of such two-vortex conﬁguration of
+                      ε0 =   limN→∞E0(N)/N                      (19)        theuij is denoted asE2(N) while, as before,E0(N) is the
+                                                                            ground energy with alluij = 1.  We deﬁne the excitation
+                                                                                                                                                    5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  4.    Physical  (thick  solid  line)  and  unphysical  (thick
+dashed line) excitation energy of two adjacent vortices.  This
+plot  refers  to  the  gapless  phase  with  Jx  =  Jy  =  Jz  =  1,
+L1 = 2L, L2 = M = L, and a single uij =−1 with ij being a
+z link.  Thin dashed lines extrapolate to the thermodynamic
+limit.  The dots at L = 3 (unphysical) and L = 13 (physical)
+represent the largest system sizes with negative excitation en-
+ergy.
+
+
+energy of a vortex as
+
+                ∆E(N) = 12[E2(N)−E0(N)],              (20)                   FIG.  5.   Physical  (solid  line)  and  unphysical  (dashed  line)
+                                                                             excitation energy of two adjacent vortices in the gapped phase
+which is plotted in Figs. 4 and 5 as function of L for dif-                  with  Jx  =  Jy  =  0.1,  Jz  =  1,  L1  =  L2  =  L,  and  a  single
+ferent choices of the parameters (given in the captions).                    uij  =−1 with ij  being a y  link.  Panel a) refers to M  = 0
+In particular, Fig. 4 refers to the gapless phase and Fig. 5                 while panel b) to M = 1.
+to the gapped phase.  Notice also that it is important in
+general to specify if uij =−1 refers to an x,y, orz link.
+  Since the vortex state is not translationally invariant,                   (solid line) persist for L→∞ and their size is equal to
+we obtain the energy spectrum and det(Qu) numerically.                       half  the  gap  of  the  fermions  (∼ Jz),  much  larger  than
+This can be done eﬃciently, since it only involves 2N×2N                     the excitation energy of the vortex pair in the unphysical
+matrices.  In Figs. 4 and 5 we show physical excitation                      space (dashed line).  A diﬀerent choice of boundary con-
+energies up to L = 26 and L = 35, respectively (corre-                       ditions can lead to a situation where ∆E is always large
+sponding to 4L2 = 2704 and 2L2 = 2450physical spins),                        and negative (∼−Jz) and has a well deﬁned thermody-
+obtained  with  a  standard  tabletop  computer  and  high                   namic limit, as illustrated in Fig. 5b.
+level language routines (matlab).  We have checked that                         The  thermodynamic  limit  of  the  unphysical  energies
+for the lowest possible system size the spectrum obtained                    (dashed curves) of Fig. 5 is well approximated by a high
+with this method is in agreement with direct diagonal-                       order perturbative expansion, which allows to derive an
+ization  of  the  physical  model.   However,  direct  diago-                accurate eﬀective Hamiltonian including vortex energies
+nalization is limited to systems with only a few tens of                     and interactions.1,3,9,23 However such low-energy Hamil-
+spins, by making use of very intensive parallel comput-                      tonian does not contain explicitly the constraints on the
+ing numerical routines.16,18 Other numerical approaches                      allowed vortex conﬁgurations, and some care is necessary
+such  as  DMRG19  allow  to  address  larger  spin  systems                  to establish which states are physical.  For example, the
+(2N ≲ 100) but still much smaller than the ones accessi-                     vortex-free  conﬁguration  of  Fig.  5b  does  not  belong  to
+ble with the projection protocol presented here.                             the low-energy subspace and the two-vortex state has al-
+  Similarly to Fig. 3, physical and unphysical results are                   ways lower energy.  It is worth pointing out here that the
+generally diﬀerent.  In Fig. 4 (in the gapless phase) they                   negative vortex energies encountered in these examples
+become equal only if there is a zero energy mode or in the                   are not in contradiction with Lieb’s theorem as originally
+thermodynamic limit.  On the other hand, ﬁnite size cor-                     formulated in Ref. 27 (see also Ref. 28).
+rections are very important:  ∆E(N) shows pronounced
+oscillations with an amplitude which is of the same order
+of magnitude of ∆E(∞), for up to a few thousand spins.                                             V.    CONCLUSION
+Remarkably,  such  oscillations  result  in  negative  excita-
+tion energies of the vortex pair up to 676 spins (instead                       We  have  obtained  here  an  explicit  form  of  the  pro-
+of 36, in the extended space).                                               jection operator which allows us to extract the physical
+  In the gapped phase, the diﬀerence between projected                       properties of the honeycomb model for large lattices. The
+and unprojected results can survive the thermodynamic                        parity of fermions in the physical sector is directly given
+limit.  In Fig. 5a the oscillations in the physical solution                 through  our  Eq.  (10)  and  depends  in  a  nontrivial  way
+                                                                                                                                                   6
+
+on  the  vortex  conﬁguration  and  the  periodic  boundary                 sake of simpler notation we relabel (b′1,b′′1,...,b′N,b′′N) as
+conditions.  By applying Eq. (10), we have examined the                     (b1,b2,...,b2N).  The relation between the c and b Majo-
+energies of vortex-free and two-vortex conﬁgurations and                    rana fermion operators is given by Eq. (4):
+showed that signiﬁcant deviation from the physical val-
+ues can exist if the projection operator is not taken into                                             ci =∑Qi,jbj,                         (A1)
+account.  Such diﬀerences between projected and unpro-                                                        j
+jected quantities can persist up to large values of N  and                  where Q  is  an  orthogonal  matrix.   Let  us  consider  the
+they can survive the thermodynamic limit.                                   set S2N  of  the  permutations  of  1,..., 2N.   Since  the ci
+  Applying the projection only requires to determine the                    anticommute,  we  can  write  the  product c1c2...c2N  as  a
+parity  of  physical  fermions.   Therefore,  it  does  not  in-            sum over all permutations σ∈S2N  as follows:
+troduce any additional complication related to the sym-
+metrization over all gauge transformations (6), a proce-                                    2N∏                ∑          2N∏
+dure which never needs to be implemented in practice. As                                        ci =     1(2N)!     ϵ(σ)      cσ(k),            (A2)
+known, the energies of projected (i.e.  symmetrized) and                                    i=1                 σ        k=1
+unprojected  (i.e.   unsymmetrized)  statesare  the  same                   where ϵ(σ)  is  the  sign  of  permutation σ.    By  using
+and the spin correlation functionsSαβij  (t) =⟨σαi (t)σβj (0)⟩              Eq. (A1) we can write∏2N
+(whose certain exact properties were discussed in Refs. 2                              ∑                    k=1cσ(k) as
+and 20) can be conveniently computed with unprojected                                         Qσ(1),iσ(1)...Qσ(2N),iσ(2N)biσ(1)...biσ(2N)
+eigenstates|Ψ⟩u.20 This is possible thanks to the fact that                          i1,...,i2N
+the spin operators~σαi  are gauge-invariant.  However, one
+should  make  sure  that  only  states  withP|ψ⟩u⁄=  0  are                       = ∑         Q1,i1...Q2N,i2Nbiσ(1)...biσ(2N),              (A3)
+included  in Sαβij  (t).   Therefore  deviations  from  the  un-                     i1,...,i2N
+projected results exist for the Sαβij  (t) as well.                         where the numerical factor∏kQk,ik only depends on the
+  More generally it is obvious from our discussion that                     values of ik, and not on the permutation σ.  This allows
+all dynamic and thermodynamic quantities derived from                       to express Eq. (A2) in the following form
+H  (for example, the partition function), depend on the                                                     (∑                          )
+physical  spectrum  and  eigenstates  and  thus  diﬀer  from                      1      ∑      2N∏
+those of the unprojected model ~H.  Therefore, we think                        (2N)!                 Qk,ik         ϵ(σ)biσ(1)...biσ(2N)    .   (A4)
+that it would be interesting to apply our method to prob-                              i1,..,i2Nk=1            σ
+lems which have been studied without projection1,23–25                      It is not diﬃcult to check that the sum over σ gives zero
+and compare the diﬀerences.  Our work is generally rel-                     if the values of two of the indexesik are equal.  When the
+evant to spin models to which Kitaev’s solution applies,                    ik  are  all  distinct,  they  are  a  permutation  of  1,..., 2N:
+like  the  honeycomb  model  perturbed  by  a  weak  mag-                   ik  = σ′(k)  and iσ(k)  = σ′(σ(k)).Furthermore,  we  can
+netic ﬁeld1,16,19, interacting with cavity modes9  or with                  anticommute  the  Majorana  operators  to  the  canonical
+diﬀerent link distributions23, and a three-dimensional ex-                  orderb1b2...b2N, which introduces the signϵ(σ)ϵ(σ′).This
+tension  of  the  honeycomb  model  recently  proposed  in                  leads to
+Ref.  22.    The  case  of  open  boundary  conditions  can                                 (∑            2N∏           )
+also  be  simply  obtained  by  extending  Eq.  (1)  to  site-                        1            ϵ(σ′)      Qk,σ′(k)    b1b2...b2N.        (A5)
+dependent  couplings Jαij → Jij  (and Jij  =  0  on  the                            (2N)!
+boundary).                                                                                    σ′σ        k=1
+                                                                            where  the  (2N)!  is  canceled  by  the  sum  over σ.   The
+                                                                            remaining factor is simply the determinant ofQ, and the
+              VI.    ACKNOWLEDGMENTS                                        following relation is obtained:
+
+                                                                                                   2N∏                 2N∏
+  We thank D. DiVincenzo for inspiring suggestions.  We                                                ci = det(Q)         bi,                    (A6)
+also acknowledge discussions with S. Gangadharaiah, V.                                             i=1                 i=1
+Lahtinen, D. Rainis, B. R¨othlisberger, and L. Trifunovic.
+This  work  was  supported  by  the  Swiss  NSF,  NCCR                      from which Eq. (9) directly follows.
+Nanoscience, NCCR QSIT, DARPA QuEST, and the EU
+project SOLID. S.C. acknowledges support from CIFAR.
+                                                                                        Appendix B: Derivation of Eq. (10)
+
+            Appendix A: Derivation of Eq. (9)                                  In this appendix we present details of the derivation of
+                                                                            Eq. (10).  From Eq. (7) we know that
+  In  this  appendix  we  present  a  detailed  derivation  of                                                     2N∏
+Eq.  (9)  which  gives  the  relation  between  the  parity  ˆπc                                     2P0 = 1 +         Di,                        (B1)
+and  the  parity  of  the  physical  fermions  ˆπ.    For  the                                                     i=1
+                                                                                                                                                    7
+
+with  gauge  operators Di  = bxibyibzici.   The  product  of                 whereφ4 =L2.  Note that the phaseφ4 arises because of
+all  gauge  operators  can  then  be  rewritten  in  terms  of               the boundary conditions along e1.  To form theux1 2L1 op-
+Majorana operators as                                                        erator (ux18 in Fig. 1) one has to movebx1 afterbx2L1, which
+                                                                             introduces a (−1) factor.  This procedure has to be re-
+             2N∏                                                             peatedL2 times, for all pairs of the formbx2nL1bx2L1(n−1)+1
+                 Di =bx1by1bz1c1 ... bx2Nby2Nbz2Nc2N.        (B2)            withn = 1, 2,...,L2 (in Fig. 1, these arebx8bx1 andbx16bx9).
+            i=1                                                              Hence, the factor (−1)L2  arises.
+where N  = L1L2.  In order to pair the b operators and                          Finally,  in  order  to  identify ∏2Nj=1byj  as  a  product  of
+form the correspondingu operators, we ﬁrst move all the                      uy, we ﬁrst decompose it in L2 products of 2L1 terms:
+c operators to the right of theb operators.  The fermionic                                              2N∏        L2∏
+anticommutation relations then lead to a phase factor of                                                    byj  =     Tn,                         (B7)
+(−1)φ1  with φ1 = 3N(2N− 1):                                                                           j=1        n=1
+
+
+     2N∏                                              2N∏                    whereTn  = ∏2L1
+          Di = (−1)φ1bx1by                                cl.      (B3)                         j=1by2L1(n−1)+j  (e.g.,T1  = by1by2...by8  for
+                              1bz1 ... bx2Nby2Nbz2N                          Fig. 1).  As a ﬁrst step, we rewrite eachTn by moving all
+     i=1                                             l=1                     the by
+                                                                                   i  with odd i on the left side (and keeping them in
+Since bxi  and bxi+1 are always separated by two fermionic                   increasing order of i) while rearranging the byi  with even
+operators,  we  can  move  all  the bx  to  the  left  without               i (now on the right side of eachTn) in decreasing order.
+introducing  any  phase  factor.   We  then  group  together                 These operations do not introduce any additional phase
+all  the by  operators  to  the  right  of  the bx,  at  the  cost           factor in the ﬁnal expressions.  For example, in the case
+of  an  additional  phase  (−1)φ2  where φ2  = N(2N− 1)                      of Fig. 1 we can writeT1  = by1by3by5by7by8by6by4by2.  The ad-
+[notice that (−1)φ1+φ2 = 1]:                                                 vantage of this ordering is that most pairs ofby operators
+                                                                             are now straightforward to form.  For example, the pairs
+               2N∏         2N∏    2N∏     2N∏     2N∏                        by2by9, by4by11, ... of Fig. 1 are now easily formed from the
+                   Di =        bxi     byj    bzk     cl,           (B4)     rearranged string (B7), of the form...by6by4by2by9by11by13....
+               i=1        i=1     j=1     k=1     l=1                        The only diﬃculty is a remaining product of byi
+
+  For the sake of clarity we explicitly write in this ap-                         (by1by3...by2L1−1)(by2Nby2N−2...by2N−2(L1−1)),       (B8)
+pendix each u operator as uα where α refers to the link                      which requires some care in pairing to account of the toric
+associated to u:  ˆuij = ˆuαijij   =ibαiji bαijj   . In order to pair        boundary  conditions.   The  rearrangement  of  Eq.  (B8)
+the bα  (α  = x,y,z)  operators  into uα,  it  is  necessary                 introduces the phase factor (−1)φ5 in the ﬁnal expression:
+to ﬁx the correspondence between i = 1,..., 2N  and the
+sites of the lattice.  We choose here the labeling deﬁned                                        2N∏                   ∏
+by Eq. (8) and illustrated in Fig. 1 for a particular case                                           byj  = (−1)φ5          ˆuymn,                (B9)
+(L1 = 4 and L2 =M = 2).  It is then straightforward to                                          j=1            iN    ⟨m,n⟩
+see that
+
+                    2N∏                                                      where φ5 =M(L1−M) +L1.
+                        bzk = (−1)φ3      ∏    uzmn                 (B5)        Collecting all the terms, we ﬁnally obtain
+
+                   k=1            iN    ⟨m,n⟩                                          2N∏                                    2N∏
+                                                                                           Di = (−1)φ3+φ4+φ5         ∏    ˆuij    cl.           (B10)
+where the factor 1/iN is from the deﬁnition ofuαij =ibαibαj                           i=1                i3N         ⟨i,j⟩    l=1
+and φ3 =N  arises from the convention of specifying uij
+with i∈ A.  Therefore, the uzmn  above have always the                       With the aid of Eq. (9) we then ﬁnd
+form uzi+1i.
+  It is also not diﬃcult to rearrange the bx operators:                       2P0 = 1+(−1)L1+L2+M(L1−M) det(Qu)ˆπ∏                      ˆuij,  (B11)
+                                                                                                                                   ⟨i,j⟩
+                    2N∏                  ∏
+                        bxi  = (−1)φ4iN        uxmn                 (B6)     which is Eq. (10) of the main text.
+                   i=1                  ⟨m,n⟩
+
+
+
+
+
+ 1  A. Kitaev, Ann. Phys. 321, 2 (2006).                                        245121 (2008).
+ 2  H.-D. Chen and Z. Nussinov, J. Phys. A: Math. Theor. 41,                  4  G. Kells, J. K. Slingerland, and J. Vala, Phys. Rev. B 80,
+   075001 (2008).                                                               125415 (2009).
+ 3  J. Vidal, K. P. Schmidt, and S. Dusuel, Phys. Rev. B 78,                  5  G. Jackeli and G. Khaliullin, Phys. Rev. Lett. 102, 017205
+                                                                                                                                                             8
+
+   (2009).                                                                            Exp. (2009) P03006.
+ 6  K.  S.  Tikhonov,  M.  V.  Feigel’man,  and  A.  Yu.  Kitaev,                 18  J.  Chaloupka,  G.  Jackeli,  and  G.  Khaliullin,  Phys.  Rev.
+   Phys. Rev. Lett. 106, 067203 (2011).                                               Lett. 105, 027204 (2010).
+ 7  A. Kitaev, Ann. Phys. 303, 2 (2003).                                          19  H.-C.   Jiang,    Z.-C.   Gu,    X.-L.   Qi,    and   S.   Trebst,
+ 8  S. Chesi, B. R¨othlisberger, and D. Loss, Phys. Rev. A 82,                        arXiv:1101.1145 (2011).
+   022305 (2010).                                                                 20  G. Baskaran, S. Mandal, and R. Shankar, Phys. Rev. Lett
+ 9  F. L. Pedrocchi, S. Chesi, and D. Loss, Phys. Rev. B 83,                          98, 247201 (2007).
+   115415 (2011).                                                                 21  G. Kells, A. T. Bolukbasi, V. Lahtinen, J. K. Slingerland,
+10  L.-M. Duan, E. Demler, and M. D. Lukin, Phys. Rev. Lett.                          J. K. Pachos, and J. Vala, Phys. Rev. Lett. 101, 240404
+   91, 090402 (2003).                                                                 (2008).
+11  J. Q. You,  X.-F. Shi,  X. Hu,  and F. Nori,  Phys. Rev. B                    22  S.  Mandal  and  N.  Surendran,  Phys.  Rev.  B  79,  024426
+   81, 014505 (2010).                                                                 (2009).
+12  H. Yao and S. A. Kivelson,  Phys. Rev. Lett. 99,  247203                      23  M.  Kamfor,  S.  Dusuel,  J.  Vidal,  and  K.  P.  Schmidt,  J.
+   (2007).                                                                            Stat. Mech.:  Theory Exp. (2010) P08010.
+13  H. Yao, S.-C. Zhang, and S. A. Kivelson, Phys. Rev. Lett.                     24  H. Xu and J. M. Taylor, arXiv:1104.0024 (2011).
+   102, 217202 (2009).                                                            25  V. Lahtinen, New J. Phys. 13, 075009 (2011).
+14  H. Yao and X.-L. Qi, Phys. Rev. Lett. 105, 080501 (2010).                     26  K. I. Kugel’ and D. I. Khomskii, Sov. Phys.-Usp. 25, 231
+15  A. J. Willans, J. T. Chalker, and R. Moessner, Phys. Rev.                         (1982).
+   B 84, 115146 (2011).                                                           27  E. H. Lieb, Phys. Rev. Lett. 73, 2158 (1994).
+16  V. Lahtinen, G. Kells, A. Carollo, T. Stitt, J. Vala, and J.                  28  N.  Macris  and  B.  Nachtergaele,  J.  Stat.  Phys.  85,  745
+   K. Pachos, Ann. Phys. 323, 2286 (2008).                                            (1996).
+17  G. Kells, N. Moran, and J. Vala, J. Stat. Mech.:  Theory

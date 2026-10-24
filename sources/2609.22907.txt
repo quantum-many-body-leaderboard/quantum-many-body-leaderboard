@@ -1,0 +1,1033 @@
+                On the precise boundary of the N´eel antiferromagnetic phase in the
+                                                     Shastry-Sutherland model
+
+                                        Rongyi  Lv,1  Xiangjian  Qian,1, 2  and  Mingpu  Qin1, 3,∗
+                      1Key  Laboratory  of  Artificial  Structures  and  Quantum  Control  (Ministry  of  Education),
+                   School  of  Physics  and  Astronomy,  Shanghai  Jiao  Tong  University,  Shanghai  200240,  China
+                        2Tsung-Dao  Lee  Institute,  Shanghai  Jiao  Tong  University,  Shanghai  200240,  China
+                                             3Hefei  National  Laboratory,  Hefei  230088,  China
+                                                           (Dated:  September 22, 2026)
+                   The ground state phase diagram of the Shastry-Sutherland model remains controversial.  In par-
+                ticular, the nature of the transition between the plaquette valence bond solid (PVBS) phase and
+                the N´eel antiferromagnetic (AFM) phase is still under debate.  While some studies suggest a direct
+                transition between the two phases, others propose the existence of a narrow intermediate quantum
+                spin liquid regime.  To address this issue, we perform large-scale Density Matrix Renormalization
+                Group calculations to determine the N´eel AFM phase boundary in the Shastry-Sutherland model.
+                By applying staggered boundary pinning fields and directly measuring the bulk staggered magne-
+                tization, and through systematic extrapolations with respect to truncation error as well as careful
+                finite-size scaling, we find that the staggered magnetization remains finite across the controversial
+                region  0.78≲J           1/J2 ≤0.81,  which  was  suggested  to  host  a  quantum  spin  liquid  phase  in  some
+                studies.  Together with the previously established consensus placing the PVBS phase boundary at
+                J1/J2 ≈0.78, these results provide evidence against the existence of an intermediate quantum spin
+                liquid phase and support a direct PVBS–N´eel AFM transition in the Shastry-Sutherland model.
+
+
+   Introduction  –Frustrated  quantum  magnets  provide                        the  competition  betweenJ       1  andJ       2  couplings  in  the
+a  fertile  platform  for  exploring  exotic  quantum  phases                  Shastry-Sutherland model induces strong frustration, re-
+and phase transitions beyond the conventional Landau-                          sulting in a diverse and complex ground state phase di-
+Ginzburg  paradigm.    Strong  frustration  and  quantum                       agram.    It  is  widely  accepted  that  forJ      1/J2  ≲0.68,
+fluctuations may give rise to long-range entangled states                      the  system  resides  in  a  dimer  singlet  phase,  while  for
+such  as  quantum  spin  liquids  (QSLs)  [1–5],  which  lack                  J1/J2 ≳0.82, it enters the N´eel antiferromagnetic (AFM)
+long-range order even at zero temperature and fall out-                        phase.  Between these two phases,  an intermediate pla-
+side the traditional symmetry-breaking framework.  Elu-                        quette valence bond solid (PVBS) phase in the range of
+cidating  the  nature  of  such  exotic  phases  is  of  funda-                0.68≲J            1/J2 ≲0.78  has  been  established  in  previous
+mental  importance  for  the  study  of  strongly  correlated                  studies [8, 15–27].
+quantum magnets.                                                                  However,  the  nature  of  the  phase  transition  between
+   Among  various  frustrated  quantum  magnet  models,                        the PVBS and AFM phases remains under active debate.
+the  Shastry-Sutherland  model  has  attracted  significant                    On the one hand, several numerical studies suggest a di-
+attention  over  the  past  few  decades.    It  is  also  be-                 rect  transition  between  the  two  ordered  phases.   Early
+lieved to capture the essential physics of the quasi-two-                      density  matrix  renormalization  group  (DMRG)  results
+dimensional material SrCu2(BO3)2 [6–14].  The Hamilto-                         proposed  a  deconfined  quantum  critical  point  (DQCP)
+nian of the Shastry-Sutherland model is given by                               with  emergent  O(4)  symmetry  atJ    1/J2  =  0.77  [16],
+                       X                     X                                 while recent finite projected entangled pair state (PEPS)
+             H=J       1    Si ·S j +J    2        Si ·S j,           (1)      calculations  also  support  a  DQCP  scenario,  but  locat-
+                       ⟨i,j⟩                ⟨⟨i,j⟩⟩                            ing the transition atJ    1/J2  = 0.828 [21].  Alternatively,
+whereS           i  is  the  spin-1/2  operator  at  sitei.    The  an-        studies based on projected entangled simplex state [20]
+tiferromagnetic  coupling  constantsJ    1  andJ       2  represent            and DMRG [24] support a weakly first-order transition
+the  nearest-neighbor  (⟨i, j⟩)  and  next-nearest-neighbor                    atJ    1/J2 ≈0.79.   On  the  other  hand,  multiple  numer-
+(⟨⟨i, j⟩⟩)  interactions,  respectively.   As  shown  in  Fig.  1              ical  investigations,  including  functional  renormalization
+(a), the nearest-neighbor bonds are represented as black                       group [17], DMRG [18], neural quantum states [23], and
+pairs  and  the  next-nearest-neighbor  bonds  are  repre-                     very recent infinite PEPS (iPEPS) [27], have suggested
+sented  as  blue  pairs.   Different  from  theJ      1-J  2  Heisen-          the existence of a narrow intermediate QSL phase in the
+berg model on the square lattice, the Shastry-Sutherland                       range of 0.78≲J            1/J2 ≲0.82.  Despite these different sce-
+model contains only part of the next-nearest-neighbor in-                      narios, previous studies have established a broad consen-
+teractions.  But same as in theJ      1-J  2 Heisenberg model,                 sus that the PVBS phase terminates atJ    1/J2 ≈0.78 [16–
+                                                                               20, 22–24, 27].  Therefore, the key unresolved question is
+                                                                               whether N´eel AFM order develops at the boundary of the
+                                                                               PVBS phase, corresponding to a direct PVBS–N´eel AFM
+                                                                               transition, or only at a larger value ofJ    1/J2, leaving an
+∗ qinmingpu@sjtu.edu.cn
+                                                                               intervening magnetically disordered region that may host
+                                                                                                                                                         2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1. Shastry-Sutherland model and the results for staggered magnetization. (a) Shastry-Sutherland model on a 4×8 cylinder
+with open boundary conditions in thexdirection and periodic boundary conditions in theydirection.  The black and blue lines
+represent theJ      1 andJ       2 interactions, respectively.  We setJ      2 = 1 throughout this work.  A pinning field along thezdirection
+with strengthh                pin is applied at the open boundaries (orange hatched regions).  The staggered magnetizationm                         s is measured
+on the two central columns (red dashed box).  (b) Staggered magnetizationm                         s as a function ofJ    1/J2, measured with a pinning
+field (h  pin = 0.5) and extrapolated to the thermodynamic limit using results from multiple cylinders with different aspect ratios
+(details in Fig. 2 and Fig. 4).  The extrapolatedm           s places the lower boundary of the N´eel AFM phase atJ    1/J2 ≈0.78.
+
+
+a QSL phase.                                                                    Sutherland model.
+   A  central  difficulty  in  resolving  this  issue  lies  in  the               Method  –DMRG  has  established  itself  as  arguably
+reliable determination of the AFM order parameter near                          the  most  powerful  numerical  method  for  studying  one-
+the phase boundary.  In finite-size simulations,  preserv-                      dimensional and quasi-one-dimensional quantum many-
+ing  SU(2)  spin  symmetry  precludes  a  direct  measure-                      body systems.  Its efficiency originates from the underly-
+ment  of  the  staggered  magnetizationm                         s  from  the  lo-ing matrix product state (MPS) variational ansatz [35],
+cal spin expectation values.  Approaches based on finite-                       which provides a compact representation of area-law en-
+size  scaling  of  spin  correlations  effectively  computem                 2s tangled  states  for  one-dimensional  systems  [33,  36–38],
+rather thanm        s itself and can therefore suffer from signif-              thereby  capturing  the  essential  entanglement  structure
+icant  uncertainties  when  the  magnetic  order  parameter                     of the system at a relatively low computational cost.  In
+is very small [24, 28–30], especially in the narrow param-                      DMRG,  the  bond  dimensionDgoverns  the  maximum
+eter region where different phases may compete.  In such                        entanglement that can be captured by the state, directly
+cases,  distinguishing a genuinely disordered phase from                        determining  the  numerical  precision  of  the  DMRG  re-
+a weakly ordered AFM phase is challenging.                                      sults.  DMRG can also accurately solve the ground state
+   In this work, we revisit this problem using large-scale                      of spin models on two-dimensional cylinders with width
+DMRG [31–33] simulations on cylindrical geometries.  To                         around 10 by pushing the bond dimension to very large
+more  reliably  detect  the  possible  weak  AFM  order,  we                    values  [39–43].   In  this  work,  we  exploit  the  U(1)  sym-
+apply staggered pinning fields at the open boundaries of                        metry  associated  with  totalS         z  conservation  and  push
+the cylinders [34].  By explicitly breaking the SU(2) sym-                      the bond dimension up to as large asD= 30000 for the
+metry,  we  can  directly  probe  the  bulk  staggered  mag-                    widest  systems  (L  y  =  12),  enabling  us  to  suppress  the
+netization.   For  each  finite  geometry,  we  perform  con-                   truncation error to the order of 10−6    and perform reli-
+trolled extrapolations with truncation error, followed by                       able extrapolations for each finite-size system.
+finite-size scaling to the thermodynamic limit.  Following                         Fig.  1(a)  illustrates  the  Shastry-Sutherland  model
+Ref. [34], we compare the finite-size scaling of the results                    studied in this work on cylinders, where we impose open
+with different aspect ratios and determine the staggered                        boundary  conditions  (OBC)  in  thexdirection  and  pe-
+magnetization  in  the  thermodynamic  limit  as  the  con-                     riodic  boundary  conditions  (PBC)  in  theydirection.
+verged value.  Our results demonstrate that the staggered                       Throughout  this  work,  we  setJ      2  =  1  and  express  all
+magnetization  remains  finite  throughout  the  previously                     energies and pinning field strengths in units ofJ    2.  We
+disputed region 0.78≲J            1/J2 ≤0.81.  These findings, to-              define the aspect ratioα=L              x/Ly.  To systematically ap-
+gether with the previously established consensus placing                        proach the thermodynamic limit while mitigating finite-
+the PVBS phase boundary atJ    1/J2 ≈0.78 [16–20, 22–                           size  effects,  we  mainly  perform  calculations  on  cylin-
+24, 27], provide evidence for a direct transition between                       ders with aspect ratiosα∈ {1.5,2,3}, with the cylinder
+the  PVBS  and  N´eel  AFM  phases  and  rule  out  the  ex-                    widthL          y  reaching up to 12, and check the convergence
+istence  of  an  intermediate  QSL  phase  in  the  Shastry-                    of the results with different aspect ratios [29, 34, 42].  At
+                                                                                                                                                               3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2.  Finite-size scaling of the staggered magnetizationm                         s
+atJ    1/J2  = 0.8 with two pinning field strengths,h                       pin  = 0.5
+and 0.2.  Values extrapolated to zero DMRG truncation error                        FIG. 3.  Finite-size scaling of the ground state energy density
+are shown (see Figs. S3–S5 in the Supplemental Materials [44]                      efor  the  Shastry-Sutherland  model  atJ      1/J2  =  0.8.   The
+for the corresponding extrapolations).  Data for systems with                      bulk  energies  extrapolated  to  zero  DMRG  truncation  error
+different  aspect  ratiosαare  extrapolated  to  the  thermody-                    (see  the  Supplemental  Materials  [44]  for  details)  forL     y  =
+namic limit (1/L    y →0).  Inset:  The difference inm       s between             6,8,10,and 12 with different aspect ratiosαare shown.  The
+the two pinning fields, denoted as ∆, as a function of 1/L  y.                     upper  and  lower  panels  correspond  toh    pin  =  0.2  and  0.5,
+We  can  see  ∆  vanishes  as  1/L  y  →0,  demonstrating  that                    respectively.   The  resulting  thermodynamic  limit  estimate,
+the  extrapolated  staggered  magnetization  is  independent  of                   e∞  =−0.4490(1)  (the  purple  star),  is  consistent  with  the
+the pinning field strength.  The converged finite extrapolated                     previous iPEPS result [27, 45].
+value ofm   s for systems with different aspect ratios indicates
+long-range N´eel AFM order at this coupling ratio.
+                                                                                   even length, the onsite staggered magnetizations in the
+the representative pointJ  1/J2 = 0.8, we also study the                           central region generally take different values on the two
+square-like geometry withα= 1 as an additional check                               sublattices,  denoted  asAandB,  which  are  associated
+of geometry-dependent finite-size effects.                                         with the two orthogonal orientations of the dimer bonds
+   To probe the magnetic order of the system, we follow                            in the Shastry-Sutherland lattice.  However, they should
+the  strategy  in  Ref.  [34].   We  apply  staggered  pinning                     converge to the same value in the thermodynamic limit.
+fields along thezdirection with strengthh                         pin at the open     To account for this finite-size sublattice splitting,  we
+boundaries to explicitly break the SU(2) symmetry.  We                             perform  independent  linear  extrapolations  of  the  stag-
+seth      pin  =  0.5  in  this  work.   For  theJ          1/J2  =  0.8,  our     gered magnetizations averaged separately over theAand
+results show thath         pin = 0.2 results agree with theh      pin =            Bsites within the central region, denoted asm       As  andm       Bs ,
+0.5  results  in  the  thermodynamic  limit,  indicating  our                      as functions of the truncation errorεfor each geometry.
+conclusion is independent of the strength of the pinning                           The  extrapolated  values  in  theε→0  limit  are  subse-
+fields. The application of boundary pinning fields enables                         quently  averaged  to  yield  the  staggered  magnetization
+a direct measurement of the staggered magnetizationm                         s     for each finite geometry,
+in the bulk.  Specifically, we definem           s as                                                         ms = mAs  +m   Bs
+                                      X                                                                                      2       .                         (3)
+                      ms =   1Nc              ηi⟨S  zi ⟩,                    (2)   The difference betweenm      As  andm       Bs  provides a measure
+                                   i∈central
+                                                                                   of the finite-size splitting associated with the two inequiv-
+whereη           i =±1 denotes the phase factor of the expected                    alent sublattices and is reflected in the error bars of the
+staggered pattern, andN       c is the number of sites included                    subsequent  finite-size  scaling  analysis.   The  truncation-
+in the average.  The summation is taken over the central                           error extrapolations are shown in the Supplemental Ma-
+region of the cylinder to reduce boundary-induced arti-                            terials [44].  Finally, the resulting values ofm   s are extrap-
+facts:  for cylinders with even lengthL           x, we consider the               olated as a function of the inverse cylinder width 1/L  y,
+two central columns, as illustrated by the red dashed box                          to obtain the staggered magnetization in the thermody-
+in Fig. 1(a), whereas for cylinders with oddL     x, we con-                       namic limit.
+sider only the single central column.  For cylinders with                             Results  –We  first  investigate  systems  withJ           1/J2  =
+                                                                                                                                                           4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 4. Finite-size scaling of the staggered magnetizationm                         s extrapolated to zero DMRG truncation error (see the Supplemental
+Materials [44] for details) for different coupling ratios:  (a)J      1/J2 = 0.78, (b) 0.79, and (c) 0.81.  All data are obtained with a
+pinning field strength ofh    pin = 0.5.  As in Fig. 2,m    s converges to the same value in the thermodynamic limit for systems with
+different aspect ratiosα.
+
+
+0.8,   a  representative  point  deep  inside  the  interme-                     resulte        ∞ =−0.44896(2) [27] ande              ∞ =−0.4490 in  [45].
+diate  QSL  regime  proposed  in  several  previous  stud-                          After  establishing  thatJ         1/J2  =  0.8  lies  in  the  N´eel
+ies [17, 18, 23, 27].  To systematically approach the ther-                      AFM phase, we scan the interval 0.78≤J            1/J2 ≤0.81 to
+modynamic limit while mitigating finite-size effects,  we                        determine the N´eel AFM phase boundary on the small
+perform DMRG simulations on cylinders with four dis-                             J1/J2 side.  For these calculations, we use the same pin-
+tinct aspect ratios:α∈ {1,1.5,2,3}.  As shown in Fig. 2,                         ning field strength ofh    pin = 0.5.  The systematic finite-
+the staggered magnetization exhibits different finite-size                       size scaling for the specific values ofJ    1/J2 = 0.78,0.79,
+effects as expected [29, 34].  For aspect ratiosα= 1 and                         and  0.81  are  presented  in  Fig.  4,  showing  the  conver-
+1.5,m      s  decreases  with  the  increase  of  the  system  size,             gence of the staggered magnetization across multiple as-
+while systems with aspect ratioα= 3 show opposite be-                            pect ratios.  The resulting extrapolated values ofm   s are
+havior.  Mild finite-size effects are found for aspect ratio                     summarized as a function of the coupling ratioJ          1/J2 in
+α= 2.  A simple finite-size scaling of the staggered mag-                        the magnetic phase diagram shown in Fig. 1(b).  As cap-
+netizationm                  s  with a boundary pinning fieldh         pin  = 0.5tured in this phase diagram,m                s  exhibits a smooth and
+yields a consistent nonzero extrapolated value across all                        monotonic increase across the investigated interval.
+four geometries, withm        s  = 0.045(10) in the thermody-                       At the lower bound of our investigated range,J   1/J2 =
+namic  limit.   The  quoted  uncertainty  is  chosen  conser-                    0.78, we obtain an extrapolated magnetization ofm       s =
+vatively to encompass the spread among different aspect                          0.0023(53), suggesting this point lies at the boundary of
+ratios, thereby accounting for geometry-dependent effect.                        the N´eel AFM phase.  We notice that atJ    1/J2 = 0.78 for
+These results indicate thatJ         1/J2  = 0.8 lies in the N´eel               the 6×18 cylinder, one of the sublattice staggered mag-
+AFM phase.                                                                       netization becomes slightly negative because the central
+   We also check the effect of the strength of the pinning                       region no longer display the expected perfect N´eel stag-
+fields on the extrapolated staggered magnetization.  As                          gered pattern, consistent with the strong suppression of
+shown in the inset of Fig. 2, the difference of the values                       N´eel AFM order at this coupling.  Previous studies have
+of staggered magnetization forh      pin = 0.2 andh           pin = 0.5          established a broad consensus that the PVBS phase ter-
+vanishes in the thermodynamic limit.                                             minates  also  atJ    1/J2  ≈0.78  [16–20,  22–24,  27].   So
+   We  also  calculate  the  ground  state  energy  densitye                     within the resolution of our calculations, we find no ev-
+atJ    1/J2  =  0.8.   To  reduce  boundary  effect,  we  calcu-                 idence for a stable intermediate QSL phase, supporting
+late local site energies from the corresponding bond en-                         instead a direct transition between the PVBS and N´eel
+ergies  and  average  them  over  the  two  central  columns                     AFM phases.
+for  evenL    x  and  the  three  central  columns  for  oddL     x.                Conclusion  –In  this  work,  we  determine  the  pre-
+For each finite geometry, the resulting average energye                          cise  boundary  of  the  N´eel  AFM  phase  of  the  Shastry-
+is extrapolated to zero DMRG truncation error, with de-                          Sutherland model using large-scale DMRG calculations.
+tails in the Supplemental Materials [44].  The finite-size                       By employing staggered boundary pinning fields, we di-
+energies forL     y  = 6,8,10,and 12 are then extrapolated                       rectly  probe  the  bulk  magnetic  order  parameter  in  the
+using the power-law forme(L            y) =e   ∞ +AL   −4y  , with the           controversial  region  of  0.78≤J            1/J2  ≤0.81.   Our  re-
+exponent 4 chosen to maximize the coefficient of deter-                          sults demonstrate that the N´eel AFM order remains fi-
+minationR                  2 among the tested fits.  As shown in Fig. 3,         nite atJ    1/J2 = 0.8, a point which was believed to lie in
+the extrapolations forh      pin = 0.2 and 0.5 across multiple                   an  intermediate  spin  liquid  phase  [17,  18,  23,  27].   We
+aspect ratios yield mutually consistent estimates, giving                        find  that  the  boundary  of  the  N´eel  AFM  phase  is  at
+e∞  =−0.4490(1),  in agreement with the recent iPEPS                             J1/J2  ≈0.78,  where  the  PVBS  phase  terminates  [16–
+                                                                                                                                                            5
+
+20,  22–24,  27].   These  results  provide  evidence  against                                       ACKNOWLEDGMENTS
+an  intermediate  QSL  phase  in  the  Shastry-Sutherland
+model.  Our findings instead support a direct transition                            The calculation in this work is carried out with Ten-
+between the PVBS and N´eel AFM phases.                                           sorKit  [46].   The  computations  in  this  paper  were  run
+                                                                                 on  the  Siyuan-1  cluster  supported  by  the  Center  for
+                                                                                 High  Performance  Computing  at  Shanghai  Jiao  Tong
+                                                                                 University.  MQ acknowledges the support from the Na-
+                                                                                 tional Natural Science Foundation of China (Grant No.
+                                                                                 12522406  and  No.   12274290),  the  Innovation  Program
+                                                                                 for Quantum Science and Technology (2021ZD0301902),
+                                                                                 and  the  National  Key  Research  and  Development  Pro-
+                                                                                 gram of MOST of China (2022YFA1405400).
+
+
+
+
+
+ [1]P. W. Anderson, Resonating valence bonds:  A new kind                        [14]J.  Guo,  P.  Wang,  C.  Huang,  B.-B.  Chen,  W.  Hong,
+     of insulator?, Materials Research Bulletin8, 153 (1973).                          S.  Cai,  J.  Zhao,  J.  Han,  X.  Chen,  Y.  Zhou,et  al.,
+ [2]P.  W.  Anderson,  The  resonating  valence  bond  state                           Deconfined  quantum  critical  point  lost  in  pressurized
+     in  La2CuO4  and  superconductivity,  Science235,  1196                           SrCu2(BO3)2, Communications Physics8, 75 (2025).
+     (1987).                                                                     [15]P.  Corboz  and  F.  Mila,  Tensor  network  study  of  the
+ [3]L.  Balents,  Spin  liquids  in  frustrated  magnets,  nature                      shastry-sutherland  model  in  zero  magnetic  field,  Phys.
+     464, 199 (2010).                                                                  Rev. B87, 115144 (2013).
+ [4]L. Savary and L. Balents, Quantum spin liquids:  a re-                       [16]J. Y. Lee, Y.-Z. You, S. Sachdev, and A. Vishwanath, Sig-
+     view, Reports on Progress in Physics80, 016502 (2016).                            natures of a deconfined phase transition on the shastry-
+ [5]Y. Zhou, K. Kanoda, and T.-K. Ng, Quantum spin liquid                              sutherland  lattice:    Applications  to  quantum  critical
+     states, Rev. Mod. Phys.89, 025003 (2017).                                         SrCu2(BO3)2, Phys. Rev. X9, 041037 (2019).
+ [6]B. Sriram Shastry and B. Sutherland, Exact ground state                      [17]A.  Kele¸s  and  E.  Zhao,  Rise  and  fall  of  plaquette  or-
+     of a quantum mechanical antiferromagnet, Physica B+C                              der in the shastry-sutherland magnet revealed by pseud-
+     108, 1069 (1981).                                                                 ofermion functional renormalization group, Phys. Rev. B
+ [7]H. Kageyama, K. Yoshimura, R. Stern, N. V. Mushnikov,                              105, L041115 (2022).
+     K. Onizuka, M. Kato, K. Kosuge, C. P. Slichter, T. Goto,                    [18]J.  Yang,  A.  W.  Sandvik,  and  L.  Wang,  Quantum  crit-
+     and Y. Ueda, Exact dimer ground state and quantized                               icality  and  spin  liquid  phase  in  the  shastry-sutherland
+     magnetization plateaus in the two-dimensional spin sys-                           model, Phys. Rev. B105, L060409 (2022).
+     tem SrCu2(BO3)2, Phys. Rev. Lett.82, 3168 (1999).                           [19]L. Wang, Y. Zhang, and A. W. Sandvik, Quantum spin
+ [8]A. Koga and N. Kawakami, Quantum phase transitions                                 liquid  phase  in  the  shastry–sutherland  model  detected
+     in the shastry-sutherland model for SrCu2(BO3)2, Phys.                            by an improved level spectroscopic method, Chin. Phys.
+     Rev. Lett.84, 4461 (2000).                                                        Lett.39, 077502 (2022).
+ [9]K.  Kodama,  M.  Takigawa,  M.  Horvati´c,  C.  Berthier,                    [20]N. Xi, H. Chen, Z. Y. Xie, and R. Yu, Plaquette valence
+     H.  Kageyama,  Y.  Ueda,  S.  Miyahara,  F.  Becca,  and                          bond solid to antiferromagnet transition and deconfined
+     F. Mila, Magnetic superstructure in the two-dimensional                           quantum critical point of the shastry-sutherland model,
+     quantum  antiferromagnet  SrCu2(BO3)2,  Science298,                               Phys. Rev. B107, L220408 (2023).
+     395 (2002).                                                                 [21]W.-Y.  Liu,  X.-T.  Zhang,  Z.  Wang,  S.-S.  Gong,  W.-Q.
+[10]C. Boos, S. P. G. Crone, I. A. Niesen, P. Corboz, K. P.                            Chen, and Z.-C. Gu, Quantum criticality with emergent
+     Schmidt, and F. Mila, Competition between intermediate                            symmetry  in  the  extended  shastry-sutherland  model,
+     plaquette phases in SrCu2(BO3)2 under pressure, Phys.                             Phys. Rev. Lett.133, 026502 (2024).
+     Rev. B100, 140413(R) (2019).                                                [22]H. Chen,  G. Duan,  C. Liu,  Y. Cui,  W. Yu,  Z. Y. Xie,
+[11]J.  L.  Jim´enez,  S.  P.  Crone,  E.  Fogh,  M.  E.  Zayed,                       and  R.  Yu,  Spin  excitations  of  the  shastry-sutherland
+     R. Lortz,  E. Pomjakushina,  K. Conder,  A. M. L¨auchli,                          model – altermagnetism and deconfined quantum criti-
+     L.  Weber,  S.  Wessel,et  al.,  A  quantum  magnetic  ana-                       cality (2025), arXiv:2411.00301 [cond-mat.str-el].
+     logue  to  the  critical  point  of  water,  Nature592,  370                [23]L.  L.  Viteritti,  R.  Rende,  A.  Parola,  S.  Goldt,  and
+     (2021).                                                                           F. Becca, Transformer wave function for two dimensional
+[12]Y.  Cui,  L.  Liu,  H.  Lin,  K.-H.  Wu,  W.  Hong,  X.  Liu,                      frustrated magnets:  Emergence of a spin-liquid phase in
+     C. Li, Z. Hu, N. Xi, S. Li, R. Yu, A. W. Sandvik, and                             the shastry-sutherland model, Phys. Rev. B111, 134411
+     W. Yu, Proximate deconfined quantum critical point in                             (2025).
+     SrCu2(BO3)2, Science380, 1179 (2023).                                       [24]X. Qian, R. Lv, J. Y. Lee, and M. Qin, From the shastry-
+[13]Y. Cui, K. Du, Z. Wu, S. Li, P. Yang, Y. Chen, X. Xu,                              sutherland model to theJ      1−J   2 heisenberg model, Phys.
+     H.  Chen,  C.  Li,  J.  Liu,  B.  Wang,  W.  Hong,  S.  Li,                       Rev. B111, L241113 (2025).
+     Z.  Xie,  J.  Cheng,  B.  Normand,  R.  Yu,  and  W.  Yu,                   [25]A.  Maity,  F.  Ferrari,  S.  Capponi,  K.  Penc,  J.  Potten,
+     Two  plaquette-singlet  phases  and  emergent  so(5)  de-                         T. M¨uller, A. Feuerpfeil, R. Thomale, J. Y. Lee, R. Sama-
+     confined  quantum  criticality  in  SrCu2(BO3)2  (2025),                          jdar,  and  Y.  Iqbal,  Evidence  for  aZ  2  dirac  spin  liq-
+     arXiv:2411.00302 [cond-mat.str-el].                                               uid in the generalized shastry-sutherland model (2026),
+                                                                                                                                                                 6
+
+     arXiv:2501.00096 [cond-mat.str-el].                                                  Rev. B113, 155127 (2026).
+[26]L.-C.  Chen  and  Z.-X.  Liu,  Deconfined  gapless  phases                      [46]J.  Haegeman,  The  code  is  developed  with  TensorKit
+     and criticalities in the shastry-sutherland antiferromag-                            package at https://github.com/Jutho/TensorKit.jl.
+     net, Phys. Rev. B113, 224440 (2026).
+[27]P. Corboz, Y. Zhang, B. Ponsioen, and F. Mila, Quan-
+     tum  spin  liquid  phase  in  the  shastry-sutherland  model
+     revealed  by  high-precision  infinite  projected  entangled-
+     pair states, Phys. Rev. Lett.136, 186701 (2026).
+[28]A. W. Sandvik, Computational studies of quantum spin
+     systems, AIP Conference Proceedings1297, 135 (2010).
+[29]E.   Stoudenmire   and   S.   R.   White,   Studying   two-
+     dimensional systems with the density matrix renormal-
+     ization  group,  Annual  Review  of  Condensed  Matter
+     Physics3, 111–128 (2012).
+[30]F. F. Assaad and I. F. Herbut, Pinning the order:  The
+     nature of quantum criticality in the hubbard model on
+     honeycomb lattice, Phys. Rev. X3, 031010 (2013).
+[31]S.  R.  White,  Density  matrix  formulation  for  quantum
+     renormalization groups, Phys. Rev. Lett.69, 2863 (1992).
+[32]S.  R.  White,  Density-matrix  algorithms  for  quantum
+     renormalization groups, Phys. Rev. B48, 10345 (1993).
+[33]U. Schollw¨ock, The density-matrix renormalization group
+     in  the  age  of  matrix  product  states,  Annals  of  Physics
+     326, 96 (2011), january 2011 Special Issue.
+[34]S. R. White and A. L. Chernyshev, Ne´el order in square
+     and  triangular  lattice  heisenberg  models,  Phys.  Rev.
+     Lett.99, 127004 (2007).
+[35]S.       ¨Ostlund and S. Rommer, Thermodynamic limit of den-
+     sity  matrix  renormalization,  Phys.  Rev.  Lett.75,  3537
+     (1995).
+[36]J.  Eisert,  M.  Cramer,  and  M.  B.  Plenio,  Colloquium:
+     Area laws for the entanglement entropy, Rev. Mod. Phys.
+     82, 277 (2010).
+[37]J.  I.  Cirac,  D.  P´erez-Garc´ıa,  N.  Schuch,  and  F.  Ver-
+     straete, Matrix product states and projected entangled
+     pair states:  Concepts, symmetries, theorems, Rev. Mod.
+     Phys.93, 045003 (2021).
+[38]T.  Xiang,Density  Matrix  and  Tensor  Network  Renor-
+     malization(Cambridge University Press, 2023).
+[39]S.-S. Gong, W. Zhu, D. N. Sheng, O. I. Motrunich, and
+     M. P. A. Fisher, Plaquette ordered phase and quantum
+     phase  diagram  in  the  spin- 12  J1−J   2  square  heisenberg
+     model, Phys. Rev. Lett.113, 027201 (2014).
+[40]L.  Wang  and  A.  W.  Sandvik,  Critical  level  crossings
+     and  gapless  spin  liquid  in  the  square-lattice  spin-1/2
+     J1−J   2 heisenberg antiferromagnet, Phys. Rev. Lett.121,
+     107202 (2018).
+[41]X. Qian and M. Qin, Absence of spin liquid phase in the
+     J1 −J   2  heisenberg  model  on  the  square  lattice,  Phys.
+     Rev. B109, L161103 (2024).
+[42]J. Huang, X. Qian, and M. Qin, On the magnetization of
+     the 120°order of the spin-1/2 triangular lattice heisen-
+     berg model:  a dmrg revisited, Journal of Physics:  Con-
+     densed Matter36, 185602 (2024).
+[43]C. A. Gallegos, S. Jiang, S. R. White, and A. L. Cherny-
+     shev,  Phase  diagram  of  the  easy-axis  triangular-lattice
+     J1−J   2 model, Phys. Rev. Lett.134, 196702 (2025).
+[44]See  Supplemental  Materials  for  all  truncation-error  ex-
+     trapolations of the staggered magnetization and bulk en-
+     ergies, as well as additional finite-size scaling results for
+     the ground state energies atJ    1/J2 = 0.78, 0.79, and 0.81.
+[45]H. Chen, Y. Fu, W. Yu, R. Yu, and Z. Y. Xie, Single-layer
+     framework  of  variational  tensor  network  states,  Phys.
+                                                                                                                                            7
+
+                                                Supplemental Materials for
+              “On the precise boundary of the N´eel antiferromagnetic phase in the
+                                                Shastry-Sutherland model”
+
+                                      Rongyi Lv,1 Xiangjian Qian,1,2    and Mingpu Qin1,3,∗
+                     1Key Laboratory of Artificial Structures and Quantum Control (Ministry of Education),
+                   School of Physics and Astronomy, Shanghai Jiao Tong University, Shanghai 200240, China
+                       2Tsung-Dao Lee Institute, Shanghai Jiao Tong University, Shanghai 200240, China
+                                           3Hefei National Laboratory, Hefei 230088, China
+                                                     (Dated:  September 22, 2026)
+
+
+ I.   TRUNCATION-ERROR EXTRAPOLATIONS                                        II.   EXTRAPOLATIONS OF THE GROUND
+     OF THE STAGGERED MAGNETIZATION                                                           STATE ENERGIES
+
+                                                                            We further determine the thermodynamic limit ground
+                                                                         state energy densities atJ    1/J2 = 0.78, 0.79, and 0.81 us-
+                                                                         ing the same finite-size scaling procedure as in Fig. 3 of
+  Following the procedure described in the main text, we                 the main text.  Fig. S7 shows the finite-size scaling of the
+perform linear extrapolations of the staggered magnetiza-                bulk energies for these coupling ratios on cylinders with
+tionsm         As  andm       Bs , averaged separately over theAandB     different  aspect  ratios.   Each  data  point  is  obtained  by
+sites within the central region, as functions of the trunca-             linearly extrapolating the corresponding finite-geometry
+tion errorεfor each finite geometry.  All truncation-error               bulk energy to zero DMRG truncation error.  The com-
+extrapolations used in the finite-size scaling analysis are              plete set of truncation-error extrapolations of the energies
+shown in Figs. S1, S2, S3, S4, S5, and S6.                               used in this work is presented in Figs. S8 and S9.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+∗ qinmingpu@sjtu.edu.cn
+                                                                                                                                                                                              8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  S1.   Extrapolations  of  the  sublattice  staggered  magnetizationsm                           As  andm       Bs   as  functions  of  the  truncation  errorεfor
+different system sizes (L  y ×L   x) atJ    1/J2 = 0.78 withh            pin = 0.5.
+                                                                                                                                                                                              9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  S2.   Extrapolations  of  the  sublattice  staggered  magnetizationsm                           As  andm       Bs   as  functions  of  the  truncation  errorεfor
+different system sizes (L  y ×L   x) atJ    1/J2 = 0.79 withh            pin = 0.5.
+                                                                                                                                                                                            10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  S3.   Extrapolations  of  the  sublattice  staggered  magnetizationsm                           As  andm       Bs   as  functions  of  the  truncation  errorεfor
+different system sizes (L  y ×L   x) atJ    1/J2 = 0.8 withh            pin = 0.2.
+                                                                                                                                                                                            11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  S4.   Extrapolations  of  the  sublattice  staggered  magnetizationsm                           As  andm       Bs   as  functions  of  the  truncation  errorεfor
+different system sizes (L  y ×L   x) atJ    1/J2 = 0.8 withh            pin = 0.5.
+                                                                                                                                                                                            12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  S5.   Extrapolations  of  the  sublattice  staggered  magnetizationsm                           As  andm       Bs   as  functions  of  the  truncation  errorεfor
+different system sizes (L  y ×L   x) atJ    1/J2 = 0.8 withh            pin = 0.5.
+                                                                                                                                                                                           13
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  S6.   Extrapolations  of  the  sublattice  staggered  magnetizationsm                           As  andm       Bs   as  functions  of  the  truncation  errorεfor
+different system sizes (L  y ×L   x) atJ    1/J2 = 0.81 withh            pin = 0.5.
+                                                                                                                                                                          14
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S7.  Finite-size scaling of the ground state energy densityefor the Shastry-Sutherland model at different coupling ratios:
+(a)J      1/J2 = 0.78, (b) 0.79, and (c) 0.81.  All data are obtained with a pinning field strength ofh              pin = 0.5.  The bulk energies
+extrapolated  to  zero  DMRG  truncation  error  are  shown  (see  Fig.  S9  for  the  corresponding  extrapolations)  and  are  further
+extrapolated usinge(L             y) =e  ∞ +AL  −4y  .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S8.  Extrapolations of the bulk ground state energy densityeas functions of the truncation errorεfor aspect ratioα= 1
+atJ    1/J2 = 0.8 withh            pin = 0.5.
+                                                                                                                                                                                    15
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S9.  Extrapolations of the bulk ground state energy densityeas functions of the truncation errorε.  From top to bottom,
+the five rows correspond to (J  1/J2, hpin) = (0.78,0.5), (0.79,0.5), (0.8,0.2), (0.8,0.5), and (0.81,0.5), while the three columns
+correspond to aspect ratiosα= 1.5, 2, and 3, respectively.

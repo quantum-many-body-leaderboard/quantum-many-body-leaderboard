@@ -1,0 +1,566 @@
+Valence-bond crystalline order in the s = 1/2  J1–J2
+model  on the honeycomb lattice
+
+                  R  F  Bishop1, P  H  Y  Li1  and  C E  Campbell2
+                  1 School of Physics and Astronomy, Schuster Building, The University of Manchester,
+                  Manchester, M13 9PL, UK
+                  2  School of Physics and Astronomy, University of Minnesota, 116 Church Street SE,
+                  Minneapolis, Minnesota 55455, USA
+
+                  Abstract.    Using  the  coupled  cluster  method  we  study  the  phase  diagram  of  the
+                  spin-1/2  Heisenberg  antiferromagnet on  a  honeycomb  lattice  with  nearest-neighbour
+                  exchange coupling J1 > 0 and frustrating next-nearest-neighbour coupling J2 ≡ xJ1 >
+                  0.   In  the  range  0  <  x  <  1  we  ﬁnd  four  phases  exhibiting  respectively  N´eel,  6-spin
+                  plaquette,  staggered  dimer,  and  N´eel-II  orderings,  with  quantum  critical  points  at
+                  xc1  ≈  0.207(3),  xc2  ≈  0.385(10),  and  xc3  ≈  0.65(5).   The  transitions  at  xc1  and  xc3
+                  appear to be continuous (and hence deconﬁned) ones, while that at xc2  appears to be
+                  a direct ﬁrst-order one.
+
+
+
+                  PACS numbers:  75.10.Jm, 75.10.Kt, 75.30.Kz, 75.50.Ee
+
+1.  Introduction
+
+Frustrated quantum spin models on the two-dimensional (2D) honeycomb lattice have
+become the objects of intense study.  Quantum ﬂuctuations on spin lattices are generally
+larger for lower dimensionality D and smaller values of the coordination number z of the
+lattice, as well as for smaller values of the spin quantum number s of the lattice spins.
+Spin-1/2 models on the honeycomb lattice (with D = 2 and z = 3) are thus expected to
+have large quantum ﬂuctuations,  which,  in turn, open up the theoretical possibility  of
+realizing exotic ground-state (GS) phases with novel magnetic properties and/or novel
+ordering.
+     Additional  impetus  for  studying  2D  honeycomb  models  came  from  the  reported
+presence  of  a  quantum  spin-liquid  (QSL)  phase  in  both  the  exactly  soluble  (albeit
+somewhat artiﬁcial) Kitaev model of spin-1/2 particles on a honeycomb lattice [1], and
+the  half-ﬁlled Fermi-Hubbard  (FH) model  on a honeycomb  lattice  [2].  Thus,  Meng  et
+al. [2] reported in a quantum Monte Carlo (QMC) calculation, free of the usual fermion
+sign problems, the presence in the honeycomb FH model of a QSL phase, at moderate
+values of the on-site Coulomb repulsion strength (U), situated between the nonmagnetic
+metallic  insulator  (or  semi-metal)  phase  at  low  U  and  the  antiferromagnetic  (AFM)
+Mott  insulator  phase  for  large  U.   Since  the  U  →  ∞  limit  corresponds  to  the  pure
+Valence-bond crystalline order:  s = 1/2 J1–J2  model on the honeycomb lattice              2
+
+Heisenberg antiferromagnet (HAFM), i.e., with nearest-neighbour (NN) interactions (of
+strength J1 > 0) only, the Mott insulator phase of the Hubbard model corresponds to
+the N´eel-ordered phase of the HAFM spin-lattice model.  Higher-order terms in the t/U
+expansion of the FH model (where t is the strength parameter of the NN hopping term)
+lead to frustrating exchange couplings in the corresponding spin-lattice model in which
+the HAFM with NN exchange  couplings  is the leading term in the large-U  expansion.
+The  simplest  such  frustrated  model  is  the  J1–J2  model  studied  here,  where  the  next-
+nearest-neighbour  (NNN) spin  pairs have  an  additional exchange  coupling  of strength
+J2 > 0.
+     A  later  study  of  the  FH  model,  using  a  Schwinger  boson  mean  ﬁeld  theory  (SB-
+MFT)  approach  [3],  provided  some  corroborating  evidence  for  a  Z2  QSL  state;  and  a
+Schwinger fermion representation of the same model [4] gave some evidence for both a
+Z2  QSL phase and a chiral antiferromagnetic phase.  However,  later numerically  exact
+QMC  calculations  by  Sorella  et  al.  [5],  with  much  larger  clusters  than  those  used  by
+Meng et al. [2], have cast considerable doubt on their original ﬁnding of an intermediate
+QSL phase.  We note in this context that the presence  of magnetically  ordered phases
+is  diﬃcult  to  detect  by  standard  QMC  techniques  when  the  ordering  is  small,  since
+the usual quantity measured is the square of the order parameter.  As a consequence, in
+addition to the usual problem of ﬁnding an appropriate ﬁnite-size extrapolation formula,
+very large clusters are required with high precision.  It is this eﬀect that has apparently
+caused  the  controversy  between  Refs.  [2]  and  [5]  regarding  the  existence  or  not  of  an
+intermediate  QSL  phase  in  the  FH  model on  the  honeycomb  lattice.  In  a  very  recent
+paper [6] this controversy has eﬀectively been resolved by using a novel QMC technique
+that  measures  the  local  magnetic  order  parameter  M  directly,  rather  than  its  square,
+M 2.  Use of this technique leads [6] to the rather ﬁrm conclusion that in the FH model
+on the honeycomb lattice there is a single continuous quantum phase transition between
+the nonmagnetic semi-metal and AFM Mott insulator phases, with no intermediate QSL
+phase.
+     It  is  also  pertinent  to  ask  whether  the  J1–J2  model  actually  does  represent  well
+the  low-energy  physics  of  the  FH  model  on  the  honeycomb  lattice.    While  this  is
+undoubtedly true for small enough values of the Hubbard parameter t/U, it is interesting
+to enquire more deeply and quantitatively about this question.  In particular, two recent
+studies [7, 8] have thrown considerable light on the relationship between the physics of
+FH  and  J1–J2  models  on  the  honeycomb  lattice.  Thus,  in  the  ﬁrst  place,  it  has  been
+shown [7] that the ratio x ≡ J2/J1 actually stays quite small over a large range of values
+of t/U.  More speciﬁcally, it is always smaller than the value xc1, which is the point at
+which  the  N´eel  order,  present  at x  = 0,  ﬁrst  vanishes  as  x  is  increased,  as  we  discuss
+below.  Secondly, in a very interesting paper [8] that studied in detail the full low-energy
+spin  model  arising  from  the  FH  model  on  the  honeycomb  lattice,  it  was  shown  that
+six-spin interactions on hexagonal plaquettes are the most important leading correction
+to the NN J1 bonds, rather than the NNN J2 bonds.
+     Despite  all  of  the  above  caveats  of  the  relevance  of  the  J1–J2  model  on  the
+Valence-bond crystalline order:  s = 1/2 J1–J2  model on the honeycomb lattice              3
+
+
+
+
+                              J1      J
+                                       2
+
+
+
+
+
+
+
+                                        (a)                             (b)
+
+
+                  Figure  1.  (Colour online) The J1–J2 model on the honeycomb lattice (with J1 = 1),
+                  showing  (a)  the  N´eel  and  (b)  N´eel-II  states.   The  arrows  represent  spins  located  on
+                  lattice sites •.
+
+
+honeycomb   lattice   to   describe   the   low-energy   physics   of   the   corresponding   FH
+honeycomb model, it remains of very great interest in its own right.  This has possibly
+even been heightened by the considerable uncertainty that has existed until very recently,
+as discussed above, as to whether or not a QSL phase exists for the FH model.  For this
+and other reasons, this spin-lattice model and its generalizations [speciﬁcally to include
+also  next-next-nearest-neighbour  (NNNN)  bonds  with  strength  J3],  have  been  much
+studied [9–20] recently.
+
+2.  The  model
+
+The Hamiltonian of the model studied here is given by∑∑
+                  H = J1          si · sj + J2         si · sk ,                                                              (1)
+                             ⟨i,j⟩              ⟨⟨i,k⟩⟩
+where  index  i  runs  over  all  honeycomb  lattice  sites,  and  indices  j  and  k  run  over  all
+NN and NNN sites to i, respectively, counting each bond once only.  Each lattice site i
+carries a particle with spin s =  12  and a spin operator si = (sxi , syi , szi ).
+      The lattice and exchange bonds are illustrated in ﬁgure 1.  We are interested in the
+case where both NN and NNN bonds are AFM in nature, and henceforth, we put J1 = 1
+to set the energy scale and deﬁne the frustration parameter x ≡ J2/J1.
+      The  classical  (s →  ∞) ground  state  of  the  model  is  N´eel-ordered  for  0 ≤  x  <   16,
+whereas  for  all  values  x  >    16  the  spins  are  spirally  ordered.    In  this  latter  regime,
+the  classical  model  has  a  one-parameter  family  of degenerate  incommensurate  ground
+states  where  the spiral  wave  vector  can orient in any  direction.  At leading order,  i.e.,
+O(1/s),  spin-wave  ﬂuctuations  lift  this  accidental  degeneracy  in  favour  of  particular
+wave  vectors  [9].  For the extreme  quantum  case,  s = 1/2,  considered  here,  we  expect
+quantum ﬂuctuations to be strong enough to destroy the spiral order over a wide range
+of values of x.  In a recent paper [15] that used the coupled cluster method (CCM), we
+have veriﬁed that expectation for all values in the range 0 ≤ x ≤ 1 considered here.
+Valence-bond crystalline order:  s = 1/2 J1–J2  model on the honeycomb lattice              4
+
+      We  showed  too  [15]  that  quantum  ﬂuctuations  preserve  the  N´eel  order  to  higher
+values  of  x  than  in  the  classical  model.   Thus,  we  found  that  the  GS  phase  of  the
+s = 1/2 model is N´eel-ordered for x < xc1 ≈ 0.207(3).  At x = xc1  there appears to be a
+continuous deconﬁned phase transition to a GS paramagnetic phase exhibiting plaquette
+valence-bond crystalline (PVBC) order.  Furthermore, we found the PVBC state to be
+the stable GS phase in the regime xc1  < x < xc2, where xc2  ≈ 0.385(10).  Our aim now
+is to investigate further the transition at x = xc2  and the nature of the GS phase(s) for
+x > xc2.
+
+3.  Coupled  cluster  method
+
+The CCM [21–23], that we will employ here, has been very successfully applied to many
+models in quantum magnetism,  including models on the honeycomb  lattice [10, 15, 16]
+of interest here.  It provides a well-structured  means of studying various candidate GS
+phases and their regimes of stability, for each of which the description is systematically
+improvable  in  terms  of  well-deﬁned  truncation  hierarchies  for  the  quantum  multi-spin
+correlations.  We now brieﬂy describe the method and refer the reader to the literature
+(see, e.g., [21–30]) for further details.
+      The starting point for any CCM calculation is the selection of a suitable normalized
+model (or reference) state |Φ⟩.  For spin systems it is often convenient to take a classical
+(uncorrelated)  GS  wave  function  for  |Φ⟩.    For  the  present  case  we  choose  the  N´eel
+state  shown  in  ﬁgure  1(a)  for  small  values  of  the  frustration  parameter  x.   For  larger
+values  of  x  we  could  choose  one  of  the  classical  spiral  GS  phases  to  provide  a  CCM
+model  state,  but  as  we  have  argued  above  these  are  likely  to  be  very  fragile  against
+quantum  ﬂuctuations.    Instead,  for  larger  values  of  x,  we  choose  here  the  so-called
+N´eel-II phase shown in ﬁgure 1(b) (which has also been denoted as the anti-N´eel phase
+earlier [15]), that occurs in the classical (s → ∞) model only at the isolated and highly
+degenerate critical point x =   12.  Whereas the N´eel state has all 3 NN spins to a given
+spin antiparallel to it, the N´eel-II state also comprises AFM sawtooth chains along one
+of  the  three  equivalent  honeycomb  directions,  but  with  NN  spins  on  adjacent  chains
+now parallel to one another.  The N´eel-II state is also sometimes known in the literature
+as  the  collinear  striped  AFM  phase  for  reasons  that  should  be  clear  from  ﬁgure  1(b),
+although we prefer to avoid this name here since it is open to confusion with other AFM
+states on the honeycomb lattice that have also been called striped states (see, e.g., [16]).
+The N´eel-II state is thus also easily seen to break the lattice rotational symmetry.
+      It is convenient  to perform a mathematical  rotation of the local axes  of the spins
+such that all spins in the reference state align along the negative z-axis.  The Schr¨odinger
+ground-state  ket  and  bra  CCM  equations  are  H|Ψ⟩   =   E|Ψ⟩  and  ⟨ ˜Ψ|H   =   E⟨ ˜Ψ|
+respectively.   The  CCM  employs  the  exponential  parametrizations,  |Ψ⟩  =  eS|Φ⟩  and
+⟨ ˜Ψ|  =  ⟨Φ| ˜Se−S.   The  correlation  operator  S  is  expressed  as  S  =  ∑I⁄=0 SIC+I   and  its
+counterpart is  ˜S  = 1 + ∑I⁄=0  ˜SIC−I   where,  by deﬁnition,  C−I |Φ⟩ = 0 = ⟨Φ|C+I , ∀I  ⁄= 0.
+Thus  we  have  the  normalization  condition  ⟨ ˜Ψ|Ψ⟩   =   ⟨Φ|Φ⟩   ≡   1.     The  multispin
+Valence-bond crystalline order:  s = 1/2 J1–J2  model on the honeycomb lattice              5
+
+creation  operators  C+I    ≡  (C−I )†,  with  C+0   ≡  1,  are  written  as  C+I    ≡  s+j1s+j2 · · · s+jn,
+in  terms  of  the  single-site  spin-raising  operators  s+k   ≡  sxk  + isyk.   The  GS  energy  is
+E  = ⟨Φ|e−SHeS|Φ⟩; and the local average onsite magnetization M  in the rotated spin
+coordinates is M  ≡ − 1N ⟨ ˜Ψ| ∑Nj=1 szj|Ψ⟩.  The ket- and bra-state correlation coeﬃcients
+(SI,  ˜SI)  are  calculated  by  requiring  the  expectation  value   ¯H   =   ⟨ ˜Ψ|H|Ψ⟩  to  be  a
+minimum  with  respect  to  all  parameters  (SI,  ˜SI),  and  hence  ⟨Φ|C−I e−SHeS|Φ⟩  =  0
+and ⟨Φ| ˜S(e−SHeS − E0)C+I |Φ⟩ = 0 ; ∀I ⁄= 0.
+      The  CCM  formalism  is  exact  if  all  spin  conﬁgurations  are  included  in  the  S  and
+˜S  operators.  In  practice,  however,  truncations  are  needed.   We  employ  here  the  well-
+studied localized (lattice-animal-based subsystem) LSUBm scheme [24–30], in which all
+possible multi-spin-ﬂip correlations over diﬀerent locales on the lattice deﬁned by m or
+fewer  contiguous  lattice  sites  are  retained.  Such  clusters  are  deﬁned  to  be  contiguous
+in  this  sense  if  every  site  in  the  cluster  is  adjacent  (as  a  nearest  neighbour)  to  at
+least  one  other  site  in  the  cluster.   The  interested  reader  is  referred  to  the  literature
+(see,  e.g.,  [24])  for  ﬁgures  illustrating  the  LSUBm  scheme  in  detail.    The  numbers
+Nf  of  such  fundamental  conﬁgurations  that  are  distinct  under  the  (space  and  point-
+group) symmetries of the lattice and the model state increase rapidly with the LSUBm
+truncation index m.  Thus the highest LSUBm level that we can reach here, even with
+massive  parallelization  and  the  use  of  supercomputing  resources  [31],  is  LSUB12,  for
+which Nf  = 293309 for the N´eel-II state.
+      Since,   in   any   truncation,   CCM   parametrizations   automatically   satisfy   the
+Goldstone linked cluster theorem, we may work from the outset in the thermodynamic
+limit, N  → ∞.  Nevertheless, the raw LSUBm data still need to be extrapolated to the
+exact m → ∞ limit.  Thus, for the GS energy per spin, E/N, we use (see, e.g., [26–29])
+                  E(m)/N  = a0 + a1m−2 + a2m−4 ;                                                               (2)
+while for the magnetic order parameter, M, deﬁned above, we use either the scheme
+                  M(m) = b0 + b1m−1 + b2m−2 ,                                                                    (3)
+for systems showing no or only slight frustration (see, e.g., [25, 27]), or the scheme
+                  M(m) = c0 + c1m−1/2 + b2m−3/2 ,                                                               (4)
+for  more  strongly  frustrated  systems  or  ones  showing  a  GS  order-disorder  transition
+(see, e.g., [28, 29]).
+      In  principle  one  may  always  test  for  the  correct  leading  exponent  in  the  LSUBm
+extrapolation  scheme  for  any  physical  quantity  Z   by  ﬁrst  ﬁtting  to  the  formula
+Z(m)  =  d0 + d1m−ν.   For  the  GS  energy,  E/N,  we  generally  ﬁnd  ν  ≈  2  for  a  wide
+variety  of  spin  systems,  both  non-frustrated  and  frustrated.   For  the  magnetic  order
+parameter, M, on the other hand we generally ﬁnd ν ≈ 1 for unfrustrated systems (or
+for ones with very small frustration), and ν ≈ 0.5 for more strongly frustrated systems.
+We  discuss  this  more  fully  in  section  4  in  the  context  of  the  present  model.   These
+general results for the leading exponents then provide the basis for equations (2)-(4).
+Valence-bond crystalline order:  s = 1/2 J1–J2  model on the honeycomb lattice              6
+
+
+                               −0.35
+
+                                −0.4
+
+                               −0.45
+
+                                −0.5
+
+                               −0.55      LSUB6
+                                         LSUB10LSUB8
+                                −0.6   LSUB∞(1)LSUB12
+                               −0.65   LSUB∞(2)
+                                     0        0.2      0.4       0.6      0.8       1
+                                                            x
+
+                  Figure 2.  (Colour online) CCM LSUBm results for the GS energy per spin, E/N, as
+                  a function of the frustration parameter, x ≡ J2/J1, of the spin-1/2 J1–J2  honeycomb
+                  model  (with  J1  >  0),  using  the  N´eel  (left  curves)  and  N´eel-II  (right  curves)  states
+                  as  model  states,  with  m  =  {6, 8, 10, 12}.   The  extrapolated  curves  LSUB∞(1)  and
+                  LSUB∞(2) use this  data set and the restricted set m = {8, 10, 12} respectively, with
+                  equation (2).
+
+
+      Finally, we  note that since  the hexagon is an important structural element  of the
+honeycomb lattice we never use LSUBm data with m < 6 to perform the extrapolations.
+Furthermore,  in  any  CCM  calculation  using  the  LSUBm  scheme,  we  always  need  to
+check whether the lowest-order potentially usable approximation, namely LSUB6 here,
+is actually usable in the sense of ﬁtting the extrapolation scheme to be used.  Although
+it  generally  does  do  so,  there  are  also  (relatively  rare)  occasions  when  it  does  not,
+presumably due either to the result being too far removed from the asymptotic m → ∞
+limit  or  to  the  fact  that  for  the  particular  CCM  model  state  used  these  lowest-order
+approximants omit one or more of the most important multispin correlations.
+
+4.  Results and  discussion
+
+In ﬁgures 2 and 3 we show our results for the GS energy per spin, E/N, and magnetic
+order parameter, M, using both the N´eel and N´eel-II states as CCM model states.
+      Figure 2 shows clearly that the CCM LSUBm results for the GS energy extrapolate
+extremely rapidly with increasing order m of approximation to the exact LSUB∞ limit.
+It also shows clearly how the LSUBm results based on both the N´eel and N´eel-II model
+states naturally terminate at some critical values of the frustration parameter x, which
+themselves depend on the order parameter m of the particular LSUBm approximation,
+beyond  which  no  real  CCM  solution  can  be  found.   Such  termination  points  of  CCM
+solutions  are  well  studied  (and  see,  e.g.,  Refs.  [22, 23])  and  well  understood.    They
+are  simply  reﬂections  of  the  quantum  phase  transitions  in  the  system  and,  as  such,
+may themselves be used to estimate the positions of the corresponding quantum critical
+points [22].  We do not, however, examine the extrapolation properties of the termination
+Valence-bond crystalline order:  s = 1/2 J1–J2  model on the honeycomb lattice              7
+
+points further here, since we have more accurate criteria available to us to determine the
+quantum  critical  points,  as  we  discuss  more  fully  below.   Nevertheless,  ﬁgure  2  shows
+clearly that the CCM LSUBm results based on both the N´eel and N´eel-II model states
+for ﬁnite values of m extend beyond  the corresponding LSUB∞ transition points into
+unphysical  regions  where  such  states  in  the  real  (LSUB∞)  case  have  ceased  to  exist.
+Such unphysical regimes diminish in size to zero as m → ∞.  Figure 2 shows that there
+are  no  energy  crossings  between  the  N´eel  and  N´eel-II  phases  at  any  LSUBm  level  of
+approximation,  and  that there  is  a  clear  range  of  values  of  the  frustration  parameter,
+xc1  < x < xc2,  in  which  neither  the N´eel  nor the  N´eel-II states  provide  a physical  GS
+phase.   The  simple  unextrapolated  LSUB12  estimates  for  the  two  termination  points,
+namely  xc1  ≲  0.23  and  xc2  /greaterorsimilar  0.35 already  provide  remarkably  good  estimates  for  the
+corresponding quantum critical points, as we shall see below.
+     We  note  from  ﬁgure  2  that  the  LSUBm  estimates  for  the  GS  energy  approach
+the  asymptotic  LSUB∞  limit  very  rapidly,  and  hence  the  extrapolations  are  rather
+insensitive to both the ﬁtting scheme and data set used.  Nevertheless, a ﬁt of the form
+E(m)/N  = e0 + e1m−ν  for the N´eel-II LSUBm  results  gives  the usual expected  result
+ν  ≈  2  for  the  data  set  m  =  {8, 10, 12},  whereas  the  inclusion  of  the  LSUB6  result
+leads  to  a  spurious  value  ν  ≈  1.   By  contrast,  both  data  sets  m  =  {6, 8, 10, 12}  and
+m  =  {8, 10, 12} yield  a  value  ν  ≈  2  for  the  corresponding  LSUBm  N´eel  results.   The
+anomalous nature of the LSUB6 N´eel-II approximation is discussed further below with
+regard to the magnetic order parameter M, for which its behaviour is more critical and
+more pronounced.
+     We  now  turn  our  attention  to  the  corresponding  CCM  LSUBm  results  for  the
+magnetic order parameter, as shown in ﬁgure 3, using both the N´eel and N´eel-II states
+as the CCM model states.  For the present model we ﬁnd that an extrapolation formula
+for the magnetic order parameter of the form M(m) = d0+d1m−ν ﬁts the data well on the
+N´eel side with a leading exponent ν ≈ 1 for values of the frustration parameter x equal
+to or very close to zero, whereas the value ν ≈ 0.5 accurately ﬁts the data over most of
+the range x /greaterorsimilar 0.1.  Accordingly, in ﬁgure 3 on the N´eel side we show extrapolations using
+both equations (3) and (4).  Equation (3), which is appropriate when J2 = 0, yields the
+value M  ≈ 0.271(2) for the unfrustrated HAFM on the hexagonal lattice (i.e., with NN
+interactions  only),  in  excellent  agreement  with  the  best  available  QMC  estimate  [32],
+M  = 0.2677(6).  Our own error estimates are based on sensitivity checks using diﬀerent
+LSUBm data sets.  Similarly we see from ﬁgure 3 that all extrapolations give essentially
+the same estimate xc1 ≈ 0.207(3) for the point where N´eel order vanishes (M  → 0).  We
+showed previously  [15] that the phase transition at x = xc1  is a continuous deconﬁned
+one between states with N´eel and PVBC order.
+     Figure 3 also shows corresponding results for M  for a possible phase with N´eel-II
+ordering.  In this case we ﬁnd (even by simple inspection by eye) that the LSUB6 results
+do not ﬁt with a leading-order extrapolation scheme  of the form M(m) = d0 + d1m−ν
+with any value of ν.  By contrast, the LSUBm results with m > 6 are accurately ﬁtted
+by this form with a leading-order exponent ν ≈ 0.5 over the whole range of values of the
+Valence-bond crystalline order:  s = 1/2 J1–J2  model on the honeycomb lattice              8
+
+
+                                 0.35
+
+                                  0.3
+
+                                 0.25
+
+                                  0.2
+
+                                 0.15
+
+                                  0.1                                         LSUB6
+                                                                              LSUB8
+                                                                             LSUB10
+                                 0.05                                      LSUB∞(1)LSUB12
+                                                                           LSUB∞(2)
+                                   0                                       LSUB∞(3)
+                                     0     0.2     0.4    0.6    0.8     1
+                                                      x
+
+                   Figure  3.  (Colour online) CCM LSUBm results for the GS order parameter, M, as
+                   a function of the frustration parameter, x ≡ J2/J1, of the spin-1/2 J1–J2  honeycomb
+                   model (J1 = 1), using the N´eel (left curves) and N´eel-II (right curves) states as model
+                   states,  with  m = {6, 8, 10, 12}.  The  extrapolated curves  LSUB∞(1)  and  LSUB∞(3)
+                   use this  data set with equations (4) and (3) respectively, while  the  LSUB∞(2) curve
+                   uses equation (4) with the restricted set m = {8, 10, 12}.
+
+
+frustration parameter x shown.  Precisely why the LSUB6 result should be anomalous in
+this case is unclear, but as discussed in section 3 we must now discard it for extrapolation
+purposes.  For these reasons we show in ﬁgure 3 only extrapolated results using equation
+(4) for the N´eel-II model state, based on m = {8, 10, 12}.  The results clearly show that
+N´eel-II  ordering  is  present,  albeit  with  a  rather  small  value  of  the  order  parameter,
+M  ≲ 0.1,  for  x > xc3  where  xc3  ≈ 0.65(5),  but  where  the  error  estimate  is  now  more
+uncertain.
+      In our previous work [15] we showed that the N´eel-II state becomes susceptible to
+PVBC  ordering for x < xc2  ≈ 0.385(10), but we  now observe  that the N´eel-II state  is
+itself only stable as a magnetically ordered state for x > xc3.  We are thus led to enquire
+about  the  possible  GS  phase(s)  of the  system  in  the  range  xc2  < x  < xc3.  In  view  of
+the  persistence  of our CCM  LSUBm  solutions  based  on the  N´eel-II  model  state,  with
+ﬁnite values of m, well into the region x < xc3  before they terminate (as is clearly seen
+from ﬁgure  3),  we  expect  that the  actual GS phase  in this  intermediate  regime  might
+share similarities  with the N´eel-II state.  For example,  just as the N´eel-II state breaks
+the  lattice  rotational  symmetry,  so  does  another  valence-bond  solid  state,  namely  the
+staggered-dimer  valence-bond  crystalline  (SDVBC)  (or  lattice  nematic)  state.   This  is
+formed from the N´eel-II state by replacing all of the parallel NN spin pairs by spin-zero
+dimers (and see ﬁgure 4).
+      In  order  to  investigate  the  possibility  of  an  SDVBC  phase  we  ﬁrst  consider  the
+response  of  the  system  to  a  ﬁeld  operator  F  (and  see,  e.g.,  [29]).   Thus,  a  ﬁeld  term
+F   =  δ   ˆOd  is  added  to  the  Hamiltonian  of  equation  (1),  where   ˆOd  is  an  operator
+corresponding  to  the  possible  SDVBC  order,  illustrated  in  ﬁgure  4  and  deﬁned  in
+its  caption.    The  energy  per  site,  E(δ)/N   ≡  e(δ),  is  then  calculated  in  the  CCM
+Valence-bond crystalline order:  s = 1/2 J1–J2  model on the honeycomb lattice              9
+
+
+
+                                40   LSUB6
+                                35   LSUB8
+                                    LSUB10
+                                30 LSUB∞(1)LSUB12
+
+                                25 LSUB∞(2)
+
+                                20
+
+                                15
+
+                                10
+
+                                5
+
+                                0
+                                 0.1  0.2 0.3 0.4 0.5  0.6 0.7 0.8 0.9  1
+                                                    x
+
+
+                   Figure 4.  (Colour online) Left:  CCM LSUBm results for the inverse staggered dimer
+                   susceptibility, 1/χd, as a function of the frustration parameter, x ≡ J2/J1, of the spin-
+                   1/2  J1–J2  honeycomb  model  (J1  =  1),  using  the  N´eel-II  state  as  model  state,  with
+                   m  =  {6, 8, 10, 12}.  The  extrapolated  curves  LSUB∞(1)  and  LSUB∞(2)  are  derived
+                   from  ﬁtting  the  perturbed  energies  (see  text)  as  e(δ)  =  e0(δ) + e1(δ)m−ν,  and  use
+                   the  data  sets  m  =  {6, 8, 10, 12}  and  m  =  {8, 10, 12}  respectively.   Right:   The  ﬁeld
+                   F  → δ  ˆOd for the staggered dimer susceptibility, χd.  Thick (red) and thin (black) lines
+                   correspond respectively to strengthened and unaltered NN exchange couplings, where
+                    ˆOd  = ∑⟨i,j⟩ aijsi · sj,  and the sum runs over all NN bonds,  with aij  = +1 and 0  for
+                   thick (red) lines and thin (black) lines respectively.
+
+
+
+for  the  perturbed  Hamiltonian  H  + F ,  using  the  N´eel-II  model  state.    We  deﬁne
+the  corresponding  susceptibility  as  χd  ≡  − (∂2e(δ))/(∂δ2)|δ=0.   Clearly  the  GS  phase
+becomes  unstable  against  SDVBC  order  when  χ−1d    becomes  zero.    We  now  use  the
+LSUBm extrapolation scheme e(δ) = e0(δ)+e1(δ)m−ν, with the exponent ν also a ﬁtting
+parameter,  rather  than  our  standard  energy  extrapolation  scheme  of  equation  (2),  in
+order to calculate the extrapolated values of χ−1d    shown in ﬁgure 4.  For the same data
+set m = {8, 10, 12} used to calculate M  for the N´eel-II state above, the ﬁtted value of ν
+is close to 2 over most of the range of the J2 values shown, except near the termination
+point  of  this  phase,  where  it  falls  sharply.   By  contrast,  for  the  set  m  =  {6, 8, 10, 12}
+also shown in ﬁgure 4, ν  is closer to 1 over most of the range.  This again reinforces the
+anomalous nature of the LSUB6 results.
+      What  we  see  from  ﬁgure  4  is  that  the  extrapolated  value  of  χ−1d    is  close  to  zero
+over a range of values of x that extends from xc2  below to an upper value of about 0.6,
+which  is  completely  compatible  with the  value xc3  obtained from the order  parameter
+M  of the N´eel-II state.  Thus, by combining our results, we conclude that in the region
+xc2  <  x  <  xc3  the  GS  phase  has  SDVBC  order,  while  for  x  >  xc3  the  GS  phase  has
+N´eel-II  order,  although  this  latter  ordering  is  weak  and  quite  fragile  against  the  still
+strongly  competing  SDVBC  order.   The  shape  of  the  CCM  curves  for  χ−1d    in  ﬁgure  4
+are  indicative  of  a  continuous  (and  hence  deconﬁned)  quantum  critical  point  at  xc3,
+Valence-bond crystalline order:  s = 1/2 J1–J2  model on the honeycomb lattice            10
+
+                                      Neel    PVBC     SDVBC           Neel−II        x
+
+                                   0                                                     0.65(5)0.207(3)     0.385(10)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  Figure   5.     (Colour  online)  Phase  diagram  of  the  spin-1/2  J1–J2  model  on  the
+                  honeycomb lattice (with J1 > 0 and x ≡ J2/J1 > 0), as obtained by a CCM analysis.
+                  The quantum critical points are at xc1 ≈ 0.207(3), xc2  ≈ 0.385(10), and xc3  ≈ 0.65(5),
+                  as shown in the diagram.
+
+
+whereas the corresponding curves for χ−1p  , the inverse plaquette susceptibility, found in
+our earlier work [15] were much more indicative of a direct ﬁrst-order transition at xc2.
+We  see  no  signals  at all  of the  spiral  ordering  that  is  present  classically  for x >   16  for
+any value of x in the range 0 < x < 1 examined.
+
+5.  Summary
+
+In conclusion, over the range 0 < x < 1 we ﬁnd that the spin-1/2 J1–J2 HAFM on the
+honeycomb lattice has four phases with, respectively, N´eel, PVBC, SDVBC, and N´eel-II
+ordering.  Our CCM estimate for the phase diagram is shown in ﬁgure 5.  We note that
+all  of  our  most  accurate  estimates  for  the  three  quantum  critical  points  are  based  on
+evaluations of the positions at which the relevant magnetic order parameters and/or the
+inverse  susceptibilities  to the  relevant  forms  of valence-bond  solid  order vanish.  Since
+there are no energy crossings between the N´eel and N´eel-II states directly used as CCM
+model states in our CCM calculations, the GS energy data only give direct corroborating
+evidence for the transitions at xc1  and xc2  from the corresponding termination points of
+the CCM LSUBm solutions based on the N´eel and N´eel-II model states respectively, as
+discussed in section 4 and illustrated in ﬁgure 2.
+      Our  ﬁrst  calculated  critical  point,  xc1   ≈  0.207(3),  at  which  N´eel  order  melts,
+agrees  well  with  other  recent  results,  including  xc1   ≈  0.195(25)  from  a  large-scale
+exact  diagonalization  (ED)  study  [11],  xc1  ≈  0.26  [17]  and  xc1  ≈  0.22  [18]  from  two
+separate density-matrix renormalization group (DMRG) studies, and xc1  ≈ 0.2075 [19]
+and 0.21 [20] from two recent SB-MFT studies.  Both DMRG studies [17,18] and the ED
+study [11] concur with us that the transition at xc1  is probably a continuous deconﬁned
+one to a PVBC state, whereas both SB-MFT studies [19, 20] indicate a transition to a
+Valence-bond crystalline order:  s = 1/2 J1–J2  model on the honeycomb lattice            11
+
+QSL state.
+      Our  second  calculated  critical  point,  xc2  ≈  0.385(10),  at  which  the  PVBC  order
+melts,  is  similarly  in  good  agreement  with  the  result  xc2  ≈  0.375(25)  from  the  ED
+study  [11],  and  the  results  xc2  ≈  0.36  [17]  and  xc2  ≈  0.35  [18]  from  the  two  DMRG
+studies.   We  ﬁnd  that  the  transition  at  xc2  is  probably  a  direct  ﬁrst-order  one  to  a
+state  with  SDVBC  order.   Both  DMRG  studies  [17, 18]  concur  that  the  transition  at
+xc2  is  to a state  with  SDVBC  order,  although Ganesh  et  al. [18] ﬁnd  evidence  for the
+surprising scenario that the transition at xc2  is also of the continuous deconﬁned type,
+as at xc1.  The two SB-MFT studies [19,20] ﬁnd QSL states out to values x ≈ 0.3732 [19]
+and x ≈ 0.43 [20], respectively,  beyond the point xc1  at which N´eel order melts.  They
+disagree,  however,  between  themselves  as  to  what  is  the  nature  of  the  GS  phase  for
+larger  values  of  x,  beyond  the  QSL  phase.    Thus,  Zhang  and  Lamas  [19]  ﬁnd  the
+GS  phase  to  be  spirally  ordered  (just  as  in  the  classical,  s  →  ∞,  version  of  the
+model)  for  0.398  ≲  x  (≲  0.5),  and  to  have  SDVBC  order  in  the  very  narrow  region
+0.3732  ≲  x  ≲  0.398;  whereas  Yu  et  al.  [20]  ﬁnd  that  for  x  /greaterorsimilar  0.43  the  GS  phase  has
+N´eel-II order.  The ED study [11], by contrast, ﬁnds a ﬁrst-order transition at xc2  to a
+state that cannot be distinguished between having either SDVBC or N´eel-II order.
+      Finally,  we  ﬁnd  evidence  for  a  third  critical  point  at  xc3  ≈  0.65(5)  at  which  a
+continuous (and hence again deconﬁned) transition occurs to a state with weak N´eel-II
+magnetic  order.   We  note  that  such  a  transition  is  also  compatible  with  the  DMRG
+result of Ganesh el al. [18], which could not rule out a melting of the SDVBC order for
+values x /greaterorsimilar 0.7.  It is interesting to speculate whether the weak N´eel-II magnetic order
+observed  by  us  for x > xc3  might  be  interpreted  as,  or arise  from,  a sort  of “dressed”
+SDVBC state in which spin-triplets now contribute on the spin-singlet dimer bonds.  It
+is  too  far  beyond  the  scope  of  the  present  analysis,  however,  to  address  such  delicate
+questions authoritatively.
+      As a last remark, it is interesting to note that in a very recent study using a projector
+QMC technique [33] a very similar direct continuous quantum phase transition to what
+we observe here for the J1–J2 model at xc1, between states with N´eel and PVBC order,
+has also been observed  in a related spin-1/2 J1-Q model on the honeycomb  lattice,  of
+precisely  the  type  suggested  by  Yang  et  al.  [8]  to  be  more  relevant  to  the  low-energy
+physics of the FH model on the honeycomb lattice, as discussed previously in section 1.
+This J1-Q model also contains NN AFM exchange bonds of strength J1, but with our
+competing NNN exchange bonds of strength J2  replaced by a six-spin interaction term
+of strength Q on hexagonal plaquettes, which by itself favours the formation of a state
+with PVBC order.  It would clearly also be of interest to apply a comparable CCM study
+to the J1-Q model to that used here for the J1–J2 model, in order to investigate its GS
+phase diagram similarly.
+Valence-bond crystalline order:  s = 1/2 J1–J2  model on the honeycomb lattice            12
+
+ACKNOWLEDGMENT
+
+We  thank  the  University  of  Minnesota  Supercomputing  Institute  for  the  grant  of
+supercomputing facilities for this research.
+
+References
+
+  [1]  Kitaev A 2006 Ann. Phys. (N.Y.) 321 2; Baskaran G, Mandal S and Shankar R 2007 Phys. Rev.
+         Lett. 98 247201; Chaloupka J, Jackeli G and Khaliullin G 2010 ibid. 105 027204
+  [2]  Meng Z Y, Lang T C, Wessel S, Assaad F F and Muramatsu A 2010 Nature 464 847
+  [3]  Wang F 2010 Phys. Rev. B 82 024419
+  [4]  Lu Y-M and Ran Y 2011 Phys. Rev. B 84 024420
+  [5]  Sorella S, Otsuka Y and Yunoki S 2012 Scientiﬁc Reports 2 992
+  [6]  Assaad F F and Herbut I F 2013 eprint arXiv:1304.6340v1
+  [7]  Yang H Y and Schmidt K P 2011 Europhys. Lett. 94 17004
+  [8]  Yang H-Y, Albuquerque A F, Capponi S, L¨auchli A M and Schmidt K P 2012 New J. Phys. 14
+         115027
+  [9]  Mulder A, Ganesh R, Capriotti L and Paramekanti A 2010 Phys. Rev. B 81 214419
+ [10]  Farnell D J J, Bishop R F, Li P H Y, Richter J and Campbell C E 2011 Phys. Rev. B 84 012403
+ [11]  Albuquerque A F, Schwandt D, Het´enyi B, Capponi S, Mambrini M and L¨auchli A M 2011 Phys.
+         Rev. B 84 024406
+ [12]  Oitmaa J and Singh R R P 2011 Phys. Rev. B 84 094424
+ [13]  Reuther J, Abanin D A and Thomale R 2011 Phys. Rev. B 84 014417
+ [14]  Mezzacapo F and Boninsegni M 2012 Phys. Rev. B 85 060402(R)
+ [15]  Bishop  R  F,  Li  P  H  Y,  Farnell  D  J  J  and  Campbell  C  E  2012  J.  Phys.:  Condens.  Matter  24
+         236002
+ [16]  Li P H Y, Bishop R F, Farnell D J J and Campbell C E 2012 Phys.  Rev. B 86 144404
+ [17]  Zhu Z, Huse D A and White S R 2013 Phys. Rev. Lett. 110 127205
+ [18]  Ganesh R, van den Brink J and Nishimoto S 2013 Phys. Rev. Lett. 110 127203
+ [19]  Zhang H and Lamas C A 2013 Phys. Rev. B 87 024415
+ [20]  Yu X-L, Liu D-Y, Li P and Zou L-J 2013 e-print arXiv:1301.5282v1
+ [21]  Bishop R F 1991 Theor. Chim. Acta 80 p 95
+ [22]  Bishop R  F  1998 Microscopic  Quantum  Many-Body  Theories  and  Their  Applications  (Springer
+         Lecture Notes in Physics vol 510) ed J. Navarro and A Polls (Berlin:  Springer) p 1
+ [23]  Farnell D J J and Bishop R F 2004 Quantum Magnetism (Springer Lecture Notes in Physics vol
+         645) ed U Schollw¨ock, J Richter, D J J Farnell and R F Bishop (Berlin:  Springer) p 307
+ [24]  Zeng C, Farnell D J J and Bishop R F 1998 J. Stat. Phys. 90 327
+ [25]  Kr¨uger S E, Richter J, Schulenburg J, Farnell D J J and Bishop R F 2000 Phys. Rev. B 61 14607
+ [26]  Bishop  R  F,  Farnell  D  J  J,  Kr¨uger  S  E,  Parkinson  J  B,  Richter  J  and  Zeng  C  2000  J.  Phys.:
+         Condens. Matter 12 6887
+ [27]  Darradi R, Richter J and Farnell D J J 2005 Phys. Rev. B 72 104425
+ [28]  Bishop R F, Li P H Y, Darradi R, Schulenburg J and Richter J 2008 Phys. Rev. B 78 054412
+ [29]  Darradi R, Derzhko O, Zinke R, Schulenburg J, Kr¨uger S E and Richter J 2008 Phys. Rev. B 78
+         214415
+ [30]  Bishop R F, Li P H Y, Farnell D J J and Campbell C E 2010 Phys.  Rev. B 82 024416
+ [31]  We    use    the    program    package    CCCM    of    Farnell    D    J    J    and    Schulenburg    J    see
+         http://www-e.uni-magdeburg.de/jschulen/ccm/index.html
+ [32]  Castro E V, Peres N M R, Beach K S D and Sandvik A W 2006 Phys. Rev. B 73 054422
+ [33]  Damle K, Alet F and Pujari S 2013 e-print arXiv:1302.1408v1

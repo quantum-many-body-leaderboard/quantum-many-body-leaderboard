@@ -1,0 +1,950 @@
+             Kitaev-derived Gapless Spin Liquid in theK-J-Γ-Γ                                             ′ Quantum Magnet Na2Co2TeO6
+
+                                            Han  Li,1,∗  Xu-Guang  Zhou,2  Gang  Su,3, 4  and  Wei  Li3,†
+                        1School of Physical Science and Engineering, Beijing Jiaotong University, Beijing 100044, China
+             2Anhui Key Laboratory of Low-Energy Quantum Materials and Devices, High Magnetic Field Laboratory (CHMFL),
+                             Hefei Institutes of Physical Science, Chinese Academy of Sciences, Hefei, 230031, China
+                              3Institute of Theoretical Physics, Chinese Academy of Sciences, Beijing 100190, China
+                  4Kavli Institute for Theoretical Sciences, University of Chinese Academy of Sciences, Beijing 100190, China
+                                                                 (Dated: September 11, 2025)
+
+
+The realization of quantum spin liquids (QSLs) in Kitaev                             spind        7 electronic configuration of Co2+ and the edge-sharing
+magnets   represents   an   intriguing   topic   in   frustrated                     CoO6  octahedra,  it  gives  rise  to  a  pseudo-spinJ                      eff   =    12
+quantum  magnetism.     Despite  prediction  in  the  pure                           ground state and potentially Kitaev interactions between the
+Kitaev honeycomb model, realization of QSLs in realistic                             Co2+  ions  [26].    Thus  the  Co-based  compounds  have  at-
+systems and materials remain scarce.  The recent discov-                             tracted  significant  research  interest  [27–33].   Among  them,
+ery  of  cobalt-based  compound  Na2Co2TeO6  has  raised                             Na2Co2TeO6  (NCTO) features nearly ideal honeycomb lay-
+significant  research  interest.   By  establishing  a  realistic                    ers  and  exhibits  antiferromagnetic  (AFM)  long-range  order
+K-J-Γ-Γ           ′  model  for  Na2Co2TeO6  —  with  a  dominant                    belowT   N  ≈27K  [34, 35].   The  nature  of  the  AFM  or-
+antiferromagnetic (AFM) Kitaev interaction (K >0) that                               der, either a zigzag magnetic structure [34–37] or a triple-Q
+quantitatively explains its thermodynamics measurements                              ground state configuration [38,39], remains actively debated.
+—  we  reveal  an  intermediate  gapless  QSL  phase  under                          Under an in-plane magnetic field alonga        ∗ axis, a first-order
+[111]  magnetic  fields  with  tensor-network  calculations.                         phase transition  occurs near 6 T  [40] or 7.5  T [27].   When
+We confirm the QSL nature of this phase by demonstrat-                               the field is greater than 9.5 T, it enters the (partially) polarized
+ing  its  adiabatic  connection  to  the  intensively  studied                       phase [40]. However, the AFM order is much harder to be sup-
+intermediate QSL of the pure AFM Kitaev model under                                  pressed under the out-of-plane fields along thecaxis. Such a
+out-of-plane fields.  Our results show excellent agreement                           strong magnetic anisotropy cannot be simply ascribed to the
+with  recent  high-field  experiments,   thereby  explaining                         Land´e factor,  reminiscent of similar phenomena reported in
+the   intermediate-field   phase   in   Na2Co2TeO6.      These                       α-RuCl   3 [41–43].
+findings  bridge  the  gap  between  theoretical  proposals                              Although  significant  effort  has  been  devoted  to  elucidate
+for  a  Kitaev-derived  QSL  and  experimental  realization,                         the  magnetic  properties  of  NCTO  and  its  microscopic  spin
+opening new avenues for exploring exotic quantum states                              model [26–32,34–36,38–40], the identification of Kitaev in-
+of matter in realistic Kitaev materials.                                             teractions in this material remains an active area of investiga-
+Introduction                                                                         tion. Prior efforts have suggested both theK-J           1,2,3     -Γ-Γ     ′ and
+Quantum  spin  liquids  (QSLs),  an  exotic  class  of  topologi-                    XXZJ         1-J  3  models as candidate models for NCTO [27,29,
+cal state of matter beyond the traditional symmetry-breaking                         37,44–46], however, even the sign of the Kitaev interactions
+paradigm,  has  garnered  significant  research  interest  [1–5].                    remains unsettled. Some studies propose FM Kitaev coupling
+Amongst  others,  the  Kitaev  honeycomb  model,  with  bond-                        in NCTO based on linear spin wave theory [44] , while others
+directional  Ising-type  couplings,  is  exactly  soluble  and  fea-                 argue for AFM interactions based on inelastic neutron scatter-
+tures the Kitaev QSL [6–8]. Under a finite field, there emerges                      ing and related analyses [27,45,46].  Thus, determining the
+non-Abelian  anyon  in  the  Kitaev  model,  a  cornerstone  for                     microscopic  spin  model  for  NCTO  constitutes  the  first  step
+topological  quantum  computations  [6, 7].    In  light  of  the                    in understanding its magnetic properties, which requires ad-
+Jackeli-Khaliullin mechanism [9], substantial progresses have                        vanced many-body thermodynamic calculations.
+been made in the material realization of the Kitaev QSL, es-                             In   this   work,   we   first   systematically   investigate   the
+pecially  for  the  prime  candidate  materialα-RuCl                  3  [10–20].    ground-state  and  thermodynamic  properties  of  these  candi-
+Experimental studies reveal thatα-RuCl          3 constitutes a prox-                date  models.   Our  analysis  reveals  that  all  of  these  models
+imate Kitaev QSL material with strong ferromagnetic (FM)                             exhibit significant difficulties in reproducing the experimen-
+Kitaev interactions,  with clear signatures of spin fractional-                      tal  specific  heat  results  using  the  thermal  tensor  network
+ization at finite temperature or frequency [21–25].                                  approach [47–49].  Therefore, through careful fittings of the
+   Besides  the4d-magnetα-RuCl                            3,  there  are  other  Kitaevspecific heat profiles and spin structure factors,  we propose
+candidate  materials  emerging  recently.   Theoretical  studies                     an alternative effectiveK-J-Γ-Γ            ′ model with dominant AFM
+suggest  that  the  peculiar  Kitaev  interactions  may  also  ap-                   Kitaev  interactionsK≈19meV  for  NCTO,  which  can
+pear in certain3dhoneycomb magnets.  Owing to the high-                              well explain the key experimental observations with a single
+                                                                                     set  of  model  parameters.     These  prominent  experimental
+                                                                                     observations  include:    (i)  double-peak  specific  heat  with
+                                                                                     peaks corresponding to temperatures of magnitudeO(10)K
+∗ hanli@bjtu.edu.cn                                                                  andO(100)K,  (ii)  strong  magnetic  anisotropy  (in-plane
+† w.li@itp.ac.cn
+                                                                                     vs.     out-of-plane),  and  (iii)  field-induced  quantum  phase
+                                                                                                                                                                            2
+
+transitions,  along  different  directions  (in-planea             ∗  and  out-
+of-planecaxes).  We also obtain the temperature-field phase
+diagram, from which we uncover two distinct quantum phase
+transitions  under  out-of-plane  magnetic  fields,   evidenced
+by  spin  structure  factors,  isentropic  curves,  and  Gr¨uneisen
+parameter results, etc. We thus identify the intermediate-field
+phase as a gapless QSL, possibly quantum Majorana metal,
+which  is  adiabatically  connected  to  that  of  the  pure  AFM
+Kitaev  model  under  [111]  (out-of-plane)  field.    Our  work
+firmly  establishes  NCTO  as  a  viable  platform  for  realizing
+field-induced QSL states, and pave the theoretical ground for
+its further experimental studies.
+
+Results
+EffectiveK-J-Γ-Γ            ′  model  with  dominant  AFM  Kitaev
+term.Two different types of effective spin models have been
+proposed to describe the magnetic properties of NCTO [27,
+29,37,44–46], which we have conducted a systematic eval-
+uation  (see  Supplementary  Note.1).   Although  most  of  the                           Fig.1.Comparison between model simulations and experimen-
+proposed models can reproduce the experimentally observed                                 tal  results.   aZero-field  specific  heatC          m  curves  versus  tempera-
+zigzag magnetic order [34–37] via density matrix renormal-                                ture.  Experimental data (squares, left axis) with legends “Yao2022”
+ization group (DMRG) calculations, the comparison between                                 and  “Yang2022”  from  Refs.  [28, 54]  exhibit  characteristic  double
+our finite-temperature tensor-network calculations (see Meth-                             peaks  at  temperature  scalesT           L  andT      H.   Theoretical  calculations
+ods) and experimental measurements reveals a clear inconsis-                              (blue curves with open circles,  right axis) display systematic con-
+tency:  we find absence of double-peak structre in the simu-                              vergence with increasing bond dimension (D=  200and400).b
+lated specific heat of XXZJ         1-J  3 model; while certainK-J-                       shows the calculated results of in-plane and out-of-plane magnetiza-
+Γ-Γ   ′  models possess double-peak specific heat [29,34,40],                             tionM(T)at 1 Tesla, with experimental data [55] shown in the in-
+the peak positions are found different from experiments (see                              set.  Both theoretical and experimental data exhibit strong magnetic
+Supplementary Note.1).  This inconsistency motivates us to                                anisotropy.c-eThe spin structure factorsS(q)(see the main text) at:
+find an optimized parameter set that simultaneously stabilizes                            clow-,dintermediate-, andehigh-temperature regimes, with their
+the zigzag-ordered ground state and quantitatively reproduces                             temperature values indicated in panela. The results are symmetrized
+the finite-temperature behaviors observed in experiments.                                 over the equivalentqpoints.
+   The effectiveK-J-Γ-Γ            ′ model for NCTO reads:
+
+    H=   X        [KS γi Sγj  +JS      i ·S j + Γ(S     αi Sβj  +S    βi Sαj )            measurements (see Methods). We finally arrive at a parameter
+           ⟨i,j⟩      γ                                                         (1)       set{K, J,Γ,Γ          ′}/K={1,−0.9035,−0.65,0.3597} with
+           + Γ′(S  γ                                                                      K= 19meV for NCTO. The field orientationH                            [lmn]       is de-
+                     i Sαj  +S    γi Sβj  +S    αi Sγj  +S    βi Sγj )],                  fined in the spin{S         x, Sy, Sz}axes, whereH             [111] represents
+where⟨i, j⟩              γ  indicates the nearest neighbor sites connected                the out-of-planec-direction field.   The Zeeman term is thus
+with theγ-type bond,S                 i ={S      xi , Sy                                  g[lmn]     µBµ0H[lmn]       lSx+mS   y+nS   z√l2+m    2+n    2   ,  whereg           [111]  =g    c  ≃2.3
+                                               i , Szi }represents the spin-              andg       [¯101]  =g    ab  ≃4.33[27].   With  this  set  of  proposed
+1/2operators on thei-th site, and{α, β, γ}refers to a cyclic                              parameters,  we show below that the model calculations can
+permutation of{x, y, z};Kis the Kitaev interaction;Jis the                                well reproduce the thermodynamics measurements, including
+nearest-neighbor isotropic  Heisenberg interaction;ΓandΓ                       ′          the specific heat with two characteristic peaks occur at tem-
+are the off-diagonal couplings.                                                           peratures differing by almost an order of magnitude [28,54],
+   Inspired by the striking similarity in magnetic and thermo-                            magnetic  anisotropy  along  in-plane  and  out-of-plane  direc-
+dynamics behaviors between the two compounds NCTO and                                     tions  [27, 36, 40, 55],  and  finite-temperature  evolution  of
+α-RuCl   3 [21,42,50–52], we take suchα-RuCl                                   3 model [24]spin-structure factors [29,33,46], etc.
+as  the  starting  point  for  constructing  the  effective  model
+for NCTO. In Ref. [24],  the model parameters forα-RuCl              3
+determined  from  the  thermal  data  are{K, J,Γ,Γ          ′}/|K|                        Magnetic  properties  and  thermodynamics.In  Fig.1a,
+={−1,−0.1,0.3,−0.02}with|K|  =   25meV.  On  the                                          by    performing    thermal    tensor    renormalization    group
+other   hand,   previous   studies   points   to   an   AFM   Kitaev                      (XTRG  [48])  simulations  based  on  the  NCTO  model  pa-
+term  (K   >0)  in  NCTO  [27, 45, 46].    Nevertheless,  we                              rameters  as  mentioned  above,  we  present  the  specific  heat
+notice  that  the  effective  models  of  two  Kitaev  candidate                          Cm  curves  with  two  different  bond  dimensionsD,  which
+materials  can  be  related  via  a  unitary  transformation  [53].                       are  well  converged  with  each  other  and  lead  to  reliable
+Through a globalπrotation aroundcaxis, we can transform                                   results.  The experimental data are shown in the background
+theα-RuCl        3  model,   with  the  Kitaev  coupling  becoming                        with  solid  squares,  which  are  adapted  from  Refs.  [28, 54]
+positive,   and  then  fine  tune  it  to  fit  the  thermodynamic                        from  two  different  research  groups.    As  the  experimental
+                                                                                                                                                                              3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig.2.Field-induced phase transitions in NCTO under out-of-plane fields.  aZero-temperature entanglement entropyS         E with different
+system sizes.  Two transition fieldsB          c1 ≃35T andB               c2 ≃86T are detected and labeled by the red dots.bThe spin structure factors                ˜S(q)
+(see main text) curves atq=M,Γpoints, from which the transition fields can also be determined.cThe landscape of specific heatC                                           m.
+The light color highlights theC     m maxima, and the white dashed lines indicate the schematic phase boundaries separating paramagnetic (PM),
+zigzag (ZZ), intermediate gapless phase (IGP), and polarized (PL) phases.d-fThe spin structure factor results                ˜S(q)under fieldsB= 20,50
+and100T atT= 5.7K, which reflect the characteristics of three distinct low-temperature field-induced phases ZZ, IGP and PL, respectively.
+gThe isentropic curves starting from various temperature, and the color code corresponds to the values of normalized thermal entropyS/ln2.
+hThe Gr   ¨uneisen parameterΓ                  B results at various low temperatures.  The dashed lines mark fieldsB          c1 andB      c2, corresponding to the twoΓ  B
+peaks, which indicate two distinct quantum phase transitions in the system.
+
+
+magnetic specific heatC        m  peaks exhibit slight variations in                       Supplementary  Note.1).    Moreover,  theΓ-point  intensity
+their absolute magnitudes amongst different experiments, we                                is  less  pronounced  compared  to  that  observed  inα-RuCl      3
+emphasize  the  importance  of  the  characteristic  double-peak                           results [24], which may be attributed to the relatively stronger
+structure and their respective temperature scalesT           H andT       L,               non-Kitaev|Γ|interaction present in this system than in the
+which  provide  key  information  for  determination  of  model                            α-RuCl   3 magnet.  At intermediate temperatureT= 45.7K,
+parameters.    Our  parameter  set  could  well  reproduceT                  H             the renowned M-star structure present inα-RuCl      3  [42] also
+andT       L  at  respectively  100  K  and  around  20  K.  The  small                    appears here in NCTO model calculations shown in Fig.1d,
+difference  around  low-temperature  peak  positionT               L  likely               which  is  indicative  of  the  spin  fractionalization  due  to  the
+arises  from  finite-size  effects  inherent  to  the  cylindrical                         Kitaev  coupling.   At  high  temperature,  the  system  enters  a
+geometry in the simulations.                                                               conventional  paramagnetic  regime,  evidenced  by  the  broad
+   With the same set of model parameters,  we calculate the                                and diffusive peak at theΓpoint in Fig.1e.
+magnetization curves alonga        ∗  andcaxes, evaluated at1T.
+As shown in Fig.1b, the in-plane magnetization is nearly one                               Two quantum phase transitions induced by out-of-plane
+order of magnitude larger than the out-of-plane value, indicat-                            fields.Through XTRG and ground-state DMRG calculations,
+ing that the system exhibits strong magnetic anisotropy.  It is                            we  map  out  the  temperature-field  phase  diagram  along  two
+consistent with the experimental results [55] as shown in the                              different field directions.  Under in-plane fields along thea    ∗
+inset.  Consequently, we find our model is capable of repro-                               axis,  we  find  a  single  phase  transition  between  the  zigzag
+ducing both the specific heat characteristics and the magnetic                             AFM  and  polarized  phases  (see  Supplementary  Note.2);
+anisotropy along different field directions.                                               while under out-of-planec-direction fields, as shown in Fig.2,
+   At   finite   temperatures   and   zero   magnetic   field,   we                        two transition fields are observed atB   c1 ≃35T andB               c2 ≃
+show    in    Fig.1c-ethe    static    spin    structure    factors                        86T, respectively. It is noteworthy thatB           c1 andB       c2 obtained
+S(q)   =      Pj eiq(r     j−r   i0)⟨S  i0Sj⟩,   where  the  sub-indexi    0               from our model calculations are consistent withH        AFMc        and
+represents a central site of the lattice, and the summation is                             HSc  observed  in  the  recent  high-field  magnetization  experi-
+taken  over  all  lattice  sites.   AtT=  11.4K in  Fig.1c,  we                            ments [57].
+observe  large  intensities  at  M  points  in  the  Brillouin  zone                          The ground-state bipartite entanglement entropyS  E results
+(BZ),  which  is  a  signature  of  the  low-temperature  AFM                              can be used to determine the transition fields, as presented in
+order  [29, 33, 46].   We  note  that  it  has  been  ascribed  to  a                      Fig.2a.   At aroundB                        c1  ≃35T andB               c2  ≃86T, theS              E
+zigzag [34–36] or a triple-Q [38,39,56] order in experiments,                              curve exhibits anomalies. The determined critical fields are in
+while  our  DMRG  results  here  favor  the  zigzag  order  (see                           excellent agreement with the transition fields identified in the
+                                                                                                                                                                             4
+
+experimental measurements.   The experimental out-of-plane                                intermediate  QSL  phase  under  out-of-plane  magnetic  fields
+magnetic susceptibility exhibits two phase transitionsH                   AFMc            has  been  intensively  studied,  yet  its  fundamental  nature  re-
+andH       Sc  for small field angles to thec    ∗-axis [57].                             mains unresolved [58–66].   Recent work suggests this state
+   The transition fieldsB          c1  andB       c2  can also be determined              is a quantum Majorana metal, characterized by itinerant Ma-
+through the spin-structure factors  ˜S(q)with background sub-                             jorana fermions moving through a background of fluctuating
+tracted, i.e.,                                                                            Z2 fluxes [67].  In Fig.3, we introduce a tuning parameterη
+                                                                                          to modulate the strength of non-Kitaev interactions including
+           ˜S(q) =    Xeiq(r     j−r   i0)(⟨S   i0Sj⟩ − ⟨S  i0⟩⟨S   j⟩).                  theJ,ΓandΓ               ′ terms, i.e.,H=H              Kitaev +η H   ′NCTO, with
+
+                       j
+As  shown  in  Fig.2b,  at  small  fields,  the  system  exhibits  a                          H′NCTO = X            [JS    i ·S j + Γ(S     αi Sβj  +S    βi Sαj )
+                                                                                                             ⟨i,j⟩      γ                                                 (2)
+zigzag AFM phase at low temperatures,  as indicated by the                                                   + Γ′(S  γ
+structure factor at M point (see the red curve in Fig.2b).  For                                                        i Sαj  +S    γi Sβj  +S    αi Sγj  +S    βi Sγj )],
+higher fields,  as the system enters the spin polarized phase,                            whereγ∈ {x, y, z}andη= 0and1represent the pure AFM
+both  ˜S(M)and          ˜S(Γ)values vanish.  Therefore, the positions                     Kitaev model and NCTO model, respectively.
+where  ˜S(M)decreases  rapidly,  and  where  both          ˜S(M)and
+˜S(Γ)values approach vanish,  mark the two quantum phase
+transitions (see also in Figs.4a,b). Under intermediate fields,
+the  ˜S(M)is decreased,  with its magnitude even below that
+of ˜S(Γ), indicating the suppression of long-range order. Such
+characteristics can also be observed in Figs.2d-fat a low tem-
+peratureT= 5.7K, under fieldsB= 20, 50 and 100 T, re-
+spectively. In the following section, we will discuss the nature
+of this intermediate-field phase.
+   For  finite-temperature  calculations,  we  present  the  land-
+scape  of  the  specific  heatC        m  in  Fig.2c,  and  mark  out  the
+temperature  scalesT           H, T L, T ′L,  andT      ′′L .   Upon  increasing
+magnetic fields, the high-temperature scaleT         H firstly demon-
+strates a relatively flat line, persistent across both the low-field
+zigzag-ordered phase and the intermediate-field phase at low
+temperatures.  When the field is further enhanced,T                  H gradu-
+ally shifts towards higher temperatures and finally merge with
+the Zeeman energy scaleT        ′L, producing a broad maximum in
+Cm as visualized in the intensity plot (Fig.2c, upper right). In
+the intermediate-field regime, a lower-temperature hump/peak
+feature  emerges  inC    m  atT   ′′L ,  separated  fromT         H  (also  see
+Fig.3c), which corresponds to the dome-like feature in Fig.2g
+and will be discussed below. Therefore, we find the three low-
+temperature phases, i.e., low-field zigzag ordered AFM phase,                             Fig. 3.η-Bphase  diagram  connecting  pure  AFM  Kitaev  and
+intermediate-field disordered phase, and high-field polarized                             NCTO model.  aTheη-Bphase diagram constructed from struc-
+phase, are separated byB     c1 andB       c2 as indicated in Fig.2c.                     ture factor results, where CSL, ZZ, IGP and PL denote chiral spin
+   The low-temperature isentropic curves of thermal entropy                               liquid, zigzag order, intermediate-field gapless phase, and spin po-
+S/ln2can  also  determine  the  two  phase  transitions.     In                           larized phase, respectively.b,cLow-temperature thermodynamic re-
+Fig.2g, it shows an increasement near 35 T upon entering the                              sults including the specific heatC       m, thermal entropyS/ln2, and the
+intermediate-field  regime  (as  indicated  by  the  black  dashed                        spin-lattice relaxation rateS       1(ω= 0)(see main text), at character-
+dome-like  boundary),  accompanied  by  pronounced  valley                                istic fieldsB/|K| ≃0.26and 0.23 within the IGP forη= 0and
+features upon leaving this regime. Derived from the simulated                             1, respectively (see the red crosses marked ina).  The gray vertical
+isentrope data, in Fig.2hwe show the calculated Gr           ¨uneisen                     bar marks the characteristic temperature scaleT       ′′L , below which we
+parameter  at  low  temperatures,  i.e.,Γ       B  =   1                                  observed a power-law scaling as indicated by the red dashed line.d,e
+                                                              T ( ∂T∂B )S.   Near         Contour plots of spin structure factors ˜S(M)and          ˜S(Γ)under differ-
+Bc1  there is a single peak without sign reversal,  while near                            ent fieldsB/|K|and parametersη(see main text) values. The tran-
+Bc2 a peak-dip structure with clear sign reversal is observed.                            sition fieldsB          c1 andB      c2 are determined fromd       ˜S(q=M,Γ)/dB
+It suggests that there is a first- (B  c1) and second-order phase                         anddM/dBcurves (see Fig.4and Supplementary Note.3).  The
+transitions (B  c2) at the two transition fields.                                         results are presented in natural unit in these plots.
+
+Gaplss QSL under out-of-plane fields.To explore the na-                                      We  summarize  our  results  in  theη-Bphase  diagram  in
+ture of IGP obtained from the realistic NCTO model, we con-                               Fig.3a,  where  the  phase  boundariesB                                c1  andB       c2  separate
+struct  anη-Bphase  diagram  connectingK-J-Γ-Γ                                   ′  and  theZZ, IGP, and PL phases for largeηvalues, while CSL, IGP,
+pure  AFM  Kitaev  honeycomb  model.   The  existence  of  an                             and PL phases for very smallηvalues.  These phase bound-
+                                                                                                                                                                         5
+
+                                                                                        der is suppressed, leading to a rapid decrease in  ˜S(M).  The
+                                                                                        lower critical field,B         c1, is therefore identified from this drop
+                                                                                        in  ˜S(M), with the extracted values marked by black squares
+                                                                                        (see also in Fig.4a). For reference, the derivatived           ˜S(M)/dB
+                                                                                        is provided in Supplementary Note.3.
+                                                                                            The high-field phase transition, in contrast, is characterized
+                                                                                        by theΓ-point structure factors        ˜S(Γ). By subtracting the static
+                                                                                        contribution from field polarization, ˜S(q)more clearly reveals
+                                                                                        the intrinsic correlations in the system.  In the high-field PL
+                                                                                        phase,  ˜S(q)vanishes, as the intensity there in the spin struc-
+                                                                                        ture factor is entirely due to field polarization (Fig.3e).  The
+                                                                                        transition fieldB        c2  to the PL phase is thus identified by the
+                                                                                        point where ˜S(Γ)drops to zero, as marked with red circles in
+                                                                                        Fig.4b.
+                                                                                            In the small-ηregime, the system resides in a CSL phase
+                                                                                        under  low  magnetic  fields,   we  use  different  criterion  to
+                                                                                        determine  the  phase  boundary  between  the  CSL  and  IGP.
+Fig. 4.Determination  of  the  phase  boundary.   a,bThe          ˜S(M)                 In  Fig.4c,  we  show  the  derivative  of  the  magnetization
+and  ˜S(Γ)curves  as  a  function  of  magnetic  fieldB/|K| for  dif-                   dM/dBand  identify  the  positions  of  two  transition  fields.
+ferentη≥0.025.    The  black  and  red  arrows  mark  the  dips  of                     We benchmark our method usingη= 0.025, where the lower
+d ˜S(q=M,Γ)/dBcurves at transition fieldsB                                  c1 andB      c2, respec-transition field (from the ZZ to the IGP phase) is consistent
+tively.cThe derivatives of magnetizationdM/dBanddthe bipartite                          whether  determined  from  ˜S(M)ordM/dB.    For  smaller
+entanglement entropyS  E curves at various smallη, where the peaks                      ηin  the  CSL  phase,  the  positions  of  transition  fields  are
+indicateB              c1 andB      c2 and are indicated by the black and red arrows.   determined fromdM/dB, which are found to be consistent
+The curves in these plots have been vertically offset for clarity.                      with  those  determined  from  bipartite  entanglement  entropy
+                                                                                        SE  results (see Fig.4d).   Near the two transition fields,  the
+aries are determined from the spin structure factors  ˜S(q)as                           SE  curves exhibits peaks or humps.  Based on these results,
+detailed in Figs.3d,eand Fig.4.  The gapless nature of the                              especially the phase diagram in Fig.3a, we conclude that the
+IGP is supported by the simulated thermodynamic properties                              IGP of NCTO model and that in pure AFM Kitaev model are
+in Fig.3b. Under a typical field strengthB/|K| ≃0.23within                              adiabatically connected.
+the IGP of NCTO system, which corresponds toB≃57T in                                    Discussion
+experiments, we find there exist algebraic scaling∼T                α  be-              The present work establishes aK-J-Γ-Γ            ′  model for the Ki-
+                                           ′′
+low the low-temperature scaleT            L  in specific heatC        m, thermal        taev material NCTO. Through systematic evaluation of previ-
+entropyS/ln2and  spin-lattice  relaxation  rate  estimated  byPPN                       ously proposed model parameters for NCTO [27,29,37,44–
+S1(ω= 0) =       1T       γ    j=1 [⟨S   γj ( β2 )S  γj (0)⟩ − ⟨S       γj (β)⟩      2][68].46],  combining  XTRG  (T  >0)  and  DMRG  (T=  0)  cal-
+More data supporting the gapless nature can be found in the                             culations,  we demonstrate that while most models correctly
+Supplementary Note.3.  Therefore, the IGP exhibits neither                              reproduce the zigzag-ordered ground state,  they exhibit sig-
+magnetic ordering nor a gap, which supports an out-of-plane                             nificant  discrepancies  with  experimental  specific  heat  data.
+field-induced gapless QSL state in NCTO magnet.                                         It thus motivates us to find an optimized parameter set that
+   It is particularly noteworthy that the IGP in NCTO exhibits                          account both the ground-state and finite-temperature proper-
+common properties to the intermediate-field QSL of the pure                             ties.  Inspired by the striking similarities in magnetic proper-
+AFM  Kitaev  model  atη≃0.   In  Fig.3c,  we  selected  an                              ties between the compound NCTO and the prime Kitaev mag-
+intermediate-field strengthB/|K| ≃0.26and computed the                                  netα-RuCl        3,  we  propose  a  model  that  demonstrates  quan-
+same  thermodynamic  quantities  as  in  Fig.3b,  observing  a                          titative agreement with recent experimental observations on
+similar algebraic low-temperature scaling∼T                α′.  These re-               NCTO [27–29,33,36,40,46,54,55,57], including:  (i) the
+sults indicate that the IGP in the realistic NCTO system may                            characteristic  double-peak  structure  in  specific  heat  at  tem-
+directly connect to the gapless QSL of the ideal AFM Kitaev                             peratures  of  magnitudeO(10)K andO(100)K,  (ii)  strong
+model.   Below,  we demonstrate the connectivity of the two                             magnetic anisotropy alonga        ∗  andcaxes, (iii) spin-structure
+phases through tuning the parameterηand field strengthB                                 factors across various temperatures, and (iv) high-field mag-
+based on zero-temperature DMRG calculations.                                            netization curves along in- and out-of-plane directions.
+   The critical fields can be determined from the spin struc-                               More importantly, our model predicts that the Kitaev can-
+ture  factors  ˜S(q).   In  Fig.3dand  Fig.3e,  we  present  con-                       didate  NCTO  hosts  a  gapless  QSL  in  the  intermediate-field
+tour plots of the M- andΓ-point spin structure factors, and the                         regime.    This  phase  can  be  adiabatically  connected  to  the
+phase boundaries are clearly visualized. At larger values ofη,                          intermediate-field  phase  of  the  pure  AFM  Kitaev  model.
+the system remains in the ZZ phase under small fields, lead-                            While the specific nature of this QSL in the pure model —
+ing to a pronounced M-point structure factor ˜S(M)as shown                              whether  a  gappedZ           2  state  [64, 69],  a  gapless  U(1)  spinon
+in Fig.3d.  As the field increases into the IGP, the AFM or-                            Fermi surface [61,63,66],  or a gaplessZ                            2  quantum Majo-
+                                                                                                                                                                          6
+
+rana metal [67,70] — remains under active investigation, the                             remarkably low, XTRG method has shown its accuracy and
+presence  of  a  QSL  is  well-established.   Therefore,  our  cal-                      high  efficiency  [23–25, 66].   The  system  sizes  we  adopt  in
+culations  predict  that  the  intermediate-field  phase  observed                       the ground-state and the finite-temperature simulations in this
+in  recent  experimental  on  NCTO  [57]  is  a  manifestation  of                       work are cylindrical lattices with widthW= 4, lengthL= 6
+this  Kitaev-derived  QSL.  Thus,  although  realistic  materials                        or10, the total number of lattice sitesN=W×L×2and
+inevitably contain non-Kitaev interactions that obscure the re-                          periodic boundary conditions along theWdirection (Y-type
+alization of the pure Kitaev model,  we propose that an out-                             cylinder,  YC).  The  bond  dimensionDis  up  to512with
+of-plane  magnetic  field  can  suppress  these  terms,  allowing                        truncation  errorϵ≲1×10                −7    in  DMRG,  and400withϵ
+a quantum spin liquid primarily ascribed to the pure Kitaev                              less than1×10           −3    in XTRG down toT/|K| ≃0.01.  The
+model to emerge.                                                                         convergency  check  of  differentDand  different  sizesLare
+   Notably,   the  existence  of  the  IGP  phase  has  recently                         shown  in  Fig.1aand  Fig.2d,  which  gives  well-converged
+been  experimentally  identified  in  NCTO  [57].    We  further                         results.
+propose   future   experimental   protocols   for   studying   this
+gapless QSL state at high fields (>35T): (i) low-temperature                             Unitary transformation and the coupling parameters.For
+thermodynamic measurements such as the specific heat that                                theK-J-Γ-Γ               ′ model, the unitary transformation is
+can  reveal  the  gapless  behavior  below  10  K;  (ii)  magnetic
+torque measurements, which should exhibit a very small total                                    J    ′           J        1  + 4                       J  
+net  torque  value  in  the  low-field  zigzag  AFM  phase,  and                                K            K =      0−   19  − 49   + 49   K ,
+then  increase  rapidly  in  the  intermediate  QSL  regime  [25];                                 Γ       =τ       Γ            0  + 43   + 43  − 43         Γ
+(iii)  NMR  measurements  at  intermediate  fields  can  reveal                                    Γ′               Γ′                  9   + 59   + 49       Γ′
+a  power-law  dependence1/T                        1  ∼T    α,  with  the  exponent                                              0−   29   + 29   + 79
+αidentifying  the  gapless  nature  of  the  intermediate-field                          whereτ   is    a    globalπ  rotation    about    the[111]
+QSL phase.  Lastly, we propose that this scenario of Kitaev-                             axis    (perpendicular    to    the    honeycomb    plane)    [53].
+derived QSL apply to not only NCTO but alsoα-RuCl          3:  the                       Therefore,      the     proposed     parameters     forα-RuCl        3,
+intermediate-field phase inα-RuCl      3 [24,71] — characterized                         i.e.,  {K, J,Γ,Γ           ′}/|K|      =    {−1,−0.1,0.3,−0.02}
+by  the  suppression  of  zigzag  order  and  the  emergence  of                         with|K|   =    25meV   [24]   could   be   transformed   to
+QSL  phase  —  may  also  be  adiabatically  connects  to  this                          {K, J,Γ,Γ      ′}/|K|  = {1,−0.9035,−0.3772,0.3597} with
+Kitaev-derived QSL. We expect this scenario can guide future                             |K| =  19meV.  Through  tuning  theΓ/|K|ratio  to−0.65,
+theoretical  and  experimental  studies  on  Kitaev  materials,                          we  could  simultaneously  reproduce  both  the  specific  heat
+including  NCTO  andα-RuCl         3,   as  well  as  other  Kitaev                      and  field-induced  transitions  in  NCTO.  The  details  of  the
+candidates like BaCo2(AsO4)2 [30,32,72].                                                 parameter  fitting  process  could  be  found  in  Supplementary
+
+Methods                                                                                  Note.1.
+Zero and finite-temperature tensor network approaches.
+The   ground-state   and   finite-temperature   properties   are                         Data availability
+calculated   by   the   density   matrix   renormalization   group                       Source data are provided in this paper.  The data generated in
+(DMRG)  method  [73],  recognized  as  an  effective  approach                           this study have been deposited in the Zenodo database.
+for  calculating  two-dimensional  (2D)  lattice  systems,  and
+the   exponential   tensor   renormalization   group   (XTRG)
+method  [48],  which  has  been  previously  applied  to  study                          Code availability
+several  2D  finite-size  spin  systems  [23–25, 48, 66, 74–80],                         All numerical codes in this paper are available upon request
+respectively.   In  particular,  for  studying  the  Kitaev  system                      to the authors.
+featuring  two  temperature  scales  where  one  of  which  is
+
+
+
+
+
+ [1]P. W. Anderson, Resonating valence bonds:  A new kind of in-                          [6]A. Kitaev, Fault-tolerant quantum computation by anyons,Ann.
+      sulator?,Mater. Res. Bull.8, 153  (1973).                                                Phys.303, 2 (2003).
+ [2]L. Balents, Spin liquids in frustrated magnets,Nature (London)                        [7]A. Kitaev, Anyons in an exactly solved model and beyond,Ann.
+      464, 199 (2010).                                                                         Phys.321, 2  (2006), january Special Issue.
+ [3]Y. Zhou, K. Kanoda, and T.-K. Ng, Quantum spin liquid states,                         [8]M. Hermanns, I. Kimchi, and J. Knolle, Physics of the Kitaev
+      Rev. Mod. Phys.89, 025003 (2017).                                                        Model:  Fractionalization, Dynamic Correlations, and Material
+ [4]J.  Wen,  S.-L.  Yu,  S.  Li,  W.  Yu,  and  J.-X.  Li,  Experimental                      Connections,Ann. Rev. Condens. Matter Phys.9, 17 (2018).
+      identification of quantum spin liquids,npj Quant. Mater.4, 12                       [9]G. Jackeli and G. Khaliullin, Mott insulators in the strong spin-
+      (2019).                                                                                  orbit coupling limit:  From Heisenberg to a quantum compass
+ [5]C. Broholm, R. J. Cava, S. A. Kivelson, D. G. Nocera, M. R.                                and Kitaev models,Phys. Rev. Lett.102, 017205 (2009).
+      Norman,  and  T.  Senthil,  Quantum  spin  liquids,Science367,                     [10]S. M. Winter, Y. Li, H. O. Jeschke, and R. Valent       ´ı, Challenges
+      eaay0668 (2020).                                                                         in design of Kitaev materials: Magnetic interactions from com-
+                                                                                                                                                                                7
+
+      peting energy scales,Phys. Rev. B93, 214431 (2016).                                         S.  Asai,  S.  Itoh,  G.  G¨unther,  M.  Russina,  Z.  Lu,  J.  Sheng,
+[11]S.  M.  Winter,  K.  Riedl,  P.  A.  Maksimov,  A.  L.  Chernyshev,                           L. Wang, J. Wang, G. Wang, Q. Ren, C. Xi, W. Tong, L. Ling,
+      A.  Honecker,  and  R.  Valent´ı,  Breakdown  of  magnons  in  a                            Z. Liu, L. Wu, J. Mei, Z. Qu, H. Zhou, X. Wang, J.-G. Park,
+      strongly spin-orbital coupled magnet,Nat. Commun.8, 1152                                    Y. Wan, and J. Ma, Field-induced quantum spin disordered state
+      (2017).                                                                                     in spin-1/2 honeycomb magnet Na2Co2TeO6,Nat. Commun.
+[12]L. Wu, A. Little, E. E. Aldape, D. Rees, E. Thewalt, P. Lampen-                               12, 5559 (2021).
+      Kelley,  A.  Banerjee,  C.  A.  Bridges,  J.-Q.  Yan,  D.  Boone,                     [28]W.  Yao,  K.  Iida,  K.  Kamazawa,  and  Y.  Li,  Excitations  in
+      S. Patankar, D. Goldhaber-Gordon, D. Mandrus, S. E. Nagler,                                 the  ordered  and  paramagnetic  states  of  honeycomb  magnet
+      E.  Altman,  and  J.  Orenstein,  Field  evolution  of  magnons  in                         Na2Co2TeO6,Phys. Rev. Lett.129, 147202 (2022).
+      α-RuCl   3  by  high-resolution  polarized  terahertz  spectroscopy,                  [29]X. Li,  Y. Gu,  Y. Chen,  V. O. Garlea,  K. Iida,  K. Kamazawa,
+      Phys. Rev. B98, 094425 (2018).                                                              Y. Li, G. Deng, Q. Xiao, X. Zheng, Z. Ye, Y. Peng, I. A. Za-
+[13]T. Cookmeyer and J. E. Moore, Spin-wave analysis of the low-                                  liznyak,  J. M. Tranquada, and Y. Li, Giant magnetic in-plane
+      temperature thermal Hall effect in the candidate Kitaev spin liq-                           anisotropy and competing instabilities in Na3Co2SbO6,Phys.
+      uidα-RuCl         3,Phys. Rev. B98, 060412(R) (2018).                                       Rev. X12, 041024 (2022).
+[14]H.-S. Kim and H.-Y. Kee, Crystal structure and magnetism in                             [30]R. Zhong,  T. Gao,  N. P. Ong, and R. J. Cava, Weak-field in-
+      α-RuCl   3: An ab initio study,Phys. Rev. B93, 155143 (2016).                               duced nonmagnetic state in a Co-based honeycomb,Sci. Adv.
+[15]T. Suzuki and S.-i. Suga, Erratum: Effective model with strong                                6, eaay6953 (2020).
+      Kitaev interactions forα-RuCl        3,Phys. Rev. B99, 249902(E)                      [31]X.  Zhang,  Y.  Xu,  T.  Halloran,  R.  Zhong,  C.  Broholm,  R.  J.
+      (2019).                                                                                     Cava, N. Drichko, and N. P. Armitage, A magnetic continuum
+[16]K. Ran, J. Wang, W. Wang, Z.-Y. Dong, X. Ren, S. Bao, S. Li,                                  in  the  cobalt-based  honeycomb  magnet  BaCo2(AsO4)2, Nat.
+      Z. Ma, Y. Gan, Y. Zhang, J. T. Park, G. Deng, S. Danilkin, S.-                              Mater.22, 58 (2023).
+      L. Yu, J.-X. Li, and J. Wen, Spin-wave excitations evidencing                         [32]T.  Halloran,   F.  Desrochers,   E.  Z.  Zhang,   T.  Chen,   L.  E.
+      the Kitaev interaction in single crystallineα-RuCl                     3,Phys. Rev.         Chern, Z. Xu, B. Winn, M. Graves-Brook, M. B. Stone, A. I.
+      Lett.118, 107203 (2017).                                                                    Kolesnikov,  Y.  Qiu,  R.  Zhong,  R.  Cava,  Y.  B.  Kim,  and
+[17]W. Wang, Z.-Y. Dong, S.-L. Yu, and J.-X. Li, Theoretical in-                                  C. Broholm, Geometrical frustration versus Kitaev interactions
+      vestigation of magnetic dynamics inα-RuCl      3,Phys. Rev. B96,                            in  BaCo2(AsO4)2, Proc.  Natl.  Acad.  Sci.120,  e2215509119
+      115103 (2017).                                                                              (2023).
+[18]I. O. Ozel, C. A. Belvin, E. Baldini, I. Kimchi, S.-H. Do, K.-                          [33]W. Yao, Y. Zhao, Y. Qiu, C. Balz, J. R. Stewart, J. W. Lynn, and
+      Y. Choi, and N. Gedik, Magnetic field-dependent low-energy                                  Y. Li, Magnetic ground state of the KitaevNa  2Co2TeO6 spin
+      magnon  dynamics  inα-RuCl      3, Phys.  Rev.  B100,  085108                               liquid candidate,Phys. Rev. Res.5, L022045 (2023).
+      (2019).                                                                               [34]E.  Lefranc¸ois,  M.  Songvilay,  J.  Robert,  G.  Nataf,  E.  Jordan,
+[19]A.  Banerjee,  C.  A.  Bridges,  J.  Q.  Yan,  A.  A.  Aczel,  L.  Li,                        L.  Chaix,  C.  V.  Colin,  P.  Lejay,  A.  Hadj-Azzem,  R.  Ballou,
+      M. B. Stone, G. E. Granroth, M. D. Lumsden, Y. Yiu, J. Knolle,                              and V. Simonet, Magnetic properties of the honeycomb oxide
+      S. Bhattacharjee, D. L. Kovrizhin, R. Moessner, D. A. Tennant,                              Na2Co2TeO6,Phys. Rev. B94, 214416 (2016).
+      D. G. Mandrus, and S. E. Nagler, Proximate Kitaev quantum                             [35]A. K. Bera, S. M. Yusuf, A. Kumar, and C. Ritter, Zigzag anti-
+      spin liquid behaviour in a honeycomb magnet,Nat. Mater.15,                                  ferromagnetic ground state with anisotropic correlation lengths
+      733 (2016).                                                                                 in  the  quasi-two-dimensional  honeycomb  lattice  compound
+[20]H.-S. Kim, V. S. V., A. Catuneanu, and H.-Y. Kee, Kitaev mag-                                 Na2Co2TeO6,Phys. Rev. B95, 094424 (2017).
+      netism in honeycomb RuCl3 with intermediate spin-orbit cou-                           [36]S.  Zhang,  S.  Lee,  A.  J.  Woods,  W.  K.  Peria,  S.  M.  Thomas,
+      pling,Phys. Rev. B91, 241110(R) (2015).                                                     R.  Movshovich,  E.  Brosha,  Q.  Huang,  H.  Zhou,  V.  S.  Zapf,
+[21]S.-H. Do, S.-Y. Park, J. Yoshitake, J. Nasu, Y. Motome, Y. S.                                 and M. Lee, Electronic and magnetic phase diagrams of the Ki-
+      Kwon, D. T. Adroja, D. J. Voneshen, K. Kim, T.-H. Jang, J.-H.                               taev quantum spin liquid candidateNa                 2Co2TeO6,Phys. Rev.
+      Park,  K.-Y. Choi, and S. Ji, Majorana fermions in the Kitaev                               B108, 064421 (2023).
+      quantum spin systemα-RuCl               3,Nat. Phys.13, 1079 (2017).                  [37]A. M. Samarakoon, Q. Chen, H. Zhou, and V. O. Garlea, Static
+[22]A. Banerjee, P. Lampen-Kelley, J. Knolle, C. Balz, A. Aczel,                                  and dynamic magnetic properties of honeycomb lattice antifer-
+      B. Winn, Y. Liu, D. Pajerowski, J. Yan, C. A. Bridges, A. T.                                romagnets Na2M2TeO6,m=  Coand Ni,Phys. Rev. B104,
+      Savici, B. C. Chakoumakos, M. D. Lumsden, D. A. Tennant,                                    184415 (2021).
+      R.  Moessner,  D.  G.  Mandrus,  and  S.  E.  Nagler,  Excitations                    [38]W. Chen, X. Li, Z. Hu, Z. Hu, L. Yue, R. Sutarto, F. He, K. Iida,
+      in the field-induced quantum spin liquid state ofα-RuCl       3,npj                         K. Kamazawa, W. Yu, X. Lin, and Y. Li, Spin-orbit phase be-
+      Quant. Mater.3, 8 (2018).                                                                   havior ofNa    2Co2TeO6 at low temperatures,Phys. Rev. B103,
+[23]H. Li,  D.-W. Qu,  H.-K. Zhang,  Y.-Z. Jia,  S.-S. Gong,  Y. Qi,                              L180404 (2021).
+      and W. Li, Universal thermodynamics in the Kitaev fractional                          [39]C.  H.  Lee,  S.  Lee,  Y.  S.  Choi,  Z.  H.  Jang,  R.  Kalaivanan,
+      liquid,Phys. Rev. Res.2, 043015 (2020).                                                     R.   Sankar,   and   K.-Y.   Choi,   Multistage   development   of
+[24]H. Li,  H.-K. Zhang,  J. Wang,  H.-Q. Wu,  Y. Gao,  D.-W. Qu,                                 anisotropic magnetic correlations in the Co-based honeycomb
+      Z.-X. Liu, S.-S. Gong, and W. Li, Identification of magnetic in-                            latticeNa           2Co2TeO6,Phys. Rev. B103, 214447 (2021).
+      teractions and high-field quantum spin liquid inα-RuCl      3,Nat.                    [40]W. Yao and Y. Li, Ferrimagnetism and anisotropic phase tun-
+      Commun.12, 4007 (2021).                                                                     ability by magnetic fields inNa   2Co2TeO6,Phys. Rev. B101,
+[25]H. Li, W. Li, and G. Su, High-field quantum spin liquid tran-                                 085120 (2020).
+      sitions and angle-field phase diagram of the Kitaev magnetα-                          [41]P. Lampen-Kelley, S. Rachel, J. Reuther, J.-Q. Yan, A. Baner-
+      RuCl3,Phys. Rev. B107, 115124 (2023).                                                       jee, C. A. Bridges, H. B. Cao, S. E. Nagler, and D. Mandrus,
+[26]H. Liu, J. c. v. Chaloupka, and G. Khaliullin, Kitaev spin liquid                             Anisotropic susceptibilities in the honeycomb Kitaev systemα-
+      in3dtransition metal compounds,Phys. Rev. Lett.125, 047201                                  RuCl3,Phys. Rev. B98, 100403(R) (2018).
+      (2020).                                                                               [42]A.  Banerjee,  J.  Yan,  J.  Knolle,  C.  A.  Bridges,  M.  B.  Stone,
+[27]G.  Lin,  J.  Jeong,  C.  Kim,  Y.  Wang,  Q.  Huang,  T.  Masuda,                            M. D. Lumsden, D. G. Mandrus, D. A. Tennant, R. Moessner,
+                                                                                                                                                                                8
+
+      and S. E. Nagler, Neutron scattering in the proximate quantum                         [58]M.  Gohlke,  R.  Moessner,  and  F.  Pollmann,  Dynamical  and
+      spin liquidα-RuCl             3,Science356, 1055 (2017).                                    topological properties of the Kitaev model in a [111] magnetic
+[43]D. Weber, L. M. Schoop, V. Duppel, J. M. Lippmann, J. Nuss,                                   field,Phys. Rev. B98, 014418 (2018).
+      and B. V. Lotsch, Magnetic Properties of Restacked 2D Spin 1/2                        [59]Z. Zhu, I. Kimchi, D. N. Sheng, and L. Fu, Robust non-Abelian
+      honeycomb RuCl3 Nanosheets,Nano Lett.16, 3578 (2016).                                       spin liquid and a possible intermediate phase in the antiferro-
+[44]M.  Songvilay,  J.  Robert,  S.  Petit,  J.  A.  Rodriguez-Rivera,                            magnetic Kitaev model with magnetic field,Phys. Rev. B97,
+      W. D. Ratcliff, F. Damay, V. Bal´edent, M. Jim´enez-Ruiz, P. Le-                            241110 (2018).
+      jay,  E.  Pachoud,  A.  Hadj-Azzem,  V.  Simonet,  and  C.  Stock,                    [60]S.  Liang,  M.-H.  Jiang,  W.  Chen,  J.-X.  Li,  and  Q.-H.  Wang,
+      Kitaev  interactions  in  the  Co  honeycomb  antiferromagnets                              Intermediate gapless phase and topological phase transition of
+      Na3Co2SbO6  and  Na2Co2TeO6, Phys.  Rev.  B102,  224429                                     the Kitaev model in a uniform magnetic field,Phys. Rev. B98,
+      (2020).                                                                                     054433 (2018).
+[45]C. Kim, J. Jeong, G. Lin, P. Park, T. Masuda, S. Asai, S. Itoh,                         [61]H.-C.  Jiang,  C.-Y.  Wang,  B.  Huang,  and  Y.-M.  Lu,  Field  in-
+      H.-S. Kim, H. Zhou, J. Ma, and J.-G. Park, Antiferromagnetic                                duced quantum spin liquid with spinon Fermi surfaces in the
+      Kitaev  interaction  in  Jeff  =  1/2  cobalt  honeycomb  materials                         Kitaev model, arXiv:1809.08247  (2018).
+      Na3Co2SbO6 and Na2Co2TeO6,J. Phys.: Condens. Matter34,                                [62]C. Hickey and S. Trebst, Emergence of a field-driven U(1) spin
+      045802 (2021).                                                                              liquid in the Kitaev honeycomb model,Nat. Commun.10, 530
+[46]G. Lin, M. Shu, Q. Zhao, G. Li, Y. Ma, J. Jiao, Y. Li, G. Duan,                               (2019).
+      Q. Huang, J. Sheng, A. I. Kolesnikov, L. Li, L. Wu, H. Chen,                          [63]N. D. Patel and N. Trivedi, Magnetic field-induced intermediate
+      R. Yu, X. Wang, Z. Liu, H. Zhou, and J. Ma, Evidence for field                              quantum  spin  liquid  with  a  spinon  fermi  surface,Proc.  Natl.
+      induced quantum spin liquid behavior in a spin-1/2 honeycomb                                Acad. Sci.116, 12199 (2019).
+      magnet,Innov. Mater.2, 100082 (2024).                                                 [64]M.-H.  Jiang,  S.  Liang,  W.  Chen,  Y.  Qi,  J.-X.  Li,  and  Q.-H.
+[47]W. Li, S.-J. Ran, S.-S. Gong, Y. Zhao, B. Xi, F. Ye, and G. Su,                               Wang,  Tuning  topological  orders  by  a  conical  magnetic  field
+      Linearized tensor renormalization group algorithm for the cal-                              in the Kitaev model,Phys. Rev. Lett.125, 177203 (2020).
+      culation of thermodynamic properties of quantum lattice mod-                          [65]S. S. Jahromi, M. H       ¨ormann, P. Adelhardt, S. Fey, R. Orus, and
+      els,Phys. Rev. Lett.106, 127202 (2011).                                                     K.  P.  Schmidt,  Kitaev  honeycomb  antiferromagnet  in  a  field:
+[48]B.-B. Chen, L. Chen, Z. Chen, W. Li, and A. Weichselbaum,                                     quantum  phase  diagram  for  general  spin,arXiv:  2111.06132
+      Exponential thermal tensor network approach for quantum lat-                                (2021).
+      tice models,Phys. Rev. X8, 031082 (2018).                                             [66]H. Li,  E. Lv,  N. Xi,  Y. Gao,  Y. Qi,  W. Li, and G. Su, Mag-
+[49]Q. Li, Y. Gao, Y.-Y. He, Y. Qi, B.-B. Chen, and W. Li, Tangent                                netocaloric effect of topological excitations in Kitaev magnets,
+      Space Approach for Thermal Tensor Network Simulations of                                    Nat. Commun.15, 7011 (2024).
+      the 2D Hubbard Model,Phys. Rev. Lett.130, 226502 (2023).                              [67]P. Zhu, S. Feng, K. Wang, T. Xiang, and N. Trivedi, Emergent
+[50]Y.  Kubota,  H.  Tanaka,  T.  Ono,  Y.  Narumi,  and  K.  Kindo,                              quantum Majorana metal from a chiral spin liquid,Nat. Com-
+      Successive  magnetic  phase  transitions  inα-RuCl      3:   XY-like                        mun.16, 2420 (2025).
+      frustrated magnet on the honeycomb lattice,Phys. Rev. B91,                            [68]N. Xi,  Y. Gao,  C. Li,  S. Liang,  R. Yu,  X. Wang, and W. Li,
+      094422 (2015).                                                                              Thermal tensor network approach for spin-lattice relaxation in
+[51]S. Widmann, V. Tsurkan, D. A. Prishchenko, V. G. Mazurenko,                                   quantum magnets,arXiv:2403.11895 (2024).
+      A. A. Tsirlin, and A. Loidl, Thermodynamic evidence of frac-                          [69]S.-S.  Zhang,  G.  B.  Hal       ´asz,  and  C.  D.  Batista,  Theory  of  the
+      tionalized  excitations  inα-RuCl      3, Phys.  Rev.  B99,  094415                         Kitaev model in a [111] magnetic field,Nat. Commun.13, 399
+      (2019).                                                                                     (2022).
+[52]J. A. Sears, M. Songvilay, K. W. Plumb, J. P. Clancy, Y. Qiu,                           [70]K. Wang, S. Feng, P. Zhu, R. Chi, H.-J. Liao, N. Trivedi, and
+      Y.  Zhao,  D.  Parshall,  and  Y.-J.  Kim,  Magnetic  order  inα-                           T. Xiang, Fractionalization signatures in the dynamics of quan-
+      RuCl3: A honeycomb-lattice quantum magnet with strong spin-                                 tum spin liquids,Phys. Rev. B111, L100402 (2025).
+      orbit coupling,Phys. Rev. B91, 144420 (2015).                                         [71]X.-G. Zhou, H. Li, Y. H. Matsuda, A. Matsuo, W. Li, N. Kurita,
+[53]J.  Chaloupka  and  G.  Khaliullin,  Hidden  symmetries  of  the                              G. Su, K. Kindo, and H. Tanaka, Possible intermediate quantum
+      extended   Kitaev-Heisenberg   model:     Implications   for   the                          spin liquid phase inα-rucl3 under high magnetic fields up to
+      honeycomb-lattice  iridates  A2IrO3, Phys.  Rev.  B92,  024413                              100 t,Nature Communications14, 5613 (2023).
+      (2015).                                                                               [72]P. A. Maksimov, S. Jiang, L. P. Regnault, and A. L. Chernyshev,
+[54]H. Yang, C. Kim, Y. Choi, J. H. Lee, G. Lin, J. Ma, M. Kra-                                   Strong kitaev interaction in BaCo2(AsO4)2,Phys. Rev. Lett.
+      tochv´ılov´a, P. Proschek, E.-G. Moon, K. H. Lee, Y. S. Oh, and                             135, 066703 (2025).
+      J.-G. Park, Significant thermal Hall effect in the3dcobalt Ki-                        [73]S. R. White, Density matrix formulation for quantum renormal-
+      taev system Na2Co2TeO6,Phys. Rev. B106, L081116 (2022).                                     ization groups,Phys. Rev. Lett.69, 2863 (1992).
+[55]G. Xiao, Z. Xia, Y. Song, and L. Xiao, Magnetic properties and                          [74]L. Chen, D.-W. Qu, H. Li, B.-B. Chen, S.-S. Gong, J. von Delft,
+      phase diagram of quasi-two-dimensional Na2Co2TeO6  single                                   A.  Weichselbaum,  and  W.  Li,  Two  temperature  scales  in  the
+      crystal  under  high  magnetic  field,J.  Phys.:  Condens.  Matter                          triangular lattice Heisenberg antiferromagnet,Phys. Rev. B99,
+      34, 075801 (2021).                                                                          140404(R) (2019).
+[56]X. Hong,  M. Gillig,  W. Yao,  L. Janssen,  V. Kocsis,  S. Gass,                        [75]H. Li,  B.-B. Chen,  Z. Chen,  J. von Delft,  A. Weichselbaum,
+      Y. Li, A. U. B. Wolter, B. B¨uchner, and C. Hess, Phonon ther-                              and W. Li, Thermal tensor renormalization group simulations of
+      mal transport shaped by strong spin-phonon scattering in a Ki-                              square-lattice quantum spin models,Phys. Rev. B100, 045110
+      taev material Na2Co2TeO6,npj Quant. Mater.9, 18 (2024).                                     (2019).
+[57]X.-G. Zhou, H. Li, C. Kim, A. Matsuo, K. Mehlawat, K. Mat-                              [76]H. Li, Y.-D. Liao, B.-B. Chen, X.-T. Zeng, X.-L. Sheng, Y. Qi,
+      sui, Z. Yang, A. Miyata, G. Su, K. Kindo, J.-G. Park, Y. Ko-                                Z. Y. Meng, and W. Li, Kosterlitz-Thouless melting of magnetic
+      hama, W. Li, and Y. H. Matsuda, Emergent quantum disordered                                 order  in  the  triangular  quantum  Ising  material  TmMgGaO4,
+      phase in Na2Co2TeO6 under intermediate magnetic field along                                 Nat. Commun.11, 1111 (2020).
+      caxis,arXiv:2408.01957 (2024).                                                        [77]Z. Hu, Z. Ma, Y.-D. Liao, H. Li, C. Ma, Y. Cui, Y. Shangguan,
+                                                                                                                                                                   9
+
+      Z. Huang, Y. Qi, W. Li, Z. Y. Meng, J. Wen, and W. Yu, Ev-
+      idence of the Berezinskii-Kosterlitz-Thouless phase in a frus-
+      trated magnet,Nat. Commun.11, 5631 (2020).
+[78]Y. Gao,  Y.-C. Fan,  H. Li,  F. Yang,  X.-T. Zeng,  X.-L. Sheng,
+      R.  Zhong,   Y.  Qi,   Y.  Wan,  and  W.  Li,  Spin  supersolidity
+      in  nearly  ideal  easy-axis  triangular  quantum  antiferromagnet
+      Na2BaCo(PO4)2,npj Quant. Mater.7, 89 (2022).
+[79]J. Wang, H. Li, N. Xi, Y. Gao, Q.-B. Yan, W. Li, and G. Su, Pla-
+      quette singlet transition, magnetic barocaloric effect, and spin
+      supersolidity in the Shastry-Sutherland model,Phys. Rev. Lett.
+      131, 116702 (2023).
+[80]J. Xiang, C. Zhang, Y. Gao, W. Schmidt, K. Schmalzl, C.-W.
+      Wang, B. Li, N. Xi, X.-Y. Liu, H. Jin, G. Li, J. Shen, Z. Chen,
+      Y. Qi, Y. Wan, W. Jin, W. Li, P. Sun, and G. Su, Giant magne-
+      tocaloric effect in spin supersolid candidate Na2BaCo(PO4)2,
+      Nature625, 270 (2024).
+[81]H. Takeda, J. Mai, M. Akazawa, K. Tamura, J. Yan, K. Mooven-
+      daran,  K.  Raju,  R.  Sankar,  K.-Y.  Choi,  and  M.  Yamashita,
+      Planar thermal hall effects in the Kitaev spin liquid candidate
+      Na2Co2TeO6,Phys. Rev. Res.4, L042035 (2022).
+
+Acknowledgements
+The  authors  acknowledge  supports  by  the  National  Natural
+Science Foundation of China (Grants Nos.  12404177 (H.L.),
+12222412  and  12047503  (W.L.)),  the  Strategic  Priority  Re-
+search Program of Chinese Academy of Sciences, Grant No.
+XDB1270100 (W.L.), and the Talent Fund of Beijing Jiaotong
+University (Grant No. 2025JBRC003) (H.L.). We thank HPC-
+ITP for the technical support and generous allocation of CPU
+time.
+
+Author contributions
+H.L. and W.L. initiated this work. H.L. performed the tensor-
+network calculations.   All the authors conducted theoretical
+analysis.  H.L. and W.L. prepared the manuscript with input
+from all authors. All authors reviewed the manuscript.
+
+Competing interests
+The authors declare no competing interests.
+
+Additional information
+Supplementary   Informationis   available   in   the   online
+version of the paper.
+                                                                                                                                                      10
+
+                                             Supplementary Information for
+Kitaev-derived Gapless Spin Liquid in theK-J-Γ-Γ                                             ′ Quantum Magnet Na2Co2TeO6
+
+                                                                 Liet al.
+                                                                                                                                                                  11
+
+                                        Supplementary Note 1.    Model parameters for Na2Co2TeO6
+
+   Summary of previously proposed models for Na2Co2TeO6.For the Kitaev magnet Na 2Co2TeO6 (NCTO) material, a series
+of model parameters have been previously proposed in the literature [27,29,37,44–46]. Here we systematically summarize and
+organize these parameters in Supplementary Table.1and Supplementary Table.2. These model parameters can be classified into
+two descriptions, which are respectively described byK-J          1,2,3     -Γ-Γ     ′ and XXZJ         1-J  3 frameworks. For theK-J           1,2,3     -Γ-Γ     ′ model,
+we have normalized all parameters with respect to the Kitaev interaction|K|, while for XXZJ                                   1-J  3 model, the normalization was
+performed relative to theJ      xy3    interaction.  The corresponding energy scales (in meV units) are all derived from their respective
+references.
+
+                         Refs.                K(meV)         Γ/|K|       Γ′/|K|      J1/|K|      J2/|K|      J3/|K|      Kfit (meV)       zigzag    Cm
+               Songvilay2020 [44]                 -9           0.2        0.033      -0.011       0.033        0.1           -28            !       !
+                   Kim2021 [45]                   3.3        -0.848       0.636      -0.4545         0       0.4545           10            !       !
+                   Lin2021 [27]                 0.125           1           0         -18.6          0          20           0.25           !       %
+            Samarakoon2021A [37]                  -7        0.00286    -0.03286      -0.0286     0.0071      0.1714          -28            !       !
+            Samarakoon2021B [37]                  2.7        -1.074      0.5926      -1.1852      0.037      0.4444           10            !       !
+                   Lin2022 [46]                  1.28       -0.9375       0.625      -1.0938         0       0.9375           3.8           !       %
+                     our model                    19        -0.9035       -0.65      0.3597          0           0            19            !       !
+
+Supplementary Table1.Parameters and checklist of various effectiveK-J                   (1,2,3)       -Γ( ′)model proposed for Na  2Co2TeO6.The “!” and
+“%” symbols are used to indicate whether the experimentally observed characteristics can be reproduced by the corresponding parameter set.
+In the table, “zigzag” means a formation of ground-state zigzag AFM order (see Supplementary Fig.1), while “C           m” means the double-peak
+specific heat feature (see Supplementary Fig.2).
+
+
+                        Refs.           Jxy3    (meV)   Jz3 /|J    xy3  |Jxy1  /|J    xy3  |Jz1 /|J    xy3  |D/|J    xy3  |Jxy3,fit    (meV)zigzagCm
+                 Kim2021B [45]              2.1             0.95             -1           -0.95       0.1506              5            !        %
+                  Yao2022 [28]             1.896              1              0              0         0.2175              5            %        %
+
+Supplementary Table2.Parameters and checklist of various effective XXZ-J                      1-J 3 models proposed for Na2Co2TeO6. The “!”  and
+“%” symbols are used to indicate whether the experimentally observed characteristics can be reproduced by the corresponding parameter set.
+In the table, “zigzag” means a formation of ground-state zigzag AFM order (see Supplementary Fig.1), while “C           m” means the double-peak
+specific heat feature (see Supplementary Fig.2).
+
+   Ground-state spin correlations.Employing these model parameters, we applied the density matrix renormalization group
+(DMRG) method to calculate the ground-state spin correlations and magnetic moments for each parameter set listed in Sup-
+plementary Table.1and Supplementary Table.2.  The calculations were performed on YC8×12×2lattice sites (e.g., see
+Supplementary Fig.1a’), with a kept bond dimensionD= 512.  Supplementary Fig.1a-handa’-h’show the corresponding
+spin structure factorsS(q)and the expectation values of magnetic moments⟨S                                    γ⟩(γ=x, y, z).  Through the spin structure
+factors results in Supplementary Fig.1a-h, we observe that most parameter sets (with the exception of the “Yao2022” set [28]
+as shown in Supplementary Fig.1h) exhibit prominent intensity at the M-point in the Brillouin zone (BZ). Combined with their
+magnetic configuration results on the right-hand side, this indicates the formation of a zigzag antiferromagnetic (AFM) mag-
+netic order in the ground state, consistent with the experimental observations [29,33,46]. Accordingly, we have added a column
+started with “zigzag” in Supplementary Table.1and Supplementary Table.2, where checkmarks (“!”) and crosses (“%”) are
+used to denote whether the experimentally observed zigzag AFM order can be reproduced by each parameter set.
+   Finite-temperature specific heat results.In addition to the ground-state spin correlations, we further calculated the finite-
+temperature  specific  heatC        m  curves  for  each  parameter  set  using  the  exponential  tensor  renormalization  group  (XTRG)
+method [48], as presented in Supplementary Fig.2.  The arrangement of panels in Supplementary Fig.2maintains a one-to-
+one correspondence with panelsa-hin Supplementary Fig.1.  The gray curves with open circles represent calculated results
+obtained directly from the proposed parametersKorJ                          xy3   [27,29,37,44–46], while light-colored square symbols denote exper-
+imental data from two independent studies [28,54]. We find that all parameter sets yield specific heat curves showing significant
+deviations from experimental measurements, thereby obscuring the thermal characteristics within the temperature range of in-
+terest.  We therefore rescaled the temperature axes for each parameters in each panels by only adjusting the energy scale from
+the originalKorJ                     xy3    values in Supplementary Table.1and Supplementary Table.2to optimizedK                                        fit andJ       xy3,fit    values, with
+the rescaled results shown as blue curves with open circles. Considering that the experimental specific heat exhibits a character-
+istic double-peak feature, our systematic comparison reveals that only parameter sets corresponding to panelsa-dsuccessfully
+                                                                                                                                                                     12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary Figure 1.Ground-state spin correlations of various proposed models.  a-iThe spin structure factorsS(q)(see main
+text for details) under different parameter sets with a unified color code applied across all panels.a’-i’The corresponding on-site magnetic
+moment configurations⟨S                         γ⟩along a specific componentγ=x, yorz, where red circles denote positive and black circles represent negative
+expectation values. The circle size corresponds to the magnitude of⟨S     γ⟩values.
+
+
+reproduce this distinctive structure (although it does not means a specific heat matching with experiments, as the energy scale is
+manual shifted).  Consequently, we have added a “C  m” column in Supplementary Table.1and Supplementary Table.2, where
+(“!”)  and crosses (“%”) indicate the presence or absence of the experimentally observed double-peak specific heat signature
+for each parameter set.
+   Our parameter set.Although the four aforementioned parameter sets presented in Supplementary Fig.2a-dsuccessfully
+                                                                                                                                                                                  13
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary Figure 2.Comparison of specific heatC             m curves calculated from various proposed models with experimental data.
+The grey curves with open circles represent the results calculated strictly using the proposed energy scaleKorJ                xy3   , while the blue ones depict
+the corresponding results with adjusted energy scaleK         fit andJ      xy3,fit    for each case. The solid squares denote the experimental data [28,54]. In
+panelsa-d, the magnetic specific heatC                         m displays a double-peak structure when plotted with the optimized energy scaleK         fit, where the peak
+positions show agreement with experimental observations.  In contrast, panelse-hreveal thatC                        m exhibits only a single peak structure.  The
+specific values of the optimized parametersK                   fit andJ      xy3,fit    are provided in Supplementary Table.1and Supplementary Table.2.
+
+
+reproduce the double-peak specific heat characteristics, we observe that the necessary energy-scale modifications (viaK→K               fit)
+required to fit the specific heat curves inevitably lead to discrepancies between the calculated zero-temperature transition fields
+and experimental observations [57].  Therefore, we aim to propose a revised parameter set that could simultaneously satisfy
+both  thermodynamic  (specific  heat  peak  positions)  and  field-induced  properties  (in-plane  and  out-of-plane  transition  fields)
+constraints.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary Figure3.Magnetization curves under differentΓvalues.The systems with the threeΓ/|K|ratio all exhibit two distinct
+field-induced phase transitions. The low transition fieldB        c1, marked by thick yellow bars, remains nearly constant around 35 T with varying
+Γ/|K|values, indicating smallΓdependence.  In contrast, the high transition fieldB                                c2 (denoted by color-matched arrows) decreases signif-
+icantly with increasing|Γ|/|K|, corresponding to the reduction in the range of the intermediate-field QSL regime.  All curves are calculated
+using a unified energy scale of|K|= 19meV. The lower three curves correspond to the magnetization results (left vertical axis), while the
+upper ones show their field derivatives (right vertical axis).
+
+   As there are remarkable similarities in the finite-temperature and field-induced properties betweenα-RuCl                  3  and NCTO, it
+suggests  that  it  might  be  a  good  starting  point  to  adopt  the  model  parameters  ofα-RuCl       3.   While  theα-RuCl        3  parameter
+is constructed based onK-J          1,2,3     -Γ-Γ     ′  model with ferromagnetic (FM) Kitaev interactions [24], we first perform a self-dual
+                                                                                                                                                                             14
+
+transformation [53] on theα-RuCl             3  model parameters [24] to obtain an effective description with AFM Kitaev interactions,
+yielding a parameter set withΓ/|K|=−0.3772. Subsequently, we find that increasing the value of|Γ|/|K|leads to a decrease
+in the high transition field strengthB               c2 and thus a narrowing of the intermediate-field QSL regime, as shown in Supplementary
+Fig.3, in better agreement with recent high-field magnetization measurements [57] of NCTO along the out-of-plane direction.
+Through tuning theΓ/|K|ratio to−0.65, we could simultaneously reproduce both the specific heat (see the main text Fig.1a)
+and field-induced properties of NCTO. Furthermore, we have verified that this parameter set maintains the zigzag AFM order as
+the ground state with the corresponding spin correlations and magnetic moments data as presented in Supplementary Fig.1iand
+i’. Such parameter set has also been included in Supplementary Table.1.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary Figure4.Thermodynamic properties of NCTO model under in-plane magnetic fields. a-cThe landscapes ofaspecific
+heatC       m,bthermal entropyS/ln2, andcmagnetizationMresults with fields alonga                                                ∗ axis (B [l m n]    =B    [−1 0 1]    ). The white dashed lines in
+panelaindicate the temperature scalesT                      H,T L andT     ′L, which also serves as schematic phase boundaries separating paramagnetic (PM), zigzag
+(ZZ), Kitaev fractional liquid (KFL) and polarized (PL) phases.d-gCalculated spin structure factors                ˜S(q)(see the main text for definition)
+under various magnetic fields atT= 129.2K, a temperature above the high-temperature scaleT                         H.d’-g’Structure factors at an intermediate
+temperatureT= 45.7K. The “M-star” features in panels (d’-g’) signify the persistence of the KFL regime over a finite field range.d”-g”
+Structure factors atT= 5.7K. The intensity at the M-point in the Brillouin zone is suppressed after the phase transition occurs with increasing
+in-plane fields.
+                                                                                                                                                                 15
+
+                  Supplementary Note 2.    Finite-temperature properties of NCTO model under in-plane fields
+
+   In-plane field-induced phase transitions.The magnetization process of NCTO under in-planea                             ∗ direction magnetic fields
+has been a focus in recent experimental studies [27,36,40,46,55,56]. Those works have proposed several scenarios, including:
+(a) a first-order transition from the (canted) zigzag-ordered AFM phase to a coexisting zigzag and spin-disordered phase at about
+6 T, followed by subsequent transitions (around 8 T) to a spin-disordered phase (possibly a QSL) and finally to a spin-polarized
+phase (around 10 T) [27,46]; (b) a first-order phase transition at about 6 T and then continuously to the polarized phase [81]; or
+(c) a first-order transition from the triple-Q phase at about 8 T, and a quantum critical point (around 10 T) [56].
+   In this work, employing the XTRG and DMRG methods with our proposed model parameters as listed in Supplementary
+Table.1,  we  have  calculated  the  specific  heat  and  thermodynamic  entropy  under  in-plane  magnetic  fields  up  to  20  T.  Our
+two-dimensional numerical simulations reveal only a single phase transition (no intermediate QSL phase) from the ordered
+phase to a (partially) polarized phase.  Notably, the aforementioned first-order transition from “the (canted) zigzag or triple-
+Q ordered phase” to a “canted AFM” or a “coexisting zigzag and spin-disordered phase” — which possibly originates from
+three-dimensional material properties — remains undetectable in our two-dimensional finite-size study.
+   The  landscapes  of  specific  heat,  thermal  entropy,  and  magnetizations.Supplementary  Fig.4apresents  a  landscape
+of specific heatC        m.   The temperature scaleT         H  associated with the high-temperature specific heat peak remains nearly un-
+changed across varying magnetic fields, while the low-temperature peak exhibits a non-monotonic response.  Specifically, the
+low-temperature characteristic scale (marked asT    L in Supplementary Fig.4a) initially shifts toward lower temperatures with
+weakening intensity as the field increases, but undergoes a notable reversal (marked asT   ′L in Supplementary Fig.4a) near 6 T
+back to higher temperatures.  This behavior suggests the emergence of a field-induced phase transition in the low-temperature
+regime.  The white dashed curves serving as guides to the eye, which indicates the phase boundaries separating distinct phases
+in the phase diagram.
+   The thermodynamic entropy results also indicates the existence of a phase transition below 10 T, as evidenced in Supplemen-
+tary Fig.4b.  At low magnetic fields (B  <6T), the isentropic curves are densely distributed nearT                           H  andT       L, signify large
+entropy release near the two characteristic temperature scales, while sparsely distributed in the Kitaev fractional liquid (KFL)
+regime between these scales, and in the low-temperature zigzag ordered phase. Above 6 T, a marked upward curvature emerges
+in the isotropic curves, demonstrating systematic entropy reduction in the low-temperature spin-polarized phase.
+   We have also mapped the landscape of magnetization resultsM= (−1⟨S                        x⟩+0⟨S      y⟩+1⟨S      z⟩)/  √2as shown in Supplementary
+Fig.4c.  The lower-right-corner regime indicates large magnetic moment,  which indicates that the system undergoes a slow
+convergence to the fully polarized phase.
+   Spin correlations.In the lower part of Supplementary Fig.4, we present the results of the spin-structure factors                     ˜S(q)at
+different in-plane magnetic fields for three characteristic temperatures.  It can be seen that when the temperature is relatively
+high (T > T  H), as shown in Supplementary Fig.4d-g, the structure factors change little with the magnetic field. At intermediate
+temperatures (T  L < T < TH) and a lower field (see Supplementary Fig.4d’-g’), we observe that the structure factor exhibits an
+M-star feature, which is consistent with the characteristics of the KFL phase [23,24].  When the temperature is low (T  < T             L),
+and the magnetic field is small (B  <6T), i.e., Supplementary Fig.4d”, there is a relatively large intensity at the M-point in
+the Brillouin zone, indicating that the system is in the zigzag-ordered phase; when the magnetic field is large (B >10T, see
+Supplementary Fig.4e”-g”), the intensity at the M-point is suppressed, indicating that the system enters the partially polarized
+phase.  These characteristics of spin correlations, together with the specific heat, entropy, and magnetization mentioned above,
+enable us to obtain the finite-temperature phase diagram under in-plane magnetic fields as summarized in Supplementary Fig.4a.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary Figure 5.Thermodynamic properties of NCTO model at fieldsB/|K| ≃0.23and0.26. The specific heatC                                                          m  and
+thermal entropyS/ln2curves with these two fields are plotted in logarithmic coordinates, which clearly demonstrate the power-law behavior
+T α under the low-temperature scaleT       ′′L  (see the black dashed line).
+                                                                                                                                                                        16
+
+                      Supplementary Note 3.    Additional results of field-induced gapless quantum spin liquid
+
+   Low-temperature  thermodynamic  scaling  in  the  intermediate-field  gapless  phase  (IGP).In  addition  to  the  low-
+temperature thermodynamic results atB/|K| ≃0.23presented in Fig.3bof the main text, we have also calculated the specific
+heat and thermal entropy curves at a different fieldB/|K| ≃0.26, also within the IGP, on YC4×10×2 lattices withD= 400.
+The comparison of the results with these two fields are shown in Supplementary Fig.5.  It is observed that the specific heat
+and entropy curves exhibit small variation betweenB/|K| ≃0.23and0.26.   We note that a field difference of0.03|K|in
+natural units corresponding to approximately 7 T in experimental units.  Below the low temperature scaleT        ′′L , the curves with
+B/|K| ≃0.26demonstrate nearly identical behavior to those atB/|K| ≃0.23, both following the power-law scaling.  This
+consistency strongly supports the gapless nature of the low-temperature intermediate-field phase.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary Figure 6.Determination of the phase boundaries of IGP. a,bThe derivatives of the spin structure factorsd                 ˜S(M)/dB
+andd     ˜S(Γ)/dBversus out-of-plane magnetic fieldB/|K|. Forη≥0.025, the dip minima in panelsaandb(marked by black and red arrows,
+respectively) correspond to the transition fieldsB          c1 andB      c2. The curves in these plots have been vertically offset for clarity.c,dThe contour
+plots ofd   ˜S(M)/dBandd                    ˜S(Γ)/dBunder differentB/|K|andηvalues.  The dark red regime corresponding to the dips of the curves in
+panelsa,b, with the phase boundaries indicated by the black squares and red dots.
+
+   Determination of the IGP phase boundaries.The boundaries of the IGP under an out-of-plane magnetic field for various
+ηvalues can be determined by analyzing the derivative of the spin structure factor. The system is located in the zigzag-ordered
+phase above certainηvalues, characterized by the M-point structure factors             ˜S(M).  Therefore, the derivatived          ˜S(M)/dB, as
+shown in Supplementary Fig.6a, can be used to pin down the phase boundary.  The positions of the dips in these curves with
+respect to the applied magnetic field correspond to the transition fieldB        c1.  These dip positions are indicated by black arrows
+and presented in Fig.3and Fig.4of the main text.
+   TheB       c2  for the phase transition from IGP to the polarized phase can be determined by the spin structure factor  ˜S(Γ).  In
+Supplementary Fig.6b, we present thed              ˜S(Γ)/dBfor variousηvalues, which reaches a minimum and subsequently converges
+rapidly to zero. The position of this dip (see the red arrows) determines the higher transition fieldB        c2.
+   In Supplementary Fig.6c,d, we show the contour plots of thed                 ˜S(M)/dBandd                    ˜S(Γ)/dBresults.  The red regimes in the
+plots indicate the dip positions and visualize the phase boundaries. These results indicate that the IGP in realistic NCTO model
+and pure AFM Kitaev model are adiabatically connected, i.e., they belong to the same phase.  It thus provides strong evidence
+for the realization of Kitaev-derived spin liquid phase in the realistic Kitaev magnet NCTO.

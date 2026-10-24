@@ -1,0 +1,1005 @@
+                 From the Shastry-Sutherland model to the J1-J2 Heisenberg model
+
+                            Xiangjian  Qian,1  Rongyi  Lv,1  Jong  Yeon  Lee,2, ∗  and  Mingpu  Qin1, 3, †
+                     1Key  Laboratory  of  Artificial  Structures  and  Quantum  Control  (Ministry  of  Education),
+                   School  of  Physics  and  Astronomy,  Shanghai  Jiao  Tong  University,  Shanghai  200240,  China
+                                 2Department  of  Physics  and  Institute  of  Condensed  Matter  Theory,
+                              University  of  Illinois  at  Urbana-Champaign,  Urbana,  Illinois  61801,  USA
+                                             3Hefei  National  Laboratory,  Hefei  230088,  China
+                                                          (Dated:  November 27, 2024)
+                   We propose a generalized Shastry-Sutherland model which bridges the Shastry-Sutherland model
+                and the J1-J2 Heisenberg model.  By employing large scale Density Matrix Renormalization Group
+                and Fully Augmented Matrix Product State calculations, combined with careful finite-size scaling,
+                we  find  the  phase  transition  between  the  plaquette  valence  bond  state  (PVBS)  and  Neel  anti-
+                ferromagnetic (AFM) phase in the pure Shastry-Sutherland model is a weak first one.  This result
+                indicates the existence of an exotic tri-critical point in the PVBS to AFM transition line in the
+                phase diagram, as the transition in the J1-J2  Heisenberg model was previously determined to be
+                continuous.  We determine the location of the tri-critical point in the phase diagram at which first-
+                order transition turns to continuous. Our generalized Shastry-Sutherland model provides not only a
+                valuable platform to explore exotic phases and phase transitions but also more realistic description
+                of Shastry-Sutherland materials like SrCu2(BO3)2.
+
+
+  Introduction– The exploration of quantum phases and                         into  a  N´eel  antiferromagnetic  (AFM)  state  at  around
+phase transitions in strongly correlated systems remains                      J1/J3  =  0.79  [22–25].   While  the  transition  from  the
+a  central  theme  in  condensed  matter  physics,  offering                  dimer  phase  to  the  plaquette  VBS  phase  is  distinctly
+profound insights into the fundamental behaviors of mat-                      first-order, the characteristics of the transition from the
+ter and the exotic phenomena these systems exhibit [1–                        plaquette  VBS  to  the  AFM  phase  remain  ambiguous,
+15].   Among  the  various  models  that  have  captivated                    with various studies suggesting different possibilities:  a
+the attention of physicists, the Shastry-Sutherland (SS)                      continuous phase transition [21, 24, 26], a first-order tran-
+model  [16]  and  the  J1-J2  Heisenberg  model  stand  out                   sition  [23,  25,  27],  or  the  presence  of  a  narrow  quan-
+as paradigms for studying quantum magnetism and the                           tum spin liquid phase between the pVBS and N´eel AFM
+intricate interplay of competing interactions.                                phases [22, 28].
+  The Shastry-Sutherland model is proposed to describe                           On  the  other  hand,  the  J1-J2  Heisenberg  model  is
+the magnetic material SrCu2(BO3)2 [1, 17, 18], with the                       renowned  for  its  potential  to  host  a  quantum  spin  liq-
+effective spin Hamiltonian                                                    uid phase, driven by the interplay of nearest and next-
+                    X                        X                                nearest  neighbor  interactions  on  a  square  lattice.   The
+          H = J1         Si · Sj + J3                 Si · Sj        (1)      Hamiltonian for this model is defined by
+                    ⟨i,j⟩               ⟨⟨i,j⟩⟩∈blue                                                  X                    X
+                                                                                            H = J1         Si · Sj + J2          Si · Sj            (2)
+where  Si  is  the  spin-1/2  operator  on  site  i,  and  the                                        ⟨i,j⟩               ⟨⟨i,j⟩⟩
+summations are taken over nearest-neighbor black pairs                        where  the  summations  are  taken  over  all  the  nearest-
+(⟨i, j⟩)  and  part  of  the  next-nearest-neighbor  (⟨⟨i, k⟩⟩)               neighbor   (⟨i, j⟩)   and   next-nearest-neighbor   (⟨⟨i, k⟩⟩)
+blue  pairs  as  shown  in  Fig.  1(a).    The  SS  model  is                 pairs.    Recent  studies  have  focused  on  exploring  the
+renowned  for  its  potential  to  host  a  deconfined  quan-                 non-magnetic  regime,  which  roughly  spans  the  range
+tum  critical  point  (DQCP)  [4,  5,  19–21],  a  continu-                   0.5 < J2/J1 < 0.6.  Within this intriguing region, a va-
+ous  phase  transition  between  two  distinct  symmetry-                     riety of competing states have been identified using mul-
+breaking   phases,   which   is   beyond   the   conventional                 tiple  numerical  methods.   These  states  include  colum-
+Landau-Ginzburg  paradigm,  between  the  plaquette  va-                      nar  valence  bond  state  (cVBS)  [29–31],  pVBS  [32–35],
+lence bond state (pVBS) and the N´eel antiferromagnetic                       and potential intermediate quantum spin liquids  [36–40].
+(AFM) phases.  The SS model contains rich phases.  As                         Notably, recent calculations have reported that there is
+the  ratio  J1/J3  (defined  as  α  in  this  work)  increases,               a direct phase transition between the pVBS [41][42] and
+the  ground  state  undergoes  a  series  of  quantum  phase                  the Neel phases at J2/J1 = 0.535(3) [43], indicating the
+transitions, beginning with a dimer singlet phase, tran-                      absence of intermediate quantum spin liquid phase in this
+sitioning  to  a  plaquette  valence  bond  state  (VBS)  at                  model [43, 44].
+approximately  J1/J3  =  0.675,  and  ultimately  evolving                       Model and Methods– In this study, we propose a model
+                                                                              that  bridges  the  SS  model  and  the  J1-J2  Heisenberg
+                                                                              model,  aiming to unify the understanding of these two
+∗ jongyeon@illinois.edu                                                       foundational  models.   Notably,  prior  numerical  results
+† qinmingpu@sjtu.edu.cn
+                                                                              have indicated evidence of a continuous transition in the
+                                                                                                                                                    2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1.  Model and phase diagram.  (a) The illustration of the model we propose to bridge the Shastry-Sutherland model
+(SS model) and the J1-J2 Heisenberg model. The interactions J1, J′3 and J3 are represented by solid black, dashed red, and solid
+blue lines, respectively.  (b) The ground-state phase diagram of the pure Shastry-Sutherland model (J′3 = 0), with α = J1/J3,
+featuring three distinct phases:  the dimer valence bond state (dVBS), the plaquette valence bond state (pVBS), and the N´eel
+antiferromagnetic (AFM) phase. The transition from the dVBS to the pVBS is well known to be a strongly first-order transition.
+In this work, we find a direct weak first-order phase transition between the pVBS and the N´eel AFM phases.  (c) The phase
+diagram of the generalized Shastry-Sutherland model in (a), where the dashed red lines indicate first-order transitions and the
+solid blue lines represent continuous transitions between the pVBS and N´eel AFM phases.  We identify an exotic tri-critical
+point (indicated by the black crossing symbol) along the transition line from the pVBS to the AFM phase, where the transition
+changes from first-order in the Shastry-Sutherland limit to continuous in the J1-J2 Heisenberg limit.
+
+
+J1-J2 model compared to the Shastry-Sutherland model.                        erwise specified, we concentrate on L × 2L cylinder sys-
+By tracking the evolution of this exotic phase within the                    tems following [22].  For L ≤ 14, we present simulation
+phase diagram of our unified model, we aim to uncover                        results without disentanglers, i.e., employing the regular
+new  perspectives  on  quantum  criticality  and  the  emer-                 SU(2)-symmetric DMRG, and we push the bond dimen-
+gent phenomena arising from the interplay of frustrating                     sion D up to 15000 SU(2) multiples, equivalent to about
+interactions.   The  proposed  model  is  described  by  the                 60000 U(1) states to ensure high simulation accuracy.
+Hamiltonian                                                                     For L = 16, we employ the FAMPS method and push
+ H = J1     X   Si · Sj + J3    X    Si · Sj + J′3   X    Si · Sj   (3)      the bond dimension to as large as D = 20000 U(1) states.
+                                                                             Our test indicates that FAMPS results with bond dimen-
+           ⟨i,j⟩            ⟨⟨i,j⟩⟩∈blue         ⟨⟨i,j⟩⟩∈red                 sion D have almost the same accuracy as the MPS results
+and  the  summations  are  taken  over  nearest-neighbor                     with bond dimension 4D for the L = 16 results.  FAMPS
+(⟨i, j⟩) and next-nearest-neighbor (⟨⟨i, j⟩⟩) blue and red                   results also make the extrapolation with truncation error
+pairs as shown in Fig. 1(a).  This model encompasses the                     more reliable [41].  This setup ensures that all truncation
+SS model and the J1-J2 Heisenberg in the limits J′3 = 0                      errors in our calculations are below or at approximately
+and J′3 = J3, respectively.                                                  1 × 10−5.   The  L  =  16  calculation  takes  about  three
+  Recent  advancements  in  the  density  matrix  renor-                     weeks on three 64-core nodes for one parameter.  All re-
+malization  group  (DMRG)  [45]  have  introduced  a  new                    sults  presented  in  this  work  have  been  extrapolated  to
+method  known  as  the  fully  augmented  matrix  product                    zero truncation errors.  The extrapolation processes are
+state  (FAMPS)  [46],  which  significantly  enhances  our                   shown in the supplementary materials.
+ability to accurately determine the ground state of large                       The  boundary  of  the  VBS  phase  can  be  accurately
+systems by incorporating an additional disentangler layer                    identified  by  examining  the  energy  crossing  between
+on  matrix  product  state  (MPS)  [47].   This  method  en-                 the  first  excited  states  in  the  S = 1  and  S = 0  sec-
+ables calculations on cylinders (which are periodic in the                   tors [22, 37, 38, 43, 48–52], which shows small finite size
+y-direction and open in the x-direction as illustrated in                    effect  [22,  49].   In  contrast,  the  boundary  of  the  N´eel
+Fig. 1(a)) with circumferences up to L = 16.  Unless oth-                    AFM phase  is determined  by analyzing  the crossing  of
+                                                                                                                                                     3
+
+the correlation ratio of the AFM order parameter [53]
+                            s
+             ξm/L =  1              m2s(π, π)
+                        2π     m2s(π + 2π/L, π) − 1,           (4)
+
+which  shows  smaller  finite-size  corrections  than  other
+quantities  [43,  51,  54].    We  also  show  the  results  of
+m2s(π, π) in the supplementary materials.  We find that
+it is difficult to infer the precise location of the bound-
+ary for AFM phases from m2s(π, π), because of the large
+uncertainty in the extrapolation of m2s(π, π) to the ther-
+modynamic  limit  when  the  studied  sizes  are  not  large
+enough.
+  To  differentiate  between  first-order  and  continuous
+transitions, we utilize the first derivative of the ground
+state energy.  For a first-order transition, finite-size scal-
+ing  analysis  of  the  first  derivative  of  ground  state  en-             FIG. 2.  Phase boundary in the SS model.  (a) The re-
+ergy reveals a crossing point, with a deviation from the                      sults for the finite-size crossing points derived from the AFM
+transition point in the thermodynamic limit bounded by                        correlation ratio, singlet and triplet gap crossing points, and
+O(e−L) [55].  In our simulation, the derivative of energy                     the crossing points of the first-order derivative of the ground
+density with the parameters in the studied model corre-                       state  energy  with  respect  to  α,  which  suggest  a  first-order
+sponds to the expectation value of the following operatorsP                   transition at α = J1/J3 = 0.785(5) (shown as the gray band
+by the Feynman-Hellmann theorem:     1P          N     ⟨⟨i,j⟩⟩⟨Si · Sj⟩       in (a)).  Here, the crossing points between L and L + 2 from
+for the interpolated model and    1                                           (b,d) are plotted with respect to the middle value L + 1. (b)
+                                         N     ⟨i,j⟩⟨Si · Sj⟩ for the         The results of the AFM correlation ratio ξm/L.  (c) Singlet
+pure Shastry-Sutherland model, because in the Shastry-                        and triplet gaps versus α in the neighborhood of the expected
+Sutherland model J3  is set as energy unit, while in the                      quantum phase transition point.  (d) The crossing points for
+generalized  model  case,  J1  is  set  as  energy  unit.   Note              the first derivative of ground state energy with respect to α
+that these operators differ from the energy density, which                    calculated using the Feynman-Hellmann theorem.  This sug-
+should be continuous across the transition regardless of                      gests a first-order transition at α = 0.785(5) as shown by the
+whether it is first or second order.  This quantity can ex-                   gray band.  (Inset) The difference of ∂e/∂α between L and
+hibit the crossing behavior only if it takes different values                 L − 2.
+for the VBS and AFM phases, implying that the transi-
+tion is discontinuous with phase coexistence. In contrast,                    ing  point  are  shown  in  Fig.  2(b)  and  Fig.  2(c)  for  the
+such a crossing point is absent in continuous transitions.                    correlation ratio and gap crossing, respectively.  The re-
+Indeed, this crossing point has been numerically observed                     sults of VBS order parameters Da =    1           P
+in previous calculations [43], allowing for a precise deter-                                                                 Nb     r eiqa·rSr·Sr+a
+mination of the first-order transition point.                                 (a = x/y) [56] can be found in the supplementary ma-
+  Results for the pure Shastry-Sutherland Model – First,                      terials,  which  also  suggests  a  transition  point  between
+we study the pure Shastry-Sutherland model with J′3 = 0.                      α  =  0.78  and  α  =  0.80  and  the  VBS  are  pVBS  type.
+Its phase diagram is depicted in Fig. 1(b).  We explore                       It  is  recently  shown  that  the  VBS  state  in  the  J1-J2
+the phase diagram by varying α = J1/J3.  The transition                       Heisenberg  model  is  pVBS  type  [41].   So  there  is  only
+between the dimer valence bond state (dVBS) and pla-                          one PVBS phase in the phase diagram as shown in Fig. 1.
+quette valence bond state (pVBS) phases is well known                         Additionally, we compute the first-order derivative of the
+to be a first-order one [23, 25].  However, the transition                    ground state energy with respect to α using the Feynman-
+between  the  pVBS  and  N´eel  antiferromagnetic  (AFM)                      Hellmann  theorem,  as  shown  in  Fig.2  (d)  [57].    The
+phases has been the subject of extensive research, with                       first-order derivative of the ground state energy confirms
+various studies suggesting different possibilities:  a con-                   a  crossing  point  at  the  transition  point  αc  =  0.785(5)
+tinuous phase transition, a first-order transition, or the                    which agrees with the transition point determined from
+presence of a narrow quantum spin liquid phase between                        the  crossing  points  of  correlation  ratio  and  singlet  and
+the pVBS and N´eel AFM phases.                                                triplet gap in Fig. 2, demonstrating that the transition is
+  Our main results for the SS model are shown in Fig. 2,                      a first-order one in this model.
+with a summary in Fig. 2(a).  In Fig. 2,  we can find a                         Bridging  the  Shastry-Sutherland  Model  to  the  J1-J2
+touch  between  the  extrapolation  results  from  the  cor-                  Heisenberg  Model–  In  this  section,  we  explore  how  the
+relation  ratio  crossings  for  the  boundary  of  the  N´eel                transition point between the pVBS and N´eel AFM phases
+AFM  phase  and  the  S = 0  and  S = 1  gap  crossing  for                   evolves as the system shifts from the SS limit to the J1-
+the  boundary  of  the  pVBS  phase,  demonstrating  a  di-                   J2  Heisenberg limit.  A key and intriguing question we
+rect transition between the N´eel AFM and pVBS phases                         address is how this transition progresses from the first-
+at  α  =  0.785(5).   The  data  used  to  extract  the  cross-               order regime:  will it become continuous, as anticipated
+                                                                                                                                                      4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  3.     Phase  boundary  in  the  generalized  model.
+The crossing points extracted from the AFM correlation ra-
+tio ξm/L and the lowest singlet and triplet gaps for different
+∆ = J3 − J′3  values.  While the correlation ratio data is ob-                FIG. 4.   Energy derivative.  The results of the first-order
+tained for up to L = 14, the singlet-triplet crossing point is ob-            derivative of ground state energy as a function of β = J′3/J1
+tained for system up to L = 12 as excited states require more                 for different ∆ = J3 − J′3  values at the neighborhood of the
+computational resources and its finite size effect is small. Our              transition point shown in Fig. 3. In the inset we plot the differ-
+results indicate that as the system evolves from the SS model                 ence of the first order derivative between L and L−2 systems,
+limit to the J1-J2  Heisenberg limit,  it always experiences a                to show the crossing points clearer. The crossing point for the
+direct transition between the N´eel AFM and pVBS phases.                      first derivative of the ground state energy disappears as the
+                                                                              system approaches the J1-J2 Heisenberg model limit. This re-
+                                                                              sult suggests that the transition between the N´eel AFM and
+for a DQCP, or will it lead to the emergence of a spin-                       pVBS phases ultimately turns to continuous when the model
+                                                                              is close to the J1-J2  Heisenberg model limit [43].  From the
+liquid phase?                                                                 results we can infer that the change from first order to con-
+  To  answer  this  question,  we  set  the  parameter  in                    tinuous transition occurs at approximately between ∆ = 0.2
+Eq.  (3)  as  J3  =  J′3 + ∆  and  investigate  the  phase  di-               and ∆ = 0.3 which is marked as the black crossing symbol in
+agram  by  varying  β  =  J′3/J1,  with  J1  serving  as  the                 Fig. 1.
+energy unit (different to the convention used in the pure
+Shastry-Sutherland model, where α is defined as J1/J3
+and J3  is set as energy unit).  We explore the phase di-                     sign-problem-free J-Q model was studied along a specific
+agram  for  values  of  ∆  =  {1.0, 0.6, 0.4, 0.3, 0.2},  repre-              line cut exhibiting a first-order transition [59, 60].  Our
+sented by the gray lines in Fig. 1(c).  Our results indicate                  comprehensive numerical investigation using a concrete
+the model exhibits a direct transition between the N´eel                      model raises intriguing questions about the field-theoretic
+AFM and pVBS phases through the range of ∆ we stud-                           description of this transition. While the conventional the-
+ied.   In  Fig.  3,  the  correlation  ratio  and  gap  crossing              ory of deconfined quantum critical points (DQCP) [5] for
+analyses  indicate  that  the  boundaries  of  the  AFM  and                  continuous transitions is well-developed, the theory sur-
+VBS phases touch with each other for all examined val-                        rounding tricritical DQCPs remains largely unexplored.
+ues of ∆, although numerically we cannot rule out a pos-                      A more detailed investigation of this multicritical point
+sible very narrow intermediate region.  Importantly, the                      is left for future work.
+first derivative of the ground state energy, presented in                        Conclusion and Perspective– In this work, we have in-
+Fig. 4, reveals that the crossing point for the first deriva-                 troduced a generalized Shastry-Sutherland model, which
+tive of the ground state energy disappears as the system                      encompasses  both  the  pure  Shastry-Sutherland  model
+approaches the J1-J2 Heisenberg model limit [43].  This                       and the J1-J2  Heisenberg model as special cases within
+suggests that the transition between the N´eel AFM and                        its phase diagram. Through extensive large-scale DMRG
+pVBS  phases  ultimately  becomes  continuous  when  the                      calculations  and  meticulous  finite-size  scaling,  we  have
+model is sufficiently close to the J1-J2 Heisenberg model                     determined  that  the  phase  transition  from  the  pVBS
+limit.   A summary of the results is shown in Fig. 1(c),                      to the N´eel AFM phase in the pure Shastry-Sutherland
+where the phase boundary is marked based on the linear                        model  is  a  weak  first-order  transition.    Additionally,
+extrapolation of singlet-triplet crossing points.                             we  have  identified  a  tri-critical  point  in  the  phase  dia-
+  The observation that the transition evolves from first-                     gram, bridging the transition from a first-order one in the
+order to second-order suggests the existence of a multi-                      Shastry-Sutherland limit to a continuous transition in the
+critical point, indicated by the black cross in Fig.1.  No-                   J1-J2  Heisenberg limit.  Our findings highlight the gen-
+tably,  this  phase  diagram  is  consistent  with  one  of  the              eralized Shastry-Sutherland model as a valuable frame-
+hypothetical scenarios proposed in Ref. [58],  where the                      work  for  investigating  exotic  phases  and  phase  transi-
+                                                                                                                                                           5
+
+tions.  Furthermore, it can serve as an effective model for                      12274290), the Innovation Program for Quantum Science
+describing  materials  related  to  the  Shastry-Sutherland                      and Technology (2021ZD0301902), and the sponsorship
+model.  It will also be interesting to study the general-                        from Yangyang Development Fund.  JYL acknowledges
+ized Shastry-Sutherland model in a magnetic field [61].                          the support from the faculty startup grant at University
+                                                                                 of Illinois, Urbana-Champaign.
+   Acknowledgments– We thank Bryan K. Clark and Yasir                               Data availability– The calculation in this work is car-
+Iqbal for fruitful discussions.  MQ acknowledges the sup-                        ried out with TensorKit [62].  The computations in this
+port from the National Key Research and Development                              paper  were  run  on  the  Siyuan-1  cluster  supported  by
+Program of MOST of China (2022YFA1405400), the Na-                               the Center for High Performance Computing at Shanghai
+tional Natural Science Foundation of China (Grant No.                            Jiao Tong University.
+
+
+
+
+
+ [1]Y.  Cui,  L.  Liu,  H.  Lin,  K.-H.  Wu,  W.  Hong,  X.  Liu,                [17]H. Kageyama, K. Yoshimura, R. Stern, N. V. Mushnikov,
+     C. Li, Z. Hu, N. Xi, S. Li, R. Yu, A. W. Sandvik, and                            K. Onizuka, M. Kato, K. Kosuge, C. P. Slichter, T. Goto,
+     W. Yu, Proximate deconfined quantum critical point in                            and Y. Ueda, Exact dimer ground state and quantized
+     srcu2(bo3)2, Science 380, 1179 (2023).                                           magnetization plateaus in the two-dimensional spin sys-
+ [2]L.  Balents,  Spin  liquids  in  frustrated  magnets,  Nature                     tem srcu2(bo3)2, Phys. Rev. Lett. 82, 3168 (1999).
+     464, 199 (2010).                                                            [18]J.  L.  Jim´enez,  S.  P.  G.  Crone,  E.  Fogh,  M.  E.  Za-
+ [3]L. Savary and L. Balents, Quantum spin liquids:  a re-                            yed,  R.  Lortz,  E.  Pomjakushina,  K.  Conder,  A.  M.
+     view, Reports on Progress in Physics 80, 016502 (2016).                          L¨auchli, L. Weber, S. Wessel, A. Honecker, B. Normand,
+ [4]T. Senthil, A. Vishwanath, L. Balents, S. Sachdev, and                            C.  R¨uegg,  P.  Corboz,  H.  M.  Rønnow,  and  F.  Mila,  A
+     M. P. A. Fisher, Deconfined quantum critical points, Sci-                        quantum magnetic analogue to the critical point of wa-
+     ence 303, 1490 (2004).                                                           ter, Nature 592, 370–375 (2021).
+ [5]T. Senthil, Deconfined quantum critical points: a review,                    [19]T. Senthil, L. Balents, S. Sachdev, A. Vishwanath, and
+     arXiv  (2023), 2306.12638 [cond-mat.str-el].                                     M. P. A. Fisher, Quantum criticality beyond the landau-
+ [6]F. Wilczek, Quantum mechanics of fractional-spin parti-                           ginzburg-wilson  paradigm,  Phys.  Rev.  B  70,  144407
+     cles, Phys. Rev. Lett. 49, 957 (1982).                                           (2004).
+ [7]B. I. Halperin, Statistics of quasiparticles and the hierar-                 [20]M. A. Metlitski and R. Thorngren, Intrinsic and emer-
+     chy of fractional quantized hall states, Phys. Rev. Lett.                        gent anomalies at deconfined critical points, Phys. Rev.
+     52, 1583 (1984).                                                                 B 98, 085140 (2018).
+ [8]D.  Arovas,  J.  R.  Schrieffer,  and  F.  Wilczek,  Fractional              [21]J. Y. Lee, Y.-Z. You, S. Sachdev, and A. Vishwanath, Sig-
+     statistics and the quantum hall effect, Phys. Rev. Lett.                         natures of a deconfined phase transition on the shastry-
+     53, 722 (1984).                                                                  sutherland  lattice:    Applications  to  quantum  critical
+ [9]C. Han, Z. Iftikhar, Y. Kleeorin, A. Anthore, F. Pierre,                          SrCu2(BO3)2, Phys. Rev. X 9, 041037 (2019).
+     Y. Meir, A. K. Mitchell, and E. Sela, Fractional entropy                    [22]J.  Yang,  A.  W.  Sandvik,  and  L.  Wang,  Quantum  crit-
+     of multichannel kondo systems from conductance-charge                            icality  and  spin  liquid  phase  in  the  shastry-sutherland
+     relations, Phys. Rev. Lett. 128, 146803 (2022).                                  model, Phys. Rev. B 105, L060409 (2022).
+[10]M.  Brooks,  M.  Lemeshko,  D.  Lundholm,  and  E.  Yak-                     [23]N. Xi, H. Chen, Z. Y. Xie, and R. Yu, Plaquette valence
+     aboylu, Molecular impurities as a realization of anyons                          bond solid to antiferromagnet transition and deconfined
+     on the two-sphere, Phys. Rev. Lett. 126, 015301 (2021).                          quantum critical point of the shastry-sutherland model,
+[11]A.   W.   W.   Ludwig,   D.   Poilblanc,   S.   Trebst,   and                     Phys. Rev. B 107, L220408 (2023).
+     M. Troyer, Two-dimensional quantum liquids from inter-                      [24]W.-Y.  Liu,  X.-T.  Zhang,  Z.  Wang,  S.-S.  Gong,  W.-Q.
+     acting non-abelian anyons, New Journal of Physics 13,                            Chen, and Z.-C. Gu, Quantum criticality with emergent
+     045014 (2011).                                                                   symmetry  in  the  extended  shastry-sutherland  model,
+[12]H. Nakano, Y. Minami, and S.-i. Sasa, Long-range phase                            Phys. Rev. Lett. 133, 026502 (2024).
+     order  in  two  dimensions  under  shear  flow,  Phys.  Rev.                [25]P.  Corboz  and  F.  Mila,  Tensor  network  study  of  the
+     Lett. 126, 160604 (2021).                                                        shastry-sutherland  model  in  zero  magnetic  field,  Phys.
+[13]P. A. Lee, N. Nagaosa, and X.-G. Wen, Doping a mott in-                           Rev. B 87, 115144 (2013).
+     sulator:  Physics of high-temperature superconductivity,                    [26]J. Wang, H. Li, N. Xi, Y. Gao, Q.-B. Yan, W. Li, and
+     Rev. Mod. Phys. 78, 17 (2006).                                                   G. Su, Plaquette singlet transition, magnetic barocaloric
+[14]H.-C.  Jiang  and  S.  A.  Kivelson,  High  temperature  su-                      effect,  and  spin  supersolidity  in  the  shastry-sutherland
+     perconductivity in a lightly doped quantum spin liquid,                          model, Phys. Rev. Lett. 131, 116702 (2023).
+     Phys. Rev. Lett. 127, 097002 (2021).                                        [27]H. Chen,  G. Duan,  C. Liu,  Y. Cui,  W. Yu,  Z. Y. Xie,
+[15]H.   Xu,    C.-M.   Chung,    M.   Qin,    U.   Schollw¨ock,                      and  R.  Yu,  Spin  excitations  of  the  Shastry-Sutherland
+     S.   R.   White,   and   S.   Zhang,   Coexistence   of   su-                    model – altermagnetism and proximate deconfined quan-
+     perconductivity   with   partially   filled   stripes   in   the                 tum criticality, arXiv e-prints , arXiv:2411.00301 (2024),
+     hubbard    model,    Science    384,    eadh7691    (2024),                      arXiv:2411.00301 [cond-mat.str-el].
+     https://www.science.org/doi/pdf/10.1126/science.adh7691.                    [28]L.  Loris  Viteritti,   R.  Rende,   A.  Parola,   S.  Goldt,
+[16]B. Sriram Shastry and B. Sutherland, Exact ground state                           and   F.   Becca,   Transformer   Wave   Function   for   the
+     of a quantum mechanical antiferromagnet, Physica B+C                             Shastry-Sutherland   Model:     emergence   of   a   Spin-
+     108, 1069 (1981).                                                                Liquid Phase, arXiv e-prints , arXiv:2311.16889 (2023),
+                                                                                                                                                              6
+
+     arXiv:2311.16889 [cond-mat.str-el].                                           [48]K. Nomura, Correlation functions of the 2d sine-gordon
+[29]R.  R.  P.  Singh  and  R.  Narayanan,  Dimer  versus  twist                        model, Journal of Physics A: Mathematical and General
+     order in the j1-j2 model, Phys. Rev. Lett. 65, 1072 (1990).                        28, 5451 (1995).
+[30]N. Read and S. Sachdev, Large-n expansion for frustrated                       [49]K. Okamoto and K. Nomura, Fluid-dimer critical point
+     quantum  antiferromagnets,  Phys.  Rev.  Lett.  66,  1773                          in s = 12 antiferromagnetic heisenberg chain with next
+     (1991).                                                                            nearest neighbor interactions, Physics Letters A 169, 433
+[31]R.  R.  P.  Singh,  Z.  Weihong,  C.  J.  Hamer,  and  J.  Oit-                     (1992).
+     maa, Dimer order with striped correlations in the J1−j2                       [50]H. Suwa and S. Todo, Generalized moment method for
+     heisenberg model, Phys. Rev. B 60, 7278 (1999).                                    gap  estimation  and  quantum  monte  carlo  level  spec-
+[32]L. Capriotti and S. Sorella, Spontaneous plaquette dimer-                           troscopy, Phys. Rev. Lett. 115, 080601 (2015).
+     ization in the j1−−j2 heisenberg model, Phys. Rev. Lett.                      [51]A. W. Sandvik, Computational Studies of Quantum Spin
+     84, 3173 (2000).                                                                   Systems, AIP Conference Proceedings 1297, 135 (2010).
+[33]M. Mambrini, A. L¨auchli, D. Poilblanc, and F. Mila, Pla-                      [52]H. Suwa, A. Sen, and A. W. Sandvik, Level spectroscopy
+     quette valence-bond crystal in the frustrated heisenberg                           in a two-dimensional quantum magnet: Linearly dispers-
+     quantum  antiferromagnet  on  the  square  lattice,  Phys.                         ing  spinons  at  the  deconfined  quantum  critical  point,
+     Rev. B 74, 144422 (2006).                                                          Phys. Rev. B 94, 144416 (2016).
+[34]S.-S. Gong, W. Zhu, D. N. Sheng, O. I. Motrunich, and                          [53] m2s(k) =    1L4 Pij⟨Si · Sj⟩eik(i−j),  i = (ix, iy) is the site
+     M. P. A. Fisher, Plaquette ordered phase and quantum                               position and the summation runs over the center L × L
+     phase  diagram  in  the  spin- 12  J1−J2  square  heisenberg                       sites.
+     model, Phys. Rev. Lett. 113, 027201 (2014).                                   [54]R. K. Kaul, Spin nematics, valence-bond solids, and spin
+[35]J.-F. Yu and Y.-J. Kao, Spin-         12  J1-J2 heisenberg antifer-                 liquids in SO(n) quantum spin models on the triangular
+     romagnet on a square lattice:  A plaquette renormalized                            lattice, Phys. Rev. Lett. 115, 157202 (2015).
+     tensor network study, Phys. Rev. B 85, 094407 (2012).                         [55]C.  Borgs  and  R.  Koteck´y,  A  rigorous  theory  of  finite-
+[36]W.-J.  Hu,  F.  Becca,  A.  Parola,  and  S.  Sorella,  Direct                      size  scaling  at  first-order  phase  transitions,  Journal  of
+     evidence for a gapless Z2 spin liquid by frustrating n´eel                         Statistical Physics 61, 79 (1990).
+     antiferromagnetism, Phys. Rev. B 88, 060402 (2013).                           [56] Nb  is the number of bonds in the calculation, qa  is the
+[37]L.  Wang  and  A.  W.  Sandvik,  Critical  level  crossings                         wave vector associated with the VBS order, taking values
+     and  gapless  spin  liquid  in  the  square-lattice  spin-1/2                      (π, 0) or (0, π) depending on the direction a of the dimer
+     J1−J2 heisenberg antiferromagnet, Phys. Rev. Lett. 121,                            order. The summation runs over the center L × L sites.
+     107202 (2018).                                                                [57]Here,  we show the results for       L × 2.5L systems,  which
+[38]Y.  Nomura  and  M.  Imada,  Dirac-type  nodal  spin  liq-                          reveal  a  more  pronounced  crossing  point  than  L × 2L
+     uid revealed by refined quantum many-body solver using                             systems. Results for L×2L systems, provided in the sup-
+     neural-network wave function, correlation ratio, and level                         plementary material, also exhibit a crossing point at the
+     spectroscopy, Phys. Rev. X 11, 031034 (2021).                                      transition.
+[39]W.-Y.  Liu,  S.-S.  Gong,  Y.-B.  Li,  D.  Poilblanc,  W.-Q.                   [58]J.  Takahashi,  H.  Shao,  B.  Zhao,  W.  Guo,  and  A.  W.
+     Chen,  and  Z.-C.  Gu,  Gapless  quantum  spin  liquid  and                        Sandvik, So(5) multicriticality in two-dimensional quan-
+     global phase diagram of the spin-1/2 j1-j2 square antifer-                         tum magnets (2024), arXiv:2405.06607 [cond-mat.str-el].
+     romagnetic heisenberg model, Science Bulletin 67, 1034                        [59]J.  Takahashi  and  A.  W.  Sandvik,  Valence-bond  solids,
+     (2022).                                                                            vestigial order, and emergent so(5) symmetry in a two-
+[40]H.-C. Jiang, H. Yao, and L. Balents, Spin liquid ground                             dimensional quantum magnet, Phys. Rev. Res. 2, 033459
+     state of the spin- 12  square J1-J2 heisenberg model, Phys.                        (2020).
+     Rev. B 86, 024424 (2012).                                                     [60]B. Zhao,  P. Weinberg, and A. W. Sandvik, Symmetry-
+[41]J. Huang, X. Qian, and M. Qin, Plaquette-type valence                               enhanced   discontinuous   phase   transition   in   a   two-
+     bond solid state in the J1−J2  square-lattice heisenberg                           dimensional  quantum  magnet,  Nature  Physics  15,  678
+     model, Phys. Rev. B 110, 195111 (2024).                                            (2019).
+[42]In the      J1-J2 Heisenberg model, a rigorous analysis to pin                 [61]P. Corboz and F. Mila, Crystals of bound states in the
+     down plaquette over columnar VBS has been performed                                magnetization plateaus of the shastry-sutherland model,
+     in Ref. [41] using an infinitesimal symmetry breaking field                        Phys. Rev. Lett. 112, 147203 (2014).
+     and a proper finite size scaling.                                             [62]J.  Haegeman,  The  code  is  developed  with  TensorKit
+[43]X. Qian and M. Qin, Absence of spin liquid phase in the                             package at https://github.com/Jutho/TensorKit.jl.
+     J1 − J2  heisenberg  model  on  the  square  lattice,  Phys.
+     Rev. B 109, L161103 (2024).
+[44]H.-Y. Lin, Y. Guo, R.-Q. He, Z. Y. Xie, and Z.-Y. Lu,
+     Green’s  function  monte  carlo  combined  with  projected
+     entangled  pair  state  approach  to  the  frustrated  J1−J2
+     heisenberg model, Phys. Rev. B 109, 235133 (2024).
+[45]S.  R.  White,  Density  matrix  formulation  for  quantum
+     renormalization groups, Phys. Rev. Lett. 69, 2863 (1992).
+[46]X. Qian and M. Qin, Augmenting density matrix renor-
+     malization  group  with  disentanglers,  Chinese  Physics
+     Letters 40, 057102 (2023).
+[47]U. Schollw¨ock, The density-matrix renormalization group
+     in  the  age  of  matrix  product  states,  Annals  of  Physics
+     326, 96 (2011), january 2011 Special Issue.
+                                                                                                                                                     7
+
+                           CONTENTS
+
+    References                                                               5
+
+A.  Additional results for the Shastry-Sutherland
+    model                                                                      7
+    1.  Comparison of the ground state energies             7
+    2.  The AFM order parameter                                  7
+    3.  The VBS order parameter                                   7
+    4.  The first derivative of the ground state energy    7
+
+B.  Generalized model and convergence                         8
+    1.  The first derivative of the ground state energy    8
+    2.  The correlation ratio of the AFM order               9
+
+
+         Appendix A: Additional results for the
+                  Shastry-Sutherland model
+
+     1.    Comparison of the ground state energies
+
+  In  Fig.  S1,  we  show  the  energies  of  the  Shastry-
+Sutherland  model  on  cylinders  with  different  sizes  at
+α := J1/J3 = 0.80.   The  finite  size  scaling  from  the  lin-
+ear extrapolation gives energy (−0.44844(8)) aligns with
+a recent extrapolated energy on L × L periodic systems
+(−0.44849(30)) using neural network method [28] and the
+previous DMRG calculation (−0.44836(30)) [22]. We also                        FIG.  S1.    Upper:   the  extrapolated  with  truncation  error
+show the ground state energy for a 6 × 6 PBC system at                        ground state energy per site for L ranging from 8 to 16 for the
+α = 0.80 as a function of truncation error in Fig. S2. The                    Shastry-Sutherland model with α = 0.8 on a L×2L cylinders.
+extrapolated energy is indistinguishable from the exact                       The extrapolation with truncation error in DMRG/FAMPS
+diagonalization value E = −0.4517531 [28].                                    can be found in the lower panel.  An linear extrapolation of
+                                                                              the energy with 1/L gives the thermodynamic limit energy as
+                                                                              −0.44844(8), consistent with the previous DMRG calculation
+                                                                              (−0.44836(30)) [22] and a recent calculation on L×L periodic
+              2.    The AFM order parameter                                   systems (−0.44849(30)) [28].  Lower:  the quadratic extrapo-
+                                                                              lation of the energy with truncation error for different sizes.
+  We calculate the N´eel AFM order parameter
+               m2s(k) =   1     X⟨Si · Sj⟩eik·(i−j)            (S1)                          3.    The VBS order parameter
+                           L4    ij
+                                                                                 We also calculate the VBS order parameter, as shown
+where i = (ix, iy) and k = (π, π) using the middle region                     in Fig. S4, which shows that ⟨Dx⟩2 = ⟨Dy⟩2, consistent
+of size L × L in an open cylinder of size L × 2L.  The                        with a plaquette VBS. As depicted in Fig. S6 for 14 × 28
+value of m2 at momentum (π, π) is shown in Fig. S3.                           system at α = 0.76, plaquettes are formed on the empty
+  We also try to determine the AFM phase boundary by                          squares  of  the  Shastry-Sutherland  lattice.   The  results
+extrapolating m2 to the thermodynamic limit.  However,                        suggest a phase transition between α = 0.78 and α = 0.8.
+we find the extrapolation is highly sensitive to the order
+of  the  polynomial  fit.   In  particular,  first  and  second-               4.    The first derivative of the ground state energy
+order  fit  generate  unreasonable  extrapolation  values  of
+negative  m2  for  α ∈  [0.78, 0.82]  and  do  not  yield  any
+discernible  transition  point.   Using  a  third-order  poly-                   As mentioned in the main text, the first derivative of
+nomial  fit,  we  find  a  transition  point  at  approximately               the ground state energy for L × 2L systems also exhibits
+α = 0.79, although the use of a third-order polynomial is                     a crossing point.  Here, we compare the results obtained
+not fully justified.  Since the estimation from the squared                   from L× 2L (main plot) and L× 2.5L (inset) systems as
+AFM order parameter does not provide a reliable transi-                       illustrated  in Fig.  S5.   Both  systems  display a  crossing
+tion point, we use the correlation ratio to determine the                     point,  with the crossing being more  pronounced in the
+boundary of the AFM phase in the main text.                                   L × 2.5L configurations.
+                                                                                                                                                            8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  S2.     The  ground  state  energy  for  a  calculated  6 × 6
+PBC  system  at  α  =  0.80  as  a  function  of  truncation  er-
+ror.    The  calculated  ground  state  energy  is  very  close  to              FIG. S4.   The VBS order parameters as a function of circum-
+the  exact  energy  obtained  from  exact  diagonalization  E  =                 ferences L.  Values of D2x  and D2y  are on top of each other.
+−0.4517531  from  Ref.  [28].    The  displayed  points  are  the                The results suggest a phase transition between α = 0.78 and
+results  of  calculations  performed  with  bond  dimensions  of                 α  =  0.8.   In  the  inset,  we  show  a  zoom  of  the  results  for
+D = {30000, 40000, 50000, 60000}.                                                α ≥ 0.79.  We can find that near the phase transition point,
+                                                                                 D2x  and D2y  behave non-monotonically, which makes the de-
+                                                                                 termination of the pVBS boundary difficult from D2x and D2y.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S3. The N´eel AFM order parameters as a function of cir-
+cumferences L. The solid lines represent a third-order polyno-
+mial fit, while the dashed lines indicate a second-order poly-
+nomial  fit.   We  can  find  that  the  boundary  of  AFM  phase                FIG.  S5.   Comparison  of  the  results  for  the  first  derivative
+is  extremely  sensitive  to  the  way  we  fit  the  data  (first  and          of the ground state energy calculated by L × 2L (main plot)
+second-order fit generate unreasonable extrapolation value of                    and L× 2.5L systems (inset).  Both of the calculated systems
+negative m2), and this is the reason why we use the correla-                     demonstrate a crossing point at around α = 0.785(5)
+tion ratio to determine the boundary of AFM phase in the
+main text.
+
+   As discussed in the main text, the first derivative corre-                    order.
+sponds to the expectation value of the following operator:
+                                    X
+                       O1 :=  1N         ⟨Si · Sj⟩,                    (S2)         Appendix B: Generalized model and convergence
+                                    ⟨i,j⟩
+which  is  the  average  expectation  value  of  the  nearest                      1.    The first derivative of the ground state energy
+neighbor Si · Sj.  The crossing behavior of this operator
+across  the  phase  transition  implies  that  in  the  infinite                     In the model interpolating the Shastry-Sutherland lat-
+size limit,  there would be a discontinuity of the opera-                        tice and J1-J2  model, the first derivative of the ground
+tor.  This indicates that the transition would be of a first                     state energy corresponds to the expectation value of the
+                                                                                                                                                     9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S6.  The bond energy, with red/blue indicating lower/higher bond energies, illustrates the spatial structure of the VBS
+order in the Shastry-Sutherland model for a 14 × 28 system at α = 0.76.  The plaquettes are formed on the empty squares of
+the Shastry-Sutherland lattice.
+
+
+following operator                                                            extrapolation results for 16 × 32 systems in Fig. S12.
+
+                     O2 =  1      X    ⟨Si · Sj⟩,                   (S1)            2.    The correlation ratio of the AFM order
+                             N   ⟨⟨i,j⟩⟩
+                                                                                 The  correlation  ratio  for  the  AFM  order  parameter
+which is the average expectation value of the next-nearest                    converges rapidly with the bond dimension, only exhibit-
+neighbor Si · Sj.                                                             ing slower convergence near the transition point at very
+                                                                              large system sizes. For most results, linear fits with trun-
+  For most of the calculations, the first derivative of the                   cation error are applied to reduce the finite bond dimen-
+ground state energies converges rapidly with bond dimen-                      sion  effect.   For  results  with  obvious  curvature,  second
+sion.  In Fig. S7, S8, S9, S10 and S11, where each figure                     order polynomial fits with truncation error are applied.
+is at different ∆, the first derivative is linearly extrapo-                  The results are shown in Fig. S13,  S14,  S15,  S16,  S17,
+lated as a function of truncation error.  We also show the                    and S18.
+                                                                                                                                                        10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S7.  Convergence of the results for the first derivative of the ground state energy for the Shastry-Sutherland model
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+             FIG. S8.  Convergence of the results for the first derivative of the ground state energy for ∆ = 0.6
+                                                                                                                                            11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S9.  Convergence of the results for the first derivative of the ground state energy for ∆ = 0.4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S10.  Convergence of the results for the first derivative of the ground state energy for ∆ = 0.3
+                                                                                                                                                            12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                 FIG. S11.  Convergence of the results for the first derivative of the ground state energy for ∆ = 0.2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S12.  Convergence of the results for the first derivative of the ground state energy for the 16 × 32 cylinders from linear
+extrapolation.
+                                                                                                                                          13
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ FIG. S13.  Convergence of the results for the correlation ratio for the Shastry-Sutherland model
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S14.  Convergence of the results for the correlation ratio for the SS model of 16 × 32 systems.
+                                                                                                                           14
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S15.  Convergence of the results for the correlation ratio for ∆ = 0.6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S16.  Convergence of the results for the correlation ratio for ∆ = 0.4
+                                                                                                                           15
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S17.  Convergence of the results for the correlation ratio for ∆ = 0.3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S18.  Convergence of the results for the correlation ratio for ∆ = 0.2

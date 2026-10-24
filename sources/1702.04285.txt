@@ -1,0 +1,824 @@
+ Block product density matrix embedding theory for strongly correlated spin systems
+
+                    Klaas Gunst,∗  Sebastian Wouters,  Stijn De Baerdemacker,  and Dimitri Van Neck
+               Center  for  Molecular  Modeling,  Ghent  University,  Technologiepark  903,  9052  Zwijnaarde,  Belgium
+                                                        (Dated:  September 22, 2018)
+                  Density matrix embedding theory (DMET) is a relatively new technique for the calculation of
+               strongly  correlated  systems.   Recently  block  product  DMET  (BPDMET)  was  introduced  for  the
+               study  of  spin  systems  such  as  the  anti-ferromagnetic J1− J2  model  on  the  square  lattice.   In
+               this paper,  we extend the variational ansatz of BPDMET using spin-state optimization,  yielding
+               improved results.  We apply the same techniques to the Kitaev-Heisenberg model on the honeycomb
+               lattice, comparing the results when using several types of clusters.  Energy proﬁles and correlation
+               functions are investigated.  A diagonalization in the tangent space of the variational approach yields
+               information on the excited states and the corresponding spectral functions.
+
+
+                    I.    INTRODUCTION                                      have a Kitaev spin liquid11 as ground state within a ﬁnite
+                                                                            parameter region.
+  When studying quantum many-body systems, exactly                             To solve these systems, exact diagonalization is unfea-
+solving  the  system  becomes  unfeasible  for  large  system               sible for larger systems and approximate methods have
+sizes.   The  exponential  scaling  of  the  Hilbert  space  di-            to be used.  Some examples of approximate methods are
+mension with the number of particles inhibits an exact                      series  expansion,12–15  large-N  expansion,16  density  ma-
+simulation of larger systems, and approximate methods                       trix renormalization group,17–19 projected entangled pair
+have to be used.                                                            states,20 and coupled cluster methods.21
+  A  particular  type  of  quantum  many-body  systems  is                     An approximate solution of quantum many body sys-
+the quantum spin-lattice system.  For this system, inter-                   tems can also be obtained through embedding theories.
+acting spins are localized on the lattice points of a lattice.              Here, the system is divided into two parts:  an impurity,
+In this paper,  we extend the block product matrix em-                      cluster  or fragment  (which is the subsystem of interest)
+bedding theory (BPDMET),1 a method that was recently                        and an environment.  Using this division, embedding the-
+introduced to study quantum spin-lattices.  We study the                    ories are able to solve the problem approximately.22
+validity of the model by applying it to theJ1−J2 model                         The total Hilbert space of the system is now a direct
+on the square lattice with Heisenberg interaction and the                   product of the Hilbert spaces of the impurity and the en-
+Kitaev-Heisenberg model.  These are two spin lattice sys-                   vironment (with dimensionA andB respectively).  A ba-
+tems of particular interest.                                                sis for this Hilbert space is given by{|αi⟩⊗|βj⟩}, where
+                                                                            |αi⟩  are  states  of  the  impurity  and|βj⟩  are  states  re-
+  The  ﬁrst  system  has  been  a  long  time  subject  of  re-             stricted to the environment.  Every state|Ψ⟩ in the total
+search.  This partly because of its fundamental interest                    Hilbert space can be written as
+in its simplicity,  but also for its use in Fe-based super-
+conductors  and  other  materials.   For  example,  high-Tc                             A∑  B∑                    min(A,B)∑
+superconductivity in iron pnictide (or oxypnictides) has                      |Ψ⟩ =             Ψij|αi⟩|βj⟩ =                λk|~αk⟩|~βk⟩.   (1)
+been discovered with LaOFeAs being the ﬁrst.2  The Fe                                  i=1 j=1                         k
+atoms form a square lattice in these iron pnictides and
+they  exhibit  NN  and  NNN  superexchange  interactions                    The  latter  result  is  obtained  by  using  a  singular  value
+that can be described with this J1−J2 model (however                        decomposition of the matrix Ψij.  This is known as the
+withS = 1 or 2).  When the crystal is doped, an eﬀective                    Schmidt decomposition of a state.  Here,|~αk⟩ are states
+model with a t−J1−J2 Hamiltonian can be suggested,                          of the impurity and |~βk⟩ are states of the environment.
+introducing a kinetic component.2  This should give rise                    The summation is restricted to the minimum of the im-
+to superconductivity.  Also the properties of Li2VOSiO4                     purity and the environment dimension.  Since the dimen-
+have been investigated through the J1−J2 model.3                            sion of the environment is typically much larger than the
+  The Kitaev-Heisenberg model was ﬁrst introduced for                       dimension of the impurity, the summation is limited by
+the  theoretical  examination  of  iridium  oxides  of  the                 the impurity.  It is thus clear that only A states in the
+form A2IrO3, with A = Li, Na.4  Herein, Ir4+  ions form                     environment are needed for the construction of the wave
+honeycomb-like lattice planes and have an eﬀective spin                     function.  If only one of the singular valuesλk is nonzero,
+one-half.  The interaction between the diﬀerent eﬀective                    the  state|Ψ⟩  can  be  factorized  and  impurity  and  envi-
+spins  is  anisotropic.   Experimental  evidence  has  shown                ronment are not entangled.  However, if several singular
+that  the  proposed  Kitaev-Heisenberg  model  is  a  suc-                  values are nonzero,|Ψ⟩ is called entangled.23–26
+cessful  model  for  the  iridium  oxides,  however  some  ex-                 Embedding theories capitalize on this division of the
+tensions  of  the  model  have  been  introduced  for  a  bet-              system.   By  replacing  the  environment  by  an  approxi-
+ter  description.5–10  Particular  interest  for  the  Kitaev-              mate model, one tries to calculate the properties of the
+Heisenberg model has arisen since the model is able to                      impurity  accurately  and  cost-eﬀectively.   The  simplest
+                                                                                                                                                 2
+
+option is to approximate the environment in such a way                     this method has been further extended by implementing
+that there is no entanglement with the impurity.  This is                  BPDMET  with  the  hierarchical  mean-ﬁeld  approach.39
+a good approximation when the Schmidt singular values                      In the present work, the original BPDMET is used and
+have  one  dominant  non-zero  value.   For  many  systems                 the ansatz is further extended with so-called spin-state
+this is suﬃcient.  However, for systems with strong static                 superpositions in the impurity, yielding improved results.
+correlation  between  the  impurity  and  environment  one                    As will be shown, the BPDMET ansatz1 can easily be
+has to go beyond the mean-ﬁeld approximation.  Static                      written as a particular case of a more general tensor net-
+correlation refers to systems where a product state is not                 work state (TNS). The concept of tensor network states
+suﬃcient for a qualitative description of the system, but                  is  an  increasingly  important  technique  for  the  descrip-
+a superposition of multiple product states is needed, i.e.                 tion  of  highly  correlated  systems.   It  can  be  viewed  as
+whenever  substantial  entanglement  is  present  between                  an extension of the density matrix renormalization group
+the impurity and environment,  implying several impor-                     (DMRG) as introduced by White.40,41 DMRG was shown
+tant Schmidt values λk in Eq. (1).                                         to be highly accurate and useful for one-dimensional lat-
+  One of the more powerful and popular embedding the-                      tice systems, but also reasonably small two-dimensional
+ories  is  dynamical  mean-ﬁeld  theory  (DMFT)27–30.   It                 lattices can be studied up to high accuracy.42 The DMRG
+maps  the  system  to  an  impurity  and  a  non-interacting               algorithm has been later rewritten as an optimization of
+bath  in  a  self-consistent  way,  using  the  single-particle            a matrix product state (MPS) ansatz.43,44
+Green’s function.                                                             The concept of TNS is quite general and includes pro-
+  Density Matrix Embedding Theory (DMET) is a new                          jected  entangled  pair  states  (PEPS)20,45  which  is  the
+embedding theory ﬁrst proposed by Knizia and Chan31                        extension  of  MPS  into  two  and  higher  dimensions,  as
+for  the  Hubbard  model.   It  was  later  extended  to  full             well as tree TNS (TTNS)46–49 and complete-graph TNS
+quantum chemical Hamiltonians.32 For ground state en-                      (CGTNS).50,51
+ergies,  DMET  is  a  computationally  cheaper  alternative                   In section II, the concept of BPDMET is introduced
+to  DMFT  with  similar  accuracy.   The  self-consistency                 by means of a variational ansatz.  The optimization pro-
+for  DMET  is  based  on  the  density  matrix,  instead  of               cedure is explained as well as the calculation of the en-
+the frequency dependent Green’s function in DMFT. In-                      ergy  and  other  properties  in  the  BPDMET  framework.
+formation  about  excited  states  in  DMET  can  still  be                We  also  extend  the  variational  ansatz  using  spin-state
+explored.33,34                                                             superposition  in  the  impurity.   Finally,  we  point  out  a
+  In DMET the entanglement between impurity and en-                        possible way of extracting information on spectral prop-
+vironment is explicitly kept and the wave function is of                   erties.  The link with tensor network states is also made.
+the form given by Eq. (1).  Finding the Schmidt basis for                  In section III, the method is applied to the 2D Heisenberg
+the  environment{|~βk⟩}  can  be  done  if  the  exact  wave               model on a square lattice and to the Kitaev-Heisenberg
+function |Ψ⟩  is  known.    This  is,  however,  not  an  op-              model on a honeycomb lattice.  Results for the energies,
+tion since ﬁnding the exact wave function is equivalent                    correlation functions and the location of quantum phase
+to  solving  the  many-body  problem.   DMET  solves  the                  transitions are studied.  The concept of diagonalization
+lack of a priori knowledge of|Ψ⟩ by embedding the im-                      in tangent space and the resulting spectral function is ap-
+purity  in  an  approximate  bath.   Solving  this  combined               plied to both lattice systems.  Summary and conclusions
+impurity and bath system is called the embedded prob-                      are provided in section IV.
+lem.  To ﬁnd this bath space, one can use diﬀerent tech-
+niques.  A Fock space of bath orbitals which is obtained                                             II.    METHOD
+from  a  low-level  particle-number  conserving  mean-ﬁeld
+wave  function  is  used  in  the  original  Refs.   31  and  32                             A.    Block Product DMET
+and  is  illustrated  extensively  in  Ref.   34.   Other  meth-
+ods are also possible:  single-particle states from Hartree-                  The  BPDMET  method  as  introduced  by  Fan  et  al.1
+Fock-Bogoliubov theory35,36 and antisymmetrized gemi-                      can be used for the approximate solution of spin lattice
+nal power (AGP) wave functions37 have also been used.                      systems.  These systems can be used to model magnetic
+Extensions  of  DMET  to  coupled  interacting  fermion-                   properties of materials.  A spin lattice system comprises
+boson systems through coherent state wave functions for                    a number of lattice sites N.  Each site has a spin degree
+phonons have been described as well.38                                     of freedom interacting with other spins.  Only spin-spin
+  Adapting  DMET  for  spin  lattices  has  given  rise  to                interactions are investigated in this paper.  For these sys-
+the  so-called  cluster  density  matrix  embedding  theory                tems,  the total Hamiltonian can be written in its most
+(CDMET),  as  introduced  by  Fan  et  al.1  In  this  paper,              general form as
+however,  we  opt  for  the  name  block  product  DMET                                                    ∑
+(BPDMET)  in  order  to  avoid  possible  confusion  with                                        ˆH =∑          Jmnµν  ˆSµm ˆSνn.                     (2)
+fermionic DMET when the impurity consists of a cluster                                                 m,n  µ,ν
+of degrees of freedom.  In BPDMET, bath states in a spin
+lattice  system  are  represented  by  block  product  states,             Here,m andn denote lattice indices andµ andν denote
+which is emphasised by our alternative name.  Recently,                    the spatial componentsx,y andz, i.e.  the diﬀerent mea-
+                                                                                                                                                  3
+
+suring directions for the spin operator.  Magnetic terms                    1)(NC− 1) + 2Ns. Ns is the number of spins in a cluster
+have been excluded but can be introduced in a straight-                     andNC  is the number of clusters.  When the cluster size
+forward manner.                                                             Ns  is  kept  ﬁxed,  the  degrees  of  freedom  scale  linearly
+  An  interesting  variational  ansatz  for  the  system  was               with the number of spins (or the number of clustersNC).
+provided  by  Fan  et  al.1  After  division  of  the  spin  lat-           This linear scaling clearly is the major advantage of the
+tice  into  an  impurity  and  environment,  they  propose  a               BPDMET ansatz.
+replacement  of  the  exact  environmental  states |~βk⟩  in
+Eq. (1) by a set of block product states|BPSk⟩.  With                                    B.    Optimizing the wave function
+this  approximation,  the  wave  function  of  the  impurity
+model becomes:
+                    |Ψ⟩ =∑       ai|αi⟩|BPSi⟩,                    (3)          Thanks to the linear scaling, one can target the state
+                                                                            |Ψ⟩  (Eq.  (4))  variationally.   Optimization  of  the  block
+                              i                                             product states and ﬁnding the ground state of the impu-
+wherei labels the diﬀerent states in the Hilbert space of                   rity model proceeds in an iterative way.  At each step of
+the impurity.  To deﬁne these block product states, the                     the iteration, a bath cluster is chosen and its state corre-
+spin lattice system is divided into diﬀerent clusters.  One                 sponding to a certain impurity state is optimized.  This
+of  the  clusters  is  the  impurity.   The  other  clusters  are           way, a large number of coeﬃcients of the variational wave
+called the bath clusters.  An exemplary division can be                     function is kept ﬁxed, and only a restricted number of co-
+seen in Fig. 1.  With this division of the lattice system,                  eﬃcients is optimized in each step.  The variational wave
+the block product states are deﬁned as follows:                             function within the impurity model can be written as       
+             |BPSi⟩ =   ∏                 ∑   biCβ|β⟩C.           (4)                                                   ∑
+                                                                                     |Ψ⟩ =∑       ai|αi⟩    ∏               biCβ|β⟩C,      (5)
+                         C∈bath clusters   β                                                   i             C∈bath cl.  β
+
+Here{|β⟩C} is a complete set of states within the Hilbert                   with C  being the diﬀerent bath clusters.  For every pos-
+space restricted to the bath cluster C.  For example,  if                   sible wave function of this form, we can take
+each bath cluster contains 3 sites with spin- 12,  we have                                            ∑    bi∗CβbiCβ = 1,                           (6)
+{|↓↓↓⟩,|↓↓↑⟩,|↓↑↓⟩,..,|↑↑↑⟩} in the natural basis (eigen-
+states of  ˆSz).  These block-product states have to be op-                                             β
+timized  so  that  Eq.  (3)  optimally  represents  the  exact              by absorbing appropriate factors in the ai’s.  Even more,
+ground state wave function.  The approximation made is                      when the wave function is normalized,
+that  the  correlations  within  the  bath  clusters  are  fully                                         ∑
+taken  into  account,  while  the  correlations  between  the                                                a∗iai = 1                              (7)
+bath clusters are only taken into account via mediation                                                   i
+of the impurity.                                                            will also be satisﬁed.
+                                                                               The coeﬃcients of the variational wave function are ob-
+                                                                            tained with a restricted optimization.  All coeﬃcients are
+                                                                            ﬁxed, except for the ai’s and bi0B0β, i.e.  the b-coeﬃcients
+                                                                            corresponding  with  the  impurity  state i0  and  a  chosen
+                                                                            bath cluster B0.  By looping over the diﬀerent i0’s and
+                                                                            bath clusters B0  we optimize the DMET wave function
+                                                                            iteratively.
+                                                                               We now rewrite the wave function given by Eq.  (5) as
+                                                                                                          ∑
+                                                                               |Ψ⟩ = ∑       ai|αi⟩∏          biCβ|β⟩C +
+                                                                                      i(⁄=i0)          C   β
+                                                                                      ∑                              ∏     ∑                    (8)
+                                                                                           ai0bi0B0β|αi0⟩|β⟩B0                  bi0Cβ′|β′⟩C.
+                                                                                        β                          C(⁄=B0)  β′
+                                                                            Since  optimization  happens  over ai  with i ⁄= i0  and
+Figure  1.   An  exemplary  division  of  a  square  lattice  into  1       ai0bi0B0β′, every iteration is equivalent to a diagonalization
+impurity and 8 bath clusters of size 2× 2.                                  in the low-dimensional subspace spanned by{|φα⟩,|φβ⟩},
+                                                                            with                          ∑
+  The dimension of the complete Hilbert space is given                                 |φαi⟩ =|αi⟩∏            biCβ|β⟩C,
+by  2N  with N  the  number  of  spins,  and  hence  grows                                             C    β    ∏     ∑
+exponentially with the number of spins.  When the size                                  |φβ⟩ =|αi0⟩|β⟩B0                    bi0Cβ′|β′⟩C.
+of all clusters is chosen equal, the number of degrees of
+freedom of the BPDMET ansatz is given by 2Ns(2Ns−                                                             C(⁄=B0)   β′
+                                                                                                                                                 4
+
+  To ﬁnd the optimal solution with every iteration, the                       The  adapted  BPDMET  ansatz  is  again  given  by
+following Lagrangian is minimized within this restricted                   Eq.  (3).   However,  the  impurity  states  are  now  super-
+Hilbert space:                                                             positions of the natural basis states: |αi⟩ =∑
+                                                                                                                                     m Uim|m⟩
+                   L =⟨Ψ| ˆH|Ψ⟩−λ⟨Ψ|Ψ⟩,                    (9)             with|m⟩ ={|↓···↓↓⟩,|↓···↓↑⟩,···}  and U  a unitary
+                                                                           matrix.  The BPDMET ansatz is thus given by:
+yielding a linear eigenvalue problem.                                                          ∑                         ∑
+  The Lagrangian multiplier λ is the variational energy                        |Ψ⟩ =∑       ai     Uim|m⟩  ∏                 biCβ|β⟩C.    (10)
+of the wave function.  Within every iteration, the solution                              i      m             C∈bath cl.  β
+corresponding to the smallestλ is chosen.  It is clear that                Now the unitary matrix has to be optimized as well.  We
+the solution of the previous iteration can still be chosen                 simply extend the original algorithm:  the block-product
+within the freedom of the parameters in the current iter-                  states and the unitary matrix are optimized successively
+ation.  Because of this, the minimal λ-value obtained in                   until convergence is obtained.
+the current iteration is at least as small as the λ value                     The   unitary   matrix   is   optimized   by   minimizing
+of  the  previous  iteration.   Since λ  decreases  with  every            the   variational   energy λ   through   successive   Jacobi-
+two consecutive iterations,  we converge to a minimal λ                    rotations.53
+value, although it is not guaranteed to be the global min-                    The optimization scheme for BPDMET with spin-state
+imum of the energy.  The complexity of a major iteration                   superposition now looks like:
+(i.e.  an iteration over alli0-values and over all bath clus-
+ters B0) is of the orderO(N2C) with NC  the number of                          1. Initialization of of the impurity states (U) and the
+clusters.  The number of major iterations needed up to                            BPS (biCβ)
+convergence may increase when increasing the number of
+clusters.  However, the scaling of the problem when en-                        2. Optimization of the BPDMET wave function:
+larging the number of spins is of course more favorable                             (a) Optimization  of  the  BPS:  Loop  over  bath
+than the exponential scaling of the exact diagonalization,                               clusters B0  and  impurity  states i0  and  solve
+as long as the size of the clusters does not change.                                     Eq. (9) keeping appropriate parameters ﬁxed
+  When changing the size of the clusters, the algorithm                                  until convergence
+scales  exponentially  due  to  the  exponential  scaling  of
+the restricted Hilbert space chosen every minor iteration                           (b) Optimization  of  the  impurity  states  through
+step.   Even  more,  the  number  of  impurity  states  also                             successive Jacobi rotations.
+grows exponentially, making the number of minor itera-                              (c) Restart from step 2a until convergence.
+tion steps in every major iteration step also blow up.  The
+scaling  of  every  major  iteration  step  is  approximately              As a convergence criterion both the variational energy λ
+O(24Ns).   Making  the  clusters  bigger  results  quickly  in             and the BPDMET energyE can be used.  The BPDMET
+high computational times.                                                  energy  (Eq.  13)  is  an  alternative  way  to  calculate  the
+  Details  of  the  calculations  are  investigated  in  more              energy of the system within the DMET framework and
+depth in the Supplemental Material.52                                      will  be  introduced  in  the  next  section.   In  this  paper
+                                                                           we  choose  the  BPDMET  energy,  as  it  converges  some-
+                                                                           what more slowly than the variational energy.  The faster
+     C.    Spin-state superposition in the impurity                        convergence of the variational energy is clear since it is
+                                                                           quadratically dependent on the error of the wave func-
+  When looking at the Schmidt decomposition of the ex-                     tion, while generally, the expectation value of a property
+act wave function in a small impurity and a larger envi-                   (which Eq. (13) represents) has a linear dependency as
+ronment (Eq. (1)), the set of impurity states{|αi⟩} can                    shown in the appendix.
+be any basis of the Hilbert space restricted to the impu-
+rity.  Corresponding environmental states will always be
+found.  When approximating the environmental states by                                         D.    Expectation values
+block product states, this freedom of choice is lost.  The
+choice of the impurity states inﬂuences the corner of the                     In  this  section,  the  calculation  of  expectation  val-
+Hilbert space the BPDMET algorithm optimizes in.  In                       ues  within  the  BPDMET  framework  is  discussed.   The
+the original BPDMET method,1 the states of the impu-                       method of calculation is equivalent to the method used
+rity{|αi⟩} are given by the natural basis for a spin sys-                  in DMET as presented by Wouters et al.54 In BPDMET,
+tem, e.g.{|↓···↓↓⟩,|↓···↓↑⟩,|↓···↑↓⟩,··· ,|↑···↑↑⟩}                        we  divide  the  lattice  into  diﬀerent  clusters  and  choose
+forS =  12.  This choice is arbitrary and inﬂuences the ob-                one cluster as the impurity cluster.  In this paper the di-
+tained results.  In this section we extend the BPDMET                      vision happens in such way that all clusters are equivalent
+wave  function  enabling  it  to  ﬁnd  an  optimal  set  of  or-           with respect to the lattice symmetry.  All clusters can be
+thonormal  impurity  states.   Orthonormality  is  imposed                 transformed into each other by using a translation or ro-
+in order to keep the simpliﬁcations in the calculation of⟨∂Ψ⏐⏐ ˆH⏐⏐Ψ⟩, as described in the Supplemental Material.52tation for which the lattice is invariant.  By picking one
+  ∂z∗                                                                      cluster C  as impurity and calculating its corresponding
+                                                                                                                                                   5
+
+BPDMET wave function|ΨC⟩, we immediately know all                           rately than the bath.  However, this method is not vari-
+the BPDMET wave functions corresponding to the other                        ational in nature, so energies obtained through Eq. (13)
+choices of the impurity.  This is a great advantage as far                  are not upper bounds to the exact energy, and squared
+as computational time is concerned.                                         total spins can be slightly negative.  From now on, this
+  Wouters et al.54 noted the fundamental diﬀerence be-                      non-variational energy will be called the BPDMET en-
+tween local  and nonlocal  operators.  Local operators act                  ergy and denoted by E,  while the variational energy is
+within  one  impurity  while  nonlocal  operators  do  not.                 given by the Lagrangian multiplier λ in Eq. (9).
+Just  like  in  the  original  DMET  framework,  expecta-
+tion values for local operators are quite straightforward,
+while  expectation  values  for  nonlocal  operators  require                            E.    Tangent space and excitations
+some inventiveness.  When a local operator  ˆA only acts
+upon cluster C, its expectation value can be calculated                        The BPDMET algorithm can also be extended for the
+by: ⟨ ˆA⟩  = ⟨ΨC| ˆA|ΨC⟩,  where|ΨC⟩  is  the  calculated                   calculation  of  approximate  spectral  functions.   For  the
+BPDMET  wave  function  with  cluster C  chosen  as  im-                    calculation of the spectral function, the Hamiltonian re-
+purity.   Note  however  that  also  operators  consisting  of              stricted  to  the  tangent  space  of  the  BPDMET  ansatz
+summations of local operators impose no problem.  For                       (Eq.   10)  is  diagonalized.   Shifting  of  weights  between
+example,  the  expectation  value  of  the  total  spin  in  the            the  diﬀerent biCβ  and Uim  parameters  is  possible  with-
+z-direction is given by:                                                    out changing the actual wave function.  It is thus clear
+   ⟨ ˆSztot⟩                                                                that the parametrization is redundant.  By introducing
+            =∑       ⟨ΨC| ˆSztotC|ΨC⟩ =NC⟨ΨC| ˆSztotC|ΨC⟩,                  a  set  of  restrictions,  the  redundancy  can  be  lifted  and
+                 C                                                          normalization of the wave function can be imposed:
+                                                                  (11)                           ∑
+where  ˆSztotC  is the total spin in the z-direction restricted                                      bi∗CβbiCβ = 1  ∀i,C                   (15)
+to sites belonging to clusterC.  Since all|ΨC⟩ are equiva-                                        β
+lent, the summation over the diﬀerent clusters is omitted                                         ∑    U∗ijUij = 1  ∀i                       (16)
+in the last step,  where NC  is the number of clusters in                                          j
+the system.                                                                                          ∑
+  For nonlocal operators the original DMET framework                                                     a∗iai = 1.                                (17)
+suggests  splitting  these  operators  appropriately.54  The                                          i
+expectation values of interest for the spin lattice systems                 The tangent space is constructed by taking these restric-
+studied in this paper are given by a summation of scalar                    tions into account and diﬀerentiating with respect to the
+products  of  spin  operators.   The  expectation  value  can               nonredundant parameters.  Diagonalization of the Hamil-
+thus be written as the sum of the expectation values of⟨ˆSi· ˆSj⟩           tonian  restricted  to  the  tangent  space  now  amounts  to
+the  diﬀerent  terms                 .   When  both i  and j  are           solving  a  generalized  eigenvalue  problem.   Eigenvectors
+sites within one cluster, this expectation value is an ex-                  with eigenvalues close to zero of the overlap matrix are
+pectation value of a local operator.  However, when this                    projected out.
+is not the case, this expectation value is an expectation                      The spectral function is given by
+value of a nonlocal operator and will be calculated as:                        A(ω,  ˆX) =− 1                                            ˆX|φ0⟩],
+ ⟨ˆSi· ˆSj⟩                                                                                     π Im[⟨φ0| ˆX†              1ω− ( ˆH−E0) +iη
+             = 12⟨ΨCi|ˆSj· ˆSi|ΨCi⟩ + 12⟨ΨCj|ˆSi· ˆSj|ΨCj⟩,                                                                                    (18)
+                                                                  (12)      where   ˆX   is  a  perturbation  operator  connecting  the
+where|ΨCi⟩ and|ΨCj⟩ are the BPDMET solutions with                           ground  state  with  the  excited  states.   By  restricting  to
+the  impurity  chosen  to  be  the  cluster  of  site i  or  site           the tangent space, this can be rewritten as
+j, respectively.  Since the solutions of the BPDMET for                                                  [∑                             ]
+diﬀerent impurity clusters are equivalent, the calculation                       A(ω,  ˆX)≈− 1                     |⟨φn| ˆX|φ0⟩|2              (19)
+of expectation values of operators that respect the lattice                                       π Im      n  ω− (En−E0) +iη
+symmetry can be simpliﬁed.  Examples of these are the                       where φn  and En  are  the  eigenvectors  of  the  general-
+Hamiltonian  ˆH in Eq. (2) and the squared total spin ˆS2tot.               ized  eigenvalues  problem  and  their  corresponding  ener-
+These are given by:                                                         gies.  For En and E0, both the variational energy λ and
+         ⟨ ˆH⟩           ∑         ⟨     ⏐⏐⏐ˆSi· ˆSj⏐⏐⏐ΨC⟩                  the BPDMET energy E in Eq. (13) can be used.  It will
+                =NC            Jij   ΨC                   ,         (13)    be shown that the latter choice yields inferior results.
+                        i∈C,j
+       ⟨ˆS2tot⟩          ∑     ⟨     ⏐⏐⏐ˆSi· ˆSj⏐⏐⏐ΨC⟩                         In  this  paper,  the  spectral  function  is  calculated  by
+                =NC              ΨC                   .               (14)  searching  all  the  excitations  within  the  tangent  space.
+                        i∈C,j                                               Another  option  is  through  solving  the  linear  response
+  By calculating properties in this way, we take into ac-                   equation given by:
+count that BPDMET describes the impurity more accu-                                       (ω− ( ˆH−E0) +iη)|φ1⟩ =  ˆX|φ0⟩.          (20)
+                                                                                                                                                  6
+
+Both  methods  can  be  done  through  sparse  iterative                                             III.    RESULTS
+solvers. However, since the BPDMET ansatz has a rather
+low number of parameters, the tangent space has a low                          In  this  section,  results  of  the  BPDMET  method  are
+dimension, making explicit solving feasible.                                discussed for two diﬀerent models.  In section III A, the
+                                                                            2D Heisenberg model on the square lattice with nearest-
+                                                                            neighbor (NN) and next-nearest-neighbor (NNN) interac-
+                                                                            tion is studied.  The BPDMET results obtained by Fan et
+         F.    Connection with Tensor Networks                              al.1 are reproduced and compared with the results when
+                                                                            spin-state superposition is introduced (see section II C).
+                                                                            In addition, diﬀerent order parameters are calculated.  In
+  When looking at the BPDMET ansatz, it is clear that                       section III B, the BPDMET algorithm is applied to the
+it can be represented by the tensor network depicted in                     Kitaev-Heisenberg model on a Honeycomb lattice4  with
+Fig. 2.  The central tensor corresponds to the impurity                     24 spins and compared with exact results.
+cluster  and  the  remaining  tensors  to  the  bath  clusters.                Spectral functions obtained through diagonalization in
+It should be noted, that these bath tensors can be cho-                     the  tangent  space  as  discussed  in  section  II E  are  also
+sen  diﬀerently  from  each  other,  as  can  be  readily  seen             presented.
+from Eq. (10).  The spin degrees of freedom are combined                       Note  that  when  dividing  the  complete  lattice  into
+into one physical index per cluster.  The impurity tensor                   two  clusters,  one  impurity  and  one  bath  cluster,  that
+has virtual indexes connected to every bath tensor.  It is                  the  BPDMET  ansatz  (Eq.  (10))  yields  a  redundant
+therefor a very high rank tensor (one virtual index per                     parametrization  of  the  complete  Hilbert  space.   In  this
+bath  cluster).   However,  the  impurity  tensor  is  heavily              situation,  BPDMET  should  coincide  with  exact  diago-
+restricted, making the tensor network manageable.  The                      nalization (ED). Comparison with ED for small systems
+BPDMET high rank impurity tensor can be represented                         with only one bath cluster allows us to check the correct-
+as                                                                          ness of the algorithms and implementations.
+
+
+              Ami1i2i3i4··· =Ui1mδi1i2δi1i3δi1i4···            (21)
+                                                                             A.    NN and NNN interaction on the square lattice
+with U  a unitary matrix.  The traditional technique to                        The ﬁrst system under consideration is the square lat-
+make  TNS  manageable  is  the  truncation  of  the  virtual                tice  with  NN  and  NNN  Heisenberg  interactions.   The
+dimension (e.g.  as in DMRG and PEPS). In BPDMET,                           Hamiltonian of this system is given by
+the  TNS  is  made  manageable  by  imposing  restrictions
+on the impurity tensor.  There are no truncations in the                                  ˆH =J1    ∑    ˆSi· ˆSj +J2   ∑      ˆSi· ˆSk          (22)
+virtual  dimension.   Clarifying  the  link  with  tensor  net-
+works can facilitate the construction of diﬀerent ansatzes                                          ⟨i,j⟩              ⟨⟨i,k⟩⟩
+for the bath states.
+                                                                            with ⟨i,j⟩  denoting  NN  sites, J1  the  NN  interaction
+                                                                            strength,⟨⟨i,k⟩⟩  denoting  NNN  sites  and J2  the  NNN
+                                                                            interaction  strength.   We  restrict  ourselves  to  anti  fer-
+                                                                            romagnetic  (AF)  interactions  (J1,J2 >  0).   This  is  the
+                                                                            same  system  as  investigated  by  Fan  et  al.1  Three  dis-
+                                                                            tinct  phases  are  present  in  the  inﬁnite  lattice.   At  low
+                                                                            NNN  interaction,  the  ground  state  is  in  a  N´eel  phase,
+                                                                            this  is  a  long-range-ordered  phase.   At J2/J1 ≈  0.4  a
+                                                                            phase transition from this N´eel phase happens to a dis-
+                                                                            ordered quantum paramagnetic phase.  When tuning the
+                                                                            system to stronger NNN interactions, the system under-
+                                                                            goes a transition to another long range ordered phase at
+                                                                            J2/J1≈ 0.6.  This is the collinear phase.  The nature of
+                                                                            the intermediate paramagnetic phase is still undecided.
+                                                                            Multiple  interpretations  for  this  phase  have  been  pro-
+Figure  2.   (Color  online)  TNS  depiction  of  the  BPDMET               posed, such as spin liquids and valence bond states like
+ansatz given in Eq. (10).  The TNS is given for 6 bath cluster              the  columnar  and  staggered  dimer  valence  bond  crys-
+tensors (blue) and one impurity tensor (red).  The impurity                 tals and the plaquette resonating valence bond (PRVB)
+tensor is given by Eq. (21).  The physical indexes are given by             state.12,19–21,55–64  In Ref.  1, it is shown that BPDMET
+the unconnected bonds (m,β1,β2,··· ).                                       calculations suggests no rotational symmetry breaking at
+                                                                            the intermediate phase, and evidence is found in favor of
+                                                                            the PRVB.
+                                                                                                                                                  7
+
+  The BPDMET energies (see Eq. (13)) are calculated
+for a 8× 8 square lattice with periodic boundary condi-
+tions, i.e.  an 8× 8 square lattice on a torus.  The lattice
+is divided into 16 equal 2×2 clusters of which one is cho-
+sen as impurity.  Ground-state energies are calculated as
+explained in section II D. In Fig. 3, the converged energy
+values for BPDMET with random initialization are given.
+At high and low J2/J1 convergence of the BPDMET al-
+gorithm  happens  quite  consistently  to  the  same  energy
+values.  When J2/J1∈ [0.6, 0.8], multiple energy values
+are  found  and  the  algorithm  converges  to  a  variety  of
+local  minima.   For  purposes  of  reproducibility,  we  will
+make use of sweeps (Fig. 4 and Fig. 5).  A sweep starts
+in a region where convergence is consistent to the same
+minimum, and sweeps through the parameter region us-
+ing previous converged results as initialization.  Sweeps
+can be done from low to high J2/J1  or vice versa.  The
+BPDMET  energy  is  used  as  selection  criterion  for  the                Figure 3.  Calculations executed with random initialization.
+optimal  solution.   It  should  be  stressed  that  using  the             At  each J2/J1  value,  40  random  calculations  are  executed.
+random initializations (40 runs per parameter value) we                     The size of the markers scale with the number of calculations
+never found a lower energy than the minimum energies                        that yielded the corresponding value.
+found through sweeps from the left or right.  This sug-
+gests  that  the  sweep  ﬁnds  more  optimal  solutions  that
+are hard to ﬁnd with random initialization.  This poses                     between two NN spins in the impurity cluster.  Using this
+some justiﬁcation for the use of sweeps.                                    expression  for  the  energy  per  spin, E  =−0.66917  and
+  Introduction  of  spin-state  optimization  in  BPDMET                    E =−0.67045 without and with spin-state optimization
+yields signiﬁcant changes in the calculated energy, as can                  are  obtained.   Correspondence  with  the  QMC  solution
+been seen in Fig.  4(a).  In the two ordered phases, minor                  clearly improves using this alternative energy expression.
+changes in energy per spin are observed.  In the interme-                      The N´eel and the collinear order parameters are calcu-
+diate paramagnetic phase, larger changes are visible. It is                 lated in order to identify the diﬀerent phase transitions.
+good to note that the BPDMET energy is not variational                      These order parameters are given by
+so a lowering in energy is not necessarily a net improve-                                                  ∑
+ment of the energy.  However, a study has been done on                                  M2N(Q) =   1           ⟨ˆSi· ˆSj⟩eiQ(Ri−Rj),        (23)
+the 40-spin lattice (Fig. 5) and compared with exact re-                                              N2    ij
+sults obtained in Ref.  65.  The boundary conditions are
+chosen in the same way as in Ref.  65.  When introducing                    where Q is given by (π,π) for the N´eel parameter and by
+the spin-state optimization for the 40-spin system, there                   (π, 0) and (0,π) for the collinear parameter in x- and y-
+is a substantial improvement in energy observed in the                      direction. Ri is the position vector of the spin site i and
+intermediate  paramagnetic  phase.   This  makes  us  con-                  N  is  the  total  number  of  spins.   For  an  inﬁnite  lattice
+ﬁdent  that  the  substantial  change  in  BPDMET  energy                   rotational symmetry breaking will occur.  However,  the
+through introduction of spin-state optimization is also a                   exact solution for the ﬁnite lattice (for instance a 4× 4
+net improvement for the 64-spin lattice.                                    lattice) yields a collinear order parameter that is equal in
+  When looking at the variational energy λ (Fig. 4(a)),                     thex- andy-direction.  We notice that BPDMET ﬁnds a
+only  a  small  correction  occurs  with  the  introduction  of             rotation symmetry broken solution, even in ﬁnite lattices.
+spin-state  optimization.    At J2  =  0, λ  changes  from                  In Fig.  4(b) the order parameters are shown.  The largest
+−0.5939  per  spin  to−0.5940  per  spin,  while  the  non-                 collinear parameter is plotted here.
+variational  BPDMET  energy E  changes  from−0.6657                            When   introducing   spin-state   optimization,    small
+per  spin  to −0.6678  per  spin.     The  change  in  the                  changes  are  noticeable  in  the  order  parameters.    The
+BPDMET energy is clearly much larger than the change                        N´eel  order  parameter  at J2  =  0  (M2N  =  0.19825  and
+in  the  variational  energy,  and  this  was  found  to  occur             M2N = 0.19670 without and with spin-state optimization)
+for all J2/J1  values.  The improvement of the results is                   corresponds  well  with  results  obtained  through  QMC
+largely contained in the impurity spins.  The energy per                    (M2N  = 0.17784).66,67  Phase transitions at J2/J1≈ 0.4
+spin  at J2  =  0  (E  = −0.667840)  corresponds  reason-                   and J2/J1 ≈  0.62  can  be  observed,  in  correspondence
+ably well with results obtained by quantum Monte Carlo                      with previous studies.  The location of these phase tran-
+(QMC) for the 8× 8 lattice (E =−0.673487).66                                sitions  does  not  change  with  the  introduction  of  spin-
+  Fan et al.1 calculated the energy per spin at J2 = 0 as                   state  optimization.   A  strong  N´eel  order  is  observed  at
+E = 2⟨ψ|ˆS1· ˆS2|ψ⟩, making use of rotational symmetry                      low J2/J1  while  a  strong  collinear  order  is  observed  at
+present in the N´eel phase.  This is twice the bond energy                  high J2/J1.  In the intermediate region,  both order pa-
+                                                                                                                                                         8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                Figure 5.  BPDMET energy of the 40-spin square lattice with
+                                                                                NN  and  NNN  interaction  using  sweeps.   Results  both  with
+                                                                                and without spin-state optimization are given.  Exact results
+                                                                                are obtained from Ref.  65.
+
+
+                                                                                nian:
+                                                                                            ˆH =−J1       ∑      ˆSxi  ˆSxj−J1   ∑      ˆSy
+                                                                                                                                          i  ˆSyj
+                                                                                                        x−links                y−links
+                                                                                                          ∑      ˆSzi ˆSzj +J2 ∑    ˆSi· ˆSj.          (24)
+                                                                                                  −J1
+                                                                                                        z−links                ⟨ij⟩
+
+Figure  4.    (Color  online)  BPDMET  calculations  with  and
+without  spin-state  optimization  of  the  8× 8  square  lattice
+with NN and NNN interaction.  (a) shows the variational λ
+energy (+ and∆) and the non variational BPDMET energy
+(× and ▽).  (b) shows the N´eel (× and ▽) and collinear order
+parameters (+ and∆).
+
+
+
+rameters stay rather small, but do not completely vanish
+due to ﬁnite size eﬀects.
+
+
+
+                                                                                Figure 6. x-, y- and z-links for the Kitaev terms on the hon-
+                                                                                eycomb  lattice  with  24  spins.   The  dashed,  dotted  and  full
+            B.    The Kitaev-Heisenberg model                                   links are thex-,y- andz-links, respectively.  The 4-sublattice
+                                                                                rotated basis4  ˆ˜S is also shown.
+
+   The   applicability   of   BPDMET   is   not   limited   to                     J1  represents  the  strength  of  the  anisotropic  Kitaev
+square  lattices,   other  lattices  are  also  equally  feasi-                 interaction  while J2  is  the  strength  of  the  Heisenberg
+ble.   In  this  section  we  consider  the  Kitaev-Heisenberg                  part.  Every spin is connected through exactly one x-, y-
+model4,7,15,68–70  on  the  honeycomb  lattice.   We  study                     and z-link to a neighboring spin.  The diﬀerent links are
+a 24-spin lattice with periodic boundary conditions (see                        shown in Fig.  6.
+Fig. 6).  For this system exact diagonalization of the sys-                        The     Kitaev     and     Heisenberg     interaction     are
+tem  is  still  feasible  and  the  BPDMET  method  can  be                     parametrized  as J1  =  2α  and J2  =  1− α.    In  the
+benchmarked.   This  model  is  a  mixture  of  the  Kitaev                     interval α ∈  [0, 1],  three  phases  occur.4  At  low α  a
+model11  and  the  Heisenberg  model  on  the  honeycomb                        N´eel  AF  phase  is  observed,  at  intermediate α  a  stripy
+lattice  and  spin  interactions  are  given  by  the  Hamilto-                 AF  phase,  and  at  high α  a  quantum  spin  liquid  is
+                                                                                                                                                      9
+
+                                                                              examined.
+                                                                                 When randomly initializing the BPDMET algorithm,
+                                                                              convergence  happens  quite  consistently  in  the  two  AF
+                                                                              phases (α < 0.8); however, in the spin liquid phase, the
+                                                                              calculations converge to a wide variety of local minima as
+                                                                              can be seen in Fig. 8 with the calculation of  ˆ˜S2tot for the
+Figure 7.  Diﬀerent possible cluster-coverings for the hexago-                S-shaped  cluster.   Similar  results  were  obtained  for  the
+nal lattice.                                                                  star  shaped  and  hexagonal  clusters.   It  was  found  that
+                                                                              results  obtained  with  the  S-shaped  cluster  are  slightly
+                                                                              inferior to the other two types of clusters in describing the
+                                                                              phase  transitions.   We  will  therefore  only  present  these
+                                                                              random initialization results for the S-shaped cluster and
+                                                                              in the remainder of the paper only the star shaped and
+                                                                              hexagonal clusters are discussed.
+                                                                                 Sweeps, either from the left or from the right, are again
+                                                                              used to ensure reproducibility of the results.
+                                                                                 Comparison  of  the  BPDMET  results  for  the  24-spin
+                                                                              system with the exact results shows a diﬀerence between
+                                                                              the  star-shaped  and  hexagonal  clusters.   Both  clusters
+                                                                              describe the two AF phases well.  When using the star-
+                                                                              shaped  cluster  a  phase  transition  occurs  at α ≈  0.8
+                                                                              (Fig.  9).  Although the phase transition to the spin liq-
+                                                                              uid is observed, the spin liquid itself is poorly described
+                                                                              through BPDMET as can be inferred from the calculated
+                                                                              BPDMET energies (Fig. 9(a)), spin properties (Fig. 9(b))
+                                                                              and correlation functions (Fig. 9(c)).  The phase transi-
+                                                                              tion to the spin liquid gets more pronounced when intro-
+Figure 8.  Calculations executed with random initialization.                  ducing spin-state optimization, but the spin liquid itself
+Calculations  are  executed  with  the  S-shaped  cluster  (Fig.              is still not represented adequately.
+7(a)).  At each α value, 40 random calculations are executed.                    In general, the BPDMET ansatz can capture a larger
+The  squared  total  spin  in  the  rotated  basis  is  given.   The          corner of the Hilbert space with increasing impurity size,
+size of the markers scale with the number of calculations that                so it is expected that the hexagonal cluster performs bet-
+yielded the corresponding value.  Since the calculated squared                ter than the 4-spin clusters.  When using the hexagonal
+total spin is not a squared total spin of a wave function but                 cluster, the phase transition towards a spin liquid is de-
+calculated as described in section II D, the values can be neg-               tected and the obtained properties of the spin liquid are
+ative.  The full line is the exact result for 24 spins.                       in good correspondence with the exact diagonalization at
+                                                                              α = 1 (Fig.  10).  However, the phase transition happens
+                                                                              at α≈ 0.92, which is not the right value.  Calculations
+observed.  The phase transitions are expected at α≈ 0.4                       with spin-state optimization have not been performed for
+and α ≈   0.8.4,7,15,68–70   At  the  intermediate  point,                    this type of cluster since they were already quite intensive
+α  =  0.5,  the  system  is  exactly  solvable  through  the                  without the optimization.
+use  of  a  rotated  basis.4  This  rotated  basis  is  deﬁned                   BPDMET allows to investigate larger systems than the
+by  dividing  the  lattice  into  4  sublattices  and  deﬁning                24 spin lattice.  When expanding the honeycomb lattice
+diﬀerent  rotated  spin  operators  ˆ˜S  on  these  sublattices               by  one  extra  layer,  a  54  spin  honeycomb  lattice  is  ob-
+as can be seen in Fig. 6.  At this intermediate point, the                    tained which is however not coverable with the S-shaped
+Hamiltonian is reduced to the ferromagnetic Heisenberg                        and star shaped clusters.  Also, a rotated basis respect-
+model in the rotated basis, and exact solutions are given                     ing periodic boundary conditions as proposed in Ref.  4,
+by  states  with  maximal  total  spin  in  the  rotated  basis               cannot be found.  With another extra layer, we get a 96
+(e.g. |↑↑...↑⟩).   The  two  trivial  states  with  maximal                   spin honeycomb lattice that is coverable with the three
+total  spin  can  be  clearly  represented  by  the  BPDMET                   types of clusters (Fig. 7), and is also consistent with the
+ansatz.   The  basis  transformation  suggested  in  Ref.   4                 concept of the rotated basis.  No shift in the location of
+leaves  the  corner  of  the  Hilbert  space  described  by  the              the phases is found when extending to 96 spins.
+BPDMET  ansatz  unchanged.71  In  the  original  basis  it
+is  therefore  also  possible  to  ﬁnd  exact  solutions  at  this
+intermediate point through BPDMET.                                                                 C.    Spectral functions
+  BPDMET  allows  freedom  in  the  choice  of  the  impu-
+rity and bath clusters.  Three diﬀerent types of clusters                        In   section   II E,   a   method   is   introduced   for   the
+that  can  cover  the  entire  lattice  (see  Fig. 7)  have  been             BPDMET to ﬁnd the excitations and the spectral func-
+                                                                                                                                                         10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 9.  (Color online) BPDMET results for the star-shaped                     Figure 10.  (Color online) BPDMET results for the hexagonal
+cluster (Fig.  7(b)).  Crosses are results without and dots are                  cluster (Fig.  7(c)).  Crosses are results without spin-state op-
+results with spin-state optimization.  Full lines are exact re-                  timization.  Full lines are exact results for the 24 spin lattice.
+sults for the 24 spin lattice.  (a) Energy per spin.  (b) Squared                (a) Energy per spin.  (b) Squared total spin in original (⟨S2tot⟩)
+total spin in original (⟨S2tot⟩) and rotated basis (⟨ ˜S2tot⟩).  (c)             and rotated basis (⟨ ˜S2tot⟩).  (c) Nearest neighbor spin spin cor-
+Nearest neighbor spin spin correlations in original (⟨Si· Sj⟩)                   relations in original (⟨Si·Sj⟩) and rotated basis (⟨˜Si· ˜Sj⟩) and
+and rotated basis (⟨˜Si· ˜Sj⟩) and nearest neighbor spin spin                    nearest neighbor spin spin correlation in the bond direction
+correlation in the bond direction (⟨SγiSγj⟩).                                    (⟨SγiSγj⟩).
+
+
+
+tions through the tangent space.  For the calculation of
+the spectral function Eq. (19) is used, with η = 0.01.  In
+Eq. (19), two possible energy values for En can be used,
+i.e.  the variational energy λ and the BPDMET energy                             act solution can be found through BPDMET. We expect
+as given in Eq. (13).                                                            thus that the spectral function will be reproduced quite
+   For the Kitaev-Heisenberg model at α = 0.5, the ex-                           well.  Since the ground state inα = 0.5 is degenerate, the
+                                                                                                                                                 11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                            Figure  12.    (Color  online)  The  spectral  function  for  the
+                                                                            Kitaev-Heisenberg model with 24 spins atα = 0.25.  The per-
+                                                                            turbation  ˆX is chosen as  ˆSz andη = 0.01.  Exact results (full
+                                                                            line) are compared with results obtained through BPDMET
+                                                                            with spin-state optimization (dotted line).
+
+
+                                                                            a clear gap (the next eigenvalues are found at≈ 0.25).
+                                                                            These  eigenstates  are  left  out  of  the  spectral  function
+                                                                            since they originate from the degenerate ground-state so-
+                                                                            lutions within the tangent space.
+Figure  11.    (Color  online)  The  spectral  function  for  the              We  calculate  the  spectral  function  with  ˆS+i   used  as
+Kitaev-Heisenberg model with 24 spins at α = 0.5.  The per-                 perturbation   ˆX,  i.e.  the raising operator on spin i.  In
+turbation  ˆX  is chosen as  ˆS+  and η  = 0.01.  The BPDMET                Fig. 11(a), it is observed that the tangent space method
+spectral function is averaged out over 100 calculations with                ﬁnds practically the exact spectrum when using the vari-
+random initialization.  (a) shows the exact results (full line)             ational energy.  Some small diﬀerences in peak location
+and results obtained through BPDMET with spin-state op-                     and amplitude are visible.
+timization  where  the  variational  energy λ  is  used  for  the              When  using  the  non-variational  DMET  energy  in
+En  values  (dotted  line).    (b)  shows  the  results  obtained           Eq.  (19),  all  correspondence  with  the  exact  solution  is
+through  BPDMET  with  spin-state  optimization  where  the                 lost (see Fig. 11(b)).  It is therefore clear that the vari-
+non-variational  BPDMET  energy E  is  used  for  the En  val-              ational  energy  should  be  used  in  the  calculation  of  the
+ues.
+                                                                            spectral function in contrary to the calculation of ground
+                                                                            state  properties.   There,  the  non-variational  BPDMET
+equation for the spectral function is changed to                            energy has proven to be superior.
+                                                                             In the previous example, BPDMET is able to ﬁnd the
+   A(ω,  ˆX) =−  1          ∑      ∑     |⟨φj| ˆX|φi⟩|2   ,    (25)       exact ground-state wave function.  When this is not the
+                    πd Im                ω− ∆Ej +iη                         case, the calculation of the spectral function through tan-
+                              i=gs j⁄=gs                                    gent space diagonalization can be inadequate.  This can
+where d is the dimension of the degenerate ground state                     be seen in Fig.  12,  where the spectral function for the
+space, ∆Ej is the energy diﬀerence between the state|φj⟩                    same Kitaev-Heisenberg model is calculated atα = 0.25.
+and the energy of the degenerate ground states, and the                     BPDMET is, in this case, unable to ﬁnd the exact ground
+index i  sums  over  all  ground  states  while j  sums  over               state.  For this system, correspondence of the BPDMET
+the excited states.  This expression is independent of the                  spectral function with exact results is lost.
+chosen basis in the degenerate ground state space.
+  To calculate the spectral function through BPDMET                                               IV.    CONCLUSION
+we simply perform the calculations multiple times with
+random initializations and average out over the obtained
+spectral functions.  Residues between the ground states                        The BPDMET method is used to study the spin-1/2
+are  not  taken  into  account  in  the  spectral  function,  as            anti ferromagnetic Heisenberg model on the square lat-
+can be seen in Eq. (25).  To make sure that the tangent                     tice with 64 spins as originally done in Ref.  1 and the
+space method does not take these residues into account,                     spin-1/2  Kitaev  Heisenberg  model4  on  the  honeycomb
+only eigenvectors with an eigenvalue signiﬁcantly diﬀer-                    lattice with diﬀerent sizes.  A systematic approach for the
+ent  from the  ground state  energy are  used  in the  sum-                 calculation of properties within the BPDMET framework
+mation in Eq. (19).  When diagonalizing the Hamiltonian                     is introduced.  Spin-state superposition in the impurity
+in the tangent space, a few eigenvalues very close to the                   has been added to BPDMET yielding improved results
+ground  state  energy  are  obtained  (within  a  0.03  mar-                for the energy proﬁle and properties.  The calculation of
+gin), which are separated from the other excitations by                     excited states and the spectrum through diagonalization
+                                                                                                                                                 12
+
+in the tangent space of the BPDMET ground state is in-                       with⟨Ψ0|Ψerror⟩ = 0 and ϵ a measure for the error.  The
+vestigated, but provides somewhat unsatisfactory results.                    error on the wave function is
+In any case, it has been shown that for the calculation of                                               √(√                 )2 +ϵ2
+the spectral function the variational energy λ should be                           ||Ψ⟩−|Ψ0⟩||2 =                1−ϵ2− 1
+used and not the BPDMET energy.                                                                                                               (A.2)
+  For  the  AF  Heisenberg  model  on  the  square  lattice,                                          =ϵ +O(ϵ2)
+order parameters are calculated and the right phases are
+detected in the system. For the Kitaev Heisenberg model,                     and thus linear in ϵ for small errors.  We get
+diﬀerent  types  of  clusters  are  used.   The  results  for  a
+24-spin honeycomb lattice are compared with the exact                                         (            ⟨Ψ| ˆQ|Ψ⟩−⟨Ψ0| ˆQ|Ψ0⟩ =)
+solution.   It  is  clear  that  the  results  are  dependent  on                                ⟨Ψerror| ˆQ|Ψ0⟩ +⟨Ψ0| ˆQ|Ψerror⟩        ϵ    (A.3)
+the  cluster  shape  and  that  some  clusters  are  more  ap-                    (                                        )
+propriate for certain phases than others.  However, none                        +    ⟨Ψerror| ˆQ|Ψerror⟩−⟨Ψ0| ˆQ|Ψ0⟩         ϵ2 +O(ϵ3)
+of the cluster shapes are able to represent the spin liq-
+uid regime.  Only with hexagonal clusters, the spin liquid                   for the error on the expectation value of general proper-
+phase is detected, but the phase transition happens at a                     ties.  We see that this error is linear with ϵ.  Since|Ψ0⟩
+wrong value of the coupling parameters.  BPDMET en-                          is  an  eigenstate  of   ˆH  and⟨Ψerror|Ψ0⟩  =  0,  the  linear
+ables one to investigate larger systems unreachable with                     term vanishes for the error on the energy and the leading
+exact diagonalization.  The ground state for the 96-spin                     error term is thus quadratic in ϵ.  In BPDMET, an opti-
+honeycomb lattice is calculated and it is found that the                     mization is performed in a restricted Hilbert space during
+position of the phase transitions does not change when                       each minor iteration step.  During this optimization, the
+enlarging the system.                                                        optimal solution within the restricted space is chosen by
+                                                                             diagonalizing the eﬀective Hamiltonian in this restricted
+                                                                             Hilbert space (as discussed in section II B). The updated
+                  ACKNOWLEDGMENTS                                            wave function is therefore an eigenstate (corresponding
+                                                                             to the minimal eigenvalue) of the eﬀective Hamiltonian
+  K.G.  and  S.D.B.  acknowledge  support  from  the  Re-                    (not necessarily of the full Hamiltonian).
+search Foundation Flanders (FWO Vlaanderen).                                   In each minor iteration, the wave function|Ψ⟩ is up-
+                                                                             dated  to  the  ground  state|Ψ0⟩  of  the  eﬀective  Hamil-
+                                                                             tonian.   The  change  during  each  minor  iteration  of  the
+                                                                             variational energy λ is given by Eq. (A.3) with  ˆQ =  ˆHeﬀ
+                   Appendix: Convergence                                     and  for  the  same  reason  as  explained  above,  will  have
+                                                                             a quadratic leading term.  The eﬀective non-variational
+  For a variational optimization, we show that the error                     BPDMET  energy  operator  (i.e.   the  BPDMET  energy
+on the energy scales quadratically with the error on the                     operator  mapped  to  the  restricted  Hilbert  space),  will
+wave function.  For expectation values of general proper-                    have a linear leading term.
+ties, the error scales linearly with the wave function error.                  When the BPDMET algorithm is close to a local mini-
+In order to see this, we decompose our approximate wave                      mum and close to convergence, the correction parameter
+function into a component parallel to the exact ground                       ϵ  will  be  small.   The  corrections  on  the  variational  en-
+state and a perpendicular error-component, i.e.72                            ergyλ will be quadratic inϵ, while the corrections on the
+                                                                             BPDMET energy will be linear inϵ. Using the BPDMET
+                                                                             energy  as  convergence  criterion  is  therefore  more  strin-
+                |Ψ⟩ =√1−ϵ2|Ψ0⟩ +ϵ|Ψerror⟩            (A.1)                   gent.
+
+
+
+
+
+
+
+ ∗  Klaas.Gunst@UGent.be                                                      7  J. Chaloupka,  G. Jackeli,   and G. Khaliullin, Phys. Rev.
+ 1  Z. Fan and Q.-l. Jie, Phys. Rev. B 91, 195118 (2015).                       Lett. 110, 097204 (2013).
+ 2  Q.  Si  and  E.  Abrahams,  Phys.  Rev.  Lett.  101,  076401              8  J. Reuther, R. Thomale,  and S. Rachel, Phys. Rev. B 90,
+   (2008).                                                                      100405 (2014).
+ 3  R. Melzi, S. Aldrovandi, F. Tedoldi, P. Carretta, P. Millet,              9  J. G. Rau, E. K.-H. Lee,  and H.-Y. Kee, Phys. Rev. Lett.
+   and F. Mila, Phys. Rev. B 64, 024409 (2001).                                 112, 077204 (2014).
+ 4  J. Chaloupka,  G. Jackeli,   and G. Khaliullin, Phys. Rev.               10  J. Chaloupka and G. Khaliullin, Phys. Rev. B 92, 024413
+   Lett. 105, 027204 (2010).                                                    (2015).
+ 5  I. Kimchi and Y.-Z. You, Phys. Rev. B 84, 180407 (2011).                 11  A. Kitaev, Annals of Physics 321, 2  (2006), january Spe-
+ 6  Y. Singh,  S. Manni,  J. Reuther,  T. Berlijn,  R. Thomale,                 cial Issue.
+   W.  Ku,  S.  Trebst,   and  P.  Gegenwart,  Phys.  Rev.  Lett.            12  M. P. Gelfand, R. R. P. Singh,  and D. A. Huse, Phys. Rev.
+   108, 127203 (2012).                                                          B 40, 10801 (1989).
+                                                                                                                                                          13
+
+
+13  R. R. P. Singh, Z. Weihong, C. J. Hamer,  and J. Oitmaa,                         densed Matter Physics 3, 111 (2012).
+   Phys. Rev. B 60, 7278 (1999).                                                 43  S.  ¨Ostlund  and  S.  Rommer,  Phys.  Rev.  Lett.  75,  3537
+14  V. N. Kotov, J. Oitmaa, O. P. Sushkov,  and Z. Weihong,                          (1995).
+   Phys. Rev. B 60, 14613 (1999).                                                44  S. Rommer and S.  ¨Ostlund, Phys. Rev. B 55, 2164 (1997).
+15  J. Oitmaa, Phys. Rev. B 92, 020405 (2015).                                   45  F.   Verstraete   and   J.   I.   Cirac,   eprint   arXiv:cond-
+16  N. Read and S. Sachdev, Phys. Rev. Lett. 66, 1773 (1991).
+17  S. R. White and A. L. Chernyshev, Phys. Rev. Lett. 99,                           mat/0407066  (2004).
+                                                                                 46  V.  Murg,  F.  Verstraete,  O.  Legeza,    and  R.  M.  Noack,
+   127004 (2007).                                                                    Phys. Rev. B 82, 205105 (2010).
+18  S. Yan, D. A. Huse,   and S. R. White, Science 332, 1173                     47  V.  Murg,  F.  Verstraete,  R.  Schneider,  P.  R.  Nagy,   and
+   (2011).                                                                           .  Legeza,  Journal  of  Chemical  Theory  and  Computation
+19  H.-C.  Jiang,  H.  Yao,   and  L.  Balents,  Phys.  Rev.  B 86,
+                                                                                     11, 1027 (2015).
+   024424 (2012).                                                                48  N.  Nakatani  and  G.  K.-L.  Chan,  J.  Chem.  Phys.  138,
+20  V. Murg, F. Verstraete,  and J. I. Cirac, Phys. Rev. B 79,
+                                                                                     134113 (2013).
+   195119 (2009).                                                                49  W. Li, J. von Delft,  and T. Xiang, Phys. Rev. B 86, 195137
+21  R.  Darradi,  O.  Derzhko,  R.  Zinke,  J.  Schulenburg,  S.  E.
+                                                                                     (2012).
+   Kr¨uger,  and J. Richter, Phys. Rev. B 78, 214415 (2008).                     50  K. H. Marti, B. Bauer, M. Reiher, M. Troyer,  and F. Ver-
+22  Q. Sun and G. K.-L. Chan, Accounts of Chemical Research
+                                                                                     straete, New Journal of Physics 12, 103008 (2010).
+   49, 2705 (2016).                                                              51  K. H. Marti and M. Reiher, Phys. Chem. Chem. Phys. 13,
+23  C. H. Bennett, D. P. DiVincenzo, J. A. Smolin,  and W. K.
+                                                                                     6750 (2011).
+   Wootters, Phys. Rev. A 54, 3824 (1996).                                       52  See Supplemental Material for details of the BPDMET cal-
+24  R.   Horodecki,    P.   Horodecki,    M.   Horodecki,       and
+                                                                                     culations.
+   K. Horodecki, Rev. Mod. Phys. 81, 865 (2009).                                 53  W.   Poelmans,    M.   Van   Raemdonck,    B.   Verstichel,
+25  J. Eisert, M. Cramer,  and M. B. Plenio, Rev. Mod. Phys.
+   82, 277 (2010).                                                                   S. De Baerdemacker, A. Torre, L. Lain, G. E. Massaccesi,
+26  J. Eisert, ArXiv e-prints   (2013), arXiv:1308.3318 [quant-                      D. R. Alcoba, P. Bultinck,   and D. Van Neck, Journal of
+                                                                                     Chemical Theory and Computation 11, 4064 (2015).
+   ph].                                                                          54  S.  Wouters,  C.  A.  Jimnez-Hoyos,  Q.  Sun,   and  G.  K.-L.
+27  W.  Metzner  and  D.  Vollhardt,  Phys.  Rev.  Lett. 62,  324
+   (1989).                                                                           Chan, Journal of Chemical Theory and Computation 12,
+28  A.  Georges  and  W.  Krauth,  Phys.  Rev.  Lett.  69,  1240                     2706 (2016).
+                                                                                 55  P. Chandra and B. Doucot, Phys. Rev. B 38, 9335 (1988).
+   (1992).                                                                       56  N. Read and S. Sachdev, Phys. Rev. Lett. 62, 1694 (1989).
+29  A. Georges, G. Kotliar, W. Krauth,  and M. J. Rozenberg,                     57  K.  Takano,  Y.  Kito,  Y.  ¯Ono,   and  K.  Sano,  Phys.  Rev.
+   Rev. Mod. Phys. 68, 13 (1996).                                                    Lett. 91, 197202 (2003).
+30  D.  Zgid  and  G.  K.-L.  Chan,  The  Journal  of  Chemical                  58  F. Mezzacapo, Phys. Rev. B 86, 045115 (2012).
+   Physics 134, 094115 (2011).                                                   59  J.-F. Yu and Y.-J. Kao, Phys. Rev. B 85, 094407 (2012).
+31  G. Knizia and G. K.-L. Chan, Phys. Rev. Lett. 109, 186404                    60  T. Li, F. Becca, W. Hu,  and S. Sorella, Phys. Rev. B 86,
+   (2012).                                                                           075111 (2012).
+32  G. Knizia and G. K.-L. Chan, Journal of Chemical Theory                      61  L. Wang, D. Poilblanc, Z.-C. Gu, X.-G. Wen,  and F. Ver-
+   and Computation 9, 1428 (2013).                                                   straete, Phys. Rev. Lett. 111, 037202 (2013).
+33  G. H. Booth and G. K.-L. Chan, Phys. Rev. B 91, 155107                       62  W.-J. Hu, F. Becca, A. Parola,  and S. Sorella, Phys. Rev.
+   (2015).                                                                           B 88, 060402 (2013).
+34  S.  Wouters,  C.  A.  Jim´enez-Hoyos,   and  G.  K.-L.  Chan,                63  R. L. Doretto, Phys. Rev. B 89, 104415 (2014).
+   ArXiv e-prints  (2016), arXiv:1605.05547 [cond-mat.str-el].                   64  S.-S. Gong, W. Zhu, D. N. Sheng, O. I. Motrunich,   and
+35  B.-X. Zheng and G. K.-L. Chan, Phys. Rev. B 93, 035126
+                                                                                     M. P. A. Fisher, Phys. Rev. Lett. 113, 027201 (2014).
+   (2016).                                                                       65  J.  Richter  and  J.  Schulenburg,  The  European  Physical
+36  J.  P.  F.  LeBlanc,  A.  E.  Antipov,  F.  Becca,  I.  W.  Bu-
+                                                                                     Journal B 73, 117 (2010).
+   lik,  G.  K.-L.  Chan,  C.-M.  Chung,  Y.  Deng,  M.  Ferrero,                66  A. W. Sandvik, Phys. Rev. B 56, 11678 (1997).
+   T. M. Henderson, C. A. Jim´enez-Hoyos, E. Kozik, X.-W.                        67  A. W. Sandvik and H. G. Evertz, Phys. Rev. B 82, 024407
+   Liu, A. J. Millis, N. V. Prokof’ev, M. Qin, G. E. Scuseria,                       (2010).
+   H. Shi, B. V. Svistunov, L. F. Tocchio, I. S. Tupitsyn, S. R.                 68  H.-C. Jiang, Z.-C. Gu, X.-L. Qi,  and S. Trebst, Phys. Rev.
+   White, S. Zhang, B.-X. Zheng, Z. Zhu,   and E. Gull (Si-                          B 83, 245104 (2011).
+   mons Collaboration on the Many-Electron Problem), Phys.                       69  J. Reuther, R. Thomale,  and S. Trebst, Phys. Rev. B 84,
+   Rev. X 5, 041041 (2015).                                                          100406 (2011).
+37  T. Tsuchimochi,  M. Welborn,   and T. Van Voorhis, The                       70  C.  C.  Price  and  N.  B.  Perkins,  Phys.  Rev.  Lett.  109,
+   Journal of Chemical Physics 143, 024107 (2015).                                   187201 (2012).
+38  B.   Sandhoefer   and   G.   Kin-Lic   Chan,   ArXiv   e-prints              71  K.  Gunst,  Study  of  strongly  correlated  spin  systems  us-
+   (2016), arXiv:1602.04195 [cond-mat.str-el].                                       ing density matrix embedding theory, Master’s thesis, Uni-
+39  J. Qin, Q. Jie,  and Z. Fan, Computer Physics Communi-                           versity Ghent (2016), available at http://lib.ugent.be/
+   cations ,  (2016).                                                                catalog/rug01:002300552.
+40  S. R. White, Phys. Rev. Lett. 69, 2863 (1992).                               72  S. Wouters and D. Van Neck, The European Physical Jour-
+41  S. R. White, Phys. Rev. B 48, 10345 (1993).
+42  E. Stoudenmire and S. R. White, Annual Review of Con-                            nal D 68, 272 (2014).

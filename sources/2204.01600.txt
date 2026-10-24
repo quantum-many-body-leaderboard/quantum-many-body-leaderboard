@@ -1,0 +1,1352 @@
+          Interplay of magnetic ﬁeld and trigonal distortion in honeycomb Γ model:
+                                                Occurrence of a spin-ﬂop phase
+
+                                                 Qiang  Luo1, 2  and  Hae-Young  Kee1, 3,∗
+                       1Department  of  Physics,  University  of  Toronto,  Toronto,  Ontario  M5S  1A7,  Canada
+               2College  of  Physics,  Nanjing  University  of  Aeronautics  and  Astronautics,  Nanjing,  211106,  China
+                         3Canadian  Institute  for  Advanced  Research,  Toronto,  Ontario,  M5G  1Z8,  Canada
+                                                             (Dated:  May 30, 2022)
+                   In candidate Kitaev materials, the oﬀ-diagonal Γ and Γ′ interactions are identiﬁed to come from
+                the spin-orbit coupling and trigonal distortion, respectively.  They have generated intense research
+                eﬀorts because of their intimate relation to the ﬁeld-induced magnetically disordered state reported
+                in α-RuCl3.  Theoretically, while a plethora of ﬁeld-induced phases has been proposed in the hon-
+                eycomb lattice, a stable intermediate phase that can survive in a wide parameter region regardless
+                of the underlying phases is still lacking.  Here we focus on the interplay of an out-of-plane magnetic
+                ﬁeld and a symmetry-allowed Γ′ term due to trigonal distortion in the dominant antiferromagnetic
+                Γ region.  By using multifaceted approaches ranging from classical Monte Carlo and semiclassical
+                spin-wave theory to density-matrix renormalization group, we identify an intriguing spin-ﬂop phase
+                in the presence of magnetic ﬁeld and antiferromagnetic Γ′  interaction,  before it eventually enters
+                into a fully polarized state.  As the Γ′ interaction approaches the size of Γ one, the Γ-Γ′ model maps
+                to the easy-axis XXZ antiferromagnet, where the spin-ﬂop phase can be understood as a superﬂuid
+                phase in the extended Bose-Hubbard model.  Our ﬁnding thus demonstrates an exciting path from
+                the honeycomb Γ model towards a U(1)-symmetric XXZ antiferromagnet in a magnetic ﬁeld.
+
+
+                    I.    INTRODUCTION                                        nal distortion [18], respectively.
+                                                                                 Hitherto, α-RuCl3  has  drawn  immense  attention  for
+  In the pursuit of exotic quantum ground states such as                      the existence of ﬁngerprints of fractionalized excitations
+quantum spin liquid (QSL), a large family of spin-orbit                       [19–21].  Also of note is that an in-plane magnetic ﬁeld
+coupled  eﬀective  spin-1/2  Mott  insulators  on  a  honey-                  of roughly 8 T can suppress the underlying magnetic or-
+comb lattice has been the focus of massive research ef-                       der,  leading to an intermediate phase (IP) which could
+forts (for reviews, see Refs. [1,2]).  This interest is trig-                 survive in a ﬁnite interval of magnetic ﬁeld [22–27].  How-
+gered  by  a  seminal  work  by  Kitaev,  who  proposed  an                   ever,  the precise nature of this IP is still a contentious
+exactly  solvable  honeycomb  model  consisting  of  bond-                    question, with a possibility of either Majorana fermionic
+directional  Ising  couplings,  and  demonstrated  that  it                   excitations or conventional multiparticle magnetic excita-
+hosts  QSLs  with  fractionalized  excitations  of  itinerant                 tions [28,29].  Noteworthily, the former scenario is in line
+Majorana fermions and Z2 gauge ﬂuxes [3].  Jackeli and                        with the tempting observation of a half-integer quantized
+Khaliullin subsequently showed that the Kitaev (K) in-                        thermal Hall eﬀect [30].  In addition, a convictive model
+teraction could be realized in alkali iridates [4].  However,                 which harbors such an IP on top of the zigzag ordering is
+almost  all  existing  “Kitaev  materials”  are  found  to  ex-               still absent, although there is a consensus regarding the
+hibit long-range magnetic orderings at ambient pressure                       minimal K-Γ model [31,32].  On the other hand, when
+and  zero  magnetic  ﬁeld.   For  example,  the  well-studied                 an out-of-plane magnetic ﬁeld is applied, a metamagnetic
+Na2IrO3  [5,6] and   α-RuCl3  [7–9] have the zigzag mag-                      transition due to the possible spin-ﬂop process is also re-
+netic order at low temperatures, while the Li2IrO3 family                     ported but with a large critical magnetic ﬁeld [33].  The
+displays  an  incommensurate  counter-rotating  magnetic                      fact that the discrepancy between the in-plane and out-
+spiral  [10–12].   A  newly  synthesized  compound  YbCl             3        of-plane Land´e g-factors is modest implies a signiﬁcant
+with  4f  electron  conﬁguration,  which  is  proposed  as  a                 role played by the symmetric oﬀ-diagonal Γ interaction.
+possible  realization  of  the  Kitaev  interaction,  shows  an               Meanwhile, a small Γ′ interaction stemming from the in-
+antiferromagnetic (AFM) order with a N´eel temperature                        evitable trigonal distortion should also be involved [18].
+TN  = 0.60 K [13–16].  The existence of long-range mag-                       This term is essential for explaining the zigzag ordering
+netic orders in these compounds is naturally understood                       in α-RuCl3 [34,35], and could enhance the mass gap of
+as a consequence of non-Kitaev interactions which con-                        Majorana fermions generated by external magnetic ﬁelds
+taminate the fragile Kitaev QSL. The non-Kitaev inter-                        [36,37].  Until now, many theoretical models such as     J-
+actions include the Heisenberg (J) interaction, and also                      K model [38],  K-Γ-Γ′ model [39,40], and    K-Γ-J3 model
+the symmetric oﬀ-diagonal Γ and Γ′  interactions which                        [41], have been adopted to embrace the ﬁeld-induced IPs
+mainly come from the spin-orbit coupling [17] and trigo-                      that may relate to the experimental phenomena observed
+                                                                              in α-RuCl3.
+                                                                                 To study the intriguing IPs in the presence of a mag-
+                                                                              netic ﬁeld, we start from a Γ-Γ′ model with a dominant
+∗hykee@physics.utoronto.ca                                                    AFM Γ interaction.  Here, the ground state is known to
+                                                                                                                                                    2
+
+host two exotic phases dubbed Γ spin liquid (ΓSL, named                      [111] direction, which is perpendicular to the honeycomb
+after  the  ground  state  of  the  honeycomb  Γ  model  [42–                lattice as illustrated in Fig.1(b).  On account of the pos-
+44]) and chiral-spin ordering stabilized by a small AFM                      sible microscopic Hamiltonian ofα-RuCl3, the model (1)
+Γ′  interaction [45].  The model is equivalent to a   U(1)-                  has been studied previously with K, Γ being treated as
+symmetric  XXZ  model  when  Γ′  =  Γ,  and  the  ground                     leading interactions [39,40,51].  From a theoretical point
+state turns out to be an AFMc state whose magnetic mo-                       of view, the AFM Kitaev model in a [111] magnetic ﬁeld
+ment is along the c [111] direction.  A natural question                     has been studied extensively and a QSL is found in an in-
+in mind is that if an IP could appear over the disordered                    termediate ﬁeld despite that its nature is still under study
+phases  or  AFMc  states  in  the  presence  of  an  external                (see Ref. [52] and references therein).  On the other hand,
+magnetic  ﬁeld.   We  recall  that  the  uniaxial  Heisenberg                near the dominant AFM Γ region, the ΓSL and the chiral
+antiferromagnet undergoes a spin-ﬂop transition when a                       spin phase are identiﬁed by tuning the Γ′ term [45].
+magnetic ﬁeld is applied parallel to the easy-axis direc-
+tion  [46, 47].   In  the  spin-ﬂop  region,  the  spins  exhibit
+considerable components that are normal to the ﬁeld di-                         In the subsequent sections, we will perform a hierarchi-
+rection, albeit with somewhat canting toward the applied                     cal study of the Γ-Γ′ model in a [111] magnetic ﬁeld where
+ﬁeld [48].  To this end, we apply a [111] magnetic ﬁeld in                   the  Heisenberg  (J)  interaction  and  the  Kitaev  (K)  in-
+the Γ-Γ′  model, and a spin-ﬂop phase is found to set in                     teraction are switched oﬀ.  The classical Luttinger-Tisza
+above the ΓSL, the chiral-spin ordering, and the AFMc                        method is used to map out the zero-ﬁeld phase diagram
+phase,  before  entering  into  the  paramagnetic  phase  at                 [53,54], while the classical Monte Carlo (MC) simulation
+large  ﬁeld.   Notably,  the  spin-ﬂop  phase  in  the  param-               is performed in the presence of a ﬁnite magnetic ﬁeld [55].
+eter  region  with  Γ′  =  Γ  could  be  interpreted  as  a  su-             The simulation are executed in a low-temperature range
+perﬂuid phase in the hard-core extended Bose-Hubbard                         with dozens of replicas.  For each given temperature, we
+model [49,50].                                                               use the heat-bath algorithm to target the lowest energy
+  The rest of the paper is organized as follows.  In Sec.II,                 with a MC step of ﬁve millions.  In addition,  the ther-
+we  introduce  the  generic JKΓΓ′  model  on  the  honey-                    mal replicas where conﬁgurations swap between diﬀerent
+comb lattice, followed by a brief mention of our numer-                      temperatures are allowed with a probability according to
+ical  and  theoretical  methods.   In  Sec.III,  we  perform                 a detailed balance condition [56].  When considering the
+both classical and semiclassical studies of the zero-ﬁeld                    eﬀect of quantum ﬂuctuations, we calculate the spin-wave
+Γ-Γ′  model, in connection to a previous quantum study                       energy, dispersion relations, and the Chern number with
+[45].  SectionIVpresents a ﬁeld-induced quantum phase                        the help of linear spin-wave theory (LSWT) [57].
+diagram,  with an emphasis on the ΓSL and chiral spin
+state.  In Sec.V, a thorough analysis of the ﬁeld-induced
+spin-ﬂop  phase  is  shown.   Finally,  conclusions  are  pre-                  Apart from the classical and semiclassical treatments,
+sented in Sec.VI.                                                            this  model  is  studied  massively  by  the  density-matrix
+                                                                             renormalization group (DMRG) method on two distinct
+              II.    MODEL AND METHODS                                       cluster  geometries  [58–60].   The  DMRG  is  initially  in-
+                                                                             vented  as  a  powerful  approach  aiming  to  solve  prob-
+  In the multitudinous Kitaev materials with spin-orbit                      lems  in  one  dimension,  and  stands  out  as  a  competi-
+coupled pseudospin-1/2 degrees of freedom, the paradig-                      tive method for dealing with two-dimensional problems.
+matic model takes the general JKΓΓ′ form on a honey-                         In  the  latter  case,  one  needs  to  map  the  physical  two-
+comb lattice [17,18],                                                        dimensional  lattice  to  the  one-dimensional  chain  prop-
+                                                                             erly.  This process will inevitably involve long-range cor-
+                [                                                 )]         relation  and  entanglement  [60].   However,  these  issues
+   H = ∑          JSi· Sj +KSγiSγj  + Γ(Sαi Sβj  +SβiSαj                     are not very severe if the number of sites is not too large
+         ⟨ij⟩‖γ                                                              or  the  width  of  the  cylinder  is  not  too  big,  and  could
+                      [(Sαi  +Sβ)Sγ             (Sαj  +Sβ)]                  be reduced essentially by increasing the block states and
+         + Γ′ ∑                   i    j  +Sγi            j                  performing  ﬁnite-size  scaling.   We  focus  primarily  on  a
+               ⟨ij⟩‖γ                                                        24-site C6-symmetric  hexagonal  cluster  under  full  peri-
+         −∑      ˆh· Si,                                                     (1)odic boundary condition, and the method to map it to a
+              i                                                              one-dimensional chain is shown in the Supplemental Ma-
+where Sγ                                                                     terial [61].  In addition, we also consider the  Lx×Ly YC
+          i  (γ = x, y, and z) is the γ-component of spin-                   cluster under cylindrical boundary condition with total
+1/2 operator at site i.  On z  bonds (α,β,γ) = (x,y,z),                      sites N  = LxLy  (cf.  Fig.1(a)).  During the calculation,
+with cyclic permutation forx andy bonds (see Fig.1(a)).                      the truncation error will change as we scan the superblock
+J  and K  are the diagonal Heisenberg and Kitaev inter-                      and it also decreases with the increase of the block state.
+actions, respectively, while Γ and Γ′  are the symmetry-                     Therefore,  we  keep  as  many  as m  =  3000  block  states
+allowed oﬀ-diagonal exchanges.  The last term in Eq. (1)                     and perform up to 12 sweeps until the worst truncation
+speciﬁes a uniform external magnetic ﬁeld h =|ˆh| in the                     error is smaller than 10−6.
+                                                                                                                                                   3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1:  (a) Honeycomb lattice with a YC structure.  The unit cell deﬁned by primitive vectors n1,2 = (±√3/2, 3/2) contains
+two (open and ﬁlled) sites.  δx (√3/2, 1/2), δy (−√3/2, 1/2), and δz (0,−1) are the unit vectors along the X (red), Y (green),
+Z  (blue)  bonds,  respectively.   (b)  Layout  of  the  honeycomb  plane  spanned  by a  [11¯2]  and b  [¯110].  c  [111]  represents  the
+out-of-plane direction which is perpendicular to the honeycomb plane.  (c) and (d) show the in-plane spin structures of the
+120◦-I and 120◦-II phases, respectively.  Here, ϕA  and ϕB  are the referring angles of A and B sublattices with respect to the
+a direction.  They satisfy the relation ϕA +ϕB = 0 (or 2π) for 120◦-I phase and ϕA +ϕB = π (or 3π) for 120◦-II phase.  (e)
+Classical phase diagram of the Γ-Γ′ model with Γ = cosψ and Γ′ = sinψ, which includes the AFMc phase, the FMc phase, and
+the 120◦ phases.  (f) The classical ground-state energy εcl versus ψ.
+
+
+III.    CLASSICAL AND SEMICLASSICAL STUDY                                    in the reciprocal space as
+                    OF THE Γ-Γ′ MODEL                                                            ∑(⃗ST−q,1,⃗ST−q,2)              ( ⃗Sq,1⃗Sq,2)
+                                                                                    H/N = 14                             · Λq·               ,     (2)
+                 A.    Lutinger-Tisza analysis                                                     q
+  Before  presenting  the  quantum  study  of  the  Γ-Γ′                     where the 6×6 interaction matrix Λq is an anti-diagonal
+model, it is helpful to have a look at the classical phase                   block matrix
+                                                                                                            ( ⃗0   ∆q     )
+diagram.  The Luttinger-Tisza method has been demon-                                                Λq =                     .
+strated to be powerful for the determination of magnetic                                                       ∆∗q  ⃗0
+ground states in various classical spin models [53,54].  In                  Here,
+these models, the classical spins are treated as O(3) vec-                                                                     
+tors which satisfy the condition|Si|2 =S2.  In the spirit
+of the Luttinger-Tisza method, this ‘hard constraint’ is                                      ∆q =   K(ς1) T (1) T (ς2)T (1) K(ς2) T (ς1),
+replaced  by  a  ‘soft  constraint’ ∑i|Si|2  = NS2  tenta-                                              T (ς2) T (ς1) K(1)
+tively,  and  the  authentic  ground  state  is  selected  from
+those solutions derived under the soft constraint that ad-                   withK(ς) =Jγk +ςK andT (ς) = Γ′γk +ς(Γ− Γ′).  The
+ditionally  meets  the  hard  constraint.   Successful  appli-               momentum-dependent arguments read as
+cations of the Luttinger-Tisza method to the spin-orbit                                                                   3qx+3qy)/2
+coupled model (1) in some special cases are shown previ-                                   ς1,2 =e−ıqn1,2 =e−ı(±√
+ously [62,63].                                                               and
+  We choose the primitive vectors of the honeycomb lat-                                                                   √
+tice as n1,2 = (±√3/2, 3/2) (see Fig.1(a)), and the sites                             γq = 1 +ς1 +ς2 = 1 + 2 cos            3qx
+are represented as (R,υ), whereR marks the position of                                                                      2  e−ı3qy/2.
+the unit cell andυ (= 1, 2) is the sublattice index.  Trans-                    According  to  the  Luttinger-Tisza  minimization,  the
+forming the spin operators via ⃗SR,υ =∑qeiq·R⃗Sq,υ with                      lowest eigenvalue of Λq  in the entire Brillouin zone pro-
+⃗Sq,υ =(Sxq,υ,Syq,υ,Szq,υ)T , we cast the entire Hamiltonian                 vides a lower bound of the classical energy.  Noticing that
+                                                                                                                                                   4
+
+Dq = ∆∗q∆q = ∆†q∆q, we ﬁnd that
+
+                                        √λmax
+                      E/(NS2)≥−             2                            (3)
+
+
+whereλmax is the maximal eigenvalue ofDq at the corre-
+sponding ordering wave vector Q.  The magnetic moment
+direction ⃗m can be obtained afterwards by checking the
+spin-length constraint.
+  We  have  applied  the  Luttinger-Tisza  method  to  the
+Γ-Γ′  model,  and  the  corresponding  classical  phase  dia-
+gram is found to include an AFMc  phase when Γ′ > 0
+and  a  ferromagnetic  (FMc)  phase  when  Γ′ <  0.   Here,
+the subscript c represents that magnetic moment direc-                       FIG. 2:  The spin-wave energy εsw  for the zigzag phase (red
+tion  is  along  the c  [111]  direction.   The  energy  of  the             circle),  120◦  phase  (green  triangle),  and  AFMc  phase  (blue
+AFMc  phase is εcl =−(Γ + 2Γ′), while it is Γ + 2Γ′  for                     square)  in  the  Γ-Γ′  model.   The  classical  (black  line)  and
+FMc  phase.   The  classical  phase  diagram  also  contains                 quantum  (pink  diamond)  energy  per  site  with S  =  1/2  are
+two  120◦  phases  but  with  diﬀerent  relative  angles  (see               also shown for comparison.
+Fig.1(c)  and  (d)).   For  the  120   ◦  phases,  all  spins  lie
+in the ab-plane and are divided into two interpenetrat-
+ing parts on A and B  sublattices of honeycomb lattice,                                      B.    Linear spin-wave theory
+where  on  each  sublattice  the  spins  on  the  corner  of  an
+equilateral triangle are mutually oriented to each other                        Classically,  there is a direct 120◦-AFMc  transition in
+with 120 angles.  Assuming that ϕA  and ϕB  are the in-                      the  vicinity  of  the  AFM  Γ  limit  as  Γ′  is  varied.   The
+plane angles of A and B  sublattices with respect to the                     quantum ﬂuctuation manifests its eﬀect by altering the
+a direction, then the classical energy per site is given by                  underlying  phases  at  least  in  two  aspects  [45].   One  is
+            ε120◦                                                            that the 120◦ phase is replaced by the zigzag phase when
+             cl     =−(Γ− Γ′) cos(ϕA +ϕB−π).          (4)                    Γ′ is negative.  The other is that, for small but positive Γ′
+                                                                             interaction, there are two exotic phases which are inter-
+The optimal angles of ϕA and ϕB  depend on the sign of                       vened between the magnetically ordered states.  Here we
+Γ− Γ′, where a negative sign denotesϕA +ϕB = 0 or 2π                         show that the LSWT is amenable to illuminate the eﬀect
+(see Fig.1(c)), while a positive sign represents    ϕA+ϕB =                  of quantum ﬂuctuation. Within the framework of LSWT,
+π or 3π (see Fig.1(d)).  There is no extra restriction on                    the quadratic Hamiltonian in the momentum space reads
+the  values  of ϕA  and ϕB,  implying  an  emergent U(1)                     [57]
+symmetry  in  the ab  plane.   In  both  cases,  we  have  the                                                           ∑
+classical energy as ε120◦cl     =−|Γ− Γ′|.                                              H  = NS(S + 1)εcl + S                ˆx†q ˆHqˆxq,          (6)
+  In addition, we also parameterize Γ = cosψ and Γ′ =                                                                 2   q
+sinψ, and show the classical phase diagram in Fig.1(e).
+It can be found that the AFMc phase is preferred when                        where   ˆx†q    = (a†1,q,a†2,q,··· ,a1,−q,b2,−q,···)   is   the
+ψ∈ (0,ψ0) withψ0 =π− tan−1(2)≈ 0.6476π and occu-                             Nambu  spinor  and  ˆHq  is  a  2× 2  block  matrix  termed
+pies nearly one third of the whole ψ circle.  Remarkably,                    Bogliubov-de Gennes (BdG) Hamiltonian.  The length of
+when ψ  = π/4  (i.e.,  Γ  =  Γ′),  the  Γ-Γ′  model  can  be                 Nambu spinor should be 2ns where ns is the number of
+reduced to                                                                   sites in one unit cell.  The bosonic BdG Hamiltonian is
+                     [                                       ]               diagonalized via a paraunitary matrixTq,
+        H =Γ∑          − 12( ˜S+i  ˜S−j  + ˜S−i  ˜S+j ) + 2 ˜Szi ˜Szj,      (5)                               (Ωq     0    )
+                ⟨ij⟩                                                                           T†q ˆHqTq =                    ,                      (7)
+                                                                                                                 0   Ω−q
+which  is  nothing  but  an  easy-axis   XXZ  model  with                                                                 ) whose diagonal ele-
+a Z2 ⋉ U(1)  symmetry.     The  AFMc  phase  and  the                        where Ωq = diag(ωq1,ωq2,··· ,ωqns
+FMc phase are smoothly connected to the hidden SU(2)                         ments are the magnon dispersionsωqυ (υ = 1, 2,··· ,ns).
+Heisenberg  model  at  (J, Γ, Γ′)   =   (1/3, 1/3, 1/3)  and                 The paraunitary matrixTq satisﬁes the boson relation
+(J, Γ, Γ′) = (1/3,−2/3,−2/3) [62], respectively.  Besides,
+from the pinnacles of the energy curve shown in Fig.1(f)                                        T†qΣTq =TqΣT†q  = Σ,                        (8)
+we can tell that all the classical phase transitions are of
+ﬁrst order.  In what follows, we take Γ = 1 as the energy                    where Σ = diag(+ˆ1,−ˆ1).  In other words,  the magnon
+unit.                                                                        dispersions ωqυ can also be determined by diagonalizing
+                                                                                                                                                 5
+
+Σ ˆHq.  The spin-wave energy is then given by
+                                       ∑     ∫  d2q
+     εsw =S(S + 1)εcl + S2ns                     (2π)2ωqυ.       (9)
+                                     {υ}∈ns
+
+  Figure2shows the spin-wave energy      εsw for the zigzag
+phase,  120◦  phase,  and  AFMc  phase  in  the  window  of
+−0.5 ≤  Γ′/Γ ≤  0.5.    When  Γ′ <  0,  energy  of  the
+zigzag phase is considerably smaller than that of the 120◦
+phase, showing that the quantum ﬂuctuation would pro-
+voke  the  zigzag  ordering  as  the  true  ground  state.   In
+the neighboring of the AFM Γ limit, magnon gap ∆ of
+the zigzag phase decreases gradually and vanishes when
+Γ′/Γ  =  0  (not  shown).   This  phenomenon  is  called  the
+magnon instability and is a signature of phase transition                   FIG.  3:  (a)  Quantum  phase  diagram  of  the  Γ-Γ′  model  in
+[64].   Hence,  the  zigzag  phase  can  not  surpass  the  line            a [111] magnetic ﬁeld.  The DMRG calculation is performed
+of Γ′/Γ = 0 and thus cannot survive in the presence of                      on a 24-site hexagonal cluster.  The phase diagram contains a
+an AFM Γ′  term.  Whereas the AFMc  phase is favored                        zigzag phase, a ΓSL, a chiral spin state (marked by the symbol
+for modest positive Γ′ interaction, there is a noteworthy                   χ), and an AFMc phase at zero ﬁeld.  A spin-ﬂop phase and
+energy  jump  between  the  zigzag  phase  and  the  AFMc                   a paramagnetic phase are induced upon increasing the mag-
+phase near Γ′/Γ = 0.  Our spin-wave result implies that                     netic ﬁeld.  We note that the precise phase boundary between
+an intermediate region should exist as a consequence of                     the zigzag phase and the paramagnetic phase is smeared due
+competing  interactions.   The  classical  (black  line)  and               to the unavoidable multi-step magnetization before entering
+quantum (pink diamond) energy per-site are also shown                       into the totally polarized region.  The vertical cuts along the
+                                                                            lines  of  Γ′/Γ  =  0.0  (red  dash-dotted  line)  and  Γ′/Γ  =  0.3
+in  Fig.2for  comparison.   It  is  observed  that  the  spin-              (blue dotted line) are the main focuses of the following study.
+wave  energy  is  lower  than  the  classical  energy,  but  is             The study of other cuts are shown in the Supplemental Ma-
+higher than the quantum case.                                               terial [61].  (b) Quantum phase transitions along the line of
+                                                                            Γ′/Γ = 1.  The low-ﬁeld transition at ht1  = 2.115(3) is ﬁrst
+                                                                            order, while the high-ﬁeld transition at ht2≈ 4.50 seems to
+ IV.    MAGNETIC FIELD-INDUCED QUANTUM                                      be continuous.
+                     PHASE DIAGRAM
+
+  In a previous study of the Γ-Γ′  model by the authors                     that the spin-ﬂop phase has an intimate relation to the
+[45], it is shown that there is indeed an intermediate re-                  superﬂuid phase identiﬁed in the extended Bose-Hubbard
+gion between the zigzag phase and the AFMc phase at the                     model [49,50].  In addition, the regions of ΓSL and chiral
+quantum level.  In the range of−0.015 ≲ Γ′/Γ ≲ 0.095,                       spin state are enlarged but are terminated before enter-
+there is a gapless ΓSL which is characterized by a hid-                     ing  into  the  paramagnetic  phase.   In  what  follows  we
+den plaquette correlation [42].  Besides, a chiral-spin or-                 will concentrate on the ΓSL and chiral spin state, while
+dered state with spontaneously time-reversal symmetry                       leaving the discussion on the spin-ﬂop phase to the next
+breaking appears when 0.095 ≲ Γ′/Γ ≲ 0.185.  Here, we                       section.
+go beyond that study by applying an out-of-plane mag-
+netic ﬁeld, and the resulting phase diagram is shown in                                    A.    ΓSL in the magnetic ﬁeld
+Fig.3.  The DMRG computation is mainly executed in
+the 24-site hexagonal cluster.  We have also checked the
+phase diagram on the YC6 cylinder of 12×6, which basi-                         We start from the ΓSL and investigate its fate in the
+cally remains unchanged despite a tiny shift of the phase                   presence  of  a  magnetic  ﬁeld.    The  von  Neumann  en-
+boundaries.                                                                 tanglement entropy is a reliable quantity to capture the
+  Throughout the phase diagram, there are six distinct                      phase transitions between the phases with unique ground
+phases and two of them only exist in the presence of a                      states.  It is deﬁned asS =−tr(ρs lnρs) where ρs is the
+ﬁnite  magnetic  ﬁeld.   One  is  a  conventional  paramag-                 reduced density matrix of one half of the system [65].  S
+netic  phase,  while  the  other  is  a  spin-ﬂop  phase  which             displays a jump at the transition point if the transition is
+also exhibits an in-plane magnetization when compared                       ﬁrst order, otherwise it varies smoothly with the driving
+with the paramagnetic phase.  Starting from the magnet-                     parameter.  Figure4(a) shows the behavior of entangle-
+ically ordered states at zero ﬁeld, transition between the                  ment entropyS  on the 24-site cluster.  When we apply
+zigzag phase and the paramagnetic phase is ﬁrst order, as                   a  small  magnetic  ﬁeld,  entanglement  entropy  is  main-
+reﬂected by the jump in the magnetic order parameter.                       tained around 3.5, followed by a sustaining decrease with
+By contrast, the spin-ﬂop phase is sandwiched between                       a steepest drop at ht1≈ 0.45(5) (see inset).  The entan-
+the AFMc  phase and the paramagnetic phase.  We note                        glement entropy does not experience a big change until
+                                                                                                                                                    6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                             FIG. 5:  (a) Flux-like density⟨Wp⟩ and (b) plaquette order
+                                                                             parameterP(Q) on the 24-site hexagonal cluster (red circle)
+                                                                             and  the  YC  cylinders  of  8× 4  (green  triangle)  and  12× 6
+                                                                             (blue  square).   The  inset  of  (a)  shows⟨Wp⟩  at  large  ﬁeld,
+                                                                             which tends to approach 1/27 as ﬁeld increases.
+
+FIG.  4:   (a)  Behavior  of  the  entanglement  entropy S  as  a
+function of magnetic ﬁeldh in the Γ-Γ′ model with Γ′/Γ = 0.                  peak  at M  point  could  be  spotted  in  the  intermediate
+The underlying geometry is a 24-site hexagonal cluster.  Inset:              region  as  shown  in  Fig.4(d).   Upon  applying  a  higher
+The ﬁrst-order derivative ofS with respect toh.  (b)Magnetic                 magnetic ﬁeld, there is a paramagnetic phase which dis-
+order parameters MN(Q) for the zigzag order and paramag-                     plays a visible peak at Γ point (see Fig.4(e)).  We deﬁne
+netic phase with Q = M and Γ, respectively.  The geometries
+are  a  24-site  hexagonal  cluster  and  a  12× 6  YC  cylinder.            the order parameterMN,τ(Q) =√SN,τ=0(Q)/N with Q
+Panels (c-e) show the static structure factor at a ﬁeld of (c)               being the ordering wavevector.  In Fig.4(b) we show the
+h = 0.2 (ΓSL), (d) h = 1.0 (zigzag phase), and (e) h = 2.0                   order parameters MN(Q) of the zigzag phase (Q = M)
+(paramagnetic phase), respectively.                                          and  paramagnetic  phase  (Q  = Γ)  on  a  24-site  hexago-
+                                                                             nal cluster and a 12× 6 YC cylinder.  When h < ht,1,
+an abrupt reduction around ht2≈ 1.40(5).  The consec-                        the order parameter MN(M) exhibits a considerable re-
+utive release of entropy therein may imply a multi-step                      duction with the increase of the system size.  Although
+alignment of the spins towards a more parallel structure                     we do not make an extrapolation of this order parameter
+in the paramagnetic phase.  We expect the interval of this                   for the lack of large clusters, the magnetic order is likely
+metastate shrinks with the increase of the system size.                      to vanish asN  increases, and the low-ﬁeld region should
+  To  ﬁgure  out  the  nature  of  the  intermediate  region,                be identical to the ΓSL identiﬁed in the zero-ﬁeld study
+we resort to the static structure factor (SSF) SN,τ(q) =                     [42].  On the other hand, the ground state at   h>ht,2 is
+∑                                                                            a paramagnetic phase with a almost saturated magnetic
+   αβδαβSαβN,τ(q) where                                                      moment.  However, the most inspiring observation is that
+               ∑    (⟨Sαi Sβ                                                 there is a zigzag ordering, which is smoothly connected
+  SαβN,τ =  1N              j⟩−τ⟨Sαi⟩⟨Sβj⟩)eiq·(Ri−Rj).   (10)               to the zigzag phase induced by the FM Γ′ interaction, in
+                 ij                                                          the intermediate region of ht,1 < h < ht,2.  The zigzag
+Here,Ri is the position of site i andq is the wavevector                     phase is unusual in that it only has a unique ground state
+in the reciprocal space.  The symbol τ  could be either 0                    with a small excitation gap.
+or 1, and it indicates that the eﬀect of magnetic ﬁeld is                       Similar  to  the  Kitaev  honeycomb  model,  in  the  Γ-Γ′
+either kept or deducted, respectively.  We note that when                    model we also calculate the hexagonal plaquette operator
+τ  =  1,  only  the  intensity  around  the  very  center  (i.e.,            [3]
+Γ point) in the Brillouin zone is reduced.  Figure4(c-e)                                          ˆWp = 26Sx1Sy2Sz3Sx4Sy5Sz6,                  (11)
+show the snapshots of SSF SN,τ(Q) in a ﬁeld of h = 0.1                       where the sites 1–6 form a hexagon plaquette labeled by
+(τ  = 1),  1.0 (τ  = 1),  and 2.0 (τ  = 0),  respectively.  In               p (see Fig.1(a)). Without loss of generality, we deﬁne the
+Fig.4(c), intensity in the reciprocal space is very diﬀu-
+sive, albeit with a soft peak at M point that may relate                     ﬂux-like density      Wp =∑p⟨ ˆWp⟩/Np  where Np = N/2 is
+to  the  adjacent  zigzag  ordering.   By  contrast,  a  sharp               the number of plaquette.  Figure5(a) shows the ﬂux-like
+                                                                                                                                                       7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  6:  (a)  Chiral  distribution  of⟨χ[s]ijk⟩  as  a  function  of  site  index s  on  a  24-site  hexagonal  cluster  with  Γ′/Γ  =  0.15  and
+h = 0.2.  Here,s is the center site of the equilateral triangle formed by (i,j,k).  Whens is 2, 4, 6,···  (red circle), (i,j,k) should
+be odd and belongs to theA sublattice with the chiral order parameter⟨χA⟩ =|⟨χ[s]⟩| (s is even).  Otherwise, whens is 1, 3, 5,
+···  (blue square), (i,j,k) belongs to the B sublattice with the chiral order parameter⟨χB⟩ =|⟨χ[s]⟩| (s is odd).  (b) Behaviors
+of⟨χA⟩ (red circle) and⟨χB⟩ (blue square) as functions of Γ′/Γ with ﬁxedh = 0.2.  (c) Behaviors of⟨χA⟩ (red circle) and⟨χB⟩
+(blue square) as functions of h with ﬁxed Γ′/Γ = 0.15.
+
+
+density   Wp with respect to the magnetic ﬁeld. In the ΓSL                     ˆWq⟩ = 1/35.  Taken together, we have
+region the net ﬂux       Wp is−0.25(2) at zero ﬁeld, followed                                                 (          )
+by  a  steady  ascent  as  the  ﬁeld  increases.   The  ﬂux-like                                WNp(Γ) =        1 + 1136   + Np36 .                  (14)
+density  ﬁnally  becomes  positive  and  reach  its  maximal
+value  of  0.10(1)  at ht,2.   After  that  one  enters  into  the             Typically,  the  ﬁrst  term  in  the  right-hand  side  is  dom-
+paramagnetic  phase  accompanied  by  a  sudden  drop  of                      inant  when N ≲  100.   To  reduce  the  strong  ﬁnite-size
+Wp.   It  is  interesting  to  note  that  the  ﬂux-like  density              eﬀect, we introduce the following plaquette order param-
+in  the  paramagnetic  phase  does  not  has  a  monotonous                    eter
+behavior; instead, it ﬁrst declines with the ﬁeld and then                                                 √
+increases  again,  reaching  a  saturated  value  ultimately.                                    PNp =        WNp(Q)          √
+For large enough magnetic ﬁeld along the [111] direction,                                                         Np  −    1Np.                (15)
+all  the  spins Si  = σi/2  are  totally  polarized  with  the
+same magnitude,⟨σxi⟩ =⟨σyi⟩ =⟨σzi⟩ = 1/√3.  Thus, ex-                          Figure5(b) shows the plaquette order parameter    P(Q)
+pectation value of hexagonal plaquette operator at large                       with the high-symmetry point Q = Γ being the center
+enough magnetic ﬁeld is                                                        of the Brillouin zone.  In the ΓSL and the zigzag phase,
+                      (  1   )6                                                P(Γ) is nonzero as the spins are noncollinear.  Further-
+           ⟨ ˆWp⟩ =      √       =  1                                          more,P(Γ) is more pronounced in the ΓSL, highlighting
+                           3         27≈ 0.037037··· .        (12)             the unusual spin pattern due to the intrinsic frustration.
+
+As  can  be  seen  from  the  inset  of  Fig.5(a),         Wp  indeed                                B.    Chiral spin state
+approaches to 1/27 with the increase of magnetic ﬁeld.
+  We continue the discussion of hexagonal plaquette op-
+erator by calculating the plaquette-plaquette correlation                         As  pointed  out  in  Ref.  [45],  the  chiral-spin  ordered
+⟨Wp·Wq⟩.  The plaquette structure factor is deﬁned as                          state could be stabilized by a small AFM Γ′ interaction
+[66]                                                                           that  is  one  order  of  magnitude  smaller  than  the  domi-
+                               ∑                                               nated Γ interaction.  It is known to break time-reversal
+           WNp(q) =   1            ⟨ ˆWp ˆWq⟩eiq·(Rp−Rq),        (13)          symmetry spontaneously and thus exhibits a ﬁnite scalar
+                          Np    pq                                             spin chirality deﬁned as
+
+whereRp is the central position of each plaquette which                                               ˆχ∆ijk = ˆSi· (ˆSj× ˆSk),                     (16)
+forms a triangular lattice with a lattice constant of√3. In                    where (i,j,k) label lattice sites of either A or B sublat-
+the totally polarized phase,⟨ ˆWp· ˆWq⟩ can only take three                    tice,  forming an equilateral triangle∆ in the clockwise
+diﬀerent values, depending on their relative positions.  IfˆWp and  ˆWq are identical or totally irrelevant without anydirection, see inset of Fig.6(a).  We ﬁnd that the chiral
+                                                                               spin state could still survive up to a small magnetic ﬁeld,
+shared edge, then⟨ ˆWp·  ˆWq⟩ is 1 and 1/36, respectively.                     before entering into a partially polarized phase.  Follow-
+Otherwise,  ˆWp and  ˆWq have a sole shared edge and⟨ ˆWp·                     ing the analysis in Ref. [45], we focus on a point at (Γ  ′ =
+                                                                                                                                                 8
+
+0.15, h = 0.2) in the Γ-Γ′ model, and the distribution of                   phases and thus should be checked by other methods in
+chirality ˆχ within the 24-site cluster is shown in Fig.6(a).               the intermediate region.  By using of Eq. (17), the entire
+It is clear seen that the scalar spin chirality is uniformly                variational classical energy eg =Eg/NS2 is given by
+distributed in each sublattice and possesses an opposing
+sign in theA andB sublattices.  In addition, magnitudes                                 eg = Γ + 2Γ′
+of the chirality in the A and B sublattices, whose abso-                                           4     (1 + 3 cos 2ϑ)− hS cosϑ.         (18)
+lute  values  are⟨χA⟩≈  0.0264  and⟨χB⟩≈  0.0333,  are                      Strikingly, the energy is irrelevant ofϕ and thus the polar
+no longer the same due to the existence of the magnetic                     angle ϑ is the sole variational parameter [67].  The opti-
+ﬁeld.                                                                       mal value ϑo is determined by the conditional equations
+  Figure6(b) presents the chiral order parameters    ⟨χA⟩                   ∂eg/∂ϑ = 0 and∂e2g/∂ϑ2 > 0, and from which we obtain
+and⟨χB⟩ as functions of Γ′.  The chiral order parameters                    that
+are very robust in the window of 0.095 ≲ Γ′/Γ ≲ 0.185                                             { 0,         h≥ht
+and undergo drastic jumps on the brink of phase bound-                                      ϑo =
+aries.  We also show the evolutions of chiral order param-                                           cos−1(h/ht), h<ht ,              (19)
+eters with respect to the magnetic ﬁeld in Fig.6(c).  It
+is found that⟨χB⟩ is slightly elevated with the increase                    where ht  =  3S(Γ + 2Γ′)  is  the  critical  magnetic  ﬁeld.
+of magnetic ﬁeld and displays a maximum whenh≈ 0.3.                         The Eq. (19) indicates that just below the critical mag-
+By contrast,⟨χA⟩ decreases almost linearly from 0.0333                      netic ﬁeld ht, the spins deviate from the axial direction
+(at h = 0.0) to 0.0195 (at ht≈ 0.53).  Again, the chiral                    by a given angle ϑo and exhibit a nonzero in-plane mag-
+order parameters experience jumps to a small but ﬁnite                      netization  (see  the  inset  of  Fig.7).   With  the  decrease
+value at h>ht, and the system enters into the spin-ﬂop                      of  the  magnetic  ﬁeld,  the  energy  of  the  intermediate
+phase where the discrepancy between⟨χA⟩ and⟨χB⟩ dis-                        phase grows, and it is replaced by the AFMc phase when
+appears.                                                                    h < ht/√3.  By substituting Eq. (19) into Eq. (18) and
+  According to our previous work, the chiral spin state is                  with the energy of the AFMc phase in mind, we have the
+known as a magnetically disordered state without long-                      classical energy of the three phases
+range magnetic ordering [45].  In that study, we proposed                                      
+that it could be either a gapless chiral spin liquid because                                      − 3h−ht3S ,  h≥ht
+of the continuous feature of the dynamic structure fac-                                 eg =      − 3h2+h2t           3<h<ht         .         (20)
+tor in the low frequency region, or a symmetry-protected                                            6Sht , ht/√
+phase with short-range entanglement based on the mod-                                             −ht3S,    h≤ht/√3
+ular matrix.  However, a decisive conclusion could hardly                   One could notice that all the three phases have two-site
+be made due to the low symmetry of the Hamiltonian and                      unit cells, see the cartoon patterns shown in Fig.7.
+the capacity of the numerical calculation.  Hence, deter-
+mining the nature of the chiral spin state is a tempting
+open question to be explored.
+
+
+     V.    FIELD-INDUCED SPIN-FLOP PHASE
+
+          A.    Overview of the classical analysis
+
+  In this subsection, we investigate the evolution of the
+AFMc phase under the [111] magnetic ﬁeld in the region
+of  Γ, Γ′ >  0.   Since  the  applied  magnetic  ﬁeld  is  par-
+allel to the direction of the classical magnetic moment,
+the energy of the AFMc phase remains unchanged in the
+presence of a weak magnetic ﬁeld.  By contrast, a strong
+enough ﬁeld will induce a totally polarized phase where                     FIG. 7:  Classical MC calculation of the ground-state energy
+all the spins align along the magnetic ﬁeld direction.  To                  εcl as a function of magnetic ﬁeld h/Γ (S = 1/2) in the Γ-Γ′
+quantify the value of the critical ﬁeld ht,  we deﬁne the                   model  with  Γ′/Γ  =  0.3.   Two  distinct  clusters,  2× 12× 8
+spin Si for arbitrary i as                                                  (open circle) and 2× 24× 16 (open square), are used in the
+     Si =S( sinϑ cosϕˆa + sinϑ sinϕˆb + cosϑˆc)       (17)                  simulation.  The exact energy of the AFMc  phase (blue line,
+                                                                            left), spin-ﬂop phase (green line, middle), and paramagnetic
+where ˆa[11¯2], ˆb[¯110], and ˆc[111] are the crystallographic              phase (red line, right) are shown for comparison.  The cartoon
+axes, ϑ and ϕ are the polar angle relative to the c axis                    patterns of these phases are shown in the inset.
+and  azimuthal  angle  in  the ab-plane,  respectively.   We
+note that this ansatz is certainly suitable for the param-                    Having discussed the consecutive transitions along the
+agnetic phase, but may break down for the unpolarized                       magnetic  ﬁeld,  we  now  perform  the  parallel  tempering
+                                                                                                                                                      9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 8:  Magnon dispersionsωq1 (blue) andωq2 (red) of the AFMc phase or the paramagnetic phase in theS = 1/2 Γ-Γ′ model
+with Γ′/Γ = 0.3.  (a) and (b) show the magnon dispersions and the intensity of the lowest magnon branch in the AFMc phase
+withh = 0.0, respectively.  The black arrow in panel (a) marks the position of the minimal excitation gap, and the path in the
+reciprocal space is depicted in panel (b).  (c) and (d) show the same quantities as these of (a) and (b) in the case of AFMc
+phase with h = 1.2.  The green dotted horizontal line in panel (c) is a guide for the eye.  (e) and (f) show the same quantities
+as these of (a) and (b) in the case of paramagnetic phase with h = 3.0.  The green dotted horizontal line in panel (e) is a guide
+for the eye.  In this paramagnetic phase, the Chern numberC1 of the lowest magnon branch is−1.
+
+
+MC  simulation  to  study  the  intermediate  region  in  de-                    B.    Spin-wave dispersions, topological magnons,
+tail.  After identiﬁcations of the possible classical ground                                and order-by-disorder mechanism
+states, we then perform the simulation on two cylinders
+of 2× 12× 8 (open circle) and 2× 24× 16 (open square).                           In  this  subsection,  we  resort  to  the  LSWT  to  study
+The calculated energy of the AFMc phase (blue line) and                       the magnon excitations of the underlying phases in the
+the paramagnetic phase (red line) match nicely with the                       [111] magnetic ﬁeld.  We start from the AFMc  phase at
+exact  solutions  shown  in  Eq.  (20),  see  Fig.7.   In  the                the low-ﬁeld region and its BdG Hamiltonian in Eq. (6)
+intermediate region,  there are several large-unit-cell or-                   takes the form of
+derings and the selected conﬁgurations are shown in the
+Supplemental  Material  [61].   These  results  are  at  odds                                                                          
+with Eq. (17) which assumes that all the spins have the                                      ε+0   λ0(q)           0    λ1(q)       .        (21)
+same polar angle. We note that, while the spin-ﬂop phase                              ˆ⃗H =    λ∗0(q)  ε−0         λ1(−q)       0
+(green line) is not the genuine ground state in the inter-                                       0  λ∗1(−q)           ε+0   λ∗0(−q)
+mediate region, its energy is very close to and yet slightly                                   λ∗1(q)       0      λ0(−q)  ε−0
+higher  than  the  MC  result.   This  leaves  the  possibility
+open  to  legitimate  the  spin-ﬂop  phase  at  the  quantum
+level.                                                                        The momentum-dependent coupling expressions are
+
+                                                                                                    ε±0   =  2(Γ + 2Γ′)±h/S,                (22)
+                                                                                                 λ0(q)  =  2(Γ− Γ′)γ1,q,                       (23)
+                                                                                                 λ1(q)  = −(Γ + 2Γ′)γ0,q.                    (24)
+                                                                                                                                                   10
+
+For convenience, we introduce three auxiliary functions                      closure of excitation gap at Γ′ point, the lower transition
+                        (eıqδx +eıqδy +eıqδz),                 (25)          point is estimated as ht1 =√3S(Γ + 2Γ′).
+           γ0,q  =   1                                                          We  also  calculate  the  Chern  numbers  and  ﬁnd  that
+                      3(ω−1eıqδx +ωeıqδy +eıqδz),        (26)                they are zero for both branches.  The reason may be that
+           γ1,q  =   1                                                       the  two  branches  touch  each  other  at  some  points  and
+                      3(ωeıqδx +ω−1eıqδy +eıqδz),        (27)                thus the Chern number is not well-deﬁned.  We note that
+           γ2,q  =   1                                                       the same conclusion was drawn in a relevant study [69].
+                      3                                                      However, it is demonstrated that magnons in the param-
+which  satisfy  the  relations γ∗0,q  = γ0,−q, γ∗1,q  = γ2,−q,               agnetic phase is topologically nontrivial for the existence
+and γ∗2,q =γ1,−q.  The Berry curvatureFυ(q) associated                       of nonzero Chern number [70–72].  To this end, we pro-
+with each magnon band is given by                                            ceed with the analysis of the paramagnetic phase at large
+                                                                             enough magnetic ﬁeld.  Similarly, the BdG Hamiltonian
+                                                                             of the paramagnetic phase takes the form of
+                Fυ(q) = ∂A(υ)y   (q)∂qx  − ∂A(υ)x  (q)∂qy  ,             (28)                     ε±0   = −2(Γ + 2Γ′) +h/S,               (33)
+
+                                                                                              λ0(q)  = −(Γ + 2Γ′)γ0,q,                      (34)
+whereA(υ)γ   (q) =ıTr[PυΣT†qΣ(∂qγTq)] (γ =x,y) is the                                         λ1(q)  =  2(Γ− Γ′)γ1,q.                        (35)
+Berry  potential.   Here,Pυ  is  a  diagonal  matrix  taking
++1 for the υ-th diagonal component and zero otherwise.                       The magnon spectrum at the Γ point is
+Alternatively,  the  Berry  curvature  can  be  rewritten  as
+[68]                                                                                              ∆Γ =h/S− 3(Γ + 2Γ′),                   (36)
+                     [∑                                             ]        which increases linearly with the magnetic ﬁeld whenh is
+  Fυ(q) =−2Im               σµυ⟨Tυ|∂qx ˆ⃗H|Tµ⟩⟨Tµ|∂qy ˆ⃗H|Tυ⟩(ωqµ−ωqυ)2      larger than the upper transition pointht2 = 3S(Γ+2Γ′).
+                       µ⁄=υ                                                  Figure8(e)  shows  the  dispersion  of  the  paramagnetic
+                                                                   (29)      phase where h = 3.0 is taken as an example.  It can be
+with σµυ  =  ΣµµΣυυ.   The  Chern  number  of  the υ-th                      veriﬁed that the magnon gap at Γ is 1.2, which is in ac-
+branch is obtained as the sum of the Berry curvature in                      cordance with the theoretical value revealed in Eq. (36).
+the Brillouin zone,                                                          More  importantly,  our  result  suggests  that  the  Chern
+                                ∫                                            numbers of the two branches in the paramagnetic phase
+                     Cυ =   1                                                are−1 and +1, respectively, see Fig.8(f).
+                            2π    BZFυ(q)d2q.                    (30)
+
+  Figure8(a)  shows  two  magnon  branches  along  the
+high-symmetry points in the Brillouin zone in the zero-
+ﬁeld limit, and the intensity of the lower branch in the re-
+ciprocal space is shown in Fig.8(b). The        K and K′ points
+are inequivalent, which is reminiscent of the time-reversal
+symmetry breaking.  The magnon bands are gapped and
+the lowest excitation gap comes from the K point with
+the value of
+
+      ∆K = 2(Γ + 2Γ′)−√(h/S)2 + 4(Γ− Γ′)2.        (31)
+
+Apparently, the zero-ﬁeld magnon gap ∆K = 6Γ′ = 1.8,
+consistent  with  the  data  shown  in  Fig.8(a).   However,
+one  ﬁnds  that  depending  on  the  relative  magnitude  of
+the magnetic ﬁeld there could be a soft mode around the                      FIG.  9:  Energy  barrier δ ¯Eb  between  the  spin-ﬂop  phase  of
+ordering wavevectors of Γ/Γ′  points.  Hence, the lowest                     diﬀerent orientations along the line ofh = 9(Γ+2Γ′)/8.  Inset:
+excitation gap is given by                                                   Spin-wave  energy  correction  ∆E(ϕ)  at  the  parameter  point
+                                                                             (Γ′/Γ,h) = (0.3, 1.8) vs azimuthal angleϕ, which is suited at
+                   ∆Γ′ =√3(Γ + 2Γ′)−h/S,                 (32)                the ˆa-ˆb plane.
+
+which  decreases  linearly  with  the  increase  of  magnetic                   The LSWT analysis shows clearly that there should be
+ﬁeld.   In  Fig.8(c),  we  show  the  magnon  dispersions  at                an intermediate region in the window of h∈ (ht1,ht2),
+a ﬁeld of h = 1.2, together with a lower magnon branch                       which happens to be the same interval inferred from the
+in  Fig.8(d).   It  is  observed  that  excitation  gap  at        Γ′        classical study (see Eq. (20)). For the spin-ﬂop phase, the
+point is slightly smaller than that of the K point.  Since                   classical moment direction Si(ϑ,ϕ) is shown in Eq. (17)
+the melting of the AFMc ordering is accompanied by the                       where ϑ is given by Eq. (19).  According to Eq. (9) we
+                                                                                                                                                  11
+
+calculate the spin-wave energy εsw at a magnetic ﬁeld of                     ﬁeld, the excitation gap ∆2 of the AFMc phase goes down
+h = 1.8, and the energy reduction ∆E(ϕ) =εsw−S2εcl                           gradually and is vanishingly small at ht1 = 0.88(2).  Be-
+with  respect  to  the  azimuthal  angle ϕ  is  shown  in  the               yond the transition point, excitation gaps are small and
+inset of Fig.9.  It is shown that ∆   E(ϕ) exhibits a period                 the spectrum is very dense in a large interval, indicative
+of 2π/3 in the in-plane manifold and the angles at ϕ =                       of  a  gapless  region.   Exceeding ht2  =  2.38(2),  excita-
+0, 2π/3, and 4π/3 are more energetically favorable than                      tion gap ∆1  opens linearly with the magnetic ﬁeld.  We
+the others.  Hence, the emergent classical U(1) manifold                     note in passing that the transition points are fairly con-
+is  lifted  by  quantum  ﬂuctuations,  generating  a  discrete               sistent with those obtained by cylinder DMRG calcula-
+C3  rotational  symmetry.   We  also  introduce  the  energy                 tion [61].  In addition, magnetic order parameters of the
+barrier δ ¯Eb  as Eg(ϕ = π)−Eg(ϕ = 0), which is 0.0338                       AFMc  phase and the paramagnetic phase are shown in
+when  (Γ′/Γ,h)  =  (0.3, 1.8)  (marked  by  a  hexagram  in                  Fig.10(b).  For the AFM     c phase, the SSF peaks at the Γ′
+Fig.9). In the main panel of Fig.9, we present the energy                    point, and the order parameter M(Γ′) has a sharp jump
+barrierδ ¯Eb along the line ofh = 9(Γ+2Γ′)/8.  The value                     at ht1, signifying a ﬁrst-order transition thereof.  In the
+of δ ¯Eb  gradually raises with the increase of Γ′/Γ up to                   intermediate phase, the spins are only partially polarized
+Γ′/Γ≈ 0.27.  Afterwards, it drops rapidly and vanishes                       as  opposed  to  the  paramagnetic  phase  when ht > ht2.
+at Γ′/Γ = 1 where the system possesses a hidden U(1)                         However,  a  nontrivial  observation  is  that  it  also  has  a
+symmetry.                                                                    uniform in-plane correlation that is perpendicular to the
+                                                                             external ﬁeld.  For example, magnetization along ˆa and ˆb
+                                                                             are of equal strength and are overlapped in the plot (see
+                                                                             Fig.10(c)).  Consequently, the intermediate phase is rec-
+                                                                             ognized as a gapless spin-ﬂop phase with a temporarily
+                                                                             emergent U(1) symmetry.  The ﬁnite-size scaling of the
+                                                                             order parameters and the SSF of the spin-ﬂop phase are
+                                                                             shown in the Supplemental Material [61].
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 10: (a) The ﬁrst ﬁfteen excitation gaps ∆υ (υ = 1–15) as                FIG. 11:  Behaviors of the shifted ground-state energy ∆Eg
+functions of magnetic ﬁeldh/Γ in the Γ-Γ′ model with Γ′/Γ =                  in  the  range  of ϕ ∈  [0, 2π)  for  three  diﬀerent  tilted  angle
+0.3.   (b)  Magnetic  order  parameters MN(Q)  for  the  AFMc                ϑ = 2◦  (pink),  5◦  (green),  and 8◦  (blue) in the Γ-Γ′  model
+phase  and  paramagnetic  phase  with Q  = Γ′  (blue  square)                under a c-axis magnetic ﬁeld.  Here,  the DMRG calculation
+and Γ  (red  circle),  respectively.   The  intermediate  spin-ﬂop           is performed on a 24-site cluster with (Γ′/Γ, h) = (0.3, 1.8).
+phase has a ﬁnite in-plane magnetization (green triangles).                  The energy valleys at ϕ = 0, 2π/3, and 4π/3 are reminiscent
+                                                                             of the order-by-disorder phenomenon.
+
+                                                                                However, the in-plane component of the spin-ﬂop phase
+                   C.    DMRG calculation                                    is likely unstable against extra perturbation.  The emer-
+                                                                             gent U(1)  symmetry  is  then  broken  down  to C3  rota-
+  In the preceding subsection, we predict that a spin-ﬂop                    tional symmetry, accompanied by the appearance of gap-
+phase can occur in a wide ﬁeld region before entering into                   less  Goldstone  modes.   To  this  end,  we  apply  a  tilted
+the paramagnetic phase.  Here, we conﬁrm the existence                       magnetic ﬁeld h = h(ϑ,ϕ) which enjoys the same form
+of such phase by the DMRG method.  Figure10(a) shows                         of Eq. (17).  Here, the intensity of the ﬁeld   h = 1.8 and
+the ﬁrst ﬁfteen low-lying excitation gaps ∆υ =Eυ−E0                          the tilted angle ϑ relative to the c-axis is speciﬁed as 2◦,
+in the Γ-Γ′ model with Γ′/Γ = 0.3 ﬁxed.  The method to                       5◦, and 8◦.  Figure11shows the behaviors of the shifted
+target the ﬁrst few low-lying energy levels simultaneously                   ground-state  energy  ∆Eg,  which  is  deﬁned  as Eg−  ¯Eg∫ 2π
+is shown in Ref.42.  With the increase of the magnetic                       with  ¯Eg =   12π  0 dϕEg(ϕ), with respect to the in-plane
+                                                                                                                                                 12
+
+azimuthal angle ϕ∈ [0, 2π) [73].  It can be observed that                   µt,2/V  = 3.75,  which is fairly consistent with quantum
+the  variation  of  the  energy  is  one  order  of  magnitude              Monte Carlo simulations (for illustration, see Ref. [49,50]
+smaller  than  that  of  the  semiclassical  situation.   How-              and also Supplemental Material [61]).
+ever, in both cases there is a breaking of the continuous
+U(1) symmetry to the discrete C3  rotational symmetry,
+giving rise to three local minima when ϕ = 0, 2π/3, and
+4π/3.  In addition, the energy barrierδ ¯Eb = ∆Eg(ϕ =π)                                           VI.    CONCLUSION
+− ∆Eg(ϕ = 0) obeys approximately the ﬁtting formula
+δ ¯Eb≈ 10−3·   7.1ϑ9.6+ϑ, showing that the energy barrier δ ¯Eb                In  this  paper  we  focus  on  the  interplay  of  magnetic
+will be less sensitive to the tilted angle ϑ as ϑ increases.                ﬁeld and trigonal distortion [18] in honeycomb Γ model.
+To conclude,  there is a two-step symmetry changing in                      For this purpose, we have studied a Γ-Γ′ model in a [111]
+the spin-ﬂop phase .  The ﬁrst step is from the discrete                    magnetic  ﬁeld  in  the  vicinity  of  a  dominated  AFM  Γ
+symmetry to the emergentU(1) symmetry, while the sec-                       region.   In  the  absence  of  magnetic  ﬁeld,  a  120◦  phase
+ond step is from U(1) symmetry to the broken C3 rota-                       and  an  AFMc  phase  can  be  selected  immediately  from
+tional symmetry.  We note that a similar phenomenon is                      the inﬁnitely degenerate ground state of the classical Γ
+also  reported  in  the  classical  honeycomb  Γ  model  in  a              model,  depending  on  the  sign  of  Γ′  interaction.    The
+magnetic ﬁeld [48].                                                         classical 120◦ phase is unstable against quantum ﬂuctua-
+  As shown in Fig.3(b), the spin-ﬂop phase could survive                    tions, giving away to the neighboring zigzag ordering.  At
+for at least Γ′/Γ = 1, at which the model is equivalent to                  the quantum level, two exotic phases are found to exist in
+the spin-1/2 XXZ model in a longitudinal magnetic ﬁeld                      the intermediate region between the zigzag phase and the
+with an easy-axis anisotropy ∆a = 2.  Accidentally, the                     AFMc  phase.  One is a ΓSL stemming from the ground
+spin-ﬂop  phase  could  also  be  interpreted  as  the  super-              state of honeycomb Γ model, while the other is a chiral
+ﬂuid phase in the extended Bose-Hubbard model whose                         spin state which spontaneously breaks the time-reversal
+Hamiltonian reads [49,50]                                                   symmetry.   Upon  applying  a  magnetic  ﬁeld,  regions  of
+   HBH =−t∑(b†                                  ninj−µ∑         ni          the ΓSL and chiral spin state are enlarged but are ter-
+                        ibj +bib†j) +V∑                                     minated before entering the paramagnetic phase at large
+                  ⟨ij⟩                      ⟨ij⟩             i              ﬁeld.
+             + U   ∑    ni(ni− 1),                                   (37)      A nontrivial observation of this work is that, there is
+                 2   i                                                      a ﬁeld-induced spin-ﬂop phase as long as a modest mag-
+                                                                            netic ﬁeld is applied over the AFMc phase.  The spins in
+where b†i  (bi)  is  the  creation  (annihilation)  operator  at            the spin-ﬂop phase are tilted away from the ﬁeld direction
+sitei andni =b†ibi is the corresponding occupation num-                     and are free to rotate in the honeycomb plane, indicative
+ber.  Here, t is the nearest-neighbor hopping parameter,                    of  an  emergent U(1)  symmetry.   Due  to  the  quantum
+µ is the chemical potential, and U  and V  represent the                    ﬂuctuation in the frustrated magnet, such a continuous
+on-site  and  nearest-neighbor  repulsive  interactions,  re-               symmetry is broken down to the C3  rotational symme-
+spectively.  In the hard-core limit where U/t→∞, there                      try where the spins are perpendicular to any of the three
+is one boson at most on each site.  By virtue of the map-                   types of bonds.  When Γ′/Γ = 1, the model is reduced to
+ping b†i  = S+i  , bi  = S−i  ,  and ni  = Szi  + 1/2,  Eq.  (37)           an easy-axis spin-1/2 XXZ antiferromagnet subjected to
+can  be  mapped  onto  the  spin-1/2  XXZ  model  under  a                  a longitudinal magnetic ﬁeld.  In this circumstance, it is
+longitudinal magnetic ﬁeld,                                                 equivalent to a hard-core extended Bose-Hubbard model.
+          [∑     [− (SxiSxj +Sy                      ]−h∑          ]        In that sense, the spin-ﬂop phase is merely the superﬂuid
+  H =2t                           iSyj )+∆aSziSzj               Szi         phase.  In doing so, we manifest an unusual route from
+            ⟨ij⟩                                             i              the Γ region to the XXZ magnet.
+        +E0,                                                              (38) In closing, we comment that there are several ways to
+                                                                            achieve such a dominated Γ interaction in experiments.
+where ∆a  = V/2t is the anisotropy of the spin-spin in-(µ− zV/2)  =  ∆(µ/V − z/2)  is  theIn α-RuCl3,  for  example,  the  spin  interactions  are  re-
+teraction, h  =    12t                                 (µ/V−z/4)            vealed to be sensitive to the layer stacking and octahe-
+longitudinal magnetic ﬁeld, and E0 =−NV2                                    dral  distortion,  and  the  overwhelming  Γ  regime  with  a
+is an energy constant arising from the mapping between                      desired AFM Γ′  interaction could be achieved upon ap-
+the  spins  and  bosons  operators.   Considering  the  case                plying  compression  [74].   On  the  other  hand,  by  virtue
+t/V   =  1/4  (inversely,  we  have  ∆a  = V/2t  =  2)  and                 of the circularly-polarized light, the Heisenberg interac-
+µ/V >z/2 = 1.5 in the original extended Bose-Hubbard                        tion  in α-RuCl3  can  be  made  much  smaller  than  the
+model, the ground state is a solid with density ρ = 1/2                     anisotropic exchange interactions K  and Γ [75], and the
+when µ/V   is  sightly  increased,  a ρ  =  1  Mott  insula-                tailored light pulse can further weaken the Kitaev inter-
+tor  at  large  enough µ/V ,  and  a  superﬂuid  at  moder-                 action by a proper adjustment of its amplitude and fre-
+ate µ/V .   In  view  of  the  relation µt/V   =  (ht + z)/2                quency [76,77].  Therefore, these procedures allow us to
+with ht,1  =  2.115(3)  and ht,2  =  4.5,  our  result  sug-                drive the material into a regime where the Γ interaction
+gests the ﬁrst transitions occurs atµt,1/V  = 2.558(2) and                  is prominent [78].
+                                                                                                                                                        13
+
+                        Acknowledgments                                         Y.K. was supported by the NSERC Discovery Grant No.
+                                                                                06089-2016,  the  Centre  for  Quantum  Materials  at  the
+   We would like to thank Y. Lu, X. Wang, T. Ying, J.                           University  of  Toronto,  the  Canadian  Institute  for  Ad-
+Zhao,  and  Z.  Zhou  for  useful  discussions,  and  are  ex-                  vanced Research, and the Canada Research Chairs Pro-
+tremely grateful to J. S. Gordon and P. P. Stavropoulos                         gram.  Computations were performed on the Niagara su-
+for the intimate collaboration of a related research [45].                      percomputer at the SciNet HPC Consortium.  SciNet is
+Q.L. was supported by the Fundamental Research Funds                            funded  by:  the  Canada  Foundation  for  Innovation  un-
+for the Central Universities (Grant No.  1018-XAA22046)                         der the auspices of Compute Canada; the Government of
+and  the  startup  Fund  of  Nanjing  University  of  Aero-                     Ontario;  Ontario Research Fund - Research Excellence;
+nautics  and  Astronautics  (Grant  No.   YAH21129).   H.-                      and the University of Toronto.
+
+
+
+
+
+[1]J.  G.  Rau,  E.  K.-H.  Lee,  and  H.-Y.  Kee,  Spin-Orbit                      N.  Ni,  N´eel-type  antiferromagnetic  order  and  magnetic
+    Physics  Giving  Rise  to  Novel  Phases  in  Correlated  Sys-                  ﬁeld-temperature phase diagram in the spin- 12  rare-earth
+    tems:  Iridates  and  Related  Materials,  Annu.  Rev.  Con-                    honeycomb compound YbCl3, Phys. Rev. B 102, 014427
+    dens. Matter Phys. 7, 195 (2016).                                               (2020).
+[2]H. Takagi, T. Takayama, G. Jackeli, G. Khaliullin, S. E.                     [14]G. Sala, M. B. Stone, B. K. Rai, A. F. May, D. S. Parker,
+    Nagler, Concept and realization of Kitaev quantum spin                          G. B. Hal´asz, Y. Q. Cheng, G. Ehlers, V. O. Garlea, Q.
+    liquids, Nat. Rev. Phys. 1, 264 (2019).                                         Zhang,  M.  D.  Lumsden,  and  A.  D.  Christianson,  Crys-
+[3]A. Kitaev, Anyons in an exactly solved model and beyond,                         tal ﬁeld splitting, local anisotropy, and low-energy excita-
+    Ann. Phys. 321, 2 (2006).                                                       tions in the quantum magnet YbCl3, Phys. Rev. B 100,
+[4]G. Jackeli and G. Khaliullin, Mott insulators in the strong                      180406(R) (2019).
+    spin-orbit coupling limit:  From Heisenberg to a quantum                    [15]Y.  Hao,  H.  Wo,  Y.  Gu,  X.  Zhang,  Y.  Gu,  S.  Zheng,
+    compass and Kitaev models, Phys. Rev. Lett. 102, 017205                         Y.  Zhao,  G.  Xu,  J.  W.  Lynn,  K.  Nakajima,  N.  Murai,
+    (2009).                                                                         W.  Wang,  and  J.  Zhao,  Field-tuned  magnetic  structure
+[5]X. Liu, T. Berlijn, W.-G. Yin, W. Ku, A. Tsvelik, Young-                         and phase diagram of the honeycomb magnet YbCl3, Sci.
+    June  Kim,  H.  Gretarsson,  Yogesh  Singh,  P.  Gegenwart,                     China-Phys. Mech. Astron. 64, 237411 (2021).
+    and J. P. Hill, Long-range magnetic ordering in Na2IrO3,                    [16]G. Sala, M. B. Stone, B. K. Rai, A. F. May, P. Laurell,
+    Phys. Rev. B 83, 220403(R) (2011).                                              V.  O.  Garlea,  N.  P.  Butch,  M.  D.  Lumsden,  G.  Ehlers,
+[6]J. Chaloupka, G. Jackeli, and G. Khaliullin, Zigzag Mag-                         G.  Pokharel,  A.  Podlesnyak,  D.  Mandrus,  D.  S.  Parker,
+    netic  Order  in  the  Iridium  Oxide  Na2IrO3,  Phys.  Rev.                    S. Okamoto, G. B. Hal´asz, and A. D. Christianson, Van
+    Lett. 110, 097204 (2013).                                                       Hove singularity in the magnon spectrum of the antiferro-
+[7]K.  W.  Plumb,  J.  P.  Clancy,  L.  J.  Sandilands,  V.  V.                     magnetic quantum honeycomb lattice, Nat. Commun. 12,
+    Shankar,  Y.  F.  Hu,  K.  S.  Burch,  H.-Y.  Kee,  and  Y.-J.                  171 (2021).
+    Kim,α-RuCl3:  a Spin-Orbit Assisted Mott Insulator on a                     [17]J.  G.  Rau,  E.  K.-H.  Lee,  and  H.-Y.  Kee,  Generic  Spin
+    Honeycomb Lattice, Phys. Rev. B 90, 041112(R) (2014).                           Model  for  the  Honeycomb  Iridates  beyond  the  Kitaev
+[8]H.-S. Kim, V. V. Shankar, A. Catuneanu, and H.-Y. Kee,                           Limit, Phys. Rev. Lett. 112, 077204 (2014).
+    Kitaev magnetism in honeycomb RuCl3 with intermediate                       [18]J. G. Rau and H.-Y. Kee, Trigonal distortion in the hon-
+    spin-orbit coupling, Phys. Rev. B 91, 241110(R) (2015).                         eycomb iridates:  Proximity of zigzag and spiral phases in
+[9]R.  D.  Johnson,  S.  C.  Williams,  A.  A.  Haghighirad,  J.                    Na2IrO3,arXiv:1408.4811.
+    Singleton,  V.  Zapf,  P.  Manuel,  I.  I.  Mazin,  Y.  Li,  H.             [19]A. Banerjee, C. A. Bridges, J.-Q. Yan, A. A. Aczel, L. Li,
+    O. Jeschke,  R. Valent´ı,  and R. Coldea,  Monoclinic crys-                     M. B. Stone, G. E. Granroth, M. D. Lumsden, Y. Yiu, J.
+    tal structure ofα-RuCl3 and the zigzag antiferromagnetic                        Knolle,  S. Bhattacharjee,  D. L. Kovrizhin,  R. Moessner,
+    ground state, Phys. Rev. B 92, 235119 (2015).                                   D. A. Tennant, D. G. Mandrus, and S. E. Nagler, Prox-
+[10]A. Biﬃn, R. D. Johnson, I. Kimchi, R. Morris, A. Bom-                           imate Kitaev quantum spin liquid behaviour in a honey-
+    bardi,  J.  G.  Analytis,  A.  Vishwanath,  and  R.  Coldea,                    comb magnet, Nat. Mater. 15, 733 (2016).
+    Noncoplanar and Counterrotating Incommensurate Mag-                         [20]A.  Banerjee,  J.  Yan,  J.  Knolle,  C.  A.  Bridges,  M.  B.
+    netic Order Stabilized by Kitaev Interactions inγ-Li2IrO3,                      Stone,  M. D. Lumsden,  D. G. Mandrus,  D. A. Tennant,
+    Phys. Rev. Lett. 113, 197201 (2014).                                            R.  Moessner,  and  S.  E.  Nagler,  Neutron  scattering  in
+[11]S.  C.  Williams,  R.  D.  Johnson,  F.  Freund,  S.  Choi,  A.                 the proximate quantum spin liquidα-RuCl3, Science 356,
+    Jesche, I. Kimchi, S. Manni, A. Bombardi, P. Manuel, P.                         1055 (2017).
+    Gegenwart, and R. Coldea, Incommensurate counterrotat-                      [21]K. Ran, J. Wang, W. Wang, Z.-Y. Dong, X. Ren, S. Bao,
+    ing magnetic order stabilized by Kitaev interactions in the                     S.  Li,  Z.  Ma,  Y.  Gan,  Y.  Zhang,  J.  T.  Park,  G.  Deng,
+    layered  honeycomb α-Li2IrO3,  Phys.  Rev.  B 93,  195158                       S.  Danilkin,  S.-L.  Yu,  J.-X.  Li,  and  J.  Wen,  Spin-Wave
+    (2016).                                                                         Excitations  Evidencing  the  Kitaev  Interaction  in  Single
+[12]I. Rousochatzakis and N. B. Perkins, Magnetic ﬁeld in-                          Crystallineα-RuCl3, Phys. Rev. Lett. 118, 107203 (2017).
+    duced evolution of intertwined orders in the Kitaev mag-                    [22]I. A. Leahy, C. A. Pocs, P. E. Siegfried, D. Graf, S.-H.
+    net β-Li2IrO3, Phys. Rev. B 97, 174423 (2018).                                  Do,  K.-Y.  Choi,  B.  Normand,  and  M.  Lee,  Anomalous
+[13]J.  Xing,  E.  Feng,  Y.  Liu,  E.  Emmanouilidou,  C.  Hu,                     Thermal Conductivity and Magnetic Torque Response in
+    J.  Liu,  D.  Graf,  A.  P.  Ramirez,  G.  Chen,  H.  Cao,  and                 the Honeycomb Magnet α-RuCl3, Phys. Rev. Lett. 118,
+                                                                                                                                                           14
+
+    187203 (2017).                                                                    Kee, Theory of the ﬁeld-revealed Kitaev spin liquid, Nat.
+[23]J. A. Sears, Y. Zhao, Z. Xu, J. W. Lynn, and Y.-J. Kim,                           Commun. 10, 2470 (2019).
+    Phase Diagram ofα-RuCl3 in an in-plane Magnetic Field,                       [40]H.-Y.  Lee,  R.  Kaneko,  L.  E.  Chern,  T.  Okubo,  Y.  Ya-
+    Phys. Rev. B 95, 180411(R) (2017).                                                maji,  N.  Kawashima,  and  Y.  B.  Kim,  Magnetic-ﬁeld  in-
+[24]S.-H. Baek, S.-H. Do, K.-Y. Choi, Y. S. Kwon, A. U. B.                            duced quantum phases in tensor network dtudy of Kitaev
+    Wolter, S. Nishimoto, J. van den Brink, and B. B¨uchner,                          magnets, Nat. Commun. 11, 1639 (2020).
+    Evidence for a Field-Induced Quantum Spin Liquid in α-                       [41]B. H. Kim, S. Sota, T. Shirakawa, S. Yunoki, and Y.-W.
+    RuCl3, Phys. Rev. Lett. 119, 037201 (2017).                                       Son,  Proximate Kitaev system for an intermediate mag-
+[25]A. U. B. Wolter, L. T. Corredor, L. Janssen, K. Nenkov,                           netic phase in in-plane magnetic ﬁelds, Phys. Rev. B 102,
+    S.  Sch¨onecker,  S.-H.  Do,  K.-Y.  Choi,  R.  Albrecht,  J.                     140402(R) (2020).
+    Hunger,  T.  Doert,  M.  Vojta,  and  B.  B¨uchner,  Field-                  [42]Q. Luo, J. Zhao, H.-Y. Kee, and X. Wang, Gapless quan-
+    induced  quantum  criticality  in  the  Kitaev  system α-                         tum spin liquid in a honeycomb Γ magnet, npj Quantum
+    RuCl3, Phys. Rev. B 96, 041405(R) (2017).                                         Mater. 6, 57 (2021).
+[26]Z. Wang, S. Reschke, D. H¨uvonen, S.-H. Do, K.-Y. Choi,                      [43]A. Catuneanu, Y. Yamaji, G. Wachtel, Y.-B. Kim, and
+    M. Gensch, U. Nagel, T. Room, and A. Loidl, Magnetic                              H.-Y. Kee,  Path to stable quantum spin liquids in spin-
+    Excitations  and  Continuum  of  a  Possibly  Field-Induced                       orbit coupled correlated materials,  npj Quantum Mater.
+    Quantum Spin Liquid in α-RuCl3, Phys. Rev. Lett. 119,                             3, 23 (2018).
+    227202 (2017).                                                               [44]M.  Gohlke,  G.  Wachtel,  Y.  Yamaji,  F.  Pollmann,  and
+[27]J. Zheng, K. Ran, T. Li, J. Wang, P. Wang, B. Liu, Z.-X.                          Y. B. Kim, Quantum spin liquid signatures in Kitaev-like
+    Liu, B. Normand, J. Wen, and W. Yu, Gapless Spin Exci-                            frustrated magnets, Phys. Rev. B 97, 075126 (2018).
+    tations in the Field-Induced Quantum Spin Liquid Phase                       [45]Q.  Luo,  P.  P.  Stavropoulos,  J.  S.  Gordon,  and  H.-Y.
+    of α-RuCl3, Phys. Rev. Lett. 119, 227208 (2017).                                  Kee,  Spontaneous  chiral-spin  ordering  in  spin-orbit  cou-
+[28]S. M. Winter, K. Riedl, P. A. Maksimov, A. L. Cherny-                             pled honeycomb magnets, Phys. Rev. Research 4, 013062
+    shev, A. Honecker, and R. Valenti, Breakdown of magnons                           (2022).
+    in a strongly spin-orbital coupled magnet, Nat. Commun.                      [46]F.  B.  Anderson  and  H.  B.  Callen,  Statistical  Mechan-
+    8, 1152 (2018).                                                                   ics and Field-Induced Phase Transitions of the Heisenberg
+[29]D.  Wulferding,  Y.  Choi,  S.-H.  Do,  C.  H.  Lee,  P.  Lem-                    Antiferromagnet, Phys. Rev. 136, A1068 (1964).
+    mens, C. Faugeras,  Y. Gallais,  and K.-Y. Choi,  Magnon                     [47]B.  R.  Morrison,  The  spin-ﬂop  transition  in  some  two-
+    bound states versus anyonic Majorana excitations in the                           sublattice  uniaxial  antiferromagnets,  Phys.  Status  Solidi
+    Kitaev honeycomb magnet α-RuCl3,  Nat. Commun. 11,                                (B) 59, 581 (1973).
+    1603 (2020).                                                                 [48]Z. Tian, Z. Fan, P. Saha, and G.-W. Chern, Honeycomb-
+[30]Y. Kasahara, T. Ohnishi, N. Kurita, H. Tanaka, J. Nasu,                           lattice  Gamma  model  in  a  magnetic  ﬁeld:   hidden  N´eel
+    Y.  Motome,  T.  Shibauchi,  and  Y.  Matsuda,  Majorana                          order and spin-ﬂop transition,arXiv:2106.16121.
+    quantization and half-integer thermal quantum Hall eﬀect                     [49]S.  Wessel,  Phase  diagram  of  interacting  bosons  on  the
+    in a Kitaev spin liquid, Nature 559, 227 (2018).                                  honeycomb lattice, Phys. Rev. B 75, 174301 (2007).
+[31]W. Wang, Z.-Y. Dong, S.-L. Yu, and J.-X. Li, Theoreti-                       [50]J.  Y.  Gan,  Y.  C.  Wen,  J.  Ye,  T.  Li,  S.-J.  Yang,  and
+    cal investigation of magnetic dynamics in α-RuCl3, Phys.                          Y.  Yu,  Extended  Bose-Hubbard  model  on  a  honeycomb
+    Rev. B 96, 115103 (2017).                                                         lattice, Phys. Rev. B 75, 214509 (2007).
+[32]J.  A.  Sears,  L.  E.  Chern,  S.  Kim,  P.  J.  Bereciartua,               [51]L. E. Chern, R. Kaneko, H.-Y. Lee, and Y. B. Kim, Mag-
+    S.  Francoual,  Y.  B.  Kim,  and  Y.-J.  Kim,  Ferromag-                         netic  ﬁeld  induced  competing  phases  in  spin-orbital  en-
+    netic Kitaev interaction and the origin of large magnetic                         tangled Kitaev magnets,  Phys. Rev. Research 2,  013014
+    anisotropy in α-RuCl3, Nat. Phys. 16, 837-840 (2020).                             (2020).
+[33]J.  A.  Sears,  M.  Songvilay,  K.  W.  Plumb,  J.  P.  Clancy,              [52]S.-S. Zhang, G. B. Hal´asz, and C. D. Batista, Theory of
+    Y.  Qiu,  Y.  Zhao,  D.  Parshall,  and  Y.-J.  Kim,  Magnetic                    the Kitaev model in a [111] magnetic ﬁeld, Nat. Commun.
+    order in α-RuCl3:  A honeycomb-lattice quantum magnet                             13, 399 (2022).
+    with strong spin-orbit coupling, Phys. Rev. B 91, 144420                     [53]J. M. Luttinger and L. Tisza, Theory of Dipole Interac-
+    (2015).                                                                           tion in Crystals, Phys. Rev. 70, 954 (1946).
+[34]P.  A.  Maksimov  and  A.  L.  Chernyshev,  Rethinking   α-                  [54]D. B. Litvin, The Luttinger-Tisza method, Physica      77,
+    RuCl3, Phys. Rev. Research 2, 033011 (2020).                                      205 (1974).
+[35]E. C. Andrade, L. Janssen, and M. Vojta, Susceptibility                      [55]N. Metropolis, A. W. Rosenbluth, M. N. Rosenbluth, A.
+    anisotropy and its disorder evolution in models for Kitaev                        H. Teller, and E. Teller, Equation of state calculations by
+    materials, Phys. Rev. B 102, 115160 (2020).                                       fast computing machines, J. Chem. Phys. 21, 1087 (1953).
+[36]D. Takikawa and S. Fujimoto, Impact of oﬀ-diagonal ex-                       [56]K. Hukushima and K. Nemoto,  Exchange Monte Carlo
+    change interactions on the Kitaev spin-liquid state of α-                         method and application to spin glass simulations, J. Phys.
+    RuCl3, Phys. Rev. B 99, 224409 (2019).                                            Soc. Jpn. 65, 1604 (1996).
+[37]D. Takikawa and S. Fujimoto, Topological phase transi-                       [57]P.  A.  Maksimov  and  A.  L.  Chernyshev,  Field-induced
+    tion to Abelian anyon phases due to oﬀ-diagonal exchange                          dynamical properties of theXXZ model on a honeycomb
+    interaction in the Kitaev spin liquid state, Phys. Rev. B                         lattice, Phys. Rev. B 93, 014418 (2016).
+    102, 174414 (2020).                                                          [58]S.  R.  White,  Density  matrix  formulation  for  quantum
+[38]Y.-F.  Jiang,  T.  P.  Devereaux,  and  H.-C.  Jiang,  Field-                     renormalization groups, Phys. Rev. Lett. 69, 2863 (1992).
+    induced  quantum  spin  liquid  in  the  Kitaev-Heisenberg                   [59]I.  Peschel,  X.  Q.  Wang,  M.  Kaulke,  and  K.  Hallberg,
+    model  and  its  relation  to α-RuCl3,  Phys.  Rev.  B  100,                      Density-matrix      renormalization  (Springer, Berlin, 1999).
+    165123 (2019).                                                               [60]E. M. Stoudenmire and S. R. White, Studying Two Di-
+[39]J. S. Gordon, A. Catuneanu, E. S. Sßorensen, and H.-Y.                            mensional  Systems  With  the  Density  Matrix  Renormal-
+                                                                                                                                                           15
+
+    ization Group, Annu. Rev. Condens. Matter Phys. 3, 111
+    (2012).
+[61]See Supplemental Material athttp://link.aps.org/supple
+    -mental/10.1103/PhysRevB.000.000000  for  the  mapping
+    of the Γ-Γ′  model to the extended Bose-Hubbard model,
+    classical Monte Carlo simulation of the Γ-Γ′  model,  and
+    DMRG determination of phase transitions, ﬁnite-size scal-
+    ing, and excitation gap in the Γ-Γ′ model in [111] magnetic
+    ﬁeld.
+[62]J.  Chaloupka  and  G.  Khaliullin,  Hidden  symmetries  of
+    the  extended  Kitaev-Heisenberg  model:  Implications  for
+    the honeycomb-lattice iridates A2IrO3, Phys. Rev. B 92,
+    024413 (2015).
+[63]I. Rousochatzakis and N. B. Perkins, Classical Spin Liq-
+    uid Instability Driven By Oﬀ-Diagonal Exchange in Strong
+    Spin-Orbit Magnets, Phys. Rev. Lett. 118, 147204 (2017).
+[64]P. A. Maksimov, Z. Zhu, S. R. White, and A. L. Cherny-
+    shev, Anisotropic-Exchange Magnets on a Triangular Lat-
+    tice:  Spin Waves, Accidental Degeneracies, and Dual Spin
+    Liquids, Phys. Rev. X 9, 021017 (2019).
+[65]J.  Eisert,  M.  Cramer,  and  M.  B.  Plenio,  Colloquium:
+    Area laws for the entanglement entropy. Rev. Mod. Phys.
+    82, 277 (2010).
+[66]P.  Saha,  Z.  Fan,  D.  Zhang,  and  G.-W.  Chern,  Hid-
+    den  plaquette  order  in  a  classical  spin  liquid  stabilized
+    by  strong  oﬀ-diagonal  exchange,  Phys.  Rev.  Lett.  122,
+    257204 (2019).
+[67]L. Janssen, E. C. Andrade, and M. Vojta, Magnetization
+    processes of zigzag states on the honeycomb lattice:  Iden-
+    tifying spin models for α-RuCl3 and Na2IrO3, Phys. Rev.
+    B 96, 064430 (2017).
+[68]Y. Lu, X. Guo, V. Koval, and C. Jia, Topological ther-
+    mal Hall eﬀect driven by spin-chirality ﬂuctuations in frus-
+    trated antiferromagnets, Phys. Rev. B 99, 054409 (2019).
+[69]X. Zhu, S. Dong, Y. Lin, R. Mondaini, H. Guo, S. Feng,
+    and R. T. Scalettar, Self-organized bosonic domain walls,
+    Phys. Rev. Research 2, 013085 (2020).
+[70]P.  A.  McClarty,  X.-Y.  Dong,  M.  Gohlke,  J.  G.  Rau,
+    F.  Pollmann,  R.  Moessner,  and  K.  Penc,  Topological
+    magnons in Kitaev magnets at high ﬁelds, Phys. Rev. B
+    98, 060404(R) (2018).
+[71]D. G. Joshi, Topological excitations in the ferromagnetic
+    Kitaev-Heisenberg  model,  Phys.  Rev.  B  98,  060405(R)
+    (2018).
+[72]Z.-X. Luo and G. Chen, Honeycomb rare-earth magnets
+    with anisotropic exchange interactions, SciPost Phys. Core
+    3, 004 (2020).
+[73]M.  Gohlke,  L.  E.  Chern,  H.-Y.  Kee,  and  Y.  B.  Kim,
+    Emergence of nematic paramagnet via quantum order-by-
+    disorder and pseudo-Goldstone modes in Kitaev magnets,
+    Phys. Rev. Research 2, 043023 (2020).
+[74]P. Peter Stavropoulos       et al. (unpublished).
+[75]N.  Arakawa  and  K.  Yonemitsu,  Floquet  engineering  of
+    Mott  insulators  with  strong  spin-orbit  coupling,  Phys.
+    Rev. B 103, L100408 (2021).
+[76]A.   Sriram   and   M.   Claassen,    Light-Induced   Con-
+    trol  of  Magnetic  Phases  in  Kitaev  Quantum  Magnets,
+    arXiv:2105.01062.
+[77]P. Strobel and M. Daghofer, Comparing the inﬂuence of
+    ﬂoquet dynamics in various Kitaev-Heisenberg materials,
+    Phys. Rev. B 105, 085144 (2022).
+[78]U. Kumar, S. Banerjee, and S.-Z. Lin, Floquet engineer-
+    ing of Kitaev quantum magnets,arXiv:2111.01316.
+                                                                                                                                              1
+
+                                                 Supplemental Material for
+         “Interplay of magnetic ﬁeld and trigonal distortion in honeycomb Γ model:
+                                            Occurrence of a spin-ﬂop phase”
+
+                                                 Qiang Luo1, 2 and Hae-Young Kee1, 3
+
+                   1Department of Physics, University of Toronto, Toronto, Ontario M5S 1A7, Canada
+           2College of Physics, Nanjing University of Aeronautics and Astronautics, Nanjing, 211106, China
+                     3Canadian Institute for Advanced Research, Toronto, Ontario, M5G 1Z8, Canada
+
+       S1.    FROM THE Γ-Γ′ MODEL TO THE                                  J±± and Jz± vanish and Eq. (S2) reduces to
+       EXTENDED BOSE-HUBBARD MODEL                                                         [                                      ]
+             A.    Mapping to the XXZ model                                    H =Γ∑         − 12( ˜S+i  ˜S−j  + ˜S−i  ˜S+j ) + 2 ˜Szi ˜Szj,       (S4)
+                                                                                       ⟨ij⟩
+
+  The  Hamiltonian  shown  in  Eq.  (1)  in  the  main  text              which  is  nothing  but  the  easy-axis  XXZ  model  with  a
+could  have  two  diﬀerent  frames.   One  is  the  cubic xyz             Z2 ⋉U(1) symmetry.
+basis and the Hamiltonian takes the well-known JKΓΓ′
+form, while the other is the crystallographicabc reference
+frame  where  the  perpendicular  direction  is  the  c  axis.                 B.    Bose-Hubbard model in hard-core limit
+Mathematically, we have a[11¯2], b[¯110], and c[111].  We
+can replace the cubic spin components (Sxi,Syi,Szi )T  by                    In the hard-core limit where U/t→∞, the extended
+                                                                      Bose-Hubbard model is equivalent to the spin-1/2 XXZ
+        √1       √    √1          ˜Sxi  cosϕ + ˜Sy                        model under a longitudinal magnetic ﬁeld.  For the latter
+       6 −  12       3                     i  sinϕ                  model, the easy-axis anisotropy ∆a =V/2t and the eﬀec-
+        √1      √1    √1       − ˜Sxi  sinϕ + ˜Sy       ,  (S1)                                      (µ−zV/2) = ∆a(µ/V−z/2).
+        √6        2     3                         i  cosϕ                 tive magnetic ﬁeld h =   12t
+      −    2          √                     ˜Szi                          Here,z = 3 is the coordination number of the honeycomb
+           3     0        13
+                                                                          lattice.  When Γ′ = Γ = 1, it is shown in Eq. (S4) that
+and the Hamiltonian is then casted into [1–3]                             the anisotropy ∆a = 2 in the Γ-Γ′ model.  Also, the tran-
+                 [                                                        sition  points  of  the  AFMc–spin-ﬂop  transition  and  the
+      H =∑        Jzz ˜Szi ˜Szj +J±( ˜S+i  ˜S−j  + ˜S−i  ˜S+j )           paramangetic–spin-ﬂop  transition  are  2.115(3)  and  4.5
+            ⟨ij⟩                                                          (see Fig.3(b) in the main text), respectively.  In view of
+            +J±±(γij ˜S+                                                  the relationµt/V  = (ht+3)/2, we haveµt,l/V  = 2.558(2)
+                           i  ˜S+j  +γ∗ij ˜S−i  ˜S−j ) ]                  and µt,h/V  = 3.75, which is fairly consistent with quan-
+            Jz±(γ∗ij ˜S+                                       (S2)       tum Monte Carlo simulations (see Fig. S1) [4].
+                       i  ˜Szj +γij ˜S−i  ˜Szj +⟨i↔j⟩)
+
+where  ˜Sαi  (α =x,y,z) are the three components of spin-
+1/2  operators,  and  ˜S±i   =  ˜Sxi ±i ˜Syi .   The  phase  factor
+γij =eıϕij whereϕij = 2π/3,−2π/3, and 0 for the bonds
+⟨ij⟩ along the X, Y, and Z direction, respectively.  The
+interaction parameters are
+
+                 Jzz =J + K + 2(Γ + 2Γ′)3     ,
+
+                 J± = J2  + K− (Γ + 2Γ′)6     ,
+                                                               (S3)
+                 J±± = K + 2(Γ− Γ′)6     ,
+
+                 Jz± =−K + (Γ− Γ′)3√2    .
+
+We emphasize that the energy spectra of Eq. (S2) are in-                  FIG.  S1:   Quantum  phase  diagram  of  the  hard-core  Bose-
+variant if we alter the sign ofJz±.  This can be elucidated               Hubbard model on a honeycomb lattice [4]. Along the vertical
+by a π-rotation around the z axis in the spin space, i.e.,                line where t/V  = 0.25, transition between ρ = 0.5 solid and
+˜Szi →  ˜Szi  and  ˜S±                                                    superﬂuid  occurs  at µt,l/V ≈  2.5,  while  transition  between
+                    i →− ˜S±i  ,  resulting  in Jz± →−Jz±,                ρ = 1 insulator and superﬂuid occurs at µt,l/V ≈ 3.75.
+while other couplings remain unchanged.
+  For the Γ-Γ′  model with equal  strength of Γ and  Γ′,
+                                                                                                                                                 2
+
+                                                   S2.    CLASSICAL Γ-Γ′ MODEL
+
+  In  the  Sec.Vin  the  main  text,  it  is  shown  that  starting  from  the  AFM     c  phase  at  the  zero  ﬁeld,  there  is  an
+intermediate region when the ﬁeld is roughly in the interval of [ht/√3,ht] with ht = 3S(Γ + 2Γ′).  In this region, the
+spin conﬁgurations are very complicated and could vary with the increase of the magnetic ﬁeld.  Nevertheless,  the
+energy of the spin-ﬂop phase is very close to the authentic phases, and the discrepancy becomes less pronounced with
+increasing h.
+  For clariﬁcation, we focus on the line of Γ′/Γ = 0.3 and the intermediate region exists in the interval of [1.3856,
+2.40].   When  the  ﬁeld  is  1.50,  the  spin  conﬁguration  of  the  underlying  phase  is  shown  in  Fig. S2,  whose  unit  cell
+contains 48 sites.  The ground-state energy per site is 0.075 lower than that of the spin-ﬂop phase.  However, when the
+ﬁeld is 2.0, the unit cell of the underlying phase is only 4 (see Fig. S3), and the energy diﬀerence is less than 0.004.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S2:  Spin texture at the parameter (Γ′/Γ = 0.3, h = 1.5).  The spins are parameterized by Si = S(sinθ cosφ, sinθ sinφ,
+cosθ).  Here, θ is represented by the color (see colormap) while φ is represented by the orientation of the arrow in the plane.
+The shape of the unit cell (with 48 sites in total) is marked by the yellow shadow.  The right panel is the static structure factor
+in the momentum space.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                           FIG. S3:  The same as Fig. S2but with the parameter (Γ ′/Γ = 0.3, h = 2.0).
+
+
+
+
+        S3.    QUANTUM Γ-Γ′ MODEL: VARIOUS CALCULATION UNDER PERIODIC BOUNDARY
+                                                                CONDITION
+
+                                  A.    mapping a 24-site cluster to a one-dimensional chain
+
+  The DMRG method is known as a powerful method for solving problems in one dimension.  To apply it to two-
+dimensional problems, one need to map the lattice geometries to snake-like chains.  Figure S4shows the method that
+maps a 24-site cluster to a one-dimensional chain.  One needs to number the sites from 1 to 24, and the sites belonged
+to the A (B) sublattice are assigned odd (even) numbers.  The eﬀective spin chain is created by connecting the sites
+in order.  Nevertheless, the procedure will inevitably involve long-range correlation and entanglement.  For example,
+                                                                                                                                                3
+
+in the case of the hexagonal cluster,  the sites 15 and 10 are of nearest neighbor.  while site 15 is the  ﬁfth  nearest
+neighbor of the site 10 in the resulting spin chain.  However, all the interactions are kept in the spin chain and the full
+Hamiltonian remains unchanged.  Hence, the true ground state could still be targeted properly.  Since the long-range
+interactions are brought in, the DMRG method is less eﬃcient and one need to increase the number of block states
+and/or sweep times gradually to obtain a reliable result.  In practice, for a 24-site cluster, 3000 block states and 12
+sweep times are enough to reach an energy precision with 7 8 digits after the decimal point.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S4: (a) The numbering of the sites on the 24-site hexagonal cluster.  (b) The one-dimensional chain analog of the hexagonal
+cluster.
+
+
+
+
+                                       B.    multiple transitions across the phase diagram
+
+  In this subsection we will show the method to determine the phase transitions in the phase diagram.  Figure S5√
+presents the results along the line of Γ′/Γ = 0.1.  Figure S5(a) shows the magnetization MS =                         ⟨Sx⟩2 +⟨Sy⟩2 +⟨Sz⟩2,
+which undergoes ﬁve distinct phases termed as chiral-spin (χ) phase, ΓSL, spin-ﬂop phase, zigzag phase, and para-
+magnetic  phase.   Similarly,  the  ﬂux-like  plaquette⟨Wp⟩  shown  in  Fig. S5(b)  displays  the  same  phase  transitions,
+corroborating the reliability of our phase diagram.
+  We also show the phase  transition along the line of Γ′/Γ =−0.1 in Fig. S6.  It is observed that  there  is direct
+transition occurring at ht≈ 1.22 between the zigzag phase and the paramagnetic phase.
+
+
+                                            C.    ﬁnite-size scaling of the magnetization
+
+  We take the Γ-Γ′ model in a [111] magnetic ﬁeld as an example to show the ﬁnite-size correlation and extrapolation.
+Without lose of generality,  we will ﬁx Γ′/Γ = 0.3 and choose magnetic ﬁeld h = 0.5 (AFMc  phase),  1.8 (spin-ﬂop
+phase),  and 3.0 (paramagnetic phase).  The system size N  is chosen as 18,  24,  and 32.  The extrapolations of the
+magnetic order parameters MN(Γ) and MN(Γ′) as functions of 1/N  are shown in Fig. S7(a)-(f).  In each panel, the
+blue ﬁlled circles stand for the values along the c[111] direction, while the red open circles represent the value in the
+a[11¯2]-b[¯110] plane.
+
+    • In panel (a) and (b) [AFMc  phase],  we ﬁnd that only the c  component (blue circles) of MN(Γ′) is ﬁnite,  in
+       accordance with the property of the AFMc phase.
+                                                                                                                                                       4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S5:  (a) Behavior of the magnetization MS  as a function of magnetic ﬁeld h in the Γ-Γ′  model with Γ′/Γ = 0.1.  The
+underlying geometry is a 24-site hexagonal cluster.  The dash dotted lines represent the phase boundaries of the adjacent phases.
+(b) The same as (a) but for the ﬂux-like plaquette⟨Wp⟩.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S6:  (a) Behavior of the magnetization MS  as a function of magnetic ﬁeld h in the Γ-Γ′  model with Γ′/Γ =−0.1.  The
+underlying geometry is a 24-site hexagonal cluster.  The dash dotted lines represent the phase boundaries of the adjacent phases.
+(b) The same as (a) but for the ﬂux-like plaquette⟨Wp⟩.
+
+
+    • In panel (e) and (f) [paramagnetic phase], thec components (blue circles) ofMN(Γ) andMN(Γ′) are both ﬁnite.
+       The diﬀerence lies in that, the value of MN(Γ) is around 0.5, while the value of MN(Γ′) is around 0.25.
+    • In  panel  (c)  and  (d)  [spin-ﬂop  phase],  we  ﬁnd  that  not  only  the c  components  (blue  circles)  of MN(Γ)  and
+                                                                                                                                                          5
+
+       MN(Γ′) are ﬁnite, but also the ab components (red circles) are nonzero.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S7:  Extrapolation of the magnetic order parameters MN(Γ) and MN(Γ′) as a function of magnetic ﬁeld h in the Γ-Γ′
+model with Γ′/Γ = 0.3, withN = 18, 24, and 32.  In each panel, the blue ﬁlled circles stand for the values along thec direction,
+while the red open circles represent the value in the ab plane.  The magnetic ﬁeld is h = 0.5 (a and b, AFMc phase), h = 1.8
+(c and d, spin-ﬂop phase), and h = 3.0 (e and f, paramagnetic phase).  The error bars are much smaller than the size of the
+symbols.
+
+
+   Finally,  for  the  sake  of  clarity,  we  show  the  static  structure  factor  of  the  spin-ﬂop  phase  in  Fig.  S8.   Since  the
+spins in the spin-ﬂop phase have a dominant component along the [111] direction,  we now deﬁne the α (= x,y,z)
+component of the static structure factor as
+
+                                                       ˜SαN(q) =  1    ∑⟨ ˜Sαi  ˜Sαj⟩eiq·(Ri−Rj)                                                           (S5)
+                                                                   N    ij
+
+
+where  ˜Sxi  =    1√6(Sxi  +Syi− 2Szi ),  ˜Syi  =    1√2(Syi−Sxi ),  ˜Szi  =    1√3(Sxi  +Syi  +Szi ).  Here,Ri is the position of site i and
+q is the wavevector in the reciprocal space.  Panels (a), (b), and (c) represent, respectively, the structure factor along
+the a  [11¯2] direction (i.e., ˜SxN(q)), b  [¯110] direction (i.e., ˜SyN(q)), and c  [111] direction (i.e., ˜SzN(q)).  The diﬀerence
+between the spin-ﬂop phase and the totally polarized phase is that the a andb components of the structure factor are
+ﬁnite and have an equal strength.
+                                                                                                                                                  6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S8:  The static structure factor of the spin-ﬂop phase in the Γ-Γ′  model in the [111] magnetic ﬁeld with (Γ′/Γ = 0.3,
+h/Γ=1.8). Panels (a), (b), and (c) show the static structure factor along the a direction, b direction, and c direction, respectively.
+
+
+   S4.    QUANTUM Γ-Γ′ MODEL: EXCITATION GAP UNDER CYLINDER BOUNDARY CONDITION
+
+  In Fig.10(a) in the main text, we show the excitation gaps ∆   υ =Eυ−E0 obtained on a 24-site cluster.  Here, we
+present the ﬁrst few excitation gaps ∆υ obtained on a 12× 6 YC cylinder, see Fig. S9.  It is found that there are two
+quantum phase transitions occurring at ht1≈ 0.8 and ht2≈ 2.3.  The values of the transition points are quite close
+to the estimated results revealed in the 24-site cluster.  Such a consistency implies the robustness of the intermediate
+spin-ﬂop phase.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S9:  The ﬁrst four excitation gaps ∆υ  (υ = 1–4) as a function of magnetic ﬁeld h/Γ in the Γ-Γ′ model with Γ′/Γ = 0.3.
+Here, the computation is executed on a 12× 6 YC cylinder under cylinder boundary condition.
+
+
+
+
+
+
+[1]J.  Chaloupka  and  G.  Khaliullin,  Hidden  symmetries  of  the  extended  Kitaev-Heisenberg  model:   Implications  for  the
+    honeycomb-lattice iridates A2IrO3, Phys. Rev. B 92, 024413 (2015).
+[2]P. A. Maksimov and A. L. Chernyshev, Rethinking  α-RuCl3, Phys. Rev. Research 2, 033011 (2020).
+[3]Z.-X. Luo and G. Chen, Honeycomb rare-earth magnets with anisotropic exchange interactions, SciPost Phys. Core    3, 004
+    (2020).
+[4]J. Y. Gan, Y. C. Wen, J. Ye, T. Li, S.-J. Yang, and Y. Yu, Extended Bose-Hubbard model on a honeycomb lattice, Phys.
+    Rev. B 75, 214509 (2007).

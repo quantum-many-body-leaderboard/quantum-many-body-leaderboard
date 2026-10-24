@@ -1,0 +1,416 @@
+      Deconﬁned  criticality in  the  frustrated Heisenberg  honeycomb  antiferromagnet
+
+                                  R.  Ganesh,1  Jeroen  van  den  Brink,1, 2  and  Satoshi  Nishimoto1
+            1Institute  for  Theoretical  Solid  Sate  Physics,  IFW  Dresden,  Helmholtzstr.  20,  01069  Dresden,  Germany
+                         2Department  of  Physics,  Technical  University  Dresden,  D-1062  Dresden,  Germany
+                                                             (Dated:  October 9, 2018)
+                   Using the density-matrix renormalization group, we determine the phase diagram of the spin 1/2
+                Heisenberg  antiferromagnet  on  a  honeycomb  lattice  with  a  nearest  neighbor  interaction  J1  and  a
+                frustrating,  next-neighbor  exchange  J2.   As  frustration  increases,  the  ground  state  exhibits  N´eel,
+                plaquette  and  dimer  orders,  with  critical  points  at  J2/J1  =  0.22  and  0.35.   We  observe  that  both
+                the spin gap and the corresponding order parameters vanish continuously at both the critical points,
+                indicating the presence of deconﬁned quantum criticality.
+
+   Introduction    Models of frustrated magnetism on the                                       Néel        pRVB           Dimer             J /□J
+                                                                                                                                              2         1
+honeycomb lattice have lately received tremendous inter-                                              0.22        0.35
+est.  This interest stems from sign-problem-free Quantum
+Monte Carlo (QMC) studies which have established the
+presence  of  a  spin  liquid  phase  in  the  honeycomb  Hub-
+bard  model  [1].   Approaching  from  the  strong  coupling
+side,  the  physics  at intermediate  values  of the  Hubbard
+interaction U, for which the novel spin liquid phase has                                                       ~     -
+been found, can be described by the spin 1/2 Heisenberg
+model characterized by an antiferromagnetic interaction                         FIG.  1.   Phase  diagram  of  the  spin  1/2  Heisenberg  antifer-
+J1  between  neighboring  spins  and  a  frustrating,  next-                    romagnet  on  a  honeycomb  lattice  with  a  nearest  neighbor
+nearest  neighbor  exchange  J2.   When  the  frustration  is                   interaction  J1  and  a  frustrating,  next-neighbor  exchange  J2
+small and J2  weak, the well-known N´eel ordered state is                       as obtained from DMRG.
+stable, but  at a  critical value  of α = J2/J1  it gives way
+to  another,  possibly  liquid,  phase.   While  all  studies  so               stabilized  beyond  the  classical  limit,  up  to  αc1  =  0.22
+far  agree  upon  the  presence  of  a  phase  transition,  the                 (ii) the intermediate state has weak plaquette order with
+nature of this intermediate phase that is reached by the                        f-wave  symmetry,  and  (iii)  for  αc2  >  0.35,  the  ground
+transition out of the  N´eel state is heavily debated.  The                     state has dimer order and breaks lattice rotational sym-
+intermediate  phase  has  been  identiﬁed  as  a  Z2  spin  liq-                metry.   These  results  are  summarized  in  the  phase  di-
+uid by some [2–4] and as a plaquette-Resonating Valence                         agram  shown  in  Fig.  1.   Moreover,  we  ﬁnd  that  within
+Bond (pRVB) state, breaking translational symmetry, by                          numerical precision, (iv) both the spin gap and the rele-
+others  [5–7].  A  recent variational calculation argues in-                    vant order parameters vanish continuously, at both crit-
+stead that the intermediate state does not have plaquette                       ical  points  αc1  and  αc2.   This  implies  that  even  if  two
+order [8].  Upon further increasing the frustration param-                      diﬀerent symmetries are broken on either side of αc, the
+eter α, a second transition takes place into a ground state                     transition  is  not  ﬁrst-order,  as  one  would  expect  from
+that breaks lattice rotational symmetry but may or may                          a  Ginzburg-Landau-type  theory.    Having  two  second-
+not have magnetic order.                                                        order transitions between the N´eel, plaquette and dimer
+   We analyze this complex situation by formulating and                         phases,  implies  that  the  critical  theory  for  these  tran-
+answering  four  succinct  fundamental  questions  on  the                      sitions  is  unusual  and  is  not  described  in  terms  of  the
+J1 − J2 honeycomb Heisenberg model:  (i) As to the N´eel                        order  parameter  ﬁelds  of  either  phase.   It  indicates  in-
+state:  do  quantum  ﬂuctuations  tend  to  stabilize  or  de-                  stead  the  presence  of  two  deconﬁned  quantum  critical
+stroy  it?   In  other  words,  does  N´eel  order  vanish  above               points [9, 10].
+or  below  the  classical  threshold  of  α  =  1/6?  (ii)  What                   Frustrated  honeycomb  Heisenberg  model    The  Hamil-
+is  the  nature  of  the  intermediate  state?   Is  it  a  liquid              tonian corresponding to the J1 − J2 Heisenberg model on
+state  or does  it  have  plaquette  order?  (iii)  What  is  the               a honeycomb lattice is
+ground state for  large α?  Does  it have magnetic  order?                                              ∑                    ∑
+(iv) What is the nature of the two phase transitions?  Do                                     H = J1         Si · Sj + J2          Si · Sj,             (1)
+the order parameters develop discontinuously or contin-                                                 ⟨ij⟩                 ⟨⟨ij⟩⟩
+uously across the quantum critical points?                                      where ⟨ij⟩ and ⟨⟨ij⟩⟩ denote nearest neighbor and next-
+   We   use   nominally-exact   two-dimensional   density-                      neighbor  sites  i  and  j,  respectively,  and  α  =  J2/J1  pa-
+matrix  renormalization  group  (DMRG)  calculations  to                        rameterizes the strength of the frustration.  We consider
+settle  these  issues  and  establish  that:   (i)  N´eel  order  is            antiferromagnetic coupling:  J1, J2 and α are all positive.
+                                                                                                                                                           2
+
+The model is well understood in the classical limit:  at the                     (a)   Diamond-shaped cluster      (c)
+critical value of α = 1/6, N´eel order gives way to a spiral                                         L+1                0.2  d  amond               clusteri            -shaped
+state with interesting order-by-disorder physics [11, 12].                                                L                                        J2=0.00
+However,  in  the  extreme  quantum  limit  of  S   =  1/2,                                        21    13    5                                      0.04
+                                                                                                22    14    6     1     0.1                           0.08
+                                                                                                                                                      0.12
+the  phase diagram is not well established [2–8].  We  use                                      23    15    7     2                                   0.16
+                                                                                             28    20    12    4                                      0.20
+DMRG to resolve this issue.                                                                                                                           0.22
+                                                                                             27    19    11    3         0
+   Method    Our  DMRG  is  truly  two-dimensional  –  we                                 29    24    16    8             0    0.1   0.2 1/L0.3  0.4   0.5
+consider  clusters  with  various  geometries  chosen  to  be                             30    25    17    9           0.2
+                                                                                             26    18    10        (d)
+conducive to various ordering patterns.  It is well known                                                                    hexagonal cluster
+that one can lift the degeneracy of wave functions by tak-
+                                                                                                                                                   J2=0.00
+ing some or all edges to be open.  We use appropriate edge                       (b)      Hexagonal cluster             0.1                           0.04
+                                                                                                                                                      0.08
+geometries as weak perturbing ﬁelds to induce symmetry                                           L+1                                                  0.12
+                                                                                                                                                      0.16
+breaking  in  the  ground  state.   By  performing  measure-                                                                                          0.20
+ments  in the  center of the  cluster, one can estimate  the                                       L                                                  0.22
+                                                                                                                         00    0.1   0.2   0.3   0.4   0.5
+order  parameter  induced  by  the  edge  geometry.   Upon                                                                               1/L
+                                                                                                  7  6             (e)  0.1
+systematically  increasing  the  size  of  the  system,  the  ef-
+                                                                                            15  14     5  1            0.08
+fect of the edges becomes progressively weaker and thus,                                   22    13  8      2                         extrapolated values
+by scaling to the thermodynamic limit, we can obtain the                                    21  16     9  4            0.06                  J2,c/ J1 ~ 0.22
+value of the order parameter in the ground state.  In all                                  23    17  12     3          0.04
+
+                                                                                            24  20     11 10
+cases, we have obtained smooth ﬁnite size scaling which                                          19  18                0.02
+indicates that our results exhibit a steady convergence to
+the thermodynamic limit.                                                                                                 00         0.1        0.2        0.3
+                                                                                                                                         J2 / J1
+   As  described below,  we have used a variety of cluster
+geometries  appropriate  for  each  phase.    Note  that  the                    FIG.  2.    Finite  size  scaling  of  N´eel  order  parameter.    (  a)
+performance  of  DMRG  calculation  is  equally  stable  for                     Diamond cluster with L = 3.  (b) Hexagonal cluster with L =
+any ordered phase at α < O(1).  We study several cluster                         3.  (c-d) Finite size scaling of N´eel order paramater deﬁned in
+sizes with total number of sites up to 96 and keep up to                         Eq.   2  for  diamond  and  hexagonal  clusters.   (e)  Scaled  N´eel
+6000  density-matrix  eigenstates  in  the  renormalization                      order parameter as a function of α = J2/J1 for diamond (red,
+procedure.   We  perform  ∼  10  sweeps  until  the  ground-                     closed circles) and hexagonal (blue, open circles) clusters.
+state energy converges within an error of ∼ 10−5J1.  All
+quantities calculated in this letter have been extrapolated                      beyond the classical regime of stability.  We have used two
+to  the  limit  n → ∞,  where n  is  the  number  of retained                    cluster geometries – diamond and hexagonal [Fig. 2a,b].
+eigenstates.                                                                     One should be aware that periodic boundary conditions
+   Quantum  stabilitization  of  N´eel  order    We  ﬁrst  de-                   in  some  direction  artiﬁcially  enhance  or  diminish  N´eel
+termine  the  value  of  α  at  which  N´eel  order  vanishes                    correlations  due  to  short  range  periodicity.   This  ﬁnite-
+and  establish  the  role  of  quantum  ﬂuctuations  in  this                    size eﬀect decays only slowly with increasing cluster size.
+process.   Na¨ıvely,  one  expects  quantum  ﬂuctuations  to                     To circumvent this issue, we keep all edges of the clusters
+destabilize  N´eel order for  S  = 1/2, thereby  pushing  the                    open  and  measure  the  following  order  parameter  as  a
+αc1  to  a  value  below  1/6.   On  the  other  hand,  as  the                  function of α:
+N´eel  state  is  collinear,  quantum  ﬂuctuations  may  pre-                                                       (∑               )2
+fer  the  N´eel  state  over  a  competing  spiral  phase  and                                     m2(N) =  1              (−1)i ⃗Si      .                  (2)
+push  αc1  above  1/6.   Even  though  various  approaches                                                      N
+have  been  used  to  resolve  this  issue,  a  consistent  pic-                                                        i
+ture  has  not  emerged  so  far.   Calculations  which  sup-                    As  shown  in  Fig.2,  this  quantity  shows  good  ﬁnite-size
+port  the  hypothesis  that  αc1  <  1/6  include  linear  spin                  scaling with terms proportional to 1/L and 1/L2, where
+wave theory [13], one-loop renormalization group study of                        L is the linear extent of the system.  In the unfrustrated
+the non-linear sigma model [14], functional renormaliza-                         situation (α = 0), the staggered moment m in the  ther-
+tion group analysis [15],  and a  Variational Monte  Carlo                       modynamic limit comes out to be 0.2857 ± 0.039 which is
+(VMC)  approach  using  RVB  and  Huse-Elser  wavefunc-                          consistent with previously estimated values of 0.2677(6)
+tions [4].  On the other hand, approaches which support                          and  0.270  obtained  from  QMC  [17]  and  ED  [6]  respec-
+the  αc1  >  1/6  hypothesis  include  exact  diagonalization                    tively.  As α increases, the obtained value of the N´eel or-
+(ED)  [5,  6],  Schwinger boson mean-ﬁeld theory  [13],  se-                     der parameter steadily decreases.  At the critical value of
+ries expansions [16], coupled-cluster calculations [7] and                       αc1 ∼ 0.22, we observe that N´eel order vanishes in a con-
+a VMC calculation using entangled plaquette states [8].                          tinuous transition as shown in Fig.2e.  Both diamond and
+   The  DMRG  results  presented  in  Fig.  2  conclusively                      hexagonal cluster geometries give the same value of αc1,
+establish that quantum ﬂuctuations  stabilize N´eel order                        which signals  the  robustness of  our  result.  Thus,  quan-
+                                                                                                                                                          3
+
+
+
+                                       J2 /J1 = 0.20   1                        gle  hexagon.   The  f-wave,  antisymmetric,  pRVB  wave-
+                                 0.6   J2 /J1 = 0.25       (c)
+                                       J2 /J1 = 0.30                            function is given by |−⟩ ∼ |a⟩ − |b⟩, upto a normalization
+   (a)                                 J2 /J1 = 0.35
+                                 0.4                                            constant.  The  order parameter  corresponding to  pRVB
+
+
+          14 23                                                                 order is the projection onto the antisymmetric wavefunc-
+        13    24                                                 J2 /J1 = 0.20
+                                 0.2          (b)                J2 /J1 = 0.25  tion:   ˆOpRV B  =  |−⟩⟨−|  acting  on  a  shaded  plaquette  in
+          15 22                                                  J2 /J1 = 0.30
+                                                                 J2 /J1 = 0.35
+      7 12    25 30                                                             Fig. 3a.  We use the closely related plaquette-ﬂip operator
+    6     16 21    31              00 0.20.4 0.60.8 1  00  0.10.2 0.30.40.5
+                                           1/L                  1/L             which ﬂips the two Kekul´e covers:
+      8  11   26 29
+                                 0.5
+  2 5     17 20    3235              extrapolated values
+1     9 10    27 28    36        0.4                                                                     ˆP  = −|a⟩⟨b| − |b⟩⟨a|.                          (3)
+                                                               gap     9
+  3 4     18 19   33 34          0.3                            Pcentral
+           L                             (d)                                    If  the  plaquette  is  in  the  pure  |−⟩  state,  this  operator
+                                 0.2
+               L+1               0.1                                            has expectation value 5/4 (details in Supplementary Ma-
+
+                                   00.1     0.2      0.3       0.4      0.5     terial).  For the case of s-wave pRVB order, this expecta-
+                                                     J2 /J1                     tion value would be negative.
+FIG. 3.  (a):  Cluster geometry used to establish the presence                      To determine the strength of the pRVB ordering at the
+of  plaquette  order.   (b,c)  Finite  size  scaling  of  spin  gap  and        cluster center, we deﬁne ⟨ ˆPcentral⟩ as the average of ⟨ ˆP ⟩
+⟨ ˆPcentral⟩ – a measure of pRVB amplitude.  (d) Spin gap and                   over  three  plaquette-ordering  hexagons  at  the  center  of
+⟨ ˆPcentral⟩ in the thermodynamic limit.                                        the system.  As seen from our cluster geometry in Fig. 3a,
+                                                                                one cannot always identify a single central plaquette for
+                                                                                a given L.  But we can always identify a central triad of
+tum ﬂuctuations stabilize N´eel order signiﬁcantly beyond                       plaquettes.  Finite  size  scaling of ⟨ ˆPcentral⟩  provides the
+the classical threshold.                                                        strength  of  pRVB  order  in  the  limit  of  inﬁnite  system
+   Non-linear spin wave analysis    The excitations of the                      size.  Consistent with f-wave pRVB order, this expecta-
+N´eel state are well captured by spin wave theory, which                        tion value is positive for 0.22 ≲ α ≲ 0.35.  Fig. 3c shows
+treats quantum ﬂuctuations using an expansion in pow-                           the ﬁnite size scaling of ⟨ ˆPcentral⟩ which indeed scales to
+ers of S.  Linear spin wave theory with O(S1) terms gives                       a  positive  value  in  thermodynamic  limit.   Also  we  ﬁnd
+αc1 ∼ 0.11 [13], which is below the classical threshold.  To                    a  ﬁnite  spin  gap  that  is  consistent  with  √3 × √3  pla-
+reconcile this with the observed DMRG phase boundary,                           quette ordering.  We note, however, that strong quantum
+we  take  into  account  the  quartic  spin  wave  interaction                  ﬂuctuations reduce the amplitude of plaquette ordering:
+terms of order O(S0).  We treat the interactions at mean-                       ⟨ ˆP N=∞central⟩ reaches a maximum value of ∼ 0.43 compared
+ﬁeld level (for details, see Supplementary Material) and                        to 5/4 for the case of pure pRVB order.  The strength of
+observe that the Hartree Fock parameters merely renor-                          pRVB  order  can  also  be  characterized  by  ¯p,  the  ampli-
+malize  the  strength  of  the  J1  and  J2  couplings.   This                  tude of the projection onto the |−⟩ plaquette wavefunc-
+eﬀectively  scales  the  frustration  parameter  α  =  J2/J1                    tion  as  deﬁned  in  Ref.  [20].   For  decoupled  hexagons  in
+down  so  that  the  N´eel  state  only  becomes  unstable  be-                 the regime 0 < α < 0.5, there is perfect pRVB order with
+yond α ∼ 0.214.  The quartic terms thereby provide a sig-                        ¯p  =  1.   Our  DMRG  results  indicate  that  in  the  honey-
+niﬁcant  correction to  the  critical  frustration  ratio.  The                 comb J1 − J2  model, pRVB order is strongly aﬀected by
+precise value of αc1 may depend upon further corrections                        quantum ﬂuctuations and reduced to  ¯p ≲ 0.43.  To con-
+beyond quartic order.  Nevertheless, non-linear spin wave                       ﬁrm  the  existence  of  pRVB  order,  we  also  measure  the
+analysis conﬁrms the strong tendency for quantum ﬂuc-                           spin gap which is by deﬁnition the energy diﬀerence be-
+tuations to stabilize N´eel order beyond the classical limit.                   tween the ﬁrst triplet excited state and the singlet ground
+   Intermediate  plaquette  phase    We  observe  the  pres-                    state,
+
+ence of an intermediate plaquette-RVB (pRVB) phase, as                                    ∆(L) = E1(L) − E0(L),     ∆ =   lim
+suggested previously [5–7, 18], for 0.22 ≲ α ≲ 0.35.  This                                                                          L→∞ ∆(L),       (4)
+state consists of a √3 × √3 arrangement of plaquettes as                        where En(L) is the n-th eingenenergy (n = 0 corresponds
+shown  in  Fig.  1  –  each  shaded  plaquette  is  in  an  anti-               to  the  ground  state)  of  the  system  size  L.   The  scaling
+symmetric combination of the two Kekul´e singlet covers.                        analysis  of  the  ﬁnite-size  data  is  shown  in  Fig.  3b,  and
+To test for plaquette order in the ground state, we choose                      the results extrapolated to the thermodynamic limit are
+the  cluster geometry shown in Fig. 3a which favors pla-                        plotted in Fig. 3d.  We observe that the gap is ﬁnite only
+quette order (this also favors columnar dimer order [19],                       in the region of positive ⟨ ˆPcentral⟩.
+but we have explicitly checked that it order does not oc-                           Dimer  phase    At  larger  values  of  J2,  the  presence  of
+cur).  This choice of boundary conditions acts as a weak                        a  dimer  state  which  breaks  lattice  rotational  symmetry
+ﬁeld  which  induces  plaquette  ordering  as  shown  by  the                   has  been  proposed  previously  [11,  18].   This  state  has
+shaded hexagons in Fig. 3a.  To determine the pRVB or-                          been  variously  called  the  staggered-Valence  Bond  Solid
+der  parameter,  we  ﬁrst  deﬁne  the  two  single-plaquette                    (s-VBS) or the Nematic VBS state in literature.  We es-
+states |a⟩ and |b⟩ – the two Kekul´e singlet covers of a sin-                   tablish  that  this  state  occurs  in  the  phase  diagram  for
+                                                                                                                                                              4
+
+
+
+0.6                                    0.8               Ly=2 (Lx           )∞        Nature  of  phase  transitions    We  have  clearly  demon-
+                                                         Ly=4 (Lx           )∞
+                                                         Ly=6 (Lx           )∞     strated the presence of N´eel, plaquette and dimer orders.
+                                       0.6               Lx,  Ly∞
+0.4           OBC  Lx                                                              Na¨ıvely,  one  expects  ﬁrst-order  quantum  phase  transi-
+  R                                      /c68                                      tions (QPTs) between these phases as they break diﬀer-
+                                       0.4
+                 CB A                                                              ent  symmetries.  Our  DMRG  results,  however, evidence
+0.2                         PBC  Ly
+                                       0.2                                         a  continuous  transition  out  of  the  N´eel  phase:   as  can
+
+  0                                      0                                         be  seen  from  Fig.  2,  the  N´eel  order  parameter  vanishes
+         0.4             0.6             0.8              10.40.6 0.8       1      continuously  at  αc1  =  0.22.   This  implies  the  presence
+                  J2/J1                                  J2/J1
+                                                                                   of an exotic deconﬁned QPT [7].  Approaching from the
+FIG. 4.  Left:  ﬁnite size scaling of ⟨ ˆR⟩, order parameter corre-                pRVB side, the quantum ﬁeld theory governing this de-
+sponding to lattice  rotational  symmetry  breaking.  For  ﬁnite                   conﬁned transition must involve spinons coupled to vor-
+size  scaling,  we  ﬁrst  take  Lx  →  ∞  and  then  Ly  →  ∞.   We                tices  in  the  pRVB  order  parameter  [19].   This  is  an  ex-
+show  data  points  obtained  by  Lx  scaling  for  diﬀerent  ﬁxed                 citing proposition as a deconﬁned QPT in a model with
+Ly  values.  The  points connected  by the line  are  ﬁnal values                  realistic  Heisenberg  interactions  has  not  been  identiﬁed
+obtained  from  Ly  scaling.   Inset:  cluster  geometry  to  detect               before.  Surprisingly, DMRG results suggest that also the
+dimer order.  We enforce periodic boundary conditions along                        plaquette-dimer  transition  is  continuous.   As  seen  from
+Ly and open boundary conditions along Ly.  Right:  The order                       Fig.  3d  and  Fig.  4,  at  αc2  =  0.35,  there  is  no  evidence
+parameter  and  spin  gap  (also  obtained  by  similar  ﬁnite  size
+scaling) as a function of α = J2/J1.                                               for either plaquette ordering or a breaking of lattice ro-
+                                                                                   tational  symmetry.   More  detailed  work  will  be  needed
+                                                                                   to study the vicinity of these transitions, to extract crit-
+α  /greaterorsimilar  0.35  using  the  cluster  geometry  in  Fig.4a.   We  use   ical exponents and to rule out weak ﬁrst-order behavior
+open boundary conditions in the x direction and periodic                           or  the  presence  of  a  diﬀerent  small  intervening  phase.
+boundary conditions along y, thus breaking the degener-                            If there is indeed a continuous transition between dimer
+acy associated with threefold lattice rotational symmetry.                         and  plaquette  phases,  it  would  be  yet  another  Landau-
+The cluster favors bond ordering with horizontal dimers                            forbidden QPT within the same model.  The ﬁeld theory
+as shown in Fig.4a.  We ﬁrst measure the breaking of lat-                          corresponding to this transition would be of immense in-
+tice  rotational  symmetry  by  evaluating  the  expectation                       terest.
+value of                                                                              We  thank  I.  Rousochatzakis  for  many  useful  discus-
+                                                                                   sions.
+                       ˆR = SA · SB − SB · SC,                        (5)             Note added:  during the preparation of this manuscript
+                                                                                   a DMRG study in Ref. [21] reported a similar sequence of
+where the sites A, B and C are chosen close to the center                          N´eel, plaquette and dimer order as well as the continuous
+of the  system (see  Fig. 4a).  We  determine  the  expecta-                       nature of the transition out of the N´eel phase.
+tion  ⟨ ˆR⟩  while  systematically  increasing  system  size.   If
+the  true  ground  state  breaks  lattice  rotational  symme-
+try, we expect this quantity to scale to a non-zero value
+in  the  thermodynamic  limit.   For  ﬁnite  size  scaling,  we                     [1]  Z.  Y.  Meng,  T.  C.  Lang,  S.  Wessel,  F.  F.  Assaad,  and
+ﬁrst take Lx  → ∞ followed by Ly  → ∞.  This sequence                                   A. Muramatsu, Nature 464, 847 (2010).
+of limits ensures that there is no degeneracy arising from                          [2]  F. Wang, Phys. Rev. B 82, 024419 (2010).
+lattice rotations.  We obtain smooth ﬁnite size scaling by                          [3]  Y.-M. Lu and Y. Ran, Phys. Rev. B 84, 024420 (2011).
+restricting  ourselves  to  even  values  of  Ly,  as  shown  in                    [4]  B. K. Clark, D. A. Abanin, and S. L. Sondhi, Phys. Rev.
+Fig.4.  Including odd Ly values leads to small oscillations                             Lett. 107, 087204 (2011).
+preventing smooth scaling.                                                          [5]  H.  Mosadeq,  F.  Shahbazi,  and  S.  A.  Jafari,  J.    Phys.:
+   Fig.4b  shows  that  ⟨ ˆR⟩  scales  to  a  non-zero  value  for                      Condens.   Matter 23, 226006 (2011).
+α  /greaterorsimilar  0.35,  clearly  establishing  broken  lattice  rotational     [6]  A.  F.  Albuquerque,  D.  Schwandt,  B.  Het´enyi,  S.  Cap-
+symmetry  in  the  ground state.   However,  this  is  consis-                          poni,  M.  Mambrini,  and  A.  M.  L¨auchli,  Phys.  Rev.  B
+tent with  two ground state candidates  –  dimer  order or                              84, 024406 (2011).
+                                                                                    [7]  R. Bishop, P. Li, D. Farnell, and C. Campbell, J.   Phys.:
+magnetic  stripe  order [6].  To  distinguish  between  these                           Condens.   Matter 24, 236002 (2012).
+two, we measure the spin gap.  The ﬁnite size scaling for                           [8]  F.  Mezzacapo  and  M.  Boninsegni,   Phys.  Rev.  B  85,
+spin  gap  is  shown  in  Fig.  4b.   The  error  bars  shown  in                       060402 (2012).
+Fig. 4b are associated with the choice of ν to ﬁt the data                          [9]  T.  Senthil,  A.  Vishwanath,  L.  Balents,  S.  Sachdev,  and
+points.   For  0.35  ≲  α  ≲  0.6,  the  spin  gap  scales  to  a                       M. Fisher, Science 303, 1490 (2004).
+non-zero  value  robustly.   For  α  /greaterorsimilar  0.7,  it  is  not  possible[10]  C. Xu, Int. J. Mod. Phys. B 26, 1230007 (2012).
+to  determine  reliably  whether  the  spin  gap  closes.   The                    [11]  A. Mulder, R. Ganesh, L. Capriotti, and A. Paramekanti,
+                                                                                        Phys. Rev. B 81, 214419 (2010).
+non-zero spin gap clearly indicates dimer order and rules                          [12]  S. Okumura, H. Kawamura, T. Okubo, and Y. Motome,
+out the presence of broken spin rotation invariance.                                    J. Phys. Soc. Jpn. 79, 114705 (2010).
+                                                                                                                                                              5
+
+[13]  A. Mattsson, P. Fr¨ojdh, and T. Einarsson, Phys. Rev. B                           Sandvik, Phys. Rev. B 73, 054422 (2006).
+     49, 3997 (1994).                                                              [18]  J.  Fouet, P. Sindzingre, and C. Lhuillier,  Euro. Phys. J.
+[14]  T. Einarsson and H. Johannesson, Phys. Rev. B 43, 5867                            B 20, 241 (2001).
+     (1991).                                                                       [19]  C. Xu and L. Balents, Phys. Rev. B 84, 014402 (2011).
+[15]  J.  Reuther, D.  A. Abanin, and  R. Thomale,  Phys. Rev.                     [20]  R.  Ganesh,  S.  Nishimoto,  and  J.  van  den  Brink,  ArXiv
+     B 84, 014417 (2011).                                                               e-prints (2012), 1209.6091.
+[16]  J. Oitmaa and R. Singh, Phys. Rev. B 84, 094424 (2011).                      [21]  Z.  Zhu,  D.  A.  Huse,  and  S.  R.  White,  ArXiv  e-prints
+[17]  E. V. Castro, N. M. R. Peres, K. S. D. Beach, and A. W.                           (2012), 1212.6322.
+                                                  Supplementary  Material  for:
+      Deconﬁned  criticality in  the  frustrated Heisenberg  honeycomb  antiferromagnet
+
+                                 R.  Ganesh,1  Jeroen  van  den  Brink,1, 2  and  Satoshi  Nishimoto1
+            1Institute  for  Theoretical  Solid  Sate  Physics,  IFW  Dresden,  Helmholtzstr.  20,  01069  Dresden,  Germany
+                        2Department  of  Physics,  Technical  University  Dresden,  D-1062  Dresden,  Germany
+                                                           (Dated:  October 9, 2018)
+
+
+
+                Non-linear  spin  wave theory                                The index m stands for i + η,  where η  is a next-nearest
+                                                                             neighbour vector.
+  To  analyse  the  excitations  about  the  N´eel  state,  we                  We treat these terms using the Hartree Fock approach.
+follow  the  spin  wave  formalism  of  Ref.  [1].    Using  the             Using  Wick’s  theorem,  we  replace  bilinears  with  their
+Holstein  Primakoﬀ  representation,  the  Hamiltoniann  is                   expectation values  and ignore the  remaining normal or-
+expanded  in  powers  of  the  spin  length  S.    Ultimately                dered quartic interaction piece.  We take only the follow-
+however, we will set S = 1/2.  The classical energy of the                   ing bilinears to have non-zero expectation values:
+N´eel state is given by terms proportional to S2                                                      ⟨a†
+                                                   ]                                                     i ai⟩ = ⟨b†i bi⟩ = n,                         (6)
+                  ECl = NS2[       − 32J1 + 3J2     .                    (1)                        ⟨aibi+δ⟩ = p,                                         (7)
+where  N  is  the  total  number  of  spins.    The  quantum                                       ⟨a†i ai+η⟩ = h.                                        (8)
+correction, of order S, is given by              )(  ak     )                These are the only bilinears which have non-zero expec-
+        Hqu =∑       ( a†                                      ,      (2)    tation  values  within  the  quadratic  theory.   This  choice
+                         k   b−k)( Ak   BkB∗k   Ak     b†                    of order parameters leads to a self-consistent theory that
+                  k                                     −k                   does not induce extra bilinears with non-zero values.  The
+where    [                                                             ]     quantities  n  and  h,  being  expectation  values  of  Hermi-
+Ak = S     3J1 − 6J2 + 2J2{cos ka + cos kb + cos(ka + kb)}               ,   tian operators, are real.  We take p to be real, as it is real
+                                                                             within the quadratic theory.  Using the symmetries of the
+Bk = −SJ1γk.                                                                 underlying N´eel state, we take these three quantitites to
+We have deﬁned γk =∑                                                         be independent of position and choice of neighbour (δ, η).
+                               δ eik·δ, where δ’s are the nearest               The interaction terms can be decoupled as
+neighbour vectors.  The quantities ka  and kb  are compo-                                                  ∑    [
+nents of momentum along two primitive lattice vectors of                            HJ1(O(S0)) = J1              3{p − n}(a†
+the triangular Bravais lattice.  The operator a†k  (b†k) cre-                                                                  kak + b†kbk)
+ates a spin wave excitation on the A (B) sublattice.  This                                                   k                            ]
+Hamiltonian matrix can be diagonalized by a bosonic Bo-                                              + {n − p}γk(a−kbk + a†kb†−k)          .
+goliubov transformation with the eigenvalue                                                                ∑    [
+                              √                                                     HJ2(O(S0)) = J2              6{n − h}(a†kak)
+                       λk =      A2k − |Bk|2.                           (3)                                  k               ]
+For J2 > J1/6, the spin wave energy λk becomes complex                                               − {n − h}µk(a†kak)         + (a → b).      (9)
+near  the  Γ point  indicating  that  N´eel order is  unstable.              Here, µk  =∑
+We next include the quartic corrections arising from spin                    terms enter the quadratic Hamiltonian in Eq.2.  We haveη exp(ik · η).  With  this  decoupling, these
+wave  interactions  by  retaining  terms  of  order  O(S(0)).
+There are no cubic terms.  The interaction terms propor-                         A → A + 3J1{p − n} − 6J2{h − n} + J2{h − n}µk
+tional to J1  are given by
+                                ∑[                                           and
+        HJ1(O(S0)) =  J14             aib†jbjbj + a†i aiaibj                                       B → B + J1{n − p}γk.
+                                 i,δ                        ]
+                  +a†i b†jb†jbj + a†i a†i aib†j − 4a†i aib†jbj.       (4)       Clearly,  the  Hartree  Fock  decouplings  merely  renor-
+The index j stands for i + δ.  The quartic terms propor-                     malize the exchange couplings J1  and J2.  We have
+
+tional to J2  are given by                                                    J1 → J1(1 + {p − n}/S);        J2 → J2(1 + {h − n}/S).
+                                  ∑   [                                      We obtain the Hartree Fock parameters n, h and p self-
+        HJ2(O(S0)) =  −J28              aia†ma†mam+a†i aiaia†m               consistently.  For  every  ‘bare’ value  of  J2/J1,  we  obtain
+                                  i,η
+                                                    ]                        a renormalized value of J2/J1 as plotted in Fig.  1.  Fig.2
+    +a†i a†mamam+a†i a†i aiam − 4a†i aia†mam          + (a → b). (5)         plots  the  obtained  value  of  n.   When  n  ∼  S,  the  N´eel
+                                                                                                                                                                   2
+
+
+
+
+             0.18
+                                                                                     lattice  [2].   Thus,  our  value  of  critical  J2/J1  is  close  to
+
+             0.16                                                                    Schwinger Boson mean-ﬁeld result of Ref. [3].
+
+
+             0.14
+
+
+             0.12
+
+              0.1                                                                                             Plaquette  operators
+
+
+             0.08
+
+             0.06                                                                       On a single  plaquette,  we  denote  the  two Kekul´e sin-
+
+
+             0.04                                                                    glet  covers  as  |a⟩  and  |b⟩.     We  take  these  states  to
+                                                                                     be  normalized.   They  are  however  not  orthogonal  with
+             0.02
+                                                                                     ⟨a|b⟩ = −1/4, upto a phase that can be gauged away.  We
+               0
+                0    0.1  0.2   0.3  0.4   0.5  0.6  0.7   0.8  0.9   1              denote  symmetric  (s-wave)  and  antisymmetric  (f-wave)
+                                       Bare J2 / J1
+                                                                                     combinations of these covers as
+FIG.  1.   Eﬀective  J2/J1  obtained  after  Hartree-Fock  treat-                                      √                              √
+ment  of  interactions.  Note  that  the  eﬀective  J2/J1  lies  only                         |+⟩ =        2                              2
+approaches the instability  threshold 1/6 when the bare ratio                                              3 (|a⟩ + |b⟩) , |+⟩ =          5 (|a⟩ − |b⟩) .    (10)
+∼ 0.95.                                                                              With  this  deﬁnition,  we  have  ⟨+|+⟩  =  ⟨−|−⟩  =  1  and
+                                                                                     ⟨+|−⟩ = 0.  On an isolated plaquette, this operator takes
+
+
+             1.4                                                                     the expectation values:
+
+
+
+
+             1.2                                                                                      ⟨a| ˆP |a⟩ = 1/2,    ⟨b| ˆP |b⟩ = 1/2                  (11)
+                                                                                                                           ⟨+| ˆP |+⟩ = −3/4,              (12)
+              1
+                                                                                                                           ⟨+| ˆP |−⟩ = 0,                     (13)
+
+             0.8
+                                                                                                                           ⟨−| ˆP |−⟩ = 5/4.                 (14)
+
+
+             0.6
+                                                                                        Our  cluster  supports  pRVB  order.   With  pure  pRVB
+
+
+             0.4                                                                     ordering, the central plaquette must be in the |−⟩ state.
+                                                                                     We  ﬁnd  a  positive  expectation  value  for   ˆPcentral  which
+
+             0.2                                                                     supports  the  hypothesis  that  the  central plaquette  is  in
+               0    0.1   0.2  0.3   0.4  0.5   0.6  0.7   0.8  0.9   1
+                                       Bare J2 / J1
+                                                                                     the  |−⟩.    However,  the  expectation  value  is  less  than
+                                                                                     5/4  which  indicates  that  quantum  ﬂuctuations  reduce
+FIG.  2.    Plot  of  the  order  parameter  n.    When  n   ∼   S,                  the  strength  of  pRVB  order.   Our  cluster  geometry  can
+N´eel  is  expected  to  become  unstable  to  quantum  ﬂuctua-                      also accommodate c-VBS order, in which case the central
+tions.   For  S  =  1/2  (shown  as  a  dotted  line),  this  happens                plaquette  would  be  in  a  pure  |a⟩  or  |b⟩  state.   We  have
+at (J2/J1)bare ∼ 2.14.                                                               explicitly checked that this does not occur.
+
+
+moment  is  renormalized  to  zero  and  N´eel  order  is  ex-
+pected to become unstable to quantum ﬂuctuations.  For
+S = 1/2, this happens for (J2/J1)bare ∼ 0.214.                                       [1]  A. Mulder, R. Ganesh, L. Capriotti,  and A. Paramekanti
+   Our self-consistency equations are equivalent to a par-                                Phys. Rev. B 81, 214419 (2010).
+ticular  formulation  of  Schwinger  Boson  mean-ﬁeld  the-                          [2]  C. Bruder and F. Mila, Europhys. Lett. 17(5), 463 (1992).
+ory.  This connection between two very diﬀerent methods                              [3]  A.  Mattsson,  P.  Frjdh,  and  T.  Einarsson,  Phys.  Rev.  B
+has  been  pointed  out  earlier  for  the  case  of  the  square                         49, 3997 (1994).

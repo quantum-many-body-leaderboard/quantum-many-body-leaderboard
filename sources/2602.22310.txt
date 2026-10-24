@@ -1,0 +1,1151 @@
+Tuning the magnetic properties of Kitaev materials via the
+
+     antiferromagnetic proximity effect:  Novel phases and
+
+                 application to anα-RuCl         3/MnPS3 bilayer
+
+
+      Pedro M. Cˆonsoli,∗,†    Ezra Day-Roberts,† Johannes Knolle,‡,¶,§      Antia S.
+
+                                   Botana,∗,†    and Onur Erten∗,†
+
+         †Department of Physics, Arizona State University, Tempe, AZ 85287, USA
+
+‡Munich Center for Quantum Science and Technology (MCQST), Schellingstrasse 4, 80799
+
+                                            Munich, Germany
+
+ ¶Technical University of Munich, TUM School of Natural Sciences, Physics Department,
+
+                                   TQM, 85748 Garching, Germany
+
+    §Blackett Laboratory, Imperial College London, London SW7 2AZ, United Kingdom
+
+               E-mail:pconsoli@asu.edu;antia.botana@asu.edu;onur.erten@asu.edu
+
+
+    KEYWORDS:α-RuCl                  3, MnPS3, 2D magnetism, quantum spin liquids, antiferromagnetic
+proximity effect, skyrmion crystals
+
+                                                  Abstract
+
+          In  recent  years,  the  increasing  level  of  control  over  van  der  Waals  (vdW)  het-
+      erostructures  has  opened  new  routes  to  tune  the  properties  of  quantum  materials.
+      Motivated by these developments, we examine the potential consequences of interfac-
+      ing a Kitaev honeycomb magnet, such asα-RuCl       3, with a nearly lattice-matched vdW
+      antiferromagnet.  By combining perturbation theory, exact diagonalization, and a clas-
+      sical energy-minimization method, we show that an effective staggered magnetic field
+      originating from the vdW antiferromagnet can drive a monolayer of a Kitaev material
+      into  various  novel  phases,  including  an  antichiral  Kitaev  spin  liquid,  a  nonmagnetic
+      nematic phase, and different types of skyrmion crystals.  We then apply first-principle
+
+                                                       1
+       simulations to assess the prospect of concretely realizing this setup in a heterobilayer
+       ofα-RuCl       3 and the easy-axis antiferromagnet MnPS3.
+
+    A long-standing quest that has united the fields of condensed matter physics and materi-
+als chemistry for decades is the search for experimental realizations of quantum spin liquids
+(QSLs) – elusive states of matter that display fascinating properties such as long-range en-
+tanglement, fractionalized excitations, and emergent gauge fields.1–4    By now, various classes
+of Mott insulators have been identified as candidates to host QSLs, including the so-called
+Kitaev materials.5 At low energies, these compounds develop spin-orbit entangledJ           eff = 1/2
+magnetic  moments  which  interact  primarily  through  the  bond-dependent  Ising  exchange
+couplings observed in Kitaev’s honeycomb model.6–8    Yet while the latter is celebrated for
+harboring an exact QSL ground state, Kitaev materials tend to exhibit long-range magnetic
+order at low temperatures due to additional magnetic interactions. 8–13
+    In this context, there have been continued efforts to understand whether external per-
+turbations can stabilize proximate QSLs as ground states of Kitaev magnets.  Although this
+strategy has not been conclusively successful so far, it has generated tremendous activity,
+especially with regard toα-RuCl       3.  In this van der Waals (vdW) material, magnetic Ru3+
+ions form a honeycomb lattice14,15    and antiferromagnetic (AFM) zigzag order emerges below
+a temperatureT               N ∼7 K.    16–20     However, a moderate in-plane magnetic field suppresses the
+zigzag  phase15,16,21        and  drivesα-RuCl       3  into  a  disordered  intermediate-field  regime  whose
+nature remains under debate to this day.22–30
+    In parallel, various other routes have been explored as means of uncovering new phases
+inα-RuCl       3.  Apart from chemical substitution, carrier doping,31 strain engineering32–35     and
+twisting,36 an appealing alternative is to interfaceα-RuCl                 3 with a different vdW material.
+A first example along these lines is provided byα-RuCl      3/graphene heterostructures, where
+charge transfer and screening can lead to novel correlated states at the interface. 37–44     A sec-
+ond example involvesα-RuCl       3/CrX3 (X= I,Cl) heterostructures, in which the ferromagnetic
+(FM) order in CrX3 acts onα-RuCl        3 as a magnetic field with a dominantuniformspatial
+component.45
+    Here,  we  examine  a  related  setting  where  a  Kitaev  material  is  subject  to  astaggered
+magnetic field,  which may originate from an adjacent vdW material with AFM order.  A
+primary motivation to pursue this route is that Kitaev models with FM and AFM couplings
+have starkly different responses to external magnetic fields:  the AFM model exhibits richer
+physics in a spatially uniform field, whereas the converse occurs in a staggered field. 46 Since
+a significant fraction of Kitaev materials – includingα-RuCl                       3 and other compounds whose
+magnetic ions haved  5 ord    7 electronic configurations7,8,47,48        – are believed to possess FM Ki-
+taev couplings, it is natural to ask what new phases they might realize in the proposed AFM
+
+                                                          2
+proximity environment.   We tackle this question by studying the influence of a staggered
+magnetic field on two-dimensional spin models that interpolate between a pure FM Kitaev
+model and parameter sets previously proposed forα-RuCl       3. As the model can be potentially
+realized in practice by interfacing a monolayer of a Kitaev magnet with a vdW antiferro-
+magnet, we also perform first-principles simulations in a heterobilayer ofα-RuCl       3 and the
+easy-axis antiferromagnet MnPS3.  We find that when a weak staggered field is applied to
+a  Kitaev  spin  liquid  (KSL),  it  gives  rise  to  Majorana  Fermi  surfaces  and  antichiral  edge
+states.49,50    At higher fields, a nematic phase without long-range magnetic order may emerge.
+In contrast, when the staggered field is applied to a zigzag phase, it induces a metamagnetic
+transition into a robust state with triple-Qmagnetic order.  We propose that this state is
+a  skyrmion  crystal  and  discuss  the  possibility  of  it  being  realized  in  anα-RuCl        3/MnPS3
+heterobilayer.
+    The starting point for our model calculations is an effective Hamiltonian
+
+                                             H=H        K +gH      JΓΓ    ′ +H    h                                               (1)
+
+describing a single honeycomb layer of (pseudo)spin-1/2 momentsS                                     i in a Kitaev material.
+Although the model does not include additional degrees of freedom,  it will be instructive
+to  refer  to  the  aforementioned  setup,  in  which  the  Kitaev  layer  (L  1)  is  interfaced  with  a
+monolayer  (L  2)  of  a  vdW  magnet  whose  spinss          i  display  collinear  N´eel  order.   The  three
+terms in Eq. (1) read:
+             HK =K    1     X      X    Sγ
+                                          i Sγj ,
+                          γ=x,y,z  ⟨ij⟩    γ
+          HJΓΓ    ′ =J    1X  Si ·S j +J    3  X    Si ·S j
+
+
+                          ⟨ij⟩                ⟨⟨⟨ij⟩⟩⟩
+                           X    h                                                                             i
+                  + X            Γ1    Sαi Sβj  +S    βi Sαj+ Γ′1    Sγi Sαj  +S    γi Sβj  +S    αi Sγj  +S    βi Sγj,
+                       γ   ⟨ij⟩    γ
+             Hh =−  X         hi ·S i ≈ −X        (J  ⊥si)·S   i.                                                             (2)
+                           i                   i
+
+The first part,H          K, is a Kitaev Hamiltonian with isotropic couplings along the three types of
+nearest-neighbor (NN) bonds,γ=x, y, z. The second term,H                              JΓΓ    ′, includes other symmetry-
+allowed interactions that are relevant to Kitaev magnets; they consist of first- and third-NN
+Heisenberg exchanges,J                1 andJ        3, as well as two off-diagonal, bond-dependent couplings, Γ1
+and Γ′1.  For a given NNγbond, the latter are defined in terms of a permutation (α, β, γ)
+of (x, y, z).  Finally, the last part represents the influence of an AFM proximity environment
+
+
+                                                             3
+Table 1: Parameter sets utilized in our ED calculations. Both of these models were previously
+employed to reproduce experimental results forα-RuCl         3.  The couplings are given in units
+of meV.
+
+      Model            K      1                   J1                    Γ1                    Γ′1                    J3
+   1 [Ref.55]         −5.0           −0.5                 2.5                   0.0                   0.5
+   2 [Ref.56]       −7.567      −4.750              4.276               2.326               3.400
+
+
+by a Zeeman fieldh         i.  As advertised, we will assume that this field has a staggered structure
+hi = (−1)      ihˆn, with (−1)         i =±1 on theA(B) sublattice of the honeycomb lattice.
+    We expectH      h to reasonably capture the low-temperature properties of the alludedL               1/L2
+heterostructure if (i) the layers are nearly lattice-matched and (ii) the N´eel temperature of
+L2  is  much  higher  than  that  ofL    1.   These  conditions  are  met  by  MnPS3,  which  has  a
+N´eel temperatureT               N = 78 K,51,52     and together allow one to relate the Zeeman term to an
+interlayer couplingJ              ⊥; see Eq. (2). For concreteness, we fix the direction of the Zeeman field
+to  ˆn=       1√3 (ˆx+   ˆy+   ˆz).  This coincides with the vector normal to the honeycomb planes in
+actual Kitaev materials5,53   and is consistent with the direction of the easy axis of MnPS3.54
+    To restrict the number of free parameters in Eq. (1), we considered two sets of couplings
+(K  1, J1,Γ 1,Γ ′1, J3),  which  were  proposed  in  Refs.55and56to  describeα-RuCl                                 3  and  are
+listed in Table1.  As a result, we are left with two free parameters:hand a dimensionless
+parameter,g, which we will use to interpolate between a pure Kitaev Hamiltonian (g= 0)
+and a more realistic model forα-RuCl         3 (g= 1).
+    One  can  gain  insight  into  the  nature  of  the  ground  state  at  smallgandh/|K                            1| by
+performing a perturbative calculation around the Kitaev limit.  Specifically, wheng= 0 and
+his much  smaller than  the flux  gap  ∆   f  ∼ |K 1|,  the  Hamiltonian  maps  onto an  effective
+low-energy model of itinerant Majorana fermions [see the Supporting Information (SI) for
+details].  As in the case of a uniform magnetic field,6 the distinctive feature of this model is
+that the NN hopping term present ath= 0 is supplemented with next-NN hopping processes.
+However,  the  staggering  ofh    i  imprints  itself  on  the  signs  of  the  hopping  amplitudes  and
+therebyqualitativelychanges the Majorana spectrum ath̸= 0.  Reference49showed that,
+instead of becoming gapped, the Dirac cones at theKandK                ′ valleys are shifted by opposite
+energies, so that the system acquires Majorana Fermi surfaces (see Fig.1) – a result that
+can also be achieved via a magnetoelectric coupling.57
+    Colom´es and Franz50 uncovered a similar mechanism for complex fermions in a variant
+of the Haldane model58  with the same structure of next-NN hoppings shown in Fig.1(b).
+Similarly to systems considered here and in Ref.57, this model breaks time-reversal symmetry
+and inversion about the center of a NN bond, but is invariant under the product of those
+
+
+                                                             4
+Figure 1: Schematics of the results of third-order perturbation theory inharound the exactly-
+solvable Kitaev pointg= 0 for a (a) uniform     6 and (b) staggered49 external magnetic field.
+Left: Next-NN Majorana hopping terms induced by the field. The blue arrows are correlated
+with the sign of the complex hopping amplitudes.  Middle:  Effect of the perturbations on
+the Majorana spectrum near the two inequivalent corners,KandK                        ′, of the first Brillouin
+zone.  Right:  Illustration of chiral and antichiral edges modes.
+
+
+transformations.  Remarkably, Ref.50also showed that the resulting imbalance between the
+Dirac cones generatesantichiraledge modes, i.e., copropagating currents at the boundary
+which are compensated by a counterpropagating current in the gapless bulk [see Fig.1(b)].
+Given  the  similarity  to  our  model,  we  expect  that,  regardless  of  the  sign  ofK    1,  a  KSL
+will develop antichiral edge modes of Majorana fermions when exposed to a weak staggered
+magnetic field.   Therefore,  the spin liquid found in this paper ath̸=  0 is fundamentally
+different from the chiral spin liquid obtained under a weak uniform field.6,46
+    To access phenomena away from the vicinity of the Kitaev pointg=h= 0, we employed
+Lanczos ED to the cluster withN= 24 sites shown in Fig.2(a).  Among the different 24-site
+clusters, this particular choice has the advantage of preserving all point-group symmetries
+of the honeycomb lattice.  We imposed periodic boundary conditions and used translational
+invariance  to  decompose  the  Hamiltonian  into  smaller  sectors  of  well  defined  momentum
+k.   Ground-state  phase  diagrams  were  then  constructed  by  performing  scans  at  constant
+gorh.   We  determined  phase  boundaries  by  identifying  the  ground-state  sectorkand
+monitoring mainly two types of quantities: the second derivatives of the ground-state energy,
+∂2Egs/∂g2 and∂        2Egs/∂h2, and the fidelityF(x) =|⟨ψ(x+δx)|ψ(x)⟩|, which measures the
+overlap between ground-state wavefunctions at neighboring pointsx=  (g, h) andx+δx
+
+
+                                                          5
+withδx=  (δg,0) or (0, δh).  Finally,  to characterize the different phases obtained in our
+simulations, we computed the static spin structure factor
+                                                       X
+                                        S(q) =        1N    eiq·(r      i−r   j) ⟨S  i ·S j⟩                                        (3)
+                                                        i,j
+
+and two-point correlation functions
+
+                                                  Cαβ(r) =   
+Sα0 Sβr                                                       (4)
+
+
+with respect to a fixed reference site 0.  In both cases,⟨···⟩denotes the ground-state expec-
+tation value.
+    The ED results for the phase diagrams of Models 1 and 2 are shown in Figs.2(c) and
+2(d), respectively.  Atg= 0, both models are identical up to a rescaling of|K            1|and undergo
+a sequence of three phase transitions.  Starting at low fields, the antichiral KSL gives way to
+a narrow intermediate phase which extends fromh          c1  ≈0.4625|K                   1|toh      c2  ≈0.4775|K                   1|.  In
+this process, the ground-state sector briefly changes fromk=ΓtoKbefore returning to
+k=Γin a second intermediate phase that remains stable up toh              c3  ≈0.575|K                1|.  Above this
+threshold, the system enters a (partially) polarized state with neither symmetry-breaking nor
+topological order.  These results are mostly consistent with previous simulations by Hickey
+and Trebst;46 the only disagreement lies in the existence of the phase betweenh       c1  andh        c2 ,
+which may have been overlooked until now due to its small extent and different momentum
+sector.
+    In contrast, whenh= 0, both models exhibit a single phase transition between the KSL
+and the zigzag phase asgis tuned from 0 to 1.  The transition occurs atg           c ≈0.17 for Model
+1 and at a lowerg    c ≈0.11 for Model 2 due to stronger non-Kitaev couplings.  Although one
+can already infer that the second phase corresponds to zigzag magnetic order by adiabatic
+continuity  tog=  1,  we  confirmed  that  this  is  the  case  by  analyzing  the  static  structure
+factor, Eq. (3), and two-point correlations, Eq. (4), of the ground-state wavefunction.
+    A comparison between Figs.2(c,d) forg, h̸= 0 reveals that Model 1 has a richer phase
+diagram,  with  a  higher  number  of  field-induced  phases  at  smallg.   In  particular,  there
+are  two  phases,  colored  light  blue  and  purple  in  Fig.2(c),  which  occur  only  forg̸=  0.
+Most interesting among the two is the purple phase,  which displays short-range spin-spin
+correlations, but differs from the KSL in two main aspects.  The first is that it belongs to
+the momentum sectork=K, and therefore behaves nontrivially under translations.  The
+second and most significant difference is illustrated in Fig.2(e), which compares results for
+the diagonal componentsC    αα (α=x, y, z) of the spin-spin correlation functions in the KSL
+
+
+                                                             6
+Figure 2:  (a) 24-site cluster used for our ED calculations.  (b) Momentum resolution of the
+finite-size cluster.  The inner hexagon represents the first Brillouin zone, whereas the outer
+hexagon connects the six equivalentΓ  ′ points.  (c,d) Ground-state phase diagrams of Models
+1 and 2 from Table1.  Both models exhibit a robust field-inducedXphase which precedes
+polarizition for nearly all values ofgup to 1. (e) Comparison between two-point correlations
+Cαα relative to site 0 (orange triangle) in the KSL and the purple phase above it in (c).  The
+data were obtained for (g, h/|K         1|) = (0.075,0.175) and (0.09,0.35), which are highlighted
+in (c).  The value ofC    αα at each site is represented by a circle whose radius is proportional
+to|C      αα|and whose color reflects the sign ofC      αα.  Blue (red) circles indicate FM (AFM)
+correlations.
+
+
+and in the purple phase (right panel).  While both phases maximize each|C    αα|along the
+corresponding NNα-bond,           59  the purple phase develops stronger correlations along one of
+the three possible directions (zbonds in the present example).  Hence,  in contrast to the
+KSL, it breaks theC      ∗3 symmetry of the Hamiltonian,53 which combines 2π/3 rotations of the
+honeycomb lattice with a simultaneous 2π/3 rotation of the spin operators around the out-
+of-plane axis  ˆn.  Together with a broad but anisotropic spin structure factor, this suggests
+that the purple phase realizes a type of nematic order.
+    Despite the above differences, the phase diagrams of Models 1 and 2 are mostly occupied
+by the samefourphases.  Besides the expected Kitaev, zigzag, and field-polarized phases,
+we encounter a robust phase at intermediate fields, which is shown in pink in Figs.2(c,d)
+and  will  henceforth  be  referred  to  as  the  “Xphase”.   This  phase  spans  a  broad  interval
+0.02≲g≤1 and,  upon increasingh,  generally reaches a field-polarized state via a first-
+order transition.  Its spin structure factor, depicted in Fig.3(a) for a representative point
+
+                                                          7
+Figure 3:  Static spin structure factorS(k) obtained by applying (a) ED and (b) a classical
+energy-minimization method to Model 1 on the 24-site cluster in Fig.2(a). The results apply
+for the points (g, h/|K        1|) = (0.17,0.50) and (0.75,1.18), respectively.  The yellow hexagons
+have the same meaning as in Fig.2(b).
+
+
+(g, h/|K        1|) = (0.17,0.50), exhibits primary and secondary peaks at theΓ                   ′ andK/2 points,
+respectively.  While the former reflect the development of a staggered magnetization induced
+byh, the latter suggest that theXphase displays long-range magnetic order. However, with
+our implementation of ED, we are unable to discern whether this is a single-Qspin spiral
+or, potentially, a more exotic triple-Qstate.
+    To address this issue, we sought a classical analog of theXphase on the same 24-site
+cluster employed in our ED calculations.  Using an iterative energy-minimization method
+(see  SI  for  details),  we  searched  for  ground  states  of  the  classical  version  of  Model  1,  in
+which spinsS          i are treated as unit vectors, over a wide range ofgandh.  Among the various
+phases we encountered, none were single-Qspirals with an ordering wavevectorQ=K/2.
+However, we did obtain a triple-Qground state whose structure factor, depicted in Fig.3(b)
+for (g, h/|K      1|) = (0.75,1.18), shows the same distinctive features as Fig.3(a): primary peaks
+atΓ   ′ accompanied by local maxima atK/2.  Although the absence of quantum fluctuations
+causes Fig.3(b)  to have notably sharper  features  than Fig.3(a),  the overall  resemblance
+between the two cases indicates that theXphase identified within 24-site ED corresponds
+to a triple-Qmagnetically ordered state.
+    As a next step, we aimed to determine whether the above triple-Qconfiguration is still
+a  classical  ground  state  of  Model  1  for  larger  system  sizes.   To  this  end,  we  applied  the
+same  classical  method  as  before  to  22  clusters  of  varying  shapes  and  sizes  (see  SI).  We
+imposed periodic boundary conditions in all cases and reached a maximum ofN= 288 sites.
+Working at a fixedg= 0.75, we then selected the states with the lowest energy per spin for
+values ofh/|K           1| ∈[0,2].  Our results, compiled in Fig.4, show that the system undergoes
+
+
+                                                             8
+a complex magnetization process before entering the field-polarized phase.  As in the case
+of a spatially uniform field, this follows not only from the presence of magnetic frustration,
+but also from the nontrivial interplay between the magnetic field and the anisotropic spin
+interactions.53,60–63
+    Upon increasingh, the low-field zigzag (ZZ) phase is suppressed ath/|K                                   1| ≈0.19, giving
+way  to  a  sequence  of  three  types  of  skyrmion  crystals  (SkXs),  i.e.,  triple-Qstates  whose
+spin textures display a periodic arrangement of topological defects.  These defects are char-
+acterized by the presence of nontrivial topological chargesn             µsk on the triangular sublattices
+µ=A, Bof the honeycomb lattice (see SI).
+    The  first  SkX  occurs  within  the  extended  interval  0.19<  h/|K               1| <1.09  and  has  op-
+posite  topological  charges  on  each  sublattice,  (n  Ask, nBsk)  =  (−1,+1).   Its  structure  factor
+exhibits pronounced Bragg peaks at the three inequivalentMpoints (see Fig.4(b), left).
+By  inspecting  the  spin  configuration  directly  in  real  space,  we  find  that  it  has  an  8-site
+magnetic unit cell and corresponds to a state dubbed AFM star in an early study of the
+classical Heisenberg-Kitaev model in auniformmagnetic field.                    60 Later on, this same type of
+order was suggested as a potential ground state of the Kitaev material Na2Co2TeO6 in zero
+field.64–68     Here, it is intriguing that the AFM star phase is absent from the quantum phase
+diagrams of Figs.2(c,d), since it occupies a broad region in Fig.4and is commensurate with
+the 24-site cluster in Fig.2(a).  This may be due to the fragility of the state to quantum
+fluctuations, which was demonstrated within the framework of a 1/Sexpansion in Ref.69.
+    The second and third SkXs, henceforth labeled SkX2 and SkX3, are built from a linear
+combination  of  ordering  wavevectorsQ=  3K/7≈0.43KandQ=  0.4K,  respectively.
+Thus, they have larger magnetic unit cells than an AFM star state [see Figs.4(c,d)] and,
+given  the  greater  proximity  toQ=K/2,  are  better  candidates  for  a  classical  analog  of
+theXphase.  Similarly to the AFM star,  SkX           2  is an AFM SkX with topological charges
+(n  Ask, nBsk) = (−1,+1).  SkX          3, on the other hand, is characterized by two different, yet equally
+favorable,  set  of  integers:  (n  Ask, nBsk)  =  (−3,+1)  and  (−1,+3).   This  indicates  that  SkX                   3
+spontaneouslydevelops  a  net  topological  charge  of±2  per  magnetic  unit  cell,  a  behavior
+reminiscent of the “ferrichiral” skyrmion phase identified in a recent study of an extended
+Kitaev model on the triangular lattice.70
+    Finally, the system realizes a sequence of topologically trivial (n  µsk = 0) triple-Qphases
+betweenh/|K              1| =  1.37  and  1.62  before  reaching  the  field-polarized  phase.   While  we  re-
+frain from describing these triple-Qstates in detail, it is worth noting that the normQof
+their ordering wavevectors consistently decreases with increasingh.  This extends a trend
+already seen among the three aforementioned SkXs and hints at the possible existence of an
+even greater number of triple-Qphases, both topological and trivial, in the thermodynamic
+
+                                                             9
+Figure  4:  Results  obtained  from  classical  energy  minimization  for  Model  1  at  fixedg=
+0.75.  (a) Staggered magnetization per site,m            h  =−(Nh)          −1  Pi hi ·S i, as a function ofh.
+Between the zigzag (ZZ) and polarized phases, the system realizes a sequence of SkXs (gray
+shaded region) and topologically trivial triple-Qphases with progressively smaller ordering
+wavevectors.  The former are characterized by their sublattice-resolved topological charges,
+(n  Ask, nBsk).  (b) Static structure factors per site,S(k)/N,  for the points highlighted on the
+magnetization curve.  Data are shown for the discrete momenta compatible with the clusters
+on which the solutions were obtained. The inner yellow hexagon delineates the first Brillouin
+zone. (c,d) Magnetic unit cells of the (−1,+1) and (−3,+1) SkXs, respectively. Shaded disks
+highlight the location of skyrmions.
+
+
+limit.  It also implies that, among all classical phases obtained here, the one whose ordering
+wavevectors are closest toK/2 is SkX            2.  Given the limited momentum resolution of our 24-
+site ED, this is does not unambiguously identify theXphase as SkX           2.  However, it signals
+that applying staggered magnetic fields to Kitaev materials may be a promising route to
+realize SkXs and periodicities that are smaller than their metallic counterparts stabilized by
+the Dzyaloshinskii–Moriya interaction.71
+    Given that the SkX2 and SkX3 states would have a periodicity of∼20 nm inα-RuCl               3,
+they may be detectable via Lorentz transmission electron microscopy 72 or magnetic exchange
+force microscopy.73,74    Both of these methods are well-suited to image magnetic configurations
+in thin insulating films and have high spatial resolutions of∼10 nm and≲1 nm, respectively.
+The SkX2 and SkX3 phases may also display topological magnon bands and an associated
+(non-quantized) thermal Hall effect.75–77
+    As mentioned above, a plausible materials platform to scrutinize a Kitaev material sub-
+ject to astaggeredmagnetic field is a bilayer ofα-RuCl            3  and AFM MnPS3.  To obtain a
+
+
+                                                          10
+Figure  5:   (a)  Structure  of  the  bilayerα-RuCl       3/MnPS3.   Ru:gray,  Cl:green,  Mn:purple,
+S:yellow, P:silver (b,c) Single layers ofα-RuCl       3  and MnPS3, respectively, showing cation-
+cation distances.  (d) Density of states for a fully FM configuration (interlayer AFM config-
+uration is qualitatively similar).
+
+
+characteristic coupling scale for this heterostructure, we use density functional theory cal-
+culations.  We start by building the structure of a heterobilayer as shown in Fig.5(a) that
+is subsequently optimized.  Further details about the methodology, including relaxation of
+the structure, are provided in the SI. Figures5(b,c) show relevant bond lengths for MnPS                  3
+andα-RuCl           3 in our relaxed structure, reflecting that they are nearly lattice-matched.  We
+subsequently  use  the  optimized  structure  to  calculate  the  energy  difference  between  two
+magnetic  states  both  with  FM  order  within  the  layers  and  differing  by  the  alignment  or
+anti-alignment between the layers.  Importantly, there is no charge transfer between the lay-
+ers and the system remains in an insulating state regardless of the interlayer orientation, as
+shown in Fig.5(c).  We obtain an effective fieldh≃0.3 meV, which alone is not enough to
+enable access to theXphase.  It may be possible to apply out-of-plane pressure to decrease
+the interlayer spacing and increase the coupling.
+    In summary, we studied two-dimensional extended Kitaev models subject to an effective
+staggered magnetic field.  We showed that, in addition to inducing Majorana Fermi surfaces
+andantichiraledge modes in the KSL, the staggered field can give rise to a nonmagnetic
+nematic phase and to SkXs, both with and without a net topological charge.  We then com-
+plemented  these  results  by  employing  first-principle  simulations  to  assess  the  prospect  of
+realizing these phenomena in anα-RuCl        3/MnPS3  bilayer.   Our DFT calculations demon-
+strate  that  this  heterostructure  is  approximately  lattice-matched  and  MnPS3  leads  to  an
+effective field of abouth≃0.3 meV.
+    An interesting direction for future research would be to consider how a Kitaev material
+is influenced by a proximity-induced magnetic fieldh         i  with the periodicity of a moir´e su-
+perlattice.  This would account for the small lattice mismatch between MnPS3 andα-RuCl           3
+layers and may lead to further interesting phenomena.  On the materials front, it would be
+worthwhile not only to pursue an experimental realization of theα-RuCl          3/MnPS3 heterobi-
+layer, but also to seek other material platforms capable of reproducing the physics discussed
+
+                                                          11
+here.
+
+Associated Content
+
+Supporting Information
+Contains further details on the perturbative calculation around the Kitaev limit, exact di-
+agonalization, iterative energy-minimization algorithm, and computation of the topological
+charges and details on the density-functional theory calculations.  Includes Refs. 78–82
+
+Author Information
+
+Corresponding Author:  Pedro M. Cˆonsoli (pconsoli@asu.edu), Onur Erten
+(onur.erten@asu.edu) & Antia Botana (asanc157@asu.edu)
+Author  Contributions:PMC,  JK,  ASB,  and  OE  conceived  and  designed  the  project.
+PMC performed the exact-diagonalization calculations and classical simulations.  EDR and
+ASB carried out the first-principles calculations.  All authors analyzed the results and con-
+tributed to writing the manuscript.
+Notes:The authors declare no competing financial interest.
+
+Acknowledgements
+
+We thank Hui-Ke Jin for preliminary DMRG calculations, as well as Eric C. Andrade and
+Natalia Perkins for helpful discussions.  P.M.C. is also grateful to Eric C. Andrade, Niccol`o
+Francini, Lukas Janssen, and Matthias Vojta for collaborations on previous related projects.
+This work is supported by the U.S. Department of Energy, Office of Science, Office of Basic
+Energy  Sciences,  Material  Sciences  and  Engineering  Division  under  Award  Number  DE-
+SC0025247.   EDR  and  ASB  acknowledge  the  support  of  NSF  Grant  No.   DMR-2206987.
+J. K. acknowledges support from the Deutsche Forschungsgemeinschaft (DFG, German Re-
+search  Foundation)  grant  TRR  360  -  492547816  [14].   J.K.  further  acknowledges  support
+from DFG under Germany’s Excellence Strategy (EXC-2111-390814868), DFG Grants No.
+KN1254/1-2,  KN1254/2-1  and  SFB  1143  (project-id  247310070),  as  well  as  the  Munich
+Quantum Valley, which is supported by the Bavarian state government with funds from the
+Hightech Agenda Bayern Plus.  J.K. further acknowledges support from the Imperial-TUM
+flagship partnership, as well as the Keck Foundation.  The authors acknowledge Research
+
+
+
+
+                                                     12
+Computing at Arizona State University for providing HPC resources 83 that contributed to
+the results reported in this paper.
+
+References
+
+ (1)Savary, L.;  Balents, L. Quantum spin liquids:  a review.Rep.  Prog.  Phys.2016, 80,
+      016502.
+
+ (2)Zhou, Y.; Kanoda, K.; Ng, T.-K. Quantum spin liquid states.Rev. Mod. Phys.2017,
+      89, 025003.
+
+ (3)Knolle, J.; Moessner, R. A Field Guide to Spin Liquids.Annu. Rev. Condens. Matter
+      Phys.2019,10, 451.
+
+ (4)Broholm, C.; Cava, R. J.; Kivelson, S. A.; Nocera, D. G.; Norman, M. R.; Senthil, T.
+      Quantum spin liquids.Science2020,367, 263.
+
+ (5)Trebst, S.; Hickey, C. Kitaev materials.Phys. Rep.2022,950, 1–37.
+
+ (6)Kitaev,  A.  Anyons  in  an  exactly  solved  model  and  beyond.Ann.  Phys.2006, 321,
+      2–111.
+
+ (7)Jackeli, G.;  Khaliullin, G. Mott Insulators in the Strong Spin-Orbit Coupling Limit:
+      From Heisenberg to a Quantum Compass and Kitaev Models.Phys. Rev. Lett.2009,
+      102, 017205.
+
+ (8)Chaloupka, J.;  Jackeli, G.;  Khaliullin, G. Kitaev-Heisenberg Model on a Honeycomb
+      Lattice:  Possible Exotic Phases in Iridium OxidesA    2IrO3.Phys. Rev. Lett.2010,105,
+      027204.
+
+ (9)Chaloupka, J.; Jackeli, G.; Khaliullin, G. Zigzag Magnetic Order in the Iridium Oxide
+      Na2IrO3.Phys. Rev. Lett.2013,110, 097204.
+
+(10)Rau, J. G.; Lee, E. K.-H.; Kee, H.-Y. Generic Spin Model for the Honeycomb Iridates
+      beyond the Kitaev Limit.Phys. Rev. Lett.2014,112, 077204.
+
+(11)Winter, S. M.; Li, Y.; Jeschke, H. O.; Valent´ı, R. Challenges in design of Kitaev ma-
+      terials:  Magnetic interactions from competing energy scales.Phys.  Rev.  B2016,93,
+      214431.
+
+
+
+                                                       13
+(12)Winter, S. M.; Tsirlin, A. A.; Daghofer, M.; van den Brink, J.; Singh, Y.; Gegenwart, P.;
+      Valent´ı, R. Models and materials for generalized Kitaev magnetism.J. Phys.:  Condens.
+      Matter2017,29, 493002.
+
+(13)Rousochatzakis,  I.;  Perkins,  N.  B.;  Luo,  Q.;  Kee,  H.-Y.  Beyond  Kitaev  physics  in
+      strong spin-orbit coupled magnets.2023, arXiv:2308.01943.arXiv.org e-Print archive.,
+      https://arxiv.org/abs/2308.01943(accessed on August 03, 2023).
+
+(14)Plumb, K. W.; Clancy, J. P.; Sandilands, L. J.; Shankar, V. V.; Hu, Y. F.; Burch, K. S.;
+      Kee, H.-Y.; Kim, Y.-J.α-RuCl              3:  A spin-orbit assisted Mott insulator on a honeycomb
+      lattice.Phys. Rev. B2014,90, 041112.
+
+(15)Johnson,  R.  D.;  Williams,  S.;  Haghighirad,  A.;  Singleton,  J.;  Zapf,  V.;  Manuel,  P.;
+      Mazin, I.; Li, Y.; Jeschke, H. O.; Valent´ı, R.; Coldea, R. Monoclinic crystal structure
+      ofα-RuCl       3  and  the  zigzag  antiferromagnetic  ground  state.Phys.  Rev.  B2015, 92,
+      235119.
+
+(16)Sears, J. A.; Songvilay, M.; Plumb, K. W.; Clancy, J. P.; Qiu, Y.; Zhao, Y.; Parshall, D.;
+      Kim, Y.-J. Magnetic order inα−RuCl           3:  A honeycomb-lattice quantum magnet with
+      strong spin-orbit coupling.Phys. Rev. B2015,91, 144420.
+
+(17)Cao, H. B.; Banerjee, A.; Yan, J.-Q.; Bridges, C. A.; Lumsden, M. D.; Mandrus, D. G.;
+      Tennant, D. A.; Chakoumakos, B. C.; Nagler, S. E. Low-temperature crystal and mag-
+      netic structure ofα-RuCl       3.Phys. Rev. B2016,93, 134423.
+
+(18)Banerjee, A. et al. Proximate Kitaev quantum spin liquid behaviour in a honeycomb
+      magnet.Nat. Mater.2016,15, 733–740.
+
+(19)Banerjee,  A.;  Yan,  J.;  Knolle,  J.;  Bridges,  C.  A.;  Stone,  M.  B.;  Lumsden,  M.  D.;
+      Mandrus, D. G.; Tennant, D. A.; Moessner, R.; Nagler, S. E. Neutron scattering in the
+      proximate quantum spin liquidα-RuCl               3.Science2017,356, 1055–1059.
+
+(20)Ojeda-Aristizabal, C. et al. Lessons fromα-RuCl3 for pursuing quantum spin liquid
+      physics in atomically thin materials. 2025;https://arxiv.org/abs/2511.13838.
+
+(21)Sears, J. A.; Zhao, Y.; Xu, Z.; Lynn, J. W.; Kim, Y.-J. Phase diagram ofα−RuCl                    3 in
+      an in-plane magnetic field.Phys. Rev. B2017,95, 180411.
+
+(22)Baek,  S.-H.;  Do,  S.-H.;  Choi,  K.-Y.;  Kwon,  Y.  S.;  Wolter,  A.  U.  B.;  Nishimoto,  S.;
+      van den Brink, J.; B¨uchner, B. Evidence for a Field-Induced Quantum Spin Liquid in
+      α-RuCl   3.Phys. Rev. Lett.2017,119, 037201.
+
+                                                          14
+(23)Wolter, A. U. B.; Corredor, L. T.; Janssen, L.; Nenkov, K.; Sch¨onecker, S.; Do, S.-H.;
+      Choi, K.-Y.; Albrecht, R.; Hunger, J.; Doert, T.; Vojta, M.; B¨uchner, B. Field-induced
+      quantum criticality in the Kitaev systemα−RuCl                     3.Phys. Rev. B2017,96, 041405.
+
+(24)Kasahara, Y.;  Ohnishi, T.;  Mizukami, Y.;  Tanaka, O.;  Ma, S.;  Sugii, K.;  Kurita, N.;
+      Tanaka, H.; Nasu, J.; Motome, Y.; Shibauchi, T.; Matsuda, Y. Majorana quantization
+      and half-integer thermal quantum Hall effect in a Kitaev spin liquid.Nature2018,559,
+      227–231.
+
+(25)Yokoi, T.; Ma, S.; Kasahara, Y.; Kasahara, S.; Shibauchi, T.; Kurita, N.; Tanaka, H.;
+      Nasu,  J.;  Motome,  Y.;  Hickey,  C.;  Trebst,  S.;  Matsuda,  Y.  Half-integer  quantized
+      anomalous  thermal  Hall  effect  in  the  Kitaev  material  candidateα−RuCl                           3. Science
+      2021,373, 568–572.
+
+(26)Gass,  S.;  Cˆonsoli,  P.  M.;  Kocsis,  V.;  Corredor,  L.  T.;  Lampen-Kelley,  P.;  Man-
+      drus,  D.  G.;  Nagler,  S.  E.;  Janssen,  L.;  Vojta,  M.;  B¨uchner,  B.;  Wolter,  A.  U.  B.
+      Field-induced transitions in the Kitaev materialα-RuCl                     3 probed by thermal expansion
+      and magnetostriction.Phys. Rev. B2020,101, 245158.
+
+(27)Lefran¸cois,        ´E.; Grissonnanche, G.; Baglo, J.; Lampen-Kelley, P.; Yan, J.-Q.; Balz, C.;
+      Mandrus, D.; Nagler, S.; Kim, S.; Kim, Y.-J.; others Evidence of a Phonon Hall Effect
+      in the Kitaev Spin Liquid Candidateα-RuCl              3.Phys. Rev. X2022,12, 021025.
+
+(28)Bruin,  J.  A.  N.;  Claus,  R.  R.;  Matsumoto,  Y.;  Kurita,  N.;  Tanaka,  H.;  Takagi,  H.
+      Robustness of the thermal Hall effect close to half-quantization inα-RuCl3.Nat. Phys.
+      2022,18, 401–405.
+
+(29)Czajka,  P.;  Gao,  T.;  Hirschberger,  M.;  Lampen-Kelley,  P.;  Banerjee,  A.;  Quirk,  N.;
+      Mandrus, D. G.;  Nagler, S. E.;  Ong, N. P. Planar thermal Hall effect of topological
+      bosons in the Kitaev magnetα-RuCl            3.Nat. Mater.2023,22, 36–41.
+
+(30)Sarkis, C. L.; Dixit, K. D.; Rao, P.; Khundzakishvili, G.; Balz, C.; Yan, J.-Q.; Winn, B.;
+      Williams,  T.  J.;  Unnikrishnan,  A.;  Moessner,  R.;  Tennant,  D.  A.;  Knolle,  J.;  Na-
+      gler,  S.  E.;  Banerjee,  A.  Intermediate  Field  Spin(on)  Dynamics  inα-RuCl       3.  2026;
+      https://arxiv.org/abs/2601.16850.
+
+(31)Bastien, G.; Roslova, M.; Haghighi, M.; Mehlawat, K.; Hunger, J.; Isaeva, A.; Doert, T.;
+      Vojta, M.; B¨uchner, B.; Wolter, A. Spin-glass state and reversed magnetic anisotropy
+      induced by Cr doping in the Kitaev magnetα-RuCl                   3.Phys. Rev. B2019,99, 214410.
+
+
+                                                          15
+(32)Bastien,  G.;  Garbarino,  G.;  Yadav,  R.;  Mart´ınez-Casado,  F.  J.;  Rodr´ıguez,  R.  B.;
+      Stahl, Q.;  Kusch, M.;  Limandri, S. P.;  Ray, R.;  Lampen-Kelley, P.;  others Pressure-
+      induced dimerization and valence bond crystal formation in the Kitaev-Heisenberg mag-
+      netα-RuCl          3.Phys. Rev. B2018,97, 241108.
+
+(33)Bachus, S.; Kaib, D. A.; Tokiwa, Y.; Jesche, A.; Tsurkan, V.; Loidl, A.; Winter, S. M.;
+      Tsirlin, A. A.; Valenti, R.; Gegenwart, P. Thermodynamic Perspective on Field-Induced
+      Behavior ofα-RuCl       3.Phys. Rev. Lett.2020,125, 097203.
+
+(34)Kaib, D. A.; Biswas, S.; Riedl, K.; Winter, S. M.; Valent´ı, R. Magnetoelastic coupling
+      and effects of uniaxial strain inα-RuCl       3 from first principles.Phys. Rev. B2021,103,
+      L140402.
+
+(35)Kocsis,  V.;  Kaib,  D.  A.;  Riedl,  K.;  Gass,  S.;  Lampen-Kelley,  P.;  Mandrus,  D.  G.;
+      Nagler,  S.  E.;  P´erez,  N.;  Nielsch,  K.;  B¨uchner,  B.;  others  Magnetoelastic  coupling
+      anisotropy in the Kitaev materialα-RuCl                     3.Phys. Rev. B2022,105, 094410.
+
+(36)Akram, M.;  Kapeghian, J.;  Das, J.;  Valent´ı, R.;  Botana, A. S.;  Erten, O. Theory of
+      Moir´e Magnetism in Twisted Bilayerα-RuCl       3.Nano Letters2024,24, 890–896.
+
+(37)Mashhadi, S.;  Kim, Y.;  Kim, J.;  Weber, D.;  Taniguchi, T.;  Watanabe, K.;  Park, N.;
+      Lotsch, B.; Smet, J. H.; Burghard, M.; others Spin-split band hybridization in graphene
+      proximitized withα-RuCl             3 nanosheets.Nano Letters2019,19, 4659–4665.
+
+(38)Zhou, B.; Balgley, J.; Lampen-Kelley, P.; Yan, J.-Q.; Mandrus, D. G.; Henriksen, E. A.
+      Evidence  for  charge  transfer  and  proximate  magnetism  in  graphene–α-RuCl                         3  het-
+      erostructures.Phys. Rev. B2019,100, 165426.
+
+(39)Biswas, S.;  Li, Y.;  Winter, S. M.;  Knolle, J.;  Valent´ı, R. Electronic Properties ofα-
+      RuCl3 in proximity to graphene.Phys. Rev. Lett.2019,123, 237201.
+
+(40)Rizzo, D. J. et al. Charge-Transfer Plasmon Polaritons at Graphene/α-RuCl                                   3 Interfaces.
+      Nano Letters2020,20, 8438–8445.
+
+(41)Gerber, E.; Yao, Y.; Arias, T. A.; Kim, E.-A. Ab Initio Mismatched Interface Theory
+      of Graphene onα-RuCl        3:  Doping and Magnetism.Phys. Rev. Lett.2020,124, 106804.
+
+(42)Leeb, V.; Polyudov, K.; Mashhadi, S.; Biswas, S.; Valent´ı, R.; Burghard, M.; Knolle, J.
+      Anomalous quantum oscillations in a heterostructure of graphene on a proximate quan-
+      tum spin liquid.Phys. Rev. Lett.2021,126, 097201.
+
+
+                                                           16
+(43)Balgley, J.;  Butler, J.;  Biswas, S.;  Ge, Z.;  Lagasse, S.;  Taniguchi, T.;  Watanabe, K.;
+      Cothrine, M.; Mandrus, D. G.; Velasco Jr, J.; others Ultrasharp Lateral p–n Junctions
+      in Modulation-Doped Graphene.Nano Letters2022,22, 4124–4130.
+
+(44)Shi,  J.;  MacDonald,  A.  Magnetic  states  of  graphene  proximitized  Kitaev  materials.
+      Phys. Rev. B2023,108, 064401.
+
+(45)Zhang, L.; Motome, Y. Possible Realization of Kitaev Spin Liquids in van Der Waals
+      Heterostructures of RuCl3 and CrX3 (X=Cl and I).Phys. Rev. B2024,110, L241109.
+
+(46)Hickey, C.; Trebst, S. Emergence of a field-driven U(1) spin liquid in the Kitaev hon-
+      eycomb model.Nat. Commun.2019,10, 530.
+
+(47)Liu, H.; Khaliullin, G. Pseudospin exchange interactions ind             7 cobalt compounds:  Pos-
+      sible realization of the Kitaev model.Phys. Rev. B2018,97, 014407.
+
+(48)Sano, R.; Kato, Y.; Motome, Y. Kitaev-Heisenberg Hamiltonian for high-spind                            7 Mott
+      insulators.Phys. Rev. B2018,97, 014408.
+
+(49)Nakazawa, K.; Kato, Y.; Motome, Y. Asymmetric modulation of Majorana excitation
+      spectra and nonreciprocal thermal transport in the Kitaev spin liquid under a staggered
+      magnetic field.Phys. Rev. B2022,105, 165152.
+
+(50)Colom´es,  E.;  Franz,  M.  Antichiral  Edge  States  in  a  Modified  Haldane  Nanoribbon.
+      Phys. Rev. Lett.2018,120, 086603.
+
+(51)Kurosawa,  K.;  Saito,  S.;  Yamaguchi,  Y.  Neutron  Diffraction  Study  on  MnPS3  and
+      FePS3.J. Phys. Soc. Jpn.1983,52, 3919–3926.
+
+(52)Wildes,  A.  R.;  Roessli,  B.;  Lebech,  B.;  Godfrey,  K.  W.  Spin  waves  and  the  critical
+      behaviour of the magnetization in MnPS3.J. Phys.:  Condens. Matter1998,10, 6417.
+
+(53)Janssen, L.; Vojta, M. Heisenberg–Kitaev physics in magnetic fields.J. Phys.:  Condens.
+      Matter2019,31, 423002.
+
+(54)Han, H.; Lin, H.; Gan, W.; Xiao, R.; Liu, Y.; Ye, J.; Chen, L.; Wang, W.; Zhang, L.;
+      Zhang,  C.;  Li,  H.  Field-induced  spin  reorientation  in  the  N´eel-type  antiferromagnet
+      MnPS3.Phys. Rev. B2023,107, 075423.
+
+(55)Winter, S. M.; Riedl, K.; Maksimov, P. A.; Chernyshev, A. L.; Honecker, A.; Valent´ı, R.
+      Breakdown of magnons in a strongly spin-orbital coupled magnet.Nat. Commun.2017,
+      8, 1152.
+
+                                                         17
+(56)M¨oller, M.; Maksimov, P. A.; Jiang, S.; White, S. R.; Valent´ı, R.; Chernyshev, A. L.
+      Rethinkingα−RuCl                              3:  Parameters,  models,  and phase diagram.Phys.  Rev.  B2025,
+      112, 104403.
+
+(57)Chari, R.; Moessner, R.; Rau, J. G. Magnetoelectric generation of a Majorana-Fermi
+      surface in Kitaev’s honeycomb model.Phys. Rev. B2021,103, 134444.
+
+(58)Haldane, F. D. M. Model for a Quantum Hall Effect without Landau Levels: Condensed-
+      Matter Realization of the “Parity Anomaly”.Phys. Rev. Lett.1988,61, 2015–2018.
+
+(59)Baskaran, G.; Mandal, S.; Shankar, R. Exact Results for Spin Dynamics and Fraction-
+      alization in the Kitaev Model.Phys. Rev. Lett.2007,98, 247201.
+
+(60)Janssen, L.; Andrade, E. C.; Vojta, M. Honeycomb-Lattice Heisenberg-Kitaev Model
+      in a Magnetic Field:  Spin Canting, Metamagnetism, and Vortex Crystals.Phys. Rev.
+      Lett.2016,117, 277202.
+
+(61)Janssen, L.; Andrade, E. C.; Vojta, M. Magnetization processes of zigzag states on the
+      honeycomb lattice:  Identifying spin models forα−RuCl             3  and Na2IrO3.Phys.  Rev.  B
+      2017,96, 064430.
+
+(62)Chern, G.-W.; Sizyuk, Y.; Price, C.; Perkins, N. B. Kitaev-Heisenberg model in a mag-
+      netic  field:   Order-by-disorder  and  commensurate-incommensurate  transitions.Phys.
+      Rev. B2017,95, 144427.
+
+(63)Chern, L. E.;  Kaneko, R.;  Lee, H.-Y.;  Kim, Y. B. Magnetic field induced competing
+      phases in spin-orbital entangled Kitaev magnets.Phys. Rev. Res.2020,2, 013014.
+
+(64)Chen, W.; Li, X.; Hu, Z.; Hu, Z.; Yue, L.; Sutarto, R.; He, F.; Iida, K.; Kamazawa, K.;
+      Yu, W.; Lin, X.; Li, Y. Spin-orbit phase behavior of Na2Co2TeO6 at low temperatures.
+      Phys. Rev. B2021,103, L180404.
+
+(65)Kr¨uger, W. G. F.; Chen, W.; Jin, X.; Li, Y.; Janssen, L. Triple-q Order in Na         2Co2TeO6
+      from Proximity to Hidden-SU(2)-Symmetric Point.Phys. Rev. Lett.2023,131, 146702.
+
+(66)Gu, Y.; Jin, X.; Li, Y. On the Multi-q Characteristics of Magnetic Ground States of
+      Honeycomb Cobalt Oxides.Chin. Phys. Lett.2025,42, 027303.
+
+(67)Francini,  N.;  Janssen,  L.  Ferrimagnetism  from  triple-q  order  in  Na         2Co2TeO6. Phys.
+      Rev. B2024,110, 235118.
+
+
+
+                                                         18
+(68)Francini, N.; Cˆonsoli, P. M.; Janssen, L. Ferrimagnetism from quantum fluctuations in
+      Kitaev materials.Phys. Rev. B2025,112, 155103.
+
+(69)Cˆonsoli, P. M.; Janssen, L.; Vojta, M.; Andrade, E. C. Heisenberg-Kitaev model in a
+      magnetic field:  1/Sexpansion.Phys. Rev. B2020,102, 155134.
+
+(70)Wen, B.;  Cen, J.;  Kee, H.-Y. Ferrichiral skyrmions with sublattice-resolved chirality
+      in extended Kitaev model in triangular lattice. 2026;https://arxiv.org/abs/2601.
+      17121.
+
+(71)Fert, A.; Reyren, N.; Cros, V. Magnetic skyrmions:  advances in physics and potential
+      applications.Nature Reviews Materials2017,2, 17031.
+
+(72)Seki, S.; Yu, X. Z.; Ishiwata, S.; Tokura, Y. Observation of Skyrmions in a Multiferroic
+      Material.Science2012,336, 198–201.
+
+(73)Kaiser, U.; Schwarz, A.; Wiesendanger, R. Magnetic exchange force microscopy with
+      atomic resolution.Nature2007,446, 522–525.
+
+(74)Grenz, J.; K¨ohler, A.; Schwarz, A.; Wiesendanger, R. Probing the Nano-Skyrmion Lat-
+      tice on Fe/Ir(111) with Magnetic Exchange Force Microscopy.Phys. Rev. Lett.2017,
+      119, 047205.
+
+(75)Akazawa,  M.;  Lee,  H.-Y.;  Takeda,  H.;  Fujima,  Y.;  Tokunaga,  Y.;  Arima,  T.-h.;
+      Han,  J.  H.;  Yamashita,  M.  Topological  thermal  Hall  effect  of  magnons  in  magnetic
+      skyrmion lattice.Phys. Rev. Res.2022,4, 043085.
+
+(76)Takeda, H.; Kawano, M.; Tamura, K.; Akazawa, M.; Yan, J.; Waki, T.; Nakamura, H.;
+      Sato, K.; Narumi, Y.; Hagiwara, M.; Yamashita, M.; Hotta, C. Magnon thermal Hall
+      effect via emergent SU(3) flux on the antiferromagnetic skyrmion lattice.Nat. Commun.
+      2024,15, 566.
+
+(77)Kawano, M. Thermal Hall effect and gauge-field picture of magnons in antiferromag-
+      netic skyrmion crystals.Phys. Rev. B2025,112, L060403.
+
+(78)Lieb, E. H. Flux Phase of the Half-Filled Band.Phys. Rev. Lett.1994,73, 2158–2161.
+
+(79)Walker, L. R.; Walstedt, R. E. Computer Model of Metallic Spin-Glasses.Phys. Rev.
+      Lett.1977,38, 514–518.
+
+(80)Berg, B.; L¨uscher, M. Definition and statistical distributions of a topological number
+      in the lattice O(3)σ-model.Nucl. Phys. B1981,190, 412–424.
+
+                                                        19
+(81)D´ıaz, S. A.; Klinovaja, J.; Loss, D. Topological Magnons and Edge States in Antiferro-
+      magnetic Skyrmion Crystals.Phys. Rev. Lett.2019,122, 187203.
+
+(82)Nagaosa, N.; Tokura, Y. Topological properties and dynamics of magnetic skyrmions.
+      Nat. Nanotechnol.2013,8, 899–911.
+
+(83)Jennewein, D. M. et al. The Sol Supercomputer at Arizona State University. Practice
+      and Experience in Advanced Research Computing 2023:  Computing for the Common
+      Good. New York, NY, USA, 2023; p 296–301.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                      20
+         Supplementary Information for “Tuning magnetic
+
+    properties of Kitaev materials via an antiferromagnetic
+
+         proximity effect:  Novel phases and application to
+
+                               α-RuCl   3/MnPS3 bilayer”
+
+
+Pedro M. Cˆonsoli,† Ezra Day-Roberts,† Johannes Knolle,‡,¶,§      Antia S. Botana,∗,†
+
+                                         and Onur Erten∗,†
+
+         †Department of Physics, Arizona State University, Tempe, AZ 85287, USA
+
+‡Munich Center for Quantum Science and Technology (MCQST), Schellingstrasse 4, 80799
+
+                                          Munich, Germany
+
+ ¶Technical University of Munich, TUM School of Natural Sciences, Physics Department,
+
+                                 TQM, 85748 Garching, Germany
+
+    §Blackett Laboratory, Imperial College London, London SW7 2AZ, United Kingdom
+
+                         E-mail:antia.botana@asu.edu;onur.erten@asu.edu
+
+
+    In this supplementary file, we provide additional details on four aspects discussed in the
+main  text.   First,  we  outline  the  perturbative  calculation  we  applied  to  study  the  effect
+of  a  weak  staggered  field  on  a  Kitaev  spin  liquid  (KSL).  Second,  we  provide  additional
+information on our ED calculations, including data to exemplify how we extracted the phase
+boundaries in Figs. 2(c) and 2(d) of the main text.  Third, we describe the iterative energy-
+minimization algorithm  we applied  to obtain  classical ground  states of  Model 1.   Fourth,
+we explain how we computed the topological chargesn             µsk used to characterize the skyrmion
+crystals uncovered in our classical simulations.  And finally, we provide details of the first
+principles calculations.
+
+
+
+
+                                                    1
+Perturbation theory inharound the Kitaev limit
+
+    In this section, we show how perturbation theory can be used to infer that a KSL subject
+to a weak staggered magnetic field develops Majorana Fermi surfaces and antichiral edge
+modes.  This calculation is closely related to the one presented in Kitaev’s original paper. 1
+    We start by separating the full HamiltonianH=H                                  0 +Vinto an unperturbed Kitaev
+Hamiltonian,H                            0, and the Zeeman term,V:
+                                                     X
+                                  H0 = X        Kγ        σγi σγj ,
+                                            γ        ⟨ij⟩    γ
+                                    V=−    X       hi ·σ i =−  X(−1)      i X        hγσγi .                               (S1)
+                                                i                    i            γ
+
+As usual, the model is defined on a honeycomb lattice with nearest-neighbor bonds of types
+γ=x, y, zand  sublatticesAandB.   Note  that,  differently  from  the  main  text,  we  now
+allow for an arbitrary staggered fieldh         i = (−1)      ih.  Furthermore, we will work directly with
+Pauli matricesσ                  γi  instead of spin-1/2 operatorsS                             γi  =ℏσ       γi /2 for convenience.  Unless stated
+otherwise, we will assume that the Kitaev couplings are isotropic (K  γ =K) for simplicity.
+However, our results are valid for the entire “Bphase” of the Kitaev model,       1 which is realized
+when|K            α| ≤ |K β|+|K      γ|for all permutations (α, β, γ) of (x, y, z).
+    Before applying perturbation theory, let us briefly review some of the main ingredients
+behind Kitaev’s exact solution ofH    0. Following Ref.1, we can represent each spin-1/2 degree
+of freedomσ                 i in terms of four Majorana fermionsno{b                    xi , byi , bzi , ci}obeying the anticommutation
+relations      bαi , bβj  =δ    ijδαβ,{b    αi , cj}= 0, and{c             i, cj}=δ      ij.  With this, the representation
+σγi  = ib γi ci  reproduces the appropriate SU(2) spin algebra as long as one imposes the con-
+straintD  i =b    xi byi bzi ci = 1.  The unperturbed Hamiltonian then reads
+                                             H0 =−i    X      Kγ   X     ˆu  γ
+                                                                           ijcicj,                                          (S2)
+                                                           γ       ⟨ij⟩    γ
+
+where ˆu  γij = ib γi bγj  =−ˆu          γji is an operator defined for sitesiandjthat belong to theAandB
+sublattices, respectively, and are connected by aγ-bond. Since these operators commute with
+each other and withH         0, one can divide the unperturbed Hamiltonian into separate gauge
+sectors, in which the ˆu  γij operators are replaced by a set of integer eigenvaluesu    γij =±1.
+    However, as in any gauge theory, this description is redundant.  Two gauge sectors are
+only  inequivalent  if  they  realize  different  sets  of  (gauge-invariant)  flux  eigenvalues{w             p},
+wherew            p  = Q(ij)∈p      uγij  =±1 is given by the product of theu              γij  variables around a given
+elementary hexagonal plaquettep.   It then follows from Lieb’s theorem              2  that the ground	 that
+state of the system can be obtained by diagonalizingH                            0 within any gauge sector uγij
+
+
+                                                               2
+yieldsw            p  =  +1  for  everyp.   By  doing  so,  one  also  finds  that  the  excitations  of  a  KSL
+with isotropic couplings (or, more generally, of theBphase alluded to above) are gapless
+Majorana fermions and gapped visons.  The latter correspond to fluxesw            p =−1, which can
+only be created in pairs at an energy cost of ∆2f  ∼ |K|.
+    Since visons are gapped excitations,  the low-energy physics of the full HamiltonianH
+is constrained to the zero-flux subspaceL                   0  as long ash≪∆            2f  .  IfPis a projector onto
+L0, then the effective low-energy Hamiltonian can be derived via a standard perturbative
+expansion:
+
+                                               ∞X                            ∞X        !
+                                    Heff ≡         H(n)eff  =H    0 +PV            Rn     P,                               (S3)
+                                              n=0                             n=0
+
+whereR= (1−P)(E− H                                   0)−1  (1−P)V.  Following Ref.1, we will use the approximation
+R≈ −∆      −12f  (1−P)V, which yields the correct qualitative results for the lowest orders of the
+perturbation series.
+    The  first-order  termH          (1)eff  =PVPvanishes  identically  becauseVonly  connects  states
+with different flux configurations.  This result can be verified by noting that a single Pauli
+matrixσ              αγ  commutes with all but one of the  ˆu  ij  operators.  The exception is the operator
+ˆu  γmn,  for  which{σ     αm,ˆu    γmn}=  0.   It  then  follows  that  if  ψ{u  ij}  is  a  state  belonging  to  aψ{u  ij} will be in a gauge sector
+gauge sector{u               ij},σ    αm                               {˜u                 ij}which only differs from{u         ij}ψ{u  ij} have opposite fluxes on the two
+in that ˜u  mn =−u       mn.  Consequently, ψ{u  ij} andσ        αm
+hexagonal plaquettes joined by the (mn) bond.
+    The second-order termH          (2)eff  ≈ −∆   −12f  PV    2Pis the first nonvanishing contribution to the
+perturbation series.  One can verify that, apart from shifting the Hamiltonian by a constant,
+its only effect is to renormalize the Kitaev couplings:K                     γ 7−→  ˜Kγ =K+(h          2γ/∆  2f  ).  Since the
+correction (h  2γ/∆  2f  ) is small compared toK, this renormalization is innocuous:  the system
+remains in the aforementionedBphase, without suffering any qualitative changes.
+    The first significant change in the low-energy physics of the system comes from
+                                              X     X    X
+                           H(3)eff ≈ −  1∆22f                 (−1)      i+j+k      hαhβhγPσαi σβj σγkP.                      (S4)
+                                                iα   jβ   kγ
+
+As in Kitaev’s original paper,1 the projected three-body interactionPσ                   αi σβj σγkPcan only be
+nonzero ifα̸=β̸=γ.  When (α, β, γ) = (x, y, z), the nonvanishing contributions are due to
+the spatial configurations (a) and (b) in Fig.S1, both of which conserve allw                  p eigenvalues
+because they flip anevennumber ofu                  γij  variables per plaquette.  Similar symmetry-related
+arrangements of (i, j, k) follow for the other combinations of (α, β, γ).
+    When  expressed  in  terms  of  Majorana  fermions,  third-order  contributions  of  type  (a)
+
+
+                                                                3
+Figure S1:  Schematic depicting the sites,i,j, andk, involved in the two types of processes,
+(a) and (b), which yield a nonzero contribution to the third-order term of the perturbation
+series.   The  blue  and  red  lines  highlight  the  bonds  whose  gauge  variablesu                γij  are  flipped
+after the action of the three-body termσ          xi σyj σzk.  Also shown are the primitive vectorsa             1 =
+(√3,3)/2 anda                  2 = (− √3,3)/2 that enter Eqs. (S7) and (S8).
+
+
+are  found  to  bequarticin  the  itinerantc                  i  Majoranas.   Thus,  they  do  not  immediately
+change  the  Majorana  spectrum  and  can  be  neglected.   In  contrast,  type-(b)  terms  yield
+σxi σyj σzk =−iˆu          xkiˆu  ykjcicjDk, and therefore map onto a next-nearest-neighbor hopping mediated
+by the gauge fields.
+     Hence, by collecting all terms up to third order in Eq. (S3) and choosing a zero-flux gauge
+withu         γij = +1 on every bond, we obtain the effective Hamiltonian
+                                                                                             
+                                    Heff = i    X        ˜Kγ X     cicj +κ  X       vijcicj ,                              (S5)
+
+
+                                                     γ        ⟨ij⟩    γ         ⟨⟨ij⟩⟩
+
+whereκ= (h                 xhyhz)/∆    22f   andv        ij =±1 have the sign structure depicted in Fig.  1(b) of the
+main text.  After a Fourier transform, Eq. (S5) becomes
+
+                                         HBZX                                            !           !
+                              Heff =             c†                  ∆(q)     if(q)             cqA     ,                        (S6)
+                                                  qA     c†qB      −if     ∗(q)   ∆(q)         cqB
+                                           q
+
+with the sum restricted to half of the Brillouin zone (HBZ). The functions
+
+                          f(q) =       ˜Kxeiq·a     1 +  ˜Kyeiq·a     2 +  ˜Kz,                                                       (S7)
+                          ∆(q) = 2κ{sin(q·a                             1) + sin(q·a            2) + sin [q·(a        1 −a    2)]}.                   (S8)
+
+are defined in terms of the primitive vectors of the honeycomb lattice,a               1,2   = (± √3/2,3/2),
+shown in Fig.S1.  The spectrum ofH                 eff follows from the diagonalization of the 2×2 matrix
+
+
+
+                                                                   4
+Figure S2:  ED results obtained for Model 1 at constant (a-c)g= 0.02, (d-h)g= 0.10 and
+(g-i)g= 0.25.  Different regions in the plots are color-coded to corresponding ground state
+in Fig. 2(c) in the main text.  The first column of plots shows to the second derivative of the
+ground-state energy with respect toh, ∂       2Egs/∂h2,  whereas the second and third columns
+depict the ground-state fidelity and the staggered magnetization per site. Note that the latter
+does not saturate in the field-polarized phase because a N´eel-type product state where each
+spin points along the direction of the staggered field is not an eigenstate of the Hamiltonian.
+
+
+in Eq. (S6):
+                                               ϵ±(q) = ∆(q)± |f(q)|.                                             (S9)
+
+Since the renormalized Kitaev couplings  ˜Kγ  =K+h            2γ/∆  2f   have but a small anisotropy,
+the  function|f(q)| still  has  zeros  at  momenta±q                              ∗  in  the  first  Brillouin  zone.1  Were  it
+not for ∆(q), this would give rise to a pair of Dirac cones at zero energy.  However, since
+∆(−q) =−∆(q), the Dirac cones are now subject to opposite energy shifts±|∆(q                                          ∗)|, as
+illustrated in Fig. 1(b) in the main text.  Whenh∥[111] as in the main text, we find that
+q∗ =K= 4π/(3       √3)ˆxand the splitting|∆(q                       ∗)|= 3  √3κ.
+
+Additional information on exact diagonalization
+
+    As mentioned in the main text, when performing our ED calculations, we exploited the
+translational  symmetry  of  the  24-site  cluster  to  decompose  the  Hamiltonian  into  sectors
+of  different  momentak.   IfT           1  andT        2  denote  the  operators  that  implement  translations
+
+
+                                                              5
+by the vectorsa            1  =  (√3,3)/2 anda                  2  =  (0,3) shown in Fig. 1(a) of the main text,  then
+each momentum sector is composed of states|ϕ⟩satisfyingT                                      n |ϕ⟩=e          ik·a    n |ϕ⟩for a different
+momentumk=               π3√3(2n    1 −3n      2,√3n  2), withn         1, n2 ∈Z.
+    In  Fig.S2,  we  present  additional  ED  data  to  illustrate  how  the  phase  boundaries  in
+Figs. 2(c) and 2(d) of the main text were extracted.  Because of finite-size effects, continuous
+phase transitions tend to be associated withsmoothpeaks in the second derivatives of the
+ground-state energy and the fidelity. By contrast, first-order transitions lead to sharp features
+that also manifest in observables such as the staggered magnetization per site
+                                                 mh =   1       X     hi · ⟨S  i⟩,                                           (S10)
+                                                          Nh      i
+
+depicted in the right panels.
+
+Iterative minimization
+
+    Our  classical  simulations,  whose  results  were  discussed  in  the  main  text,  made  use  of
+an  iterative  energy-minimization  method  related  the  algorithm  presented  in  Ref.3.   Our
+algorithm is composed of the following steps:
+
+    1.Given a finite-size cluster Λ, initialize the unit vectors{S              i}in a random configuration.
+
+    2.Compute the set of local fields
+
+                                                      Hαi  =h    αi − X     Jαβij  Sβj .                                       (S11)
+                                                                        j,β
+
+        Here,J           αβij   is a matrix that includes all interactions between the spins at sitesiandj.
+        It is defined by rewriting the Hamiltonian from Eqs. (1) and (2) in the main text asPP
+        H=      12   i,j    α,β Sαi Jαβij  Sβj − Pi hi ·S i.
+
+    3.Generate a new spin configuration{S                            ′i}defined by
+                                                              h                         i
+                                                 S′i =  1Ni    ri ˆHi + (1−r        i)S  i,                                  (S12)
+
+
+        where  ˆHi  =H    i/|H    i|, r   i  is  a  random  number  uniformly  sampled  from  an  interval
+        [r min, rmax] with 0≤r      min  < rmax ≤1, andN           i  is a normalization constant chosen to
+        ensure that|S        ′i|= 1.
+
+    4.Compute the deviationsε                         i =|S     i −S   ′i|and substitute{S                    ′i} → {S  i}.
+
+
+
+                                                                 6
+Figure S3:  Different clusters used in our iterative minimization study.  The smallest blue
+cluster corresponds to the 24-site cluster utilized in our ED simulations.
+
+
+   5.Iterate steps 2-4 until the maximum deviation is less than a prescribed tolerance ∆,
+       i.e., max (ε  i)≤∆.
+   6.Repeat steps 1-5 forN          init different initial configurations and store the state SΛi                	 with
+
+       the lowest energy.
+
+    In our simulations, we used simulation parametersr                        min = 0.1,r        max = 0.3, ∆ = 10   −10  , and
+Ninit = 103.  Moreover, for each set of model parametersgandh, we applied the iterative
+method to the 22 clusters depicted in Fig.S3, all of which were subject to periodic boundary	 with the lowest energy per spin.
+conditions.  In the end, we selected the state SΛi
+
+
+Computation of topological charges
+
+    The topological chargesn             µsk (µ=A, B) mentioned in the main text are computed as             4,5
+                                       X                         Si ·(S   j ×S    k)
+                          nµsk =  12π       arctan     1 +S    i ·S j +S    i ·S k +S    j ·S k ,                     (S13)
+                                         ,
+
+where the sum runs over all elementary plaquettes (                      or    ) of sublatticeµin the magnetic
+unit cell.  For any given plaquette, the sites (i, j, k) are ordered in the same way, e.g., anti-
+clockwise.  Moreover, arctan refers to the principal branch of the arctangent function, whose
+image is (−π/2, π/2].  As a discretized version of the usual skyrmion number,              6 Eq. (S13) is
+an integer that counts the number of times the spin configuration wraps the unit sphere.
+
+
+                                                            7
+Density functional theory calculation
+
+    To obtain a characteristic coupling scale for the real material bilayer, we calculate the
+energy difference between a state with ferromagnetic layers coupled ferromagnetically and
+the same ferromagnetic layers coupled anti-ferromagnetically from density functional theory
+simulations.  For these calculations, we used the VASP code and the projector-augmented-
+wave (PAW) approach7,8   along with the PBE pseudopotential.9 A 8×4×1 Γ centered k-point
+grid was used for monolayer calculations with a 600 eV energy cutoff.  All calculations were
+done including spin-orbit coupling.10
+    A bilayer was constructed from the experimental C2/m bulk structures for RuCl3 11 and
+MnPS3 12  including∼20                  ˚A of vacuum.  The lattice constants were taken from MnPS3  to
+mimic  a  monolayer  of  RuCl3  atop  an  MnPS3  bulk.   This  setup  would  provide  the  most
+uniform field experienced by the RuCl3.  The atomic coordinates were then relaxed under
+a fully ferromagnetic order.  Finally, the energies in a fully ferromagnetic state and a state
+consisting of ferromagnetic layers coupled anti-ferromagnetically were computed to determine
+the energy difference per Ru atom.
+
+References
+
+ (1)Kitaev,  A.  Anyons  in  an  exactly  solved  model  and  beyond.Ann.  Phys.2006, 321,
+      2–111.
+
+ (2)Lieb, E. H. Flux Phase of the Half-Filled Band.Phys. Rev. Lett.1994,73, 2158–2161.
+
+ (3)Walker, L. R.; Walstedt, R. E. Computer Model of Metallic Spin-Glasses.Phys. Rev.
+      Lett.1977,38, 514–518.
+
+ (4)Berg, B.; L¨uscher, M. Definition and statistical distributions of a topological number
+      in the lattice O(3)σ-model.Nucl. Phys. B1981,190, 412–424.
+
+ (5)D´ıaz, S. A.; Klinovaja, J.; Loss, D. Topological Magnons and Edge States in Antiferro-
+      magnetic Skyrmion Crystals.Phys. Rev. Lett.2019,122, 187203.
+
+ (6)Nagaosa, N.; Tokura, Y. Topological properties and dynamics of magnetic skyrmions.
+      Nat. Nanotechnol.2013,8, 899–911.
+
+ (7)Kresse, G.; Furthm¨uller, J. Efficient iterative schemes for ab initio total-energy calcu-
+      lations using a plane-wave basis set.Phys. Rev. B1996,54, 11169–11186.
+
+ (8)Kresse, G.; Joubert, D. From ultrasoft pseudopotentials to the projector augmented-
+      wave method.Phys. Rev. B1999,59, 1758–1775.
+
+                                                        8
+ (9)Perdew, J. P.;  Burke, K.;  Ernzerhof, M. Generalized Gradient Approximation Made
+      Simple.Phys. Rev. Lett.1996,77, 3865–3868.
+
+(10)Kim, H.-S.; Kee, H.-Y. Crystal structure and magnetism inα−RuCl                    3:  An ab initio
+      study.Phys. Rev. B2016,93, 155143.
+
+(11)Cao, H. B.; Banerjee, A.; Yan, J.-Q.; Bridges, C. A.; Lumsden, M. D.; Mandrus, D. G.;
+      Tennant, D. A.; Chakoumakos, B. C.; Nagler, S. E. Low-temperature crystal and mag-
+      netic structure ofα-RuCl       3.Phys. Rev. B2016,93, 134423.
+
+(12)Ouvrard,  G.;  Brec,  R.;  Rouxel,  J.  Structural  determination  of  some  MPS3  layered
+      phases (M = Mn, Fe, Co, Ni and Cd).Materials  Research  Bulletin1985, 20, 1181–
+      1189.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                          9

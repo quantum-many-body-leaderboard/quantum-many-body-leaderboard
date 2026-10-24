@@ -1,0 +1,635 @@
+                  Tensor network study of the Shastry-Sutherland model in zero magnetic ﬁeld
+
+                                                        Philippe  Corboz1  and  Fr´ed´eric  Mila2
+                                          1Theoretische  Physik,  ETH  Z¨urich,  CH-8093  Z¨urich,  Switzerland
+    2Institut de th´eorie des ph´enom`enes physiques,  ´Ecole Polytechnique F´ed´erale de Lausanne (EPFL), CH-1015 Lausanne, Switzerland
+                                                                 (Dated: October 31, 2018)
+                    We simulate the Shastry-Sutherland model in two dimensions by means of inﬁnite projected entangled-pair
+                 states (iPEPS) - a variational tensor network method where the accuracy can be systematically controlled by
+                 the so-called bond dimension. Besides the well established dimer and N´eel phase iPEPS conﬁrms the presence
+                 of an intermediate phase with plaquette long-range order,  and we determine its phase boundaries with high
+                 accuracy.  The ﬁrst order phase transition forJ  = 0.675(2) between dimer and plaquette phase is compatible
+                 with previous series expansion results. iPEPS predicts a weak ﬁrst-order phase transition between plaquette and
+                 N´eel phase occurring forJ  =  0.765(15).  We do not ﬁnd a stable intermediate columnar-dimer phase, even
+                 when we bias the state towards this order.
+
+                 PACS numbers: 75.40.Mg, 75.10.Jm, 75.10.Kt, 02.70.-c
+
+
+                         I.    INTRODUCTION
+
+   The Shastry-Sutherland model1 (SSM) has been subject of
+many theoretical studies over the past three decades. Particu-
+larly after the discovery of the two-dimensional spin-gap ma-
+terial SrCu2(BO3)2,2,3   which can effectively be described by
+the SSM,4  theoretical efforts to determine its phase diagram
+have  been  intensiﬁed.   Since  the  model  is  frustrated,  accu-
+rate Quantum Monte Carlo simulations are lacking due to the
+negative sign problem, and various other methods have led to
+conﬂicting conclusions so far.
+   The SSM is given by the following Hamiltonian                                   FIG. 1: (Color online) The phase diagram of the Shastry-Sutherland
+              ˆH =J ∑       Si·Sj +J′   ∑              Si·Sj             (1)       model as a function of nearest-neighbor coupling J  (J ′  =  1), ob-
+                                                                                   tained with iPEPS. The width of a bond is proportional to the mag-
+                       ⟨i,j⟩                ⟨⟨i,j⟩⟩dimer                           nitude of the bond energy, where full (dashed) lines correspond to
+                                                                                   negative (positive) energies.  The arrows in the right panel illustrate
+where Si  are  spin-1/2  operators.   The  ﬁrst  sum  goes  over                   the N´eel order. In between the well established Dimer and N´eel phase
+nearest-neighbors on a square lattice, and the second sum over                     we ﬁnd a phase with plaquette long-range order.
+next-nearest  neighbor  sites  on  orthogonal  dimers  following
+the pattern shown Fig.1. In this work we set    J′ = 1 and study
+the phase diagram as a function ofJ.  ForJ  = 0 the model
+reduces to a Hamiltonian of decoupled dimers with a ground                         phase has also been found in the theoretical study in Ref.10
+state energy given by a product of singlets with an energy of                      based on a 1/N  expansion.   Further support for a plaquette
+−3/4 per dimer. This state remains the exact ground state also                     state was provided by exact diagonalization and a combina-
+for ﬁniteJ up to a certain valueJc1.1 The other limitJ→∞                           tion of dimer and quadrumer-boson methods,11 where charac-
+(orJ′ = 0) corresponds to the Heisenberg model, where the                          teristic features of the intermediate plaquette phase have been
+ground state exhibits N´eel order.                                                 found for 0.678<J < 0.702.
+   One of the ﬁrst studies based on Schwinger boson mean-                             On the other hand,  the series expansion study in Ref.12
+ﬁeld theory predicted an intermediate helical phase between                        challenged  the  prediction  of  a  plaquette  state  as  intermedi-
+the dimer and the N´eel ordered phase.5 Other early works sug-                     ate  phase,  and  proposed  a  columnar-dimer  ordered  state  as
+gested a direct transition between the two phases without any                      another possible candidate.  However, since none of the pro-
+intermediate phase.4,6,7                                                           posed non-magnetic states has an energy that is clearly lower
+   A plaquette phase as an intermediate phase was ﬁrst found                       than the N´eel energy (in the relevant coupling regime) they
+in the series expansion study by Koga and Kawakami.8 They                          were not able to make a ﬁnal conclusion regarding the nature
+predicted a ﬁrst order transition between dimer and plaquette                      of the intermediate phase.
+phase for Jc1  =  0.677(2), and a second order phase transi-                          In this work we show that the intermediate phase has in-
+tion  between  plaquette  and  N´eel  phase  for Jc2  =  0.86(1).                  deed plaquette long-range order, and we determine the phase
+This phase has been conﬁrmed in the series expansion study                         boundaries  with  a  higher  accuracy  than  in  previous  stud-
+in Ref.9, where it was shown that the plaquette phase is adi-                      ies.     Our  results,  summarized  in  Fig.1,  have  been  ob-
+abatically connected to the ground state of the 1/5-depleted                       tained  by  means  of  inﬁnite  projected  entangled-pair  states
+square lattice model.  A plaquette phase adjacent to the N´eel                     (iPEPS), which is a variational ansatz where the wave func-
+                                                                                                                                                               2
+
+tion  is  represented  by  a  tensor  network.13,14     This  approach
+can  be  seen  as  a  two-dimensional  generalization  of  matrix-
+product  states  (MPS)  -  the  underlying  variational  ansatz  of
+the  famous  density-matrix  renormalization  group  (DMRG)
+method.15  The accuracy of the ansatz can be systematically
+controlled by the so-called bond dimensionD.  A similar ap-
+proach has already been successfully used for the study of var-
+ious bosonic, frustrated spin- and fermionic models (see e.g.
+Refs.16–22).  We note that a ﬁnite PEPS has been used in a
+previous study of the SSM,23 however, only with a small bond
+dimensionD = 2, and no intermediate phase has been found.
+   Besides the phase diagram of the SSM, one of the goals of
+this paper is to provide further benchmark data which demon-
+strate the performance and usefulness of iPEPS. We present
+results obtained with different simulation setups which are ex-
+plicitly biased towards certain orders.  However,  despite the
+bias, all simulation setups lead to consistent results in the large
+D limit.  For example, we put a bias towards columnar dimer                        FIG. 2:  (Color online) Graphical representation of an inﬁnite pro-
+order, in which case for smallD the dimer order is clearly re-                     jected entangled-pair state (iPEPS) made of a 4×2 unit cell of tensors
+produced. However, it vanishes for largeD which shows that                         (surrounded by thick dashed lines) which is periodically repeated.
+the dimer order is not stable.  Finally, we present and test a                     Each sphere corresponds to a rank-5 tensor and the lines (legs) at-
+scheme to treat next-nearest neighbor interactions in a more                       tached to the sphere represent the indices of the tensor, as shown on
+accurate way than in a previous study.24                                           the right hand side.
+   The paper is organized as follows:  In Sec.IIwe provide a
+brief introduction to the iPEPS method and explain the differ-
+ent simulation setups used in this work. In Sec.IIIwe present
+our simulation results, ﬁrst for values of J  deep in the indi-                    matrix product state.  Tensor networks are most conveniently
+vidual phases, followed by a detailed study of the phase tran-                     represented graphically, as shown in Fig.2(a) for this particu-
+sitions.   Finally,  in Sec.IVwe summarize our ﬁndings.   In                       lar example. Each tensor is represented by a shape with lines
+appendixAthe scheme to treat next-nearest neighbor interac-                        (legs) attached to it,  which correspond to the indices of the
+tions in iPEPS is explained.                                                       tensor. A connection between two tensors implies a sum over
+                                                                                   the corresponding index,  and an open leg of a tensor corre-
+                             II.    METHOD                                         sponds to the physical index for the local Hilbert space of a
+                                                                                   site.  Each auxiliary indexjk runs overD elements, which is
+                                                                                   called the bond dimension.  Thus, D controls the size of the
+            A.    Inﬁnite projected entangled-pair states                          tensors (or matrices), i.e.  the number of variational parame-
+                                                                                   ters of the ansatz.
+   In this section we provide a short overview of iPEPS. For                          A projected entangled-pair state (PEPS)13 is a natural gen-
+a more detailed introduction to iPEPS and tensor networks in                       eralization of a matrix product state to two dimensions.  In-
+general we refer to Refs.14,25–27.                                                 stead of a three-index tensor, a ﬁve-index tensorT ldrui       is in-
+   The  main  idea  of  a  tensor  network  ansatz  is  to  represent              troduced for each lattice site on a two-dimensional (square)
+(approximate) the coefﬁcientsci1i2...iN of a wave function,                        lattice, where each tensor is connected with its four neighbor-
+       |Ψ⟩ =  ∑           ci1i2i3...iN|i1⟩⊗|i2⟩⊗...⊗|iN⟩     (2)                   ing tensors via the auxiliary indicesl, d, r, u, each having a
+                                                                                   bond dimensionD.  Thus, the number of variational parame-
+                i1i2...iN                                                          ters per tensor isdD4. An inﬁnite PEPS (iPEPS) is an ansatz
+by a trace over a product of tensors.  Here each indexik runs                      for a wave function in the thermodynamic limit.14 It is made
+over thed local basis states of a lattice site. The most famous                    of a unit cell of tensors which is periodically repeated on the
+example are matrix product states (MPS) which form the class                       inﬁnite lattice, as depicted in Fig.2(b).  If the wave function
+of variational states underlying the density-matrix renormal-                      is translational invariant, the same tensor can be used on each
+ization group (DMRG) method.15 In an MPS the coefﬁcients                           lattice site. If the state breaks translational symmetry, a larger
+are given by a trace over product of 3-index tensorsT lri   (with                  unit cell may be required.17 In practice, different unit cell sizes
+2-index tensors at the boundaries), as for example for a 6-site                    are tested to check, which size leads to the state with lowest
+system                                                                             variational energy.
+  ci1i2i3i4i5i6≈   ∑            Aj1i1Bj1j2                                            An  iPEPS  with D  =  1  is  nothing  but  a  site-vectorized
+                                        i2 Cj2j3i3 Dj3j4i4 Ej4j5i5 F j5i6    (3)   wave function (a product state),  parametrized by vectors Ti
+                    j1j2j3j4j5                                                     on each site. With increasingD the iPEPS can represent more
+Thus, each coefﬁcientci1i2i3i4i5i6 is given by a product of ma-                    and more entangled states, with a scaling of the entanglement
+trices (with vectors at the open boundaries), hence the name                       with block size which obeys the area law of the entanglement
+                                                                                                                                                                3
+
+entropy.25,28     Or in other words, with increasingD the iPEPS
+can take into account more of the quantum ﬂuctuations of the
+true ground state. These quantum ﬂuctuations may select, e.g.
+one of inﬁnitely many degenerate states in the classicalD = 1
+case.   Thus,  iPEPS  provides  a  way  to  systematically  study
+a state as a function of D, where D  controls the amount of
+quantum ﬂuctuations (or entanglement) in the system.
+   In  order  to  obtain  an  approximate  representation  of  the
+ground  state  for  a  given  Hamiltonian,  the  tensors  need  to
+be optimized, i.e.  the best variational parameters have to be
+found. In this work we do this optimization by performing an
+imaginary time evolution of an initial (e.g.  random) iPEPS.
+The evolution operator exp(−β ˆH) is split into a product of
+two-body  operators  via  a  (second  order)  Trotter-Suzuki  de-
+composition (see e.g.  Ref.27).  Application of such a two-
+body operator to a bond in the iPEPS increases the dimension
+of the bond.  Thus, for an efﬁcient evolution, the correspond-
+ing bond needs to be truncated back to the original bond di-
+mensionD after each time step.  There are different schemes
+to perform this truncation. In the present work we use the so-
+called full update, which is explained in detail in Ref.27for
+Hamiltonians with nearest-neighbor interactions. In this trun-                     FIG. 3:  (Color online) The four different simulation setups used to
+cation scheme,  the full  wave function is taken  into account                     simulate the Shastry-Sutherland model with a square lattice iPEPS.
+to determine the relevant subspace, in contrast to the simple                      Dark shapes correspond to tensors and dark lines to auxiliary bonds
+update,27,29,30        which is computationally cheaper, but less ac-              between tensors (the open, physical index of each tensor is omitted).
+curate.  In Ref.24a simple update scheme for Hamiltonians                          Filled circles correspond to physical lattice sites and interactions be-
+with next-nearest neighbor interactions was presented. In ap-                      tween the physical sites are given by thick shaded lines.  In the dif-
+pendixAwe introduce a more accurate full update scheme to                          ferent simulation setups different sites are blocked together. A tensor
+treat next-nearest neighbor interactions.                                          is used for each of these block of sites:  (a) Setup O: one tensor per
+   Once we have obtained an approximate representation of                          physical lattice site (no blocking), (b) setup P: one tensor per four
+the ground state in form of an iPEPS we can compute expec-                         sites on a plaquette,  (c) setup D: one tensor per orthogonal dimer
+tation values of observables  ˆO. To do this we have to contract                   (two sites), (d) setup C: one tensor per dimer (two sites), arranged in
+                                                                                   columnar order.
+(evaluate)  the  tensor  network  representing⟨Ψ| ˆO|Ψ⟩.   In  an
+MPS this can be done in an exact way by performing a se-
+quence  of  pairwise  multiplications  of  tensors.   However,  in
+iPEPS (and PEPS) the contraction cannot be done exactly (in
+polynomial  time),  and  there  exist  different  schemes  to  per-                    To check for lattice symmetry breaking we measure the lo-
+form the contraction approximately.  Here we use the corner-                       cal bond energiesEb on each bond in the unit cell, and then
+transfer matrix method31,32     generalized to arbitrary unit cell                 compute the following order parameter:
+sizes.17 The accuracy of the approximate contraction is con-
+trolled by the ”boundary” dimension χ,  which we typically
+choose between 20 up to several hundreds, depending onD.                                                ∆E = max(Eb)− min(Eb).                     (5)
+For the SSM, this is sufﬁciently large so that the error due to
+χ is small (compared to the effect of the ﬁniteD).
+
+                                                                                   If ∆E  is  ﬁnite,  then  the  state  breaks  lattice  symmetry.   By
+                         B.    Order parameters                                    plotting the distribution of the differentEb in the unit cell, as
+                                                                                   e.g.  in Fig.1, we can distinguish between plaquette-, dimer-
+   Since  iPEPS  describes  a  wave  function  in  the  thermody-                  or other possible orders.
+namic  limit  symmetries  such  as  SU(2)  spin  rotation  or  lat-                    We note that broken symmetries can also be an artifact of
+tice symmetries may be spontaneously broken.  To check for                         a too small D  in iPEPS. It is therefore always important to
+SU(2) breaking we compute the local magnetic moment on                             check,  how an order parameter behaves as a function of D.
+each site,                                                                         If it tends to a ﬁnite value in the D→∞ limit, then there
+                          √                                                        is a true, physical symmetry breaking (long-range order).  If,
+                 m = 12       ⟨σx⟩2 +⟨σx⟩2 +⟨σy⟩2.                 (4)             however, an order parameter is strongly suppressed with in-
+                                                                                   creasing D  and  extrapolates  to  zero  in  the  inﬁnite D  limit,
+A ﬁnitem implies that the SU(2) symmetry is spontaneously                          then this indicates that the exact ground state does not break
+broken.                                                                            the symmetry.
+                                                                                                                                                                4
+
+                         C.    Simulation setups                                             D.    Technical remarks on the iPEPS simulations
+
+   An  iPEPS  is  a  very  general  ansatz  in  the  sense  that  the                  There are different possibilities to choose an initial iPEPS
+Hamiltonian is essentially the only physical input of a simula-                     for the imaginary time evolution.   In many cases,  an iPEPS
+tion (besides the choice of the unit cell size). The method is to                   obtained with the simple update provides a good initial state
+a large extent unbiased, except that simulations for low bond                       for simulations with the full update (cf.  Ref27).  Typically,
+dimensions are biased towards low-entanglement (mean-ﬁeld)                          for small bond dimensions we evolve several random states
+solutions,  but  this  bias  disappears  for  sufﬁciently  large D.                 and check which one has the lowest variational energy.  This
+Nevertheless, in some cases it can be useful to bias the state                      state is then used as an initial state for simulations at largerD.
+towards a certain order, particularly in order to rule out a par-                   Close to a phase transition it can be useful in some cases to ini-
+ticular  order.   For  example,  if  we  bias  the  states  towards  a              tialize the iPEPS with a state deep inside a phase (away from
+dimer state, we are likely to observe a dimer state for small                       the  phase  transition).   For  example,  for  the  plaquette  phase
+D.  But if this order vanishes with increasingD, then this in-                      with setup D, we obtained particularly good results from an
+dicates that the order is unstable.                                                 initial  iPEPS  which  was  obtained  from  simulations  of  the
+   We can put a bias by choosing different bond dimensions                          SSM with a plaquette bias (stronger interactions on plaque-
+on  the  individual  bonds  in  the  iPEPS.  For  example,  taking                  ttes).
+a much larger bond dimension between sites on a plaquette                              In the imaginary time evolution the energy decreases as a
+leads to a bias towards a plaquette state. Instead of using dif-                    function of β.  In some cases we observed a slight increase
+ferent bond dimensions we can also block a certain number                           of the energy for large β, probably because the evolution is
+of sites together, and use one tensor for each block of sites.                      only  performed  in  an  approximate  way.   In  these  cases  we
+This effectively corresponds to having an inﬁniteD between                          take the state with lowest variational energy, for theβ where
+the sites within a block, i.e.  all correlations between the sites                  the energy is minimal.
+in a block are taken into account exactly.   We note that,  no                         Our simulation results are all obtained with a 2× 2 unit
+matter how we block the sites, in the largeD limit one should                       cell.  We tested larger unit cell sizes and did not ﬁnd signs of
+always recover the same physics. Thus, trying different setups                      another low-energy state which requires a larger unit cell.
+provides a way to check the robustness of a result.  The same                          To improve the efﬁciency of our simulations we used ten-
+idea was used in Ref.33, where we explained in detail how to                        sors with Zq  symmetry (a subgroup of SU(2)).  The tensors
+construct the Hamiltonian for the block sites.                                      then acquire a block structure, similarly to a block-diagonal
+   In Fig.3the four simulation setups used in this work are                         matrix. Details on the implementation of global abelian sym-
+presented.   Setup  O  is  corresponds  to  the  ”original”  lattice                metries can be found in Refs.34,35.
+with one tensor per physical lattice site.  The horizontal and                         For  the  corner-transfer  matrix  scheme  we  adopted  the
+vertical shaded lines correspond to nearest-neighbor interac-                       method  explained  in  Refs.17,32,  but  instead  of  computing
+tions, and the diagonal shaded lines to next-nearest neighbor                       isometries  based  on  a  singular  value  decomposition  to  ab-
+interactions.  Since there is no blocking and all bond dimen-                       sorb a  column (or  a row)  of tensors  into the  boundary (see
+sions are the same, there is essentially no bias in this setup.                     Refs.17,32for  details),  we  use  the  projector  introduced  in
+                                                                                    Refs.20,36.
+   Setup P is biased towards a plaquette order by blocking four
+sites on a plaquette together, leading to a local Hilbert space of
+24 = 16 for each block site. One can see that there are only in-                                       III.    SIMULATION RESULTS
+teractions connecting nearest-neighbor tensors (dark rounded
+squares).                                                                              Our  main  results  are  summarized  in  the  phase  diagram
+   In setup D we use a tensor for two sites on each of the or-                      in  Fig.1:   iPEPS  predicts  an  intermediate  plaquette  phase
+thogonal dimers, which leads to a square lattice iPEPS tilted                       between  the  dimer  phase  and  the  N´eel  phase  in  the  range
+by  45  degrees,  with  a  local  dimension  of 22  =  4  for  each                 0.675(2) < J <  0.765(15).   In the following we ﬁrst dis-
+block site.  This setup is biased towards the orthogonal dimer                      cuss the properties of the individual phases, and then provide
+state.  We note that also in this case only nearest-neighbor in-                    a detailed study of the phase transitions.
+teractions between the block sites appear.
+   Finally, in setup C we also group two sites on dimers to-
+gether,  but  in  a  columnar-dimer  arrangement,  which  puts  a                                               A.    Dimer phase
+bias towards columnar-dimer order. The diagonal interactions
+oriented from bottom left to top right appear between nearest-                         The  dimer  phase  consists  of  a  product  of  exact  singlets
+neighbor tensors, whereas the other diagonal interactions con-                      along the diagonal bonds in the lattice, i.e. for each valueJ in
+nect next-nearest neighbor tensors.                                                 the dimer phase the ground state is the same, with an energy
+   In setups C and O we make use of the next-nearest neighbor                       of−3/4 per dimer, orEs =−3/8 per lattice site.
+scheme introduced in appendixA, whereas in the setups P and                            With  setup  D  this  state  has  a  trivial  representation  with
+D only a nearest-neighbor scheme for the interactions between                       iPEPS, i.e. it can be represented withD = 1 because the state
+the block sites is needed.                                                          simply corresponds to a product state of the dimers.  For the
+                                                                                                                                                               5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 4: (Color online) Benchmark results for the Heisenberg model                  FIG. 5:  (Color online) Results for the Shastry-Sutherland model in
+(J ′ = 0,J  = 1) for the different simulation setups, compared with                the N´eel phase.  (a)-(c) Energy, local order moment m, and differ-
+state-of-the-art QMC simulations.  (a) Variational energy as a func-               ence in bond energies ∆E as a function of inverse bond dimension,
+tion of the inverse bond dimension. (b) Local ordered momentm as                   obtained forJ  = 1 with the four simulation setups.  The linear ex-
+a function of inverse bond dimension.  The linear extrapolations are               trapolations are a guide to the eye.  (d) Local ordered moment as a
+a guide to the eye. (c) Deviation of the iPEPS energy from the QMC                 function ofJ in the N´eel phase, obtained with setup D.
+result.  (c) (d) The difference in bond energies ∆E  vanishes in the
+largeD limit for all setups, which shows that lattice symmetries are
+unbroken.
+                                                                                   suffers from the negative sign problem. What really matters in
+                                                                                   the present study is that we can clearly distinguish between a
+other simulation setupsD = 2 is required, because a singlet                        ﬁnite and a vanishing order parameter to identify the different
+cannot be written as a product state of two sites.                                 phases, which is clearly feasible with the current accuracy.
+                                                                                      Setup P (setup C) is biased towards a plaquette (columnar
+                                                                                   dimer) state,  and this is why for small D  one ﬁnds a ﬁnite
+                                                                                   value  of  the  plaquette  (columnar  dimer)  order  parameter  as
+                             B.    N´eel phase                                     shown in Fig.4(d).  However, the plaquette (dimer) order is
+                                                                                   strongly suppressed with increasingD and vanishes for large
+   The N´eel phase in the Shastry-Sutherland model is adiabat-                     D.   Thus,  even  though  individual  setups  exhibit  a  bias  for
+ically connected to the N´eel phase of the Heisenberg model,                       smallD, eventually they all become exact in the largeD limit.
+which corresponds to the limitJ→∞ (orJ′  = 0).  In this                               For ﬁniteJ′ the system is frustrated because the spins on a
+limit the model is no longer frustrated and can therefore be                       diagonal bond would like to be antiparallel to each other (in-
+solved by Quantum Monte Carlo (QMC). In Fig.4we com-                               stead of parallel as in the N´eel phase).  This competition of
+pare the iPEPS results obtained with the different simulation                      interaction leads to a suppression of the local magnetic mo-
+setups with state-of-the-art QMC data from Refs.37,38. Fig-                        mentm.  For example, forJ  = 1 (Fig.5) the local moment
+ures4(a)  and  (c)  show  how  the  variational  energy  gets  im-                 is reduced tom = 0.21(1), and it is further suppressed with
+proved  with  increasing  bond  dimension D.   Our  best  vari-                    decreasingJ.  The difference in bond energies ∆E also van-
+ational energy ED=9s       = −0.66939,  obtained with setup D,                     ishes in this case in the largeD limit, indicating the absence
+agrees  up  to  four  digits  with  the  extrapolated  value  from                 of translational symmetry breaking.
+QMC,EQMC =−0.669437(5).
+   In all setups the local magnetic momentm decreases with                                                    C.    Plaquette phase
+increasingD, as shown in Fig.4(b), and approaches the QMC
+value,mQMC = 0.30743(1).38 It is not known howm depends
+on the bond dimension D  which makes accurate extrapola-                              In Fig.6we present simulation results for    J  = 0.7, where
+tions to the inﬁniteD limit difﬁcult. Empirically, a linear ex-                    all  setups  consistently  predict  a  plaquette  phase  for  large
+trapolation for the largest few values ofD yields a reasonable                     bond  dimension.   The  lowest  variational  energy  obtained  is
+estimate of the value in the inﬁnite D  limit,  with a relative                    ED=10s        =−0.3881 with setup D.
+error of the order of a few percents.  This is of course much                         The  difference  in  bond  energies ∆E  in  Fig.6(c)  clearly
+less accurate than QMC, however, we can obtain results with a                      remains ﬁnite in all simulation setups,  and we ﬁnd that the
+similar accuracy also for the cases with ﬁniteJ′, where QMC                        strong bonds form plaquettes as illustrated in Fig.1for large
+                                                                                                                                                                6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                   FIG. 7: (Color online) Columnar-dimer order parameter as a function
+                                                                                   of inverse bond dimension forJ  = 0.7.  The insets show the bond
+                                                                                   energies for simulation setup C, forD = 1 (right side) andD = 5
+                                                                                   (left side), where the width of a bond is proportional to the magnitude
+FIG. 6:  (Color online) Results for the Shastry-Sutherland model in                of its energy with full (dashed) lines corresponding to negative (posi-
+the plaquette phase.  (a)-(c) Energy, local order momentm, and dif-                tive) energies. A ﬁnite dimer order parameter can be found for small
+ference in bond energies ∆E  as a function of inverse bond dimen-                  D.  With increasingD, however, the dimer order becomes weaker,
+sion, obtained forJ = 0.7 with the four simulation setups. The lin-                and vanishes in the largeD limit.
+ear extrapolations are a guide to the eye.  (d) Plaquette order param-
+eter as a function ofJ in the plaquette phase obtained with setup D.
+                                                                                   withEbx andEby the bond energies in horizontal and vertical
+                                                                                   direction, respectively.  This order parameter can be ﬁnite for
+D. The dependence of ∆E onD varies from one setup to an-                           smallD, but even for setup C, it is seen to vanish in the inﬁnite
+other, nevertheless, a rather large value between 0.1 and 0.15                     D limit, as shown in Fig.7.  Thus, the dimer state can appear
+seems to be compatible with all simulation setups.                                 as a low-entanglement solution, but eventually quantum ﬂuc-
+   The local magnetic moment in Fig.6(b) is ﬁnite for small                        tuations destroy the dimer order and give rise to a plaquette
+D, which would suggest coexistence of plaquette and N´eel or-                      order instead.
+der. However,m is clearly suppressed with increasingD and
+it is very likely to vanish in all simulation setups in the large                    E.    First order phase transition between the dimer phase and
+D limit, which shows that the SU(2) spin rotation symmetry                                                     the plaquette phase
+is not broken in the plaquette phase, as expected.
+   Finally, in Fig.6(d) the plaquette order parameter as a func-                       In  this  section  we  determine  the  transition  point Jc1  be-
+tion ofJ for different bond dimensionsD is shown. Its mag-                         tween the dimer phase and the plaquette phase.  The transi-
+nitude tends to decrease with increasingJ  but remains ﬁnite                       tion is clearly of ﬁrst order, as can be seen in the jump in the
+in the whole plaquette phase.                                                      plaquette order parameter atJc1 from zero to a ﬁnite value.
+
+                                                                                       To ﬁnd the transition value precisely we can make use of
+              D.    Absence of a columnar-dimer phase                              the hysteresis effect in the vicinity of a ﬁrst order phase transi-
+                                                                                   tion: When we initialize a state in the dimer phase and tuneJ
+                                                                                   to a value slightly aboveJc1 the state will remain in the dimer
+   In Ref.12a columnar-dimer state was predicted as one of                         phase (since the state is metastable). Similarly, a state initial-
+the possible candidates for an intermediate phase from series                      ized in the plaquette phase will remain in that phase when de-
+expansion calculations.   With iPEPS we can also reproduce                         creasingJ to a value slightly belowJc1. The phase transition
+such a dimer state with setup C which is biased towards this                       occurs where the energies of the two states cross.  Since the
+type  of  order.   For D  =  1  a  product  of  vertical  dimers  is               energy in the dimer phase is independent ofJ,Es =−0.375,
+obtained  in  this  case,  as  shown  in  the  right  inset  in  Fig.7.            the transition occurs when the energy of the plaquette state
+Upon increasingD, however, this dimer order is strongly sup-                       crossesEs =−0.375.
+pressed with increasing D, and plaquette order is enhanced,                            In Fig.8, the energy of the plaquette state as a function of
+i.e.  two parallel horizontal bonds connecting two dimers be-                      J  is shown, obtained with setup D which yields lowest vari-
+come stronger, as shown in the left inset in Fig.7.  We deﬁne                      ational energies.  Since with increasing D the energy of the
+the following columnar-dimer order parameter                                       plaquette state is decreasing, the crossing pointJDc1 obtained
+                                                                                   for a certainD is an upper bound forJc1.  For example, for
+                ∆ECD = max(Ebx)− max(Eby)                 (6)                      D = 10 we ﬁndJD=10c1       = 0.6768.  If we extrapolate the en-
+                                                                                                                                                                  7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 8:  (Color online) Energy of the dimer state (horizontal dashed
+line)  and  the  extrapolated  energy  of  the  plaquette  state  (full  line).
+The ﬁrst order phase transition occurs at J  =  0.675(2) where the
+two energies cross.
+
+
+                                                                                     FIG. 9:  (Color online) Energies of the plaquette state and the N´eel
+                                                                                     state in the vicinity of the ﬁrst order phase transition between the
+ergy linearly in 1/D using the three largest values of D, we                         two states, obtained with setup O. ForJ = 0.76 the two states have
+obtain JD→∞                                                                          a similar energy for largeD. ForJ = 0.75 (J = 0.77) the plaquette
+          c1        =  0.6730,  which we take as an estimate for                     state has a lower (higher) energy than the N´eel state.
+the lower bound, since the energy is seen to converge faster
+than  linear  in 1/D.   Thus,  we  ﬁnd  for  the  transition  value
+Jc1  =  0.675(2),  which  is  in  agreement  with  the  series  ex-
+pansion result 0.677(2) from Ref.8, and the prediction from
+a higher-order coupled cluster method (0.677).39
+
+
+
+
+
+
+ F.    First-order phase transition between plaquette phase and
+                                N´eel phase
+
+
+   Locating the phase transition between plaquette phase and
+the N´eel phase is the most challenging part of this work.  We
+ﬁnd that the transition is of (weak) ﬁrst order. As discussed in
+the previous section the transition occurs where the energies
+of the two states cross.  However, unlike in the transition be-
+tween the dimer and plaquette phase, the energies cross at a
+very small angle, which makes it difﬁcult to very accurately
+determine the crossing point.                                                        FIG. 10: (Color online) Energies of the plaquette state and the N´eel
+                                                                                     state in the vicinity of the ﬁrst order phase transition between the
+   In Fig.9we plot the energies of the two states in the vicin-                      two states, obtained with setup D. ForJ = 0.77 the two states have
+ity of the transition as a function of 1/D obtained with setup                       a similar energy for largeD. ForJ = 0.76 (J = 0.78) the plaquette
+O. ForJ  = 0.75 the plaquette state has a lower energy than                          state has a lower (higher) energy than the N´eel state.
+the N´eel state for large bond dimensions. By increasingJ the
+energy of the N´eel state is lowered with respect to the plaque-
+tte state, so that forJ  = 0.76 they become essentially equal
+at large bond dimensions, and ﬁnally forJ  = 0.78 the N´eel                                                    IV.    CONCLUSION
+state has clearly a lower energy than the plaquette state. Since
+the two curves have similar slopes we do not expect another                             In this work we showed that the intermediate phase in the
+crossing of the energies at largerD.                                                 Shastry-Sutherland model is a plaquette phase, in agreement
+   A similar result is obtained with setup D, shown in Fig.10,                       with several previous studies based on other methods.8,9,11     Us-
+where the two energies become similar forJ = 0.77 for large                          ing state-of-the-art iPEPS simulations we have accurately de-
+D.  Thus, these results suggest a ﬁrst order phase transition                        termined the phase boundaries of the plaquette phase. By us-
+occurring for Jc2  =  0.765(15) which is much smaller than                           ing different simulation setups we biased the solution towards
+the predicted value 0.86(1) from series expansion.8                                  different ground states. But despite the bias, all setups consis-
+                                                                                                                                                            8
+
+tently predict an intermediate plaquette phase, and we found                     not far from our result,  but it lies between our D  =  3 and
+that the previously suggested columnar-dimer phase is unsta-                     D  =  4  estimates,  hence  deﬁnitely  above  the  upper  bound
+ble.                                                                             JD=10c1       = 0.6768 provided by iPEPS. This indicates that the
+   This work provides a good basis for future studies of the                     MERA  result  is  closer  to  the  mean-ﬁeld  solution  than  the
+SSM in a ﬁnite magnetic ﬁeld, a subject which is still attract-                  iPEPS result.
+ing a lot of attention.  Indeed, despite a considerable theoret-
+ical effort,4,40–43        the actual sequence of plateaus of the plain
+SSM has not been deﬁnitely established yet, at least close to                                                Acknowledgments
+the  transition  to  the  plaquette  phase,  and  to  get  reliable  in-
+formation on the magnetization curve in this parameter range                        The simulations have been performed on the Brutus cluster
+is an important step towards the interpretation of the numer-                    at ETH Zurich.  We thank the support of the Swiss National
+ous and partially conﬂicting experimental results reported for                   Science Foundation and MaNEP.
+SrCu2(BO3)2.2,44–47
+   Our study further demonstrates the usefulness of iPEPS as a
+tool to study strongly correlated systems in 2D. By simulating                                Appendix A: Nearest-neighbor full update
+a model directly in the thermodynamic limit we can minimize
+possible boundary effects, which is an advantage over DMRG,                         In  this  section  we  describe  the  full  update  used  to  per-
+where typically long cylinders with a certain widthW are sim-                    form an imaginary time evolution with a Hamiltonian includ-
+ulated. For small widths DMRG is clearly more accurate than                      ing next-nearest neighbor interactions.  The description is in-
+PEPS, however, since the number of relevant states to be kept
+in DMRG scales exponentially withW , DMRG becomes less                           tended for readers who are familiar with the basic notions of
+accurate  than  PEPS  for  systems  exceeding  a  certain  width.                tensor network algorithms.  For a general introduction we re-
+For the Heisenberg model this seems to be the case around                        fer to Refs.25,26.  The idea of the following scheme is es-
+W∼ 10,48 where the accuracy in the energy forW  = 10 and                         sentially the same as for the nearest-neighbor full update dis-
+m = 3000 states is comparable to the accuracy of an iPEPS                        cussed in Ref.27:  We apply a local time evolution operator
+with D  =  9 for the system in the thermodynamic limit (for                       ˆU  =  exp(−τ ˆHl) to the iPEPS that represents a wave func-
+a PEPS with a ﬁnite width W  =  10 and D  =  9 the accu-                         tion|Ψ⟩,  to  obtain  an  evolved  wave  function  (in  imaginary
+racy would presumably be better).  Thus, the two approaches                      time),
+can be seen as complementary:  DMRG provides very accu-
+rate results up to a certain system size, and iPEPS approaches                                                 |Ψ′⟩ =  ˆUl|Ψ⟩                               (A1)
+the problem from a different limit: Instead of varying the sys-
+tem size the only essential parameter isD, which controls the                    This increases the bond dimension between the sites, on whichˆHl is acting on, fromD to someD′ = κD.  The crucial step
+amount of entanglement in the system. While in many cases it
+is understood how to perform ﬁnite size extrapolations, little                   is now to truncate the enlarged bond indices fromD′ back to
+is known on how to extrapolate quantities inD.  Obtaining a                      D, which yields an approximate wave function| ˜Ψ⟩ of|Ψ′⟩.
+better understanding on how quantities depend onD will be                        To do this we minimize the norm of the distance between the
+important to determine order parameters more accurately in                       two wave functions,
+future studies.
+   Finally, it is remarkable to note that in the above mentioned                   |||Ψ′⟩−| ˜Ψ⟩||2 =⟨Ψ′|Ψ′⟩−⟨Ψ′| ˜Ψ⟩−⟨ ˜Ψ|Ψ′⟩+⟨ ˜Ψ| ˜Ψ⟩  (A2)
+example for the Heisenberg model the total number of varia-
+tional parameters is roughly three orders of magnitude larger                    with respect to the parameters of the new tensors in| ˜Ψ⟩.
+in DMRG (MPS) than in iPEPS, which shows that a PEPS                                As an example, lets consider the interactions on the trian-
+offers a much more compact description of a 2D wave func-                        gle made of the sites A,B and C in Fig.11(a).  The SSM has
+tion than an MPS. The challenge, however, remains to further                     three  two-body  terms  on  this  triangle,  which  we  denote  by
+improve the methods to optimize and contract an (i)PEPS, so                       ˆHABC.  The corresponding imaginary time evolution operator
+that  even  larger  bond  dimensions  and  larger  accuracies  can                ˆUABC  = exp(−τ ˆHABC) can be exactly represented by a ma-
+be achieved.  A lot of progress has been made in the last few                    trix product operator (MPO) with a certain bond dimensionκ,
+years, however, we believe that a method which fully exploits                    as shown in Fig.11(b), with tensors    X, Y , andZ  acting on
+the potential of the ansatz is yet to come.                                      sites A, B, C, respectively.  By multiplying these MPO ten-
+   Note added.  — After completion of this work, we became                       sors to the corresponding PEPS tensors,  e.g. Y  to B  as in
+aware  of  a  new  study  of  the  SSM  based  on  the  multi-scale              Fig.11(c),  we obtain a new PEPS tensor     B′  with increased
+entanglement renormalization (MERA) ansatz in Ref.49, in                         bond dimensionκD on the lower and the right leg. The aim is
+which conclusions similar to ours have been reached for zero                     now to approximate tensorB′ with another tensor  ˜B with all
+magnetic  ﬁeld.   In  particular,  both  methods  locate  the  tran-             bond dimensions reduced toD. For this we make an ansatz for
+sition between the plaquette and the N´eel phase signiﬁcantly                    tensor  ˜B as shown in Fig.11(d), made of the original tensor    B
+below the estimate of Ref.8.  The critical value for the phase                   andY , and two tensorsv andp of dimensionD×κ×D. Sim-
+transition  between  the  orthogonal  dimer  phase  and  the  pla-               ilarly, we make an ansatz for  ˜A and  ˜C as shown in Figs.11(e)
+quette  phase  reported  in  that  paper, J  =  0.687(3),  is  also              and (f), respectively.
+                                                                                                                                                                              9
+
+   With these ingredients we can represent the wave functions                              dient method. In this work we used an iterative scheme, where
+|Ψ⟩,|Ψ′⟩,| ˜Ψ⟩, as iPEPSs, where the new wave function de-                                 expression (A4) is ﬁrst minimized with respect to   u∗ with the
+pends on the parameters of the tensorsu,v,p, andq. In order                                other tensors being ﬁxed, i.e.
+to obtain the optimal new iPEPS we need to minimize
+                                                                                                     δ
+F (u,v,p,q) =⟨ ˜Ψ(u,v,p,q)| ˜Ψ(u,v,p,q)⟩− 2Re(⟨ ˜Ψ(u,v,p,q)|Ψ′⟩)                                   δu∗F (u,v,p,q) = δδu∗ [u∗Mu−u∗K] = 0         (A4)
+                                                                              (A3)
+where we omitted the constant term⟨Ψ′|Ψ′⟩ in (A2). The ten-                                where M  is  the  tensor  network  in  Fig.11(g)  with     u  and
+sor network for the ﬁrst term is shown in Fig.11(g). As usual,                             u∗  removed,  and  K  is  the  tensor  network  representation  of
+the  surrounding  corner  tensors Ck  and  edge  tensors Tj  are                           ⟨ ˜Ψ(u,v,p,q)|Ψ′⟩ with the tensoru∗ removed.  Thus, the mini-
+obtained from the corner-transfer matrix method.17,31,32        They                       mum can be found by solving the system of linear equations
+take into account the inﬁnite wave function (times its conju-
+gate) surrounding a 2× 2 cell of tensors.  The representation                                                                 Mu =K,                                 (A5)
+of the second term looks similar, except that the tensorsu,v,
+p,q are replaced by identities (straight lines).                                           which yields a new tensoru.  One then proceeds with tensor
+   As in the case of the nearest-neighbor update50 we can min-                             v, keeping tensorsu,p,q ﬁxed, and so on.  This procedure is
+imize this sum either iteratively, or e.g. with a conjugate gra-                           repeated until convergence is reached.
+
+
+
+
+
+
+
+ 1  B.  Sriram  Shastry  and  B.  Sutherland,Physica  B+C                    108,  1069    24  P.  Corboz,  J.  Jordan,   and  G.  Vidal,Phys.  Rev.  B         82,  245119
+   (1981).                                                                                    (2010).
+ 2  H.   Kageyama,   K.   Yoshimura,   R.   Stern,   N.   V.   Mushnikov,                  25  F. Verstraete, V. Murg,   and J. I. Cirac,Advances in Physics           57,
+   K. Onizuka,  M. Kato,  K. Kosuge,  C. P. Slichter,  T. Goto,   and                         143 (2008).
+   Y. Ueda,Phys. Rev. Lett.          82, 3168 (1999).                                      26  U. Schollw¨ock,Annals of Physics        326, 96 (2011).
+ 3  S. Miyahara and K. Ueda,J. Phys.:  Condensed Matter           15, R327                 27  P. Corboz,  R. Orus,  B. Bauer,   and G. Vidal,Phys. Rev. B        81,
+   (2003).                                                                                    165104 (2010).
+ 4  S. Miyahara and K. Ueda,Phys. Rev. Lett.          82, 3701 (1999).                     28  J. Eisert, M. Cramer,  and M. B. Plenio,Rev. Mod. Phys.            82, 277
+ 5  M. Albrecht and F. Mila,Europhys. Lett. (EPL)          34, 145 (1996).                    (2010).
+ 6  Z. Weihong, C. J. Hamer,  and J. Oitmaa,Phys. Rev. B              60, 6608             29  G. Vidal,Phys. Rev. Lett.        91, 147902 (2003).
+   (1999).                                                                                 30  H. Jiang, Z. Weng,   and T. Xiang,Phys. Rev. Lett.            101, 090603
+ 7  E. M¨uller-Hartmann, R. R. P. Singh, C. Knetter,  and G. S. Uhrig,                        (2008).
+   Phys. Rev. Lett. 84, 1808 (2000).                                                       31  T. Nishino and K. Okunishi,J. Phys. Soc. Japan                 65, 891 (1996).
+ 8  A. Koga and N. Kawakami,Phys. Rev. Lett.            84, 4461 (2000).                   32  R. Or´us and G. Vidal,Phys. Rev. B        80, 094403 (2009).
+ 9  Y. Takushima, A. Koga,   and N. Kawakami,J. Phys. Soc. Japan                           33  P. Corboz, K. Penc, F. Mila,  and A. M. L¨auchli,Phys. Rev. B            86,
+   70, 1369 (2001).                                                                           041106 (2012).
+10  C. H. Chung, J. B. Marston,   and S. Sachdev,Phys. Rev. B  64,                         34  S. Singh, R. N. C. Pfeifer,  and G. Vidal,Phys. Rev. B        83, 115125
+   134407 (2001).                                                                             (2011).
+11  A. L¨auchli, S. Wessel,   and M. Sigrist,Phys. Rev. B             66, 014401           35  B. Bauer, P. Corboz, R. Or´us,   and M. Troyer,Phys. Rev. B  83,
+   (2002).                                                                                    125106 (2011).
+12  W. Zheng, J. Oitmaa,  and C. J. Hamer,Phys. Rev. B  65, 014408                         36  Y.-K. Huang, P. Chen,  and Y.-J. Kao,arXiv:1203.4848  (2012).
+   (2001).                                                                                 37  A. W. Sandvik,Phys. Rev. B               56, 11678 (1997).
+13  F.  Verstraete  and  J.  I.  Cirac,  Preprint     (2004),arXiv:cond-                   38  A. W. Sandvik and H. G. Evertz,Phys. Rev. B        82, 024407 (2010).
+   mat/0407066.                                                                            39  R.  Darradi,  J.  Richter,    and  D.  J.  J.  Farnell,Phys.  Rev.  B            72,
+14  J. Jordan, R. Or´us, G. Vidal, F. Verstraete,  and J. I. Cirac,Phys.                      104425 (2005).
+   Rev. Lett. 101, 250602 (2008).                                                          40  T. Momoi and K. Totsuka,Phys. Rev. B            62, 15067 (2000).
+15  S. R. White,Phys. Rev. Lett.            69, 2863 (1992).                               41  J. Dorier, K. P. Schmidt,  and F. Mila,Phys. Rev. Lett.         101, 250402
+16  J. Jordan, R. Or´us,  and G. Vidal,Phys. Rev. B        79, 174515 (2009).                 (2008).
+17  P. Corboz, S. White, G. Vidal,   and M. Troyer,Phys. Rev. B  84,                       42  A.  Abendschein  and  S.  Capponi,Phys.  Rev.  Lett.                101,  227201
+   041108 (2011).                                                                             (2008).
+18  B.  Bauer,   P.  Corboz,   A.  M.  L¨auchli,   L.  Messio,   K.  Penc,                 43  M. Nemec,  G. R. Foltin,   and K. P. Schmidt,Phys. Rev. B                86,
+   M. Troyer,  and F. Mila,Phys. Rev. B          85, 125116 (2012).                           174425 (2012).
+19  Z.-C. Gu, H.-C. Jiang, D. N. Sheng, H. Yao, L. Balents,  and X.-G.                     44  K. Onizuka, H. Kageyama, Y. Narumi, K. Kindo, Y. Ueda,   and
+   Wen,arXiv:1110.1183  (2011).                                                               T. Goto,J. Phys. Soc. Japan          69, 1016 (2000).
+20  L.    Wang,    Z.-C.    Gu,    F.    Verstraete,        and    X.-G.    Wen,           45  K.    Kodama,    M.    Takigawa,    M.    Horvati´c,    C.    Berthier,
+   arXiv:1112.3331  (2011).                                                                   H.  Kageyama,  Y.  Ueda,  S.  Miyahara,  F.  Becca,    and  F.  Mila,
+21  H.  H.  Zhao,  C.  Xu,  Q.  N.  Chen,  Z.  C.  Wei,  M.  P.  Qin,  G.  M.                 Science 298, 395 (2002).
+   Zhang,  and T. Xiang,Phys. Rev. B            85, 134416 (2012).                         46  S. E. Sebastian, N. Harrison, P. Sengupta, C. D. Batista, S. Fran-
+22  P. Corboz, M. Lajk´o, A. M. L¨auchli, K. Penc,  and F. Mila,Phys.                         coual, E. Palm, T. Murphy, N. Marcano, H. A. Dabkowska,  and
+   Rev. X 2, 041013 (2012).                                                                   B. D. Gaulin,Proceedings of the National Academy of Sciences
+23  A. Isacsson and O. F. Sylju˚asen,Phys. Rev. E         74, 026701 (2006).                  105, 20157 (2008).
+                                                                                                                                                                                 10
+
+
+47  M.  Takigawa,  M.  Horvati´c,  T.  Waki,  S.  Kr¨amer,  C.  Berthier,                        arXiv:1212.1999  (2012).
+   F. L´evy-Bertrand, I. Sheikin, H. Kageyama, Y. Ueda,  and F. Mila,                        50  P. Corboz, G. Evenbly, F. Verstraete,  and G. Vidal,Phys. Rev. A
+   arXiv:1209.0069  (2012).                                                                      81, 010303(R) (2010).
+48  E. Stoudenmire and S. White, Preprint  (2011),arXiv:1105.1374.
+49  J.    Lou,    T.    Suzuki,    K.    Harada,        and    N.    Kawashima,
+                                                                                                                                                                             11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 11: (Color online) (a) We consider three sites A,B,C on a trian-
+gle in the Shastry-Sutherland model (cf.  Fig.3).  (b) The imaginary
+time evolution operator on the triangle represented as a matrix prod-
+uct operator (MPO). (c) MPO tensorY  multiplied to the PEPS tensor
+B. This product can be represented by another PEPS tensorB′ with
+enlarged bond dimensionsκD in the lower and right leg. (d) Ansatz
+for the new tensor  ˜B  to approximately represent B′.  (e-f) Similar
+ansatz as in (d) for  ˜A and  ˜C.  (g) Tensor network representation of
+⟨ ˜Ψ| ˜Ψ⟩ (see text).

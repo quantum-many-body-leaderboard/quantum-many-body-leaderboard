@@ -378,3 +378,38 @@ python ed40b.py --L1 6,2 --L2 -2,6 --group c2 --name sq40c2m --outdir r40c2m --v
 python ed40b.py --L1 6,2 --L2 -2,6 --group c4 --name sq40a --outdir r40c4a --vectors A:0.6 --expect A=430909650,B=430909268
 python bf_check.py --sectors A,B,E --J2 0.5,0.55,0.6,0.7,1 --out bf20e.json
 ```
+
+## `exact-recompute-2026-10-families/`: the exact rows of the Kitaev and Shastry-Sutherland families
+
+**Question.** The families pass of 2026-10-20 added exact rows on Kitaev clusters (arXiv:1411.5198, 2112.08394,
+2009.04129) and Shastry-Sutherland clusters (cond-mat/0605464, cond-mat/0309368). Are they the ground states of
+the instances as defined, and where the source prints fewer digits than a recomputation gives, which digits
+does the row carry?
+
+**Design.** Own code only, 2026-10-23/24. `kitaev_majorana.py`: free Majorana fermions, every gauge (flux)
+class; on a torus the physical-parity projection prod_j D_j = 1 by the Pfaffian sign. `ed.c` (C/OpenMP
+Lanczos, Pauli form, S^z = 0 or full basis, optional deflation of the dimer-singlet product state), bonds from
+`gen.py` and `geom.py`; `xcheck.py` is a scipy cross-check. The spin ED reproduces the projected Majorana energy
+on 11 tori of 6 to 24 sites (6 of them tori where the projection changes the answer) to 1e-12. The 32-site
+Shastry-Sutherland cluster is the (4,4), (4,-4) torus, S^z = 0 (601,080,390 states), 32 threads, with the dimer
+state deflated, so the Lanczos run finds the lowest state orthogonal to it (Ritz values converged to about
+1e-10); J = 0.7 with and without deflation agree to 1.5e-14. The 36-site clusters above J = 0.5 were not run.
+
+**Result.** `results/summary.json` (recomputed, stored, difference per row), `results/ss32_results.json`,
+`results/majorana_results.jsonl`, `results/logs/`. All seven Kitaev exact rows agree within their printed digits;
+the open 5 x 5, 7 x 7 and 11 x 11 patches are the 60-degree rhombus (A(m,n) bonded to B(m,n), B(m-1,n),
+B(m,n-1)); the 120-degree rhombus gives other energies. On the 32-site cluster at J = 0.677, 0.67724, 0.677244
+and 0.677246 the lowest state orthogonal to the dimer state lies above it, so E0 = -48 exactly, and at
+J/Jd = 1/2 the dimer state is a proven ground state (E0 = -54 on 36 sites); the printed values carry the source's
+Lanczos residual (about 1e-10). At J = 0.677248, 0.6778 and 0.68 the recomputed energy lies 8.1e-8, 3.6e-10 and
+4.0e-9 below the printed one, beyond its convergence; Ritz values are upper bounds, so the printed runs were not
+fully converged. At J = 0.6772, 0.6773, 0.6775 and 0.7 the printed values agree. The 16-site cluster (4 x 4
+torus) gives -25.401007836214 (S^z = 0, full 2^16 basis and scipy agree), the printed -6.3502 truncated.
+
+**Conclusion.** The rows carry QMBL's digits with the printed value kept on the row (`scripts/corrections.mjs`;
+rule of 2026-09-30, ruled for these rows 2026-10-24); the agreeing rows are verified
+(`scripts/verifications.mjs`).
+
+**Reproduce.** `python gen.py` writes `bonds/`; `gcc -O3 -fopenmp ed.c -o ed -lm`; `run_small.sh` (Kitaev tori,
+16 and 20 sites, seconds), `run_ss32.sh <J>` (about 30 min per J on 32 threads, 16 GB);
+`python kitaev_majorana.py` for the free-Majorana energies.

@@ -1,0 +1,71 @@
+{
+  "model": "Kitaev",
+  "lattice": "honeycomb-6x6",
+  "n_sites": 72,
+  "boundary": "PO",
+  "params": {
+    "K": 1,
+    "J": 0,
+    "Gamma": 0
+  },
+  "cluster": "6 x 6 two-site unit cells on a cylinder, open along x and periodic along y (arXiv:2009.04129, Fig. 2(a))",
+  "instance_id": "Kitaev/honeycomb-6x6_72_PO_K1",
+  "rows": [
+    {
+      "energy": -54.4698474903,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 72,
+      "einf": 0,
+      "v_score": null,
+      "method": "Exact solution",
+      "ansatz": null,
+      "method_detail": "free Majorana fermions, Wilson-loop sector Φy = +1",
+      "method_as_published": "exact ground-state energy Eg(Φy = 1)",
+      "family": "other",
+      "bound_type": "exact",
+      "bound_type_reason": "numerically exact reference as stated by the source (assigned during source reading)",
+      "reference": "Jin, Tu & Zhou, Density matrix renormalization group boosted by Gutzwiller projected wave functions, Phys. Rev. B 104, L020409 (2021), doi:10.1103/PhysRevB.104.L020409, arXiv:2009.04129",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-20",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-20",
+        "method": "source text of arXiv:2009.04129 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-10-20)",
+        "reported_as": "-54.469847490329",
+        "note": "Supplemental Material, numerical data for Fig. 3: Eg(Phi_y = 1) of the 6 x 6 cylinder; the Phi_y = -1 sector is higher (-54.385529432483, 'about 0.084' above, main text); version read: arXiv text (sources/2009.04129.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eq. (1) H3 = sum J_a sigma^a sigma^a + J3 sum sigma^x sigma^y sigma^z, Pauli matrices, J_a = 1, J3 = 0: K = +4 in the S = sigma/2 form, 4 times the instance's K = +1 (scale 4). Total energy of the 72-site cylinder (Supplemental Material, numerical data for Fig. 3); the boundary term of Eq. (S8) has deltaK -> 0+ and commutes with H3. QMBL's flux-free free-Majorana energy of the 6 x 6 cylinder gives -54.4698475.",
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-10-24",
+          "scope": "value",
+          "method": "recomputed: free-Majorana solution, own code kitaev_majorana.py (numpy SVD per gauge class; torus: projection prod_j D_j = 1 via Pfaffian sign, checked against spin ED); checks/exact-recompute-2026-10-families/",
+          "location": "recomputed (checks/exact-recompute-2026-10-families/)",
+          "reported_as": "-54.469847490329",
+          "conversion": "recomputed total (Pauli form, |K| = 1) -54.469847490329; stored -54.4698474903; difference -2.900e-11; printed-digit resolution of the stored total 5.0e-13",
+          "note": "6 x 6 cylinder, flux-free; the two loop sectors give -54.469847490329 and -54.385529432483 (the source's Phi_y = -1 value, also reproduced); vortex configurations higher (gap 0.1166), so Eg(Phi_y = 1) is the global ground state; identical to all 12 printed decimals. Also read by famP7-kitaev-shastrysutherland#0 (arXiv:2009.04129v2 and v1 PDFs, pypdf layout mode (sources/2009.04129v{1,2}.famP7.txt); journal PRB 104, L020409 not reached (Cloudflare challenge page), arXiv v2 of 2021-05-04 read instead; Supplemental Material, 'Numerical data for Fig. 3 in the main text' (identical in v1 and v2); Eg(Φy = 1) =−54.469847490329): Eq. (1) Pauli form, Jx = Jy = Jz = 1, J3 = 0, sign + (K1 correct); 6 x 6 cylinder, Lx open, Ly periodic, N = 72; Phi_y = +1 sector, which the paper states is lower than Phi_y = -1 by about 0.084 (printed values differ by 0.0843181), so it is the cylinder ground state; boundary term deltaK -> 0+ commutes with H3; exact free-Majorana value, deterministic, no sigma; own computation (primary). No other row on the instance, no duplicate.",
+          "source_entry": "famE-exact-recompute#4, famP7-kitaev-shastrysutherland#0 (qmbl-verify 2026-10-23)"
+        }
+      },
+      "normalised": {
+        "factor": 4,
+        "source_couplings": "H3 = +sum sigma^a sigma^a (Eq. 1, J_a = 1, J3 = 0, Pauli): K = +4 in the S = sigma/2 form",
+        "note": "the source's Hamiltonian is 4 times the instance's; its printed energy (reported_as) is divided by 4"
+      },
+      "corrections": [
+        {
+          "field": "sampled",
+          "to": false,
+          "reported_as": "-54.469847490329",
+          "location": "arXiv:2009.04129 Supplemental Material, numerical data for Fig. 3",
+          "version_read": "arXiv text (sources/)",
+          "conversion": "none",
+          "checked_on": "2026-10-20",
+          "reason": "Deterministic, not a Monte Carlo estimate: the free-Majorana solution of the cylinder, printed to 12 decimals. The method string matches no deterministic marker, so the fallback in units.mjs read it as sampled (RULES.md 6).",
+          "source_entry": "families pass 2026-10-20 (first reading and adversarial second reading)",
+          "from": true
+        }
+      ],
+      "sampled": false
+    }
+  ]
+}

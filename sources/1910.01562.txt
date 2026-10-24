@@ -1,0 +1,1676 @@
+                           Gapless quantum spin liquid in a honeycomb Γ magnet
+
+                           Qiang  Luo,1, 2  Jize  Zhao,3,∗  Hae-Young  Kee,2, 4  and  Xiaoqun  Wang5, 6,†
+                            1Department  of  Physics,  Renmin  University  of  China,  Beijing  100872,  China
+                       2Department  of  Physics,  University  of  Toronto,  Toronto,  Ontario  M5S  1A7,  Canada
+                         3School  of  Physical  Science  and  Technology  &  Key  Laboratory  for  Magnetism  and
+                            Magnetic  Materials  of  the  MoE,  Lanzhou  University,  Lanzhou  730000,  China
+                         4Canadian  Institute  for  Advanced  Research,  Toronto,  Ontario,  M5G  1Z8,  Canada
+                      5Key  Laboratory  of  Artiﬁcial  Structures  and  Quantum  Control  (Ministry  of  Education),
+                                           Shenyang  National  Laboratory  for  Materials  Science,
+                                       School  of  Physics  and  Astronomy,  Tsung-Dao  Lee  Institute,
+                                         Shanghai  Jiao  Tong  University,  Shanghai  200240,  China
+                               6Beijing  Computational  Science  Research  Center,  Beijing  100084,  China
+                                                              (Dated:  May 18, 2021)
+                   A family of spin-orbit coupled honeycomb Mott insulators oﬀers a playground to search for quan-
+                tum  spin  liquids  (QSLs)  via  bond-dependent  interactions.   In  candidate  materials,  a  symmetric
+                oﬀ-diagonal Γ term,  close cousin of Kitaev interaction, has emerged as another source of frustra-
+                tion that is essential for complete understanding of these systems.  However,  the ground state of
+                honeycomb Γ model remains elusive, with a suggested zigzag magnetic order.  Here we attempt to
+                resolve the puzzle by perturbing the Γ region with a staggered Heisenberg interaction which favours
+                the zigzag ordering.  Despite such favour, we ﬁnd a wide disordered region inclusive of the Γ limit
+                in the phase diagram.  Further, this phase exhibits a vanishing energy gap, a collapse of excitation
+                spectrum,  and a logarithmic entanglement entropy scaling on long cylinders,  indicating a gapless
+                QSL. Other quantities such as plaquette-plaquette correlation are also discussed.
+
+
+INTRODUCTION                                                                   model13, analytical solution of the honeycomb Γ model
+The   ongoing   search   for   exotic   magnetic   states   in                 has not been found yet36.  Previous classical studies have
+highly frustrated antiferromagnets1–6    has been extended                     demonstrated  that  its  ground  state  is  a  classical  spin
+to  a  new  class  of  correlated  materials  with  a  two-                    liquid37, followed by a ﬂux-ordered spin liquid which is
+dimensional   honeycomb   structure7–10      and   its   three-                stabilized in a ﬁnite temperature window38.  Given the
+dimensional  variants11.     It  is  suggested  that  bond-                    inﬁnite classical ground-state degeneracy37, determining
+dependent  interactions  could  be  realized  in  the  spin-                   the precise quantum nature of Γ model is nontrivial, and
+orbit  coupled  Mott  insulators  with  the  aforementioned                    existing numerical works have already led to conﬂicting
+lattice  geometry12.    In  particular,  the  Kitaev  honey-                   results.   Parallel  works  by  exact  diagonalization39  and
+comb  model  exhibits  a  novel  Kitaev  quantum  spin  liq-                   density-matrix renormalization group (DMRG) study of
+uid (QSL) which hosts fractionalized Majorana fermions                         a cylinder with a width of three unit cells40  both claim
+and  ﬂux  excitations13.    Realization  of  Kitaev  interac-                  that the ground state is a nonmagnetic phase.  A varia-
+tion in real materials was ﬁrst proposed in iridates14–16    ,                 tional Monte Carlo simulation, on the other hand, sug-
+and  then  turned  toward α-RuCl3  in  which  Ru3+  ions                       gests that it is a zigzag order41.  Furthermore, a recent
+are arranged in a honeycomb lattice and carry eﬀective                         study  proposes  that  it  is  a  nematic  paramagnet  that
+spin-1/2  particles7,9  .   Although α-RuCl3  displays  long-                  spontaneously breaks the lattice rotational symmetry42.
+range  zigzag  magnetic  order  at  low  temperature17–22    ,                    In this work, we study a model which consists of the Γ
+it  is  argued  to  be  proximate  to  the  Kitaev  QSL  owing                 term and of a staggered Heisenberg ( ˜J) interaction along
+to  the  broad  continuum  of  magnetic  excitations  iden-                    the  bonds,  dubbed  the  bond-modulated   ˜J-Γ  model  (see
+tiﬁed  in  Raman  scattering23,24      and  inelastic  neutron                 Eq. (1)).  Depending on the sign of     ˜J, it could either favor
+scattering9,25–27       .                                                      the zigzag order ( ˜J > 0) or stripy order ( ˜J < 0).  If the
+   In spite of massive research eﬀorts,  it has been chal-                     ground state of Γ model is a zigzag ordered phase, then
+lenging  to  determine  exchange  parameters  of  the  pro-                    the zigzag order protruding from the pure Γ limit should
+posed  spin  Hamiltonian  for α-RuCl3  (see  refs.28,29     and                compete  with  and  survive  up  to  a  ﬁnite  ferromagnetic˜J  interaction.  Otherwise, there will be an intermediate
+references  therein).   However,  there  is  a  broad  consen-
+sus  on  a  sizable  oﬀ-diagonal  Γ  interaction30,31     which  is            phase sandwiched between the two magnetically ordered
+antiferromagnetic (AFM) and is potentially comparable                          states.   Thus,  this  model  works  as  a  virtuous  arena  to
+to the celebrated Kitaev interaction26,32,33        .  Crucially, it           clarify  the  debates  by  unfolding  the  competing  states,
+is shown that the Γ interaction could help enhance the                         although it is not a description of any particular material.
+mass gap of Majorana fermions34  and is responsible for                        By employing the DMRG method on both ﬁnite cylinders
+the strongly anisotropic responses to the magnetic ﬁeld                        with circumferences of up to 10 sites and C3-symmetric
+observed  in α-RuCl3  provided  that  the  Land´e g-factor                     hexagonal clusters43,44    , we identify a disordered state in
+anisotropy  is  modest28,30,35        .   In  contrast  to  the  Kitaev        between.   This  phase  manifests  characters  of  a  gapless
+                                                                                                                                                       2
+
+QSL including a dense excitation spectrum, logarithmic
+entanglement entropy scaling, and short-range plaquette-
+plaquette correlation.  The pure Γ limit belongs to this
+QSL  and  is  separated  from  the  zigzag  order  by  a  ﬁrst-
+order transition.
+
+
+RESULTS
+Model
+    The Hamiltonian of the bond-modulated  ˜J-Γ model
+reads
+
+     H = ˜J ∑       ηγSi· Sj + Γ ∑          (Sαi Sβj  +SβiSαj )      (1)
+             ⟨ij⟩‖γ                  ⟨ij⟩‖γ
+
+where Sγi  (γ =x, y, z) is the γ-component of a spin-1/2
+operator at site i, and α and β are the two other bonds
+on a honeycomb lattice. ηγ = 1 for the bond⟨ij⟩γ  along
+the horizontal direction and equals to−1 otherwise (see
+Fig.1).          ˜J  and Γ are parameterized using ϑ∈ [0,π] so as
+to  ˜J = cosϑ and Γ = sinϑ (≥ 0).
+                                                                               FIG.  2:  Classical  phase  diagram.    a  Monte  Carlo  sim-
+                                                                               ulations  of  classical  energy eg  under  three  XC  clusters  of
+                                                                               16×16 (red triangle), 24×24 (green square), and 32×32 (blue
+                                                                               circle).  The solid black line stands for the exact solution given
+                                                                               by the energy optimization method.  The classical phase di-
+                                                                               agram  is  then  determined  by  kinks  in  energy  curves.    In-
+                                                                               set:   Zoom  in  of  energy  curves  near ϑclt,r/π ≈  0.6476.    A
+                                                                               noncollinear  (NCL)  phase  appears  in  a  narrow  window  of
+                                                                               0.6368 < ϑ/π <  0.6543.    b  and  c  depict  the  zigzag  order
+FIG. 1:  Lattice geometry.  Illustration of an XC6 cylinder                    and  stripy  order,  respectively.   d  A  NCL  phase  with  a  unit
+on a honeycomb lattice. ηγ is +1 (−1) for horizontal (zigzag)                  cell of 4× 2.
+bonds.  The insets are (left) the unit cell for the zigzag/stripy
+order with a1 = 3 and a2 =√3, (middle) the hexagonal pla-
+quette operator  ˆWp with its six sites enumerated, and (right)                orderings perpendicular to the Z bonds are induced when
+the X (red), Y (green), and Z (blue) bonds.                                    ϑ/π  is 0 or 1,  respectively.  By introducing AFM Γ in-
+   In what follows,  we carry out a hierarchical study of                      teraction,  the  ground  state  becomes  more  competitive,
+Eq. (1) to provide multi-faceted evidences of the gapless                      triggering the possibility of other magnetic orderings in
+QSL nature of Γ magnet.  We start by mapping out the                           the moderate interaction regime.  The ground-state en-
+classical phase diagram via the parallel tempering Monte                       ergy eg  = Eg/(NS2)  (Eg  is  the  total  energy)  is  shown
+Carlo simulation45,46    , and conclude that the ground state                  in Fig.2a, while selected spin conﬁgurations of the cor-
+of Γ model sits exactly at the classical transition point on                   responding  phases  are  depicted  in  Fig.2b-d.    In  the
+the verge of the zigzag phase.  This makes sense because                       phase  diagram,  the  leftmost  is  the  zigzag  order  with
+the zigzag ordering belongs to the macroscopic ground-                         ezzg   = −(2Γ + 3 ˜J)/2  and  its  magnetic  moment  direc-
+state manifold of the classical Γ model37.  Next, we show                      tion is n [11¯1].  The rightmost is occupied by the stripy
+the energy reduction and sublattice magnetization within                       order  with estg   = −(Γ− 3 ˜J)/2.   Its  spins  are  perpen-
+the  linear  spin-wave  analysis  (for  a  review,  see  Ref.47).              dicular  to  n  [11¯1],  but  could  vary  freely  in  the  plane
+Afterwards,  we  present  a  quantum  phase  diagram  ob-                      spanned  by ˜a  [112]  and  ˜b  [1¯10],  showing  an  emergent
+tained by large-scale DMRG calculations on various dis-                        continuous  symmetry.    Further,  an  extensive  interme-
+tinct cluster geometries.                                                      diate  region  appears  in  between.    It  is  dominated  by
+                                                                               a  so-called  mixed  phase  in  which  the  AFM  order  and
+                                                                               two  twining  zigzag  orders  are  degenerate  with  energy
+Classical phase diagram                                                        emixedg       =−(2Γ−  ˜J)/2.  Here, twining zigzag orders refer
+    Figure2shows the classical phase diagram of Eq. (1)                        to the other two zigzag orders whose spin orientations are
+obtained  by  Monte  Carlo  simulations45,46    ,  coincide  ex-               diﬀerent from the one shown in Fig.2b (for spin conﬁg-
+actly  with  the  subsequent  results  of  energy  optimiza-                   urations, see Supplementary Note 1).  The zigzag–mixed
+tion method (see “Methods” section).  Due to the bond-                         transition  takes  place  exactly  at ϑclt,l/π  =  0.5,  reﬂect-
+modulated ηγ-term,  the  conventional  zigzag  and  stripy                     ing the classical spin liquid of the Γ model37.  There is
+                                                                                                                                                     3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3:  Spin-wave analysis of the stripy phase.  a Four branches of the magnon spectra ωqυ  in the stripy phase where
+ϑ/π = 0.75.  The path along the symmetry directions in the momentum space is depicted in the inset.  b Energy barrier δE
+between the stripy phases of diﬀerent orientations in the classically allowed zone.  Inset:  Quantum energy correction ∆E(φ) vs
+angleφ suited at the ˜a-˜b plane.  The parameter is ﬁxed toϑ/π = 0.75, which is marked as a black hexagram in the main panel.
+
+
+no  direct  transition  between  the  mixed  phase  and  the
+stripy phase expected to occur at ϑclt,r/π  = 1−  1π atan 2
+≈  0.6476.   Instead,  a  noncollinear  phase  (see  Fig.2d)√
+with eg  =−         ˜J2 + Γ2/16− Γ/√2 appears in a narrow
+window ofϑ/π that is less than 0.02, see inset of Fig.2a.
+
+
+Spin-wave theory
+    To  understand  the  role  played  by  quantum  ﬂuc-
+tuations   and   for   the   sake   of   comparison   with   the
+DMRG results later, we have performed the linear spin-
+wave calculation47  based on the quadratic Hamiltonian¯H   = Eg[S2 → S(S  + 1)]  + S∑
+
+                                           2    qψ†qMqψq,   where
+ψ†q  = (a†q,b†q,··· ,a−q,b−q,···)  is  the  Nambu  spinor,
+andMq  is  a  2× 2  block  matrix  (see  “Methods”  and                       FIG. 4: Quantum ground-state energy.  DMRG result of
+Supplementary Note 2).   There  are  four  spin-wave  dis-                    eg  under  three  XC  clusters  where  the  circumferences n  are
+persion  branches ωqυ  (υ  =  1-4)  for  the  four-sublattice                 6 (red triangle), 8 (green diamond), and 10 (blue circle).  The
+(ns = 4) zigzag and stripy orderings.  In the zigzag order,                   thick  belts  are  the  energy  of  the  zigzag  order  (green  belt)
+there exists a magnon gap ∆ at M point in the Brillouin                       and stripy order (blue belt) obtained by the linear spin-wave
+zone (see inset of Fig.3a).  When approaching Γ limit,                        theory (LSWT). Inset:  Extrapolation of energy for Γ model.
+˜J/Γ≪ 1, the lowest magnon branch is softened and the√                        For  each  circumferences n  the  energy  is  linearly  decreasing
+                              √30                                             with 1/N  and the special cases (Lx/Ly  = 2) are marked by
+gap vanishes as ∆/Γ≃            3      ˜J/Γ.  Therefore, the zigzag           ﬁlled symbols. The extrapolated values fall in the purple band
+order could only survive for AFM  ˜J (i.e.,ϑ/π< 0.50), be-                    centered at−0.354(3).
+yond which the magnon branch becomes imaginary and
+should be terminated by a transition.
+  The magnon spectra for the representative stripy or-                        allel or antiparallel to ˜b axis (see inset of Fig.3b).  To
+der  with ϑ/π  =  0.75  are  shown  in  Fig.3a  where  the                    illustrate  it,  we  ﬁrstly  deﬁne  the  quantum  energy  cor-
+wave  vector q  is  parameterized  in  units  of  (h,k)  as q                 rection ∆E(φ) = Sestg  + S           ∑    ∫ d2q
+= ( 2πa1h, 2πa2k)15.   The  spectra  are  symmetric  with  the                                                 2ns    υ    (2π)2ωqυ(φ), where φ
+middle  of  the  Γ-M  line,  so  the  Γ  and  M  points  are                  is the angle in the ˜a-˜b plane49.  For ϑ/π = 0.75, which
+equivalent.    Due  to  the  emergent  continuous  symme-                     is deep in the stripy order, we show ∆E(φ) vs φ in the
+try  of  the  classical  stripy  order,  the  magnon  spectra                 inset of Fig.3b.  The energy correction has its minima
+are  gapless.   In  the  presence  of  quantum  ﬂuctuations,                  at φ  = π/2  or  3π/2,  corresponding  to  the  two  mostly
+however,  the  degeneracy  is  lifted  via  order-by-disorder                 favored  conﬁgurations  at  the  quantum  level.   The  en-
+mechanism48, selecting two of them that are either par-                       ergy barrierδE, deﬁned as the energy diﬀerence between
+                                                                                                                                                   4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 5: Magnetic order parameters and quantum phase diagram.  a Magnetic order parameters M(Q) for the zigzag
+order (open symbols) and stripy order (ﬁlled symbols) with Q = M and/or M′ under four ﬁnite XC clusters.  The thick gray
+line shows the magnetic order in the thermodynamic limit.  b Quantum phase diagram of the bond-modulated  ˜J-Γ model.  c
+and d show extrapolations of the maximal peaks           M throughout the reciprocal space.  c Linearly extrapolation for Γ model with
+ϑ/π = 0.50.  d ϑ/π = 0.55 (red triangle), 0.60 (green diamond), and 0.65 (blue circle), respectively.
+
+
+∆E(π/2) and ∆E(0), is approximately 0.0175.  The main                       energy  curves  in  the  middle  are  very  ﬂat,  while  they
+panel  of  Fig.3b  shows  energy  barrier  at  diﬀerent    ϑ/π              have two sharp downwarping when away from the mid-
+in  the  stripy  order.   When ϑ/π  =  1.00  the  energy  bar-              dle region, leading to two well-marked kinks that are sig-
+rier is zero, consistent with the gapless Goldstone modes                   nals of ﬁrst-order transitions.  These discontinuous phase
+thereof.  Beyond that,  the energy barrier is ﬁnite,  indi-                 transitions could also be advocated by the entanglement
+cating  that  the  stripy  order  should  also  be  twofold  de-            entropy  which  has  a  trend  to  jump  as  the  system  size
+generate in the quantum case.                                               is  increased  (see  Supplementary Fig. S9 and Fig. S11).
+  Due to the magnon instabilities of zigzag and stripy or-                  Therefore,  the  DMRG  result  supports  an  intermediate
+derings, they could only exist in their classically allowed                 region  that  impedes  the  direct  transition  between  the
+regions.   The  corresponding  phase  transitions  could  be                zigzag  and  stripy  phases50,51    .   For  comparison,  we  also
+illuminated by their sublattice magnetization.  It is ob-                   depict  the  spin-wave  energy  of  the  zigzag  order  (green
+served that magnetization of the zigzag order is almost                     belt) and stripy order (blue belt) in Fig.4.  It is clearly
+saturated whenϑ/π< 0.4.  Asϑ/π approaches 0.5, it un-                       found  that  there  is  a  further  energy  reduction  of  the
+dergoes a considerable suppression and the lowest branch                    zigzag order beyond the linear approximation, in accord
+of the magnetization nearly vanishes atϑclt,l/π = 0.50 (see                 with the dramatic suppression of magnetic order param-
+Supplementary Fig. S5).   The  stripy  order  is  more  sta-                eter which will be clariﬁed later.  Strikingly, as shown in
+ble and its magnetization only has a small reduction at                     the inset of Fig.4, the energy    eg of Γ model (ϑ/π = 0.5)
+ϑclt,r/π≈ 0.6476. However, spin-wave energy in the mixed                    exhibits a nonmonotonic scaling behavior52, indicative of
+phase, say AFM order, is overwhelmingly higher than its                     a possible periodicity as revealed in the Kitaev model13.
+neighbors.  It thus implies that the genuine phase in the                   At each ﬁxed circumference n, the energy is linearly de-
+intermediate region should be diﬀerent from its classical                   creasing with length Lx of the cylinder.  By varying the
+counterpart, imposing restrictions on the applicability of                  circumference n  from  4  to  10,  the  extrapolated  energy
+the spin-wave analysis.                                                     has an oscillation in a window of−0.357<eg <−0.352.
+                                                                            Therefore,  we  estimate  that  the  energy  of  Γ  model  is
+                                                                            eg =−0.354(3) in the thermodynamic limit.
+Intervening magnetically disordered state                                      In  order  to  unveil  the  nature  of  the  intermediate  re-
+    As  discussed,  the  spin-wave  calculation  fails  in  the             gion and to pin down the precise phase boundaries, we
+intermediate regime, hence the quantum study is neces-                      resort to the magnetic order parameter, which is deﬁned
+sary.  We have performed the standard DMRG compu-                           as MN(Q) =√SN(Q)/N  where SN(Q) is the magnetic
+tation  on  three  XC  clusters  of  12× 6  (n  =  6),  16× 8               structure  factor  with Q  being  the  ordering  wavevector
+(n = 8), and 20× 10 (n = 10) and compute the ground-                        (see “Methods” for deﬁnition).  The zigzag phase has a
+state energy eg  = Eg/N  which is shown in Fig.4.  The                      peak at M point in the Brillouin zone, while the stripy
+                                                                                                                                                       5
+
+phase possesses both peaks at M and M′  points.  Cru-
+cially,  magnetic structure factor of the intermediate re-
+gion  is  diﬀuse  with  a  soft  peak.   Fig.5a  displays  order
+parameters MN(Q)  of  the  zigzag  and  stripy  phases  on
+four  distinct  XC  clusters  with  a  circumference  ranging
+from 4 to 10.  Akin to their spin-wave results, magneti-
+zation of the zigzag and stripy phases exhibits maxima
+at ϑ/π≈ 0.25 and 0.75, respectively.  This implies that
+these magnetic orderings are most stable when Γ term is
+approximately of equal strength to the Heisenberg inter-
+action.   Away  from  these  points,  quantum  ﬂuctuations
+are enhanced so that the magnetic ordering in the inter-
+mediate region is dramatically suppressed, followed by an
+algebraically decay with the circumferencen (see Fig.5c
+and Fig.5d).  After a careful inspection of the ﬁnite-size
+eﬀect, we conclude that the magnetization will disappear
+eventually as the best ﬁtting gives M→ 0.0 for Γ model
+(ϑ/π = 0.5).
+  The entire quantum phase diagram of Eq. (1) is pre-
+sented in Fig.5b.  In addition to the conventional zigzag
+and stripy orderings, there is a disordered phase, which is
+later interpreted as a QSL, is stabilized in a large region
+between ϑt,l  and ϑt,r  with ϑt,l/π≃  0.50  and ϑt,r/π  =                      FIG.  6:   Excitation  gaps.    a  The  ﬁrst  ﬁfteen  excitation
+0.66(1).  It should be noticed that even though the bond-                      gaps  ∆υ  with  degeneracy  for  a N  =  24  hexagonal  cluster.
+modulated Heisenberg interaction has a strong tendency                         The zigzag and stripy phases are doubly degenerate while the
+to favor the zigzag ordering, the ground state of Γ model                      ground state of the QSL in the middle is unique.  b The two
+remains disordered albeit the transition point ϑt,l  is so                     lowest excitation gaps ∆1 (open symbols) and ∆2 (ﬁlled sym-
+close toπ/2. A more elaborative study on hexagonal clus-                       bols)  at  three  XC  clusters  where  the  circumferences n  are
+ters  of N  =  24  and  32  suggests  that ϑt,l/π  =  0.498(1)                 6 (red triangle), 8 (green diamond), and 10 (blue circle).  The
+(see  Supplementary Fig. S12).   For  other  less  sensitive                   thick belt is the extrapolated bulk gap.
+perturbations such as the third-nearest-neighbor Heisen-
+berg  (J3)  interaction,  the  zigzag  order  could  only  exist               phase  (ϑ/π  =  0.40)  and  stripy  phase  (ϑ/π  =  0.80)  is
+for J3/Γ >  0.075  (see  Supplementary Fig. S20).   While                      considerably large and slightly grows with the increasing
+for another oﬀ-diagonal Γ′  interaction, the zigzag order                      of system size.  For the intermediate phase, however, the
+is generated at Γ′/Γ<−0.01553.  These, in turn, conﬁrm                         lowest excitation gap ∆1 atϑ/π = 0.50 and 0.60 declines
+the  robust  nonmagnetic  character  of  Γ  model  notwith-                    quickly when N  changes from 18 to 32, indicating that
+standing the aggressive zigzag ordering.                                       the excitation gap tends to close eventually.
+
+
+Gapless excitation and entropy scaling                                         TABLE I: Lowest excitation gap on hexagonal clusters.
+    Next,  we  investigate  the  nature  of  the  disordered                   The  lowest  excitation  gap  at ϑ  =  0.40π,  0.50π,  0.60π,  and
+phase by calculating the excitation gap and entanglement                       0.80π  on  hexagon  clusters  of N  =  18,  24,  and  32.   For  the
+entropy.  For this purpose, we target the ﬁrst sixteen en-                     zigzag/stripy phase the lowest excitation gap is ∆2, while for
+                                                                               the intermediate region the lowest excitation gap is ∆1.
+ergy states on a 24-site hexagonal cluster by the DMRG
+method (see “Methods” section), and the ﬁrst ﬁfteen low-                       ϑ/π       Phases                     Lowest excitation gap
+lying  excitation  gaps,  ∆υ  = Eυ−Eg  (υ  =  1− 15),  is                                                N = 18     N = 24     N = 32
+shown  in  Fig.6a.   It  can  be  seen  that  ∆          1  is  vanishing       0.40       zigzag              –              0.63943681      0.73353505
+small while ∆2  survives in the zigzag/stripy phases, in-                       0.50        QSL        0.08821080      0.08656249      0.04009844
+dicative of the doubly degenerate ground states predicted                       0.60        QSL        0.19543027      0.13898662      0.08599835
+by the semi-classical analysis.  In the intermediate region,                    0.80       stripy               –              0.22834260      0.24451198
+the ground state is unique and the density of state in the
+low-energy spectrum is higher than its neighbors.  Such a
+collapse of excitation gaps could be interpreted as a sign                        We then turn to XC cylinders which enable us to cal-
+of  gapless  spectrum54,55    .   To  check  the  behavior  of  the            culate the excitation gaps on large system sizes.  Above
+lowest  excitation  gap  as N  is  varied,  we  focus  on  four                all, we calculate the ﬁrst ﬁfteen excitation gaps on a XC
+selected points atϑ/π = 0.40, 0.50, 0.60, and 0.80, under                      cluster of 8× 4 and we ﬁnd that there is unlikely a big
+hexagonal cluster ofN  = 18, 24, and 32.  As can be seen                       ground-state degeneracy in the intermediate region since
+from Tab.I, the lowest excitation gap ∆        2  of the zigzag                the gap increases gradually without abrupt change (see
+                                                                                                                                                    6
+
+                                                                             S(l)  =−Tr(ρ lnρ)  where ρ  is  the  reduced  density  ma-
+                                                                             trix  of  a  subregion  with  length l56.    Figure7a  shows
+                                                                             the  representative  behavior  ofS(l)  in  the  Γ  model  on
+                                                                             a  2× 16× 4  cylinder,  which  contains  eight  sites  along
+                                                                             each column.  When l is a multiply of 8, it corresponds
+                                                                             to a neat edge-cutting where the two halves have smooth
+                                                                             margins.   The  entanglement  entropy  is  minimized  and
+                                                                             forms a lower branch as marked by solid symbols.  Oth-
+                                                                             erwise  the  subsystems  will  be  more  entangled,  gaining
+                                                                             extra entropy over the lower bound.  Therefore, we shall
+                                                                             ﬁx l = N/2 to extract the central charge upon a series
+                                                                             of ﬁnite cylinders.  For such a critical system,  it is rec-
+                                                                             ognized that the entanglement entropy scaling takes the) +c′  where c is the
+                                                                             form ofSvN≡S(N/2) = c6 ln( 2Lxπ
+                                                                             central  charge  and c′  is  a  non-universal  constant56.   In
+                                                                             Fig.7b, we shows the logarithmic ﬁtting of   SvN for cylin-
+                                                                             ders of length Lx  = 8, 16, 24, and 32.  It is found that
+                                                                             SvN  obeys  the  formula  well  with  the  ﬁtting  constants
+                                                                             (c,c′)≈ (2.92, 1.09),  showing that the central charge is
+                                                                             close  to  3.   An  alternative  ﬁtting  of  the  lowest  branch
+                                                                             of  the  entropy  on  each  cylinder  also  demonstrates  that
+FIG. 7:  Entanglement entropy scaling.  a Entanglement                       c≃ 3 (see Supplementary Fig. S16).  By contrast, for the
+entropyS(l)  of  a  consecutive  segment  of  length l  on  a  2×            three-leg cylinder the entropy is extremely insensitive to
+16× 4  cylinder  in  the  Γ  model.   The  solid  symbols  of  the           the length (see Fig.7b), revealing a central charge of 0.
+lowest branch represent the neat edge-cutting with l being a                 The fact that the central charge depends highly on the
+multiply of 8 (i.e., the number of the sites along each column).             width (Ly) of cylinders may imply the existence of spinon
+The bipartite entanglement entropy with l = N/2 is marked                    Fermi surface (SFS). In this scenario, the pockets of SFS
+as a blue square.   b Entanglement entropy scaling on three-                 might be detected by diﬀerent cuts in the Brillouin zone,
+leg cylinders (dashed line) and four-leg cylinders (solid line).             and thus the central charge could vary for diﬀerent Ly.
+The  ﬁtting  constants  are  (c,c′)≈  (0.02, 0.85)  and  (c,c′)≈             We note in passing that the central charge argument has
+(2.92, 1.09) for Ly  = 3 and 4, respectively.  The inset shows               also been used to explore the possible SFS in the ﬁeld-
+the bipartite partition of a four-leg cylinder with equal sites
+in the left and right halves.                                                induced gapless QSL in the Kitaev model57–59    .  Another
+                                                                             possibility is a Dirac QSL6,60    with three Dirac Fermions
+                                                                             around M  points,  which  is  potentially  consistent  with
+Supplementary Fig. S8).  Therefore, we only present the                      the central charge 3 on four-leg cylinders.  Information of
+two  lowest  excitation  gaps  on  three  larger  XC  clusters               the central charge on wider cylinders should be helpful
+up  to  200  sites  (see  Fig.6b).   The  gaps  in  the  middle              to distinguish between the two scenarios.  Regardless of
+are rather small, indicative of a gapless region.  We also                   diﬀerent QSL natures, the vanishing magnetization and
+take a closer look of the gaps at ϑ/π = 0.50 where dif-                      excitation gap in the Γ model, together with the distinct
+ferent  YC  clusters  are  also  adopted.   For  either  XC  or              central charges on cylinders ofLy = 3 (c = 0) andLy = 4
+YC  cluster,  ∆1,2  show  a  decreasing  trend  with  the  in-               (c = 3), manifest that its ground state is likely a gapless
+creasing of circumference n.  In spite of the oscillation in                 QSL.
+value, they appear to vanish within a reasonable round-
+oﬀ, showing the gaplessness of the excitation spectrum in
+Γ model (see Supplementary Fig. S13).  As a ﬁnal con-
+sistency  check  for  the  gapless  nature,  we  calculate  the
+excitation gap on cylinder geometry of 2×Lx×Ly (for ge-
+ometry, see inset of Fig.7b) with    N = 2LxLy sites in to-                  Flux-like density and plaquette correlation
+tal.  Although the three-leg cylinder (Ly = 3) is gapped,                        So far, we have conﬁrmed that there is no magnetic
+excitation  gap  on  cylinder  of Ly  =  4  decreases  quickly               ordering in the honeycomb Γ model, yet little is known
+with Lx  and is expected to disappear as Lx→∞ (see                           about  the  lattice  symmetry  breaking.    Very  recently,
+Supplementary Fig. S14).  Such a strong size-dependent                       there is a proposal of plaquette ordering stemming from a
+behavior of the excitation gap is typical of gapless sys-                    broken translational symmetry in the classical Γ model38.
+tems.                                                                        it is thus of interest to examine whether there is a pla-
+  The entanglement entropy has appeared as a versatile                       quette ordering in the quantum situation.  To this end,
+tool in diagnosing quantum critical systems described by                     we  study  the  hexagonal  plaquette  operator   ˆWp  and  its
+conformal ﬁeld theory.  In this regard, the von Neumann                      correlation.  Actually,  ˆWp also has its own merit as it can
+entanglement entropy is introduced and it is deﬁned as                       capture the associated phase transitions33.  The six-body
+                                                                                                                                                   7
+
+plaquette operator is known as13                                             DISCUSSION
+                                                                             Ever  since  the  seminal  proposal  of  the  Kitaev  interac-
+             ˆWp = 26∏Sγ                                                     tion in heavy 4d/5d transition metal oxides12, which trig-
+                             i  = 26Sx1Sy2Sz3Sx4Sy5Sz6,           (2)        gers the thriving research direction of Kitaev materials,
+                       i∈p                                                   tremendous  eﬀorts  have  been  devoted  to  realizing  the
+                                                                             Kitaev QSL in real materials,  yet hampered by the in-
+which is the product of spin operators on out-going bonds                    eluctable  non-Kitaev  terms  such  as  the  oﬀ-diagonal  Γ
+around a plaquette (see Fig.1).                                              interaction.  Whereas the honeycomb Γ model has drawn
+                                                                             enormous  attention,  its  quantum  nature  is  still  under
+                                                                             debate.   To  this  end,  we  introduce  a  bond-modulated
+                                                                             Heisenberg  interaction  to  check  its  tendency  towards
+                                                                             probable  magnetic  orderings.   For  the  magnetic  phase
+                                                                             diagram of the proposed bond-modulated  ˜J-Γ model, we
+                                                                             ﬁnd an intermediate region which is intervened between
+                                                                             the  zigzag  and  stripy  phases.   Though  exhibiting  mag-
+                                                                             netic  order  at  the  classical  level,  quantum  ﬂuctuations
+                                                                             suppress such ordering since it acquires a large energy ac-
+                                                                             cording to the spin-wave result.  In the quantum case, it
+                                                                             turns out to be disordered and is separated from its two
+                                                                             neighbors  by  ﬁrst-order  transitions.   By  taking  massive
+                                                                             numerical eﬀorts on the Γ model, we are able to conﬁrm
+                                                                             the  following  three  subtle  physical  issues.   (i)  The  low-
+                                                                             energy spectrum is rather dense on a 24-site hexagonal
+                                                                             cluster, and the lowest excitation gap goes down gradu-
+                                                                             ally with the expansion of cluster size.  The empirical ex-
+                                                                             trapolation on large cylinders up to 200 sites gives a van-
+                                                                             ishing energy gap, in line with the logarithmic behaviors
+                                                                             of entanglement entropy.  (ii) The zigzag magnetic order-
+FIG. 8: Flux-like density and plaquette correlation.  a                      ing vanishes eventually, consistent with the suppression
+Flux-like density⟨Wp⟩ and b plaquette order parameterP(Q)                    of magnetization of the zigzag order by spin-wave anal-
+for N  = 24 (red triangular) and 32 (blue circle).  The inset                ysis.   (iii)  In  the  plaquette  structure  factor,  there  is  a
+exhibits the plaquette structure factor of Γ model, which has                perceptible short-range plaquette correlation because of
+a  relatively  weak  peak  at K  point  (corner  of  the  Brillouin          a subleading peak at K point.  These ﬁndings strongly
+zone) in the reciprocal space.                                               corroborate the ground state of Γ model is a gapless QSL
+                                                                             rather than a zigzag order, despite the latter being close
+                                                                             in energy.
+∑Figure8a   shows   the   ﬂux-like   density    ⟨Wp⟩    =                      We would like to mention that, due to the gapless na-
+
+   p⟨ ˆWp⟩/Np  where Np  = N/2 is the number of hexag-                       ture and for the lack of continuous spin symmetry, it is
+onal  plaquette  on  clusters  of N  =  24  and  32.   Start-                exceedingly challenging to capture the fractionalized ex-
+ing  from ϑ/π  =  0.0, ⟨Wp⟩  is  zero,  followed  by  a  con-                citation in the proposed QSL. The ﬂux insertion method,
+tinuous decrease before arriving at the transition point,                    which  pumps  fractional  particles  from  one  edge  to  the
+ϑ/π≃ 0.50.  Afterwards, it begins to increase and then                       other, is usually a promising way to elucidate the topo-
+surpasses the critical line to enter into the stripy phase                   logical characters of the ground state.  It is performed by
+where⟨Wp⟩> 0.  Recalling the quantum phase diagram                           adiabatically twisting boundary conditions of the Hamil-
+shown in Fig.5b, our result corroborates that the ﬂux-                       tonian so that the U(1) symmetry is required.  The dis-
+like density could signal phase transitions.  For Γ model                    crete symmetries of the Γ model thus inherently hinder
+we have⟨Wp⟩ =−0.25(2),  which is about a quarter of                          this  trick.   Actually,  topological  degeneracy  is  in  gen-
+that  in  the  Kitaev  model13.   Based  on  the  plaquette-                 eral not well-deﬁned for a gapless QSL, as diﬀerent gauge
+plaquette correlation⟨ ˆWp ˆWq⟩, we then introduce the pla-                  sectors are closely connected due to gapless excitations.
+quette order parameterPNp(Q) via the plaquette struc-                        Nonetheless, the Kitaev QSL is special because ﬂux  ˆWp is
+ture factorWNp(Q)38 (see “Methods” for deﬁnition).  In                       a conserved quantity, allowing for the identiﬁcation of dif-
+Fig.8b, we show that the QSL phase has a vigorous peak                       ferent ﬂux sectors by the vison insertion55. Also of note is
+at Γ point in the reciprocal space but a weaker intensity                    that a recent study suggests the existence of a nematicity
+at K point, signifying a perceptible plaquette correlation.                  due to the lattice rotational symmetry breaking42.  We
+Nevertheless, The fact that the strength ofPNp(K) goes                       would  like  to  stress  that  the  symmetry  of  Γ  model  it-
+down  rapidly  suggests  that  there  is  unlikely  a  plaque-               self is discrete and the asymmetrical boundary condition
+tte ordering in the region, further corroborating a QSL                      could cause instability on the landscape of bond energy,
+without a broken symmetry.                                                   making it hard to determine the nematicity in the ther-
+                                                                                                                                                  8
+
+modynamic limit.  However, the pending lattice nematic-                     where Rp  is the central position of each plaquette, and
+ity  does  not  alter  our  proposal  of  the  QSL,  because  it            Np  = N/2  is  the  number  of  plaquette.   To  eliminate
+could be accompanied by a broken lattice symmetry as                        the strong ﬁnite-size eﬀect due to the identity ⟨( ˆWp)2⟩
+reported  in  other  theoretical  models61,62    .   Despite  such          =  1,  we  introduce  the  plaquette  order  parameter  (see
+challenges, our work emphasizes on the inspiring and in-                    Supplementary Note 5)
+tractable quantum nature of the Γ model.  Notably, the                                                 √
+dominating Γ region could be realized in α-RuCl3 under                                                     WNp(Q)
+compression where the magnitude of Kitaev interaction                                         PNp =           Np  −    1√Np.                  (5)
+is small53.  In short, our results provide a signiﬁcant guid-
+ance to further theoretical and experimental studies on
+honeycomb magnets.                                                          Simulation and energy optimization
+
+                                                                                We  use  the  parallel  tempering  Monte  Carlo  simula-
+METHODS                                                                     tion with the heat-bath algorithm to prevent the possible
+                                                                            metastable state at low temperatures45,46    .  The simula-
+Density matrix renormalization group                                        tion  is  carried  out  in  a  temperature  range  with  a  hun-
+    In  order  to  check  for  ﬁnite-size  eﬀects,   we  have               dred of replicas. The heat-bath algorithm is performed at
+performed  large-scale  DMRG  calculations43,44     on  three               given temperature, followed by a so-called thermal repli-
+kinds of cluster geometries.  Firstly, the frequently used                  cas where conﬁguration swaps between diﬀerent temper-
+geometry  is  a Lx× Ly  XCn  cluster  under  cylindrical                    atures are allowed with a probability according to a de-
+boundary condition (see Fig.1).  Here,  X indicates the                     tailed balance condition.  The simulations are performed
+orientation  of  the  cylinder,  while n  is  the  circumfer-               on three XC clusters of 16× 16,  24× 24,  and 32× 32,
+ence  of  the  cylinder.   We  consider  even  circumferences               under toroidal boundary condition.
+n (=Ly/a0) ranging from 4 to 10 lattice spacinga0, and                         The  resulting  energy-optimized  spin  conﬁguration  is
+use ﬁxed ratio Lx/Ly = 2 unless stated explicitly other-                    then served as the benchmark for the analytical calcula-
+wise. N  =LxLy  is the total number of spins.  Secondly,                    tion.  The classical spin can be written as
+we consider the honeycomb cylinder of 2×Lx×Ly where
+Lx  (Ly)  is  the  number  of  unit  cell  along e1  =  (√3, 0)                        Si =S (sinθi cosφi, sinθi sinφi, cosθi),         (6)
+(e2  =  (1/2,√3/2))  direction  (see  the  inset  of  Fig.7).               whereθi∈ [0,π) andφi∈ [0, 2π).  Taking the zigzag (zz)
+Due the limitation of modern computational capability,                      order  and  stripy  (st)  order  for  instance,  their  classical
+we focus primarily on four-leg cylinders (Ly  = 4).  The                    energy are
+maximal value ofLx is 32, and the total number of spins
+N = 2LxLy.  Lastly, we also use theC3 symmetric hexag-                                        ezzg  =−1(3 ˜J +Fmax(θ,φ)Γ)                 (7)
+onal cluster with N  = 24 or 32 sites under full periodic                                               2
+boundary  conditions.   In  all  cases,  we  keep  up  to m  =              and
+3000∼5000  states  and  perform  about  12  sweeps  in  the
+calculation so as to ensure the truncation error is smaller                                    estg  = 1(3 ˜J +Fmin(θ,φ)Γ)                   (8)
+than 10−6.  When targeting the ﬁrst few low-lying energy                                               2
+levels,  we diagonalize a subspace of a sparse Hermitian
+matrix iteratively by Davidson algorithm, with the preci-                   where the explicit form of the auxiliary function is
+sion of each eigenvalue maintained at a desired standard.                           F(θ,φ) = sin2θ sin 2φ− sin 2θ(sinφ + cosφ).     (9)
+In addition, all the targeted states are used with an equal
+weight to construct the reduced density matrix.                             Mathematically,   the  maximum  of  Eq.  (9)  is  2  with
+√The magnetic order parameter is deﬁned byMN(Q) =                           (θ,φ) = (π−atan(√2),π/4) or (θ,φ) = (atan(√2), 5π/4).
+  SN(Q)/N where SN(Q) =∑αβδαβSαβN  (Q) is the total                         This means that the classical energy of the zigzag phase is
+static magnetic structure factor, with                                      ezzg  =−(2Γ + 3 ˜J)/2 with the classical magnetic direction
+                             ∑                                              n = [11¯1]. The mimimum of Eq. (9) is −1, and the energy
+            SαβN  (Q) =  1N       ⟨Sαi Sβj⟩eiQ·(Ri−Rj).           (3)       of the stripy phase is estg  =−(Γ− 3 ˜J)/2.  Its moment di-
+                              ij                                            rection is free to vary in a plane that is perpendicular to
+Here, Ri  is  the  position  of  spin  and Q  is  the  ordering             n,  indicating  an  emergent  continuous  symmetry  in  the
+wavevector.   We  also  calculate  the  plaquette-plaquette                 classical  stripy  phase.   The  analytical  energy  and  spin
+correlation⟨ ˆWp ˆWq⟩ where  ˆWp  is the hexagon plaquette                  conﬁgurations of the other magnetic phases are shown in
+operator  (see  Eq.  (2)).   Likewise,  we  deﬁne  the  static              Supplementary Note 1.
+
+plaquette structure factor
+                              ∑                                             Linear spin-wave theory
+          WNp(Q) =   1Np          ⟨ ˆWp ˆWq⟩eiQ·(Rp−Rq),         (4)            We summarize the derivation of the spin wave spec-
+                               pq                                           tra for the zigzag phase, which is one of the degenerate
+                                                                                                                                                9
+
+ground  states  of  the  classical  Γ  model.   In  the  frame-            The parameters in Eq. (14) and Eq. (15) are given by
+work  of  linear  spin-wave  theory,  the  local  spin  opera-                        
+tor Si = (Sxi,Syi,Szi ) is represented by bosonic creation                               A = 3 ˜J + 2Γ
+and annihilation operators ai  and a†i.  By virtue of the                                Bq =−2( ˜J− Γ/3)ϱ−1 cosπk
+Holstein-Primakoﬀ transformation, we have                                             Cq = ( ˜J− Γ/3)ϱ2                               (16)
+    ˜S+       2Sai,     ˜S−      2Sa†                                                    Dq,τ =  2Γ3 (cosπk +τ√3 sinπk)ϱ−1
+     i ≃√                i ≃√         i,     ˜Sni  =S−a†iai.   (10)                      Eq =  2Γ
+                                                                                                  3 ϱ2
+Here,  ˜Sni ≡ (S· n) is the spin component along the clas-                 where ϱ = eıπh/3.  Since B−q  = B∗q, C−q  = C∗q, E−q  =
+sical ordered moment n and  ˜S±i ≡ (Si· e)±ı[Si· (n× e)]
+are the ladder operators consisting of the orthogonal spin                 E∗q, andD−q,τ =D∗q,−τ, we hence deduce that  ˆ∆†q =  ˆ∆q
+components, with e being an (arbitrary) unit vector per-                   and  ˆΛT−q = ˆΛ†q.
+pendicular to n and satisfying the right-hand rule47.  The                    The  quadratic  Hamiltonian  Eq.  (12)  can  be  diago-
+spin operator is thus                                                      nalized  via  a  bosonic  Bogoliubov  transformation T (q).
+              √S                    √S                                     To  preserve  the  canonical  commutation  rules  of  the
+   Sτ,i  =                                                                 bosons,   it  should  satisfy  the  orthogonality  relations
+                 2 (ai +a†i)e +τ        2 (−ıai +ıa†i)(n× e)               T ΣT†    =  T†ΣT    =    Σ   where   Σ    =    diag (1,−1).
+              +τ(S−a†iai)n                                         (11)    The  eigenvalues  of  Σ ˆHq   give  the  magnon  spectrum
+                                                                           Ω(q)  =  diag (ωq,1,ωq,2,··· ,ωq,ns).   The  spin-wave  dis-
+where τ  is  introduced  for  classical  spin  which  is  either           persions   of   other   magnetic   orderings   (including   the
+parallel  (τ  =  +1)  or  antiparallel  (τ  =−1)  to n.   The              mixed  phase  and  the  noncollinear  phase)  are  shown  in
+γ-component of the spin Sγτ,i = Sτ,i· eγ.                                  Supplementary Note 2.
+  For the zigzag phase, we choose the following orthogo-
+nal axis, e = [112], n×e = [1¯10], and n = [11¯1].  Because
+of the four-sublattice (ns = 4) nature, the magnetic unit                  DATA AVAILABILITY
+cell  is  taken  as  the  rectangle  of  the  area a1×a2  with             The data that support the ﬁndings of this study are avail-
+a1 = 3a0  and a2 =√3a0, see Fig.1a.  Within the mag-                       able from the corresponding authors upon reasonable re-
+netic unit cell, the wave vectorq could be parameterized                   quest.
+in units of (h,k) asq =( 2πa1h, 2πa2k)15.  In this notation,
+M and M′ points in the Brillouin zone could be rewrit-
+ten  as  (1,  0)  and  (0,  1),  respectively.   By  introducing           ACKNOWLEDGEMENTS
+four ﬂavors of Holstein-Primakoﬀ bosons and using the                      We thank M. Gohlke, J. S. Gordon, Y.-Z. Huang, T. Li,
+Fourier transformation, we arrive at the following spin-                   H.-J. Liao,  K. Liu,  Z.-X. Liu,  B. Xi,  W. Yu,  and espe-
+wave Hamiltonian                                                           cially S. Hu for many inspiring and helpful discussions.
+                                           ∑                               X.W.  was  supported  by  the  National  Program  on  Key
+       HzzSW  =−NS(S + 1)ezzg  + S2             ˆx†q ˆHqˆxq,       (12)    Research Project (Grant No.  2016YFA0300501) and by
+                                             q                             the National Natural Science Foundation of China (Grant
+where ˆx†q =(a†q,b†q,c†q,d†q,a−q,b−q,c−q,d−q) is a vector                  No.    11974244).    J.Z.  was  supported  by  the  the  Na-
+of length 2ns and  ˆHq is a 2ns× 2ns matrix of the form                    tional Natural Science Foundation of China (Grant No.
+                                                                           11874188).  H.-Y.K. was supported by the NSERC Dis-
+                            (  ˆΛq    ˆ∆q  )                               covery Grant No.  06089-2016 and acknowledged funding
+                     ˆHq =      ˆ∆†q   ˆΛT−q                     (13)      from the Canada Research Chairs Program.  X.W. also
+                                                                           acknowledged  additional  support  from  a  Shanghai  tal-
+                                                                           ent program.  The computations were mostly performed
+with                                                                       on the Tianhe-2JK at the Beijing Computational Science
+                          A Eq ◦  Bq                                     Research Center (CSRC).
+                ˆΛq =  E∗q A B∗q ◦                            (14)
+                            ◦  Bq A Eq                                     COMPETING INTERESTS
+                           B∗q ◦  E∗q A                                    The authors declare no competing interests.
+
+and
+                      ◦   Cq  ◦  Dq,+                                    AUTHOR CONTRIBUTIONS
+                  C∗q  ◦  D∗q,+ ◦               .           (15)   J.Z. and X.W. initiated and supervised the project.  Q.L.
+           ˆ∆q =                                                           performed the spin-wave analysis and numerical calcula-
+                       ◦  Dq,− ◦   Cq                                      tions.  H.-Y.K. guided the analysis of entanglement en-
+                     D∗q,− ◦   C∗q  ◦                                      tropy  scaling  and  plaquette  correlation.   J.Z.,  H.-Y.K.,
+                                                                                                                                                          10
+
+and X.W. checked the calculations.  All authors together                         Correspondence and requests for materials should be
+discussed the numerical details and drafted the article.                         addressed to J.Z. or X.W.
+
+
+ADDITIONAL INFORMATION
+Supplementary information is available in the online
+version of the paper.
+
+
+
+
+
+
+
+ ∗  zhaojz@lzu.edu.cn                                                                Na2IrO3. Nat. Phys. 11, 462-466 (2015).
+ †  xiaoqunwang@sjtu.edu.cn                                                      17  Sears,   J.   A.   et   al.   Magnetic   order   in α-RuCl3:    A
+ 1  Balents,  L.  Spin  liquids  in  frustrated  magnets.  Nature                    honeycomb-lattice quantum magnet with strong spin-orbit
+   (London) 464, 199-208 (2010).                                                     coupling. Phys. Rev. B 91, 144420 (2015).
+ 2  Han,  T.-H.  et  al.  Fractionalized  excitations  in  the  spin-            18  Leahy,  I.  A.  et  al.  Anomalous  thermal  conductivity  and
+   liquid  state  of  a  kagome-lattice  antiferromagnet.  Nature                    magnetic  torque  response  in  the  honeycomb  magnet α-
+   (London) 492, 406-410 (2012).                                                     RuCl3. Phys. Rev. Lett. 118, 187203 (2017).
+ 3  Li,  Y.  et  al.  Rare-earth  triangular  lattice  spin  liquid:  A          19  Sears, J. A. et al. Phase diagram ofα-RuCl3 in an in-plane
+   single-crystal study of YbMgGaO4. Phys. Rev. Lett. 115,                           magnetic ﬁeld. Phys. Rev. B 95, 180411(R) (2017).
+   167203 (2015).                                                                20  Baek,  S.-H.  et  al.  Evidence  for  a  ﬁeld-induced  quantum
+ 4  Liao,  H. J. et al. Gapless spin-liquid ground state in the                      spin  liquid  in α-RuCl3.  Phys.  Rev.  Lett.  119,  037201
+   S  =  1/2  kagome  antiferromagnet.  Phys.  Rev.  Lett. 118,                      (2017).
+   137202 (2017).                                                                21  Wolter, A. U. B. et al. Field-induced quantum criticality in
+ 5  Wang, L. and Sandvik A. W. Critical level crossings and                          the Kitaev system α-RuCl3. Phys. Rev. B 96, 041405(R)
+   gapless  spin  liquid  in  the  square-lattice  spin-1/2 J1-J2                    (2017).
+   Heisenberg antiferromagnet. Phys. Rev. Lett. 121, 107202                      22  Zheng, J. et al. Gapless spin excitations in the ﬁeld-induced
+   (2018).                                                                           quantum  spin  liquid  phase  of α-RuCl3.  Phys.  Rev.  Lett.
+ 6  Hu, S., Zhu, W., Eggert, S., and He Y.-C. Dirac spin liq-                        119, 227208 (2017).
+   uid on the spin-1/2 triangular Heisenberg antiferromagnet.                    23  Sandilands,  L.  J.  et  al.  Scattering  continuum  and  possi-
+   Phys. Rev. Lett. 123, 207203 (2019).                                              ble fractionalized excitations inα-RuCl3. Phys. Rev. Lett.
+ 7  Plumb,   K.  W.  et  al. α-RuCl3:    a  spin-orbit  assisted                     114, 147201 (2015).
+   Mott insulator on a honeycomb lattice. Phys. Rev. B 90,                       24  Li,  G.  et  al.  Raman  evidence  for  dimerization  and  Mott
+   041112(R) (2014).                                                                 collapse inα-RuCl3 under pressures. Phys. Rev. Materials
+ 8  Kim H.-S., Shankar V. V., Catuneanu A., and Kee H.-Y.                            3, 023601 (2019).
+   Kitaev magnetism in honeycomb RuCl3 with intermediate                         25  Do, S.-H. et al. Majorana fermions in the Kitaev quantum
+   spin-orbit coupling. Phys. Rev. B 91, 241110(R) (2015).                           spin system α-RuCl3. Nat. Phys. 13, 1079-1084 (2017).
+ 9  Banerjee, A. et al. Proximate Kitaev quantum spin liquid                     26  Ran, K. et al. Spin-wave excitations evidencing the Kitaev
+   behaviour in a honeycomb magnet. Nat. Mater. 15, 733-                             interaction in single crystalline α-RuCl3. Phys. Rev. Lett.
+   740 (2016).                                                                       118, 107203 (2017).
+10  Li, Y. D., Yang, X., Zhou, Y., and Chen, G. Non-Kitaev                       27  Winter, S. M. et al. Breakdown of magnons in a strongly
+   spin liquids in Kitaev materials. Phys. Rev. B 99, 205119                         spin-orbital   coupled   magnet.   Nat.   Commun.  8,   1152
+   (2019).                                                                           (2018).
+11  Rau,  J.  G.,  Lee,  E.  K.-H.,  and  Kee.  H.-Y.  Spin-orbit                28  Janssen, L., Andrade, E. C., and Vojta, M. Magnetization
+   physics giving rise to novel phases in correlated systems:                        processes of zigzag states on the honeycomb lattice:  Iden-
+   Iridates and related materials. Annu. Rev. Condens. Mat-                          tifying spin models for α-RuCl3 and Na2IrO3. Phys. Rev.
+   ter Phys. 7, 195-221 (2016).                                                      B 96, 064430 (2017).
+12  Jackeli, G. and Khaliullin, G. Mott insulators in the strong                 29  Laurell, P. and Okamoto, S. Dynamical and thermal mag-
+   spin-orbit coupling limit:  From Heisenberg to a quantum                          netic  properties  of  the  Kitaev  spin  liquid  candidate α-
+   compass and Kitaev models. Phys. Rev. Lett. 102, 017205                           RuCl3. npj Quantum Materials 5, 2 (2020).
+   (2009).                                                                       30  Rau,  J.  G.,  Lee,  E.  K.-H.,  and  Kee,  H.-Y.  Generic  spin
+13  Kitaev, A. Anyons in an exactly solved model and beyond.                         model for the honeycomb iridates beyond the Kitaev limit.
+   Ann. Phys. 321, 2-111 (2006).                                                     Phys. Rev. Lett. 112, 077204 (2014).
+14  Ye, F. et al. Direct evidence of a zigzag spin-chain structure               31  Yadav, R. et al. Kitaev exchange and ﬁeld-induced quan-
+   in the honeycomb lattice:  A neutron and x-ray diﬀraction                         tum spin-liquid states in honeycombα-RuCl3. Sci. Rep. 6,
+   investigation of single-crystal Na2IrO3. Phys. Rev. B 85,                         37925 (2016).
+   180403(R) (2012).                                                             32  Wang, W., Dong, Z.-Y., Yu, S.-L., and Li, J.-X. Theoreti-
+15  Choi,  S.  K.  et  al.  Spin  waves  and  revised  crystal  struc-               cal investigation of magnetic dynamics in α-RuCl3. Phys.
+   ture of honeycomb iridate Na2IrO3. Phys. Rev. Lett. 108,                          Rev. B 96, 115103 (2017).
+   127204 (2012).                                                                33  Gordon, J. S., Catuneanu, A., Sßorensen, E. S., and Kee,
+16  Chun,  S.  H.  et  al.  Direct  evidence  for  dominant  bond-                   H.-Y. Theory of the ﬁeld-revealed Kitaev spin liquid. Nat.
+   directional  interactions  in  a  honeycomb  lattice  iridate                     Commun. 10, 2470 (2019).
+                                                                                                                                                           11
+
+
+34  Takikawa, D. and Fujimoto, S. Impact of oﬀ-diagonal ex-                       53  Luo, Q., Stavropoulos, P. P., and Kee, H.-Y. Spontaneous
+   change  interactions  on  the  Kitaev  spin-liquid  state  of α-                  chiral-spin ordering in spin-orbit coupled Honeycomb mag-
+   RuCl3. Phys. Rev. B 99, 224409 (2019).                                            nets. Preprint at https://arxiv.org/abs/2010.11233 (2020).
+35  Lampen-Kelley, P. et al. Anisotropic susceptibilities in the                  54  Zhu, Z., Kimchi, I., Sheng, D. N., and Fu, L. Robust non-
+   honeycomb  Kitaev  system α-RuCl3.  Phys.  Rev.  B  98,                           Abelian  spin  liquid  and  a  possible  intermediate  phase  in
+   100403(R) (2018).                                                                 the  antiferromagnetic  Kitaev  model  with  magnetic  ﬁeld.
+36  Samarakoon,  A.  M.  et  al.  Classical  and  quantum  spin                      Phys. Rev. B 97, 241110(R) (2018).
+   dynamics  of  the  honeycomb  Γ  model.  Phys.  Rev.  B 98,                    55  Hickey, C. and Trebst, S. Emergence of a ﬁeld-drivenU(1)
+   045121 (2018).                                                                    spin liquid in the Kitaev honeycomb model. Nat. Commun.
+37  Rousochatzakis, I. and Perkins, N. B. Classical spin liquid                      10, 530 (2019).
+   instability driven by oﬀ-diagonal exchange in strong spin-                     56  Eisert,  J.,  Cramer,  M.,  and  Plenio,  M.  B.  Colloquium:
+   orbit magnets. Phys. Rev. Lett. 118, 147204 (2017).                               Area laws for the entanglement entropy. Rev. Mod. Phys.
+38  Saha,  P.,  Fan,  Z.,  Zhang,  D.,  and  Chern,  G.-W.  Hid-                     82, 277-306 (2010).
+   den plaquette order in a classical spin liquid stabilized by                   57  Jiang,   H.-C.,   Wang,   C.-Y.,   Huang,   B.,   and  Lu,   Y.-
+   strong oﬀ-diagonal exchange. Phys. Rev. Lett. 122, 257204                         M.   Field   induced   quantum   spin   liquid   with   spinon
+   (2019).                                                                           Fermi   surfaces   in   the   Kitaev   model.   Preprint   at
+39  Catuneanu, A., Yamaji, Y., Wachtel, G., Kim, Y.-B., and                          https://arxiv.org/abs/1809.08247 (2018).
+   Kee,  H.-Y.  Path  to  stable  quantum  spin  liquids  in  spin-               58  Patel, N. D. and Trivedi, N. Magnetic ﬁeld-induced inter-
+   orbit coupled correlated materials. npj Quantum Materials                         mediate quantum spin liquid with a spinon Fermi surface.
+   3, 23 (2018).                                                                     Proc. Natl. Acad. Sci. USA 116, 12199-12203 (2019).
+40  Gohlke,  M.,  Wachtel,  G.,  Yamaji,  Y.,  Pollmann,  F.,  and                59  Zou, L. and He, Y.-C. Field-induced neutral Fermi surface
+   Kim, Y. B. Quantum spin liquid signatures in Kitaev-like                          and  QCD3-Chern-Simons  quantum  criticalities  in  Kitaev
+   frustrated magnets. Phys. Rev. B 97, 075126 (2018).                               materials. Phys. Rev. Research 2, 013072 (2020).
+41  Wang,  J.,  Normand,  B.,  and  Liu,  Z.-X.  One  proximate                   60  Iqbal, Y., Becca, F., Sorella, S., and Poilblanc D. Gapless
+   Kitaev spin liquid in the K-J-Γ Model on the honeycomb                            spin-liquid phase in the kagome spin- 12  Heisenberg antifer-
+   lattice. Phys. Rev. Lett. 123, 197201 (2019).                                     romagnet. Phys. Rev. B 87, 060405(R) (2013).
+42  Gohlke,  M.,  Chern,  L.  E.,  Kee,  H.-Y.,  and  Kim,  Y.  B.                61  Gong, S.-S., Zhu, W., Sheng, D. N., and Yang, K. Possible
+   Emergence of nematic paramagnet via quantum order-by-                             nematic spin liquid in spin-1 antiferromagnetic system on
+   disorder and pseudo-Goldstone modes in Kitaev magnets.                            the square lattice:  Implications for the nematic paramag-
+   Phys. Rev. Research, 2, 043023 (2020).                                            netic state of FeSe. Phys. Rev. B 95, 205132 (2017).
+43  White,  S.  R.  Density  matrix  formulation  for  quantum                    62  Hu,  W.-J.,  Gong,  S.-S.,  Lai,  H.-H.,  Hu,  H.,  Si,  Q.,  and
+   renormalization groups. Phys. Rev. Lett. 69, 2863 (1992).                         Nevidomskyy A. H. Nematic spin liquid phase in a frus-
+44  Stoudenmire,  E.  M.  and  White,  S.  R.  Studying  two  di-                    trated spin-1 system on the square lattice. Phys. Rev. B
+   mensional  systems  with  the  density  matrix  renormaliza-                      100, 165142 (2019).
+   tion group. Annu. Rev. Condens. Matter Phys. 3, 111-128
+   (2012).
+45  Metropolis,  N.,  Rosenbluth,  A.  W.,  Rosenbluth,  M.  N.,
+   Teller, A. H., and Teller, E. Equation of state calculations
+   by fast computing machines. J. Chem. Phys. 21, 1087-1092
+   (1953).
+46  Hukushima  K.,  and  Nemoto,  K.  Exchange  Monte  Carlo
+   method and application to spin glass simulations. J. Phys.
+   Soc. Jpn. 65, 1604-1608 (1996).
+47  Janssen,  L.  and  Vojta,  M.  Heisenberg-Kitaev  physics  in
+   magnetic  ﬁelds.  J.  Phys.:   Condens.  Matter  31,  423002
+   (2019).
+48  Henley,  C.  L.  Ordering  due  to  disorder  in  a  frustrated
+   vector  antiferromagnet.  Phys.  Rev.  Lett.  62,  2056-2059
+   (1989).
+49  Zhu,  Z.,  Maksimov,  P.  A.,  White,  S.  R.,  and  Cherny-
+   shev,  A. L. Disorder-induced  mimicry of a  spin liquid  in
+   YbMgGaO4, Phys. Rev. Lett. 119, 157201 (2017).
+50  Huang, Y.-Z. et al. Quantum phase transition, universal-
+   ity, and scaling behaviors in the spin-1/2 Heisenberg model
+   with ferromagnetic and antiferromagnetic competing inter-
+   actions on a honeycomb lattice. Phys. Rev. E 93, 062110
+   (2016).
+51  Huang, Y.-Z. and Su, G. Quantum Monte Carlo study of
+   the spin-1/2 honeycomb Heisenberg model with mixed an-
+   tiferromagnetic and ferromagnetic interactions in external
+   magnetic ﬁelds. Phys. Rev. E 95, 052147 (2017).
+52  Luo, Q., Zhao, J., Wang, X., and Kee, H.-Y. Unveiling the
+   phase  diagram  of  a  bond-alternating  spin- 12 K-Γ  chain.
+   Phys. Rev. B 103, 144423 (2021).
+                                                                                                                                             1
+
+                       “Gapless quantum spin liquid in a honeycomb Γ magnet”Supplemental Information for
+
+
+                             Qiang Luo1,2, Jize Zhao3, Hae-Young Kee2,4, and Xiaoqun Wang5,6
+
+                       1Department of Physics, Renmin University of China, Beijing 100872, China
+                   2Department of Physics, University of Toronto, Toronto, Ontario M5S 1A7, Canada
+                     3School of Physical Science and Technology & Key Laboratory for Magnetism and
+                       Magnetic Materials of the MoE, Lanzhou University, Lanzhou 730000, China
+                     4Canadian Institute for Advanced Research, Toronto, Ontario, M5G 1Z8, Canada
+                 5Key Laboratory of Artiﬁcial Structures and Quantum Control (Ministry of Education),
+                                       Shenyang National Laboratory for Materials Science,
+School of Physics and Astronomy, Tsung-Dao Lee Institute, Shanghai Jiao Tong University, Shanghai 200240, China
+                          6Beijing Computational Science Research Center, Beijing 100084, China
+
+
+
+                              Supplementary Note 1:  Classical energy and spin conﬁgurations
+
+
+                                   1.    The mixed antiferromagnetic–twining zigzag phase
+
+  Due to the bond-modulated ηγ(±1) term,  the  ˜J-Γ model shown in Eq. (1) in the main text does not posses  C6
+rotational symmetry.  This leads to a discrepancy among the three conventional conﬁgurations of the zigzag ordering
+with diﬀerent orientions.  We ﬁnd that the other two twining zigzag orders (see Fig.S1(b) and (c)) have higher energy
+than the standard zigzag order (see Fig.2(b) of the main text) when    ϑ/π∈ [0, 1/2).  Whenϑ/π is slightly larger than
+1/2, the twining zigzag orders overcome the latter and become the ground state.  Interestingly, the antiferromagnetic
+(AFM) order (see Fig.S1(a)) has the same energy and contributes to the degenerate manifolds.  Moreover, due to the
+two nonequivalent sites per unit cell, each conﬁguration is two-fold degenerate.  Consequently, we conclude that the
+mixed phase has six-fold degenerate ground states.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary Figure S1:  The degenerate ground states of the mixed phase, which includes (a) antiferromagnetic (AFM)
+order and (b)/(c) two kinds of twining zigzag orders.
+
+  For the AFM ordering out of the mixed phase, its energy is given by
+                                                emixedg       =−1(−  ˜J +Fmax(θ,φ +π)Γ),                                                       (S1)
+                                                             2
+whereF(θ,φ) = sin2θ sin 2φ− sin 2θ(sinφ + cosφ).  The functionF(θ,φ) is plotted in Fig.S2, which has a maximum
+of 2.  Since the translation of φ byπ does not change the magnitude of the functionF(θ,φ), we then obtain emixedg       =
+−(2Γ−  ˜J)/2  with  (θ,φ)  =  (atan(√2),π/4)  or  (θ,φ)  =  (π− atan(√2), 5π/4).   In  this  case  the  classical  magnetic
+direction of the AFM ordering is n = [111].
+
+
+                                                     2.    The noncollinear phase
+
+  When θ/π≈ 0.65 there is a noncollinear (NCL) phase consisting of two kinds of spins (or four if we consider that
+two  of  them  are  anti-parallel  to  their  partners)  which  are  neither  (anti-)parallel  nor  perpendicular  in  the  classical
+                                                                                                                                                     2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    Supplementary Figure S2:  Illustration of functionF(θ,φ) in the (θ, φ) parameter space.
+
+
+phase diagram.  Suppose that the angles of one kind of the spins are (θ,φ), then they are (θ +π/2,φ +π) for the
+other.  Namely,
+                                                {
+                                                    Sa =S (sinθ cosφ, sinθ sinφ, cosθ)
+                                                    Sb =−S (cosθ cosφ, cosθ sinφ, sinθ) .                                                     (S2)
+
+One of the conﬁgurations of the spins is shown in Fig.S3(a).  The optimal angles could be obtained by minimizing
+the classical energy
+                                         eNCLg      =  ˜J sin 2θ + Γ[ cos 2θ sin 2φ− 2(sinφ + cosφ)].                                            (S3)
+                                                                 4
+For example, if θ = 3π/4−ψ0/2 and φ =π/4 where ψ0 = atan( Γ                           ), we have the classical energy
+                                                                                   4J
+                                                                      √
+                                                         eNCLg      =−    ˜J2 + Γ216−   Γ√
+                                                                                          2.                                                                (S4)
+We also note that the angles between the two kinds of spins are−ψ0 or its supplementary angle π +ψ0.  Since ψ0 is
+ϑ-dependent, the polar angle θ also varies with ϑ.  The fascinating character of the noncollinear phase is that it may
+also possess other ground states with larger unit cell.  For example, we ﬁnd such a ground state whose (enlarged) unit
+cell has 64 lattice sites, see Fig.S3(b).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary Figure S3:  Conﬁgurations of the noncollinear phase in the real space.  The size of the unit cell marked by
+the yellow shadow is (a) 4× 2 and (b) 8× 8 (enlarged).
+
+
+
+                       Supplementary Note 2:  Quantum ﬂuctuations in the Linear spin-wave theory
+
+  Here, we go beyond the classical level by considering the quantum ﬂuctuations to ﬁnd out where the nonmagnetic
+state may appear in the phase diagram.  To this end,  we utilize the linear spin-wave theory where each local spin
+                                                                                                                                                3
+
+operator Si = (Sxi,Syi,Szi ) is represented by bosonic creation and annihilation operators ai and a†i.  We adopt some
+of the notations used by Janssen and Vojta1.  By virtue of the Holstein-Primakoﬀ transformation,
+                                                      √
+                                        ˜S+i    = √2S    1−a†iai/(2S)ai =√2Sai +O(1/√S),
+                                                         √
+                                        ˜S−i    = √2Sa†i    1−a†iai/(2S) =√2Sa†i +O(1/√S),                                            (S5)
+                                        ˜Sni   = S−a†iai.
+
+Here,  ˜Sni ≡ (S·n) is the spin component along the classical ordered moment n and  ˜S±i ≡ (Si·e)±ı[Si·(n×e)] are the
+ladder operators consisting of the orthogonal spin components, with e being an (arbitrary) unit vector perpendicular
+to n and satisfying the right-hand rule.  The spin operator is thus
+                                        √S                     √S
+                                Sτ,i =      2 (ai +a†i)e +τ       2 (−ıai +ıa†i)(n× e) +τ(S−a†iai)n                                   (S6)
+
+where τ  is introduced for classical spin which is either parallel (τ  = +1) or antiparallel (τ  =−1) to n.  For each
+γ-component Sγτ,i = Si· eγ, we have
+                        √   S                                    √S
+                Sγτ,i =     2ai(e· eγ−ıτ(n× e)· eγ) +               2a†i(e· eγ +ıτ(n× e)· eγ) +τ(S−a†iai)(n· eγ)
+                        √   S                     √S
+                     =      2ai(ξγ−ıτηγ) +           2a†i(ξγ +ıτηγ) +τ(S−a†iai)ζγ                                                            (S7)
+
+where ξγ = e· eγ, ηγ = (n× e)· eγ, and ζγ = n· eγ.  Before going into detail, we shall deﬁne an auxiliary function
+
+                                        Gαβτ   (x) = (ξαξβ +xηαηβ) +ıτ 1−x2    (ξαηβ +ξβηα),                                             (S8)
+
+which satisﬁesGαβ−τ(x) =[Gαβτ   (x)]∗.  Speciﬁcally,Gαβτ   (1) =Gαβ±  (1) = ξαξβ +ηαηβ  andGαβτ=1(−1) = (ξα +ıηα)(ξβ +
+ıηβ) =[Gαβτ=−1(−1)]∗.
+
+
+                                                    1.    four-sublattice stripy order
+
+  Like  the  zigzag  order,  the  stripy  order  also  has  four  sublattices.   Following  a  very  similar  procedure  shown  in
+“Method:  Linear spin-wave theory” in the main text, we get the spin-wave Hamiltonian for the stripy order as
+                                                                                                ∑    ˆx†q ˆHqˆxq,                                   (S9)
+                             H = 2NsS(S + 1)[3 ˜J− 2Γ(ζyζz +ζzζx−ζxζy)] + S2
+                                                                                                  q
+               (                                       )
+where ˆx†q =     a†q,b†q,c†q,d†q,a−q,b−q,c−q,d−q          is a vector of length 2ns and  ˆHq is a 2ns× 2ns matrix of the form
+                                                                  (  ˆΛq    ˆ∆q  )
+                                                           ˆHq =      ˆ∆†q   ˆΛT−q                                                        (S10)
+
+with                                                                                                            
+                               A   Eq  ◦  Bq,+             ,     ˆ∆q =   ◦   Cq,+  ◦   Dq              .                         (S11)
+                       ˆΛq =      E∗q   A  B∗q,− ◦                                C−q,+ ◦   D−q  ◦
+                                   ◦  Bq,−  A   Eq                                   ◦   Dq  ◦   Cq,−
+                                 B∗q,+ ◦   E∗q   A                                 D−q  ◦  C−q,− ◦
+Those matrix entries are given by
+                                   A = 2Γ(ζyζz +ζzζx−ζxζy)− 3 ˜J
+
+                                      Bq,τ = Γ(Gyzτ  (−1)eiqδx +Gzxτ  (−1)eiqδy)
+                                   Cq,τ = ΓGxyτ  (−1)eiqδz                                             ,                                    (S12)
+                                      Dq =− ˜J(eiqδx +eiqδy) + Γ(Gyz(1)eiqδx +Gzx(1)eiqδy)
+                                      Eq =[ ˜J + ΓGxy(1)]eiqδz
+                                                                                                                                                    4
+whereδx =(− a1              ),δy =(− a1              ), andδz =(a1
+                     6 , a22                6 ,−a22                    3 , 0).  Here, a1×a2 is the unit cell of the zigzag/stripy order
+with a1 = 3 and a2 =√3, see Fig.1of the main text.  For simplicity, the wave vector   q is parameterized in units of
+(h,k) asq =( 2πa1h, 2πa2k)2.
+   Actually,  there  is  an  emergent  continuous U(1)  symmetry  for  the  stripy  order.   The  spins  are  perpendicular  to
+˜c [11¯1], but could vary freely in the plane spanned by ˜a [112] and ˜b [1¯10].  As demonstrated in Fig.3(b) in the main
+text, these degeneracy is lifted by quantum ﬂuctuations, leading to a two-fold degenerate ground state which is either
+parallel or antiparallel to ˜b.  Thus, we choose n = ˜b as the magnetically ordered moment direction and e = ˜c as the
+arbitrary unit vector, then we ﬁnd that the explicit formula in Eq. (S12) is given by
+                                                       A = Γ− 3 ˜J
+                                                           Bq,τ =  Γ(ϖτs−3)
+                                                                         2  ϱ−1 cosπk
+                                                           Cq,τ =  Γϖτs                       .                                                            (S13)
+                                                                2 ϱ2
+                                                           Dq =−2 ˜Jϱ−1 cosπk
+                                                           Eq =  2 ˜J+Γ2 ϱ2
+where ϖs =  1+2√2ı
+                    3      and ϱ =eıπh/3.
+   The quadratic Hamiltonian Eq. (S9) can be diagonalized via a bosonic Bogoliubov transformation       1,
+                                              (                )               (  ˆΛq    ˆ∆q  )
+                                                 Ω(q)     0        = T†(q)                       T (q)                                               (S14)
+                                                   0     Ω(q)                      ˆ∆†q   ˆΛT−q
+
+where Ω(q) = diag (ωq,1,ωq,2,··· ,ωq,ns).  The transformation matrix satisﬁes the orthogonality relations T ΣT†  =
+T†ΣT  = Σ where Σ = diag (1,−1).  The spectrum of the Hamiltonian can be obtained by the eigenvalue equation
+                                              (   ˆΛq       ˆ∆q   )(         )             (        )
+                                                                        ⃗u(υ)q   = ωq,υ       ⃗u(υ)q   .                                                (S15)
+                                                 − ˆ∆†q −ˆΛT−q         ⃗v∗(υ)−q               ⃗v∗(υ)−q
+                                  (              )T is normalized with respect to the inner product involving the matrix Σ, i.e.,
+If the eigenvector|n(q)⟩≡           ⃗u(υ)q ,⃗v∗(υ)−q
+⟨n(q)|Σ|n(q)⟩ = 1 with⟨n(q)|≡|n(q)⟩†, then the columns of the matrix T (q) are given by the two vectors|n(q)⟩.
+   In  addition  to  the  spin-wave  dispersion  relations  which  are  usually  of  prime  interest,  there  are  also  two  other
+important quantities which can be easily obtained using the spin-wave calculation.  Namely, (i) the value of the total
+ordered moment⟨M⟩ per site, and (ii) the total energy per siteε.  For the classical moment⟨M⟩, it is straightforwardly
+to get1
+        M                ∑        ∑     (                     )                                ∑      ∫  d2q      ⏐⏐⏐⃗v∗(υ)⏐⏐⏐2 +O(1/S2),      (S16)
+         S  =     1Nsns                   1−  1S⟨a†i,υai,υ⟩     +O(1/S2) = 1−   1nsS                      (2π)2     −q
+                       {i}∈Ns   {υ}∈ns                                                        {υ}∈ns
+
+where ⃗v∗(υ)−q   denotes the lower half of the normalized υ-th eigenvector occurring in Eq. (S15),  with positive energy
+ωq,υ.   The  momentum  integral  is  over  all  wavevectors q  =  (qx,qy)  in  the  Brillouin  zone.   Likewise,  the  spin  wave
+energy ε is given by1
+                                                                     ∑      ∫  d2q
+                                      ε =S(S + 1)εcl + S2ns                     (2π)2ωq,υ +O(1/S2).                                           (S17)
+                                                                   {υ}∈ns
+
+
+                                                      2.    two-sublattice AFM order.
+
+   The AFM order has two sublattices in the honeycomb lattice.  Without loss of generality we can assume thatτ = +1
+for theA-sublattice and τ =−1 for theB-sublattice.  Quite directly, we can obtain
+                               H  = −NsS(S + 1)[−  ˜J + 2Γ(ζyζz +ζzζx +ζxζy)]
+                                                    aq  †                                                  aq  
+                                                      ε0   λ0(q)        0    λ1(q)                                            (S18)
+                                        +S   ∑       bq         λ∗0(q)   ε0   λ1(−q)       0                    bq
+                                           2   q    a†−q           0  λ∗1(−q)   ε0   λ∗0(−q)                   a†−q
+                                                     b†−q       λ∗1(q)       0   λ0(−q)   ε0                   b†−q
+                                                                                                                                                  5
+
+where
+                    
+                        ε0 =− ˜J + 2Γ(ζyζz +ζzζx +ζxζy)
+                      λ0(q) = Γ[Gyzτ=1(−1)eiqδx +Gzxτ=1(−1)eiqδy +Gxyτ=1(−1)eiqδz]
+                        λ1(q) =− ˜J(eiqδx +eiqδy−eiqδz) + Γ[Gyz(1)eiqδx +Gzx(1)eiqδy +Gxy(1)eiqδz] .                 (S19)
+
+  For the AFM ordering, the spins are found to be along the [111] direction.  So we choose the following crystalline
+axis, e = a [11¯2], n× e = b [¯110], and n = c∗ [111].  In this case we have
+                                                                                                                             
+        [ζαζβ] = 1      1  1  1  , [Gαβ(1)] = 1           2 −1 −1        , [Gαβ                      ω−1     1   ω                 (S20)
+                     3    1  1  1                         3    −1    2 −1                τ=1(−1)] = 23          1   ω  ω−1
+                          1  1  1                              −1 −1    2                                       ω  ω−1     1
+
+where ω =e2πı/3.  In light of above equations we ﬁnd that
+                                                        
+                                                           ε0 = 2Γ−  ˜J
+                                                         λ0(q) = 2Γγ1,q                  .                                                             (S21)
+                                                           λ1(q) =− ˜Jγ0,q− Γγ0,q
+
+where
+                                                
+                                                   γ0,q =eıqδx +eıqδy−eıqδz(eıqδx +eıqδy +eıqδz)
+                                                 γ0,q =  13(ω−1eıqδx +ωeıqδy +eıqδz) .                                                   (S22)
+                                                   γ1,q =  13
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary Figure S4:  The spin-wave dispersions ωqυ at ϑ/π = 0.25 (zigzag), ϑ/π = 0.60 (AFM), ϑ/π = 0.60 (twining
+zigzag), and ϑ/π = 0.6450 (NCL). The path in the reciprocal space is depicted in the inset for each subplot.
+                                                                                                                                                  6
+
+                         3.    Spin-wave dispersion ωqυ, energy ε, and sublattice magnetization M
+
+  In  this  section,  we  begin  by  calculating  the  spin-wave  dispersions  for  the  selected  points  in  the  zigzag  phase
+(0.00≤ϑ/π < 0.50), the mixed phase of AFM ordering and twining zigzag ordering (0.50≤ϑ/π < 0.6368), and the
+noncolinear (NCL) phase (0.6368≤ ϑ/π < 0.6543).  The spin-wave dispersion of the stripy phase, which shows an
+order-by-disorder mechanism, is shown in the main text.  The spin-wave dispersions atϑ/π = 0.25 (zigzag),ϑ/π = 0.60
+(AFM), ϑ/π = 0.60 (twining zigzag), and ϑ/π = 0.6450 (NCL) are shown in Fig.S4, and the path in the reciprocal
+space is depicted in the inset for each subplot.  For the zigzag ordering (see Fig.S4(a)), it is gapped with a magnon√
+gap ∆ of 2.12.  Generally, we have ∆ =               3(Γ2 + 2Γ ˜J) when ϑ ≲ 0.40π.  As can be seen from Fig.S4(b) and (c), the
+magnon gap is relatively small in the mixed phase of the AFM ordering and twining zigzag ordering.  In the NCL
+phase,  its  unit  cell  contains  8  sites  (cf.   Fig.S3(a)).   Therefore,  the  dispersion  shown  in  Fig.S4(d)  contains  eight
+branches and the minimal gap is around 0.25.
+  We then turn to the spin-wave energy ε and sublattice magnetization M  of the magnetically ordered states.  In
+Fig.S5(a), the top black solid lines is the classical energy for all the phases.  The transitions between the neighboring
+phases are of ﬁrst order because of the kinks in the energy curve.  The bottom yellow star line represents the quantum
+energy on a 24-site hexagonal cluster.  The spin-wave energy of the zigzag phase (green triangle), AFM phase (red
+circle),  and  stripy  phase  (blue  square)  are  calculated  in  their  classically  allowed  region.   In  the  zigzag  phase,  the
+spin-wave  energy  correction  ∆E  (when  compared  to  the  classical  energy)  is  the  largest  at ϑ/π  =  0.50.   Here,  the
+classical energy is -0.25 while the spin-wave energy is -0.33, showing an energy correlation of 0.08.  We note that the
+quantum ground-state energy at the Γ limit is estimated to be -0.354(3) (see Fig.4of the main text), and there is
+a large quantum ﬂuctuation due the classical ground-state degeneracy.  In contrast, in the intermediate region, the
+energy correction for the AFM phase is very small, indicating that the AFM order is unlikely the true ground state
+at the quantum level.  We emphasize here that this phenomenon is directly related to the QSL phase by large-scale
+DMRG calculation.  In the stripy phase, the spin-wave energy is very close to the quantum result.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary Figure S5:  (a) The spin-wave energy for zigzag order (green), AFM order (red), and stripy order (blue).
+The black line is the classical energy (S is set to be 1/2) illustrated in the main text, and the yellow star line is the quantum
+energy on a 24-site hexagonal cluster.  (b) The four branches of the sublattice magnetization Mυ  (υ = 1− 4) for the zigzag
+order and stripy order.  The averaged magnetization   ¯M  (thick black line) is also shown for comparison.
+
+  FigureS5(b) shows the sublattice magnetization      Mυ (υ = 1− 4) of the zigzag and stripy phases.  Since both phases
+contain four sites in their unit cells, there are four diﬀerent branches of Mυ.  Deep into the zigzag phase, the four
+branches  have  very  close  values,  but  the  diﬀerence  becomes  pronounced  at  the  boundaries.   In  the  Γ  limit  where
+ϑ/π→ 0.50, the lowest branch M1 is dramatically suppressed and it tends to vanish.  Since the quantum ﬂuctuation
+has a strong impact on the lowest branch, it thus suggests that the ground state of Γ model is likely a QSL in the
+quantum situation.  However, we note that the averaged magnetization   ¯M  = (M1 +M2 +M3 +M4)/4 is nonzero,
+with a value of   ¯M≈ 0.28.  We will go back to this point later.  In the stripy phase, the lowest branch M1 is relatively
+smaller  than  the  remaining  branches  and  it  is  also  insensitive  to  the  interaction  except  near  the  phase  boundary.
+This phenomenon may relate to the fact the lowest branch is  gapless  due to the emergent continuous symmetry.  In
+contrast, the second branch M2 is more amenable to reveal the magnetization, and it share the same behavior as the
+quantum case.
+  Before ending this section, we wish to get further spin-wave signatures of the QSL in the pure Γ model.  The classical
+Γ model is known to have an inﬁnite number of degeneracy, with the two-sublattice AFM ordering, four-sublattice
+                                                                                                                                                  7
+
+zigzag  ordering,  six-sublattice  vortex-like  120◦  ordering,  and  many  large-unit-cell  (LUC)  ordering  such  as  18-site
+ordering.  In the quantum level, some of them are not favored (e.g., the AFM order, which has a higher spin-wave
+energy), but a subset of them (whose number should be large) are competitive.  For example, the spin conﬁgurations
+of the zigzag ordering (peaks at M point) and 18-site ordering (peaks at 2M/3 point) are shown in Fig.S6.  For both
+of the two, all the spins have the same weight of three components, i,e.,|Sxi| =|Syi| =|Szi| = S/√3.  As a result,
+the zigzag ordering and the 18-site ordering have the same spin-wave energy and the same magnetization   ¯M≃ 0.28.
+Since the zigzag ordering and the 18-site ordering have diﬀerent peaks in the reciprocal space, the linear superposition
+of the two leads to a reduced magnetization of   ¯M′ =  ¯M/√2≈ 0.20.  In addition, by an alternative rearrangement of
+the spins, larger LUC orderings with 36-site and 48-site unit cells could be created, and the superposition of them
+will further weaken the magnetization, giving rise to a nonmagnetic phase eventually.  In this sense, the spin-wave
+calculation is consistent with our large-scale DMRG calculation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary  Figure  S6:  (a)  Conﬁguration  of  the  zigzag  ordering  in  the  real  space.   The  spins  are  parameterized  by
+ˆS =S (sinθ cosφ, sinθ sinφ, cosθ).  Here, θ is represented by the color (see colormap) while φ is represented by the orientation
+of the arrow in the plane.  The shape of the unit cell (with 4 sites in total) is marked by the yellow shadow.  The right panel is
+the static structure factor in the momentum space with peaks at M points.  (b) Conﬁguration of one of the 18-site orderings in
+the real space.  The shape of the unit cell (with 18 sites in total) is marked by the yellow shadow.  The right panel is the static
+structure factor in the momentum space with peaks at 2M/3 points.
+
+
+
+
+                Supplementary Note 3:  The bond-modulated  ˜J-Γ model:  cylinder vs hexagonal cluster
+
+
+                       1.    XC cylinder:  precision, low-lying excitation, and entanglement entropy
+
+  In the current computational capability, the number of block states m in the two-dimensional (2D) DMRG calcula-
+tion is limited to a few thousands for the Hamiltonian without U(1) symmetry.  Therefore, it is crucial to do a proper
+ﬁnite-size scaling of the measured quantities,  such as energy and order parameter,  with respect to m.  Taking the
+12× 6 XC cylinder as an example, we start by keeping m = 500 states in the warming-up process.  Then we continue
+to sweep by increasing the block states to 1000, 2000, and 3000, respectively.  For each m kept we perform 4 sweeps
+                                                                                                                                                8
+
+and up to 12 sweeps are applied.  The numbers of sweeps are extended to 16∼20 times in the gapless region and the
+block statem is increased to 4000 occasionally.  FigureS7shows the extrapolation of the energy for the gapped zigzag
+phase (ϑ/π= 0.40) and the gapless QSL phase with ϑ/π= 0.50 (Γ limit) and ϑ/π = 0.60.  The energy in Fig.S7(a)
+is almost m independent, showing that the energy converges very quickly in the gapped phase.  In the QSL phase,
+the  energy  at m  =  1000,  2000,  and  3000  shows  a  linear  scaling  of  1/m.   Typically,  the  energy  diﬀerence  between
+the Eg (m = 3000) and the extrapolated one Eg (m → ∞) is not very big.  For example, when ϑ/π= 0.50, the two
+are -25.40831921 and -25.40866029, respectively.  The energy per-site is -0.35289332 and -0.35289806, with an even
+smaller diﬀerence.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary Figure S7: (a) Finite-size scaling of the total ground-state energyEg in the gapped zigzag phase (ϑ/π =  0.40)
+with respect to m.  (b) and (c) are for the intermediate phase at ϑ = 0.50π (red circle) and ϑ = 0.60π (yellow diamond).
+
+  On the other hand, it is essential to check the ground-state degeneracy on XC cylinders, the number of which could
+be large due to the possible gapless edge excitation.  To get the ﬁrst few dozens of target states, we diagonalize a sparse
+Hermitian matrix by Davidson algorithm.  Suppose that we already have the ﬁrst k eigenvectors, we then extend the
+subspace and perform the iteration until some criterions are met,  and the (k + 1)-th eigenvalue could be obtained
+with the default precision.  We emphasize that in the DMRG calculation, we need to use all the targeted states to
+construct the reduced density matrix.  In our implementation, all the target states are used with equal weight.  In
+principle,  this  method  is  general  and  can  be  used  to  target  a  large  number  of  low-energy  states.   But  due  to  the
+truncation error, there should be a balance between the system sizes and the number of target states to guarantee
+the numerical accuracy.  For a cylinder with∼50 sites, the ﬁrst 20-30 states could be targeted precisely with an error
+bar ofO(10−6) or less.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary Figure S8:  The ﬁrst ﬁfteen energy gap ∆υ  = Eυ−E0  on a XC cylinder of 8× 4.  The underlying phases
+are gapped zigzag phase (ϑ = 0.40π, green triangle), and intermediate phase at ϑ = 0.50π (red circle) and ϑ = 0.60π (yellow
+diamond).
+
+  In our calculation, we calculate the ﬁrst sixteen energy levels on a small system size of 8× 4 cylinder, which enables
+us to get the low-lying energy accurately.  The excitation gap ∆υ =Eυ−E0 withυ = 0− 15 is shown in Fig.S8.  For
+the zigzag order (ϑ = 0.4π), the ground state is indeed doubly degenerate with a large energy gap of∼ 0.35 (Note:
+we note that this value is somewhat small due to small system size and cylinder boundary condition.  As shown in
+                                                                                                                                                 9
+
+Fig.6a in the main text, excitation gap for larger cylinder is   ∼ 0.65, which is consistent with the PBC case shown
+in Tab.1in the main text).  For the intermediate phase at   ϑ = 0.5π and ϑ = 0.6π, the excitation gap is successive
+increasing without large abrupt change.  Thus, there is unlikely a large number of ground-state degeneracy.
+  In Fig.4of the main text, we show the ground-state energy on XC clusters of 12  × 6, 16× 8, and 20× 10.  Here,
+Fig.S9show the von Neumann entropy   S on the same cylinders.  It is observed that the entropy in the gapped zigzag
+and stripy phases are lower than that in the intermediate phase.  With the increasing of the total sites, the entropy in
+the intermediate phase increases, consistent with the conclusion that the intermediate phase is gapless.  In addition,
+the entropy has drops at ϑl/π≃ 0.50 and ϑr/π≈ 0.66, indicating that both of the transitions are of ﬁrst order.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary Figure S9:  The von Neumann entropyS  on XC clusters of 12× 6 (red triangle), 16× 8 (green diamond),
+and 20× 10 (blue circle).
+
+
+
+
+                                          2.    Hexagonal cylinder:  Zigzag-QSL transition
+
+  Due to the bond-modulated Heisenberg ( ˜J) interaction which favors the zigzag ordering, the Zigzag-QSL transition
+near ϑl/π ≃ 0.50 is more intricate.  To determine the transition type and the transition point accurately, we have
+done extra calculation on hexagonal clusters of N  = 18, 24, and 32 under full periodic conditions (for geometries, see
+Fig.S10).  We note that although these clusters have less sites than the cylinder cases, they do not have the boundary
+eﬀect and thus show clearer tendencies of physical quantities asN is increased.  To begin with, we calculate the energy
+and von Neumann entropy on the 18-site cluster.  It is found that there is a kink in the energy eg  and a sharp jump
+in the entropyS  (not shown), supporting the ﬁrst-order transition.  Nevertheless, since the 18-site cluster does not
+match with the zigzag ordering whose unit cell is 4, this result is more or less unjust.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary Figure S10:  The lighted regions with yellow frames mark hexagonal clusters of (a) N  = 18, (b) N  = 24,
+and (c) N  = 32.  The black solid dots represent real sites whose number should be N.  The types of bonds are X-bond (red),
+Y-bond (green), and Z-bond (blue).  In (a) and (b), the dotted vertical lines represent the partition of the systems into two
+equal halves with N/2 sites in each part.  In (c), the blue and cyan dotted lines represent [l,r]-partitions of [11, 21] and [19,
+13], respectively, with four Z-bonds been cut.
+
+  In what follows, we resort to the 24-site and 32-site clusters, which are accommodative with the zigzag phase.  First
+of all, since the entropy is amenable to signify the transition type, we thus calculate the von Neumann entropyS by
+                                                                                                                                                 10
+
+cutting the same number of bonds.  As can be seen from Fig.S10(b) andS10(c), the red cut in the 24-site case and the
+blue and cyan cuts in the 32-site case meet this requirement where four Z-Type bonds are cut, and the entropy are
+shown in Fig.S11(a).  In the transition region where 0     .48<ϑ/π < 0.51, the entropy for the 24-site cluster increases
+from 2.4984 to 3.6065, an increment of 1.1081.  By contrast, the increment is∼1.80 for the 32-site case.  This indicates
+that the diﬀerence of the entropy in the zigzag phase and the QSL phase should be enlarged as N  is increased, and
+there should be a jump at the transition point as N→∞.  In addition, we also calculate the order parameter M(M)
+of the zigzag ordering for the two system sizes.  As can be seen in Fig.S11(b), the order parameter has a tendency
+to jump with the increasing of N.  In summary, the results of entropy and order parameter both favor the ﬁrst-order
+Zigzag-QSL transition.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary Figure S11:  (a) The von Neumann entropy on 24-site (open symbol) and 32-site (ﬁll symbols) hexagonal
+clusters.  The partitions of the systems are shown in Fig.S10(b) and -S10(c).  (b) The order parameter of the zigzag ordering
+on the 24-site (red circle) and 32-site (blue square) clusters.
+
+  In the main text,  we estimate that the transition point ϑl/π  is around but slightly smaller than 0.50.  It is the
+staggered-like Heisenberg ( ˜J) interaction that enhances the zigzag phase and pushes the transition point to the Γ
+limit.  To make a reasonable and precise transition point, we turn to the energy derivatives on hexagonal clusters of
+N  = 24 and N  = 32.  For a ﬁnite-size  system, there is a peak in the second-order energy derivative.  As the system
+size is increased, the peak will behave as a Gaussian-like wave-packet ( Dirac δ function) for the ﬁrst-order transition
+or will diverge for continuous phase transition.  The ground-state energy is calculated with an increment of 0.001 and
+0.005 (ϑ/π) for the N  = 24 and 32 cases, respectively.  The energy is extrapolated by a spline-extrapolation method
+so as to make the energy derivatives be smooth.  The ﬁrst-order (red) and second-order (blue) energy derivatives are
+shown in Fig.S12.  For the      N  = 24 case (left panel),  the peak locates at 0.4985,  while it is 0.4980 for the 32-site
+case (right panel).  The transition point is slowly shifted to the left and we expect it will not change too much as
+N  is further increased.  Thus, we estimate the transition point as ϑ/π = 0.498 (1), and the pure Γ limit falls in the
+intermediate phase.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary Figure S12:  (a) The ﬁrst-order (in red, left) and second-order (in blue, right) energy derivatives of a 24-site
+hexagonal cluster.  The peak position locates atϑ/π = 0.4985.  (b) The same as (a) but for a 32-site cluster.  The peak position
+locates at ϑ/π = 0.4980.
+                                                                                                                                               11
+
+    Supplementary Note 4:  The honeycomb Γ model:  energy gap scaling and entanglement entropy scaling
+
+
+                                                          1.    energy gap scaling
+
+  In a recent study of the one-dimensional (1D) Γ chain by us3, the ground-state energy eg  has been shown to have
+an intimate relation to the boundary condition.  Notably, eg exhibits a six-site periodicity with the length of Lx.  We
+recall that the gap for vison excitations in the Kitaev honeycomb model shows a three-period structure, as pointed
+out by Kitaev4.  We thus speculate that the energy spectrum of the two-dimensional (2D) Γ model should also own a
+similar but more complicated periodicity.
+  The unusual size-dependent behavior has an awful impact on the energy and energy gaps shown in Fig.S13, making
+an accurate extrapolation to the thermodynamic limit intractable.  We have calculated the low-lying energy on both
+XC clusters (blue square) of 8× 4, 12× 6, 16× 8, and 20× 10, and also YC clusters (red circle) of 8× 4, 12× 6,
+and  16× 8,  see  Fig.S13.   The  XC  cluster  shown  in  Fig.1of  the  main  text  has  zigzag  open  edges,  while  the  YC
+cluster is a 90◦ rotation of the XC cluster and has armchair open edges.  In both cases, the energy has an oscillation,
+and  we  estimate  the  ground-state  energy  is  -0.354(3)  (more  details  are  presented  in  Fig.4of  the  main  text).   As
+shown  in  Fig.S13(b),  there  are  similar  oscillations  in  the  energy  gaps  ∆               1  (open)  and  ∆2  (ﬁlled).   Because  of  the
+overall downward trend in the gaps with the increasing of the system size, we estimate that the lowest gap should be
+∆ = 0.00(1) in the thermodynamic limit.  This result is in line with the dense energy spectrum on a 24-site hexagonal
+cluster shown in Fig.6a of the main text), favoring the gapless ground state in the Γ model.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary Figure S13:  (a) Ground-state energy eg  of Γ model on XC (blue) and YC (red) clusters.  The system sizes
+Lx×Ly  are 8× 4 (n = 4), 12× 6 (n = 6), 16× 8 (n = 8), and 20× 10 (n = 10).  (b) Energy gaps ∆1  (open symbols) and
+∆2 (ﬁlled symbols) for the corresponding clusters.  The thick solid lines indicate the overall trends of the curves.
+
+  Next, we go beyond the XC/YC cylinders with a ﬁxedLx/Ly = 2, and study the energy gap of the Γ model ranging
+from 1D chain to two-leg honeycomb ladder, and also towards a series of 2×Lx×Ly tori ofLy = 3 or 4.  The geometry
+of the latter is shown in the inset of Fig.7in the main text.
+    • To begin with, for the 1D isotropic Γ chain, its ground state is found to be a gapless Luttinger liquid3,5    with
+       emergent SU(2) symmetry.
+    • Furthermore, we consider a two-leg honeycomb ladder which is a rung-alternating coupling of two isotropic Γ
+       chain.  It is a stripe of a honeycomb lattice along its zigzag edges and only contains Lx/2 Z bonds.  We ﬁnd that
+       there is a unique ground state with energy E0 under PBC, followed by a triplet excited state with energy E1.
+       There seems to be a continuous spectrum afterwards and the lowest branch has a energy of E4.  FigureS14(a)
+       shows the energy gap of ∆1 =E1−E0 and ∆4 =E4−E0, which go down asLx increased.  After an extrapolation
+       of ∆4 we ﬁnd that ∆4 < 0.004, which seems to close for long enough ladder.
+    • Moreover, we study the energy gaps for three- and four-leg tori.  Here, PBCs are imposed on both directions so
+       as to remove the possible edge excitations.  For Ly = 3, we perform the calculation on four diﬀerent tori with
+       Lx = 3, 4, 5, and 6, and ﬁnd that the gap is around∼ 0.11.  However, for Ly = 4, the gap goes down quickly
+       from 0.09 when Lx  = 3 to 0.015 when Lx  = 5, see Fig.S14(b).  We thus infer that the gap for      Ly  = 4 most
+       probably vanishes as Lx→∞.
+                                                                                                                                               12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary Figure S14:  (a) Energy gap ∆υ = Eυ−E0  for a two-leg honeycomb ladder under PBC. The black line is
+the extrapolation of ∆4 to inﬁnite-size system.  (b) The minimal energy gap ∆m for the three-leg (red circle) and four-leg (blue
+square) tori.
+
+
+  The  results  on  diﬀerent  clusters  are  summarized  in  the  table  below.   We  ﬁnd  that  the  energy  gap  has  a  strong
+cluster dependence, and could vanishes at several cases.  We note that this is not the typical character of a gapped
+system whose gap is usual very stable.  In this regard, it is another evidence for the gaplessness of Γ model.
+
+
+Supplementary Table S1:   Energy gap of the pure Γ model under a 1D chain, two-leg honeycomb ladder, and also 2×Lx×Ly
+tori of Ly = 3 or 4.
+                                                    Cases                Energy gap    Gapped/Gapless
+                                            1D isotropic Γ chain               0             gapless
+                                       two-leg honeycomb Γ ladder          < 0.004           gapless
+                                              2×Lx× 3 torus                 ∼ 0.11           gapped
+                                              2×Lx× 4 torus                < 0.001           gapless
+
+
+
+
+                                                   2.    entanglement entropy scaling
+
+  As shown in the last subsection, the three-leg cylinder is found to be gapped in the pure Γ model.  Such a gapped
+ground state could also be checked by the entanglement entropy.  FigureS15shows the representative behavior of
+S(l) on a 2× 18× 3 cylinder, which contains six sites along each column.  When l is a multiply of 6, it corresponds to
+a neat edge-cutting where the two halves have smooth margins.  The entanglement entropy is minimized and forms
+a lower branch as marked by solid red symbols.  It is clearly found that the lower branch is very ﬂat in the middle
+region, in accordance with a gapped system with a central charge of 0.
+  By contrast, the four-leg cylinder is found to be gapless.  For the quasi-one-dimensional conformal invariant critical
+system under open boundary condition, it is established that the entanglement entropy obeys the following formula6
+                                                                   [2Lx        (πlx  )]
+                                                    S(lx) = c6 ln      π   sin   Lx      +c′                                                         (S23)
+
+where c is the central charge and c′  is a model-dependent ﬁtting constant. lx  is the number of the columns of the
+subsystem andLx is the length of the cylinder.  In Fig.)+c′.  In that case we ﬁnd that (c,c′)≈ (2.92, 1.09), showing that the central charge is approximately7of the main text, we take    lx =Lx/2 and ﬁt the central charge
+asS = c6 ln( 2Lxπ
+3.  Here, instead, we turn to ﬁt the central charge on each individual cylinder according to the formula Eq. (S23).
+FigureS16shows the ﬁtting of central charge on cylinders of 2     × 16× 4, 2× 24× 4, and 2× 32× 4.  We ﬁnd that the
+best ﬁtting values are 2.85, 2.88, and 2.90, respectively.  Therefore, the central charge converges to 3 for long enough
+four-leg cylinder.
+  In the end, we want to address that the signiﬁcant diﬀerence between Ly = 3 and 4 suggests an unusual way from
+multi-leg ladder towards 2D limit.  Besides, it may imply that the ground state is likely to own spinon Fermi surface
+                                                                                                                                                   13
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary Figure S15:  Entanglement entropyS(l) of a consecutive segment of length l on a 2× 18× 3 cylinder.  The
+solid symbols of the lowest branch represent the neat edge-cutting with l being a multiply of 6 (i.e., the number of the sites
+along each column).  The bipartite entanglement entropy with l =N/2 is marked as a blue square.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary Figure S16:  (a) Extracting the central charge c from the entanglement entropyS on a 2× 16× 4 cylinder.
+The ﬁtting formula is Eq. (S23) and the central charge is estimated as 2.85.  (b) and (c) show the entanglement entropy scaling
+on cylinders of 2× 24× 4 and 2× 32× 4, respectively, with the ﬁtting central charge c≈ 2.88 and c≈ 2.90.
+
+
+(SFS)7,8  .  In this scenario, the pockets of SFS could be detected by diﬀerent cuts along the Brillouin zones.  Since the
+pockets are usually distributed at several high symmetry points, the central charge should vary for diﬀerent width
+of cylinders, depending on how many pockets are crossed.  Such a Ly-dependent behavior of the central charge is a
+highlight signature of SFS QSL. FigureS17shows the quantized momenta along the circumference of the three-leg
+(left) and four-leg (right) cylinders.  In view of the diﬀerent central charges of the two cases, we speculate the gapless
+excitations meet red lines several times in Fig.S17(b) but not the green lines in Fig.S17(a).  However, since there is
+no translational symmetry along the Lx-direction (which is OBC), we cannot determine the precise momenta of the
+gapless excitations.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary  Figure  S17:  Quantized  momenta  along  the  circumferences  of  the  cylinders  of Ly  =  3  (left)  and Ly  =  4
+(right).
+                                                                                                                                               14
+
+  Nevertheless, the central charge 3 on four-leg cylinders may also match with the possibility of a Dirac QSL where
+three Dirac Fermions are located around M points.  We note that central charge on wider cylinders of Ly  = 5 and
+6 should be useful to further clarify this issue.  Actually,  in the ﬁnite-size DMRG calculation,  the width of a long
+cylinder (Lx ≲ 50) is usually limited to three or four unit-cell, as the precision is not satisfactory for wider cylinders.
+So it is unclear currently how does the central charge vary with further increasing of widthLy.  We speculate that this
+problem might be studied by the variational Monte Carlo calculation on a mean-ﬁeld Hamiltonian constructed out of
+Abrikosov fermions or Majorana fermions9  or the inﬁnite DMRG calculation on the correlation length spectrum10.
+We think that this is an exciting research direction in the future.
+
+
+                                       Supplementary Note 5:  Plaquette order parameter
+  In the Kitaev honeycomb model, the hexagonal plaquette operator  ˆWp = 26Sx1Sy2Sz3Sx4Sy5Sz6  commutates with the
+model and  ˆWp =±14.  For the Γ model as well as the general bond-modulated  ˜J-Γ model, [H,  ˆWp]⁄= 0, so  ˆWp is no
+longer a conserved quantity.  However, the ﬂux-like density⟨Wp⟩ =∑p⟨ ˆWp⟩/Np  where Np = N/2 is the number of
+hexagonal plaquette can be tremendously useful and informative to distinguish diﬀerent phases.
+  We calculate the plaquette-plaquette correlation⟨ ˆWp ˆWq⟩, and deﬁne the static plaquette structure factor11,
+                                                WNp(Q) =   1       ∑⟨ ˆWp ˆWq⟩eiQ·(Rp−Rq),                                                     (S24)
+                                                               Np   pq
+
+whereRp is the central position of each plaquette.  We ﬁnd that there is a dominating peak in the Γ point and also a
+subleading peak at K point of the Brillouin zone.  This fact implies that there is no translational symmetry breaking
+in the honeycomb lattice but with perceptible plaquette correlation.  We thus deﬁne the plaquette order parameter as
+PNp =√WNp(Q)/Np.  The results on the hexagonal clusters of N = 24 and 32 are shown in Fig.S18(a).  Due to the
+dominating contribution from the trivial identity ⟨( ˆWp)2⟩ = 112,PNp  has a considerable ﬁnite-size value, which is
+approximately 1/√Np, see the horizonal lines in Fig.S18.  Therefore, the bared plaquette order parameter is formally
+deﬁned as                                                       √
+
+                                                       PNp =        WNp(Q)        √
+                                                                       Np  −    1Np.                                                              (S25)
+  The result of the bared plaquette order parameter is shown in Fig.7of the main text.  It can be found that there
+is a decreasing plaquette correlation around Γ model.  Besides, there is a negative ﬂux-like density⟨Wp⟩ =−0.25(2)
+for Γ model (see Fig.S18(b)).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary Figure S18:  (a) SVSFW(K) on hexagonal clusters of N = 24 and 32.  The horizonal lines of 1/(2√3) and
+1/4 are approximately the lower limits at the corresponding sizes.  (b) Extrapolated ﬂux-like density⟨Wp⟩ for Γ magnet.
+                                                                                                                                                15
+
+                                       Supplementary Note 6:  Role of 3rd-NN interaction
+
+  For the quantum bond-modulated  ˜J-Γ model,  there are three distinct phases,  including a zigzag order,  a stripy
+order, and also a QSL. The ground state of Γ model belongs to the QSL phase but locates very close to the transition
+point between the zigzag order and the QSL. The selected contour plots of the SMSF for the three phases are shown
+in Fig.S19(a)-(c).  While the zigzag and stripy phases peak at        M and/or M′ points, the magnetic order atϑ/π = 0.5
+is tiny, and a subleading peak locating at X point in the Brillouin zone appears.  This peak could be enhanced by
+negative third-NN J3 interaction.
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary  Figure  S19:   Typical  contour  plots  of  the  overall  SMSF  for  (a)  zigzag  phase  (ϑ/π  =  0.25),  (b)  QSL
+phase (ϑ/π = 0.50), and (c) stripy phase (ϑ/π = 0.75) are shown for XC clusters of 12× 6.
+
+  Fig.S20shows the evolution of the magnetic orders versus      J3 in a rather wide region.  It could be found that the
+ferromagnetic (FM) and AFM J3 model tend to select the FM phase and zigzag phase, respectively, as their ground
+states on the perturbation of AFM Γ interaction.  Between the two,  the maximum of MN(Q) appears at X point
+of the Brillouin zone (see Fig.3a of the main text).  At    J3  = 0, MN(Q) at M becomes comparable to that at X.
+However, as can be seen from the inset which shows the ﬁrst derivative of MN(M) versus J3, the peak locates at a
+tiny but nonzero J3,t≈ 0.075.  This provides further evidence that the ground state of the Γ model, in which J3  is
+zero, is not the zigzag ordering.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary Figure  S20:  Order parameters MN(Q) for the FM order (blue square),  X-correlation (green circle),  and
+zigzag order (red triangle) with Q = Γ, X, and M, respectively. The system size of the XC cylinder is 12×6 with a circumference
+of 6.  Inset:  The ﬁrst derivative of MN(M) versus J3.
+
+
+
+
+
+
+
+
+
+  ∗  zhaojz@lzu.edu.cn
+   †  xiaoqunwang@sjtu.edu.cn
+ [1]Janssen, L. and Vojta, M. Heisenberg-Kitaev physics in magnetic ﬁelds. J. Phys.:  Condens. Matter    31, 423002 (2019).
+ [2]Choi, S. K. et al. Spin Waves and Revised Crystal Structure of Honeycomb Iridate Na     2IrO3. Phys. Rev. Lett. 108, 127204
+     (2012).
+ [3]Luo, Q., Zhao, J., Wang, X., and Kee, H.-Y. Unveiling the phase diagram of a bond-alternating spin-1  /2K-Γ chain. Phys.
+     Rev. B 103, 144423 (2021).
+                                                                                                                                                            16
+
+ [4]Kitaev, A. Anyons in an exactly solved model and beyond. Ann. Phys.    321, 2-111 (2006).
+ [5]Yang, W., Nocera, A., Tummuru, T., Kee, H.-Y., and Aﬄeck, I. Phase Diagram of the Spin-1  /2 Kitaev-Gamma Chain
+     and Emergent SU(2) Symmetry. Phys. Rev. Lett. 124, 147205 (2020).
+ [6]Eisert,  J.,  Cramer,  M.,  and  Plenio,  M.  B.  Colloquium:  Area  laws  for  the  entanglement  entropy.  Rev.  Mod.  Phys.     82,
+     277-306 (2010).
+ [7]Jiang, H.-C., Wang, C.-Y., Huang, B., and Lu, Y.-M. Field induced quantum spin liquid with spinon Fermi surfaces in the
+     Kitaev model.arXiv:1809.08247(2018).
+ [8]Patel, N. D. and Trivedi, N. Magnetic ﬁeld-induced intermediate quantum spin liquid with a spinon Fermi surface. Proc.
+     Natl. Acad. Sci. USA 116, 12199-12203 (2019).
+ [9]Iqbal, Y., Becca, F., Sorella, S., and Poilblanc D. Gapless spin-liquid phase in the kagome spin-      12  Heisenberg antiferro-
+     magnet. Phys. Rev. B 87, 060405(R) (2013).
+[10]Hu,  S.,  Zhu,  W.,  Eggert,  S.,  and  He  Y.-C.  Dirac  Spin  Liquid  on  the  Spin-1  /2  Triangular  Heisenberg  Antiferromagnet.
+     Phys. Rev. Lett. 123, 207203 (2019).
+[11]Saha,  P.,  Fan,  Z.,  Zhang,  D.,  and  Chern,  G.-W.  Hidden  Plaquette  order  in  a  classical  spin  liquid  stabilized  by  strong
+     oﬀ-diagonal exchange. Phys. Rev. Lett. 122, 257204 (2019).
+[12]Since  ⟨(Sx)2⟩ =⟨(Sy)2⟩ =⟨(Sz)2⟩ = 1/4, we can get ⟨(Wp)2⟩ = 212(⟨(Sαυ )2⟩)6 = 212· (1/46) = 1.

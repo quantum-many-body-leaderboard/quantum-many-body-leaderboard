@@ -1,0 +1,50 @@
+{
+  "model": "ShastrySutherland",
+  "lattice": "square-tilted",
+  "n_sites": 32,
+  "boundary": "P",
+  "params": {
+    "J": 0.7,
+    "Jd": 1
+  },
+  "cluster": "32-site square cluster tilted by 45 degrees (periodic vectors (4,4) and (4,-4)), periodic boundaries; drawn in arXiv:cond-mat/0605464 Fig. 6 (second N = 32 cluster), distinct from its 4 x 8 stripe",
+  "instance_id": "ShastrySutherland/square-tilted_32_P_J0.7_Jd1",
+  "rows": [
+    {
+      "energy": -49.5002695831,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 32,
+      "einf": 0,
+      "v_score": null,
+      "method": "ED",
+      "ansatz": null,
+      "method_detail": "Lanczos",
+      "method_as_published": "exact diagonalisation (Lanczos)",
+      "family": "other",
+      "bound_type": "exact",
+      "bound_type_reason": "numerically exact reference as stated by the source (assigned during source reading)",
+      "reference": "Sindermann, Löw & Zittartz, Ground state properties of two spin models with exactly known ground states on the square lattice, Int. J. Mod. Phys. C 17, 1085 (2006), doi:10.1142/S0129183106009709, arXiv:cond-mat/0605464",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-20",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-20",
+        "method": "source text of arXiv:cond-mat/0605464 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-10-20)",
+        "reported_as": "-0.386720856118170",
+        "note": "Table I (square N = 32), x = 0.7; version read: arXiv text (sources/cond-mat-0605464.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eq. (1) H = J2 sum S.S (square bonds) + J1 sum S.S (diagonal dimer bonds), x = J2/J1, E0/N per site in units of J1 (the Fig. 1 caption swaps the labels; the tables fix them: E0/N = -0.375, the dimer-product energy, for all x below xc, and x = 0.8 equals the 6 x 6 ED of arXiv:2311.16889).",
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-10-24",
+          "scope": "value",
+          "method": "recomputed: own Lanczos ed.c, Sz = 0 basis of the 32-site tilted cluster (601080390 states), dimer state deflated; checks/exact-recompute-2026-10-families/",
+          "location": "recomputed (checks/exact-recompute-2026-10-families/)",
+          "reported_as": "-0.386720856118170",
+          "conversion": "recomputed -49.5002695831; stored -49.5002695831; difference -1.82e-11",
+          "note": "Lowest state orthogonal to the dimer-singlet product state: E1 = -49.5002695831 after 153 Lanczos steps (last 10 steps moved it by about 1e-10; Ritz values are upper bounds). The dimer state is an exact eigenstate at E = -48. Printed value x 128 = -49.50026958313. Cluster: tilted torus (4,4),(4,-4), orthogonal dimers. E1 < -48, so E0 = E1. Agrees with the printed value to 8e-12 (within the recompute's convergence, 1e-10). Also read by famP2-10-1142-s0129183106009709#10 (arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11; Table I (square N = 32, left half), row J2/J1 = 0.7; -0.386720856118170 (E0/N, per site, units of J1 = Jd, S.S form)): Value, x = J2/J1 = J/Jd, N, periodic boundaries, bound_type exact and method agree. Hamiltonian Eq. (1) in spin-1/2 S operators, J1 on the diagonal dimer bonds (E0/N = -0.375 = -3/8 J1 below xc fixes the dimer bond as the unit; the Fig. 1 caption swaps the labels). Cluster: the 32-site square cluster of Fig. 6 (second N = 32 row, diamond drawing); its Table III sector dimension 75,164,451 equals exactly the Burnside count for the (4,4),(4,-4) torus with the translations (2,2),(2,-2), Sz = 0 and spin inversion, so QMBL's tilted instance is consistent. Sector: the caption calls it 'the subspace containing the ground state' (Sz = 0, momentum, spin inversion). journal version (Int. J. Mod. Phys. C 17, 1085 (2006)) not reached: worldscientific.com /doi/pdf, /doi/epdf and /doi/abs all returned HTTP 403 with a Cloudflare JavaScript challenge on 2026-10-24; arXiv:cond-mat/0605464v1 (the only arXiv version, comment 'to appear in IJMPC 17') read alone. Duplicate check (data/ShastrySutherland/square-tilted_32_P_J0.7_Jd1.json, read-only): no other row on the instance carries this number.",
+          "source_entry": "famE-exact-recompute#17, famP2-10-1142-s0129183106009709#10 (qmbl-verify 2026-10-23)"
+        }
+      }
+    }
+  ]
+}

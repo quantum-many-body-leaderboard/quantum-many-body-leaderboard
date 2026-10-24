@@ -1,0 +1,257 @@
+{
+  "model": "Kitaev",
+  "lattice": "honeycomb-5x5",
+  "n_sites": 50,
+  "boundary": "O",
+  "params": {
+    "K": -1,
+    "J": 0,
+    "Gamma": 0
+  },
+  "cluster": "5 x 5 two-site unit cells (N = Lx x Ly x 2, arXiv:2112.08394 Table III footnote) on the 60-degree rhombus (A(m,n) bonded to B(m,n), B(m-1,n) and B(m,n-1), 0 <= m,n < 5), open boundaries: neither is printed in the source; the flux-free free-Majorana energy of this open patch reproduces the source's Exact column to all 8 printed digits, and the 120-degree rhombus does not (SWEEP.md, 2026-10-20; checks/exact-recompute-2026-10-families/, 2026-10-24)",
+  "instance_id": "Kitaev/honeycomb-5x5_50_O_K-1",
+  "rows": [
+    {
+      "energy": -35.7012005,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 50,
+      "einf": 0,
+      "v_score": null,
+      "method": "Exact solution",
+      "ansatz": null,
+      "method_detail": "",
+      "method_as_published": "Exact",
+      "family": "other",
+      "bound_type": "exact",
+      "bound_type_reason": "numerically exact reference as stated by the source (assigned during source reading)",
+      "reference": "Lin, Zaletel & Pollmann, Efficient simulation of dynamics in two-dimensional quantum spin systems with isometric tensor networks, Phys. Rev. B 106, 245102 (2022), doi:10.1103/PhysRevB.106.245102, arXiv:2112.08394",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-20",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-20",
+        "method": "source text of arXiv:2112.08394 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-10-20)",
+        "reported_as": "-0.71402401",
+        "note": "Table III, row (5,5), column Exact; version read: arXiv text (sources/2112.08394.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eq. (25) H = -Jx sum sigma^x sigma^x - Jy sum sigma^y sigma^y - Jz sum sigma^z sigma^z, Pauli matrices, Jx = Jy = Jz = 1: K = -4 in the S = sigma/2 form, 4 times the instance's K = -1 (scale 4). Table III caption 'energy per site E0/N'; footnote 'N = Lx x Ly x 2'. QMBL's flux-free free-Majorana energies of the open 5 x 5, 7 x 7 and 11 x 11 patches give -0.71402401, -0.73416737 and -0.75303346 per site, the Exact column to all printed digits, which fixes the open boundaries the text does not print.",
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-10-24",
+          "scope": "value",
+          "method": "recomputed: free-Majorana solution, own code kitaev_majorana.py (numpy SVD per gauge class; torus: projection prod_j D_j = 1 via Pfaffian sign, checked against spin ED); checks/exact-recompute-2026-10-families/",
+          "location": "recomputed (checks/exact-recompute-2026-10-families/)",
+          "reported_as": "-0.71402401",
+          "conversion": "recomputed total (Pauli form, |K| = 1) -35.701200406996; stored -35.7012005; difference 9.300e-08; printed-digit resolution of the stored total 2.5e-07",
+          "note": "open 5 x 5 rhombus, full enumeration of all 2^16 flux sectors: minimum is flux-free; recomputed -0.714024008 per site. Open patch: A(m,n) bonded to B(m,n), B(m-1,n), B(m,n-1), 0 <= m,n < L (the 60-degree rhombus); the 120-degree rhombus (A to B(m,n), B(m-1,n), B(m-1,n-1)) gives -34.0130, -69.2244, -177.4229 and does not match, so the source's cluster is the 60-degree one. Also read by famP3-arxiv-2112-08394#5 (arXiv:2112.08394v2 PDF (pypdf layout and plain modes) and v2 HTML (table cells parsed with node); v1 PDF Table III identical; journal PDF (Phys. Rev. B 106, 245102) not reachable from this session (journals.aps.org/prb/pdf returned HTTP 401 on 2026-10-24), so the arXiv versions are read alone; Table III (Appendix D), row (5, 5), column Exact; -0.71402401 (energy per site E0/N, Pauli H of Eq. (25), Jx = Jy = Jz = 1)): Instance agrees with the source: Kitaev honeycomb, Eq. (25) H = -Jx sum sigma^x sigma^x - Jy sum sigma^y sigma^y - Jz sum sigma^z sigma^z (Pauli), Jx = Jy = Jz = 1, no constant term; this is exactly the stored Pauli form of K = -1 (RULES 5), so stored total = printed E0/N x N with no further factor (the normalised.factor 4 maps the source to the S = sigma/2 form and the loader's x4 for the Pauli total cancels it). N = Lx x Ly x 2 = 50 (Table III footnote). Cluster and open boundary are not printed; this reader's free-Majorana check of the open rhombic 5 x 5 patch (flux-free gauge) gives -35.70120041 total, -0.71402401 per site, the Exact column to all 8 digits, while a brick-wall open patch gives a different number; for L = 5, 7 every non-gauge one-bond flux flip raises the energy (by >= 0.08). sigma null is right: deterministic numbers, no error bar printed. No duplicate: the instance file holds only the five (four for 5 x 5) Table III rows of this batch. bound_type exact: free-Majorana exact solution of the finite patch. Provenance: the paper does not say who computed the Exact column (acknowledgement 'We thank J. Knolle for providing data for Kitaev model', which may refer to the Fig. 11 DSF); first printed here, primary is right. The stored total is the 8-digit per-site value x N; the full-precision free-fermion total (-35.70120041) differs by 9.0e-8, inside the printed rounding (+-0.5e-8 x N).",
+          "source_entry": "famE-exact-recompute#3, famP3-arxiv-2112-08394#5 (qmbl-verify 2026-10-23)"
+        }
+      },
+      "normalised": {
+        "factor": 4,
+        "source_couplings": "H = -sum sigma^g sigma^g (Eq. 25, Jx = Jy = Jz = 1, Pauli): K = -4 in the S = sigma/2 form",
+        "note": "the source's Hamiltonian is 4 times the instance's; its printed energy (reported_as) is divided by 4"
+      },
+      "corrections": [
+        {
+          "field": "sampled",
+          "to": false,
+          "reported_as": "-0.71402401",
+          "location": "arXiv:2112.08394 Table III, column Exact",
+          "version_read": "arXiv text (sources/)",
+          "conversion": "none",
+          "checked_on": "2026-10-20",
+          "reason": "Deterministic, not a Monte Carlo estimate: the exact finite-system solution of the Kitaev model (free Majorana fermions; QMBL reproduces all three values to the printed digits). The method string matches no deterministic marker, so the fallback in units.mjs read it as sampled (RULES.md 6).",
+          "source_entry": "families pass 2026-10-20 (first reading and adversarial second reading)",
+          "from": true
+        }
+      ],
+      "sampled": false
+    },
+    {
+      "energy": -35.681458,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 50,
+      "einf": 0,
+      "v_score": null,
+      "method": "DMRG",
+      "ansatz": null,
+      "method_detail": "",
+      "method_as_published": "DMRG χ=512",
+      "family": "tensor network",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Lin, Zaletel & Pollmann, Efficient simulation of dynamics in two-dimensional quantum spin systems with isometric tensor networks, Phys. Rev. B 106, 245102 (2022), doi:10.1103/PhysRevB.106.245102, arXiv:2112.08394",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-20",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-20",
+        "method": "source text of arXiv:2112.08394 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-10-20)",
+        "reported_as": "-0.71362916",
+        "note": "Table III, row (5,5), column DMRG χ=512; version read: arXiv text (sources/2112.08394.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eq. (25) H = -Jx sum sigma^x sigma^x - Jy sum sigma^y sigma^y - Jz sum sigma^z sigma^z, Pauli matrices, Jx = Jy = Jz = 1: K = -4 in the S = sigma/2 form, 4 times the instance's K = -1 (scale 4). Table III caption 'energy per site E0/N'; footnote 'N = Lx x Ly x 2'. QMBL's flux-free free-Majorana energies of the open 5 x 5, 7 x 7 and 11 x 11 patches give -0.71402401, -0.73416737 and -0.75303346 per site, the Exact column to all printed digits, which fixes the open boundaries the text does not print.",
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-10-24",
+          "scope": "value",
+          "method": "arXiv:2112.08394v2 PDF (pypdf layout and plain modes) and v2 HTML (table cells parsed with node); v1 PDF Table III identical; journal PDF (Phys. Rev. B 106, 245102) not reachable from this session (journals.aps.org/prb/pdf returned HTTP 401 on 2026-10-24), so the arXiv versions are read alone",
+          "location": "Table III (Appendix D), row (5, 5), column DMRG χ = 512",
+          "reported_as": "-0.71362916 (energy per site E0/N, Pauli H of Eq. (25), Jx = Jy = Jz = 1)",
+          "conversion": "-0.71362916 x 50 = -35.68145800 (stored -35.681458); S = sigma/2 form per site -0.1784072900",
+          "note": "Instance agrees with the source: Kitaev honeycomb, Eq. (25) H = -Jx sum sigma^x sigma^x - Jy sum sigma^y sigma^y - Jz sum sigma^z sigma^z (Pauli), Jx = Jy = Jz = 1, no constant term; this is exactly the stored Pauli form of K = -1 (RULES 5), so stored total = printed E0/N x N with no further factor (the normalised.factor 4 maps the source to the S = sigma/2 form and the loader's x4 for the Pauli total cancels it). N = Lx x Ly x 2 = 50 (Table III footnote). Cluster and open boundary are not printed; this reader's free-Majorana check of the open rhombic 5 x 5 patch (flux-free gauge) gives -35.70120041 total, -0.71402401 per site, the Exact column to all 8 digits, while a brick-wall open patch gives a different number; for L = 5, 7 every non-gauge one-bond flux flip raises the energy (by >= 0.08). sigma null is right: deterministic numbers, no error bar printed. No duplicate: the instance file holds only the five (four for 5 x 5) Table III rows of this batch. bound_type variational: DMRG at a stated bond dimension, no extrapolation stated; the column heading prints only 'DMRG' and χ (the text uses 1D DMRG with bond dimension 1024 as the TFI reference, Sec. III); the value lies above the Exact column (0.019742 in the stored total).",
+          "source_entry": "famP3-arxiv-2112-08394#6 (qmbl-verify 2026-10-23)"
+        }
+      },
+      "normalised": {
+        "factor": 4,
+        "source_couplings": "H = -sum sigma^g sigma^g (Eq. 25, Jx = Jy = Jz = 1, Pauli): K = -4 in the S = sigma/2 form",
+        "note": "the source's Hamiltonian is 4 times the instance's; its printed energy (reported_as) is divided by 4"
+      },
+      "compute": {
+        "parameters": null,
+        "gpu_hours": null,
+        "device": null,
+        "n_devices": null,
+        "samples": null,
+        "wall_clock": null,
+        "cpu_core_hours": null,
+        "bond_dimension": 512,
+        "iterations": null,
+        "reported_as": "method string: \"DMRG χ=512\"",
+        "source": "the row's published method string (scripts/method_names.mjs, 2026-09-17)",
+        "scope": "row",
+        "confidence": "high",
+        "note": "Only the numbers the method string states; nothing else about this run's cost is recorded."
+      }
+    },
+    {
+      "energy": -35.700541,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 50,
+      "einf": 0,
+      "v_score": null,
+      "method": "DMRG",
+      "ansatz": null,
+      "method_detail": "",
+      "method_as_published": "DMRG χ=1024",
+      "family": "tensor network",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Lin, Zaletel & Pollmann, Efficient simulation of dynamics in two-dimensional quantum spin systems with isometric tensor networks, Phys. Rev. B 106, 245102 (2022), doi:10.1103/PhysRevB.106.245102, arXiv:2112.08394",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-20",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-20",
+        "method": "source text of arXiv:2112.08394 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-10-20)",
+        "reported_as": "-0.71401082",
+        "note": "Table III, row (5,5), column DMRG χ=1024; version read: arXiv text (sources/2112.08394.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eq. (25) H = -Jx sum sigma^x sigma^x - Jy sum sigma^y sigma^y - Jz sum sigma^z sigma^z, Pauli matrices, Jx = Jy = Jz = 1: K = -4 in the S = sigma/2 form, 4 times the instance's K = -1 (scale 4). Table III caption 'energy per site E0/N'; footnote 'N = Lx x Ly x 2'. QMBL's flux-free free-Majorana energies of the open 5 x 5, 7 x 7 and 11 x 11 patches give -0.71402401, -0.73416737 and -0.75303346 per site, the Exact column to all printed digits, which fixes the open boundaries the text does not print.",
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-10-24",
+          "scope": "value",
+          "method": "arXiv:2112.08394v2 PDF (pypdf layout and plain modes) and v2 HTML (table cells parsed with node); v1 PDF Table III identical; journal PDF (Phys. Rev. B 106, 245102) not reachable from this session (journals.aps.org/prb/pdf returned HTTP 401 on 2026-10-24), so the arXiv versions are read alone",
+          "location": "Table III (Appendix D), row (5, 5), column DMRG χ = 1024",
+          "reported_as": "-0.71401082 (energy per site E0/N, Pauli H of Eq. (25), Jx = Jy = Jz = 1)",
+          "conversion": "-0.71401082 x 50 = -35.70054100 (stored -35.700541); S = sigma/2 form per site -0.1785027050",
+          "note": "Instance agrees with the source: Kitaev honeycomb, Eq. (25) H = -Jx sum sigma^x sigma^x - Jy sum sigma^y sigma^y - Jz sum sigma^z sigma^z (Pauli), Jx = Jy = Jz = 1, no constant term; this is exactly the stored Pauli form of K = -1 (RULES 5), so stored total = printed E0/N x N with no further factor (the normalised.factor 4 maps the source to the S = sigma/2 form and the loader's x4 for the Pauli total cancels it). N = Lx x Ly x 2 = 50 (Table III footnote). Cluster and open boundary are not printed; this reader's free-Majorana check of the open rhombic 5 x 5 patch (flux-free gauge) gives -35.70120041 total, -0.71402401 per site, the Exact column to all 8 digits, while a brick-wall open patch gives a different number; for L = 5, 7 every non-gauge one-bond flux flip raises the energy (by >= 0.08). sigma null is right: deterministic numbers, no error bar printed. No duplicate: the instance file holds only the five (four for 5 x 5) Table III rows of this batch. bound_type variational: DMRG at a stated bond dimension, no extrapolation stated; the column heading prints only 'DMRG' and χ (the text uses 1D DMRG with bond dimension 1024 as the TFI reference, Sec. III); the value lies above the Exact column (0.000659 in the stored total). Record row (best variational bound on the instance): read hardest; energy, lattice, boundary, couplings, column and producer all agree.",
+          "source_entry": "famP3-arxiv-2112-08394#7 (qmbl-verify 2026-10-23)"
+        }
+      },
+      "normalised": {
+        "factor": 4,
+        "source_couplings": "H = -sum sigma^g sigma^g (Eq. 25, Jx = Jy = Jz = 1, Pauli): K = -4 in the S = sigma/2 form",
+        "note": "the source's Hamiltonian is 4 times the instance's; its printed energy (reported_as) is divided by 4"
+      },
+      "compute": {
+        "parameters": null,
+        "gpu_hours": null,
+        "device": null,
+        "n_devices": null,
+        "samples": null,
+        "wall_clock": null,
+        "cpu_core_hours": null,
+        "bond_dimension": 1024,
+        "iterations": null,
+        "reported_as": "method string: \"DMRG χ=1024\"",
+        "source": "the row's published method string (scripts/method_names.mjs, 2026-09-17)",
+        "scope": "row",
+        "confidence": "high",
+        "note": "Only the numbers the method string states; nothing else about this run's cost is recorded."
+      }
+    },
+    {
+      "energy": -35.3449695,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 50,
+      "einf": 0,
+      "v_score": null,
+      "method": "isoTNS",
+      "ansatz": null,
+      "method_detail": "η = 8",
+      "method_as_published": "isoTNS D=4, η=8",
+      "family": "tensor network",
+      "bound_type": "projected",
+      "bound_type_reason": "DMRG2 on an isometric tensor network, otherwise biased, not a strict upper bound: 'We would like to point out that the DMRG2 proposed here is not a standard variational algorithm, which optimize over the parameters of a single variational wavefunction. Instead, we optimize over a set of quantum states approximately connected by MM. [...] As a result, the variational energy does not monotonically decrease as in the standard DMRG algorithm [...]. The approximation of the ground state energy found by DMRG2 is thus, similar to TEBD2, bound by the MM error.' (arXiv:2112.08394, Sec. III B; ruled 2026-10-24)",
+      "reference": "Lin, Zaletel & Pollmann, Efficient simulation of dynamics in two-dimensional quantum spin systems with isometric tensor networks, Phys. Rev. B 106, 245102 (2022), doi:10.1103/PhysRevB.106.245102, arXiv:2112.08394",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-20",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-20",
+        "method": "source text of arXiv:2112.08394 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-10-20)",
+        "reported_as": "-0.70689939",
+        "note": "Table III, row (5,5), column isoTNS D=4, η=8 (the row prints four numbers; the D = 6 cell is empty); version read: arXiv text (sources/2112.08394.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eq. (25) H = -Jx sum sigma^x sigma^x - Jy sum sigma^y sigma^y - Jz sum sigma^z sigma^z, Pauli matrices, Jx = Jy = Jz = 1: K = -4 in the S = sigma/2 form, 4 times the instance's K = -1 (scale 4). Table III caption 'energy per site E0/N'; footnote 'N = Lx x Ly x 2'. QMBL's flux-free free-Majorana energies of the open 5 x 5, 7 x 7 and 11 x 11 patches give -0.71402401, -0.73416737 and -0.75303346 per site, the Exact column to all printed digits, which fixes the open boundaries the text does not print.",
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-10-24",
+          "scope": "value",
+          "method": "arXiv:2112.08394v2 PDF (pypdf layout and plain modes) and v2 HTML (table cells parsed with node); v1 PDF Table III identical; journal PDF (Phys. Rev. B 106, 245102) not reachable from this session (journals.aps.org/prb/pdf returned HTTP 401 on 2026-10-24), so the arXiv versions are read alone",
+          "location": "Table III (Appendix D), row (5, 5), column isoTNS D = 4, η = 8",
+          "reported_as": "-0.70689939 (energy per site E0/N, Pauli H of Eq. (25), Jx = Jy = Jz = 1)",
+          "conversion": "-0.70689939 x 50 = -35.34496950 (stored -35.3449695); S = sigma/2 form per site -0.1767248475",
+          "note": "Instance agrees with the source: Kitaev honeycomb, Eq. (25) H = -Jx sum sigma^x sigma^x - Jy sum sigma^y sigma^y - Jz sum sigma^z sigma^z (Pauli), Jx = Jy = Jz = 1, no constant term; this is exactly the stored Pauli form of K = -1 (RULES 5), so stored total = printed E0/N x N with no further factor (the normalised.factor 4 maps the source to the S = sigma/2 form and the loader's x4 for the Pauli total cancels it). N = Lx x Ly x 2 = 50 (Table III footnote). Cluster and open boundary are not printed; this reader's free-Majorana check of the open rhombic 5 x 5 patch (flux-free gauge) gives -35.70120041 total, -0.71402401 per site, the Exact column to all 8 digits, while a brick-wall open patch gives a different number; for L = 5, 7 every non-gauge one-bond flux flip raises the energy (by >= 0.08). sigma null is right: deterministic numbers, no error bar printed. No duplicate: the instance file holds only the five (four for 5 x 5) Table III rows of this batch. bound_type projected (ruled 2026-10-24): isoTNS optimised by DMRG2 (App. D: 'We list the ground state energy for Kitaev honeycomb mode obtained through DMRG2 with 2D isoTNSs in Table III'), which Sec. III B calls 'not a standard variational algorithm', its energy 'bound by the MM error'; energy is a deterministic boundary-MPS contraction ('We contract each term approximately using the boundary MPSs approach [19]', D_bMPS = 2D^2, Sec. III B), so sampled false is right; the value lies above the Exact column. method_detail keeps only η; D is in method_as_published. Column placement: the (5,5) row prints four numbers; the v2 HTML table has the empty cell in the last (D = 6, η = 12) column, so -0.70689939 is the D = 4, η = 8 cell.",
+          "source_entry": "famP3-arxiv-2112-08394#8 (qmbl-verify 2026-10-23)"
+        }
+      },
+      "normalised": {
+        "factor": 4,
+        "source_couplings": "H = -sum sigma^g sigma^g (Eq. 25, Jx = Jy = Jz = 1, Pauli): K = -4 in the S = sigma/2 form",
+        "note": "the source's Hamiltonian is 4 times the instance's; its printed energy (reported_as) is divided by 4"
+      },
+      "corrections": [
+        {
+          "field": "sampled",
+          "to": false,
+          "reported_as": "-0.70689939",
+          "location": "arXiv:2112.08394 Table III, column isoTNS D=4",
+          "version_read": "arXiv text (sources/)",
+          "conversion": "none",
+          "checked_on": "2026-10-20",
+          "reason": "Deterministic, not a Monte Carlo estimate: a tensor-network energy contracted exactly (isometric TNS optimised by DMRG2); no Monte Carlo sampling. The method string matches no deterministic marker, so the fallback in units.mjs read it as sampled (RULES.md 6).",
+          "source_entry": "families pass 2026-10-20 (first reading and adversarial second reading)",
+          "from": true
+        }
+      ],
+      "sampled": false,
+      "compute": {
+        "parameters": null,
+        "gpu_hours": null,
+        "device": null,
+        "n_devices": null,
+        "samples": null,
+        "wall_clock": null,
+        "cpu_core_hours": null,
+        "bond_dimension": 4,
+        "iterations": null,
+        "reported_as": "method string: \"isoTNS D=4, η=8\"",
+        "source": "the row's published method string (scripts/method_names.mjs, 2026-09-17)",
+        "scope": "row",
+        "confidence": "high",
+        "note": "Only the numbers the method string states; nothing else about this run's cost is recorded."
+      }
+    }
+  ]
+}

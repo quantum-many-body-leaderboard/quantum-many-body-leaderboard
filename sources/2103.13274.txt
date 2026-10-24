@@ -1,0 +1,1193 @@
+                       Variational study of the Kitaev-Heisenberg-Gamma model
+
+                      Shang-Shun  Zhang1,  G´abor  B.  Hal´asz2,3,  Wei  Zhu4,  and  Cristian  D.  Batista1,5
+           1Department of Physics and Astronomy,  University of Tennessee,  Knoxville,  Tennessee 37996-1200,  USA
+       2Materials Science and Technology Division, Oak Ridge National Laboratory, Oak Ridge, Tennessee 37831, USA
+                                    3Quantum  Science  Center,  Oak  Ridge,  Tennessee  37831,  USA
+                        4  Key  Laboratory  for  Quantum  Materials  of  Zhejiang  Province,  School  of  Science,
+                        Westlake  University,  18  Shilongshan  Road,  Hangzhou,  Zhejiang  310024,  China  and
+                                  5Quantum  Condensed  Matter  Division  and  Shull-Wollan  Center,
+                                 Oak  Ridge  National  Laboratory,  Oak  Ridge,  Tennessee  37831,  USA
+
+                  We compute the low-energy excitation spectrum and the dynamical spin structure factor of the
+               Kitaev-Heisenberg-Gamma model through a variational approach based on the exact fractionalized
+               excitations of the pure Kitaev honeycomb model.  This novel approach reveals the physical reason
+               for the asymmetric stability of the Kitaev spin liquid phases around the ferromagnetic and antifer-
+               romagnetic Kitaev limits.  Moreover, we demonstrate that the fractionalized excitations form bound
+               states in speciﬁc regions of each Kitaev spin liquid phase and that certain phase transitions induced
+               by Heisenberg and Gamma interactions are driven by the condensation of such a bound state.  Re-
+               markably, this bound state appears as a sharp mode in the dynamical spin structure factor, while
+               its condensation patterns at the appropriate phase transitions provide a simple explanation for the
+               magnetically ordered phases surrounding each Kitaev spin liquid phase.
+
+
+                    I.    INTRODUCTION                                         Even though none of the candidate materials seem to
+                                                                            realize the Kitaev spin liquid, and most of them are found
+  Quantum spin liquids are highly unconventional, fun-                      to be magnetically ordered at the lowest temperatures,
+damentally quantum phases of magnetic systems that do                       there are nevertheless direct experimental indications of
+not  order  by  spontaneous  symmetry  breaking  and  are                   dominant Kitaev interactions.16 The Kitaev materials are
+instead  characterized  by  long-range  quantum  entangle-                  thus expected to be proximate to the Kitaev spin liquid,27
+ment,1,2  along with a rich variety of exotic phenomena,                    making it important to understand the magnetically or-
+including topological order, emergent gauge theories, and                   dered  phases  surrounding  the  Kitaev  spin  liquid,  along
+quasiparticle fractionalization.  Indeed, the spin degrees                  with the corresponding quantum phase transitions giving
+of freedom in quantum spin liquids appear to be fraction-                   rise to magnetic order.  To this end, the phase diagram
+alized into nonlocal quasiparticle excitations that carry                   of the Kitaev-Heisenberg-Gamma model has been stud-
+internal gauge charges and exhibit nontrivial anyonic par-                  ied extensively using a wide range of techniques, includ-
+ticle statistics.  In addition to their fundamental appeal,                 ing exact diagonalization,42–46 density-matrix renormal-
+these anyonic quasiparticles facilitate topological braid-                  ization  group,47–49  tensor-network  methods,50,51  slave-
+ing processes and thus provide manifestly fault-tolerant                    particle  mean-ﬁeld  theories,52   and  variational  Monte
+schemes of quantum computation.3,4                                          Carlo approaches.53  These works yield consistent phase
+  The  Kitaev  spin  liquid  phase  on  the  honeycomb  lat-                diagrams,  predicting  a  rich  variety  of  magnetically  or-
+tice  is  particularly  amenable  to  theoretical  studies  due             dered phases around the ferromagnetic (FM) and antifer-
+to its exactly solvable limit described by the famous Ki-                   romagnetic (AFM) Kitaev spin liquid phases.  However,
+taev honeycomb model.5 Remarkably, it has been demon-                       while they seem to indicate that some of the phase transi-
+strated that the bond-directional spin interactions of the                  tions are close to continuous (i.e., weakly ﬁrst order), the
+Kitaev  model  are  naturally  realized  between  eﬀective                  underlying  mechanisms  driving  these  phase  transitions
+spin-one-half  magnetic  moments  in  strongly  spin-orbit-                 are still not properly understood.
+coupled 4d and 5d systems,6 and this realization has led                       Since quantum spin liquids do not break any symme-
+to the discovery of several candidate materials in which                    tries and possess no local order parameters or any other
+the microscopic spin Hamiltonian is believed to be well                     “smoking-gun” signatures, they are notoriously diﬃcult
+approximated  by  the  Kitaev  model.7–10  These  Kitaev                    to identify in an experimental setup.  It is conventional
+materials include the honeycomb iridates Na2IrO3,11–16                      wisdom  that,  as  a  result  of  fractionalization,  quantum
+α-Li2IrO3,17,18  H3LiIr2O6,19, and Ag3LiIr2O6,20  as well                   spin liquids are characterized by diﬀuse continuum fea-
+as the analogous ruthenium systemα-RuCl3.21–29 While                        tures in spectroscopic probes because any local magnetic
+the  precise  microscopic  Hamiltonians  of  these  materi-                 excitation  (magnon)  created  by  such  a  probe  immedi-
+als are still subject to intense debate,30–41  the simplest                 ately decomposes into several nonlocal quasiparticle exci-
+nearest-neighbor model one may consider is the Kitaev-                      tations (spinons). Indeed, for the Kitaev spin liquid, such
+Heisenberg-Gamma model,42–44 where isotropic (Heisen-                       continuum features have been proposed to be observable
+berg) interactions and symmetric oﬀ-diagonal anisotropic                    in inelastic neutron scattering,54–57 Raman scattering,58
+(Gamma) interactions are superimposed on the diagonal                       and resonant inelastic x-ray scattering.59,60 However, it is
+anisotropic (Kitaev) interactions.                                          important to emphasize that the presence of such contin-
+                                                                                                                                                2
+
+uum features does not necessarily indicate an underlying
+quantum spin liquid, as it can also originate from disor-
+der and/or thermal ﬂuctuations in classical phases with
+no long-range entanglement.61–63
+
+  The main diﬀerence between the two scenarios is that
+the continuum features of quantum spin liquids are pro-
+duced by coherent (albeit nonlocal) quasiparticles while
+those  appearing  in  classical  phases  have  completely  in-
+coherent (diﬀusive) origins.  To conﬁrm the presence of
+an  underlying  quantum  spin  liquid,  one  must  therefore
+demonstrate  the  coherent  nature  of  its  nonlocal  quasi-              FIG. 1.  Kitaev honeycomb model with bond-dependent Ising
+particle excitations.  For example, these nonlocal excita-                 interactions on the honeycomb lattice.  The three bond types
+tions, which typically correspond to continuum features                    (x,y,z) are marked by three diﬀerent colors.  The bond vari-
+in dynamical responses, may also form local bound states,                  ablesu⟨ij⟩ are Z2 gauge ﬁelds whose ﬂuxes around hexagonal
+thereby producing sharp modes and providing evidence                       plaquettes p coincide with the plaquette operators Wp.
+for coherent behavior.  Surprisingly, the distinctive signa-
+ture of the quantum spin liquid in this scenario is then a
+sharp mode, in conjunction with the continuum features                                 II.    GENERAL FORMULATION
+and the lack of magnetic order.
+                                                                                    A.    Kitaev-Heisenberg-Gamma model
+  In this paper, we use a variational approach based on
+the exactly solvable Kitaev honeycomb model to demon-                         The Kitaev-Heisenberg-Gamma model42–44 is obtained
+strate that such local bound states of nonlocal excitations                by including Heisenberg and Gamma interactions on top
+are prominent in both Kitaev spin liquid phases of the                     of the exactly solvable Kitaev honeycomb model5.  The
+Kitaev-Heisenberg-Gamma model.  Speciﬁcally, we focus                      corresponding Hamiltonian,
+on  the  nonlocal  ﬂux  pair  and  Majorana  fermion  exci-
+tations  of  the  pure  Kitaev  model  and  investigate  their                                  H =HK +HH +HΓ,                       (1)
+dynamics and interactions resulting from the Heisenberg
+and Gamma perturbations.  We ﬁnd that the ﬂux pairs,                       includes three contributions,
+which  are  static  in  the  pure  Kitaev  model,  acquire  an                                                     ∑
+emergent dynamics and may bind Majorana fermions to                                        HK =K  ∑                      σγjσγk,
+form local magnon-like excitations.  In turn, such a local                                             γ={x,y,z}⟨jk⟩‖γ
+excitation manifests in the dynamical spin structure fac-                                  HH =J∑          σj·σk,
+tor as a sharp mode descending from a diﬀuse continuum
+feature.  Moreover, when such a bosonic magnon-like ex-                                               ⟨jk⟩     ∑
+citation becomes gapless, its condensation directly gives                                   HΓ = Γ ∑                 σαjσβk,                     (2)
+rise to magnetic order.  We argue that this condensation                                              α⁄=β⁄=γ ⟨jk⟩‖γ
+is the driving force behind the weakly ﬁrst-order transi-
+tions out of the Kitaev spin liquid phases and, by consid-                 where J  is  the  isotropic  Heisenberg  interaction,  Γ  is  a
+ering the precise condensation patterns,  we account for                   symmetric oﬀ-diagonal exchange anisotropy, andK is the
+the resulting magnetically ordered phases found in pre-                    Kitaev  interaction,  corresponding  to  diagonal  exchange
+vious works.  Finally, by studying the dynamics of both                    anisotropy.  As it is illustrated in Fig. 1, the Kitaev terms
+nonlocal and local excitations, we explain the asymmet-                    are bond-dependent Ising interactions between spin com-
+ric stability of the Kitaev spin liquid phases around the                  ponents that depend on the bond orientation.
+FM and AFM Kitaev limits.
+
+  The structure of this paper is as follows.  In Sec. II, we                            B.    Exactly solvable Kitaev limit
+introduce the model Hamiltonian and the variational ap-
+proach for computing its low-energy excitation spectrum.
+In Sec. III, we study the dynamics of ﬂux-pair excitations                    The pure Kitaev model (J = Γ = 0) is exactly solvable
+while, in Sec. IV, we consider magnon-like bound states                    by means of a simple mapping in which each spin opera-
+formed by a ﬂux pair and a Majorana fermion.  In Sec. V,                   tor is expressed as a product of two Majorana fermions:
+we determine the magnetic orders obtained by condens-                      σγj   = ibγjcj .5  The  “matter”  Majorana  fermion cj  does
+ing  these  magnon-like  excitations  while,  in  Sec.  VI,  we            not carry any ﬂavor and is associated with the site j.  In
+calculate their direct contributions to the dynamical spin                 contrast,  the  “bond”  Majorana  fermions bγj  have  three
+structure factor.  Finally, we conclude the paper with a                   ﬂavors,γ =x,y,z, associated with the three orientations
+brief summary and outlook in Sec. VII.                                     of the bonds connected to the site j.  In terms of these
+                                                                                                                                                3
+
+Majorana fermions, the Kitaev Hamiltonian becomes                          and|u2⟩⊗|nu2⟩ related by gauge transformations.  While
+                                   ∑                                       these states belong to distinct bond-fermion sectors, u1
+              HK =−iK∑                   u⟨jk⟩‖γcjck,              (3)     and u2, they correspond to the same ﬂux sector Φ.
+                              γ   ⟨jk⟩‖γ                                      Due to the extensive projection described by Eq. (6),
+where u⟨jk⟩‖γ≡ibγ                                                          it is not surprising that the ground state of the Kitaev
+                      jbγk  are conserved bond variables that              model, characterized by ﬂux operatorsWp = +1 for allp
+can be identiﬁed as static Z2 gauge ﬁelds coupled to the                   and fermion numbers nuα = 0 for all α, is a strongly en-
+matter fermions.  In each bond-fermion sector character-                   tangled quantum spin liquid5.  While the ﬂux excitations,
+ized  by  the Z2  gauge  ﬁelds, u⟨jk⟩  =±1,  the  quadratic                characterized by Wp  =−1 for some p,  are gapped,  the
+matter-fermion Hamiltonian can then be diagonalized:                       fermion excitations, characterized by nuα = 1 for someα,
+                     HuK =∑       εuα(fuα)†fuα.                       (4)  have a single gapless Dirac point.
+
+                               α
+The superscript u of the fermion operators, fuα, and the                                     C.    Variational approach
+corresponding eigenenergies, εuα≥ 0, indicates their de-
+pendence on the Z2 gauge-ﬁeld conﬁguration.  Note that,                       Beyond the exactly solvable Kitaev limit, one can treat
+in the following, we use the terms “fermions” and “mat-                    small enough Heisenberg and Gamma interactions as per-
+ter fermions” interchangeably, unless we make an explicit                  turbations. In general, perturbation theory would require
+distinction between them.                                                  the evaluation of all matrix elements ofHH  andHΓ be-
+  Since the Majorana fermion representation of the spin                    tween the exact Kitaev eigenstates.  To simplify the prob-
+operators enlarges the local Hilbert space, it gives rise to               lem, we instead take a variational approach and only cal-
+a local Z2  gauge transformation, Dj  = bxjbyjbzjcj, which                 culate these matrix elements within an appropriate vari-
+commutes  with  any  physical  observable  and  anticom-                   ational subspace.  Importantly, this variational subspace
+mutes with the bond variablesu⟨jk⟩ that include the site                   is naturally constrained by the various selection rules on
+j.  The physical states are then characterized by gauge-                   the ﬂux and fermion quantum numbers which make most
+invariant products or “ﬂuxes” of the Z2 gauge ﬁelds, cor-                  of the above matrix elements vanish.
+responding to their circulation (i.e., Wilson loop) around                    Let us ﬁrst concentrate on the ﬂuxes.  For a Heisenberg
+each hexagonal plaquette (p):                                              term along anx bond,⟨jk⟩‖x, the componentσxjσxk sim-
+                   Wp = ∏           u⟨jk⟩ =±1.                    (5)      ply  renormalizes  the  corresponding  Kitaev  term,  while
+                                                                           the  components σyjσyk  and σzjσzk  each  invert  the  eigen-
+                           ⟨jk⟩∈∂p                                         values,  Φp  =±1,  of  all  four  ﬂuxes  at  the  plaquettes p
+An eigenvalue−1 (+1) of the ﬂux operatorWp indicates                       surrounding  the  bond⟨jk⟩.   In  contrast,  for  a  Gamma
+the presence (absence) of a Z2  gauge ﬂux Φ or, equiva-                    term along the same x bond,⟨jk⟩‖ x, the components
+lently, a vison at the plaquette p.                                        σyjσzk  and σzjσyk  each  invert  the  eigenvalues  of  only  two
+                                                                           ﬂuxes at the plaquettesp that are separated by the bond
+  To  obtain  a  general  eigenstate  of  the  Kitaev  model,              ⟨jk⟩.  The symmetry-inequivalent ﬂux sectors connected
+we start from a product state|u⟩⊗|nu⟩ in the enlarged                      by these Heisenberg and Gamma terms are depicted in
+Hilbert  space  of  the  Majorana  fermions,  where  the Z2                Figs. 2 and 3, respectively.
+gauge  ﬁeld  conﬁguration, |u⟩,  is  a  simultaneous  eigen-                  From the ﬂux selection rules of Figs. 2 and 3, it is clear
+state of all bond variables,u⟨jk⟩ =±1, while the matter-                   that both Heisenberg and Gamma interactions naturally
+fermion  state |nu⟩  is  a  simultaneous  eigenstate  of  all              result in ﬂux-pair hopping [see Figs. 2(b) and 3(b)].  Re-
+fermion numbers, nuα = (fuα)†fuα  ={0, 1}, corresponding                   markably, a ﬂux-pair excitation, consisting of two ﬂux ex-
+to a Slater determinant in terms of the matter fermions                    citations at neighboring plaquettes, can propagate coher-
+cj. The physical eigenstate is then obtained by projecting                 ently and, thus, can be treated as a well-deﬁned quasipar-
+this product state into the physical Hilbert space through                 ticle even in the presence of the gapless fermions.  Indeed,
+an appropriate projector,                                                  a ﬂux-pair excitation does not lead to an orthogonality
+                                 ∏                                         catastrophe because it corresponds to a local perturba-
+                      P  =   12N    (1 +Dj),                       (6)     tion (the ﬂip of a single hopping amplitude u⟨jk⟩ =±1)
+                                  j                                        from the perspective of the fermions which are, in turn,
+which enforces Dj = +1 for all sites j = 1,...,N  of the                   gapless at a Dirac point only64.  In other words, the ma-
+lattice.  Consequently, the physical eigenstate                            trix  elements  ofHH  andHΓ  connecting  diﬀerent  ﬂux
+                                                                           sectors in Figs. 2(b) and 3(b) areO(1) between the re-
+                 |Φ;f⟩ = 2N/2P{|u⟩⊗|nu⟩},                 (7)              spective  fermion  vacua  and  exponentially  small  in  the
+                                                                           number of fermions created or annihilated.
+labeled  schematically  by  its  ﬂux  (Φ)  and  fermion  (f)                  Focusing on ﬂux-pair excitations, the variational sub-
+conﬁgurations, is manifestly gauge invariant.  Note that                   space is then restricted to ﬂux sectors containing a single
+the same physical eigenstate,|Φ;f⟩, can be obtained by                     ﬂux pair at various positions [see Figs. 2(b) and 3(b)].  As
+projecting distinct Majorana-fermion states|u1⟩⊗|nu1⟩                      shown in Refs. 55 and 56, the fermion vacuum of such a
+                                                                                                                                                  4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       FIG. 2.  Distinct matrix elements of the Heisenberg interactions in terms of the J = Γ = 0 ﬂux sectors connected.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         FIG. 3.  Distinct matrix elements of the Gamma interactions in terms of the J = Γ = 0 ﬂux sectors connected.
+
+
+ﬂux sector has odd fermion parity.65 Therefore, the ﬂux-                    interestingly,  the remaining processes describe the hop-
+pair  excitation  has  fermionic  statistics  and  is  topologi-            ping  of  single-ﬂux  excitations  [see  Fig.  3(d)]  and  their
+cally equivalent to a bond fermion.  The hopping problem                    hybridization with three-ﬂux excitations [see Figs. 2(d),
+of such a bare ﬂux pair is obtained by calculating the ma-                  2(e),  3(e),  and 3(f)].  While such single-ﬂux excitations
+trix elements ofHH  andHΓ between the fermion vacua                         seem  natural  to  consider  in  conjunction  with  ﬂux-pair
+of the appropriate ﬂux sectors.  Another excitation of in-                  excitations, we do not expect a single-ﬂux excitation to
+terest is the bound state of a ﬂux pair (i.e., bond fermion)                be a coherent quasiparticle as it corresponds to a vortex
+and a matter fermion which has bosonic statistics and is                    (rather than a local perturbation) from the perspective
+topologically equivalent to a spin ﬂip or, in other words,                  of  the  gapless  fermions.   Therefore,  we  concentrate  on
+a magnon (i.e., topologically trivial). This composite ﬂux                  ﬂux-pair hopping [see Figs. 2(b) and 3(b)] in the follow-
+pair is important for us because it directly manifests in                   ing and only consider the hybridization between “open”
+the dynamical spin structure factor and its condensation                    and “closed” ﬂux pairs [see Fig. 2(c)] in Sec. III D.
+immediately leads to magnetic order.  To demonstrate its                       To verify that a ﬂux pair is a well-deﬁned quasiparticle
+formation and solve the hopping problem,  we calculate                      while a single ﬂux is not, we investigate how the presence
+the matrix elements ofHH andHΓ between one-fermion                          of each distorts the matter-fermion vacuum. We ﬁrst con-
+states of the appropriate ﬂux sectors.                                      sider the eﬀect of a ﬂux pair. In the pure Kitaev limit, the
+  As shown in Figs. 2 and 3, the Heisenberg and Gamma                       distortion of the matter-fermion vacuum can be studied
+interactions also give rise to many other processes beyond                  by  computing  the  spatial  variation  of  the  bond  energy,
+ﬂux-pair hopping.  First, the energy of the ground state is                 εij =⟨G|Kσγiσγj|G⟩, where|G⟩ is the ground state of the
+renormalized because of matrix elements connecting the                      corresponding ﬂux sector.  For the ﬂux-free sector,  this
+ground-state  ﬂux  sector  (i.e.,  the  ﬂux-free  sector)  with             bond energy is the same for all bonds by symmetry and
+excited ﬂux sectors [see Figs. 2(a) and 3(a)].  Next, the                   is numerically found to beε0≃−0.5249|K|.  The gapless
+“closed” ﬂux-pair excitations of Figs. 2(b) and 3(b) can                    nature of the matter fermions then implies that the dis-
+hybridize with “open” ﬂux-pair excitations [see Fig. 2(c)]                  tortion of the bond energy, δεij≡εij−ε0, induced by a
+and four-ﬂux excitations [see Fig. 3(c)].  Finally and most                 ﬂux pair, falls oﬀ as a power lawr−ν for long distancesr
+                                                                                                                                                  5
+
+                                                                            are not expected to give a substantial contribution to dy-
+                                                                            namical correlation functions of local observables, such as
+                                                                            the dynamical spin structure factor, because local oper-
+                                                                            ators necessarily create ﬂuxes in pairs.
+
+
+
+                                                                                       D.    Computation of matrix elements
+
+                                                                               In this subsection, we explain how to compute the ma-
+                                                                            trix element of an arbitrary HamiltonianH′ between two
+                                                                            eigenstates of the pure Kitaev model speciﬁed in the form
+                                                                            of Eq. (7).  For the purposes of this work, we consider two
+FIG. 4.  Radial dependence of the bond-energy distortionδεij                diﬀerent classes of eigenstates.  First, there are “conven-
+induced by:  (a) a ﬂux pair and (b) a single ﬂux.  In each case,            tional eigenstates” containing a single topologically triv-
+the asymptotic behavior obeys a power law δεij∼r−ν.  The                    ial excitation, for example, a bosonic bound state of a ﬂux
+exponent ν  is obtained by ﬁtting the bond-energy distortion                pair and a matter fermion.  Second, there are “fraction-
+computed on a honeycomb lattice of 80× 80 unit cells.  The                  alized eigenstates” containing a topologically nontrivial
+ﬁtting range 17<r< 25 is chosen to capture the asymptotic                   (i.e., fractionalized) excitation, for example, a fermionic
+behavior while minimizing the boundary eﬀects.                              bare ﬂux pair. Importantly, for a closed system, an eigen-
+                                                                            state containing a single fractionalized excitation is un-
+between the bond⟨ij⟩ and the ﬂux pair.  The situation is                    physical and annihilated by the projector in Eq. (6). This
+similar to Friedel oscillations induced by an impurity in                   problem  can  be  circumvented  by  considering  an  eigen-
+half-ﬁlled graphene, where the decay exponent is known                      state with two fractionalized excitations:  the original ex-
+to beν = 3 in both sublattices.66 This power-law behav-                     citation of interest and another excitation as far away as
+ior is conﬁrmed by our numerical results [see Fig. 4(a)],                   possible.  In this work, however, instead of including an-
+for the distortion around a ﬂux pair in a speciﬁc direction                 other excitation, we modify the projector in Eq. (6) such
+with no oscillatory behavior.  The value of the exponent,                   that it enforces Dj  =−1 at a far-away reference site j
+ν  =  2.96,  is  very  close  to  the  expected  value, ν  =  3,            and Dj′ = +1 at all other sites j′:
+
+for the true asymptotic behavior, and its small deviation                                    ¯Pj =   1
+can be attributed to ﬁnite-size eﬀects.  In turn, since the                                         2N (1−Dj)∏j′ (1 +Dj′).                (8)
+2D integral∫ d2rr−ν is convergent forν > 2, a distortion
+decaying as 1/r3 can be regarded as localized.  Therefore,                  In contrast to the original projectorP , this modiﬁed pro-
+the two matter-fermion vacua connected by the matrix                        jector  ¯Pj annihilates states with even fermion parity but
+element in Fig. 2(b) must have anO(1) overlap,  which                       not those with odd fermion parity.  Therefore, replacing
+is numerically found to be≃ 0.78.  From this result, we                     P  with  ¯Pj is physically equivalent to including a fermion
+also expect that matrix elements involving multimatter-                     excitation around site j.
+fermion states can be safely neglected.                                        Exploiting [H′,P ] = 0 andP 2 =P , the general matrix
+  Next, we investigate the eﬀect of a single ﬂux. We start                  element between two conventional eigenstates reads:
+by noting that, for a closed system with periodic bound-
+ary  conditions,  ﬂuxes  must  always  be  inserted  in  pairs                ⟨Φ2;f2|H′|Φ1;f1⟩ = 2N⟨nu2|⊗⟨u2|PH′|u1⟩⊗|nu1⟩.  (9)
+because of the global constraint∏pWp = 1.  Therefore,
+we introduce two ﬂuxes separated by the largest possible                    Similarly, due to [H′, ¯Pj] = 0 and  ¯P 2j  =  ¯Pj, the general
+distance on a ﬁnite lattice, and we only concentrate on                     matrix  element  between  two  fractionalized  eigenstates
+one of these ﬂuxes.  Similarly to the case of a ﬂux pair,                   takes an analogous form:
+the spatial variation of the bond energy, δεij, as deﬁned                      ⟨Φ2;f2|H′|Φ1;f1⟩ = 2N⟨nu2|⊗⟨u2| ¯PjH′|u1⟩⊗|nu1⟩.
+above, falls oﬀ as a power law for long enough distances                                                                                       (10)
+r between the bond⟨ij⟩ and the single ﬂux.  However, in                     In each case, the two states connected byH′  may have
+this case, we ﬁnd an exponent ν≃ 1.98 [see Fig. 4(b)],                      diﬀerent gauge choicesu1 andu2 as the appropriate pro-
+which is close to the critical valueν = 2 separating the lo-                jector  (P  or  ¯Pj)  automatically  takes  care  of  the  gauge
+calized and the delocalized scenarios.  In other words, the                 transformation between these two gauge choices.
+distortion of the matter-fermion vacuum due to a single                        Since the bond fermions are static, the bond-fermion
+ﬂux is found to be marginally delocalized.                                  matrix elements in Eqs. (9) and (10) can be calculated
+  In view of these considerations, we exclude single-ﬂux                    straightforwardly.  Thus, Eqs. (9) and (10) are reduced to
+excitations from our variational analysis. By doing so, we                  the general form⟨0u2| ˆψ1 ˆψ2... ˆψ2N|0u1⟩ in matter-fermion
+implicitly assume that single-ﬂux excitations do not play                   space, where|0u1,2⟩ is the matter-fermion vacuum of the
+a relevant role in the instabilities induced by the Heisen-
+berg and Gamma terms.  Note also that these excitations                     gauge sector|u1,2⟩, and each  ˆψi =∑k(aikf(u1)k     +¯aikf(u1)†k      )
+                                                                                                                                                  6
+
+is expressed as a linear combination of the normal matter                   fermion matrix element becomes
+fermion modesf(u1)k     andf(u1)†k      .  The matter-fermion ma-            ⟨0u2| ˆψ1 ˆψ2... ˆψ2N|0u1⟩                                                 (13)
+trix element is then computed by introducing a modiﬁed                                            (                          )n
+form of Wick’s theorem, which is necessary because the                                    ∞∑   1     1 ∑
+two states|0u1⟩ and|0u2⟩ correspond to diﬀerent fermion                      =|C|⟨0u1|         n!    2      f(u1)k  Mklf(u1)l     ˆψ1... ˆψ2N|0u1⟩,
+vacua.  In general, these fermion vacua are related by                                   n=0            kl
+
+                              ∑                                             and can be evaluated through Wick’s theorem.  Ifq pairs
+           |0u2⟩ =|C|e− 12       klf (u1)†k   M∗klf (u1)†l  |0u1⟩,        (11)of  ˆψ operators are contracted, the remaining 2N− 2q  ˆψ
+where  the  anti-symmetric  matrix M  = X−1Y  and  the                      operators must be paired with f  operators.  In this case,
+normalization constant C  = det[X]1/2  are both derived                     only the term of order n =N−q gives a ﬁnite contribu-
+from the unitary transformation                                             tion because⟨0u1|f(u1)k  f(u1)l |0u1⟩ = 0.  If we consider the
+         (          )     (X∗nm Y∗nm        )(            )                 partitions of 2N− 2q  ˆψ  operators into N−q  pairs, for
+             f(u2)n    =                          f(u1)m     .     (12)     each  partition  there  are n!  =  (N−q)!  equivalent  ways∑
+            f(u2)†n           Ynm Xnm             f(u1)†m                   of contracting each pair with  12           klf(u1)k  Mklf(u1)l     .  This
+                                                                            factor cancels the prefactor 1/n! = 1/(N−q)!.  Summing
+By  expanding  the  exponential  in  Eq.  (11),  the  matter-               over all possible cases, 0≤q≤N, we then obtain
+
+
+
+
+                                                      N∏ [                          (                          )                       ]
+                                                                                       1 ∑                        ˆψPq(1) ˆψPq(2)|0u1⟩
+          ⟨0u2| ˆψ1 ˆψ2... ˆψ2N|0u1⟩ =|C|∑       ηP        ⟨0u1| ˆψPq(1) ˆψPq(2) +     2     f(u1)k  Mklf(u1)l
+                                             P       q=1                                  kl
+                                                      N∏
+                                     =|C|∑       ηP      ⟨0u2| ˆψPq(1) ˆψPq(2)|0u1⟩,                                                                       (14)
+                                             P       q=1
+
+
+
+where P  sums over all the possible partitions of the 2N                    where|u0⟩  is  the  trivial  gauge  sector  with u⟨lm⟩  =  +1
+ˆψ operators into N  pairs and (Pq(1),Pq(2)) is the index                   for  all  bonds⟨lm⟩,  while|0(j,γ)⟩  is  the  matter-fermion
+of theq-th pair.  The coeﬃcientηP  = sgn(P ) =±1 arises                     vacuum of the gauge sector bγj|u0⟩.  The labels γ  and j
+from the fermionic statistics of the  ˆψ  operators.  By in-                specify the orientation (also denoted as “ﬂavor”) and the
+troducing a skew-symmetric matrix A of dimension 2N,                        position of the ﬂux pair, respectively.
+whose matrix elements are given by the generalized con-(aikδkl− ¯aikMkl) ¯aj   The  Hamiltonian  restricted  to  the  above  variational
+traction Aij≡⟨0u2| ˆψi ˆψj|0u1⟩≡∑kl                                   l     subspace describes a tight-binding problem on the dual
+for i<j, the above result takes the concise form                            Kagome lattice formed by the center of bonds of the hon-
+              ⟨0u2| ˆψ1 ˆψ2... ˆψ2N|0u1⟩ =|C| Pf [A],           (15)        eycomb  lattice  (see  Fig.  5  (a)).   The  dual  Kagome  lat-
+                                                                            tice has a primitive unit cell of three lattice sites corre-
+where Pf [A] is the Pfaﬃan of the matrix A.                                 sponding to the bonds with diﬀerent orientations, which
+                                                                            is shown by the three colors (red, blue, green) in Fig. 5
+                                                                            (a).   The  primitive  vectors a1,2  coincide  with  the  ones
+     III.    DYNAMICS OF BARE FLUX PAIRS                                    of the original honeycomb lattice.  The Heisenberg inter-
+                                                                            action (J) generates eﬀective hopping amplitudes within
+                  A.    General formulation                                 one of the three sublattices of the Kagome lattice that are
+                                                                            shown by one particular color in Fig. 5 (a), which is diag-
+  In this section, we focus on bare ﬂux pairs, which are                    onal in the ﬂavor index of the ﬂux pair.  In contrast, the
+coherently propagating fermionic quasiparticles and are                     Gamma interaction (Γ) propagates the ﬂux pair within
+topologically equivalent to bond fermions.  The relevant                    one of the three Kagome  sublattices that are shown by
+variational subspace contains all eigenstates of the pure                   one particular color in Fig. 5 (b), which is oﬀ-diagonal in
+Kitaev model that have two ﬂux excitations at neighbor-                     the ﬂavor index of the ﬂux pair.  Each sublattice forms an
+ing plaquettes and no matter-fermion excitations.  Each                     enlarged Kagome lattice spanned by the primitive vectors
+state from the variational subspace then corresponds to                     a′1,2.  For either J  = 0 or Γ = 0, the respective “sublat-
+a  bond  on  the  honeycomb  lattice,  and  the  state  corre-              tice” index is a good quantum number, which leads to a
+sponding to bond⟨jk⟩‖ γ  (with j∈ A) can be written                         triple degeneracy of the ﬂux pair spectrum.
+as                                                                             To compute each hopping amplitude, we consider a ﬂux
+                                                                            pair|i0,z⟩ on the bond⟨i0j0⟩‖z (see Fig. 5 (c) or (d)).
+              |j,γ⟩ = 2N/2P{bγj|u0⟩⊗|0(j,γ)⟩},            (16)              The hopping amplitude of a ﬂux pair on bonds x or y is
+                                                                                                                                                     7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 5.  Sublattices of the dual Kagome lattice on which the
+ﬂux pair propagates through (a) Heisenberg and (b) Gamma
+interactions.   The  primitive  lattice  vectors  of  the  triangular        FIG. 6. Finite-size scaling of the ﬂux-pair hopping amplitudes
+Bravais  lattice  of  the  dual  Kagome  lattice  are  indicated  in         under Heisenberg and Gamma interactions on top of the FM
+each ﬁgure. (c) The blue arrows indicate the non-zero hopping                and AFM Kitaev models.  Insets:  Extrapolated hopping am-
+amplitudes of a ﬂux pair via Heisenberg interaction.  (d) The                plitudes  as  a  function  of  1/Lmax,  where Lmax  refers  to  the
+green arrows indicate the non-zero hopping amplitudes of a                   maximal system size used in the ﬁnite-size ﬁtting.
+ﬂux pair via Gamma interaction.
+
+
+related to this case by the three-fold rotation symmetry                     tudes to the thermodynamic limit:TH≃ 0.0938J for the
+of the model.  The Heisenberg interaction moves this ﬂux                     FM Kitaev model andTH≃ 1.4702J for the AFM Kitaev
+pair to the neighboring sites of the dual (Kagome) lattice                   model.  It is interesting to note that the two amplitudes
+with the same bond orientation.  The hopping amplitude                       (for  the  same  value  of J)  are  diﬀerent  by  one  order  of
+that takes the ﬂux pair|i0,z⟩ to|i1,z⟩ (see Fig. 5 (c) for                   magnitude between the FM and AFM Kitaev models.
+lattice site labels) is                                                         Through the Gamma interaction,  the ﬂux pair|i0,z⟩
+                                [                                            propagates  to  its  four  second  nearest  neighbors  of  the
+           Tzzi1,i0 =Ju0⟨i0j0⟩z   ⟨0(i1,z)|ici1cj0|0(i0,z)⟩                  dual (Kagome) lattice as shown in Fig. 5 (d).  The one
+                                                ]                            that takes the ﬂux pair|i0,z⟩ to|i1,y⟩ reads
+                  +u0⟨i1j0⟩x⟨0(i1,z)|0(i0,z)⟩     ,                    (17)                                   [
+where iµ∈ A and jµ∈ B, µ = 0, 1.  This formula also                                      Tyzi1,i0 = Γu0⟨i0j0⟩z  ⟨0(i1,y)|ici1cj0|0(i0,z)⟩
+applies to the other hopping processes related by mirror                                                                      ]
+symmetry  about  the z-bond  shown  by  Fig.  5  (c).   The                                     −u0⟨i1j0⟩x⟨0(i1,y)|0(i0,z)⟩     .                    (19)
+remaining two hopping amplitudes are obtained by com-                        The  other  hopping  amplitude  that  takes  the  ﬂux  pair
+plex conjugation of Eq. (17).  There are in total six inde-                  |i0,z⟩ to|k,y⟩ reads
+pendent hopping parameters including all the three ﬂa-                                                        [
+vors of ﬂux pairs.  For the isotropic Kitaev model, the six
+hopping parameters are equal and real:                                                    Tyzk,i0 = Γu0⟨kj1⟩γ   ⟨0(k,y)|ici0cj1|0(i0,z)⟩
+Txx−a1 =Txx−a2 =Tyy                                                                                                           ]
+                      a1−a2 =Tyya1  =Tzza2  =Tzza2−a1≡TH∈ R,
+                                                                    (18)                         −u0⟨i0j1⟩x⟨0(k,y)|0(i0,z)⟩     .                    (20)
+
+where the subscript denotes the relative vector between                      The above two formulas also apply to the remaining two
+the  ﬁnal  and  the  initial  ﬂux  pair.   The  hopping  ampli-              hopping processes related by mirror symmetry about the
+tudeTH  has  been  computed  for  FM  and  AFM  Kitaev                       z-bond.  There are also six independent hopping param-
+models as shown in Figs. 6 (a) and (b), which has an ap-                     eters.   For  the  isotropic  Kitaev  model,  the  six  hopping
+parent system size dependence due to the gapless nature                      parameters are equal and real:
+of the matter fermion spectrum.  By ﬁtting the numeri-                       Tyza2  =Tyz
+cal results with a second degree polynomial in 1/L,  we                                 −a1 =Txz−a1+a2 =Txza1  =Txya2  =Txya1−a2≡TΓ∈ R.
+obtain the following extrapolation of the hopping ampli-                                                                                         (21)
+                                                                                                                                              8
+
+The ﬁnite size scaling ofTΓ is shown in Figs. 6 (c) and (d).              previous subsection, we obtainTyTz≃ 0.5382J2sign(K),
+The extrapolation to the thermodynamic limit givesTΓ≃                     which  is  very  close  to  the  value  obtained  in  Eq.  (22).
+−1.4391Γ for the FM Kitaev model andTΓ≃−0.1733Γ                           Besides providing a sanity check for the approximation
+for the AFM Kitaev model.  As in the previous case, the                   scheme adopted in this work, this simple analysis explains
+two amplitudes diﬀer by one order of magnitude.                           thatTy  andTz  have  opposite  sign  for  the  FM  Kitaev
+                                                                          model and the same sign for the AFM Kitaev model.
+
+   B.    Asymmetry between FM and AFM Kitaev                                 Now we consider the Gamma interaction acting on the
+                              models                                      x- bond, that also includes two terms: Jσyiσzj  andJσziσyj .
+                                                                          Both terms contribute to the matrix elements shown in
+                                                                          Fig.  3  (b),  which  are  denoted  asTyz  andTzy,  respec-
+  We  have  observed  that  there  is  an  apparent  diﬀer-               tively.  Under the same unitary transformation that re-
+ence  in  magnitude  between  the  hopping  amplitudes  of                lates  the  FM  and  AFM  Kitaev  model,  the  above  two
+the ﬂux pairs for the FM and AFM Kitaev models.  As                       Gamma terms transform according to: σyiσzj →−σyiσzj
+we  demonstrate  below,  this  asymmetry  arises  from  the               andσziσyj→σziσyj .  Therefore,Tyz andTzy have opposite
+fact that each ﬂux-pair hopping process has two contribu-                 relative sign for the FM and AFM Kitaev models.  Once
+tions which interfere constructively for one sign of Kitaev               again, this relative sign is determined by the sign of the
+interaction and destructively for the other.                              Kitaev interaction:
+  Without loss of generality, we consider the matrix el-
+ement shown in Fig. 2 (b) due to the Heisenberg inter-                               TyzTzy≃ Γ2
+action on the x-bond.  This matrix element has contri-                                            KεΦ1ij  =−0.5851Γ2sign(K).        (23)
+butions from the two spin-exchange interactions, Jσyiσyj                  Thus,Tyz  andTzy  have the same  sign for a FM Kitaev
+and Jσziσzj ,  denoted  asTy  andTz,  respectively.   Note                model and opposite sign for an AFM Kitaev model.  Ac-
+that  the  FM  and  AFM  Kitaev  interactions  are  related               cording to the calculation,TyzTzy≃−0.5102Γ2sign(K)
+to each other by a four-site unitary transformation.  The                 which  is  in  a  good  agreement  with  the  approximated
+two  Heisenberg  interactions  acquire  a  relative  “-”  sign            value given in Eq. (23).
+under this transformation, namely, σyiσyj →−σyiσyj  and
+σziσzj→σziσzj .  It then follows that, ifTFM =Ty +Tz for
+the FM Kitaev model, we haveTAFM =Ty−Tz for the
+AFM Kitaev model.  Given the similar absolute values of
+Ty andTz, the net hopping amplitudesTFM  andTAFM
+are dramatically diﬀerent [see Figs. 6 (a) and (b)].  The                                      C.    Stability analysis
+relative  sign  betweenTy  andTz  can  be  determined  us-
+ing  a  simple  argument.   We  will  denote  the  initial  and              The projection of the full Hamiltonian in Eq. (1) to the
+ﬁnal ﬂux-pair conﬁgurations by Φ1 and Φ2, and their re-                   subspace spanned by the states (16) leads to the tight-
+spective ground states  by|Φ1;ω1⟩  and|Φ2;ω2⟩.  In the                    binding Hamiltonian:
+spirit of our approximation scheme, we can estimate the
+product of the two matrix elements:                                               Hodd = ∆ ∑          ˜χα†r  ˜χαr
+ TyTz =J2⟨Φ1;ω1|σyiσyj|Φ2;ω2⟩⟨Φ2;ω2|σziσzj|Φ1;ω1⟩                                             α,r∈A                                
+        ≃J2∑⟨Φ1;ω1|σyiσyj|Φ2;f2⟩⟨Φ2;f2|σziσzj|Φ1;ω1⟩                                         ∑       ∑                             ,    (24)
+               f2                                                                        +                 Tβα ˜χβ†r+δβα ˜χαr +h.c.
+                                                                                              αβ,δβα  r∈A
+        =−J2⟨Φ1;ω1|σxiσxj|Φ1;ω1⟩
+                                                                          where  ∆≃  0.26|K +J|  is  the  energy  gap  of  the  ﬂux-
+        =−J2KεΦ1ij  = 0.5851J2sign(K),                       (22)         pair  excitation  of  the  pure  Kitaev  model,  ˜χα†rj, ˜χαrj  are
+                                                                          fermionic  creation  and  annihilation  operators  of  a  ﬂux
+where,   in   the   second   step,   the   ground   state   pro-          pair  state |rj,α⟩ ≡  ˜χα†rj (|u0⟩⊗|0u0⟩)  (u0  refers  to  the
+jector |Φ2;ω2⟩⟨Φ2;ω2|   is   replaced   with   the   identity             trivial gauge sector as in Eq. (16)) which inserts a ﬂux-
+∑
+  f2|Φ2;f2⟩⟨Φ2;f2| = I  in the gauge sector Φ2  (f2  runs                 pair and simultaneously polarizes the matter fermion vac-
+over all the eigenstates of the pure Kitaev model in the                  uum,Tβ=α =TH  andTβ⁄=α =TΓ, the bond vectorsδβα
+gauge sector Φ2).  We note that this approximation is ba-                 are  summed  over  the  sets: δxx  = {−a2,−a1}, δyy  =
+sically the same as the one that we are using in our vari-                {a1,a1−a2}, δzz  ={−a1 +a2,a2}, δyz  ={a2,−a1},
+ational scheme, where we ignore the tunneling of|Φ1;ω1⟩                   δxz  ={−a1 +a2,a1}  and δxy  ={a2,a1−a2}.   This
+into multi-matter-fermion state|Φ2;f2⁄= ω2⟩.  The sim-                    tight-binding  Hamiltonian  can  be  diagonalized  in  mo-
+ple outcome is that the above product is proportional to                  mentum space:
+the bond energy εΦ1ij   on the bond where the Heisenberg
+interaction applies in the ground state|Φ1;ω1⟩ of the pure                              Hodd =∑        ˜X†q (∆I3×3 +Mq)  ˜Xq,            (25)
+Kitaev model.  By following the scheme described in the                                            q
+                                                                                                                                                     9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 7.  (a)-(b) Dispersion of a bare ﬂux pair (corresponding to the odd-fermion-parity sector) for the FM (a) and AFM (b)
+Kitaev models with four representative perturbations indicated by black dots in panels (c) and (d).  (c)-(d) Stability ranges of
+the FM (c) and AFM (d) Kitaev spin liquids based on a partial variational subspace restricted to bare ﬂux pairs.  The dashed
+lines mark the boundary of each Kitaev spin liquid where bare ﬂux pairs become soft.
+
+
+                                                                             whereI3×3 is the 3×3 unit matrix,  ˜Xq≡ ( ˜Xxq,  ˜Xyq,  ˜Xzq)T
+                                                                             with
+                                                                                                          √   2  ∑
+                                                                                                   ˜χαr  =    N        ˜Xαqeiq·r,                    (26)
+
+                                                                                                                   q
+
+                                                                             and
+
+
+                           2TH[cos(q1) + cos(q2)]  TΓ[e−iq2 +e−i(q1−q2)]   TΓ[ei(q1−q2) +e−iq1]                                  
+                Mq =         TΓ[eiq2 +ei(q1−q2)]     2TH[cos(q1) + cos(q1−q2)]   TΓ[e−iq2 +eiq1]                                 .              (27)
+                             TΓ[e−i(q1−q2) +eiq1]    TΓ[eiq2 +e−iq1]           2TH[cos(q1−q2) + cos(q2)]
+
+
+
+The resulting tight-binding spectrum of the ﬂux-pair is                      As  expected,  for  equal  strengths  of  either J  or  Γ,  the
+shown in Figs. 7 (a) and (b) for diﬀerent sets of model                      bandwidth  is  very  diﬀerent  between  the  FM  and  AFM
+parameters  (K  =±1,J, Γ  =  0),  (K  =±1,J  =  0, Γ).                       Kitaev  models.   Interestingly,  in  the J  =  0  limit,  the
+                                                                                                                                               10
+
+ﬂux pair propagates through the Gamma interaction on
+one of the three Kagome sublattices shown in Fig. 5 (b).
+It is well-known that the spectrum of this tight-binding
+problem hosts a completely ﬂat band, which corresponds
+to a localized single-particle state that circulates around
+the six lattice sites of a hexagon and carries momentum
+π.   This  ﬂat  band  becomes  the  lowest  energy  band  for
+Γ< 0.
+  The tight-binding spectrum becomes gapless for a crit-
+ical strength of the perturbations, indicating a potential
+instability of the Kitaev liquid state.  As we will see in
+the next section, a (bosonic) bound state between a ﬂux
+pair and a matter fermion can become gapless for a lower
+strength of the perturbations.  While more details of the
+instability analysis are presented in the next section, here
+we aim to provide a qualitative understanding of the sta-
+bility of the FM or AFM Kitaev spin liquid.  Fig. 7 (c)
+and (d) show the boundaries in the J− Γ space where
+the  ﬂux-pair  spectrum  becomes  gapless.   According  to
+this analysis, the AFM Kitaev spin liquid is more fragile
+against the inclusion of a Heisenberg term, while the FM
+Kitaev  spin  liquid  is  more  fragile  against  the  inclusion
+of a Gamma term.  Both results are entirely consistent
+with  numerical  results  pulished  in  previous  works46,47.
+As we will see in Sec. VI, besides the stability analysis,
+the ﬂux pair dispersion induced by the Heisenberg and
+Gamma  terms  determines  the  dispersion  of  the  contin-
+uum of excited states that contribute to the dynamical
+spin structure factor.
+
+                                                                           FIG. 8. (a) Minimal energy of a closed ﬂux pair for the FM Ki-
+        D.    Hybridization with open ﬂux pairs                            taev model in the presence/absence of hybridization with the
+                                                                           open ﬂux pair continuum (green shaded region).  (b) Quasi-
+  Finally, we discuss the quantum tunneling between the                    particle residue of a closed ﬂux pair hybridized with the open
+closed and open ﬂux pairs shown in Fig. 2 (c).  Both per-                  ﬂux pair continuum.
+turbations, J  and Γ, contribute to this tunneling.  Given
+that the two ﬂux sectors have ground states with oppo-                     Heisenberg interaction Jc.  For instance, Jc reduces from
+site  fermion  parities,  the  fermion  vacuum  of  the  closed            0.40|K| to 0.20|K| for an AFM Heisenberg interaction,
+ﬂux sector can tunnel into a continuum of excited states                   and from 2.0|K| to 0.34|K| for a FM Heisenberg interac-
+with odd number of fermions in the open ﬂux sector.  In                    tion.  As shown in Fig. 8 (b), the quasi-particle residue of
+the pure Kitaev limit, the closed ﬂux pair has higher ex-                  the closed ﬂux pair remains above 70% before the mode
+citation  energy  than  the  open  ﬂux  pair,  implying  that              becomes soft.
+the  closed  ﬂux  pair  is  immersed  in  the  matter  fermion
+continuum of the open ﬂux sector.  The energy diﬀerence
+between the two excitations is δ≃ 0.03K.                                           IV.    MAGNON-LIKE BOUND STATES
+  For  weak  tunneling,|λ(ε∼ δ)|≪ δ,  the  lifetime  of
+the closed ﬂux pair is τ∝ 1/[ρ(δ)|λ(δ)|2]∝ 1/[δ|λ(δ)|2],
+where ρ(ε) ∝ ε  is  the  density  of  states  of  the  matter                                 A.    General formulation
+fermions around the Dirac point.  A stronger tunneling
+can eventually push the energy of a closed ﬂux pair be-                       In this section, we aim to describe topologically triv-
+low the continuum.  Fig. 8 (a) shows the matter fermion                    ial bound states of ﬂux pairs and matter fermions.  The
+continuum of the open ﬂux pair and the energy level of                     relevant variational subspace contains all eigenstates of
+the closed ﬂux pair as a function ofJ for the FM Kitaev                    the pure Kitaev model that have two ﬂux excitations at
+model and for two diﬀerent values of the momentum of                       neighboring plaquettes and a single matter-fermion exci-
+the ﬂux pair.  The tunneling between the two sectors pro-                  tation.  In the notation of Eq. (16), a general state from
+duces a large renormalization of the energy of the closed                  this variational subspace can then be written as
+ﬂux pair.  In particular, the spectrum of the ﬂux pair be-
+comes gapless for a smaller absolute value of the critical                          |j,γ,n⟩ = 2N/2P{f(j,γ)†n   χγ†j |u0⟩⊗|0(j,γ)⟩},    (28)
+                                                                                                                                                  11
+
+wherej∈A,f(j,γ)n      (labeled byn) are the matter fermions                                 B.    Formation of bound states
+in  the  gauge  sector bγj|u0⟩  speciﬁed  by  the  superscript
+(j,γ)  and u0  refers  to  the  trivial  gauge  sector.   Gener-                The spectrum ofHeven forms a ﬂat continuum (local-
+ally, the matrix elements of the Heisenberg and Gamma                        ized ﬂux pair plus gapless matter fermions) in the pure
+terms  that  connect  these  eigenstates  give  rise  to  inde-              Kitaev  limit  because  of  the  static  nature  of  the  ﬂuxes.
+pendently  propagating  ﬂux  pairs  and  matter  fermions.                   However, it becomes dispersive upon addition of the non-
+However, due to the interactions generated by such non-                      Kitaev terms because the ﬂux pair can propagate coher-
+Kitaev  terms,  these  excitations  may  also  form  bosonic                 ently  through  the  honeycomb  lattice.   As  we  discussed
+(magnon-like) bound states.                                                  before, the Heisenberg perturbation leads to a spectrum
+  Once  again,  the  low-energy  dynamics  of  ﬂux  pairs  is                that is much more dispersive for the AFM Kitaev model
+governed by an eﬀective low-energy Hamiltonian that re-                      than  for  the  FM  Kitaev  model.   For  the  FM  case,  i.e.,
+sults from projectingH on the subspace spanned by the                        for  the  Kitaev  liquid  state  that  is  more  robust  against
+basis (28):                                                                  the perturbation, a discrete level appears below the con-
+                                                                             tinuum when the strength of the Heisenberg interaction
+     Hj,β,m;i,α,neven          =⟨j,β,m|(HK +HH +HΓ)|i,α,n⟩.(29)              exceeds a critical valueJ =Jc [see Fig. 9 (a)].  ForJ < 0,
+The    Kitaev    term    is    diagonal    on    this    basis,              we obtainJc =−0.25|K| and the minimum of the bound
+⟨j,β,m|HK|i,α,n⟩   = δβαδijδnm(∆  + εn).     In  con-                        state  dispersion  is  located  at  the  Γ  point.   For J >  0,
+trast,     the    Heisenberg    and    Gamma    interactions                 the critical Heisenberg exchange is Jc = 0.16|K| and the
+generate   oﬀ-diagonal   elements   of Heven,   namely   a                   minimum of the bound state dispersion is located at the
+hopping  matrix  (Tβα                                                        M  point.
+                        ij  )mn  =⟨j,β,m|(HH +HΓ)|i,α,n⟩                        We note that extended states have a rather strong ﬁ-
+which  is  a  generalization  of  the  hopping  amplitudes                   nite  size  dependence.   Fig.  9  (a)  shows  the  ﬁnite  size
+Tβαij   =⟨j,β|(HH +HΓ)|i,α⟩ introduced for a ﬂux pair.                       scaling  of  the  spectrum  at  the  Γ  point,  which  is  the
+For  concreteness,  the  hopping  matrix  associated  with                   wave vector that minimizes the bound state dispersion.
+the  ﬂux-pair  hopping  processes  in  Fig.  5  (c,d)  is  given             In  the  continuum  limit,  the  size  dependence  of  the  en-
+by (the lattice site labels are shown in the ﬁgures)                         ergy levels follows from the linear dispersion Ep(Q;L) =
+   (Tzzi1,i0)                                                                Ep(Q) +ApL−1.  By contrast, the energy of the bound
+            mn=Ju0⟨i0j0⟩z [                                                  state has negligible dependence on L because the linear
+                 ⟨0(i1,z)|f(i1,z)m  icA,i1cB,j0(f(i0,z)n      )†|0(i0,z)⟩]   size of the bound state is much smaller than the L val-
+                 +u0⟨i1j0⟩x⟨0(i1,z)|f(i1,z)m     (f(i0,z)n      )†|0(i0,z)⟩,(30)ues used in our calculations.  The L→∞ extrapolation
+                                                                             of  the  ﬁnite  size  results  indicates  that  the  binding  en-
+    (Tyz    )                                                                ergy (gap between the bound state and the continuum)
+                                                                             remains ﬁnite in the thermodynamic limit.
+       i1,i0 mn= Γu0⟨i0j0⟩z [                                                   The  positive  and  negative  signs  of  the  Heisenberg
+                 ⟨0i1,y|f(i1,y)m  icA,i1cB,j0(fi0,zn    )†|0i0,z⟩]           interaction  are  related  by  a  four  sublattice  spin  rota-
+                 −u0⟨i1j0⟩x⟨0(i1,y)|f(i1,y)m     (fi0,zn    )†|0(i0,z)⟩,(31) tion42,67,68  that produces the following transformations:
+                                                                             HH→−HH + 2HK  andHK→HK.  This unitary oper-
+    (      )                                                                 ation then establishes a correspondence between points
+      Tyz                                                                    of  the  quantum  phase  diagram  with  exactly  the  same
+       k,i0  mn= Γu0⟨kj1⟩z [                                                 energy  spectrum.   In  terms  of  the  dimensionless  ratio
+                 ⟨0(k,y)|f(k,y)m  icA,i0cB,j1(f(i0,z)n      )†|0(i0,z)⟩]     x =J/|K|69, this transformation maps 1/2>x+ > 0 to
+                 −u0⟨i0j1⟩x⟨0(k,y)|f(k,y)m    (f(i0,z)n      )†|0(i0,z)⟩.(32)x− < 0,
+
+                                                                                                   x− =−x+/(1− 2x+).                     (34)
+The hopping matrix associated with the other symmetry
+related hopping processes can be derived in a similar way.                   This property of the exact  solution  of  the  problem  pro-
+The  translational  invariance  of  the  above  Hamiltonian                  vides a quantitative test for our approximation scheme.
+Heven implies that the center of mass momentumQ is a                         In other words, the instability that we are ﬁnding for pos-
+good  quantum  number.   Correspondingly,  we  introduce                     itivex atx+ = 0.20 must have its negativex counterpart
+the Fourier transform of the basis|j,γ,n⟩ in Eq. (28):                       at x−  =−0.3333.  This value agrees very well with the
+                            √   2  ∑                                         result x− =−0.3312 from our approximation scheme.
+              |Q,γ,n⟩≡                  eiQ·rj|j,γ,n⟩,           (33)           The Gamma term also makes the continuum spectrum
+                                N  j∈A                                       dispersive and it induces a bound state between the ﬂux
+                                                                             pair  and  a  matter  fermion.   However,  in  this  case  the
+whererj  refers to the coordinate of lattice site j.  For a                  bound state only appears for the AFM Kitaev model be-
+given center of mass momentumQ, the diagonalization of                       cause  the  FM  model  is  much  more  fragile  against  the
+Heven produces the eigenvectors∑n,γcQ,p(n,γ)|Q,γ,n⟩                          Gamma term (the ﬂux-pair gap closes before the bound
+with energy eigenvalues Ep(Q), p = 1, 2,..., 3N/2.                           state is formed).  There are two interesting features as-
+                                                                                                                                                 12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  9.   (a)-(d)  Two-body  energy  spectrum  of  a  ﬂux  pair  and  a  matter  fermion  (corresponding  to  the  even-fermion-parity
+sector) for the FM (a),(c) and AFM (b),(d) Kitaev models with four representative perturbations indicated by black dots in
+panels (e) and (f).  The right panels of (a)-(d) show the ﬁnite size scaling of the spectrum for the wave vector that minimizes
+the excitation energy (the maximum linear size of the ﬁnite lattices is 52× 52 unit cells).  (e)-(f) Stability ranges of the FM (e)
+and AFM (f) Kitaev spin liquids.  The dashed lines indicate phase boundaries where bare ﬂux pairs become gapless [see also
+Figs. 7 (c) and (d)], while the solid lines denote phase boundaries induced by a softening of a magnon-like bound state between
+a ﬂux pair and a matter fermion.  The color of each line segment shows the center-of-mass momentum Q of the bound state.
+
+
+sociated with the bound state dispersion.  First,  in the                   phase boundary between Γ and K magnetic orderings.
+absence of Heisenberg interaction, the spectra are iden-                       Secondly,  for  negative  Gamma  interaction,  multiple
+tical  for  the  Γ  and  the K  points  of  the  Brillouin  zone            bands of bound states are formed and the lowest energy
+because the dual Kagome lattice is subdivided into three                    band has a quasi-ﬂat dispersion.  This is a direct conse-
+disconnected Kagome sublattices [see Fig. 5 (a)].  Con-                     quence of the ﬂat lowest energy band of a bare ﬂux pair
+sequently, the bound state dispersion has global minima                     for the AFM Kitaev model with Γ < 0 [see Fig. 7 (b)].
+at both momentum points for  positive  Gamma interac-                       For J < 0.0145|K|, the bound state becomes soft at six
+tion.  This degeneracy is lifted by the Heisenberg term:                    incommensurate wave vectors related by the C6 symme-
+the Γ (K) point has a lower energy for a small positive                     try ofH.  These wave vectors are located on the paths
+(negative)J.  As the bound state becomes soft for a par-                    that connect theM points of the Brillouin zone with the
+ticular wave vector Q,  the system develops a divergent                     zone center (the Γ point).  For instance, one of these wave
+magnetic susceptibility, χ(Q,ω), at ω = ωQ→ 0.  Con-                        vectors isQ = (0, 4πq/√3a) with 0<q < 0.35.  The six
+sequently,  the vertical line J  = 0 can be regarded as a                   wave vectors converge at the Γ point for J > 0.0145|K|.
+                                                                                                                                                13
+
+  In summary, by contrast to the odd-parity sector, the                     In this reference frame, the honeycomb layer is perpen-
+even-parity sector can include bosonic modes if the spe-                    dicular to the [111] axis.
+ciﬁc perturbation induces a bound state of two elemen-                         As discussed in the previous section, the bound state
+tary  fermionic  particles.   The  softening  of  one  of  these            |BQ⟩  is  obtained  as  the  eigenstate  of  the  variational
+bosonic modes indicates an instability towards magnetic                     HamiltonianHeven  at the wave vector Q,  which is for-
+ordering.    The  corresponding  stability  boundaries  are                 mally written as
+shown in Fig. 9 (e) and (f).  In the next section we an-
+alyze the type of magnetic ordering that has dominant                                        |BQ⟩ =∑        cQ(n,µ)|Q,µ,n⟩.               (38)
+divergent susceptibility at each point of these boundaries.                                            n,µ
+We stress that the actual phase transition does not need
+to be continuous.  Correspondingly, the area enclosed by                    The degeneracy ν  of the lowest energy bound state de-
+the stability boundaries is an upper bound for the area                     pends  on  the  perturbations.   For ν >  1,  we  should  in
+occupied by the Kitaev liquid phase.  It is important to                    principle  evaluate  the  matrix  element  (35)  for  each  de-
+note that the hybridization with the open ﬂux pair has                      generate  bound  state.   However,  this  is  not  necessary
+been ignored when considering the even-parity sector.  As                   because the magnetic orderings associated with diﬀerent
+we have shown for the odd sector, this hybridization re-                    matrix elements are related by symmetry operations.  In
+duces  the  energy  of  an  individual  closed  ﬂux  pair  and,             principle,  the  boson  can  condense  in  a  linear  combina-
+consequently, the upper bound for the area occupied by                      tion  of  bound  state  wave  functions|BQ⟩  with  diﬀerent
+the  Kitaev  liquid  phase.   To  account  for  this  eﬀect  in             symmetry related wave vectorsQ (multi-Q magnetic or-
+the even-parity sector, one must enlarge the variational                    dering).  For simplicity, we will assume that the conden-
+space by including states with an open ﬂux pair and two                     sation occurs at a bound state with well deﬁned ordering
+matter fermions.                                                            wave vector Q (single-Q magnetic ordering).  However,
+                                                                            we  should  keep  in  mind  that  in  these  cases  the  actual
+                                                                            linear combination of bound state wave functions is de-
+                 V.    MAGNETIC ORDER                                       termined by interaction terms between the bound states,
+                                                                            whose derivation is beyond the scope of the present work.
+  The  magnetic  ordering  with  dominant  susceptibility                      To  determine  the  magnetic  moments  explicitly,  we
+can be obtained by computing the matrix element of the                      computed the two matrix elements on the A and B sub-
+spin operator between the overall ground state|Φ0;f0⟩≡                      lattices:
+2N/2P{|u0⟩⊗|0u0⟩}  of  the  pure  Kitaev  model  and  the
+bound state|BQ⟩ with center of mass momentumQ that                                           CµA,r =      2√              A,Q,                 (39)
+becomes soft,                                                                                             N/2e−iQ·r ˜Cµ
+
+                   Cµα,r =⟨Φ0;f0| ˆSµα,r|BQ⟩,                  (35)                          CµB,r =      2√N/2e−iQ·rµ ˜CµB,Q,                (40)
+
+where Φ0 refers to the ﬂux-free sector represented by the                   whererµ∈A is connected to the B site of the unit cell
+gauge  ﬁeld  conﬁguration u0, α  = A,B  and r  denotes                      atr via the µ-th bond, and
+the position of each unit cell of the honeycomb lattice.
+Throughout  this  work,  the  position  of  the  unit  cells  is                   ˜CµA,Q =i∑      cQ(n,µ)⟨0(rµ,µ)|f(rµ,µ)n   cA,r|0u0⟩,  (41)
+labeled by the lattice site on theA sublattice.  The quan-                                      n
+tity                                                                               ˜Cµ           cQ(n,µ)⟨0(rµ,µ)|f(rµ,µ)n   cB,r|0u0⟩.    (42)
+                                                                                    B,Q =∑
+                     ˆO = ∑      Re[Cµα,r] ˆSµα,r,                    (36)                    n
+
+                           µ,α,r                                            According to Eq. (37), the magnetic moment at each lat-
+                                                                            tice site is explicitly given by
+is the corresponding order parameter.  We note thatCµα,r
+is deﬁned up to a U(1) phase (relative phase between the                       Mµα,r∝ cos(φ−Q·r)nµα,1− sin(φ−Q·r)nµα,2,    (43)
+states with n andn + 1 bound states), which is replaced
+by a Z2 freedom (H has only discrete symmetries) upon                       with
+including processes that create a pair of bound states.70                                 nµ
+  The consequent local magnetic moment at each lattice                                     α,1 = Re[ ˜Cµα,Q],nµα,2 = Im[ ˜Cµα,Q].           (44)
+site is given by                                                            In  other  words,  the  local  magnetic  moments  on  sub-
+                        Mµα,r∝ Re[Cµα,r].                        (37)       lattice α  = A,B  are  spanned  by  the  two  vectors nα,1
+                                                                            and nα,2  (a  bold  variable n ≡  (nx,ny,nz)  refers  to
+The spin components µ = x,y,z  refer to the directions                      a  three-component  vector).    The  U(1)  degree  of  free-
+parallel to the cubic axes of the underlying ligand octahe-                 dom,  ˜Cµα,Q→  ˜Cµα,Qeiφ,  corresponds  to  a  uniform  rota-
+dra of O2− ions that mediate the Kitaev, Heisenberg and                     tion of the local moments on the 2D plane spanned by
+Gamma interactions in most realizations of this model.                      {nα,1,nα,2}.  The U(1) phase does not aﬀect the nature
+                                                                                                                                               14
+
+of the magnetic orderings that we discuss below, except                                          2.    Stripy order (J > 0)
+for the 120◦  order.  Correspondingly, the analysis of the
+φ-dependence will be restricted to that case.                                 For  the  FM  Kitaev  model,  a  strong  enough  AFM
+                                                                            Heisenberg term (J > 0) gives rise to three degenerate
+                                                                            bound  states  at  the  three M  points.   For  concreteness,
+                                                                            we will assume that the bound state condenses at the M
+                                                                            point Q  =  (2π/√3a, 0)  (single-Q  ordering).   The  mag-
+             A.    Ferromagnetic Kitaev model                               netic orders associated with condensations at the other
+                                                                            two M  points  are  obtained  by  applying  a C3  rotation.
+                                                                            In the absence of the Γ-term, the condensation gives rise
+                1.    Ferromagnetic order (J < 0)                           to  a  collinear  magnetic  order  along  the  [001]  direction.
+                                                                            As shown in Fig. 10 (c), spins that are connected by the
+  For the FM Kitaev model, a strong enough FM Heisen-                       z-bonds are oriented in the same direction, forming the
+berg term (J < 0) gives rise to three degenerate bound                      so-called  stripy  magnetic  order44–46.   A  ﬁnite  Gamma
+states at the Γ point.  The bond orientation γ  = x,y,z                     term induces a global rotation of the magnetic moments
+of the ﬂux pair is preserved to ﬁrst-order in the Heisen-                   about the b-axis.
+
+berg interaction.  The resulting three degenerate bound
+states can then be labeled by the quantum number|γ⟩.
+The condensation at one of the three bound states gives
+rise to a collinear magnetic ordering with the moments                                B.    Antiferromagnetic Kitaev model
+oriented along γ axis, namely Mµr  =Mrδµγ.
+  The Gamma term splits the degenerate triplet into a                                 1.    Antiferromagnetic order (Γ> 0,J > 0)
+singlet  and  a  doublet.   For  Γ <  0,  the  lowest  energy
+bound state is the singlet                                                    We will consider now the instabilities of the AFM Ki-
+
+                    |s⟩ = (|x⟩+|y⟩+|z⟩)/√3,                   (45)          taev model.  As shown in Fig. 9 (b), for Γ> 0 andJ = 0,
+                                                                            there are three degenerate bound states.  One of them is
+that belongs to the trivial representation of the C3 sym-                   located at the Γ point,  while the other two are located
+metry  group.    Consequently,   ˜Cxα,0  =   ˜Cyα,0  =   ˜Czα,0 ≡           at  the  two K  points.   This  degeneracy  is  a  direct  con-
+˜Cα,α  = A,B.    Note  that  the  ground  state  and  the                   sequence of the restricted motion of the bound state to
+bound state are both invariant up to a phase factor un-                     one of the three sublattices shown in Fig. 5 (b).  An arbi-
+der the inversion symmetry, cA,r→cB,r, cB,r→−cA,r:                          trarily small Heisenberg interaction lifts the degeneracy
+|0u0⟩→|0u0⟩,|b⟩≡∑                                                           between  the  Γ  and±K  points.   The  Γ  state  has  lower
+                           nµcQ(n,µ)f(r,µ)†n  |0r,µ⟩→i|b⟩, im-              (higher) energy if J > 0 (J < 0).  In this subsection we
+plying that  ˜CA =  ˜CB.  According to Eq. (37), this indi-                 consider the case J > 0, while the case J < 0 is left for
+cates an instability towards ferromagnetic ordering along                   the next subsection.
+the [111] direction [see Fig. 10 (a)].                                        The bound state at the Γ point picks up a phase−i un-
+  For Γ> 0, the lowest energy bound states are spanned                      der inversion.  Together with theC3 symmetry ofH, this
+by the doublet                                                              property  dictates  that  ˜Cxα,0  =  ˜Cyα,0  =  ˜Czα,0≡  ˜Cα,α  =
+                                                                            A,B  and  ˜CA =− ˜CB.  According to Eq. (37), this indi-
+       |d1⟩ =   1√3(|x⟩ +ei2π/3|y⟩ +e−i2π/3|z⟩),                            cates  an  instability  towards  antiferromagnetic  ordering
+                                                                            along  the  [111]  direction.   The  resulting  antiferromag-
+       |d2⟩ =   1√                                          3.    (46)      netic order is shown in Fig. 10 (d)
+                   3(|x⟩ +e−i2π/3|y⟩ +ei2π/3|z⟩)/√
+The bosons can then condense in any linear combination
+of these two states.  If we assume that the condensation
+takes place in|d1⟩ or|d2⟩, we obtainnA2,nB2 = 0 and                                     2.    120◦  magnetic order (Γ> 0,J < 0)
+nA1 =nB1⊥[111].  This result implies an instability to-
+wards ferromagnetic ordering in the plane perpendicular
+to the [111] direction [see Fig. 10 (b)].  Diﬀerent in-plane                  As  explained  in  the  last  subsection,  the  bound  state
+moment directions correspond to condensations in diﬀer-                     dispersion induced by a positive Gamma interaction has
+ent linear combinations of|d1⟩ and|d2⟩.  We note that                       a global minimum at the±K points for arbitrarily small
+this  magnetic  order  coincides  with  the  one  that  is  ob-             and  negative  FM  Heisenberg  interaction  (J <  0).   The
+tained in the classical limit of the model44.  The same is                  magnetic order produced by the condensation in one of
+true for the remaining magnetic orders that we discuss                      the two K  points corresponds to a six-sublattice struc-
+below.                                                                      ture.   For  instance,  there  are  three  nonequivalent  mag-
+                                                                                                                                              15
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ FIG. 10.   Magnetic order deduced from the condensation of the lowest-energy bound state for diﬀerent model parameters.
+
+
+netic moments on the A sublattice,                                         form a 120◦  structure on each A and B sublattice.  An-
+                                                                           other constraint that results from the calculation is that
+        MA,0∝nA1 cos(φ)−nA2 sin(φ),                                        ˜nB1 =−nA1 and  ˜nB2 =nA2.  This constraint locks the
+       MA,a1∝nA1 cos(φ− 4π                                                 relative vector chirality of the two diﬀerent sublattices:
+                                   3  )−nA2 sin(φ− 4π3  ),                 for  each  hexagonal  plaquette  of  the  honeycomb  lattice,
+     MA,2a1∝nA1 cos(φ− 2π                                                  the  vector  spin  chirality  along  the  up-triangles  on  the
+                                   3  )−nA2 sin(φ− 2π3  ),                 A sublattice is the same as the vector chirality along the
+                                                                           down-triangles on the B sublattice [see Fig. 10 (e)]. There
+and three on the B sublattice,                                             is  still  a  remaining  degree  of  freedom  in  the  magnetic
+        MB,0∝ ˜nB1 cos(φ)− ˜nB2 sin(φ),                                    pattern because a change of φ corresponds to a uniform
+                                                                           rotation of the magnetic moments on the A and B sub-
+      MB,a1∝ ˜nB1 cos(φ− 4π                                                lattices  in  opposite  directions.   This  freedom,  that  also
+                                   3  )− ˜nB2 sin(φ− 4π3  ),               exists in the classical limit of the model44, is removed by
+     MB,2a1∝ ˜nB1 cos(φ− 2π                                                the processes that create and annihilate pairs of bound
+                                   3  )− ˜nB2 sin(φ− 2π3  ),               states (vacuum ﬂuctuations) with opposite wave vectors
+where                                                                      K  and−K.   As  it  is  shown  in  Fig.  10  (e)  for  a  ﬁxed
+                                                                           value of φ, the resulting coplanar order lies in the [111]
+                       √3                      √3                          plane and it agrees with the result that is obtained for
+ ˜nxB1 =−12nxB1 +       2 nxB2,    ˜nxB2 =−      2 nxB1− 12nxB2,           the classical limit of the model44.
+                       √3                    √3
+ ˜nyB1 =−12nyB1−        2 nyB2,    ˜nyB2 =    2 nyB1− 12nyB2,                3.    Spiral magnetic and antiferromagnetic order (Γ< 0)
+ ˜nzB1 =nzB1,                          ˜nzB2 =nzB2.
+Hereφ is the angle associated with the above-mentioned                       As we found in Sec. IV B, for Γ< 0 andJ≤ 0.0145|K|,
+U(1) freedom.                                                              the bound state becomes gapless at six incommensurate
+                                                                           wave  vectors  related  by C6  symmetry  [see  Fig.  9  (f)].
+  The calculation of the matrix element (35) leads to the                  A (single-Q) condensation in one of these wave vectors,
+following  constraints: |nA1|  =|nA2|  =|˜nB1|  =|˜nB2| ≃                  such as Q = (0, 4πq/√3a) with 0 < q < 0.35,  leads to
+0.66 andnA1⊥nA2,  ˜nB1⊥˜nB2.  These constraints imply                      a coplanar magnetic order that lies in the plane perpen-
+that the magnitude of the magnetic moments is uniform                      dicular to the [¯110] axis becausenA1×nA2,nB1×nB2‖
+over the whole lattice. As a result, the magnetic moments                  [¯110] [see Fig. 10 (f)].  By choosing a proper phase of the
+                                                                                                                                              16
+
+
+TABLE I. Phase boundaries of the FM Kitaev spin liquid in                  TABLE II. Phase boundaries of the AFM Kitaev spin liquid
+the presence of a Heisenberg interaction (Γ = 0).                          in the presence of a Gamma interaction (J = 0).
+             Jc/|K|   this work     ED46     DMRG47                                           Γc/|K|    this work    ED44,45
+             J < 0       -0.33     -0.1648    -0.1167                                          Γ< 0        -0.4       -0.14
+             J > 0        0.20      0.1231     0.0938                                          Γ> 0        0.27       0.095
+
+
+bound state wave-function such thatnA1 is orthogonal to                    bility against the Heisenberg and the Gamma terms con-
+nA2, the two vectorsnA1 andnA2 have diﬀerent lengths.                      sidered  in  this  work.   This  asymmetry  arises  from  the
+The same holds true for the B sublattice.  This property                   constructive/destructive  interference  between  processes
+leads to a spin density wave, i.e., to a modulation of the                 that contribute to the eﬀective hopping of ﬂux pairs and
+magnitude of the magnetic moments.                                         it is also veriﬁed by numerical studies of this model.
+  The six incommensurate wave vectors converge to the                         Finally,  we  note  that  some  magnetic  orders  reported
+Γ  point  upon  increasing J,  giving  rise  to  a  doublet  of            in the ED study44  are not explained by the current ap-
+bound states.  Meanwhile, the magnetic moments rotate                      proach because of the absence of preformed bound states
+about the [¯110] axis and form an AFM structure parallel                   in the excitation spectrum.  In this case, the excitations
+to  the  [11¯2]  axis.   Given  the  double  degeneracy  of  the           that  become  soft  are  the  fractional  (fermionic)  modes.
+lowest energy bound state, the AFM moments can point                       This  result  is  consistent  with  a  recent  DMRG  study49,
+in any direction of the [111] plane.  We note that positive                where it is found that an AFM Gamma interaction in-
+and negative signs of the Gamma interaction added to the                   duces a transition from the FM Kitaev spin liquid to a
+AFM Kitaev model both lead to AFM order.  However,                         diﬀerent type of spin liquid.  The transition is character-
+theC3 symmetry about the [111] axis is preserved in the                    ized by a discontinuous change in the average ﬂux⟨Wp⟩
+former case, while it is broken in the latter case.  Accord-               per plaquette.
+ing  to  numerical  simulations44,45,  the  two  AFM  orders
+are adjacent to each other on the J− Γ phase diagram,
+in agreement with Fig. 9 (f) where J > 0.  Our analysis                     VI.    DYNAMICAL SPIN STRUCTURE FACTOR
+indicates that there should be a magnetic moment reori-
+entation phase transition between the two types of AFM                        The above-mentioned two-fermion bound state should
+order.
+                                                                           appear as a sharp mode in the dynamical spin structure
+                                                                           factor  that  is  measured  with  inelastic  neutron  scatter-
+        C.    Comparison with numerical results                            ing.  As explained above, the emergence of these coherent
+                                                                           quasi-particle modes signals the proximity to a quantum
+  We close this section with a comparison against the ex-                  phase transition into a magnetically ordered state.  This
+isting numerical simulations.  The ordering wave vectors                   phenomenon can be exploited to reveal the coherent na-
+that we extracted from the analysis presented in this sec-                 ture of the continuum of magnetic excitations produced
+tion are consistent with exact-diagonalization (ED) stud-                  by the unbounded ﬂux pair and matter fermion modes.
+ies of a 24-site cluster44–46.  The orientation of the mag-                   The diagonal components of the dynamical structure
+netic moments was determined from studies of the classi-                   factor are
+cal limit of the model44 and it also agrees with our results.                     Sµµ(q,ω) =∑δ(ω−En +EG)|⟨G|Sµq|n⟩|2,   (47)
+Tables I and   II include a comparison between the criti-                                           n
+cal values of the perturbations at which the two-fermion
+bound state becomes a gapless excitation and the phase                     where|n⟩ and|G⟩ denote the exact eigenstates and the
+boundaries  obtained  from  ED  studies44–46  and  density                 ground state ofH with eigenvalues En  and EG, respec-
+matrix  renormalization  group  (DMRG)47.   In  all  cases,                tively,  and µ  = x,y,z. Sµµ(q,ω)  can  be  exactly  com-
+the  present  analysis  predicts  a  larger  stability  range  of          puted at T  = 0 for the pure Kitaev model.  In this case,
+the Kitaev liquid because of two reasons.  The ﬁrst reason                 the ground state has zero ﬂux and the excited states con-
+is that in our simple analysis we have neglected processes,                tributing to the matrix elements in Eq. (47) have only one
+such as the hybridization with the open ﬂux pair or the                    ﬂux pair.  As we argued in previous sections,  the main
+creation/annihilation  of  two  ﬂux  pairs  [see  Fig.  2  (a)],           contribution to these matrix elements arises from states
+that produce a signiﬁcant reduction in the energy of the                   containing  only  one  matter  fermion  (Bogoliubov  quasi-
+ﬂux pair (Fig. 8).  The second reason is that these phase                  particle  in  the  two-ﬂux  sector).   Our  approach  should
+transitions are expected to be of ﬁrst order, implying that                then provide an accurate estimate of Sµµ(q,ω) for small
+the  transition  occurs  before  the  bound  state  excitation             enough values of J/K and Γ/K.
+becomes gapless.                                                              The  excited  eigenstates  that  contribute  to Sµµ(q,ω)
+  In the previous section,  we have also shown that the                    are  approximated  by  the  eigenstates  of  the  eﬀective
+FM and AFM Kitaev spin liquids have very diﬀerent sta-                     HamiltonianHeven  [see  Eq.  (29)]  that  acts  on  the  re-
+                                                                                                                                               17
+
+                                                                                      VII.    SUMMARY AND OUTLOOK
+
+                                                                              In this paper, we have studied the low-energy excita-
+                                                                           tion  spectrum  of  the  Kitaev-Heisenberg-Gamma  model
+                                                                           through a novel variational approach that is based on the
+                                                                           exact fractionalized excitations of the pure Kitaev hon-
+                                                                           eycomb model.  We have demonstrated that this new ap-
+                                                                           proach reveals the microscopic mechanisms behind many
+                                                                           important  aspects  of  the  quantum  phase  diagram  from
+                                                                           previous numerical works.42–47
+                                                                              First of all, our results provide a simple explanation for
+                                                                           the asymmetric stability of the Kitaev spin liquid phases
+                                                                           around the FM and AFM Kitaev limits.  In our picture,
+                                                                           the phase transitions out of the Kitaev spin liquid phases
+                                                                           are related to softening of ﬂux-pair excitations, which are
+                                                                           static for the pure Kitaev model but become dispersive in
+                                                                           presence of Heisenberg and/or Gamma interactions.  For
+                                                                           J⁄= 0 and Γ = 0, the hopping amplitude of such a ﬂux
+                                                                           pair is large (small) for the AFM (FM) Kitaev spin liquid
+                                                                           due to a constructive (destructive) interference between
+                                                                           two  contributions  arising  from  diﬀerent  components  of
+                                                                           the Heisenberg interaction.  Since a larger hopping am-
+                                                                           plitude  means  a  stronger  dispersion  for  the  same  per-
+                                                                           turbation, this simple result naturally explains why the
+                                                                           AFM Kitaev spin liquid is more fragile against a Heisen-
+                                                                           berg perturbation than the FM Kitaev spin liquid.  Con-
+                                                                           versely, for Γ⁄= 0 and J  = 0, the hopping amplitude is
+FIG. 11.  (Color online) Dynamical structure factorS(q,ω)≡                 small (large) for the AFM (FM) Kitaev spin liquid due to
+∑                                                                          an analogous interference eﬀect, implying that the AFM
+  µSµµ(q,ω)  for  diﬀerent  perturbations  of  the  FM  Kitaev             Kitaev spin liquid is more robust against a Gamma per-
+model (a-c) and AFM Kitaev model (d-f).  The black dashed
+line indicates the lower edge of the continuum.  The calcula-              turbation than the FM Kitaev spin liquid.
+tion has been done on a ﬁnite lattice of 71× 71 unit cells and                Importantly, our variational approach can be straight-
+the artiﬁcial broadening of the delta functions in Eq. (47) is             forwardly  generalized  to  other  perturbations  on  top  of
+η = 0.08|K|.                                                               the  Kitaev  model,  including  a  Zeeman  term  represent-
+                                                                           ing  an  external  magnetic  ﬁeld.71–73  By  considering  the
+                                                                           hopping amplitude of a ﬂux pair, the same kind of inter-
+                                                                           ference eﬀect then explains why the AFM Kitaev spin liq-
+duced even-parity sector.  Fig. 11 (a) and (d) show the                    uid is more robust (fragile) against a uniform (staggered)
+resulting S(q,ω)≡ ∑µSµµ(q,ω) for the pure FM and                           magnetic ﬁeld than the FM Kitaev spin liquid.73 Further
+AFM Kitaev model.  Panels (b) and (c) show the result                      perturbations  of  interest  include  diﬀerent  forms  of  dis-
+for  two  representative  sets  of  perturbations  around  the             order,  such  as  bond  disorder,74  random  vacancies,75,76
+FM Kitaev model.  Similarly, panels (e) and (f) show the                   and  topological  defects.77  In  particular,  our  varational
+result for two representative sets of perturbations around                 approach may shed light on the localization of ﬂux exci-
+the AFM Kitaev model.                                                      tations via the Anderson mechanism or the ﬂux-binding
+                                                                           eﬀect induced by spin vacancies.75,78,79
+  Since the mass of the ﬂux pair reduces to a ﬁnite value                     Moreover,  our  results  provide  valuable  insight  about
+for J⁄= 0 or Γ⁄= 0, the spectral weight distribution ac-                   the magnetically ordered phases beyond the transitions
+quires a ﬁnite dispersion in the presence of these pertur-                 out of the two Kitaev spin liquid phases. In particular, for
+bations. The magnon-like bound state that was discussed                    each phase transition induced by the kind of perturbation
+in the previous section gives rise to sharp and dispersive                 (Heisenberg or Gamma) against which the given Kitaev
+magnetic  modes.   These  modes  acquire  a  ﬁnite  lifetime               spin liquid (FM or AFM) is more robust, we ﬁnd a soften-
+(the line becomes broad) upon entering in the continuum                    ing of a bosonic magnon-like excitation at a wave vector
+because they can decay into two independent bond and                       that coincides with the ordering wave vector of the result-
+matter Majorana fermions.  The sharp features below the                    ing magnetically ordered phase.  Since this bosonic exci-
+continuum provide unambiguous evidence of a coherent                       tation is topologically trivial (i.e., it does not carry any
+quantum spin liquid (continuum features can also origi-                    gauge charge), its condensation at a continuous transition
+nate from disorder and/or thermal ﬂuctuations in classi-                   would lead to a magnetically ordered quantum spin liq-
+cal phases with no long-range quantum entanglement).                       uid phase.  To reach a conventional magnetically ordered
+                                                                                                                                                        18
+
+phase, one would then require two subsequent phase tran-                        focused on the dynamical spin structure factor, straight-
+sitions for generating the magnetic order and destroying                        forward extensions of our approach can also be used to
+the quantum spin liquid, respectively.  However, accord-                        compute other dynamical responses.  In turn, computing
+ing  to  numerical  studies,  these  two  transitions  are  pre-                such dynamical responses away from the exactly solvable
+empted by a single discontinuous (ﬁrst-order) transition                        limit is crucial for characterizing real candidate materials
+which immediately destroys the quantum spin liquid in                           both for the actual quantum spin liquid phase as well as
+favor of a conventional magnetically ordered phase.  It is                      the “proximate” magnetically ordered phases.
+then an intriguing question whether including additional
+perturbations could make this phase transition continu-
+ous, thereby stabilizing a novel quantum phase in which                                            ACKNOWLEDGMENTS
+the  fractionalized  excitations  of  the  Kitaev  spin  liquid
+coexist with long-range magnetic order.                                            S.-S. Z. and C. D. B. are supported by funding from the
+   Finally,  our  work  predicts  that  the  bosonic  magnon-                   Lincoln Chair of Excellence in Physics and from the Los
+like excitation, which forms further away from the pure                         Alamos National Laboratory Directed Research and De-
+Kitaev limit, manifests as a sharp mode in the dynam-                           velopment program.  W.Z. is supported by the Key R&D
+ical spin structure factor.  This exotic bound state of a                       Program  of  Zhejiang  Province,   China  (2021C01002).
+ﬂux pair and a Majorana fermion can then be detected                            G. B. H. was supported by the U.S. Department of En-
+in inelastic neutron scattering and can serve as a direct                       ergy,  Oﬃce  of  Science,  National  Quantum  Information
+signature of the Kitaev spin liquid phase.  While we have                       Science Research Centers, Quantum Science Center.
+
+
+
+
+
+
+
+ 1  L. Balents, Nature 464, 199 (2010).                                            Stoumpos, C. D. Malliakas, J. F. Mitchell, K. Mehlawat,
+ 2  L. Savary and L. Balents, Reports on Progress in Physics                       Y.  Singh,  Y.  Choi,  T.  Gog,  A.  Al-Zein,  M.  M.  Sala,
+   80, 016502 (2016).                                                              M. Krisch,  J. Chaloupka,  G. Jackeli,  G. Khaliullin,   and
+ 3  A. Kitaev, Annals of Physics 303, 2 (2003).                                    B. J. Kim, Nat. Phys. 11, 462  (2015).
+ 4  C.  Nayak,  S.  H.  Simon,  A.  Stern,  M.  Freedman,    and                17  Y. Singh,  S. Manni,  J. Reuther,  T. Berlijn,  R. Thomale,
+   S. Das Sarma, Rev. Mod. Phys. 80, 1083 (2008).                                  W.  Ku,  S.  Trebst,   and  P.  Gegenwart,  Phys.  Rev.  Lett.
+ 5  A. Kitaev, Annals of Physics 321, 2 (2006).                                    108, 127203 (2012).
+ 6  G. Jackeli and G. Khaliullin, Phys. Rev. Lett. 102, 017205                  18  S.  C.  Williams,   R.  D.  Johnson,   F.  Freund,   S.  Choi,
+   (2009).                                                                         A. Jesche, I. Kimchi, S. Manni, A. Bombardi, P. Manuel,
+ 7  J.   G.  Rau,   E.   K.-H.   Lee,     and   H.-Y.  Kee,   Annual               P. Gegenwart,   and R. Coldea, Phys. Rev. B 93, 195158
+   Review   of   Condensed   Matter   Physics  7,   195   (2016),                  (2016).
+   https://doi.org/10.1146/annurev-conmatphys-031115-                           19  K.  Kitagawa,  T.  Takayama,  Y.  Matsumoto,  A.  Kato,
+   011319.                                                                         R. Takano, Y. Kishimoto, R. Dinnebier, G. Jackeli,   and
+ 8  S. Trebst, ArXiv e-prints  (2017), arXiv:1701.07056 [cond-                     H. Takagi, Nature 554, 341 (2018).
+   mat.str-el].                                                                 20  F.  Bahrami,   W.  Lafargue-Dit-Hauret,   O.  I.  Lebedev,
+ 9  M.   Hermanns,   I.   Kimchi,      and   J.   Knolle,   Annual                 R.  Movshovich,  H.-Y.  Yang,  D.  Broido,  X.  Rocquefelte,
+   Review   of   Condensed   Matter   Physics  9,   17   (2018),                   and F. Tafti, Phys. Rev. Lett. 123, 237203 (2019).
+   https://doi.org/10.1146/annurev-conmatphys-033117-                           21  K.  W.  Plumb,  J.  P.  Clancy,  L.  J.  Sandilands,  V.  V.
+   053934.                                                                         Shankar,  Y.  F.  Hu,  K.  S.  Burch,  H.-Y.  Kee,   and  Y.-J.
+10  H.  Takagi,  T.  Takayama,  G.  Jackeli,  G.  Khaliullin,   and                Kim, Phys. Rev. B 90, 041112 (2014).
+   S. E. Nagler, Nature Reviews Physics 1, 264 (2019).                          22  L. J. Sandilands, Y. Tian, K. W. Plumb, Y.-J. Kim,   and
+11  Y.  Singh  and  P.  Gegenwart,  Phys.  Rev.  B  82,  064412                    K. S. Burch, Phys. Rev. Lett. 114, 147201 (2015).
+   (2010).                                                                      23  J.  A.  Sears,  M.  Songvilay,  K.  W.  Plumb,  J.  P.  Clancy,
+12  X. Liu,  T. Berlijn,  W.-G. Yin,  W. Ku,  A. Tsvelik,  Y.-J.                   Y. Qiu, Y. Zhao, D. Parshall,  and Y.-J. Kim, Phys. Rev.
+   Kim,  H. Gretarsson,  Y. Singh,  P. Gegenwart,   and  J. P.                     B 91, 144420 (2015).
+   Hill, Phys. Rev. B 83, 220403 (2011).                                        24  M.  Majumder,  M.  Schmidt,  H.  Rosner,  A.  A.  Tsirlin,
+13  S. K. Choi,  R. Coldea,  A. N. Kolmogorov,  T. Lancaster,                      H.  Yasuoka,   and  M.  Baenitz,  Phys.  Rev.  B 91,  180401
+   I.  I.  Mazin,  S.  J.  Blundell,  P.  G.  Radaelli,  Y.  Singh,                (2015).
+   P.  Gegenwart,  K.  R.  Choi,  S.-W.  Cheong,  P.  J.  Baker,                25  R. D. Johnson, S. C. Williams, A. A. Haghighirad, J. Sin-
+   C.  Stock,   and  J.  Taylor,  Phys.  Rev.  Lett. 108,  127204                  gleton,  V.  Zapf,  P.  Manuel,  I.  I.  Mazin,  Y.  Li,  H.  O.
+   (2012).                                                                         Jeschke,  R.  Valent´ı,    and  R.  Coldea,  Phys.  Rev.  B  92,
+14  F.  Ye,   S.  Chi,   H.  Cao,   B.  C.  Chakoumakos,   J.  A.                  235119 (2015).
+   Fernandez-Baca, R. Custelcean, T. F. Qi, O. B. Korneta,                      26  L.  J.  Sandilands,  Y.  Tian,  A.  A.  Reijnders,  H.-S.  Kim,
+   and G. Cao, Phys. Rev. B 85, 180403 (2012).                                     K.  W.  Plumb,  Y.-J.  Kim,  H.-Y.  Kee,   and  K.  S.  Burch,
+15  R. Comin, G. Levy, B. Ludbrook, Z.-H. Zhu, C. N. Veen-                         Phys. Rev. B 93, 075144 (2016).
+   stra,  J.  A.  Rosen,  Y.  Singh,  P.  Gegenwart,  D.  Stricker,             27  A. Banerjee, C. A. Bridges, J.-Q. Yan, A. A. Aczel, L. Li,
+   J.  N.  Hancock,  D.  van  der  Marel,  I.  S.  Elﬁmov,    and                  M.  B.  Stone,  G.  E.  Granroth,  M.  D.  Lumsden,  Y.  Yiu,
+   A. Damascelli, Phys. Rev. Lett. 109, 266406 (2012).                             J.  Knolle,  S.  Bhattacharjee,  D.  L.  Kovrizhin,  R.  Moess-
+16  S.  Hwan  Chun,  J.-W.  Kim,  J.  Kim,  H.  Zheng,  C.  C.                     ner, D. A. Tennant, M. D. G.,   and S. E. Nagler, Nature
+                                                                                                                                                          19
+
+   materials  (2016), 10.1038/nmat4604.                                          53  J.  Wang,  B.  Normand,   and  Z.-X.  Liu,  Phys.  Rev.  Lett.
+28  A. Banerjee, J. Yan, J. Knolle, C. A. Bridges, M. B. Stone,                      123, 197201 (2019).
+   M. D. Lumsden, D. G. Mandrus, D. A. Tennant, R. Moess-                        54  G. Baskaran, S. Mandal,  and R. Shankar, Physical review
+   ner,  and S. E. Nagler, Science 356, 1055 (2017).                                 letters 98, 247201 (2007).
+29  S.-H. Do, S.-Y. Park, J. Yoshitake, J. Nasu, Y. Motome,                      55  J. Knolle, D. L. Kovrizhin, J. T. Chalker,   and R. Moess-
+   Y. S. Kwon, D. T. Adroja, D. J. Voneshen, K. Kim, T.-H.                           ner, Phys. Rev. Lett. 112, 207203 (2014).
+   Jang, J.-H. Park, K.-Y. Choi,   and S. Ji, Nature Physics                     56  J. Knolle, D. L. Kovrizhin, J. T. Chalker,   and R. Moess-
+   13, 1079 (2017).                                                                  ner, Phys. Rev. B 92, 115127 (2015).
+30  Y.  Yamaji,   Y.  Nomura,   M.  Kurita,   R.  Arita,     and                 57  X.-Y. Song, Y.-Z. You,   and L. Balents, Phys. Rev. Lett.
+   M. Imada, Phys. Rev. Lett. 113, 107201 (2014).                                    117, 037209 (2016).
+31  Y. Sizyuk, C. Price, P. W¨olﬂe,   and N. B. Perkins, Phys.                   58  J.  Knolle,  G.-W.  Chern,  D.  L.  Kovrizhin,  R.  Moessner,
+   Rev. B 90, 155126 (2014).                                                         and N. B. Perkins, Phys. Rev. Lett. 113, 187201 (2014).
+32  H.-S. Kim, V. S. V., A. Catuneanu,  and H.-Y. Kee, Phys.                     59  G. B. Hal´asz, N. B. Perkins,  and J. van den Brink, Phys.
+   Rev. B 91, 241110 (2015).                                                         Rev. Lett. 117, 127203 (2016).
+33  J.  c.  v.  Chaloupka  and  G.  Khaliullin,  Phys.  Rev.  B 92,              60  G.  B.  Hal´asz,  S.  Kourtis,  J.  Knolle,   and  N.  B.  Perkins,
+   024413 (2015).                                                                    Phys. Rev. B 99, 184417 (2019).
+34  I. Rousochatzakis, J. Reuther, R. Thomale, S. Rachel,  and                   61  A. M. Samarakoon, A. Banerjee, S.-S. Zhang, Y. Kamiya,
+   N. B. Perkins, Phys. Rev. X 5, 041035 (2015).                                     S. E. Nagler, D. A. Tennant, S.-H. Lee,  and C. D. Batista,
+35  S.  Nishimoto,  V.  M.  Katukuri,  V.  Yushankhai,  H.  Stoll,                   Phys. Rev. B 96, 134408 (2017).
+   U. K. R¨oßler, L. Hozoi, I. Rousochatzakis,  and J. van den                   62  Z. Zhu, P. A. Maksimov, S. R. White,  and A. L. Cherny-
+   Brink, Nature Communications 7, 10273 (2016).                                     shev, Phys. Rev. Lett. 119, 157201 (2017).
+36  H.-S. Kim and H.-Y. Kee, Phys. Rev. B 93, 155143 (2016).                     63  A. M. Samarakoon, G. Wachtel, Y. Yamaji, D. A. Tennant,
+37  S. M. Winter, Y. Li, H. O. Jeschke,  and R. Valent´ı, Phys.                      C. D. Batista,   and Y. B. Kim, Phys. Rev. B 98, 045121
+   Rev. B 93, 214431 (2016).                                                         (2018).
+38  J.  c.  v.  Chaloupka  and  G.  Khaliullin,  Phys.  Rev.  B 94,              64  M.  Hentschel  and  F.  Guinea,  Phys.  Rev.  B  76,  115407
+   064435 (2016).                                                                    (2007).
+39  S. M. Winter, K. Riedl, P. A. Maksimov, A. L. Chernyshev,                    65  Note that the fermion parity is deﬁned with respect to the
+   A. Honecker,   and R. Valent´ı, Nature Communications 8,                          fermion  vacuum  of  the  ﬂux-free  sector  and  accounts  for
+   1152 (2017).                                                                      both bond and matter fermions.
+40  S.  M.  Winter,  A.  A.  Tsirlin,  M.  Daghofer,  J.  van  den               66  A. B´acsi and A. Virosztek, Phys. Rev. B 82, 193405 (2010).
+   Brink, Y. Singh, P. Gegenwart,  and R. Valent´ı, Journal of                   67  G. Khaliullin, Progress of Theoretical Physics Supplement
+   Physics:  Condensed Matter 29, 493002 (2017).                                     160, 155 (2005).
+41  C.  Eichstaedt,  Y.  Zhang,  P.  Laurell,  S.  Okamoto,  A.  G.              68  R.  Schaﬀer,  S.  Bhattacharjee,   and  Y.  B.  Kim,  Physical
+   Eguiluz,  and T. Berlijn, Phys. Rev. B 100, 075110 (2019).                        Review B 86, 224417 (2012).
+42  J. Chaloupka,  G. Jackeli,   and G. Khaliullin, Phys. Rev.                   69 x+ = 0.5 with FM Kitaev interaction is mapped into the
+   Lett. 105, 027204 (2010).                                                         pure FM Heisenberg model, implying that the local mag-
+43  J. Chaloupka,  G. Jackeli,   and G. Khaliullin, Phys. Rev.                       netic moment is fully saturated.
+   Lett. 110, 097204 (2013).                                                     70  Note that those processes can only be included by enlarging
+44  J. G. Rau, E. K.-H. Lee,  and H.-Y. Kee, Phys. Rev. Lett.                        the variational space to states containing two ﬂux pairs and
+   112, 077204 (2014).                                                               an even number of matter fermions.
+45  J. G. Rau and H.-Y. Kee, arXiv preprint arXiv:1408.4811                      71  Z. Zhu, I. Kimchi, D. N. Sheng,  and L. Fu, Phys. Rev. B
+   (2014).                                                                           97, 241110 (2018).
+46  D. Gotfryd, J. Rusnaˇcko, K. Wohlfeld, G. Jackeli, J. c. v.                  72  M. Gohlke, R. Moessner,  and F. Pollmann, Phys. Rev. B
+   Chaloupka,    and  A.  M.  Ole´s,  Phys.  Rev.  B  95,  024426                    98, 014418 (2018).
+   (2017).                                                                       73  C. Hickey and S. Trebst, Nature Communications 10, 530
+47  M. Gohlke, R. Verresen, R. Moessner,   and F. Pollmann,                          (2019).
+   Phys. Rev. Lett. 119, 157203 (2017).                                          74  J. Knolle, R. Moessner,  and N. B. Perkins, Physical review
+48  M.  Gohlke,  G.  Wachtel,  Y.  Yamaji,  F.  Pollmann,    and                     letters 122, 047202 (2019).
+   Y. B. Kim, Phys. Rev. B 97, 075126 (2018).                                    75  W.-H.  Kao,  J.  Knolle,  G.  B.  Hal´asz,  R.  Moessner,   and
+49  J. S. Gordon,  A. Catuneanu,  E. S. Sørensen,   and H.-Y.                        N. B. Perkins, Physical Review X 11, 011034 (2021).
+   Kee, Nature communications 10, 2470 (2019).                                   76  W.-H. Kao and N. B. Perkins, Annals of Physics , 168506
+50  J. Osorio Iregui, P. Corboz,  and M. Troyer, Phys. Rev. B                        (2021).
+   90, 195102 (2014).                                                            77  O.  Petrova,  P.  Mellado,   and  O.  Tchernyshyov,  Physical
+51  H.-Y. Lee, R. Kaneko, L. E. Chern, T. Okubo, Y. Yamaji,                          Review B 90, 134404 (2014).
+   N. Kawashima,   and Y. B. Kim, Nature Communications                          78  A. J. Willans, J. T. Chalker,  and R. Moessner, Phys. Rev.
+   11, 1639 (2020).                                                                  Lett. 104, 237203 (2010).
+52  R. Schaﬀer, S. Bhattacharjee,  and Y. B. Kim, Phys. Rev.                     79  A. J. Willans, J. T. Chalker,  and R. Moessner, Phys. Rev.
+   B 86, 224417 (2012).                                                              B 84, 115146 (2011).

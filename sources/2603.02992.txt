@@ -1,0 +1,765 @@
+    Kitaev model in a magnetic field:  stable emergent structure, degenerate classical
+                                           ground states, and reentrant topology
+
+                                                          Sheikh  Moonsun  Pervez              ∗
+                                Institute  of  Physics,  Sachivalaya  Marg,  Bhubaneswar-751005,  India  and
+              Homi Bhabha National Institute,  Training School Complex,  Anushakti Nagar,  Mumbai 400094,  India
+                                                               (Dated:  March 4, 2026)
+                   We have studied the anti-ferromagnetic Kitaev model on a honeycomb lattice under the Zeeman
+                field, using an extensive Majorana mean-field analysis.  When the magnetic field is along a specific
+                Cartesian axis, we find that the emergent fields exhibit direction-dependent stabilization up to a
+                certain critical strength of the external field.  For a conical magnetic field, the characteristics of the
+                emergent intermediate state are elusive. Our mean-field analysis reveals the existence of two distinct
+                phases in the intermediate region.  First, the system enters a disordered phase, where emergent-field
+                densities converge to random values, and the Chern number is ill-defined.  The magnitude of mag-
+                netization also fluctuates and remains less than unity, indicating a strong quantum effect.  In the
+                second phase, emergent-field densities attain vanishingly small values.  In this phase, the magnetiza-
+                tion components fluctuate heavily, but the magnitude of the magnetization vectors becomes unity,
+                indicating highly degenerate classical ground states.  We perform exact diagonalization calculations
+                that qualitatively support some of the mean-field results.  We extend our study to the anisotropic
+                limit of the Kitaev coupling parameters.  When the couplings are beyond the triangular inequality,
+                the pure Kitaev model is known to host a topologically trivial gapped quantum spin liquid.  We find
+                that, for intermediate strengths of a conical magnetic field, topology shows a reentrant behavior.
+
+
+                     I.    INTRODUCTION
+
+   Highly  entangled  quantum  phases,  such  as  spin  liq-
+uids, are exhibited by frustrated magnetic systems [1,2].
+Kitaev proposed such a system with direction-dependent
+Ising  interactions  on  a  honeycomb  lattice  [3],  which
+shows  the  signature  of  quantum  spin  liquid  (QSL).
+Depending on the relative strength among the different
+bond-dependent  exchange  couplings,  this  QSL  can  be
+gapless  or  gapped.   Besides  being  an  exactly  solvable
+interacting system in two [4,5] and three dimensions [6],
+this   model   has   potential   application   to   topological
+quantum  computation  [3].    A  large  number  of  works
+soon   flooded   in   [7–10]   after   Jackeli   and   Khaliullin
+proposed  a  mechanism  to  realize  the  Kitaev  model  in
+Mott  insulators  [11].   Lots  of  experimental  works  have                   FIG. 1.  (a) Representation of the momentum space vectors
+been done on the Kitaev candidate materialsα-RuCl                     3,        (magenta arrows) ˆq  1 and ˆq  2 in the rhombic Brillouin zone (in
+Na2IrO3,  β-Li    2IrO3,   etc.  [12–16],   but  the  search  is                black line).  The two-site unit cell is shaded in magenta.  The
+still  ongoing.    The  main  difficulty  is  the  presence  of                 dashed gray lines are shown to easily identify the correspon-
+non-Kitaev interactions (Heisenberg, Γ, Γ′, etc.)  in real                      dence between the hexagon and rhombus.  (b) 24-site Kitaev
+materials  [17].   The  Kitaev  candidate  materials  always                    honeycomb model with periodic boundary conditions used for
+exhibit some magnetic order at very low temperatures,                           the exact diagonalization.  The direction-dependent Ising-like
+which makes them not suitable to realize the QSL [18].                          x,y,z-type interactions are indicated in red, blue, and green
+However,  studies  have  been  done  on  extended-Kitaev                        colours.  One of the plaquette operators  ˆBp, is shown in ma-
+models to realize proximate QSL [19–21].                                        genta shade.
+
+   To   study   the   effect   of   magnetic   field   on   Kitaev              numerically investigated in the non-perturbative region
+spin liquid (KSL), Tikhonovet al.performed a pertur-                            too  [23–36].   All  studies  suggest  that  QSL  survives  up
+bative analysis that shows the nearest-neighbor spin-spin                       to  a  critical  field  before  entering  into  an  intermediate
+correlation builds up quadratically with the magnitude                          phase,  whose  exact  characteristics  remains  elusive  for
+of the external perturbation [22].  Later, the model was                        a  conical  magnetic  field.   It  has  been  suggested  to  be
+                                                                                gapless  [27–29],  gapped  [30, 31],U(1)gapless  [32–34],
+                                                                                chiral  spin  liquid  [35],  or  Majorana  metal  phase  [36].
+
+∗ Bmoonsun@iopb.res.in                                                          This motivates us to investigate the Kitaev model in a
+                                                                                                                                                          2
+
+magnetic field once more.                                                       of the MF results.
+
+   In  this  paper,  we  investigate  the  anti-ferromagnetic                      Finally,   we   consider   anisotropy   in   the   exchange
+Kitaev  model  in  an  external  magnetic  field  directed                      couplings  and  subject  the  Hamiltonian  to  a  conical
+along[0,0,1]and[1,1,1]directions.  We have executed                             magnetic  field.   The  gapless  phase  of  the  pure  Kitaev
+an extensive mean-field (MF) analysis with a large num-                         model  immediately  becomes  topologically  non-trivial
+ber  ofindependentparameters  to  hunt  for  the  nature                        withC        n =−1.  Interestingly, at an anisotropic parameter
+of  this  intermediate  phase,  followed  by  exact  diagonal-                  point   beyond   the   triangular   inequality,   the   gapped
+ization  (ED)  calculations  to  support  the  MF  analysis.                    topologically  trivial  QSL  of  the  pure  Kitaev  model
+We  extend  the  study  with[1,1,1] magnetic  field  to                         shows a transition into a topologically non-trivial phase
+the anisotropic region of the Kitaev coupling parameters.                       for  intermediate  strengths  of  the  magnetic  field.    We
+                                                                                explain  the  reentrance  of  topology  in  terms  of  some
+   We  have  found,  magnetic  field  along  the  ˆz-direction                  effective couplings entering the triangular inequality.
+immediately  destabilizes  the  gauge  field  defined  on  the
+z-type  bond.   But  those  defined  onxory-type  bonds                            The  paper  is  structured  as  follows.    In  sectionII,
+are  stable  up  to  two  critical  fields.   This  is  in  partial             we introduce the model under consideration and provide
+agreement  with  the  results  obtained  in  our  previous                      details  of  the  MF  decomposition.    In  sectionIII,  we
+work  with  small  Kitaev  clusters,   where  the  static/                      tabulate the MF results inIII A, followed by ED support
+dynamic  nature  of  emergent  fields  has  been  explicitly                    inIII B.  The  reentrant  topology  in  the  anisotropic
+shown in time [37].  Stabilization of these fields indicates                    Kitaev  model  is  investigated  inIII C.  We  conclude  in
+partially  robust  QSL  [38–40],  and  it  is  topologically                    sectionIV.
+non-trivial  with  Chern  numberC    n =+1.   Beyond  the
+first critical field,C         n =−1. After the second critical field,
+the gauge fields defined onxandybonds also become                                               II.    MODEL AND METHOD
+dynamic, indicating the commencement of another QSL,
+which  is  topologically  trivial.   The  emerging  structure                                             A.    Hamiltonian
+is  completely  destroyed  beyond  a  third  critical  field,
+identifying the spin-polarized (SP) phase.                                         Kitaev model on honeycomb lattice is a spin 1/2 sys-
+   The situation is particularly interesting for a conical                      tem where the nearest neighbor spin-spin interaction is
+magnetic  field.    All  of  the  emergent  gauge  fields  are                  direction-dependent Ising-type. The system Hamiltonian
+equally  dynamic,  in  a  topologically  non-trivial  phase                     is given by [3],
+
+withC        n =−1.   Beyond a first critical field,  the system                    HK =κ  x ∑          σxj σxk +κ   y  ∑    σyj σyk+κ   z  ∑    σzj σzk,(1)
+enters  into  an  intermediate  phase,  where  the  emergent                                      ⟨j,k⟩    x          ⟨j,k⟩    y          ⟨j,k⟩    z
+fields’ densities are arbitrary, magnetization components
+fluctuate, and the Chern number is ill-defined (fluctuates                      where ⃗σj  is  the  Pauli  spin  1/2  operator  at  sitej,  and
+betweenC      n =+2  [24, 30, 35]  andC                            n =0),  which  is  in⟨j, k⟩    α is theα-type bond that connects nearest neighbors
+accordance with MF results from a previous study [26].                          jandk.  While studying the isotropic case, we have con-
+Beyond  a  second  critical  field,   the  system  becomes                      sideredκ             x =κ  y =κ  z =κ, and adopt the natural units by
+topologically trivial, where the Cartesian components of                        letting ̵h=1.  All of the results are obtained by normaliz-
+magnetization  fluctuate  heavily,  though  they  obey  the                     ing the Hamiltonian by the Kitaev coupling, i.e., in units
+constraint  of∣  ⃗mA/B  ∣=1  (A/Bare  the  two  sub-lattice                     of∣κ∣.  After splitting the spins into Majorana fermions,
+indices  of  the  honeycomb  lattice).   In  this  phase,  the                  this model can be written as a four-body Majorana hop-
+emergent structures become vanishingly small.  Studies                          ping model.  These Majoranas can be re-coupled to form
+in existing literature do not treat all of the magnetization                    gauge fields which make the background staticZ           2 struc-
+components  as  separate  MF  parameters.   That  is  why                       ture, on which, the emergent ‘matter fermions’ hop.  In
+this particular structure remained hidden in all previous                       a particular choice of the gauge sector, the Hamiltonian
+MF  studies.   We  attribute  this  feature  as  a  signature                   reduces  to  a  two-body  hopping  model  for  the  matter-
+of  large  degeneracy  in  classical  ground  states  (as  the                  fermions, which can be solved exactly, and the result is
+magnetization   operator’s   expectation   behaves   like   a                   KSL [3].  A spin operatorσ               αj  when operates on an eigen-
+classical vector).  Thus,  regarding the large degeneracy                       state∣ψ⟩,  it  flips  the  gauge  sector  by  injectingπflux
+of  ground  states,  we  have  partial  agreement  with  the                    on the two plaquettes adjacent to theαbond originated
+previous  works  with  ED,  which  showed  a  plethora  of                      fromj         th site, apart from introducing an itinerant Majo-
+states come down in the intermediate state [28,32,33].                          rana to the matter sector.  This change can be non van-
+It  is  not  a  spin  liquid  under  the  present  MF  analysis,                ishingly compensated byσ  βk  , only ifβ=α, and∣         ⃗rj− ⃗rk∣
+as the emergent structures are almost destroyed in this                         = 0 (trivially, following Pauli algebra) or 1 (actual flux
+state.  At a third critical field, the system enters the SP                     compensation).  This results in a short range correlation
+phase.  Our ED calculations qualitatively support some                          which cuts off beyond the nearest neighbor, indicating an
+                                                                                                                                                            3
+
+extreme liquid nature of the eigen-state [4].  In presence                       consider the later choice to keep it consistent with matter
+of an external field, the exact solvability is destroyed, and                    field definitions. So there are three of the gauge fields and
+the problem has to be tackled numerically, for large field                       three matter fields.  The next fields can be thought of as
+values.  When subjected to an external magnetic field ⃗h,                        gauge-matter transition fields,
+the Kitaev-Zeeman (KZ) Hamiltonian becomes,
+                                                                                          ⟨ib  αj,Ack,B⟩γ =u  αγ  ,    ⟨ib   αk,Bcj,A⟩γ =w  αγ .         (7)
+                                             N
+                      HKZ =H  K−⃗h⋅          ∑                                   We have takenu    αγ =uandw            αγ =w, for allα, γ=x, y, z.
+                                             j=1  ⃗σj,                    (2)    These careful choices of the MF variables come after try-
+whereNis the total number of sites.  A Kitaev system                             ing out many different MF ans¨atze.  Because of the pres-
+with periodic boundary condition forN=24 [41] is de-                             ence of large number of MF variables, to reliably converge
+picted in FIG.1(b),  which has been used to do the ED                            the  MF,  we  started  with  zeroth  order  MF  decomposi-
+calculations.   Two  magnetic  field  directions  under  con-                    tion  (simplest  choices  of  the  MF  variables:m                αA =m  A,
+sideration are ˆh001 =ˆz, and       ˆh111 =(ˆx+ˆy+ˆz)/            √3.  With      mαB =m  B, u α =u, w      α =w, f       α =f, g      α =g,  for  all
+this set-up, we are now ready to delve into the MF de-                           α=x, y, z),  and  gradually  increased  the  complexity  in
+composition that we have performed in this work.                                 the analysis.  At each order, we observe specific pattern
+                                                                                 among  the  variables,  and  in  next  order,  we  implement
+                                                                                 that (for example, if twoindependentvariables from the
+                B.    Mean-field decomposition                                   same MF species are converged to similar value for the
+                                                                                 full  range  ofh,  we  treat  them  as  a  single  variable  in
+             1.    Fermionization and the mean fields                            the next order), while incorporating more number of MF
+                                                                                 variables.  Results from different MF ans¨atze are consis-
+   As we are concentrating on KZ system, all the inter-                          tent.
+action terms are of the typeσ  αj σβk , withβ=αonly, and
+this interaction is defined on aα-type bond.  Using Ki-                                                  2.    Lagrange multiplier
+taev fermionization process, we can split the spin at a site
+into four Majoranas (three of them are indexed ‘b’ Majo-                            Kitaev fermionizaion locally enlarges the Hilbert space
+ranas, and one of them is non-indexed ‘c’ Majorana) [3].                         by  a  factor  of  two,  which  needs  to  be  projected.   The
+We always considerj-site belongs to ‘A’ sub-lattice and                          projection operator at sitejisD           j =b  xj by
+k-site belongs to ‘B’ sub-lattice.  We put this sub-lattice                                                                             j bzjcj =(−)1 for
+index too in the Majorana definition,  so that when we                           (un)physical subspace.  The constraint is difficult to im-
+go to Fourier space and the nearest neighbor interacting                         plement in this quartic form, but we can transform it to
+terms are written using the same site index along with a                         a set of quadratic equations as:b     xj byj+b   zjcj =0 (and other
+translation vector (something like ⃗rk = ⃗rj + ⃗v), we don’t                     cyclic permutations). Introducing the Lagrange multipli-
+loose the track of which Majorana belongs to what sub-                           ers [30], the constrained Hamiltonian becomes,
+lattice.  So, on sub-latticeAandB, spins are split as,
+        σαj,A =i b  αj,A cj,A ,       σαk,B =i b  αk,B ck,B.         (3)           Hc =H  KZ− ∑                                        2εαβγbβj,Abγj,A)
+                                                                                                     j∈A    ∑α=x,y,z    λαA(ib  αj,Acj,A+ i
+Under MF decomposition, each interacting term can be                                        − ∑
+approximated as,                                                                               k∈B    ∑α=x,y,z    λαB (ib  αk,Bck,B+ i2εαβγbβk,Bbγk,B), (8)
+
+   σαj σαk ≈m  αA (ib  αk,Bck,B)+(ib      αj,Acj,A)m  αB−m   αAmαB               whereε           αβγ is the purely anti-symmetric Levi-Civita sym-
+            −g   αγ (ic  j,Ack,B)−(ib      αj,Abαk,B)f  γ+g   αγ fγ              bol.  After trying out different combinations forλ’s, we
+            −u   αγ (ib  αk,Bcj,A)−(ib      αj,Ack,B)w  αγ +u   αγ  wαγ  ,(4)    are convinced that a site and direction-independent sin-
+                                                                                 gle Lagrange multiplier is enough to provide good con-
+where the nearest neighborsj, kare connected by aγ-                              vergence and consistent results.
+type bond, and in generalγmay not be equal toα.  The
+defined MF variables are,
+                                                                                                  3.    Momentum space Hamiltonian
+         ⟨ib  αj,Acj,A⟩=m    αA ,    ⟨ib   αk,Bck,B⟩=m    αB.         (5)
+These  are  components  of  magnetization  on  each  sub-                           Next we do the Fourier transformation of each of the
+lattice, so there are total six of them.  Next mean fields                       Majoranas to go to momentum ⃗qspace,
+are gauge and matter sector correlations,
+         ⟨ib  αj,Abαk,B⟩γ =g  αγ ,    ⟨ic   j,Ack,B⟩γ =f  γ .         (6)                     bαj(k),A(B)      =    1√N ∑           ⃗q,A(B)      ,
+                                                                                                                      ⃗q  ei⃗rj(k)  ⋅⃗q bα
+We have to take eitherg           αγ =g  α ∀γ,  org         αγ =g  γ ∀α,  as                  cj(k),A(B)      =    1√N ∑
+these two scenarios are numerically indistinguishable; we                                                             ⃗q  ei⃗rj(k)  ⋅⃗q c⃗q,A(B)      ,             (9)
+                                                                                                                                                                                  4
+
+with the normalization,   1N ∑j ei⃗rj⋅(⃗q−  ⃗q′) =δ(   ⃗q−  ⃗q′).  Af-                       We have explicitly writtenλ              αA/B    , as we have taken them
+ter  MF  decomposition,   the  quartic  Hamiltonian  be-                                     as independent MF variables in some of the trial ans¨atze,
+comes quadratic, and it is written in the basis of⟨Ψ∣=                                       before  we  were  convinced  to  take  a  singleλ.   Results
+(b  x†⃗q,A    by†⃗q,A    bz†⃗q,A    c†⃗q,A    bx†⃗q,B    by†⃗q,B    bz†⃗q,B    c†⃗q,B), as:  obtained for MF scheme with uniformλ, are mentioned
+                                                                                             as  final  results.u             α  andw       α  are  also  written  as  vector
+                    HKZ =  ∑                                                                 components, whereas, in our calculations, we have taken
+                               ⃗q∈HBZ  ⟨Ψ∣H     ⃗q ∣Ψ⟩+Σ.                 (10)               uα =u, andw            α =w,∀α.
+
+HBZ stands for ‘half of the Brillouin zone’, and Σ is the
+sum  of  all  constant  terms,  Σ=      N2 κ(−   ⃗mA⋅ ⃗mB +3uw+                                                     4.    Self-consistent equations
+⃗f⋅  ⃗g).   The  momentum-space  HamiltonianH                     ⃗q  leads  to
+eight bands and the negative energies contribute to the                                         Considering half-filling of the bands, only the negative
+ground state energy.  It is written in the basis of∣Ψ⟩as,                                    half will contribute to the ground state energy.  So, the
+                                                                                             ground state energy density per unit cell is,
+                          −i H  ⃗q =[ ℘11 ℘12℘21 ℘22].                       (11)                                                              3
+                                                                                                             Eg =       1N/2      ∑           ∑
+We use some short hand notations to write these parts                                                                           n1,n2∈HBZ     l=0   E(l)n1,n2
+more conveniently:e      iˆq    1⋅⃗q  =e   iq1, e iˆq    2⋅⃗q  =e   iq2, f xeiq1  +                                     +  ∑
+fyeiq2 +f   z =  ˜f,g   xeiq1 +g   yeiq2 +g   z = ˜g/3 = ˜g        0,u(e      iq1+                                        α=x,y,z    κα(−m    αAmαB+f   αgα)
+eiq2 +1)=  ˜u,w(e                 iq1 +e   iq2 +1)=  ˜w.  We have assumed                                               +(κ    x+κ   y+κ   z)uw,                       (12)
+uαγ =uandw            αγ =wfor  allα, γ=x, y, z,  as  mentioned
+previously.  With these notations, we have,                                                  whereE        (0,1,2,3)n1,n2     are the four negative energy bands of the
+           ⎡⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎣                                               ⎤⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎦spectrum ofH   ⃗q at ⃗q=(     n1N1 2π,    n2N2 2π). N        1, N2 are number
+                                                                    ⎛−κ   xmxB+h   x⎞        of points in momentum space along ˆq  1,ˆq   2. MinimizingE                     g
+                    0             λ  zA      −λ   yA   −            ⎜             ⎟          over all the MF parameters, the obtained self-consistent
+                                                                    ⎝    +λ   xA  ⎠          equations are solved using Newton-Raphson method. De-
+                                                                    ⎛−κ   ymyB+h   y⎞        noting the momentum dependent part of Eq(12) as E, we
+                 −λ   zA              0             λ  xA    −      ⎜             ⎟          define,
+℘11 =                                                               ⎝    +λ   yA  ⎠   ,
+                                                                    ⎛−κ   zmzB+h   z⎞                                   mαB−  1          ∂    E=F      αA( ⃗X),
+                  λyA      −λ   xA              0   −               ⎜             ⎟                                              κα   ∂mαA
+                                                                    ⎝    +λ   zA  ⎠                                                      ∂
+             ⎛−κ   xmxB+h   x⎞⎛−κ   ymyB+h   y⎞ ⎛−κ   zmzB+h   z⎞                                                       mαA−  1κα     ∂mαB    E=F      αB( ⃗X),
+             ⎜            ⎟   ⎜             ⎟   ⎜            ⎟            0                                                               ∂
+             ⎝   +λ   xA  ⎠   ⎝    +λ   yA  ⎠   ⎝    +λ   zA ⎠                                                             gα+  1
+                                                                                                                                   κα   ∂fα E=F      αf ( ⃗X),
+              ⎡⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎣                                                     ⎤⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎦                              fα+  1         ∂
+                −κ   xfxeiq1         0            0   −κ     xwxeiq1                                                               κα   ∂gα E=F      αg ( ⃗X),
+                      0   −κ     yfyeiq2      0   −κ     ywyeiq2                                                                           ∂
+   ℘12 =              0               0   −κ     zfz   −κ   zwz                   ,                          w+             1(κ  x+κ   y+κ   z)∂uE=F     u( ⃗X),
+                                                             ⎛−κ   xgxeiq1⎞                                                               ∂
+                 κxuxeiq1    κyuyeiq2    κzuz                ⎜−κ   ygyeiq2    ⎟                              u+             1
+                                                             ⎝    −k   zgz    ⎠                                    (κ  x+κ   y+κ   z)    ∂w E=F     w( ⃗X),
+                                                                                                                                           ∂
+           ⎡⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎢⎣                               ⎛−κ   xmxA+h   x⎞⎤⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎥⎦                           ∂λE=F     λ( ⃗X).          (13)
+                   0            λ  zB      −λ   yB   −⎜                          ⎟           Here, ⃗X= (m     xA,m yA,m zA,m xB,m yB,m zB,f x,f y,f z,g x,
+                                                                    ⎝   +λ   xB  ⎠           gy,g z,u,w,λ) is an ordered set of the 15 MF variables,
+                                                                    ⎛−κ   zmyA+h   y⎞        and  we  denote  ⃗F(  ⃗X)=  (F        xA, F  y
+                 −λ   zB              0            λ  xB    −       ⎜            ⎟           F xf , F  y                                         A  , F  zA, F  xB, F  yB, F  zB,
+                                                                    ⎝   +λ   y   ⎠                    f , F  zf , F  xg , F  yg , F  zg , F u, F w, F λ  )  to  be  another
+℘22 =                                                                 −κ   zmzA+h   zB.      set, treated as a 15-dimensional vector, calculated at the
+                                                                    ⎛            ⎞           given  values  of  ⃗X.   We  start  with  some  random  initial
+                  λyB      −λ   xB             0   −                ⎜            ⎟           guesses of parameters ⃗X(0)   , and keep updating the values
+                                                                    ⎝   +λ   zB  ⎠           forn=1,2,3, ...using the Newton-Raphson formula,
+             ⎛−κ   xmxA+h   x⎞⎛−κ   ymyA+h   y⎞ ⎛−κ   zmzA+h   z⎞
+             ⎜            ⎟   ⎜             ⎟   ⎜            ⎟           0                    ⃗X(n+1)    = ⃗X(n)  −(J[  ⃗X(n)   , ⃗F(  ⃗X(n)  )])−1 ⋅ ⃗F(  ⃗X(n)  ),    (14)
+             ⎝   +λ   xB  ⎠   ⎝    +λ   yB  ⎠   ⎝   +λ   zB  ⎠
+                                                                                                                                                                  5
+
+until∣X    (n+1)i   −X   ni ∣<ϵ,∀i∈[1,15], whereϵ=10                    −4   in our in partial agreement with our previous work with small
+calculations (for some other MF decompositions with less                            Kitaev clusters [37].  Ath         (2)c  ,g z is completely destroyed,
+number of variables, we have gone up toϵ=10    −5  ).  The                          whereasg               x,y  pick  up  dynamics,  and  that  is  reflected
+Jacobian matrix is defined as (JM[ ⃗X(n)   , ⃗F(  ⃗X(n)  )])j,k =                   through  the  decay  in  their  density.   Ath  (3)c  ,  these  two
+∂F(n)                                                                               fields vanish too, indicating the onset of SP phase.
+   j  /∂X  (n)k   , forj, k∈[1,15].
+   We   take   the   momentum   space   summation   over                                The  work  by  Nasu  et  al.  [43]  captures  the  first
+100×100 grid points to calculate E.  At each parameter                              two  critical  fields  at∼0.834  and  1.006  (we  have  mul-
+value,  we  minimize  the  energy  over  10  converged  set                         tiplied  by  2,  as  they  considered  ⃗Sj =  ⃗σj/2,  instead
+that  are  obtained  with  different  random  initial  guesses                      of  just  the  Pauli  operators),  which  are  very  close  to
+for  the  MF  variables.   For  each  initial  guess,  we  take                     our  data,   while  the  third  critical  field  is  absent  in
+50  iterations  for  the  Newton-Raphson  updation,  with                           their  calculations.     With  ED,  they  identify  a  single
+up  to  300  trials  of  one  iteration  loop  till  convergence                    transition  ath    z ∼0.61,  which  is  exactly  reproduced  in
+is  achieved.    Using  the  converged  values  of  the  MF                         our calculations too [III B].
+parameters,   we  calculate  Chern  number  to  identify
+topological phases [42].                                                                         2.    Magnetic field along [1,1,1] direction
+
+
+                           III.    RESULTS                                              Now  we  focus  at  the  results  with  a  conical  field.
+                                                                                    Withh          111[FIG.2d],  two  1st  order  and  one  2nd  order
+   First we look into the results obtained in the isotropic                         phase  transition  occurs  at  critical  fieldsh     (1)c  =0.84   √3,
+case, i.e., forκ     x,y,z =1.  In subsectionIII C, we discuss                      h(2)c  =0.89   √3, andh         (3)c  =1.16   √3. As soon as theh      111 be-
+the effect of anisotropy in the exchange couplings.                                 comes non-zero, it opens up a gap in the energy spectra,
+                                                                                    and the resulting phase is topologically non-trivial with
+                                                                                    Cn =−1.   Survival  of  the  emergent  structures  tillh        (1)c
+                      A.    Mean-field results                                      indicates  partially  robust  QSL.  Beyond  that,  it  enters
+                                                                                    into an intermediate region, whose exact characteristics
+            1.    Magnetic field along [0,0,1] direction                            is still under debate.
+
+   Ath=0,  ground  state  (GS)  energy  per  unit  cell  is                             The  isotropic  Kitaev  model  with  a  conical  mag-
+Eg =−1.5746,  an  exact  match  with  original  result  [3].                        netic field has cubic symmetry,  and thus the Cartesian
+Increasinghgradually  decreases  theE                           g,   eventually     components   of   magnetization   should   coincide   with
+makes  it  linearly  varyingE            g ∼−2h(two  sub-lattice                    each  other.   This  is  indeed  true  in  low-field  QSL  and
+points  per  unit  cell)  in  largehlimit.   Forh               z[FIG.2a],          high-field  SP  phase,  as  we  observe  in  FIG.2e.   But  in
+system undergoes three phase transitions.  Ath  (1)c  =0.92,                        the  intermediate  phase,  something  peculiar  happens.
+second  order  phase  transition  occurs  where  system’s                           In  betweenh        (1)c    andh         (2)c  ,  the  gauge  and  matter  fields
+non-trivial  topology  persists  across  a  gap  closing  at                        fluctuate  but  are  not  destroyed  completely  [FIG.2f].
+h(1)c  ,  and  Chern  numberC    n  changes  from+1  to−1.                          So,  the  liquidity  persists  partially.   When  we  calculate
+Ath  (2)c  =1.05,  a first order phase transition makes the                         the  Chern  number,  it  is  ill-defined  (fluctuates  between
+system topologically trivial withC        n =0.  Ath     (3)c  =2.91,               0  and  2  [44]),  as  already  reported  in  Ref.  [26].    The
+the system enters into SP state via 1st order transition                            magnetization  components  loose  the  cubic  symmetry
+with  no  change  in  topology.  m z                                                and converge to random values.  The magnitude∣           ⃗mA/B  ∣
+                                             A/B     gradually  increases           also  fluctuate,   and  stays  below  1,   indicating  strong
+withh        z,  before  a  discontinuous  jump  ath     (2)c  [FIG.2b].            quantum effects.  All these make us believe that it is a
+(Dis/)continuity  in  order  parameters  at  critical  fields                       disordered phase with randomly directed magnetization,
+are  as  per  the  order  of  phase  transitions.m                     x,yA/B     takeand poorly defined topology.
+almost  zero  but  negative  values  due  to  AFM  coupling,
+and beyondh         (3)c  , they completely vanish.                                     In  our  MF  calculation,   we  identify  a  second  in-
+   Ath=0,  emerging  fields∣g                 α∣≊1,  for  allα=x, y, z,             termediate  phase.    In  betweenh        (2)c    andh         (3)c  , m x,y,zA/B
+due  to  theirZ         2-structure  [FIG.2c].     In  absence  of                  converge  to  arbitrary  values,  but,  they  do  follow  the
+magnetic  field,  the  system  is  integrable  and  the  flux                       constraint of(m     xA/B  )2 +(m    yA/B  )2 +(m    zA/B  )2 =1 [FIG.2e].
+operator expectation can be calculated as⟨    ˆBp⟩=g     2xg2yg2z                   The  emergent  structures  are  almost  vanished  in  this
+=  1.000007,  which  is  in  very  good  agreement  with  the                       phase,  and  we  calculateC                n =0.    The  magnetization
+actual  value  of  unity.   For  the  matter  fields,  we  have                     operator  is  behaving  like  a  classical  vector  (with  the
+got∣f       α∣=0.52,  for allα=x, y, z,  which is same as the                       full  unit  magnitude)  which  points  along  any  direction,
+original value [4]. Increase inh       z immediately destabilizes                   indicating  the  presence  of  large  classical  GS  degen-
+gz, but the other fieldsg          x,y are robust up toh     (2)c  .  This is       eracy.    So  we  paint  the  whole  picture  in  this  region
+                                                                                    as  follows.   Ath  (2)c  ,  the  system  already  enters  into  a
+                                                                                                                                                                 6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2.  Mean-field results for AFM Kitaev model with magnetic field in (a-c) [0,0,1] and (d-f) [1,1,1] direction.  (a,d) Ground
+state energy, and its first and second order derivative with respect to magnitude of the magnetic field.  (b,e) Components of
+magnetization on sub-latticesAandB.  (c,f) Gauge and matter fields’ density.  The emergent fieldsf                                            γ  andg       γ  under this MF
+scheme behave as conjugate to each other.  So, for example in the pure AFM Kitaev limit, if they take simultaneously positive
+or negative values, both provide the same valid solution.  Because in this limit we have,σ   zj σzk <0/Leftr⫯g⊸tl⫯ne⇒σ         zj σzk =⟨ib     zjcj ibzkck⟩=
+−⟨ib    zjbzk icjck⟩=−gf<0/Leftr⫯g⊸tl⫯ne⇒sign(g) sign(f)>0.  That’s why we have plotted absolute value off                                          γ  andg       γ.  Chern numberC  n
+is mentioned inside the colored top bar in (a,d).  Legends for (a,d), (b,e) and (c,f) are indicated inside the legend box of (d),
+(e), and (f), respectively.
+
+
+classical  regime.     The  magnetization  vector  actually                         degenerate  ground  states,  and  remain  zero  acrossh              (3)c
+precesses  around  ˆh111  by  an  angleθ.   As  we  increase                        while approaching SP state.
+h111,θgradually decreases, and ath         (3)c  , it becomes zero,
+indicating  the  commencement  of  SP  phase  where  the
+spins are aligned along the direction of the magnetic field.                                      B.    Exact-diagonalization results
+
+   In   betweenh        (2)c     andh         (3)c  ,   presence   of   large   GS     Under MF approximation, some of the correlations are
+degeneracy  is  in  accordance  with  previous  works  that                         always left out, and it is important to validate MF results
+show  large  number  of  low  lying  eigen-states  exist  in                        by some other method.  Here we choose to study the sys-
+this intermediate region [28,32,33].  Under the present                             tem with ED using Lanczos algorithm.  We take average
+MF  framework,  this  phase  in  not  a  spin  liquid,  as  the                     over  the  results  obtained  from  different  initial  random
+emergent  structures  are  (almost)  vanished.     All  MF                          configurations.  Standard deviations (SD) are shown as
+work  in  literature,  assume  the  cubic  symmetry  in  the                        vertical bars in all panels of FIG.3.
+observables, to keep the number of MF variables less, so
+that  the  convergence  is  achievable.   As  a  consequence,
+this  rich  structure  remained  hidden.    Our  work  goes                                      1.    Magnetic field along [0,0,1] direction
+beyond  this  assumption,  considers  the  variables  to  be
+direction-dependent,  and  thus  able  to  bring  out  the                             GS  ED  energy, E GS =−1.5881  per  unit  cell,  is  very
+constrained structure.                                                              close  to  MF  data.   The  resemblance  between  MF  and
+   In   summary,   as   we   increaseh               111,   the   emergent          ED results for allhvalues show that we have obtained
+                                                                                    GS via MF, very close to the exact one.  This is possible
+fields  remain  close  to  their  zero-field  values  indicating                    only  because  we  have  dealt  with  large  number  of  MF
+persisting  QSL,  starts  to  fluctuate  ath     (1)c    indicating                 variables,  that  describes  the  system  more  accurately.
+commencement of a disordered phase, vanish beyondh         (2)c                     Increase  inhmakesE          GS  to  decrease,  and  eventually
+depicting the absence of QSL and emergence of classical                             to  vary  as∼−2hin  largehlimit.   Due  to  finite  size
+                                                                                                                                                                      7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3.  Exact diagonalization results for magnetic field in (a-d) [0,0,1], and (e-h) [1,1,1] direction.  (a,e) Ground state energy
+and its derivatives with respect to magnetic field strength. MF energy is shown in black line for comparison. (b,f) Magnetization
+components (not averaged, and explicitly plotted for all sites).  (c,g) Expectation value of the flux operator⟨          ˆBp⟩, and quantum
+distanced               Q.   The  set  of  twelve  flux  operator  values  are  not  averaged,  and  they  have  been  plotted  one  top  of  another,  to
+explicitly show the fluctuation in betweenh        (2)c    andh         (3)c   .  (d,h) Spin-spin correlations on the bonds:  21-22 (z-type), 22-23 (x-
+type), and 23-24 (y-type).  Legends for (a,e), (b,f) and (c,g) are indicated inside the legend box of (a), (b), and (c), respectively.
+Correlations with different colors are split into multiple legend boxes, and are kept in (d) and (h).
+
+
+effects, ED captures only a 1st order phase transition at                              and we get larged         Q [FIG.3c].  GS evolves adiabatically
+h(1)c  =0.61, and other critical points are absent [FIG.3a].                           with only a rapid transition at the critical field.  Beyond
+                                                                                       hc, GS smoothly connects to the SP state at largehlimit.
+   Absence   of   non-Kitaev   interaction   makesAand
+Bsub-lattice  to  experience  the  magnetic  field  equally                               Zero   temperature   spin-spin   correlation   is   defined
+[FIG.3b].   Ashis  along  ˆz-direction,m                                           x,yA/B     remain  zeroasC    αβjk =⟨GS∣σ           αj σβk∣GS⟩.  In pure-Kitaev limit, the exact
+throughout the zero-field QSL phase to the high-field SP                               value  of  this  correlation  comes  from  the  matter  sector
+state.  Ath  (1)c  ,m zA/B    changes discontinuously because of                       only,  asC    ααγ  =−⟨ic       jck⟩δ  α,γ,  and  all  the  cross  corre-
+the 1st order transition, and asymptotically approaches                                lations  are  zero  [4].   At  zero-field,  we  get  the  non-zero
+unity at largehlimit.                                                                  correlations asC    xxx   =C    yyy   =C    zzz   = -0.529367 with SD
+   Flux   operator    ˆBp   is   defined   as   the   product   of                     of  0.031519;  actual  value−0.524866  is  well  within  the
+pure-Kitaev Hamiltonian terms around a plaquette, that                                 error bar.h       z  does not buildx−xandy−ycorrelation
+                                                                                       in thez-type bonds, and we getC          xxz  =C   yyz  =0∀h       z. C yyx
+effectively  reduces  to  product  of  the  Pauli  operators                           andC       xxy    undergoes a subtle discontinuity ath    c =0.61,
+projected  along  the  outward  directions  from  each  site                           supporting the 1st order phase transition.  Ash     z  starts
+on a plaquette (one of them,  ˆBp =σ  y19σz20σx21σy22σz23σx24,                         to align the spins along  ˆz, C      yyx  =C   xxy  →0 in the limit
+is  shown  in  FIG.1b).   Ath             z =0,⟨     ˆBp⟩starts  from+1,               hz →∞. C         zzx  =C   zzy   starts from zero ath    z =0,  jumps
+monotonously  decreases  with  increasingh                   z,  shows  a              up ath     (1)c  , and gradually saturates to unity in largeh         z
+discontinuous  jumps  to  very  low  values  at  the  critical                         limit.  Interestingly, on az-type bond, allx−x, y−y, z−z
+field.    At  largeh         z  values, ⟨  ˆBp⟩ completely  vanishes,                  correlations exactly vanish at 0.88<h          0 <0.89 [FIG.3d,
+indicating equal mixing of theZ      2  vortices; thus QSL is                          black  dotted  circle].   So,  ath    0,  the  system  effectively
+completely destroyed.                                                                  reduces to decoupledx-ychains, which is in accordance
+   To  calculate  the  gradual  fidelity,   we  define  quan-                          with previous work of dimensional reduction in KSL [46].
+                                                                                       Using ED GS, we have calculated the distanced neighbor
+tum distanced                2Q(h)=1−∣⟨ψ               h∣ψ h+∆h    ⟩∣2 [45], where∣ψ                 h⟩correlations  ath    0 =0.8864.   We  get∣C             yyj,j+k   ∣∼∣C     xxj,j+k   ∣
+is the ED GS ath.d       Q ∼0 indicates that the two consecu-                          =  0.536361,  0.265968,  0,  0,  fork=1,2,3,4  respec-
+tive GS are very similar (‘close’ to each other). Whereas,                             tively.  WhereasC                zzj,j+k     = 0.537345, 0.174880, 0.195425,
+a  larged         Q  tells  that  consecutive  GS  are  independent                    0.177797  fork=1,2,3,4  respectively.   So,x−x, y−y
+of each other.  When we introduce non-zeroh  z, the GS                                 correlations  are  short  ranged,  as  they  survive  only  up
+is very different from what it was in pure-Kitaev limit,                               to second nearest neighbor.  Whereas,z−zcorrelations
+                                                                                                                                                               8
+
+saturate at some finite value for long-distance neighbors,                         fluctuations  in  topological  entanglement  entropy  [33],
+and that produce the magnetization in ˆz-direction as in                           and in genuine multipartite negativity for intermediate
+FIG.3b.                                                                            magnetic field [47].
+
+
+            2.    Magnetic field along [1,1,1] direction
+
+   In  this  subsection,  we  showcase  the  ED  results  with
+h111.   Despite  finite  size  effects,  ED  captures  all  three
+critical  transitions  with  quantitatively  different  (than
+MF) fields,h              (1)c  =0.46   √3,h    (2)c  =0.65   √3,h    (3)c  =0.74   √3,
+and  all  of  the  transitions  are  identified  as  2nd  order
+[FIG.3e].    All  of  the  flux  operators  are  destabilized
+equally  in  the  low  field  partially  robust  QSL,  and  in
+high  field  SP  phase.    But,  in  betweenh        (2)c    andh         (3)c  ,  FIG. 4.  (a) Gapless (B) and gapped (A       x,y,z) phases (in ab-
+⟨ ˆBp⟩ fluctuates  rapidly  as  captured  by  its  large  SD                       sence  of  magnetic  field)  in  the  Kitaev  coupling  parameter
+(FIG.3g,   magenta◻inset)  calculated  from  different                             space on the triangle havingκ        x +κ   y +κ   z =1.  The chosen cou-
+Lanczos initializations.  In this region, ED magnetization                         pling constants when projected on this plane,  are indicated
+magnitude   and   the   Cartesian   components   fluctuate                         by colored dots.  (b) Chern numberC    n  as we vary strength
+rapidly with high SD (FIG.3f, magenta◻inset).  Apart                               of the magnetic field.  The color coding indicates the coupling
+from  large  SD,  we  observe  substantial  non-zerod  Q  in                       strengths as indicated on the Kitaev’s parameter triangle in
+this  region,  indicating  that  consecutive  GS  are  inde-                       the left panel.  We have given a slight shift along the vertical
+pendent  from  each  other.    The  non-zero  correlations                         axis for visual clarity.  The black dots on the field axis indi-
+at  zero-field,  gradually  increases  with  increase  inhat                       cate theh      111  values for which the band spectra is shown in
+equal  rate,  crosses  zero,  and  eventually  saturates  to                       FIG.5, for the parameter valuesκ                    x =κ  y =1,κ      z =2.5 (red
+1/3.    The  other  correlations  also  grow  from  zero  and                      line here).
+asymptotically  approaches  1/3.    In  betweenh             (2)c    and
+h(3)c  ,  the  correlations  become  weak  and  they  fluctuate
+with large SD, as depicted in black◻inset box of FIG.3h.
+                                                                                                 C.    Anisotropic Kitaev couplings
+   It  is  worth  mentioning  that  in  the  model  under
+consideration, a triple (quasi-)degeneracy in the ground                              Kitaev  model  is  known  to  host  both  gapless  and
+state is expected owing to the Ising topological quantum                           gapped   energy   spectra   depending   on   the   relative
+field  theory  [32].   We  observe  such  (quasi)  degeneracy                      strength of the exchange couplings.  When they obey the
+to  occur  tillh    (3)c     [FIG.8b].    Interestingly,  higherd                        Qtriangular  inequality  (∣κ   α∣+∣κ    β∣ ≥∣κ    γ∣),  the  spectrum
+value in this region means the GS at each field strength                           is  gapless.    Resulting  QSL  is  actually  a  topologically
+changes rapidly having very small fidelity between them,                           non-trivial  one,  which  can  be  calculated  by  opening
+which  is  suggested  to  be  a  spin-glass  phase  for  Kitaev                    a  gap  in  the  spectra  by  introducing  a  perturbation.
+model on a ribbon geometry using density matrix renor-                             When  theκ      α’s  are  beyond  the  triangular  inequality,
+malization group technique [25].  In our ED calculations,                          the  spectrum  is  gapped,  and  it  is  topologically  trivial.
+nearh        111 ∼0.23   √3,  the  lowest  three  Lanczos  states                  Here we study the fate of this gapped trivial QSL when
+are  degenerate  within  ∆E∼0.0002;  but  that  affects                            subjected to a magnetic field.
+the  cubic  symmetry  in  the  magnetization  components                              To  this  end,  we  investigate  the  effect  of  anisotropy
+minimally.    Whereas,  in  betweenh     (2)c     andh     (3)c   ,  they          in  the  Kitaev  couplingsκ           x,y,z  in  presence  of  magnetic
+stay withinE            0+0.002, but the results appear to suffer                  field  in  the[1,1,1] direction.     In  absence  ofh                      111,
+a numerical convergence of the GS to random directions                             the  Kitaev  phase  diagram  is  shown  in  FIG.4a.    We
+in a degenerate subspace.  This hints us, the GS in this                           choose  the  coupling  strength  values  asκ    x =κ  y =1,
+phase  might  be  fundamentally  different.    The  sudden                         andκ       z =0.5,1,1.5,2,2.5.    As  soon  as  a  perturbative
+drop in the correlation also indicate the system possibly                          magnetic  field  is  turned  on,   the  gapless  phase  (‘B’
+orients the spins in specific directions depending on the                          in  FIG.4a)  acquires  a  gap  and  become  topologically
+bond interaction, and the large SD is a signature of the                           non-trivial withC        n =−1.  Forκ         z =0.5, the system makes
+different  accessible  configurations  of  that  orientation.                      a  topological  transition  intoC    n =+1  at  a  certain  field
+Comparing  with  the  MF  analysis  presented  inIII A,                            value,  and  eventually  makes  another  transition  to  the
+we  believe  the  ED  result  is  also  a  indicator  of  the                      trivial phase when the external field is increased further.
+classical  degenerate  GS,  with  some  finite  size  effects                      Forκ    z =1.5, the system goes from−1→0→−1→0 at
+(for example, fluctuations in the magnetization become                             certain strengths ofh    111.
+minimal,  unlike  MF).  Interestingly,  we  do  find  similar
+                                                                                                                                                         9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 5. The eight band energy spectra in momentum space forκ     x =κ  y =1,κ      z =2.5 (corresponds to red line in FIG.4). Various
+strengths of the magnetic field areh      111/√3 = (a) 0.58, (b) 1.29, (c) 1.73, (d) 2.19, (e) 2.60, indicated by different black dots
+on the horizontal axis of FIG.4b.  The system makes topological transition at (b) and (d).
+
+
+   The  particularly  interesting  case  is  when  the  sys-                    as  established  in  the  literature  by  means  of  different
+tem is otherwise topologically non-trivial (κ  x =κ  y =1,                      numerical  methods  [38, 39].     Upon  application  of  a
+κz =2.5).  As we observe in FIG.4b, in presence of the                          conical  magnetic  field,  we  show  the  presence  of  two
+conical magnetic field’s intermediate strength, topology                        phases in the intermediate strength of the field. The first
+shows  a  reentrant  behavior.    We  can  understand  this                     one being magnetically disordered,  where the emergent
+in  the  following  way.     The  external  field  suppresses                   fields converge to random values, and the Chern number
+the  anisotropic  AFM  interactions  (stronger  effect  on                      becomes  ill-defined.    In  the  next  intermediate  phase,
+the  largerκ           α),  effectively  bringing  them  back  within           the magnetization vectors behave as classical ones, with
+the  triangular  inequality,  and  thus  making  a  topolog-                    their direction directed along arbitrary directions.  With
+ical  transition.    Our  numerical  investigation  suggests                    increase in the external field strength, the magnetization
+that  the  effective  couplings  can  even  be  written  in  an                 vectors, gradually becomes more aligned to the magnetic
+approximate  quantitative  way  asκ    effα  = κ  α/∣g   α∣,   for              field’s  direction,  and  after  a  critical  strength  of  the
+α=x,  y,  z.  Theκ               effα ’s when projected to a triangular         Zeeman  field,  enters  the  trivial  spin  polarized  phase.
+parameter space (similar to FIG.4a),  the topologically                         The   presence   of   two   intermediate   phases   has   been
+non-trivial  phase  appears  when  the  effective  couplings                    explored  using  cluster  mean-field  calculations  [26],  but
+approximately belong to the inner triangle.  We demon-                          the existence of degenerate classical ground states is not
+strate  this  correspondence  between  change  in  topology                     shown.   Performing  exact  diagonalization  calculations,
+andκ       effα ,  in  [48].   With  increase  in  the  field  strength,        we  qualitatively  re-establish  some  of  the  conclusions
+the  system  eventually  becomes  spin  polarized,   thus                       from our mean-field analysis.
+making a transition to topologically trivial phase.  The
+topological  region  is  quite  robust  for  a  wide  range  of                 Finally,   we   investigate   the   effect   of   anisotropy   in
+the intermediate field strength.  We also plot the energy                       the  Kitaev  couplings  in  the  presence  of  a  conical  mag-
+band in FIG.5to explicitly demonstrate the gap closure                          netic  field,  and  find  that  topology  shows  a  reentrant
+during the topological transitions.                                             behavior  in  the  ‘gapped’  phase  (of  the  unperturbed
+                                                                                Kitaev  model)  at  some  intermediate  strength  of  the
+                                                                                external  field.   Our  numerics  suggest  that  the  Kitaev
+                      IV.    CONCLUSION                                         couplings  are  effectively  rescaled,  which  can  even  be
+                                                                                written  in  an  approximate  quantitative  equation,  and
+   We  have  performed  a  Majorana  mean-field  analysis                       the  reentrance  of  topology  occurs  when  these  effec-
+with an extensive number of variables to bring out the                          tive  couplings  satisfy  the  triangular  inequality.    It  is
+rich physics of the Kitaev-Zeeman model.  In contrast to                        intriguing  to  extend  our  study  in  presence  of  other
+previous mean-field works in the literature [30,43,49–                          non-Kitaev  interactions,   and  to  check  if  in  a  more
+52], we consider the variables to be direction-dependent.                       realistic  model  (including  Heisenberg,  Γ,  Γ′  terms),  a
+The novelty in our work lies in the successful convergence                      proximate  topologically  non-trivial  QSL  survives,  that
+of  the  self  consistent  equations,  despite  considering  so                 would  in  principle  manifest  its  signature  through  a
+many variables.                                                                 half-quantized thermal Hall response.
+
+   When the Zeeman field is along a Cartesian axis, we                             It is worthwhile to make further similar investigations
+find  that  the  emergent  fields  are  stabilized  depending                   for the Kitaev model in higher dimensions [6,53].  It will
+on  their  directionality  (on  what  type  of  bond  they  are                 also be interesting if we find any correspondence under
+initially defined).  Interestingly, the stabilization of these                  the mean-field scheme to the emerging narrow bands in
+emergent  structures  is  an  direct  indication  that  the                     the eigen-spectra when a competing Heisenberg interac-
+QSL remains partially robust up to certain critical field,                      tion (opposing the Kitaev coupling) is present [54].  It is
+                                                                                                                                                            10
+
+compelling  to  investigate  the  fate  of  recently  proposed                                        ACKNOWLEDGEMENT
+emergent quadrupolar order [55] in such a system,  and
+what  is  its  signature  under  a  mean-field  scheme.   All
+these questions can be addressed extending the present
+work, and we leave them as future scope.
+                                                                                     The author gratefully acknowledges Saptarshi Mandal
+                                                                                  for suggesting the problem, for insightful discussions, and
+          DATA AVAILABILITY STATEMENT                                             for  carefully  reading  the  manuscript.   Numerical  calcu-
+                                                                                  lations were partially carried out at SAMKHYA (High-
+   The data supporting this study’s findings are available                        Performance Computing facility), provided by the Insti-
+upon reasonable request from the corresponding author.                            tute of Physics, Bhubaneswar.
+
+
+
+
+
+ [1]L.  Balents,  Spin  liquids  in  frustrated  magnets,Nature                   [14]S. K. Choi, R. Coldea, A. N. Kolmogorov, T. Lancaster,
+     464, 199 (2010).                                                                   I.  I.  Mazin,  S.  J.  Blundell,  P.  G.  Radaelli,  Y.  Singh,
+ [2]L. Savary and L. Balents, Quantum spin liquids:  a re-                              P. Gegenwart,  K. R. Choi,  S.-W. Cheong,  P. J. Baker,
+     view,Reports on Progress in Physics80, 016502 (2016).                              C. Stock, and J. Taylor, Spin waves and revised crystal
+ [3]A.  Kitaev,  Anyons  in  an  exactly  solved  model  and  be-                       structure of honeycomb iridate na2iro3,Phys. Rev. Lett.
+     yond,Annals of Physics321, 2 (2006), january Special                               108, 127204 (2012).
+     Issue.                                                                       [15]T. Takayama, A. Kato, R. Dinnebier, J. Nuss, H. Kono,
+ [4]G. Baskaran, S. Mandal, and R. Shankar, Exact results                               L. S. I. Veiga, G. Fabbris, D. Haskel, and H. Takagi, Hy-
+     for  spin  dynamics  and  fractionalization  in  the  kitaev                       perhoneycomb iridateβ−li                  2iro3 as a platform for kitaev
+     model,Phys. Rev. Lett.98, 247201 (2007).                                           magnetism,Phys. Rev. Lett.114, 077202 (2015).
+ [5]S. Mandal, R. Shankar, and G. Baskaran, Rvb gauge the-                        [16]Y. Singh, S. Manni, J. Reuther, T. Berlijn, R. Thomale,
+     ory  and  the  topological  degeneracy  in  the  honeycomb                         W. Ku,  S. Trebst, and P. Gegenwart, Relevance of the
+     kitaev  model,Journal  of  Physics  A:  Mathematical  and                          heisenberg-kitaev  model  for  the  honeycomb  lattice  iri-
+     Theoretical45, 335304 (2012).                                                      datesA          2iro3,Phys. Rev. Lett.108, 127203 (2012).
+ [6]S.  Mandal  and  N.  Surendran,  Exactly  solvable  kitaev                    [17]S. Trebst and C. Hickey, Kitaev materials,Physics Re-
+     model  in  three  dimensions,Phys.  Rev.  B79,  024426                             ports950, 1 (2022), kitaev materials.
+     (2009).                                                                      [18]S.  Mandal,  A  primer  on  kitaev  model:   basic  aspects,
+ [7]J.  G.  Rau,  E.  K.-H.  Lee,  and  H.-Y.  Kee,  Spin-orbit                         material realization, and recent experiments,Journal of
+     physics giving rise to novel phases in correlated systems:                         Physics:  Condensed Matter37, 193002 (2025).
+     Iridates  and  related  materials,Annual  Review  of  Con-                   [19]A. Banerjee, C. A. Bridges, J.-Q. Yan, A. A. Aczel, L. Li,
+     densed Matter Physics7, 195 (2016).                                                M. B. Stone, G. E. Granroth, M. D. Lumsden, Y. Yiu,
+ [8]M. Hermanns, I. Kimchi, and J. Knolle, Physics of the ki-                           J. Knolle, S. Bhattacharjee, D. L. Kovrizhin, R. Moess-
+     taev model: Fractionalization, dynamic correlations, and                           ner,  D. A. Tennant,  D. G. Mandrus, and S. E. Nagler,
+     material connections,Annual Review of Condensed Mat-                               Proximate  kitaev  quantum  spin  liquid  behaviour  in  a
+     ter Physics9, 17 (2018).                                                           honeycomb magnet,Nature Materials15, 733 (2016).
+ [9]H. Takagi, T. Takayama, G. Jackeli, G. Khaliullin, and                        [20]J.  Wang,  B.  Normand,  and  Z.-X.  Liu,  One  proximate
+     S. E. Nagler, Concept and realization of kitaev quantum                            kitaev spin liquid in thek−j−Γ model on the honeycomb
+     spin liquids,Nature Reviews Physics1, 264 (2019).                                  lattice,Phys. Rev. Lett.123, 197201 (2019).
+[10]S. Trebst and C. Hickey, Kitaev materials,Physics Re-                         [21]A.  Kumar  and  V.  Tripathi,  Kitaev  quasiparticles  in  a
+     ports950, 1 (2022), kitaev materials.                                              proximate  spin  liquid:   A  many-body  localization  per-
+[11]G.  Jackeli  and  G.  Khaliullin,  Mott  insulators  in  the                        spective,Phys. Rev. B102, 100401 (2020).
+     strong  spin-orbit  coupling  limit:  From  heisenberg  to  a                [22]K.  S.  Tikhonov,  M.  V.  Feigel’man,  and  A.  Y.  Kitaev,
+     quantum compass and kitaev models,Phys. Rev. Lett.                                 Power-law  spin  correlations  in  a  perturbed  spin  model
+     102, 017205 (2009).                                                                on  a  honeycomb  lattice,Phys.  Rev.  Lett.106,  067203
+[12]A.   Banerjee,   J.   Yan,   J.   Knolle,   C.   A.   Bridges,                      (2011).
+     M.   B.   Stone,   M.   D.   Lumsden,   D.   G.   Mandrus,                   [23]D. A. S. Kaib, S. M. Winter, and R. Valent´ı, Kitaev hon-
+     D.   A.   Tennant,   R.   Moessner,   and   S.   E.   Nagler,                      eycomb models in magnetic fields:  Dynamical response
+     Neutron    scattering    in    the    proximate    quantum                         and dual models,Phys. Rev. B100, 144445 (2019).
+     spin    liquidα−rucl                3,   Science356,    1055    (2017),      [24]F. Y ılmaz, A. P. Kampf, and S. K. Yip, Phase diagrams
+     https://www.science.org/doi/pdf/10.1126/science.aah6015.                           of kitaev models for arbitrary magnetic field orientations,
+[13]H. Gretarsson, J. P. Clancy, X. Liu, J. P. Hill, E. Bozin,                          Phys. Rev. Res.4, 043024 (2022).
+     Y. Singh, S. Manni, P. Gegenwart, J. Kim, A. H. Said,                        [25]K.  B.  Yogendra,  T.  Das,  and  G.  Baskaran,  Emergent
+     D. Casa, T. Gog, M. H. Upton, H.-S. Kim, J. Yu, V. M.                              glassiness in the disorder-free kitaev model:  Density ma-
+     Katukuri,  L.  Hozoi,  J.  van  den  Brink,  and  Y.-J.  Kim,                      trix  renormalization  group  study  on  a  one-dimensional
+     Crystal-field splitting and correlation effect on the elec-                        ladder setting,Phys. Rev. B108, 165118 (2023).
+     tronic structure ofA    2iro3,Phys. Rev. Lett.110, 076402                    [26]W. Holdhusen, D. Huerga, and G. Ortiz, Emergent mag-
+     (2013).                                                                            netic  order  in  the  antiferromagnetic  kitaev  model  in  a
+                                                                                                                                                              11
+
+     [111] field,Phys. Rev. B109, 174411 (2024).                                         an ill-definedc           n, which fluctuates between 0 and 2.
+[27]M.  Gohlke,  R.  Moessner,  and  F.  Pollmann,  Dynamical                      [45]R. Resta, The insulating state of matter:  a geometrical
+     and topological properties of the kitaev model in a [111]                           theory,The European Physical Journal B79, 121 (2011).
+     magnetic field,Phys. Rev. B98, 014418 (2018).                                 [46]S.  Feng,  A. Agarwala,  and  N.  Trivedi, Dimensional  re-
+[28]Z. Zhu, I. Kimchi, D. N. Sheng, and L. Fu, Robust non-                               duction of kitaev spin liquid at quantum criticality,Phys.
+     abelian spin liquid and a possible intermediate phase in                            Rev. Res.6, 013298 (2024).
+     the antiferromagnetic kitaev model with magnetic field,                       [47]L.  Lyu,  D.  Chandorkar,  S.  Kapoor,  S.  Takei,  E.  S.
+     Phys. Rev. B97, 241110 (2018).                                                      Sørensen,   and   W.   Witczak-Krempa,Multiparty   en-
+[29]K. Wang, S. Feng, P. Zhu, R. Chi, H.-J. Liao, N. Trivedi,                            tanglement   loops   in   quantum   spin   liquids(2025),
+     and T. Xiang, Fractionalization signatures in the dynam-                            arXiv:2505.18124 [cond-mat.str-el].
+     ics of quantum spin liquids,Phys. Rev. B111, L100402                          [48]As  we  vary  the  magnetic  fieldh           111,  the  couplings  are
+     (2025).                                                                             renormalized effectively asκ    effα =κ  α/∣g   α∣ forα=x, y, z,
+[30]M.-H. Jiang, S. Liang, W. Chen, Y. Qi, J.-X. Li, and Q.-                             and we plot these effectiveκ’s on triangular parametric
+     H. Wang, Tuning topological orders by a conical magnetic                            plot,[click  on  this  link  (in  browser,  a  play  button  will
+     field in the kitaev model,Phys. Rev. Lett.125, 177203                               show up, click on that) to view the motion picture, for
+     (2020).                                                                             ⃗κ=(1,1,2.5)].
+[31]S.-S. Zhang, G. B. Hal´asz, and C. D. Batista, Theory of                       [49]S. Thiagarajan, C. Watson, T. Yzeiri, H. Hu, B. Uchoa,
+     the kitaev model in a [111] magnetic field,Nature Com-                              and F. Kr¨uger, Nature of the topological transition of the
+     munications13, 399 (2022).                                                          kitaev model in [111] magnetic field,Phys. Rev. B113,
+[32]C. Hickey and S. Trebst, Emergence of a field-driven u(1)                            085108 (2026).
+     spin liquid in the kitaev honeycomb model,Nature Com-                         [50]S. G. Saheli,  J. Lin,  H. Hu, and F. Kr¨uger, Majorana-
+     munications10, 530 (2019).                                                          fermion mean field theories of kitaev quantum spin liq-
+[33]D. C. Ronquillo, A. Vengal, and N. Trivedi, Signatures of                            uids,Phys. Rev. B109, 014407 (2024).
+     magnetic-field-driven  quantum  phase  transitions  in  the                   [51]A. Ralko and J. Merino, Novel chiral quantum spin liq-
+     entanglement  entropy  and  spin  dynamics  of  the  kitaev                         uids  in  kitaev  magnets,Phys.  Rev.  Lett.124,  217203
+     honeycomb model,Phys. Rev. B99, 140413 (2019).                                      (2020).
+[34]S. Pradhan,  N. D. Patel, and N. Trivedi, Two-magnon                           [52]S.  Liang,  M.-H.  Jiang,  W.  Chen,  J.-X.  Li,  and  Q.-H.
+     bound states in the kitaev model in a [111] field,Phys.                             Wang, Intermediate gapless phase and topological phase
+     Rev. B101, 180401 (2020).                                                           transition of the kitaev model in a uniform magnetic field,
+[35]S. Thiagarajan, C. Watson, T. Yzeiri, H. Hu, B. Uchoa,                               Phys. Rev. B98, 054433 (2018).
+     and  F.  Kr¨uger,Nature  of  the  topological  transition                     [53]S.  Sarkar,  D.  Rana,  and  S.  Mandal,  Defect  production
+     of  the  kitaev  model  in  [111]  magnetic  field(2025),                           and  quench  dynamics  in  the  three-dimensional  kitaev
+     arXiv:2509.13057 [cond-mat.str-el].                                                 model,Phys. Rev. B102, 134309 (2020).
+[36]P.  Zhu,  S.  Feng,  K.  Wang,  T.  Xiang,  and  N.  Trivedi,                  [54]S. M. Pervez and S. Mandal,Quantum otto heat-engine
+     Emergent  quantum  majorana  metal  from  a  chiral  spin                           with  kitaev-heisenberg  cluster:   Possible  roles  of  frus-
+     liquid,Nature Communications16, 2420 (2025).                                        tration, magnons, and duality(2026),arXiv:2601.03826
+[37]S. M. Pervez and S. Mandal, Deciphering competing in-                                [cond-mat.mes-hall].
+     teractions of kitaev-heisenberg–γsystem in clusters:  Ii.                     [55]M.  Routh,  S.  Ghosh,  J.  van  den  Brink,  S.  Nishimoto,
+     dynamics of majorana fermions,Journal of Physics: Con-                              and M. Kumar, Emergent quadrupolar order in the spin-
+     densed Matter37, 025803 (2024).                                                      1
+                                                                                          2  kitaev-heisenberg model,Phys. Rev. B109, L220403
+[38]S. Feng, A. Agarwala, S. Bhattacharjee, and N. Trivedi,                              (2024).
+     Anyon dynamics in field-driven phases of the anisotropic
+     kitaev model,Phys. Rev. B108, 035149 (2023).
+[39]S. Feng and N. Trivedi,Magnetic field induced phenom-                                                Appendix A: Appendix
+     ena in kitaev spin liquids(2026),arXiv:2601.14496 [cond-
+     mat.str-el].                                                                           1.    Benchmark test of Lanczos algorithm
+[40]S. M. Pervez and S. Mandal, Deciphering competing in-
+     teractions  of  kitaev–heisenberg-γsystem  in  clusters:  I.
+     static properties,Journal of Physics:  Condensed Matter                           As  we  have  already  observed  [FIG.3a,e],   the  MF
+     37, 025802 (2024).                                                            ground state is very close to the Lanczos ground state,
+[41]J. c. v. Chaloupka, G. Jackeli, and G. Khaliullin, Kitaev-                     and thus it passes the benchmark test.  But, what about
+     heisenberg model on a honeycomb lattice: Possible exotic                      the Lanczos state itself?  Here we do a benchmark test
+     phases  in  iridium  oxidesA          2iro3, Phys.  Rev.  Lett.105,           for  the  Lanczos,  while  comparing  the  energy  obtained
+     027204 (2010).                                                                for  a  12-site  Kitaev  cluster  using  full-diagonalization.
+[42]T.  Fukui,  Y.  Hatsugai,  and  H.  Suzuki,  Chern  num-                       Throughout this paper, for Lanczos algorithm, we have
+     bers  in  discretized  brillouin  zone:    Efficient  method                  set  the  Krylov  space  dimension  at  200.   This  is  good
+     of   computing   (spin)   hall   conductances,Journal   of                    enough  to  give  the  ground  state  energy,  as  we  will  see
+     the   Physical   Society   of   Japan74,   1674   (2005),                     in  the  convergence  test.    We  have  used  a  12-site  Ki-
+     https://doi.org/10.1143/JPSJ.74.1674.
+[43]J. Nasu, Y. Kato, Y. Kamiya, and Y. Motome, Successive                         taev  cluster  with  periodic  boundary  condition,  as  de-
+     majorana  topological  transitions  driven  by  a  magnetic                   picted in FIG.6a, to execute the full exact diagonaliza-
+     field in the kitaev model,Phys. Rev. B98, 060416 (2018).                      tion.   For benchmarking,  we have  used 11 Lanczos ini-
+[44]We have checked with minimizing energy for 30 different                        tializations.  The results for two different orientation of
+     sets of converged mean-field parameters and still obtain
+                                                                                                                                                          12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                 FIG. 7.  Convergence test for Lanczos algorithm on the 24-
+                                                                                 site lattice under consideration, in the pure Kitaev limit.  As
+                                                                                 we vary the dimension of Krylov space (D[K]), here we plot
+FIG. 6.  Benchmark test for the Lancos ground state energy                       the expectation of (a) flux operator, (b) total magnetization
+E0 with respect to the actual ground state energyE            GS.  (a)           along ˆz-direction, (c) ground state energy, and (d) few excited
+The 12-site cluster that we have used for benchmarking, and                      states’  energy,  along  the  left  vertical  axis.   Along  the  right
+the magnetic field is in (b) [0,0,1]-direction,  and (c) [1,1,1]-                vertical axis, on a logarithmic scale, we plot deviation of the
+direction.  In the insets, we have plotted difference between                    same quantities from their corresponding values obtained for
+the two energies.                                                                D[K]=200.  These plots are based on only one realization of
+                                                                                 the initial random vector, and already shows convergence of
+                                                                                 the order 10−12   forD[K]∼120.
+the  magnetic  field  is  shown  in  FIG.6b,c.   They  match
+exactly.    To  have  a  closer  look  at  the  difference,  we
+plot  ∆E=E         Lanczos −E   full ED  in  the  insets.   A  curious                   3.    Lanczos energies of the excited states
+reader might have the doubt why does ∆Ebecome nega-
+tive sometimes.  According to the variational principle of
+quantum mechanics, it should always be positive.  To an-
+swer that, we want to mention, we have taken precision
+up to 10−12   for the energies, and any difference (positive
+or negative) within this window comes from the machine
+precision only.
+
+
+       2.    Convergence test of Lanczos algorithm
+
+   In the previous section, the Lanczos algorithm passes                         FIG. 8.  Ten lowest energies as calculated using Lanczos algo-
+the benchmark test.  But what should be the dimension                            rithm, shifted by the ground state energy, for magnetic field
+of Krylov space (D[K]) to achieve convergence in the 24-                         in (a) [0,0,1] and (b) [1,1,1] direction.  The black dotted lines
+site honeycomb lattice under consideration? To find that,                        indicate the critical field strength as calculated by change in
+we calculate flux operator expectation, total magnetiza-                         slope ofE    GS.
+tion, ground and some of the excited states’ energy, as we                                                   4.    Plaquettes
+varyD[K].  As we observe in FIG.7, forD[K]∼120, we
+already achieve incredible convergence.  In practice,  we
+have takenD[K]=200.  In addition to that, we take av-                               The  24-site  honeycomb  is  defined  on  a  torus  with
+erage over different random initializations of the Lanczos                       12  plaquettes.   Seven  of  them  are  easily  identifiable  in
+process.                                                                         FIG.1(b).  The other five plaquettes are:
+                                                                                                                                                            13
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 9.  Five plaquettes and their corresponding site arrange-
+ments in the periodic 24-site cluster under consideration.

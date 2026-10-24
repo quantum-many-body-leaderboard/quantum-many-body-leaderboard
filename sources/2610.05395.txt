@@ -1,0 +1,1081 @@
+Complete Entanglement Structure of the Kitaev Honeycomb Spin Liquid from Exact
+                                                             Tensor Networks
+
+                                                    Hidehiro  Saito∗  and  Chisa  Hotta†
+                      Department  of  Basic  Science,  University  of  Tokyo,  Meguro-ku,  Tokyo  153-8902,  Japan
+                                                            (Dated:  October 6, 2026)
+                   While most of the features of the Kitaev honeycomb model are already clarified from the com-
+                binedZ           2  plaquette  and  Majorana  fermion  picture,  we  show  that  retrieving  the  exact  quantum
+                many-body form gives a clue to fix the remaining issues on its spin liquid property.  We provide an
+                exact two-dimensional tensor network description of a full set of solutions from a random product
+                state, by sequential quantum-number projection and Gutzwiller projection, both expressed as local
+                matrix-product operators of dimensionD= 2.  The ground and excited states share the same bond
+                dimension yet exhibit distinct Schmidt spectra,  distinguishing their area-law and volume-law en-
+                tanglement.  We demonstrate that the topological entanglement entropy emergesfor all eigenstates
+                only afterthe Gutzwiller projection onto the physical spin Hilbert space, where the gauge constraint
+                removes exactly half of the Schmidt states.  This establishes that excited states are likewise topolog-
+                ically ordered.  We further show that there exists a projection-induced collapse of the wave function
+                into a single gauge sector in the Parton mean-field states that is known to give a good description
+                of the spin liquids.  The demonstrations on theS= 1/2 kagome and triangular Heisenberg models
+                suggest that the present perspective is applied to a wider class of models hostingZ               2  spin liquids.
+                Our  finding  visualizes  a  bulk-boundary  correspondence  with  the  Wilson-loop  characterization  of
+                topological order.
+
+
+                     I.    INTRODUCTION                                       Jordan-Wigner, Fourier, and Bogoliubov transformations
+                                                                              into  a  3D  unitary  TN  circuit  of  polynomial  depth[14].
+  The Kitaev honeycomb model [1] has long served as a                         However,  the fermionic operation in such standard TN
+canonical platform for realizing aZ  2 quantum spin liquid                    generally  requires  a  relatively  complex  algorithm.   [15]
+(QSL), owing to its analytical tractability using classical                   Approximate  two-dimensional  TN  states based on  pro-
+Z2 plaquettes and free Majorana fermions.  In candidate                       jected entangled pair states (PEPS) have also been pro-
+materials like Li2IrO3, Na2IrO3[2–4] andα-RuCl                   2[5,6],      posed [16]; they break the QSL symmetry while restoring
+additional Heisenberg or Γ interactions are present that                      it variationally to some extent, and are largely restricted
+make the state no longer exactly solvable[7–9].  Still, the                   to  the  ground  state[17].   The  approximation  sacrifices
+insights from the Kitaev limit help their understanding,                      the accurate description of the underlying gauge struc-
+with  Majorana  fermions  regarded  as  a  hallmark  of  the                  ture, e.g., mixes different topological sectors, and raises
+QSL[10].                                                                      difficulty in the evaluation of the entanglement spectrum.
+  However,  the true QSL wavefunction is not the bare                         Some works on infinite cylinders have succeeded in sepa-
+Majorana  state  but  its  Gutzwiller  projection  onto  the                  rating the topological sectors and the entanglement spec-
+physical  Hilbert  space.   Since  this  distinction  does  not               trum  for  the  approximate  DMRG  states[18, 19].   How-
+explicitly  affect  most  of  the  non-topological  thermo-                   ever, obtaining the numerically exact entanglement spec-
+dynamic  properties[11],  it  was  not  clear  whether  the                   trum  for  a  sufficiently  large  system  remains  an  utmost
+post-projected states that are no longer treated analyt-                      challenge.
+ically,  can  have  more  importance.   Mathematically,  for                     In  this  paper,  we  propose  an  exact  and  simple  two-
+fermionic  models  with  four  Majorana  modes,  one  can                     dimensional  TN  representation  of  the  full  spectrum  of
+construct a solvable toric-code type Hamiltonian[12] that                     the Kitaev honeycomb model. The construction relies on
+commutes  with  the  loop-forming  Gutzwiller  projector,                     matrix-product-operator  (MPO)  representations[20–22]
+and this projection is indispensable to have the topolog-                     ofthe global projectors associated with plaquette and Ma-
+ical order of that Hamiltonian[13].  For generic models,                      jorana fermion quantum numbers, reducible to products
+however,  the  projection  cannot  be  carried  out  analyti-                 of local MPOs with bond dimensionD= 2 and no addi-
+cally, making an explicit quantum many-body formula-                          tional fermionic SWAP gates.  Starting from a random-
+tion of the QSL essential to address this issue.                              ized one-dimensional matrix product state (MPS)[21,23],
+  Unfortunately, only a few works have constructed ex-                        we  successively  apply  these  projectors  while  truncat-
+act  quantum  many-body  states  of  the  Kitaev  honey-                      ing  idle  bonds,  and  finally  perform  a  Gutzwiller  pro-
+comb model.  Tensor-network (TN) representation of the                        jection from Majorana to spin degrees of freedom.  Our
+ground state was successfully obtained by encoding the                        TN enables efficient local operations, including Majorana
+                                                                              braiding, bipartition, and spatially local projections, via
+                                                                              product-MPO manipulations.  We find that the topolog-
+∗ saito-hidehiro722@g.ecc.u-tokyo.ac.jp                                       ical entanglement entropy(EE) [24, 25],−ln 2,  appears
+† chisa@phys.c.u-tokyo.ac.jp
+                                                                              only after the Gutzwiller projection.  The projection re-
+                                                                                                                                                                     2
+
+                                                                                      freedom are extended to the representation of four Ma-
+                                                                                      jorana fermions, ˆbxi ,ˆbyi ,ˆbzi ,ˆc   i, where ˆσ  αi  =i   ˆbαi ˆc  i.  For the
+                                                                                      ⟨jk⟩    γ  neighbors,  these  Majoranas  form  a  bond  opera-
+                                                                                      tor given as,  ˆu  jk  =i   ˆbγj ˆbγk, and by using them, Eq.(1) is
+                                                                                      rewritten in the quadratic form,
+
+                                                                                                              HM =i   X         Jγ ˆu  jkˆc  jˆc  k.                    (2)
+                                                                                                                          ⟨jk⟩    γ
+
+                                                                                      Here, because [H M,ˆu   jk] = 0, and ˆu  jk has the eigenvalue
+                                                                                      ujk  =±1,  this  Majorana  Hamiltonian  is  block  diago-
+                                                                                      nalized into the subspace specified by a set of quantum
+                                                                                      numbersu={u              jk}over  2  3N/2     different  combinations.
+                                                                                      Suppose we have one such set, and the resultant matrix
+                                                                                      representation  of  the  Hamiltonian  on  that  subspace  is
+                                                                                      given  in  theN×Nform,iA={2iJ                                      γujk}Nj,k=1  ,  with
+FIG. 1.   (a) Finite-size cluster of a Kitaev honeycomb model                         its  elements  satisfyingu                  jk  =−u       kj.    Diagonalizing  it
+(N= 32 withN             x  =N   y  = 4) with bond labels,γ=x, y, z,                  asiA=QEQ          †,  we  find,H        M  = PN/2ℓ=1  ϵℓ(ˆa  †ℓˆa  ℓ −1/2),
+and  with  PBC.  We  construct  the  MPS  along  the  1D  path                        where ˆa  ℓ = 1/ √2PNj=1  Qjℓˆc  j satisfies ˆa  ℓ = ˆa  †N+1−ℓ         when
+shown in a broken line.  (b) Graphical representation of the                          diagE={−ϵ                    ℓ}Nl=1  is arranged in ascending order.
+TN that provides the exact eigenstate of the Kitaev honey-                                The Majorana fermion number operator is, ˆn  ℓ = ˆa  †
+comb model.  The first row shows the MPS of|   ˜Ψrandom⟩.  Op-                                                                                                    ℓˆa  ℓ,
+erating (1±ˆu         jk)/2 on successive rows, totally 3N/2, and then                wheren           ℓ = 0 or 1.  Therefore, each eigenstate|                ˜ΨMu,n  ⟩of
+operatingNrows of MPO of either ˆa                 l  or ˆa  †l , we obtain the       HM has the quantum numbers,u={u               jk}andn={n                 ℓ}.
+fermionic|               ˜ΨMu,n  ⟩.  FinallyN-single operators,P                                D, project itTo  put  these  eigenstates  back  to  those  of  the  physical
+onto|Ψ     u,n  ⟩. The neighboring MPOs and MPS are contracted                        Hamiltonian, the operator,  ˆDi = ˆbxi ˆbyi ˆbzi ˆc  i, whose eigen-
+for each operation.  (c) Braiding process, where the plaquette                        value is±1, is useful, as the sectorD                 i = 1 forms a sub-
+αgoes aroundβbyσ                     y6σz5σx4 σy3σz2σx1 , operating independently     space of spin degrees of freedom on sitei.  Using their
+on six tensors around theβplaquette.                                                  products, the fermionic wave function is projected onto
+                                                                                      the original Hilbert space as
+duces all the Schmidt states exactly by half, as they allow                                                                                 NY   1 +  ˆDi
+only one of the two mutually exclusiveZ  2-gauge states                                           |Ψ u,n  ⟩ ∝ PD|˜ΨMu,n  ⟩,   P   D =                2     .       (3)
+to  survive.   Similar  collapse  of  the  Schmidt  states  by                                                                              i=1
+the Gutzwiller projection also occurs in the spin-liquid                              These preliminary formulas are well established [1].
+state  of  theS=  1/2  kagome  antiferromagnet,  despite
+the  absence  of  explicit  gauge  variables  or  loop  degrees
+of  freedom  in  its  Hamiltonian.   The  underlying  global
+gauge constraint on the Hilbert space is therefore an in-
+trinsic property of emergent topological order, providing                                                  B.    Exact tensor network
+a visible bulk counterpart to the boundary gauge sector
+characterized by Wilson loops [26,27].                                                    For a given values of quantum numbers,u={u               jk}=
+                                                                                      ±1  andn={n                   ℓ}=  0  or  1,  there  are  corresponding
+                       II.    FORMULATION                                             projectors given in the form,
+
+                          A.    Preliminaries                                           Pu =  Y         ˆp  jk,   ˆp   jk = 1±ˆu        jk2     , (j < k,  u   jk =±1)  (4)
+                                                                                                 ⟨jk⟩    γ
+                                                                                                 N/2Y                     ˆa  †
+   We consider a spin-1/2 Kitaev honeycomb model on a                                   Pa =          ˆq  ℓ,       ˆq   ℓ =  ℓˆa  ℓ  (n  ℓ = 1)
+N= 2N      x ×N   y lattice (Fig.1(a)) with a periodic bound-                                                              ˆa  ℓˆa  †ℓ  (n  ℓ = 0)  ,                 (5)
+ary condition(PBC) given as                                                                      ℓ=1
+                                                                                      where forj > k, ˆp         jk = (1∓ˆu         kj)/2.  Previously, fermionic
+                         H=−     X         Jγ ˆσ  γj ˆσ  γk,                      (1) MPS-MPO  representations  with  a  graphical  structure
+                                    ⟨jk⟩    γ                                         similar to Fig.1(b) were developed as variational ansatz
+                                                                                      for  ground  states  [28–30].   Our  framework  differs  con-
+where⟨jk⟩               γ  runs  over  all  nearest  neighbor  sites,  and            ceptually:  rather than constructing the target state by
+γ=x, y, zdenotes either of the three different directions                             applying fermionic creation operators to the vacuum[31],
+thejk-bond is pointing.   The up/down spin degrees of                                 we start from a maximally informative random state and
+                                                                                                                                                                 3
+extract the target Hilbert subspace by projection.  This                            QN/2
+                                                                                       p=1   ˆWp = ˆ1, there areN/2 + 1 independent conserved
+philosophical difference is analogous to the contrast be-                           Z2  quantum  numbers,w         p, wx, wy,  which  determineu.
+tween  METTS  [32]  and  TPQ  [33]  for  thermal  states,                           Furthermore,uandnmust satisfy the projection con-
+where the former builds a mixed state as an ensemble of                             straint  ˆD=   QNi=1   ˆDi = ˆ1[25,37–39]. Details are provided
+initially unentangled product states by minimally devel-                            in AppendixA.
+oping entanglement, whereas the latter projects a highly
+entangled random state into a single pure state.
+   Exact  eigenstates  are  obtained  because  the  projec-                               III.    NUMERICAL REPRESENTATIVITY
+tors  ˆp  jk  and  ˆq  ℓ admita factorized MPO representation,
+with each local tensor acting only on a single-site Hilbert                            We numerically perform the above calculation on the
+space.We construct such a representation using MPOs                                 N= 2N      x ×N   y = 32 site cluster, and test the represen-
+acting on an MPS wavefunction defined on a finite cluster                           tativity of our TN.
+with PBC. The MPS is defined along a helical path cover-
+ing the two-dimensional lattice, as illustrated in Fig.1(a).
+For the single-site fermionic basis of dimensiond= 4 de-                                                          A.    Braiding
+fined as|0⟩,| ↑⟩,| ↓⟩,| ↑↓⟩[34,35], the MPO of ˆp                                       jk and ˆq  ℓ
+acting on theγ-th bond andℓ-th site can be represented                                 The prominent advantage of our TN is to easily obtain
+with bond dimensionD= 2 as                                                          and manipulate any of the excited states.  The braiding
+  1±ˆu        jk                          h                    i                    operation is local and simple (Fig.1(c)).  Let the initial
+                                            1                    ⊗
+      2      =I    1 ⊗ ··· ⊗I   j−1    ⊗ Ij+1      0  Ik−1         02Ij  ± i2bγj ˜F (i) j    Ik state|Ψ           (i)  [α, β]⟩has{w               p, wx, wy}={1,1,1}, except for
+                              ⊗ ··· ⊗                       ⊗                       two colored hexagons,w                  α =w   β =−1. We now move the
+               0   F  j+1                    0   F  k−1          ˜F (f)             flux onαaroundβ, which is done by operatingσ                                    γi  withγ
+                                                                   k  bγk           the bond label that the moving plaquette crosses. As it is
+           ⊗I   k+1  ⊗ ··· ⊗I   N,                                        (6) F2  Q2l  F↑2  c2 a single-site operation to our TN on six different sites, the
+         h  1                    i                                                  final  state,|Ψ           (f)   [α, β]⟩=σ          y
+ ˆa  ℓ =   √         √             ⊗                        ⊗ ···⊗                                                          6σz5σx4σy3σz2σx1|Ψ (i)  [α, β]⟩,  is
+             2F1   Q1l2 F↑1  c1          0       I  2                               immediately obtained and shows⟨Ψ       (i)  [α, β]|Ψ      (f)   [α, β]⟩=
+          FN−1       QN−1l      F↑N−1      cN−1      QNlF↑N  cN                     Wβ =−1.
+              0              I  N−1              ⊗          IN          , (7)
+
+whereF         ↑  =  diag(1,−1,1,−1),F                          ↓  =  diag(1,1,−1,−1),                  B.    Entanglement entropy
+andF       j  =F   ↑F↓  is  the  fermion  string  required  by  the
+anticommutation relation,  ˜F (i)j    =F   j  (γ=x, y) andF             ↓              Figure2(a) shows the entanglement entropy (EE),S,
+(γ=z), and         ˜F (f)                                                           about  the  bipartitionmtoN−m(see  Fig.1(a))  for
+                    k   =I   k (γ=x, y) andF             ↑ (γ=z).                   the  ground  state  and  the  excited  state,  where  for  the
+   In addition to the local MPO, the key to obtaining a                             latter,  we  take  the  randomly  chosen  sector,u,n.   The
+numerically exact MPS eigenstate is to start from an ini-                           excited state shows a typical volume law behavior (Ap-
+tial random product state|        ˜Ψrandom⟩, whereχ= 1 turns                        pendixA 3), and the ground state exhibits an area-law
+out sufficient.  By operating Eqs.(4) and (5), we obtain                            plateau.   We  test  in  Fig.2(b)  the  size  scaling  ofS             N/2
+the exact TN eigenstate as                                                          for both the fermionic|               ˜ΨMu,n⟩and physical state|Ψ          u,n⟩.
+
+                     |˜ΨMu,n  ⟩=P     aPu|˜Ψrandom⟩,                  (8)           Both cases are exactly linear-in-N                 y with equal slopes for
+                                                                                    different  choices  ofN   x  =  2,3,4.   Notably,  the  physical
+which is graphically illustrated in Fig.1(b). At each step                          ground  state  has  a  finite  topological  term,−ln 2,  that
+of applying  ˆp  jk  or  ˆq  ℓ,  we Schmidt decompose the state                     identifies theZ      2  QSL, whereas the intercept is zero for
+and discard the idle bond dimension.  The local contrac-                            a  fermionic  eigenstate.   The  same  reduction  of  EE  by
+tion is allowed because Eq.(6) is a product of local opera-                         −ln 2 after projection appears for theexcited states.  In-
+tors.  This process does not imply an approximation [36],                           terestingly,  we find that whenP          D  is applied to|    ˜ΨMu,n⟩,
+unlike the standard variational usage of MPS that uses                              the number of Schmidt states at the bipartition isexactly
+finiteχby discarding small Schmidt states.  Finally, on                             reduced by half for each Schmidt valueand the valueλ                 q
+the last row of the figure, the Gutzwiller single-site MPO,                         is scaled by √2 instead (Fig.2(d)).  This means that the
+Eq.(3), is applied to make it the eigenstate of Eq.(1).                             whole solution space is reduced simultaneously by half,
+   Before performing these processes, we need to chooseu                            and this applies to all eigenstates.
+andnto satisfy the conservation laws; There areN/2+2                                   As all the solutions are exact, the number of nonzero
+loop  operators  commuting  with  the  Hamiltonian:   two                           Schmidt  values  is  equal  to  the  bond  dimensionχ                   m.
+global  loop  operators,W              x, Wy,  winding  around  torus,              Figure2(c)  showsχ                   m  as  functions  ofm,  where  we
+andN/2  plaquette  operators          ˆWp  = Qj∈L  p σαjj  ,  where                 find  that  they  are  exactly  the  same  for  all  eigenstates.
+αj  =x, y, zdenotes  the  bond  connected  to  sitejbut                             The  maximum  value  at  the  system  center,  is  given  as
+not  included  in  the  loop.   Considering  the  constraint,                       χmax = 2(N  x+2)N      y/2  ,2 (N  x+2)N      y/2−1     , respectively, for the
+                                                                                                                                                                     4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2.    (a) Entanglement entropy (EE)Sof the exact ground state and the excited state (withu,nrandomly chosen) at
+Jx =J   y =J   z = 1 for the bipartitionmandN−mof theN= 32 cluster in panel (a).  The blue and red lines/symbols show
+the results of the fermionic and physical eigenstates, respectively.  (b) Size scaling ofS    N/2   for several system sizes.  (c) Bond
+dimension,χ                    m, at themth bond from the left edge.  (d) The largest 500 Schmidt values for the bipartition of the ground state
+fermionic|               ˜ΨMu,v  ⟩and physical states|Ψ              u,v  ⟩before and after the Gutzwiller projection, respectively (see also AppendixA 2).
+(e) Bipartition to|ψ    A⟩and|ψ        B⟩, with|w         R⟩forming boundary states belonging toR=A, B.
+
+
+fermionic and physical states.  In general,χ                max grows in              tite  it  toAandBalong  the  closed  loop,  which  cuts
+power and exponential of system size for the states with                              totally  2LdifferentZ       2  bonds  (Fig.2(e)),  the  2Ldif-
+area law and volume law EE, respectively.  However, our                               ferent  bond  gauges  are  rearranged  in  a  way  that  they
+χmax  has the same size dependence, regardless of being                               reconnect  and  form  boundary  gauge  operators  ˆw  A,n    =
+a ground state or excited states, which is because their                              iˆbαA,2n−1        ˆbβA,2n      and  ˆw  B,n   =i   ˆbαB,2n−1        ˆbβB,2n    , whose eigenval-
+construction is formally the same.  It therefore appears                              ues rely on|u      2n−1     , u2n ⟩=|±,1±1⟩and| ∓1,±1⟩on
+that the area and volume law difference comes from the                                the  cut  as|w    A,n  , wB,n  ⟩=  (| −1,1⟩ ± |1,−1⟩)/                 √2  and
+distribution of Schmidt values within the sameχ          max.                         (|1,1⟩ ± | −1,−1⟩)/                √2, each confined inside the region
+   The big advantage of our TN description is that the                                AorB.   Accordingly,  the  gauge  states  are  divided  as
+Schmidt  states  are  available.   With  this,  one  can  show                        |u⟩=|u         A⟩|w  A⟩|u  B⟩|w  B⟩, where|u           R⟩are the ones inside
+that  the  post-projection  states  with  different  quantum                          regionR=A,Bthat  do  not  touch  the  cut,  and|w                            R⟩
+numbers do not fully share the Schmidt state, or in other                             are the boundary gauge states; these facts are known so
+words, the Majorana fermions are quasi-local.  (See Ap-                               far[25].  Since|                 ˜ΨMu,v  ⟩is the product of gauge and mat-
+pendixCfor mathematical proof).                                                       ter part, the latter is trivially Schmidt decomposed into
+                                                                                      |M Auℓ  ⟩|M   Buℓ  ⟩and we obtain an explicit Schmidt form,
+                       C.    Topological order                                                       χX
+                                                                                      |˜ΨMu,v  ⟩=        λℓ|M Auℓ  ⟩|M   Buℓ  ⟩  X     |u A⟩|u  B⟩(−)     γ√2L |w A⟩|w  B⟩
+                           1.    Schmidt values                                                     ℓ=1                     {w  n=±1}
+                                                                                                     χX     X
+   Following our numerical observation on the reduction                                         =                   (−)     γ  λℓ√2L|ψ Aℓ ⟩|ψ  Bℓ ⟩,                   (9)
+                                                                                                    ℓ=1  {w  n=±1}
+of the Schmidt states, we analytically show that the con-
+straintD  i  =  1  supported  byP  D  creates  a  topological                         with|ψ        Rℓ ⟩=|u     R⟩|w  R⟩|M   Ruℓ  ⟩, and some sign (−)       γ, where
+term  of  EE.  Let  us  first  rewrite  the  fermionic  eigen-                        eachλ  ℓ  has  2L  degeneracy  coming  from  thew      n  =±1
+state  using  theZ      2  bond  gauge|u⟩and  fermionic  part                         factor that appear in choosing|w         A,n  , wB,n  ⟩.  Let us then
+|M u⟩ explicitly  as|     ˜ΨMu,v  ⟩ =|u⟩|M            u⟩.    As  we  bipar-           divide the global gauge operator as,  ˆD=     ˆDA ·  ˆDB.  Im-
+                                                                                                                                                               5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3.     (a) Signed fraction of Pfaffian inDfor the bond-randomJ                              γ  Kitaev honeycomb model withN        x  =N   y  = 16 and
+uniformly random probability distributionP(J                          γ), in a flux-free sector, where for each given ∆ we take 1000 samples.  Inset:
+λℓ  forN    A =N/2 at ∆ = 2 and sgn(Pf(A)) = 1 state withu             ij  =−1 forJ            ij  <0.  (b) Density plot of the comparison of two
+choices of states labeled byrandr         ′ of the Kitaev honeycomb model for fermionic eigenstates and the physical eigenstates with
+Nx = 2, N  y = 4 obtained by our TN. We choose the random flux sector (uchosen randomly).  A similar comparison is made for
+the spin chain forN= 10−13 using exact diagonalization for the Ising, XX, Heisenberg (XXX), and XYZ models for the full
+eigenstates.  (c) Histogram of the value ofk   rr′  (range of the minimum overlap of Schmidt bases between the two eigenstates)
+of different models.
+
+
+portantly, we find that|ψ        Rℓ ⟩is the eigenstate of   ˆDR (see               quently,  the  2L−1      degeneracy  remains  in  the  projected
+AppendixB 2Eq.(B9) for proof).                                                     Schmidt spectrum, with eachλ  ℓ multiplied by √2, pro-
+   The  Gutzwiller  projector  is  separated  into  the  prod-                     viding an analytical proof of Fig.2(d).  Previously, the
+uct,P       D =P   ADPBD which allows us to project the Schmidt                    explicit form of the EE was obtained by Yao and Qi as
+states independently for eachℓasP       RD|ψ Rℓ ⟩.  Accordingly,                   S=  (L−1) ln 2 +αL,  by  calculating  the  trace  of  the
+the Gutzwiller projected eigenstates of the spin Hamil-                            local density matrix using a Replica trick [40].  Here, we
+tonian  are  written  explicitly  by  taking  account  of  the                     disclosed the complete entanglement structure under the
+normalization factor √2N−1      of the wave function as                            gauge  constraint,  namely,  at  the  quantum  many-body
+                                                                                   level  for  spin  Hamiltonian,  and  showed  how  it  gener-
+|Ψ u,v  ⟩=  √2N−1    PD|˜ΨMu,v  ⟩=  √2N−1    PADPBD|˜ΨMu,v  ⟩                      ates−ln 2.   There  is  another  complementary  study  by
+                        χX       X           λℓ    PAD|ψ Aℓ ⟩ PBD|ψ Bℓ ⟩         D´ora and Moessner[41] that confines itself to the quan-
+         = √2N−1                           √2L                                     tum many-body spin Hamiltonian, or equivalently to its
+                       ℓ=1  {w  A},D  A=1                                          Jordan-Wigner  fermionic  form,  successfully  separating
+              χX      X                     √                                      the  gauge  and  matter  sectors  and  integrating  the  lat-
+         =                       √λℓ           2NA−1   PAD|ψ Aℓ ⟩                  ter, showing that the zero-flux sector of the ground state
+
+             ℓ=1  {w  A},D  A=1    2L−1                                            alone could generate a−ln 2 term,  which gives a good
+                       √                                                           connection to the cylinder DMRG.
+                   ⊗      2NB−1   PBD|ψ Bℓ ⟩    .                        (10)
+
+Here,|ψ         Aℓ ⟩ is  an  eigenstate  ofD    A  as  we  explain  in
+Eq.(B9)  in  AppendixB 2.    Since|                             ˜ΨMu,v  ⟩ has    ˆD=  1,
+there  are  two  choices,D          A   =D   B   =±1,  and  the                                             2.    Gauge constraint
+Gutzwiller projection enforcesD               i = 1 for alli.  Among
+ PAD|ψ Aℓ ⟩ PBD|ψ Bℓ ⟩  states  that  include  bothD     A   =
+
+DB =±1 eigenstates, only the +1 sector remains, which                                 With in mind that theD= 1 constraint to the Majo-
+is exactly half of (P  AD|ψ Aℓ ⟩)(P    BD|ψ Bℓ ⟩) for eachℓ.  Conse-               rana fermions plays a crucial role in generating−ln 2 at
+                                                                                                                                                         6
+
+post-projection, we reexamine the formula [37–39],                              XYZ model,  we setJ     x  = 1,J   y  = 1.53,  andJ          z  = 1.79PN
+                                                       PN/2                     in  the  HamiltonianH                         XYZ  = Pγ=x,y,zi=1  JγSγi Sγi+1 .
+   D= (−)         Nx+N/2    sgn Pf(A)    Y  uj,k(−)     ℓ=1   ˆn  ℓ,   (11)    Compared  with  the  Kitaev  honeycomb  model,  the  re-
+                                        ⟨j,k⟩                                   sulting  density  plots  for  these  standard  models  exhibit
+by expressing it using the sign of the Pfaffian.   To un-                       relatively structureless patterns.
+derstand its implication, we consider a bond-randomized                            To  quantifyk-localness,  we  plot  the  distribution  of
+version of Eq.(1) withJ                  γ = 1 + ∆jk, where ∆jk  follows        krr′/Nover all pairs (r, r    ′) within the flux-free sector in
+the  uniformly  random  distribution  at  [−∆  :  ∆].   Fig-                    Fig.3(c). The Ising model exhibits a peak atk= 0, with
+ure3(a)  shows  the  signed  fraction  of  sgn      Pf(A)   ;  the             a distribution that decays exponentially with increasing
+emergent  sgn Pf(A)     =  1  signals  the  gap  closing  asso-                k,  reflecting the  2  N−k      scaling  of the  number  ofk-local
+ciated with the condensation of the random flux state,                          states.   In contrast,  the other quantum spin chains ex-
+predicted to occur near ∆∼0.96[42].  Its Schmidt spec-                          hibit peaks atk=N, followed by exponential decay ask
+trum  is  exactly  halved  byP  D  (see  the  inset),  showing                  decreases.  This behavior may reflect the quantum corre-
+that the disordered eigenstates remain topologically or-                        lations in these quantum-critical states, which arise from
+dered irrespective of sgn Pf(A)    =±1.                                        superpositions of similar states.  Thek-localness of the
+   While the Pfaffian serves as aZ  2 topological invariant                     Kitaev spin liquid, however, differs distinctly from both
+in the quantum spin Hall effect [43,44], the present case                       the Ising and other quantum spin states.  The distribu-
+is more closely related to the Pfaffian invariant of the Ki-                    tion vanishes fork≳0.9Nandk≤0.5N.   The latter
+taev chain, where it signals the U(1) symmetry breaking                         feature is attributed to the nonlocal Majorana fermionic
+into the topological superconductor supporting unpaired                         wave function, which extends over more than half the sys-
+Majorana edge modes [45]. This correspondence suggests                          tem. Although the fermionic solutions of the Kitaev hon-
+that our framework naturally extends to general parton                          eycomb model retain a nonzero component neark=N,
+Hamiltonians and has similarity to the Kitaev chain.                            their  distribution  differs  from  those  of  the  other  quan-
+                                                                                tum  states.   This  component  vanishes  upon  projection
+                                                                                onto the physical states.  Physically, this result indicates
+         D.    Quasi-localized Majorana fermions                                that the spin-liquid states do not share a common global
+                                                                                basis set within the sector.  This feature can be under-
+   The  Schmidt  vectors  encode  the  purely  quantum                          stood by analogy with a Rokhsar–Kivelson state[46], an
+many-body  aspects  of  the  QSL  state.   We  divide  the                      analytical realization of aZ  2  spin liquid.   Such a state
+system  intoA=  1,···, kandB=k+ 1,···, N,  and                                  is an equal-weight superposition of dimer coverings, and
+Schmidt-decompose therth (=u,n) eigenstate as                                   distinct  basis  states  exhibitk  <  N-locality.   These  re-
+                                                                                sults establishk-localness as a fingerprint for identifying
+                                χX                                              topological order in the quantum many-body framework.
+                     |Ψ r⟩=        λs|ψ Ar,s⟩|ϕ  Br,s⟩,                 (12)    Indeed,  the  Kitaev  honeycomb  state  exhibits  a  similar
+                              s=1                                               structure through the equal-weight superposition ofD    g-
+                                                                                operated states in Eq. (B2).
+whereχis the number of nonzero Schmidt values.  We                                 The spatial distribution of each Majorana fermion that
+define the subspace associated with therth eigenstate as                        constitutes the spin liquid ground state and excited states
+VAk,r = span{|ψ          Ar,s⟩}χs=1 .  Comparing two arbitrary states           is also solved analytically (see AppendixC), and the max-
+randr       ′, we find that ifV   (A)                                           imum range that the fermions could spread is restricted
+                                  k,r  ∩ V(A)k,r′ = 0, their Schmidt            to∼3/4 of the system size, which is consistent with the
+subspaces have no overlap in regionA.                                           numerical observation ofk-local in Fig.3(c).
+   Starting fromk=N, we decreasekuntil the overlap
+becomes nonzero.   We define the “k-local” scale as the
+maximum size ofAfor which the two states share non-                                                IV.    PARTON THEORY
+trivial local quantum states. If the states belong to differ-
+ent quantum-number sectors,u r ̸=u   r′, thenkis always                                            A.    Parton Hamiltonian
+smaller than the corresponding region size, and the states
+are trivially orthogonal.  We therefore focus on pairs of
+states in the sameusector and plotk                    rr′ in Fig.3(b). For        To generalize our central findings to the QSL realized
+the Kitaev honeycomb model, states are ordered from left                        in other quantum spin models, we consider a mean-field
+to right by the binary representation of the fermion oc-                        parton Hamiltonian, which gives the basic description of
+cupation numbers  (n  1n2 ···n N/2;2  ),  while  for the other                  the QSL obtained by the variational Monte Carlo stud-
+models,  they  are  ordered  by  energy.    The  similarities                   ies.   We  start  from  theS=  1/2  quantum  Heisenberg
+between fermionic states differ markedly from those be-                         model  given  as,H=J        P⟨i,j⟩    Si ·S j,  and  rewrite  the
+tween the corresponding physical states after projection.                       spin operator using the Abrikosov fermionf              iσ as
+For  comparison,  we  perform  the  same  analysis  for  the
+classical  Ising,  XX,  Heisenberg  (XXX),  and  XYZ  spin                                    Si = 12f†iσσαβfiβ,   X          f†iσfiσ = 1,         (13)
+chains,  using all eigenstates forN=  10−13.   For the                                                                    σ
+                                                                                                                                                                 7
+
+which gives the form,                                                               for the mean-field state that has equal probability ofD    i =
+                          X                                                         ±1.
+              H0p = J           f†                                                     The global projector is constructed as
+                       4         iσfiβf†jσfjβσαβ ·σ αβ.         (14)
+                          ⟨i,j⟩                                                                                            NY
+                                                                                                                    ˆD=         ˆDi,                           (20)
+By introducing the mean-field asχ    ij = 2⟨f    †jσfiσ⟩, ∆  ij =                                                         i=1
+⟨−f     i↑ fj↓  +f   i↓ fj↑ ⟩, we find the parton Hamiltonian,
+                    X                                                               Unlike the local operator,  ˆDcommutes withH            p, so that
+    Hp = X                 χijf†iσfjσ + ∆ij f†i↑ f†j↓  +h.c.                       |Ψ (MF)f    ⟩is  an  eigenstate  of    ˆD,  where  only  theD=  1
+            ⟨i,j⟩   σ=↑,↓                                                           value is allowed for fermions, becauseD=−1 does not
+                       X                                                            survive after the Gutzwiller approximation. Accordingly,
+            + X                µf†iσfiσ +ζ   f†i↑ f†i↓  +h.c.           (15)       as has been done previously for the Kitaev-honeycomb
+                 i     σ=↑,↓                                                        case  in  Eqs.(B1)  and  (B2),  we  are  able  to  expand  the
+After   obtaining   the   eigenstate   of   this   Hamiltonian,                     post-projection wave function as,
+|Ψ MF⟩, one needs to transform it to the spin space, which                                       |Ψ (MF)         √             X        |Ψ f,{D   i}⟩,       (21)
+is  done  by  the  Gutzwiller  projection,P              G  = Qi(n  i↑  −                            f    ⟩=       12N−1
+ni↓ )2,  withn        iσ  =f   †                                                                                            {D  i},D=1
+                              iσfiσ,  and  the  resultant|Ψ   SL⟩ =
+PG|Ψ MF⟩is considered as a good ansatz for the spin liq-                            where|Ψ            f,{D   i}⟩is the possible or approximate eigenstate
+uid state realized in the original Heisenberg model.                                ofH    0p before taking a mean-field, where eachD  i =±1 is
+                                                                                    well defined.
+                       B.    Gauge operators                                           The nontrivial point for the general parton theory is
+                                                                                    that,  unlike  the  Kitaev  honeycomb  model,|Ψ        f,{D   i}⟩is
+   The    Majorana    fermions    corresponding    to    the                        not necessarily written as the product of gauge and mat-
+Abrikosov fermions are given as                                                     ter  parts,  which  does  not  allow  the  discussions  we  ex-
+                                                                                    panded in Sec.III C 1and App.B 2.  However, because
+      ciσ;1    =f   iσ +f   †                                                       the global gauge operator in regionA,              ˆDA = QNAj=1   ˆDj,
+                          iσ,    ciσ;2    = (−i)(f          iσ −f   †iσ).       (16)also commutes the fermion parity operator in regionA
+We introduce an operator                                                            (see Eq.(D7)), similarly to Eq.(B9), the Schmidt state in
+                                                                                    Ais an eigenstate of     ˆDA.  This fact allows us to expand
+                        ˆDi =c   i↑;1   ci↑;2   ci↓;1   ci↓;2   .                  (17)the  parallel  discussions  on  the  Schmidt  decomposition
+                                                                                    we made for the Kitaev-honeycomb model.The  parton
+Since  ˆDi  commutes  withS        i  for  alli,  it  is  a  conserved              Hamiltonian therefore contains no explicitZ              2 gauge vari-
+quantity  for  the  spin  Hamiltonian,  or  equivalently, H 0p                      ables.
+in Eq.(14).  The eigenstates of the spin Hamiltonian are                               This  ˆDhas the same form as Eq.(11), except that the
+indexed by{D    i  =±1}         Ni=1 .  When the eigenstate ofH    0p               bond-gauge factor Q uj,k is absent.  When ∆ij =ζ= 0,
+is  obtained,  it  is  put  back  into  the  spin  space  by  the                   the  spin-up  and  down  fermions  remain  decoupled,  and
+Gutzwiller  projection,  where  only  theD      i  =  1,   ∀icom-                   sgn[Pf(A)] = 1,  so that the Pfaffian does not enter      ˆD.
+ponent remains as the true ground state of the original                             After  the  Gutzwiller  projection,  this  corresponds  to  a
+Heisenberg model.  However, the introduction of mean-                               U(1) spin liquid for appropriate ∆ij, By contrast, finite
+field in Eq.(15) breaks this local conservation, as          ˆDi no                 pairing ∆ij ̸= 0 introduces the factor sgn[Pf(A)] =±1
+longer  commutes  withH        p.   Sinceµin  the  mean-field                       into  ˆD,  yielding  aZ      2  spin  liquid.   The  Pfaffian  there-
+Hamiltonian is set to keep the system half-filled, the ex-                          fore encodes the breaking of the U(1) gauge symmetry
+pectation values of the following operators evaluated by                            (AppendixD 1).
+their ground state|Ψ         (MF)f    ⟩satisfy,
+                                                                                                      C.    Kagome antiferromagnet
+            ⟨f  †iσfiσ⟩=   12,   ⟨f   †i↑ fi↓ ⟩=⟨f      †i↓ fi↑ ⟩= 0.      (18)
+                                                                                       To show that the projection-induced topological order
+Here,  we  used⟨f         †iσfiσ  +f   iσf†iσ⟩ =   1.    Accordingly,               is not specific to the Kitaev honeycomb model,  we an-
+⟨c  aj cbj⟩=  0  is  satisfied  for  alla̸=b, a, b=  (α, σ)  with                   alyze the U(1) andZ       2  parton wave functions proposed
+α= 1,2,σ=↑,↓.  Wick’s theorem naturally gives,                                      for  the  kagome  Heisenberg  model  [48]  (AppendixD 3).
+                                                                                    As shown in the inset of Fig.4,χ           ij  between the nearest
+    ⟨ ˆDi⟩=⟨c       i↑;1   ci↑;2  ⟩⟨c   i↓;1   ci↓;2  ⟩ − ⟨c  i↑;1   ci↑;2  ⟩⟨c   i↓;1   ci↓;2  ⟩and next-nearest neighbors, second nearest neighbor ∆ij,
+              +⟨c     i↑;1   ci↓;2  ⟩⟨c   i↑;2   ci↓;1  ⟩                           and on-siteζ >0 are considered, where bothχ                      ij and ∆ij
+           = 0,                                                            (19)     take plus and minus distributions.  Figure4(a) shows the
+                                                                                    R´enyi-2 entropyS  2 on a YC cylinder as a function of the
+                                                                                                                                                          8
+
+                                                                                theJ      1-J  2 triangular-lattice antiferromagnet (see Fig.8).
+                                                                                As neither the Heisenberg models nor the parton Hamil-
+                                                                                tonian contains explicit bond-gauge variables,  these re-
+                                                                                sults identify the post-projection collapse of the fermionic
+                                                                                into spin state by the gauge constraint as a generic bulk
+                                                                                signature of topological order.  It is a bulk counterpart
+                                                                                to the Wilson-loop characterization of topological order
+                                                                                proposed by Levin and Wen [26,27], establishing a bulk-
+                                                                                boundary correspondence between the gauge constraint
+                                                                                inside  the  wave  function  and  the  universal  topological
+                                                                                contribution to the EE.
+
+
+
+                                                                                              V.    CONCLUDING REMARKS
+
+                                                                                   We have established an exact tensor-network represen-
+                                                                                tation of the full set of eigenstates of the Kitaev honey-
+                                                                                comb model for sufficiently large systems to accurately
+                                                                                capture  their  entanglement  properties.    The  complete
+                                                                                Schmidt decomposition reveals that the Schmidt eigen-
+FIG. 4. (a) R´enyi-2 entropyS  2 of the kagomeS= 1/2 Heisen-                    values and corresponding eigenstates are reduced by half
+berg antiferromagnet, using the parton theory in Eq.(15) and                    when a fermionic eigenstate undergoes Gutzwiller projec-
+the DMRGZ    2 spin liquid results taken from Ref.[47], where                   tion onto the physical spin Hilbert space.  This reduction
+we  used  the  YC  cylinders  ofN   x  =  32  and  circumference                accounts for the universal−ln 2 contribution to the en-
+c= 2N    y, N y  = 4−10.  Top right panel is the kagome lat-                    tanglement entropy associated with topological order.
+tice with the unit cell of the Parton state whose parameters                       There  are  two  remarks.   First,  since  the  topological
+areχ      ij with nearest neighbor solid/broken bold lines are±1,               contribution,  at  least  for  the  gapped  QSL,  is  taken  as
+next  nearest  solid/broken  lines  are±0.0186[48].   We  apply
+∆2  =ζ =  0  (U(1))  and  0.3  (Z           2)  where  the  next  nearest       a  key  signature  of  a  QSL,  the  unprojected  Majorana
+neighbor ∆2 also has±signs.  Inset:  ∆          2 =ζdependence of               fermion states are not the QSL state; the physical spin-
+the von Neumann entropyS  vN   andS       2 atc= 20.  (b) Largest               liquid  character  emerges  only  after  Gutzwiller  projec-
+fewλ      ℓ of the partonZ             2 state (∆2 =ζ= 0.3) withD              A =±1,tion.  Second, this halving of the Schmidt spectrum oc-
+in the centerN    A = 12 subsystem of YC10 cylinder (see also                   curs exactly for every eigenstate, indicating that the same
+AppendixD 3). The line for the DMRG cylinder is taken from                      topological entanglement contribution persists through-
+Ref.[47],  and the line for ourZ                    2  is derived by the fitting ofout the spectrum, including in excited states.
+the  data  asαc+γ,  withγ=  0.   The  U(1)  spin  liquid  has                      The  mechanism  underlying  this  halving  is  demon-
+serious size effects and the fitting is performed by setting the                strated by the exact analytical form of the Schmidt de-
+zero intercept.                                                                 composition, using the global gauge operator  ˆD, defined
+                                                                                as the product of the local gauge operators  ˆDi  over all
+circumferencec,  the  choice  allowing  direct  comparison                      sites.   Since  ˆDcommutes with both the Majorana and
+with the DMRG results for theZ      2 spin liquid [47].  The                    spin Hamiltonians, its eigenvalue is factorized into those
+Z2  parton state exhibits nearly half theS      2  of the U(1)                  of  subsystemsAandB,  withD=D                                                 ADB  =  1  and
+state,  which  is  understood  in  analogy  with  the  Kitaev                   DA, DB =±1. The Gutzwiller projection, which imposes
+chain [45]; in the fermionic language, the superconduct-                        the local constraintsD   i = 1 to reduce the enlarged Ma-
+ing pairing in theZ      2 state halves the number of free par-                 jorana Hilbert space to the physical spin Hilbert space,
+ticles,  and  hence  their  entanglement  arising  from  their                  selects theD      A =D   B = 1 sector. Importantly, this fact is
+distribution is halved.                                                         rigorous, since the Gutzwiller projector commutes with
+                                                                                both  ˆDA,  ˆDB.  This constraint provides an analytical ex-
+   Remarkably,  the unprojectedZ            2  parton state follows             planation for the reduction of the Schmidt spectrum by
+the  almost  the  same  linear  scaling  as  the  DMRG  spin                    half and the resulting−ln 2 contribution to the entan-
+state,  except for the constant−ln 2 shift:  Here,  notice                      glement entropy.
+that  the  linear  line  for  DMRG  is  taken  from  Ref.[47],                     At  first  sight,  this  mechanism  might  appear  to  be  a
+and the fitting curve of our data for theZ      2 parton the-                   special feature of the exactly solvable Kitaev honeycomb
+ory gives the slope with zero intercept.  Microscopically,                      model. However, we find that the same formulation of the
+the Schmidt spectrum separates into two nearly degen-                           gauge operator  ˆDapplies to the Abrikosov-fermion par-
+erate sectors withD       A =±1 (Fig.4(b)), and the projec-                     ton mean-field theory, a standard framework for describ-
+tion removes theD  A =−1 sector, which we have proved                           ing QSLs in theS= 1/2 Heisenberg model.  Guided by
+analytically in Sec.IV Bas the outcome of the commu-                            this observation, we investigate mean-field parton states
+tativity  of  ˆDA  andP       D.   Similar  behavior  is  found  for            of  the  kagome  Heisenberg  model  using  parameters  ob-
+                                                                                                                                                            9
+
+tained  from  previous  variational  Monte  Carlo  studies.                      pendent sectors of dimension 2N/2−1     .
+The  resulting  Schmidt  spectra  exhibit  near-degenerate                           The conserved quantitiesw={{w                    p}, w  x, wy}= 1 or
+sectors  associated  withD        A  =±1,  and  the  Gutzwiller                  −1  are  the  product  ofu       jk  on  the  loop.   We  note  that
+projection  is  performed  independently  of  the  sectors,                      since|        ˜Ψu,n⟩is an eigenstate of   ˆD=   QNi=1   ˆDi,u,nneeds
+rigorously  eliminating  the−1  component.    This  find-                        to satisfy  ˆD= 1 to obtain a physical state[37,39], where
+ing suggests that selecting one of these sectors through                         Dis explicitly written as [39]
+Gutzwiller  projection  provides  a  microscopic  origin  for
+the topological entanglement contribution.  However, an                                    NY                             N/2Y
+explicit  Gutzwiller  projection  of  the  parton  mean-field                      D=         Di = (−1)     Nx detQ      r    (1−2n         l) Y ujk, (A1)
+states for sufficiently large systems is not currently avail-                             i=1                             l=1              ⟨j,k⟩
+able.  Indeed, previous VMC works show that the precise                          whereQ           r = √2[ReQ         1,ImQ       1,···,ReQ         N/2  ,ImQ      N/2  ] is an
+evaluation of the topological term,γ, with the Gutzwiller                        orthogonal matrix, whose columns are the real and imag-
+projection may suffer numerical difficulty, which can vary                       inary parts of half the columns ofQused to diagonalize
+fromγ=  0.584±0.089[49]  to  0.288±0.107[50],  and                               the free Majorana,Q= [Q                   1,···, Q  N].
+γ= 0.2±0.04[51] , even using the same scheme of eval-                                By converting detQ      r = (−)     N/2  sgn(Pf(A)), we obtain
+uation.  This fact highlights the utmost difficulty of even                      the  explicit  form  Eq.(11).   Here,  we  briefly  explain  its
+simply  extracting  the−ln 2  term  and  performing  the                         derivation. Because the antisymmetric matrixAis block-
+proper Gutzwiller projection to the quantum many-body                            diagonalized asQ    trAQr, with∓ϵ            ℓ forming an off-diagonal
+level, which requires numerically exact schemes even with                        element of eachℓ= 1,···, N/2 block matrices,
+the limited system sizes. The application of the exact TN
+method to more general QSL states, in order to clarify                                                              N/2Y
+the role of Gutzwiller projection to the general QSL needs                            Pf(Q  trAQr) = (−)     N/2         ϵℓ = (−)     N/2 √detA, (A2)
+further investigation.                                                                                              ℓ=1
+   Still, our findings provide a microscopic perspective on                      where  det(iA)  =  (       QN/2
+how gauge constraints shape the entanglement structure                           mula Pf(Q  trAQr) = det(Q        r)Pf(A), we obtainℓ=1  ϵℓ)(QN/2ℓ=1  −ϵ   ℓ).   Using  the  for-
+of QSL, extending previous loop-based approaches to a
+framework that directly connects gauge sectors with the                            det(Q        r) = (−)     N/2 √detA/Pf(A) = (−)                     N/2  sgn(Pf(A)).
+Schmidt spectrum.  More broadly, our results establish a                                                                                                (A3)
+basis for investigating how the gauge structure of parton
+representations determines the entanglement properties
+of physical spin states.                                                                       2.    Distribution of singular values
+
+                                                                                     We  discussed  in  the  main  text  that  for  all  the  TN
+                   ACKNOWLEDGMENTS                                               exact  solutions,  the  bond  dimensionχ                   m  which  is  the
+                                                                                 number of nonzero Schmidt coefficients is the same re-
+   We   thank   Ryui   Kaneko   for   valuable   comments.                       gardless  of  whether  it  is  the  ground  state  or  the  ex-
+The  work  is  supported  by  JSPS  KAKENHI  Grants                              cited state (for any given quantum numbersu,n).  Fig-
+No.       JP26K00627,   JP26H00635   JP21H05191,   and                           ure5shows the distribution of nonzero singular values
+JP21K03440  from  the  Ministry  of  Education,  Science,                        λq  when we Schmidt-decompose the state by the bipar-
+Sports and Culture of Japan.  H.S. is supported by the                           tition toA={1,···, m}andB={m+ 1,···, N}where
+JSPS fellowship No.  JP25KJ0762.                                                 we  setm=N/2.   Two  distinct  features  are  observed.
+                                                                                 For all values ofλ   q, the degeneracy is twice as large for
+                                                                                 the  fermionic  eigenstate,|               ˜ΨMu,n  ⟩,  while  the  correspond-
+     Appendix A: Details of exact tensor-network                                 ingλ      q’s  of  the  physical  eigenstate|Ψ                   u,n  ⟩ is  reduced,
+                               solutions                                         λq → √2λ  q.  Namely, by scaling the horizontal and ver-
+                                                                                 tical  axes  by×2  and/        √2,  the  two  data  lines  exactly
+                    1.    Conserved quantities                                   collapse.
+                                                                                     The  second  feature  is  that  although  the  maximum
+   In  the  Kitaev  honeycomb  spin  Hamiltonian  Eq.(1),                        number of Schmidt valuesχ         m  is the same between the
+there areN/2 + 1 independent conserved quantities:  the                          ground  and  excited  states,  the  values  ofλ    q  are  more
+N/2 plaquettesW                     p = Q                                        widely spread for the latter, which yields a volume-law
+                                 i∈L p σαii   and the two loop oper-             entanglement.
+atorsW         x  = Qi∈L x σαii  ,W y  = Qi∈L y σαii    whereL           p  is a
+loop around the plaquettepandL                          x,y  are loops around
+the torus in thex, ydirections.α                           i =x, y, zis the bond             3.    Volume law of the excited states
+index connnected to siteibut is not included in the loop.
+Since Qp Wp = 1, the number of independent quantities                                In  Fig.2(a)  in  the  main  text,  we  showed  the  entan-
+decreases by one, and the Hilbert space has 2N/2+1   inde-                       glement  entropy  forN=  32  of  the  MPS-MPO  solu-
+                                                                                                                                                                 10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  5.      Schmidt  values  of  the  eigenstates  of  the  Kitaev
+honeycomb model withJ        x =J   y =J   z = 1 obtained from our
+exact TN solutions whereN= 2N                x ×N   y  = 2×4×4 and
+we  divide  the  system  in  half.   For  the  fermionic  eigenstate,                FIG. 6.    Entanglement entropyS  A  of the excited states of
+|˜ΨMu,n  ⟩, we find 4096 nonzero Schmidt values (blue symbols),                      the Kitaev honeycomb model withJ        x  =J   y  =J   z  = 1.  (a)
+which reduces to 2048 for the physical eigenstate|Ψ               u,n  ⟩(red         N= 2N      x ×N   y = 2×4×4 = 32 withN                A sites in regionA
+symbols).  We plot those of (a) the ground state and (b) the                         with fixedN         y = 4.  (b)N= 2N           x ×N   y = 2×64×64 = 8192
+excited state sector withu,nrandomly chosen.                                         withN       A =n    2 taken as in the inset.  Contributions from mat-
+                                                                                     ter fermion,S               mA  = Pℓ λ2ℓ lnλ    2ℓ, from the Majorana fermions,
+tion,  where we argued that the volume law behavior is                               SfA  =Lln 2 +S          mA ,  and  from  the  physical  state  after  the
+observed  for  the  excited  state  solutions  in  contrast  to                      Gutzwiller projection,S              pA = (L−1) ln 2 +S           mA , are separately
+                                                                                     shown.  Solid lines are the linear fits that show the volume
+the ground state, although the bond dimensions are the                               law.   Calculation  is  done  by  using  exact  TN  representation
+same. To further support our claim, we show in Fig.6(a)                              for (a) and by analytical formula for (b).
+the entanglement entropy of the sameN= 2N               x ×N   y =
+2×4×4  cluster  as  a  function  ofN            A  =  2N  Ax NAy   (the
+number  of  sites  included  inA),  where  we  setN           Ay   =  4              largerN.  We also notice that the matter fermion part,
+constant  and  varyN     Ax .   The  results  do  not  contradict                    SmA  is mainly responsible for the volume-law behavior of
+the volume law.                                                                      the excited states of the Kitaev honeycomb model.
+   For  clarification,  we  show  in  Fig.6(b)  the  case  of
+Nx  =N   y  =  64  that  amounts  toN=  8192,  with  the
+regionAtaken  as  in  the  inset,  keeping  the  aspect  ra-
+tio  to  1  in  thexandydirections;N                              A  =n    2  with  the
+boundary  length  given  asL=  3n.   We  compare  the                                             Appendix B: Gutzwiller projection
+case of the entanglement entropy of the matter fermions,
+SmA  = Pℓ λ2ℓ lnλ    2ℓ, that of the Majorana fermions,S                 fA =           1.    Gauge constraint and post-projection state.
+Lln 2 +S      mA , and the physical ones after the Gutzwiller
+projection, S pA  =  (L−1) ln 2 +S           mA .    The  difference,                   Let us illustrate the nature of the post-projection state.
+SpA −S    fA  =−ln 2,  is  almost  invisible  for  the  scale  of                    The fermionic state is an eigenstate of  ˆD=   QN
+the figure, while it is present and supports the topologi-                                                                                           i=1   ˆDi but
+cal order. With this result, one finds that the volume law                           is not the eigenstate of  ˆDi.  The operatorP           D  in Eq.(3)
+is safely distinguished atN   A ≳600,  and is present for                            projects it to the simultaneous eigenstates of all  ˆDi’s and
+                                                                                                                                                                   11
+
+is expanded as                                                                        side.  Next, we rearrange the bond operator on then-th
+                                                                                      hexagonal unit and define a set of states|w          A,n  , wB,n  ⟩as
+             NY  1 +  ˆDj            X
+   PD =              2      =   12N        ˆDg,     ˆDg = Y       ˆDj,   (B1)          ˆf1n   = 1
+
+            j=1                        g                    j∈g                                 2(ˆbαA,2n−1         +i   ˆbβA,2n     ),      ˆf2n   = 12(ˆbαB,2n−1         +i   ˆbβB,2n    ),
+                                                                                                                     |1,−1⟩=           ˆf†
+wheregruns over all the subsets of lattice sites, chosen                                                                                1n |0⟩
+from  among  all  the  lattice  sitesL.   Because  the  con-                          wn =|w    A,n  , wB,n  ⟩=          | −1,1⟩=−i               ˆf†2n |0⟩     (B5)
+dition  ˆD|   ˜ΨMu,n  ⟩=|     ˜ΨMu,n  ⟩,  is  rewritten  as    ˆDg|˜ΨMu,n  ⟩=                                         |1,1⟩=         ˆf†1n  ˆf†2n |0⟩
+ˆDL−g    |˜ΨMu,n  ⟩,  among  the  2  N   terms  in Pg,  only  half                                                       | −1,−1⟩=i|0⟩
+are independent.  The normalization factor of the post-                               From  this  definition,  the  original  gauge  statesu           n  =
+projected state needs to be multiplied by 1/ √2 to reduce                             |u 2n−1     , u2n ⟩= (|−1,−1⟩,|1,1⟩,|1,−1⟩,|−1,1⟩)                                                   T  are re-
+this redundancy:                                                                      lated tow    n as
+                 |Ψ u,n  ⟩=       1√      X     ˆDg|˜ΨMu,n  ⟩,           (B2)                                                              
+                                  2N+1                                                                                   1−1
+                                            g                                                                          1     1            wn.           (B6)
+                                                                                                       un =   1√2                  1−1
+which  ends  up  with  the  equal-weight  superposition  of                                                                        1     1
+2N−1      independent  states  gauge-transformed  by  differ-
+ent   ˆDg’s  [25].     These  discussions  rephrase  those  in                        Therefore, for a givenu    n,|w  A,n  , wB,n  ⟩hasZ         2 degrees of
+Refs.[25,37, and39].                                                                  freedom which we labelw   n =±1; whenu                  2n−1       =u    2n   it
+   To prepare for the next subsection, we now divide the                              corresponds to the choice|1,−1⟩and| −1,1⟩, and when
+system intoAandB.  Here, the projection operator,P                             D,     u2n−1      =−u       2n  ,|1,1⟩and|−1,−1⟩. Because a set of bond
+is naturally divided into those operating on the two as                               gaugesuforms  a  product  state,  with  this  local  gauge
+PD =P   ADPBD, with                                                                   transformation around the loop, it can be separated into
+
+           NAY                        X                                               those inside regionRdenoted as|u                 R⟩and those on the
+  PAD =         1 +  ˆDj                     ˆDg,     ˆDg = Y      ˆDj. (B3)          boundaries which are rearranged into|w    A,n  , wB,n  ⟩.
+
+           j=1      2      =    12NA  g∈A                    j∈g                         The separation of the bond-gauges into regionAand
+                                                                                      Bso far discussed are based on Ref.[25] by Yao and Qi.
+Using this factorization, we applyP          D to Eq.(9) and ob-                      In  their  framework,  they  applied  the  form  Eq.(B2)  to
+tain the explicit form of the Gutzwiller projected eigen-                             describe  the  density  matrix,ρ           A  =  TrB(|Ψ   u,n  ⟩⟨Ψ   u,n  |),
+states of the original Hamiltonian, Eq.(10).  By further                              where they operated  ˆDg  =  ˆXgA  ˆYgA   ˆXgB  ˆYgB  ,  separately
+expandingP                AD  andP      BD  in  terms  of  ˆDi,  we  obtain  the      on the subsystems, each on bond gauge and matter parts.
+following form,                                                                       In  this  form  (Eq.(A7)  of  the  Supplemental  [25]),  the
+                           X          X                                               fermion parity in the matter state is constrained by the
+    |Ψ u,v  ⟩=  X                          √     λℓ                                   partial Gutzwiller projection  ˆYgA   and  ˆYgB  .  Among the
+                   g  {w  A},D  A=1    ℓ      2N+L+1       Dg|ψ Aℓ ⟩|ψ  Bℓ ⟩.         matter states, the ones that survive depend explicitly on
+                                                                         (B4)         the boundary gauge configuration, which then appears in
+                                                                                      their form ofρ   A as off-diagonal element of the projection
+                                                                                      operators,   ˆXgA |u A, w⟩⟨u     A, w|    ˆX†gA  ′.  In such a case,  the
+   2.    How the Schmidt states are reduced by half.                                  Schmidt decomposition appears no longer to be carried
+                                                                                      out independently of the gauge sector, making the sum-
+   Here, we explain the details of the derivation of Eq.(9)                           mation overgandg           ′  (gauge transformation in Eq.(B2)
+in the main text and related results.  Let us divide the                              that  appear  insideρ         A)  highly  nontrivial.   Instead,  Yao
+system into subsystemsAandBby drawing a closed loop                                   and  Qi  evaluated  the  integrated  value  TrA[(ρ  A)n],  ap-
+as  shown  in  Fig.1(e)  in  the  main  text.   Suppose  that                         plied  the  Replica  trick,S=−           ∂∂nTrA[(ρ  A)n]| n=1  ,  and
+this closed loop cuts 2Lbonds on the lattice, which are                               obtainedS= (L−1) ln 2 +αL.
+indexed as 1,2,···,2n−1,2n,···2L,  where we  relabel                                     Our approach proceeds in the opposite order.Before
+the bond operator ˆu  j as ˆu  2n−1      and ˆu  2n   labeled byα, β=                 applying the Gutzwiller projector, we first perform the ex-
+x, y, z, and the corresponding fermionic operator   ˆbαR,2n−1                         act Schmidt decomposition of the fermion wave function
+                                                                                      for both the matter and bond gauge parts (Eq.(9) in the
+and ˆbβR,2n      that  belong  to  that  bond  on  theR=A,B                           main text),
+                                                                                                                                                                 12
+
+
+
+                                                              χX                                                  LY
+                             |˜ΨMu,v  ⟩=|u⟩|M            u⟩=     λℓ|M  Auℓ  ⟩|M   Buℓ  ⟩|u A⟩|u   B⟩   X              |w A,n, wB,n⟩
+                                                            ℓ=1                                     {w  n=±1}   n=1
+                                           χX     X
+                                      =                   (−)     γ  λℓ√2L|M Auℓ  ⟩|u  A⟩|w  A⟩    |M Buℓ  ⟩|u  B⟩|w  B⟩  ,                                    (B7)
+                                          ℓ=1  {w  n=±1}
+
+
+
+where the sign (−)     γ comes from the combination of either                        DA = 1, only half of them remain, which explains that
+of the two choices of|w    A,n  , wB,n  ⟩values in Eq.(B6).  The                     the number of Schmidt states is reduced by half for each
+relevant summation Pwn=±1      means that for each bond                              λℓ  and accordingly,λ ℓ  is scaled by √2.  Using Eq.(B9),
+on a cut, there are two equivalent contributions from the                            one can separately operate the Gutzwiller projection to
+choices of rearrangedZ                      2 bond gauges, that generate 2L          AandBparts of the Schmidt form in|              ˜ΨMu,v  ⟩, and|Ψ          u,v  ⟩
+different  terms.   This  contribution  explains  the  highly                        of the spin Hamiltonian is also Schmidt decomposed as
+degenerate Schmidt values found numerically in Fig.2(d)                              in Eq.(10) of Sec.III C.
+in the main text.
+   Since  a  set  of{u      j} are  fixed  values,   the  bound-
+ary  gauges  on  the  2Lbonds  should  naturally  satisfy                                 Appendix C: Spatial range that the Majorana
+Q                                ηis either +1 or−1)                                                            fermion occupies
+   n wA  =η  Qn wB  =±1 (where
+under  theD=  1  constraint.   The  two  choices  of  the
+boundary gauge have one-to-one correspondence with the                                  We want to obtain a quantum number of subsystemA
+choice ofD   A =±1.                                                                  that characterizes this subspace.  The value of{u} ∈ A
+   In  Eq.(B7),  Schmidt  decomposing|M                        u⟩for  a  fixed       is local and trivial, whereasa               ℓ/a†ℓ acts on all the sites, so
+bond gauge (classical variables) is trivial itself.  However,                        that the number of localized Majorana fermions needs to
+as we clarify in the following equations,|M                 Ruℓ  ⟩are clas-          be calculated.
+sified  by  the  fermion  parity  in  regionR=A,B,  which                               Suppose  the  free  Majorana  state  before  projection,
+has one-to-one correspondence with the boundary gauge                                |˜ΨMr ⟩ ≡ |˜ΨMu,n⟩, has anℓth Majorana,n                     ℓ  = 1 (or not,
+sectors, which may not be trivial. This finding is a key to                          nℓ = 0), which is read off as ˆa  †
+performing a full Schmidt decomposition of the physical                                                                      ℓ|˜ΨMr ⟩= 0 (or ˆa    ℓ|˜ΨMr ⟩= 0).
+state after the Gutzwiller projection (see Eq.(10)).                                 For a given set of values,{n             ℓ}N/2ℓ=1  , one can define a vector
+   We now consider the global gauge operator, factorized                             ˆa={ˆa         ×l }l=1···,N/2         , where×=†forn                         l = 1 and×means
+into two parts,  ˆD=     ˆDA· ˆDB, where  ˆDR = Qj∈R   ˆDj. The                      nothing  otherwise.   Then,  the  condition  that  the  state
+one operating onAcan be expressed using a fermionic                                  needs to satisfy to have these Majorana numbers is given
+operator as                                                                          as a set of linear equations, ˆa|   ˜ΨMr ⟩=0.  By substituting
+              ˆDA = Y        ˆDj = Y      ˆbxjˆby                                    ˆa  ℓ = 1/ √2PNj=1  Qjℓcj withc={c                j}j=1···,N        , we find
+
+                                               jˆbzj ˆc  j
+                       j∈A           j∈A                                                                            ˜Qc|     ˜ΨMr ⟩= 0,                         (C1)
+
+                                             LY          Y
+                   = (−)     m  Y      ˆu  ij    ˆw  A,n      ˆc  l,       (B8)      where the  ˜Q={      ˜Qℓj}is theN/2×Nmatrix that satisfies
+                               uij∈A       n=1          l∈A                          ˜Qℓj  =Q   ∗jℓ  (orQ     jℓ)  forn     ℓ  =  1  (or  0).   This  matrix  is
+                                                                                     rewritten as
+with  the  sign  (−)     m  properly  chosen.   Since  the  matter                                                     ˜Q=UL,                          (C2)
+Schmidt states,|M  Ruℓ  ⟩, on regionAandBare both free
+Majorana states, they are the eigenstates of Ql∈R  ˆc  l with
+eigenvalues±1; the operatorQthat transforms Majorana                                 using the unitary matrixUand lower triangular matrix
+to fermions has Qℓ cℓ = det(Q)       Qℓ(1−2n        ′ℓ) withn       ′ℓ the           L.  One then finds that a new set of Majorana fermions,
+fermion  number  operator  (see  Ref.[39]  Appendix  A  for                          ˆa′ ={ˆa      ′l}l=1···,N/2         , transformed from  ˆa=U      ˆa′, and be-
+details). Therefore, one can straightforwardly show that,                            cause of the lower triangular form ofL,a      ′ acts only on
+                                                                                     the  subsystem  ranging  within  [1  : N/2 +ℓ].   It  means
+         ˆDA|M Auℓ  ⟩|u  A⟩|w  A⟩=±|M        Auℓ  ⟩|u  A⟩|w  A⟩,        (B9)         that one can specify which Majorana,ℓ,  is localized in
+                                                                                     regionA(1 :k) by judging that ifk≥N/2 +ℓ, it satis-
+where±1  eigenvalues  come  from  the  two  choices  of                              fies ˆa  ′†l ˆa  ′l = 0, and otherwise nonlocalized.  We could list
+boundary gauge states|w          A⟩, as|u      A⟩is unique about ˆu    ij.           the  localized  Majoranas  and  fully  characterizeV                 Ak,r  ac-
+   With these informations, one can say that|       ˜ΨMu,v  ⟩is the                  cordingly.  One important conclusion here is that all the
+D= 1 eigenstate and its Schmidt state{|ψ             Aℓ ⟩}includes                   Majoranas  are  spread  over  more  than  half  the  system
+two eigenstates ofD   A =±1. However, sinceP                D enforces               size, regardless of the shape or size of the cluster.
+                                                                                                                                                                           13
+
+           Appendix D: Details of Parton theory                                              Whereas  when  ∆ij   ̸=   0,   the  Hamiltonian  has  a
+                                                                                          Bogoliubov-de-Gennes form,
+                    1.    Schmidt decomposition
+   We   first   Fourier   transform   Eq.(15)   as,f                 ksσ      =            Hp = X         Ψ†kH(k)Ψ         k,
+                                                                                                    k>0         W(k)    D(k)
+N−1/2c     PNcl=1  eikr l,sflsσ  where  we  redefinedf                 lsσ  as  the
+Abrikosov fermion in thel(= 1,···, N            c) th unit cell on                              H(k) =          Dt∗ (k) −W(k)              ,
+s(= 1,···, n       s) th site (j∈(l, s)).  For the kagome lat-
+tice,N        c  =N/6  andn            s  =  6,  shown  in  Fig.8(a).   The                     Ψ†k = (f  †k,1,↑     ,···, f  †k,n  s,↑ ,···, f  −k,1,↓       ,···, f  −k,n     s,↓ ),
+Hamiltonian is transformed as                                                                                                                                          (D2)
+                   X
+     Hp =X                ksσ  Ws,s′(k)f      ks  ′σ
+              k,σ  s,s′ f†                                                                and by diagonalizing the 2n  s×2n     s matrixHasQ                †HQ=
+                          X                                                               diag({−w       k,ℓ  },{w     k,ℓ  })  ℓ=1,···,n           s,  we  obtain  a  Bogoliubov
+                 + X              ks↑   Ds,s′(k)f     †−ks     ′↓ +h.c.).    (D1)         fermion (b  k,ℓ  , b†
+                      k   s,s′(f  †                                                                             −kℓ    ) =Q   †Ψk, and the corresponding su-
+                                                                                          perconducting  energy  band±w            k,ℓ  .    Here,  we  set  the
+When  ∆ij  =ζ =  0,  we  findD            s,s′   =  0  so  that  we                       chemical potential to have the system half-filled, which
+only  need  to  diagonalize  then      s ×n   s  matrixWwith                              is inside the band gap.
+Qσ, σ=↑,↓, asQ               σ†WQσ = diag(ϵ  ℓ(k))    ℓ=1,···n           s, with the         We now prepare a correlation matrixCfor the Majo-
+corresponding fermions given as,  ˜fkℓσ   = Ps Qσ†ℓs fksσ  .                              rana fermions in Eq.(16),{c                 lsσ;α   }with (α= 1,2) as
+
+
+
+
+                                C(lsσ;α,l      ′s′σ′;α ′) =⟨c     lsσ;α    cl′s′σ′;α ′⟩,                                                                                      (D3)
+                                      ⟨c  lsσ;1   cl′s′σ′;1⟩=⟨f      †lsσfl′s′σ′ +f   lsσf†l′s′σ′ +f   †lsσf†l′s′σ′ +f   lsσfl′s′σ′⟩,
+                                      ⟨c  lsσ;2   cl′s′σ′;2⟩=⟨f      †lsσfl′s′σ′ +f   lsσf†l′s′σ′ −f   †lsσf†l′s′σ′ −f   lsσfl′s′σ′⟩,
+                                      ⟨c  lsσ;1   cl′s′σ′;2⟩= (−i)⟨f          †lsσfl′s′σ′ −f   lsσf†l′s′σ′ −f   †lsσf†l′s′σ′ +f   lsσfl′s′σ′⟩
+                                      ⟨c  lsσ;2   cl′s′σ′;1⟩=i⟨f       †lsσfl′s′σ′ −f   lsσf†l′s′σ′ +f   †lsσf†l′s′σ′ −f   lsσfl′s′σ′⟩,                             (D4)
+
+
+
+where⟨f           †lsσfl′s′σ′⟩is obtained by transforming its repre-                      labeled byℓ= 1,···,2N          A, is the eigenstate of  ˆDA  be-
+sentation to Bogoliubov fermions.                                                         cause,
+   When  dividing  the  system  into  subsystemsAand                                                      ˆDA =   Y
+B,  the  Schmidt  values  are  given  as  a  submatrix  ofC,                                                                 cℓs↑;1    cℓs↑;2    cℓs↓;1    cℓs↓;2
+whose column and row indices belong to region A:C    A =                                                           (ℓ,s)∈A
+C(m,m ′)∈A  ≡δ   mm′ +i(Γ    A)mm′, withm= (lsσα) Diago-                                                                                     2N  AY
+nalizingC            A −1 =iΓ       A, we obtain a set of 2N  A pairs of                                          →D    A = detQ     A             (−1)     nAm.       (D7)
+eigenvalues as                                                                                                                               m=1
+
+        Q†A(iΓ)Q      A = diag {±ν     m}2N  Am=1   ,   0≤ν       m ≤1,                  This allows us to evaluateD         A for each Schmidt state.
+        (˜c  1,···,˜c      2m−1      ,˜c    2m  ,···,˜c      2N  A)                          When the U(1) symmetry is kept, the correlation ma-
+                                                                                          trix is block diagonalized into up and down spin sectors,
+     =Q   A(c  1,···, c   2m−1      , c2m  ,···c   2N  A).                   (D5)         and thus the Schmidt values become the product of the
+They are put back to the fermionic operator in regionA                                    two spin sectors as
+as ˜bm = (˜c  2m−1       +i˜c        2m  )/2, and its number is described                              NAY   1 + (−)     nm↑  νm    NAY    1 + (−)     nm′↓νm′
+by the eigenvalues as⟨   ˜b†m˜bm⟩= (1 +ν     m)/2.  Following                                 λℓ =                    2                              2           .   (D8)
+Ref.[52], the Schmidt value is obtained for each setℓ≡                                                m=1                          m′=1
+{n  Am}2N  Am=1    as                                                                     This fact indicates that the Schmidt states are completely
+
+                                2N  AY                                                    separable  between  the  up  and  down  spin  components,
+                        λℓ =          1 + (−)     nAmνm                                   namely, the two components have zero entanglement.  In
+
+                                m=1            2         .                 (D6)           that case, the entanglement entropy is determined (as in
+                                                                                          the case of standard free fermions) by counting the prob-
+The  important  notice  is  that  each  Schmidt  state|ψ         Aℓ ⟩                     ability of each one-body fermionic eigenstate having the
+                                                                                                                                                            14
+
+distributions  on  both  sides.   When  the  U(1)  symmetry                          When ∆ij ̸= 0, the noncommutative loops, [P C, PC′]̸=
+is broken and the gap opens, theZ      2 spin liquid state is                     0, yield aZ  2 spin liquid.  This means that from Eq.(D9),
+obtained.  This state is analogous to the superconductiv-                         we can find detQ̸= 1 only when the U(1) symmetry is
+ity of the Kitaev chain, in which case the fermions form                          broken, in which case sgn(Pf(A)) entersD.
+a Cooper pair.  Their entanglement entropy is obtained
+by counting the probability distribution of each Cooper-
+pair eigenstate, which number is roughly half the original                                               3.    Numerical results
+fermionic number (see Fig.7(b)).  This explains why the
+introduction of ∆2 ̸= 0 reduces the entanglement entropy                             We now demonstrate the validity of applying parton
+by half from the U(1) case in Fig.4(a) in the main text                           theory  to  theS=  1/2  kagome  and  triangular  lattice
+(see also Fig.7(a)).                                                              J1-J  2  Heisenberg  models.   For  the  kagome  lattice,  we
+                                                                                  adoptedχ               ij  =±χ       1  for the nearest neighbor bonds and
+        2.    Pfaffian and U(1) andZ        2 Spin liquids                        χij  =±χ       2  for  the  next-nearest  neighbor  bonds  in  a
+                                                                                  configuration shown in Fig.8(a) with six-site unit cell.
+                                                                                  The plus and minus bonds are shown in solid and bro-
+   In this subsection, we explain in detail how the defi-                         ken  lines,  respectively,  corresponding  to  theZ       2[0, π]β
+nition ofDin Eq.(11) in the main text is related to the                           ansatz.  The parameter values are taken from the varia-
+characterization of the spin liquid.  In the same way as                          tional Monte Carlo study (VMC) in Ref.[48] as (χ                1, χ2) =
+Eq.(11) in the main text, the global operator            ˆDis given               (1,−0.0186).  For a U(1) spin liquid, ∆             2  =ζ= 0,  and
+in the form,                                                                      for theZ      2 spin liquid, we choose ∆2, ζ̸= 0 by hand.  In
+ ˆD=   Y    cℓs↑;1    cls↑;2   cℓs↓;1    cℓs↓;2                                   the VMC studies [48,54], the optimization of parameters
+                                                                                  reach ∆2 =ζ= 0, while their convergence is not as good
+       (ℓ,s)                                                                      as the energy itself; the free energy landscape about ∆2,
+                            2NY                                   P               that connects U(1) andZ       2[0, π]β, is reported to be very
+       →D= detQ                 (−1)     nm = sgn(Pf(A))(−)          m nm,        flat.  This indicates the actual difficulty of determining
+
+                           m=1                                                    which is stable, solely by numerical simulations, as has
+                                                                      (D9)        been discussed for decades[55].  Here, we do not aim to
+wheren           m     =     0,1   is   the   number   of   fermions              discuss this issue,  but instead,  make direct comparison
+occupying    them-th    eigenstate    of    Eq.(D2),  A                           of  the  entanglement  property  between  the  parton  spin
+is    an    antisymmetrc    matrix    defined    asH    p     =P                  liquid state and theZ  2 spin liquid reported previously in
+i                        ;α, ℓ      ′s′σ′;α ′cℓsσ;α     cℓ′s′σ′;α ′            andthe DMRG study[47].
+4    ℓsσ;α, ℓ      ′s′σ′;α ′ Aℓsσ                                                    We  first  show  the  results  of  the  kagome  lattice  cal-
+detQ= (−)               2N √detA/Pf(A) = sgn(Pf(A)).                              culated  on  a  series  of  YC  cylinders  shown  in  the  inset
+   Let us make some remarks on the relationship between                           of Fig.7; the periodic boundary (PBC) taken in they-
+Dand the Pfaffian.  When ∆    ij =ζ   ij = 0 with unbroken                        direction, and its circumference isc= 2N       y, where we set
+U(1) symmetry, the up and down-spin fermions are de-                              Nx = 32 andN       y = 4−10, withN= 6N                   xNy up to 1920
+coupled, so thatQ       ↑ =Q   ↓. The Bogoliubov fermion num-                     sites.  We show in Fig.7(a), the R´enyi-αentropy defined
+ber for spinσis defined asn              mσ, withn        m =n   m↑   +n   m↓   . as
+Then,Dreduces to
+                                                                                                       Sfα =     11−α     ln TrA[(ρ   A)α],             (D12)
+                          NY                         NY
+D= detQ        ↑detQ     ↓   (−1)     nm↑   +n   m↓   =  (−1)     nm↑   +n   m↓  ,to compare with those obtained by the cylinder DMRG
+                        m=1                         m=1                           in  Ref.[47].   We  plotα=  2,3,4,5  for  the  U(1)  parton
+                                                                     (D10)        state, whereα= 2 data is the same as the one plotted in
+which means thatDno longer depends on the Pfaffian,                               Fig.4(a) in the main text.  As we show in the inset for
+as we always find detQ= detQ         ↑detQ     ↓ = (detQ      ↓)2 = 1.            thec= 20 case, breaking the U(1) symmetry down toZ             2
+   The characterization of the U(1) spin liquid is given by                       by the introduction of ∆2 ̸= 0 reducesS              α by half.  Then,
+Wen[53] using a Wilson loop operator along the closed                             we find that the slope ofS   α/2 of our Parton Hamiltonian
+loopC; Using a matrixU                    ij defined on an⟨ij⟩neighbor-           (fermions) for allαin the main panel is comparable to the
+ing bond, the matrix representation of the Wilson loop                            one obtained by DMRG in theS= 1/2 kagome Heisen-
+is given as                                                                       berg antiferromagnet (see Fig. 6 of Ref.[47]).  The differ-
+                χij    ∆ij                                                        ence is the emergent−ln 2;  it means that theD         A  = 1
+    Uij =                        ,     P C =  Y           Uij.     (D11)          sector of the parton state has quantitatively the same en-
+                ∆∗ij  −χ   ij                                                     tanglement scaling law as the spin liquid state in DMRG,
+                                                 ⟨i,j⟩∈C                          and  that  the  Gutzwiller  projection  is  the  origin  of  the
+When ∆ij  = 0,U   ij  is diagonal and accordingly, Wilson                         −ln 2 term.
+loop  commutes,  [P C, PC′]  =  0.   In  this  case,χ   ij  ̸=  0                    To examine how the twoD  A  sectors emerge, we plot
+yields a U(1) spin liquid.                                                        in  Fig.7(b)  the  distribution  of  the  eigenvalues  of  the
+                                                                                                                                                                         15
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 7.  Results of the parton Hamiltonian on a kagome lattice withχ        ij =±χ       γ,χ 1 = 1, χ  2 =−0.0186, on a YC cylinder (PBC
+in they-direction, OBC in thex-direction), where the circumference isc= 2N                       y.  We setN     x = 32 andN       y = 4−10.  (a) R´enyi-α
+entropyS  α withα= 2,3,4,5, for which the previous DMRG result on the Heisenberg model [47] is available for comparison.
+Broken lines (top five data) are the U(1) case (∆2 = 0,ζ= 0), and the next five are theZ            2  case (∆2 = 0.3,ζ= 0), which
+are different by a factor 2.  The DMRG data [47] develops almost parallelly with theZ            2 parton case while exhibiting a−ln 2
+intercept.  Inset:  ∆2  dependence ofS   α  atc= 20 atζ= 0.  (b) Eigenvalues of correlation matrixν                        m  for the bipartition of
+the cylinder withN       A  = 960.  Red circles are the U(1) case (∆2  =ζ= 0) and blue circles are theZ            2  case (∆2  =ζ= 0.3).
+(c) Schmidt values obtained forN    A = 12 taken as two unit cells of aspect ratio 1 at the center of the cylinder for U(1) case
+(∆2 =ζ= 0) and theZ            2 case (∆2 =ζ= 0.3)
+                                                           , where we classify them byD  A =±1.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 8.  Results of the parton Hamiltonian on kagome and triangular lattices.  (a,b) Unit cell (n  c = 6 and 4) for the parton
+Hamiltonian; kagome lattice has nearest neighborχ    ij =s   ijχ1, and next nearest neighbors    ijχ2, with (χ  1, χ2) = (1,−0.0186),
+where solid and broken lines indicates        ij = 1 and−1, respectively. The triangular lattice has nearest neighborχ              ij =s   ijχ1 =±1
+withn        s  = 4.  We set ∆ij  =ζ= 0.  (c,d) Schmidt spectrum obtained forN= 6N                xNy  = 384,N        x  =N   y  = 8 (kagome) and
+N= 4N      xNy = 400 withN        x =N   y = 10 (triangle).  The lattice has PBC in bothxandydirections shown in the figure, and
+subsystemAis taken asN                      A = 12 ones indicated in the inset.  The size scaling of the entanglement entropy obtained by this
+analysis is given in the inset forN     Ax  =N   Ay   where the units ofN   Ax  andN      Ay   are taken as those shown as shaded regions of the
+lattice.
+                                                                                                                                                          16
+
+correlation matrix,ν              m, which generatesλ                 ℓ according toeffects  are  less  pronounced  than  in  the  cylinders.   The
+Eq.(D6).  Here, naively,ν               m  is considered as an occupa-           excited state has the same feature with more precise de-
+tion  number  of  fermionic  particles.   By  comparing  the                     generacies.  The size scaling of the entanglement entropy
+case  of  ∆2  =ζ=  0  (U(1))  and  0.3  (Z           2),  the  occupa-           as a function ofN   Ax   =N   Ay    is shown in the inset, which
+tion is roughly reduced by half, which is intuitively un-                        linearly extrapolates to zero.  By removing theD     A =−1
+derstood as the aforementioned analogy with the Kitaev                           contribution from it, we obtain the−ln 2 term.
+superconductor, that the pairing of fermions reduces the                            We  also  performed  the  same  calculation  for  the  tri-
+occupation number by half.  In fact, as we showed in the                         angular  latticeJ             1-J  2   antiferromagnet  [56]  shown  in
+main text, introducing ∆2 =ζ̸= 0 will almost perfectly                           Fig.8(b),  where we set the nearest neighborχ             ij  =±1
+support the half-reduction of the entanglement entropy                           as  solid  and  broken  lines  withn        s  =  4  site  unit  cell,
+due to the breaking of U(1) symmetry.  We then further                           which has aπflux on the upward triangle.  By setting
+show  in  Fig.7(c)  the  Schmidt  values,λ                    ℓ,  for  the  U(1) Nx  =N   y  = 10 withN= 4N              xNy  = 400,  and the sub-
+andZ       2  states.   The  Schmidt  spectrum  splits  into  two                systemAasN                 A  =  12  shown  in  Fig.8(d),  we  find  re-
+nearly degenerateD                 A  =±1 sectors,  and by definition,           sults similar to the kagome lattice case.  The size scaling
+the Gutzwiller projection removes the−1 sector to put                            forN     Ax   =N   Ay   shows a linear slope toward zero,  which
+the state back to the spin representation, where the−ln 2                        we can expect to acquire−ln 2 after Gutzwiller projec-
+appears.                                                                         tion onto theD     A = 1 sector.  Unfortunately, unlike the
+                                                                                 kagome lattice, there are no rigorous numerical simula-
+   Figure8(c) shows the results of the parton theory for                         tions  that  exhibit  the  entanglement  entropy  (or  R´enyi
+the same kagome lattice antiferromagnet on a torus (PBC                          entropy) scaling, which makes the direct comparison dif-
+in two different directions shown in the inset), where the                       ficult. However, the features observed here for the parton
+unit cell is the shadedn             c  = 6 sites.  We calculated the            Hamiltonian are basically equivalent to the kagome lat-
+Schmidt values for subsystemAconsisting ofN                      A  = 12         tice.  This fact strongly supports the general picture of
+sites shown in the panel; they are separated into almost                         the reduction of Schmidt states as the cause of the topo-
+equivalentD A =±1 sectors, where the finite-size (shape)                         logical term.
+
+
+
+
+ [1]A.  Kitaev,  Anyons  in  an  exactly  solved  model  and  be-                      Physics Giving Rise to Novel Phases in Correlated Sys-
+     yond,Annals of Physics321, 2 (2006), january Special                              tems:  Iridates and Related Materials,Annual Review of
+     Issue.                                                                            Condensed Matter Physics7, 195 (2016).
+ [2]J. c. v. Chaloupka, G. Jackeli, and G. Khaliullin, Kitaev-                   [10]Y. Qiang, V. L. Quito, T. V. Trevisan, and P. P. Orth,
+     Heisenberg Model on a Honeycomb Lattice: Possible Ex-                             Probing Majorana Wave Functions in Kitaev Honeycomb
+     otic Phases in Iridium OxidesA              2IrO3,Phys. Rev. Lett.                Spin Liquids with Second-Order Two-Dimensional Spec-
+     105, 027204 (2010).                                                               troscopy,Phys. Rev. Lett.133, 126505 (2024).
+ [3]Y. Singh and P. Gegenwart, Antiferromagnetic Mott in-                        [11]J.  Nasu,  M.  Udagawa,  and  Y.  Motome,  Thermal  frac-
+     sulating state in single crystals of the honeycomb lattice                        tionalization   of   quantum   spins   in   a   Kitaev   model:
+     material Na2IrO3,Phys. Rev. B82, 064412 (2010).                                   Temperature-linear specific heat and coherent transport
+ [4]Y. Singh, S. Manni, J. Reuther, T. Berlijn, R. Thomale,                            of Majorana fermions,Phys. Rev. B92, 115122 (2015).
+     W. Ku,  S. Trebst, and P. Gegenwart, Relevance of the                       [12]A.  Y.  Kitaev,  Fault-tolerant  quantum  computation  by
+     Heisenberg-Kitaev Model for the Honeycomb Lattice Iri-                            anyons,Annals of Physics303, 2 (2003).
+     datesA          2IrO3,Phys. Rev. Lett.108, 127203 (2012).                   [13]R. A. Macˆedo, C. C. Bellinati, W. B. Fontana, E. C. An-
+ [5]A. Banerjee, C. A. Bridges, J.-Q. Yan, A. A. Aczel, L. Li,                         drade, and R. G. Pereira, Partons from stabilizer codes,
+     M. B. Stone, G. E. Granroth, M. D. Lumsden, Y. Yiu,                               Phys. Rev. B112, 125101 (2025).
+     J. Knolle, S. Bhattacharjee, D. L. Kovrizhin, R. Moess-                     [14]P. Schmoll and R. Or´us, Kitaev honeycomb tensor net-
+     ner,  D. A. Tennant,  D. G. Mandrus, and S. E. Nagler,                            works:   Exact  unitary  circuits  and  applications,Phys.
+     Proximate  Kitaev  quantum  spin  liquid  behaviour  in  a                        Rev. B95, 045112 (2017).
+     honeycomb magnet,Nature Materials15, 733 (2016).                            [15]In   Ref.[14],    decomposing   the   operations   including
+ [6]J.  Nasu,  J.  Knolle,  D.  L.  Kovrizhin,  Y.  Motome,  and                       Jordan-Wigner, Fourier, and Bogoliubov transformations
+     R. Moessner, Fermionic response from fractionalization                            to 2-qubit gates require explicit fermionic SWAP gates,
+     in an insulating two-dimensional magnet,Nature Physics                            which are extra to the standard TN for the spin Hamilto-
+     12, 912 (2016).                                                                   nian. Our method also treats fermions, but the fermionic
+ [7]G.  Jackeli  and  G.  Khaliullin,  Mott  Insulators  in  the                       swaps are implicitly encoded in the single-site MPO, and
+     Strong Spin-Orbit Coupling Limit: From Heisenberg to a                            requires no extra treatment compared to the projection
+     Quantum Compass and Kitaev Models,Phys. Rev. Lett.                                operation developed in Ref.[57] to obtain an exact solu-
+     102, 017205 (2009).                                                               tion for the frustration-free spin Hamiltonian. The com-
+ [8]J. G. Rau,  E. K.-H. Lee, and H.-Y. Kee, Generic Spin                              putational cost of Ref.[14] is measured by the polynomial
+     Model  for  the  Honeycomb  Iridates  beyond  the  Kitaev                         depth unitary circuit, which is comparable to ourO(N)
+     Limit,Phys. Rev. Lett., 077204 (2014).112                                         cost. The memory cost should also be comparable if one
+ [9]J.  G.  Rau,  E.  K.-H.  Lee,  and  H.-Y.  Kee,  Spin-Orbit                        performs  the  same  size  calculation  without  approxima-
+                                                                                                                                                                17
+
+     tion.                                                                                construction of efficient matrix product operators,Phys.
+[16]J.  Osorio  Iregui,  P.  Corboz,  and  M.  Troyer,  Probing                           Rev. B95, 035129 (2017).
+     the  stability  of  the  spin-liquid  phases  in  the  Kitaev-                 [36]The  numerical  accuracy  of  the  ground  state  and  ran-
+     Heisenberg model using tensor network algorithms,Phys.                               domly  chosen  excited  state  atN=  32  when  starting
+     Rev. B90, 195102 (2014).                                                             from  the  bond  dimensionD=  1  are|⟨H⟩ −E                                 exact| =
+[17]H.-Y.  Lee,  R.  Kaneko,  T.  Okubo,  and  N.  Kawashima,                             2.85×10         −10    and 2.66×10         −15  , respectively, against the
+     Gapless  Kitaev  Spin  Liquid  to  Classical  String  Gas                            analytical exact solutionsE                  exact.
+     through Tensor Networks,Phys. Rev. Lett.123, 087203                            [37]H. Yao, S.-C. Zhang, and S. A. Kivelson, Algebraic Spin
+     (2019).                                                                              Liquid  in  an  Exactly  Solvable  Spin  Model,Phys.  Rev.
+[18]L. Cincio and G. Vidal, Characterizing Topological Order                              Lett.102, 217202 (2009).
+     by Studying the Ground States on an Infinite Cylinder,                         [38]A. J. Willans, J. T. Chalker, and R. Moessner, Site dilu-
+     Phys. Rev. Lett.110, 067208 (2013).                                                  tion in the Kitaev honeycomb model,Phys. Rev. B84,
+[19]Y.-C.  He,  D.  N.  Sheng,  and  Y.  Chen,  Obtaining  topo-                          115146 (2011).
+     logical  degenerate  ground  states  by  the  density  matrix                  [39]F. L. Pedrocchi, S. Chesi, and D. Loss, Physical solutions
+     renormalization group,Phys. Rev. B89, 075110 (2014).                                 of the Kitaev honeycomb model,Phys. Rev. B84, 165414
+[20]F. Verstraete,  J. J. Garc´ıa-Ripoll, and J. I. Cirac, Ma-                            (2011).
+     trix  Product  Density  Operators:   Simulation  of  Finite-                   [40]In Ref.[25], they directly constructed the density operator
+     Temperature and Dissipative Systems,Phys. Rev. Lett.                                 ρA of the post-projected state consisting of equal-weight
+     93, 207204 (2004).                                                                   superposition of different gauge configurations. The form
+[21]U. Schollw¨ock, The density-matrix renormalization group                              ofρ   A  includes  the  nontrivial  off-diagonal  contributions
+     in the age of matrix product states,Ann. Phys.326, 96                                between different gauge configurations that seem highly
+     (2011).                                                                              nontrivial to reconcile with the Schmidt decomposition.
+[22]F. Fr¨owis, V. Nebendahl, and W. D¨ur, Tensor operators:                              Instead, they directly evaluated TrA (ρ A)n, integrated
+     Constructions and applications for long-range interaction                            over the regionsA, and applied the Replica trick to ob-
+     systems,Phys. Rev. A81, 062337 (2010).                                               tain  the  von  Neumann  entropy.  See  AppendixB 2for
+[23]M. Fannes, B. Nachtergaele, and R. F. Werner, Finitely                                details.
+     correlated states on quantum spin chains,Communica-                            [41]B. D´ora and R. Moessner, Gauge field entanglement in
+     tions in Mathematical Physics144, 443 (1992).                                        kitaev’s  honeycomb  model,Phys.  Rev.  B97,  035109
+[24]A. Kitaev and J. Preskill, Topological Entanglement En-                               (2018).
+     tropy,Phys. Rev. Lett.96, 110404 (2006).                                       [42]F. Zschocke and M. Vojta, Physical states and finite-size
+[25]H. Yao and X.-L. Qi, Entanglement Entropy and Entan-                                  effects in kitaev’s honeycomb model: Bond disorder, spin
+     glement Spectrum of the Kitaev Model,Phys. Rev. Lett.                                excitations, and nmr line shape,Phys. Rev. B92, 014403
+     105, 080501 (2010).                                                                  (2015).
+[26]M. A. Levin and X.-G. Wen, String-net condensation:  A                          [43]C. L. Kane and E. J. Mele,Z                  2 Topological Order and the
+     physical mechanism for topological phases,Phys. Rev. B                               Quantum Spin Hall Effect,Phys. Rev. Lett.95, 146802
+     71, 045110 (2005).                                                                   (2005).
+[27]M. Levin and X.-G. Wen, Detecting topological order in a                        [44]L. Fu and C. L. Kane, Time reversal polarization and a
+     ground state wave function,Phys. Rev. Lett.96, 110405                                Z2 adiabatic spin pump,Phys. Rev. B74, 195312 (2006).
+     (2006).                                                                        [45]A. Y. Kitaev, Unpaired majorana fermions in quantum
+[28]H.-K. Jin, H.-H. Tu, and Y. Zhou, Efficient tensor net-                               wires,Physics-Uspekhi44, 131–136 (2001).
+     work  representation  for  gutzwiller  projected  states  of                   [46]D. S. Rokhsar and S. A. Kivelson, Superconductivity and
+     paired fermions,Phys. Rev. B101, 165135 (2020).                                      the Quantum Hard-Core Dimer Gas,Phys. Rev. Lett.61,
+[29]H.-K. Jin, H.-H. Tu, and Y. Zhou, Density matrix renor-                               2376 (1988).
+     malization  group  boosted  by  gutzwiller  projected  wave                    [47]S. Depenbrock, I. P. McCulloch, and U. Schollw¨ock, Na-
+     functions,Phys. Rev. B104, L020409 (2021).                                           ture  of  the  Spin-Liquid  Ground  State  of  theS=  1/2
+[30]H.-K. Jin, R.-Y. Sun, H.-H. Tu, and Y. Zhou, A promis-                                Heisenberg  Model  on  the  Kagome  Lattice,Phys.  Rev.
+     ing  method  for  strongly  correlated  electrons  in  two  di-                      Lett.109, 067201 (2012).
+     mensions:  Gutzwiller-guided Density Matrix Renormal-                          [48]Y.  Iqbal,  F.  Becca,  and  D.  Poilblanc,  Projected  wave
+     ization Group, AAPPS Bulletin35,10.1007/s43673-025-                                  function study of z2 spin liquids on the kagome lattice for
+     00156-8(2025).                                                                       the  spin- 12  quantum  heisenberg  antiferromagnet,Phys.
+[31]Y.-H. Wu, L. Wang, and H.-H. Tu, Tensor network rep-                                  Rev. B84, 020407(R) (2011).
+     resentations of parton wave functions,Phys. Rev. Lett.                         [49]Y. Zhang, T. Grover, and A. Vishwanath, Topological en-
+     124, 246401 (2020).                                                                  tanglement entropy of𭟋    2 spin liquids and lattice laughlin
+[32]S. R. White, Minimally entangled typical quantum states                               states,Phys. Rev. B84, 075128 (2011).
+     at  finite  temperature,Phys.  Rev.  Lett.102,  190601                         [50]Y.  Zhang,  T.  Grover,  and  A.  Vishwanath,  Erratum:
+     (2009).                                                                              Topological entanglement entropy of𭟋    2 spin liquids and
+[33]A. Iwaki, A. Shimizu, and C. Hotta, Thermal pure quan-                                lattice  laughlin  states  [phys.  rev.  b  84,  075128  (2011)],
+     tum matrix product states recovering a volume law en-                                Phys. Rev. B85, 199905 (2012).
+     tanglement,Phys. Rev. Res.3, L022015 (2021).                                   [51]J. Pei, S. Han, H. Liao, and T. Li, Topological entangle-
+[34]S. Keller, M. Dolfi, M. Troyer, and M. Reiher, An efficient                           ment entropy in gutzwiller projected spin liquids,Phys.
+     matrix product operator representation of the quantum                                Rev. B88, 125135 (2013).
+     chemical Hamiltonian, The Journal of Chemical Physics                          [52]G. Vidal, J. I. Latorre, E. Rico, and A. Kitaev, Entangle-
+     143,10.1063/1.4939000(2015).                                                         ment in Quantum Critical Phenomena,Phys. Rev. Lett.
+[35]C. Hubig, I. P. McCulloch, and U. Schollw¨ock, Generic                                90, 227902 (2003).
+                                                                                                                                                                  18
+
+[53]X.-G. Wen, Quantum orders and symmetric spin liquids,                            [56]Y.  Iqbal,  W.-J.  Hu,  R.  Thomale,  D.  Poilblanc,  and
+     Phys. Rev. B65, 165113 (2002).                                                        F.  Becca,  Spin  liquid  nature  in  the  heisenbergJ      1 −J    2
+[54]Y. Iqbal, F. Becca, S. Sorella, and D. Poilblanc, Gapless                              triangular  antiferromagnet,Phys.  Rev.  B93,  144411
+     spin-liquid phase in the kagome spin- 12  heisenberg anti-                            (2016).
+     ferromagnet,Phys. Rev. B87, 060405(R) (2013).                                   [57]H. Saito and C. Hotta, Cluster-projected matrix product
+[55]A. M. L¨auchli, J. Sudan, and R. Moessner,s=                        12 kagome          state:  Framework for engineering exact quantum many-
+     heisenberg antiferromagnet revisited,Phys. Rev. B100,                                 body  ground  states  in  one  and  two  dimensions,Phys.
+     155142 (2019).                                                                        Rev. Res.7, 013086 (2025).

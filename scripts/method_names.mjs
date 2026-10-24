@@ -812,6 +812,49 @@ Object.assign(NAMES, {
   "DMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)": ["Fixed-node DMC", "trial state: Slater-Jastrow, antiferromagnetic bcc crystal; extrapolated: Δτ → 0", { family: "DMC" }],
 });
 
+// Rows of sweep-rows-2026-10-20-families.json (SWEEP.md): the labels scripts/families_2026_10_20.mjs writes.
+// arXiv:1411.5198 Tables I-II (Kitaev, pair wave functions; MP = momentum projection, KL = Kitaev-liquid
+// constraint on the hexagon fluxes), 2112.08394 Table III, 2009.04129 Supplement, cond-mat/0605464,
+// 2311.16889 Table I, 2505.03466, 2309.10955 Table III, 2503.20122 Table VI, cond-mat/0309368,
+// 2110.06390 Table IV, 2206.07370 Table 1. The pair wave functions of arXiv:1411.5198 (Kurita, Yamaji,
+// Morita & Imada) are mVMC's generalized Pfaffian pair-product states: ansatz PP (splitName, 2026-10-23).
+Object.assign(NAMES, {
+  "|ψpair⟩ (Table I)": ["mVMC", "pair wave function"],
+  "|ψMP⟩ (Table I)": ["mVMC", "pair wave function; projected: K = 0"],
+  "|ψKL⟩ (Table I)": ["mVMC", "pair wave function, hexagon fluxes fixed (Kitaev-liquid constraint)"],
+  "Exact (Table I)": ["ED", ""],
+  "Exact": ["Exact solution", ""],
+  "DMRG χ=512": ["DMRG", "", { bond_dimension: 512 }],
+  "DMRG χ=1024": ["DMRG", "", { bond_dimension: 1024 }],
+  "isoTNS D=4, η=8": ["isoTNS", "η = 8", { bond_dimension: 4, family: "tensor network" }],
+  "isoTNS D=6, η=12": ["isoTNS", "η = 12", { bond_dimension: 6, family: "tensor network" }],
+  "exact ground-state energy Eg(Φy = 1)": ["Exact solution", "free Majorana fermions, Wilson-loop sector Φy = +1"],
+  "exact diagonalisation (Lanczos)": ["ED", "Lanczos"],
+  "exact diagonalizations (6 x 6)": ["ED", ""],
+  "exact values": ["ED", ""],
+  "Transformer, n_l = 2": ["Transformer", "n_l = 2 layers"],
+  "Transformer, n_l = 4": ["Transformer", "n_l = 4 layers"],
+  // L = 16 and 18 ran a different network (arXiv:2311.16889 App. D: 'This method is employed in our simulations
+  // of the 16 x 16 and 18 x 18 lattice systems'; qmbl-verify 2026-10-23, ruled 2026-10-24)
+  "Transformer, n_l = 8": ["Transformer", "n_l = 8 layers", { instance_detail: Object.fromEntries([256, 324].map(n =>
+    [`ShastrySutherland/square_${n}_P_J0.8_Jd1`, "n_l = 8 layers, local attention (window 5 x 5 patches, patch size b = 2), h = 12, d = 72"])) }],
+  "Transformer, Extrap. (n_l → ∞, variance extrapolation)": ["Transformer", "extrapolated: variance → 0 (n_l = 2, 4, 8 layers)"],
+  "ConvNext (6,3,3)[2,2]": ["ConvNeXt", "(6,3,3)[2,2]"],
+  "ConvNext (4,3,2)[1,1], with patching": ["ConvNeXt", "(4,3,2)[1,1], with patching"],
+  "ConvNext (4,3,2)[1,1], without patching": ["ConvNeXt", "(4,3,2)[1,1], without patching"],
+  "GNN (Table IV)": ["GNN", ""],
+  "GNN-2 (Table IV)": ["GNN", "GNN-2, separate amplitude and phase networks"],
+  "ResNet (Table IV)": ["ResNet", "baseline of arXiv:2110.06390"],
+  "LCN": ["LCN", "", { family: "CNN / ResNet" }],
+});
+for (const D of [4, 6, 8, 10]) NAMES[`finite PEPS, D = ${D}`] = ["PEPS", "finite", { bond_dimension: D }];
+for (const s of ["(+,+)", "(+,−)", "(−,+)"])
+  NAMES[`VMC, |ψKL⟩ with Wilson-loop projection, (Wx,Wy) = ${s} (Table II)`] = ["mVMC", `pair wave function, hexagon fluxes fixed, Wilson-loop sector (Wx,Wy) = ${s}`];
+for (const [c, label] of [["(i)", "EP state"], ["(ii)", "switch plaquette"], ["(iii)", "switch plaquette, -Δ2"], ["(iv)", "No plaquette order"],
+  ["(v)", "other EP state"], ["(vi)", "EP phase in 16x16 sites"], ["(vii)", "no potential, t2 dominate"], ["(viii)", "no potential, Δ2 dominate"],
+  ["(ix)", "small potential"], ["(x)", "no Δ2"], ["(xi)", "splitting Néel phase"], ["(xii)", "splitting Néel, no large t2"], ["(xiii)", "splitting Néel, no Néel order"]])
+  NAMES[`Gutzwiller-projected parton state, case ${c} ${label}`] = ["VMC", `Gutzwiller-projected partons, Table VI case ${c}: ${label}`];
+
 // Systematic families of strings, matched when no exact entry exists.
 export const PATTERNS = [
   [/^DMRG \(chi = (\d+)\), QMBL cost-to-reproduce run$/, m => ["DMRG", "QMBL run", { bond_dimension: +m[1] }]],
@@ -846,7 +889,9 @@ export function lookup(published) {
 // PEPS + CNN) is optimised by VMC and is a VMC ansatz.
 const NO_ANSATZ = new Set(["DMRG", "ED", "SSE QMC", "QMC", "CT-QMC", "Exact solution", "AFQMC", "VAFQMC", "TPS", "PEPS",
   "VQE", "CCD", "CCSD", "CCSDT", "CCSDTQ", "CCSDTQ5", "DCD", "TC-CCD", "TC-DCD", "lmCCD", "lmrCCD", "mCCD", "rmCCD",
-  "rxmCCD", "MP2", "dRPA", "dRPA + SOSEX", "FCIQMC", "Transcorrelated FCIQMC", "CP-AFQMC", "ph-AFQMC"]);
+  "rxmCCD", "MP2", "dRPA", "dRPA + SOSEX", "FCIQMC", "Transcorrelated FCIQMC", "CP-AFQMC", "ph-AFQMC",
+  // An isometric tensor network optimised by its own sweeps (arXiv:2112.08394), not by VMC.
+  "isoTNS"]);
 // Projector algorithms by their short names.
 const PROJECTOR = { "Fixed-node DMC": "FN-DMC", "Fixed-node GFMC": "FN-GFMC", "Fixed-phase DMC": "FP-DMC" };
 // Short ansatz names; a name not listed is its own short name.

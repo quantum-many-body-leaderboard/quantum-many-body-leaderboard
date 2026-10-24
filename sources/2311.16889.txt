@@ -1,0 +1,1017 @@
+               Transformer Wave Function for two dimensional frustrated magnets:
+                emergence of a Spin-Liquid Phase in the Shastry-Sutherland Model
+
+        Luciano Loris Viteritti,1, ∗ Riccardo Rende,2, ∗ Alberto Parola,3 Sebastian Goldt,2 and Federico Becca1
+                     1Dipartimento  di  Fisica,  Universit`a  di  Trieste,  Strada  Costiera  11,  I-34151  Trieste,  Italy
+                  2International  School  for  Advanced  Studies  (SISSA),  Via  Bonomea  265,  I-34136  Trieste,  Italy
+          3Dipartimento di Scienza e Alta Tecnologia, Universit`a dell’Insubria, Via Valleggio 11, I-22100 Como, Italy
+                                                             (Dated:  April 11, 2025)
+                   Understanding quantum magnetism in two-dimensional systems represents a lively branch in mod-
+                ern condensed-matter physics.  In the presence of competing super-exchange couplings,  magnetic
+                order is frustrated and can be suppressed down to zero temperature.  Still, capturing the correct
+                nature of the exact ground state is a highly complicated task, since energy gaps in the spectrum
+                may be very small and states with different physical properties may have competing energies.  Here,
+                we introduce a variational Ansatz for two-dimensional frustrated magnets by leveraging the power
+                of representation learning.  The key idea is to use a particular deep neural network with real-valued
+                parameters, a so-called Transformer, to map physical spin configurations into a high-dimensional
+                feature space.  Within this abstract space, the determination of the ground-state properties is sim-
+                plified  and  requires  only  a  shallow  output  layer  with  complex-valued  parameters.   We  illustrate
+                the efficacy of this variational Ansatz by studying the ground-state phase diagram of the Shastry-
+                Sutherland model, which captures the low-temperature behavior of SrCu2(BO3)2 with its intriguing
+                properties.  With highly accurate numerical simulations, we provide strong evidence for the stabi-
+                lization of a spin-liquid between the plaquette and antiferromagnetic phases.  In addition, a direct
+                calculation of the triplet excitation at the Γ point provides compelling evidence for a gapless spin
+                liquid.  Our findings underscore the potential of Neural-Network Quantum States as a valuable tool
+                for probing uncharted phases of matter, and open up new possibilities for establishing the properties
+                of many-body systems.
+
+
+                     I.    INTRODUCTION
+
+  Since the discovery of the fractional quantum Hall ef-
+fect  [1]  and  its  description  by  the  Laughlin  wave  func-
+tion [2], a growing interest has developed around uncon-
+ventional  phases  of  matter,  i.e.,  the  ones  that  escape
+perturbative  or  mean-field  approaches.    In  this  sense,
+the  hunt  for  spin  liquids  is  of  fundamental  importance
+in Mott insulators, where localized spins determine the
+low-temperature properties.  On geometrically frustrated                      FIG.  1.     The  ground-state  phase  diagram  of  the  Shastry-
+lattices, it is not possible to minimize simultaneously all                   Sutherland  model  as  obtained  in  this  work.    The  super-
+the interactions among the spins and, therefore, magnetic                     exchanges J  and J′  are  denoted  by  solid  and  dashed  lines,
+order could be suppressed, even at zero temperature.  In                      respectively.
+this  case,  spins  are  highly  entangled  and  the  resulting
+ground-state wave function shows unconventional prop-
+erties [3].  However, most of the theoretical models that                     by Shastry and Sutherland [6] deserves particular atten-
+have been proposed to support quantum spin liquids are                        tion since it gives an example in which the magnetic order
+still  unresolved,  and  their  phase  diagrams  are  not  well               can be melted by tuning the super-exchange interactions,
+established except for specific points (that usually give                     leading to a particularly simple ground-state wave func-
+trivial states).  One notable exception is given by the Ki-                   tion, where nearby spins form singlets. Most importantly,
+taev model on the honeycomb lattice [4], which provides                       this Hamiltonian captures the low-temperature proper-
+a formidable example for gapless and gapped spin liquids.                     ties of SrCu2(BO3)2 [7,8].
+On the experimental side, there has been great develop-                          The main interest in this material comes from its prop-
+ment in the search for materials that might be able to                        erties when external magnetic fields are applied.  Indeed,
+support  these  exotic  phases  of  matter.   One  promising                  a complicated magnetization curve is observed, with var-
+example is given by the so-called Herbertsmithite, which                      ious magnetization plateaus (most notably at magnetiza-
+may realize a spin liquid at low temperatures [5]. Among                      tion 1/8) that show intriguing properties [7,9–11].  The
+the variety of quantum spin models, the one introduced                        Shastry-Sutherland model is defined by
+
+                                                                                          ˆH = J X       ˆSr · ˆSr′ + J′  X       ˆSr · ˆSr′ ,         (1)
+∗ These authors contributed equally.
+                                                                                                   ⟨r,r′⟩                ⟨⟨r,r′⟩⟩
+                                                                                                                                                       2
+
+where  ˆSr  is  the  S  =  1/2  operator  on  the  site  r  of  a              on the variational principle,  in which a trial state |Ψθ⟩
+L × L square lattice, with periodic boundary conditions.                       is  introduced,  where  θ  is  a  set  of  parameters  to  be
+Here,  the  first  sum  goes  over  nearest-neighbor  sites  on                optimized  in  order  to  minimize  the  variational  energy
+the  square  lattice,  while  the  second  sum  is  over  next-                ⟨Ψθ| ˆH|Ψθ⟩ /⟨Ψθ|Ψθ⟩.  In the variational quantum Monte
+nearest-neighbor  sites  on  orthogonal  dimers,  according                    Carlo  scheme  [26],  a  quantum  system  consisting  of      N
+to the bond pattern of Fig.1.  For a detailed description                      spin-1/2 arranged on a lattice is typically studied in the
+of the lattice structure, including its symmetries, see Ap-                    computational basis with well-defined spin values along
+pendixA.                                                                       the z-axis, i.e., {|σ⟩ = |σz1,··· , σzN⟩} with σzi  = ±1, thus
+  The ground-state properties of the Shastry-Sutherland                        leading to |Ψθ⟩ = P{σ} Ψθ(σ)|σ⟩, where Ψθ(σ) = ⟨σ|Ψθ⟩
+model are well known in two limiting cases. When J = 0,                        is  the  amplitude  of  the  variational  Ansatz.    Different
+the  model  reduces  to  a  collection  of  decoupled  dimers                  parametrizations of Ψθ(σ) have been proposed to study
+and its ground state is a product of singlets connected                        frustrated two-dimensional models. For example, the de-
+by  J′;  this  state  remains  the  exact  ground  state  also                 scription of quantum states able to reproduce the main
+for  finite  values  of  J/J′,  up  to  a  certain  value  [6].   In           features  of  quantum  spin  liquids  is  based  on  the  con-
+the opposite limit, when J′  = 0, the Heisenberg model                         cept  of  resonating-valence  bond  states  [27, 28],  leading
+on the square lattice is recovered, whose ground state is                      to  powerful  physically  inspired  wave  functions  [29–31].
+the N´eel antiferromagnet;  also in this case,  the ground                     Although  the  construction  of  this  kind  of  wave  func-
+state is robust in a finite region when J′  > 0.  Despite                      tions is generalizable to different models,  it is not easy
+the  substantial  effort  that  has  been  invested  in  under-                to define a systematic way to improve it; as a result, it
+standing the appearance of magnetization plateaus, the                         is  not  always  possible  to  achieve  high  accuracies  for  a
+ground-state properties of the Shastry-Sutherland model                        generic model.  On the other hand, DMRG and tensor-
+have been investigated in much less depth.  One of the                         network approaches have also proved to be very compet-
+first studies based on the mean-field approximation pre-                       itive on two-dimensional systems [32,33].  Still, despite a
+dicted an intermediate helical phase between the dimer                         great computational effort, two-dimensional systems re-
+and  the  N´eel  phases  [12],  while  other  works  suggested                 main very challenging to deal with.
+a  direct  transition  between  these  two  phases  [8, 13].                      In a seminal contribution, Carleo and Troyer [34] pro-
+Later,  an  intermediate  phase  with  plaquette  order  has                   posed to parameterize variational states using neural net-
+been found by series expansion approaches [14] and con-                        works,  thus  defining  Neural-Network  Quantum  States
+firmed  within  the  generalization  to  Sp(2N)  symmetry                      (NQS). Further investigations on various many-body sys-
+and  large-N  expansion  [15],  by  exact  diagonalizations,                   tems in one and two spatial dimensions proved that very
+and a combination of dimer- and quadrumer-boson meth-                          high accuracies can be obtained with this approach [35–
+ods  [16].   Subsequent  tensor-network  approaches  have                      46].   Still,  in  most  cases  their  use  has  been  limited  to
+corroborated  the  presence  of  the  plaquette  phase,  for                   rather  simple  models,  where  the  exact  solutions  were
+0.675 ≲ J/J′ ≲ 0.765 [17].  This phase breaks the reflec-                      already  known  from  other  methods  (e.g.,  the  unfrus-
+tion symmetry across the lines containing the J′  bonds                        trated  Heisenberg  model  on  the  square  lattice  or  one-
+(leading  to  a  two-fold  degenerate  ground  state)  and  is                 dimensional systems) [34, 37–39].  Attempts to address
+described  by  resonating  singlets  on  half  of  the  plaque-                challenging  cases  have  been  pursued,  but  without  ad-
+ttes with no J′  bonds,  see Fig.1.   The stabilization of                     dressing  important  open  questions  on  the  ground-state
+plaquette order in SrCu2(BO3)2 has been obtained when                          properties  [35, 36, 40–44].   In  addition,  neural-network
+hydrostatic pressure is applied, even though there is ev-                      architectures  have  also  been  employed  to  enhance  con-
+idence that the broken symmetry is related to the four-                        ventional  variational  states,  which  were  widely  utilized
+fold rotations around the center of plaquettes with no J′                      in  previous  studies  on  frustrated  spin  models  (e.g.,
+bonds [18,19]. In addition, high-pressure thermodynam-                         Gutzwiller-projected  fermionic  states)  [47–49].    More-
+ics  provided  evidence  of  a  deconfined  quantum  critical                  over,  NQS  are  particularly  promising  to  resolve  chal-
+point between the N´eel and plaquette phases [20].  The                        lenging  problems  in  strongly-correlated  systems,  since
+latter aspect has been supported by a numerical analy-                         they can efficiently represent highly-entangled quantum
+sis, also suggesting the emergence of the O(4) symmetry                        states [50,51]. On the contrary, DMRG and related Ten-
+at  the  critical  point  [21, 22].   However,  recent  density-               sor  Network  approaches  can  accurately  describe  states
+matrix renormalization group (DMRG) and exact diag-                            with high entanglement only in one-dimensional systems,
+onalization calculations [23,24] pushed forward the idea                       where  a  large  bond  dimension  can  be  easily  used.   In-
+that a spin liquid intrudes between the antiferromagnetic                      stead, in two dimensions, serious limitations appear, ei-
+and plaquette phases, around 0.79 ≲ J/J′ ≲ 0.82.  The                          ther imposing to work with a high-rank tensor structure
+existence of an intruding spin-liquid phase has been also                      or a quasi-one-dimensional cluster (with low-rank tensors
+suggested by renormalization group calculations [25].                          arranged in a snaked path [52]).
+  Numerical  methods  have  proven  crucial  to  obtain  a                        Here, we aim to push the boundaries of this approach
+description  of  the  physical  properties  of  the  Shastry-                  by demonstrating that an  Ansatz exclusively reliant on
+Sutherland  model  or,  in  general,  of  other  complicated                   neural  networks  enables  us  to  achieve  unprecedented
+physical  systems.   These  approaches  are  mainly  based                     accuracy  in  solving  the  challenging  Shastry-Sutherland
+                                                                                                                                                       3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2.    Left panel:  The NQS is defined as the composition of two functions:  first, a deep neural network V (σ; ϕ) (with
+real-valued parameters) maps the input configurations σ into hidden representations z; then, a simple shallow network f(z; W)
+(with complex-valued parameters) generates the logarithm of the amplitudes Log[Ψθ(σ)] starting from hidden representations.
+Right  panel:   Pictorial  illustration  of  the  mapping  process  carried  out  by  the  deep  neural  network.   The  network  maps
+spin configurations from the Hilbert space σ  into configurations in a feature space z ∈ Rd  with a non-trivial structure.  In
+subsectionIII D,  we  show  for  example  that  physical  configurations                 σ  cluster  in  feature  space  according  to  the  sign  of  the
+amplitudes Log[Ψθ(σ)].
+
+
+model. This model poses a particularly demanding prob-                        in our case, predicting the amplitude of the wave func-
+lem in the realm of highly-frustrated magnetism, and our                      tion for a given spin configuration.  The idea of learning
+approach facilitates the extraction of its intricate physi-                   these representations directly from data is contrary to the
+cal properties.  Specifically, we use an architecture based                   approach  of  classical  machine  learning,  which  required
+on Transformer [53,54] which has already proven to be                         careful engineering and considerable domain expertise to
+extremely  accurate  for  models  in  one  and  two  dimen-                   distil raw data (such as the spin configurations) into a
+sions  [45, 46, 55, 56].   However,  in  this  work,  we  in-                 representation or feature vector that could be used for a
+corporate the Transformer architecture in an innovative                       downstream task [58].
+framework  where  the  deep  neural  network  is  employed                       Here,  we  follow  this  approach  by  building  a  varia-
+as  a  map  from  the  space  of  the  physical  spin  configu-               tional Ansatz where we use a deep neural network to map
+rations  to  an  abstract  space,  where  the  determination                  physical  spin  configurations  into  a  feature  space.   This
+of the low-energy properties of the systems is simplified.                    transformation enables an accurate prediction of the am-
+This approach mirrors the representation learning that is                     plitude  associated  with  each  configuration  with  even  a
+central to the success of modern deep learning [57].  Car-                    simple, shallow fully-connected layer [34].  By reframing
+rying out simulations on clusters with periodic-boundary                      the NQS as feature extractors rather than just universal
+conditions, we show that there exists a small, but finite,                    approximators of complicated functions, the variational
+region in the phase diagram in which both the antiferro-                      state  is  naturally  perceived  as  the  composition  of  two
+magnetic and plaquette order parameters vanish in the                         distinct functions, each with a specific role:
+thermodynamic limit (see Fig.1).  As a result,  this re-                                                        z = V (σ; ϕ) ,
+gion is consistent with the existence of a spin-liquid state.
+Another  original  contribution  of  this  work  is  to  define                                    Log[Ψθ(σ)] = f (z; W)  ,                    (2)
+a suitable modification of the ViT architecture to treat                      where the variational parameters are partitioned into two
+excited  states  at  finite  momenta.   This  approach  lends                 blocks θ  = {ϕ, W}.  The function V (·; ϕ) is parameter-
+support to the existence of a gapless spin liquid.                            ized as a deep neural network, mapping physical config-
+                                                                              urations σ  to  vectors z,  called  hidden  representations,
+   II.    THE VARIATIONAL WAVE FUNCTION                                       which  belong  to  a  d-dimensional  feature  space.    Con-
+                                                                              versely, f(·; W) is a shallow neural network used to gener-
+                                                                              ate a single scalar value from the hidden representations
+  In this study,  we take a new perspective on NQS by                         z. This final value is used to predict the amplitude corre-
+leveraging  the  principle  of  representation  learning  [57]                sponding to the input configuration.  In order to predict
+that is key to the success of deep neural networks in prac-                   both modulus and phase of the variational state (which is
+tice. The idea is that the mathematical structure of deep                     fundamental in cases where the exact sign is not known
+networks, a composition of simple functions with param-                       a  priori),  it  is  convenient  to  employ  a  complex-valued
+eters that can be tuned to data, allows neural networks                       variational state.  The structure of the Ansatz in Eq. (2)
+to automatically extract the pertinent features of a data                     suggests the possibility of taking ϕ as real-valued param-
+set  for  a  given  task.   These  features  or  representations              eters in the deep neural network V (·; ϕ).  Subsequently,
+of the inputs are then used for downstream tasks,  like,                      only the parameters W  of the shallow function f(·; W)
+                                                                                                                                                       4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3.    The input spin configuration σ is partitioned into                  FIG.  4.       To  process  the  embedded  patches,  each  Trans-
+patches, which are linearly projected in a d-dimensional em-                   former Encoder block employs a real-valued factored multi-
+bedding space and then processed by a Vision Transformer.                      head attention mechanism,  which mixes the patches,  and a
+The  latter  one  builds  new  representations  of  the  patches,              real-valued two-layers Feed-Forward neural network, which is
+which  are  then  combined  through  summation  and  fed  into                 used to introduce a non-linearity. Skip connections and Layer
+a  final  single  complex-valued  fully-connected  layer  in  order            Normalization are also employed.
+to obtain the logarithm of the (complex) wave function.  No-
+tice that this is a particular instantiation of the more general
+scheme proposed in the left panel of Fig.2.
+                                                                                                   A.    Vision Transformer
+
+                                                                                  One of the most promising architectures in machine-
+can  be  taken  complex-valued.   We  schematically  repre-                    learning applications is the Transformer [53], which, orig-
+sent these two steps in the left panel of Fig.2; instead, a                    inally  designed  for  natural  language  processing  tasks,
+pictorial scheme of the mapping process from the physi-                        rapidly reached competitive results also in different fields,
+cal space of the spin configurations to the feature space                      for example the Vision Transformer (ViT) for image clas-
+is depicted in the right panel of Fig.2.                                       sification tasks [54].  Some of us adapted the ViT archi-
+   Far from being only a change of viewpoint, the possi-                       tecture to study one-dimensional systems [45], achieving
+bility of having a real-valued feature extractor is crucial                    results that are comparable with DMRG on large clus-
+in  practice.   Several  works  showed  recently  that  depth                  ters.   In  this  work,  we  propose  its  use  to  parametrize
+is crucial to achieve high accuracies on two-dimensional                       V (·; ϕ) in Eq. (2), instead the function    f is chosen to be:
+quantum  systems  [43, 59–61].   However,  training  deep                                                  KX
+networks is a complicated task that is only possible by                                    f(z; W) =          log cosh (bα + wα · z)  ,          (3)
+leveraging techniques such as Layer Normalization [62],                                                  α=1
+skip  connections  [63],  and  appropriate  activation  func-                  where the variational parameters W  are the biases and
+tions  [64].   However,  all  of  these  techniques  have  been                the weights of the linear transformation.  The number of
+developed  for  real-valued  architectures,  and  cannot  be                   hidden neurons K  is a hyperparameter of the network.
+straightforwardly  generalized  to  complex-valued  neural                     Notice that Eq. (3) has the same functional form as the
+networks.  For these reasons, in Ref. [45], the optimiza-                      well-known Restricted-Boltzmann Machine (RBM) intro-
+tion of a deep Transformer architecture having complex-                        duced by Carleo and Troyer [34]. Crucially, in this case it
+valued  parameters  necessitated  the  development  of  a                      is not applied to the physical configuration σ but instead
+heuristic  procedure  involving  the  introduction  of  a  cut                 to  the  hidden  representation z.   This  is  the  change  of
+in the attention weights.  A big advantage of the newly                        paradigm that we want to emphasize. With these choices,
+proposed Ansatz with a real-valued feature extractor is                        the process of constructing the amplitude corresponding
+then  that  it  can  be  trained  from  scratch  without  ad-                  to a physical spin configuration σ involves the following
+ditional restrictions and with minimal regularization in                       steps (see Fig.3):
+the optimization protocol (see AppendixBfor details).
+This modified architecture has recently yielded state-of-                          1.The input spin configuration   σ is initially divided
+the-art results on one of the most popular benchmark in                               into n patches (see AppendixA).
+frustrated magnetism [46]. The following two subsections
+give a detailed description of the architecture of the neu-                        2.The   patches   are   linearly   projected   into   a     d-
+ral network that we use to study the Shastry-Sutherland                               dimensional  embedding  space,  resulting  in  a  se-
+model; we present our results in sectionIII.                                          quence of vectors (x1,··· , xn), where xi ∈ Rd.
+                                                                                                                                                      5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 5.   Panel a: Relative error ∆ε = |(Eexact−EViT)/Eexact| of the ViT wave function on a 6×6 lattice at J/J′ = 0.8. First,
+fixing only one layer and measuring the accuracy by increasing the width (blue dots).  Then, for a fixed width, by increasing
+the number of layers (green squares).  Panel b:  The isotropic spin-spin correlations in real space as computed by the ViT
+wave function (full dots) on a 6 × 6 lattice at J/J′ = 0.8.  Values from exact diagonalization (empty dots) are also shown for
+comparison.  Inset:  The red line shows how the spin-spin correlations are ordered in the panel (b).  Panel c:  The comparison
+between  the  energies  per  site  obtained  by  the  ViT  wave  function  (green  circles)  on  L × L  lattices  with  periodic-boundary
+conditions from L = 6 to L = 18 and the ones obtained by DMRG (orange squares) on 2L × L cylinders with open-boundary
+conditions along the x direction from L = 6 to L = 14 [23].  The exact result on the 6    × 6 lattice is denoted with an empty red
+circle.  The reported energy values were obtained by optimizing a ViT model with hyperparameters set to h = 12, d = 72, and
+nl = 8, utilizing a sample size of M = 6 × 103 during the optimization process.
+
+
+   3.A ViT processes these embedded patches, produc-                          is processed by a real-valued factored multi-head atten-
+       ing another sequence of vectors (y1,··· , yn), where                   tion mechanism [66,67].  The          µ-th attention vector Aµi
+       yi ∈ Rd.                                                               is defined by first applying a local linear transformation
+   4.The  hidden  representation    z  of  the  configuration                 V µ to each input vector xj.
+                                                                                 The resulting vectors V µxj are then globally mixed ac-
+       σ is defined by summing all these output vectors:                      cording to the attention mechanism [53]
+       z = Pni=1 yi.
+   5.A  fully-connected  layer  with  complex-valued  pa-                                             Aµi  = X     αµi−jV µxj,                       (4)
+                                                                                                               j
+       rameters,  defined in Eq. (3),  produces the ampli-
+       tude  Log[Ψθ(σ)]  corresponding  to  the  input  con-                  where  µ  =  1, . . . , h,  with  h  the  numbers  of  heads  in
+       figuration σ.  Specifically, we set K = d.                             the  multi-head  attention  mechanism.   The  parameters
+  Notably, while the vector xi depends solely on the spins                    αµi−j ∈ R are the attention weights, which define the so-
+contained in the i-th patch, the resulting vector yi  is a                    called attention  maps (see subsectionIII E). The                   h dif-
+function of all the spins in the configuration.  The ViT                      ferent attention representations computed in each head
+architecture is constructed as a sequence of  nl  encoder                     Aµi  ∈ Rd/h  are  concatenated  together  to  give  an  out-
+blocks.  In each of them, a multi-head self-attention layer                   put sequence of n attention vectors (A1,··· , An), with
+(with h heads) is followed by a two-layer fully connected                     Ai ∈ Rd.   Then,  after  another  linear  projection  which
+network. For a detailed description of the Encoder Block                      mixes the representations of the different heads, each at-
+see subsectionII B.                                                           tention vector is finally passed identically and indepen-
+  Notice that the structure of this variational Ansatz re-                    dently  through  a  non-linearity,  which  is  taken  to  be  a
+quires a large number of parameters.  In order to opti-                       (real-valued) two-layers fully-connected neural network,
+mize  them,  modern  formulations  of  the  Stochastic  Re-                   with hidden dimension 2d and the standard rectified lin-
+configuration  technique  [65],  able  to  deal  with  a  large               ear unit (ReLU) activation function. The output of the l-
+number of variational parameters [43,46], are used (see                       th encoder block is a sequence (y1,··· , yn), with yi ∈ Rd
+AppendixB).                                                                   being a new representation of the i-th input.  Pre-Layer
+                                                                              Normalization [62] and skip connections are used, these
+                                                                              being the key elements that permit the optimization of
+                       B.    Encoder Block                                    deep networks.  The use of factored attention in Eq. (4)
+                                                                              is justified by the physical interpretation we give to the
+                                                                              attention  weights;  indeed,  we  expect  that  they  should
+  The Encoder Block is the core of the Transformer ar-                        mainly  depend  on  the  relative  positions  among  groups
+chitecture (see Fig.4).  The input sequence of the         l-th               of spins and not on the actual values of the spins in the
+Encoder Block (where l runs from 1 to nl) is the set of                       patches [45,67].  Moreover, attention weights are taken
+n vectors (x1,··· , xn), where, for the sake of simplicity,                   translationally invariant, in order to encode the transla-
+the index l is not made explicit. This sequence of vectors                    tional symmetry between patches.
+                                                                                                                                                   6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 6.    Fourier transform of the spin-spin (upper panels) and plaquette-plaquette (lower panels) correlations for L = 12 for
+different values of the frustration ratio J/J′.  The calculations are performed with a Vision Transformer characterized by a
+number of heads equal to h = 12, an embedding dimension d = 72, and number of layers nl = 8.
+
+
+                         III.    RESULTS                                     We first examine the accuracy of the variational energies
+                                                                             while varying the hyperparameters of the neural network.
+  We consider L×L clusters in which sites r = a/2(x, y)                      In Fig.5a, we present the relative energy error as a func-
+are labelled by x and y that take values from 0 to L − 1,                    tion of the number of parameters, distributed in two dif-
+and  periodic-boundary  conditions  along  the  primitive                    ferent ways within the architecture.  Initially, we main-
+vectors a1 = (a, 0) and a2 = (0, a), with a = 2.  As a re-                   tain a single layer (nl  = 1) and increase the number of
+sult, the total number of sites is L2, while the number of                   heads h and embedding dimension d.  Subsequently, we
+unit cells is L2/4. Most of the calculations are performed                   fix a specific width (h = 12 and d = 72) and increment
+on clusters with L ranging from 6 to 14; in addition, cal-                   the number of layers from nl = 2 to nl = 16 (the energies
+culations with L = 16 and 18 have been considered for                        are reported in AppendixC).
+J/J′  = 0.8, located in the middle of the putative spin-                        This analysis highlights the importance of the model
+liquid region.  We mention that the ViT wave function                        depth:  for a fixed number of parameters,  architectures
+breaks the spin SU(2) symmetry and, therefore, it is not                     that  allocate  parameters  across  multiple  layers  exhibit
+an eigenstate of the total spin S2; still, it is possible to                 superior  accuracy.    These  results  align  with  previous
+fix the z-component of the total spin, by performing the                     works  [43, 46, 59–61],  which  underscore  the  necessity
+Monte Carlo sampling within a sector with a fixed value                      of deep neural networks for achieving high-precision re-
+of Sz = 1/2Pi σzi .  All calculations for assessing ground-                  sults  in  two-dimensional  frustrated  systems.   In  addi-
+state properties are performed taking Sz  = 0 (see sub-                      tion, in Fig.5b we show the isotropic spin-spin correla-
+sectionsIII AandIII B). By contrast, triplet excitations                     tion functions ⟨ˆS0 · ˆSr⟩, illustrating that our variational
+are obtained by choosing Sz  = 1 (see subsectionIII C).                      wave function not only yields accurate energies, but also
+We emphasize that, the optimized states have extremely                       faithfully captures correlation functions at all distances.
+small deviations from the expected value of the total spin,                  For cluster sizes exceeding L = 6, exact results become
+e.g., S(S+1) ≈ 0.002 (0.1) and 2.002 (2.07) for the singlet                  unattainable.  Consequently, in Fig.5c, we compare the
+and triplet states for L = 6 (L = 10) cluster, respectively.                 variational energies of the ViT Ansatz on L × L clusters
+                                                                             (with periodic-boundary conditions) to the ones obtained
+                                                                             using the DMRG method on Lx×Ly cylinders with open
+                        A.    Benchmarks                                     and  periodic  boundaries  in  the  x  and  y  direction,  re-
+                                                                             spectively (Lx  = 2Ly  and Ly  = L are considered) [23].
+                                                                             The energy per site is extrapolated in the thermodynamic
+  In order to validate our approach, we compare the re-                      limit, using system sizes ranging from L = 8 to L = 18 for
+sults obtained by the ViT wave function with those ob-                       the ViT wave function, and from L = 8 to L = 14 for the
+tained by exact diagonalizations on a small 6× 6 cluster.                    DMRG. To enhance the efficiency of the ViT for larger
+Specifically, we focus on the challenging point J/J′ = 0.8.                  systems, specifically at L = 16 and L = 18, we employ
+                                                                                                                                                        7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 7.    Panel a:  Size scaling of the square magnetization m2(L) (left panel), and the plaquette order parameter mp(L)
+(right panel) as a function of 1/L from L = 6 up to L = 18.  The values reported for each size L are obtained by extrapolating
+to an infinite number of layers (see AppendixCfor the details), except for            L = 16 and L = 18, where only simulations with
+nl = 8 layers have been performed.  The error bars of the extrapolated values in the thermodynamic limit are estimated via a
+resampling technique with gaussian noise.  The fits associated to dashed curves are obtained using second-order polynomials in
+1/L (see Eq. (8) of the main text), while solid curves are obtained using the critical form in Eq. (9) of the main text.       Panel b:
+In the left (right) panel we show the correlation ratio RN´eel (Rplaq) for the antiferromagnetic (plaquette) order in the interval
+J/J′ ∈ [0.80, 0.84] (J/J′ ∈ [0.76, 0.80]). System sizes from L = 10 to L = 14 are used, and correlation ratio values are computed
+exclusively with architectures having nl = 8 layers.  Inset:  Crossing points of the correlation ratio for N´eel (orange diamond)
+and plaquette (red squares) order parameter as a function of the system size.  The crossing points are obtained using L1 × L1
+and L2 × L2 clusters with (L1, L2) = (10, 12), (10, 14), (12, 14), with Lm = (L1 + L2)/2.  Error bars on the correlation ratio are
+determined using resampling techniques under the assumption of Gaussian noise.
+
+
+a local attention mechanism (see AppendixDfor further                          by a suitably defined order parameter
+details).  We mention that the energies obtained by the
+ViT wave function reveal a 1/L2 term as the leading cor-                           mp(L) = |C(L/2, L/2) − C(L/2 − 1, L/2 − 1)| ,     (6)
+rection, whereas the DMRG results exhibit an additional                        where  the  function  C(r)  is  defined  as  follows:  starting
+1/L term.  Most importantly, the energy extrapolated in
+the  thermodynamic  limit  is  compatible  within  the  two                    from the operator  ˆPr, which performs a cyclic permuta-
+approaches.                                                                    tion of the four spins of a plaquette with the top-right
+                                                                               site at r [23], the following correlation functions are eval-
+                                                                               uated:
+                       B.    Phase diagram
+                                                                                             C(r) = 14 ⟨[ ˆPr +  ˆP−1r   ][ ˆP0 +  ˆP−10   ]⟩  .            (7)
+   Having  proved  the  high  accuracy  of  our  Ansatz,  we
+now  focus  on  the  region  0.7  ≤  J/J′  ≤  0.9,  which  is                  Therefore,   the  plaquette  order  parameter  mp(L)  of
+expected to include both antiferromagnetic and plaque-                         Eq. (6) measures the difference, along the diagonal, of the
+tte phases, as well as the putative spin-liquid one.  The                      plaquette correlation at the maximum distance and the
+presence  of  antiferromagnetic  order  is  extracted  from                    second maximum distance; whenever the plaquette order
+the thermodynamic limit of the staggered magnetization                         is present, the correlation along the diagonal does not de-
+m2(L) = S(π, π)/L2 [23], where                                                 cay to zero, implying a non-vanishing value of mp(L) for
+                                                                               large L.  Similarly, the Fourier transform of the correla-
+                    S(k) = Xeik·r ⟨ˆS0 · ˆSr⟩                    (5)           tion functions in Eq. (7) (with the same conventions as for
+                                r                                              spins) denoted by C(k) can be analyzed.  The presence
+                                                                               of  the  plaquette  order  can  be  identified  by  a  diverging
+is  the  spin  structure  factor.    Since  the  antiferromag-                 peak at kp = (0, π) or (π, 0).  The results for L = 12 are
+netic order pertains to the square lattice denoted by the                      shown in Fig.6, for three values of the frustration ratio:
+sites r, i.e., without considering the basis of the Shastry-                   for J/J′ = 0.7 the ground state has strong peaks in C(k)
+Sutherland  lattice,  it  is  useful  to  define  the  momenta                 and a rather smooth spin structure factor S(k), which is
+within this convention, i.e., k = 2π/L(n, m) with n and                        typical of a state with plaquette order; by contrast, for
+m taking values from 0 to L − 1.  The existence of N´eel                       J/J′  =  0.9  there  are  strong  spin-spin  correlations  and
+order is signalled by a diverging peak at km = (π, π).  In                     weak plaquette-plaquette ones, which is characteristic of
+addition, the insurgence of the plaquette order is detected                    antiferromagnetic states.
+                                                                                                                                                       8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 8.   Left panel:  Variational energy as a function of the optimization steps for the triplet momentum-resolved excitation
+spectra on a 6 × 6 lattice, with Ka = (0, 0), (0, 2π/3), and (2π/3, 2π/3); depicted in blue, green, and orange, respectively.  The
+exact energies per site for the corresponding states are denoted by dashed (E = −0.444040), dotted (E = −0.435033), and dash-
+dotted (E = −0.430831) lines.  The inset displays the relative error of the variational energy compared to exact diagonalization
+results.  Right panel:  The energy gap ∆ between the ground state and the triplet excitations for the independent momenta
+of 6 × 6 lattice (green points),  with the corresponding values obtained from exact diagonalization (red empty points).  The
+energy gaps for a 12 × 12 lattice on a closed path in the Brillouin zone are denoted by blue squares.  All the calculations are
+performed at a frustration ratio of J/J′ = 0.8.  The hyperparameters for these calculations are h = 12, d = 72, and nl = 8.  For
+the optimization protocol, we used a sample size of M = 214, a learning rate τ = 0.02, and a diagonal shift regularization term
+of λ = 10−3 (see AppendixB).
+
+
+   In between, for J/J′ = 0.8, the spin-spin correlations                      by the direct computation of the spin gap (see subsec-
+still have a peak, with moderate plaquette correlations.                       tionIII C).  Interestingly,  fitting  the  data  of  the  square
+In order to get information on the thermodynamic limit,                        magnetization  at  J′/J  =  0.8  with  m2  ≈  L−(1+η),  we
+a size scaling is necessary.  In general, if magnetic order                    get η ≈ 0.3, in agreement with the DMRG calculations
+is stabilized, the square magnetization scales asymptoti-                      of Ref. [23].  We emphasize that, for the most challeng-
+cally as [68,69]:                                                              ing point J/J′ = 0.8, lattices with L = 16 and 18 have
+                                                                               been also considered, giving further support in favor of
+                   m2(L) ≈ m20 + A1L  + A2L2  ,                   (8)          an intermediate spin liquid phase.
+
+where  m0  is  the  magnetization  in  the  thermodynamic
+limit.  In a disordered phase, the magnetization vanishes                         In  summary,  we  find  that  the  magnetization  (pla-
+in the thermodynamic limit.  The size corrections can be                       quette   order)   vanishes   for   J/J′   ≈   0.82   (J/J′   ≈
+either exponential (for a gapped state) or power law (for                      0.77).     These  results  suggest  that  a  spin  liquid  ex-
+a gapless one).  In the vicinity of the N´eel transition, the                  ists  between  (J/J′)plaq ≈ 0.77  and  (J/J′)N´eel ≈ 0.82.
+gap is relatively small and we use the “critical” form [49]:                   To   further   support   the   present   outcome,   we   mea-
+                        m2(L) ≈ L−(1+η) .                        (9)           sure   the   correlation   ratio   for   the   plaquette   order
+                                                                               as  Rplaq = 1 − C(kp + δk)/C(kp),   and  for  the  mag-
+Similar   scaling   behaviors   are   considered   for   mp(L)                 netic  order  as  RN´eel = 1 − S(km + δk)/S(km),  where
+(within  the  plaquette  phase,   exponential  corrections                     ||δk|| = 2π/L.  When plaquette (magnetic) order is not
+should be present, but no appreciable differences in the                       present, C(k) (S(k)) is a smooth function of k, which im-
+fits  are  observed  with  respect  to  the  choice  of  a  poly-              plies that Rplaq → 0 (RN´eel → 0) in the thermodynamic
+nomial  fit).   In  Fig.7a,  we  perform  a  size-scaling  ex-                 limit;  instead,  when  plaquette  (magnetic)  order  settles
+trapolation of both order parameters.  For J′/J  = 0.84                        down, C(k) (S(k)) is finite for all the momenta except
+(J′/J  = 0.76), the numerical values of the square mag-                        for kp  (km), leading to Rplaq → 1 (RN´eel → 1).  Then,
+netization  (plaquette  order  parameter)  fit  well  with  a                  the transition point may be accurately determined by lo-
+second-order  polynomial  in  1/L  and  suggest  the  exis-                    cating the crossing point of the correlation ratio curves
+tence  of  long-range  order  in  the  thermodynamic  limit.                   for different system sizes.  The results for the plaquette
+By contrast, for J′/J  = 0.78, 0.8 (J′/J  = 0.82, 0.84), a                     (magnetic) order are shown in Fig.7b, in the relevant in-
+more appropriate description of the scaling behavior of                        terval J/J′ ∈ [0.76, 0.80] (J/J′ ∈ [0.80, 0.84]), increasing
+m2  (mp)  is  obtained  by  the  critical  relation  of  Eq.  (9)              the system size, i.e., for L = 10, 12, and 14.  The vari-
+(more  details  about  the  extrapolations  are  reported  in                  ous curves cross at (J/J′)plaq ≈ 0.78 ((J/J′)N´eel ≈ 0.81),
+the AppendixC). This fact is compatible with the exis-                         validating the phase boundary derived from the extrap-
+tence of a gapless spin liquid, which is also corroborated                     olations of the order parameters.
+                                                                                                                                                    9
+
+               C.    Nature of the Spin Liquid
+
+  A crucial step toward understanding the nature of the
+spin liquid-phase is the characterization of its low-energy
+excitations.  The first important question is to determine
+whether the energy spectrum is gapped or gapless.  Here,
+we  focus  on  the  frustration  ratio  J/J′  =  0.8,  a  repre-
+sentative point within the spin-liquid phase, and assess
+triplet excitations for different momenta.  Then,  we fo-
+cus on the lowest-energy state, which lies at the Γ point
+of the Brillouin zone, and perform the extrapolation to
+the thermodynamic limit.  Our results provide strong ev-
+idence for a gapless spin liquid.
+  The ViT architecture outlined in SectionII Aemploys                        FIG. 9.    Energy gap ∆ obtained by the ViT wave function
+translationally invariant attention weights and the input                    between the ground state and the lowest-energy triplet state,
+patches are constructed from spins within the unit cell                      as  a  function  of  inverse  linear  length  1/L,  from  L  =  6  to
+(see AppendixAfor additional details).  Consequently,                        L = 18 at J/J′  = 0.8.  The exact gap for the 6 × 6 lattice
+the resulting wave function preserves translational sym-                     is also reported for comparison (green empty circle).  Inset:
+metry with zero momentum.  Nevertheless, by exploiting                       Rescaled gap ∆ × L as a function of 1/L for the same size
+the  translational  equivariance  property  of  the  mapping                 considered in the main panel.
+between the input vectors (x1, . . . , xn) and output vec-
+tors (y1, . . . , yn), the architecture can be easily adapted                cluster, namely Ka = (0, 0), (0, 2π/3), and (2π/3, 2π/3)
+to study an arbitrary sector with momentum K, satisfy-                       (where a = 2 is the length of the primitive vectors,  to
+ing the following relation:                                                  have −π < Kxa ≤ π, and similarly for Ky).  In all the
+
+       Log[ΨKθ (TRσ)] = Log[ΨKθ (σ)] + iK · R ,         (10)                 cases, the ViT wave function achieves a relative error of
+                                                                             approximately ∆ε ≈ 10−3 within 104 optimization steps.
+where TR represents a translation by the Bravais lattice                     The  resulting  variational  triplet  energy  gaps  have  high
+vector R, whose components are integer multiples of the                      accuracy  when  compared  with  the  exact  ones  (refer  to
+primitive vectors a1 and a2.  The momenta K are quan-                        the  right  panel  of  Fig.8).   Specifically,  we  obtain  that
+tized in units of 2π/L, i.e, Kx = 2πn/L, with n ranging                      the lowest-energy excitation on the 6 × 6 lattice lies at
+from 0 to L/2 − 1 and similarly for Ky.  To define the                       the Γ point.  In the right panel of Fig.8, we also report
+ViT state with a specific momentum K, we modified the                        the triplet gaps for a closed path in momentum space on
+amplitude as follows:                                                        a  12 × 12  cluster,  confirming  that  the  zero-momentum
+            Log[ΨKθ (σ)] = Log[Ψθ(σ)] + iΘK(σ) ,        (11)                 excitation remains the lowest-energy one.
+                                                                                Then,  we  proceed  to  analyze  the  size  scaling  of  the
+where  the  function  ΘK(σ)  adjusts  the  phase  to  match                  lowest-energy  triplet  at  J/J′  =  0.8.   The  energy  gap
+the target momentum sector,  ensuring that Eq. (10) is                       ∆ = Etriplet − E0  is reported in Fig.9for different val-
+satisfied.   This  phase  shift  can  be  computed  from  the                ues of the cluster size, i.e., with L ranging from 6 to 18.
+output vectors (y1, . . . , yn) as follows:                                  The extrapolation performed using a quadratic fit of the
+                                                                       form  ∆  =  a + b/L + c/L2  yields,  with  a  small  fitting
+                                     nX                                      error, a vanishing gap in the thermodynamic limit, i.e.,
+          ΘK(σ) = ℑ                     eiK·Rjyj,1                         ∆ = 0.00(7).  In addition, in the inset of Fig.9, we show
+                          Log                            .       (12)      that  the  rescaled  gap  ∆ × L  approaches  a  finite  value
+                                    j=1                                      in the thermodynamic limit, thus confirming the gapless
+where Rj  indicates  the  (Bravais)  vector  that  identifies                nature of the intermediate spin-liquid phase.
+the j-th patch of the Shastry-Sutherland model and yj,1
+is the first component of the vector yj,  chosen by con-
+vention.                                                                                      D.    Hidden representations
+  In practice, we fix one of the possible momenta allowed
+in the L × L lattice and perform the Monte Carlo sam-                           We discussed in SectionIIthat the motivation for our
+pling in the sector with Sz = 1.  Even though the latter                     ViT wave function is to leverage the power of representa-
+condition does not imply that the variational state is a                     tion learning.  Instead of using a neural network simply
+triplet, we verified that the expectation value of the total                 as a universal approximator to map spin configurations
+spin S2 is very close to 2. Therefore, this Ansatz gives an                  to  wave  function  amplitudes,  we  train  the  network  to
+accurate approximation of a triplet state.  The left panel                   map spin states into a feature space.  These features are
+of Fig.8shows the optimization curves of the variational                     then  used  as  an  input  to  a  shallow  neural  network  to
+energy for the three independent momenta of the 6 × 6                        predict  the  amplitude  corresponding  to  the  input  con-
+                                                                                                                                                      10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                               FIG. 11.    a) Attentions maps of a ViT with 4 layers and 12
+                                                                               heads per layer, optimized in the point J/J′ = 0.8 for L = 14.
+                                                                               b) Mean of the absolute values of all the attention maps. The
+                                                                               attention maps have size L/b, where L and b are the linear
+                                                                               dimensions of the lattice and of the patches, respectively.
+
+
+FIG.  10.      Dimensional  reduction  (using  the  UMAP  algo-                discernible structure in the representations (see Fig.10a).
+rithm)  of  the  hidden  representations  for  a  set  of  configura-          After  training,  by  means  of  minimizing  the  variational
+tions obtained from a ViT in the limit of J′ = 0, leading to                   energy, we see instead that features have a highly non-
+the  Heisenberg  model.   Points  are  colored  according  to  the             trivial structure:  they are grouped into different clusters
+exact  signs  given  by  the  Marshall  sign  rule  [70].   a)  Before         of the representation space (see Fig.10b). This is a direct
+optimizing,  when  the  parameters  of  the  neural  network  are              result of the training.
+random, the hidden representations are all concentrated in a                      Remarkably, these clusters have a physical interpreta-
+single cluster. b) After the optimization of the variational en-               tion in the unfrustrated case, where the spin configura-
+ergy the hidden representations are organized in clusters with                 tions in a given cluster have the same number of flipped
+the  same  number  of  flipped  spins  with  respect  to  the  N´eel           spins with respect to the N´eel state and, therefore, the
+state.  All calculations are performed on an 8 × 8 cluster.                    same  sign  (according  to  the  Marshall  rule),  and  simi-
+                                                                               lar modulus.  The crucial point is that, by using a single
+                                                                               fully-connected layer, the prediction of the correct ampli-
+figuration [see Eq. (3)].  This change in perspective has                      tudes is much easier when acting on these representations
+important practical ramifications:  it dispenses with the                      rather than using the original spin configurations, as can
+need of having complex-valued parameters in the feature                        be seen from the vastly superior energies obtained by the
+extractor V (σ; ϕ), making the training of deep networks                       ViT state compared to a simple RBM [46,72].
+much easier.  In this section, we verify that the network                         A similar clustering structure in the trained ViT also
+indeed learns a set of non-trivial features in the course                      appears  for  general  values  of  J/J′,  though  the  precise
+of training, and we find that some of these features are                       interpretation of the clusters is less straightforward (see
+even interpretable in a simple limiting case.                                  AppendixE), and is left for future works.  This reflects
+   To  this  end,  we  examine  the  limit  J′  =  0,  in  which               the situation in machine learning,  where it is generally
+the system reduces to the unfrustrated Heisenberg model;                       difficult to extract human-interpretable structure directly
+here, the ground state properties are characterized by the                     from the representations.  In fact, the whole point of let-
+presence of antiferromagnetic order.  In addition, the ex-                     ting neural networks learn features directly from data is
+act sign structure of the ground state follows the Marshall                    that they can discover subtle patterns in the data that
+sign rule [70]. For a given set of configurations    {σi} (sam-                are hard for humans to extract or even describe, but nev-
+pled along the Monte Carlo procedure), we compute the                          ertheless turn out to be useful for the task at hand.
+corresponding hidden vectors {zi} of size d ≫ 1, which
+can be visualized in two dimensions after a dimensional
+reduction with the standard Uniform Manifold Approxi-                                                 E.    Attention maps
+mation and Projection method (UMAP) [71].
+   In Fig.10, we color each feature or representation         zi                  Another  approach  to  understand  how  the  ViT  wave
+according to the exact sign of the amplitude correspond-                       function processes the input spin configurations is to ex-
+ing to the spin configuration σi.  Before the Transformer                      amine  the  attention  weights  αi−j  of  a  trained  Trans-
+is trained, i.e., with random network weights, there is no                     former for the different heads and layers at J/J′  = 0.8
+                                                                                                                                                  11
+
+and L = 14, which we show in Fig.11a.  A key feature of                      this approach to create a mapping of the physical con-
+the self-attention mechanism is to connect all the input                     figurations in a real feature space, where it is then easy
+patches even in a single layer.  We highlight that the net-                  to predict amplitudes, even with a single fully-connected
+work makes use of this capability even in the first layer,                   layer.  Looking at NQSs as feature extractors is another
+since some heads attend to all the patches.  This is not                     original contribution of this work,  in contrast with the
+possible when working with architectures that use only                       common  interpretation  of  just  universal  approximators
+local  filters  (e.g.,  convolutional  ones).   To  capture  the             of functions, which usually leads to taking all the param-
+overall  behavior  of  the  attention  weights,  we  compute                 eters complex-valued.
+the mean of the absolute values of the weights across all                       Future directions are two-fold. From the physical point
+heads and layers.  The results, displayed in Fig.11b, re-                    of view, it is tantalizing to apply this approach to other
+veal  a  systematic  trend:  the  mean  interaction  between                 many-body problems, including fermionic systems, which
+patches (representing groups of spins in this context) ex-                   pose the challenge of grasping the correct antisymmetry
+hibits  a  regular  decay  as  the  relative  distance  between              of the wave function.  In these cases, at present NQS do
+patches increases. Interestingly, this mean attention map                    not  achieve  comparable  accuracies  as  observed  in  spin
+encodes also the rotational symmetry of the model, which                     models,  underscoring  a  rich  area  for  improvement  and
+is  not  imposed  in  the  weights,  whereas  individual  at-                exploration. From the machine-learning part, the matter
+tention maps do not exhibit this feature (see Fig.11a).                      for future research would be an examination of the at-
+These observations are fully consistent with the findings                    tention maps learned by the ViT, checking whether they
+of Ref. [67], in which analytical results establish a direct                 could be used to directly infer physical properties of the
+link  between  attention  weights  and  correlations  among                  ground state, without the need to compute order param-
+spins.                                                                       eters. Moreover, it could be interesting to study in detail
+                                                                             the representations (clusters) built by the Transformer, in
+                                                                             particular how they change across the different layers and
+                    IV.    CONCLUSIONS                                       in the different phases, in such a way as to understand
+                                                                             phase transitions by looking only at hidden representa-
+  Our results demonstrate that NQSs represent an ex-                         tions.  Along this line of research, it would be valuable to
+tremely useful tool to investigate the ground-state prop-                    investigate whether the clusters identified when working
+erties of frustrated quantum magnets.  Here, we focused                      with the z-axis basis can be utilized to detect orders of
+the attention on the Shastry-Sutherland model, for which                     off-diagonal operators.
+the existence of a spin-liquid phase between the plaque-
+tte  and  antiferromagnetic  ones  has  been  recently  sug-                                   ACKNOWLEDGMENTS
+gested [23,24].  The difficulty of the problem resides in
+the smallness of this region, thus requiring extremely ac-                      We  thank  S.  Sachdev,  A.  Sandvik,  M.  Imada,  A.
+curate calculations and large system sizes.  The present                     Chernyshev,  A.  Laio  and  Y.  Iqbal  for  useful  discus-
+definition  of  the  ViT  wave  function  (that  combines  a                 sions.   We  also  acknowledge  L.  Wang  for  providing  us
+real-valued  attention  mechanism  and  a  final  complex-                   the DMRG energies from Ref. [23].  We acknowledge the
+valued fully-connected layer) allows us to detect the ex-                    CINECA award under the ISCRA initiative, for the avail-
+istence  of  a  finite  region  0.78 ≲  J/J′ ≲  0.82  in  which              ability of high-performance computing resources and sup-
+both magnetic and plaquette orders vanish in the ther-                       port.
+modynamic  limit,  thus  supporting  the  presence  of  the
+intermediate  spin-liquid  phase  [23].   Most  importantly,
+by  a  direct  evaluation  of  the  energy  gap  between  the                           Appendix A: Lattice and symmetries
+ground state and the lowest-energy triplet excitation, we
+provided  evidence  for  a  gapless  spin-liquid  phase.   Re-
+markably,  the  characterization  of  the  spin  liquid  phase                  The  Shastry-Sutherland  lattice  is  shown  in  Fig.12,
+within  the  Shastry-Sutherland  model  has  not  been  ex-                  where  each  site  is  labeled  by  the  Cartesian  coordinate
+plored in previous studies.  Our results are particularly                    r = a/2(x, y), where x and y  are integers and a = 2 is
+important because they show that the magnetically or-                        the length of the primitive lattice vectors a1 = (a, 0) and
+dered  N´eel  phase  is  melted  into  a  gapless  spin  liquid,             a2  = (0, a).  The lattice is invariant under translations
+similarly to what happens in the J1-J2 Heisenberg model                      Ta1  : (x, y) → (x + a, y) and Ta2  : (x, y) → (x, y + a).
+on the square lattice [30].  This suggests that this kind of                 This  symmetry  can  be  easily  encoded  in  the  Trans-
+(continuous) transition is rather generic and may repre-                     former architecture by taking as input patches the four
+sent the habit, and not the exception, for the melting of                    spins in an empty plaquette (i.e., plaquettes with no J′
+the N´eel order due to magnetic frustration.  In addition,                   bonds), which constitute the unit cell and then choosing
+our calculations clearly demonstrate that the ViT Ansatz                     the  translationally  invariant  attention  weights,  namely
+rises among the universe of variational wave functions as                    αi,j = αi−j. In addition, the lattice is invariant under the
+a  possible  way  to  eventually  solve  important  quantum                  rotation with respect to the center of the empty plaque-
+many-body problems.  One key feature is the ability of                       tte at the origin of the lattice Rπ/2 : (x, y) → (−y + 1, x)
+                                                                                                                                                     12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 12.    The (nearest-neighbor) coupling J  is denoted by
+solid lines and (next-nearest-neighbor one) J′ by dashed lines.
+The standard unit cell contains 4 sites, implying translations
+Tx  and  Ty  (along  x  and  y  axis)  by  2  lattice  points.   The           FIG. 13.    Upper panels:  the values of the square magneti-
+point-group symmetries, C4 rotations and σxy  reflection, are                  zation m2(L) (left panel) and of the plaquette order parame-
+also shown.                                                                    ter mp(L) (right panel) as a function of the number of layers
+                                                                               nl = 2, 4, 8 and for different lattice sizes from L = 6 to L = 14
+and the diagonal reflection σxy : (x, y) → (y + 1, x − 1).                     at J/J′ = 0.8.  Lower panels:  the same quantities plotted as
+For the ground state, which lies in the Ka = (0, 0) sec-                       function of the variance of the energy (divided by N).  Ex-
+                                                                               trapolated results for the limit of an infinite number of layers
+tor, all these symmetries can be enforced by a projector                       and in the limit of zero variance are displayed as filled sym-
+operator, leading to a total-symmetric state [49,73,74]:                       bols, with exact values for L = 6 shown for comparison (red
+                                                                               circles). Error bars on the extrapolated values are determined
+                      ˜Ψθ(σ) = X      Ψθ(ρRσ),                   (A1)          using resampling techniques under the assumption of Gaus-
+                                  ρ,R                                          sian noise.
+
+where ρ ∈ {I, σxy} and R ∈ {I, Rπ/2, R2π/2, R3π/2}.  No-                       where   τ   is   the   learning   rate   and   λ   is   the   reg-
+tice  that  the  sum  is  over  a  fixed  number  of  terms  and               ularization   parameter.      The   matrix   X   has   shape
+does  not scale with the size of the system.   In general,                     P  ×  2M    and   it   is   obtained   as   the   concatena-
+this procedure gets an improvement in the accuracy of                          tion   of   the   real   and   imaginary   parts   of   the   cen-
+the variational state, which is difficult to obtain by just                    tered  rescaled  Jacobian  Yα,i = (Oαi −  ¯Oα)/√M,  where
+increasing  the  number  of  variational  parameters.   The                    Oα,i = ∂Log[Ψθ(σi)]/∂θα   are   the   logarithmic   deriva-
+numerical simulations shown in this work are performed                         tives.         The    vector   f    ∈    R2M    is    given    by
+with the symmetrized state in Eq. (A1).                                        f = Concat[ℜ(ε),−ℑ(ε)],   having  introduced  the  cen-
+                                                                               tered  rescaled  local  energy  εi  = −2[EL,i −  ¯EL]∗/√M,
+     Appendix B: Optimization of the variational                               with  EL,i = ⟨σi| ˆH|Ψθ⟩ /⟨σi|Ψθ⟩.    The  expressions   ¯EL
+                             parameters                                        and  ¯Oα  are  used  to  denote  sample  means.   A  detailed
+                                                                               derivation of the Eq. (B1) can be found in Ref. [46].
+  The  standard  formulation  of  the  Stochastic  Recon-                         This formulation of the Stochastic Reconfiguration is
+figuration  [26, 65]  requires  inverting  a  square  matrix                   implemented in NetKet [75], under the name of      VMC              SRt.
+whose size is equal to the number of variational param-
+eters.   The  computational  cost  of  this  matrix  inversion                             Appendix C: Extrapolations details
+is prohibitive when increasing the number of parameters
+and  limits  this  approach  to  a  relatively  small  number
+of parameters compared to modern deep learning mod-                               Here, we provide further details on the extrapolation
+els.  However, two recent papers [43,46] proposed vari-                        procedures  used  to  obtain  the  final  values  of  the  order
+ations of the original algorithm that can deal with vari-                      parameters presented in Fig.7of the main text.  In the
+ational states with millions of parameters P, working in                       upper panels of Fig.13, we show the order parameters,
+the regime where P  exceeds the number of samples M                            namely the square magnetization m2(L) and the plaque-
+used  for  the  stochastic  estimations.   These  approaches                   tte order parameter mp(L), plotted as a function of the
+lead to the following updates:                                                 number of layers nl, extrapolating their values for a net-
+                                                                               work with nl → ∞.  For L = 6, these numerical extrap-
+                 δθ = τX(XT X + λI2M)−1f  ,             (B1)                   olations show excellent agreement with exact diagonal-
+                                                                                                                                                         13
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 14.   Size scaling of the square magnetization m2(L) as
+a function of 1/L from L = 6 up to L = 14 at J′/J  = 0.8.                       FIG. 15.     Variational energy as a function of optimization
+The numerical data encompasses varying numbers of layers,                       steps for a ViT optimized to approximate the ground state
+specifically from nl = 2 to nl = 8, along with the extrapolated                 of  a  16 × 16  lattice  at  coupling  ratio  J/J′  =  0.8.   The  hy-
+values  for  an  infinite  number  of  layers  (see  Fig.13).   The             perparameters  of  the  network  are  set  as  follows:   attention
+curves for the extrapolations in the thermodynamic limit are                    heads h = 12, embedding dimension d = 72, number of layers
+performed using as fitting curve a second-order polynomial in                   nl = 12, and a patch size of b = 4.  For enhanced visual clar-
+1/L [see Eq. (8)] (left panel) and the critical form of Eq. (9)                 ity, the initial 2 × 103 steps have been omitted from the plot.
+(right panel). The error bars of the extrapolated values in the                 Horizontal  dashed  lines  indicate  the  final  energies  obtained
+thermodynamic limit are obtained with resampling techniques                     using a local attention mechanism with a patch size of b = 2
+with gaussian noise.                                                            and a window size restricted to 5 × 5 patches.  For this local
+                                                                                attention setup, the network’s hyperparameters are h = 12,
+                                                                                d = 72,  and nl  = 8.  In both setups,  the optimization pro-
+ization results.  Furthermore, the extrapolated values ex-                      tocol employs a sample size of M  = 6 × 103, a learning rate
+hibit minimal deviation from those obtained with nl = 8                         of τ = 0.03, and a diagonal shift regularization parameter of
+layers,  underscoring  the  consistency  of  the  results.   To                 λ = 10−4 (see AppendixBfor details).
+further assess the robustness of the calculations, in the
+lower panels of Fig.13the extrapolations are also per-                          nism [see Eq. (4)], exhibits a computational complexity
+formed as a function of the variance of the energy.  No-                        that scales quadratically with the input sequence length.
+tably, this alternative method, which does not depend on                        This quadratic scaling leads to substantial computational
+the specific structure of the variational state, yields re-                     costs when increasing the size of the system.  Here,  we
+sults consistent with the layer-based extrapolations.  Fi-                      propose two alternative approaches to mitigate this com-
+nally, in Fig.14, we cross-validate the results by utilizing                    putational challenge.
+both a second-order polynomial in 1/L [see Eq. (8)] and
+the critical form described in Eq. (9) for the extrapola-                          The first approach utilizes local attention mechanisms,
+tions of the square magnetization in the thermodynamic                          which  compute  the  updated  representation  of  a  patch
+limit (as a function of 1/L). We repeat the extrapolations                      based only on its neighboring patches.  This method is
+considering each value of the number of layers  nl  =  2,                       employed in our simulations of the 16 × 16 and 18 × 18
+4, and 8.  The resulting fitting curves exhibit remarkably
+similar behaviors, further confirming the consistency and
+reliability of the extrapolated results.                                                 L    2 layers      4 layers      8 layers     Extrap.
+   TableIreports  the  ground-state  variational  energies                                6  -0.4516642  -0.4516991  -0.4517072  -0.451750
+per  site  (in  units  of  J′)  for  system  sizes  ranging  from                         8  -0.449641   -0.449802   -0.449829   -0.44995
+L = 6 to L = 14, computed using a Transformer archi-                                     10  -0.449062   -0.449221   -0.449329   -0.44947
+tecture with nl layers, where nl = 2, 4, and 8.  The last                                12  -0.448861   -0.449013   -0.449078   -0.44931
+column  shows  the  extrapolated  energies  for  an  infinite                            14  -0.448551   -0.448812   -0.448929   -0.44920
+number of layers, obtained through variance extrapola-
+tion technique [30].  Additionally, the ground-state ener-                               16                                     -0.448881
+gies for nl = 8 are provided for the largest system sizes                                18                                     -0.448859
+considered in this work, L = 16 and L = 18.
+                                                                                TABLE I.  Ground-state variational energy (in unit of J′) for
+                                                                                different number of layers nl at J/J′ = 0.8.  The extrapolated
+         Appendix D: Study of large lattice sizes                               values obtained by variance extrapolation [73] for an infinite
+                                                                                number of layers are also reported.  The Monte Carlo error
+                                                                                due to finite sampling effects is on the last digit.  In the case
+   The  ViT  architecture  outlined  in  SectionII,  due  to                    of a 6 × 6 lattice, the ground-state energy per site from exact
+the  fully  connected  structure  of  the  attention  mecha-                    diagonalization is E = −0.4517531.
+                                                                                                                                                     14
+
+                                                                              over 4×103 steps. Subsequently, C4 rotational symmetry
+                                                                              and  reflection  symmetry  are  imposed,  optimized  over
+                                                                              2 × 103  and  103  steps,  respectively.    For  comparison,
+                                                                              horizontal   dashed   lines   represent   the   final   energies
+                                                                              obtained using a local attention approach with a patch
+                                                                              size  of  b  =  2  and  hyperparameters  h  =  12,  d  =  72,
+                                                                              nl = 8.  The close agreement between the final energies
+                                                                              across  both  approaches  highlights  the  robustness  and
+                                                                              consistency  of  the  variational  results  across  the  two
+                                                                              different setups.
+
+FIG. 16.    UMAP projections of the hidden representations,                    Appendix E: Hidden Representations in Frustrated
+at  the  end  of  the  variational  energy  minimization,  for  the                                           scenario
+unfrustrated [panel (a)] and frustrated case with J/J′ = 0.7
+[panel (b)] on a 8 × 8 cluster.  Points are colored according to                 In subsectionIII D, we discussed the role of the hid-
+the  log-amplitude  of  the  corresponding  spin  configurations,             den  representations  in  determining  the  effectiveness  of
+normalized with  respect to  the maximum amplitude within                     our variational Ansatz [see Eq. (2)].  In Fig.16, we com-
+the sample.                                                                   pare UMAP projections for the unfrustrated case and the
+                                                                              frustrated case with J/J′ = 0.7.  In these plots, the hid-
+                                                                              den representations zi are visualized with colors assigned
+lattice  systems.   Specifically,  for  these  larger  sizes,  we             according to the predicted logarithmic amplitude of the
+utilize a network with hyperparameters h = 12, d = 72,                        associated  configurations σi,  which  is  normalized  rela-
+nl = 8, and a local attention window size of 5×5 patches.                     tive to the maximum amplitude within the sample.  Im-
+In this case, we do not perform the extrapolations of the                     portantly, we observe that even for a generic frustration
+order parameters in the number of layers: the robustness                      ratio J/J′  ,  a clustering structure consistently emerges
+of the values obtained for a number of layers nl  = 8 is                      in the feature space at the end of the energy minimiza-
+justified  by  the  analysis  presented  in  AppendixC.  We                   tion.  This outcome validates the representation learning
+emphasize that the use of local attention preserves the                       framework that inspired the design of our  Ansatz.  De-
+translational invariance of the variational state.                            spite starting from the same random initialization of the
+  The second method to reduce the computational com-                          variational parameters, resulting in all configurations be-
+plexity with the input sequence length is to increase the                     ing  concentrated  within  a  single  cluster  (see  Fig.10a),
+patch size b.  This method has the advantage of preserv-                      the feature spaces obtained after the energy minimization
+ing global connections of the patches in each layer but                       exhibit significant differences.  For the unfrustrated case,
+has the drawback of breaking translational symmetries,                        there is a global gradient in the amplitudes. Points in the
+which must subsequently be restored, as with other sym-                       bottom clusters correspond to configurations with a small
+metries (see AppendixA).                                                      number of spin flips relative to the N´eel state, resulting
+                                                                              in  larger  amplitudes  (see  Fig.10).   Moving  toward  the
+  In  Fig.15,  we  present  the  optimization  curves  of                     top clusters, the number of spin flips increases, leading
+the  variational  energy  for  a  16 × 16  lattice,  employing                to a decay in amplitude.  In contrast, for the frustrated
+a  neural  network  architecture  with  hyperparameters                       case,  the  arrangement  of  configurations  in  the  feature
+h  =  12,  d  =  72,  and  nl  =  12,  and  utilizing  a  patch               space  is  significantly  different.   Configurations  mapped
+size of b = 4.  The optimization proceeds in stages:  an                      within the same cluster display very different amplitudes,
+initial phase of 104 steps is performed without enforcing                     with each cluster exhibiting its own internal gradient of
+symmetries,  during  which  the  ViT  state  retains  only                    amplitudes.   This  complication  makes  interpreting  the
+translational symmetry among patches.  This first stage                       clustering  structure  more  challenging  compared  to  the
+is followed by the restoration of translational symmetry                      unfrustrated scenario.
+
+
+
+
+
+ [1]D.  C.  Tsui,  H.  L.  Stormer,  and  A.  C.  Gossard,  Two-                [4]A.  Kitaev,  Anyons  in  an  exactly  solved  model  and  be-
+     dimensional magnetotransport in the extreme quantum                            yond,Ann. Phys.       321, 2 (2006), january Special Issue.
+     limit,Phys. Rev. Lett.        48, 1559 (1982).                             [5]M. Norman, Colloquium: Herbertsmithite and the search
+ [2]R. B. Laughlin, Anomalous quantum hall effect:  An in-                          for the quantum spin liquid,Rev. Mod. Phys.          88, 041002
+     compressible quantum fluid with fractionally charged ex-                       (2016).
+     citations,Phys. Rev. Lett.              50, 1395 (1983).                   [6]B. Shastry and B. Sutherland, Exact ground state of a
+ [3]L. Savary and L. Balents, Quantum spin liquids:  a re-                          quantum mechanical antiferromagnet,Physica B+C                    108,
+     view,Rep. Prog. Phys.        80, 016502 (2017).                                1069 (1981).
+                                                                                                                                                             15
+
+ [7]H. Kageyama, K. Yoshimura, R. Stern, N. V. Mushnikov,                          [23]J.  Yang,  A.  W.  Sandvik,  and  L.  Wang,  Quantum  crit-
+     K. Onizuka, M. Kato, K. Kosuge, C. P. Slichter, T. Goto,                            icality  and  spin  liquid  phase  in  the  shastry-sutherland
+     and Y. Ueda, Exact dimer ground state and quantized                                 model,Phys. Rev. B      105, L060409 (2022).
+     magnetization plateaus in the two-dimensional spin sys-                       [24]L. Wang, Y. Zhang, and A. W. Sandvik, Quantum spin
+     tem srcu2(bo3)2,Phys. Rev. Lett.  82, 3168 (1999).                                  liquid phase in the shastry-sutherland model detected by
+ [8]S. Miyahara and K. Ueda, Exact dimer ground state of                                 an improved level spectroscopic method,Chinese Physics
+     the two dimensional heisenberg spin system srcu2(bo3)2,                             Letters 39, 077502 (2022).
+     Phys. Rev. Lett. 82, 3701 (1999).                                             [25]A.  Kele¸s  and  E.  Zhao,  Rise  and  fall  of  plaquette  or-
+ [9]K.  Onizuka,   H.  Kageyama,   Y.  Narumi,   K.  Kindo,                              der in the shastry-sutherland magnet revealed by pseud-
+     Y.  Ueda,  and  T.  Goto,  1/3  magnetization  plateau  in                          ofermion functional renormalization group,Phys. Rev. B
+     srcu2(bo3)2  -  stripe  order  of  excited  triplets  -,Journal                     105, L041115 (2022).
+     of the Physical Society of Japan 69, 1016 (2000).                             [26]F.  Becca  and  S.  Sorella,        Quantum  Monte  Carlo  Ap-
+[10]K.  Kodama,  M.  Takigawa,  M.  Horvati´c,  C.  Berthier,                            proaches for Correlated Systems  (Cambridge University
+     H.  Kageyama,  Y.  Ueda,  S.  Miyahara,  F.  Becca,  and                            Press, 2017).
+     F. Mila, Magnetic superstructure in the two-dimensional                       [27]P. Fazekas and P. Anderson, On the ground state prop-
+     quantum antiferromagnet srcu2(bo3)2,Science  298, 395                               erties of the anisotropic triangular antiferromagnet, Phil.
+     (2002).                                                                             Mag. 30, 423 (1974).
+[11]P. Corboz and F. Mila, Crystals of bound states in the                         [28]P.  Anderson,  The  resonating  valence  bond  state  in
+     magnetization plateaus of the shastry-sutherland model,                             la2cuo4 and superconductivity, Science 235, 1196 (1987).
+     Phys. Rev. Lett. 112, 147203 (2014).                                          [29]Y.  Ran,   M.  Hermele,   P.  A.  Lee,  and  X.-G.  Wen,
+[12]M. Albrecht and F. Mila, First-order transition between                              Projected-wave-function study of the spin-1/2 heisenberg
+     magnetic order and valence bond order in a 2d frustrated                            model on the kagom´e lattice,Phys. Rev. Lett.          98, 117205
+     heisenberg model,Europhysics Letters      34, 145 (1996).                           (2007).
+[13]Z.  Weihong,  C.  J.  Hamer,  and  J.  Oitmaa,  Series  ex-                    [30]W.-J.  Hu,  F.  Becca,  A.  Parola,  and  S.  Sorella,  Direct
+     pansions  for  a  heisenberg  antiferromagnetic  model  for                         evidence for a gapless Z2 spin liquid by frustrating n´eel
+     srcu2(bo3)2,Phys. Rev. B  60, 6608 (1999).                                          antiferromagnetism,Phys. Rev. B                         88, 060402 (2013).
+[14]A. Koga and N. Kawakami, Quantum phase transitions                             [31]Y.  Iqbal,  W.-J.  Hu,  R.  Thomale,  D.  Poilblanc,  and
+     in  the  shastry-sutherland  model  for  srcu2(bo3)2, Phys.                         F.  Becca,  Spin  liquid  nature  in  the  heisenberg  J1 − J2
+     Rev. Lett. 84, 4461 (2000).                                                         triangular  antiferromagnet,Phys.  Rev.  B                     93,  144411
+[15]C. H. Chung, J. B. Marston, and S. Sachdev, Quantum                                  (2016).
+     phases of the shastry-sutherland antiferromagnet: Appli-                      [32]S. Yan, D. A. Huse, and S. R. White, Spin-liquid ground
+     cation to srcu2(bo3)2,Phys. Rev. B  64, 134407 (2001).                              state  of  the  s=1/2  kagome  heisenberg  antiferromagnet,
+[16]A. L¨auchli, S. Wessel, and M. Sigrist, Phase diagram of                             Science 332, 1173 (2011).
+     the quadrumerized shastry-sutherland model,Phys. Rev.                         [33]Z.  Zhu  and  S.  R.  White,  Spin  liquid  phase  of  the       s  =
+     B 66, 014401 (2002).                                                                1
+                                                                                         2  J1 − J2  heisenberg  model  on  the  triangular  lattice,
+[17]P.  Corboz  and  F.  Mila,  Tensor  network  study  of  the                          Phys. Rev. B 92, 041105 (2015).
+     shastry-sutherland  model  in  zero  magnetic  field,Phys.                    [34]G.  Carleo  and  M.  Troyer,  Solving  the  quantum  many-
+     Rev. B 87, 115144 (2013).                                                           body  problem  with  artificial  neural  networks,Science
+[18]T. Waki, K. Arai, M. Takigawa, Y. Saiga, Y. Uwatoko,                                 355, 602 (2017).
+     H.  Kageyama,  and  Y.  Ueda,  A  novel  ordered  phase  in                   [35]X. Liang, W.-Y. Liu, P.-Z. Lin, G.-C. Guo, Y.-S. Zhang,
+     srcu2(bo3)2 under high pressure,Journal of the Physical                             and  L.  He,  Solving  frustrated  quantum  many-particle
+     Society of Japan 76, 073710 (2007).                                                 models with convolutional neural networks,Phys. Rev.
+[19]M.  E.  Zayed,  C.  R¨uegg,  J.  Larrea  J.,  A.  M.  L¨auchli,                      B 98, 104426 (2018).
+     C.  Panagopoulos,   S.  S.  Saxena,   M.  Ellerby,   D.  F.                   [36]K. Choo,  T. Neupert, and G. Carleo, Two-dimensional
+     McMorrow,  T.  Str¨assle,  S.  Klotz,  G.  Hamel,  R.  A.                           frustrated  J1−J2  model  studied  with  neural  network
+     Sadykov, V. Pomjakushin, M. Boehm, M. Jim´enez–Ruiz,                                quantum states,Phys. Rev. B          100, 125124 (2019).
+     A.   Schneidewind,   E.   Pomjakushina,   M.   Stingaciu,                     [37]O. Sharir, Y. Levine, N. Wies, G. Carleo, and A. Shashua,
+     K. Conder, and H. M. Rønnow, 4-spin plaquette singlet                               Deep  autoregressive  models  for  the  efficient  variational
+     state  in  the  shastry–sutherland  compound  srcu2(bo3)2,                          simulation of many-body quantum systems,Phys. Rev.
+     Nature Physics 13, 962 (2017).                                                      Lett. 124, 020503 (2020).
+[20]J.  Guo,  G.  Sun,  B.  Zhao,  L.  Wang,  W.  Hong,  V.  A.                    [38]M. Hibat-Allah, M. Ganahl, L. E. Hayward, R. G. Melko,
+     Sidorov, N. Ma, Q. Wu, S. Li, Z. Y. Meng, A. W. Sand-                               and J. Carrasquilla, Recurrent neural network wave func-
+     vik,  and  L.  Sun,  Quantum  phases  of  srcu2(bo3)2  from                         tions,Phys. Rev. Res.         2, 023358 (2020).
+     high-pressure  thermodynamics,Phys.  Rev.  Lett.                124,          [39]L.  L.  Viteritti,  F.  Ferrari,  and  F.  Becca,  Accuracy  of
+     206602 (2020).                                                                      restricted  Boltzmann  machines  for  the  one-dimensional
+[21]J. Y. Lee, Y.-Z. You, S. Sachdev, and A. Vishwanath, Sig-                            J1 − J2 Heisenberg model,SciPost Phys.      12, 166 (2022).
+     natures of a deconfined phase transition on the shastry-                      [40]A. Szab´o and C. Castelnovo, Neural network wave func-
+     sutherland  lattice:    Applications  to  quantum  critical                         tions and the sign problem,Phys. Rev. Res.             2, 033075
+     srcu2(bo3)2,Phys. Rev. X  9, 041037 (2019).                                         (2020).
+[22]W.-Y.  Liu,  X.-T.  Zhang,  Z.  Wang,  S.-S.  Gong,  W.-Q.                     [41]M. Hibat-Allah, R. G. Melko, and J. Carrasquilla, Sup-
+     Chen, and Z.-C. Gu, Deconfined quantum criticality with                             plementing recurrent neural network wave functions with
+     emergent symmetry in the extended shastry-sutherland                                symmetry  and  annealing  to  improve  accuracy  (2022),
+     model (2023),arXiv:2309.10955 [cond-mat.str-el].                                    arXiv:2207.14314 [cond-mat.dis-nn].
+                                                                                                                                                              16
+
+[42]X.  Liang,  M.  Li,  Q.  Xiao,  J.  Chen,  C.  Yang,  H.  An,                        tween deep learning and frustrated quantum spin system
+     and  L.  He,  Deep  learning  representations  for  quantum                         for extreme-scale simulations on new generation of sun-
+     many-body systems on heterogeneous hardware,Machine                                 way supercomputer,IEEE Transactions on Parallel amp;
+     Learning:  Science and Technology 4, 015035 (2023).                                 Distributed Systems 33, 2846 (2022).
+[43]A.  Chen  and  M.  Heyl,  Efficient  optimization  of  deep                    [60]X. Liang, M. Li, Q. Xiao, H. An, L. He, X. Zhao, J. Chen,
+     neural quantum states toward machine precision (2023),                              C.  Yang,  F.  Wang,  H.  Qian,  L.  Shen,  D.  Jia,  Y.  Gu,
+     arXiv:2302.01941 [cond-mat.dis-nn].                                                 X. Liu, and Z. Wei, 21296 exponentially complex quantum
+[44]M.  Mezera,  J.  Menˇs´ıkov´a,  P.  Bal´aˇz,  and  M.        ˇZonda,                 many-body simulation via scalable deep learning method
+     Neural network quantum states analysis of the shastry-                              (2022),arXiv:2204.07816 [quant-ph].
+     sutherland    model    (2023),arXiv:2303.14108    [cond-                      [61]C. Roth, A. Szab´o, and A. H. MacDonald, High-accuracy
+     mat.dis-nn].                                                                        variational monte carlo for frustrated magnets with deep
+[45]L. L. Viteritti, R. Rende, and F. Becca, Transformer vari-                           neural networks,Phys. Rev. B        108, 054410 (2023).
+     ational wave functions for frustrated quantum spin sys-                       [62]R. Xiong, Y. Yang, D. He, K. Zheng, S. Zheng, C. Xing,
+     tems,Phys. Rev. Lett.        130, 236401 (2023).                                    H.  Zhang,  Y.  Lan,  L.  Wang,  and  T.-Y.  Liu,  On  layer
+[46]R.  Rende,  L.  L.  Viteritti,  L.  Bardone,  F.  Becca,  and                        normalization  in  the  transformer  architecture  (2020),
+     S.  Goldt,  A  simple  linear  algebra  identity  to  opti-                         arXiv:2002.04745 [cs.LG].
+     mize large-scale neural network quantum states (2023),                        [63]K.  He,  X.  Zhang,  S.  Ren,  and  J.  Sun,  Deep  residual
+     arXiv:2310.05715 [cond-mat.str-el].                                                 learning for image recognition (2015),arXiv:1512.03385
+[47]Y.  Nomura,  A.  Darmawan,  Y.  Yamaji,  and  M.  Imada,                             [cs.CV].
+     Restricted   boltzmann   machine   learning   for   solving                   [64]A. F. Agarap, Deep learning using rectified linear units
+     strongly correlated quantum systems,Phys. Rev. B             96,                    (relu) (2019),arXiv:1803.08375 [cs.NE].
+     205152 (2017).                                                                [65]S. Sorella, Wave function optimization in the variational
+[48]F.   Ferrari,   F.   Becca,   and   J.   Carrasquilla,   Neural                      monte carlo method,Phys. Rev. B    71, 241103 (2005).
+     gutzwiller-projected  variational  wave  functions,Phys.                      [66]R.  Rende,  F.  Gerace,  A.  Laio,  and  S.  Goldt,  Opti-
+     Rev. B 100, 125131 (2019).                                                          mal  inference  of  a  generalised  potts  model  by  single-
+[49]Y.  Nomura  and  M.  Imada,  Dirac-type  nodal  spin  liq-                           layer   transformers   with   factored   attention   (2023),
+     uid revealed by refined quantum many-body solver using                              arXiv:2304.07235.
+     neural-network wave function, correlation ratio, and level                    [67]R. Rende and L. L. Viteritti, Are queries and keys always
+     spectroscopy,Phys. Rev. X  11, 031034 (2021).                                       relevant?   a  case  study  on  transformer  wave  functions
+[50]Y. Levine, O. Sharir, N. Cohen, and A. Shashua, Quan-                                (2024),arXiv:2405.18874 [cond-mat.dis-nn].
+     tum entanglement in deep learning architectures,Phys.                         [68]A. W. Sandvik, Finite-size scaling of the ground-state pa-
+     Rev. Lett. 122, 065301 (2019).                                                      rameters of the two-dimensional heisenberg model,Phys.
+[51]O. Sharir, A. Shashua, and G. Carleo, Neural tensor con-                             Rev. B 56, 11678 (1997).
+     tractions and the expressive power of deep neural quan-                       [69]M. Calandra Buonaura and S. Sorella, Numerical study
+     tum states,Phys. Rev. B   106, 205136 (2022).                                       of  the  two-dimensional  heisenberg  model  using  a  green
+[52]E.   Stoudenmire   and   S.   R.   White,   Studying   two-                          function monte carlo technique with a fixed number of
+     dimensional systems with the density matrix renormal-                               walkers,Phys. Rev. B      57, 11446 (1998).
+     ization  group,Annual  Review  of  Condensed  Matter                          [70]W.  Marshall,  Antiferromagnetism,Proceedings  of  the
+     Physics 3, 111 (2012).                                                              Royal  Society  of  London.  Series  A,  Mathematical  and
+[53]A.   Vaswani,   N.   Shazeer,   N.   Parmar,   J.   Uszkoreit,                       Physical Sciences 232, 48 (1955).
+     L.  Jones,  A.  Gomez,  L.  Kaiser,  and  I.  Polosukhin,At-                  [71]L. McInnes,  J. Healy, and J. Melville, Umap:  Uniform
+     tention is all you need(2017).                                                      manifold approximation and projection for dimension re-
+[54]A. Dosovitskiy, L. Beyer, A. Kolesnikov, D. Weissenborn,                             duction (2020),arXiv:1802.03426 [stat.ML].
+     X.  Zhai,  T.  Unterthiner,  M.  Dehghani,  M.  Minderer,                     [72]R.  Rende,   S.  Goldt,   F.  Becca,  and  L.  L.  Viteritti,
+     G. Heigold, S. Gelly, J. Uszkoreit, and N. Houlsby,An im-                           Fine-tuning   neural   network   quantum   states(2024),
+     age is worth 16x16 words: Transformers for image recog-                             arXiv:2403.07795 [cond-mat.dis-nn].
+     nition at scale(2021).                                                        [73]Y. Nomura, Helping restricted boltzmann machines with
+[55]D.  Luo,  Z.  Chen,  K.  Hu,  Z.  Zhao,  V.  M.  Hur,  and                           quantum-state  representation  by  restoring  symmetry,
+     B. K. Clark, Gauge-invariant and anyonic-symmetric au-                              Journal of Physics: Condensed Matter 33, 174003 (2021).
+     toregressive neural network for quantum lattice models,                       [74]M. Reh, M. Schmitt, and M. G¨arttner, Optimizing design
+     Phys. Rev. Res. 5, 013216 (2023).                                                   choices  for  neural  quantum  states,Phys.  Rev.  B          107,
+[56]K. Sprague and S. Czischek, Variational monte carlo with                             195115 (2023).
+     large   patched   transformers   (2023),arXiv:2306.03921                      [75]F.  Vicentini,  D.  Hofmann,  A.  Szab´o,  D.  Wu,  C.  Roth,
+     [quant-ph].                                                                         C.  Giuliani,  G.  Pescia,  J.  Nys,  V.  Vargas-Calder´on,
+[57]Y.  Bengio,  A.  Courville,  and  P.  Vincent,  Representa-                          N.  Astrakhantsev,  and  G.  Carleo,  NetKet  3:   Machine
+     tion  learning:   A  review  and  new  perspectives  (2014),                        Learning Toolbox for Many-Body Quantum Systems,Sci-
+     arXiv:1206.5538 [cs.LG].                                                            Post Phys. Codebases , 7 (2022).
+[58]Y. LeCun, Y. Bengio, and G. Hinton, Deep learning, Na-
+     ture 521, 436 (2015).
+[59]M. Li,  J. Chen,  Q. Xiao,  F. Wang,  Q. Jiang,  X. Zhao,
+     R. Lin, H. An, X. Liang, and L. He, Bridging the gap be-

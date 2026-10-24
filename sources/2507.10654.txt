@@ -1,0 +1,1025 @@
+                             Ferrimagnetism from quantum fluctuations in Kitaev materials
+
+                                            Niccol`o  Francini,  Pedro  M.  Cˆonsoli,  and  Lukas  Janssen
+        Institut f¨ur Theoretische Physik and W¨urzburg-Dresden Cluster of Excellence ct.qmat, TU Dresden, 01062 Dresden, Germany
+                                                                     (Dated: July 14, 2025)
+                     Ferrimagnetism appears in the temperature-field phase diagrams of several candidate Kitaev materials, such as
+                 the honeycomb cobaltates Na2Co2TeO6 and Na3Co2SbO6.  In a number of instances, however, the exact nature
+                 of the corresponding ground states remains the subject of ongoing debate.   We show that general symmetry
+                 considerations can rule out candidate states that are incompatible with the observed ferrimagnetic behavior.  In
+                 particular, we demonstrate that a ferrimagnetic response cannot be reconciled with a collinear zigzag ground
+                 state, owing to the combined time-reversal and translational symmetry inherent to that configuration.  Instead,
+                 the observed behavior is fully compatible with the symmetries of noncollinear multi-q states, such as the triple-q
+                 discussed in the context of Na2Co2TeO6.   We exemplify this general result by computing the ferrimagnetic
+                 response of an extended Heisenberg-Kitaev-Gamma model with explicit sublattice symmetry breaking within
+                 linear spin-wave theory. If the model realizes a triple-q ground state, the calculated magnetization curve is well
+                 consistent with the low-temperature behavior observed in Na2Co2TeO6.   In this case,  a finite magnetization
+                 remains in the zero-temperature limit as a consequence of quantum fluctuations, even if the 𝑔-factors on the
+                 different sublattices are identical.  For a zigzag ground state, by contrast, the total magnetization vanishes both
+                 at zero and finite temperatures, independent of possible sublattice-dependent 𝑔-factors, as expected from the
+                 symmetry analysis.  The implications of our general result for other Kitaev materials exhibiting ferrimagnetic
+                 behavior are also briefly discussed.
+
+
+                         I.    INTRODUCTION                                          ments have revealed a sizable internal field, interpreted as a
+                                                                                     consequence  of  the  spin  vorticity  associated  with  the  non-
+   Since its introduction [1], the Kitaev honeycomb model has                        collinear  triple-q  order  [51].   A  similar  ambiguity  arises  in
+attracted  significant  interest  in  the  study  of  frustrated  mag-               Na3Co2SbO6, where the observed Bragg-peak pattern is con-
+netism.  This is motivated not only by the fact that the model                       sistent with either a domain mixture of two single-q zigzag
+hosts different quantum spin-liquid phases,  characterized by                        states or a noncollinear double-q order [35–37].
+fractionalized excitations and emergent gauge fields [2–5], but                          Amid ongoing uncertainty, Na2Co2TeO6 exhibits a remark-
+also  by  the  prospect  of  realizing  its  bond-dependent,  Ising-                 able low-temperature ferrimagnetic response when cooled in a
+like interactions in transition-metal compounds with partially                       weak out-of-plane magnetic field [9]. When the field is turned
+filled 𝑑  shells  [6–8].    Among  the  various  candidates  pro-                    off  at  low  temperatures,  a  small  remanent  magnetization  of
+posed  to  exhibit  such  behavior,  the  honeycomb  cobaltates                      −0.01𝜇B/Co2+ remains along the out-of-plane direction, ori-
+Na2Co2TeO6  [9–33],  Na             3Co2SbO6  [10, 16, 18, 29, 34–37],               ented opposite to the training field. Upon warming, the magne-
+and BaCo2(AsO4)2 [38–42] have emerged as a promising class                           tization grows and eventually reverses sign at a compensation
+of  Kitaev  materials.   In  the  cobaltates,  the  combined  effect                 point𝑇★≃ 12.5 K. The magnetization reaches its maximum of
+of crystal-field environments, strong spin-orbit coupling, and                       +0.01𝜇B/Co2+ slightly before dropping to zero at the ordering
+Coulomb repulsion on the𝑑7 electronic configuration of Co2+                          temperature𝑇c≃ 26.7 K. Above this temperature, the system
+ions  leads  to  the  formation  of  a  Mott-insulating  phase  with                 enters the paramagnetic phase, and the magnetization remains
+effective 𝑗 = 1/2 local magnetic moments [43–47].  The ge-                           zero.   In  Na3Co2SbO6,  the  residual  magnetization  vanishes
+ometry of the edge-sharing CoO6 octahedra enhances the role                          once the external field is removed [34].   However,  applying
+of the Kitaev interactions [6]. However, as in other Kitaev ma-                      a  finite  field  along  an  in-plane  direction  perpendicular  to  a
+terials [48], magnetic interactions beyond the nearest-neighbor                      Co-Co bond induces a metamagnetic transition to an interme-
+Kitaev exchange drive these honeycomb cobaltates away from                           diate  phase,  referred  to  as  “AFM   13,”  which  shows  features
+the ideal Kitaev limit and stabilize long-range magnetic order                       of ferrimagnetic behavior and suggests the system may lie in
+at low temperatures and small external magnetic fields.                              proximity to a ferrimagnetic state [35].
+   Nevertheless, the nature of the magnetic order in the honey-                          Ferrimagnetism  typically  arises  when  magnetic  moments
+comb cobaltates remains a subject of ongoing debate.  In the                         on inequivalent sublattices of an antiferromagnet do not com-
+case of Na2Co2TeO6,  early neutron scattering data obtained                          pensate each other [16].  On the honeycomb lattice, a zigzag
+from powder samples were interpreted in favor of a collinear                         ground state can give rise to ferrimagnetism only if the zigzag
+zigzag ground state [10,11,16,18].   Later experiments on                            order is canted due to a coexisting N´eel order [9].  However,
+single crystals, however, demonstrated that the symmetry of                          no known model within the extended Heisenberg-Kitaev pa-
+the magnon spectrum cannot be explained within the zigzag                            rameter space supports such a peculiar form of canted zigzag
+scenario [21]. This led to the proposal that Na       2Co2TeO6 rather                order. Moreover, a coexisting N´eel order would give rise to an
+displays a noncollinear triple-q order [12,21,49] and called for                     additional Bragg peak, which has not been observed within the
+further experiments capable of distinguishing both scenarios.                        experimental resolution in neutron diffraction measurements
+Electric polarization measurements employed to this end found                        on Na2Co2TeO6 [12,52].  This points to an alternative mech-
+conflicting results [24,50]. Recent Faraday rotation measure-                        anism underlying the ferrimagnetic behavior observed in this
+                                                                                                                                                              2
+
+compound.                                                                                          II.    SYMMETRY CONSTRAINTS
+
+   Recently,  an  extended  Heisenberg-Kitaev  model  featur-                        We start by discussing how symmetries constrain the cor-
+ing  a  noncollinear  triple-q  classical  ground  state  was  intro-             rections to sublattice magnetizations that arise due to quantum
+duced [53].  By explicitly accounting for the sublattice sym-                     and thermal fluctuations. Consider a HamiltonianH describ-
+metry breaking in Na2Co2TeO6, it was shown that the triple-q                      ing a magnetic system with density matrix𝜌. In the canonical
+order generically develops ferrimagnetism at finite tempera-                      ensemble, where the system is coupled to a heat bath at inverse
+tures  below  the  ordering  transition.   In  the  classical  model,             temperature 𝛽 = 1/(𝑘B𝑇), the density matrix is given by the
+however, fluctuations vanish as temperature approaches zero,                      standard expression𝜌=𝑒−𝛽H/Tr e−𝛽H.  A symmetry oper-
+leaving the remanent magnetization determined solely by the                       ation is defined as a transformationT  that commutes with the
+difference in 𝑔-factors between the 𝐴 and 𝐵 sublattices.   As                     Hamiltonian,[H,T]= 0. The subset of symmetry operations
+a result, the existence of a compensation point𝑇★ at a finite                     T  that remain unbroken in the low-temperature ordered phase
+temperature below the ordering transition depends sensitively                     also commute with the density matrix,[𝜌,T] =  0.  At zero
+on the sublattice𝑔-factor ratio, introducing a fine-tuning prob-                  temperature,  the  density  matrix  reduces  to  a  projector  onto
+lem.   Moreover,  in  the  low-temperature  limit,  the  classical                the ground state, 𝜌 =|𝜓0⟩⟨𝜓0|, and the condition[𝜌,T] = 0
+magnetization varies linearly with temperature,  which is in-                     implies  thatT  can  only  change|𝜓0⟩  by  a  harmless  global
+consistent with the activated behavior expected for a gapped                      phase.
+magnetic excitation spectrum and observed experimentally in                          A symmetryT =[A||B]  of a magnetic Hamiltonian can
+Na2Co2TeO6 [9].  These artifacts of the classical model high-                     generally be specified in terms of two operations,A andB, that
+light the importance of quantum fluctuations in understanding                     act respectively on spin and real space. However, the inevitable
+the low-temperature behavior of ferrimagnetic Kitaev materi-                      presence of spin-orbit coupling implies that these operations
+als, an aspect that has been neglected in previous work [53].                     are  not  independent:   any  proper  or  improper  rotation  inB
+                                                                                  must also be performed inA.  For a given magnetic system,
+   In  this  study,  we  seek  to  address  this  gap.    We  explore             the set of symmetriesT  that satisfy this property constitute a
+extensions  of  the  Heisenberg-Kitaev  model  featuring  either                  magnetic space group [54]. Recent developments [55,56] have
+collinear single-q zigzag order or noncollinear triple-q order,                   nonetheless demonstrated the utility of considering a broader
+and analyze the effects of quantum fluctuations using linear                      class  of  symmetry  groups,  dubbed  spin-space  groups  [57–
+spin-wave theory.  On one hand, we explain how symmetries                         59],  in  which A  andB  are  completely  decoupled.   A  key
+forbid the zigzag ground state from exhibiting ferrimagnetism,                    advantage  of  such  a  generalization  is  that  it  enables  one  to
+providing insight into why this long-range order cannot acquire                   predict new magnetic phenomena from enhanced symmetries
+a uniform magnetization without further symmetry breaking                         that appear within minimal models for a system of interest, but
+in Heisenberg-Kitaev systems.   On the other hand, we show                        are weakly broken once all symmetry-allowed interactions are
+that the triple-q ground state exhibits ferrimagnetism both at                    included. This link has successfully been explored to identify,
+zero and at finite temperatures below the ordering transition,                    e.g.,  instances  of  nontrivial  magnon  band  topology  [55]  as
+under a broad set of generic and physically realistic symmetry                    well as the existence of spin-split electronic bands in metallic
+assumptions. In particular, our results are independent of spe-                   altermagnets [56].  Here, we will also consider the effects of
+cific𝑔-factor ratios and naturally give rise to a compensation                    general  spin-space  transformationsT = [A||{R|t}],  where
+point𝑇★, thereby substantially broadening the range of scenar-                    the real-space operation is expressed in terms of a translation
+ios in which ferrimagnetism can emerge from a triple-q ground                     t  and  a  rotationR  which  is  in  principle  independent  ofA.
+state. Our results are directly applicable to the low-temperature                 However, we will ultimately show in Sec.V B 2that it is the
+physics of Na2Co2TeO6, but may in principle also be of rele-                      breaking of a spin-space symmetry that allows ferrimagnetism
+vance to other honeycomb cobaltates, such as Na3Co2SbO6 in                        to emerge from a triple-q ordered state in Heisenberg-Kitaev
+in-plane magnetic fields.                                                         magnets.
+                                                                                     To begin, consider the spins S𝑖𝜇  and S𝑗𝜈  located at lattice
+   The  remainder  of  the  paper  is  organized  as  follows:   In               sites labeled by𝑖𝜇 and 𝑗𝜈, where𝑖 and 𝑗 specify the magnetic
+Sec.II,  we  discuss  general  symmetries  constraints  on  the                   unit cells and 𝜇 and𝜈 denote the magnetic sublattices.  IfT
+magnetization corrections.   Our approach for computing the                       represents an unbroken symmetry, the spin expectation values
+magnetization corrections within spin-wave theory for a non-                      satisfy the relation
+collinear ground state is summarized in Sec.III. In Sec.IV,                         ⟨S𝑖𝜇⟩= Tr 𝜌S𝑖𝜇 = Tr T−1T𝜌T−1T S𝑖𝜇 = A Tr 𝜌S𝑗𝜈
+we present a comprehensive analysis of magnetization correc-                                = A⟨S𝑗𝜈⟩,                                                                  (1)
+tions in the original Heisenberg-Kitaev model, augmented with
+sublattice-symmetry-breaking  terms,  using  linear  spin-wave                    where the matrix A represents the action of the operationA in
+theory.   The effects of an off-diagonal Γ  interaction present                   spin space, so that the transformationT  acts on the spins as
+in extended Heisenberg-Kitaev models are discussed for the
+cases of single-q zizag and noncollinear triple-q ground states                                              T S𝑖𝜇T−1= AS𝑗𝜈,                              (2)
+in Sec.V. We close with a summary and outlook in Sec.VI.
+Two appendices offer additional technical details of the spin-                    with sites𝑖𝜇 and 𝑗𝜈 connected by R𝑗𝜈 = RR𝑖𝜇+ t, where R
+wave calculations.                                                                is the matrix representation of the proper or improper rotation
+                                                                                                                                                                 3
+
+                                                                                    rotationU. Rotations of by angle𝛼 around a unit vector ˆn are
+                                                                                    described by unitary operatorsU= ˛𝑖𝜇𝑒𝑖𝛼 ˆn·S𝑖𝜇. Under these
+                                                                                    transformations,  the  spin  vector  S𝑗𝜈  transforms  as  a  vector,
+                                                                                    meaning  thatUS𝑗𝜈U−1 =  Oˆn(𝛼)S𝑗𝜈,  where Oˆn(𝛼)  is  an
+                                                                                    orthogonal matrix describing the rotation of the spin vector
+                                                                                    by an angle𝛼 around the axis  ˆn.  As a consequence, the spin-
+                                                                                    space  transformationT = [U||{𝐸|d}]  acts  asT S𝑖𝜇T−1 =
+                                                                                    OS𝑗𝜈,  where O  is  the  rotation  matrix  corresponding  toU,
+                                                                                    and R𝑗𝜈 = R𝑖𝜇+ d.  We dropped the axis  ˆn and the angle𝛼
+                                                                                    in O for simplicity of notation.   Hence,  Eq. (1) leads to the
+                                                                                    nonperturbative result
+FIG. 1.   Illustration of spin-space transformation mapping two in-
+equivalent spins (large black arrows).   A spin at site𝑖𝜇 (blue dot),                                            ⟨S𝑖𝜇⟩= O⟨S𝑗𝜈⟩.                               (4)
+where𝑖 denotes the magnetic unit cell and𝜇 the magnetic sublattice,
+is  mapped  to  a  spin  at  site 𝑗𝜈  (red  dot)  in  a  two  steps:   First,  the  Since the rotation matrix O is orthogonal, it preserves the spin
+spin is rotated in spin space via the operationA, with the resulting                length, implying that the fluctuation-induced spin corrections
+transformed spin shown as a gray arrow.  Second, the spin transfor-                 on the two inequivalent sites have equal magnitude.
+mation is accompanied by a lattice transformation{R|t}, consisting                     Below,  we argue that the noncollinear triple-q order pos-
+of a lattice rotationR and a translation t, mapping site𝑖𝜇 to 𝑗𝜈.                   sesses  this  type  of  spin-space  symmetry,  provided  that  off-
+                                                                                    diagonal terms such as aΓ interaction are absent from the spin
+operationR, see Fig.1.   The result in Eq. (1) holds exactly                        interaction matrix. As a result, the magnetization is symmetry-
+at all temperatures, and can therefore be used to significantly                     constrained to vanish in these pure Heisenberg-Kitaev models.
+constrain  possible  magnetization  corrections  within  the  dif-                  Once off-diagonal interactions are taken into account, such as
+ferent candidate ground states.   In the following, we discuss                      in current models for Na2Co2TeO6 featuring a triple-q ground
+two examples relevant for different phases within the extended                      state [21,53,60], the spin-space symmetry is broken.  In this
+Heisenberg-Kitaev parameter space.                                                  case, a sublattice imbalance, as observed in Na2Co2TeO6 [9],
+                                                                                    generically gives rise to ferrimagnetism.
+
+
+                  A.    Translation and time reversal
+                                                                                                          III.    SPIN-WAVE THEORY
+   Assume that two collinear but oppositely aligned spins, S𝑖𝜇
+and S𝑗𝜈, located at sites𝑖𝜇 and𝑗𝜈, are related by a symmetryT                          To  illustrate  the  point  within  an  explicit  calculation,  we
+that combines a translation by a lattice vector t= d with time                      compute  the  correction  to  the  magnetization  from  quantum
+reversal,A=Θ.  If𝐸 denotes the identity operation, then the                         and thermal fluctuations within spin-wave theory.  Formally,
+corresponding spin-space operation isT =[Θ||{𝐸|d}], which                           spin-wave theory can be understood as an expansion in 1/𝑆,
+acts asT S𝑖𝜇T−1=−S𝑗𝜈. As a result, Eq. (1) reduces to                               where 𝑆  is  the  spin  magnitude  and 𝑆 →∞  represents  the
+                                                                                    classical limit.
+                             ⟨S𝑖𝜇⟩=−⟨S𝑗𝜈⟩.                                (3)
+
+This nonperturbative result constrains the expectation value of                                                 A.    1/𝑺 expansion
+the sum of the two spins to zero, thereby prohibiting any un-
+compensated moment from arising due to quantum or thermal                              Consider a bilinear spin Hamiltonian of the form
+fluctuations.
+   Below, we show that the collinear zigzag order found in both                                                     ∑︁
+the original and extended Heisenberg-Kitaev models possesses                                                H =          S𝑖𝜇J𝑖𝜇,𝑗𝜈S𝑗𝜈,                         (5)
+precisely such kind of spin-space symmetry combining lattice                                                       𝑖𝜇,𝑗𝜈
+translation and time reversal.  As a result, the magnetization                      with a 3× 3 interaction matrix J𝑖𝜇,𝑗𝜈 for any given pair of sites
+on  each  of  the  crystallographic  sublattices 𝐴  and 𝐵  of  the                  𝑖𝜇  and 𝑗𝜈.   Assume that the classical ground state contains
+honeycomb  lattice  is  individually  constrained  to  vanish  by                   𝑝 sites per magnetic unit cell.  Then, the magnetic-sublattice
+symmetry.  Importantly, this conclusion holds to all orders in                      indices are𝜇,𝜈= 1,...,𝑝, and the magnetic-unit-cell indices
+the 1/𝑆 expansion, provided the spin-space symmetry remains                         are𝑖,𝑗 = 1,...,𝑁/𝑝, where𝑁 is the total number of magnetic
+unbroken in the ordered state.                                                      sites.  Due to translational invariance, the interaction matrix
+                                                                                    depends only on the relative position between the magnetic unit
+                  B.    Translation and spin rotation                               cells𝑖 and 𝑗, J𝑖𝜇,𝑗𝜈 = J𝜇𝜈(R𝑖− R𝑗).  We express each spin
+                                                                                    S𝑖𝜇 in a sublattice-dependent reference frame{e(1)𝜇 , e(2)𝜇 , e(3)𝜇 },
+   As a second example, consider a state featuring a symmetry                       where the third axis is aligned with the classical spin direction,
+given by a combination of a lattice translation t= d with a spin                    e(3)𝜇 =⟨S𝑖𝜇/𝑆⟩𝑆→∞. In terms of spin ladder operators𝑆±𝑖𝜇, the
+                                                                                                                                                             4
+
+spin operators read                                                               accounts for𝑝 bosonic modes, one for each site in the magnetic
+                                                                                  unit cell. The Hamiltonian is diagonalized using a Bogoliubov
+S𝑖𝜇 =  12   𝑆(+)𝑖𝜇 +𝑆(−)𝑖𝜇  e(1)𝜇 +  12i 𝑆(+)𝑖𝜇 −𝑆(−)𝑖𝜇  e(2)𝜇 +𝑆(3)𝑖𝜇 e(3)𝜇 .    transformation,
+                                                                         (6)                                         ∑︁
+In  this  basis,  we  employ  a  Holstein-Primakoff  transforma-                         HLSW=𝑆(𝑆+ 1)𝒽0+                  𝜔k𝜇    𝜓†k𝜇𝜓k𝜇+ 12      ,        (10)
+tion [61],                                                                                                           k,𝜇
+
+                  𝑆(3)𝑖𝜇 =𝑆−𝑎†𝑖𝜇𝑎𝑖𝜇,                                              where𝜔k𝜇  represents the magnon spectrum and𝜓k𝜇  are the
+                                                !1/2                              Bogoliubov quasiparticle ladder operators; details are given in
+                                         𝑖𝜇𝑎𝑖𝜇                                    AppendixA.
+                  𝑆(+)𝑖𝜇 =√2𝑆     1− 𝑎†2𝑆             𝑎𝑖𝜇,               (7)
+
+                               √                    !1/2                                              B.    Magnetization corrections
+                 𝑆(−)            2𝑆   1− 𝑎†𝑖𝜇𝑎𝑖𝜇          ,
+                   𝑖𝜇 =𝑎†𝑖𝜇                   2𝑆
+in which the spin operators are represented in terms of bosonic                    𝑝 In the classical limit,  the sublattice magnetization m𝜇 B˝
+S𝑖𝜇 is aligned with the e(3)𝜇    axis by definition, m𝜇→
+operators satisfying[𝑎𝑖𝜇,𝑎†                                                        𝑁    𝑖
+                                  𝑗𝜈] = 𝛿𝜇𝜈𝛿𝑖𝑗.  The square roots in              𝑚(3)𝜇  e(3)𝜇  ,  and  fully  saturated  in  the  zero-temperature  limit,
+the spin ladder operators can be expanded in powers of 1/𝑆,                       so  that 𝑚(3)𝜇 /𝑆 →  1  for 𝑆 → ∞  and 𝑇 →  0.    Quantum
+resulting in the series                                                           fluctuations present at finite𝑆 generally reduce the sublattice
+                                  ∞∑︁                                             magnetization.
+                           H =        𝑆2−𝑛2 𝒽𝑛,                              (8)     For  a  collinear  ground  state  in  the  absence  of  any  off-
+                                  𝑛=0                                             diagonal term in the spin interaction matrix J𝑖𝜇,𝑗𝜈, the sub-
+where 𝒽𝑛  contains 𝑛  bosonic  operators.   Here,  the  zeroth-                   lattice  magnetization  at  orderO(1/𝑆0)  of  the  semiclassical
+order term 𝒽0 describes the ground-state energy of the classi-                    expansion remains parallel to the classical spin configuration,
+cal Hamiltonian.  The linear term 𝒽1 vanishes as long as we                       m𝜇 = 𝑚(3)𝜇  e(3)𝜇 +O(1/𝑆).   The  total  magnetization  is  then
+are expanding around a minimum of the energy.  As a conse-                        given by
+quence, the quadratic term 𝒽2 contains the leading quantum
+corrections  within  the  1/𝑆  expansion.    Higher-order  terms                                ∑︁  
+S𝑖𝜇
+𝒽𝑛≥3  describe boson-boson interactions.  The cubic interac-                         m B  1𝑁
+tions 𝒽3 vanish if the spin interaction matrix J𝑖𝜇,𝑖𝜈 is diagonal                               𝑖,𝜇
+for all𝑖𝜇 and 𝑗𝜈, and if the classical ground is collinear. When                              ∑︁               ∑︁
+off-diagonal spin interactions are present, such as theΓ term                           = 𝑆𝑝       e(3)𝜇 −  1𝑁     ⟨0|𝑎†𝜇(k)𝑎𝜇(k)|0⟩e(3)𝜇 +O(1/𝑆).
+in  extended  Heisenberg-Kitaev  models  [62],  the  cubic  term                                𝜇              k,𝜇
+generally does not vanish.                                                                                                                                (11)
+   In practical calculations, the expansion is usually truncated                  For a collinear antiferromagnet, the first term vanishes.  From
+after some order𝑛, which may be expected to represent a re-                       symmetry, we expect that the second term yields a finite cor-
+liable approximation as long as the boson density⟨𝑎†𝑖𝜇𝑎𝑖𝜇⟩ is                     rection only if the spin-space symmetry connecting the two op-
+small  compared  to  the  spin  length,⟨𝑎†𝑖𝜇𝑎𝑖𝜇⟩ ≪  2𝑆.   Since                   posite spins is broken, such as in a N´eel state on a honeycomb
+⟨𝑎†𝑖𝜇𝑎𝑖𝜇⟩ grows with temperature, the spin-wave expansion re-                     lattice with two inequivalent crystallographic sublattices.  For
+mains valid only below a cutoff temperature scale𝑇max, which                      the zigzag state, the second term is constrained by symmetry
+depends on the spin magnitude𝑆 and the system’s level of frus-                    to vanish, even if the two crystallographic sublattices on the
+tration. 𝑇max increases with𝑆 but decreases with frustration.                     honeycomb lattice are inequivalent.   The same remains true
+Therefore, in strongly frustrated systems with significant quan-                  for the higher-order termsO(1/𝑆), as long as the spin-space
+tum fluctuations, especially for𝑆= 1/2, the cutoff temperature                    symmetry is preserved.  Below, we confirm this expectations
+scale can be low.                                                                 within  explicit  calculations  at  the  level  of  linear  spin-wave
+   In  linear  spin-wave  theory,  Eq.  (8)  is  truncated  after  the            theory.
+quadratic order𝑛= 2, neglecting any boson-boson interactions                         If the classical ground state is noncollinear and/or the spin
+𝒽𝑛≥3. In momentum space, Eq. (5) then acquires the compact                        interaction matrix J𝑖𝜇,𝑖𝜈  contains off-diagonal terms, such as
+expression                                                                        theΓ term in extended Heisenberg-Kitaev models [62], then
+                                         ∑︁                                       Eq. (11) becomes incomplete. Three-boson terms    𝒽3 in Eq. (8)
+         HLSW=𝑆(𝑆+ 1)𝒽0+ 12                    x†(k)M(k)x(k),       (9)           correct the classical direction e(3)𝑖𝜇   of the magnetic moments
+                                        k∈BZ                                      and produce a contribution at order𝑆0 that is absent in mod-
+where the summation is over all momenta k within the mag-                         els with collinear ground states and diagonal spin interaction
+netic Brillouin zone (BZ). The 2𝑝-component vector                                matrices [63–65]. To account for the missing contribution, we
+                                                                                  introduce a small external magnetic field h=ℎn along a fixed
+      x†(k)=      𝑎†1(k),...,𝑎†𝑝(k),𝑎1(−k),...,𝑎𝑝(−k))                            but otherwise arbitrary direction n by adding a Zeeman term
+                                                                                                                                                              5
+
+to the Hamiltonian,                                                                                                A.    Model
+                                           ∑︁                                         We consider a𝐶∗3-symmetric Heisenberg-Kitaev model [7,
+                        H↦→H− h·               S𝑖𝜇.                         (12)
+                                           𝑖𝜇                                      8]
+                                                                                                     ∑︁      ∑︁   h                      i
+This allows us to determine the total magnetization along the                             HHK=                     𝐽S𝑖· S𝑗+𝐾𝑆𝛾𝑖𝑆𝛾𝑗
+direction of n at zero temperature in the low-field limit as                                       𝛾=𝑥,𝑦,𝑧  ∑︁⟨𝑖𝑗⟩𝛾                 ∑︁                     (16)
+                              ∑︁   
+S𝑖𝜇ℎ→0=− 1      𝜕𝐸gs  ℎ→0,  (13)                       +𝐽2𝐴          S𝑖· S𝑗+𝐽2𝐵              S𝑖· S𝑗,
+ 𝑚 B n·mℎ→0= n· 1                                                                                        ⟨⟨𝑖𝑗⟩⟩𝐴                 ⟨⟨𝑖𝑗⟩⟩𝐵
+                           𝑁   𝑖𝜇                     𝑁   𝜕ℎ
+                                                                                   where𝐽 and𝐾 parameterize the nearest-neighbor Heisenberg
+where 𝐸gs  corresponds  to  the  ground-state  energy  in  linear                  and Kitaev terms, respectively, while𝐽2𝐴 and𝐽2𝐵 characterize
+spin-wave theory. Importantly, the above equation includes all                     sublattice-dependent next-nearest-neighbor interactions. Note
+contributions required to obtain the magnetization correction                      that⟨𝑖𝑗⟩𝛾 labels a pair of sites along a𝛾 bond,𝛾 =𝑥,𝑦,𝑧.  In
+at the leading order𝑆0 [66], see AppendixAfor more details.                        the following, we adopt the parametrization
+
+   No  systematic  method  exists  to  treat  the  problem  within                                        (𝐽,𝐾)= 𝐴(cos𝜙, sin𝜙)                       (17)
+the 1/𝑆 expansion at finite temperatures.  However, given that
+Eq. (9) is a free-boson Hamiltonian, one can readily write the                     with the overall energy scale set to 𝐴 =  1 for convenience.
+Gibbs free energy                                                                  At each site𝑖, the spins S𝑖  are represented in a global cubic
+                                h𝜔k𝜇                                               coordinate system, S𝑖 =𝑆𝑥𝑖 e𝑥+𝑆𝑦𝑖 e𝑦+𝑆𝑧𝑖 e𝑧  [67].
+                           ∑︁                                                         The nearest-neighbor Heisenberg-Kitaev model with𝐽2𝐴=
+   F =𝑆(𝑆+ 1)𝒽0+                   2 +𝑇 ln       1− e−𝜔k𝜇/𝑇 i      ,     (14)      𝐽2𝐵 = 0 has been extensively studied using a variety of meth-
+                            k𝜇                                                     ods [7,8,47,65,68–71].  For           𝑆≤ 3/2, the zero-temperature
+                                                                                   phase  diagram  includes  spin-liquid  phases  near  the  Kitaev
+with the temperature𝑇 given in units in which𝑘B = 1.  From                         points𝜙 = 𝜋/2 and 3𝜋/2 [72–75], in addition to four phases
+the above, we obtain the total magnetization at finite tempera-                    exhibiting collinear magnetic order.   These collinear phases
+ture as                                                                            appear  for  all  values  of 𝑆  and,  listed  in  order  of  increasing
+                        ℎ→0=𝑚(0)−  1       ∑︁                 ℎ→0,         𝜙∈[0, 2𝜋), are referred to as N´eel, zigzag, ferromagnet, and
+   𝑚(𝑇)=− 1        𝜕F                                𝜕𝜔k𝜇/𝜕ℎ                       stripy.   Interestingly,  in  the  classical  limit 𝑆→∞,  all  four
+                𝑁   𝜕ℎ                      𝑁  k,𝜇  e𝜔k𝜇/𝑇− 1                      ordered phases exhibit an accidental ground-state degeneracy,
+                                                                        (15)       leading to SU(2)-symmetric ground-state manifolds [67].  As
+with 𝑚(0)  being  the  result  from  Eq.  (13).   This  expression                 a consequence,  the magnon spectra calculated within linear
+reveals that the magnetization at low temperatures varies if two                   spin-wave theory exhibit pseudo-Goldstone modes at the or-
+conditions are met.  First, the temperature has to be at least of                  dering  wave  vectors  or  at  wave  vectors  related  to  them  by
+the order of the energy gap,𝑇 ≳ min𝜔k𝜇.  Second, the main                          crystal symmetries [76–79].
+contribution to the temperature variation of the magnetization                        We have explicitly verified that the inclusion of small 𝐽2𝐴
+comes from those𝜔k𝜇 which have the highest response to an                          and 𝐽2𝐵  does  not  alter  the  overall  structure  of  the  classical
+external field,  effectively introducing weights in the sum of                     phase  diagram.    Furthermore,  because  these  couplings  are
+Eq.  (15).   This  fact  will  play  a  role  in  analyzing  the  finite-          isotropic,  the ordered phases retain their accidental ground-
+temperature magnetization in the Sec.V.                                            state degeneracy.  As in the standard case with𝐽2𝐴=𝐽2𝐵= 0,
+                                                                                   this degeneracy is lifted by thermal or quantum fluctuations
+                                                                                   through  an  order-by-disorder  mechanism,  which  favors  spin
+                                                                                   orientations along one of the three cubic axes e𝑥, e𝑦, or e𝑧 [7,
+              IV.    HEISENBERG-KITAEV MODEL                                       8,68,69].
+                                                                                      The model defined in Eq. (16) exhibits several symmetries,
+                                                                                   including combined spin-lattice𝐶∗3 rotations, time reversalΘ,
+   In  this  section,  we  investigate  how  ferrimagnetism  can                   translations  by  the  crystallographic  unit  vectors  t±,  and 𝐶𝛼2
+emerge in a nearest-neighbor Heisenberg-Kitaev model sup-                          spin  rotations  about  the 𝛼 = 𝑥,𝑦,𝑧  axes  [67].   In  addition,
+plemented  with  sublattice-dependent,  next-nearest  neighbor                     the two crystallographic sublattices 𝐴 and 𝐵 are related by a
+Heisenberg couplings, 𝐽2𝐴 and 𝐽2𝐵.  By making 𝐽2𝐴 ≠ 𝐽2𝐵,                           reflection through a plane containing any of the three types
+we can emulate the asymmetry between the crystallographic                          of honeycomb bonds.   When 𝐽2𝐴 ≠ 𝐽2𝐵, the two sublattices
+sublattices,𝐴 and𝐵, of materials such as Na2Co2TeO6 [9,53].                        become inequivalent, and the system no longer retains symme-
+Our  calculations  were  carried  out  for  systems  comprising                    try under these mirror reflections.  For magnetically-ordered
+𝑁 = 2𝐿2 spins of magnitude𝑆, arranged on the sites of a hon-                       states  with  a  two-site  unit  cell,  this  removes  the  constraint
+eycomb lattice with𝐿2 unit cells and primitive lattice vectors                     that the sublattice magnetizations be equal in magnitude, and
+t±=(±√3/2, 3/2).  Unless otherwise specified, all numerical                        generically  results  in  ferrimagnetism.   However,  as  we  will
+results presented below correspond to the case𝑆= 1/2.                              show below, additional symmetries can prohibit magnetically-
+                                                                                                                                                                6
+
+       (a)                                                    (b)
+                                                                                   TABLE I. Sublattice magnetizations m𝜇 =𝑚𝜇e𝑧 in the Heisenberg-
+                                                                                   Kitaev model with nearest-neighbor couplings(𝐽,𝐾)=(cos𝜙, sin𝜙)
+                                                                                   and next-nearest-neighbor couplings(𝐽2𝐴,𝐽2𝐵) =(0.2,−0.1), from
+                                                                                   linear  spin-wave  theory  for 𝑆 =  1/2.    The  angles 𝜙 = 𝜋/4  and
+                                                                                   5𝜋/4 serve as representative points within the N´eel and ferromagnetic
+                                                                                   phases, respectively, with classical ground states assumed as S𝐴 =
+                                                                                   S𝐵=𝑆e𝑧 and S𝐴=−S𝐵=𝑆e𝑧.
+                                                                                    Order        𝜙       𝑚𝐴      𝑚𝐵    |msec|
+                                                                                    Ferromagnet       5𝜋/4             0.481             0.485             0.002
+                                                                                    N´eel        𝜋/4              0.137   −0.141            0.002
+
+
+FIG. 2.  Two-site magnetic unit cell in the (a) ferromagnetic and (b)
+N´eel ground states. Here, the magnetic sublattices (𝐴 and𝐵) coincide                 We  observe  the  same  qualitative  trend  for  every 𝜙  in  the
+with  the  crystallographic  sublattices,  represented  by  the  filled  and       ferromagnetic phase except at the SU(2)-symmetric point𝜙=
+open circles.                                                                      𝜋.  Here, the ferromagnetic state|↑↑···↑⟩ is an exact ground
+                                                                                   state  of  the  Hamiltonian,  so  that  the  system  cannot  have  a
+ordered  states  with  larger  unit  cells  from  developing  a  net               nonzero staggered magnetization at𝑇 = 0.
+
+magnetization, irrespective of the values of𝐽2𝐴 and𝐽2𝐵.
+                                                                                                                  2.    N´eel state
+
+                    B.    Magnetization corrections                                   The N´eel order features a two-site unit cell with antiparallel
+   Applying linear spin-wave theory as described in Sec.III,                       spins,  see  Fig.2(b).   Upon  the  inclusion  of   𝐽2𝐴 ≠ 𝐽2𝐵,  we
+we have studied the effect of quantum fluctuations around the                      encounter a behavior analogous to that of the ferromagnetic
+classical ground states of the Heisenberg-Kitaev modelHHK                          case:  Provided that 𝐾 ≠  0,  the inequivalent sublattices ex-
+defined in Eq. (16). To compute the magnetization corrections,                     perience different magnetization corrections at𝑇 =  0.  As a
+we employed Eq. (11), which applies to collinear ground states                     result, the system acquires a nonvanishing net magnetization,
+and  diagonal  spin  interaction  matrices.   We  have  explicitly                 m =(m𝐴+ m𝐵)/2,  and  becomes  ferrimagnetic.   (The  dis-
+verified that the more general method based on Eq. (13), valid                     cussion  of  the  case 𝐾 =  0  is  deferred  to  Sec.IV C.)  For  a
+also for noncollinear configurations, yields consistent results.                   representative point 𝜙 = 𝜋/4, a linear spin-wave calculation
+The numerical calculations presented below were carried out                        about the classical state S𝐴=−S𝐵=𝑆e𝑧 yields m𝐴≈ 0.137e𝑧
+for fixed values(𝐽2𝐴,𝐽2𝐵) =(0.2,−0.1),  while varying the                          and m𝐵≈−0.141e𝑧 for𝑆= 1/2, as shown in TableI.
+
+angle 𝜙,  which  parametrizes  the  ratio  between  the  nearest-
+neighbor Kitaev (𝐾) and Heisenberg (𝐽) couplings.                                                                3.    Zigzag state
+
+
+                         1.    Ferromagnetic state                                    Zigzag ground states can be viewed as a sequence of fer-
+                                                                                   romagnetically ordered chains whose ordering direction alter-
+   The    ferromagnetic    phase    of    the    nearest-neighbor                  nates across nearest-neighbor bonds of a given type𝛾 =𝑥,𝑦,
+Heisenberg-Kitaev model corresponds to states with the same                        or𝑧. This results in a four-site magnetic unit cell as depicted in
+two-site  unit  cell  as  the  underlying  honeycomb  lattice,  see                Fig.3(a).  Importantly, the transformation  T =[Θ||{𝐸|t±}],
+Fig.2(a).    As  discussed  above,  the  inclusion  of  couplings                  which combines time reversalΘ with a translation by either t+
+𝐽2𝐴 ≠ 𝐽2𝐵  eliminates all symmetries that exchange 𝐴↔ 𝐵,                           or t−, acts on the spin configuration as
+
+and thus allows fluctuations to act differently on each sublat-                           T  :(S𝐴, S𝐵, S𝐶, S𝐷)↦−→−(S𝐶, S𝐷, S𝐴, S𝐵).         (18)
+tice.  We consequently expect that, while still oriented along
+the same direction, the sublattice magnetizations m𝐴 and m𝐵                        and thus constitutes a symmetry of the Hamiltonian and the
+will acquire different magnitudes.                                                 zigzag state. The combined translation and time reversal trans-
+   To validate this picture, we carried out an explicit spin-wave                  formationT represents a particular instance of the transforma-
+calculation at a representative point in the ferromagnetic phase                   tions discussed in Sec.II A. As a consequence of Eq. (3), the
+of the Heisenberg-Kitaev model, namely 𝜙 =  5𝜋/4.  Taking                          sublattice magnetizations in the zigzag phase satisfy the rela-
+S𝐴 = S𝐵 = 𝑆e𝑧 as a classical ground state, we found that the                       tions m𝐴 =−m𝐶  and m𝐵 =−m𝐷.  Note that this result only
+system  indeed  develops  different  sublattice  magnetizations,                   relies on symmetries, and is thus valid to all orders in 1/𝑆. We
+given by m𝐴≈ 0.481e𝑧  and m𝐵≈ 0.485e𝑧  for𝑆 = 1/2, see                             conclude that, even if𝐽2𝐴≠𝐽2𝐵, a zigzag state cannot become
+TableI. The resulting state can thus be viewed as a weak spin-                     ferrimagnetic.
+density wave superimposed on a ferromagnetic background,                              To support this conclusion, we performed linear spin-wave
+m=(𝑚±Δ𝑚)e𝑧, with net magnetization𝑚≈ 0.483 and an                                  calculations  for 𝜙 =  5𝜋/8  around  a  classical 𝑧-zigzag  ref-
+oscillation amplitude ofΔ𝑚≈ 0.002.                                                 erence  state  with  S𝐴 =  S𝐷 = 𝑆e𝑧  and  S𝐵 =  S𝐶 =−𝑆e𝑧.
+                                                                                                                                                                 7
+  (a)                                                 (b)                             (a)
+
+
+
+
+
+
+
+
+
+
+
+                                                                                      (b)
+
+
+FIG. 3.  Four-site magnetic unit cell in the (a) zigzag and (b) stripy
+ground states. 𝐴,𝐵,𝐶, and𝐷 denote the four magnetic sublattices,
+with the two crystallographic sublattices indicated by filled and open
+circles. t+ and t− are lattice translation vectors.
+
+
+TABLE II. Sublattice magnetizations m𝜇 =𝑚𝜇e𝑧 in the Heisenberg-
+Kitaev model with nearest-neighbor couplings(𝐽,𝐾)=(cos𝜙, sin𝜙)
+and next-nearest-neighbor couplings(𝐽2𝐴,𝐽2𝐵) =(0.2,−0.1), from
+linear spin-wave theory for𝑆= 1/2. The angles𝜙= 5𝜋/8 and 13𝜋/8                      FIG. 4.   (a) Magnon spectrum  in the 𝑧-zigzag ground  state of  the
+serve  as  representative  points  within  the  zigzag  and  stripy  phases,        Heisenberg-Kitaev model with nearest-neighbor couplings(𝐽,𝐾) =
+respectively, with classical ground states assumed as S𝐴 =−S𝐵 =                     (cos𝜙, sin𝜙)  at 𝜙 =   5𝜋/8,  and  next-nearest-neighbor  couplings
+−S𝐶 = S𝐷 =𝑆e𝑧 and S𝐴= S𝐵=−S𝐶 =−S𝐷 =𝑆e𝑧.                                             (𝐽2𝐴,𝐽2𝐵) =(0.2,−0.1),  from  linear  spin-wave  theory.   The  mo-
+Order     𝜙    𝑚𝐴    𝑚𝐵    𝑚𝐶    𝑚𝐷  |msec|                                         mentum path through the extended Brillouin zone is shown in the
+Zigzag       5𝜋/8       0.238 −0.250 −0.238     0.250          0                    central  inset  of  (b),  with  the  green  star  indicating  the  Bragg  peak
+Stripy        13𝜋/8      0.480       0.489 −0.480 −0.489         0                  associated with the𝑧-zigzag order.  Pseudo-Goldstone modes appear
+                                                                                    at M due to an accidental SU(2) degeneracy of the classical ground
+                                                                                    state. (b) Sublattice magnetizations m𝜇 along the [001] direction for
+The resulting spectrum is shown in Fig.4(a), where linearly                         𝜇 = 𝐴,𝐵,𝐶,𝐷  in the 𝑧-zigzag ground state for 𝑆 =  1/2, using the
+dispersing pseudo-Goldstone modes appear due to the acci-                           same model parameters as in (a). Extrapolated values in the thermo-
+                                                                                    dynamic limit 1/𝐿→ 0 are shown in the right inset.
+dental SU(2) symmetry of the classical ground-state manifold.
+When  extrapolated  to  the  thermodynamic  limit,  the  sublat-
+tice magnetizations are found to be m𝐴 =−m𝐶 ≈  0.238e𝑧                              as 𝜙 = 13𝜋/8.  Choosing a classical reference state given by
+and m𝐷 =−m𝐵≈  0.250e𝑧  for 𝑆 =  1/2 [see Fig.4(b) and                               S𝐴 =  S𝐵 = 𝑆e𝑧  and S𝐶 =  S𝐷 =−𝑆e𝑧,  we obtained m𝐴 =
+TableII], yielding a vanishing net moment on each crystallo-                        −m𝐶≈ 0.480e𝑧  and m𝐵 =−m𝐷≈ 0.489e𝑧  for𝑆 = 1/2, as
+graphic sublattice, consistent with the symmetry analysis.                          shown in TableII. These results are consistent with symmetries
+   It is worth emphasizing that, in the collinear zigzag state,                     and with the expected zero net magnetization.
+the constraint on sublattice magnetization corrections arises
+from the translational symmetry of the underlying honeycomb
+lattice. This is a fundamental symmetry that holds irrespective                                                   C.    Discussion
+of any fine-tuning of the exchange parameters.
+                                                                                       In the previous subsection, we discussed conditions under
+                              4.    Stripy state                                    which the  reduction of  spin-space symmetries  by couplings
+                                                                                    𝐽2𝐴 ≠ 𝐽2𝐵  can lead to ferrimagnetism.   However, we would
+                                                                                    like to emphasize that the Kitaev exchange also has significant
+   The   remaining   ordered   phase   of   the   nearest-neighbor                  influence on the qualitative nature of the magnetic properties
+Heisenberg-Kitaev model, the stripy phase, is characterized by                      at 𝑇 =  0.   In  fact,  as  noted  above,  even  when 𝐽2𝐴 ≠ 𝐽2𝐵,
+a collinear spin configuration which is uniform along stripes                       the ground state at the ferromagnetic Heisenberg point𝜙=𝜋
+parallel to one of the 𝛾  bonds (𝑥,𝑦, or 𝑧), but alternates be-                     (corresponding to𝐽 =−1 and𝐾 = 0) does not exhibit a stag-
+tween adjacent stripes.  This results in a four-site unit cell, as                  gered magnetization.  It turns out that an analogous condition
+illustrated in Fig.3(b), from which it is evident that the stripy                   holds for the antiferromagnetic Heisenberg point𝜙= 0 (𝐽= 1
+phase also exhibits the symmetryT =[Θ||{𝐸|t±}] described                            and 𝐾 =  0):  Marshall’s theorem [80], along with its exten-
+in  Eq.  (18).    Hence,  just  as  in  the  zigzag  case,  symmetry                sions by Lieb,  Schultz,  and Mattis [81,82],  establishes that
+prevents a stripy state from developing ferrimagnetism.                             the  ground  state  remains  a  total  singlet  for 𝐽2𝐴,𝐽2𝐵 >−𝐽.
+   We once more sought to corroborate this symmetry-based                           Consequently,  as  long  as  this  condition  is  satisfied,  intro-
+argument by performing a linear spin-wave calculation for a                         ducing unequal couplings 𝐽2𝐴 ≠ 𝐽2𝐵  does not induce a net
+representative point of the phase diagram, which we here took                       magnetization at zero temperature.  At both SU(2)-symmetric
+                                                                                                                                                                  8
+
+points discussed above,  the characteristic signature of ferri-
+magnetism,  namely the coexistence of nonzero uniform and
+staggered magnetizations, emerges only at finite temperature.
+This arises from unequal thermal population of split magnon
+bands, which leads to a nonvanishing uniform magnetization
+at𝜙= 0 and a staggered magnetization at𝜙=𝜋 [83].
+   In  light  of  the  above  discussion,  we  aim  to  quantify  the
+degree of ferrimagnetism across the Heisenberg-Kitaev phase
+diagram  at  zero  temperature.   Ferrimagnetism  refers  to  the
+coexistence of ferromagnetic and antiferromagnetic order, im-
+plying the presence of two distinct order parameters.  In cases
+of weak ferrimagnetism, such as those considered above, one
+order parameter dominates and is referred to as the primary
+order parameter.  The subdominant component, which signals
+the presence and strength of ferrimagnetic behavior, is referred
+to as the secondary order parameter. We define this secondary                       FIG. 5.  Magnitude of the secondary order parameter|msec|, defined
+order parameter as the uniform magnetization in phases with                         in  Eq.  (19),  as  a  function  of  the  Heisenberg-Kitaev  angle   𝜙,  with
+dominant antiferromagnetic order, and as the staggered mag-                         nearest-neighbor  couplings(𝐽,𝐾) = (cos𝜙, sin𝜙)  and  fixed  next-
+netization in dominantly ferromagnetic phases,                                      nearest-neighbor  couplings(𝐽2𝐴,𝐽2𝐵) = (0.2,−0.1)  at  zero  tem-
+                                                                                    perature,  from  linear  spin-wave  theory  for 𝑆 =  1/2.   As  dictated
+         1                                                                     by symmetry, there is no uncompensated moment in the zigzag and
+           2(m𝐴+ m𝐵),                        N´eel order,                           stripy phases, nor at the Heisenberg points (𝜙 =  0,𝜋).   The colors
+msec=      1                                                                        indicate the four magnetically-ordered phases of the nearest-neighbor
+         4(m𝐴+ m𝐵+ m𝐶+ m𝐷),    stripy and zigzag order,                         model, while the white regions mark potential new phases near its
+           1
+           2(m𝐴− m𝐵),                        ferromagnetic order.                   phase boundaries (gray dashed lines), induced by the next-nearest-
+                                                                         (19)       neighbor couplings.
+
+The  magnitude  of  the  secondary  order  parameter|msec|  is                                                       A.    Model
+given for representative values of𝜙 in TablesIandII. Figure5
+shows|msec| as a function of the nearest-neighbor Heisenberg-                           The Heisenberg-Kitaev model defined in Eq. (16) can be
+Kitaev angle𝜙, with the next-nearest-neighbor couplings held                        augmented with further interactions that respect the𝐶∗3  sym-
+fixed  at(𝐽2𝐴,𝐽2𝐵) =(0.2,−0.1).   Consistent  with  the  gen-                       metry. Here, we consider
+eral argument above,|msec| vanishes at the Heisenberg points                                       ∑︁     ∑︁   h                                                 i
+𝜙 =  0 and 𝜙 = 𝜋.  Moreover, it vanishes throughout the en-                          HHKΓ=                       𝐽S𝑖· S𝑗+𝐾𝑆𝛾𝑖𝑆𝛾𝑗+Γ(𝑆𝛼𝑖 𝑆𝛽𝑗+𝑆𝛽𝑖𝑆𝛼𝑗)
+tire zigzag and stripy phases, in agreement with the analysis                                   𝛾=𝑥,𝑦,𝑧   ⟨𝑖𝑗⟩𝛾
+presented  in  the  previous  subsection.   Finally,  we  note  that                                      ∑︁                      ∑︁
+the couplings 𝐽2𝐴 and 𝐽2𝐵  shift the phase boundaries of the                                     +𝐽2𝐴           S𝑖· S𝑗+𝐽2𝐵              S𝑖· S𝑗,               (20)
+nearest-neighbor model and appear to stabilize narrow regions                                           ⟨⟨𝑖𝑗⟩⟩𝐴                  ⟨⟨𝑖𝑗⟩⟩𝐵
+of noncollinear order, indicated by the white areas in Fig.5.                       which  includes  a  nearest-neighbor Γ  coupling  defined  such
+A detailed characterization of these emergent phases is left for                    that  the  spin  indices(𝛼,𝛽,𝛾)  form  a  cyclic  permutation  of
+future work.                                                                         (𝑥,𝑦,𝑧) [62]. We use the parametrization
+
+                                                                                                (𝐽,𝐾,Γ)= 𝐴(sin𝜃 cos𝜙, sin𝜃 sin𝜙, cos𝜃),        (21)
+                                                                                    with  the  overall  energy  scale  set  to 𝐴 =  1,  as  before.   The
+         V.    HEISENBERG-KITAEV-GAMMA MODEL                                        Heisenberg-Kitaev model of Sec.IVis recovered by setting
+                                                                                    𝜃=𝜋/2.
+                                                                                        The classical ground-state phase diagram ofHHKΓ for𝐽2𝐴=
+   In  this  section,  we  extend  the  Heisenberg-Kitaev  model                    𝐽2𝐵= 0 has been discussed in Refs. [62,71,87–89]. It exhibits
+by  adding  a  nearest-neighbor Γ  term,  which  has  been  ar-                     coplanar 120° order and a range of noncollinear multi-q states,
+gued  to  be  relevant  in  a  number  of  Kitaev  materials  [47],                 in addition to the four collinear phases (ferromagnetic, N´eel,
+including𝛼-RuCl3 [67,71,84–86], BaCo                             2(AsO4)2 [42], and zigzag, and stripy) that appear in the absence of aΓ interaction.
+Na2Co2TeO6  [21, 53, 60].   Our  aim  is  to  examine  the  im-                     Our focus here is on the magnetic properties of the single-q
+pact of 𝐽2𝐴 ≠ 𝐽2𝐵  on the zigzag and triple-q states,  and to                       zigzag phase and the noncollinear triple-q state. The latter can
+determine  whether  these  states  can  support  ferrimagnetism,                    be stabilized by either a six-spin ring-exchange interaction or
+both  at  zero  and  finite  temperatures.     As  before,  we  fix                 suitably chosen local field terms [21,53,60].
+(𝐽2𝐴,𝐽2𝐵) = (0.2,−0.1),  though  the  results  remain  quali-                           An important aspect for the following discussion is that the
+tatively  unchanged  for  other  values,  provided  the  sublattice                 off-diagonal Γ  interaction breaks the 𝐶𝛼2   spin-rotation sym-
+symmetry is explicitly broken.                                                      metry present in the model whenΓ= 0.
+                                                                                                                                                                9
+
+                    B.    Magnetization corrections                                Figure6(b) shows   [𝑓(𝑇,ℎ)−𝑐(𝑇)]/ℎ=𝑏(𝑇)+𝑎(𝑇)ℎ+O(ℎ2)
+                                                                                   for𝑆= 1/2 as a function ofℎ for different fixed temperatures
+                             1.    Zigzag state                                    𝑇,  with  the  coefficient 𝑐(𝑇)  obtained  in  each  case  from  a
+                                                                                   quadratic fit according to Eq. (24).  Here, the field is applied
+   Within the zigzag phase, the inclusion of a nonzeroΓ lifts                      along  the  out-of-plane[111]  direction;  however,  analogous
+the  accidental  ground-state  degeneracy  that  emerges  in  the                  results  are  expected  for  other  field  orientations  as  well.   In
+classical limit𝑆→∞, see Sec.IV. While the selected zigzag                          this plot, the presence of ferrimagnetism would be indicated
+configurations are still collinear, they generally order along an                  by a finite intercept of the curve[𝑓(ℎ)−𝑐]/ℎ on the vertical
+axis that deviates from the cubic directions e𝑥, e𝑦, and e𝑧 [62].                  axis.   However,  the  data  consistently  show  a  zero  intercept
+For example, for ferromagnetic𝐽 and𝐾, large enoughΓ, and                           at all temperatures, indicating that the uniform magnetization
+𝐽2𝐴 = 𝐽2𝐵 =  0, the zigzag state depicted in Fig.3(a) can be                       of  the  zigzag  state  vanishes  identically,  in  agreement  with
+parametrized in the cubic coordinate system as [71]                                the general symmetry analysis.  This result is summarized in
+                                                                                   Fig.6(c), which shows   𝑚(𝑇) for various temperatures𝑇, where
+   S𝐴=−S𝐵=−S𝐶 = S𝐷 =𝑆 e𝑥+ e𝑦+ 𝑓(Γ/|𝐾|)e𝑧√︁                                         each data point is obtained from extrapolating[𝑓(ℎ)−𝑐]/ℎ at
+                                             2+ 𝑓(Γ/|𝐾|)2  ,     (22)              fixed temperature𝑇 to the limitℎ→ 0.
+where
+                                          4+ 4𝜁+ 9𝜁 2                                                           2.    Triple-q state
+                    𝑓(𝜁)=  2+𝜁− √︁2𝜁                                   (23)
+characterizes the tilting of the spins as a function of the ra-                        The   triple-q   order   proposed   as   the   ground   state   of
+tio 𝜁 = Γ/|𝐾|.  We have confirmed that this parametrization                        Na2Co2TeO6 is a noncoplanar magnetic configuration with an
+remains valid over an extended range of 𝐽2𝐴 and 𝐽2𝐵 values,                        eight-site unit cell [21], as illustrated in Fig.7.  In this config-
+including the specific choice(𝐽2𝐴,𝐽2𝐵) =(0.2,−0.1) used in                         uration, the spins on magnetic sublattices𝐴 and𝐵 align along
+the following analysis.                                                            the[111] and[¯1¯1¯1] directions of the cubic coordinate system,
+   Using  analogous  symmetry  arguments  as  those  outlined                      respectively, which are perpendicular to the honeycomb plane
+in  Sec.IV B 3,  we  can  understand  the  behavior  of  the  uni-                 spanned by the cubic[11¯2]  and[¯110]  directions [67].   The
+form magnetization at all temperatures in the zigzag phase.                        spins on the remaining six magnetic sublattices,𝐶,𝐷,𝐸,𝐹,𝐺,
+Although  the  spins  are  tilted  away  from  the  cubic  direc-                  and𝐻, exhibit finite in-plane components arranged in a vortex-
+tions,  the  state  is  still  collinear,  so  that  the  transformation           like pattern around the hexagonal plaquette. Their out-of-plane
+T =[Θ||{𝐸|t±}] remains a symmetry of both the Heisenberg-                          components alternate in sign; see AppendixBfor further de-
+Kitaev-Gamma  HamiltonianHHKΓ  defined  in  Eq.  (20)  and                         tails.   Although the triple-q order appears as a ground state
+the density matrix 𝜌 =  e−HHKΓ/𝑇/Tr(e−HHKΓ/𝑇).   The trans-                        of the bilinear Heisenberg-Kitaev-Γ modelHHKΓ  [Eq. (20)]
+formation in Eq. (18) maps antiparallel spins onto each other,                     only at isolated points in parameter space, it can be stabilized
+resulting in constrained corrections to sublattice magnetiza-                      by  nonbilinear  spin  exchange  interactions  [21].   In  particu-
+tions.  Due to the zigzag structure, this symmetry prohibits a                     lar,  different forms of six-spin ring exchange,  which consti-
+finite net magnetization at all temperatures𝑇≥ 0.                                  tute  the  leading  correction  to  the  nearest-neighbor  Heisen-
+   To illustrate that ferrimagnetism does not arise in the zigzag                  berg interaction in the strong-coupling expansion of the Hub-
+phase in the Heisenberg-Kitaev-Gamma model with explicit                           bard  model  on  the  honeycomb  lattice  [90],  have  been  pro-
+sublattice symmetry breaking introduced by 𝐽2𝐴 ≠ 𝐽2𝐵,  we                          posed  as  a  possible  mechanism  for  stabilizing  this  order  in
+carried out a linear spin-wave calculation at a representative                     Na2Co2TeO6 [21,49,53,60,91].  At the level of linear spin-
+point in parameter space,(𝜙,𝜃)=(5𝜋/4,𝜋/16). The resulting                          wave theory, the ring exchange interaction has been shown to
+spectrum, shown in Fig.6(a), exhibits a finite excitation gap,                     effectively generate a local-field term alongside a renormal-
+as  the  presence  of Γ ≠  0  lifts  the  accidental  ground-state                 ization  of  the  bilinear  couplings  [21].   Here,  the  local  field
+degeneracy that is present in the pure Heisenberg-Kitaev model                     is aligned with the classical spin configuration.  In this work,
+HHK. To obtain the magnetization correction arising from both                      we neglect both the renormalization of the bilinear couplings
+thermal  and  quantum  fluctuations,  we  add  a  small  external                  and  the  dependence  of  the  local  field  directions  on  bilinear
+magnetic field and compute the free-energy density 𝑓(𝑇,ℎ)=                         couplings.  This simplification is not expected to qualitatively
+F(𝑇,ℎ)/𝑁  for  different  temperatures 𝑇  and  fields ℎ  using                     affect our results, as the emergence of ferrimagnetism is deter-
+Eq. (14). Away from phase transitions, the free-energy density                     mined solely by the symmetries of the model and its ground
+is analytic and admits a Taylor expansion for smallℎ as                            state, rather than by the specific microscopic mechanism that
+                                                                                   stabilizes the ground-state order.
+           𝑓(𝑇,ℎ)=𝑐(𝑇)+𝑏(𝑇)ℎ+𝑎(𝑇)ℎ2+O(ℎ3),       (24)                                  Concretely, we consider the Hamiltonian
+with temperature-dependent coefficients𝑐(𝑇),𝑏(𝑇), and𝑎(𝑇).                                                   H3q=HHKΓ+Hloc,                          (26)
+For  a  given  temperature 𝑇,  the  system  is  ferrimagnetic  if
+𝑓(𝑇,ℎ) features a finite term linear inℎ,ℎ→0=−𝑏(𝑇).               (25)         where the local field term given by
+                                                                                                                           ∑︁
+                 𝑚(𝑇)=−𝜕𝑓(𝑇,ℎ)𝜕ℎ                                                                           Hloc=−ℎloc           ˆn𝜇· S𝑖𝜇                       (27)
+                                                                                                                            𝑖𝜇
+                                                                                                                                                                       10
+(a)
+
+
+
+
+
+
+
+
+
+
+
+
+(b)                                                                                                                        (c)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 6. (a) Magnon spectrum in the𝑧-zigzag ground state of the Heisenberg-Kitaev-Gamma model with nearest-neighbor couplings(𝐽,𝐾,Γ)=
+(sin𝜃 cos𝜙, sin𝜃 sin𝜙, cos𝜃) at𝜙= 5𝜋/4 and𝜃=𝜋/16 and next-nearest-neighbor couplings(𝐽2𝐴,𝐽2𝐵)=(0.2,−0.1), from linear spin-wave
+theory. The momentum path through the extended Brillouin zone is shown in the central inset of Fig.4(b). (b) Free-energy density   𝑓(ℎ,𝑇) as
+a function ofℎ at various fixed temperatures, using the same model parameters as in (a) and𝑆= 1/2, with an external field applied along the
+out-of-plane[111] direction. The data are plotted as[𝑓(ℎ)−𝑐]/ℎ, where the temperature-dependent coefficient𝑐 is extracted from a quadratic
+fit according to Eq. (24).  The absence of a finite vertical intercept for  ℎ→ 0 demonstrates that the out-of-plane magnetization vanishes in the
+zero-field limit.  (c) Out-of-plane magnetization𝑚(𝑇) as a function of temperature, using the same model parameters as in (a), obtained by
+extrapolating[𝑓(ℎ)−𝑐]/ℎ to the zero-field limit, confirming the absence of ferrimagnetism at all temperatures within the zigzag phase.
+
+
+                                                                                        with the field directions chosen as
+
+                                                                                                              ˆn𝐴=−ˆn𝐵=  e𝑥+ e𝑦+ e𝑧√3   ,                       (28)
+
+                                                                                                              ˆn𝐶 =−ˆn𝐷 =  e𝑥+ e𝑦− e𝑧√3   ,                      (29)
+
+                                                                                                              ˆn𝐸 =−ˆn𝐹 =−e𝑥+ e𝑦− e𝑧√3    ,                    (30)
+
+                                                                                                              ˆn𝐺 =−ˆn𝐻 =−e𝑥+ e𝑦+ e𝑧√3    .                   (31)
+
+                                                                                        In addition to being invariant under
+
+                                                                                           𝐶∗3 :    S𝑖𝜇↦→ Oc(2𝜋/3) S𝑗𝜈,     ˆn𝜇 ↦→ Oc(2𝜋/3) ˆn𝜇,    (32)
+
+FIG. 7.  Eight-site magnetic unit cell in the triple-q state. 𝐴, 𝐵,𝐶,                   with  R𝑗𝜈 = Oc(2𝜋/3)R𝑖𝜇,  which  implements  simultaneous
+𝐷, 𝐸, 𝐹, 𝐺, and 𝐻  denote the eight magnetic sublattices, with the                      2𝜋/3-rotations around the[111] out-of-plane direction in real
+crystallographic sublattices indicated by filled and open circles.  The                 and in spin space,Hloc also exhibits three spin-space symme-
+spins on the 𝐴  and 𝐵  magnetic sublattices point along the out-of-                     tries given by
+plane[111]  and[¯1¯1¯1]  directions,  respectively,  as indicated by the                                                      
+circled and crossed sites.  The spins on the remaining six magnetic                                                             [𝐶𝑥2||{𝐸|t−}],    𝛼=𝑥,
+sublattices,𝐶, 𝐷, 𝐸, 𝐹,𝐺, and𝐻, have finite in-plane components                             T𝛼=[𝐶𝛼2||{𝐸|t(𝛼)}]=                 [𝐶𝑦2||{𝐸|t+}],    𝛼=𝑦,
+forming a vortex-like pattern around the hexagonal plaquette, while                                                           [𝐶𝑧
+their out-of-plane components alternate in sign.                                                                                   2||{𝐸|t+− t−}],  𝛼=𝑧,
+                                                                                                                                                                     (33)
+                                                                                        consisting of a lattice translation by a vector t(𝛼)∈{t∓, t+−t−}
+                                                                                        combined  with  a 𝜋-rotation  about  the  cubic  axis  e𝛼 ∈
+                                                                                                                                                            11
+
+{e𝑥, e𝑦, e𝑧}  in  spin  space.    In  the  absence  of  the Γ  term,              specified in Eqs. (34)–(35). As a result of the finite     Γ interac-
+Eqs. (32) and (33) are symmetries not only of   Hloc, but also                    tion and the presence of the local field, the spectrum is gapped,
+of  the  full  HamiltonianH3q.   As  in  previous  sections,  this                as before.  To obtain the magnetization correction, we again
+fact alone imposes severe constraints on the different sublat-                    compute the free-energy density 𝑓(𝑇,ℎ) at various tempera-
+tice  magnetizations.   For  example,  given  thatT𝑥  permutes                    tures𝑇  and external fields ℎ, and extrapolate to the low-field
+the sublattices according to(𝐴,𝐵,𝐶,𝐷)↔(𝐻,𝐺,𝐹,𝐸), the                              limit.    Figure8(c)  shows   [𝑓(𝑇,ℎ)−𝑐(𝑇)]/ℎ  for 𝑆 =  1/2
+symmetry derived from the composite transformation𝐶∗3T𝑥                           as a function of ℎ for several fixed temperatures𝑇, with the
+requires that the sublattice magnetizations satisfy m𝐴+ m𝐷+                       coefficient𝑐(𝑇) extracted in each case via a quadratic fit ac-
+m𝐸+ m𝐻 =  0 and m𝐵+ m𝐶+ m𝐹+ m𝐺 =  0.  As a result,                                cording to Eq. (24).  In contrast to the zigzag case, the curves
+the total magnetization m = ˝𝜇 m𝜇  of a triple-q state must                       [𝑓(ℎ)−𝑐]/ℎ now exhibit a clear finite intercept as ℎ→  0,
+vanish  by  symmetry  when Γ =  0.   However,  the  situation                     with the intercept value varying as a function of temperature
+changes when Γ ≠  0,  as the transformations in Eq. (33) no                       𝑇.  This result is summarized in Fig.8(d), which displays the
+longer remain symmetries ofH3q. As a result, the constraints                      out-of-plane component of the residual magnetization 𝑚(𝑇)
+on the sublattice magnetizations are lifted, enabling the sys-                    in the limitℎ→ 0 as a function of temperature𝑇.  Note that
+tem to develop ferrimagnetism. The𝐶∗3 symmetry in Eq. (32)                        𝑚(𝑇) changes sign at a characteristic temperature𝑇★≃ 0.133,
+only constrains the in-plane components of m𝐸+m𝐷+m𝐻 and                           indicating the presence of a compensation point, as observed
+m𝐶+m𝐺+m𝐹 to vanish, leaving the out-of-plane components                           in Na2Co2TeO6 [9].  In our calculation, this behavior occurs
+and the magnetizations on sublattices𝐴 and𝐵 unconstrained.                        because the magnetic sublattices with larger zero-temperature
+   To substantiate our symmetry-based argument with an ex-                        magnetizations  turn  out  to  be  more  susceptible  to  thermal
+plicit  spin-wave  calculation,  we  first  identified  a  parameter              fluctuations than those with smaller ones.   Importantly,  this
+regime in which a classical triple-q configuration serves as a                    result does not depend on any sublattice-dependent𝑔-factors,
+suitable reference state for a 1/𝑆 expansion. For this condition                  thereby avoiding the fine-tuning issue present in the classical
+to hold, the triple-q state must minimizeH3q within the space                     model [53].   Since the magnetization corrections are small,
+of all classical spin configurations whose magnetic unit cells                    we expect𝑇★ to lie within the temperature range where linear
+share the size and shape depicted in Fig.7.  Since each spin                      spin-wave theory remains valid.
+configuration is parametrized by two angles, the minimization                        Furthermore, the magnetization curve 𝑚(𝑇)  displays acti-
+involves a function of 16 variables. We addressed this problem                    vated behavior at low temperatures, which may be associated
+using a two-step numerical procedure. First, for a given set of                   with  the  presence  of  a  finite  gap  in  the  magnon  excitation
+parameters(𝜙,𝜃,𝐽2𝐴,𝐽2𝐵,ℎloc,ℎ), whereℎ denotes the mag-                           spectrum, in full qualitative agreement with experimental ob-
+nitude of the external field h, we imposed a triple-q ansatz on                   servations  in  Na2Co2TeO6  [9].   The  red  curve  in  Fig.8(d)
+H3q (see AppendixBfor details) and determined the optimal                         indicates a fit of the low-temperature portion of 𝑚(𝑇)  using
+configuration within this restricted two-dimensional subspace.                    the simplified function
+Second, we computed the Hessian ofH3q to verify whether the
+optimal triple-q solution also corresponds to a local minimum                                             𝑚(𝑇)= 𝐴+   𝐵
+in the full 16-dimensional configuration space.  An example                                                               eΔ/𝑇− 1,                        (36)
+of a parameter set that yields a stable triple-q ground state, as                 with  fitting  parameters 𝐴, 𝐵,  and Δ.   Excellent  agreement,
+defined above, is                                                                 as  shown  in  Fig.8(d),  is  achieved  using  the  best-fit  values
+                    (𝜙,𝜃)=(𝜋− arctan 2,𝜋/3),                    (34)              𝐴 =−0.01242(1), 𝐵 =  0.0924(3),  and Δ =  0.2829(6)  for
+              (𝐽2𝐴,𝐽2𝐵,ℎloc/𝑆)= 𝐴(0.2,−0.1, 0.8),            (35)                 𝑆 =  1/2.    We  have  explicitly  verified  that  the  value  of 𝐴
+                                                                                  obtained  from  the  fitting  procedure  agrees,  within  numeri-
+with small ℎ→ 0 and the overall energy scale set to 𝐴 = 1,                        cal uncertainty, with the zero-temperature magnetization𝑚(0)
+as before.   We use this parameter set for the explicit calcu-                    calculated directly from Eq. (13), lending further credibility to
+lations presented in the remainder of this section.   Previous                    the fitting approach. However, caution is required when inter-
+work  on  the  classical  model  [53]  demonstrated  that  finite-                preting the activation energyΔ.  In particular, we emphasize
+temperature fluctuations generically induce a uniform magne-                      that this energy scale should not be directly identified with the
+tization along the[111] direction in the classical triple-q state.                gapΩ = min(𝜔k𝜇) = 0.1857 in the magnon excitation spec-
+In the low-temperature limit, however, this classical uniform                     trum. This is reflected in the difference between the gap value
+magnetization vanishes unless sublattice-dependent𝑔-factors                       Ω and the optimal fit parameterΔ= 0.2829(6).  The latter is
+are introduced.  In the following, we investigate the interplay                   indicated by the horizontal dotted line in Fig.8(a).  To under-
+between quantum and thermal fluctuations,  focusing in par-                       stand the value ofΔ, it is helpful to examine Eq. (15).  Given
+ticular on whether quantum fluctuations can induce a uniform                      that the summand in the temperature-dependent part of𝑚(𝑇) is
+magnetization in the triple-q state already at zero temperature.                  weighted by the partial derivatives𝜕𝜔k𝜇/𝜕ℎ,Δ is shifted from
+For the explicit calculations, we again apply the external field                  Ω toward the eigenenergies for which the weights are largest.
+h along the [111] direction, enabling direct comparison with                      Figure8(b)  shows  the  weights    𝜕𝜔k𝜇/𝜕ℎ,  obtained  using  a
+both the classical analysis in Ref. [53] and experimental results                 finite-difference approximation.   Among the high-symmetry
+on Na2Co2TeO6 [9].                                                                points, the two low-energy bands exhibit the largest weights
+   Figure8(a)  displays  the  magnon  excitation  spectrum  ob-                   at the 𝑋, Γ, Γ′,𝑌, and 𝑀  points, as well as at the midpoint
+tained from linear spin-wave theory using the parameter set                       betweenΓ and𝐾.  Notably, the corresponding excitation en-
+                                                                                                                                                                    12
+(a)
+
+
+
+
+
+
+
+
+
+
+
+(b)
+
+
+
+
+
+
+
+(c)                                                                                                                        (d)
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 8. (a) Magnon spectrum in the triple-q ground state of the Heisenberg-Kitaev-Gamma model with nearest-neighbor couplings(𝐽,𝐾,Γ)=
+(sin𝜃 cos𝜙, sin𝜃 sin𝜙, cos𝜃)  at 𝜙 = 𝜋− arctan 2 and 𝜃 = 𝜋/3,  next-nearest-neighbor couplings(𝐽2𝐴,𝐽2𝐵) =(0.2,−0.1),  and local field
+ℎloc/𝑆= 0.8, from linear spin-wave theory. The momentum path through the extended Brillouin zone is shown in the central inset of Fig.4(b).
+The dashed horizontal line indicates the activation energyΔ/𝑆= 0.566(1) for𝑆= 1/2, which is obtained by fitting Eq. (36) to the out-of-plane
+magnetization𝑚(𝑇) from Eq. (15). Note that  Δ/𝑆 is slightly larger than the true magnon excitation gapΩ/𝑆= 0.3714, as a result of the reduced
+weight𝜕𝜔k𝜇/𝜕ℎ at the momentum k= 𝐾, for which the excitation energy becomes minimal.  (b) Weights𝜕𝜔k𝜇/𝜕ℎ≃ 𝛿𝜔k𝜇/𝛿ℎ, obtained
+from finite-difference derivative, taking an increment of𝛿ℎ = 2.5× 10−3, using the same model parameters as in (a), with the external field
+applied along the out-of-plane[111] direction. The largest weights occur at the𝑋,Γ,Γ′,𝑌, and𝑀 points, but not at the𝐾 point, at which the
+excitation energy becomes minimal.  (c) Free-energy density 𝑓(ℎ,𝑇) as a function of ℎ at various fixed temperatures, using the same model
+parameters as in (a) and 𝑆 = 1/2.  The data are plotted as[𝑓(ℎ)−𝑐]/ℎ, where the temperature-dependent coefficient𝑐 is extracted from a
+quadratic fit according to Eq. (24).  The presence of a finite vertical intercept for   ℎ→ 0 demonstrates the existence of a finite out-of-plane
+magnetization in the zero-field limit.  (d) Out-of-plane magnetization𝑚(𝑇) as a function of temperature, using the same model parameters
+as in (a), obtained by extrapolating[𝑓(ℎ)−𝑐]/ℎ to the zero-field limit, confirming the ferrimagnetic behavior of the triple-q state and the
+emergence of a compensation point at a finite temperature𝑇★≃ 0.133.
+
+
+ergies are in reasonable agreement with the fitted value ofΔ.                             Linear spin-wave theory can be used to quantify the effects
+In contrast, the minimal gapΩ occurs at the 𝐾  point, which                           of quantum fluctuations around classical long-range ordered
+carries significantly less weight and thus contributes less to                        states.   We  studied  various  models  that  stabilize  either  the
+the temperature-induced increase in magnetization and to the                          collinear  single-q  zigzag  or  the  triple-q  noncollinear  states.
+activation energyΔ.                                                                   The symmetries strongly constrain how quantum fluctuations
+                                                                                      affect  the  ordered  states,  leading  to  markedly  different  out-
+                                                                                      comes for the two ground states.
+                           VI.    CONCLUSION                                              First, we demonstrated that a collinear zigzag phase cannot
+                                                                                      exhibit ferrimagnetism, neither at zero nor at finite tempera-
+   In this paper, we highlighted the crucial role of symmetries                       ture,  as long as the combined symmetry of crystallographic
+in linear spin-wave calculations.  We focused on Heisenberg-                          translations with time-reversal symmetry is preserved. Impor-
+Kitaev-Gamma  systems  with  explicit  sublattice  symmetry                           tantly, both the Heisenberg-Kitaev-Gamma Hamiltonian and
+breaking,  a  scenario  relevant  for  Na2Co2TeO6  and  related                       the  collinear  zigzag  state  respect  this  symmetry,  regardless
+cobaltate honeycomb magnets. The nature of the ground state                           of the specific microscopic parameters.  Therefore, ferrimag-
+in  these  materials  remains  unsettled,  with  both  zigzag  and                    netism is forbidden in Heisenberg-Kitaev-Gamma models with
+multi-q states under consideration.                                                   a zigzag ground state, provided the combined translation and
+                                                                                                                                                           13
+
+time-reversal  symmetry  is  preserved.   We  are  not  aware  of                interactions.   This also holds in the presence of other bond-
+an extended Heisenberg-Kitaev-Gamma model on the honey-                          dependent interactions, such as Dzyaloshinskii-Moriya terms,
+comb lattice realizing a zigzag-type ground state that sponta-                   provided the ground state maintains noncollinear triple-q or-
+neously breaks this symmetry.                                                    der and the crystallographic sublattice symmetry is explicitly
+   In contrast, the noncollinear triple-q ground state emerging                  broken.  For the same reason, zigzag order cannot exhibit fer-
+in the presence of a ring exchange interaction naturally exhibits                rimagnetism in more complex models as long as the combined
+ferrimagnetic behavior. The𝐶∗3 symmetry of the Hamiltonian                       time-reversal and translational symmetry is preserved.
+and  ground  state  imposes  constraints  on  the  spins  but  per-
+mits a nonzero magnetization once theT𝛼  symmetry of the                                                ACKNOWLEDGMENTS
+Heisenberg-Kitaev  model  is  broken  by  the Γ  term.   In  our
+calculations,  we employed a local-field term to stabilize the
+triple-q state; however, on symmetry grounds, similar results                        We thank M. Fornoville, Y. Li, and M. Vojta for insightful
+are expected when using the full model with ring exchange                        comments and collaboration on related projects.   This work
+interactions. This is because the local-field model and the full                 has been supported by the Deutsche Forschungsgemeinschaft
+model share the same symmetries.   The key ingredients for                       through  Project  No.  247310070  (SFB  1143,  A02  &  A07),
+ferrimagnetic behavior are a triple-q ground state, a finite off-                Project No. 390858490 (W¨urzburg-Dresden Cluster of Excel-
+diagonal interaction such as theΓ interaction, and a sublattice                  lence ct.qmat, EXC 2147), and Project No. 411750675 (Emmy
+imbalance promoted, e.g., by different next-nearest-neighbor                     Noether program, JA2306/4-1).
+couplings𝐽2𝐴 and𝐽2𝐵.  These conditions are realistic in sys-
+tems like Na2Co2TeO6 and do not require fine-tuning [9,21].
+These  general  results  are  expected  to  hold  at  all  orders  of                                    DATA AVAILABILITY
+the spin-wave expansion since they are rooted in symmetry.
+Consequently, although higher-order terms in the 1/𝑆 expan-                          The data that support the findings of this article are openly
+sion may modify quantitative details beyond our linear spin-                     available [92].
+wave  theory  results,  the  qualitative  behavior  should  remain
+unchanged.
+   The  finite-temperature  magnetization  curve 𝑚(𝑇)  of  the                               Appendix A: Details of spin-wave calculation
+triple-q state as a function of temperature𝑇  exhibits notable
+features.  First,𝑚(𝑇) shows an activated behavior at low tem-                        In this appendix, we provide details about the linear spin-
+peratures,  which  may  be  associated  with  the  presence  of  a               wave calculations, following Ref. [93].
+finite gap in the magnon excitation spectrum. We have shown,                         The Holstein-Primakoff bosons in Eq. (7) are expressed in
+however,  that  the  activation  energy Δ  extracted  from  fitting              momentum space by means of a Fourier transformation,
+𝑚(𝑇) to an activated form does not necessarily correspond to                                                          ∑︁
+the actual magnon gapΩ. This is because the contribution of a                                        𝑎𝑖𝜇 =      1√︁       eik·R𝑖𝜇𝑎𝜇(k),                 (A1)
+given excitation to the magnetization correction in Eq. (15) is                                                𝑁/𝑝     k
+weighted by𝜕𝜔k𝜇/𝜕ℎ, which can cause the fitted value ofΔ to
+deviate from the actual gapΩ. This result is independent of the                  where R𝑖𝜇 = R𝑖+ d𝜇 and R𝑖 being the position vector of the
+specific model or ground state and may have broader signifi-                     magnetic unit cell𝑖 and d𝜇 the position vector of the magnetic
+cance for interpreting experimental magnetization curves as a                    sublattice 𝜇 inside the magnetic unit cell.  Considering only
+function of temperature. Second, specific to our model with a                    bilinear boson-boson terms, the Hamiltonian acquires the ex-
+triple-q ground state, for temperatures𝑇  above the activation                   pression in Eq. (9) with the 2 𝑝-component vector satisfying
+energyΔ, the initially negative residual out-of-plane magneti-                   the commutation relations
+zation increases and crosses zero at a compensation point𝑇★,                                                                   I𝑝     0
+where it changes sign.  Overall, the calculated magnetization                                       [x(k), x†(k)]=Σ=            0 −I𝑝     ,                (A2)
+curve qualitatively reproduces the experimental observations
+in Na2Co2TeO6  at low temperatures [9].   Deviations appear                      with I𝑝 being a 𝑝×𝑝 identity matrix.  The Bogoliubov trans-
+only at elevated temperatures, where the spin-wave approxima-                    formation x(k) = T(k)𝝍(k)  introduces new bosonic modes
+tion ceases to be valid. It follows that the triple-q state not only             𝝍  diagonalizing the quadratic Hamiltonian and fulfilling the
+supports  zero-temperature  ferrimagnetism,  but  also  permits                  commutation relations[𝝍(k), 𝝍†(k)]=Σ. Thus, the problem
+a finite-temperature compensation point—without relying on                       reduces to finding the matrix T.  First, the Cholesky decom-
+sublattice-dependent𝑔-factors—thus avoiding the fine-tuning                      position is applied to the Hermitian matrix M(k) of Eq. (9) to
+required in the classical model [53].                                            find the complex matrix K such that
+   Since our general results are rooted purely in symmetry con-
+siderations, we expect them to remain qualitatively valid across                                                  M= K†K.                                  (A3)
+the entire family of extended Heisenberg-Kitaev-Gamma mod-
+els that share the same symmetries.   In particular, a triple-q                  After solving the eigenvalue problem of the Hermitian matrix
+ground state is expected to exhibit ferrimagnetism in any ex-                    KΣK†, the eigenvectors are arranged into the matrix U diag-
+tended  Heisenberg-Kitaev-Gamma  model  with  off-diagonal                       onalizing the matrix L= U†KΣK†U.  Finally, the spectrum is
+                                                                                                                                                            14
+
+obtained as E=ΣL and the Bogoliubov transformation matrix                         spins on the lattice [70].   In the following,  we express each
+is given by T = K−1UE1/2.  The matrix T of the Bogoliubov                         spin in a basis defined by the crystallographic axes{a, b, c} as
+transformation has the structure
+                                 U(k)     V(k)
+                     T(k)=      V∗(−k)  U∗(−k)         ,                   (A4)         S𝑖 =𝑆(sin𝛽𝑖 cos𝛼𝑖a+ sin𝛽𝑖 sin𝛼𝑖b+ cos𝛽𝑖c),       (B1)
+
+with U and V being𝑝×𝑝 matrices, and satisfies the orthogo-
+nality relation TΣT†= T†ΣT.                                                       where𝑆 is the spin magnitude, and the crystallographic axes
+   The knowledge of the Bogoliubov transformation matrix T                        are given by
+allows for the computation of different physical quantities such
+as magnetization corrections.  If the classical ground state is
+collinear and the Hamiltonian does not mix different spin com-
+ponents, as in the case of Heisenberg or Kitaev interactions,                         a=  e𝑥+ e𝑦− 2e𝑧√                    √                      √
+then the sublattice magnetizations are given by                                                     6   ,     b=−e𝑥+ e𝑦2  ,     c=  ex+ ey+ e𝑧3   .(B2)
+                 ∑︁                                                               For simplicity, consider an eight-site magnetic unit cell as in
+ 𝑚3𝜇 =𝑆− 𝑝𝑁           ⟨0|𝑎†𝜇(k)𝑎𝜇(k)|0⟩+O(1/𝑆)                                    Fig.7.  Since the triple-      q state is characterized by three-fold
+                 ∑︁k                                                              rotation symmetry around the c axis, namely the𝐶∗3 symmetry,
+      =𝑆− 𝑝𝑁          ⟨0|𝝍†(k)T(k)†Λ(𝜇)T(k)𝝍(k)|0⟩+O(1/𝑆)                         the set of angles{𝛼𝑖,𝛽𝑖} is constrained. Under the symmetry,
+                   k                                                              the in-plane components of the spins rotate, while the out-of-
+                                                                       (A5)       plane components remain invariant.   As a consequence,  the
+                                                                                  𝐶∗3-invariant spins of sublattices𝐴 and𝐵 in Fig.7are fixed to
+withΛ(𝜇)𝛼𝛽 =𝛿𝛼𝜇𝛿𝛽𝜇. Inserting Eq. (A4), this reduces to                           S𝐴 = 𝑆c and S𝐵 =−𝑆c.  Following similar symmetry argu-
+                               𝑝∑︁                                                ments, one can show that the initial set of 16 angles{𝛼𝑖,𝛽𝑖}
+                         ∑︁                                                       is reduced to a set of only two angles 𝛽< and 𝛽> for the two
+        𝑚3𝜇 =𝑆− 𝑝𝑁                |V𝜇,𝛼(k)|2+O(1/𝑆),           (A6)               different crystallographic sublattices of the vortex structure,
+                          k   𝛼=1                                                 corresponding to the (𝐶, 𝐹, 𝐺) and (𝐷, 𝐸, 𝐻) sites, respec-
+However, if the classical ground state is not collinear and/or                    tively, in Fig.7. These angles describe the out-of-plane tilting
+the Hamiltonian mixes different spin components, such as the                      of these two sets of spins, which generate the in-plane vortex
+Γ term in Eq. (20), then the calculation of the sublattice mag-                   structure.  Moreover, the angles are responsible for a nonzero
+netizations also need to take into account corrections to the                     out-of-plane  magnetization  if 𝛽> ≠ 𝜋− 𝛽<,  already  at  the
+directions of the ordered moments.  In these cases, we intro-                     classical level. TableIIIreports the angles for the spins in the
+duce an external magnetic field and calculate the total mag-                      eight-site magnetic unit cell.
+netization according to Eq. (13), with a ground-state energy                         The triple-q ansatz is of great help in the energy minimiza-
+explicitly given by                                                               tion of the Hamiltonian in Eq. (26),  reducing the minimum
+                       ∑︁                                                         space to a two-dimensional manifold spanned by 𝛽≷.  For the
+   𝐸gs=𝑆(𝑆+ 1)              e(3)𝑖𝜇 J𝜇𝜈(R𝑖− R𝑗)e(3)𝑗𝜈                              set of parameters used in Sec.V B 2,  (𝜙,𝜃,𝐽2𝐴,𝐽2𝐵,ℎloc/𝑆)=
+                      𝑖𝜇,𝑗𝜈                                                       (𝜋− arctan 2,𝜋/3, 0.2,−0.1, 0.8), energy minimization leads
+                          ∑︁                    ∑︁                                to𝛽<≈ 0.489𝜋 and𝛽>≈ 0.553𝜋, with a classical out-of-plane
+           −(𝑆+ 1/2)           h𝑖𝜇· e(3)𝑖𝜇 + 12      𝜔k𝜇+O(1/𝑆0).                 classical magnetization of M· c/𝑆≈−0.05.
+                           𝑖𝜇                    k𝜇
+                                                                       (A7)
+
+where e(3)𝑖𝜇   is the third axis in the local reference frame.  The
+field h𝑖𝜇 encodes both the presence of an external field and a                    TABLE III. Angle configuration for the triple-q state shown in Fig.7.
+site-dependent term.  Despite losing the information of indi-                     The 𝐶∗3  symmetry  fixes  all  the 𝛼𝑖  angles,  and  relates  different 𝛽𝑖,
+vidual sublattice magnetizations, Eqs. (13) and (A7) yield a                      reducing the degrees of freedom necessary to describe this state from
+result that is fully consistent up to order 1/𝑆0. Since Eq. (A7)                  16 to 2, namely𝛽> and𝛽<.
+accounts for external field terms, it is more general than Eq. (5)                       Sublattice          𝛼             𝛽
+and is the expression we effectively used to compute the mag-                                 𝐴                                 n/a                                 0
+netization corrections in Eqs. (13) and (15).                                                 𝐵                                 n/a            𝜋
+                                                                                              𝐶                                  0            𝛽<
+                                                                                              𝐷             𝜋            𝛽>
+                     Appendix B: Triple-q ansatz                                              𝐸            𝜋/3            𝛽>
+                                                                                              𝐹                               4𝜋/3           𝛽<
+   In this appendix, we provide details on the triple-q ansatz                                𝐺                               2𝜋/3           𝛽<
+used in Sec.V B 2.  There are several ways of describing the                                  𝐻                               5𝜋/3           𝛽>
+                                                                                                                                                                             15
+
+
+
+
+
+ [1]A. Kitaev, Anyons in an exactly solved model and beyond,Ann.                                 Rev. Materials 6, 054407 (2022).
+      Phys. (N. Y.) 321, 2 (2006).                                                         [18]A. L. Sanders, R. A. Mole, J. Liu, A. J. Brown, D. Yu, C. D. Ling,
+ [2]L. Savary and L. Balents, Quantum spin liquids: a review,Rep.                                and S. Rachel, Dominant Kitaev interactions in the honeycomb
+      Prog. Phys. 80, 016502 (2016).                                                             materials  Na3Co2SbO6  and  Na2Co2TeO6, Phys.  Rev.  B   106,
+ [3]Y. Zhou, K. Kanoda, and T.-K. Ng, Quantum spin liquid states,                                014413 (2022).
+      Rev. Mod. Phys. 89, 025003 (2017).                                                   [19]H. Yang, C. Kim, Y. Choi, J. H. Lee, G. Lin, J. Ma, M. Kra-
+ [4]J. Knolle and R. Moessner, A Field Guide to Spin Liquids,Annu.                               tochv´ılov´a, P. Proschek, E.-G. Moon, K. H. Lee, Y. S. Oh, and
+      Rev. Condens. Matter Phys. 10, 451 (2019).                                                 J.-G. Park, Significant thermal Hall effect in the 3𝑑 cobalt Kitaev
+ [5]C. Broholm, R. J. Cava, S. A. Kivelson, D. G. Nocera, M. R.                                  system Na2Co2TeO6,Phys. Rev. B  106, L081116 (2022).
+      Norman, and T. Senthil, Quantum spin liquids,Science        367, 263                 [20]W.  Yao,  K.  Iida,  K.  Kamazawa,  and  Y.  Li,  Excitations  in
+      (2020).                                                                                    the  Ordered  and  Paramagnetic  States  of  Honeycomb  Magnet
+ [6]G. Jackeli and G. Khaliullin, Mott Insulators in the Strong Spin-                            Na2Co2TeO6,Phys. Rev. Lett.  129, 147202 (2022).
+      Orbit Coupling Limit: From Heisenberg to a Quantum Compass                           [21]W. G. F. Kr¨uger, W. Chen, X. Jin, Y. Li, and L. Janssen, Triple-
+      and Kitaev Models,Phys. Rev. Lett.              102, 017205 (2009).                        q  Order  in  Na2Co2TeO6  from  Proximity  to  Hidden-SU(2)-
+ [7]J. Chaloupka, G. Jackeli, and G. Khaliullin, Kitaev-Heisenberg                               Symmetric Point,Phys. Rev. Lett.        131, 146702 (2023).
+      Model  on  a  Honeycomb  Lattice:   Possible  Exotic  Phases  in                     [22]W. Yao, Y. Zhao, Y. Qiu, C. Balz, J. R. Stewart, J. W. Lynn, and
+      Iridium Oxides𝐴2IrO3,Phys. Rev. Lett.  105, 027204 (2010).                                 Y. Li, Magnetic ground state of the Kitaev Na2Co2TeO6  spin
+ [8]J. Chaloupka, G. Jackeli, and G. Khaliullin, Zigzag Magnetic Or-                             liquid candidate,Phys. Rev. Res.                 5, L022045 (2023).
+      der in the Iridium Oxide Na2IrO3,Phys. Rev. Lett.  110, 097204                       [23]L.  Xiang,   R.  Dhakal,   M.  Ozerov,   Y.  Jiang,   B.  S.  Mou,
+      (2013).                                                                                    A.  Ozarowski,  Q.  Huang,  H.  Zhou,  J.  Fang,  S.  M.  Winter,
+ [9]W. Yao and Y. Li, Ferrimagnetism and anisotropic phase tun-                                  Z.  Jiang,  and  D.  Smirnov,  Disorder-Enriched  Magnetic  Exci-
+      ability by magnetic fields in Na2Co2TeO6,Phys. Rev. B  101,                                tations in a Heisenberg-Kitaev Quantum Magnet Na2Co2TeO6,
+      085120 (2020).                                                                             Phys. Rev. Lett. 131, 076701 (2023).
+[10]M.  Songvilay,  J.  Robert,  S.  Petit,  J.  A.  Rodriguez-Rivera,                     [24]S.  Zhang,  S.  Lee,  A.  J.  Woods,  W.  K.  Peria,  S.  M.  Thomas,
+      W. D. Ratcliff, F. Damay, V. Bal´edent, M. Jim´enez-Ruiz, P. Le-                           R. Movshovich, E. Brosha, Q. Huang, H. Zhou, V. S. Zapf, and
+      jay,  E.  Pachoud,  A.  Hadj-Azzem,  V.  Simonet,  and  C.  Stock,                         M. Lee, Electronic and magnetic phase diagrams of the Kitaev
+      Kitaev  interactions  in  the  Co  honeycomb  antiferromagnets                             quantum spin liquid candidate Na2Co2TeO6,Phys. Rev. B  108,
+      Na3Co2SbO6  and  Na2Co2TeO6, Phys.  Rev.  B   102,  224429                                 064421 (2023).
+      (2020).                                                                              [25]X. Hong,  M. Gillig,  W. Yao,  L. Janssen,  V. Kocsis,  S. Gass,
+[11]G.  Lin,  J.  Jeong,  C.  Kim,  Y.  Wang,  Q.  Huang,  T.  Masuda,                           Y. Li, A. U. B. Wolter, B. B¨uchner, and C. Hess, Phonon thermal
+      S.  Asai,  S.  Itoh,  G.  G¨unther,  M.  Russina,  Z.  Lu,  J.  Sheng,                     transport shaped by strong spin-phonon scattering in a Kitaev
+      L. Wang, J. Wang, G. Wang, Q. Ren, C. Xi, W. Tong, L. Ling,                                material Na2Co2TeO6,arXiv:2306.16963.
+      Z. Liu, L. Wu, J. Mei, Z. Qu, H. Zhou, X. Wang, J.-G. Park,                          [26]P. Pilch, L. Peedu, A. K. Bera, S. M. Yusuf, U. Nagel, T. R       ˜o˜om,
+      Y. Wan, and J. Ma, Field-induced quantum spin disordered state                             and Z. Wang, Field- and polarization-dependent quantum spin
+      in  spin-1/2  honeycomb  magnet  Na2Co2TeO6, Nat.  Commun.                                 dynamics in the honeycomb magnet Na2Co2TeO6:  Magnetic
+      12, 5559 (2021).                                                                           excitations and continuum,Phys. Rev. B                   108, L140406 (2023).
+[12]W.  Chen,  X.  Li,  Z.  Hu,  Z.  Hu,  L.  Yue,  R.  Sutarto,  F.  He,                  [27]A. K. Bera, S. M. Yusuf, F. Orlandi, P. Manuel, L. Bhaskaran,
+      K.  Iida,  K.  Kamazawa,  W.  Yu,  X. Lin,  and  Y.  Li,  Spin-orbit                       and   S.   A.   Zvyagin,   Field-induced   phase   transitions   and
+      phase behavior of Na2Co2TeO6 at low temperatures,Phys. Rev.                                anisotropic magnetic properties of the Kitaev-Heisenberg com-
+      B 103, L180404 (2021).                                                                     pound Na2Co2TeO6,Phys. Rev. B  108, 214419 (2023).
+[13]C.  H.  Lee,  S.  Lee,  Y.  S.  Choi,  Z.  H.  Jang,  R.  Kalaivanan,                  [28]M.  Gillig,  X.  Hong,  C.  Wellm,  V.  Kataev,  W.  Yao,  Y.  Li,
+      R.   Sankar,   and   K.-Y.   Choi,   Multistage   development   of                         B. B¨uchner, and C. Hess, Phononic-magnetic dichotomy of the
+      anisotropic magnetic correlations in the Co-based honeycomb                                thermal Hall effect in the Kitaev material Na2Co2TeO6,Phys.
+      lattice Na2Co2TeO6,Phys. Rev. B  103, 214447 (2021).                                       Rev. Res. 5, 043110 (2023).
+[14]X.  Hong,  M.  Gillig,  R.  Hentrich,  W.  Yao,  V.  Kocsis,  A.  R.                   [29]P. Miao,  X. Jin,  W. Yao,  Y. Chen,  A. Koda,  Z. Tan,  W. Xie,
+      Witte,  T. Schreiner,  D. Baumann,  N. P´erez,  A. U. B. Wolter,                           W.  Ji,  T.  Kamiyama,  and  Y.  Li,  Persistent  spin  dynamics  in
+      Y. Li, B. B¨uchner, and C. Hess, Strongly scattered phonon heat                            magnetically  ordered  honeycomb-lattice  cobalt  oxides,Phys.
+      transport of the candidate Kitaev material Na2Co2TeO6,Phys.                                Rev. B 109, 134431 (2024).
+      Rev. B 104, 144426 (2021).                                                           [30]X.-G. Zhou, H. Li, C. Kim, A. Matsuo, K. Mehlawat, K. Matsui,
+[15]A. M. Samarakoon, Q. Chen, H. Zhou, and V. O. Garlea, Static                                 Z. Yang, A. Miyata, G. Su, K. Kindo, J.-G. Park, Y. Kohama,
+      and dynamic magnetic properties of honeycomb lattice antifer-                              W. Li, and Y. H. Matsuda, Emergent quantum disordered phase
+      romagnets  Na2𝑀2TeO6, 𝑀 =  Co  and  Ni,Phys.  Rev.  B       104,                           in Na2Co2TeO6 under intermediate magnetic field along𝑐 axis,
+      184415 (2021).                                                                             arXiv:2408.01957.
+[16]C. Kim, J. Jeong, G. Lin, P. Park, T. Masuda, S. Asai, S. Itoh,                        [31]G. Lin, M. Shu, Q. Zhao, G. Li, Y. Ma, J. Jiao, Y. Li, G. Duan,
+      H.-S. Kim, H. Zhou, J. Ma, and J.-G. Park, Antiferromagnetic                               Q. Huang, J. Sheng, A. I. Kolesnikov, L. Li, L. Wu, H. Chen,
+      Kitaev  interaction  in 𝐽eff =  1/2  cobalt  honeycomb  materials                          R. Yu, X. Wang, Z. Liu, H. Zhou, and J. Ma, Evidence for field
+      Na3Co2SbO6 and Na2Co2TeO6,J. Phys. Condens. Matter  34,                                    induced quantum spin liquid behavior in a spin-1/2 honeycomb
+      045802 (2022).                                                                             magnet,arXiv:2409.07959.
+[17]S. Mukherjee,  G. Manna,  P. Saha,  S. Majumdar, and S. Giri,                          [32]J. Arneth, K. Y. Choi, R. Kalaivanan, R. Sankar, and R. Klin-
+      Ferroelectric order with a linear high-field magnetoelectric cou-                          geler, Signatures of a Quantum Critical Endpoint in the Kitaev
+      pling  in  Na2Co2TeO6:   A  proposed  Kitaev  compound,Phys.                               Candidate Na2Co2TeO6,arXiv:2409.05661.
+                                                                                                                                                                             16
+
+[33]L. Bischof,  J. Arneth,  R. Kalaivanan,  R. Sankar,  K.-Y. Choi,                       [51]X. Jin, M. Geng, F. Orlandi, D. Khalyavin, P. Manuel, Y. Liu,
+      and R. Klingeler, Spin waves in Na2Co2TeO6 studied by high-                                 and Y. Li, Robust triple-q magnetic order with trainable spin
+      frequency/high-field ESR: Successes and failures of the triple-q                            vorticity in Na2Co2TeO6,arXiv:2501.07843.
+      model,arXiv:2506.03789.                                                              [52]E.  Lefranc¸ois,  M.  Songvilay,  J.  Robert,  G.  Nataf,  E.  Jordan,
+[34]J.-Q. Yan, S. Okamoto, Y. Wu, Q. Zheng, H. D. Zhou, H. B.                                     L.  Chaix,  C.  V.  Colin,  P.  Lejay,  A.  Hadj-Azzem,  R.  Ballou,
+      Cao, and M. A. McGuire, Magnetic order in single crystals of                                and V. Simonet, Magnetic properties of the honeycomb oxide
+      Na3Co2SbO6 with a honeycomb arrangement of 3𝑑7 Co2+ ions,                                   Na2Co2TeO6,Phys. Rev. B  94, 214416 (2016).
+      Phys. Rev. Materials 3, 074405 (2019).                                               [53]N. Francini and L. Janssen, Ferrimagnetism from triple-q order
+[35]X. Li, Y. Gu, Y. Chen, V. O. Garlea, K. Iida, K. Kamazawa, Y. Li,                             in Na2Co2TeO6,Phys. Rev. B  110, 235118 (2024).
+      G. Deng, Q. Xiao, X. Zheng, Z. Ye, Y. Peng, I. A. Zaliznyak,                         [54]T. W. Bradley, C. J. Bradley, and A. P. Cracknell,        The Mathe-
+      J. M. Tranquada, and Y. Li, Giant Magnetic In-Plane Anisotropy                              matical Theory of Symmetry in Solids:  Representation Theory
+      and Competing Instabilities in Na3Co2SbO6,Phys. Rev. X  12,                                 for Point Groups and Space Groups (Clarendon Press, Oxford,
+      041024 (2022).                                                                              1972).
+[36]Y. Gu, X. Li, Y. Chen, K. Iida, A. Nakao, K. Munakata, V. O.                           [55]A.  Corticelli,  R.  Moessner,  and  P.  A.  McClarty,  Spin-space
+      Garlea, Y. Li, G. Deng, I. A. Zaliznyak, J. M. Tranquada, and                               groups and magnon band topology,Phys. Rev. B                105, 064430
+      Y. Li, In-plane multi-q magnetic ground state of Na3Co2SbO6,                                (2022).
+      Phys. Rev. B 109, L060410 (2024).                                                    [56]L.        ˇSmejkal, J. Sinova, and T. Jungwirth, Beyond Conventional
+[37]Z. Hu, Y. Chen, Y. Cui, S. Li, C. Li, X. Xu, Y. Chen, X. Li, Y. Gu,                           Ferromagnetism and Antiferromagnetism:  A Phase with Non-
+      R. Yu, R. Zhou, Y. Li, and W. Yu, Field-induced phase transi-                               relativistic Spin and Crystal Rotation Symmetry,Phys. Rev. X
+      tions and quantum criticality in the honeycomb antiferromagnet                              12, 031042 (2022).
+      Na3Co2SbO6,Phys. Rev. B  109, 054411 (2024).                                         [57]W. F. Brinkman and R. J. Elliott, Theory of spin-space groups,
+[38]R. Zhong,  T. Gao,  N. P. Ong, and R. J. Cava, Weak-field in-                                 Proc. R. Soc. London A 294, 343 (1966).
+      duced nonmagnetic state in a Co-based honeycomb,Sci. Adv.                            [58]D.  Litvin  and  W.  Opechowski,  Spin  groups,Physica                  76,  538
+      6, eaay6953 (2020).                                                                         (1974).
+[39]L. Y. Shi, X. M. Wang, R. D. Zhong, Z. X. Wang, T. C. Hu, S. J.                        [59]D. B. Litvin, Spin point groups,Acta Cryst.                  A33, 279 (1977).
+      Zhang, Q. M. Liu, T. Dong, F. Wang, and N. L. Wang, Mag-                             [60]N. Francini and L. Janssen, Spin vestigial orders in extended
+      netic excitations of the field-induced states in BaCo2(AsO4)2                               Heisenberg-Kitaev models near hidden SU(2) points:  Applica-
+      probed  by  time-domain  terahertz  spectroscopy, Phys.  Rev.  B                            tion to Na2Co2TeO6,Phys. Rev. B  109, 075104 (2024).
+      104, 144408 (2021).                                                                  [61]T. Holstein and H. Primakoff, Field Dependence of the Intrinsic
+[40]X. Zhang, Y. Xu, T. Halloran, R. Zhong, C. Broholm, R. J. Cava,                               Domain Magnetization of a Ferromagnet,Phys. Rev.                 58, 1098
+      N. Drichko, and N. P. Armitage, A magnetic continuum in the                                 (1940).
+      cobalt-based honeycomb magnet BaCo2(AsO4)2,Nat. Mat.  22,                            [62]J. G. Rau,  E. K.-H. Lee, and H.-Y. Kee, Generic Spin Model
+      58 (2023).                                                                                  for the Honeycomb Iridates beyond the Kitaev Limit,Phys. Rev.
+[41]P. A. Maksimov, A. V. Ushakov, Z. V. Pchelkina, Y. Li, S. M.                                  Lett. 112, 077204 (2014).
+      Winter,  and  S.  V.  Streltsov,  Ab  initio  guided  minimal  model                 [63]M.  E.  Zhitomirsky  and  T.  Nikuni,  Magnetization  curve  of  a
+      for the “Kitaev” material BaCo2(AsO4)2: Importance of direct                                square-lattice  Heisenberg  antiferromagnet,Phys.  Rev.  B                  57,
+      hopping,  third-neighbor  exchange,  and  quantum  fluctuations,                            5013 (1998).
+      Phys. Rev. B 106, 165131 (2022).                                                     [64]T. Coletta, N. Laflorencie, and F. Mila, Semiclassical approach
+[42]P. A. Maksimov, S. Jiang, L. P. Regnault, and A. L. Chernyshev,                               to ground-state properties of hard-core bosons in two dimen-
+      BaCo2(AsO4)2: Strong Kitaev, After All,arXiv:2503.20859.                                    sions,Phys. Rev. B          85, 104421 (2012).
+[43]H. Liu and G. Khaliullin, Pseudospin exchange interactions in                          [65]P.  M.  C       ˆonsoli,  L.  Janssen,  M.  Vojta,  and  E.  C.  Andrade,
+      𝑑7 cobalt compounds: Possible realization of the Kitaev model,                              Heisenberg-Kitaev model in a magnetic field:  1/𝑆 expansion,
+      Phys. Rev. B 97, 014407 (2018).                                                             Phys. Rev. B 102, 155134 (2020).
+[44]R. Sano, Y. Kato, and Y. Motome, Kitaev-Heisenberg Hamilto-                            [66]A. L. Chernyshev and M. E. Zhitomirsky, Spin waves in a tri-
+      nian for high-spin𝑑7 Mott insulators,Phys. Rev. B                  97, 014408               angular lattice antiferromagnet: Decays, spectrum renormaliza-
+      (2018).                                                                                     tion, and singularities,Phys. Rev. B         79, 144416 (2009).
+[45]H. Liu, J. Chaloupka, and G. Khaliullin, Kitaev Spin Liquid in                         [67]L. Janssen and M. Vojta, Heisenberg-Kitaev physics in magnetic
+      3𝑑 Transition Metal Compounds,Phys. Rev. Lett.                     125, 047201              fields,J. Phys. Condens. Matter           31, 423002 (2019).
+      (2020).                                                                              [68]C. C. Price and N. B. Perkins, Critical Properties of the Kitaev-
+[46]S. M. Winter, Magnetic couplings in edge-sharing high-spin   𝑑7                               Heisenberg Model,Phys. Rev. Lett.            109, 187201 (2012).
+      compounds,J. Phys. Mat.                    5, 045003 (2022).                         [69]C. Price and N. B. Perkins, Finite-temperature phase diagram of
+[47]I. Rousochatzakis, N. B. Perkins, Q. Luo, and H.-Y. Kee, Beyond                               the classical Kitaev-Heisenberg model,Phys. Rev. B            88, 024410
+      Kitaev physics in strong spin-orbit coupled magnets,Rep. Prog.                              (2013).
+      Phys. 87, 026502 (2024).                                                             [70]L. Janssen, E. C. Andrade, and M. Vojta, Honeycomb-Lattice
+[48]S.  Trebst  and  C.  Hickey,  Kitaev  materials,Phys.  Rep.               950,  1             Heisenberg-Kitaev Model in a Magnetic Field:  Spin Canting,
+      (2022).                                                                                     Metamagnetism,  and  Vortex  Crystals,Phys.  Rev.  Lett.        117,
+[49]Y. Gu, X. Jin, and Y. Li, On the multi-q characteristics of mag-                              277202 (2016).
+      netic ground states of honeycomb cobalt oxides,Chinese Physics                       [71]L. Janssen, E. C. Andrade, and M. Vojta, Magnetization pro-
+      Letters  (2025).                                                                            cesses of zigzag states on the honeycomb lattice:  Identifying
+[50]V.  Kocsis,  S.  Luther,  N.  P       ´erez,  W.  Yao,  H.  K¨uhne,  A.  U.                   spin models for𝛼-RuCl3 and Na2IrO3,Phys. Rev. B  96, 064430
+      Wolter,  Y.  Li,  and  B.  B¨uchner,  Magnetoelectric  and  mag-                            (2017).
+      netoelastic  couplings  in  the  quantum  spin  liquid  candidate                    [72]A. Koga, H. Tomishige, and J. Nasu, Ground-state and Thermo-
+      Na2Co2TeO6,  Talk  at  APS  March  Meeting  2024,  Minneapo-                                dynamic Properties of an S = 1 Kitaev Model,Journal of the
+      lis,https://meetings.aps.org/Meeting/MAR24/Session/F22.3.                                   Physical Society of Japan 87, 063703 (2018).
+                                                                                                                                                                               17
+
+[73]P.  P.  Stavropoulos,  D.  Pereira,  and  H.-Y.  Kee,  Microscopic                      [84]S. M. Winter, Y. Li, H. O. Jeschke, and R. Valent       ´ı, Challenges
+      Mechanism for a Higher-Spin Kitaev Model,Phys. Rev. Lett.                                    in design of Kitaev materials: Magnetic interactions from com-
+      123, 037203 (2019).                                                                          peting energy scales,Phys. Rev. B            93, 214431 (2016).
+[74]X.-Y. Dong and D. N. Sheng, Spin-1 Kitaev-Heisenberg model                              [85]P. A. Maksimov and A. L. Chernyshev, Rethinking   𝛼-RuCl3,
+      on a honeycomb lattice,Phys. Rev. B            102, 121102 (2020).                           Phys. Rev. Res. 2, 033011 (2020).
+[75]H.-K. Jin, W. M. H. Natori, F. Pollmann, and J. Knolle, Unveiling                       [86]M. M       ¨oller, P. A. Maksimov, S. Jiang, S. R. White, R. Valenti, and
+      the S=3/2 Kitaev honeycomb spin liquids,Nature Communica-                                    A. L. Chernyshev, The Saga of𝛼-RuCl3:  Parameters, Models,
+      tions 13, 3813 (2022).                                                                       and Phase Diagrams,arXiv:2502.08698.
+[76]J.  Chaloupka  and  G.  Khaliullin,  Hidden  symmetries  of  the                        [87]J. G. Rau and H.-Y. Kee, Trigonal distortion in the honeycomb
+      extended   Kitaev-Heisenberg   model:     Implications   for   the                           iridates:   Proximity  of  zigzag  and  spiral  phases  in  Na2IrO3,
+      honeycomb-lattice  iridates 𝐴2IrO3, Phys.  Rev.  B   92,  024413                             arXiv:1408.4811.
+      (2015).                                                                               [88]K. Chen, Q. Luo, Z. Zhou, S. He, B. Xi, C. Jia, H.-G. Luo, and
+[77]S. M. Winter, K. Riedl, D. Kaib, R. Coldea, and R. Valent       ´ı, Prob-                      J. Zhao, Triple-meron crystal in high-spin Kitaev magnets,New
+      ing𝛼− RuCl3 Beyond Magnetic Order: Effects of Temperature                                    J. Phys. 25, 023006 (2023).
+      and Magnetic Field,Phys. Rev. Lett.        120, 077203 (2018).                        [89]P. P. Stavropoulos, Y. Yang, I. Rousochatzakis, and N. B. Perkins,
+[78]J. G. Rau, P. A. McClarty, and R. Moessner, Pseudo-Goldstone                                   Complex orders and chirality in the classical Kitaev-Γ model,
+      Gaps and Order-by-Quantum Disorder in Frustrated Magnets,                                    Phys. Rev. B 110, 214406 (2024).
+      Phys. Rev. Lett. 121, 237201 (2018).                                                  [90]H.-Y. Yang, A. F. Albuquerque, S. Capponi, A. M. L       ¨auchli, and
+[79]S. Khatua, M. J. P. Gingras, and J. G. Rau, Pseudo-Goldstone                                   K. P. Schmidt, Effective spin couplings in the Mott insulator of
+      Modes and Dynamical Gap Generation from Order by Thermal                                     the honeycomb lattice Hubbard model,New J. Phys.            14, 115027
+      Disorder,Phys. Rev. Lett.  130, 266702 (2023).                                               (2012).
+[80]W.  Marshall,  Antiferromagnetism,Proc.  Roy.  Soc.                              A232,  48[91]J.  Wang  and  Z.-X.  Liu,  Effect  of  ring-exchange  interactions
+      (1955).                                                                                      in the extended Kitaev honeycomb model,Phys. Rev. B            108,
+[81]E. Lieb, T. Schultz, and D. Mattis, Two soluble models of an                                   014437 (2023).
+      antiferromagnetic chain,Ann. Phys.         16, 407 (1961).                            [92]N.  Francini,  P.  M.  C       ˆonsoli,  and  L.  Janssen,  Data  for  “Fer-
+[82]E. Lieb and D. Mattis, Ordering Energy Levels of Interacting                                   rimagnetism  from  quantum  fluctuations  in  Kitaev  materials”,
+      Spin Systems,J. Math. Phys.          3, 749 (1962).                                          https://doi.org/10.25532/OPARA-895.
+[83]P. M. C       ˆonsoli, M. Fornoville, and M. Vojta, Fluctuation-induced                 [93]J. Colpa, Diagonalization of the quadratic boson hamiltonian,
+      ferrimagnetism in sublattice-imbalanced antiferromagnets with                                Physica A: Statistical Mechanics and its Applications 93, 327
+      application to SrCu2(BO3)2 under pressure,Phys. Rev. B               104,                    (1978).
+      064422 (2021).

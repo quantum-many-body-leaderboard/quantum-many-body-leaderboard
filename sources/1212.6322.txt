@@ -1,0 +1,549 @@
+   Weak  Plaquette Valence  Bond Order  in the  S = 1/2 Honeycomb  J1 − J2  Heisenberg
+                                                                       Model
+
+                                       Zhenyue  Zhu,1  David  A.  Huse,2  and  Steven  R.  White1
+                1Department  of  Physics  and  Astronomy,  University  of  California,  Irvine,  California  92697,  USA
+                         2Department  of  Physics,  Princeton  University,  Princeton,  New  Jersey  08544,  USA
+                                                              (Dated:  June 25, 2018)
+                   Using  the  density  matrix  renormalization  group,  we  investigate  the  S  =  1/2  Heisenberg  model
+                on  the  honeycomb  lattice  with  ﬁrst  (J1)  and  second  (J2)  neighbor  interactions.   We  are  able  to
+                study  long  open  cylinders  with  widths  up  to  12  lattice  spacings.   For  J2/J1  near  0.3,  we  ﬁnd  an
+                apparently  paramagnetic  phase,  bordered  by  an  antiferromagnetic  phase  for  J2  ≲  0.26  and  by  a
+                valence bond crystal for J2 /greaterorsimilar 0.36.  The longest correlation length that we ﬁnd in this intermediate
+                phase  is  for  plaquette  valence  bond  (PVB)  order.    This  correlation  length  grows  strongly  with
+                cylinder circumference, indicating either quantum criticality or weak PVB order.
+
+                PACS numbers:  75.10.Kt, 75.10.Jm, 73.43.Nq
+
+
+   Progress in ﬁnding  realistic  model quantum  Hamilto-                      entropy with a subsystem perimeter.  This term has now
+nians with spin-liquid (SL) ground states has accelerated                      been  measured  in  the  nearest-neighbor  kagome  system
+dramatically in the last two years, almost 40 years since                      [3]  and  also  in  the  kagome  system  with  next-nearest-
+Anderson ﬁrst proposed a resonating valence bond state                         neighbor interaction J2 [10], where for J2 = 0.1 the gaps
+as  a  possible  ground  state  of  the  triangular  Heisenberg                are large and the entanglement entropy correction term
+model [1].  One key recent advance was the discovery us-                       can  be  measured  particularly  precisely.   Thus,  there  is
+ing  the  density  matrix  renormalization  group  (DMRG)                      now solid evidence that the ground state of the  kagome
+of  a  gapped  SL  ground  state  in  the  spin-1/2  kagome                    spin-1/2 antiferromagnet is a gapped Z2  spin liquid.
+Heisenberg  antiferromagnet  [2,  3].    Spin-liquid  phases                      In this letter, we examine the spin-1/2 Heisenberg an-
+have  been  suggested  for  various  other  models,  such  as                  tiferromagnet  on  the  honeycomb  lattice  [see  Fig.   1(a)]
+the  half-ﬁlled honeycomb Fermi-Hubbard model [4] and                          with Hamiltonian
+the  square  lattice  spin-1/2  Heisenberg  antiferromagnet                                            ∑                    ∑
+with  second-neighbor  (J2)  interactions  [5,  6].   However,                              H = J1          Si · Sj + J2          Si · Sj  .            (1)
+some skepticism has  been  expressed about  the  evidence                                             ⟨i,j⟩                ⟨⟨i,j⟩⟩
+for spin liquids in the latter two models [7, 8].
+   The main deﬁning feature of a quantum spin liquid is                        where the sum over ⟨i, j⟩ runs over nearest-neighbor pairs
+the absence of any spontaneously broken symmetry, par-                         of sites and the sum ⟨⟨i, j⟩⟩ runs over next-nearest neigh-
+ticularly  either  magnetic  or  valence  bond  order.   Frus-                 bors.  We take J1 = 1 [antiferromagnetic (AF)] and con-
+tration,  which  discourages  order,  is  a  key  ingredient  of               sider  only  J2  >  0.   Our  work  follows  other  studies  of
+models  potentially  containing  spin-liquid  phases.   Spin                   this  and  similar  Heisenberg  models  [11–20],  motivated
+liquids  arise  in  several  analytic  treatments  and  exactly                by the Hubbard model results [21].  Most of these stud-
+solvable,  simpliﬁed,  but  less  realistic  models  [9].   A  key             ies  report a  nonmagnetic phase  near  J2/J1  ∼ 0.2 − 0.4,
+feature  distinguishing  types  of  spin  liquids  is  the  pres-              and we agree, but the results are in general disagreement
+ence or absence of a gap to all excitations.  The kagome                       on  the  range  and  nature  of  this  phase.    A  variational
+Heisenberg spin liquid is found to be gapped.  To satisfy                      Monte  Carlo  study  indicated  a  spin  liquid  in  the  range
+the Lieb-Schultz-Mattis theorem, gapped spin liquids for                       from 0.08 to  0.3 [20].  A combination of exact diagonal-
+models  with  a  net  half-integer  spin  per  unit  cell  must                ization and valence bond treatment reported a plaquette
+have “hidden” topological degeneracies in the thermody-                        valence  bond  [PVB,  see  Fig.   1(b)]  crystal  in  the  range
+namic  limit,  which  depend  on  the  topology  of  the  sys-                 0.2-0.4 [11].  Exact diagonalization on small lattices [12]
+tem.  The  simplest  possibility  is  a  Z2  spin liquid.  Since               and the coupled-cluster method both suggest PVB order
+local measurements cannot identify Z2 or other topolog-                        [13].  Earlier work reported that dimer correlations aren’t
+ical orders, it is  challenging to identify  its  presence in a                strong enough for PVB order [16].  Functional renormal-
+numerical study.  The degeneracies characteristic of a 2D                      ization group work claims that this phase has weak dimer
+gapped  Z2  spin  liquid  have  not  been  accessible  for  the                and plaquette responses [15].  Variational entangled pla-
+system sizes studied to date.  Odd-width cylinders spon-                       quette  states suggest that none of the  order parameters
+taneously dimerize in a pattern that is characteristic of a                    remain nonzero [19].  Other theoretical work has focused
+quasi-one-dimensional system [2, 5].  Another key feature                      on  the  possibility  of  a  Z2  SL  on  the  honeycomb  lattice
+of  a  Z2  spin  liquid  is  the  presence  of  a  − ln 2  constant            and on phase transitions between Neel and staggered va-
+term correction to the linear growth of the entanglement                       lence bond crystal (SVBC) phases [24–26].
+                                                                                                                                                              2
+
+
+                                                              -0.5         -0.3
+                             J2=0                                                                                            J2=0.26                 J2=0.36                                        J2=0.5-0.1
+    (a)           J2
+
+
+               J1                                                            AF                                       SL??                                     SVBCPVB
+                          (c)
+    (b)
+
+
+
+
+
+FIG. 1:  (a) One hexagon of the honeycomb lattice showing J1  and J2  interactions.  The six sides of the hexagon are J1  bonds,
+and the six J2  bonds are shown as dashed (blue) lines.  (b) Illustration of the pattern of PVB order.  The spin-spin correlations
+diﬀer between the bonds shown as thin (black) lines versus thick (red) lines.  (c) Three phases on the YC6-0 cylinder with 300
+sites and a gradient of J2.  The widths of lines are proportional to |⟨Si · Sj⟩|.  We also show the second-neighbor spin correlation
+but  only  when  its  value  is  negative.   The  arrows  represents  the  values  of  ⟨Szi ⟩  at  each  site.   The  scales  for  correlations  and
+magnetizations are indicated.  We remove several bonds in one zigzag row of the cylinder, so that the AF spin pattern is more
+clearly seen.  The two vertical lines at J2 = 0.26 and 0.36 indicate estimates of the phase boundaries.
+
+
+   Here, we report that the ground state displays an ap-                          zontal position from J2 = 0 at the left edge to J2 = 0.5 at
+parently  paramagnetic phase  for  0.26 ≲ J2  ≲ 0.36.  For                        the right edge.  To make the AF order visible, we apply
+J2  ≲  0.26,  we  ﬁnd  the  usual  two-sublattice  AF  phase.                     a  staggered  ﬁeld  at  the  left  end  of  the  cylinder.   As  J2
+For J2 /greaterorsimilar 0.36, we ﬁnd a SVBC. We have studied in some             increases along the cylinder, the AF order decreases, be-
+detail the system with J2 = 0.3, deep within the interme-                         coming negligible in the intermediate phase.  We will dis-
+diate  phase  that  is  neither  AF  nor  SVBC.  We  examine                      cuss this intermediate state in detail below.  The SVBC
+various correlation functions of this ground state on var-                        phase  appears  clearly  for  J2  /greaterorsimilar  0.36.  This  SVBC  phase
+ious  cylinders.   The  longest  correlation  length  that  we                    has  strong  ﬁrst-neighbor  correlations  along  the  vertical
+ﬁnd  is  for  PVB  order.   The  strong  growth  of  the  PVB                     direction with strong horizontal second-neighbor correla-
+correlation length  with  cylinder  circumference  indicates                      tions connecting them to form “ladders”.  Below we will
+that  the  system  is  either  near  a  quantum  critical  point                  determine  the  phase  boundaries  of  the  AF  and  SVBC
+or may have weak long-range PVB order.                                            phases more accurately.
+   We use cylindrical (C) boundary conditions with open                              First, we estimate the boundary of the AF phase.  One
+ends  for  our  DMRG  [27,  28]  calculations.  We  label  the                    technique to determine magnetic order parameters using
+cylinders  either  XCM-N  or  YCM-N.  The  labels  X  or  Y                       DMRG is to put strong ordering ﬁelds on the edges of an
+indicated whether a ﬁrst-neighbor bond is oriented hor-                           open  cylinder,  and  to  adjust  the  aspect  ratio  Ly/Lx  to
+izontally  (X)  or  vertically  (Y).  For  XC  cylinders,  M  is                  to  minimize  the  ﬁnite-size  eﬀects  [29].   For  both  square
+the  number  of  sites  along  a  zigzag  vertical  column  and                   and triangular spin-1/2 Heisenberg antiferromagnets, an
+N means that the periodic boundary conditions are con-                            aspect ratio near 1.7 ∼ 1.9 is found to minimize the ﬁnite-
+nected with a shift of N zigzag columns to the left or right.                     size  eﬀects.   For  XCM-0  cylinders  with  M  columns,  the
+For  YC cylinders, M  is  the  number  of zigzag horizontal                       aspect  ratio  is  √3,  which  we  use.   For  J2  =  0,  we  de-
+rows and N means the connection has a shift by N sites                            termine  that  ⟨Sz⟩  ∼=  0.2720,  which  is  close  to  the  value
+along a zigzag row.  For example, in the XC8-0 cylinder,                          determined  using  Monte  Carlo  calculations  in  the  ther-
+one  set of edges  of each hexagon lies  along the X direc-                       modynamic limit ⟨Sz⟩ = 0.2677(6) [30].  With J2 increas-
+tion, and there are eight sites along the zigzag columns,                         ing, we ﬁnd that the magnetization reduces to near zero
+which are connected periodically.  So, the circumference                          for J2 ∼= 0.26 in Fig.  2.  The various cluster sizes all point
+is C = 4√3 lattice spacings.  For the YC4-0 cylinder, one                         to the phase transition near 0.26.  This phase transition
+set of edges of each hexagon lies along the Y direction and                       point  is  larger  than  the  classical  limit  value  of  J2  =   16.
+the cylinder is connected periodically along the Y direc-                         Reference  [20]  claims  that  the  Neel  order  disappears  at
+tion with circumference 6 lattice spacings.  For the XC9-                         0.08; however, the value we ﬁnd here is more consistent
+1  cylinder,  the  connection  has  a  horizontal  shift  of  one                 with other studies which give J2 ∼= 0.2 [11, 14].
+zigzag column, producing a circumference of C = 3√7.                                 To estimate the boundary of the SVBC phase we study
+   In  Fig.   1(c),  we  present  the  ground  state  of  a  single               several  XC  cylinders  with  J2  varying  from  0.28  to  0.40
+system which gives an overview of the entire phase dia-                           using  the  method  in  Fig.    1.    These  results  show  the
+gram.  For this long YC6-0 cylinder, J2  is uniform along                         SVBC  phase  for  J2  /greaterorsimilar  0.36.   We  also  use  the  entangle-
+the  vertical  direction,  but  varies  linearly  with  the  hori-                ment  entropy  and  its  ﬁrst  derivative  with  respect  to  J2
+                                                                                                                                                                 3
+
+
+
+
+                                                        J2=0.1                                                            -0.05
+                                                        J2=0.2
+              0.250.25                                  J2=0.23
+                                                        J2=0.24
+
+               0.20.2                                                               (a)                              B
+                                                                                                                   A   C
+              0.150.15                   0              2              4              6
+                                                Distance d
+
+                0.10.1   XC 8x8
+                         XC 16x8
+                         XC 10x10
+              0.050.05   XC 12x12                                                                                    A  B
+                                                                                                                         C
+                 000                   0.1                 0.2                 0.30                   0.1                 0.2                 0.3(b)
+                                         J2
+
+FIG.  2:   The  staggered  magnetization  at  the  center  of  the
+cylinder versus J2  for various XC cylinders.  The inset shows
+how  the  local  magnetization  decays  from  the  edge  of  a  long
+XC10 cylinder for various values of J2.
+                                                                                    (c)
+
+                3
+
+
+                2                                                                   FIG.  4:   Weak  PVB  order  at  J2  =  0.3  on  (a)  YC7-3,  (b)
+                                     XC  8-0                                        XC9-1 and (c) XC12-0 cylinders.  The widths of the lines are
+                                     XC10-0                                         proportional  to  |⟨Si · Sj⟩ + 0.32|  for  all  the  plots,  with  solid
+                                     XC12-0
+                 1                                                                  blue(dashed red) lines for negative(positive) values.  The bond
+               60                                                                   strength scale is indicated at the top.  The three diﬀerent sub-
+                                                                                    lattices of plaquettes are labeled as A, B, C. In these ﬁgures,
+                                                                                    we  keep  m  =  6000  states  in  our  DMRG  calculation.    The
+               40                                                                   truncation  error  for  XC9-1  is  smaller  than  10−7,  while  it  is
+                                                                                    near 10−6  for the wider YC7-3 and XC12-0 cylinders.
+               20
+
+                0        0.34                 0.36                 0.38             states  would  be  degenerate  by  rotational  symmetry.   In
+                                        J2                                          the  classical limit,  for  large  J2  values,  the  ground state
+FIG. 3:  The entanglement entropy and its derivative versus J2                      is  a  spin  spiral  state.    However,  quantum  ﬂuctuations
+for diﬀerent XC cylinders near the transition  into the SVBC                        are strong enough to melt the spiral order and form the
+phase.                                                                              SVBC, in agreement with Ref.  [17].
+                                                                                       In  the  rest  of  this  letter,   we  focus  speciﬁcally  on
+                                                                                    J2  =  0.3  inside  the  intermediate  phase  [34].   To  mea-
+to estimate the phase transition point.  We make vertical                           sure magnetic correlations, we apply “pinning” magnetic
+cuts  between  zigzag  columns,  the  dividing  line  between                       ﬁelds at one end of the cylinder and measure the resulting
+the  two  parts  of  the  system  bisecting  a  column  of  hor-                    magnetization pattern.  Unlike  in the  AF  phase,  the  in-
+izontal  bonds,  and  measure  the  entanglement  entropy.                          duced magnetization decays exponentially from the  end
+As  seen  in  Fig.   3,  the  entropy  drops  in  going  from  the                  of the cylinder with a decay length of 2 to 3 lattice spac-
+intermediate  phase  to  the  SVBC.  The  derivative  of  the                       ings for various cylinders.  We further check the response
+entropy  shows  a  peak  around  0.37  for  the  XC8-0  cylin-                      to  a  local  magnetic  ﬁeld  applied  to  a  spin  at  the  cylin-
+der, and around 0.36 for  the  wider XC10-0 and XC12-0                              der  center.   This  local  magnetic  ﬁeld  response  is  quite
+cylinders.  In  addition,  the  height of this  peak  increases                     short  ranged.   It  only  inﬂuences  its  nearby  surrounding
+with the system width, as expected for a peak indicating                            sites, as opposed to generating a large region of staggered
+a phase transition [31–33].                                                         magnetization in the AF phase.
+   On  XC  cylinders,  we  ﬁnd  that  the  SVBC  state  has                            References [11, 12] suggest that the intermediate phase
+strong  ﬁrst-  and  second-neighbor  correlations  along  di-                       is  a  PVB  phase  with  long-range  dimer-dimer  correla-
+agonal  directions,  forming  diagonally  oriented  ladders.                        tions.   To  investigate  PVB  ordering  we  study  cylinders
+Thus, there are two degenerate diagonal SVBC states on                              with  periodic  boundary  conditions  that  are  compatible
+an  XC  cylinder,  whereas  for  YC  cylinders  there  is  only                     with PVB order, including YC4-0, YC6-0, YC7-3, YC8-
+the  one vertical SVBC pattern (Fig.  2).  For an inﬁnite                           0,  XC6-0,  XC9-1  and  XC12-0  [34].    We  pin  the  PVB
+two-dimensional system, all three of these SVBC ground                              pattern at the cylinder ends by the choice of which spins
+                                                                                                                                                             4
+
+
+           8                                                                      correlation length actually increases faster than  the  cir-
+                                                                                  cumference, suggesting that this system may have weak
+           6                                                                      PVB long-range order in the 2D limit of inﬁnite circum-
+                                                                                  ference.
+                      YC4-0,  ξ=2.06
+                      YC6-0,  ξ=3.22                                                 In conclusion, we have studied the S = 1/2 honeycomb
+                      YC8-0,  ξ=4.53
+           4          XC6-0,  ξ=1.76                                              J1−J2 Heisenberg model on various cylinders extensively
+                      XC9-1,  ξ=3.51
+                      XC12-0,ξ=5.23                                               using  DMRG.  We  ﬁnd  that  the  ground state  displays  a
+
+                 0                                   5                                 10paramagnetic phase  for  0.26 ≲ J2  ≲ 0.36.  By  studying
+           2                Distance d
+                                                                                  PVB  order  on  various  cylinders,  we  ﬁnd  that  the  PVB
+                                                                                  correlation length grows at least linearly with the cylin-
+           0                                                                      der  circumference.  This  suggests that  in  this  phase  the
+            0                               4                               8                              12Csystem is either quantum critical or has weak long-range
+                                                                                  PVB  order.  These  results  are compatible  with  an early
+FIG.  5:   PVB  order  correlation  length  ξ  for  diﬀerent  cylin-              theoretical study that a direct phase transition between
+der circumferences  C  at  J2  = 0.3.  The black  circles  indicate               an  AF  and  a  PVB  state  is  possible  on  the  honeycomb
+YC cylinders, while the red diamonds indicate XC cylinders.                       lattice [35].
+The straight green line illustrates the expected linear behav-                       We   thank   Hong-cheng   Jiang,   Miles   Stoudenmire,
+ior at the quantum critical point of the two-dimensional sys-                     Simeng  Yan,  Shoushu  Gong,  Olexei  Motrunich,  Donna
+tem.   The  inset  shows  the  local  PVB  order  parameter  ver-                 Sheng and Tarun Grover for helpful discussion.  We would
+sus distance from  the end of the cylinder in lattice  spacings.                  also  like  to  thank  A.  M.  L¨auchli  for  providing  their  GS
+The estimated PVB correlation length ξp is indicated for each                     energy on a small torus.  This work is supported by NSF
+cylinder.
+                                                                                  Grants No.  DMR-0907500, No.  DMR-1161348 and No.
+                                                                                  DMR-0819860.
+are kept and how long the cylinder is (see Fig.  4).                                 Note  added.—Recently  we  learned that  Ganesh et  al.
+   We  deﬁne  a  local  PVB  order  parameter  at  each  site                     [36] have studied the same model with DMRG. They re-
+using the nearest-neighbor spin correlations on the three                         ported  that  the  ground  state  has  three  phases,  includ-
+adjacent  plaquettes.   The  plaquettes  form  three  sublat-                     ing Neel phase, f-wave PVB state phase and dimer state
+tices  in  the  PVB  phase,  as  labeled  in  Figs.    4(a)  and                  phase,  with  critical  points  at  J2/J1  =  0.22  and  0.35.
+4(b), and one plaquette from each sublattice is adjacent                          Their  ﬁndings  are  generally  consistent with  our  results,
+to  each  site.   Let  EA  =  − ∑A⟨Si · Sj⟩  be  the  sum  over                   and they also make the important point that this appears
+the  six  bonds  around  plaquette  A.  Then,  we  deﬁne  the                     to be an example of deconﬁned quantum criticality.
+local PVB order parameter as
+
+          P  = EA + EB exp (2π3  i) + EC exp (4π3  i) .        (2)
+
+Near  the  ends  of  the  cylinders,  this  order  parameter  is                   [1]  P. W. Anderson, Mater. Res. Bull. 8, 153 (1973).
+nonzero,  and  in  general  it  is  a  complex  number.    We                      [2]  S. Yan, D. A. Huse, and S. R. White, Science 332, 1173
+extrapolate  this  local  order  parameter  versus  the  trun-                         (2011).
+cation  error  to  estimate  its  values  in  the  limit  of  large                [3]  S.  Depenbrock,   I.  P.  McCulloch,   and  U.  Schollwock,
+bond  dimension  m.   For  long  cylinders,  its  magnitude                            Phys. Rev. Lett. 109, 067201 (2012).
+                                                                                   [4]  Z. Y. Meng, T. C. Lang, S. Wessel, F. F. Assaad, and A.
+decays  exponentially  with  distance  from  the  end,  with                           Muramatsu, Nature (London) 464, 847 (2010).
+a correlation length ξp  that depends  on the cylinder, as                         [5]  H.  C.  Jiang,  H.  Yao,  and  L.  Balents,  Phys.  Rev.  B  86,
+shown in the inset of Fig.  5.  These PVB correlations can                             024424 (2012).
+be slightly incommensurate, particularly for the narrower                          [6]  L.   Wang,   Z.-C.   Gu,   X.-G.   Wen,   and   F.   Verstraete,
+YC cylinders.  For the XC9-1 cylinder with a shifted con-                              arXiv:1112.3331  (unpublished).
+nection, we measure the distance from the end along the                            [7]  Sandro Sorella, Yuichi Otsuka, Seiji Yunoki, Sci. Rep. 2,
+direction perpendicular to the wrapping vector to obtain                               992 (2012).
+                                                                                   [8]  A. W. Sandvik, Phys. Rev. B 85, 134407 (2012).
+the shortest PVB correlation length ξp.                                            [9]  L. Balents, Nature (London) 464, 199 (2010).
+   The PVB correlation length ξp versus cylinder circum-                          [10]  H. C. Jiang, Z. Wang, and L. Balents, Nat. Phys. 8, 902
+ference C  is shown in Fig.  5.  This ﬁgure includes cylin-                            (2012).
+ders with all orientations, and we see that for our larger                        [11]  A.  F.  Albuquerque,  D.  Schwandt,  B.  Het´enyi,  S.  Cap-
+circumferences, the XC cylinders appear to have a longer                               poni,  M.  Mambrini,  and  A.  M.  L¨auchli,  Phys.  Rev.  B
+PVB  correlation  length  than  the  YC  cylinders.   If  the                          84, 024406 (2011).
+2D system is at a quantum critical point, the correlation                         [12]  H. Mosadeq, F. Shahbazi, and S. A. Jafari, J. Phys. Con-
+                                                                                       dens. Matter 23, 226006 (2011).
+length  is  expected  to  be  proportional  to  the  circumfer-                   [13]  D. J. J. Farnell, R. F. Bishop, P. H. Y. Li, J. Richter and
+ence by  standard ﬁnite-size scaling.  It appears that the                             C. E. Campbell, Phys. Rev. B 84, 012403 (2011).
+                                                                                                                                                           5
+
+[14]  J. Oitmaa and R. R. P. Singh, Phys. Rev. B 84, 094424
+     (2011).
+[15]  J.  Reuther, D.  A. Abanin, and  R. Thomale,  Phys. Rev.
+     B 84, 014417 (2011).
+[16]  J. B.  Fouet, P. Sindzingre,  C. Lhuillier,  Eur. Phys. J.  B
+     20, 241 (2001).
+[17]  A. Mulder, R. Ganesh, L. Capriotti, and A. Paramekanti,
+     Phys. Rev. B 81, 214419 (2010).
+[18]  D.  C.  Cabra,  C.  A.  Lamas,  and  H.  D.  Rosales,  Mod.
+     Phys. Lett. B 25, 891 (2011).
+[19]  F.  Mezzacapo  and  M.  Boninsegni,   Phys.  Rev.  B  85,
+     060402 (2012).
+[20]  B. K. Clark, D. A. Abanin, and S. L. Sondhi, Phys. Rev.
+     Lett. 107, 087204 (2011).                                                                 0.08        0.1       0.12       0.14       0.16       0.18       0.2
+[21]  Note that the six  spin  interactions  may  be more impor-                                                      1/C
+     tant  than  the  J2  terms  in  properly  characterizing  the               FIG. 6:  The ground state energy per site at J2 = 0.3 for var-
+     charge ﬂuctuations in the Hubbard model [22, 23].                           ious  cylinders  with  circumferences  C.   The  two  dashed  lines
+[22]  H.Y. Yang and K.P. Schmidt, Europhys. Lett. 94, 17004                      are E/N  = −0.4250 and −0.4260, which are the approximate
+     (2011).                                                                     upper and lower bounds of ground state energy that we esti-
+[23]  H.-Y. Yang, A.F. Albuquerque, S. Capponi, A. Laeuchli,                     mate for the inﬁnite two-dimensional system.
+     and K.P. Schmidt, New J. Phys. 14, 115027 (2012).
+[24]  F. Wang, Phys. Rev. B 82, 024419 (2010).
+[25]  Y.-M. Lu and Y. Ran, Phys. Rev. B 84, 024420 (2011).
+[26]  C. Xu and L. Balents, Phys. Rev. B 84, 014402 (2011).                      on the energy as -0.4250.  This bound is lower than other
+[27]  S. R. White, Phys. Rev. Lett. 69, 2863 (1992).                             recent bounds from the variational entangled pair states
+[28]  S. R. White, Phys. Rev. B 48, 10345 (1993).                                method (E  ≤ −0.4210) [2,  3] and VMC  (E  ≤ −0.4169)
+[29]  S. R. White, and A. L. Chernyshev, Phys. Rev. Lett. 99,                    [4].
+     127004 (2007).                                                                 To explore the low-lying excited states on these cylin-
+[30]  E. V. Castro, N. M. R. Peres, K. S. D. Beach, and A. W.                    ders, we apply DMRG to ﬁnd the singlet and triplet gap.
+     Sandvik, Phys. Rev. B 73, 054422 (2006).
+[31]  A.  Osterloh,  L.  Amico,  G.  Falci,  and  R.  Fazio,  Nature             We  lock the PVB pattern on the  cylinder ends  to guar-
+     (London) 416, 608 (2002).                                                   antee that the excited state doesn’t include translations
+[32]  L.-A.  Wu,  M.  S.  Sarandy,  and  D.  A.  Lidar,  Phys.  Rev.             of  the  PVB  pattern.   For  the  triplet  gap,  we  target  the
+     Lett. 93, 250404 (2004).                                                    ground state in the Sz = 0 and Sz = 1 sectors separately.
+[33]  O.  Legeza  and  J.  Solyom,  Phys.  Rev.  Lett.  96,  116401              We  make  sure  the  states  have  the  expected  properties,
+     (2006).                                                                     e.g.   the  Sz  =  0  state  has  no  signs  of  excitations  and
+[34]  See Supplemental Materials for the Ground state energy                     the  Sz  =  1  state  has  the  excitation  in  the  bulk,  not  at
+     per site and spin gaps (section A); cylinders that do not
+     accommodate  PVB  order,  such  as  XC8-0  and  XC10-0                      an edge.  For the singlet gap, we target the ground state
+     (section B); entropy analysis (section C).                                  in  the  Sz  =  0  sector  ﬁrst,  until  this  state  is  very  accu-
+[35]  N.  Read  and  Subir  Sachdev,  Phys.  Rev.  B  42,  4568                  rate.  Then we target one more state in the same sector,
+     (1990).                                                                     with the sweeping restricted to exclude the end regions.
+[36]  R.   Ganesh,    J.   van   den   Brink,    and   S.   Nishimoto,           The advantage is that the singlet excitations will always
+     arXiv:1301.0853  (unpublished).                                             appear in the center of cylinder.  We perform the calcu-
+                                                                                 lation on long cylinders to make sure that the gap is well
+                                                                                 converged.  We use length 20 for XC cylinders and length
+ Appendix  A.  Ground  state  energy  per  site  and  the                        30 for YC cylinders.
+                      spin  gaps  for  J2 = 0.3.                                    The triplet and singlet gaps for XC and YC cylinders
+                                                                                 are  shown  in  Fig.   7.   The  triplet  gap  decreases  as  the
+   In  this  section,  we  present  the  ground  state  energies                 cylinders get wider, with the YC cylinders having higher
+for J2 = 0.3 for various cylinders in Fig.  6.  The  energy                      triplet  gaps  than  the  XC  cylinders.   The  triplet  excita-
+per site for a given cylinder is calculated by subtracting                       tions on the XC cylinders appear to consist of two well-
+the  energies of two long  cylinders with  diﬀerent  lengths                     separated spinons.  This eﬀect is more pronounced when
+[1].  We ﬁnd that the energy is much lower on the narrow                         the cylinder gets wider.  In YC cylinders, it appears that
+YC4-0  cylinder  (C  =  6),  probably  due  to  the  contribu-                   the spinons  remain tightly  bound.  We  don’t  yet under-
+tion to the energy from short resonating paths that wind                         stand  why  the  behavior  is  so  diﬀerent  between  the  XC
+around  the  cylinder.   This  eﬀect  persists  to  a  lesser  ex-               and YC cylinders.  From the trend of the triplet gap with
+tent for YC6-0 (C  = 9).  On all the other cylinders, the                        circumference,  particularly  for  the  YC  cylinders,  we  es-
+energy is consistently around -0.4255(5) with wider cylin-                       timate  that  in  2D  limit  the  triplet  gap is  no  more than
+ders having larger uncertainty due to the extrapolation to                       0.12.   The  singlet  gaps  also  show  substantial  variation
+large m.  Thus we estimate an approximate upper bound                            between  diﬀerent  cylinders.   From  the  trends  with  cir-
+                                                                                                                                                              6
+
+                                                                                                                    -0.4
+
+
+                             XC singlet                                              (a)
+                             XC triplet
+                             YC singlet
+                             YC triplet                                                                           -0.05
+
+
+
+                                                                                     (b)
+
+
+                0                                      0.1                                     0.2
+                                      1/C
+FIG. 7:  (color online) Spin singlet (solid line with ﬁlled sym-                     (c)
+
+bols)  and  triplet  (dashed  line  with  open  symbols)  gaps  for
+various cylinders versus inverse of circumference at J2 = 0.3.
+                                                                                  FIG. 9:  (color online) (a) Initial state for the even topological
+                                                                                  sector  of  the  XC8-0  cylinder  at  J2  =  0.3.   The  width  of  the
+                                                                                  lines  are  proportional  to  |⟨Si · Sj⟩ − e|  with  e=0.  A  vertical
+                                                                                  line  cuts  through  two  singlet  bonds.   (b)  The  VBC  ground
+                                                                                  state  for  the  even  sector  with  e=-0.32.   (c)  The  spin-liquid-
+                                                                                  like ground state for the odd sector with e=-0.29 for horizontal
+                                                                                  bonds and  e=-0.34  for  vertical  bonds.  The  spin  correlations
+                                                                                  are fairly  uniform  in  the center.  On this XC8-0  cylinder the
+                                                                                  absolute ground state is that of the odd sector.
+
+
+                                                                                  dimer coverings of a cylinder are in two distinct topolog-
+                                                                                  ical  classes,  speciﬁed  by  whether  a  vertical cut  through
+                                                                                  the cylinder breaks an even or odd number of dimers.  We
+                                                                                  can remove one site from each end of an XC cylinder to
+                                                                                  eliminate the end spinons.  Since there are then N-1 sites
+FIG. 8:  Top panel shows the ground state of a XC8-0 cylinder                     remaining  on  the  edge  of  XCN  cylinder,  this  forces  the
+for J2 = 0.3.  It has a spinon with Sz = 1/2 and an anti-spinon                   dimer cover to be in the odd sector.
+with  Sz  = −1/2  on  the edges.  The  bottom  panel  shows  the                     The  opposite  topological sector  also  can be  produced
+excited  state  in  the  Sz  =  1  sector  with  two  spinons  on  the            by  adding  two  vacancies  inside  the  cylinder.  The  eﬀect
+edges.  These states have almost exactly the same energy.                         of vacancies is to  force the  the  opposite topological sec-
+
+                                                                                  tor between  the two  vacancies.  The  two  vacancies need
+cumference, we estimate that in the 2D limit the singlet                          to  sit  in  special  locations  and  not  too  far  apart;  other-
+gap is no more than 0.07.                                                         wise spinons may bind to the vacancies, thus keeping the
+                                                                                  system in the same sector.  (not shown)
+                                                                                     For the XC8-0 cylinder, the higher energy sector is the
+  Appendix  B.  Even and  odd  topological  sectors  on                           even topological sector, which is  related to  a VBC with
+                 XC8-0  and  XC10-0  cylinders.                                   an 8 site unit cell with a hexagon and a dimer, shown in
+                                                                                  the middle panel of Fig.  9.  To get the energy per site for
+   In this section, we will discuss the XC8-0 and XC10-0                          the  even  sector,  we  cut  the  ends  and  strengthen  dimer
+cylinders  in  detail.   These  cylinders  are  not  compatible                   bonds to favor the even sector initially (Fig.  9a).  Then
+with  PVB  order,  and  show  interesting  behavior.    The                       we remove these strengthened bonds  to  run the  DMRG
+frustration of the PVB order leaves two diﬀerent nearly-                          to get the ﬁnal states (Fig.  9b).  The energy splitting for
+degenerate ground states corresponding to diﬀerent topo-                          the XC8-0 cylinder is shown on the left two panels of Fig.
+logical  sectors.   The  sectors  can  be  selected  by  adding                   11.  The  odd  sector  energy  is  always  lower  in  the  inter-
+or  removing  sites  from  the  left  and  right  edges.    For                   mediate phase.  This state looks more uniform (Fig.  9c)
+zigzag-column left and right edges, the XC8-0 and XC10-                           than the even sector, which shows strong valence bond or-
+0  ground  states  have  two  free  spinons  on  the  cylinder                    der, but it has signiﬁcant anisotropy.  In the intermediate
+edges, leading to four nearly degenerate states (Fig.  8).                        phase regime, the energy splitting increases with J2, then
+The  edge  spinons  can  be  thought  of  as  unpaired  spins                     decreases  as  J2  approaches  the  second  phase  transition
+in  a  resonating  valence  bond  picture.   Nearest-neighbor                     point.   We  didn’t  include  results  from  higher  J2  values,
+                                                                                                                                                                    7
+
+                                   -0.4
+
+                                                                                         (a)
+
+   (a)
+
+
+                                   -0.05                                                 (b)
+
+
+
+   (b)                                                                                FIG.  12:    (a)  is  XC8-0  cylinder  with  delta  bond  applied
+                                                                                      from   0.02   (left   edge)   to   -0.05(right   edge),   with   positive
+                                     -0.05                                            delta  strengthen  the vertical  bonds and  negative delta  value
+                                                                                      strengthen  the  horizontal  bonds.   Thus  we  cut  the  cylinder
+                                                                                      edge to favor odd sector for positive delta and even sector for
+                                                                                      negative delta.  Spinons locate between even and odd sectors.
+   (c)                                                                                (b) is XC10-0 cylinder with delta from 0.01 to -0.01.
+
+
+
+
+FIG. 10:  (color online) Similar to previous ﬁgure, (a) and (b)
+are  the  initial  and  the  ground  state  for  the  even  topological
+sector  of  the  XC10-0  cylinder  with  J2  =  0.3.   (c)  is  the  odd
+topological sector.  Unlike the XC8-0 cylinder, the even sector                                               Even Sector                                  Odd sector
+with apparent valence bond order is actually the ground state.                                                  XC8-0
+                                                                                                                XC10-0
+
+          (a)                                  (c)
+
+
+
+
+
+                           XC8-0                                 XC10-0                                     -0.04               -0.02                   0
+                                                                                                                               δ
+
+          (b)                                  (d)                                    FIG.  13:   Delta  value  versus  sum  of  Sz  along  the  cylinder
+                                                                                      zigzag  direction  for  XC8-0  and  XC10-0  cylinder.   The  data
+                          XC8-0 even                             XC10-0 even          are  extracted  from  previous  ﬁgure.   The  left  side  of  spinon
+                          XC8-0 odd                              XC10-0 odd           (δ  <  0)  is  even  sector,  with  odd  sector  on  the  spinon  right
+                                                                                      side.  We could  see  that  for  ground  state  with  δ  = 0,  XC8-0
+          0.28          0.3          0.32         0.340.28           0.3           0.32          0.34is in odd sector and XC10-0 is in even sector.
+                      J2
+
+FIG.  11:   (color  online)  Diﬀerent  topological  sector  energy                       The even sectors of XC10-0 cylinder are shown on Fig.
+splittings for the XC8-0 and XC10-0 cylinders versus J2  with                         10.   The  even  sector  has  a  20  sites  VBC  unit  cell.   The
+error bars.  (a) and (c) are the energy splittings for the XC8-0                      ﬁnal state has stronger valence bond order than the XC8-
+and XC10-0 cylinders respectively.  (b) and (d) are the energy                        0 cylinder.  As opposed to XC8-0 cylinder, we show in the
+per site for both even and odd sectors on XC8-0 and XC10-0
+cylinders.  It’s clear that on the XC8-0 cylinder the odd sector                      right  two  panels  of  Fig.11  that  the  even  sector  is  lower
+energy is lower.  On the XC10-0 cylinder, the energy splitting                        in energy.  We could measure the spin correlation length
+is quite small, and becomes consistent with zero at J2 = 0.34.                        from  placing  staggered magnetic  ﬁelds  on  the  edge  and
+                                                                                      measuring  how  Sz  decays.   The  odd  sector  has  a  much
+                                                                                      longer spin correlation length with ξs ∼ 12, as compared
+since  the  energy  splitting  is  already  small  compared  to                       with roughly 3 in even sector.  A longer spin correlation
+the  uncertainty in the  extrapolation of the  energy.  The                           length usually indicate smaller spin triplet gap.  We ﬁnd
+fact that the energy splitting reduces with J2 as one ap-                             that  spin  triplet  gap  is  roughly  10−3  for  the  odd  sector
+proaches  the  second  phase  transition  point  means  that                          compared  with  0.075  for  the  even  sector.    Thus  these
+the  phase  transition  in  to  the  SVBC  phase  happens  at                         results indicate that on XC10-0 cylinder the ground state
+essentially the  same J2  value in either sector.  In Fig.  3                         is a valence bond crystal with short range spin correlation
+of the main text the odd sector was used, but we also did                             and a nonzero spin triplet gap.
+the same analysis in the even sector, obtaining the same                                 To further check that the even sector has lower energy,
+estimates of J2  at the phase transition.                                             we strengthen and weaken some bonds to favor both sec-
+                                                                                                                                                                 8
+
+
+                                                                                          4
+tors  on  one  cylinder;  one  on  the  left,  the  other  on  the                       3.5                                   3
+right, see Fig.  12.  A domain wall with spinon will reside                               3                                  2.5
+                                                                                         2.5                                                XC6-0,   L=20
+between  these  diﬀerent  sectors.   Depending  on  whether                               2                                                 XC6-0,   L=24
+                                                                                                                               2            XC12-0, L=20
+the spinon is more pushed into the even or the odd sector                                1.5                                                XC12-0, L=24
+at  δ  =  0,  we  can  determine  which  sector  is  the  ground                          1              YC4-0               1.5
+                                                                                         0.5   (a)       YC6-0
+                                                                                                         YC8-0                      (b)
+state.  The results are consistent on both cylinders, shown                               00          10         20         30         40         5010            5          10          15         20
+in Fig.  13.                                                                                              x                    3               x
+
+                                                                                         2.5
+                                                                                                                             2.5
+    Appendix  C.  Entropy  analysis  for  intermediate                                    2
+                                                                                                                               2
+                        phase  with  J2 = 0.3.                                                                                               XC10-0 even L=24
+                                                                                         1.5           XC8-0 odd L=16                        XC10-0 even L=30
+                                                                                                       XC8-0 odd L=20        1.5    (d)      XC10-0 odd L=16
+                                                                                              (c)      XC8-0 even L=16                       XC10-0 odd L=20
+                                                                                                       XC8-0 even L=20                       XC10-0 odd L=30
+   In  this  section,  we  will  discuss  the  von  Neumann  en-                          10              5             10            15            2010         5        10       15       20       25       30
+tanglement entropy (EE) in detail for J2 = 0.3 for all the                                                x                                    x
+XC and YC cylinders.  For a cylinder with a non-shifted                             FIG.  14:  (color  online)  The  EE  versus  subsystem  size  x  for
+connection, eg.  the XCN-0 and YCN-0 cylinders, we cal-                             (a)  YC cylinders,  (b)  XC6-0  and  XC12-0  cylinders,  (c)  even
+culate the EE for splitting the lattice into subsystems A                           and  odd  sector  in  XC8-0  cylinders,  (d)  even  and  odd  sec-
+and  B.  The  partition  is  a  vertical  line  cut  through  the                   tor  in  XC10-0  cylinders.    Note  on  YC8-0  cylinder,  the  EE
+cylinder,  that  always  breaks  the  same  number  of  hori-                       is  measured  for  a  state  with  m  =  5000.   This  state  is  not
+zontal  or  diagonal  bonds,  i.e.   breaking  N/2  bonds  for                      well converged and it has larger PVB order as seen in the EE
+XCN-0  cylinder  and  N  bonds  for  YCN-0  cylinder.   We                          oscillation  pattern.
+didn’t consider the EE for cylinders with shifted connec-
+tions.                                                                              decay  of  PVB  order  to  the  center,  we  also  observe  the
+   In  a  2D disordered gapped system,  the  EE obeys  the                          decay of the EE oscillation pattern and measure the EE
+area law [5] with                                                                   when its value saturates to a constant value.  We notice
+
+                           S = aL + o(1/L)                             (3)          that  YC6-0  has  a  longer  PVB  correlation  length  than
+                                                                                    YC4-0,  since  the  EE  oscillates  with  more  periods  near
+where a is a non-universal constant, L is the length of the                         the  YC6-0  cylinder  edges.   On  the  YC8-0  cylinder,  the
+boundary between regions A and B. The second term dis-                              state in which we measure the EE is not well converged,
+appears as L → ∞.  For a gapped topologically-ordered                               and thus  it  has  stronger PVB  order.  The  EE  shows an
+SL phase without broken symmetries, a extra term is in-                             apparent PVB order oscillation pattern.
+cluded                                                                                 For  the  XC  cylinders  in  Fig.   14(b-d),  the  entropy  is
+                        S = aL + γ + o(1/L)                          (4)            saturated in the center, independent of subsystem size for
+                                                                                    the ground state.  For the XC8-0 cylinder, the odd sector
+with  γ  is  the  topological  EE[6,  7].   For  a  minimum  en-                    EE is independent of the sub-system size x and has the
+tangled  state  with  Z2  topological order,  γ  =  − ln(2)  at                     same value for cylinders of diﬀerent lengths.  The EE has
+T  = 0.  Thus the EE is a constant independent of length                            much stronger dependence on the sub-system size for the
+for  a  ﬁxed  width  cylinder,  since  the  boundary  length  is                    even  sector.   On  the  contrary  for  the  XC10-0  cylinder,
+always  the  same.   For  a  2D  critical  gapless  system,  the                    the  EE  saturates  in  the  center  of  the  cylinder  for  the
+EE scales as:                                                                       even  sector.   All  these  results  again  show  that  the  GS
+                                                                                    for all the cylinders with J2 = 0.3 are gapped with short
+         S = aL + b ln L + c(L) ln[sin(πxL )] + o(1/L)      (5)                     spin correlation lengths.
+                                                                                       In  Fig.   15,  we  present  the  EE  versus  cylinder  width
+for a L×L torus[8–10].  The second term comes from gap-                             to extrapolate the topological EE γ.  It is surprising that
+less  Goldstone mode.  x  is  subsystem size and the third                          not  all  the  data  points  collapse  onto  a  line.    The  EE
+term  is  the  function  depends  on  “chord  length”.   Thus                       from  XC6-0  and  XC10-0  deviates  from  a  linear  extrap-
+the  EE  depends  on  system  width  L  and  subsystem  size                        olation.   It  is  possible  that  XC6-0  cylinder  is  too  nar-
+x for a 2D gapless system, but independent of subsystem                             row,  so  that  J2  =  0.3  is  too  close  to  the  second  phase
+size for a gapped system.                                                           transition point.  The XC10-0 cylinder is a valence bond
+   In  Fig.  14(a),  we  show the  EE  versus subsystem  size                       crystal with 20 sites unit cell in the even sector.  We ﬁnd
+x  for  YCN-0  cylinders.  Since  YC  cylinders  have  strong                       that  γ  =  −0.619,  which  is  close  to  gapped  Z2  SL  with
+plaquettes appearing on the cylinder edges, we would ex-                            γ = ln 2 = −0.693.
+pect  that  the  EE  should  oscillate  with  a  PVB  pattern,                         In a recent paper by Hong-Chen Jiang et al.[11], the au-
+with two high values and one low value corresponding to                             thors extrapolate the EE to get the TEE with γ ∼ − ln 2
+cuts  at strong and  weak bonds  of plaquettes.  With  the                          and identify Z2 SL phase on many models.  As those au-
+                                                                                                                                                                9
+
+              4                                                                    the non-zero γ we ﬁnd in this paper doesn’t indicate that
+                                                                                   the GS for the Heisenberg J1 − J2  model on the honey-
+              3                           XC10-0      XC12-0                       comb lattice is a Z2  SL in the 2D limit.
+
+                                                 YC6-0
+              2                XC6-0      XC8-0
+
+               1                   YC4-0                                             [1]  E.M.  Stoudenmire  and  S.  R.  White,   Annual  Rev.  of
+                                                                                         Cond. Matt. Phys. 3,111 (2012).
+                                                                                     [2]  F.  Mezzacapo  and  M.  Boninsegni,   Phys.  Rev.  B  85,
+              0                                                                          060402 (2012).
+                                                                                     [3]  We  use  table  I  of  Ref.  [19]  at  J2  =  0.3.  We  extract  the
+                0                            5                           10              data  from  L=9,  16,  18  and  extrapolate  versus  L−3/2  to
+                                        C                                                get the energy in the 2D limit as L → ∞.
+                                                                                     [4]  B. K. Clark, D. A. Abanin, and S. L. Sondhi, Phys. Rev.
+FIG.  15:   Saturated  EE  versus  cylinder  circumference  C  for                       Lett. 332, 1173 (2011).
+the XC and YC cylinders.                                                             [5]  J. Eisert, M. Cramer, and M. B. Plenio, Rev. Mod. Phys.
+                                                                                         82, 277 (2010).
+                                                                                     [6]  A.  Kitaev,  and  J.  Preskill,  Phys.  Rev.  Lett.  96,  110404
+thors realize, for the above method to be accurate when                                  (2006).
+identifying topological phases, all the correlation lengths                          [7]  M.  Levin,  and  X.  G.  Wen,  Phys.  Rev.  Lett.  96,  110405
+(spin-spin, dimer-dimer, etc.)  have to be short compared                                (2006).
+with the cylinder widths, so that DMRG results will al-                              [8]  M. A. Metlitski, and T. Grover, arXiv:1112.5166 (unpub-
+ways lead to a minimum entangled state (MES) with zero                                   lished).
+vison  ﬂux  through  the  cylinder.   For  the  model  in  this                      [9]  A. B. Kallin, M. B. Hastings, R. G. Melko, and R. R. P.
+                                                                                         Singh, Phys. Rev. B 84, 165134 (2011).
+paper,  even  though  the  spin-spin  correlation  length  is                      [10]  H.  Ju,  A.  B.  Kallin,  P.  Fendley,  M.  B.  Hastings  and  R.
+short,  PVB  correlation  lengths  get  longer  as  the  cylin-                          G. Melko, Phys. Rev. B 85, 165121 (2012).
+der  gets  wider.   Thus  the  extrapolation  method  for  the                     [11]  H. C. Jiang, Z. Wang, and L. Balents, Nature Physics 8,
+TEE  would  lead  to  strong  ﬁnite  size  eﬀects.   Therefore                           902 (2012).

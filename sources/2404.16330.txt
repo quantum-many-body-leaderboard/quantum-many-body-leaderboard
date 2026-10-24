@@ -1,0 +1,341 @@
+Identifying the ground state phases by spin-patterns in the Shastry-Sutherland model
+
+                                 Yun-Tong  Yang,1, 2  Fu-Zhou  Chen,1, 2  and  Hong-Gang  Luo1, 2, ∗
+                                  1School  of  Physical  Science  and  Technology  &  Lanzhou  Center  for
+                                   Theoretical  Physics,  Lanzhou  University,  Lanzhou  730000,  China
+                       2Key  Laboratory  of  Quantum  Theory  and  Applications  of  MoE  &  Key  Laboratory  of
+                       Theoretical  Physics  of  Gansu  Province,  Lanzhou  University,  Lanzhou  730000,  China
+                  Exploring the influence of frustration on the phases and related phase transitions in condensed
+                matter physics is of fundamental importance in uncovering the role played by frustration.  In the
+                two-dimensional square lattice, a minimal frustration has been formulated in 1981 as the Shastry-
+                Sutherland  (SS)  model  described  by  competitions  between  the  nearest-neighbor  bond  (J1)  and
+                the next-nearest-neighbor one (J2).  In the two limits of α = J2/J1,  i.e.  α ≪ 1 and α ≫ 1,  the
+                corresponding phases are the N´eel antiferromagnet (AFM) and the dimer-singlet(DS). Unfortunately,
+                the intermediate regime remains controversial, and the nature of transition from the N´eel AFM to
+                the intermediate state is also unclear.  Here we provide a pattern language to explore the SS model
+                and take the lattice size L = 4 × 4 with periodic boundary condition.  We firstly diagonalize the
+                Hamiltonian in an operator space to obtain all fundamental spin-patterns and then analyze their
+                energy and occupancy evolutions with the frustration parameter κ = α/(1+α).  Our results indicate
+                that the intermediate regime is characterized by diagonal two-domain spin-pattern while the N´eel
+                AFM  state  has  a  diagonal  single-domain  and  the  DS  has  mixings  of  diagonal  single-  and  four-
+                domain.  While the transition from the DS to the intermediate phase occurred around αc = 1.5 is
+                the first-order in nature, consistent with that in literature, the one from the intermediate phase to
+                the AFM is clearly seen around αc = 1.277, where it has a reversal of the contributions from the
+                single- and two-domain patterns to the ground state.  The result indicates that the pattern language
+                is powerful in identifying the possible phases in frustrated models.
+
+
+  Introduction.—Frustrated  magnetism  has  become  an                       then other methods such as exact diagonalization (ED)
+extremely  active  field  in  condensed  matter  physics  due                [13, 14], density matrix renormalization group (DMRG)
+to  finding  potentially  new  states  or  new  properties  of               [15, 16] and tensor network method [17–19] also give the
+this kind of matter [1].  As a minimal frustrated model                      same result.  Futhermore,  the plaquette VBS is further
+in the two-dimensional (2D) square lattice, the Shastry-                     divided into full plaquette VBS [20–22] and empty pla-
+Sutherland  (SS)  model  has  been  extensively  studied.                    quette VBS [16, 23, 24]; a columnar-dimer state, an in-
+This  model  was  originally  proposed  in  1981  [2]  as  an                commensurate  spin-density  wave  phase  and  a  topologi-
+exactly  solvable  antiferromagnetic  model  with  nearest-                  cally ordered state were also proposed by means of series
+neighbor (J1) and next-nearest-neighbor (J2) couplings.                      expansion [25], field theory [26] and ED [27], respectively.
+A dimer-singlet (DS) state forms an exact eigenstate at                      Very recently, the coexistence of a plaquette VBS and a
+all couplings and is the ground state in a region where                      quantum  spin  liquid  state  between  Ne´el  AFM  and  DS
+J2 dominates [2, 3].  Interests in this model mainly come                    was  proposed  by  using  DMRG  [23],  ED  [24]  and  func-
+from two aspects.  The first is the discovery of the quasi-                  tional renormalization group [28].  Moreover, the nature
+2D material SrCu2(BO3)2 [3, 4] in 1999 because the spin                      of phase transition, particularly between the N´eel AFM
+network  of SrCu2(BO3)2  is  topologically  equivalent  to                   phase and the intermediate phase, is also unclear.  Is it
+the SS model [3].  The second is that SrCu2(BO3)2 is a                       a second-order transition [11] or weakly first-order tran-
+typical spin-gap system [4] which may have relevance to                      sition [17], or other forms such as a deconfined quantum
+the pseudogap behavior observed in the high-Tc cuprates                      critical point [16, 19]?
+superconductivity [5].                                                          Here  we  use  the  pattern  language  to  provide  some
+  The SS model is in the N´eel antiferromagnetic (AFM)                       insights  into  the  above  controversies.   The  pattern  lan-
+state and the DS state at both ends of phase diagram.                        guage was proposed in our previous works [29–35].  We
+However, the intermediate regime with maximal frustra-                       have  applied  this  language  to  one-dimensional  and  2D
+tion  remains  controversial.   Different  candidate  ground                 frustrated  spin  models,  namely,  the  axial  next-nearest-
+states were proposed by different approaches.  For exam-                     neighbor Ising model (ANNNI) [33] and the spin-1/2 J1-
+ples, a direct transition from the N´eel AFM phase to the                    J2 Heisenberg model on a square lattice [35].  The results
+DS phase was obtained by means of series expansion [6, 7]                    provide an explicit physical picture for the maximal frus-
+and variational projected entangled pair states algorithm                    tration  regime  of  these  two  models.   Naturally,  we  still
+[8];  a  helical  state  was  addressed  by  using  Schwinger                employ the pattern language to study the SS model.  For
+boson  mean-field  theory  [9]  and  gauge-theoretic  analy-                 simplicity, we take lattice size L = Lx×Ly (Lx = Ly = 4)
+sis [10];  a plaquette valence bond state (VBS) was first                    under  periodic  boundary  condition  (PBC).  Firstly,  we
+reported by means of series expansion in 2000 [11, 12],                      diagonalize the Hamiltonian in the operator space con-
+                                                                                                                                                          2
+
+sisting of spin components (Sxi ,−iSyi , Szi ) (i is the lattice                model Hamiltonian is rewritten as
+site).  Six kinds of patterns are obtained in which three                                                        3LX
+kinds are important to the ground state and low-lying ex-                                                 ˆH =        λn ˆA†n ˆAn,                         (4)
+cited states due to lower energies, namely, the patterns                                                        n=1
+λ1-λ3  with diagonal single-domain,  the patterns λ4-λ15
+with diagonal two-domain and the patterns λ16-λ27 with                          where each pattern λn composes of single-body operators
+mixings of diagonal single- and four-domain.  Secondly,                                     LXh                                                   i
+we  identify  the  ground  state  phases  by  analyzing  pat-                       ˆAn =        un,3i−2 ˆSxi  + un,3i−1(−i ˆSy                     .   (5)
+terns’ evolution.  The results indicate that the phase di-                                                                        i ) + un,3i ˆSzi
+agram  is  roughly  divided  into  three  regions:   the  N´eel                            i=1
+AFM,  the  intermediate  regime  and  the  DS,  which  are                      In  order  to  cover  the  whole  coupling  regime,  we  define
+dominated  by  the  patterns  λ1-λ3,  the  patterns  λ4-λ15                     another parameter
+and  the  patterns  λ16-λ27,  respectively.   The  transition
+from the DS to the intermediate regime is a first-order                                                       κ =    α1 + α,                               (6)
+phase transition, occurred around αc ∼ 1.5.  The transi-
+tion from the N´eel AFM to the intermediate one is also                         where  κ ∈  [0, 1)  corresponds  to  α ∈  [0, +∞).   In  the
+seen around αc ∼ 1.277 which corresponds the evolution                          following we take κ as the frustration parameter.
+from the patterns λ1-λ3  to the patterns λ4-λ15.  In the                           Patterns’ Information.—Firstly, we explore the prop-
+following we provide the detail to confirm our statements.                      erties of the patterns marked by relative signs of eigen-
+   Model and Method.—The Hamiltonian of the SS model                            functions (un,3i−2, un,3i−1, un,3i) and their eigenvalues λn
+reads                                                                           as functions of κ, shown in Fig. 1 and Fig. 2. Six kinds of
+             ˆH′ = J1  X     ˆSi  ·  ˆSj + J2 X      ˆSi  ·  ˆSj,          (1)  patterns with different degeneracy are obtained: the first
+                                                                                kind of pattern (red line) is threefold-degeneracy which is
+                       ⟨i,j⟩                 ⟨⟨i,j⟩⟩                            named the patterns λ1-λ3; the second (green line) and the
+where  Si  are  S  =  1/2  operators,  ⟨i, j⟩  represents  the                  third pattern (blue line) are both twelvefold-degeneracy,
+nearest-neighbor bonds in the square lattice, and ⟨⟨i, j⟩⟩                      named the patterns λ4-λ15 and the patterns λ16-λ27, re-
+represents the next-nearest-neighbor bonds belonging to                         spectively.  These three kinds of patterns have negative
+orthogonal dimer.  In what follows, we take J1 as units of                      eigenenergies in the most region of the κ, thus are impor-
+energy and introduce α = J2/J1, representing a dimen-                           tant to the ground state and the low-lying excited states.
+sionless frustration parameter.  Thus Eq.  (1) is reformu-                      The remainders, i.e.  the patterns λ28-λ33, the patterns
+lated as  ˆH′ =  J12  ˆH, where                                                 λ34-λ45  and  λ46-λ48,  have  positive  eigenenergies  which
+             ˆSi  · ˆSj + ˆSj  · ˆSi              ˆSi  · ˆSj + ˆSj  · ˆSi       have zero or less contributions to the cases we consider
+ ˆH = X                             + α X                                .      here.  Therefore, we only list the details in Fig.  1 for first
+
+      ⟨i,j⟩                               ⟨⟨i,j⟩⟩                               three kinds of patterns.
+                                                                       (2)         Now we check domain numbers along diagonals of the
+ Furthermore, Eq.  (2) can be written equivalently as a                         SS model, as done in the square J1-J2 Heisenberg model
+3L × 3L matrix                                                                  [35].   For  each  site  i,  there  are  three  spin  components
+    ˆH =    ˆSx1   i ˆSy                                                       (Sxi ,−iSyi , Szi ) in which Szi  represents spin states (spin-
+                    1   ˆSz1   ˆSx2   i ˆSy2   ˆSz2  ···   ˆSxL  i ˆSyL   ˆSzLup  or  spin-down)  and  other  two  components  represent
+          0   0   0  1  0  0  ···   α  0   0                                    dynamical information (spin flip).  We label spin states
+      0   0   0  0  1  0  ···   0  α  0         with different colors according to the plus or minus sign
+          0   0   0  0  0  1  ···   0   0  α                                    of the coefficients un,3i  and choose one diagonal as rep-
+          1   0   0  0  0  0  ···   0   0   0                                   resentative, as shown in Fig.  1.  The patterns λ1-λ3 have
+   ×      0   1   0  0  0  0  ···   0   0   0      ×                    (3)     a feature of diagonal single-domain and spins show op-
+          0   0   1  0  0  0  ···   0   0   0                                   posite alignment.  Therefore the patterns λ1-λ3 are iden-
+          ...   ...   ...   ...   ...   ...   ...   ...   ...   ...             tified as the N´eel AFM state.  The patterns λ4-λ15 have
+          α  0   0  0  0  0  ···   0   0   0                                    a feature of diagonal two-domain.  The patterns λ16-λ27
+          0  α  0  0  0  0  ···   0   0   0                                     not only have diagonal four-domain but also contain diag-
+          0   0  α  0  0  0  ···   0   0   0                                    onal single-domain (dashed blue line).  For this pattern,
+      ˆSx1  −i ˆSy                                                    T ,      we  mark  the  orthogonal  dimer  bonds  of  the  SS  lattice
+                1   ˆSz1   ˆSx2  −i ˆSy2   ˆSz2  ···   ˆSxL  −i ˆSyL   ˆSzL     with blue lines, shown in the lower right of Fig.  1.  Ob-
+                                                                                viously, the patterns λ16-λ27 have a feature of DS state.
+where  the  superscript  T  denotes  transpose.   This  ma-                        After identifying the characteristic features of the pat-
+trix can be diagonalized to obtain eigenvalues and cor-                         terns, it is interesting to check the corresponding eigenen-
+responding  eigenfunctions  {λn, un}(n  =  1, 2,··· , 3L),                      ergies of these patterns, shown in Fig.  2.  At small κ, the
+which  define  the  patterns  marked  by  λn.   Thus  the  SS                   patterns λ1-λ3 have lower energies and this regime is the
+                                                                                                                                                          3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  1.   The  patterns  and  their  relative  phases  obtained  by  diagonalization  in  operator  space,  marked  by  the  single-body
+operators Eq.  (5) with (±,±,±) denoting the signs of (un,3i−2, un,3i−1, un,3i).  The four diagonal sites are marked by orange
+and green representing (±,±, +) and (±,±,−).  In addition, the patterns are free of a total phase factor eiπ but their relative
+phases remain fixed.  The bottom right is the orthogonal dimer bonds of the SS lattice.
+
+
+
+                                                                                about phase transitions and the intermediate regime, we
+                                                                                do further calculations.                           h ˆAni
+                                                                                   We   firstly   obtains   the   matrix
+                                                                                                                                          {Szi },{Szi }′    =
+                                                                                ⟨{Szi }| ˆAn|{Szi }′⟩  by  inserting  into  the  complete  basis
+                                                                                |{Szi }⟩ and then Eq.  (4) can be solved by diagonalizing
+                                                                                the matrix with elements
+
+                                                                                                                   3LX
+                                                                                         ⟨{Szi }| ˆH|{Szi }′⟩ =        λn
+                                                                                                            h ˆA†nin=1           h ˆAni
+                                                                                                  × X
+                                                                                                     {Szi }′′      {Szi },{Szi }′′     {Szi }′′,{Szi }′ . (7)
+
+
+FIG. 2.  The eigenenergies of the patterns as functions of the                  Figure 3 (a1) & (b1) present the results for the ground
+frustrated parameter κ for L = 4 × 4 lattice size.                              state and the first excited state energies as functions of κ,
+                                                                                as shown by thick black solid lines, respectively.  Direct
+                                                                                numerical ED results are also presented to check the va-
+                                                                                lidity of the pattern picture, shown as circles.  The exact
+                                                                                agreement between them is noticed, which is not surpris-
+N´eel AFM phase in nature.  As κ increases, the patterns                        ing since no any approximation has been introduced.
+λ1-λ3 first compete with the patterns λ4-λ15, then com-                            Identifying  the  Phases  in  the  SS  Model.—Fig.  3 (a1)
+pete  with  the  patterns  λ16-λ27.   The  two  intersections                   is  the  dissection  of  the  ground  state  energy  which  can
+indicate  that  the  system  takes  place  two  phase  transi-                  be  roughly  divided  into  three  regions  according  to  two
+tions or crossovers.  To obtain more detailed information                       intersections, as shown in the inset of (a1).  Region I is
+                                                                                                                                                       4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  3.    (a1)  &  (b1)  The  ground  state  and  the  first  ex-            FIG. 4.  (a) The patterns’ occupancy in the ground state and
+cited  state  energies  as  functions  of  the  frustration  parame-           (b) the first excited state as functions of κ.  The jitter in (b)
+ter  κ  (thick  black  solid  lines)  and  their  pattern  dissections         is due to the degeneracy of the first excited state with higher
+(thin  color  solid  lines).    ED  results  (circles)  are  also  pre-        excited states.
+sented.  The vertical dashed-lines in the inset of (a1) marks
+two cross points, κc1 ≈ 0.5609 (αc1 ≈ 1.277) and κc2 ≈ 0.6
+(αc2 ≈ 1.5), respectively, which divide the frustration param-
+eter κ into three regions:  I, the N´eel AFM; II, the diagonal
+two-domain dominant; and III, the DS state.  (a2) & (b2) The                   a first-order phase transition occurs.  This is consistent
+second  derivatives  of  the  corresponding  energy  levels  (thick            with the results reported in literature [9–11, 13, 16, 17].
+black solid lines) and their pattern dissections (thin color solid             At  κc1  ≈  0.5609,  the  second  derivative  is  continuous
+lines).                                                                        which suggests that the phase transition does not occur
+                                                                               at κc1, but other ways such as series expansions or corre-
+                                                                               lation functions suggest that the phase transition occurs
+                                                                               [11, 16, 17, 19].  This is the origin of controversies.  The
+the N´eel AFM phase, where the patterns λ1-λ3 dominate                         pattern  picture  clearly  shows  what  happened  near  κc1:
+over others.  The patterns λ4-λ15 also have a remarkable                       the  patterns  λ4-λ15  defeat  the  patterns  λ1-λ3  and  the
+contribution.   Other  patterns  almost  have  no  contribu-                   model  evolves  from  diagonal  single-domain  to  diagonal
+tion to this region.  Region II is dominated by the pat-                       two-domain, i.e.  from the N´eel AFM to the intermidiate
+terns λ4-λ15.   In  this  region,  the  contribution  from  the                phase.  In addition, it is worth mentioning that the two
+patterns  λ1-λ3  fades  away  and  that  from  the  patterns                   cross points are roughly consistent with those reported
+λ4-λ15 grows up slowly.  Therefore, this region is mainly                      in the literature [14, 16, 17, 19, 36–38], irrespective of the
+characterized by the patterns λ4-λ15, which have diago-                        small lattice size we consider here.
+nal two-domain.  The cross point is about κc1 ≈ 0.5609                            We  also  analyzed  the  first  excited  state  by  the  same
+(αc1 ≈  1.277).   Region  III  is  the  DS  phase.   The  cross                way, as shown in Fig.  3 (b1) and Fig.  4 (b).  The con-
+point  is  about  κc2  ≈  0.6  (αc2  ≈  1.5).   In  this  region,              tributions  of  different  patterns  have  similar  behaviors,
+the patterns λ4-λ15 and the patterns λ16-λ27 are of equal                      but the first excited state occurs more first-order phase
+importance, as shown in Fig.  3 (a1).  However, from the                       transitions.  At κ ≈ 0.6 (α ≈ 1.5), there occur three first-
+patterns’ occupancy defined as O = ⟨Ψ| ˆA†n ˆAn|Ψ⟩ where                       order phase transitions in quick succession.  Besides, at
+|Ψ⟩ is the wavefunction, the patterns λ16-λ27 have more                        κ ≈ 0.5657 (α ≈ 1.3025) and κ ≈ 0.6432 (α ≈ 1.8026),
+large occupancy than the patterns λ4-λ15, shown in Fig.                        there also take place first-order phase transitions.  Figs.
+4 (a). Thus, the physics of this region is dominated by the                    3 (b2) provides the second derivative of the first excited
+patterns λ16-λ27, identified as the DS state.  In addition,                    state  energy,  which  confirm  the  above  statement.   The
+the patterns λ34-λ45  have a minor positive contribution                       patterns’  occupancy  gives  information  consistent  with
+caused by the interplay between the quantum fluctuation                        the above and we do not analyze further.
+and the magnetic exchange interactions.  Other patterns                           Summary  and  Discussion.—We  use  the  pattern  lan-
+almost have no contributions to the ground state energy.                       guage to explore the SS model with a small lattice size of
+   Fig.  3 (a2) is the second derivative of the ground state                   L = 4× 4.  By diagonalizing the Hamiltonian in an oper-
+and their pattern dissections.  Obviously,  at  κc2 ≈ 0.6,                     ator space, we obtain six kinds of spin-patterns.  Then we
+                                                                                                                                                         5
+
+employ spin-patterns to identify the ground state phases.                            phases of the shastry-sutherland antiferromagnet: Appli-
+Our results show that the ground state could be qualita-                             cation to srcu2(bo3)2, Phys. Rev. B 64, 134407 (2001).
+tively divided into three regions, where region I at small κ                    [11]  A. Koga and N. Kawakami, Quantum phase transitions
+and region III at large κ are identified as the N´eel AFM                            in  the  shastry-sutherland  model  for  srcu2(bo3)2,  Phys.
+phase  and  the  DS  one,  respectively.   The  intermediate                         Rev. Lett. 84, 4461 (2000).
+regime with maximal frustration has a feature of diago-                         [12]  Y. Takushima, A. Koga, and N. Kawakami, Competing
+                                                                                     spin-gap phases in a frustrated quantum spin system in
+nal two-domain structure.  At αc1 ≈ 1.277, the SS model                              two dimensions, Journal of the Physical Society of Japan
+evolves from the the N´eel AFM phase to diagonal two-                                70, 1369 (2001).
+domain dominated phase. At αc2 ≈ 1.5, the model occurs                          [13]  A. L¨auchli, S. Wessel, and M. Sigrist, Phase diagram of
+a first-order phase transition from diagonal two-domain                              the quadrumerized shastry-sutherland model, Phys. Rev.
+dominated phase to the DS one.                                                       B 66, 014401 (2002).
+                                                                                [14]  H.   Nakano   and   T.   Sakai,   Third   boundary   of   the
+   Increasing  lattice  size,  the  pattern  will  show  more                        shastry–sutherland model by numerical diagonalization,
+abundant  features,   such  as  more  domain  structures.                            Journal  of  the  Physical  Society  of  Japan  87,  123702
+However, the phenomena that the phase diagram evolves                                (2018).
+from the N´eel AFM state to the intermediate state, then                        [15]  S.  Moukouri,  Plaquette  ground  state  of  the  shastry-
+to the DS state with κ increasing does not change, only                              sutherland   model:      Density-matrix   renormalization-
+the phase transition points are slightly shifted.  This will                         group calculations, Phys. Rev. B 78, 132405 (2008).
+be testified in the future study.                                               [16]  J. Y. Lee, Y.-Z. You, S. Sachdev, and A. Vishwanath, Sig-
+                                                                                     natures of a deconfined phase transition on the shastry-
+   Acknowledgments.—The work is partly supported by                                  sutherland  lattice:    Applications  to  quantum  critical
+the National Key Research and Development Program of                                 srcu2(bo3)2, Phys. Rev. X 9, 041037 (2019).
+China (Grant No.  2022YFA1402704) and the programs                              [17]  P.  Corboz  and  F.  Mila,  Tensor  network  study  of  the
+for  NSFC  of  China  (Grant  No.   11834005,  Grant  No.                            shastry-sutherland  model  in  zero  magnetic  field,  Phys.
+12247101).                                                                           Rev. B 87, 115144 (2013).
+                                                                                [18]  J. Wang,  H. Li,  N. Xi,  Y. Gao,  Q.-B. Yan,  W. Li, and
+                                                                                     G. Su, Plaquette singlet transition, magnetic barocaloric
+                                                                                     effect,  and  spin  supersolidity  in  the  shastry-sutherland
+                                                                                     model, Phys. Rev. Lett. 131, 116702 (2023).
+                                                                                [19]  N. Xi, H. Chen, Z. Y. Xie, and R. Yu, Plaquette valence
+   ∗  luohg@lzu.edu.cn                                                               bond solid to antiferromagnet transition and deconfined
+ [1]  C.  Lacroix,  P.  Mendels,  and  F.  Mila,  Introduction  to                   quantum critical point of the shastry-sutherland model,
+     Frustrated  Magnetism:  Materials,  Experiments,  Theory                        Phys. Rev. B 107, L220408 (2023).
+     (Springer, 2011).                                                          [20]  M.  E.  Zayed,  C.  R¨uegg,  J.  Larrea  J.,  A.  M.  L¨auchli,
+ [2]  B. Sriram Shastry and B. Sutherland, Exact ground state                        C.  Panagopoulos,   S.  S.  Saxena,   M.  Ellerby,   D.  F.
+     of a quantum mechanical antiferromagnet, Physica B+C                            McMorrow,  T.  Str¨assle,  S.  Klotz,  G.  Hamel,  R.  A.
+     108, 1069 (1981).                                                               Sadykov, V. Pomjakushin, M. Boehm, M. Jim´enez–Ruiz,
+ [3]  S. Miyahara and K. Ueda, Exact dimer ground state of                           A.   Schneidewind,   E.   Pomjakushina,   M.   Stingaciu,
+     the two dimensional heisenberg spin system srcu2(bo3)2,                         K. Conder, and H. M. Rønnow, 4-spin plaquette singlet
+     Phys. Rev. Lett. 82, 3701 (1999).                                               state in the shastry–sutherland compound srcu2(bo3)2,
+ [4]  H. Kageyama, K. Yoshimura, R. Stern, N. V. Mushnikov,                          Nature Physics 13, 962 (2017).
+     K. Onizuka, M. Kato, K. Kosuge, C. P. Slichter, T. Goto,                   [21]  C. Boos, S. P. G. Crone, I. A. Niesen, P. Corboz, K. P.
+     and  Y.  Ueda,  Exact  dimer  ground  state  and  quantized                     Schmidt, and F. Mila, Competition between intermedi-
+     magnetization plateaus in the two-dimensional spin sys-                         ate plaquette phases in srcu2(bo3)2 under pressure, Phys.
+     tem srcu2(bo3)2, Phys. Rev. Lett. 82, 3168 (1999).                              Rev. B 100, 140413 (2019).
+ [5]  J. G. Bednorz and K. A. M¨uller, Possible high Tc super-                  [22]  Y.  Cui,  L.  Liu,  H.  Lin,  K.-H.  Wu,  W.  Hong,  X.  Liu,
+     conductivity  in  the  Ba-La-Cu-O  system,  Zeitschrift  fur                    C. Li,  Z. Hu,  N. Xi,  S. Li,  R. Yu,  A. W. Sandvik, and
+     Physik B Condensed Matter 64, 189 (1986).                                       W. Yu, Proximate deconfined quantum critical point in
+ [6]  Z.  Weihong,  C.  J.  Hamer,  and  J.  Oitmaa,  Series  ex-                    srcu2(bo3)2, Science 380, 1179 (2023).
+     pansions  for  a  heisenberg  antiferromagnetic  model  for                [23]  J.  Yang,  A.  W.  Sandvik,  and  L.  Wang,  Quantum  crit-
+     srcu2(bo3)2, Phys. Rev. B 60, 6608 (1999).                                      icality  and  spin  liquid  phase  in  the  shastry-sutherland
+ [7]  E.  M¨uller-Hartmann,  R.  R.  P.  Singh,  C.  Knetter,  and                   model, Phys. Rev. B 105, L060409 (2022).
+     G.  S.  Uhrig,  Exact  demonstration  of  magnetization                    [24]  L. Wang, Y. Zhang, and A. W. Sandvik, Quantum spin
+     plateaus and first-order dimer-n´eel phase transitions in a                     liquid phase in the shastry-sutherland model detected by
+     modified shastry-sutherland model for srcu2(bo3)2, Phys.                        an improved level spectroscopic method, Chinese Physics
+     Rev. Lett. 84, 1808 (2000).                                                     Letters 39, 077502 (2022).
+ [8]  A. Isacsson and O. F. Sylju˚asen, Variational treatment of                [25]  W. Zheng, J. Oitmaa, and C. J. Hamer, Phase diagram
+     the  shastry-sutherland  antiferromagnet  using  projected                      of the shastry-sutherland antiferromagnet, Phys. Rev. B
+     entangled pair states, Phys. Rev. E 74, 026701 (2006).                          65, 014408 (2001).
+ [9]  M. Albrecht and F. Mila, First-order transition between                   [26]  D. Carpentier and L. Balents, Field theory for general-
+     magnetic order and valence bond order in a 2d frustrated                        ized shastry-sutherland models, Phys. Rev. B 65, 024427
+     heisenberg model, Europhysics Letters 34, 145 (1996).                           (2001).
+[10]  C. H. Chung, J. B. Marston, and S. Sachdev, Quantum                       [27]  D. C. Ronquillo and M. R. Peterson, Identifying topolog-
+                                                                                                                                                              6
+
+     ical order in the shastry-sutherland model via entangle-                           next-nearest-neighbor  Ising  model  in  a  transverse  field,
+     ment entropy, Phys. Rev. B 90, 201108 (2014).                                      arXiv e-prints , arXiv:2301.08891 (2023).
+[28]  A.  Kele¸s  and  E.  Zhao,  Rise  and  fall  of  plaquette  or-              [34]  Y.-T. Yang and H.-G. Luo, Topological or not?  A unified
+     der in the shastry-sutherland magnet revealed by pseud-                            pattern  description  in  the  one-dimensional  anisotropic
+     ofermion functional renormalization group, Phys. Rev. B                            quantum XY model with a transverse field, arXiv e-prints
+     105, L041115 (2022).                                                               , arXiv:2302.13866 (2023).
+[29]  Y.-T.  Yang  and  H.-G.  Luo,  Dissecting  Superradiant                      [35]  Y.-T. Yang,  F.-Z. Chen,  C. Cheng, and H.-G. Luo, An
+     Phase Transition in the Quantum Rabi Model, arXiv e-                               explicit evolution from N´eel to striped antiferromagnetic
+     prints , arXiv:2212.05186 (2022).                                                  states  in  the  spin-1/2  J1-J2  Heisenberg  model  on  the
+[30]  Y.-T. Yang and H.-G. Luo, Dissecting Quantum Phase                                square lattice, arXiv e-prints , arXiv:2310.09174 (2023).
+     Transition in the Transverse Ising Model, arXiv e-prints                      [36]  R. Darradi, J. Richter, and D. J. J. Farnell, Coupled clus-
+     , arXiv:2212.12702 (2022).                                                         ter treatment of the shastry-sutherland antiferromagnet,
+[31]  Y.-T.  Yang  and  H.-G.  Luo,  First-Order  Excited-State                         Phys. Rev. B 72, 104425 (2005).
+     Quantum   Phase   Transition   in   the   Transverse   Ising                  [37]  J.  Lou,   T.  Suzuki,   K.  Harada,  and  N.  Kawashima,
+     Model   with   a   Longitudinal   Field,   arXiv   e-prints   ,                    Study of the shastry sutherland model using multi-scale
+     arXiv:2301.02066 (2023).                                                           entanglement  renormalization  ansatz,  arXiv  e-prints  ,
+[32]  Y.-T. Yang and H.-G. Luo, Pattern Description of Quan-                            arXiv:1212.1999 (2012).
+     tum Phase Transitions in the Transverse Antiferromag-                         [38]  H.   Nakano   and   T.   Sakai,   Large-scale   numerical-
+     netic  Ising  Model  with  a  Longitudinal  Field,  arXiv  e-                      diagonalization  study  of  the  shastry–sutherland  model,
+     prints , arXiv:2301.05040 (2023).                                                  in  Proceedings  of  the  29th  International  Conference  on
+[33]  Y.-T.  Yang  and  H.-G.  Luo,  Pattern  description  of  the                      Low Temperature Physics (LT29) (2022).
+     ground  state  properties  of  the  one-dimensional  axial

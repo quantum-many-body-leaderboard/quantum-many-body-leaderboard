@@ -1,0 +1,1480 @@
+     Signatures of a Deconﬁned Phase Transition on the Shastry-Sutherland Lattice:
+                                  Applications to Quantum Critical SrCu2(BO3)2
+
+                       Jong  Yeon  Lee,1  Yi-Zhuang  You,1, 2  Subir  Sachdev,1  and  Ashvin  Vishwanath1
+                       1Department  of  Physics,  Harvard  University,  Cambridge,  Massachusetts  02138,  USA
+                       2Department  of  Physics,  University  of  California,  San  Diego,  California  92093,  USA
+                                                          (Dated:  September 13, 2019)
+                   We study a possible deconﬁned quantum phase transition in a realistic model of a two-dimensional
+                Shastry-Sutherland quantum magnet,  using both numerical and ﬁeld theoretic techniques.  Using
+                the  inﬁnite  density  matrix  renormalization  group  (iDMRG)  method,  we  verify  the  existence  of
+                an  intermediate  plaquette  valence  bond  solid  (pVBS)  order,  with  two  fold  degeneracy,  between
+                the  dimer  and  N´eel  ordered  phases.   We  argue  that  the  quantum  phase  transition  between  the
+                N´eel and pVBS orders may be described by a deconﬁned quantum critical point (DQCP) with an
+                emergent O(4) symmetry.  By analyzing the correlation length spectrum obtained from iDMRG, we
+                provide evidence for the DQCP and emergent O(4) symmetry in the lattice model.  Such a phase
+                transition has  been reported in  the recent  pressure tuned experiments in  the Shastry-Sutherland
+                lattice material SrCu2(BO3)2 [1].  The non-symmorphic lattice structure of the Shastry-Sutherland
+                compound leads to extinction points in the scattering, where we predict sharp signatures of a DQCP
+                in both the phonon and magnon spectra associated with the spinon continuum.  The eﬀect of weak
+                interlayer couplings present in the three dimensional material is also discussed.  Our results should
+                help guide the experimental study of DQCP in quantum magnets.
+
+
+                              Contents                                                             I.    INTRODUCTION
+
+     I. Introduction                                                     1       Quantum  magnets  can  host  some  of  the  most  exotic
+                                                                              phenomena  in  condensed  matter  physics,  due  to  the
+   II. Numerical Study                                             3          strong quantum ﬂuctuations of the microscopic spin de-
+        A.  Detection of the pVBS Phase               3                       grees of freedom.  Notably, deconﬁned gauge ﬂuctuations
+         B.  Correlation Length Spectra, Monopole                             and fractionalized spinon excitations can emerge in quan-
+             Fluctuations, and Emergent O(4) Symmetry4                        tum magnets, which bear no analog in classical spin sys-
+                                                                              tems.  Such behavior can exist either in a quantum spin
+  III. Symmetry Analysis                                         5            liquid,  which  is  a  stable  phase  of  matter  with  topolog-
+                                                                              ical  order  [2–4];  or  by  tuning  a  single  parameter  to  a
+  IV. Dangerously Irrelevant Scaling and Its                                  critical point known as the deconﬁned quantum critical
+        Absence                                                             7 point (DQCP) [5,6].  The DQCP describes the possible
+                                                                              continuous  phase  transition  between  two  distinct  sym-
+    V. Spectral Signatures of DQCP                       10                   metry breaking phases, which is beyond the conventional
+                                                                              Landau-Ginzburg paradigm.  While the search for quan-
+  VI. Eﬀects of Interlayer Coupling                      12                   tum spin liquids is still an ongoing research eﬀort in con-
+                                                                              densed matter physics [7], the possibility of observing the
+ VII. Predictions for Experiment                           14                 DQCP in materials could provide us with an alternative
+                                                                              opportunity to study the properties of deconﬁned spinons
+VIII. Conclusions                                                       15    and emergent gauge ﬁelds in quantum magnets, as well
+                                                                              as in interacting fermion systems that realizes the DQCP
+        Acknowledgments                                            15         [8–13].
+                                                                                 In  a  recent  experiment  [1],  a  phase  transition  be-
+    A. Monopole Transformation                             15                 tween N´eel antiferromagnet and plaquette valence bond
+                                                                              solid(crystal)[14]  was  observed  in  a  single  crystal  of
+    B. Comparison with a DMRG simulation                                      SrCu2(BO3)2  under pressure.  The material is a layered
+        result of the J1-J2 model in the square                               quantum  magnet.   Within  each  two-dimensional  layer,
+        lattice                                                                 17the copper ions carry the spin-1/2 degrees of freedom and
+                                                                              are arranged on a Shastry-Sutherland lattice as shown in
+    C. VBS-Phonon Coupling and Phonon                                         Fig.1(a).  The spin system was proposed to be eﬀectively
+        Spectrum                                                           19 described by the Shastry-Sutherland model [15,16]
+                                                                                        H =J1       ∑      Si·Sj +J2         ∑      Si·Sj,        (1)
+    D. Detailed Numerical Data                               21
+                                                                                                   ij∈n.n.                ij∈dimer
+        References                                                         22 where  the J1  and J2  bonds  are  speciﬁed  according  to
+                                                                                                                                                      2
+
+                                                                              and  N´eel  phases  could  be  ﬁrst-order[22, 23].   However,
+                                                                              despite  being  ﬁrst-order,  the  transition  is  accompanied
+                                                                              with an extended region of quantum-critical-like scaling
+                                                                              and an emergent O(4) symmetry, implying that the tran-
+                                                                              sition could be close to a DQCP (possibly as an avoided
+                                                                              criticality).  Thus the DQCP is still the best theory to ac-
+                                                                              count for these anomalous features in the critical region,
+                                                                              even  though  it  may  eventually  break  down  at  longest
+                                                                              scales.   Note  that  the J-Q  model  or  loop  model  stud-
+                                                                              ied in Monte Carlo simulations[22,23] are designed dif-
+                                                                              ferently  from  the  original  Shastry-Sutherland  model  to
+                                                                              avoid the sign problem.  Given that the ﬁrst- or second-
+                                                                              order  nature  of  the  transition  can  be  tuned  by  model
+                                                                              parameters  [24–27]  and  is  therefore  a  model-dependent
+                                                                              property,  the  fate  of  the  pVBS-N´eel  transition  in  the
+                                                                              Shastry-Sutherland  model  remains  to  be  fully  resolved
+FIG.  1:   (a)  The  Shastry-Sutherland  lattice  of  copper  sites           yet.
+(small  circles)  in  SrCu2(BO3)2,  on  which  the  spins  reside.               The  goal  of  this  work  is  to  investigate  the  pVBS-
+The spins are coupled across nearest neighbor bonds (J1, in                   N´eel transition in the Shastry-Sutherland model Eq. (1)
+blue) and dimer bonds (J2, in red).  Each unit cell contains                  in  more  detail  using  both  ﬁeld  theory  and  the  density
+four sites,  as shaded in yellow.  The glide reﬂection Gx, Gy                 matrix  renormalization  group  (DMRG)  approach,  and
+and the diagonal reﬂectionσxy,σx¯y symmetries are indicated                   to identify the unique signatures of DQCP that can be
+on the lattice.  (b) Diﬀraction peaks from copper sites.  The                 probed by inelastic neutron scattering (INS) or resonant
+darker dot indicates a higher intensity.  The extinction points               inelastic  X-ray  scattering  (RIXS)  experiments.   We  use
+are  marked  out  by  red  circles.   The  ﬁrst  Brillouin  zone  is          the inﬁnite DMRG technique to overcome the sign prob-
+shaded in yellow, corresponding to the unit cell in (a).  Spe-                lem. Our numerical simulation indicates (i) that the tran-
+cial momentum points Γ,X,Y,M  are deﬁned as labeled.  (c)                     sition between pVBS and N´eel phases appears continuous
+The phase diagram of the spin model Eq. (1).  The N´eel anti-                 up to the largest available system size (inﬁnite cylinder
+ferromagnetic  and  dimer  valence  bond  solid  (dVBS)  phases
+are  separated  by  the  intermediate  plaquette  valence  bond               with the circumference of 10 lattice sites),  although we
+solid (pVBS) phase upon tuning theJ1/J2 ratio.  The critical                  can  not  rule  out  the  possibility  of  a  weakly  ﬁrst-order
+points are determined in Tab.Ibased on our iDMRG result.                      transition  due  to  our  limited  system  size.   (ii)  We  also
+The transition between pVBS and N´eel phases is likely to be                  observe the asymptotic degeneracy between spin-triplet
+a DQCP (or weakly ﬁrst-order proximate to a DQCP).                            and  spin-singlet  excitations  over  a  large  length  scale,
+                                                                              demonstrating an approximate emergent O(4) symmetry
+                                                                              which rotates among the N´eel and pVBS order parame-
+                                                                              ters.  Our theoretical analysis further suggests that (iii)
+Fig.1(a).   The  ratio    J1/J2  between  the  coupling  con-                 in  the  Shastry-Sutherland  lattice,  in  contrast  to  previ-
+stants is tunable by pressure in experiments within cer-                      ous realizations of DQCP, a dangerously irrelevant oper-
+tain range.  In the large J1 (or largeJ2) limit, the model                    ator is absent which has consequences for numerics and
+reduces  to  the  square  lattice  Heisenberg  model  (or  the                that (iv) critical spinon continua appear at the extinction
+decoupled  dimerized  model),  which  stabilizes  the  N´eel                  points of lattice diﬀraction peaks (c.f. Fig.1(b)) in both
+phase (or the dimer valence bond solid (dVBS) phase).                         the  magnon  and  phonon  channels  at  low-temperature
+Between these two limits, numerical [14,17–20] and the-                       around  the  DQCP.  The  universal  critical  behaviors  of
+oretical  [21]  analysis  of  the  model  have  revealed  an  in-             these continua are examined as well, which could guide
+termediate plaquette valence bond solid (pVBS) phase,                         the  experimental  study  of  the  candidate  DQCP  in  the
+as  illustrated  in  Fig.1(c).   Remarkably,  the  experiment                 SrCu2(BO3)2 material.
+in Ref.1seems to conﬁrm this phase diagram.  Since the                           The  rest  of  the  paper  is  organized  as  follows.    In
+pVBS and N´eel phases separately break two distinct sym-                      Sec.II, we perform an inﬁnite DMRG simulation on the
+metries,  the  lattice  and  the  spin  rotation  symmetry,  a                Shastry-Sutherland  spin  model  and  discuss  the  nature
+direct second-order transition between them would nec-                        of  the  phase  transition  between  N´eel  and  VBS  phases
+essarily go beyond the Landau-Ginzburg paradigm and                           based  on  a  correlation  length  spectra.   In  Sec.III,  we
+point to the possibility of the DQCP. Although the na-                        analyze symmetry quantum numbers of a monopole op-
+ture of the pVBS-N´eel transition remains unresolved by                       erator whose proliferation induces the transition to the
+experiments,  there  are  promising  signs  for  the  exciting                VBS  phase.   By  investigating  the  transformation  prop-
+opportunity  that  SrCu2(BO3)2  might  provide  the  ﬁrst                     erty of the monopole, we show that the single-monopole
+experimental platform to realize DQCP.                                        term is suppressed while the double-monopole term can
+  Recent studies on diﬀerent models with the same sym-                        appear  in  the  action  describing  the  N´eel  order  in  the
+metry  class  showed  that  the  transition  between  pVBS                    Shastry-Sutherland lattice.  We compare the diﬀerences
+                                                                                                                                                  3
+
+among various microscopic models – easy-plane, rectan-
+gular,  and  Shastry-Sutherland  –  whose  possible  emer-
+gent  symmetry  is  all  O(4).   One  distinct  feature  of  the
+Shastry-Sutherland lattice is the presence of the relevant
+anisotropy operator that breaks the four-fold lattice rota-
+tion symmetry, which stabilizes the VBS order and gives
+rise  to  a  fast-growing  spectral  gap  in  the  spin-0  chan-
+nel as the system enters the VBS phase.  In Sec.V, we                       FIG. 2:   Visualization of bond strengths⟨Si·Sj⟩ within the
+propose the spectral signatures of DQCP in the Shastry-                     iDMRG  unit  cell.   ˆx-direction  is  along  the  cylinder,  and  ˆy-
+Sutherland model, including the SO(4) conserved current                     direction is around the circumference.  The width of the bond
+ﬂuctuation in the magnon spectrum and the VBS ﬂuc-                          represents the value ofS1·S2.  The line color is black (red) if
+tuation in the phonon spectrum.  Both of these features                     S1·S2 is negative (positive).  One can notice that the singlet
+appear at the extinction point of the Shastry-Sutherland                    is formed at a plaquette.
+lattice, which is detectable at low energy without over-
+whelmed by the elastic scattering signals.  We conclude
+our discussion in Sec.VII.
+                                                                            iDMRG simulation provides some bias to the preferred
+                                                                            entanglement structure for the ground state.  As a result,
+                II.    NUMERICAL STUDY                                      in the pVBS phase, one of two symmetry broken phases
+                                                                            would be automatically chosen and the order parameter
+  In this section, we study the model in Eq. (1) using the                  would  not  vanish  in  the  iDMRG  simulation.   To  char-
+inﬁnite density matrix renormalization group (iDMRG)                        acterize the pVBS phase, we deﬁne the plaquette order
+method [28,29].  We wrap the 2D system onto a cylin-                        parameter as follows (See Eq. (5) and Eq. (6) in Sec.III
+der which is inﬁnite alongx-direction but compact along                     for a more rigors deﬁnition),
+y-direction, with a ﬁnite circumference L.  In the simu-
+lation,  spin-1/2s are mapped into the hard-core bosons
+with density⟨n⟩ = 1/2 per site; an antiferromagnetic spin                       Im⟨M⟩∼∑(−)x⟨Si·Si+ˆx⟩− (−)y⟨Si·Si+ˆy⟩.    (2)
+interaction  would  then  be  translated  into  hopping  and                                   i
+density-density interaction terms for bosons.  As the bo-
+son number is conserved in the simulation, we have an ex-
+plicit U(1)z symmetry which allows us to extract correla-                   In  the  pVBS  phase,  the  dimer  strengths ⟨Si·Sj⟩  on
+tion functions for an operator with a speciﬁc U(1)z quan-                   each bond⟨ij⟩ can be visualized in Fig.2, which clearly
+tum number.  During the simulation, we ﬁxed the value                       demonstrates the pattern of the pVBS ordering around
+ofJ2 = 1 and tuned the value ofJ1 across the phase tran-                    empty  (square)  plaquettes.   Indeed,  we  measured  that
+sition between the pVBS and N´eel order phases.  Since                      Im⟨M⟩⁄= 0 and Re⟨M⟩ = 0 in the paramagnetic regime
+the unit cell of Shastry-Sutherland lattice contains 2× 2                   as expected for the pVBS phase.  (See Fig.4)
+square unit cells, the iDMRG unit cell becomes 2× (2m)
+slice of the inﬁnite cylinder, where the circumference of                      Although  the  plaquette  order  parameter  Im⟨M⟩  is  a
+the cylinder L = 2m.                                                        useful indicator, it is not precise because (i) the system
+  In the iDMRG simulation, we have two limiting factors                     size does not reach the thermodynamic limit and (ii) the
+to describe the exact two-dimensional state:  the circum-                   geometry of the iDMRG simulation provides some bias
+ference lengthL and the bond dimension χ.  Due to lim-                      toward a speciﬁc entanglement structure for the ground
+ited computational capacity, it is diﬃcult to conclusively                  state.  Albeit small, it has a non-vanishing value in the
+identify  whether  the  phase  transition  is  continuous  or               N´eel  phase,  see  Fig.4.  Thus,  we use  a  discontinuity  in
+weakly ﬁrst order in the DMRG simulation.  Still, we can                    the  second  derivative  of  the  energy ∂2E/∂J21  to  locate
+extract useful information of the ground state by simulat-                  the pVBS-N´eel transition point.  Up to L = 10, the ﬁrst
+ing the model with increasing values ofL andχ.  For the                     order derivative of energy is continuous across the phase
+discussionon  bond  dimension  scaling,  see  Appendix.D.                   transition, implying that the transition is either a weakly
+In  the  DMRG  simulation,  we  measured  (i)  energy,  (ii)                ﬁrst order or second order transition.  On the other hand,
+plaquette  order  parameter,  and  (iii)  correlation  length               from the energy plot in Fig.3, the dVBS-pVBS transition
+spectra.                                                                    point can be easily extracted because the dVBS state is
+                                                                            an exact ground state of Eq.1with energy per site   Esite =
+            A.    Detection of the pVBS Phase                               −0.375J2.  As we can see, the ﬁrst order derivative of the
+                                                                            energy is discontinuous here, signaling a clear ﬁrst-order
+                                                                            phase transition between the two spin singlet dVBS and
+  Although the matrix product state description of the                      pVBS phases.  For L < 6, we do not observe the pVBS
+state  is  exact  in  the  inﬁnite  bond  dimension  limit,  for            phase.   Transition  points  for  diﬀerent  system  sizes  are
+a ﬁnite bond dimension, the cylindrical geometry of the                     summarized in Tab.I.
+                                                                                                                                                    4
+
+                        L = 6     L = 8     L = 10    L = 12
+         (J1/J2)c1       0.682     0.677     0.675     0.675
+          (J1/J2)c2      0.693     0.728     0.762     0.77
+
+
+TABLE I:   (J1/J2)c1  ((J1/J2)c2) is the transition point be-
+tween the dVBS and pVBS (pVBS and N´eel) phases.  Transi-
+tion points are extracted from the peak of the energy deriva-
+tive at χ = 4000.  At L = 12, the DMRG simulation do not
+converge for diﬀerent initial states at χ = 4000, resulting in
+diﬀerent transition points.  Thus, the critical point is deter-
+mined as the midpoint between two transition points obtained
+from the VBS-like and N´eel-like initial states.
+
+
+
+
+                                                                             FIG. 4:   The inverse of the largest correlation length for spin
+                                                                             singlet and triplet operators as a function of J1/J2 atL = 10
+                                                                             andχ = 4000.  Here, the dashed line represents the transition
+                                                                             point extracted from the second order energy derivative.  The
+                                                                             small plot at the top right shows the plaquette order parame-
+                                                                             ter (ImM) across the transition.  Deep in the VBS phase, the
+                                                                             correlation length of a spin-triplet operator is larger than that
+                                                                             of a spin-singlet operator as expected by a mean-ﬁeld theory.
+                                                                             As we approach the critical point, we can observe that the cor-
+FIG. 3:  At L = 10, χ = 4000.  (a) Energy (E) per site.  The                 relation length of the spin-singlet sector becomes larger than
+horizontal dotted line represents the exact ground state en-                 that of the spin-triplet sector. This behavior agrees with what
+ergy  of  dimer  VBS  state, Esite  =−0.375.   (b) ∂E/∂J1  per               is expected from the scenario in Fig.8.
+site near the transition between plaquette VBS and N´eel or-
+der.  The continuous ﬁrst order derivative is a characteristic               function.  Therefore, at long distances along the cylinder,
+of the continuous phase transition.  Black dashed lines denote               the DMRG correlation function of an operatorO will al-
+phase boundaries among dimer VBS, plaquette VBS, and N´eel
+order.                                                                       ways decay exponentially with certain ﬁnite correlation
+                                                                             lengthξO in the simulation.  Nevertheless, instead of try-
+                                                                             ing to compare the scaling dimension ∆O, we can deter-
+      B.    Correlation Length Spectra, Monopole                             mine the emergent symmetry by comparing the correla-
+      Fluctuations, and Emergent O(4) Symmetry                               tion lengths ξO  between N´eel (spin-1) and VBS (spin-0)
+                                                                             excitations.  In Zauner et al.  [32], it has been found that
+  Here, we present a signature of the DQCP in the cor-                       the correlation length spectrum is inversely proportional
+relation length spectrum data obtained from the iDMRG                        to  the  energy  of  the  excitations  that  mediate  this  cor-
+simulation.  A continuous phase transition is character-                     relation  behavior.   Thus,  the  correlation  length  spectra
+ized  by  the  divergence  of  a  correlation  length,  and  an              give access to the individual dynamics of diﬀerent types
+equal-time  correlation  function  exhibits  the  power-law                  of excitations.
+decaying  behavior ⟨O(r)O(0)⟩ ∝ r−2∆O  where  ∆O  is                            Using the DMRG transfer matrix technique,  one can
+a scaling dimension of  an operatorO.  In particular,  if                    readily obtain the correlation lengths ξ  along the cylin-
+there exists an emergent symmetry, operators uniﬁed un-                      der.  Moreover,  since our DMRG simulation has an ex-
+der the emergent symmetry should share the same scal-                        plicit U(1)z  symmetry, extracted correlation lengths are
+ing  dimension  ∆O  [30].    For  example,  at  the  conven-                 labeled by Sz  quantum numbers.  Since the microscopic
+tional  DQCP  with  the  emergent  SO(5)  symmetry,  the                     model  has  full  SO(3)  symmetry,  there  will  be  an  ex-
+N´eel n  =  (nx,ny,nz)  and  VBS v  =  (vx,vy)  order  pa-                   act degeneracy among correlation lengths with diﬀerent
+rameter should have the same power-law behavior:                             quantum  numbers.   For  example,  a  three-fold  degener-
+                                                                             acy among Sz = 0,±1 would imply that this correlation
+           ⟨n(r)·n(0)⟩∼⟨v(r)·v(0)⟩∼ 1/r1+η,         (3)                      length corresponds to the excitation carrying the quan-
+                                                                             tum number S = 1 of the SO(3) symmetry.  In this way,
+where η  = 2∆O− 1 is the anomalous exponent deﬁned                           we can identify the SO(3) spin quantum number of each
+relative to the engineering exponent in (2+1)D which is                      operator appeared in the correlation length spectrum.
+1.   However,  in  the  iDMRG  simulation,  the  ﬁnite  cir-                    In  Fig.4,  we  plot  the  inverse  of  the  largest  correla-
+cumference L of the cylinder and ﬁnite bond dimension                        tion lengths for spin-singlet and triplet operators.  The
+χ introduce a cutoﬀ length scale [31], which prevents us                     spin-singlet operator corresponds to the pVBS order pa-
+from observing the power-law behavior in the correlation                     rameter  (or  the  monopole  operatorM)  at  low-energy.
+                                                                                                                                                   5
+
+The monopole operator is gapped in both the N´eel and                        VBS order parameters.
+pVBS  phases  and  only  become  gapless  at  the  critical
+point.  Therefore, the divergence of the spin-singlet cor-
+relation length can signal the onset of DQCP in the ther-                                  III.    SYMMETRY ANALYSIS
+modynamic  limit.   Indeed,  we  identiﬁed  that  the  peak
+of  the  singlet  correlation  length  exactly  coincides  with                 The ﬁeld theory of DQCP, the so called “non-compact”
+the  critical  point  extracted  from  the  singularity  of  the             CP1 theory, has the following form [5,36]
+energy derivative (Fig.3).  Furthermore, the correlation
+lengthξS=0 at the critical point increases as the bond di-                              LCP1 =|(∂−ia)z|2 +κ(∇×a)2 +...,         (4)
+mension χ increases.  Although here we present only the
+correlation length spectrum at L = 10 and χ = 4000, we                       where  a  two-component  complex  spinon z  =  (z1,z2)T
+also performed numerical simulations for diﬀerent system                     is  coupled  to  U(1)  gauge  ﬁeld a.   On  top  of  this  crit-
+sizes and obtained the result that the critical point sum-                   ical  theory,  one  can  have  additional  terms  depending
+marized in Tab.Icoincides with the peak of the spin sin-                     on  symmetry  of  the  system.    The  Shastry-Sutherland
+glet correlation length.  Therefore, we can infer that the                   lattice  has  a p4g  space  group  symmetry,  as  shown  in
+transition is induced by the proliferation of monopoles,                     Fig.1(a).  The lattice respects two glide reﬂection    Gx,Gy
+consistent with DQCP physics.                                                and two diagonal reﬂection σxy,σx¯y symmetries as illus-
+  Moreover,  to  contrast  our  simulation  result  in  the                  trated in Fig.1(a).  The glide reﬂections and the (spinful)
+Shastry-Sutherland  lattice  with  the  conventional  O(3)                   time-reversalT  symmetries can combine into composite
+Wilson-Fisher  transition  between  an  explicitly  dimer-                   symmetriesTGx,TGy, dubbed as the time-reversal glide
+ized VBS and N´eel order phases [33], we performed the                       symmetries.  Note that glide-reﬂection symmetry is also
+iDMRG simulation for a 2DJ1-J′1 model with the antifer-                      broken in the N´eel phase, while the time-reversal glide is
+romagnetic Heisenberg coupling J1  on nearest neighbor                       not.  Therefore,  relative to the N´eel phase,  it is proper
+bonds  together  with  the  coupling J′1  on  a  ﬁxed  set  of               to  think  about  the  pVBS  phases  as  to  break  the  time-
+dimer  covering  bonds  (See  Appendix.B),  and  hence  a                    reversal glide symmetries.
+unique  VBS  pattern  is  pinned  by J′1.   Indeed,  for  this                  To  deﬁne  the  symmetry  transformations  more  con-
+model,  one  can  observe  that  the  correlation  length  of                veniently,  we  consider  an  ideal  version  of  the  Shastry-
+the spin-triplet sector is always larger than the correla-                   Sutherland  lattice  on  a  regular  square  lattice  without
+tion  length  of  the  spin-singlet  sector  across  the  phase              distortion,  as  shown  in  Fig.5.    This  does  not  change
+transition.    This  agrees  with  the  picture  discussed  in               the  symmetry  group  but  allows  us  to  label  every  site
+Ref. [34,35], where the transition is triggered by the con-                  by  the  Cartesian  coordinate  (x,y)  conveniently  (where
+densation  of  spin-triplet  excitations  (triplon)  from  the               x,y∈ Z).  The length of the nearest Cu-Cu bond is set
+VBS  phase.   Within  the  mean-ﬁeld  theory  framework,                     to  1,  such  that  the  unit  cell  is  of  the  size  2× 2  (and
+it was shown that the energy of the spin-triplet excita-                     hence the lattice constant is 2 here).  With this, we can
+tionEtriplon is smaller than the energy of the spin-singlet                  deﬁne  the  glide  reﬂections Gx  :  (x,y) →  (x + 1,−y)
+excitation Esinglon throughout the whole transition.  Un-                    and Gy  :  (x,y)→  (−x,y + 1),  the  diagonal  reﬂections
+der the further assumption that the singlon and triplon                      σxy : (x,y)→ (y,x) and σx¯y : (x,y)→ (−y + 1,−x + 1),
+have  the  similar  characteristic  velocity v  [32],  one  ex-              as  well  as the  translations Tx  : (x,y)→ (x + 2,y)  and
+pect the aforementioned ordering of correlation lengths                      Ty : (x,y)→ (x,y + 2).  Together, they generate the p4g
+ξ∼ (v/E).  Thus, the inversion of the magnitude of cor-                      space  group.   The p4g  space  group  also  contains  a  90◦
+relation lengths for spin singlet and triplet operators at                   rotation  symmetry C4  :  (x,y)→  (−y + 2,x− 1)  with
+the transition signiﬁes the unconventional feature of the                    respect to the center of the plaquette without a diagonal
+DQCP in the Shastry-Sutherland lattice.  For a detailed                      bond.
+analysis regarding DQCP physics, see Sec.IV.                                    On  each  site i  =  (x,y),  we  deﬁne  the  spin  operator
+  Finally,  we  remark  that  the  spin-singlet  correlation                 Si = (Sxi,Syi,Szi ), whose symmetry transformations are
+length ξS=0  and  the  spin-tiplet  correlation  length ξS=1                 listed in Tab.II(assuming the spin rotation is not locked
+approaches each other at the (ﬁnite size) critical point as                  to the spatial rotation in lack of the spin-orbit coupling).
+we increase the system size.  AtL = 6 andχ = 4000, the                       The  time-reversal  symmetryT   is  also  included,  which
+ratioξS=1/ξS=0⏐⏐crit = 0.33, but atL = 10 andχ = 4000,⏐⏐crit  =  0.95.   From  this  trend,  we  expect  tocan ﬂip all spin components.  The N´eel order parameter
+ξS=1/ξS=0                                                                    n = (nx,ny,nz) and VBS order parametersv = (vx,vy)
+have ξS=1/ξS=0 = 1 in the thermodynamic limit, which                         are deﬁned as
+indicates that the spin-singlet and spin-triplet excitations                                     n∼ (−)x+ySi,
+will become degenerate at the critical point, forming the                                        vx∼ (−)x( 1                                     (5)
+four-component  vector  representation  of  a  larger  O(4)                                                    4−Si·Si+ˆx),
+symmetry  group.   Put  diﬀerently,  we  can  observe  that                                      vy∼ (−)y( 14−Si·Si+ˆy),
+the crossing point ofξS=0 =ξS=1 in Fig.4approaches to
+the critical point as we increase the system size, consis-                   where  each  prefactor  translates  into  the  momentum
+tent with the emergent O(4) symmetry relating N´eel and                      (π,π), (π, 0) and (0,π) respectively ink-space, as marked
+                                                                                                                                                6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                           FIG. 6:  Two  types of plaquette  valence bond  solid (pVBS)
+                                                                           phases.   Thick  purple  links  encircle  the  plaquette  on  which
+                                                                           the spin singlet is formed.  A diamond plaquette contains the
+FIG. 5:  The ideal Shastry-Sutherland lattice, deformed from               diagonal bond, while a square plaquette does not.  Each type
+Fig.1(a).  Each site    i can be labeled by a Cartesian coordinate         of the pVBS order induces a corresponding lattice distortion.
+(x,y).  Thex andy coordinates are calibrated on the top and                The undistorted lattice is shown as the background for con-
+right respectively.  The displacement vectors  ˆx = (1, 0) and             trast.  Depending on the sign ofλ2, either diamond plaquette
+ˆy  = (0, 1) are deﬁned to connect nearest neighbor sites. J1              or square plaquette pVBS is favored.
+andJ2 couplings are assigned to the nearest neighbor (in blue)
+and dimer (in red) bonds.
+
+                                                                           angle of⟨M⟩, the columnar VBS (cVBS) is described by
+            (kx,ky)      n M†           Si              fi                 ⟨M⟩∼±e±iπ/4  and  the  plaquette  VBS  (pVBS)  is  de-
+     Gx    (kx,−ky)     −n−M†         SGx(i)       (−)yfGx(i)              scribed by⟨M⟩∼±1 (diamond plaquette) or⟨M⟩∼±i
+     Gy    (−kx,ky)     −n−M†         SGy(i)         fGy(i)                (square plaquette) as illustrated in Fig.6.  On the other
+    σxy     (ky,kx)      n M          Sσxy(i)     (−)xyfσxy(i)             hand, ⟨M⟩ ⁄=  0  could  also  be  interpreted  as  the  con-
+                                                                           densation of monopoles.  So the DQCP, as a transition
+    σx¯y  (−ky,−kx)      n M          Sσx¯y(i) (−)x(y+1)fσx¯y(i)           from the N´eel phase into the VBS phase, can be thought
+     T    (−kx,−ky)     −n M           −Si           Kiσ2fi                as  driven  by  the  VBS  ordering  or  equivalently  by  the
+    TGx    (−kx,ky)      n −M        −SGx(i)    (−)yKiσ2fGx(i)             monopole condensation  (starting  from  the  N´eel  phase),
+    TGy    (kx,−ky)      n −M        −SGy(i)      Kiσ2fGy(i)               which can be tuned by a monopole chemical potential r
+                                                                           in  the  Lagrangian  as rM†M.   The  transition  happens
+                                                                           as r changes sign.  The condensation of monopole estab-
+TABLE II: Symmetry transformation of momentum (kx,ky),                     lishes the VBS order on the one hand and simultaneously
+N´eel order n, monopole operatorM†, spin operator Si  and                  destroys the N´eel order on the other hand, due to a non-
+fermionic spinon fi (in the sense of PSG).                                 trivial topological term among the N´eel and VBS order
+                                                                           parameters,  which  was  analyzed  in  details  in  Ref.5, 6.
+out in Fig.1(b), and the displacement vectors are deﬁned                   This scenario provides a plausible description of a direct
+to be ˆx = (1, 0) and  ˆy = (0, 1).  The VBS order parame-                 continuous transition between the N´eel and VBS phases.
+tersvx,vy can be combined to form the following operator                      However,  apart  from  the  apparent  tuning  parameter
+given a certain gauge choice (Appendix.A)                                  term rM†M,  we  must  also  include  other  symmetry-
+                                                                           allowed (multi-)monopole terms in the Lagrangian, which
+             M† =   1√    ((vx +vy) + i(vx−vy)),            (6)            could crucially inﬂuence the properties of the DQCP. On
+                        2                                                  the Shastry-Sutherland lattice, to the leading order, they
+known as the monopole operator in the literature [5,37],                   take the form of
+
+which corresponds to a hegehog-monopole of the N´eel or-                                 LM =rM†M +λ2 ReM2 +··· .             (7)
+der parametern in the spacetime.  The monopole event
+changes the skyrmion number of then ﬁeld conﬁguration                      Here  we  adopt  the  short-hand  notations  ReO  =  (O +
+by +1,  and it is equivalent to inserting 2π-ﬂux of U(1)                   O†)/2 and ImO = (O−O†)/(2i) for generic operatorO.
+gauge ﬁeld a in the CP1  theory Eq. (4).  The symmetry                     Given  the  symmetry  properties  in  Tab.II,  one  can  see
+properties  of n  andM†  follows  from  those  of  the  spin               that the single monopole term, no matter ReM or ImM,
+operatorSi and is summarized in Tab.II. For a detailed                     is forbidden by the glide reﬂection symmetry Gx or Gy.
+derivation,  see  AppendixA.  Apart  from  these  discrete                 Furthermore, the imaginary part of the double-monopole
+symmetries, there is also an SO(3) spin rotation symme-                    term ImM2 is forbidden by the diagonal reﬂection sym-
+try, under whichn transforms as a SO(3) vector.                            metry σxy  or σx¯y.  Note that these symmetries exist in
+  The expectation value of the monopole operator⟨M⟩                        the critical theory as the spontaneous symmetry break-
+deﬁned in Eq. (6) serves as a uniﬁed order parameter for                   ing has not yet occurred and the microscopic model has
+various  types  of  VBS  orders.   Depending  on  the  phase               the symmetries.
+                                                                                                                                                 7
+
+  The higher-order monopole terms (M4,M6,...) are ex-                       TABLE  III:  Singlet  conﬁguration  energy  around  diﬀerent
+pected to be less relevant and are therefore not included                   plaquette  with  diﬀerent  pairing  symmetry,  estimated  from
+in Eq. (7) explicitly. Therefore the double-monopole term                   J1/J2∼ 0.7 for the pVBS phase.
+λ2 ReM2  is  the  most  relevant  monopole  perturbation
+allowed  on  the  Shastry-Sutherland  lattice.   Depending                                            s-wave                    d-wave
+on  its  sign,  the  system  will  favor  a  square  plaquette                   square          −2J1∼−1.4J2                       0
+(or  diamond  plaquette)  VBS  order  in  the  VBS  phase,
+describe  by  the  order  parameter  ImM  (or  ReM),  if                        diamond    −2J1 + 0.25J2∼−1.15J2               −0.75J2
+λ2 >  0  (or λ2 <  0),  as  demonstrated  in  Fig.6.   The
+square and diamond pVBS orders have distinct symme-
+try properties.  Under the reﬂection symmetries σxy  and
+σx¯y,  ImM↦→− ImM while ReM stays invariant (see
+Tab.II),  so  the  square  pVBS  spontaneously  breaks  the
+reﬂection symmetries while the diamond pVBS does not.
+Additionally, square-plaquette-centeredC4 rotation sym-
+metry  is  spontaneously  broken  in  the  diamond  pVBS,
+while  it  is  not  in  the  square  pVBS.  Therefore  the  two
+diﬀerent  pVBS  orders  will  lead  to  diﬀerent  lattice  dis-
+tortions  that  are  symmetry-wise  distinguishable  in  the
+experiments  in  the  X-ray/neutron  diﬀraction  or  NMR
+[1,38,39].
+  Previous studies [20,40] as well as our iDMRG data
+show that the pVBS phase has a square plaquette order.                      FIG. 7:   Phase diagram of the appearance of O(4) DQCP on
+Thus λ2 > 0 should be relevant to our discussion of the                     perturbing  the  SO(5)  theory.   Arrows  indicate  the  RG  ﬂow
+pVBS-N´eel  transition  in  the  Shastry-Sutherland  model                  direction.
+Eq. (1).   λ2 >  0  can  be  also  argued  based  on  the  mi-
+croscopic Hamiltonian in Eq. (1).  In the analysis of the                   evant  perturbation  ˜λ2.   In  the  case  of λ2 >  0,  the  La-
+pVBS  phases,  there  are  two  types  of  singlet  plaquette               grangianLM in Eq. (7) can be written as
+conﬁgurations: s-wave andd-wave types [14] represented
+by the following singlet pairing conﬁgurations in a pla-                                LM = ˜r(ImM)2 + ˜λ2(ReM)2 +··· ,          (9)
+quette:
+                                                                            with ˜r =r−λ2 and ˜λ2 =r +λ2.  The parameter ˜r still
+                                                                            drives  a  transition  at  ˜r  =  0  (or  equivalently r  = λ2),
+                                                                   (8)      as  shown  in  Fig.7with  a  modiﬁed  emergent  symme-
+                                                                            try.   At  the  transition  point,  the  relevant  perturbation
+For simplicity, consider a single plaquette with four spin-                 ˜λ2  =  2λ2 >  0  simply  gaps  out  the  diamond  plaquette
+1/2s  on  the  corners.    For  both  square  and  diamond                  pVBS ﬂuctuation ReM from the low-energy sector, leav-
+plaquettes,  there  is  a  AFM  coupling J1  along  plaque-                 ing the square plaquette pVBS ﬂuctuation ImM quan-
+tte  sides;  for  the  diamond  plaquette,  there  is  an  addi-            tum critical.  It is further argued that the pVBS ﬂuctu-
+tional AFM J2 coupling across one diagonal.  Then, the                      ation ImM will become degenerate with the N´eel ﬂuc-
+s-wave and d-wave singlet conﬁguration has the energy                       tuation n  at  the  critical  point[42],  because  the  pertur-
+−2J1 + 1/4J2 and−3/4J2 respectively for the diamond                         bationsn4,n2(ImM)2, (ImM)4,···  that can break the
+plaquette.   As  the  pVBS  phase  exists  at  a  parameter                 symmetry that rotates N´eel and pVBS are all rank-four
+regime J1/J2 ∼  0.7,  an  estimation  of  the  singlet  con-                operators, which are expected to be irrelevant at the crit-
+ﬁguration energy as listed in Tab.IIIindicates that the                     ical point.  Therefore the N´eel and VBS order parameters
+s-wave  pairing  in  the  square  plaquette  has  the  lowest               can combine into a O(4) vector (n, ImM), manifesting
+energy.  In the iDMRG simulation, the wavefunction in-                      an emergent O(4) symmetry.  The remaining topological
+deed exhibits the s-wave pairing symmetry in the pVBS                       O(4)  Θ-term  still  ensures  that  the  development  of  the
+phase.A recent exact-diagonalization study [41] on the                      pVBS order ImM will simultaneously destroy the N´eel
+small cluster of spins (Ns  = 40) also reported that the                    ordern, establishing a direct pVBS-N´eel transition with
+phase next to the N´eel order phase hosts a spin-spin cor-                  emergent O(4) symmetry.
+relation which contradicts to the d-wave singlet in a di-
+amond plaquette.Therefore it is natural to have       λ2 > 0
+in the phenomenological ﬁeld theory.                                         IV.    DANGEROUSLY IRRELEVANT SCALING
+  At the ﬁrst glance, it seems that the double-monopole                                          AND ITS ABSENCE
+termλ2 in Eq. (7) is relevant and may destroy the DQCP.
+However, it is realized in Ref.42that     r and λ2  actually                  In this section, we discuss a peculiarity of the DQCP
+recombine into a new tuning parameter ˜r and a new rel-                     in the Shastry-Sutherland lattice compared to the other
+                                                                                                                                                   8
+
+     Global Symmetry                 LM         Emergent Symmetry
+       Square (p4m)               λ4 ReM4      SO(3)× Z4→ SO(5)
+     Easy-plane Square            λ4 ReM4        U(1)× Z4→ O(4)
+    Rectangular (pmm)             λ′2 ImM2      SO(3)× Z2→ O(4)
+Shastry-Surtherland (p4g)         λ2 ReM2       SO(3)× Z2→ O(4)
+
+
+TABLE   IV:     Symmetry-allowed   most-relevant   monopole
+terms  (apart  from rM†M)  and  the  corresponding  DQCP
+emergent symmetries on diﬀerent lattices
+                                                                             FIG. 8:   (a) Renormalization group (RG) ﬂow of the quadru-
+                                                                             pled monopole term λ4M4  in the square lattice DQCP sce-
+DQCP scenarios that have been extensively discussed.[5,                      nario, which is dangerously irrelevant.  For a small deviation
+6,27,36,42–45] In the presence of the                      ˜λ2 term in Eq. (9),of  the  tuning  parameter J1/J2  towards  the  VBS  phase, λ4
+the  U(1)  symmetry  of  the  monopole  operator  (which                     initially decreases under RG ﬂow until the RG scale reaches
+acts  as M → eiθM)  is  explicitly  broken  down  to  Z2                     the spin-spin correlation length.  Only after that, λ4  begins
+(at  the  lattice  level).   This Z2  symmetry  can  be  iden-               to increase to reach the VBS ﬁxed point.  This has noticeable
+                                                                             consequences for observables in a ﬁnite size numerical simula-
+tiﬁed as the glide reﬂection symmetry (Gx orGy) on the                       tion.  (b) Schematic plot for the inverse correlation lengthξ−1
+Shastry-Sutherland lattice, which can be further broken                      of spin singlet and triplet operators as a function of tuning
+spontaneously  in  the  pVBS  phase  by  its  order  param-                  parameter for the square lattice DQCP scenario with either
+eter⟨ImM⟩.  At the  DQCP, this Z2  symmetry  will be                         O(4)  or  SO(5)  emergent  symmetries.   Note  that ξ−1  is  re-
+restored and combined with the SO(3) spin rotation sym-                      lated  to  the  energy  (mass  gap)  of  the  associated  excitation
+metry to form the larger emergent O(4) symmetry,  de-                        [32].  Here, the skyrmion corresponds to the Higgsed ‘photon’
+noted as SO(3)×Z2→ O(4).  Although the Z2 symmetry                           excitation in the CP1 theory.  In the VBS phase, this photon
+is restored at the DQCP, it is never further enlarged to                     excitation  manifests  as  a  spin  singlet  VBS  order  parameter
+the  U(1)  symmetry  of  monopole  conservation,  because                    ﬂuctuation,  i.e.   the  VBS  domain  wall  thickness.   Similarly,
+                                                                             the magnon becomes a ‘triplon’ in the VBS phase.  The plot
+the explicit symmetry breaking term ˜λ2 is relevant.  The                    assumes the simulation of the DQCP at the ﬁnite circumfer-
+presence of the relevant coupling ˜λ2 leads to an important                  enceL and bond dimensionχ, which preventsξ to diverge at
+diﬀerence between the DQCP on the Shastry-Sutherland                         the DQCP.
+lattice with the more conventional DQCP on the square
+lattice.
+  To expose the diﬀerences and connections, let us brieﬂy                    them.  On the square lattice, the U(1)→ Z4  symmetry
+mention the other two lattices: the square lattice and the                   breaking termλ4 ReM4 is dangerously irrelevant, which
+rectangular lattice.  Due to the diﬀerent lattice symme-                     enhances Z4  to  U(1)  at  the  DQCP.  As  we  move  away
+tries, the allowed leading monopole terms will be diﬀer-                     from the DQCP toward the VBS phase, the system will
+ent, as summarized in Tab.IV. They will lead to diﬀer-                       exhibit  two  diﬀerent length  scales:  the  spin correlation
+ent  VBS  orders  and  diﬀerent  properties  of  the  DQCP.                  lengthξspin and the VBS domain wall widthξVBS [5,47].
+For example, on a rectangular lattice, the other double-                     The  system  is  critical  at  the  length  scale  below ξspin,
+monopole termλ′2 ImM2 is allowed butλ2 ReM2 is for-                          meaning that the spin correlation decays in a power-law.
+bidden,  which  favors  the  horizontal/vertical  cVBS  or-                  Beyond this length scale, however, the system is still not
+der  depending  on λ′2 >  0  (or λ′2 <  0).   The  DQCP  on                  fully in the VBS phase.  Because the ReM4 operator is
+the rectangular lattice has a similar emergent O(4) sym-                     irrelevant at the critical point, its coupling coeﬃcient λ4
+metry,  which  was  carefully  analyzed  in  Ref.42.   How-                  has decreased under the renormalization group (RG) ﬂow
+ever,  on  a  square  lattice,  the  four-fold  rotational  sym-             initially, as in Fig.8(a).  However, once RG ﬂow goes be-
+metry  forbids  all  the  double-monopole  terms,  leaving                   yond the length scale of ξspin, λ4 starts to increase with
+the  quadruple-monopole  term λ4 ReM4  most  relevant,                       the RG ﬂow until it becomes strong enough to break the
+which  favors  cVBS  (or  pVBS)  if λ4 >  0  (or λ4 <  0).                   U(1) symmetry down to Z4 at the length scaleξVBS [48].
+In the absence of the double-monopole term, the DQCP                         A careful analysis [5] showed that  ξVBS∼ξ(∆−1)/2
+on the square lattice has an even larger emergent sym-                                                                            spin      , where
+metry  SO(3)× Z4→  SO(5).   In  the  easy-plane  model,                      ∆> 3 (irrelevant) is the scaling dimension of ReM4 [86].
+the lattice symmetry would be that of the square lattice,                    Thus,ξVBS grows more rapidly thanξspin as we approach
+but  the  spin-rotation  symmetry  is  reduced  from  SO(3)                  the critical point.
+to  U(1).   Here,  the  symmetry  enhancement  would  be                        However, on the Shastry-Sutherland lattice, there is no
+U(1)× Z4→ O(4) [25,44].                                                      symmetry enhancement from Z2  to U(1) at the DQCP
+  Although  the  DQCP  on  the  square  lattice  with  the                   because U(1)→ Z2 symmetry breaking term ˜λ2(ReM)2
+easy-plane deformation has the same O(4) emergent sym-                       is  relevant.   As  a  result,  there  is  no  dangerously  irrele-
+metry  as  the  DQCP  on  the  rectangular  or  Shastry-                     vant  RG  ﬂow  around  the  DQCP.  As  soon  as  we  move
+Sutherland lattice,  there is a crucial diﬀerence between                    away  from  the  critical  point, Z2  anisotropy  is  there  to
+                                                                                                                                                   9
+
+                                                                             For  example,  in  the  mean-ﬁeld  treatment  of  the  VBS
+                                                                             phase, it has been argued that the spin-triplet excitation
+                                                                             (triplon) has a lower energy than the singlet excitation
+                                                                             (singlon) [35].  On the other hand, in the ﬁnite size sys-
+                                                                             tems, the dangerously irrelevant scaling enforces  the re-
+                                                                             gion with ξS=0 > ξS=1  in Fig.8(b) to appear regardless
+                                                                             of the eventual RG behavior in the VBS phase.More-
+                                                                             over,  since we consider a quasi two-dimensional system
+                                                                             in  the  iDMRG  simulation,  the  ﬁnite  circumference  size
+                                                                             can  also  aﬀect  the  behavior  in  Fig.8.   In  principle,  the
+                                                                             Mermin-Wagner theorem prevents the spontaneous sym-
+                                                                             metry breaking of a continuous symmetry in dimensions
+                                                                             D≥ 2 [49].  In other words, in a quasi two-dimensional
+                                                                             system,  the  strong  ﬂuctuation  of  the  continuous  order
+                                                                             parameter (e.g.  SO(3) spin-rotation) would gap out the
+                                                                             system and reduce the correlation length for the associ-
+                                                                             ated Goldstone bosons (e.g.  magnons).  As the disorder-
+                                                                             ing eﬀect would be stronger for the physical SO(3) spin-
+                                                                             rotation symmetry than for the emergent U(1) symmetry
+                                                                             enhanced from Z4, we would again expect the parameter
+                                                                             region of ξS=0 >ξS=1 to appear near the DQCP.
+                                                                               By contrast, in the Shastry-Sutherland model, the rel-
+                                                                             evant Z2 perturbation can always gap out the monopole
+                                                                             ﬂuctuation away from the critical point.  To conﬁrm this,
+                                                                             we performed the iDMRG simulation on the spin-1/2J1-
+                                                                             J2 model at the same circumference sizeL = 10 and com-
+                                                                             pared the correlation length spectra between two models.
+                                                                             In Fig.9(a), we observe that    ξS=0, the correlation length
+                                                                             of  a S  =  0  local  excitation,  is  always  larger  than ξS=1
+FIG.  9:     The  correlation  length  spectrum  for  (Left) J1-J2           in the entire VBS phase on the square lattice.  However,
+model in the spin-1/2 square lattice (χ = 2000) and (Right)                  In Fig.9(b),    ξS=0 is larger than ξS=1 only at the transi-
+the  Shastry-Sutherland  model  (χ  =  4000).   The  correlation             tion point and immediately becomes smaller thanξS=1 as
+length spectrum coincides with the excitation level crossing                 we tune the system away from the critical point towards
+spectrum  in  Fig.2  of  [46]  (After  switching   J2/J1  to J1/J2).         the VBS phase.  This is one of the non-trivial prediction
+For the value of J1/J2  smaller than the range shown in the                  from  the  presence  of  relevant  anisotropy  operator  at  a
+ﬁgure, we would get the collinear striped AFM order (dVBS)                   ﬁnite-system size simulation.  In the N´eel ordered phase,
+for the square (Shastry-Sutherland) lattice. The level-crossing              these two models exhibit very similar correlation length
+behaviors for both models are similar in the N´eel ordered side.
+                                                                             spectra.  For more details, see Appendix.B.
+                                                                               Our numerical result for the squareJ1-J2 model aligns
+break the emergent O(4) symmetry down to the micro-                          with the recent work [46] on the ﬁnite-DMRG simulation
+scopic SO(3)× Z2 symmetry.  Thus, there does not exist                       which calculated ﬁrst several excited states with diﬀer-
+a  separation  of  length  scales  nor  scenario  expected  in               ent spin quantum numbers.  If we replace the excitation
+Fig.8.   The  singlet  gap  (the  gap  of  pVBS  ﬂuctuation)                 energy in Ref. [46] with  ξ−1, we obtain the same crossing
+should open up immediately as we tune ˜r away from the                       behavior. This can be justiﬁed by the fact that when a lo-
+critical point in the thermodynamic limit.                                   cal excitation has a mass gapm, the correlation function
+  What is the consequence of all these observations?  In                     mediated by the local excitation decays as∼e−mr, thus
+the study of ﬁnite size systems, the RG ﬂow should stop                      m∝ ξ−1.   Therefore,  our  theoretical  scenario  explains
+at a certain point beyond the system size.  This means                       why  a  local  [87]  spin-singlet  excitation  in  the  Ref.  [46]
+that the dangerously irrelevant scaling can signiﬁcantly                     has  lower  energy  than  a  spin-triplet  excitation  around
+aﬀect the correlation behavior or excitation spectrum in                     the critical point.  It also elucidates the reason why the
+small  system  sizes,  as  illustrated  in  Fig.8(b).   Due  to              previous DMRG results of theJ1-J2 model on the square
+the  dangerously  irrelevant  scaling,  near  the  DQCP  to-                 lattice [14,50–54] were unable to identify the nature of
+wards the VBS side,  the correlation length of the VBS                       the VBS phase without applying a pinning ﬁeld.  Because
+order  parameter  ﬂuctuation  (S  =  0)  should  be  larger                  all previous numerics were also performed in the similar
+than the correlation length of the N´eel order parameter                     system size, they were in the regime where the VBS or-
+ﬂuctuation  (S  =  1).   However,  in  the  thermodynamic                    der parameter ﬂuctuations were severe,  disallowing one
+limit, such a behavior is not guaranteed as the eventual                     to  conﬁrm  whether  it  is  a  plaquette  or  columnar  VBS.
+fate under the RG ﬂow is often diﬃcult to understand.                        Therefore,  we conclude that the absence or presence of
+                                                                                                                                                10
+
+an irrelevant operator is essential to understand physical                  which implies the extinction of diﬀraction peaks atQ∈
+observables in any ﬁnite size system.                                       π(2Z+1, 0) orπ(0, 2Z+1), as marked out in Fig.1(b).  In
+  In summary, we note that previously the two promis-                       general,ρ(r) can describe the spatial pattern of any scat-
+ing scenarios to realize DQCP with spin 1/2 was either                      terers that interact with the probing particle (e.g.  X-ray
+the  SO(3)  symmetric  or  easy  plane  deformations,  both                 or neutrons).  Eq. (10) holds under the assumption that
+with  four-fold  degenerate  VBS  orders.   Here,  however,                 the scatterer ﬁeld ρ(r) is even (symmetric) under glide
+we have the two-fold degenerate VBS order.  Neverthe-                       reﬂection symmetry.  This constraint can be generalized
+less, as discussed in Ref. [42], the two-fold monopole with                 to  other  type  of  scatterers  including  magnetic  ﬂuctua-
+SO(3) symmetry is equivalent to the easy plane deforma-                     tions  at  ﬁnite  frequency.   For  example,  the  destruction
+tion,  if  an  enlarged  SO(5)  symmetry  is  assumed  in  the              of  the  scattering  amplitude  at  these  extinction  points
+absence of these perturbations.  Furthermore, we remark                     could  extend  to  ﬁnite-frequency  inelastic  scattering,  as
+that the scaling behavior of dangerously irrelevant opera-                  long as no scatterer at that energy scale breaks the glide
+tor enables us to understand multiple observations made                     reﬂection symmetry.  However, as we lower the temper-
+in previous numerical simulations which is absent in the                    ature  and  approach  the  pVBS-N´eel  transition,  certain
+Shastry-Sutherland model here.                                              glide-reﬂection-breaking  excitations  (meaning  that  the
+                                                                            scatterer is odd under the glide reﬂection) may emerge
+                                                                            at  low  energy  as  part  of  the  quantum  critical  ﬂuctua-
+                                                                            tion.  Indeed, we will show that the emergent SO(4) con-
+     V.    SPECTRAL SIGNATURES OF DQCP                                      served current ﬂuctuation and the pVBS order ﬂuctua-
+                                                                            tion are examples of glide-reﬂection-breaking scatterers,
+  A hallmark of the DQCP is the emergence of decon-                         which will become critical at the DQCP and “light up”
+ﬁned spinons at the critical point, which entails distinct                  the  extinction  points.   They  will  provide  unique  signa-
+features in both the magnon and phonon excitation spec-                     tures of the DQCP that are also relatively easy to resolve
+tra that can be probed in INS or RIXS experiments.  To                      in experiments, as there are no background scattering sig-
+better appreciate the predicted spectral features at low-                   nals at the extinction points.
+temperature around the pVBS-N´eel transition, we need
+to ﬁrst understand the background elastic scattering sig-
+nal  of  SrCu2(BO3)2  in  its  high-temperature  paramag-
+netic  phase  without  any  symmetry  breaking.   We  will
+focus on the scattering of neutrons or photons oﬀ of the
+copper sites.  As shown in Fig.1(a), there are four copper
+sites in each unit cell, coordinated atrA = (1+δ, 1+δ)/2,
+rB  =  (1− δ, 3 + δ)/2, rC  =  (3 + δ, 1− δ)/2, rD  =
+(3−δ, 3−δ)/2 respectively, with the distortion parameter
+given  by δ  =  0.544  according  to  Ref.16.   In  the  high-              FIG.  10:   (a)  The π-ﬂux  model  of  fermionic  spinons.   The
+temperature  paramagnetic  phase,  an  elastic  scattering                  spinon hopping on the thick red bond gets a minus sign, such
+experiment will reveal lattice diﬀraction peaks at a set of                 that  each  plaquette  has  a π-ﬂux.   Additional  spinon  inter-
+momentaQ =π(H,K) (H,K∈ Z, note that the lattice                             action terms are applied to blue shaded diamonds.  (b) The
+constant is 2 in our convention) with the amplitude given                   arrangement of the site indices [ijkl] around each shaded di-
+by S(Q) = ∫ d2rρ(r)eiQ·r≃ ∑                                                 amond.
+                                         a=A,B,C,DeiQ·ra,  where
+ρ(r)  can  represent  either  the  electron  density  from  Cu
+orbitals (which scatters X-ray photons) or the density of                      The  proposed  spectral  signatures  at  the  pVBS-N´eel
+Cu nuclear (which scatters neutrons). The corresponding                     transition is most convenient to analyze using a fermionic
+intensity|S(Q)|2  is plotted in Fig.1(b).  Notably, there                   spinon theory for the DQCP, which has been shown to
+are extinction points in the diﬀraction pattern, protected                  be equivalent (dual) to the conventional CP1 theory[55–
+by the glide reﬂection symmetry.  Note that the system                      58].   In  the  fermionic  spinon  theory,  the  spin  operator
+at the DQCP has the glide-reﬂection symmetriesGx and                        Si   =   1
+Gy although both the N´eel and pVBS phases do not.  [88]                    fi  =  (fi↑,fi↓)⊺,  which  are  then  placed  in  the π-ﬂux2f†iσfi  is  fractionalized  into  fermionic  spinons
+The glide reﬂectionsGx andGy act as lattice translations                    state[59–62] described by the following mean-ﬁeld Hamil-
+by a half lattice constant followed by the reﬂections about                 tonian
+the translation directions, as illustrated in Fig.1(a).  The
+fact that the density distribution ρ(r) at equilibrium re-                    HMF =−∑           tij(f†ifj + h.c.)
+spects all lattice symmetries (including Gx and Gy) im-                                    ⟨ij⟩                                               (11)
+plies that ρ(x,y) = ρ(x + 1,−y) = ρ(−x,y + 1).  They                                    +g∑       (f†
+impose the following constraints on the scattering ampli-                                            ifj + h.c.)(f†kfk−f†lfl) +··· ,
+tude                                                                                         [ijkl]
+                                                                            where⟨ij⟩ runs over all the nearest neighbor bonds and
+ S(Qx,Qy) =eiQxS(Qx,−Qy) =eiQyS(−Qx,Qy),  (10)                              [ijkl]  runs  over  all  the  shaded  diamond  plaquette  de-
+                                                                                                                                              11
+
+picted  in  Fig.10(a).    The  spinon  hopping  amplitude                  measured spin excitation spectrum, by ﬁtting this lower
+tij  takes tij  = −t  on  the  bonds  highlighted  in  red  in             edge.  This is a rather robust result as its shape is unaf-
+Fig.10(a) and     tij =t on the rest of the bonds, such that               fected by the distortion parameter δ.
+the spinon seesπ-ﬂux threading through each plaquette.                        Remarkably, a gapless continuum will appear on top of
+The phenomenological parameter t∼J1 sets the energy                        the extinction point X  (as well as Y  by σxy  symmetry)
+scale of the spinon, which is expected to be of the same                   as seen in Fig.11(a).  As previously analyzed in Eq. (10),
+order  as  the  spin  interaction  strength J1.   The π-ﬂux                the  spin  excitation  at  the X  point  must  be  odd  under
+state model Eq. (11) was originally proposed as an exam-                   the glide reﬂection symmetry Gx.  This symmetry con-
+ple of algebraic spin liquids[59–62] (including the DQCP                   straint enforces that the gapless continuum should cor-
+as a special case).  It is recently conﬁrmed via quantum                   respond to the emergent SO(4) conserved current ﬂuctu-
+Monte Carlo (QMC) simulations[56–58] that the     π-ﬂux                    ation Jy  = n∂y ImM− ImM∂yn which involves both
+state actually provides a pretty good description of the                   the N´eel n and pVBS ImM order parameters and has
+spin excitation spectrum at the DQCP.                                      been thoroughly studied in Ref.57,60,64.  Since        n, ∂y
+  The π-ﬂux state mean-ﬁeld ansatz determines a pro-                       and ImM are all odd under the glide reﬂectionGx (that
+jective symmetry group (PSG)[63] that describes how the                    preserves the extinction point X), the current operator
+spinon should transform under the space group symme-                       Jy  is  also  odd  under Gx.   Therefore  Eq. (10)  does  not
+try, as concluded in the last column of Tab.II. It is found                hold  anymore,  such  that  the  ﬂuctuation  of Jy  can  ap-
+that the spinon hopping along the dimer bonds are for-                     pear at the extinction point X as a spinon continuum in
+bidden  by  the σxy,σx¯y  symmetry,  which  is  not  broken                the magnon channel (asJy carries spin-1).  On the other
+at  the  DQCP.  Therefore  the  eﬀect  of J2  can  only  en-               hand, ﬂuctuations liken ImM is not allowed to appear
+ter the Hamiltonian as a four-fermion interaction to the                   at the X  point in the spin excitation spectrum because
+leading  order,  given  by  the g  term  in  Eq. (11).   The   g           the bound staten ImM is even under glide reﬂection (cf.
+term  describes  the  spinon  interaction  around  each  dia-              Eq. (10)).  The  Jy continuum will only become gapless if
+mond plaquette [ijkl] where the site indices i,j,k,l  are                  both the N´eel and pVBS ﬂuctuations are gapless, which
+arranged according to Fig.10(b). It turns out that the in-                 only happens at the DQCP. Protected by the emergent
+teractiong is directly related to theλ2 ReM2 term given                    O(4), the conserved current operator must have a scaling
+that the monopole operatorM†∼ (vx +vy) + i(vx−xy)                          dimension exactly pinned at 2, which indicates that the
+can be written in terms of VBS order parameters vx,vy,                     magnon spectral weight at the extinction point X  must
+which are further related to fermionic spinons via vx∼                     increase with the frequency linearly (at below the energy
+(−)xf†i+ˆxfi + h.c.  and vy ∼  (−)x+yf†i+ˆyfi + h.c.,  such                scale of J1)
+that the interaction can be written as gvxvy∼g ReM2.                                           Smagnon(ω,q =X)∝ω.                   (13)
+Therefore g > 0 would correspond to λ2 > 0, which fa-
+vors the square plaquette VBS order ImM.                                   as  shown  in  Fig.11(b).   We  propose  this  as  a  hallmark
+  Let  us  ignore  the  interaction g  for  a  moment.    By               feature  of  the  spin  ﬂuctuation  at  the  pVBS-N´eel  tran-
+diagonalizing  the  spinon  hopping  Hamiltonian,  we  ﬁnd                 sition in SrCu2(BO3)2.  Conﬁrmation of this linear fre-
+the spinon dispersionϵk =±2t√cos2kx + cos2ky, which                        quency growth of the spectral weight will provide direct
+gives rise to 4 Dirac fermions (or equivalently 8 Majorana                 evidence for the emergent O(4) symmetry at the DQCP.
+fermions) at momentum (π/2,π/2). Note that the distor-                        Apart   from   the   features   in   the   spin   excitation
+tion parameter δ does not aﬀect the spinon band struc-                     (magnon) spectrum, the DQCP also introduces new fea-
+ture.  Naively, the spinon mean-ﬁeld theory has an emer-                   tures to the phonon spectrum, due to the pVBS-phonon
+gent SO(8) symmetry rotating among the 8 low-energy                        coupling.  The pVBS order has a linear coupling to the
+Majorana  fermions.   However,  a  SU(2)  gauge  structure                 lattice displacement as its representation under the lat-
+must be introduced with the fractionalization, which re-                   tice symmetry group matches with that of strain ﬁelds
+duces  the  emergent  symmetry  to  SO(5).   The  interac-
+tion term g plays an important role to further break the                                     LVBS-phonon∼vxux +vyuy,                (14)
+SO(5) symmetry explicitly to O(4), matching the emer-
+gent symmetry observed in the DMRG simulation.                             where ux (or uy) is the lattice displacement in the x (or
+  Based on the fermionic spinon mean-ﬁeld ground state,                    y) direction with a momentum (π, 0) (or (0,π)).  It is cru-
+the spin excitation spectrumS(ω,q) has been calculated                     cial that ux and uy  here are not acoustic phonon modes
+in Ref.56–58and is reproduced in Fig.11(a) for illustra-                   around momentum (0, 0)in a continuum theory, other-
+tion, where the high symmetry points Γ,X,M are deﬁned                      wise  they  can  only  enter  the  ﬁeld  theory  in  the  form
+in Fig.1(b).  The lower edge of the spinon continuum is                    of  derivatives ∂iuj.   The  coupling  is  allowed  by  lattice
+given by ωmin(q) = mink|ϵk+q−ϵk|, which reads                              symmetry and is evident from the pVBS induced lattice
+                               √                                           distortion  as  demonstrated  in  Fig.6(a).   This  leads  to
+               ωmin(q) = 2t       sin2qx + sin2qy,             (12)        a hybridization between phonon and pVBS ﬂuctuations.
+                                                                           As  the  pVBS  ﬂuctuation  becomes  critical  (gapless)  at
+as shown in Fig.11(a).  This provides us a way to esti-                    the DQCP, the quantum critical ﬂuctuation will also ap-
+mate the mean-ﬁeld parametert from the experimentally                      pear  in  the  phonon  spectrum  due  to  the  hybridization
+                                                                                                                                                   12
+
+                                                                              ﬂection.  Their critical ﬂuctuations are therefore allowed
+                                                                              to appear at the extinction point.  This is rather a nice
+                                                                              property that there will be no background signals form
+                                                                              lattice diﬀraction, which makes these spectral signatures
+                                                                              of  DQCP  more  easier  to  resolve  in  experiments.   Our
+                                                                              analysis indicates that the conserved current ﬂuctuation
+                                                                              (which carries spin-1) should appear in the magnon spec-
+                                                                              trum  and  the  pVBS  ﬂuctuation  (which  carries  spin-0)
+                                                                              should appear in the phonon spectrum.  Observation of
+                                                                              these  critical  ﬂuctuations  in  the  scattering  experiment
+                                                                              will  be  strong  evidence  for  the  potential  realization  of
+                                                                              DQCP in SrCu2(BO3)2.
+
+
+                                                                                VI.    EFFECTS OF INTERLAYER COUPLING
+
+                                                                                 So far, we have discussed the DQCP physics assuming
+                                                                              that  the  system  is  two-dimensional.   However,  the  ma-
+FIG. 11:  (a) Spin excitation spectrum (dynamical structural                  terial  realization  of  Eq. (1),  SrCu    2(BO3)2,  has  a  three-
+factor) Smagnon(ω,q)  at  the  DQCP.  Darker  color  indicates                dimensional  structure  which  is  a  stack  of  the  Shastry-
+higher  intensity.   The  dashed  line  trace  out  the  lower-edge           Sutherland lattices with a relative shift given by the lat-
+of  the  continuum  which  is  described  by  Eq. (12).   (b)  The            tice vector (1,1) between neighboring layers.  Each layer
+frequency dependence of the spectral intensity at the extinc-                 is separated by the layer of oxygen, but due to the super-
+tion point X.  At the low-frequency limit, the spectral inten-                exchange term mediated by the oxygen, there is a small
+sity grows with frequency linearly, which manifests the con-                  interlayer anti-ferromagnetic interaction J3∼ 0.1J2  [67]
+served current associated to the emergent O(4) symmetry.  (c)                 between  the  spin-1/2s  located  at  the  crossed  dimers  in
+Schematic illustration of the phonon spectrum Sphonon(ω,q).                   Fig.12.   Since the stacking structure preserves     Gx,y and
+The  bare  phonon  dispersion  is  inferred  from  Ref. [65].   The           σxy,x¯y symmetries, previous monopole analysis still holds
+VBS-phonon  coupling  leads  to  a  continuum  in  the  phonon                for each two-dimensional layer.    Here, we would like to
+spectrum.  (d) The frequency dependence of the phonon spec-                   better understand the eﬀect of the three-dimensional in-
+tral intensity at the extinction point X.  The intensity falls                terlayer coupling to the DQCP physics.
+oﬀ in a power-law with frequency, whose exponent should be                       To  analyze,  we  ﬁrst  consider  coupling  layers  of  spin
+the same as that of the spin ﬂuctuation at M  point.                          systems at the conventional DQCP point with the emer-
+                                                                              gent SO(5) symmetry (other than the O(4) case in the
+                                                                              previous discussion).  Here, each layer is described by the
+eﬀect, as illustrated in Fig.11(c) (see AppendixCfor de-                      following  nonlinear  sigma  (NLSM)  model  in  Euclidean
+tailed analysis).  As the pVBS order carries the momen-                       spacetime [61,68]:
+tum  (π, 0)  and  (0,π),  the  phonon  continuum  will  also                                   ∫
+get softened at these momenta, which happen to be the                             S(l)            d3x 1
+extinction points X  and Y  of the lattice diﬀraction pat-                          DQCP =             2g (∂µΦ(l))2 + 2πiΓWZW[Φ(l)]     (16)
+tern.  Note that the pVBS ﬂuctuation is odd under glide
+reﬂection, therefore new phonon continuum is allowed to                       where Φ(l) = (nx,ny,nz, ImM, ReM) is the order pa-
+emerge at the extinction points with the spectral weight                      rameter  of  the l-th  layer  and  ΓWZW[Φ(l)]  is  a  Wess-
+diverging at low-frequency following a power-law,                             Zumino-Witten (WZW) term at level k = 1.  With the
+                  Sphonon(ω,q =X)∝ω−2+η.                (15)                  interlayer coupling,  the total action is given by the fol-
+                                                                              lowing general form [69]
+The  anomalous  dimension η  should  match  that  of  the                                                       ∫
+pVBS order parameter at the DQCP, which, by the emer-                               S =∑S(l)DQCP−∑                  d3xgabΦ(l)a  Φ(l+1)b  ,        (17)
+gent O(4) symmetry, is also the sameη of the N´eel order                                    l                l
+parameter.  Based on the QMC simulations in Ref.25,66,
+η  has  been  estimated  to  be η  =  0.13∼  0.3.   Observa-                  where the interlayer coupling coeﬃcients gab  can be ar-
+tion  of  such  critical  phonon  ﬂuctuations  at  the  extinc-               ranged into  a matrix g.  Given that the  scaling dimen-
+tion  points  with  a  power-law  divergent  spectral  weight                 sion  of  Φ  is  estimated  to  be  around  ∆Φ ≃  0.6  in  the
+as shown in Fig.11(d) will be another direct evidence of                      literature[70–79],  the  interlayer  coupling  is  expected  to
+DQCP.                                                                         be  relevant  (as  2∆Φ <  3),  locking  the  order  parame-
+  In  conclusion,  extinction  points  are  protected  by  the                ters across diﬀerent layers.  Then, the coeﬃcient matrix
+glide  reﬂection  symmetry,  but  both  the  conserved  cur-                  g  becomes  important  since  the  sign  of  its  determinant
+rent and the pVBS order parameter breaks the glide re-                        detg  crucially aﬀects how the topological (WZW) term
+                                                                                                                                                   13
+
+                                                                             pled  DQCPs  boils  down  to  understand  the  fate  of  the
+                                                                             SO(5)  NLSM  with  Θ  = π  in  (3+1)D.  There  are  some
+                                                                             hints from the fermionic parton analysis.  One can con-
+                                                                             sider fractionalizing the Φ vector to the bilinear from of
+                                                                             a fermionic parton ﬁeld ψ following Φa∼  ¯ψiγ5Γaψ, such
+                                                                             that the ψ fermion is in the SO(5) spinor representation
+                                                                             (or the Sp(2) fundamental representation). The emergent
+                                                                             gauge structure will be SU(2), which points to the SU(2)
+                                                                             quantum chromodynamics (QCD) model in (3+1)D with
+                                                                             Sp(2) ﬂavor symmetry,
+
+                                                                                             L =  ¯ψ(γµDµ +m + iγ5ΦaΓa)ψ.             (18)
+
+                                                                             Integrating out the fermion and gauge ﬂuctuation is ex-
+                                                                             pected to reproduce the SO(5) NLSM with Θ = π(1 +
+                                                                             sgnm),  such  that  Θ  = π  is  realized  at m  =  0.   How-
+                                                                             ever, the number of Dirac fermion ﬂavors (Nf = 2) is not
+                                                                             enough to avoid a chiral symmetry breaking in 3D. There-
+FIG. 12:   (a) Three-dimensional interlayer AFM coupling J3                  fore,  under  the  interlayer  coupling,  it  is  likely  that  the
+among spins located at the cross between upper and lower di-                 SO(5)  DQCP  ﬂows  to  a  discontinuous  transition  point
+agonal bonds, mediated by the interpenetrating oxygen atom.                  induced  by  the  quantum  ﬂuctuation.Considering  that
+The other interlayer couplings are negligible.  Preferred stack-             the O(4) DQCP from easy-plane anisotropy or rectangu-
+ing  of  (b)  the  N´eel  ordered  phase  with n(l)  = n(l+1)  (red          lar deformation is descended from the SO(5) DQCP [42],
+and blue dots for opposite spins), (c) and the diamond pVBS                  breaking SO(5) down to O(4) makes the situation worse.
+phase  with  ReM(l)  =  ReM(l+1),  (d)  square  pVBS  phase                     In a similar way, one can analyze the three-dimensional
+with ImM(l)  =− ImM(l+1)  (thick purple bonds mark sin-                      stacking  of  the  Shastry-Sutherland  lattice.   If  we  allow
+glet plaquettes).  For (c) and (d) cases, energetically favorable            the  possibility  of  the  diamond  pVBS  phases,  the  order
+stacking can be deduced by the interlayer dimer resonance.                   parameter  is  written  as  Φ  =  (n, ReM, ImM)  where
+                                                                             ReM  (ImM)  represents  the  square  (diamond)  pVBS
+from  each  layer  will  be  added  up  (cf. [69]).   More  pre-             order  parameter.   Note  that  now  each  layer  is  shifted
+cisely, if the sign of detg is positive (negative), the WZW                  by  (1, 1)  vector  (see  Fig.5)  relative  to  the  layer  below,
+terms  are  added  up  in  a  uniform  (staggered)  manner.                  and  the  interlayer  AFM  coupling  is  given  by  Fig.12(a)
+The reason is that we can always redeﬁne Φ(l)  in alter-                     instead of the direct vertical coupling.  In Fig.12(b), we
+nate layers to make g positive deﬁnite, but the price to                     show  two  identical  layers  of  N´eel  ordered  pattern  rela-
+pay will be that the WZW term will change sign alter-                        tively  shifted  by  (1, 1).   If  we  focus  on  the  four  spins
+natively if the original detg  is negative.Note that the                     surrounding  the  diagonal  bond  crossing,  we  found  that
+procedure requires the topological term to be invariant                      the  two  spins  from  the  upper  layer  and  the  two  spins
+under the change of origin (translation symmetric),  i.e.                    from the lower layer are aligned oppositely, which is fa-
+Tx,y : ΓWZW[Φ]↦→ ΓWZW[Φ].  Otherwise, the addition or                        vored by the AFM interlayer spin exchange J3.  So the
+subtraction of topological terms across layers would not                     interlayer coupling prefers to lock the N´eel order param-
+be well-deﬁned due to the arbitrariness of the choice of                     eter  in  the  same  direction  across  the  layer  as n(l)  =
+origin across the layers for the locked order parameter.                     n(l+1).   In  Fig.12(c),  we  show  two            identical  diamond
+  For  example,  consider  coupling  the  two-dimensional                    pVBS patterns displaced from each other.  This conﬁg-
+square  lattice J-Q  models  [80]  into  a  3D  cubic  lattice               uration  can  gain  the  eﬀective  interlayer  ring  exchange
+with  AFM  spin-spin  interaction  along  vertical  bonds.                   energy induced by the J3  coupling, which resonates the
+Each  layer  putatively  realizes  the  DQCP  physics  with                  nearby dimers across the layer.  Thus we conclude that
+Φ = (n,vx,vy) describing N´eel and cVBS order param-                         ReM(l)  =  ReM(l+1)  is  more  favorable.   In  Fig.12(d),
+eters.  Under the AFM interlayer coupling, the coupling                      we  show  two  opposite  square  pVBS  patterns  displaced
+                                                                             from each other.  This conﬁguration also gains interlayer
+matrix g has the sign structure of gaa = (−,−,−, +, +).                      ring exchange energy by resonating the dimers lying on
+This is because the vertical AFM coupling prefersn(l) =                      top  of  each  other.   But  this  would  require  the  square
+−n(l+1)  while  the  vertical  plaquette  ring  exchange  [89]               pVBS  order  parameter  to  be  opposite  between  neigh-
+favors v(l)x,y  = v(l+1)x,y   .   In  this  case,  detg <  0,  so  the       boring layers as ImM(l) =− ImM(l+1).  In conclusion,
+WZW  terms  in  neighboring  layers  tend  to  cancel  each                  the interlayer coupling prefers (n(l), ReM(l), ImM(l)) =
+other.  However the cancellation will not be exact, as the                   (n(l+1), ReM(l+1),− ImM(l+1)).  Here, instead of using
+Φ ﬁeld still admits (smooth) ﬂuctuation over layers, this                    (vx,vy), we use (ReM, ImM) to parameterize the VBS
+results in a residual topological term, namely a topolog-                    order parameter, which is a basis change with a positive
+ical Θ-term.  Staggering a WZW-term at level k  would                        determinant.  In this basis, the interlayer coupling matrix
+give a Θ-term at Θ = πk.  Now the problem of the cou-                        g takes the sign structure of gaa = (+, +, +, +,−).  As a
+                                                                                                                                               14
+
+result, we again have detg< 0, which implies that SO(5)                     plaquette VBS phase.  In the Sec.III, we discussed two
+DQCP would ﬂow to the ﬁrst order transition point in                        diﬀerent  possibilities  for  the  pVBS  phases  (see  Fig.6):
+3D.  Since  our  O(4)  scenario  is  considered  to  be  a  per-            the square and diamond pVBS. While the square pVBS
+turbed SO(5) DQCP (see Fig.7), it is likely that the O(4)                   breaks  the  reﬂection  symmetries σxy  and σx¯y,  the  dia-
+DQCP would also ﬂow to the ﬁrst order transition point.                     mond pVBS breaks the empty-plaquette-centered C4 ro-
+                                                                            tation symmetry, see Fig.5.  As a result, when the sys-
+  If  detg  happens  to  be  positive,  the  leading  order  ef-            tem is at the pVBS phase, magnetic excitations initially
+fect is that the WZW terms would add up together, as                        degenerate  under  the p4g  symmetry  would  split  diﬀer-
+the interlayer couplingg tends to lock the order parame-                    ently  depending  on  whether  the  plaquette  is  formed  at
+ters Φ(l) across the layers.  Admittedly, the locking eﬀect                 a square or diamond.  While our iDMRG simulation of
+will  become  weaker  at  longer  distance  (along  the  per-               the Shastry-Sutherland model points to the square pVBS
+pendicular direction of layers),  but we can still analyze                  phase, in the recent experiments on SrCu2(BO3)2  using
+the problem by ﬁrst grouping the neighboring layers to                      INS[1] and NMR[38,39], the magnetic excitations in the
+a  renormalized  layer  and  then  considering  the  residual               pVBS phase seems to break the C4  rotation symmetry,
+coupling between renormalized layers.  Across neighbor-                     indicating the diamond pVBS phase.  This discrepancy
+ing layers, the order parameters are expected to bind to-                   implies that the eﬀective spin model for the real material
+gether, such that the renormalized model can be viewed                      could deviate from the Shastry-Sutherland model studied
+as a NLSM with WZW term at large level k.  The intu-                        here.  For example, three-dimensional interlayer coupling
+ition from (0+1)D O(3) WZW term is that the large level                     may induce some eﬀective further-neighbor couplings be-
+limit corresponds to the large spin limit, where the quan-                  yond  Shastry-Sutherland  model.   Therefore  the  type  of
+tum  ﬂuctuation  of  the  order  parameter  is  suppressed.                 pVBS phase to be stabilized at low energy is model de-
+Coupling spin-1/2 into a spin chain ferromagnetically in                    pendent.  Nevertheless, this does not aﬀect to the DQCP
+Sx,y,z-channels results in the ferromagnetic ground state                   scenario and the emergent O(4) symmetry because it only
+with  giant  spin  and  classical  spin  wave  excitations.   In            corresponds to a diﬀerent sign of λ2 in Eq. (7).
+this limit, the low-energy physics can be captured within                     As  discussed  earlier,  the  DQCP  naturally  realizes  a
+Landau-Ginzberg (LG) theory.  Further adding diﬀerent                       quantum spin liquid, a long sought after state of quan-
+easy-axis  anisotropies  to  the  ferromagnetic  spin  chain                tum magnets.  Furthermore it realizes a particularly ex-
+will  drive  ﬁrst-order  transitions  between  diﬀerent  Ising              otic  variety  -  a  critical  spin  liquid  -  with  algebraically
+ordered  phases  according  to  the  LG  theory.   We  con-                 decaying correlations arising from the gapless emergent
+jecture that in higher dimension, similar eﬀect will ren-                   degrees of freedom.  Moreover,  an experimental realiza-
+der each renormalized layer into a classical magnet which                   tion of the DQCP would be a crucial manifestation of the
+should be described within Landau-Ginzberg paradigm,                        many-body Berry phase eﬀect that intertwines diﬀerent
+such that the DQCP is not available.  So in the presence                    order parameters.  A dramatic experimental consequence
+of interlayer coupling, the N´eel and VBS phases will likely                of  the  DQCP  is  the  emergent  symmetry  and  resultant
+be separated by a ﬁrst order transition or intermediate                     spectroscopic signatures expected from INS or RIXS. In
+coexisting phases.  Thus, our analysis shows that in both                   particular, the model for SrCu2(BO3)2  studied here ex-
+detg >  0  and  detg <  0  cases,  the  interlayer  coupling                hibits the O(4) emergent symmetry with two promising
+would ultimately destabilize the DQCP, and drive it, for                    spectroscopic signatures atX-point in the Brillouin zone,
+example, to a ﬁrst order transition.  However, our analy-                   summarized as the following:
+sis also indicates that the detg < 0 case, corresponding                    • Magnon  (S  =  1)  Channel:   This  gives  the  informa-
+to the real material, will have stronger quantum ﬂuctu-                       tion about the critical ﬂuctuation of the emergent O(4)
+ations,  potentially  leading  to  a  weaker  ﬁrst  order  tran-              conserved current.  As a result, the spectral intensity
+sition or a smaller region of coexisting order parameters                     increases  linearly  with  the  frequency, S ∼ ω.   If  the
+than the detg> 0 case.                                                        emergent symmetry did not exist, there should not ex-
+  One additional remark is that while the interlayer N´eel                    ist low energy spectral weight at this momentum.  The
+order coupling enters directly from the J3  term, the in-                     deviation from the linear relation would give us a mea-
+terlayer VBS coupling arises from the higher-order per-                       sure of how accurate the emergent symmetry is.
+turbation  (resonance)  of  the J3  term.   As  a  result,  the
+critical point would be shifted to expand the N´eel order                   • Phonon (S = 0) Channel:  This gives the information
+phase.  This is consistent with the phase diagram studied                     about  the  pVBS  order  parameter  ﬂuctuation.   For  a
+in [40], where the interlayer coupling drives a system into                   given  anomalous  dimension ηVBS  of  the  pVBS  order
+the AFM order and shrink down the VBS region.                                 parameter, the spectral intensity diverges with the fre-
+                                                                              quency,S∼        1ω2−ηVBS . The DQCP scenario implies that
+                                                                              the VBS order parameter is fractionalized, resulting in
+     VII.    PREDICTIONS FOR EXPERIMENT                                       a non-zero ηVBS.
+                                                                            Moreover,  the emergent symmetry implies that ηVBS  is
+  Before  discussing  experimental  consequences  of  the                   equal to the anomalous dimension of the N´eel order pa-
+DQCP, we will make a few remarks on the nature of the                       rameter ﬂuctuation, ηN´eel.  However, the N´eel order pa-
+                                                                                                                                                15
+
+rameter ﬂuctuation is located at theM-point, which has                      tures including the lack of a dangerously irrelevant scal-
+a pronounced Bragg peak in addition.  In principle, the                     ing and an emergent O(4) symmetry.  Concrete predic-
+Bragg peak corresponds to spin-0 channel and it must be                     tions are made for future experiments in SrCu2(BO3)2,
+possible to extractηN´eel and compare theηN´eel withηVBS                    where a pressure tuned transition between N´eel order and
+to tell whether the emergent O(4) symmetry exits.  In the                   a putative plaquette VBS state has already been reported
+earlier work [67], it is estimated from the low-  T magnetic                [1].   The  predicted  experimental  signatures  include  the
+susceptibility and heat capacity data thatJ1≈ 4.7 meV,                      form of spectral intensity of spin singlet and spin triplet
+J2≈ 7.3 meV, and J3≈ 0.7 meV.  Moreover, the Debye                          excitations at extinction points, which should be accessi-
+frequency of the acoustic phonon branch has been mea-                       ble in future resonant X-ray and neutron scattering ex-
+sured  to  be ωD ≈  10 meV  in  Ref.  [65].   Therefore,  for               periments.  These can provide a smoking gun signature of
+experiments to conﬁrm the theoretical predictions, it is                    the deconﬁned criticality and emergent O(4) symmetry.
+required to have the energy resolution smaller than the                     Complications arising from the coupling between layers
+milli-electron volt.                                                        in the third dimension of the bulk material are brieﬂy dis-
+  According  to  the  present  numerical  simulation,  the                  cussed, although further work in this direction is needed.
+phase transition between the pVBS and N´eel order can                       We hope this study will trigger future experimental inves-
+be a second-order or weakly-ﬁrst order transition.  The                     tigation of this quantum critical point in an interesting
+result does not contradict recent numerical work with a                     material, and more generally provide a road map for the
+similar phase diagram where a ﬁrst-order transition be-                     experimental study of deconﬁned quantum criticality.
+havior  was  observed,  because  these  models  [22, 23]  are
+diﬀerent  from  the  microscopic  Hamiltonian  in  Eq. (1),
+which  is  more  likely  to  capture  the  couplings  in  the                                      Acknowledgments
+real  material.   Since  the  nature  of  the  phase  transition
+may  be  tunable,  it  is  possible  that  the  experiments  on                We thank Y.-C. He, C. Wang, M. Takigawa, A. Sand-
+SrCu2(BO3)2  may realize the transition that is either a                    vik,  B. Zhao,  L. Wang,  Z.-Y. Meng,  S.E. Han,  and M.
+second order or a weakly ﬁrst order with large correlation                  Metlitski  for  stimulating  discussions.   The  DMRG  nu-
+length.                                                                     merics were performed using code developed in collabora-
+  Would all these predictions become meaningless if the                     tion with Roger Mong and the TenPy collaboration.  The
+transition is actually a weakly ﬁrst order?  In fact, even if               computations in this paper were run on the Odyssey clus-
+the two-dimensional system hosts the DQCP, we argued                        ter supported by the FAS Division of Science, Research
+in the previous section that the interlayer coupling might                  Computing Group at Harvard University.  J.Y. Lee and
+drive  the  system  into  a  ﬁrst-order  transition  point  in              A. Vishwanath were supported by a Simons Investigator
+three-dimension.  Indeed, at the weakly ﬁrst-order tran-                    Fellowship.   S.  Sachdev  was  supported  by  the  National
+sition  point,  the  system  would  have  a  ﬁnite  excitation              Science Foundation under Grant No.  DMR-1664842.
+gap,  and  experimental  spectroscopic  data  at  zero  tem-
+perature would deviate from Fig.11due to the absence
+of  a  gapless  critical  ﬂuctuation.   However,  if  we  exam-                      Appendix A: Monopole Transformation
+ine the system within the length scale smaller than the
+(large) correlation lengthξ, the system would still exhibit                    In  this  section,  we  calculate  how  the  monopole  op-
+the DQCP physics.  In other words, if we only examine                       erator  transforms  under  the  symmetry  of  the  Shastry-
+the system above the energy scale set by the correlation                    Sutherland lattice.  To do this, we think of the Shastry-
+length ω > ωgap∼ 1/ξ, we would observe the predicted                        Sutherland lattice as the lattice being deformed from the
+spectral intensity trends in Fig.11.  It is our hope that                   square lattice with spin-1/2 per site.  Starting from the
+future  experiments  will  be  able  to  use  these  results  to            2 + 1D  antiferromagnetic  ordered  phase  (N´eel)  of  the
+clarify  the  physics  behind  the  interesting  properties  of             square lattice, one can derive the action in terms of local
+SrCu2(BO3)2.                                                                N´eel order parametern(rn) in a path integral formalism,
+                                                                                          ∫          [(∂n    )2                 ]
+                   VIII.    CONCLUSIONS                                         S =  12g     dτd2r       ∂τ      +c2(∇rn)2        +SB     (A1)
+
+
+  We studied a two dimensional S  = 1/2 model which                         where n ∼ ϵrS  is  a  N´eel  order  parameter,  and ϵr  =
+captures  key  features  of  the  Shastry-Sutherland  mate-                 (−1)rx+ry  is a factor required for an alternating spin di-
+rial  SrCu2(BO3)2.   We  obtained  the  phase  diagram  us-                 rection.  In addition to the continuum action of a clas-
+ing  numerical  iDMRG  simulations  and  observed  a  po-                   sical O(3) nonlinear σ-model, there exists a Berry phase
+tentially continuous transition between a plaquette VBS                     contribution due to the quantum nature of spin dynam-
+state with two-fold degeneracy and a N´eel ordered phase.                   ics, which manifestly has the lattice origin.  [81,82] Let
+The  transition,  studied  using  both  numerical  and  ﬁeld                ω(nr) be a solid angle swept by a local N´eel vector lo-
+theoretical  techniques,  is  proposed  to  be  a  deconﬁned                cated atr throughout the imaginary time evolution from
+quantum critical point, and we discussed its special fea-                   0  to β,  with  respect  to  the  reference  direction n0  (See
+                                                                                                                                               16
+
+
+                                                                                    Symmetries                Transformations
+                                                                                         Tx              M†↦→−iM  n↦→−n
+                                                                                         Ty               M†↦→iM  n↦→−n
+                                                                                        Rsiteπ/4           M†↦→iM†  n↦→n
+                                                                                        Rplaqπ/4          M†↦→−M  n↦→−n
+                                                                                         σx                M†↦→iM  n↦→n
+                                                                                         σy               M†↦→−iM  n↦→n
+                                                                                          T                M†↦→M  n↦→−n
+
+
+                                                                           TABLE V: Transformation of the monopole operatorM and
+                                                                           N´eel vectorn in the ﬁeld theory of nonlinear sigma model in
+                                                                           the N´eel order phase.
+
+
+                                                                                   Gp4g          Gp4m                    Action
+FIG.  13:     (a)  The  monopole  operator  inserted  in  the  Eu-                  Tx            T 2x           M†↦→M†  n↦→n
+clidean  spacetime.   White  arrows  represent  spin  directions.                   Ty            T 2y           M†↦→M†  n↦→n
+The imaginary time trajectory of each spin is represented by a                     σxy          Rπ/2σx           M†↦→M  n↦→n
+colored line.  White arrows in the black trajectory shows how                      σx¯y      TxTyRπ/2σy          M†↦→M  n↦→n
+the  direction  of  the  spin  changes  along  the  imaginary  time                 gx           Txσx           M†↦→−M†  n↦→−n
+when  the  monopole  is  inserted.   (b)  The  solid  angle ω(nr)                   gy           Tyσy           M†↦→−M†  n↦→−n
+swept through the imaginary time with respect to the refer-                        Rπ/4          Rplaq         M†↦→−M  n↦→−n
+ence vector n0.  (c) The dual lattice where a monopole op-                                         π/4
+erator resides on.  Here, plaquette centers correspond to the                        T             T            M†↦→M  n↦→−n
+spin  sites.   The  lattice  spin  acts  as  an  alternating  ﬂux  pat-
+tern  (−1)rx+ry4πS  for  monopoles.   The  hopping  amplitude
+along each black arrow gives a phase factor of eiπS =i in our              TABLE  VI:  The  table  shows  the  correspondence  between
+S = 1/2 case.                                                              the  symmetries  of  the  Shastry-Sutherland  lattice  (p4g)  and
+                                                                           square lattice (p4m).  Bold symbols are for symmetries of the
+                                                                           Shastry-Sutherland lattice.
+Fig.13(b)).  Then,     SB  = iS∑rηrω(nr) where S  is the
+spin of an each site andηr = (−1)rx+ry  is an alternating
+phase  factor  coming  from  the  antiferromagnetic  nature                “ﬂux” emanated from a spin-S.)  The associated phase
+of the magnetic order.                                                     factor is independent of the exact imaginary time loca-
+  For any spatial slice, one can deﬁne the Skyrmion num-⏐⏐⏐τ, which is a topolog-tion of the monopole event.  Thus for S = 1/2 case, one
+ber Q(τ) =   1     ∫  ˆn· (∂x ˆn×∂y ˆn)                                    can ﬁx the system into a certain gauge and view this as
+               4π                                                          if±π/2 Aharonov-Bohm phase factor gets accumulated
+ical  invariant.   Then,  a  monopole  creation  operator  is              for each hopping process for monopoles.
+deﬁned  as  a  topological  defect  at  the  spacetime  point                 The  monopole  transformation  rule  is  summarized  in
+which  changes Q(τ)  by  +1  across  it.   By  the  further                Tab.V.    Rsiteπ/2 is a site (spin) centered rotation.  Note that
+duality  mapping,  this  monopole  in  the  NLσM  will  be                 it is important to ﬁx the convention for the rotation cen-
+mapped  into  the  monopole  of  the  CP1  theory.   As  the               ter  because  translation  symmetry  is  projective.   Here,
+center of the monopole cannot have a ﬁnite spin direc-                     we  choose  a  rotation  to  be  deﬁned  with  respect  to  the
+tion, the monopole is located at a dual lattice.  When we                  black  spin  in  Fig.13(a).     Rplaq
+have a monopole event in the spacetime, it must give a                     rotation,  which is deﬁned with respect to the center ofπ/2   is  a  plaquette  centered
+branch-cut structure on the image of ω(r) because ω(r)                     four spins in Fig.13(a).  Under the unit translations     Tx,y,
+must change by 4π around the monopole location in the
+space.  More intuitively, when monopole residing on the                    time reversalT ,  and plaquette centered rotation Rplaqπ/2 ,
+dual  lattice  encircles  a  single  site,  the  imaginary  time           the N´eel order changes its sign.  It means that the ﬂux
+trajectories of all spins except the one encircled by the                  pattern is reversed under such transformations, thus we
+monopole would oscillate just back and forth, while the                    need to transform a monopole into an anti-monopole to
+trajectory for the encircled one would entirely wind itsω                  compensate for the change.  For reﬂectionsσx,y, although
+by 4π upon the completion of encircling as in Fig.13(b).                   n does not ﬂip,  the deﬁnition of the Skyrmion number
+Thus, one can view this problem as a monopole hopping                      tells that we need to change the sign for the number of
+around the dual 2D lattice in which each site in the orig-                 monopoles.  Thus,  a monopole transforms into an anti-
+inal lattice gives a 4πSηr  ﬂux through the plaquettes of                  monopole again.  After ﬁguring out whether a monopole
+the dual lattice. (Monopole is a charged object under this                 transforms into a monopole or anti-monopole, we need to
+                                                                                                                                             17
+
+multiply it by an additional phase factor αg  to account                  procedure, we obtain the following rule:
+for the Berry phase eﬀect.                                                        η∗(r + ˆx)β∗
+  Assume the topological term SB  is absent momentar-                                η(r)β       =−i     =⇒ M†↦→−iM.         (A4)
+ily, which is how CP1 theory in Eq. (4) is derived.  This is
+a usual practice because unlike the ﬁrst term inside the                  Following the similar analysis,  we can obtain αg  for all
+parenthesis in Fig.A1,  the second term,     SB,  cannot be               symmetry transformations summarized in Tab.V. In the
+straightforwardly  extended  to  the  continuum  ﬁeld  the-               case  of  time-reversal  symmetry,  we  do  not  need  an  ex-
+ory description.  Under the absence of SB, the monopole                   tra phase factor because time-reversal already complex-
+insertion  operatorM†  just  makes  a  global  adjustment                 conjugates  the  phase  factor  of  a  monopole  operator,
+of the N´eel order conﬁguration to increase the Skyrmion                  which matches with the phase factor given by the anti-
+number by one, without any additional phase factor.                       monopole at the same site.  Moreover, any monopole con-
+  However,  we  know  from  the  existence  of SB  in  the                densation  amplitude  would  be  time-reversal  symmetric
+lattice description that the Berry phase eﬀect is impor-                  becauseT  :⟨M⟩↦→⟨M†⟩∗ =⟨M⟩.
+tant.  In order to take into account the Berry phase eﬀect,                  So far, we assumed β = 1.  However, a diﬀerent choice
+we need to examine how the monopole transforms under                      of β  can  be  made,  which  would  aﬀect  to  the  transfor-
+each symmetry action.  Under the active transformation                    mation  rule  for  the  symmetries  that  ﬁlps  monopole  to
+where the coordinate system remains the same, we have                     anti-monopole.  In fact, we can show that this is related
+                                                                          to the identiﬁcation rule between monopoleM† and the
+  g :M†r↦→αg·g[M†]g(r),  g[M†] =M† orM,   (A2)                            VBS  order  parameters vx  and vy.   For β  =  1,  we  get
+                                                                          the relation Eq. (6); for example,  Tx : M†↦→−iM im-
+where the action of g  onM†  is determined by the pre-                    plies that theTx-invariant monopole condensation corre-
+vious  argument  on  whether  the  monopole  transforms                   sponds to the condition that ReM + ImM = 0.  How-
+into the monopole or anti-monopole upon the symmetry                      ever, if β  = β  = eiπ/4, we would get Tx  : M†↦→−M,
+transformation.                                                           implying  that  the Tx-invariant  condition  is  ReM  =  0.
+  To determineαg, we need to ﬁx a gauge ﬁrst.  Fixing a                   In such a case, we can deduce thatM†∼vx +ivy.
+gauge is important because a monopole is always created                      Once we ﬁx the gauge choice and determine how the
+in  a  pair  with  an  anti-monopole.   Thus,  the  monopole              monopole transforms under the square lattice symmetries
+event always has a reference point (anti-monopole) con-                   (p4m), how the monopole transforms under the Shastry-
+nected by the branch-cut.  The Berry phase factor is in-                  Sutherland lattice symmetries (p4g) can be deduced eas-
+dependent  of  the  way  we  draw  the  branch-cut  because               ily.  This is because the Shastry-Sutherland lattice sym-
+going around a single spin-lattice site gives a 2π  phase.                metries can be expressed in terms of the square lattice
+Let’s ﬁx the reference gauge such that the monopole cre-                  symmetries if we take the Shastry-Sutherland lattice in
+ated at (¯0, ¯0) gives a Berry phase β.  Then, for a generic              Fig.5is deformed from the smaller square lattice.  The
+coordinate r, inserting a monopole would give the Berry                   result is summarized in Tab.VI.
+phase factorη(r)β whereη(r) = 1,i,−1,  or −i depend-
+ing on whether the coordinates (rx,ry) are (even, even),                   Appendix B: Comparison with a DMRG simulation
+(odd, even), (odd, odd), (even, odd) [81].  This is shown                      result of the J1-J2 model in the square lattice
+explicitly in Fig.13(c) as moving the monopole along the
+arrow  gives  an  additional  phase  factor i.   Inserting  an               In this section, we present our analysis on the square
+anti-monopole at r gives a phase factor η∗(r)β∗  since it                 lattice with spin-1/2.  Using the iDMRG simulation, we
+would give an exactly opposite contribution to the Berry                  studied these models on an inﬁnite cylinder with a cir-
+phase term by having ω↦→−ω.  Now, by ﬁxing β  = 1,                        cumference  size  up  to L  =  10  lattice  sites.   Here,  we
+the insertion of the monopole and anti-monopole at each                   focused  on  the  correlation  length  spectra.   The  simula-
+dual lattice site simply gives a phase η(r) and η∗(r).                    tion is explicitly U(1)z  symmetric, and we can plot the
+  To illustrate the further procedure, let us consider two                correlation spectra for each U(1)z quantum number, Sz.
+examples,Rsiteπ/2 andTx. UnderRsiteπ/2, a monopole remains                Since following models are SO(3) symmetric in the mi-
+monopole, but its location changes asr↦→Rsiteπ/2r. By cal-                croscopic Hamiltonian, there must exist some degeneracy
+culating the relative phase factor between the monopole                   between diﬀerentSz sectors, which can be interpreted as
+created atr andRsiteπ/2r, we obtain its transformation rule               the spectrum for a higher spin.
+in the continuum description:                                                First, let us consider the case where the square lattice
+                                                                          symmetry  is  broken.   The  following  model  realizes  the
+            η(Rsiteπ/2r)β                                                 phase transition between N´eel order and dimerized phase:
+               η(r)β     =i     =⇒ M†↦→iM†.        (A3)                         H =J1        ∑      Si·Sj +J′1        ∑      Si·Sj        (B1)
+
+  In the case ofTx, a monopole transforms into an anti-                                   ⟨i,j⟩∈blue               ⟨i,j⟩∈red
+monopole under the symmetry action.  At the same time,                    where red and blue bonds are shown in Fig.14(a).  Here,
+its location changes as r↦→r + ˆx.  Following the similar                 the  dimerized  phase  does  not  break  any  symmetry  be-
+                                                                                                                                                 18
+
+cause  the  square  lattice  symmetry  is  already  broken  in
+the model.  Therefore, the transition should be described
+by the Landau-Ginzburg theory. Indeed, it is known from
+the quantum Monte Carlo simulation [33] that the sys-
+tem realizes O(3) Wilson-Fisher critical point atJ1/J′1 =
+0.523.  In the iDMRG simulation, we also observed that
+the N´eel order parameter develops at J1/J′1∼ 0.52.  At
+the transition, a single monopole event is not suppressed
+because diﬀerent conﬁgurations for single monopole event
+cannot exactly cancel each other due to the absence of
+symmetries.  As a result, the gauge ﬂuctuation (VBS or-
+der  parameter  ﬂuctuation)  becomes  conﬁning,  and  the
+CP1  theory is no longer valid.  Instead, the critical the-
+ory  is  described  by  the  classical  NLsM  with  O(3)  N´eel
+vector.  The correlation spectra in Fig.14(c) shows that
+the spin-triplet correlation length is the largest across the
+phase transition while the spin-singlet correlation length
+is  much  smaller  than  that.   This  behavior  is  consistent
+with the critical theory described by the classical NLsM.
+  Next,  we  study  the J1–J2  Heisenberg  model  with  a
+square  lattice  symmetry.   The  model  is  deﬁned  by  the                FIG. 14: (a) Square latticeJ1-J′1 model with a dimer coupling
+following Hamiltonian:                                                      J′1. J′1  explicitly  breaks  the  square  lattice  symmetry.   (b)
+             H =J1     ∑    Si·Sj +J2       ∑     Si·Sj         (B2)        Square lattice J1-J2  model.  (c,d) Correlation length spectra
+                                                                            for the model in (a,b)
+                       ⟨i,j⟩               ⟨⟨i,j⟩⟩
+where Si  is  a  spin-1/2  operator, J1  is  the  nearest-
+neighbor  AFM  coupling,  and J2  is  the  next  nearest-
+neighbor  AFM  coupling,  see  Fig.14(b).   When     J2  =  0               momentum (π,π) of the gapless magnon in N´eel order.
+(J1  =  0),  the  model  is  known  to  realize  N´eel  ordered             For S  =  0  case,  we  obtain  that  the  lowest  one  carries
+(conventional AFM stripe) phase.  For the intermediate                      kx = 0 while the second lowest one carrieskx =π, which
+value  of J1/J2,  the  system  is  frustrated  and  known  to               runs almost parallel to the lowest one.  They correspond
+realize the disordered phase.                                               to the Z4 VBS order parameter ﬂuctuations (spin-singlet)
+  In  accordance  with  the  recent  IPEPS  study  [83],  we                at (0,π) and (π, 0),  but the degeneracy is lifted due to
+obtained the N´eel, columnar VBS (cVBS), and conven-                        the iDMRG geometry which breaks the C4-rotation lat-
+tional  stripe  phases  as  we  increase J2/J1.   However,  in              tice symmetry.
+order  to  obtain  the  VBS  order,  we  had  to  apply  some                  Surprisingly, in this model, we obtained the correlation
+bias (pinning ﬁeld).  Under the absence of the bias, the                    length spectra that exactly agrees with the level crossing
+system looks totally symmetric, implying the existence of                   behavior of the excitation spectrum in the ﬁnite DMRG
+the symmetric superposition of symmetry broken states,                      algorithm (Fig.2 in Ref.46).  Our result is consistent with
+namely a Cat state.  The Cat state can be preferred over                    Ref.32, which discussed the agreement between correla-
+the symmetry broken phase if the circumference size is                      tion  length  spectrum  and  local  excitation  spectrum  in
+comparable to the length scale associated with the ﬂuc-                     the DMRG simulation.  Moreover, we want to comment
+tuations, which is the size of the monopole in this case.                   on the argument in Ref.46.  In this previous work, it was
+  Before  getting  into  the  discussion  of  the  correlation              argued that the small region where ξS=1 >ξS=0 >ξS=2
+length spectra, we want to elaborate on some simulation                     corresponds to the gapless spin liquid phase [46].  How-
+details.  In our iDMRG simulation, the iDMRG unit cell                      ever, this reasoning is inconsistent with the iDMRG sim-
+consists of two columns of lattices along the circumfer-                    ulation result of the Shastry-Sutherland lattice because
+ence, as otherwise translational symmetry broken phases                     this  region  is  clearly  a  symmetry  broken  phase  with  a
+(AFM order or VBS order) cannot develop.  The price to                      non-zero N´eel order parameter from the numerics.  Thus,
+pay is thatkx = 0 andkx =π momenta become indistin-                         we can conjecture that such a region would shrink into a
+guishable.   (In  our  simulation, ky  cannot  be  measured)                critical ‘point’ rather than remain as an extended phase
+However, at the critical point where the explicit symme-                    of Dirac spin liquid both in theJ1-J2 square lattice model
+try breaking order has not developed yet, we can use a                      and Shastry-Sutherland model.  Indeed, if we perform a
+single  column  to  distinguish kx  =  0  and kx  = π  mo-                  single-column  iDMRG  simulation  for  the J1-J2  model,
+menta.  Indeed, in the iDMRG simulation of the single-                      the simulation does not converge well for theJ1/J2 > 2.0,
+column unit cell, we observe that the largest correlation                   which  means  that  the  hypothesized  gapless  spin  liquid
+length  for S  =  1  spectra  carries  momentum kx  = π  in                 phase  is,  in  fact,  more  like  the  AFM  phase  where  the
+the single-column simulation, which is consistent with the                  double-column iDMRG unit cell is required.
+                                                                                                                                               19
+
+  Finally, we remark on the evidence that supports our
+discussion in Sec.IV. In the previous ﬁnite DMRG works
+on  this  model  [50],  the  plaquette  VBS  appeared  in-
+stead  of  the  columnar  VBS.  In  fact,  it  was  found  in
+Ref.  [83]  that  these  two  states  have  almost  the  same
+energy  (∆E/E <  0.1%).   This  again  implies  that  the
+dangerously  irrelevant  operatorM4,  which  is  responsi-
+ble for the VBS ordering, has not ﬂowed large enough to
+condense monopole to a certain direction.  This can be                     FIG. 15:  (a) A,B,C,D  label four copper sites in each unit
+supported by Fig.9(a), where the correlation length for                    cell (marked out in dashed lines). k1,k2 are the stiﬀnesses of
+the spin-singlet operator is smaller than the correlation                  the two types of bonds (nearest neighbor and dimer). X,Y
+length of the spin-triplet operator throughout the whole                   label the two types of plaquettes.  (b) Schematic illustration
+intermediate regime between the N´eel and conventional                     of  the  phonon  spectrum.   A  continuum  will  emergent  at X
+AFM stripe order.                                                          point due to the VBS-phonon coupling.
+
+
+  Appendix C: VBS-Phonon Coupling and Phonon
+                            Spectrum                                          Our strategy to ﬁgure out the pVBS-phonon coupling
+                                                                           is to ﬁrst investigate the pattern of lattice distortion in-
+  The square pVBS order breaks the glide reﬂection sym-                    duced by the pVBS order.  Because the pVBS order does
+metries Gx,Gy  and  the  diagonal  reﬂection  symmetries                   not enlarge the four-copper unit cell, its induced lattice
+σxy,σx¯y.    Due  to  the  lattice  symmetry  breaking,  the               distortion will also be identical among unit cells.  There-
+pVBS order should induce lattice distortion as shown in                    fore the distortion can be described by four displacement
+Fig.6.   Therefore  the  pVBS  ﬂuctuation  must  couple  to                vectorsuA,uB,uC,uD, translating each sublattice sep-
+the lattice vibration mode, i.e.  the phonon mode.  Here                   arately as
+we would like to determine the speciﬁc form of the pVBS-                                ri→r′i =ri +ui    (i =A,B,C,D).        (C3)
+phonon coupling.
+  We will focus on the copper lattice in the following dis-                The  energy  cost  associated  with  the  distortion  can  be
+cussion.  Although the lattice also contains other atoms                   modeled by summing up the bond energies
+and the phonon spectrum can be complicated, we choose
+to work on the symmetry level to demonstrate the uni-                        Ebond[ui] =k1        ∑     ((r′i−r′j)2− (ri−rj)2)2
+versal consequences of pVBS ﬂuctuation on the phonon                                         2
+spectrum without diving into the details.  For this pur-                                        ij∈n.n.                                     (C4)
+pose, we ﬁrst speciﬁes the coordinate of copper sites in                                  +k2     ∑       ((r′i−r′j)2− (ri−rj)2)2,
+the each unit cell.  As shown in Fig.15(a), there are four                                   2  ij∈dimer
+copper sites in each unit cell.  At equilibrium, they locate
+at                                                                         whereui dependence is implicit inr′i =ri +ui.  The en-
+                     rA = (1 +δ, 1 +δ)/2,                                  ergy will increase whenever a bond is stretched or com-
+                     rB = (1−δ, 3 +δ)/2,                                   pressed.  The shape of the potential in Eq. (C4) captures
+                                                                (C1)       this  physics  when  the  distortion ui  is  small.   The  two
+                     rC = (3 +δ, 1−δ)/2,                                   stiﬀness coeﬃcients k1 and k2 are expected to be diﬀer-
+                     rD = (3−δ, 3−δ)/2,                                    ent  in  general.   Of  course,  in  the  realistic  material,  Sr,
+                                                                           B,  O  atoms  will  all  be  involved  and  the  bond  energy
+where  0≤ δ <  1  parameterize  the  deformation  of  the                  model will be more complicated.  However the toy model
+Shastry-Sutherland lattice from the square lattice.  Ac-                   Eq. (C4) respects all the symmetry property and provides
+cording  to  Ref.16,  the  lattice  constant  is  8.995          ˚A,  the  the stiﬀness to the copper lattice, which can be used to
+shortest  Cu-Cu  bond  is  2.905˚Aand  the  second  shortest               analyze the pVBS induced lattice distortion.  Finally we
+Cu-Cu bond is 5.132˚A. This implies that, in unit of the                   note that the energy model Eq. (C4) written with respect
+lattice constant, we have                                                  to a single unit cell with periodic boundary condition (i.e.
+                                                                           on a torus geometry), so for those bond across the unit
+                  AD = 1 +δ                                                cell, their bond length must be correctly treated by con-
+                           √2 ≈ 2.905˚A8.995˚A,                 (C2)       sidering the periodic boundary condition.
+                             1 +δ2                                            Upon introducing the pVBS order, we will add an ad-
+                  AB =         2  ≈ 5.132˚A8.995˚A.                        ditional term to the energy model,
+
+The optimal solution is δ≈ 0.544.  Using this deforma-                                E[ui] =Ebond[ui] +EVBS[ui],
+tion parameter, we can write down equilibrium positions                           EVBS[ui] = ImM∑(−)p∑(r′i−Rp)2,        (C5)
+of copper atoms through out the lattice.                                                                  p         i∈p
+                                                                                                                                            20
+
+where p denotes the square plaquettes and i∈p denotes                                             vx   vy   ux   uy
+the four corner sites around the plaquette p. Rp coordi-                                     q   (π, 0)  (0,π)  (π, 0)  (0,π)
+nates the plaquette center,                                                                 Gx   −vx −vy −ux −uy
+                            {                                                               Gy   −vx −vy −ux −uy
+                    Rp =       (1, 0) p∈X,                                                  σxy    vy   vx   uy   ux
+                               (0, 1) p∈Y.                      (C6)                        σx¯y   vy   vx   uy   ux
+
+The  staggering  factor  (−)p  is  +1  for X-type  plaquette
+(yellow) and−1 forY -type plaquette (green) as shown in                   TABLE  VII:  Momentum  and  symmetry  transformations  of
+Fig.15(a).  Im   M =vy−vx denotes the square pVBS or-                     the  VBS  order  parameter v  and  ﬁnite-momentum  phonon
+der parameter.  The physical meaning ofEVBS is that the                   modeu.
+pVBS order will contract one type of the square plaque-
+tte and expand the other type, exerting forces on copper                    Given  the  VBS-phonon  coupling,  we  can  investigate
+atoms  that  points  towards  or  away  from  the  plaquette              the eﬀect of low-energy VBS ﬂuctuation on the phonon
+center.                                                                   spectrum near the DQCP. We ﬁrst write down the ﬁeld
+  Given  the  full  energy  model  in  Eq. (C5),  we  can  ex-            theory action describing both degrees of freedom,
+pandE[ui] to the quadratic order ofui.  The linear term
+will be proportional the pVBS order parameter ImM, as                                           ∑
+ImM is the force that distort the lattice.  The quadratic                         S[u,v] =12        (ω2− Ω2q)u(−q)·u(q)
+term determines how the lattice responses to the distor-                                         q
+tion force in the linear response regime.  We found that                                   −1   ∑   G−1
+independent  of  the  choice  of δ  and k2,  the  response  is                                2       VBS(q)v(−q)·v(q)                 (C11)
+always given by                                                                                  q
+                                                                                           +∑κqv(−q)·u(q),
+                     uA = ImM4k1   (−1, 1),                                                    q
+
+                     uB = ImM                                             where q = (ω,q) represents the energy-momentum vec-
+                              4k1   (−1,−1),                   (C7)       tor.  Ωq  describes the phonon dispersion relation. GVBS
+                     uC = ImM                                             is the correlation function of the VBS critical ﬂuctuation,
+                              4k1   (1, 1),                               whose low-energy behavior is given by
+
+                     uD = ImM4k1   (1,−1).                                        GVBS(ω,q) =                  1((q−Q)2−ω2)1−η/2,           (C12)
+
+Under  the  Fourier  transformation  to  the  momentum
+space                                                                     where η  is  the  anomalous  exponent  of  the  O(4)  vector
+                                                                          at  the  O(4)  DQCP.  Based  on  the  previous  numerical
+                      u(q) =∑       uieiq·ri,                      (C8)   measurements[25,66],      η  is estimated to be η  = 0.13∼
+                                 i                                        0.3. Q = (π, 0) or (0,π) denotes the momentum point
+the solution in Eq. (C7) corresponds to                                   where the VBS ﬂuctuation gets soften.  The VBS-phonon
+                                                                          coupling κq  is  expected  to  be  momentum  dependent,
+       ux(π, 0)∝− ImM,  uy(0,π)∝ ImM.          (C9)                       because  the  VBS  order  parameter  only  couples  to  the
+                                                                          high-energy  phonon  around X  and Y   points  but  not
+This  calculation  indicates  that  the  square  pVBS  order              the  acoustic  phonon  around  Γ  point.   By  the  acoustic
+will lead to a lattice distortion that corresponds to a the               phonon  around  Γ  point,  we  mean  the  low  energy  part
+simultaneous condensation of phonon modes ux  at mo-                      of the phonon,  i.e.  the segment of the acoustic branch
+mentum (π, 0) and uy  at momentum (0,π).  Given that                      around the gapless point,  which usually appears in the
+ImM = vy−vx, we conclude that there must be a lin-                        ﬁeld theory description of phonons.Given these setup,
+ear coupling between lattice displacement and the VBS                     we can integrate out the VBS ﬂuctuation and obtain the
+order parameter in the form of                                            dressed propagator of phonon,
+               LVBS-phonon =κ(vxux +vyuy),           (C10)                        D(ω,q) =                    1
+in order to produce the linear response in Eq. (C9).  The                                       Ω2q−ω2−κ2qGVBS(ω,q).           (C13)
+coupling in Eq. (C10) can be further justiﬁed by symme-                   Then the phonon spectral function can be obtained from
+try arguments.  Tab.VIIshows the momentum quantum
+number and the symmetry transformation of the VBS or-                                     S(ω,q) = 2 ImD(ω + i0+,q).            (C14)
+der parameterv and ﬁnite-momentum phonon modeu.
+One can seev andu have identical symmetry properties                      The phonon dispersion Ωq  is unknown to us, as we did
+and hence a linear coupling as in Eq. (C10) is allowed.                   not  have  the  full  model  of  the  lattice  vibration.    For
+                                                                                                                                                   21
+
+demonstration  purpose,  we  can  use  the  following  toy
+model
+
+                 Ω2q = sin2(qx/2) + sin2(qy/2),            (C15)
+
+which captures the gapless acoustic phonon at the Γ point
+and gapped phonons at X  and Y  points (see Fig.1(b)).
+We also take the anomalous exponent η = 0.13 and use
+κq =κ0Ωq with κ0 = 0.05 so that
+
+            lim
+       q→(0,π),(π,0)κq =κ0,          limq→(0,0)κq = 0.         (C16)
+
+With  these,  we  show  the  phonon  spectrum  calculated
+from  Eq. (C14)  in  Fig.15(b).The  prominent  feature  is
+a  V-shape  continuum  at  the X  point  (as  well  as  the
+Y  point)  in  the  Brillouin  zone.   This  continuum  in  the
+phonon spectrum represents the critical ﬂuctuation of the
+VBS order parameter at the DQCP. Although the spec-
+tral weight is expected to be weak, since the X  point is
+an extinction point, it is still feasible to collect spectral
+signals  of  this  continuum.   In  particular,  the  frequency
+dependence of the spectral weight at the X point is pre-
+dicted to follow
+
+                     S(ω,q =X)∝ω−2+η,                  (C17)
+
+which can be checked experimentally.  It will be meaning-
+ful to compare the measured η with large-scale quantum
+Monte Carlo simulation result.
+
+
+         Appendix D: Detailed Numerical Data                                 FIG. 16:    The iDMRG simulation results with ∆J1 = 0.002
+                                                                             at L  =  10,  shown  for  a  range  of  MPS  bond  dimension χ.
+                                                                             Bond dimension scalings of (a) energy per site E, (b) energy
+  In  this  appendix,   we  discuss  the  evolution  of  the                 derivative per site ∂E/∂J1a, (c) truncation error p, (d) cor-
+iDMRG simulations results as we increase the bond di-                        relation  length  of  spin-singlet  operator ξS=0,  and  (e)  pVBS
+mension χ for system sizes L = 8 and L = 10.  Since the                      order parameters.  Note that the correlation length is plotted
+accuracy of the iDMRG simulation is determined by the                        instead of the inverse.  In (f), we plot pVBS order parameters
+bond dimension, a reliable analysis requires one to exam-                    as functions of truncation erros for a range of the tuning pa-
+ine the results as a function of the bond dimension.  Here,                  rameter J1.  Blue dotted line is a linear ﬁtting for the three
+the iDMRG simulation results of the Shastry-Sutherland                       data points at χ = 2000, 3000, 4000.
+lattice  model  in  Eq.1)  at   L  =  10  for  a  range  of  bond              aData for χ = 500, 1000 are not shown here as these data-points
+dimensions  are  presented  in  Fig.16.   Although  the  the                 behave irregularly, and cover the other data points.
+truncation error ϵtrun  is very large (> 10−4) at the low
+bond  dimensions,  as  we  increase  the  bond  dimensison
+upto χ = 4000, ϵtrun  goes below 10−5  and the iDMRG                         signaling the continuous or weakly ﬁrst order phase tran-
+results becomes sensible.                                                    sition.
+  Fig.16(b)  shows  the  ﬁrst  derivative  of  energy,  whose
+change  of  the  slope  correspsonds  to  the  transition  be-                  Although the peak location of the spin-singlet correla-
+tween the pVBS and N´eel ordererd phases.  As the bond                       tion length changes with the bond dimension, a further
+dimension increases, the transition point shifts leftward,                   indication of the phases boundary can be obtained from
+implying that the parameter regime for the pVBS phase                        the order parameter plotted versus the truncation error
+shrinks.  The behavior aligns with the intuition that the                    [84,85].  In principle, the ground state is fully symmetric
+gapped pVBS phase would be favored over the the gapless                      and local order parameter cannot be non-zero.  However,
+N´eel orderd phase for a low entanglement MPS state. Ac-                     in the iDMRG simulation, the numerical process favors
+cordingly, the peak of the spin-singlet correlation length                   a minimally entangled state, giving rise to a non-zero lo-
+which coincides with the phase transition point also shifts                  cal order parameter in a spontaneous symmetry breaking
+leftward, presented in Fig.16(d).  At the same time, the                     phase at ﬁnite bond dimensions.  This can even happen
+peak of the spin-singlet correlation length becomes larger                   when the system is outside but close to the spontaneous
+and more pronounced as the bond dimension increases,                         symmetry  breaking  phase,  meaning  that  one  needs  to
+                                                                                                                                                    22
+
+                                                                              capacity.
+                                                                                 Finally, we remark the scaling of the result for diﬀerent
+                                                                              system sizes.  In Fig.17, we plotted the iDMRG simula-
+                                                                              tion results atL = 8 for a range of MPS bond dimension
+                                                                              as in Fig.16.  Note that the truncation error is an order
+                                                                              of magnitude smaller than the results at L = 10.  More-
+                                                                              over,  the  value  of J1  where  the  pVBS  order  parameter
+                                                                              disappears  is  much  smaller  for  the  smaller  system  size
+                                                                              L.  However, this does not imply that the N´eel ordered
+                                                                              phase  develops  for J1 >  0.726,  as  we  can  see  from  the
+                                                                              correlation length plot in Fig.18.  In Fig.18(a), while the
+                                                                              peak  of  the  spin-singlet  correlation  length  implies  that
+                                                                              the peak corresponds to the phase transition point for the
+                                                                              pVBS phase, the spin-triplet correlation length remains
+                                                                              almost constant, which implies that the N´eel order does
+                                                                              not develop, since the N´eel order would give rise to the
+                                                                              increase of the spin-triplet correlation length originated
+                                                                              from the gapless magnon excitation.  On the other hand,
+                                                                              at L = 10, we observe that the peak of the spin-singlet
+                                                                              correlation length is immediately followed by the rise of
+                                                                              the spin-triplet correlation length which signals the on-
+                                                                              set of the N´eel ordered phase. L = 6 behavior is similar
+                                                                              to that of L = 8, and the signature of the N´eel ordered
+                                                                              phase, such as the staggering magnetization or the rise of
+                                                                              the spin-triplet correlation lengh, is not observed near the
+                                                                              pVBS critical point.  This is related to the discussion in
+                                                                              the main text. For a quasi one-dimensional system with a
+                                                                              ﬁnite-size circumference size, the spontaneous symmetry
+                                                                              breaking  of  the  continuous  group  would  be  suppressed
+                                                                              due to the disordering eﬀect.  As a result, the disappear-
+FIG. 17:    The iDMRG simulation results with ∆J1 = 0.002                     ance of the pVBS ordering is not immediately followed
+(0.001 forχ = 4000) atL = 8, shown for a range of MPS bond                    by the N´eel ordering for a ﬁnite circumference system.
+dimension χ.  Diﬀerent observables are labeled as in Fig.16.
+Note that the pVBS order parameter vanishes at J1 = 0.726,
+which is smaller than the value for L = 10.
+
+
+
+plot the order parameter as a function of the truncation
+error in order to see whether a non-zero order parameter
+is truly physical. In Fig.16(f), we plotted the pVBS order
+parameter deﬁned in Eq.5as a function of the trunca-
+tion error, and extrapolated them.  We observe that the
+extrapolated  order  parameter  disappears  at J1  =  0.76,
+which  agrees  well  with  the  peak  location J1  =  0.762
+of  the  spin-singlet  correlation  length  at χ  =  4000  with               FIG. 18:   Comparison between the L = 8 andL = 10 results
+L = 10.  As mentioned earlier, this extrapolation method                      atχ = 4000 for the spin-singlet and triplet correlation lengths.
+would  be  beneﬁted  a  lot  if  a  wider  range  of  bond  di-               ForL = 8, the peak of theξS=0 is located atJ1 = 0.727, while
+mensions is available.  However, at χ = 4000, each data                       forL = 10 the peak is located atJ1 = 0.762.  Unlike the result
+point already takes about 50 hours of simulations times                       at L = 10, the spin-triplet correlation length at L = 8 does
+for 12 multi-threads with 80GB RAM, and both the time                         not grow much after the peak.
+and RAM scale roughly as χ2.  Therefore, a signiﬁcantly
+higher  bond  dimension  is  currently  inaccessible  at  our
+
+
+
+
+
+ [1]M.  E.  Zayed,  C.  R¨uegg,  J.  Larrea  J.,  A.  M.  L¨auchli,                Morrow,  T.  Str¨assle,  S.  Klotz,  et  al.,  Nature  Physics
+     C.  Panagopoulos,  S.  S.  Saxena,  M.  Ellerby,  D.  F.  Mc-                 13, 962 EP  (2017), URL http://dx.doi.org/10.1038/
+                                                                                                                                                        23
+
+     nphys4190.                                                                 [22]B. Zhao, P. Weinberg, and A. W. Sandvik, ArXiv e-prints
+ [2]L. Saminadayar,  D. C. Glattli,  Y. Jin,  and B. Etienne,                         (2018), 1804.07115.
+     Phys. Rev. Lett. 79,  2526 (1997),  URL  https://link.                     [23]P.   Serna   and   A.   Nahum,    ArXiv   e-prints   (2018),
+     aps.org/doi/10.1103/PhysRevLett.79.2526.                                         1805.03759.
+ [3]R. de Picciotto, M. Reznikov, M. Heiblum, V. Umansky,                       [24]A.   Sen   and   A.   W.   Sandvik,    Phys.   Rev.   B        82,
+     G. Bunin, and D. Mahalu, Nature 389, 162 (1997), URL                             174428  (2010),   URL   https://link.aps.org/doi/10.
+     http://dx.doi.org/10.1038/38241.                                                 1103/PhysRevB.82.174428.
+ [4]J.  Martin,  S.  Ilani,  B.  Verdene,  J.  Smet,  V.  Umansky,              [25]Y.  Q.  Qin,  Y.-Y.  He,  Y.-Z.  You,  Z.-Y.  Lu,  A.  Sen,
+     D.  Mahalu,  D.  Schuh,  G.  Abstreiter,  and  A.  Yacoby,                       A. W. Sandvik,  C. Xu,  and Z. Y. Meng,  Phys. Rev. X
+     Science 305,  980  (2004),  ISSN  0036-8075,  URL  http:                         7, 031052 (2017), URL https://link.aps.org/doi/10.
+     //science.sciencemag.org/content/305/5686/980.                                   1103/PhysRevX.7.031052.
+ [5]T. Senthil, L. Balents, S. Sachdev, A. Vishwanath, and                      [26]X.-F.    Zhang,    Y.-C.    He,    S.    Eggert,    R.    Moess-
+     M.  P.  A.  Fisher,   Phys.  Rev.  B  70,   144407  (2004),                      ner,    and    F.    Pollmann,    Phys.    Rev.    Lett.   120,
+     URL    https://link.aps.org/doi/10.1103/PhysRevB.                                115702  (2018),   URL   https://link.aps.org/doi/10.
+     70.144407.                                                                       1103/PhysRevLett.120.115702.
+ [6]T. Senthil, A. Vishwanath, L. Balents, S. Sachdev, and                      [27]C.-M. Jian, A. Rasmussen, Y.-Z. You, and C. Xu, ArXiv
+     M. P. A. Fisher,  Science 303,  1490 (2004),  ISSN 0036-                         e-prints (2017), 1708.03050.
+     8075, URL  http://science.sciencemag.org/content/                          [28]S.  R.  White,  Phys.  Rev.  Lett.       69,  2863  (1992),  URL
+     303/5663/1490.                                                                   https://link.aps.org/doi/10.1103/PhysRevLett.69.
+ [7]L.   Savary   and   L.   Balents,   Reports   on   Progress   in                  2863.
+     Physics  80,  016502  (2017),  URL  http://stacks.iop.                     [29]I. P. McCulloch, ArXiv e-prints (2008), 0804.2509.
+     org/0034-4885/80/i=1/a=016502.                                             [30]A.   Nahum,   P.   Serna,   J.   T.   Chalker,   M.   Ortu˜no,
+ [8]F.   F.   Assaad   and   T.   Grover,    Phys.   Rev.   X      6,                 and  A.  M.  Somoza,   Phys.  Rev.  Lett.  115,   267203
+     041049  (2016),   URL   https://link.aps.org/doi/10.                             (2015),     URL     https://link.aps.org/doi/10.1103/
+     1103/PhysRevX.6.041049.                                                          PhysRevLett.115.267203.
+ [9]T. Sato,  M. Hohenadler,  and F. F. Assaad,  Phys. Rev.                     [31]U.  Schollw¨ock,   Annals  of  Physics       326,   96     (2011),
+     Lett. 119, 197203 (2017), URL https://link.aps.org/                              ISSN   0003-4916,   january   2011   Special   Issue,   URL
+     doi/10.1103/PhysRevLett.119.197203.                                              http://www.sciencedirect.com/science/article/
+[10]Y.-Z. You, Y.-C. He, C. Xu, and A. Vishwanath, Phys.                              pii/S0003491610001752.
+     Rev. X 8, 011026 (2018), URL https://link.aps.org/                         [32]V. Zauner, D. Draxler, L. Vanderstraeten, M. Degroote,
+     doi/10.1103/PhysRevX.8.011026.                                                   J.  Haegeman,  M.  M.  Rams,  V.  Stojevic,  N.  Schuch,
+[11]X.-F.    Zhang,    Y.-C.    He,    S.    Eggert,    R.    Moess-                  and  F.  Verstraete,  New  Journal  of  Physics 17,  053002
+     ner,    and    F.    Pollmann,    Phys.    Rev.    Lett.   120,                  (2015), URL http://stacks.iop.org/1367-2630/17/i=
+     115702  (2018),   URL   https://link.aps.org/doi/10.                             5/a=053002.
+     1103/PhysRevLett.120.115702.                                               [33]M. Matsumoto, C. Yasuda, S. Todo, and H. Takayama,
+[12]M.  Ippoliti,  R.  S.  K.  Mong,  F.  F.  Assaad,  and  M.  P.                    Phys.  Rev.  B 65,  014407  (2001),  URL  https://link.
+     Zaletel,  Phys.  Rev.  B 98,  235108  (2018),  URL  https:                       aps.org/doi/10.1103/PhysRevB.65.014407.
+     //link.aps.org/doi/10.1103/PhysRevB.98.235108.                             [34]S.   Sachdev   and   R.   N.   Bhatt,   Phys.   Rev.   B       41,
+[13]Y.  Liu,  Z.  Wang,  T.  Sato,  M.  Hohenadler,  C.  Wang,                        9323    (1990),    URL    https://link.aps.org/doi/10.
+     W.   Guo,   and   F.   F.   Assaad,   Nature   Communica-                        1103/PhysRevB.41.9323.
+     tions 10, 2658 (2019), URL https://doi.org/10.1038/                        [35]V. N. Kotov, D.-X. Yao, A. H. Castro Neto, and D. K.
+     s41467-019-10372-0.                                                              Campbell, Phys. Rev. B 80, 174403 (2009), URL https:
+[14]M.  Mambrini,  A.  L¨auchli,  D.  Poilblanc,  and  F.  Mila,                      //link.aps.org/doi/10.1103/PhysRevB.80.174403.
+     Phys.  Rev.  B 74,  144422  (2006),  URL  https://link.                    [36]O. I. Motrunich and A. Vishwanath, Phys. Rev. B       70,
+     aps.org/doi/10.1103/PhysRevB.74.144422.                                          075104 (2004), cond-mat/0311222.
+[15]B.   S.   Shastry   and   B.   Sutherland,    Physica   B+C                 [37]M. Levin and T. Senthil, Phys. Rev. B      70, 220403 (2004),
+     108,      1069         (1981),      ISSN     0378-4363,      URL                 URL    https://link.aps.org/doi/10.1103/PhysRevB.
+     http://www.sciencedirect.com/science/article/                                    70.220403.
+     pii/037843638190838X.                                                      [38]T.  Waki,  K.  Arai,  M.  Takigawa,  Y.  Saiga,  Y.  Uwa-
+[16]S.   Miyahara   and   K.   Ueda,   Phys.   Rev.   Lett.        82,                toko,    H.    Kageyama,    and    Y.    Ueda,    Journal    of
+     3701    (1999),    URL    https://link.aps.org/doi/10.                           the   Physical   Society   of   Japan  76,   073710   (2007),
+     1103/PhysRevLett.82.3701.                                                        https://doi.org/10.1143/JPSJ.76.073710, URL https://
+[17]A. Koga and N. Kawakami, Physical Review Letters      84,                         doi.org/10.1143/JPSJ.76.073710.
+     4461 (2000), cond-mat/0003435.                                             [39]M.  Takigawa,  T.  Waki,  M.  Horvati´c,  and  C.  Berthier,
+[18]A. L¨auchli, S. Wessel, and M. Sigrist, Phys. Rev. B       66,                    Journal  of  the  Physical  Society  of  Japan  79,  011005
+     014401 (2002), cond-mat/0201506.                                                 (2010),   https://doi.org/10.1143/JPSJ.79.011005,   URL
+[19]J. Lou, T. Suzuki, K. Harada, and N. Kawashima, ArXiv                             https://doi.org/10.1143/JPSJ.79.011005.
+     e-prints (2012), 1212.1999.                                                [40]A.  Koga,   Journal  of  the  Physical  Society  of  Japan
+[20]P. Corboz and F. Mila, Phys. Rev. B      87, 115144 (2013),                       69, 3509 (2000), https://doi.org/10.1143/JPSJ.69.3509,
+     URL    https://link.aps.org/doi/10.1103/PhysRevB.                                URL https://doi.org/10.1143/JPSJ.69.3509.
+     87.115144.                                                                 [41]H. Nakano and T. Sakai, Journal of the Physical Society
+[21]C. H. Chung, J. B. Marston, and S. Sachdev, Phys. Rev.                            of Japan 87, 123702 (2018), URL https://doi.org/10.
+     B 64, 134407 (2001), URL https://link.aps.org/doi/                               7566/JPSJ.87.123702.
+     10.1103/PhysRevB.64.134407.                                                [42]M. A. Metlitski and R. Thorngren, ArXiv e-prints (2017),
+                                                                                                                                                        24
+
+     1707.07686.                                                                      F. Pollmann, ArXiv e-prints (2017), 1706.05414.
+[43]Y. You and Y.-Z. You, Phys. Rev. B       93, 195141 (2016).                 [67]S. Miyahara and K. Ueda, Journal of Physics: Condensed
+[44]C.  Wang,  A.  Nahum,  M.  A.  Metlitski,  C.  Xu,  and                           Matter 15, R327 (2003), URL http://stacks.iop.org/
+     T. Senthil, Phys. Rev. X 7, 031051 (2017), URL https:                            0953-8984/15/i=9/a=201.
+     //link.aps.org/doi/10.1103/PhysRevX.7.031051.                              [68]A.    Tanaka    and    X.    Hu,    Phys.    Rev.    Lett.        95,
+[45]C.-M.  Jian,  A.  Thomson,  A.  Rasmussen,  Z.  Bi,  and                          036402  (2005),   URL   https://link.aps.org/doi/10.
+     C. Xu, ArXiv e-prints (2017), 1710.04668.                                        1103/PhysRevLett.95.036402.
+[46]L.  Wang  and  A.  W.  Sandvik,  ArXiv  e-prints  (2017),                   [69]Z. Bi, A. Rasmussen, K. Slagle, and C. Xu, Phys. Rev.
+     1702.08197.                                                                      B  91, 134404 (2015), 1309.0515.
+[47]H.  Shao,  W.  Guo,  and  A.  W.  Sandvik,  Science       352,              [70]J. Lou, A. W. Sandvik, and N. Kawashima, Phys. Rev.
+     213  (2016),   ISSN  0036-8075,   URL   http://science.                          B 80,  180414 (2009),  URL  http://link.aps.org/doi/
+     sciencemag.org/content/352/6282/213.                                             10.1103/PhysRevB.80.180414.
+[48]J. Lou, A. W. Sandvik, and L. Balents, Phys. Rev. Lett.                     [71]K.  Harada,  T.  Suzuki,  T.  Okubo,  H.  Matsuo,  J.  Lou,
+     99,  207203  (2007),  URL  https://link.aps.org/doi/                             H. Watanabe, S. Todo, and N. Kawashima, Phys. Rev.
+     10.1103/PhysRevLett.99.207203.                                                   B 88, 220408 (2013), URL https://link.aps.org/doi/
+[49]N.   D.   Mermin   and   H.   Wagner,   Phys.   Rev.   Lett.                      10.1103/PhysRevB.88.220408.
+     17,  1133  (1966),  URL  https://link.aps.org/doi/10.                      [72]M. S. Block, R. G. Melko, and R. K. Kaul, Phys. Rev.
+     1103/PhysRevLett.17.1133.                                                        Lett. 111, 137202 (2013), URL https://link.aps.org/
+[50]S.-S.  Gong,  W.  Zhu,  D.  N.  Sheng,  O.  I.  Motrunich,                        doi/10.1103/PhysRevLett.111.137202.
+     and    M.    P.    A.    Fisher,    Phys.    Rev.    Lett.   113,          [73]S.  Pujari,  K.  Damle,  and  F.  Alet,  Phys.  Rev.  Lett.
+     027201  (2014),   URL   https://link.aps.org/doi/10.                             111,  087203 (2013),  URL  https://link.aps.org/doi/
+     1103/PhysRevLett.113.027201.                                                     10.1103/PhysRevLett.111.087203.
+[51]L. Wang, D. Poilblanc, Z.-C. Gu, X.-G. Wen, and F. Ver-                     [74]G.  J.  Sreejith  and  S.  Powell,  Physical  Review  B       89,
+     straete,   Phys.  Rev.  Lett.  111,   037202  (2013),   URL                      014404 (2014), 1311.1444.
+     https://link.aps.org/doi/10.1103/PhysRevLett.                              [75]G.   J.   Sreejith   and   S.   Powell,   Phys.   Rev.   B        92,
+     111.037202.                                                                      184413  (2015),   URL   https://link.aps.org/doi/10.
+[52]L.   Capriotti   and   S.   Sorella,   Phys.   Rev.   Lett.       84,             1103/PhysRevB.92.184413.
+     3173    (2000),    URL    https://link.aps.org/doi/10.                     [76]S.  Pujari,  F.  Alet,  and  K.  Damle,  Phys.  Rev.  B       91,
+     1103/PhysRevLett.84.3173.                                                        104411  (2015),   URL   https://link.aps.org/doi/10.
+[53]K.  Takano,  Y.  Kito,  Y.        ¯Ono,  and  K.  Sano,  Phys.  Rev.              1103/PhysRevB.91.104411.
+     Lett. 91,  197202  (2003),  URL  https://link.aps.org/                     [77]E. Dyer, M. Mezei, S. S. Pufu, and S. Sachdev, Journal of
+     doi/10.1103/PhysRevLett.91.197202.                                               High Energy Physics 2015, 37 (2015), ISSN 1029-8479,
+[54]V.  Murg,  F.  Verstraete,  and  J.  I.  Cirac,  Phys.  Rev.  B                   URL https://doi.org/10.1007/JHEP06(2015)037.
+     79,  195119  (2009),  URL  https://link.aps.org/doi/                       [78]A. Nahum, J. T. Chalker, P. Serna, M. Ortu˜no, and A. M.
+     10.1103/PhysRevB.79.195119.                                                      Somoza,  Phys. Rev. X 5,  041048 (2015),  URL  http://
+[55]Y.-Z. You, Y.-C. He, A. Vishwanath, and C. Xu, ArXiv                              link.aps.org/doi/10.1103/PhysRevX.5.041048.
+     e-prints (2017), 1711.00863.                                               [79]Y.  Nakayama  and  T.  Ohtsuki,  Phys.  Rev.  Lett.       117,
+[56]F.   F.   Assaad   and   T.   Grover,    Phys.   Rev.   X        6,               131601  (2016),   URL   https://link.aps.org/doi/10.
+     041049  (2016),   URL   https://link.aps.org/doi/10.                             1103/PhysRevLett.117.131601.
+     1103/PhysRevX.6.041049.                                                    [80]A. W. Sandvik, Phys. Rev. Lett.      98, 227202 (2007), URL
+[57]N.  Ma,  G.-Y.  Sun,  Y.-Z.  You,  C.  Xu,  A.  Vishwanath,                       http://link.aps.org/doi/10.1103/PhysRevLett.98.
+     A. W. Sandvik, and Z. Y. Meng, ArXiv e-prints (2018),                            227202.
+     1803.01180.                                                                [81]F. D. M. Haldane, Phys. Rev. Lett.      61, 1029 (1988), URL
+[58]X.  Y.  Xu,  Y.  Qi,  L.  Zhang,  F.  F.  Assaad,  C.  Xu,  and                   https://link.aps.org/doi/10.1103/PhysRevLett.61.
+     Z. Y. Meng, ArXiv e-prints (2018), 1807.07574.                                   1029.
+[59]W.   Rantner   and   X.-G.   Wen,    Phys.   Rev.   B        66,            [82]N. Read and S. Sachdev, Phys. Rev. B      42, 4568 (1990),
+     144501  (2002),   URL   https://link.aps.org/doi/10.                             URL    https://link.aps.org/doi/10.1103/PhysRevB.
+     1103/PhysRevB.66.144501.                                                         42.4568.
+[60]M. Hermele, T. Senthil, and M. P. A. Fisher, Phys. Rev.                     [83]R.  Haghshenas  and  D.  N.  Sheng,  Phys.  Rev.  B       97,
+     B 72, 104404 (2005), URL https://link.aps.org/doi/                               174408  (2018),   URL   https://link.aps.org/doi/10.
+     10.1103/PhysRevB.72.104404.                                                      1103/PhysRevB.97.174408.
+[61]T.  Senthil  and  M.  P.  A.  Fisher,   Phys.  Rev.  B       74,            [84]C. Hubig, J. Haegeman, and U. Schollw¨ock, Phys. Rev.
+     064405   (2006),   URL   http://link.aps.org/doi/10.                             B 97, 045125 (2018), URL https://link.aps.org/doi/
+     1103/PhysRevB.74.064405.                                                         10.1103/PhysRevB.97.045125.
+[62]Y. Ran and X.-G. Wen, eprint arXiv:cond-mat/0609620                         [85]A.  Szasz,  J.  Motruk,  M.  P.  Zaletel,  and  J.  E.  Moore,
+     (2006), cond-mat/0609620.                                                        arXiv e-prints arXiv:1808.00463 (2018), 1808.00463.
+[63]X.-G.  Wen,  Phys.  Rev.  B        65,  165113  (2002),  cond-              [86]Beyond  the  length  scale   ξspin,  the  system  behaves  like
+     mat/0107071.                                                                     XY model with order parameterM. From the inspection
+[64]N. Ma, Y.-Z. You, and Z. Y. Meng (2018), to appear.                               of the XY model, the domain wall length scale is given
+[65]S.  Haravifard,  B.  D.  Gaulin,  Z.  Yamani,  S.  R.  Dun-                       by ξVBS∼ λ−1/24     , where λ4  is a renormalized coeﬃcient
+     siger,   and   H.   A.   Dabkowska,   Phys.   Rev.   B   85,                     for ReM4 at that length scale. From the generic scaling
+     134104  (2012),   URL   https://link.aps.org/doi/10.                             argument, we haveξVBS∼Lf(λ4L3−∆), whereL can be
+     1103/PhysRevB.85.134104.                                                         any length scale within the scaling regime. At the length
+[66]X.-F.  Zhang,  Y.-C.  He,  S.  Eggert,  R.  Moessner,  and
+                                                                                                                                                           25
+
+     scaleL =ξspin where the system behaves like XY model,                        [88]The  N´eel  ordered  phase  has  the  time-reversal  glide
+     we already know thatξVBS∼λ−1/24     . Thus, we can deduce                          TGx,y,  while the pVBS phase has the time-reversalT .
+     f(x)∼x−1/2, and derive that ξVBS∼ξ(∆−1)/2                                          At the DQCP, we have both symmetries, thus the com-
+                                                       spin                             positionT◦TGx,y =Gx,y should be there.
+[87]In  the  VBS  phase,  there  are  four  degenerate  ground                    [89]The AFM spin-spin interaction along vertical bonds in-
+     states,  whose  degeneracy  is  lifted  by  the  ﬁnite  system                     duces  the  eﬀective  vertical  plaquette  ring  exchange  for
+     size.  These  nearly  degenerate  excited  states  should  be                      the low energy subspace.
+     distinguished  from  the  other  excitations  that  can  truly
+     be ‘local’.

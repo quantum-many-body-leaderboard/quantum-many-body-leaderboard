@@ -1,0 +1,285 @@
+    Global  Phase  Diagram  of  the Extended  Kitaev-Heisenberg  Model  on  Honeycomb
+                                                                     Lattice
+
+                                            Jie  Lou,  Long  Liang,  Yue  Yu,  and  Yan  Chen
+     Department  of  Physics  and  State  Key  Laboratory  of  Surface  Physics,  Fudan  University,  Shanghai  200433,  China and
+                       Collaborative  Innovation  Center  of  Advanced  Microstructures,  Nanjing  210093,  China
+                                                              (Dated:  July 9, 2021)
+
+                   We study the extended Kitaev-Heisenberg (EKH) quantum spin model by adding bond-dependent
+                oﬀ-diagonal Heisenberg term into the original  KH model,  which was  recently proposed to describe
+                the  honeycomb  Iridates.  A  rigorous  mathematical  mapping  of  spin  operators  reveals  the  intrinsic
+                symmetry  of  the  model  Hamiltonian.   By  employing  an  unbiased  numerical  entanglement  renor-
+                malization method based on tensor network ansatz, we obtain the global phase diagram containing
+                eight distinct quantum phases.  By using the dual mapping of spin operators, each of the individual
+                magnetic  phase  in  the  global  phase  diagram  can  be  clearly  understood.   At  last,  we  show  that  a
+                valence solid state emerges as the ground state in the quadro-critical region where multiple magnetic
+                phases compete most intensively.
+
+                PACS numbers:  75.10.Jm, 75.10.Nr, 75.40.Mg, 75.40.Cx
+
+
+  The   family   of   layered   honeycomb   iridium   oxides                  coupling  constants.   By  using  this  dual  transformation,
+Na2IrO3  and Li2IrO3  have attracted great interest both                      each of the individual magnetic phase in the global phase
+experimentally and theoretically [1–17] due to its possible                   diagram can  be  clearly  understood.  For  instance,  some
+relevance  of  Kitaev  spin  liquid  [18].   Earlier  theoretical             seemingly  complicated  magnetic  orders  can  be  mapped
+studies proposed that the exchange from direct d-orbital                      into simple antiferromagnetic (AFM) order or ferromag-
+overlap of Ir ions may result in a Kitaev-Heisenberg (KH)                     netic (FM) order.  Furthermore, both the ﬁnite size eﬀect
+model [19].  Extensive study  of such model has shown a                       and the results for inﬁnite system are discussed.  At last,
+variety of fascinating phenomena, including an extended                       we show that a valence solid state emerges as the ground
+spin  liquid  phase  and  quantum  phase  transitions  into                   state  in  the  quadro-critical  region  where  multiple  mag-
+several well-understood magnetic ground states.  Exper-                       netic phases compete most intensively.
+imentally, neutron scattering data revealed the presence                         Model  Hamiltonian.—  Our  model  is  the  EKH  model
+of the zigzag phase in Na2IrO3 [1–3].  However, it appears                    deﬁned  on a  honeycomb lattice,  for  which  the  Hamilto-
+to be hard stabilize within the HK model; one may con-                        nian is
+sider additional exchange paths [13] or further neighbor-
+ing  hoppings  [12].   Recently,  a  generic  bond-dependent                     H = ∑[JSi · Sj + KSγi Sγj  + Γ(Sαi Sβj  + Sβi Sαj )],    (1)
+oﬀ-diagonal  exchange  term  is  included  in  the  extended                            ⟨i,j⟩
+Kiteav-Heisenberg  (EKH)  model  [16].   By  using  a  com-                   where ⟨i, j⟩ denotes the nearest-neighbor, and terms with
+bination  of  classical  techniques  and  exact  diagonaliza-                 strength  J,  K  and  Γ  represent  Heisenberg,  Kitaev  and
+tion,  120◦  and  incommensurate  spiral  order,  as  well  as                bond  dependent  oﬀ-diagonal  exchange  interactions,  re-
+extended regions of zigzag and stripy order are obtained.                     spectively.   We  use  γ  to  distinguish  one  spin  direction
+This EKH model can be regarded as the minimal model                           on  each  bond  for  the  Kitaev  exchange,   as  shown  in
+to describe the essential physics of honeycomb iridium ox-                    Fig. 1.  We have parameterized the energy scales so that
+ides.  However, the eﬀect of bond-dependent oﬀ-diagonal                       J 2 + K2 + Γ2 = R2, J  = R cos θ sin φ,K  = R cos θ cos φ,
+exchange term is unclear and the obtained phase diagram                       Γ  =  R sin θ.   φ  controls  the  ratio  between  Kitaev  and
+is not clearly understood.                                                    Heisenberg terms.
+
+  In  this  letter,  we  perform  a  systematic  study  of  the                  It  is  well  known  that  at  the  Kitaev  limit  J  =  Γ  =
+EKH quantum  spin  model  on  honeycomb lattice  by  us-                      0, K  ⁄=  0,  the  ground  state  of  system  is  a  topological
+ing  the  multiscale  entanglement  renormalization  ansatz                   spin  liquid  which  has  no  long  range  order.   Away  from
+(MERA) [20] .  We obtained a global phase diagram con-                        the limit, several long range magnetic orders may emerge
+taining eight distinct quantum phases.  A rigorous math-                      and  compete  with  each  other.   In  addition  to  the  AFM
+ematical mapping  of spin operators reveals the intrinsic                     and FM order, the system also harbors stripy (ST) and
+symmetry  of  the  model  Hamiltonian.   In  particular,  by                  zigzag (ZZ) phases, in region centered at two points K =
+rotation of spin operators obeying certain rules, the addi-                   ±2J.  It can be  shown that exactly at these  two points,
+tional bond-dependent oﬀ-diagonal Heisenberg exchange                         the original KH hamiltonian can be mapped into a pure
+term  can  be  mapped  to  Heisenberg  or  Kitaev  interac-                   Heisenberg  model  with  the  coupling  constant  J ′  = −J.
+tions and vice versa.  So the original EKH model can be                       The  trick  is  to  divide  the  system  into  four  sublattices,
+mapped  to  the  model  of  same  form  but  with  modiﬁed                    each ﬂip spin components in accordance to certain rules,
+                                                                                                                                                                2
+
+                                                                                                  -180                                                                             180-90                                         90                      900
+                                                                                                   [ZZ I]                                                       [ZZ II]
+                                                                                                                      A              B
+                                                                                         E                        120[FM]              AF[FM]
+                                                                                  [ZZ III]                                                                                                                [ZZ IV]FM[120]F
+                                                                                  SL                                                                                                              SLCSLD0
+                                                                                                                    ZZ                                                   ST
+
+                                                                                                     FM[AF]           [ST I]           AF[120]
+                                                                                                                       G    H
+                                                                                                                            [ST II]                120[AF]
+                                                                                                                                                     -90
+
+                                                                                   FIG.  2:   Global  phase  diagram  from  MERA  calculations  of
+                                                                                   24-sites system.  Longitude φ and latitude θ of the world map
+                                                                                   parameterize  the couplings of  J,  K  and  Γ  terms.  In  the up-
+                                                                                   per  panel,  phases  are  described  from  the  perspective  of  the
+                                                                                   original spin model, whereas the lower panel shows the phase
+                                                                                   map  when  the  rotated  spin  model  is  considered.   Regions  of
+                                                                                   same  type  of  magnetic  order  are  shown  in  same  color,  la-
+                                                                                   beled in the bottom.  Diamonds notates special points where
+                                                                                   the original model can be simpliﬁed to simple Heisenberg in-
+                                                                                   teractions.   Red  squares  mark  parameter  sets  for  which  we
+FIG. 1:  (color online).  Mapping the original EKH model to its                    show  spin  conﬁgurations  of  ground  states  obtained  from  ER
+counterpart  through spin  rotations.  The  upper panel stands                     calculations.  Phase boundaries marked by red wide lines cor-
+for the original  spin  model,  where spin  directions γ(α, β) for                 responds to ﬁrst order phase transition.
+Kitaev  and  bond-dependent  (Γ)  exchanges  are  denoted  by
+diﬀerent  colors.  By  performing  the  spin  rotation  marked  by                 that  its  ground  state  is  classical  FM  state  with  energy
+numbers 0 to 5, following  the rule listed in the table, we can
+map the original spin model to its counterpart.  Diﬀerent col-                     per-site exactly equal to −0.375.  In Fig. 3, panel (A), we
+ors  are  painted  for  each  site  to  denote  rules  of  sign  change,           show details of the ground state, from perspectives before
+following which ZZ/SP phases can be mapped into AFM/FM.                            and after rotations of spins, for comparison.  In terms of
+Shades  in  the  background  in  the  upper  panel  represent  the                 original representation, the spin conﬁguration of ground
+MERA structure we adopted in numerical calculation.                                state is rather complicated, and long range magnetic or-
+                                                                                   der can not be easily distinguished.  On the other hand,
+as denoted by diﬀerent colors in Fig.1.  In that sense, the                        in  the  mapped  representation, the  spin  conﬁguration of
+ground  states  of  KH  model  can  be  well  understood  in                       ground  state  is  a  simple  ferromagnet  with  spins  align-
+terms of the  competitions among simple magnetic long-                             ing  in  same  direction.    Hence,  the  intrinsic  symmetry
+range orders.                                                                      of the model Hamiltonian may help  us to  better  under-
+   Mapping of Spin Operators.—In order to better under-                            stand the seemingly complicated magnetic orders of the
+stand the eﬀect of Γ-term, we applied rotation of the spin                         system  induced  by  the  additional  oﬀ-diagonal exchange
+operators Sγ → Sα (See the table in Fig.1) so that the Γ                           term.    There  exists  several  such  parameter  sets  where
+term can be mapped back to Kitaev exchange term.  By                               the original model can be  simpliﬁed to  pure  Heisenberg
+doing so, the original hamiltonian is mapped to the model                          models (shown in Fig. 2).  These special cases oﬀer some
+of same form but with modiﬁed coupling constants,                                  additional hints for solving EKH model, but it becomes
+                                                                                   rather  complicated  when  various  magnetic  orders  com-
+  H   =   ∑       J ′~Si · ~Sj + K′ ~Sγ                                            petes with each other, especially when the Γ term domi-
+                                        i  ~Sγj  + Γ′(~Sαi  ~Sβj  + ~Sβi  ~Sαj ),(2)nates.
+            <ij>
+                                                                                       Global phase diagram.—We use an unbiased MERA al-
+where strength of each term is related to original param-                          gorithm to fully explore the phase diagram of EKH model
+eters as J ′ = −Γ, K′ = (K −Γ−J), and Γ′ = −J.  Notice                             on  honeycomb  lattice.   In  the  upper  panel  of  Fig.1,  we
+that the Heisenberg and bond-dependent exchange cou-                               show  the  ER  tensor  network  we  construct  for  the  hon-
+plings are swapped through the mapping.                                            eycomb lattice.  This method is capable of capturing the
+   The mapping can be  extremely helpful to understand                             Kitaev spin liquid and other phases where quantum ﬂuc-
+the  characteristics  of  ground  state.    For  instance,  we                     tuations  play  an  important  role.   The  system  sizes  we
+take  the  limit  J  =  0, Γ  =  K  =  1.   Under  rotations  of                   calculated range from 24 to 96.
+spin operators, the mapped Hamiltonian corresponds to                                  The  global phase diagram we  numerically obtained is
+a  simple  Heisenberg  model  with  FM  interaction  H   =                         shown in Fig. 2, which is presented in format of a world
+− ∑⟨i,j⟩ SiSj.    Indeed,  numerical  calculation  conﬁrms                         map as  functions  of two parameters θ  and φ.  The  anti-
+                                                                                                                                                            3
+
+ferromegnet Kitaev point (spin liquid) is located exactly
+at  the  map  center,  and  the  original  Kitaev  Heisenberg
+model  with  Γ  =  0  corresponds  to  the  equator  line.   In
+Fig. 2, we present two phase maps and each of them be-
+longs  to  a  diﬀerent  spin  representation.  The  very  same                                  A1                           A2                              B1
+state show diﬀerent magnetic long range orders without
+(upper panel) or with (lower panel) spin rotations.  Here
+we  denote  these  two  diﬀerent  orders  with  labeling  “X”
+and  “ ¯Y ”.   By  performing  the  spin  rotations,  we  notice
+that  Heisenberg  and  Γ  exchanges  are  swapped,  namely,
+~J = −Γ and vice versa.                                                                         C1                            C2                               D1
+   AFM/FM  and  120◦  phases—Due  to the fact that the
+EKH model is mapped to itself, we expect the phase map
+to be self consistent by spin rotations.  Such mapping cor-
+respondence is clearly observed for AFM and FM orders,
+which occupy a large portion of the phase map.  It is im-
+portant to  notice that  one  block of certain order (AFM                                       E1                             E2                             E3
+for  example)  in  the  original  map  can  be  further  sepa-
+rated  into  sections  of  diﬀerent  orders  (~120  and  ~F M)  in
+the phase map for rotated spins, vice versa.
+   This  feature  seems  to  be  contradictory,  but  careful
+analysis reveals that these two regions are indeed of dif-                                      F1                             F2                             F3
+ferent magnetic orders.  As a matter of fact, a ﬁrst order
+phase transition is clearly shown when the phase bound-                          FIG.  3:   Spin  conﬁgurations  and  nearest  neighbors’  correla-
+ary is  approached and eventually crossed (see  Figure  in                       tions ⟨Si ·Sj⟩ obtained from numerical calculation for 24-sites
+supplementary  material).    The  physical  reason  can  be                      system.  On  each  site,  spin  ⟨Si⟩  is  plotted  as  combination  of
+understood  as  the  following.   For  the   ~F M  order,  spins                 a  circle  (proportional  to  ⟨Szi ⟩)  and  a  vector (proportional  to
+⟨~Si⟩ are parallels for all sites.  Naturally, we expect equal                   ⟨Sxyi   ⟩).   Spin  correlations  are  notated  by  bonds  connecting
+spin components for every site, namely  ~Sxi  = ~Sxj .  On the                   spin  pairs,  whose  width  are  proportional  to  the  strength  of
+other hand, the very phase is of the AFM order in term                           ⟨Si  · Sj⟩.    Red/green  color  stands  for  FM/AF  correlation,
+                                                                                 respectively.   Panel  A  ∼  F  show  results  achieved  in  diﬀer-
+of original spins, which require |Sxi | = |Sxj |.  Notice that                   ent  phases,  their  corresponding  parameter  sets  can  be  read
+rotations of spins (Sxi  → −~Sy                                                  from  the  marks  on  phase  maps.   The  number  of  each  nota-
+                                      i , for example) are involved              tion stands for the perspective from which the ground state is
+when original hamiltonian is mapped to the new one.  As                          viewed:  “1”  notates  the original  spin  picture,  “2”  stands for
+a result, the only possible outcome for these two require-                       the rotated  spin  picture,  and  “3”  means  the result  of  zigzag
+ments to be met at the same time is that all spins order                         mapping  (for  the  rotated  spin  model),  described  in  Fig.  1.
+along  (1, 1, 1)  direction,  namely  Sxi   =  Syi   =  Szi .   In  an-          Results for larger systems can be found in Sup.  material.
+other word, the  bulk  of  ~F M/AF  phase is  of Ising type.
+This is to be expected, as introduction of Γ term breaks
+SU(2) symmetry of original Heisenberg magnets.                                   AFM  north  of  the  equator,  and  a  U(1)  AFM  south.   A
+   Similar situation occurs for the  ~120◦/AF M phase.  The                      ﬁrst order phase transition shows up at the phase bound-
+120◦ phase is named after the fact that all angles between~                      ary.  They are diﬀerent physical orders with distinct bro-
+next-nearest neighbor spins  ~S  are 2π/3 in this order.  an                     ken symmetry.  Such phenomena is universal for all AFM
+illustrated in Fig. 3.  Such phase appear south of euqator,                      and FM orders, in both original and rotated spin models.
+which  represent  a  positive  nearest  neighbor  Heisenberg                     The  ﬁnite  size  eﬀect  is  less  remarkable  as  shown in  our
+couplings  ~J = −Γ, unfavoring the  ~F M  phase.  Therefore,                     numerical  calculation.   All  magnetic  orders  remain  the
+spins in original picture orders in the plane perpendicular                      same, except a slightly shifts of phase boundaries [21].
+to (1, 1, 1), as a compromise.  (Notice, the system is still                        Zigzag/stripy phases and frustration—While switching
+in  the  AFM  phase  with  all  nearest  neighbors  spins  an-                   longitude and latitude is helpful to understand the rela-
+tiparallel.)  It can be shown that whence Sxi +Syi +Szi  = 0                     tion  between  two  phase  maps,  especially  for  AFM/FM
+(true  for  any  vector  in  plane  perpendicular  to  (1, 1, 1)),               orders, it does not work well when zigzag/tripy phases are
+after  rotations listed in tables,  the   ~120◦  order emergies.                 considered.  As a matter of fact, these phases are far more
+In  this  case, the  U(1)  symmetry,  instead of  SU(2)  sym-                    complicated than Neel-like orders discussed above.  From
+metry, is broken in the AFM order.                                               numerical calculation, we ﬁnd that spins are much more
+   Due to  eﬀect of Γ term,  the  orginal SU(2)  symmetric                       prone to tilting away than strictly order along one direc-
+Neel AFM order breaks into two diﬀerent types:  an Ising                         tion.  Meanwhile,  various  candidates  of  magnetic  orders
+                                                                                                                                                        4
+
+compete for the  ground state, and energy gaps between                                0.25
+them  are relatively small.  The  reason for such diﬀerent
+behaviors  can  be  found  in  the  mapping  when  rotations                           0.2
+of  spins  are  done.   As  mentioned  before,  such  discrep-
+ancy may not aﬀect AFM and FM orders much, (as  we                                    0.15                                                NN_M
+observed  in  our  numerical  calculation),  but  do  change                                             -J/K                             2NN_M
+zigzag phase and stripy phase signiﬁcantly.  As a matter                                                               2                  3NN_M
+                                                                                        0.1          L=24                                 4NN_M
+of fact,  the  new  pattern of  Kitaev and  Γ interactions  is                                       L=36                                 5NN_M
+                                                                                                     L=48              1.6                NN_O
+frustrated in terms of  ~zigzag/ ~stripy order.                                                                                           2NN_O
+                                                                                      0.05                             1.2                3NN_O
+   For  the  original  Kitaev  Heisenberg  model,   a  four-                                                                              4NN_O
+sublattice  mapping  between  the  ST/ZZ  order  and  the                                        0.7       0.8       0.9        1         5NN_O
+AFM/FM  order  is  well known and  discussed  [19].  Nat-                                0         0.7          0.8          0.9           1           1.1          1.2
+urally, we expect same type of operation can be applied                                                               -J/K
+for the rotated EKH model.  Unfortunately it is not pos-                       FIG.  4:     Evolution  of  spin  correlations  (SC)  ⟨Si · Sj⟩  when
+sible to obtain such a perfect mapping in this case.  One                      system  undergoes  a  transition  from  magnetic  long  range  or-
+can  show  that,  when  we  ﬂip  spin  operators  one  by  one                 ders  to  the  VBS  phase.   K  and  Γ  are  ﬁxed  to  be  1,  and  J
+along  an  hexagon,  according  to  arrangement  of  Kitaev                    is tuned through the phase transition.  Diﬀerent colors repre-
+interaction  γi,j  on  each  bond,  we  can  not  obtain  self-                sents various distances between two spins i and j, from nearest
+consistency  after  a  full  circle.   As  a  result,  we  have  to            neighbor  (NN)  to  5th  nearest  neighbor  (5NN),  the  maximal
+sacriﬁce certain bonds  in order to map the rotated spin                       distance  in  a  periodic  24-site  lattice.    At  −J/K  =  0.95,  a
+model to its  ~ZZ/ ~ST  counterpart.  One way to make the                      phase transition between  ~F M  and the VBS order occurs, and
+compromise  is  shown  in  the  lower  panel  of  Fig.  1.   We                correlations for rotated spins (SC notated by suﬃx M) drops
+keep the sign-ﬂipping rule along chains following certain                      abruptly.  When  J/K  goes  over  1,  the  system  enter  the  FM
+direction, and reverse spin operators when jump between                        order,  and  SCs  for  original  spins  (suﬃx  O)  do  not  decay  by
+                                                                               increasing the separation.  The inset shows the ratio between
+chains.  Clearly there exists 3 degenerate ways(directions)                    average  spin  correlation  intra  and  inter a  plaquette hexagon
+for such sign change rules.  Only one is plotted in the ﬁg-                    SC1/SC2.  Results for various system sizes are plotted.
+ure, and shades indicate the chosen direction of ~ZZ/ ~ST
+chains.
+   Such  a  compromise  sacriﬁces  certain  Kitaev  interac-                   capability, we are not able to probe the region thoroughly.
+tions  intra-chain.   Numerical  study  shows  that  such  a                      Valence bond solid.  — As expected, multiple magnetic
+mapping  is  energy-favorable  for  most  zigzag  region  in                   long range orders compete most intensively close to two
+the rotated spin model.  Examples of such ~ZZ phases are                       points  −J  =  K  =  Γ  =  1  and  J  =  −K  =  −Γ  =  1.
+shown  in  Fig.  3.   In  the  rotated  spin  model,  we  expect               These  two  special  points  corresponds  to  verging  points
+the ~ZZ  phase to appear near the point  ~K = −2 ~J, ~Γ = 0,                   of  multiple  phases,  as  shown  in  Fig.  2.   It  is  not  clear
+which is translated to J = 0, K = −1, Γ = 1.  Notice that                      what is to be expected from analytical analysis, and our
+the spin-spin correlation shows that intra-chains’ correla-                    numerical calculation shows that small regions surround
+tions are signiﬁcantly larger than inter-chains’, which is                     these multi-critical points harbor the VBS phase.  A pe-
+consistent with the mapping we made.  It is necessary to                       riodic strong-weak shifting  pattern  for  nearest neighbor
+mention that due to this frustration, these states become                      spin  correlation  can  be  observed  in  Fig.  3,  panel  D2.
+less stable when we tune parameters away from the zigzag                       More  precisely  speaking,  correlations inside  a  plaquette
+point.  spin bend away and new magnetic order appears.                         (hexagon unitcell) is larger than intra-plaquette ones.  As
+One notice  that for  J  < 0 and J  > 0, the   ~zigzag  phase                  a  result,  we  expect  long  range spin correlations to  drop
+for rotated spin model also emerges as diﬀerent magnetic                       fast  when  the  distance  between  two  separated  spins  is
+order in original spin picture.  The reason is very similar                    increased.  In contrast, for all magnetic orders discussed
+to the AF case explained above.  Due to perturbation of                        above,  correlations  decay  much  slower  when  spins  are
+~Γ = −J  term, system magnetize is diﬀerent quadrant in                        further  separated.  In  Fig. 4,  we  show such results  from
+these two cases.  Details can be found in [21].                                numerical calculations and a transition between the mag-
+   The  mapping  we  choose is  not necessarily the  unique                    netically  ordered  phase  (120/ ~F M)  and  the  VBS  phase
+one, however, especially in larger systems.  In small sys-                     can be distinguished.
+tem  with  24  and  36  sites,  numerical  calculations  shows                    To  further  clarify  this,  we  deﬁne  spin  correlations in-
+that  the  former  mentioned  states  are  the  ground  states                 tra/inter plaquette hexagon (P) as SC1  and SC2, where
+spanning  the  zigzag  region  for  the  rotated  spin  model.                 SC1  =  ∑Pi=Pj Si · Sj  and  SC2  =  ∑Pi⁄=Pj Si · Sj.   In
+However for larger systems, various magnetic order can-                        subset  of  Fig.  4,  we  show  that  for  various  system  sizes
+didates  contradict  to  such  mapping  also  appears,  with                   we  calculated,  the  ratio  between SC1  and SC2  increase
+reasonably  good  energy  [21].   With  current  calculation                   signiﬁcantly  when  the  VBS  region  is  approached.   It  is
+                                                                                                                                                              5
+
+worth  mentioning  that  the  local  spin  expectation  value                       [5]  J. Reuther, R. Thomale, and S. Trebst, Phys. Rev. B 84,
+⟨Si⟩ vanishes in these critical regions (as shown in Fig. 3                             100406 (2011).
+for 24-sites system), a similar feature observed for the Ki-                        [6]  F.  Trousselet,  G.  Khaliullin,  and  P.  Horsch,  Phys.  Rev.
+taev  spin  liquid.   However,  long  range  spin  correlations                         B 84, 054409 (2011).
+reveal  that  they  are  intrinsically  diﬀerent.   We  have  to                    [7]  R. Schaﬀer, S. Bhattacharjee, and Y.B. Kim, Phys. Rev.
+clarify that our calculation is limited to  relatively small                            B 86, 224417 (2012).
+                                                                                    [8]  C.C.  Price  and  N.B.  Perkins,   Phys.  Rev.  Lett.  109,
+system sizes, as a result, ﬁnite size eﬀect boundary con-                               187201 (2012); C. Price and N. B. Perkins, Phys. Rev. B
+ditions  may  play  important  roles.   We  can  not  rule  out                         88, 024410 (2013).
+the possibility of spin liquid in this critical region.                             [9]  Y.  Singh  and  P.  Gegenwart,  Phys.  Rev.  B  82,  064412
+   Conclusions.     —We  numerically  studied  the  global                              (2010).
+phase  diagram  of  the  EKH  model  containing  eight  dis-                      [10]  Y. Singh, S. Manni, J. Reuther, T. Berlijn, R. Thomale,
+tinct  quantum  phases.   A  rigorous  mathematical  map-                               W.  Ku,  S.  Trebst,  and  P.  Gegenwart,  Phys.  Rev.  Lett.
+ping  of spin operators reveals the  intrinsic  symmetry of                             108, 127203 (2012).
+                                                                                  [11]  S. Bhattacharjee, S.-S. Lee, Y.B. Kim, New J. Phys. 14,
+the  model  Hamiltonian.   By  using  the  dual  mapping  of                            073015 (2012).
+spin  operators,  each  of  the  individual  magnetic  phase                      [12]  I.  Kimchi  and  Y.Z.  You,  Phys.  Rev.  B  84,  180407(R)
+in  the  phase  diagram  can  be  clearly  understood.    Fi-                           (2011).
+nally,  we  showed  that  a  valence  solid  state  emerges  as                   [13]  J. Chaloupka, G. Jackeli, G. Khaliullin, Phys. Rev. Lett.
+the  ground  state  in  the  critical  region  where  multiple                          110, 097204 (2013).
+magnetic phases compete most intensively.                                         [14]  V.M.  Katukuri,  S.  Nishimoto,  V.  Yushankhai,  A.  Stoy-
+   Acknowledgments.—   This   work   was   supported   by                               anova, H. Kandpal, S. Choi,  R. Coldea,  I. Rousochatza-
+the    State    Key    Programs    of    China    (Grant    No.                         kis, L. Hozoi, J. van den Brink, New J. Phys. 16, 013056
+                                                                                        (2014).
+2012CB921604),  the  National  Natural  Science  Founda-                          [15]  H.  Gretarsson,  J.P.  Clancy,  X.  Liu,  J.P.  Hill,  E.  Bozin,
+tion of China (Grant Nos.  11274069, and 11474064).                                     Y.  Singh,  S.  Manni,  P.  Gegenwart,  J.  Kim,  A.H.  Said,
+                                                                                        D.  Casa,  T.  Gog,  M.H.  Upton,  H.-S.  Kim,  J.  Yu,  V.M.
+                                                                                        Katukuri,  L.  Hozoi,  J.  van  den  Brink,  and  Y.-J.  Kim,
+                                                                                        Phys. Rev. Lett. 110, 076402 (2013).
+                                                                                  [16]  J.G. Rau, E. Lee, H.Y. Kee, Phys. Rev. Lett. 112, 077204
+ [1]  X. Liu, T. Berlijn,  W.-G. Yin, W. Ku, A. Tsvelik, Y.-J.                          (2014).
+     Kim,  H.  Gretarsson,  Y.  Singh,  P.  Gegenwart,  and  J.P.                 [17]  N.B. Perkins, Y. Sizyuk and P. W¨olﬂe, Phys. Rev. B 89,
+     Hill, Phys. Rev. B 83, 220403 (2011).                                              035143 (2014).
+ [2]  F.   Ye,    S.   Chi,    H.   Cao,    B.C.   Chakoumakos,    J.A.           [18]  A. Kitaev, Ann. Phys. 321, 2 (2006).
+     Fernandez-Baca,  R. Custelcean,  T.F.  Qi,  O.B.  Korneta,                   [19]  J.  Chaloupka,  G. Jackeli,  and  G.  Khaliullin,  Phys. Rev.
+     and G. Cao, Phys. Rev. B 85, 180403 (2012).                                        Lett. 105, 027204 (2010).
+ [3]  S.K. Choi, R. Coldea, A.N. Kolmogorov, T.Lancaster, I.I.                    [20]  G. Vidal, Phys. Rev. Lett. 99, 220405 (2007); G. Evenbly
+     Mazin, S.J. Blundell, P.G. Radaelli, Y. Singh, P. Gegen-                           and G. Vidal, ibid 102, 180406 (2009);G. Evenbly and G.
+     wart,  K.R.  Choi,  S.-W.  Cheong,  P.J.  Baker,  C.  Stock,                       Vidal, ibid 104, 187203 (2010); G. Evenbly and G. Vidal,
+     and J. Taylor, Phys. Rev. Lett. 108, 127204 (2012).                                Phys. Rev. B 79, 144108 (2009).
+ [4]  H.-C.  Jiang,  Z.-C.  Gu,  X.-L.  Qi,  and  S.  Trebst,  Phys.              [21]  See  the  Supplemental  Material  for  the  detailed  descrip-
+     Rev. B 83, 245104 (2011).                                                          tion of phase diagram.

@@ -1,0 +1,1336 @@
+Utility-Scale Quantum State Preparation:
+Classical Training using Pauli Path Simulation
+
+Cheng-Ju Lin        1,2,3, Hrant Gharibyan          1, and Vincent P. Su1
+
+
+
+
+1BlueQubit Inc., San Francisco, California 94105, USA
+
+2Joint Center for Quantum Information and Computer Science, NIST/University of Maryland, College Park, Maryland 20742, USA
+
+3Joint Quantum Institute, NIST/University of Maryland, College Park, Maryland 20742, USA
+
+
+  We  use  Pauli  Path  simulation  to  variation-                     the ground-state or thermal-state properties of a given
+ally  obtain  parametrized  circuits  for  preparing                   quantum Hamiltonian.
+ground  states  of  various  quantum  many-body                           Preparing a ground state on a quantum device, even
+Hamiltonians.  These include the quantum Ising                         approximately, is often a crucial prerequisite for these
+model  in  one  dimension,  in  two  dimensions  on                    tasks.  For instance, in quench dynamics [3] or scatter-
+square  and  heavy-hex  lattices,  and  the  Kitaev                    ing simulations [5, 6],  the initial state is typically the
+honeycomb model, all at system sizes of one hun-                       ground state of an interacting Hamiltonian.  Likewise,
+dred  qubits  or  more  —  sizes  at  which  generic                   to  investigate  the  properties  of  a  ground  state  or  its
+quantum circuits are beyond the reach of exact                         dynamical responses,  high-quality ground-state prepa-
+state-vector simulation— thereby reaching util-                        ration is essential.
+ity  scale.   We  benchmark  the  Pauli  Path  sim-                       Variational  quantum  algorithms  (VQAs)  [7–9]  pro-
+ulation results against exact ground-state ener-                       vide a widely used framework for ground-state prepara-
+gies when available, and against density-matrix                        tion and are particularly well suited to near-term quan-
+renormalization  group  calculations  otherwise,                       tum  devices.    In  this  approach,  parameterized  gates
+finding strong agreement.  To further assess the                       within structured circuits define a family of variational
+quality of the variational states, we evaluate the                     wavefunctions.  A quantum device is then used to esti-
+magnetization in thexandzdirections for the                            mate the energy expectation value of a given variational
+quantum Ising models and compute the topolog-                          wavefunction,  and  often  its  gradient,  with  the  results
+ical entanglement entropy for the Kitaev honey-                        passed to a classical computer that updates the circuit
+comb  model.   Finally,  we  prepare  approximate                      parameters according to an optimization algorithm. De-
+ground  states  of  the  Kitaev  honeycomb  model                      spite  their  conceptual  simplicity,  implementing  VQAs
+with48qubits,  in  both  the  gapped  and  gap-                        on present-day hardware remains resource-intensive and
+less  regimes,  on  Quantinuum’s  System  Model                        costly.
+H2 quantum computer using parametrized cir-                               A natural strategy to mitigate these challenges is to
+cuits obtained from Pauli Path simulation.  We                         offload as much computation as possible to classical ma-
+achieve a relative energy error of approximately                       chines [10–13].  In particular, classical simulations can
+5%without  error  mitigation  and  demonstrate                         be used to train circuit parameters, with quantum hard-
+the braiding of Abelian anyons on the quantum                          ware subsequently employed only for tasks such as sim-
+device beyond fixed-point models.                                      ulating quantum dynamics from the classically trained
+                                                                       quantum state.  This hybrid approach can substantially
+1    Introduction                                                      reduce runtime and resource demands on quantum de-
+                                                                       vices.  However, conventional classical simulation meth-
+The development of quantum computers has ushered in                    ods face limitations:  exact state-vector approaches are
+the era of noisy intermediate-scale quantum devices [1]                restricted  to  small  system  sizes,  while  tensor-network
+— machines capable of executing quantum circuits with                  methods are typically effective only for shallow circuits
+hundreds  of  qubits,  albeit  in  the  presence  of  noise.           or systems with one-dimensional geometries, with per-
+Among  potential  applications,  quantum  simulation  is               formance constrained by entanglement growth.
+arguably the most promising avenue for these devices to                   Complementing these methods, in this work we em-
+demonstrate  practical  advantages  over  classical  meth-             ploy the recently developed coefficient-truncation Pauli
+ods [2–4].  Such applications include simulating the dy-               Path simulation (PPS)—also known as sparse Pauli dy-
+namics  of  quantum  many-body  systems  and  probing                  namics or Pauli propagation [14–18]—to simulate VQAs
+
+
+Accepted in Quantum   2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                      1
+                for ground-state preparation, targeting system sizes of                      tains  strong  performance.   Notably,  for  the  2D  Ising
+                around one hundred qubits.  At this scale, generic quan-                     model on a heavy-hex lattice, the PPS variational state
+                tum circuits are beyond the reach of exact state-vector                      achieves variational energies lower than those obtained
+                simulation, dubbed the utility scale.  However, this does                    with DMRG across a range of Hamiltonian parameters,
+                not preclude the possibility that other classical meth-                      both using comparable and modest computational re-
+                ods,  such  as  tensor  network  methods  or  Monte  Carlo                   sources.  Beyond energies, we also compare magnetiza-
+                techniques, may still be able to simulate certain prob-                      tion in thexandzdirections against benchmark results.
+                lems at comparable system sizes, provided those prob-                        For the Kitaev honeycomb model, we further assess the
+                lems exhibit favorable structure for such methods.  Co-                      variational  ground  state  by  computing  its  topological
+                efficient truncation is one of several truncation schemes                    entanglement entropy [34,35].
+                within  the  PPS  framework  [18–22].   In  essence,  PPS                       Although  the  models  studied  here  can  be  solved
+                estimates  the  expectation  value  of  a  quantum  circuit                  exactly  or  efficiently  treated  with  classical  methods,
+                by evolving observables in the Heisenberg picture,  ex-                      preparing  their  ground  states  on  a  quantum  device  is
+                panding them in the Pauli-string basis, and discarding                       not always straightforward.  The parametrized circuits
+                terms with coefficients below a chosen threshold to re-                      produced  by  PPS  provide  explicit  and  implementable
+                duce  computational  cost.   This  approach  has  already                    protocols  for  this  task.   To  demonstrate  this,  we  pre-
+                been  successfully  applied  to  quantum  many-body  dy-                     pare  approximate  ground  states  of  the  Kitaev  honey-
+                namics at the utility scale [14,15], with benchmarking                       comb  model  in  both  the  gapped  and  gapless  regimes
+                against quantum hardware [2] demonstrating compara-                          for a 48-qubit system on Quantinuum’s System Model
+                ble precision in certain parameter regimes.                                  H2 quantum computer [36], using the parametrized cir-
+                   The PPS method has been shown to be effective for                         cuits obtained from PPS. Without error mitigation, we
+                simulating  noisy  quantum  circuits  at  sufficiently  high                 achieve relative energy errors of approximately5%. Fur-
+                noise rates across various truncation schemes [16,19–                        thermore, we demonstrate anyon braiding and extract
+                21].  On the other hand,  early numerical studies indi-                      the corresponding braiding statistics on these approx-
+                cate  that  weight-  and  path-based  truncation  schemes                    imate  ground  states,  thereby  confirming  the  topologi-
+                can  yield  high-quality  results  for  VQAs  in  condensed                  cal  properties  of  the  quantum  states  prepared  on  the
+                matter  systems  of  a  small  system  size  [22],  as  well  as             Quantinuum  machine.   Notably,  previous  demonstra-
+                for  quantum  machine  learning  tasks  [23].   Motivated                    tions  of  anyon  braiding  on  quantum  devices  have  fo-
+                by these findings, we investigate the performance of the                     cused  mainly  on  fixed-point  or  zero-correlation-length
+                coefficient-truncation PPS in simulating noiseless VQAs                      models  [37–41],  whereas  our  results  extend  braiding
+                for ground-state preparation, emphasizing system sizes                       demonstrations beyond the fixed-point regime.
+                at the utility scale.                                                           To  summarize,   in  this  work  we  benchmark  PPS
+                   To this end,  we apply PPS to simulate VQAs for a                         parametrized  circuits  for  ground-state  preparation  on
+                variety of quantum many-body Hamiltonians, aiming to                         prototypical models with well-understood physics,  en-
+                obtain parametrized circuits that prepare approximate                        abling  a  clear  evaluation  of  the  method’s  capabilities
+                ground states of systems with over one hundred qubits.                       through  comparisons  with  exact  and  DMRG  results.
+                Specifically,  we  consider  the  quantum  Ising  model  in                  In  certain  models  and  parameter  regimes,  PPS  varia-
+                one  dimension  (1D),  in  two  dimensions  (2D)  on  both                   tional  circuits  even  outperform  DMRG,  underscoring
+                square  and  heavy-hex  lattices,  and  the  Kitaev  honey-                  their potential as a quantum-inspired classical numer-
+                comb model [24].  Our parametrized circuits are based                        ical  method  for  ground-state  problems  in  condensed
+                on the Hamiltonian variational ansatz [25–29], with pa-                      matter  and  quantum  chemistry.   The  method’s  suit-
+                rameter updates performed using a combination of si-                         ability for quantum devices is further demonstrated by
+                multaneous perturbation stochastic approximation [30]                        our preparation of the Kitaev honeycomb ground state
+                and adaptive moment estimation [31].                                         and the subsequent braiding of anyons on the quantum
+                   For  models  whose  ground-state  energies  can  be  de-                  hardware.  We expect these PPS variational states can
+                termined exactly, such as the 1D transverse-field Ising                      also serve as high-quality starting points for quantum
+                model and the Kitaev honeycomb model, we benchmark                           dynamics simulations or as warm-start parameters for
+                PPS  results  against  exact  values.    For  models  with-                  additional  variational  optimization  on  a  quantum  de-
+                out  exact  ground-state  solutions,  we  use  the  density-                 vice.  Such pre-trained parameters substantially reduce
+                matrix renormalization group (DMRG) [32] as a refer-                         resource  demands  and  runtime,  positioning  PPS  vari-
+                ence,  using  the  ITensor  library  [33].   Across  all  cases,             ational circuits as an effective bridge between classical
+                we  observe  high  relative  energy  accuracy,  particularly                 simulation and quantum execution.
+                when the ground states are gapped.  Even in gapless or                          The rest of the paper is organized as follows. In Sec.2,
+                near-critical  regimes,  the  PPS  variational  state  main-                 we  provide  an  overview  of  the  coefficient-truncation
+
+
+                Accepted in              2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                      2
+
+
+
+
+Quantum
+                                                                                                  for some observable  ˆO.  For the ground-state problem,
+                                                                                                  one sets  ˆO=     ˆH, the system Hamiltonian, in which case
+                                                                                                  the cost function corresponds to the variational energy,
+                                                                                                  and the stateU(θ)|0      ⊗N ⟩corresponds to the variational
+                                                                                                  ground state.
+                                                                                                     In a standard VQA setup, a quantum device is used
+                                                                                                  to estimate the cost functionC(θ)and, often, its gradi-
+                                                                                                  ent∇C(θ).  These estimates are then passed to a clas-
+                                                                                                  sical optimizer, which updates the variational parame-
+                                                                                                  ters.  In this work,  however,  instead of estimating the
+                                                                                                  cost  function  and  its  gradient  on  quantum  hardware,
+                                                                                                  we  employ  coefficient-truncation  PPS  (also  known  as
+                                                                                                  the  sparse  Pauli  method)  [14–17]  —  a  variant  of  the
+                                                                                                  framework  of  Pauli  Path  simulation  that  incorporates
+                                                                                                  various truncation schemes [18–22].
+                                                                                                     The  coefficient-truncation  PPS  proceeds  as  follows.
+                 Figure  1:      Flowchart  of  the  variational  quantum  algorithm              Rather   than   evolving   the   stateU(θ)|0      ⊗N ⟩ in   the
+                 framework.   In  the  standard  approach,  the  cost  function  and              Schr¨odinger  picture,  we  evolve  the  observable  in  the
+                 its  gradient  are  evaluated  on  a  quantum  device.  In  this  work,          Heisenberg  picture   ˆO′  =U(θ)   † ˆOU(θ).    Using  Pauli
+                 we  instead  use  the  coefficient-based  Pauli  Path  simulation  to            strings   ˆP∈ {I,X,Y,Z}  ⊗N    as  a  basis,  any  operator
+                 perform these evaluations, allowing us to optimize the param-                    can be expanded as  ˆO= ∑Pap ˆPwith coefficientsa   P .
+                 eters prior to executing tasks on the quantum hardware.                          A  full  representation  of  ˆO′  requires4      N  terms,  scaling
+                                                                                                  exponentially  with  the  number  of  qubits.   To  reduce
+                                                                                                  this cost, PPS truncates Pauli strings with coefficients
+                 PPS  method  and  its  application  to  variational  quan-                       below  a  chosen  thresholdδ    c,  yielding  an  approximate
+                 tum  algorithms.   We  then  apply  our  approach  to  the                       representation sufficient to estimate expectation values.
+                 quantum Ising model in one and two dimensions, with                                 In particular,  the evolution and truncation are per-
+                 results presented in Sec.3and Sec.4, respectively, us-                           formed iteratively gate by gate.  Suppose the quantum
+                 ing ground-state energies and magnetization as bench-                            circuitU(θ)is  composed  of  a  collection  of  quantum
+                 marks.  In Sec.5, we present results for the Kitaev hon-                         gatesV= exp(−iθˆσ/2)whereˆσis a Pauli string. Given
+                 eycomb  model,  benchmarking  both  energy  and  topo-                           an operator  ˆO= ∑Pap ˆP, conjugation byVyields
+                 logical  entanglement  entropy.   Section6demonstrates
+                 the  implementation  of  parametrized  circuits  on  quan-                       V† ˆOV=  ∑          aP ˆP+  ∑        (a P cos(θ)         ˆP+isin(θ)ˆσ·               ˆP),
+                 tum  hardware  for  a  48-qubit  Kitaev  honeycomb  sys-                                      ˆP∈P     C        ˆP∈P     A
+                 tem  in  both  gapped  and  gapless  regimes.   The  braid-                                                                                            (2)
+                 ing demonstration on the quantum device highlights the
+                 topological nature of the prepared quantum states be-                            whereP     C  andP   A denote the sets of Pauli strings that
+                 yond fixed-point models.  Finally, in Sec.7, we summa-                           commute and anti-commutes withσ, respectively.  One
+                 rize our findings, discuss their implications, and outline                       then  only  retains  the  Pauli  strings  with  the  new  co-
+                 directions for future research.                                                  efficients|a ′P| > δ c,  wherea   ′P   is  the  coefficients  of
+                                                                                                  V† ˆOV= ∑Pa′p ˆPin  the  Pauli-string  basis.   Repeat-
+                                                                                                  ing this procedure for each gate in the circuit yields an
+                 2    Pauli path-simulated variational quan-                                      approximate Heisenberg-evolved operator  ˆO′≈U † ˆOU,
+                                                                                                  from which the expectation value⟨0  ⊗N |U† ˆOU|0 ⊗N ⟩≈
+                 tum algorithm                                                                    ⟨0⊗N | ˆO′|0⊗N ⟩can  be  approximated.   We  expect  this
+                                                                                                  approximation to perform well when the depth of the
+                 For  the  task  of  ground-state  preparation,  VQA  is  a                       quantum circuit is low, or when the gates of the quan-
+                 widely used framework designed to be compatible with                             tum circuit are near-Clifford, namely, whenθis close to
+                 near-term devices, as illustrated schematically in Fig.1.                        0orπ/2.
+                 Given  a  parameterized  circuitU(θ),  where  the  varia-                           The PPS-estimated cost function and its gradient are
+                 tional parameters areθ= (θ          1,...,θp), the objective of                  then  used  to  update  the  variational  parameters.    A
+                 VQA is to minimize the cost function                                             typical  gradient-based  algorithm  such  as  gradient  de-
+                                                                                                  scent requires evaluating the full gradient vector.  When
+                                C(θ) =⟨0    ⊗N |U†(θ)    ˆOU(θ)|0   ⊗N ⟩,            (1)          computed  via  finite  differences,  it  requires2pcost-
+
+
+                 Accepted in               2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                      3
+
+
+
+
+Quantum
+                 function evaluations forpvariational parameters, lead-                            The variational wavefunction with a parametrized cir-
+                 ing to significant overhead for largep.  To alleviate this,                       cuit of repetitionℓis constructed as
+                 we adopt a variation of the simultaneous perturbation
+                 stochastic  approximation  (SPSA)  algorithm  combined                               |ψ(α,β,γ)⟩=U(α            ℓ,βℓ,γℓ)···U(α        1,β1,γ1)|+⟩  ⊗N  ,
+                 with  adaptive  moment  estimation  (ADAM).  In  brief,                                                                                                   (6)
+                 SPSA estimates the gradient vector by sampling a ran-                             where|+⟩is the+1eigenstate in theX-basisX|+⟩=
+                 dom  direction  in  parameter  space,  requiring  only  two                       |+⟩,  and  the  circuit  parameters  are  grouped  asα=
+                 cost-function  evaluations  per  update,  independent  of                         (α  1,...,αℓ), with analogous definitions forβandγ.
+                 the number of variational parameters.  ADAM, widely                                  In the VQA framework, the cost function and its gra-
+                 used  in  machine  learning  and  artificial  intelligence,  is                   dient are typically evaluated on a quantum device.  As
+                 an  adaptive  optimization  method  in  which  each  vari-                        described in Sec.2, we instead approximate them classi-
+                 ational  parameter  has  an  individual,  dynamically  ad-                        cally using PPS, with a default truncation threshold of
+                 justed  learning  rate  determined  by  the  history  of  up-                     δc = 10−3  .  In practice, dynamically adjustingδ        c during
+                 dates,  encoded  through  “momentum”  and  “velocity”                             optimization is advantageous.  For example, in the early
+                 vectors.   We  discuss  further  details  on  these  methods                      stages,  when gradient magnitudes are relatively large,
+                 and their implementation in AppendixA.                                            a higher threshold yields sufficiently accurate estimates
+                                                                                                   while substantially reducing computational cost.  Fur-
+                                                                                                   thermore, reusing circuit parameters obtained at nearby
+                 3    Quantum Ising model in 1D                                                    model parameters as a warm start can significantly ac-
+                 We begin by applying our method to the 1D quantum                                 celerate optimization.
+
+                 Ising model as a test case, whose Hamiltonian is
+
+                                     N∑                    N∑               N∑
+                          ˆH=−           ZjZj+1 −g x           Xj−g z           Zj ,    (3)
+
+                                    j=1                   j=1              j=1
+                 where  periodic  boundary  conditions  (PBC)  are  im-
+                 posed,j+N≡j, andNdenotes the number of qubits.
+                 Wheng     z  =  0(the  transverse-field  Ising  model),  the
+                 model exhibits a quantum phase transition atg  x =g c =
+                 1.  Forg   x <1, theZ            2 symmetry generated by∏Nj=1 Xj
+                 is spontaneously broken, corresponding to the ferromag-
+                 netic phase.  Forg  x >1, the system is in the paramag-
+                 netic phase.  For any nonzerog      z, the low-energy degrees
+                 of freedom of the model is described by the Ising field
+                 theory [42,43], making this model a valuable setting for
+                 studying  scattering  phenomena  in  that  theory  [6, 44–
+                 47].   Moreover,  the  model  has  also  become  a  popular
+                 playground for exploring various quantum thermaliza-
+                 tion phenomena [48–51].
+                     To  approximately  prepare  the  ground  state  of  the
+                 Hamiltonian, we employ the parametrized circuit with
+                 symmetry-breaking capability [28] as follows.  Define
+                                U(α,β,γ) =u    Z(α)u   X(β)u   ZZ(γ),           (4)
+                 where
+                                                N∏
+                                   uZ(α) =          exp(−i    α2Zj)                                Figure  2:   (a)  The  relative  energy  error∆E/|E          0| for  the  1D
+                                               j=1                                                 quantum Ising model with PBC andN= 100atg                z = 0, where
+                                                N∏                                                 ∆E=⟨H⟩−E                      0.  The variational energies⟨H⟩are re-evaluated
+                                  uX(β) =           exp(−i    β2Xj)                                atδ    c  =  10−4   ,  with  circuit  repetitionsℓ=  10andℓ=  20.
+                                               j=1                                                 The  relative  errors  remain  below0.5%.  (b)(c)  Dependence  of
+                                                N∏                                                 the relative error on the truncation thresholdδ   c  for repetitions
+                                 uZZ(γ) =           exp(−i    γ2ZjZj+1 ).            (5)           ℓ= 10andℓ= 20,  respectively.  The  results  indicate  indicate
+                                               j=1                                                 thatδ        c = 10−4    already yields accurate energies.
+
+
+
+                 Accepted in               2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                      4
+
+
+
+
+Quantum
+                    The  optimized  parameters  obtained  with  a  looser                       they are compared against reference results obtained via
+                 threshold  are  subsequently  used  to  compute  the  final                    DMRG.
+                 variational energy⟨           ˆH⟩at a more stringent value (e.g.,                 For values ofg  x away from the critical point, bothM   z
+                 δc = 10−4  ) to improve accuracy.  In principle, this final                    andM   x  exhibit  excellent  agreement  with  the  DMRG
+                 result may also be benchmarked against direct measure-                         benchmarks, confirming the reliability of our variational
+                 ments on a quantum device, which corresponds to eval-                          ansatz in those regimes.  Near the critical point, how-
+                 uating  the  cost  function  atδ  c  =  0,  modulo  hardware                   ever, the ansatz tends to overestimateM         z, andM   x also
+                 noise.   To  compute  gradients  efficiently,  we  employ  a                   shows slight deviations from the DMRG result. Increas-
+                 modified SPSA algorithm in combination with ADAM                               ing the repetition fromℓ= 10toℓ= 20, we observe the
+                 optimization, as detailed in AppendixA.                                        relative energy error and the magnetization benchmarks
+                                                                                                improved slightly.  This suggest that greater repetition
+                 3.1    Transverse-field quantum Ising model                                    ℓcould improve accuracy in the critical regime.  At the
+                                                                                                same time, the performance of PPS may degrade as cir-
+                 We begin by examining results in the regime where the                          cuit depth increases due to a more complex optimization
+                 longitudinal fieldg   z = 0, for various values of the trans-                  landscape  and  greater  simulation  requirements.   This
+                 verse  fieldg   x,  using  a  system  ofN=  100qubits.   In                    trade-off  highlights  a  potential  practical  advantage  of
+                 this  case,  Eq.  (3)  is  exactly  solvable,  and  the  ground                executing VQAs on quantum hardware near criticality,
+                 state energyE             0  can be obtained analytically [52].  For           where deeper circuits are needed to capture the strong
+                 comparison, we also compute the ground state and its                           correlations.
+                 energyE             DMRG numerically using DMRG.                                  In fact, we observe a common trend across the models
+                    Figure2(a) shows the relative error∆E/|E                               0|, whereexamined in this work: our PPS results tend to perform
+                 ∆E=⟨         ˆH⟩−E       0,  calculated  from  the  variational  en-           less well near the critical point or in the gapless regime.
+                 ergy⟨        ˆH⟩[Eq.(1)] at various values ofg         x, for repetitions      We suspect that this behavior is primarily due to the
+                 ℓ=  10andℓ=  20.   While  the  optimization  is  typi-                         design of the variational ansatz, rather than an intrinsic
+                 cally  performed  using  PPS  with  truncation  threshold                      limitation of the PPS method itself.
+                 δc = 10−3  , the variational energies plotted here are re-                        In particular, we employ a class of parameterized cir-
+                 evaluated at a more stringent thresholdδ        c = 10−4  .  As                cuits known as the Hamiltonian variational ansatz.  The
+                 shown  in  the  figure,  the  relative  errors  remain  below                  intuition behind this ansatz is as follows.  To prepare a
+                 0.5%, with slightly larger deviations appearing near the                       target state from a given initial state, where both are
+                 critical pointg c = 1.                                                         ground  states  of  some  Hamiltonians,  one  can  imagine
+                    Figs.2(b) and (c) further illustrate the dependence of                      adiabatically tuning the Hamiltonian parameters, inter-
+                 the relative error onδ  c for selected values ofg  x.  We find                 polating from those of the initial Hamiltonian to those
+                 thatδ   c  =  10−4    already  provides  sufficiently  accurate                of the target Hamiltonian.  The Hamiltonian variational
+                 energy  estimations,  as  decreasingδ         c  further  produces             ansatz corresponds to a Trotterized version of this adi-
+                 negligible changes in the estimated energies.                                  abatic  evolution,  with  the  Trotter  steps  promoted  to
+                    Interestingly, we also observe cases where truncation                       variational parameters.
+                 leads to trial energies that fall below the true ground-                          Heuristically,  this approach performs well when the
+                 state  energy  [e.g.,  atg  x  =  0.8in  Figs.2(b)  and  (c)].                 spectral  gap  remains  open  along  the  adiabatic  path.
+                 This artifact arises because the truncation scheme does                        However,  its  performance  deteriorates,  or  requires  a
+                 not preserve the unitarity of the circuit.  Nevertheless,                      deeper  circuit,  when  the  gap  shrinks  or  closes,  as  oc-
+                 evaluating the energy at a more stringent threshold al-                        curs near a critical point or in a gapless regime.
+                 leviates this issue, and the circuit parameters obtained
+                 from  a  looser  truncation,  even  when  yielding  an  esti-
+                 mated energy lower than the true ground state energy,                          3.2    Tilted-field quantum Ising model
+                 still serve as excellent solutions.                                            Next,  we  consider  the  caseg   z ̸=  0.   In  this  regime,
+                    Another valuable benchmark involves evaluating the                          the  low-energy  physics  of  the  model  is  effectively  de-
+                 expectation values of physical observables.  To this end,                      scribed  by  the  Ising  field  theory  [42, 43],  making  the
+                 we compute the magnetization in thezandxdirections,                            Hamiltonian  a  practical  setting  for  studying  scatter-
+
+                                         N∑                          N∑                         ing  phenomena  on  quantum  hardware.    In  such  ap-
+                           Mz :=  1N        ⟨Z j⟩, M x :=  1N           ⟨X j⟩,      (7)         plications,  preparing  the  interacting  ground  state  is  a
+                                        j=1                         j=1                         crucial  prerequisite,  whether  for  simulating  scattering
+                                                                                                processes [6, 45–47] or exploring quantum quench dy-
+                 evaluated on our variational wavefunction atδ  c = 10−4  .                     namics  [48–50].   Consequently,  the  preparation  of  the
+                 These quantities are shown in Figs.3(a) and (b), where                         ground state via a quantum circuit plays a central role
+
+
+                 Accepted in              2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                      5
+
+
+
+
+Quantum
+                   Figure  3:    For  the  the  1D  quantum  Ising  model  with  PBC  andN=  100atg                    z  =  0,  (a)M        z  and  (b)M      x  for  the  variational
+                   wavefunction  with  circuit  repetitionsℓ= 10andℓ= 20,  evaluated  atδ                                    c  = 10−4   .   The  results  show  good  agreement  with  the
+                   DMRG data away from the critical pointg       c = 1.  Near the critical point, we expect the results can be improved by increasing the
+                   circuit repetition.
+
+
+                   in enabling these quantum simulations.
+
+                      Since  the  model  withg    z ̸=  0is  not  exactly  solv-
+                   able,  we  use  the  ground-state  energy  obtained  from
+                   DMRGE    DMRG  as the benchmark.  We define the rel-
+                   ative error in this case as∆E/|E           DMRG|, where∆E=
+                   ⟨ ˆH⟩−E       DMRG.  In Figs.4(a1) and (a2), we plot the rel-
+                   ative error forg  z = 0.2andg     z = 0.5, respectively, and
+                   for variousg     x, using a repetitionℓ= 5withN= 100.
+                   Again, the optimization is carried out using PPS with
+                   δc  =  10−3    typically.   Note  the  scale  difference  from
+                   Fig.2(a)  —  the  relative  error  remain  less  than0.1%
+                   here.  Figures4(b) and (c) show the expectation values
+                   ofM  z  andM   x, respectively, which also exhibit strong
+                   agreement  with  DMRG  results  across  the  parameter
+                   range studied.
+
+                      It is worth emphasizing that for gapped 1D Hamilto-
+                   nians, such as Eq. (3) withg     z̸= 0, DMRG is guaranteed
+                   to  obtain  the  ground  state  with  high  precision  using
+                   modest bond dimensions.  However, to study scattering
+                   or quench dynamics on quantum hardware, the ground
+                   state must be prepared on the device.  While there exist
+                   methods to prepare matrix-product states on quantum
+                   hardware [53,54], the circuit depth and gate complex-
+                   ity can become substantial for modest bond dimensions,                                 Figure  4:     For  the  1D  quantum  Ising  model  with  PBC  and
+                   posing  practical  challenges.   Our  parametrized  circuit                            N= 100, the relative energy error∆E/|E                        DMRG|for (a1)g         z =
+                   approach offers an alternative route for efficient ground-                             0.2and (a2)g             z = 0.5, where∆E=⟨H⟩−E                                             DMRG  and circuit
+                   state preparation.  As demonstrated in our results, even                               repetitionℓ=  5.    (b1)(b2)M                        z  and  (c1)(c2)M             x  evaluated
+                   a shallow circuit with repetitionℓ= 5achieves remark-                                  for  the  same  parameters  atδ    c = 10−4   .  All  results  show  good
+                   ably small relative errors, highlighting the potential of                              agreement with the corresponding DMRG data.
+                   this approach for quantum simulations.
+
+
+                   Accepted in                2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                      6
+
+
+
+
+Quantum
+                  4    Quantum Ising model in 2D
+
+                  While DMRG is provably efficient for obtaining ground
+                  states of short-range interacting models in 1D, it is ex-
+                  pected  to  face  significant  challenges  in  two  or  higher
+                  dimensions.  It is therefore of particular interest to test
+                  and compare the performance of PPS parametrized cir-
+                  cuits and DMRG on 2D models.  To this end, we study
+                  the  quantum  Ising  model  in  2D.  Specifically,  we  con-
+                  sider a square lattice with PBC and a heavy-hex lattice                            Figure  5:    (a)  The square  lattice  with periodic  boundary  con-
+                  with  open  boundary  conditions  (OBC),  as  illustrated                          ditions.  The lattice consists of a total ofN=N          x×N   y  qubits,
+                  in Figs.5(a) and (b), respectively.  Remarkably, as we                             whereN           x  andN       y  represent the number of qubits in thexand
+                  will show later, the PPS parametrized circuit might out-                           ydirections,  respectively.  The  qubits  are  labeled  according  to
+                  perform DMRG on the 2D quantum Ising model on a                                    the  order  shown  in  the  figure.  (b)  The  heavy-hex  lattice  with
+                  heavy-hex lattice in certain parameter regimes.                                    N= 127qubits.
+                     The Hamiltonian of 2D quantum Ising model is given
+                  as
+                                                                   N∑
+                                   H=−  ∑          ZiZj−g x            Xj ,               (8)
+                                              ⟨i,j⟩              j=1
+
+                  where⟨i,j⟩denotes the nearest-neighbor pairs of qubits,
+                  determined by the lattice geometries shown in Figs.5(a)
+                  and (b).  The Hamiltonian has aZ  2  symmetry gener-
+                  ated  by ∏Nj=1 Xj.   As  in  the  1D  case,  we  expect  that
+                  the  system  will  exhibit  spontaneous  symmetry  break-
+                  ing into a ferromagnetic phase wheng    x is small, while
+                  for largeg    x it enters the paramagnetic phase.
+                     We use the following parameterized circuit to approx-
+                  imate the ground state, similar to the ansatz employed
+                  for the 1D quantum Ising model.  Define
+
+                                U(α,β,γ) =u    Z(α)u   X(β)u   ZZ(γ),           (9)
+
+                  where
+
+                                                  N∏
+                                     uZ(α) =          exp(−i    α2Zj)
+                                                 j=1
+                                                  N∏
+                                    uX(β) =           exp(−i    β2Xj)
+                                                 j=1                                                 Figure 6:   (a) The relative energy error∆E/|E           DMRG|for the 2D
+                                   uZZ(γ) =  ∏         exp(−i    γ2ZiZj).            (10)            quantum Ising model on the square lattice with PBC andN       x =
+                                                 ⟨i,j⟩                                               Ny = 10, where∆E=⟨H⟩−E                                         DMRG.  The variational energies
+                                                                                                     ⟨H⟩are  re-evaluated  atδ           c  =  10−4   ,  with  circuit  repetitions
+                  The  variational  wavefunction  of  circuit  repetitionℓis                         ℓ= 5andℓ= 10.   (b)(c)  Dependence  of  the  relative  energy
+                  again given by Eq. (6), and the cost function is given by                          error on the truncation thresholdδ                 c for circuit repetitionsℓ= 5
+                  Eq. (1) with the corresponding Hamiltonian in Eq. (8).                             andℓ= 10, respectively.
+
+                     We  emphasize  that  while  the  properties  of  the  2D
+                  quantum Ising model can be calculated classically us-
+                  ing quantum Monte Carlo algorithms [55], such meth-
+                  ods do not yield a quantum circuit for approximately
+                  preparing its ground state.  This is precisely the prob-
+                  lem addressed by the parametrized circuit approach.
+
+
+                  Accepted in               2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                      7
+
+
+
+
+Quantum
+                 Figure  7:    For  the  2D  quantum  Ising  model  on  a  square  lattice  with  PBC  andN       x  =N   y  =  10,  (a)M          z  and  (b)M      x  for  the
+                 variational wavefunction with circuit repetitionsℓ= 5andℓ= 10, evaluated atδ                                  c = 10−4   .  The results show good agreement with
+                 the DMRG data away from the critical pointg       c≈3.  Near the critical point, we expect the results can be improved by increasing
+                 the circuit repetition.
+
+                 4.1    Square lattice with PBC                                                 below0.25%.
+                 We first present results for the 2D quantum Ising model                           In Figs.7(a) and (b),  we show the magnetizations
+                 on a square lattice with PBC. We apply our method to                           Mz  andM   x  computed from the optimized variational
+                 a  system  of  sizeN   x  =N y  =  10,  corresponding  to  a                   wavefunction and compare them with the correspond-
+                 total ofN= 100qubits.  Owing to the translational in-                          ing DMRG results.  As in the 1D case, the variational
+                 variance of the variational wavefunction, the evaluation                       wavefunction tends to overestimateM         z  near the criti-
+                 of the cost function can be simplified by applying PPS                         cal  point,  which  we  conjecture  could  be  mitigated  by
+                 to the reduced Hamiltonian  ˜H=N  (Z0Z1−Z   0ZNx−                              increasing  the  circuit  repetition.   In  contrast,  deep  in
+                                                                                                the ferromagnetic phase (g x≪g  c≈3) [55] and in the
+                 gxX1).   As  a  benchmark,  we  compare  against  results                      paramagnetic phase (g x≫g  c≈3), the variational re-
+                 obtained using DMRG, implemented via snake-ordering                            sults closely track the DMRG benchmarks.
+                 (see AppendixB), which maps the 2D lattice problem
+                 onto a 1D chain with long-range interactions.                                  4.2    Heavy-hex lattice with OBC
+                    Figure6(a)  shows  the  relative  error  compared  with
+                 DMRG energies obtained using maximum bond dimen-                               The second lattice geometry we study is the heavy-hex
+                 sionχ= 500.  This choice of bond dimension appears                             lattice  with  OBC,  shown  in  Fig.5(b),  whose  connec-
+                 to yield energies converged to at least eight significant                      tivity matches that of IBM quantum devices.  We ap-
+                 digits, with each sweep taking about five to ten minutes                       proximate the ground state of the quantum Ising model
+                 on a personal laptop.  For PPS, most circuit parameters                        on this lattice using the parametrized circuit defined in
+                 are optimized using a truncation threshold ofδ  c = 10−3  ,                    Eqs. (9) and (10), adapted to the heavy-hex connectiv-
+                 with some trained at smallerδ      c for improved accuracy;                    ity, and benchmark the results against DMRG calcula-
+                 all results are re-evaluated atδ  c = 10−4   for the plot.  In-                tions with a maximum bond dimension ofχ= 500.
+                 terestingly, forg  x  in the range2.0–2.5, the variational                        In  Fig.8(a),  we  plot  the  relative  error  compared
+                 wavefunction yields energies that are apparently lower                         with  the  DMRG  result.    The  circuit  parameters  are
+                 than the DMRG results.                                                         mostly  trained  usingδ  c  =  10−3    but  are  re-evaluated
+                    Figures6(b) and (c) further examine the dependence                          withδ    c  =  5×10  −4    in  Fig.8(a).   Notably,  across  a
+                 of the relative error on the truncation thresholdδ        c  for               broad range of parameters, the variational energies ob-
+                 selected values ofg  x.  We find that the relative error be-                   tained  from  the  PPS-trained  parametrized  circuit  are
+                 comes positive onceδ    c is decreased sufficiently, confirm-                  lower than those from DMRG. In Fig.8(b), we further
+                 ing that the apparent energy undershoot is an artifact                         examine the relative error as a function ofδ  c for selected
+                 of  truncation.   In  all  cases,  the  relative  energy  errors               values ofg  x.  Remarkably, aroundg      x≈1.3, the PPS en-
+                 benchmarked against DMRG remain remarkably small,                              ergy remains lower than the DMRG energy even at the
+
+
+                 Accepted in              2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                      8
+
+
+
+
+Quantum
+                 Figure  8:     For  the  2D  quantum  Ising  model  on  the  heavy-hex  lattice  with  OBC  andN=  127,  (a)  the  relative  energy  error
+                 ∆E/|E         DMRG|, where∆E=⟨H⟩−E                                        DMRG, using the variational energies⟨H⟩re-evaluated atδ                         c = 5×10  −4    and circuit repetition
+                 ℓ=  15.   The  PPS  result  achieves  variational  energy  lower  than  the  DMRG  benchmark  across  a  broad  range  of  the  transverse
+                 field  strengthg      x.   (b)  The  dependence  of  the  relative  energy  error  on  the  truncation  thresholdδ                 c  for  selected  values  ofg    x.  For
+                 some  parameters,  the  variational  energy  remains  below  the  DMRG  energy  even  atδ  c = 10−5   .  (c)(d)  Expectation  values  of  the
+                 magnetizationM                          z  andM       x  compared to the DMRG results.
+
+
+                 smallest threshold,δ        c = 10−5  .                                         tions  indeed  achieve  lower  energies  than  the  DMRG
+                    However,  we caution and remark the implication of                           benchmark.  The presented parametrized circuit,  with
+                 this  result.    First,  the  DMRG  benchmarks  reported                        repetitionℓ= 15on the heavy-hex lattice withN= 127
+                 here  were  obtained  with  modest  computational  effort                       qubits, involves2160two-qubit gates before transpila-
+                 on a personal laptop.  The DMRG energy could likely                             tion to native gates.  Definitive confirmation, however,
+                 be improved by adopting a different qubit-to-1D map-                            would  require  quantum  simulations  under  low-noise
+                 ping, increasing the bond dimension, or performing ad-                          conditions or with extensive error mitigation, which lies
+                 ditional  sweeping  iterations.   Nevertheless,  we  believe                    beyond the present scope and resources of this work.
+                 the  reported  values  are  representative  of  what  non-                          In Fig.8(c) and (d), we show the results for the mag-
+                 experts  can  reasonably  achieve  using  the  ITensor  li-                     netizationsM         z andM   x, respectively.  We again observe
+                 brary [33] without extensive optimization of the DMRG                           that the variational wavefunction tends to yield higher
+                 algorithm.  The PPS variational results were obtained                           Mz values compared to the DMRG result near the crit-
+                 with a comparable level of computational effort.                                ical  point.   Although  we  did  not  attempt  to  precisely
+                    Second,  as  discussed  earlier,  truncation  in  the  PPS                   locate the critical point here, Fig.8(c) suggests it lies
+                 algorithm can  artificially lower  the variational  energy.                     close tog  x≈1.4.
+                 The  extent  of  this  artifact  can  be  assessed  by  exam-                       We emphasize that, although the ground-state prop-
+                 ining its scaling withδ    c.  In the present case,  even at                    erties of the quantum Ising model on both lattice geome-
+                 a stricter threshold ofδ  c  = 10−5  , the PPS variational                      tries  can  be  studied  classically  using  quantum  Monte
+                 energy  remains  below  the  DMRG  result,  although  we                        Carlo [55] or tensor-network-based methods such as pro-
+                 cannot rule out the possibility that an even smallerδ      c                    jected  entangled  pair  states,  these  approaches  do  not
+                 would raise the PPS energy above the DMRG value.                                produce  explicit  quantum  circuits  for  approximately
+                    Third,   DMRG  may  not  be  the  optimal  classical                         preparing  the  ground  state.    In  contrast,  our  PPS
+                 method  for  this  problem.   Other  classical  approaches,                     parametrized circuit approach directly yields such cir-
+                 such  as  projected  entangled  pair  states  or  quantum                       cuits.
+                 Monte  Carlo,  could  potentially  achieve  lower  trial  en-                       Moreover,  our  results  demonstrate  that  PPS  varia-
+                 ergies.  Moreover, incorporating the symmetries of the                          tional results can achieve high-quality approximations
+                 problem can further enhance the performance of these                            of  ground  states,   underscoring  their  potential  as  a
+                 classical methods; this was not explored in the present                         quantum-inspired classical numerical method for quan-
+                 work.                                                                           tum many-body problems in higher dimensions.  Unlike
+                    Despite these caveats, it is striking that PPS varia-                        quantum Monte Carlo, this approach is applicable even
+                 tional results can yield lower variational energies than                        to models where the sign problem poses a major obsta-
+                 DMRG under these conditions.  This observation sug-                             cle. Its promise is further highlighted by our observation
+                 gests  an  intriguing  potential  application  for  quantum                     that PPS variational energies might, in some regimes,
+                 devices:  validating whether such variational wavefunc-                         outperform DMRG, as shown for the heavy-hex lattice,
+
+
+                 Accepted in               2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                      9
+
+
+
+
+Quantum
+                  though this should be interpreted with caution.  Finally,
+                  in regimes where PPS encounter limitations, the PPS-
+                  trained  circuit  parameters  can  be  directly  transferred
+                  to  quantum  hardware  for  further  refinement,  thereby
+                  reducing  both  runtime  and  resource  requirements  on
+                  quantum devices.
+
+                  5    Kitaev honeycomb model
+
+                  The  last  model  to  which  we  apply  our  method  is  the
+                  Kitaev honeycomb model [24], for which several works
+                  have proposed quantum circuits to prepare its ground
+                  state [56–61].  For convenience, we map the honeycomb
+                  lattice onto a square lattice with modified connectivity
+                  with PBC, as illustrated in Fig.9.  The bonds are color
+                  coded by type:  red forx-type bonds (E    X), green fory-                         Figure 9:   The honeycomb lattice can be mapped onto a square
+                  type bonds (E Y ), and blue forz-type bonds (E    Z).  The                        lattice with modified connectivity, as illustrated.  It consists of
+                  Hamiltonian is                                                                    N=N       x×N   y  qubits, whereN           x andN       y  denote the number of
+                                  ∑                        ∑                      ∑                 qubits along thex- andy-directions, respectively.  The colored
+                  H=−J     x              XiXj−J y                 YiYj−J z               ZiZj,     bonds  represent  thex-bondsE            X  (red),y-bondsE                     Y   (green),
+                               ⟨i,j⟩∈E         X        ⟨i,j⟩∈E         Y      ⟨i,j⟩∈E         Z    andz-bondsE                 Z  (blue).  Insets:  The Kitaev honeycomb model
+                                                                                        (11)        has  the  conserved  quantitiesW                  p  shown  in  the  figure.  For  the
+                  whereJ     x,J y, andJ   z  are the coupling strengths along                      calculation of the topological entanglement entropy, we use the
+                  thex-,y-, andz-type bonds, respectively, and the sums                             partitionA,B, andCshown as illustrated.
+                  run over nearest-neighbor qubit pairs⟨i,j⟩of the cor-
+                  responding bond type.                                                             ground state of the Kitaev honeycomb model, we em-
+                     This  model  is  exactly  solvable,  making  it  an  ideal                     ploy the following parametrized circuit:
+                  testbed  for  benchmarking  ground-state  energy  esti-
+                  mates.  Notably, the Kitaev honeycomb model has con-                                           U(α,β,γ) =u    ZZ(α)u   YY (β)u   XX(γ)         (12)
+                  served  quantitiesW    P ,  often  referred  to  as  fluxes,  on
+                  each hexagonal plaquette as illustrated in the inset of                           where
+                  Fig.9.  In the thermodynamic limit, the ground states
+                  lies  in  the  “flux-free”  sector,  whereW     P  =  +1for  all                                uZZ(α) =   ∏             exp(−i    α2ZiZj),
+                  plaquettes.  The exact ground state can be obtained us-                                                        ⟨i,j⟩∈E         Z
+                  ing the Majorana parton construction, as described in                                           uYY (β) =   ∏             exp(−i    β
+                  Ref. [24].  (See also Ref. [62] for an alternative approach                                                                         2YiYj),
+                  based on the Jordan-Wigner transformation.)                                                                    ⟨i,j⟩∈E         Y
+                     The  Kitaev  honeycomb  model  exhibits  two  distinct                                       uXX(γ) =   ∏              exp(−i    γ
+                  quantum phases, known as the A phase and the B phase,                                                          ⟨i,j⟩∈E         X    2XiXj).        (13)
+                  depending  on  the  relative  strengths  of  the  bond  cou-
+                  plingsJ     x,J y,  andJ   z.   The  system  is  in  the  gapped                  The  resulting  variational  wavefunction  with  a  circuit
+                  A  phase  when  one  coupling  dominates,  such  as  when                         repetitionℓis
+                  |J z|>|J   x|+|J   y|.  In this regime, the model realizes a
+                  gapped quantum spin liquid with Abelian anyonic exci-                              |ψ(α,β,γ)⟩=U(α            ℓ,βℓ,γℓ)···U(α        1,β1,γ1)V  f.f.|0⟩ ⊗N  ,
+                  tations. In contrast, the gapless B phase arises when the                                                                                                (14)
+                  couplings satisfy|J      z|≤|J x|+|J   y|,|J  y|≤|J x|+|J   z|, and               whereV            f.f. is a circuit that prepares the “flux-free” state,
+                  |J x|≤|J y|+|J   z|.  The gaplessness in this phase origi-                        satisfyingW        p = +1for all plaquettes andZ     iZj = +1for
+                  nates from the massless Majorana fermion excitations,                             alli,jon thez-type bondsE        Z.  This particular flux-free
+                  while the flux excitations (W p =−1) are still gapped.                            state also corresponds to a ground state of the Kitaev
+                  In our study, we fixJ  z = 1and varyJ    x =J y =Jfrom                            honeycomb model atJ  x =J y  = 0andJ    z  = 1.  While
+                  0to1.  Under this parametrization, the system lies in                             the full description ofV    f.f.  is provided in AppendixC,
+                  the gapped A phase whenJ <0.5, and in the gapless                                 we note here that it consists entirely of Clifford gates,
+                  B phase forJ≥0.5.                                                                 ensuring that it does not increase the number of Pauli
+                     To  construct  the  quantum  circuit  for  preparing  the                      terms in PPS. The circuit has a depth approximately
+
+
+                  Accepted in               2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                    10
+
+
+
+
+Quantum
+                  Figure  10:    For  the  Kitaev  honeycomb  model  withN        x  =N   y  = 10andJ           z  = 1.  (a)  The  relative  energy  error∆E/|E            0|,  where
+                  ∆E=⟨H⟩−E                      0,  for  parametersJ  x  =J   y  =Jand  circuit  repetitionsℓ= 10andℓ= 20,  evaluated  atδ                                          c  = 10−4   .   Note  the
+                  logarithmic  scale  in  they-axis.   The  relative  energy  error  remains  lower  than0.5%forJ≤0.5.   (b)(c)  The  dependence  of  the
+                  relative energy error onδ    c  for ansatz depthsℓ= 10andℓ= 20, respectively.  (d) The (negative) topological entanglement entropy
+                  −S    topo  computed using the partitionA={0,1},B={N                                      x,Nx + 1}andC={2,N                      x + 2}, evaluated atδ        c = 10−3   .  The dashed
+                  line at−S         topo = 1marks the theoretical value for the Kitaev A phase in the limit where the regionsA,BandCare large.
+
+
+                  equal to the linear dimension of the system, scaling as                               A, B, and C as shown in the inset of Fig.9.  The topo-
+                  Nx +N y.                                                                              logical entanglement entropy is defined as
+                      Note that while the parameterized circuitU(α,β,γ)                                   Stopo =S A+S B+S C−S AB−S AC−S BC+S ABC , (15)
+                  is translationally invariant, the initial state preparation
+                  circuitV             f.f.  and  the  PPS  truncation  break  the  trans-              whereS     R  :=−Tr[ρ     R log2ρR]is the von Nuemann en-
+                  lation  symmetry.   Nevertheless,  we  find  that  the  re-                           tanglement entropy of the reduced density matrixρ      R :=
+                  sulting variational wavefunction remains nearly transla-                              TrRc[|ψ⟩⟨ψ|], andR         c denotes the complement of region
+                  tionally invariant in practice.  To leverage this approxi-                            R. We use abbreviations such asAB:=A∪B, and so on.
+                  mate symmetry, we optimize the circuit parameters us-                                 For sufficiently large regions A, B, and C, the topolog-
+                  ing  the  proxy  Hamiltonian   ˜H=      12NxNy(−J  xX0X1−                             ical entanglement entropy in the Kitaev A phase takes
+                  JyYNxYNx+1−J zZ2ZNx+2)andδ    c  =  10−3  .   We  find                                the valueS        topo =−1.
+                  that  using  the  proxy  Hamiltonian  improves  the  qual-                               We compute the topological entanglement entropy for
+                  ity of the optimization, as the initial operator in PPS                               the optimize variational wavefunction.  Specifically, we
+                  now involves only3Pauli-strings, compared to∼1.5N                                     take the regionsA={1,2},B={N                 x,Nx+1 }, andC=
+                  number of Pauli-strings if using the full Hamiltonian.                                {2,N  x + 1}, reconstructing the reduced density matrix
+                      In Fig.10(a), we show the relative error benchmarked                              ρABC  via state tomography using PPS. To do this, we
+                  against the exact ground state energyE             0, for a system                    expressρ      ABC  in a Pauli-string expansion
+                  sizeN   x =N y = 10, or totalN= 100qubits.  Note that                                                      ρABC =      1           ∑    c ˆP ˆP ,                (16)
+                  the relative errors are re-evaluated usingδ    c = 10−4   and                                                           2|ABC|
+                  computed with respect to the full Hamiltonian Eq. (11)                                                                               ˆP
+                  rather than the proxy.  We find that forJ <0.5, cor-                                  where   ˆP∈ {I,X,Y,Z}  ⊗|ABC|        runs  over  the  Pauli
+                  responding to the gapped A phase,  the relative errors                                strings in the regionABC, and each coefficient is given
+                  remain below0.5%for the largest repetitionℓconsid-                                    byc   ˆP  =⟨ψ(θ)|            ˆP|ψ(θ)⟩, evaluated using PPS. Since the
+                  ered.  We observe that the optimization becomes more                                  number of Pauli strings grows exponentially with sub-
+                  challenging whenJ≥0.5, where the system enters the                                    system size, we limit to a subsystem with|ABC|= 6
+                  gapless B phase.  Figures10(b) and (c) show the rela-                                 qubits, a size for which PPS tomography remains com-
+                  tive error as a function ofδ  c for selectedJ.                                        putationally feasible usingδ    c = 10−3  .
+                      As  mentioned  previously,  the  Kitaev  A  phase  is  a                             Fig.10(d) shows the result of the topological entan-
+                  gapped topological state with Abelian anyonic excita-                                 glement  entropy  computed  from  the  variational  wave-
+                  tions.  A key fingerprint of such topological order is the                            functions at various values ofJ, for repetitionsℓ= 10
+                  topological entanglement entropy [34,35].  We consider                                andℓ=  20.   The  data  point  atJ=  0,ℓ=  10corre-
+                  a subregion of the system partitioned into three parts                                sponds to the stateV          f.f.|0⟩ ⊗N   ,  which hasS       topo  =−1.
+
+
+                  Accepted in                2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                    11
+
+
+
+
+Quantum
+                 Remarkably, forJ≤0.5,S                   topo remains close to the the-          with 3000 shots; forJ= 0.6, measurements are taken
+                 oretical value of−1, despite the relatively small sizes of                       with 1000 shots forx- andz-type bonds, and 500 shots
+                 regions A, B, and C. On the other hand,S           topo  starts                  fory-type  bonds.   The  error  bars  are  estimated  from
+                 to deviate from−1forJ >0.5.  These results highlight                             the standard errors/  √√Nshot, whereN            shot  is the num-∑Nshotj=1   (x j−¯x)        2/(N    shot−1)is
+                 the quality of our variational wavefunction in approxi-                          ber of shots ands=
+                 mating the ground states of Eq. (11).                                            the sample standard deviation.
+                                                                                                     As noted earlier, the variational wavefunction is ap-
+                 6    Simulation on quantum hardware                                              proximately translationally invariant.  This is evident in
+                                                                                                  the PPS results, where the values of⟨X  iXj⟩are nearly
+                 In the previous sections, we obtained the circuit param-                         identical  across  all  thex-bonds,  and  similarly  for  the
+                 eters using PPS. Since these parameters were obtained                            y-bonds andz-bonds.  The Quantinuum measurements
+                 via a noiseless, classical approximation of the cost func-                       show overall good agreement with the PPS predictions,
+                 tion,  it is natural to ask how well the resulting states                        apart  from  a  few  bonds  that  show  noticeable  devia-
+                 perform when the parameterized circuit is executed on                            tions.  From the measured⟨X         iXj⟩,⟨Y  iYj⟩, and⟨Z     iZj⟩,
+                 a noisy near-term quantum device.  To this end, we con-                          we compute
+                 sider the Kitaev honeycomb model and the variational                                                       ∑                          ∑
+                 wavefunction  described  in  Sec.5on  a  system  of  size                               ⟨H⟩=−J      x             ⟨X iXj⟩−J y                 ⟨Y iYj⟩
+                 (N x,Ny) = (8,6), corresponding to a total ofN= 48                                                      ⟨i,j⟩∈E         X∑          ⟨i,j⟩∈E         Y
+                 qubits.   We  focus  on  two  representative  coupling  val-                                     −J z             ⟨Z iZj⟩,
+                 ues,J= 0.3andJ= 0.6,  with repetitionℓ= 5.  Af-                                                         ⟨i,j⟩∈E         Z
+                 ter  obtaining  the  optimized  parameters  using  PPS  at
+                 δc  = 10−3    with respect to the proxy Hamiltonian,  we                         which gives the energy estimation on the Quantinuum
+                 prepare the PPS-trained state on the Quantinuum H2-2                             machine
+                 quantum computer [36].                                                                                EQ =−23.9717±0.0539
+                    Note that the initial part of the trial stateV          f.f|0⟩ ⊗N             forJ= 0.3and
+                 is  a  stabilizer  state,  which  in  principle  could  be  pre-
+                 pared using measurement and feedforward, resulting in                                                 EQ =−26.8396±0.0893
+                 a constant-depth circuit [39].  In our quantum simula-
+                 tions,  however,  we  implement  this  part  of  the  circuit                    forJ=  0.6.   The  quoted  uncertainties  are  estimated
+                 explicitly  using  the  quantum  gates  described  in  Ap-                       via  standard  error  propagation  under  the  assumption
+                 pendixC, which has a circuit depth scaling asN        x +N y.                    that  all  bond  measurements  are  statistically  indepen-
+                 For circuit repetitionℓ= 5,  the total number of two-                            dent.   Although  a  more  accurate  estimate  should  be
+                 qubit gates is approximately500prior to transpilation                            obtained from√(⟨H    2⟩−⟨H⟩     2)/(N      shot−1), where the
+                 into the native gate set of the Quantinuum H2-2 quan-                            covariance  among  the  bonds  are  included,  we  expect
+                 tum computer.  It would be an interesting direction for                          the  independent-bond  assumption  to  be  a  reasonable
+                 future work to investigate whether preparingV                   f.f|0⟩ ⊗N        approximation in this context.
+                 via measurement and feedforward could yield a higher-                               For comparison, the exact ground-state energies are
+                 quality approximate ground state on the quantum de-
+                 vice.                                                                                                        E0 =−25.0873
+
+                 6.1    Energy                                                                    forJ= 0.3and
+
+                 We first examine the energy of the approximate ground                                                        E0 =−28.2847
+                 state prepared on the Quantinuum H2-2 quantum com-
+                 puter.    In  Fig.11,  we  show  the  measured  values  of                       forJ= 0.6, yielding relative energy errors∆E/|E                            0|=
+                 ⟨X iXj⟩,⟨Y  iYj⟩, and⟨Z     iZj⟩on the corresponding bonds                       4.45%forJ= 0.3and∆E/|E                                       0|= 5.11%forJ= 0.6.
+                 from  the  Quantinuum  machine,  alongside  the  results                         These results are obtained without any error mitigation.
+                 from  the  PPS  method.    The  Quantinuum  data  are                            Notably,  even  in  the  presence  of  hardware  noise,  our
+                 collected  by  executing  the  parametrized  circuit  and                        parameterized circuit can prepare states roughly5%in
+                 performing  measurements  in  thex, y,  andzbases.                               relative energy error for a system ofN= 48qubits.
+                 The resulting bitstrings from each basis are then post-                             The PPS energies evaluated atδ  c = 10−5   with respect
+                 processed  to  compute  the  expectation  values⟨X     iXj⟩,                     to the full Hamiltonian are
+                 ⟨Y iYj⟩, and⟨Z     iZj⟩.  ForJ= 0.3, most bonds are mea-
+                 sured with 500 shots, while selected bonds are measured                                                    EPPS =−25.0906
+
+
+                 Accepted in               2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                    12
+
+
+
+
+Quantum
+                   Figure  11:    For  the  Kitaev  honeycomb  model  with(N          x,Ny)  =  (8,6)andJ                z  =  1,  the  expectation  values  of  (a1)⟨X            iXj⟩on
+                   x-bonds,  (b1)⟨Y            iYj⟩ony-bonds,  and  (c1)⟨Z                  iZj⟩onz-bonds,  forJ          x  =J   y  = 0.3,  obtained  from  both  the  Quantinuum  H2-2
+                   quantum computer and PPS method.  (a2)(b2)(c2) Similar to (a1)(b1)(c1) but for the couplingsJ                 x =J   y = 0.6.
+
+
+                        J             E0               PPS           Quantinuum H2-2                        this phase, we adopt the interferometric protocol intro-
+                       0.3       −25.0873          −25.0906          −23.9717±0.0539                        duced in Ref. [37].  At a high level, the protocol begins
+                       0.6       −28.2847          −28.3715          −26.8396±0.0893                        by preparing two pairs of anyons of different types on
+                   Table  1:   Comparison  of  the  ground-state  energiesE                 0  of  the      top of the ground state, yielding a state we denote as
+                   Kitaev honeycomb model atJ= 0.3andJ= 0.6on a system                                      |Φ⟩. An ancilla qubit is then initialized in the superposi-
+                   of size(N        x,Ny) = (8,6), with the corresponding results from                      tion stateH|0⟩       a =|+⟩   a =   1√2(|0⟩+|1⟩)       a.  A controlled-
+                   PPS and Quantinuum H2-2 quantum computers.                                               braiding  operation  is  applied  to|Φ⟩,  with  the  ancilla
+                                                                                                            serving  as  the  control  qubit.    More  explicitly,  if  the
+                                                                                                            braiding unitary isU b, the controlled braiding maps the(|Φ⟩⊗|0⟩   a+U b|Φ⟩⊗|1⟩   a).
+                   forJ= 0.3and                                                                             joint state as|Φ⟩⊗|+⟩      a ↦→    1√2
+                                                                                                            The expectation values of the ancilla in theXandY
+                                               EPPS =−28.3715                                               bases  then  yield  the  real  and  imaginary  parts  of  the
+                   forJ= 0.6.  We again observe the artifact that trun-                                     braiding phase, respectively
+                   cation can lead to a trial energy slightly below the true                                   ⟨X a⟩=Re (⟨Φ|U   b|Φ⟩ ), ⟨Y a⟩=Im (⟨Φ|U   b|Φ⟩ ).   (17)
+                   ground-state energy.  A summary of energies obtained
+                   from the different methods is provided in Table1.                                        (a)e-mbraiding
+
+                   6.2    Braiding statistics
+                   In addition to benchmarking the energy, we investigate                                   (b)e-ψbraiding
+                   whether the quantum states prepared on the device ex-
+                   hibit  the  topological  properties  of  the  Kitaev  honey-
+                   comb model by examining the braiding statistics of the
+                   anyonic excitations. In this model, the expected anyonic
+                   excitations aree,m,  andψ.  For the lattice shown in                                     (c)m-ψbraiding
+                   Fig.9, we label plaquette excitations withW        P  =−1in
+                   the odd rows aseanyons and those in the even rows as
+                   manyons.  Theψanyons correspond to the underlying
+                   Majorana  fermions  in  the  Majorana  parton  construc-                                 Table  2:   The  braiding  statistics  obtained  from  the  PPS  and
+                   tion [24], where a pair ofψexcitations can be created                                    Quantinuum H2-2 quantum computer, for which all phases are
+                   by applying a string of operators consisting ofXX,YY,                                    expected  to  be−1theoretically.  The  quantum  simulation  re-
+                   orZZon the correspondingE         X,E Y , orE  Z  bonds.                                 sults have remarkable agreement with the theoretical value.
+                      The  Abelian  nature  of  these  anyons  implies  that
+                   braiding one anyon around another results in an addi-                                       We use the creation and braiding operations defined
+                   tional phase imprinted on the quantum state.  To detect                                  on the fixed-point stateV          f.f.|0⟩ ⊗N   (corresponding toJ=
+
+
+                   Accepted in                 2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                    13
+
+
+
+
+   JJJ       PPSPPSPPS                  Quantinuum H2-2Quantinuum H2-2Quantinuum H2-2
+Qu0.30.30.3antum−0.9501−1.0000−1.0000(−0.8400±0.0243) +i(−0.0360±0.0447)(−0.9160±0.0180) +i(−0.0960±0.0446)(−0.9360±0.0158) +i(−0.0440±0.0447)
+  0.60.60.6−0.8141−1.0000−1.0000(−0.7160±0.0313) +i(0.0440±0.0447)(−0.9240±0.0171) +i(0.0760±0.0446)(−0.9080±0.0188) +i(0.0600±0.0447)
+                  Figure 12:   For the Kitaev honeycomb model with(N          x,Ny) = (8,6), the anyon creation operations (top panels) and the braiding
+                  operations (bottom panels) used to extract the braiding statistics.  (a)e-mbraiding:  theeanyons are created by the gates shown
+                  in red, while themanyons are created by the gates shown in blue.  The braiding operation, implemented with the gates in purple,
+                  can be interpreted as moving the top-lefteanyon around the nearbymanyon.  (b)e-ψbraiding:  theψanyons are created by the
+                  string of gates shown in brown, with the pair ofψexcitations residing at the ends of the string, highlighted by the brown circles.
+                  The  braiding  operation,  again  implemented  with  the  purple  gates,  moves  the  centralψanyon  around  the  nearbyeanyon.   (c)
+                  m-ψbraiding:  analogous to thee-ψcase, where the purple gates implement a braiding operation that moves the centralψanyon
+                  around the nearbymanyon.
+
+
+                  0) and apply them to the approximate ground states at                               approximate  ground  state  rather  than  the  exact  one.
+                  J= 0.3andJ= 0.6for a system of size (N           x,Ny) =                            On the quantum device, using500shots per observable
+                  (8,6).  For thee–mbraiding, we apply the gates shown                                for⟨X   a⟩and⟨Y     a⟩, we obtain
+                  in the top panel of Fig.12(a).  A pair ofeanyons are
+                  excited by the red gatesZ          10Z12Y13X21, while a pair of                          αem = (−0.8400±0.0243) +i(−0.0360±0.0447)
+                  manyons are excited by the blue gatesY              18X26Z33Z35.
+                  These operations can be understood by examining their                               forJ= 0.3,and
+                  effect on theW   P  operators —Zoperations excite two
+                  neighboring anyons or move an anyon to a neighboring                                      αem = (−0.7160±0.0313) +i(0.0440±0.0447)
+                  plaquette  in  thex-direction,  while  the  combinedYX                              forJ= 0.6, both without error mitigation.  A summary
+                  operation  moves  an  anyon  across  rows.   The  braiding                          of these results is given in Table2(a).
+                  operation, depicted in the bottom panel of Fig.12(a),
+                  consists of the purple gates, which effectively move thee                               For  thee–ψbraiding,  the  anyon  preparation  op-
+                  anyon at the top-left corner around the nearbymanyon.                               eration   is   shown   in   the   top   panel   of   Fig.12(b),
+                  The expected braiding phase isα em =−1.                                             and   the   braiding   operation   in   the   bottom   panel.
+                                                                                                      To  move  aψanyon  across  a  bond,  we  applyXX,
+                     We simulate the interferometry protocol both using                               YY,   orZZgate  depending  on  whether  the  bond
+                  PPS and the Quantinuum H2-2 quantum computer. For                                   belongs   toE  X, E Y ,   orE  Z,   respectively.      Thus,
+                  the fixed-point (J= 0) state, the PPS result yields the                             to   move   theψanyon   in   the   middle   around   the
+                  expectedα    em  =−1.   For  the  variational  states,  PPS                         nearbyeanyon  in  a  counterclockwise  path,  we  apply
+                  givesα  em  =−0.9501atJ= 0.3andα              em  =−0.8141                          (X  18X19)(Y   19Y20)(Z   20Z28)(X   27X28)(Y   26Y27)(Z   18Z26) =
+                  atJ=  0.6.   The  deviation  from  the  theoretical  value                          Y18X26Z27Y28X20Z19,  which is precisely the plaquette
+                  of−1likely arises from the finite correlation length of                             operatorW     p.    The  presence  of  aneanyon  on  that
+                  the state, as well as the fact that the state is only an                            plaquette makesW p =−1.
+
+
+                  Accepted in                2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                    14
+
+
+
+
+Quantum
+                    Indeed,  the PPS results forJ= 0,0.3,0.6all yield                          lattice, the Pauli Path-simulated circuit may even out-
+                 αeψ =−1.  On the Quantinuum device, we obtain                                 perform  density-matrix  renormalization  group  in  cer-
+                    αeψ = (−0.9160±0.0180) +i(−0.0960±0.0446)                                  tain  parameter  regimes,  albeit  with  caveats.   Finally,
+                                                                                               we validate and benchmark our approach on Quantin-
+                 forJ= 0.3, and                                                                uum H2-2 quantum computer [36] for the Kitaev hon-
+                                                                                               eycomb model.  For a system size ofN= 48qubits, the
+                      αeψ = (−0.9240±0.0171) +i(0.0760±0.0446)                                 prepared ground states achieve a relative energy error
+                                                                                               of roughly5%without any error mitigation.  Moreover,
+                 forJ=  0.6,  where  the  real  and  imaginary  parts  are                     the  extraction  of  braiding  statistics  confirms  that  the
+                 each estimated using500shots without error mitigation.                        prepared quantum states exhibit the expected topolog-
+                 These results are summarized in Table2(b).                                    ical properties.
+                    Lastly, them–ψbraiding follows a protocol very sim-                           Our  Pauli  Path-simulated  variational  quantum  al-
+                 ilar to thee–ψcase, with the anyon creation operation                         gorithm  offers  several  advantages  and  potentials  in
+                 shown  in  the  top  panel  of  Fig.12(c)  and  the  braid-                   both quantum computing application and classical al-
+                 ing  operation  in  the  bottom  panel.   As  before,  theψ                   gorithm.   First,  it  provides  a  systematic  approach  for
+                 braiding  effectively  acquires  a  phase  corresponding  to                  classically constructing parametrized circuits to approx-
+                 Wp  =−1,  and the PPS results forJ= 0,0.3,0.6all                              imately prepare the ground state of a system — a pre-
+                 yieldα    mψ =−1.  On the quantum device, we obtain                           requisite  for  executing  tasks  such  as  quench  dynam-
+                      αmψ = (−0.9360±0.0158) +i(0.0440±0.0447)                                 ics,  scattering  simulations  on  a  quantum  machine,  or
+                                                                                               probing  dynamical  responses.    While  certain  models
+                 forJ= 0.3and                                                                  have ground states that are exactly solvable (e.g.  the
+                                                                                               one-dimensional quantum Ising model and the Kitaev
+                      αmψ = (−0.9080±0.0188) +i(0.0600±0.0447)                                 honeycomb  model)  or  can  be  analyzed  using  classical
+                                                                                               numerical  methods  such  as  the  density-matrix  renor-
+                 forJ= 0.6, where the real and imaginary components                            malization  group  (e.g.   short-ranged  interacting  mod-
+                 are each estimated using500shots without error miti-                          els in 1D) or quantum Monte Carlo methods (e.g.  the
+                 gation.  These results are summarized in Table2(c).                           two-dimensional quantum Ising model), preparing these
+                    We remark that demonstrations of anyon braiding on                         states on a quantum machine can be challenging.  The
+                 quantum devices have so far primarily focused on fixed-                       preparation  procedure  is  not  always  straightforward,
+                 point models [37–41].  In contrast,  our results demon-                       and even when a method exists — such as when the clas-
+                 strate braiding statistics on ground states beyond the                        sical description of the wavefunction is a matrix-product
+                 fixed point, showing that the quantum states prepared                         state  [53, 54]  —  state  preparation  can  be  resource-
+                 with our variational circuit on the device exhibit the ex-                    intensive.  Our Pauli path-simulated variational quan-
+                 pected topological properties.  A summary of the braid-                       tum algorithm addresses these challenges by finding the
+                 ing phases is provided in Table2.                                             quantum circuit through classical computation,  which
+                                                                                               can then be executed on a quantum machine, as demon-
+                 7    Discussion                                                               strated in Sec.6.
+                                                                                                  Second,  our Pauli Path–simulated variational quan-
+                  In  this  work,  we  propose  using  Pauli  Path  simula-                    tum  algorithm  can  serve  as  a  novel  quantum-inspired
+                 tion for variational quantum algorithms in the task of                        classical   numerical   method   for   condensed   matter
+                 ground-state  preparation  at  the  utility  scale,  i.e.,  for               physics,  materials  science,  and  even  quantum  chem-
+                 system sizes at which generic quantum circuits are be-                        istry.    This  potential  has  already  been  hinted  at  by
+                 yond the reach of exact state-vector simulation.  To test                     its  successful  application  to  certain  quantum  machine
+                 this approach, we apply it to the quantum Ising model                         learning problems [23].  As demonstrated in this work,
+                 in one dimension, in two dimensions on both a square                          our method can approximate the ground states of var-
+                 lattice with periodic boundary conditions and a heavy-                        ious  models  with  very  small  relative  error,  particu-
+                 hex lattice with open boundary conditions,  as well as                        larly when the models possess a finite energy gap.  For
+                 to  the  Kitaev  honeycomb  model,  all  at  system  sizes                    the two-dimensional quantum Ising model on a heavy-
+                 of  one  hundred  qubits  or  more.   Across  all  test  cases,               hex  lattice,  our  Pauli  Path–based  variational  energy
+                 we benchmark Pauli Path simulation results against ei-                        may even outperform results obtained from the density-
+                 ther exact solutions or density-matrix renormalization                        matrix renormalization group,  using comparable com-
+                 group  results,  finding  remarkable  agreement  as  quan-                    putational effort for both methods, though with impor-
+                 tified  by  the  relative  energy  error  and  certain  observ-               tant caveats.
+                 ables.  For the 2D quantum Ising model on a heavy-hex                            However,  we  caution  that,  due  to  the  truncation
+
+
+                 Accepted in             2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                    15
+
+
+
+
+Quantum
+                scheme, the variational energy calculated from PPS may                     particularly well-suited for condensed matter problems.
+                fall below the true ground-state energy, which could be                    A natural extension would be to apply our method to
+                problematic when no other reliable classical benchmark                     adaptive ansatz constructions [63], which are often more
+                is available.  In such cases, examining the scaling of the                 appropriate for quantum chemistry and quantum ma-
+                trial  energy  as  a  function  of  the  truncation  threshold             chine learning applications.
+                can provide some confidence in the reliability of the re-                     Another important direction is applying and testing
+                sult.  Moreover, even if the PPS-computed trial energy                     our method on fermionic problems — an essential step
+                becomes formally unphysical, the optimized parameters                      toward  tackling  realistic  challenges  in  quantum  mate-
+                still define a valid trial wavefunction, which often per-                  rials  and  quantum  chemistry.   In  such  cases,  one  can
+                forms  well  in  practice.   Evaluating  the  optimized  cir-              employ various fermion-to-qubit encodings to map the
+                cuit  using  other  classical  simulation  methods,  such  as              fermionic Hamiltonian into a qubit Hamiltonian.  Map-
+                tensor-network  approaches,  or  even  executing  it  on  a                pings  such  as  the  Jordan–Wigner  transformation  can
+                quantum device can serve as an independent validation                      introduce long-range or multi-qubit interactions, which
+                of the variational energy.                                                 pose difficulties for classical numerical methods and for
+                   While the properties of quantum Ising models in any                     near-term  quantum  hardware.    These  complications,
+                dimension can be analyzed using quantum Monte Carlo,                       however,  are  largely  benign  for  the  Pauli  Path  simu-
+                our method extends to models where quantum Monte                           lation.
+                Carlo  encounters  difficulties,  most  notably  those  af-                   Improving the parameter update algorithm is another
+                flicted  by  the  sign  problem.    Moreover,  whereas  the                technical challenge worth to pursue.  In this work,  we
+                performance of density-matrix renormalization group is                     employed  SPSA  combined  with  ADAM.  While  SPSA
+                constrained by the amount of entanglement in the sys-                      has the advantage of requiring only two evaluations of
+                tem,  the Pauli Path method is instead limited by the                      the  cost  function  per  optimization  step,  its  stochastic
+                system’s  “magic,”  which  quantifies  its  degree  of  non-               nature limits the final accuracy.  This limitation can be
+                Clifford-ness.   Systems  whose  ground  states  are  both                 mitigated by lowering the learning rate and by averag-
+                highly entangled and sign-problematic, yet exhibit low                     ing the gradient estimates over multiple evaluations. Al-
+                magic, may therefore represent a regime where our Pauli                    though we did not systematically test the optimization
+                Path–simulated variational quantum algorithm outper-                       outcomes across many different random seeds, our lim-
+                forms existing classical approaches.                                       ited test cases suggest that different randomized initial
+                   Moreover,    the   Pauli   Path–simulated   variational                 parameters lead to consistent final results up to several
+                quantum  algorithm  is  inherently  quantum-hardware-                      significant digits.
+                friendly.  In parameter regimes where the Pauli Path-                         Exploring   alternative   optimization   algorithms   is
+                simulated parametrized circuit alone becomes challeng-                     therefore  warranted.   For  instance,  implementing  au-
+                ing, its results can be seamlessly transferred to a quan-                  tomatic differentiation could reduce the number of cost
+                tum  machine  to  initialize  and  execute  the  variational               function evaluations needed to compute gradients while
+                quantum algorithm.  In our Pauli Path–simulated opti-                      maintaining high accuracy. Another promising option is
+                mizations, we observe that using circuit parameters ob-                    the quantum natural gradient — a second-order deriva-
+                tained at nearby parameter points as a warm start sig-                     tive based optimization method that has been shown to
+                nificantly improves optimization efficiency.  This strat-                  have advantage over first-order derivative based meth-
+                egy  can,  in  principle,  be  applied  directly  on  quantum              ods such as gradient descent or ADAM [64]. Incorporat-
+                hardware: circuit parameters obtained in regimes where                     ing the quantum natural gradient (or an approximate
+                the Pauli Path simulation performs well can serve as a                     version of it) into our Pauli Path–simulated variational
+                warm start for the quantum-executed variational quan-                      algorithm would be an interesting direction for future
+                tum algorithm, potentially reducing quantum runtime                        work.
+                and enhancing the quality of the optimization results.                        Beyond  algorithmic  improvements,  our  method  has
+                   In  the  future,  we  expect  the  Pauli  Path–simulated                the  potential  to  raise  the  bar  for  claims  of  practical
+                variational quantum algorithm to be further improved                       quantum advantage in the domain of variational quan-
+                and applied to a wider range of problems.  One promis-                     tum algorithms.  As demonstrated in this work,  Pauli
+                ing avenue is ansatz design, which is a crucial compo-                     Path–simulated  results  can  achieve  very  low  relative
+                nent of the variational quantum algorithm framework.                       energy  errors  across  a  variety  of  quantum  many-body
+                Our  method  provides  a  computationally  inexpensive                     Hamiltonians.  To establish a genuine quantum advan-
+                way to explore different ans¨atze on a much larger system                  tage,  a  near-term  device  must  therefore  demonstrate
+                size without requiring access to actual quantum hard-                      that,  despite  the  presence  of  noise,  it  can  prepare  a
+                ware.  In this work, we adopted a parameterized circuit                    variational ground state with energy superior to what
+                based on the Hamiltonian variational ansatz, which is                      can be achieved classically.  At the same time, our re-
+
+
+                Accepted in             2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                    16
+
+
+
+
+Quantum
+                 sults highlight that systems with gapless energy spec-                        demonstrating practical quantum advantage.
+                 tra  pose  greater  challenges  for  Pauli  Path–simulated
+                 parametrized circuits.  Determining whether quantum-                             Acknowledgments
+                 executed variational algorithms can offer an advantage
+                 in such regimes is a worthwhile endeavor.                                     We thank the entire BlueQubit team for contributions
+                                                                                               to the BlueQubit SDK and, in particular, to the Pauli
+                                                                                               Path  Simulators  used  for  the  classical  simulations  in
+                    Finally,  even  when  ground  states  can  be  approxi-                    this  work.   We  are  grateful  to  the  Quantinuum  team
+                 mated accurately by classical methods, their dynamical                        – particularly its Startup Partner Program — for sus-
+                 responses  and  real-time  quantum  dynamics  are  often                      tained support and for facilitating access to the System
+                 far more difficult to simulate classically.  This suggests                    Model  H2  trapped-ion  processor.   We  also  thank  Sid-
+                 a  promising  hybrid  use  case:  preparing  ground  states                   dharth  Hariprakash  and  Zuhair  Mullath  for  valuable
+                 via  the  PPS  variational  method,  and  then  leveraging                    discussions  and  feedback.   C.-J.  Lin  acknowledges  the
+                 quantum hardware to simulate the subsequent dynam-                            support from the National Science Foundation (QLCI
+                 ics.  Such scenarios could provide a realistic pathway to                     grant OMA-2120757).
+
+                 A    Parameter update algorithm
+
+                 In this appendix, we describe the optimization algorithm used for updating the variational parameters.  Our ap-
+                 proach combines a modified Simultaneous Perturbation Stochastic Approximation (SPSA) with the Adaptive Mo-
+                 ment Estimation (ADAM) algorithm.
+                    Denote the variational parameters byθ= (θ       1,···,θ p)and the cost function byC(θ).  In the variational opti-
+                 mization framework, the most basic parameter update strategy is gradient descent, which updates parameters using
+                 the gradient of the cost function
+                                                                             θi+1  =θ i−η∇C(θ      i),                                                                 (18)
+                 whereθ     i represents the parameters at thei-th iteration, andηis the learning rate hyperparameter, which we tune
+                 according to the problem, with a typical valueη= 0.001.  However, computing the full gradient∇C(θ)can become
+                 prohibitively expensive when the number of parameterspis large.  For example, using the finite difference method
+                 to approximate the gradient requires evaluating each component as[C(θ+ ∆     ℓ)−C(θ−∆       ℓ)]/(2∆  ℓ), where∆      ℓ is a
+                 small perturbation in theℓ-th component ofθ.  This would require2pevaluations of the cost function per iteration,
+                 which is computationally intensive for high-dimensional parameter spaces.
+                    SPSA alleviates this challenge by approximating the gradient using only two evaluations of the cost function,
+                 regardless of the number of parameters.
+
+                                                              ∇C(θ)≈     C(θ+∆)−C(θ−∆)  2∆         ∆:=G(θ),                                               (19)
+
+                 where∆=  (∆                1,···,∆  p)is  a  randomly  chosen  perturbation  vector  in  parameter  space,  and∆  =∥∆∥                   2  :=
+                 √∑p                                                                                                              ,  which  can  be  tuned
+                       ℓ=1  ∆2ℓ  is  its  Euclidean  norm.   In  practice,  we  default  the  hyperparameter∆  =  0.005
+                 depending on the problem.  To generate∆, we first draw a random vectorχ= (χ                                   1,...,χp)with each component
+                 χℓ  sampled uniformly from the interval[−1,1].  We then normalize this vector and scale it to the desired norm
+                 ∆= ∆      χ∥χ∥      2 .  The parameter update rule becomes
+
+                                                                               θi+1  =θ i−ηG(θ).                                                                   (20)
+
+                    Note  that  in  the  standard  SPSA  [30],  each  component∆   ℓ  of  the  perturbation  vector∆is  typically  drawn
+                 independently  from  a  symmetric  binary  distribution,  taking  values±1with  equal  probability.   This  results  in
+                 perturbations  restricted  to  one  of2  p  discrete  directions  in  parameter  space.   In  contrast,  our  approach  allows
+                 perturbations in arbitrary directions by sampling from a continuous uniform distribution, which we found leads to
+                 smoother behavior of the optimization and improved stability across iterations.
+                    In both gradient descent and SPSA, using a fixed learning rate has a drawback:  if the learning rate is too small,
+                 convergence  can  be  slow,  requiring  many  iterations  to  reach  the  minimum;  if  it  is  too  large,  the  updates  may
+                 overshoot the minimum,  especially when the parameters are close to optimal.  Although learning rate schedules
+                 —  where  the  learning  rate  is  adjusted  as  a  function  of  the  iteration  number  —  can  help  mitigate  these  issues,
+
+
+                 Accepted in             2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                    17
+
+
+
+
+Quantum
+                  Figure 13:  The qubit ordering used in the DMRG calculation for (a) square lattice and (b) heavy hex lattice.  The arrows indicate
+                  the ordering.  For the square lattice, we consider the system sizeN       x =N   y = 10, orN= 100qubits.  For the heavy hex lattice, we
+                  haveN= 127qubits.
+
+
+                  the ADAM optimizer offers a significant improvement by adaptively tuning the learning rate for each individual
+                  variational parameter based on the cost function history.
+                     This is achieved by introducing the “momentum”m= (m                1,···,m p)and the “velocity”v= (v           1,···,v p)of the
+                  parameters, both initialized to zero.  These quantities are updated at each iteration according to the updating rules
+
+                                                                        mi+1  =β   1mi + (1−β       1)∇C(θ    i)                                                              (21)
+                                                                         vi+1  =β   2vi + (1−β       2)[∇C(θ     i)]⊙2  ,                                                      (22)
+
+                  where(v)    ⊙2   := (v  21,v22,···,v   2p)denotes element-wise squaring, and(β           1,β2) = (0.9,0.999)are the hyperparameters.
+                  To correct the initialization bias, one applies the following modifications
+
+                                                                                ˜mi+1  =m i+1 /(1−β    i+11    )                                                                 (23)
+                                                                                 ˜vi+1  =v i+1 /(1−β    i+12    ).                                                               (24)
+
+                  The parameters are then updated as
+                                                                           θi+1  =θ i−η    ˜mi+1 /(  ˜v⊙0.5i+1   +ϵ),                                                          (25)
+                  wherev   ⊙0.5       =  (√v1,···, √vp)is  the  element-wise  square  root,  and  all  operations  (division  and  addition)  are
+                  element-wise.  The small hyperparameterϵ= 10       −5    is introduced to avoid division by zero.  To combine SPSA with
+                  ADAM, we replace∇C(θ)in Eqs. (21) and (22) with the SPSA-estimated gradientG(θ)defined in Eq. (19).
+
+                  B    Snake-ordering in DMRG
+
+                  In the DMRG calculations, we use snake-ordering to map the two-dimensional problem onto a one-dimensional chain
+                  with long-range interactions.  The qubit orderings for the square lattice and the heavy-hex lattice are illustrated in
+                  Fig.13(a) and (b), respectively.  For the square lattice with periodic boundary conditions, we consider a system
+                  ofN= 100qubits,  while for the heavy-hex lattice with open boundary conditions,  we useN= 127qubits.  In
+                  both cases, the bond dimension is set toχ= 500.  While the DMRG trial energy could potentially be improved by
+                  increasing the bond dimension or by exploring alternative qubit orderings, we believe our results are representative
+                  of what non-experts can reasonably achieve using the ITensor library [33] without extensive DMRG tuning.
+
+                  C    Quantum circuit for flux-free state preparation
+
+                  In  this  appendix,  we  describe  the  quantum  circuitV             f.f.  used  for  to  prepare  the  flux-free  state.   Our  goal  is  to
+                  construct a state in which the plaquette operators satisfyW     P  = 1, and allz-type bonds satisfyZ     iZj  = +1.  This
+
+
+                  Accepted in               2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                    18
+
+
+
+
+Quantum
+                   Figure 14:   By projecting the qubits on thez-bondsE                Z  onto effective qubits (| ¯0⟩=|00⟩and|                 ¯1⟩=|11⟩), the honeycomb lattice
+                   is  mapped  onto  a  rotated  square  lattice.   The  plaquette  operator  in  the  honeycomb  modelW     P  becomes  the  effective  plaquette
+                   operator   W P ,  as shown in the inset.  They can be further transformed by the basis transformationU    †b                        W PUb =  ˜WP  to the more
+                   familiar toric-code stabilizers, where  ˜WP  =  ¯X ¯X ¯X ¯Xfor the red plaquettes and     ˜WP  =  ¯Z ¯Z ¯Z ¯Zfor the blue plaquettes.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   Figure 15:   The basis transformationU    b  that maps the plaquette operators                    W P  into the more familiar toric-code plaquettes  ˜WP .
+                   The circuit is operated by first applying the phase gatesS   † =|0⟩⟨0|−i|1⟩⟨1|on all the qubits, and then applying the Hadamard
+                   gates on the qubits as indicated.
+
+
+                   state  corresponds  to  a  ground  state  of  the  Kitaev  honeycomb  model  with(J    x,Jy,Jz)  =  (0,0,1)in  the  flux-free
+                   sector.  Notably, the quantum circuit for this state can be derived from the ground-state preparation of the toric
+                   code, as we explain below.
+
+                   C.1    Mapping to a toric-code ground state
+                   The  mapping  is  achieved  by  treating  the  two  states  satisfyingZ        iZj  =  +1on  thez-bonds  as  an  effective  qubit.
+                   Specifically, we define|         ¯0⟩=|00⟩and|                  ¯1⟩=|11⟩.  (We use the overline to denote the effective qubit and its operators.
+                   ) By replacing thez-type bonds on the honeycomb lattice with effective qubits, the system maps onto a (45   ◦-rotated)
+                   square lattice, as shown in Fig.14.  Projecting the plaquette operatorW          P  into this effective-qubit subspace, we find
+                   XY|00⟩=|11⟩andXY|11⟩=|00⟩, meaning that the operatorXYon thez-bonds corresponds to a                                                            ¯Yoperator
+                   on the effective qubit.  It is also straightforward to verify that theZoperator inW      P  is an effective  ¯Zoperator.
+                   Therefore,  in terms of effective qubits,                 WP  =  ¯Y  ¯Z ¯Y  ¯Zas depicted in Fig.14.  These plaquette operators can be
+                   further transformed into a more familiar toric-code form via a unitary transformationU            b  on the effective qubits
+                   depicted in Fig.15, such that            ˜WP  =U †b      WPUb , where  ˜WP  =  ¯X ¯X ¯X ¯Xfor the red plaquettes and     ˜WP  =  ¯Z ¯Z ¯Z ¯Zfor
+                   the blue plaquettes.
+
+
+                   Accepted in                2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                    19
+
+
+
+
+Quantum
+                 Figure 16:   The quantum circuitU               toric prepares the toric-code ground state in which all plaquette operators satisfy  ˜WP  = +1.  The
+                 operation proceeds row by row:  starting from the first row to the second-to-last row, apply a Hadamard gateHto the controlled
+                 qubits located at the bottom of each plaquette, followed by CNOT gates with the target qubits on the left, above, and then right.
+                 For the last row, the procedure runs from the left-most plaquette to the second-to-last plaquette.  Apply a Hadamard gate to the
+                 right qubit of the plaquette, followed by CNOT gates with target qubits above, to the left, and then bottom.
+
+
+                 C.2    Preparation of the Toric-code state on periodic boundary conditions
+
+                 To  prepare  the  toric-code  state  in  which  all  blue  plaquettes  satisfy   ˜WP  =ZZZZ=  +1,  and  all  red  plaquettes
+                 satisfy  ˜WP  =XXXX= +1, we use the circuitU                          toric as shown in Fig.16.  The circuit consists of Hadamard gates
+                 gates applied to the control qubits located at the bottom of each plaquette, followed by CNOT gates targeting the
+                 qubits to the left,  above,  and to the right of the plaquette.  This sequence is applied row by row,  from the first
+                 row up to the second-to-last row.  For the last row,  the procedure is applied from the leftmost plaquette to the
+                 second-to-last plaquette:  a Hadamard gate is applied to the control qubit on the right of the plaquette, followed by
+                 CNOT gates targeting the qubits above, to the left, and below.
+                    To understand why this circuit prepares the toric code state, it is helpful to analyze it in the Heisenberg picture,
+                 or equivalently, using the stabilizer formalism.  The initial state|0⟩    ⊗n    is stabilized by the generatorsZ         j = +1.  The
+                 Hadamard gate transforms the stabilizer according toHZH=X, converting aZstabilizer into anXstabilizer.
+                 The CNOT gate “spreads” stabilizers as CNOT12X1CNOT12 =X   1X2.  Therefore, the action on a plaquette is to
+                 turn the control qubit’s stabilizer intoX, while the CNOT gates extend this stabilizer into the four-qubit operator
+
+
+                 Accepted in               2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                    20
+
+
+
+
+Quantum
+                 XXXXon the corresponding plaquette.  The Z-type plaquettes are generated similarly through the “spreading”
+                 effect of CNOT gates on Z operators, since CNOT12Z2CNOT12 =Z   1Z2.
+
+                 C.3    Quantum gates on the effective qubits
+                 To translate the Toric-code state preparation circuit to the preparation of the flux-free state, we simply replace all
+                 gates inU    toric with the corresponding gates acting on the effective qubit degrees of freedom.  These effective gates
+                 can be realized on the physical qubits as follows.
+                    First, the effective Hadamard gate can be realized as
+                                                                            ¯H=CNOT       12H1CNOT12 ,                                                              (26)
+
+                 which can be verified by its action on the effective qubit basis states
+
+                                                ¯H|   ¯0⟩=CNOT       12H1CNOT12|00⟩=         1√                         √
+                                                                                                  2(|00⟩+|11⟩) =                   12(| ¯0⟩+|      ¯1⟩)
+                                                ¯H|   ¯1⟩=CNOT       12H1CNOT12|11⟩=         1√                         √
+                                                                                                  2(|00⟩−|11⟩) =               12(| ¯0⟩−|  ¯1⟩).
+                 The effectiveSgate is simply                                         ¯S=S      1 .                                                                            (27)
+
+
+                 Finally, using the convention where qubits 1 and 2 form the first (control) effective qubit and qubits 3 and 4 form
+                 the second (target) effective qubit, the effective CNOT gate can be realized as
+
+                                                                   CNOT¯1¯2 =CNOT   34CNOT23CNOT34 .                                                    (28)
+
+                 C.4    Preparation of the flux-free state
+                 The preparation of the flux-free state is therefore given byV   f.f  =U †bUtoric,  whereU     b  andU       toric  are described in
+                 AppendicesC.1andC.2(or Figs.15and16), repectively, with the gates replaced by the effective gates described
+                 in AppendixC.3.  Note thatV                     f.f consists entirely of Clifford gates with a circuit depth that scales linearly with the
+                 system sizeN x +N y.
+                    Although  not  shown  explicitly  in  this  appendix,  a  similar  strategy  can  be  applied  to  prepare  the  flux-free
+                 state  with  open  boundary  conditions.   In  this  case,  the  problem  is  first  mapped  onto  a  toric-code  ground  state
+                 preparation on the effective qubit degrees of freedom with open boundary conditions, where some effective qubits
+                 on the boundary coincide with physical qubits.  The toric-code ground state preparation circuitU             toric can then be
+                 constructed from, say Ref. [37].  After applying the basis transformation with the effective gatesU     †b , one obtains
+                 the quantum circuit to construct flux-free states on open boundary conditions, such as the ones shown in Ref. [65].
+                    References                                                                         S. Huang, M. W. Johnson, S. Kortas, E. Ladizin-
+                                                                                                       sky,  T.  Lanting,  T.  Lai,  R.  Li,  A.  J.  R.  Mac-
+                  [1]J. Preskill, Quantum Computing in the NISQ era                                    Donald, G. Marsden, C. C. McGeoch, R. Molavi,
+                       and beyond,Quantum2, 79 (2018).                                                 T.  Oh,  R.  Neufeld,  M.  Norouzpour,  J.  Pasvol-
+                  [2]Y. Kim, A. Eddins, S. Anand, K. X. Wei, E. van                                    sky,  P.  Poitras,  G.  Poulin-Lamarre,  T.  Prescott,
+                       den Berg, S. Rosenblatt, H. Nayfeh, Y. Wu, M. Za-                               M.   Reis,   C.   Rich,   M.   Samani,   B.   Sheldan,
+                       letel, K. Temme, and A. Kandala, Evidence for the                               A.   Smirnov,   E.   Sterpka,   B.   Trullas   Clavera,
+                       utility  of  quantum  computing  before  fault  toler-                          N.  Tsai,  M.  Volkmann,  A.  M.  Whiticar,  J.  D.
+                       ance,Nature618, 500 (2023).                                                     Whittaker, W. Wilkinson, J. Yao, T. J. Yi, A. W.
+                  [3]A.  D.  King,  A.  Nocera,  M.  M.  Rams,  J.  Dziar-                             Sandvik, G. Alvarez, R. G. Melko, J. Carrasquilla,
+                       maga,   R.   Wiersema,   W.   Bernoudy,   J.   Ray-                             M. Franz, and M. H. Amin, Beyond-classical com-
+                       mond,   N.   Kaushal,   N.   Heinsdorf,   R.   Harris,                          putation in quantum simulation,Science388, 199
+                       K.   Boothby,   F.   Altomare,   M.   Asad,   A.   J.                           (2025).
+                       Berkley,  M.  Boschnak,  K.  Chern,  H.  Christiani,                       [4]R. Haghshenas, E. Chertkov, M. Mills, W. Kadow,
+                       S. Cibere, J. Connor, M. H. Dehn, R. Deshpande,                                 S.-H.   Lin,   Y.-H.   Chen,   C.   Cade,   I.   Niesen,
+                       S.  Ejtemaee,  P.  Farre,  K.  Hamer,  E.  Hoskinson,                           T. Beguˇsi´c, M. S. Rudolph, C. Cirstoiu, K. Hemery,
+
+
+                 Accepted in              2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                    21
+
+
+
+
+Quantum
+                      C. M. Keever, M. Lubasch, E. Granet, C. H. Bald-                             Sparse Pauli Dynamics,PRX Quantum6, 020302
+                      win,  J. P. Bartolotta,  M. Bohn,  J. Cline,  M. De-                         (2025).
+                      Cross, J. M. Dreiling, C. Foltz, D. Francois, J. P.                    [15]T. Beguˇsi´c, J. Gray, and G. K.-L. Chan, Fast and
+                      Gaebler, C. N. Gilbreth, J. Gray, D. Gresh, A. Hall,                         converged classical simulations of evidence for the
+                      A. Hankin,  A. Hansen,  N. Hewitt,  R. B. Hutson,                            utility  of  quantum  computing  before  fault  toler-
+                      M.  Iqbal,  N.  Kotibhaskar,  E.  Lehman,  D.  Luc-                          ance,Sci. Adv.10, eadk4321 (2024).
+                      chetti,  I.  S.  Madjarov,  K.  Mayer,  A.  R.  Milne,                 [16]T.  Schuster,  C.  Yin,  X.  Gao,  and  N.  Y.  Yao,  A
+                      S.  A.  Moses,  B.  Neyenhuis,  G.  Park,  B.  Pon-                          polynomial-time classical algorithm for noisy quan-
+                      sioen, M. Schecter, P. E. Siegfried, D. T. Stephen,                          tum circuits,arXiv:2407.12768(2024).
+                      B.  G.  Tiemann,  M.  D.  Urmey,  J.  Walker,  A.  C.                  [17]H.  Gharibyan,  S.  Hariprakash,  M.  Z.  Mullath,
+                      Potter,  D.  Hayes,  G.  K.-L.  Chan,  F.  Pollmann,                         and  V.  P.  Su,  A  Practical  Guide  to  using  Pauli
+                      M.  Knap,  H.  Dreyer,  and  M.  Foss-Feig,  Digital                         Path Simulators for Utility-Scale Quantum Exper-
+                      quantum magnetism at the frontier of classical sim-                          iments,arXiv:2507.10771(2025).
+                      ulations,arXiv:2503.20870(2025).                                       [18]M. S. Rudolph,  T. Jones,  Y. Teng,  A. Angrisani,
+                  [5]R. C. Farrell, M. Illa, A. N. Ciavarella, and M. J.                           and  Z.  Holmes,  Pauli  Propagation:  A  Computa-
+                      Savage, Quantum simulations of hadron dynamics                               tional  Framework  for  Simulating  Quantum  Sys-
+                      in  the  Schwinger  model  using  112  qubits,Phys.                          tems,arXiv:2505.21606(2025).
+                      Rev. D109, 114510 (2024).                                              [19]D.  Aharonov,  X.  Gao,  Z.  Landau,  Y.  Liu,  and
+                  [6]R.  C.  Farrell,   N.  A.  Zemlevskiy,   M.  Illa,  and                       U.  Vazirani,  A  Polynomial-Time  Classical  Algo-
+                      J.  Preskill,  Digital  quantum  simulations  of  scat-                      rithm for Noisy Random Circuit Sampling, inPro-
+                      tering  in  quantum  field  theories  using  W  states,                      ceedings  of  the  55th  Annual  ACM  Symposium  on
+                      arXiv:2505.03111(2025).                                                      Theory of Computing, STOC 2023 (Association for
+                  [7]A. Peruzzo, J. McClean, P. Shadbolt, M.-H. Yung,                              Computing Machinery, New York, NY, USA, 2023)
+                      X.-Q. Zhou, P. J. Love, A. Aspuru-Guzik, and J. L.                           pp. 945–957.
+                      O’Brien, A variational eigenvalue solver on a pho-                     [20]E. Fontana, M. S. Rudolph, R. Duncan, I. Rung-
+                      tonic  quantum  processor,Nat  Commun5,  4213                                ger, and C. Cırstoiu, Classical simulations of noisy
+                      (2014).                                                                      variational quantum circuits,arXiv:2306.05400.
+                  [8]J.  R.  McClean,   J.  Romero,   R.  Babbush,  and                      [21]A.   Angrisani,   A.   A.   Mele,   M.   S.   Rudolph,
+                      A.  Aspuru-Guzik,  The  theory  of  variational  hy-                         M.  Cerezo,  and  Z.  Holmes,  Simulating  quantum
+                      brid  quantum-classical  algorithms,New  J.  Phys.                           circuits with arbitrary local noise using Pauli Prop-
+                      18, 023023 (2016).                                                           agation,arXiv:2501.13101(2025).
+                  [9]J.  Tilly,  H.  Chen,  S.  Cao,  D.  Picozzi,  K.  Setia,               [22]A.  Angrisani,  A.  Schmidhuber,  M.  S.  Rudolph,
+                      Y.  Li,  E.  Grant,  L.  Wossnig,  I.  Rungger,  G.  H.                      M.  Cerezo,  Z.  Holmes,  and  H.-Y.  Huang,  Classi-
+                      Booth,  and  J.  Tennyson,  The  Variational  Quan-                          cally estimating observables of noiseless quantum
+                      tum  Eigensolver:   A  review  of  methods  and  best                        circuits,arXiv:2409.01706(2025).
+                      practices,Physics Reports986, 1 (2022).                                [23]P. Bermejo, P. Braccia, M. S. Rudolph, Z. Holmes,
+                [10]J.  Huang,  W.  He,  Y.  Zhang,  Y.  Wu,  B.  Wu,                              L. Cincio, and M. Cerezo, Quantum Convolutional
+                      and  X.  Yuan,  Tensor-network-assisted  variational                         Neural Networks are (Effectively) Classically Sim-
+                      quantum  algorithm,Phys.  Rev.  A108,  052407                                ulable,arXiv:2408.12739(2024).
+                      (2023).
+                [11]S.   Lerch,   R.   Puig,   M.   S.   Rudolph,   A.   An-                 [24]A. Kitaev, Anyons in an exactly solved model and
+                      grisani,  T.  Jones,  M.  Cerezo,  S.  Thanasilp,  and                       beyond,Ann. Phys.321, 2 (2006).
+                      Z.  Holmes,  Efficient  quantum-enhanced  classical                    [25]D.   Wecker,   M.   B.   Hastings,   and   M.   Troyer,
+                      simulation  for  patches  of  quantum  landscapes,                           Progress towards practical quantum variational al-
+                      arXiv:2411.19896(2024).                                                      gorithms,Phys. Rev. A92, 042303 (2015).
+                [12]C. Mc Keever and M. Lubasch, Towards Adiabatic                           [26]W.  W.  Ho  and  T.  H.  Hsieh,  Efficient  variational
+                      Quantum Computing Using Compressed Quantum                                   simulation  of  non-trivial  quantum  states,SciPost
+                      Circuits,PRX Quantum5, 020362 (2024).                                        Phys.6, 029 (2019).
+                [13]Z.-L. Li and S.-X. Zhang, The Dual Role of Low-                          [27]R. Wiersema, C. Zhou, Y. De Sereville, J. F. Car-
+                      Weight  Pauli  Propagation:   A  Flawed  Simulator                           rasquilla, Y. B. Kim, and H. Yuen, Exploring En-
+                      but a Powerful Initializer for Variational Quantum                           tanglement and Optimization within the Hamilto-
+                      Algorithms,arXiv:2508.06358(2025).                                           nian Variational Ansatz,PRX Quantum1, 020319
+                [14]T.  Beguˇsi´c  and  G.  K.-L.  Chan,  Real-Time  Oper-                         (2020).
+                      ator Evolution in Two and Three Dimensions via                         [28]C.-Y.  Park,  Efficient  ground  state  preparation  in
+
+
+                Accepted in             2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                    22
+
+
+
+
+Quantum
+                      variational  quantum  eigensolver  with  symmetry-                           Path-Independent Anyonic Braiding on a Modular
+                      breaking layers,APL Quantum1, 016101 (2024).                                 Superconducting  Quantum  Processor,Phys.  Rev.
+                [29]C.-Y.  Park  and  N.  Killoran,  Hamiltonian  varia-                           Lett.132, 020601 (2024).
+                      tional  ansatz  without  barren  plateaus,Quantum                      [39]M. Iqbal,  N. Tantivasadakarn,  T. M. Gatterman,
+                      8, 1239 (2024).                                                              J.  A.  Gerber,  K.  Gilmore,  D.  Gresh,  A.  Hankin,
+                [30]J. C. Spall,Introduction  to  Stochastic  Search  and                          N.  Hewitt,  C.  V.  Horst,  M.  Matheny,  T.  Men-
+                      Optimization:   Estimation,  Simulation,  and  Con-                          gle,  B.  Neyenhuis,  A.  Vishwanath,  M.  Foss-Feig,
+                      trol, 1st ed. (Wiley, 2003).                                                 R. Verresen, and H. Dreyer, Topological order from
+                [31]D.  P.  Kingma  and  J.  Ba,  Adam:   A  Method  for                           measurements and feed-forward on a trapped ion
+                      Stochastic Optimization,arXiv:1412.6980(2017).                               quantum computer,Commun Phys7, 205 (2024).
+                [32]S. R. White, Density matrix formulation for quan-                        [40]M.  Iqbal,  N.  Tantivasadakarn,  R.  Verresen,  S.  L.
+                      tum renormalization groups,Phys. Rev. Lett.69,                               Campbell, J. M. Dreiling, C. Figgatt, J. P. Gaebler,
+                      2863 (1992).                                                                 J.  Johansen,  M.  Mills,  S.  A.  Moses,  J.  M.  Pino,
+                [33]M. Fishman, S. R. White, and E. M. Stoudenmire,                                A.  Ransford,  M.  Rowe,  P.  Siegfried,  R.  P.  Stutz,
+                      The itensor software library for tensor network cal-                         M. Foss-Feig, A. Vishwanath, and H. Dreyer, Non-
+                      culations,SciPost Phys. Codebases , 4 (2022).                                Abelian topological order and anyons on a trapped-
+                [34]A.  Kitaev  and  J.  Preskill,  Topological  Entangle-                         ion processor,Nature626, 505 (2024).
+                      ment Entropy,Phys. Rev. Lett.96, 110404 (2006).                        [41]Z.  K.  Minev,  K.  Najafi,  S.  Majumder,  J.  Wang,
+                [35]M.  Levin  and  X.-G.  Wen,  Detecting  Topological                            A. Stern, E.-A. Kim, C.-M. Jian, and G. Zhu, Re-
+                      Order  in  a  Ground  State  Wave  Function,Phys.                            alizing  string-net  condensation:   Fibonacci  anyon
+                      Rev. Lett.96, 110405 (2006).                                                 braiding  for  universal  gates  and  sampling  chro-
+                [36]Quantinuum    H2-2, https://www.quantinuum.                                    matic polynomials,Nat Commun16, 6225 (2025).
+                      com/, accessed July 17–September 29, 2025.                             [42]G. Delfino and G. Mussardo, The spin-spin corre-
+                [37]K.  J.  Satzinger,  Y.-J.  Liu,  A.  Smith,  C.  Knapp,                        lation function in the two-dimensional Ising model
+                      M.  Newman,  C.  Jones,  Z.  Chen,  C.  Quintana,                            in a magnetic field at T = Tc,Nuclear Physics B
+                      X.  Mi,   A.  Dunsworth,   C.  Gidney,   I.  Aleiner,                        455, 724 (1995).
+                      F.   Arute,   K.   Arya,   J.   Atalaya,   R.   Babbush,               [43]P. Fonseca and A. Zamolodchikov, Ising field the-
+                      J.  C.  Bardin,  R.  Barends,  J.  Basso,  A.  Bengts-                       ory in a magnetic field:  Analytic properties of the
+                      son,  A.  Bilmes,  M.  Broughton,  B.  B.  Buckley,                          free energy,arXiv:hep-th/0112167(2001).
+                      D.  A.  Buell,  B.  Burkett,  N.  Bushnell,  B.  Chiaro,               [44]M. Van Damme, L. Vanderstraeten, J. De Nardis,
+                      R. Collins, W. Courtney, S. Demura, A. R. Derk,                              J. Haegeman, and F. Verstraete, Real-time scatter-
+                      D. Eppens, C. Erickson, L. Faoro, E. Farhi, A. G.                            ing  of  interacting  quasiparticles  in  quantum  spin
+                      Fowler,  B.  Foxen,  M.  Giustina,  A.  Greene,  J.  A.                      chains,Phys. Rev. Research3, 013078 (2021).
+                      Gross, M. P. Harrigan, S. D. Harrington, J. Hilton,                    [45]A. Milsted, J. Liu, J. Preskill, and G. Vidal, Colli-
+                      S. Hong, T. Huang, W. J. Huggins, L. B. Ioffe, S. V.                         sions of False-Vacuum Bubble Walls in a Quantum
+                      Isakov, E. Jeffrey, Z. Jiang, D. Kafri, K. Kechedzhi,                        Spin Chain,PRX Quantum3, 020316 (2022).
+                      T.  Khattar,  S.  Kim,  P.  V.  Klimov,  A.  N.  Ko-                   [46]R.  G.  Jha,  A.  Milsted,  D.  Neuenfeld,  J.  Preskill,
+                      rotkov,   F.  Kostritsa,   D.  Landhuis,   P.  Laptev,                       and   P.   Vieira,   Real-Time   Scattering   in   Ising
+                      A. Locharla, E. Lucero, O. Martin, J. R. McClean,                            Field   Theory   using   Matrix   Product   States,
+                      M.  McEwen,  K.  C.  Miao,  M.  Mohseni,  S.  Mon-                           arXiv:2411.13645(2024).
+                      tazeri,  W.  Mruczkiewicz,  J.  Mutus,  O.  Naaman,                    [47]E. R. Bennewitz, B. Ware, A. Schuckert, A. Lerose,
+                      M.  Neeley,  C.  Neill,  M.  Y.  Niu,  T.  E.  O’Brien,                      F. M. Surace, R. Belyansky, W. Morong, D. Luo,
+                      A. Opremcak, B. Pat´o, A. Petukhov, N. C. Rubin,                             A.   De,   K.   S.   Collins,   O.   Katz,   C.   Monroe,
+                      D. Sank, V. Shvarts, D. Strain, M. Szalay, B. Villa-                         Z. Davoudi, and A. V. Gorshkov, Simulating Meson
+                      longa, T. C. White, Z. Yao, P. Yeh, J. Yoo, A. Zal-                          Scattering on Spin Quantum Simulators,Quantum
+                      cman, H. Neven, S. Boixo, A. Megrant, Y. Chen,                               9, 1773 (2025).
+                      J.  Kelly,  V.  Smelyanskiy,  A.  Kitaev,  M.  Knap,                   [48]M.  C.  Ba˜nuls,  J.  I.  Cirac,  and  M.  B.  Hastings,
+                      F. Pollmann, and P. Roushan, Realizing topologi-                             Strong and Weak Thermalization of Infinite Nonin-
+                      cally ordered states on a quantum processor,Sci-                             tegrable Quantum Systems,Phys. Rev. Lett.106,
+                      ence374, 1237 (2021).                                                        050405 (2011).
+                [38]J. Niu, Y. Li, L. Zhang, J. Zhang, J. Chu, J. Huang,                     [49]M.  Kormos,  M.  Collura,  G.  Tak´acs,  and  P.  Cal-
+                      W. Huang, L. Nie, J. Qiu, X. Sun, Z. Tao, W. Wei,                            abrese, Real-time confinement following a quantum
+                      J.  Zhang,  Y.  Zhou,  Y.  Chen,  L.  Hu,  Y.  Liu,                          quench to a non-integrable model,Nature Phys13,
+                      S. Liu, Y. Zhong, D. Lu, and D. Yu, Demonstrating                            246 (2017).
+
+
+                Accepted in              2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                    23
+
+
+
+
+Quantum
+                [50]C.-J. Lin and O. I. Motrunich, Quasiparticle Expla-                      [63]H. R. Grimsley,  S. E. Economou,  E. Barnes, and
+                      nation of the Weak-Thermalization Regime under                               N. J. Mayhall, An adaptive variational algorithm
+                      Quench in a Nonintegrable Quantum Spin Chain,                                for exact molecular simulations on a quantum com-
+                      Phys. Rev. A95, 023621 (2017).                                               puter,Nat Commun10, 3007 (2019).
+                [51]C.-J. Lin and O. I. Motrunich, Explicit construc-                        [64]D.  Wierichs,   C.  Gogolin,  and  M.  Kastoryano,
+                      tion of quasiconserved local operator of translation-                        Avoiding  local  minima  in  variational  quantum
+                      ally invariant nonintegrable quantum spin chain in                           eigensolvers  with  the  natural  gradient  optimizer,
+                      prethermalization,Phys. Rev. B96, 214301 (2017).                             Phys. Rev. Res.2, 043246 (2020).
+                [52]E.  Lieb,  T.  Schultz,  and  D.  Mattis,  Two  soluble                  [65]M. Will,  T. A. Cochran,  E. Rosenberg,  B. Jobst,
+                      models  of  an  antiferromagnetic  chain,Annals  of                          N. M. Eassa, P. Roushan, M. Knap, A. Gammon-
+                      Physics16, 407 (1961).                                                       Smith, and F. Pollmann, Probing non-equilibrium
+                [53]C.  Sch¨on,  E.  Solano,  F.  Verstraete,  J.  I.  Cirac,                      topological order on a quantum processor,Nature
+                      and M. M. Wolf, Sequential Generation of Entan-                              645, 348 (2025).
+                      gled Multiqubit States,Phys. Rev. Lett.95, 110503
+                      (2005).
+                [54]D. Malz,  G. Styliaris,  Z.-Y. Wei, and J. I. Cirac,
+                      Preparation  of  Matrix  Product  States  with  Log-
+                      Depth  Quantum  Circuits,Phys.  Rev.  Lett.132,
+                      040404 (2024).
+                [55]H.  Rieger  and  N.  Kawashima,  Application  of  a
+                      continuous  time  cluster  algorithm  to  the  two-
+                      dimensional  random  quantum  Ising  ferromagnet,
+                      Eur. Phys. J. B9, 233 (1999).
+                [56]X. Xiao,  J.  K. Freericks,  and A.  F. Kemper,  De-
+                      termining quantum phase diagrams of topological
+                      Kitaev-inspired  models  on  NISQ  quantum  hard-
+                      ware,Quantum5, 553 (2021).
+                [57]T. A. Bespalova and O. Kyriienko, Quantum sim-
+                      ulation and ground state preparation for the hon-
+                      eycomb Kitaev model,arXiv:2109.13883(2021).
+                [58]A.  Jahin,  A.  C.  Y.  Li,  T.  Iadecola,  P.  P.  Orth,
+                      G. N. Perdue, A. Macridin, M. S. Alam, and N. M.
+                      Tubman, Fermionic approach to variational quan-
+                      tum simulation of Kitaev spin models,Phys. Rev.
+                      A106, 022434 (2022).
+                [59]A.  C.  Y.  Li,  M.  S.  Alam,  T.  Iadecola,  A.  Jahin,
+                      J. Job, D. M. Kurkcuoglu, R. Li, P. P. Orth, A. B.¨Ozg¨uler, G. N. Perdue, and N. M. Tubman, Bench-
+
+                      marking  variational  quantum  eigensolvers  for  the
+                      square-octagon-lattice  Kitaev  model,Phys.  Rev.
+                      Research5, 033071 (2023).
+                [60]S.  Park  and  E.-G.  Moon,  Digital  Quantum  Sim-
+                      ulation   of   the   Kitaev   Quantum   Spin   Liquid,
+                      arXiv:2506.09156(2025).
+                [61]A. Ali, J. Gibbs, K. Kumaran, V. Muruganandam,
+                      B.  Xiao,  P.  Kairys,  G.  Hal´asz,  A.  Banerjee,  and
+                      P.  C.  Lotshaw,  Robust  Chiral  Edge  Dynamics  of
+                      a Kitaev Honeycomb on a Trapped Ion Processor,
+                      arXiv:2507.08939(2025).
+                [62]H.-D. Chen and Z. Nussinov, Exact results on the
+                      Kitaev model on a hexagonal lattice:  Spin states,
+                      string  and  brane  correlators,  and  anyonic  excita-
+                      tions,J. Phys. A: Math. Theor.41, 075001 (2008).
+
+
+                Accepted in              2026-02-20, click title to verify.  Published under CC-BY 4.0.                                                                    24
+
+
+
+
+Quantum

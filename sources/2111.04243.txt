@@ -1,0 +1,462 @@
+               Learning a compass spin model with neural network quantum states
+
+                                                Eric  Zou,  Erik  Long,  and  Erhai  Zhao
+                Department  of  Physics  and  Astronomy,  George  Mason  University,  Fairfax,  Virginia  22030,  USA
+
+                  Neural network quantum states provide a novel representation of the many-body states of inter-
+               acting quantum systems and open up a promising route to solve frustrated quantum spin models
+               that evade other numerical approaches.  Yet its capacity to describe complex magnetic orders with
+               large unit cells has not been demonstrated, and its performance in a rugged energy landscape has
+               been questioned.  Here we apply restricted Boltzmann machines and stochastic gradient descent to
+               seek the ground states of a compass spin model on the honeycomb lattice, which uniﬁes the Kitaev
+               model, Ising model and the quantum 120◦  model with a single tuning parameter.  We report cal-
+               culation results on the variational energy, order parameters and correlation functions.  The phase
+               diagram obtained is in good agreement with the predictions of tensor network ansatz, demonstrating
+               the capacity of restricted Boltzmann machines in learning the ground states of frustrated quantum
+               spin Hamiltonians.  The limitations of the calculation are discussed.  A few strategies are outlined
+               to address some of the challenges in machine learning frustrated quantum magnets.
+
+
+                    I.   INTRODUCTION                                       Then, to ﬁnd the ground state of a given interacting spin
+                                                                            Hamiltonian, all one needs to do is to train the network
+  Finding the ground-state wave functions of frustrated                     by adjusting its parameters stochastically so that the en-
+quantum spin models [1, 2] in two dimensions (2D) re-                       ergy expectation value is minimized.  This approach was
+mains  an  outstanding  theoretical  challenge  despite  the                pioneered  by  Carleo  and  Troyer,  who  represented  the
+great strides made in recent decades in the ﬁeld of nu-                     many-spin  wave  function  as  restricted  Boltzmann  ma-
+merical many-body algorithms [3].  On the one hand, ex-                     chines  (RBMs)  and  successfully  applied  it  to  solve  the
+act  diagonalization  and  density  matrix  renormalization                 Heisenberg  model  on  the  square  lattice  [9].    In  addi-
+group (DMRG), when applied to 2D, are restricted by the                     tion  to  RBM,  the  wave  function  can  also  be  expressed
+ﬁnite system size.  On the other hand, variational Monte                    as feed-forward neural networks or other neural network
+Carlo approaches, while being unbiased and valid in the                     architectures.  For example, Choo et al employed convo-
+thermodynamic limit, depend on the quality of the trial                     lutional feed-forward neural networks to solve the J1-J2
+wave functions and tend to lose its prediction power due                    model,  a  canonical  example  of  frustrated  magnets  be-
+to the lack of convergence associated with the prevalent                    lieved to host a quantum spin liquid, and obtained excel-
+“negative sign problem” in frustrated quantum spin sys-                     lent energetics comparable to exact diagonalization and
+tems.   Another  eﬃcient  variational  ansatz  for  quantum                 DMRG [11].  TheJ1-J2 model has also been investigated
+spin models is based on the tensor network (TN) repre-                      in Refs.  [12–16] using the neural network ansatz.  In a
+sentation of the many-body wave functions [4, 5].  One                      broader context, recent work has revealed a remarkable
+type  of  tensor  networks  known  as  projected  entangled                 connection between the neural-network and the tensor-
+pair  states,  which  generalize  the  matrix  product  states              network representation of quantum many-body states de-
+from  one  dimension  to  two  dimensions,  have  been  suc-                spite their diﬀerences in appearance and origin [17–19].
+cessfully  applied  to  quantum  spin  models  [6].   The  ac-              It  was  shown  that  neural  network  quantum  states  can
+curacy  of  TN  ansatz  however  depends  on  the  approxi-                 describe states with topological order, even with entan-
+mations employed when truncating and contracting the                        glement  entropy  beyond  the  area  law  [20–22].   Beyond
+tensors.  Given that each method has its advantages as                      quantum  spin  models,  neural  network  quantum  states
+well as drawbacks, a holistic approach will beneﬁt from                     have  been  also  applied  to  strongly  correlated  fermions
+new numerical methods that can shed fresh light on this                     [23–25].
+persistent problem.                                                            These promising developments have raised many open
+                                                                            questions.   So  far  the  neural  network  ansatz  was  able
+  Inspired by its tremendous success in machine learn-                      to  identify  relatively  simple  states  such  as  the  Neel  or
+ing  and  artiﬁcial  intelligence  [7],  neural  networks  were             stripe order.  Is it capable of ﬁnding more exotic phases
+recently proposed to solve quantum spin models [9, 10].                     with complicated symmetry breaking patterns?  How can
+A  generic  wave  function  of N   interacting  spins,  say                 it  be  applied  to  extract  the  entanglement  signatures  of
+S = 1/2, is a superposition of 2N  basis states with com-                   quantum spin liquids?  Does it provide an accurate, prac-
+plex coeﬃcients.  Mathematically, the wave functionψ(s)                     tical method to determine the phase transitions by com-
+deﬁnes a mapping from vector s = (s1,s2,...,sN), where                      puting  the  order  parameters  and  correlation  functions?
+si  =↑ or↓, to a complex number.  Therefore, it can be                      Very recently, certain limitations to the expressive power
+thought of as a machine that gobbles up s and spits out                     of RBMs as well as the stochastic reconﬁguration algo-
+a complex number.  It is conjectured that such mapping                      rithm  have  been  noted.    For  example,  in  some  cases,
+can  be  represented  accurately  by  neural  networks  with                the algorithm suﬀers from inherent numerical instabilities
+suﬃcient  number  of  nodes,  layers,  and  connections  [8].               [14, 26].  For highly frustrated quantum spin models, e.g.
+                                                                                                                                                    2
+
+near J2/J1  =  0.5  in  the J1-J2  model,  the  energy  land-                fermions.   In  this  model,  the  spin  exchanges  along  the
+scape is believed to be rugged, the approach to the global                   three bonds of the honeycomb lattice are given by S1S1,
+minimum may not be guaranteed in practice.  These lim-                       S2S2, andS3S3 respectively.  In spin space, each spin op-
+itations led to ongoing eﬀorts to represent the amplitude                    erator is represented by a vector, and here the three spin
+and the phase of the wave function separately using two                      vectors S1,2,3 lie within a plane forming 120◦ angle with
+real-valued networks, and to learn the sign structures of                    each other.  It is apparent that the 120◦ model is a cousin
+the wave function to facilitate the convergence [14].                        of the Kitaev model where the three corresponding spin
+  In  light  of  these  open  questions,  in  this  work  we  ap-            vectorsSx,y,z form an orthogonal triad in spin space (i.e.
+ply the neural network ansatz to the tripod model [27],                      90◦  angles  with  each  other).   This  intimate  connection
+a frustrated quantum spin model in two dimensions.  It                       between  the  two  models  motivated  the  authors  of  Ref.
+contains the Kitaev model [28] as a special limit and has                    [27] to unify the 120◦ model, the Kitaev model, and the
+an  extended  spin  liquid  phase.   At  the  same  time,  its               Ising model into a single compass model parameterized
+phase  diagram  also  includes  the  Neel  order  and  a  non-               by an angle θ.  Its Hamiltonian is given by
+trivial  bond  order  which,  according  to  TN  calculations
+[27], can be viewed as a periodic lattice of spin vortices.                                     H =J ∑        Sγ(r)Sγ(r + eγ).                  (1)
+Thus,  this  model  provides  an  ideal  playground  to  test                                            r,γ
+the  performance  and  limitations  of  the  neural  network
+ansatz.  We note that previously, there have been several                    Here J >  0  is  the  antiferromagnetic  coupling,  r  labels
+works that applied neural networks to study the ground                       the lattice site, and eγ  with γ = 1, 2, 3 denotes the three
+state  and  excitations  of  the  Kitaev  model  or  its  gener-             bond vectors of the honeycomb lattice,  i.e.   r + eγ  is a
+alizations,  e.g.   with  external  magnetic  ﬁeld  or  Heisen-              neighboring site of r (we have set the lattice spacing to
+berg terms [29–32].  The model here is rather diﬀerent:                      one).  The spin 1/2 operator Sγ  is deﬁned as
+it  overlaps  with  the  Kitaev  model  only  at  one  special
+point.  Moreover, our primary focus is on the phase dia-                           Sγ = 1
+gram and phase transitions between the spin liquid and                                    2(τz cosφγ +τx sinφγ) cosθ + 12τy sinθ       (2)
+the long-range ordered states.                                               where τx,τy,τz   are   the   Pauli   matrices,   and φγ    =
+  This  paper  is  organized  as  follows.   In  section  II,  we            0, 2π/3, 4π/3 are the azimuthal angle of the correspond-
+introduce the tripod model and summarize existing nu-                        ing bond direction eγ.  For brevity, we have suppressed
+merical  results  from  tensor  network  ansatz.   Then  we                  the θ  dependence of Sγ  and H, and the notation Sγ(r)
+outline the RBM ansatz in section III. Section IV gives a                    means the spin operator Sγ  is localized at site r.
+detailed discussion of our main numerical results, includ-                      Model Eq.  (1) is dubbed the tripod model, because ge-
+ing the energy,  the order parameters,  and the resulting                    ometrically the three Sγ  form a tripod in the spin space
+phase diagram.  In section V, we discuss the limitations                     as  shown  in  Fig.   1  of  Ref.   [27].   They  are  tilted  out
+of the neural network ansatz as implemented in our work,                     of  the xz  plane  by  angle θ  and,  when  projected  onto
+and directions for future improvement.  We hope our re-                      the xz  plane,  are  120◦  from  each  other.    In  addition
+sults, including the strategies employed to facilitate the                   to  the  tilting  angle θ  that  deﬁnes Sγ,  it  is  convenient
+learning  process,  can  be  useful  for  applying  the  neural              to  follow  Ref.   [27]  to  introduce θ′,  the  angle  between
+network ansatz to other quantum spin models, and more                        S1  and S2,  i.e.    the  angle  subtended  by  the  two  ad-
+generally, to quantum many-body systems.                                     jacent  legs  of  the  tripod.   The  two  angles  are  related
+                                                                             by  cosθ′  =  1− (3/2) cos2θ.   Three  limits  can  be  iden-
+                II.   THE TRIPOD MODEL                                       tiﬁed  as  we  change θ  from  0  to  90◦.   At θ  =  0  (and
+                                                                             correspondingly θ′ = 120◦), the three legs of the tripod
+                                                                             S1,2,3 are fully open and lie within the xz plane.  In this
+  The tripod model is a quantum spin model deﬁned on                         limit, H  reduces  to  the  quantum  120◦  model.   As θ  is
+the  two  dimensional  honeycomb  lattice.   It  belongs  to                 increased, the three legs are increasingly tilted out of the
+compass  spin  models,  a  broad  class  of  Hamiltonians  in                xz  plane,  corresponding to a partially open tripod.  At
+which the exchange interaction between two neighboring                       θ  = θK  =  arccos(√2/3)≃  35.26◦, θ′  becomes  exactly
+spins depends on the spatial direction of the bond.  The                     90◦,  then the tripod model becomes the Kitaev model:
+study of compass models has a long history,  for review                      now that the three operators Sγ  are orthogonal to each
+see Ref.  [33].  Perhaps the best know example is the Ki-                    other, we can carry out a spin rotation and redeﬁne them
+taev model [28]:  along the three bond directions of the                     asSx,y,z.  Finally, whenθ is increased all the way to 90◦,
+honeycomb lattice, the spin exchange interaction is given                    we have θ′  = 0 and all three Sγ  collapse to the y  axis.
+bySxSx,SySy, andSzSz respectively (in this shorthand                         The tripod is now fully closed.  In this limit,H reduces to
+notation, the ﬁrst spin operator is for one lattice site and                 the Ising model, H  = (J/4)∑r,γτy(r)τy(r + eγ).  Note
+the second for a neighboring site).  Another interesting                     that usually the Ising interaction is written in the form
+example of compass models is the quantum 120◦  model                         of τzτz.   Here  to  make  it  easier  to  compare  with  pre-
+discovered by Zhao and Liu [34], and independently by                        vious  literature,  we  follow  the  convention  to  choose τy
+Wu  [35],  in  the  study  of  strongly  interacting p-orbital               as  the  vertical  axis  in  spin  space  [27].   This  choice  of
+                                                                                                                                                 3
+
+the  axes  is  particularly  convenient  to  recover  the  120◦             ground states, the order parameters, or phase transitions
+model  deﬁned  in  earlier  work  Ref.  [34].   In  passing,  we            can be captured by the neural network ansatz.  Overall,
+note that the tripod model is not only of theoretical in-                   our calculation benchmarks the eﬃciency, stability, and
+terest due to its synthesis of three important models in                    accuracy of the neural network algorithm by comparing
+quantum magnetism.  Recent experiments on honeycomb                         to the state-of-the-art TN results.
+antiferromagnet NaNi2BiO6−δ suggest that its dominant
+exchange interactions resemble those in the tripod model
+with additional terms, such as the Heisenberg exchange,                       III.   RESTRICTED BOLTZMANN MACHINES
+also playing a role [37].
+  Some  limits  of  the  tripod  model  are  easy  to  under-                  We will represent the many-spin wave function using
+stand.  For example, in the Ising limit, the ground state                   one of the simplest neural networks, the Restricted Boltz-
+has Neel order, and the order parameter is the staggered                    mann  Machines  (RBMs).   The  implementation  follows
+magnetization along y.  At the Kitaev point, the model                      the original work of Ref.  [9].  To avoid repetition,  here
+is analytically solvable, and its ground state is a spin liq-               we only outline the main ideas. More details can be found
+uid  and  has  no  long-range  magnetic  order  [28].   Aside               in Ref.  [9] and [10].  A restricted Boltzmann machine is a
+from  these  two  limits,  for  general θ,  the  tripod  model              shallow neural network with two layers, the visible layer
+must be solved numerically.  This is challenging because                    consisting of N  nodes characterized by spin variables si
+the model is frustrated and hosts highly nontrivial quan-                   (i = 1, 2,...,N) and a hidden layer ofM  nodes described
+tum phases.  In particular, the ground state of the 120◦                    by variables hj  (j  = 1, 2,...,M).  The coupling between
+model has been somewhat controversial [34–36].  It was                      nodesi and nodehj is described by a connection weight
+conjectured to be long-range ordered despite the geomet-                    wij.  The quantum mechanical wave function takes the
+ric frustration [35].  Ref.  [27] for the ﬁrst time solved the              form of joint Boltzmann weight [9],
+tripod model for generalθ′ and obtained its ground state
+phase  diagram  using  tensor  network  ansatz.   The  main                            |Ψ⟩ = ∑      ψ(s)|{si}⟩
+conclusion  is  that  there  are  three  phases  separated  by                                 {si}  ∑
+two phase transitions, see Fig.  1 of Ref.  [27].  In particu-                              = ∑          eaisi+bjhj+wijsihj|{si}⟩.          (3)
+lar it predicted that the ground state of the 120◦ model                                       {si} {hj}
+has  valence  bond  order.   In  this  state,  all  the  spin  are
+conﬁned within the xz plane to form a periodic pattern                      Here, repeated indices in the exponent are summed over,
+which can be viewed as a triangular lattice of hexagons.                    {si} ={s1,s2,...sN} are all possible spin conﬁgurations
+Around  each  hexagon,  the  spin  winds  successively  at  a               (similarly for{hj}),  the biases ai  and bj  as well as the
+60◦ interval, forming a discrete spin vortex, see Fig.  5 of                connection  weights wij  are  all  complex  variational  pa-
+Ref.  [27].  Note that this phase was referred to as “dimer                 rameters.  Even though there is no direct intra-layer con-
+phase” in Ref.  [27], because along the bonds connecting                    nection in a “restricted” Boltzmann machine, the hidden
+these hexagons, two neighboring spins point in opposite                     nodes induce correlations among the visible nodes.  For
+directions.   Such  a  terminology  is  unconventional,  be-                real biases and connections, it is known that RBMs can
+cause in the literature “dimer” is usually synonymous to                    represent  any  classical  distribution  to  desired  accuracy
+spin singlet.  To avoid potential confusion, we prefer to                   with suﬃcient numbers of hidden units [8].  The expres-
+call this phase having valence bond order, because it fea-                  sive power of complex RBMs is less known.  It has been
+tures spatially periodic modulations of the bond energy.                    argued that a fully connected RBM can capture entan-
+TN ansatz also predicted that the quantum spin liquid is                    glement bounded by volume law and hence eﬃciently de-
+stabilized within the ﬁnite window θ′∈ [87◦, 94◦] enclos-                   scribe the ground states of many Hamiltonians [17].  In
+ing the Kitaev pointθ′ = 90◦. Judging from the variation                    our calculations, we consider a ﬁnite honeycomb lattice
+of the order parameters withθ′, the valence bond to spin                    withL×L unit cells with periodic boundary conditions.
+liquid transition seems continuous, while the spin liquid                   Then the number of sites N  = 2L2  and the number of
+to Neel transition seems to be ﬁrst order [27].                             bonds Nb  =  3L2.   The  layer  density  ratio α  = M/N
+  The  main  goal  of  the  present  work  is  to  investigate              is a tuning parameter,  we ﬁnd α = 2 gives satisfactory
+the ground state phase diagram of the tripod model us-                      performance for L = 4.
+ing an independent method.  This serves two purposes.                          Starting  from  some  initial  guess,  e.g.    random  val-
+On the one hand, the variational calculation with neural                    ues,  the  variational  parameters  are  adjusted  iteratively
+network ansatz here provides a check for the TN results,                    to minimize the variation energy E =⟨Ψ|H|Ψ⟩, the ex-
+especially regarding the ground state in the 120◦ limit as                  pectation value of the Hamiltonian Eq.  (1) for the cur-
+well as the location and nature of the phase transitions.                   rent  wave  function  Eq.    (3),  computed  approximately
+On  the  other  hand,  the  calculation  tests  the  capacity               by  Monte  Carlo  sampling  [9].   This  is  done  by  making
+of  the  neural  network  ansatz  by  applying  it  to  solve  a            stochastic moves in a large parameter space based on es-
+frustrated quantum spin model which has not only spin                       timating the energy gradient.  This stochastic optimiza-
+liquid but also nontrivial long-range order with an intri-                  tion  procedure  is  often  called  learning,  or  training  the
+cate spatial pattern.  A priori, it is unclear whether these                RBM. Here many mature algorithms from the machine
+                                                                                                                                                   4
+
+learning literature can be applied [7, 38].  For example,                   shake things up.  If no further progress can be made, the
+we have tested and compared several algorithms includ-                      machine is restarted.  Some states, for example the Neel
+ing  stochastic  gradient  descent,  adagrad,  and  adamax                  state, are rather easy to reach with fast and robust con-
+[38, 39, 41].  The actual computation is carried out using                  vergence, e.g.  after hundreds of iterations.  Other states,
+the powerful Netket library [41], aided by custom-made                      such as the spin liquid or bond order, require many more
+routines to manipulate the variational wave functions di-                   steps for the energy to relax,   e.g.  at least thousands of
+rectly.                                                                     iterations even with reasonable learning parameters and
+  We emphasize that while the model and learning algo-                      initial guess.  This is expected because of the frustration
+rithm are relatively straightforward to set up, the actual                  and  the  presence  of  many  competing  orders.   To  facil-
+training of the RBM with a vast parameter space is by                       itate  the  search  for  ground  states  in  highly  frustrated
+no means a trivial task.  This is analogous to many other                   regimes,  it  is  useful  to  start  from  wave  functions  that
+complex machine learning tasks:  eﬃcient training a neu-                    were learned previously for parameters nearby and have
+ral network hinges on understanding the particularities                     competitive energies.  In this case,  random ﬂuctuations
+of the model, the parameter space, and the quantity and                     are introduced to the wave function before the run, and
+quality of the data etc.  [38, 39].  For example, starting                  the result must be compared to those obtained from ran-
+from a random conﬁguration of the RBM, the algorithm                        dom, blind guesses.  During the run, the statistical errors
+may lead to a quick convergence to a local minimum and                      (variance  or  standard  deviation)  of  the  observables  are
+stall  there.   This  becomes  especially  problematic  in  re-             also monitored.
+gions where a few orders compete:  for example, a blind                        Fig.    1  shows  the  energy  per  bond  in  units  of J,
+stochastic  search  often  yields  wildly  ﬂuctuating  results              ϵ  = E/NbJ,  as  a  function  of  the  tilting  angle θ.   The
+for two neighboring parameters that belong to the same                      energy  is  the  lowest  in  the  Ising  limit θ  =  90◦,  and
+phase.  In this case, one may ﬁnd the best energetics by                    the neural network ansatz accurately reproduces the an-
+trying diﬀerent optimization algorithms or starting from                    alytical  result ϵ  =−1/4,  corresponding  to  the  antipar-
+diﬀerent initial guesses.  Even when the true ground state                  allel  alignment  of  neighboring  spins.   The  convergence
+is being approached,  the accuracy of the converged en-                     to ground state in this limit is rather fast, perhaps due
+ergy  depends  critically  on  the  proper  choice  of  the  pa-            to the classical nature of the Ising model.  (In compar-
+rameters such as learning rate and sampling batch size.                     ison,  for θ <  50◦,  reaching  the  ground  state  is  not  as
+A more serious problem is the sporadic occurrence of nu-                    straightforward and requires some of the strategies out-
+merical instability, presumably due to the parameters be-                   lined above.)  As θ is reduced, ϵ rises quickly; and after
+ing complex, which may manifest as a fast runaway of the                    going through the Kitaev point θK≃ 35.26◦, it reaches
+energy toward divergence.  These numerical complexities                     its  peak  value  of ϵ≃−0.122  at θ  =  34◦.   The  eleva-
+complicate the task of ﬁnding the ground state phase di-                    tion in energy is in accordance with the fact that in this
+agram.   (The  performance  of  RBM  is  discussed  in  Ref.                region around θK  the system is most frustrated.  Upon
+[40] for classical spin models).  Some of the strategies we                 further reduction ofθ, the energy starts to decrease.  The
+employ  to  alleviate  these  problems  are  discussed  below               noticeable cusp in energy located at θ = 34◦  marks the
+in section IV.                                                              transition  to  the  bond  ordered  phase,  inside  which  the
+                                                                            frustration  is  relieved  to  some  degree  but  not  entirely.
+                                                                            This trend continues until the 120◦ model limit is reached
+     IV.   GROUND-STATE PHASE DIAGRAM                                       atθ = 0. Note the spin liquid to Neel transition is not ob-
+                                                                            vious by inspecting the energy alone.  But plottingdϵ/dθ
+  The procedure to learn the phase diagram of the tri-                      reveals  a  sudden  change  at θ ∼  40◦.   In  what  follows,
+pod  model  is  as  follows.   For  a  given  value  of  the  tilt-         we present a better way to reveal the phase boundaries
+ing angle θ, the restricted Boltzmann machine is started                    by computing the order parameters and spin correlation
+from random parameter values, then stochastic moves are                     functions.
+made to lower the variational energy until convergence is                      The ﬁrst marker of phase transition is provided by the
+achieved.  A crucial parameter here is the learning rater,                  spin-spin correlation function.  It measures the antiferro-
+or step size of the stochastic moves [38, 39].  For stochas-                magnetic long-range order and is deﬁned by
+tic  gradient  descent,  choosing  a r  that  is  too  large  can                             ∑
+easily end up with numerical instability, while having r                      Cy =     4N− 1       ηr,r′ [⟨Sy(r)Sy(r′)⟩−⟨Sy(r)⟩⟨Sy(r′)⟩].
+too small may slow the learning to a crawl and trap it                                        r⁄=r′
+inside a local minimum.  The optimal value of r depends                                                                                         (4)
+on the model and the optimizer (many popular optimiz-                       Here r, r′ label the sites, andηr,r′ = 1 (-1) if r and r′ be-
+ers use adaptive learning rates determined from gradient                    long to the same (diﬀerent) sublattice.  As shown in Fig.
+and/or  momentum).   Its  order  of  magnitude  is  deter-                  2, Cy decays from 1 in the Ising limit and drops sharply
+mined by trial and error, and its value is adjusted on the                  as the spin liquid phase is approached.  The drop experi-
+ﬂy, for example, when entering a ﬂat energy landscape.                      ences a glitch at θ = 39◦, and Cy  vanishes for θ≤ 34◦.
+When the algorithm fails to reach the anticipated energy,                   This plot clearly demonstrates the existence of Neel order
+diﬀerent  optimizers  or  learning  parameters  are  tried  to              at θ > 39◦, as well as the lack of out-of-plane antiferro-
+                                                                                                                                                      5
+
+                                                                              operatorSx(r), and the sum ∑r is over all the sites.  Fig.
+                                                                              3 shows the variation ofS⊥ withθ, which exhibits a trend
+                                                                              opposite to Cy:  it assumes large values within the bond
+                                                                              ordered phase, drops sharply around θ1∼ 34◦, followed
+                                                                              by a small glitch atθ2∼ 39◦.  Afterwards, it remains sup-
+                                                                              pressed and vanishes in the Ising limit where all the spins
+                                                                              align parallel to they-axis.  This result conﬁrms that the
+                                                                              spins are predominantly in-plane within the bond ordered
+                                                                              phase, in good agreement with TN results (see plot ofO2
+                                                                              in Fig.  2 of Ref.  [27]).  Combining Fig.  2 and Fig.  3 to-
+                                                                              gether, it is clear that an intermediate (the spin liquid)
+                                                                              region is bounded by the lower critical point θB  = 34◦
+                                                                              and  the  upper  critical  point θN  =  39◦.   These  critical
+                                                                              values are close to, but not identical with, the TN results
+                                                                              θB = 33◦ andθN = 38◦ (the phase boundaries were given
+                                                                              in Ref.  [27] in terms of θ′, which can be easily converted
+FIG.  1.   The  converged  variational  ground  state  energy  per            into θ).
+bond in units ofJ for the tripod model Eq.  (1) obtained from
+Restricted Boltzmann Machines.  Here θ  is the tilting angle
+out of the xz  plane. θ  = 90◦  is the Ising limit, θ≃ 35.26◦
+is  the  Kitaev  point,  and θ  =  0◦  realizes  the  quantum  120◦
+model.  The vertical dotted lines atθ = 34◦ and 39◦ are guide
+to the eye.  The system has 32 sites with periodic boundary
+conditions, L  =  4, α  =  2.   No  symmetry  is  enforced.   The
+statistical error is smaller than the symbol size.
+
+
+magnetic correlation for θ< 34◦ .
+
+
+
+
+
+
+
+
+
+                                                                              FIG. 3.  The in-plane spin S⊥  deﬁned in Eq.  (5).  Its maxi-
+                                                                              mum is achieved at θ = 0 and remains ﬁnite within the bond
+                                                                              ordered phase.  The sudden drop at θ = 34◦ provides a clear
+                                                                              marker for the bond order to spin liquid transition.  Transi-
+                                                                              tion to Neel phase is accompanied by a small bump around
+                                                                              θ∼ 40◦. Within the Neel phase,S⊥ is very small and vanishes
+                                                                              in the Ising limit.
+
+                                                                                 To  further  elucidate  the  nature  of  the  bond  ordered
+                                                                              phase, we compute the bond energies
+
+FIG. 2.  The spin-spin correlation function Cy  deﬁned in Eq.                                    Bγ(r) = 4⟨Sγ(r)Sγ(r + eγ)⟩                  (6)
+(4) as function of θ.  It measures the out-of-plane antiferro-                for all three bonds connected to a given site at  r.  One
+magnetic order, and approaches 1 in the Ising limit.  Its rapid               then notices that for θ<θB, one of the bond is stronger
+decay  to  almost  zero  at θ  =  34◦  (indicated  by  the  vertical
+dotted line on left) and the visible kink at θ = 39◦  (vertical               than the other two, and a bond modulation pattern devel-
+dotted line, right) suggest two quantum phase transitions.                    ops in space which breaks the underlying lattice symme-
+                                                                              try.  There are three ways to break the symmetry of the
+  The second marker for phase transition is the expecta-                      three bonds locally.  For example, in symmetry-breaking
+tion value of the in-plane spin                                               pattern p1, B1  is stronger (negative with larger magni-
+                          ∑    √                                              tude)  while B2  and B3  are  roughly  (up  to  some  small
+              S⊥ =  1             ⟨Sx(r)⟩2 +⟨Sz(r)⟩2             (5)          ﬂuctuations) the same but weaker.  The other two pat-
+                      N    r                                                  terns p2,3  are  obtained  by  permuting γ  =  1, 2, 3,  e.g.
+                                                                              bondB2 is stronger in patternp2.  Obviously, these three
+where⟨Sx(r)⟩ is the expectation value of the local spin                       patterns are related to each other byC3 rotations in real
+                                                                                                                                                  6
+
+space.   Let  us  deﬁne  the  bond  modulation  ∆B  as  the                    Our study also exposes some limitations of the uncon-
+diﬀerence between the stronger bond and the average of                      strained RBM ansatz as implemented here.  In our calcu-
+the two weaker bonds, for example,                                          lation, we did not impose any symmetry constraints on
+                      ∑    1                                                the RBM wave functions. While this has the advantage of
+          ∆B =  1                                                           being completely unbiased, it also makes it exceedingly
+                   N    r  2 [B2(r) +B3(r)]−B1(r),        (7)               hard,  if  not  at  all  impossible,  to  reach  intricate  states
+                                                                            such as the spin vortex lattice proposed in Ref.  [27] for
+where the average over all sites is taken.  A ﬁnite ∆B is                   the 120◦  model.  As shown in Fig.  4 above,  our calcu-
+expected if the bond modulation pattern p1  is repeated                     lation reaches one of the valence bond states, where the
+throughout  the  lattice.   As  shown  in  Fig.   4,  the  bond             bond  modulation  pattern p1  is  repeated  periodically  in
+ordered  phase  is  characterized  by  a  ﬁnite  bond  modu-                space.  There are two other states with degenerate ener-
+lation, whereas in both the Neel and spin liquid phase,                     gies, where pattern p2 or p3 is repeated instead.  In fact,
+bond energies are approximately uniform in space.  Thus,                    all  possible  coverings  of  the  lattice  by  a  suitable  com-
+the bond ordered phase found here has a solid order of                      bination of local patterns p1,2,3  have the same classical
+periodically modulated bonds, i.e.  a valence bond solid.                   energy, giving rise to a large residual entropy similar to
+It breaks theC3 symmetry of the underlying honeycomb                        those found in spin ice [42].  The quantum Hamiltonian
+lattice, but diﬀers from the spin vortex state discussed in                 Eq.   (1)  induces  transitions  between  diﬀerent  coverings
+Ref.  [27].  And its energy per bond ϵ =−0.143 is higher                    and lifts the classical degeneracy.  Then a particular cov-
+than the best TN result−0.148 [27].  The reason behind                      ering, or superposition of coverings, acquires lower energy
+this diﬀerence is addressed in the next section.                            to  become  the  quantum  mechanical  ground  state.   For
+                                                                            example, the vortex state of Ref.  [27] represents a par-
+                                                                            ticular periodic covering of the whole lattice with local
+                                                                            bond pattern p1,p2, andp3.  In principle, this state may
+                                                                            be eventually reached by RBM with further reﬁnement in
+                                                                            energy.  In practice, this turns out to be hard, due to the
+                                                                            ﬂatness of the energy landscape (since diﬀerent covering
+                                                                            patterns have close energies) and the diminishing prob-
+                                                                            ability of settling into a highly symmetric conﬁguration
+                                                                            with a large unit cell by pure stochastic moves in a huge
+                                                                            parameter space.  Our attempts to further improve the
+                                                                            energy frequently encounter numerical instabilities.  We
+                                                                            conjecture that this barrier can be overcome by applying
+                                                                            symmetry constraints [11, 43, 44] to the RBM states, e.g.
+                                                                            by enforcing C6 symmetry and ﬁxing the unit cell shape
+                                                                            and size.  This should also improve the convergence and
+                                                                            numerical stability.  The downside is that one must com-
+                                                                            pare  the  energies  of  all  candidate  states  with  diﬀerent
+FIG.  4.  Bond  modulation  ∆B  deﬁned by Eq.  (7)  and (6).                symmetries.  Testing this proposal is left for future work.
+The bond ordered phase features bond modulations that grow                     Fig.   4.   illustrates  another  caveat  of  unconstrained
+with decreasingθ.  The Neel phase only has small ﬂuctuations                learning in large systems: there are small but visible ﬂuc-
+in bond energy.                                                             tuations in the bond energy even in the Neel phase.  For
+                                                                            an  ideal  Neel  state,  one  expects  ∆B  =  0.   While  the
+                                                                            algorithm successfully approaches the antiferromagnetic
+                                                                            ground state with excellent energy, the RBM rarely set-
+         V.   LIMITATIONS AND OUTLOOK                                       tles into a completely frozen state with uniform bond en-
+                                                                            ergy.  The stochastic nature of the algorithm unavoidably
+  To summarize,  neural network quantum states based                        introduces low lying excitations, which for larger systems
+on RBM have performed very well to identify the main                        are increasingly harder to eliminate.  A similar situation
+phases  (Neel,  bond  order,  and  spin  liquid)  and  phase                is observed in Fig. 2, where the order parameterCy drops
+transitions  of  the  frustrated  tripod  model.    We  ﬁnd                 to almost zero within the bond ordered phase, but small
+it  remarkable  that  with  some  judicial  control  over  the              ﬂuctuations  are  still  visible.   This  presents  a  dilemma:
+learning parameters and learning strategy, the algorithm                    on the one hand we need large clusters to accommodate
+can eﬃciently navigate the 232-dimensional Hilbert space                    orders with long modulation periods, on the other hand
+stochastically to ﬁnd variational ground states that have                   for large systems it becomes more challenging to relax to
+competitive energies.  In particular the two phase bound-                   pristine long-range ordered states.
+aries  are  close  to  the  state-of-the-art  TN  ansatz.   And                Given  these  considerations,  we  advocate  the  follow-
+for smaller systems, e.g. L = 3, the energetics is also in                  ing strategy to make the best out of the neural network
+excellent agreement with exact diagonalization.                             ansatz.   First,  the  unconstrained  network  is  trained  to
+                                                                                                                                                         7
+
+ﬁnd  the  rough  phase  diagram  and  symmetry  breaking                        acting many-body systems.
+patterns.   It  has  the  virtue  of  being  unbiased.   Then,
+other methods, such as analytical variational wave func-
+tions or neural network with symmetry, are used to fur-                                            ACKNOWLEDGMENTS
+ther improve the energetics and elucidate the long-range
+order.  We envision such a hybrid approach will be espe-                           This  work  is  supported  by  NSF  Grant  No.    PHY-
+cially useful in understanding complex spin systems, for                        2011386 (EZ). EZ would like to thank Christian McGuirk
+example models inspired by a large class of Kitaev ma-                          for   preliminary   work   implementing   and   benchmark-
+terials [45, 46].  Our results suggest that, with further re-                   ing  RBM  and  Mahmould  Lababidi,  Ahmet  Keles  and
+ﬁnements and complemented by other approaches, varia-                           Haiyuan Zou for illuminating discussions.  The numeri-
+tional  ansatz  based  on  neural  network  quantum  states                     cal simulation is based on the Netket library version 2.1.1
+can  serve  as  a  powerful  tool  to  understand  frustrated                   [41]. Part of the calculation was carried out on the ARGO
+quantum spin models and more generally strongly inter-                          clusters provided by the Oﬃce of Research Computing at
+                                                                                George Mason University.
+
+
+
+
+
+ [1]  C.  Lacroix,  P.  Mendels,  F.  Mila,  eds.  Introduction  to             [15]  Y.  Nomura  and  M.  Imada.  Dirac-type  nodal  spin  liq-
+     frustrated  magnetism:   materials,  experiments,  theory.                       uid revealed by reﬁned quantum many-body solver using
+     Springer, 2011.                                                                  neural-network wave function, correlation ratio, and level
+ [2]  H. T. Diep, ed. Frustrated spin systems. World Scientiﬁc,                       spectroscopy. Physical Review X  11, 031034, 2021.
+     2013.                                                                      [16]  D. Kochkov, T. Pfaﬀ, A. Sanchez-Gonzalez, P. Battaglia,
+ [3]  L. Savary,  L. Balents. Quantum spin liquids:  a review.                        and  B.  K.  Clark.  Learning  ground  states  of  quantum
+     Reports on Progress in Physics  80, 016502, 2016.                                Hamiltonians  with  graph  networks.   arXiv:2110.06390
+ [4]  F. Verstraete and J. I. Cirac, Renormalization algorithms                       (2021).
+     for  quantum-many  body  systems  in  two  and  higher  di-                [17]  J. Chen, S. Cheng, H. Xie, L. Wang, and T. Xiang. Equiv-
+     mensions. arXiv:cond-mat/0407066, 2004.                                          alence of restricted Boltzmann machines and tensor net-
+ [5]  R.  Orus,  A  practical  introduction  to  tensor  networks:                    work states. Physical Review B  97, 085104, 2018.
+     Matrix  product  states  and  projected  entangled  pair                   [18]  I.  Glasser,  N.  Pancotti,  M.  August,  I.  D.  Rodriguez,
+     states. Annals of Physics  349, 117, 2014.                                       and J. I. Cirac. Neural-Network Quantum States, String-
+ [6]  F.  Verstraete,  V.  Murg,  J.  I.  Cirac.  Matrix  product                     Bond States, and Chiral Topological States. Physical Re-
+     states,  projected  entangled  pair  states,  and  variational                   view X  8, 011006, 2018.
+     renormalization  group  methods  for  quantum  spin  sys-                  [19]  Y. Huang and J. E. Moore. Neural Network Representa-
+     tems. Advances in Physics  57, 143, 2008.                                        tion of Tensor Network and Chiral States.  Physical  Re-
+ [7]  P. Mehta, M. Bukov, C.-H. Wang, A. G. Day, C. Richard-                          view Letters  127, 170601, 2021.
+     son,  C. K. Fisher,  and D. J. Schwab. A high-bias,  low-                  [20]  D.-L. Deng, X. Li, and S. Das Sarma. Quantum Entan-
+     variance introduction to machine learning for physicists.                        glement in Neural Network States. Physical Review X  7,
+     Physics Reports  810, 1, 2019.                                                   021021, 2017.
+ [8]  N.  Le  Roux  and  Y.  Bengio.  Representational  power  of               [21]  D.-L. Deng, X. Li, and S. Das Sarma. Machine learning
+     restricted Boltzmann machines and deep belief networks.                          topological states. Physical Review B  96, 195145, 2017.
+     Neural Computation  20, 1631, 2008.                                        [22]  R.  Kaubruegger,  L.  Pastori,  and  J.  C.  Budich.  Chiral
+ [9]  G.  Carleo  and  M.  Troyer.  Solving  the  quantum  many-                      topological phases from artiﬁcial neural networks. Phys-
+     body  problem  with  artiﬁcial  neural  networks.  Science                       ical Review B  97, 195136, 2018.
+     355, 602, 2017.                                                            [23]  Y.  Nomura,   A.  S.  Darmawan,   Y.  Yamaji,   and  M.
+[10]  R. G. Melko, G. Carleo, J. Carrasquilla, and J. I. Cirac.                       Imada. Restricted Boltzmann machine learning for solv-
+     Restricted Boltzmann machines in quantum physics. Na-                            ing  strongly  correlated  quantum  systems.  Physical  Re-
+     ture Physics  15, 887, 2019.                                                     view B  96, 205152, 2017.
+[11]  K. Choo,  T. Neupert,  and G. Carleo. Two-dimensional                     [24]  P. Broecker, J. Carrasquilla, R. G. Melko, and S. Trebst.
+     frustrated  J1-J2  model  studied  with  neural  network                         Machine learning quantum phases of matter beyond the
+     quantum states. Physical Review B  100, 125124, 2019.                            fermion sign problem. Scientiﬁc Reports  7, 8823, 2017.
+[12]  X. Liang, W.-Y. Liu, P.-Z. Lin, G.-C. Guo, Y.-S. Zhang,                   [25]  K. Ch’ng, J. Carrasquilla, R. G. Melko, and E. Khatami.
+     L. He. Solving frustrated quantum many-particle models                           Machine learning phases of strongly correlated fermions.
+     with  convolutional  neural  networks.  Physical  Review  B                      Physical Review X  7, 031038, 2017.
+     98, 104426, 2018.                                                          [26]  C.  Y  Park,  M.  J.  Kastoryano.  Are  neural  quantum
+[13]  Z. Cai and J. Liu. Approximating quantum many-body                              states good at solving non-stoquastic spin Hamiltonians?
+     wave functions using artiﬁcial neural networks. Physical                         arXiv:2012.08889, 2020.
+     Review B  97, 035116, 2018.                                                [27]  H. Zou, B. Liu, E. Zhao, W. V. Liu. A continuum of com-
+[14]  M. Bukov, M. Schmitt, M. Dupont. Learning the ground                            pass spin models on the honeycomb lattice. New Journal
+     state  of  a  non-stoquastic  quantum  Hamiltonian  in  a                        of Physics  18, 053040, 2016.
+     rugged  neural  network  landscape.  SciPost  Physics  10,                 [28]  A.  Kitaev.  Anyons  in  an  exactly  solved  model  and  be-
+     147, 2021.                                                                       yond. Annals of Physics  321, 2, 2006.
+                                                                                                                                                             8
+
+[29]  M.  Noormandipour,  Y.  Sun,  B.  Haghighat,  Restricted                    [38]  I.  Goodfellow,  Y.  Bengio,  A.  Courville.  Deep  learning.
+     Boltzmann machine representation for the ground state                              MIT press, 2016.
+     and excited states of Kitaev honeycomb model, Machine                        [39]  A.  Geron.  Hands-On  Machine  Learning  with  Scikit-
+     Learning:  Science and Technology  3, 015010, 2021.                                Learn,  Keras,  and  TensorFlow:   Concepts,  Tools,  and
+[30]  D.  A.  Puente,  I.  M.  Eremin.  Convolutional  restricted                       Techniques  to  Build  Intelligent  Systems.  2nd  Edition,
+     Boltzmann  machine  aided  Monte  Carlo:   An  applica-                            O’Reilly Media, 2019.
+     tion to Ising and Kitaev models. Physical Review B  102,                     [40]  A.  Azizi,  M.  Pleimling.  A  cautionary  tale  for  machine
+     195148, 2020.                                                                      learning  generated  conﬁgurations  in  presence  of  a  con-
+[31]  C.-X. Li, S. Yang, J.-B. Xu, Learning spin liquids on a                           served quantity. Scientiﬁc Reports  11, 1, 2021.
+     honeycomb lattice with artiﬁcial neural networks, Scien-                     [41]  G.  Carleo,   K.  Choo,   D.  Hofmann,   J.  E.  T.  Smith,
+     tiﬁc Reports  11, 16667 (2021)                                                     T.  Westerhout,  F.  Alet,  E.  J.  Davis,  S.  Efthymiou,  I.
+[32]  N.  Rao,  K.  Liu,  M.  Machaczek,  L.  Pollet.  Machine-                         Glasser, S.-H. Lin, M. Mauri, G. Mazzola, C. B. Mendl,
+     learned phase diagrams of generalized Kitaev honeycomb                             E. van Nieuwenburg, O. O’Reilly, H. Theveniaut, G. Tor-
+     magnets. Physical Review Research  3, 033223 , 2021                                lai,  A. Wietek. NetKet:  A machine learning toolkit for
+[33]  Z. Nussinov and J. van den Brink. Compass models: The-                            many-body  quantum  systems.  Software  X  10,  100311,
+     ory and physical motivations. Review of Modern Physics                             2019.
+     87, 1, 2015.                                                                 [42]  A. P. Ramirez, A. Hayashi, R. J. Cava, R. Siddharthan,
+[34]  E. Zhao and W. V. Liu. Orbital order in Mott insulators                           B.  S.  Shastry.  Zero-point  entropy  in  ‘spin  ice’.  Nature
+     of spinless p-band fermions. Physical Review Letters 100,                          399, 333, 1999.
+     160403, 2008.                                                                [43]  Y. Nomura. Helping restricted Boltzmann machines with
+[35]  C. Wu. Orbital Ordering and Frustration of p-Band Mott                            quantum-state  representation  by  restoring  symmetry.
+     Insulators. Physical Review Letters  100, 200406, 2008.                            Journal of Physics:  Condensed Matter  33, 174003, 2021.
+[36]  J. Nasu, A. Nagano, M. Naka, S. Ishihara. Doubly degen-                     [44]  C.   Roth   and   A.   H.   MacDonald.   Group   convolu-
+     erate orbital system in honeycomb lattice: Implication of                          tional neural networks improve quantum state accuracy.
+     orbital state in layered Iron oxide. Physical Review B 78,                         arXiv:2104.05085, 2021.
+     024416 (2008).                                                               [45]  S. M. Winter, Y. Li, YH. O. Jeschke, R. Valenti. Chal-
+[37]  A. Scheie, K. Ross, P. P. Stavropoulos, E. Seibel, J. A.                          lenges in design of Kitaev materials:  Magnetic interac-
+     Rodriguez-Rivera,  J.  A.  Tang,  Yi  Li,  H.-Y.  Kee,  R.  J.                     tions  from  competing  energy  scales.  Physical  Review  B
+     Cava,  C.  Broholm,  Counterrotating  magnetic  order  in                          93, 214431, 2016.
+     the honeycomb layers of NaNi2BiO6−δ. Physical  Review                        [46]  S. Trebst. Kitaev materials. arXiv:1701.07056, 2017.
+     B  100, 214421, 2019

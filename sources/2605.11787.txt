@@ -1,0 +1,779 @@
+ SciPost Physics                                                                                  Submission
+
+
+         Exact Diagonalization of Quantum Many-Body SystemsCERTIFY-ED: A Multi-Layer Verification Framework for
+
+
+                                       Sarang Vehale1⋆  , Ritu Goel2
+
+1Department of Cyber Security and Digital Forensics, National Forensic Sciences University -
+                       Dehli Campus, Outer Ring Road, Delhi - 110085 India
+   2Department of Applied Science and Humanities, School of Engineering & Technology,
+  Vivekananda Institute of Professional Studies - Technical Campus, AU-Block (Outer Ring
+                               Road) , Pitampura, Delhi - 110034, India
+
+                                        ⋆sarangvehale2@gmail.com
+
+
+Abstract
+
+Exact diagonalization (ED) is a workhorse technique in computational quantum many-
+body physics, but published ED results are rarely accompanied by machine-checkable
+evidence of their numerical correctness.  The community typically relies on the implicit
+trust chain LAPACK→user code→result, with at most informal agreement against an-
+other package treated as confirmation.  We argue that this practice is inadequate for a
+method whose output frequently underpins theoretical claims, and we presentCERTIFY-
+ED, a verification framework designed to be usedalongsideexisting ED packages (QuS-
+pin, XDiag, ALPS) rather than as a replacement for them. The framework consists of (i)
+a multi-oracle eigensolver that runs three independent LAPACK paths and reports their
+pairwise disagreement, (ii) thirteen logically independent validation layers covering al-
+gebraic invariants, analytic limits, alternative algorithms, arbitrary precison reference
+computation, conservation laws, dynamical consistency, and finite-size scaling, and (iii)
+tamper-evident SHA-256 hashed certificates that downstram consumers can verify.  The
+framework also ships an error-injection layer that confirms the entire pipeline detects
+six injected error classes.   Running on sixteen physics models from one-dimensional
+spin chains to two-dimensional Kitaev honeycomb clusters, our reference implementa-
+tion passes 53 of 53 unit tests and 81 of 81 individual validation tests in under thirty
+seconds, with maximum disagreement against QuSpin of 1.6×10   −14   across 320 eigen-
+value comparisons, and agreement with 50-digitmpmathreference values to 1.6×10             −15  .
+The package is released under the MIT license on Zenodo and Github (Refer to Data
+Availability).
+
+
+  Copyright attribution to authors.                                      Received Date
+  This work is a submission to SciPost Physics.                          Accepted Date
+  License information to appear upon publication.                        Published Date
+  Publication information to appear upon publication.
+
+
+Contents
+
+1   Introduction                                                                                            2
+
+2   Statement of Novelty                                                                                       3
+
+3   Related Work                                                                                                          4
+
+                                                       1
+  SciPost Physics                                                                                  Submission
+
+
+
+     3.1    Exact diagonalization packages                                                                   4
+     3.2    Verified numerics                                                                                        5
+     3.3    Reproducible workflow tooling                                                                      5
+
+4   Framework Architecture                                                                          5
+     4.1    Symbolic Hamiltonian construction                                                       5
+     4.2    Multi-oracle eigensolver                                                                          5
+     4.3    Certificates                                                                                               6
+
+5   Validators                                                                                                                    6
+
+6   Results                                                                                                                         8
+     6.1    Headline numbers                                                                                       8
+     6.2    Quantitative agreement with QuSpin                                                            8
+     6.3    Spectral sum rules                                                                                             9
+     6.4    Finite-size scaling against thermodynamic limits                                              9
+     6.5    Error-injection self-test                                                                                       9
+
+7   Discussion and Limitations                                                                     10
+
+8   Conclusion                                                                                               12
+
+References                                                                                                                      12
+
+
+
+
+1 Introduction
+
+Exact diagonalization (ED) of finite quantum lattice Hamiltonians is one of the few computa-
+tional techniques in many-body physics whose output is, in principle, exact:  given a Hermi-
+tian matrixH, LAPACK’s symmetric eigenvalue routines return a full set of eigenvalues and or-
+thonormal eigenvectors limited only by floating-point precision. ED is therefore routinely used
+to produceground truthagainst which approximate methods DMRG, QMC, neural-network
+quantum states are benchmarked, and to study problems where high-energy excited states
+genuinely matter (eigenstate thermalization, many-body localization, Floquet heating).
+     Two mature ED packages dominate the Python ecosystem: QuSpin[1,2]and the recently
+released XDiag[3], complemented by older codes such as ALPS[4], TITPACK, and Pomerol.
+These packages are fast, feature-complete, and well-tested by their developers. They are not,
+however, designed to producemachine-checkable certificates of numerical correctnessfor down-
+stream consumers of their output. The implicit trust chain is
+
+                  LAPACK→package internals→user script→published number
+     with  each  link  assumed  correct.   Cross-validation  against  another  package,  when  per-
+formed at all,  is typically done informally on a single test problem before the bulk of the
+production work is run.
+     This paper makes the case that ED workflows should adopt the verification practices that
+have been standard in the verified-numerics community for two decades[5,7,9], and presents
+CERTIFY-ED, a reference implementation that demonstrates such practice is achievable with
+modest engineering effort. Concretely:
+
+
+                                                                  2
+  SciPost Physics                                                                                  Submission
+
+
+
+    •Multi-oracle consensus.Diagonalize with three independent LAPACK code paths and
+       report the worst pairwise disagreement.  Wrapper-level bugs and algorithm-specific in-
+       stabilities are caught here.
+
+    •Thirteen independent validators.Each validator probes a different class of correct-
+       ness:  closed-form analytic results; cross-validation against QuSpin; arbitrary-precision
+       reference viampmath; sparse Lanczos vs. dense LAPACK; Jordan-Wigner free-fermion
+       analytic spectra; spectral sum rules; eigenvector orthonormality and completeness; time-
+       evolution unitarity; conservation laws; symmetry-resolved spectra; thermal limits; finite-
+       size scaling; and error injection.
+
+    •Hashed certificates.Each ED result is bundled with its residuals, normalization errors,
+       oracle consensus,  and a SHA-256 hash of the entire document.   Tampering with the
+       saved file is detected on load.
+
+    •Error-injection self-test.The framework’s own ability to detect injected errors (non-
+       Hermiticity, matrix corruption, oracle disagreement, eigenvector perturbation, certifi-
+       cate tampering, eigenvector swapping) is tested as part of every release.  A verification
+       framework that fails its own injection tests cannot be trusted.
+
+    We emphasize thatCERTIFY-EDisnota competitor to QuSpin or XDiag.  It is a verification
+layer that any ED workflow can consume.   The primary contribution is methodological:  a
+worked-out demonstration that ED results in computational physics can ship with the kind of
+evidence trail that the verified-numerics community already takes for granted.
+    The remainder of the paper is organized as follows.  Section2states the specific novelty
+claim of this work and what it doesnotclaim.   Section3positions the framework against
+existing ED packages and against the verified-numerics literature. Section4details the archi-
+tecture:  the multi-oracle eigensolver, the certificate format, and the model library.  Section5
+describes each of the thirteen validators and the failure modes it covers.  Section6reports
+the empirical performance of the framework, including the quantitative agreement against
+QuSpin andmpmath, the analytic limits, and the error-injection self-test.  Section7discusses
+limitations and natural extensions, including ongoing work on interval-arithmetic eigenvalue
+enclosures for the symmetry-block-decomposed Hamiltonians that arise in many-body lattice
+models. Section8concludes.
+
+
+2 Statement of Novelty
+
+We state explicitly what this paper does and does not claim, because the distinction is essential
+for evaluating the contribution.
+
+What this paper claims.
+
+   1.The current de facto practice in computational many-body physics trusting LAPACK plus
+       an informal one-shot cross-check against another package is below the standard set by
+       the verified-numerics literature, and the gap is closeable with modest engineering.
+
+   2.The combination of (i) multi-oracle eigensolver consensus, (ii) thirteen logically inde-
+       pendent validation layers covering a four-axis failure-mode coverage matrix (algebraic,
+       algorithmic,  numerical,  physical),  (iii) tamper-evident SHA-256 certificates,  and (iv)
+       an error-injection self-test that confirms the framework catches injected errors, consti-
+       tutes a verification framework that, to our knowledge, has no published counterpart for
+
+
+                                                         3
+  SciPost Physics                                                                                  Submission
+
+
+
+       ED in computational many-body physics.  Based on a search of the SciPost, Computer
+       Physics Communications, and SciPost Codebases literatures returns ED packages (QuS-
+       pin, XDiag, ALPS) and verified-numerics packages (INTLAB), but no integration of the
+       two for many-body workflows.
+
+   3.The  reference  implementation  passes  81  of  81  individual  validation  tests.   It  agrees
+       with QuSpin to 1.6×10   −10   across 320 eigenvalue comparisons, agrees with arbitrary-
+       precisionmpmathreference values to 1.6×10             −15  , and detects all six classes of injected
+       error. These are quantitative empirical claims.
+
+What this paper does not claim.
+
+   1.We do not claim a faster ED algorithm.CERTIFY-EDis one to two orders of magnitude
+       smaller in reachable system size than QuSpin or XDiag, and that is appropriate for its
+       role.
+
+   2.We do not claim mathematical proof of correctness in the verified-numerics sense. Rig-
+       orous interval enclosures via fixed-point verification methods are out of scope here (see
+       §7and ongoing follow-up work).   The contribution of the present work is empirical
+       evidence, not formal proof.
+
+   3.We  do  not  claim  that  any  single  validator  catches  every  bug.   The  whole  point  of  a
+       coverage matrix is that no single layer is sufficient; the defense in depth across thirteen
+       layers is what makes the combined system reliable.
+
+   4.We do not claim novelty in any individual validator. Most individual checks (sum rules,
+       orthonormality, unitarity, Bethe ansatz comparison) are textbook material.  The contri-
+       bution is the integration into a single tool with a uniform interface, a uniform output
+       format (hashed certificates), and an error-injection self-test that is run on every release.
+
+Why this matters for ED practice.ED output frequently feeds into theoretical claims bench-
+marks for DMRG and QMC, tests of the eigenstate thermalization hypothesis, ground truth
+for variational Monte Carlo with neural network ansätze, and input to renormalization-group
+analyses. When a published number depends on an ED result, the reader has a legitimate in-
+terest in machine-checkable evidence that the result is correct. The framework described here
+provides exactly such evidence, in a form that is small (a single JSON file per run), portable,
+and tamper-evident.
+
+
+3 Related Work
+
+3.1Exact diagonalization packages
+QuSpin[1,2]is the most widely used Python ED package. It supports arbitrary spin, fermion,
+and boson systems with user-defined symmetries, and reaches roughly 32 spin sites for spin-
+1/2 chains via symmetry-resolved sparse Lanczos.  XDiag[3], a recent C++/Julia package
+submitted to SciPost Physics Codebases, employs sublattice coding and Lin tables to scale ED
+to thousands of CPU cores.  ALPS[4], TITPACK, and Pomerol are older codes with similar
+functional scope.
+    CERTIFY-EDdoes not compete with these packages on speed or on system size:  its dense
+diagonalization path is limited to roughly 214≈16,000-dimensional Hilbert spaces, which is
+one to two orders of magnitude smaller than what QuSpin or XDiag achieve. The contribution
+
+
+                                                         4
+ SciPost Physics                                                                                  Submission
+
+
+
+lies elsewhere. None of the existing packages produces hashed certificates of correctness, none
+ships an error-injection self-test, and none integrates a multi-oracle consensus check.  These
+gaps are whatCERTIFY-EDfills.
+
+3.2Verified numerics
+The verified-numerics community has developed rigorous techniques for bounding eigenval-
+ues with interval arithmetic for over twenty years.  Rump’s seminal work[5]on guaranteed
+inclusions for the generalized eigenproblem,  Miyajima’s enclosures for all eigenvalues[7],
+and the Krawczyk-method certifications of van der Hoeven[8],  together with Hashimoto’s
+Rayleigh-Ritz-based verification using complex moments[9], provide a mature toolkit.  The
+INTLAB package[6]implements much of this.  To our knowledge, none of these techniques
+has been ported into the production workflow of a many-body ED package.
+
+3.3Reproducible workflow tooling
+
+Workflow managers such as AiiDA[10]address a different gap: provenance tracking of which
+jobs ran on which inputs in what order.  CERTIFY-EDaddresses a complementary problem:
+whetherthe eigenvalues those jobs produced are mathematically correct. The two layers com-
+pose naturally; AiiDA+CERTIFY-EDyields an audit trail that connects published numbers to
+their underlying computations and to evidence of those computations’ correctness.
+
+
+4 Framework Architecture
+
+4.1Symbolic Hamiltonian construction
+Hamiltonians are built symbolically as sums of tensor products of Pauli operators, fermion
+operators (via Jordan-Wigner), or spin-1 operators.  TheSymbolicHamiltonianclass col-
+lects terms as(coefficient, operator string)tuples and assembles the matrix in one pass. After
+assembly the matrix is checked against its conjugate transpose with tolerance 10−14  :
+
+                                            ∥H−H          †∥∞<10 −14  .                                                   (1)
+    Hermiticity violations are flagged immediately.  Sixteen models are included in the pub-
+lic registry: TFIM, Heisenberg (XXX), XXZ, XYZ, SSH,J          1-J  2, Majumdar-Ghosh, cluster model,
+free fermion chain, Kitaev chain, single-band Hubbard, AKLT, Haldane, and 2D variants (TFIM,
+Heisenberg, Kitaev honeycomb). This selection is sufficient to exercise every distinct algorith-
+mic path used in spin-1/2, spin-1, and fermionic ED, and to compare against analytic results
+for each path.
+
+4.2Multi-oracle eigensolver
+
+Three independent LAPACK paths are used:
+
+   1.numpy.linalg.eigh: LAPACKDSYEVDvia the NumPy Fortran wrapper.
+
+   2.scipy.linalg.eigh(driver=’evd’): LAPACKDSYEVDvia the SciPy wrapper. Same
+       algorithm as path 1, different wrapper code.
+
+   3.scipy.linalg.eigh(driver=’evr’):  LAPACKDSYEVR, a fundamentally different
+       algorithm (relatively robust representations).
+
+
+
+                                                        5
+  SciPost Physics                                                                                  Submission
+
+
+      Table 1:  Failure-mode coverage matrix.  A validator marked✓catches at least one
+      failure mode in that column.
+
+
+
+                  Validator                     Algebraic    Algorithmic    Numerical    Physical
+                  Analytic           ✓             ✓             ✓           ✓
+                  QuSpin cross-check✓             ✓                           ✓
+                  mpmath50-digit                                ✓
+                  Sparse vs dense                    ✓             ✓
+                  Jordan-Wigner       ✓                                          ✓
+                  Spectral sum rules   ✓                            ✓
+                  Orthonormality✓             ✓             ✓
+                  Unitarity         ✓             ✓             ✓
+                  Conservation laws    ✓                                          ✓
+                  Symmetry sectors  ✓             ✓                           ✓
+                  Thermal limits                                                  ✓
+                  Finite-size scaling                                             ✓
+                  Error injection   ✓             ✓             ✓           ✓
+
+
+    A consensus report records the maximum pairwise disagreement
+                                          ∆∞ =maxk       λk(H)−λ           k(H ′)
+
+
+and flags violations of a user-specified tolerance (default 10−10  ).  A fourth oracle,scipy.sp
+arse.linalg.eigsh(ARPACK Lanczos), is optionally included to cross-check the lowest few
+eigenvalues against the dense paths via a fundamentally different algorithm (Arnoldi iteration
+on a Krylov subspace).
+
+4.3Certificates
+ACertificatebundles the output of a verified ED run: eigenvalues, eigenvectors, the Hamil-
+tonian, residualsr                   n =∥Hψ          n−E    nψn∥2, normalization errors∥ψ               n∥2−1, the consensus report,
+user metadata, and platform information (Python, NumPy, SciPy versions). The full document
+is serialized to JSON, hashed with SHA-256, and the hash is included in the file.  On load,
+the hash is recomputed and any mismatch raises an error.  This makes the certificatetamper-
+evidentwithout requiring an external signature service:  any consumer of the certificate can
+verify, with one library call, that the file has not been modified since the run that produced it.
+
+
+5 Validators
+
+The thirteen validators cover an explicit failure-mode coverage matrix (Table1). Each valida-
+tor is described below in the order it runs in the master pipeline. We use the convention that
+a validatorpasseswhen every individual test inside it passes (or skips gracefully if an optional
+dependency is unavailable).
+
+Analytic validator.   Compares against twelve closed-form solutions: single qubit in field; 2-,
+3-, and 4-site Heisenberg ground states (where Bethe ansatz and SU(2) Casimir give exact
+answers); TFIM ath=0 andJ=0; 2-site XXZ at arbitrary∆; Majumdar-Ghosh dimer point;
+free-fermion OBC dispersion; AKLT gap; cluster-model stabilizer; 3-site Heisenberg full SU(2)
+Casimir spectrum.
+
+
+                                                            6
+  SciPost Physics                                                                                  Submission
+
+
+
+QuSpin  cross-validator.   Twenty-pointh-sweep  of  the  4-site  TFIM  yields  320  eigenvalue
+comparisons; 4-site Heisenberg full spectrum; 5-point∆-sweep of XXZ.
+
+High-precision validator.   Diagonalizes TFIM, Heisenberg, and Kitaev chain at 50 decimal
+digits usingmpmathand compares against double-precision LAPACK. Disagreement at the level
+of 10−15   rules out any systematic double-precision pathology.
+
+Sparse-vs-dense validator.   Compares the lowest five eigenvalues from (ARPACK Lanczos)
+scipy.sparse.linalg.eigshagainst (LAPACK direct)numpy.linalg.eighon five mod-
+els atN=6. Lanczos uses a Krylov-subspace iteration that shares no code with the dense path;
+agreement provides algorithm-independent confirmation of the lowest spectrum.
+
+Jordan-Wigner validator.   For models that are equivalent to free fermions under JW, the
+entire spectrum is given by single-particle dispersion.  Tests:(i)TFIM PBC ground state from
+Bogoliubov de Gennes dispersion,(ii)XX chain (XXZ at∆=0) full 2                                           N  spectrum,(iii)free
+fermion OBC full spectrum,(iv)Kitaev chain BdG cross-check (informational).
+
+Spectral sum-rule validator.
+For each model, the validator checks four basis-independent invariants against the spectrum:
+                                        X                                         ?=maxn |E n|.                            (2)
+                            tr(H      k)  ?= Ekn,   k=1, 2, 3; ∥H∥                  2
+                                          n
+These are exact identities; any deviation indicates a computational error.
+
+Orthonormality validator.   Checks that the eigenvector matrixVsatisfiesV                                    †V=I,V V           † =I,
+andV DV         † =Hacross nine models.
+
+Unitarity validator.   BuildsU(t)  =Ve       −iDt  V †  from the spectral decomposition and checks
+(a) unitarityUU                   †  =I, (b) the group lawU(t                   1)U(t       2) =U(t         1 +t    2), and (c) agreement with
+scipy.linalg.expmatt=1.
+
+Conservation-law validator.   For pairs(H,S)where[H,S] =0 is expected, verifies the com-
+mutator norm is<10  −12   andthatSis block-diagonal in any eigenbasis ofHwithin the degen-
+erate subspaces. Includes amust not conservetest (TFIM does not conserve totalS                              z) to verify
+the validator distinguishes real from spurious symmetries.
+
+Symmetry-sector validator.   ProjectsHonto each eigenspace of the conserved quantity, di-
+agonalizes each block independently, and verifies the union of sector spectra equals the full
+spectrum. Tested for Heisenberg/S                           z, TFIM/parity, XXZ/S                         z.
+
+Thermal validator.   Checks high-temperature (β→0) and low-temperature (β→∞) limits
+for four spin models.  Atβ=0,〈O〉→tr(O)/dandZ→d; atβ→∞, thermal averages
+converge to ground-state expectations.
+
+Finite-size-scaling validator.   Verifies thatE          0/Ntrends toward known thermodynamic limits
+asNgrows: Heisenberg PBC→1/4−ln 2≈−0.4431 (Bethe ansatz), free fermion half-filled
+→−2t/π≈−0.6366, TFIM at criticality→−4/π≈−1.2732.
+
+
+
+
+                                                             7
+  SciPost Physics                                                                                  Submission
+
+
+
+Error-injection validator.   Injects six classes of error and verifies the framework detects each:
+non-Hermitian term; matrix corruption (eigenvalues against the wrong matrix); a deliberately
+corrupt oracle (consensus must fail); eigenvector perturbation (residual must amplify); SHA-
+256 tampering (load must fail); swapped eigenvectors of non-degenerate states (residual must
+reveal mismatch).A verification framework that fails its own injection tests cannot be trusted.
+
+
+6 Results
+
+We report results from a single end-to-end run on a Linux x86_64 workstation (Python 3.14.4,
+NumPy 2.4.4, SciPy 1.17.1, mpmath 1.4.1, QuSpin 1.0.1). The total wall-clock time was 5.92 s
+for the pytest suite plus 5.16 s for the thirteen validators.  The full result tree (JSON, figures,
+hashed certificates) is included in the supplementary archive.
+
+6.1Headline numbers
+
+    •Pytest unit+integration tests:53/53 passed.
+
+    •Validator individual tests:81/81 passed.
+
+    •Maximum disagreement against QuSpin across 320 TFIMh-sweep comparisons:
+
+                                                       1.6×10   −14
+
+    •Maximum disagreement againstmpmath50-digit reference: 1.6×10             −15  .
+
+    •Maximum spectral sum-rule error across 11 models: 2.0×10    −13  .
+
+    •Maximum orthonormality error across 9 models: 3.6×10    −15  .
+
+    •Maximum unitarity error across 7 models: 2.2×10    −15  .
+
+    •Error injection:6/6 detected.
+
+    These numbers establish that the framework’s claims are not aspirational: on every model
+in the registry, every validator, every comparison, the errors are at or below the limits set by
+IEEE 754 double precision. Figure1visualizes the full pass/fail count.
+
+6.2Quantitative agreement with QuSpin
+
+The most important external cross-check is against QuSpin[1,2], an independently imple-
+mented peer-reviewed ED package. Its implementation is entirely independent ofCERTIFY-ED.
+    We compare the full sixteen-dimensional spectrum of the 4-site transverse-field Ising model
+at twenty values of the transverse fieldh∈[0.1, 2.0], yielding 320 eigenvalue comparisons.
+    The maximum absolute disagreement across all comparisons is
+
+                                                  1.60×10    −14  .
+
+    The mean disagreement is
+                                              ¯∆TFIM =1.6×10    −15  ,
+
+which also lies within the expected double-precision noise floor.
+    The 4-site Heisenberg full spectrum agrees to 3.3×10   −16  , and the XXZ anisotropy sweep
+over∆∈{0, 0.5, 1.0, 1.5, 2.0}agrees to 2.0×10          −15  .
+
+
+                                                          8
+  SciPost Physics                                                                                  Submission
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      Figure 1: Validator test counts. Each bar shows the number of individual tests in one
+      validator; all 81 tests pass on the run reported here.
+
+6.3Spectral sum rules
+
+For a Hermitian  matrixHwith eigenvalues{E                                             n},  the identities tr(H        k)  = Pn Ekn  are exact
+regardless of basis.  We testk=1, 2, 3 across eleven models, plus the operator-norm identity
+∥H∥      2 =max    n|E n|. Figure2shows the absolute error for each (model, sum rule) pair on a log                  10
+scale; all errors fall between 10−16   (machine precision) and 10−13   (roundoff scaling with∥H∥                3
+for the cubed trace).
+
+6.4Finite-size scaling against thermodynamic limits
+
+We check thatE         0/Non three integrable models converges toward its thermodynamic limit as
+the system sizeNincreases.  For Heisenberg PBC, the Bethe-ansatz ground state energy per
+bond is 1/4−ln 2≈−0.4431 in the convention whereH=J           PSi·S  j.  Free fermions at half
+filling haveE          0/N→−2t/π≈−0.6366 from the band integral. The TFIM at the critical point
+h/J=1 hasE                   0/N→−4/π≈−1.2732[11]. Figure3shows the convergence: byN=10 the
+deviations are below 1% for Heisenberg and TFIM critical, and below 2% for free fermion (the
+oscillations in the latter are well-known shell-filling effects).
+
+6.5Error-injection self-test
+
+A verification framework that cannot detect injected errors gives false confidence.  We inject
+six classes of error and verify the framework catches each (Figure4):
+
+   1.Non-Hermitian perturbation:
+                                                       H→H+iε|0〉〈1|.
+        The Hermiticity check raises immediately atε=0.1.
+
+   2.Matrix corruption: diagonalizeH+δHwith random Hermitian noise of norm
+
+                                                         ∥δH∥         F∼10 −5
+
+        , then compute residuals against the originalH.  Maximum residual jumps from 10      −15
+        to∼10  −5  , correctly flagging the inconsistency.
+
+                                                              9
+  SciPost Physics                                                                                  Submission
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Figure 2: Spectral sum-rule errors across eleven models. Color encodes log10 of the
+     absolute error between the trace identity and the sum of eigenvalue powers.   All
+     errors lie between 10−16   and 10−13  .
+
+
+   3.Oracle disagreement:  a deliberately mis-shifted oracle is added to the multi-oracle en-
+       semble. Consensus check fails at the 10−3   level, exceeding the 10−10   tolerance.
+
+   4.Eigenvector perturbation: state|0〉is mixed with state|1〉at amplitudeα=0.01. Resid-
+       ual amplifies by a factor of∼10        14 relative to the unperturbed value.
+
+   5.Certificate tampering:  a single eigenvalue is overwritten in the saved JSON. SHA-256
+       mismatch raisesValueErroron load.
+
+   6.Swapped eigenvectors:|0〉and|1〉are interchanged while keeping the eigenvalues in
+       original order. Residuals against the matched eigenvalues grow to∼|E      1−E    0|, revealing
+       the mismatch.
+
+    All six injections are detected. This is the strongest evidence that the framework’s internal
+checks have practical sensitivity.
+
+
+7 Discussion and Limitations
+
+Multi-oracle is a soft check, not a guarantee.The three default oracles all link against LA-
+PACK. A deep LAPACK bug shared across DSYEVD and DSYEVR would not be caught by oracle
+consensus alone.   What multi-oracle does catch in practice is wrapper-level inconsistencies
+between NumPy and SciPy (which have occurred historically), algorithm-specific instabilities
+(DSYEVR’s relatively robust representations and DSYEVD’s divide-and-conquer respond differ-
+ently to ill-conditioned matrices), and silent fallbacks in either wrapper.  The high-precision
+validator complements multi-oracle by using a separate arithmetic stack (mpmath); the JW
+and analytic validators complement both by using closed-form expressions that bypass LA-
+PACK entirely. The defense in depth is the point.
+
+
+
+                                                         10
+  SciPost Physics                                                                                  Submission
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Figure 3:  Finite-size scaling toward thermodynamic limits.  Left:  Heisenberg PBC
+     ground-state energy per bond approaching the Bethe ansatz value 1/4−ln 2. Center:
+     free fermion half-filledE            0/N→−2t/π(oscillations are shell-filling effects).  Right:
+     TFIM at criticalityE                    0/N→−4/π.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Figure 4: Error-injection self-test.  Six classes of error are injected into the pipeline;
+     each must be detected by at least one validator or internal check. All six are detected.
+
+
+System sizes are limited by the dense path.We diagonalize matrices up to∼2                    14. For larger
+systems, users need symmetry-resolved sparse Lanczos as in QuSpin or XDiag.CERTIFY-EDis
+intended to be applied either (a) to the small benchmark systems where ED is the reference
+method, or (b) to the small symmetry sectors of larger systems decomposed by QuSpin/XDiag.
+
+Rigorous interval enclosures are out of scope here.The framework reports residuals and
+consensus disagreements these are evidence of correctness, not mathematical proof of cor-
+rectness in the verified-numerics sense.  Follow-up work, currently in preparation, develops
+verified eigenvalue enclosures for the symmetry-block-decomposed Hamiltonians that arise
+naturally in many-body lattice models, with meticulous control on the propagation of finite-
+precision errors from the block decomposition into per-block enclosures.  That direction uses
+a different mathematical machinery (interval arithmetic, fixed-point verification, perturbation
+bounds for invariant subspaces) and is naturally a separate paper. For the workflows that mo-
+tivate the present work producing trustworthy ED output for downstream theoretical claims
+the empirical validation framework presented here is already a substantial improvement over
+current practice.
+
+
+                                                          11
+  SciPost Physics                                                                                  Submission
+
+
+
+What this framework does not address.The framework verifies that,  given a Hamilto-
+nianH, the spectrum and eigenvectors returned are correct numerical solutions ofHψ=Eψ.
+It doesnotverify thatHis the correct Hamiltonian for a given physical problem that is the
+user’s responsibility, and a verified ED of the wrong Hamiltonian is just as useless as an unver-
+ified ED of the right one. The model registry is intended as a check on the user’s Hamiltonian
+assembly:  a user who builds a TFIM through the symbolic interface can compare against the
+cannedbuild_tfimas one independent confirmation of model identity.
+
+
+8 Conclusion
+
+We have presentedCERTIFY-ED, a verification framework for exact diagonalization of quantum
+many-body Hamiltonians.  The framework imports the verified-numerics tradition of multi-
+path validation,  arbitrary-precision reference computation,  and tamper-evident output into
+the workflow of computational many-body physics, where these practices are not yet standard.
+Across sixteen physical models and thirteen independent validation layers, the reference im-
+plementation passes all 81 individual validation tests, agrees with QuSpin to 1.6×10   −14   over
+320 eigenvalue comparisons, agrees with 50-digitmpmathreference values to 1.6×10           −15  , and
+detects all six classes of injected error.  The total run time of the full pipeline is under thirty
+seconds.
+    The framework is complementary to existing ED packages, not a replacement.  We hope
+it stimulates a discussion in the many-body community about what evidence accompanies an
+ED result when that result underpins a published claim. The current de facto standard implicit
+trust in LAPACK plus informal cross-checking is, we suggest, ripe for upgrade.
+
+Code and data availability.   The full source, test suite, validators, and master pipeline runner
+are released under MIT license[18]. The hashed certificates for the results reported here are
+included in the supplementary archive.
+
+Acknowledgments.The  author  thanks  the  QuSpin  and  XDiag  developers  for  their  peer-
+reviewed open-source codes, which served as ground-truth references during development.
+
+
+References
+
+ [1]P. Weinberg and M. Bukov,QuSpin: a Python Package for Dynamics and Exact Diagonali-
+       sation of Quantum Many Body Systems part I: spin chains, SciPost Phys.2, 003 (2017).
+
+ [2]P. Weinberg and M. Bukov,QuSpin: a Python Package for Dynamics and Exact Diagonali-
+       sation of Quantum Many Body Systems. Part II: bosons, fermions and higher spins, SciPost
+       Phys.7, 020 (2019).
+
+ [3]A.  Wieteket  al., XDiag:    Exact  Diagonalization  for  Quantum  Many-Body  Systems,
+       arXiv:2505.02901 (2025), submitted to SciPost Physics Codebases.
+
+ [4]B. Baueret al.,The ALPS project release 2.0:  open source software for strongly correlated
+       systems, J. Stat. Mech. (2011) P05001.
+
+ [5]S. M. Rump,Computational error bounds for multiple or nearly multiple eigenvalues, Linear
+       Algebra Appl.324, 209 (2001).
+
+
+
+                                                        12
+  SciPost Physics                                                                                  Submission
+
+
+
+ [6]S. M. Rump,INTLAB: INTerval LABoratory, in T. Csendes (ed.), Developments in Reliable
+       Computing, Kluwer Academic Publishers, 77 (1999).
+
+ [7]S. Miyajima,Fast enclosure for all eigenvalues in generalized eigenvalue problems, J. Com-
+       put. Appl. Math.233, 2994 (2010).
+
+ [8]J. van der Hoeven,Efficient Certification of Numeric Solutions to Eigenproblems, in MACIS
+       2017, LNCS10693, 81 (2017).
+
+ [9]K. Hashimoto, K. Morikuni, T. Sogabe and S.-L. Zhang,Verified eigenvalue and eigenvec-
+       tor computations using complex moments and the Rayleigh-Ritz procedure for generalized
+       Hermitian eigenvalue problems, arXiv:2110.01822 (2022).
+
+[10]S. P. Huberet al.,AiiDA 1.0, a scalable computational infrastructure for automated repro-
+       ducible workflows and data provenance, Sci. Data7, 300 (2020).
+
+[11]P. Pfeuty,The one-dimensional Ising model with a transverse field, Ann. Phys. (N.Y.)57, 79
+       (1970).
+
+[12]H. Bethe,Zur Theorie der Metalle. I. Eigenwerte und Eigenfunktionen der linearen Atom-
+       kette, Z. Phys.71, 205 (1931).
+
+[13]E. Lieb, T. Schultz and D. Mattis,Two soluble models of an antiferromagnetic chain, Ann.
+       Phys. (N.Y.)16, 407 (1961).
+
+[14]I. Affleck, T. Kennedy, E. H. Lieb and H. Tasaki,Rigorous results on valence-bond ground
+       states in antiferromagnets, Phys. Rev. Lett.59, 799 (1987).
+
+[15]A. Y. Kitaev,Unpaired Majorana fermions in quantum wires, Phys. Usp.44, 131 (2001).
+
+[16]P. W. Anderson,The resonating valence bond state inLa                                   2CuO4 and superconductivity, Sci-
+       ence235, 1196 (1987).
+
+[17]M.  Suzuki,Relationship  between  d-Dimensional  Quantal  Spin  Systems  and  (d+1)-
+       Dimensional Ising Systems:  Equivalence, Critical Exponents and Systematic Approximants
+       of the Partition Function and Spin Correlations, Prog. Theor. Phys.56, 1454 (1976).
+
+[18]S.  Vehale  and  R.  Goel,sarang-kernel/CERTIFY-ED:  v1.0.0,   Zenodo  (2026),   DOI:
+       10.5281/ZENODO.20066565,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                           13

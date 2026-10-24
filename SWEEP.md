@@ -189,6 +189,7 @@ tables and the unit conversion. `add_stored_rows.mjs` appends the rows and fills
 | `sweep-rows-2026-10-19-heglit2.json` | electron gas: papers citing the 2026-10-17 primaries |
 | `sweep-rows-2026-10-20-azadism.json` | electron gas: the bcc Wigner crystals (N = 64, 216, 512) of the Supplemental Material of arXiv:2201.08743, read from the publisher's file; its fluid tables print single-twist energies on open shells without the twist vector and are held |
 | `sweep-rows-2026-10-20-butler.json` | electron gas: the largest-basis CCD of the data release of arXiv:2403.04645, on the instances other papers also carry |
+| `sweep-rows-2026-10-20-families.json` | new families ([RULES.md §2.1](RULES.md#21-instance-names)): Kitaev (arXiv:1411.5198 Tables I-II, 2112.08394 Table III, 2009.04129 Supplement), Shastry-Sutherland (cond-mat/0605464 Tables I-II, 2311.16889 Table I, 2505.03466, 2309.10955 Table III, 2503.20122 Table VI, cond-mat/0309368), honeycomb J1-J2 (2110.06390 Table IV, 2206.07370 Table 1); written by `scripts/families_2026_10_20.mjs` |
 | `sweep-rows-2026-10-21-marino.json` | Marino, Becca & Tocchio (arXiv:2111.04623) Table 2 at t′ ≠ 0: stripe and uniform VMC at U = 12 on 6 × 48 tori, and on 6 × 40 for the λ = 5 stripes; the row printed t′/t = 0.5 between 0 and 0.1 is held |
 | `sweep-rows-2026-10-22-quoted.json` | the primaries behind held t′ = −0.2 quotes: Gu et al. (Nat. Commun. 17, 7838; arXiv:2507.02644) Supplementary Table 5, PBC energies at t′ = 0 and −0.2 on 8 × 8 to 32 × 8, and the two zero-variance extrapolations of the main text, read in the journal version (the arXiv text has no raw-data table); Liang (PRB 113, 155121; arXiv:2507.01856) Tables V and VI at t′ = −0.2. Held: Gu et al.'s OBC table (doping not printed) and 16 × 8 cylinder (doping and periodic direction not printed), and four error-bar values quoted by arXiv:2609.22618 that PRB 113, 155121 does not print |
 | `sweep-rows-2026-10-22-tc.json` | electron gas: Tanatar & Ceperley, PRB 39, 5005 (1989), no arXiv version, Tables I and II: VMC energies of the normal (N = 26-114, rs = 1-50) and fully polarized (N = 21-113, rs = 5-75) fluids in square cells, and fixed-node GFMC at N = 58 and 57. Read from the text layer of the publisher's 1989 scan, every number checked against the page image; Rydberg, Madelung term included (QMBL's HF check). Held: Table III, the crystal, whose cell is not printed |
@@ -202,6 +203,74 @@ computed them. 30 duplicates and two fits a paper prints only to reject them are
 fixed-node energies the source calls biased are flagged in `scripts/defects.mjs`; 699 rows carry the reading in
 `scripts/verifications.mjs`. Rulings of 2026-10-20: FCIQMC is `projected` even with its initiator error converged, and
 methods on a transcorrelated Hamiltonian without its three-body term are `approximate`.
+
+### The families pass (2026-10-20)
+
+- Finding: four arXiv queries in `sweep_search.mjs` (`kitaev-honeycomb`, `kitaev-heisenberg`,
+  `shastry-sutherland`, `honeycomb-j1j2`, since 2000) gave 534 candidates. Every candidate's PDF
+  was fetched and extracted (pypdf layout mode; pdftotext layout mode where pypdf failed or
+  for old-style ids). The 138 texts with a negative number to three decimals were screened.
+  References and citations of twelve on-target papers (Semantic Scholar) added 17 papers the
+  queries had missed, among them the honeycomb J1-J2 exact-diagonalization and DMRG papers.
+  76 papers were read in full.
+- Reading: three readers (one per family, Kitaev split in two), then an adversarial second
+  reading of every doubtful point on the session model.
+- Convention checks:
+  - QMBL's flux-free free-Majorana energies reproduce the Kitaev Exact values of arXiv:1411.5198
+    (3 x 4 and 4 x 4 tori), 2112.08394 (open 5 x 5, 7 x 7 and 11 x 11 patches, all eight printed
+    digits) and 2009.04129 (6 x 6 cylinder).
+  - A Lanczos diagonalization reproduces the 4 x 4 Shastry-Sutherland energy of
+    cond-mat/0309368.
+  - The scripts are in the pass's working notes, not in the repository. They are checks, and
+    they write no row.
+- Second reading:
+  - It corrected two first readings. arXiv:1411.5198 Table I is computed at alpha = 1 of its
+    Eq. (28), H = 2 H_K: its energies are twice those of K = -1 (loader factor 2). 2206.07370's
+    GNN numbers are copies of 2110.06390 Table IV, which is cited instead.
+  - It fixed the open boundaries of 2112.08394, which the paper does not print. The
+    free-Majorana check confirms them.
+- What the readers got wrong:
+  - The Shastry-Sutherland papers name the dimer coupling J, J', J1, J2 or J3. Two papers
+    contradict themselves: cond-mat/0605464's Fig. 1 caption and 2505.03466's text swap the
+    labels. The readers mapped couplings by bond, and the tables fixed which is which.
+  - A sector energy (2311.16889's -0.444040, a triplet at k = 0) was screened as a ground state.
+- Held, not rows:
+  - Every honeycomb N = 32 energy (2110.06390 Table IV, 2206.07370 Tables 1-4 and 6): the
+    cluster's printed periodic vectors span 64 sites, so the cluster is not defined.
+  - Table I of 2510.02428: Kx = Ky ≠ Kz, unequal Kitaev couplings, not yet in scope.
+  - 2304.00555: a field and Γ′.
+  - 2212.13271: XXZ.
+  - 2309.10955 Table II: the J-Q model.
+  - 2603.02992's 24-site value, which sits in a field paragraph.
+  - The stochastic-state-selection estimates of cond-mat/0309368, which estimate the exact
+    state's energy.
+  - Everything shown only in figures: Albuquerque et al. 2011, Gong et al. 2013, Zhu, Huse &
+    White 2013, 2303.14108, the cylinder energies of 2104.08887.
+- Normalisation (2026-10-21): couplings are normalised to |K| = 1 and Jd = 1 (RULES.md 2.1).
+  The Kitaev instances were renamed from `K-2`, `K-4` and `K4` to `K-1` and `K1`. The loader
+  divides the energies of arXiv:1411.5198 by 2 and those of 2112.08394 and 2009.04129 by 4, and
+  records the factor on each row (`normalised`). No two instances became one, and no record
+  changed its row.
+- Code links (2026-10-22): of the eleven sources with rows, only arXiv:2505.03466 names the code
+  that produced its energies: https://github.com/NeuralQXLab/convnextnnqs, in its Data and Code
+  Availability section and Ref. [71], with no commit stated. Its three rows carry `artifacts`. The
+  other ten texts were searched for URLs, repository names and availability statements and
+  contain none. 2311.16889 names NetKet, a library, which is not the row's code.
+- Duplicates: identical numbers from the same paper collapse to one row. This affects the
+  three Wilson-loop sectors of arXiv:1411.5198 Table II. Its 3 x 4 VMC -9.546(1) matches the
+  exact value to its printed digits and was dropped too, though it is another method's number;
+  since the verification of 2026-10-23 (ruled 2026-10-24) it carries
+  `same_value_distinct_method` and is a row.
+- Exact rows under RULES.md 6 (every published diagonalization of an exact energy is a row,
+  2026-10-24; applied when the pass reached `main`): the loader had held one exact row as a value
+  the instance already carries, arXiv:2311.16889's -0.4517531 on the 6 x 6 cluster at J = 0.8. The
+  source diagonalized the cluster itself (its Fig. 5 shows exact spin-spin correlations and its
+  Fig. 8 exact triplet energies, which cond-mat/0605464 does not print), so it carries
+  `independent_exact` and is a row. cond-mat/0605464's -0.451753105004501 (2006), printed to more
+  digits, stays the exact energy shown. The other held values are the Wilson-loop sector repeats
+  above.
+- The three code-link rows carry `artifacts` in the shape `add_code_links.mjs` writes (`code`,
+  `read_from` with the quote, location, date and pass).
 
 ## Rejected papers
 

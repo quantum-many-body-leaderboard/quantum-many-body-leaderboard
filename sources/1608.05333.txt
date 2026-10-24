@@ -1,0 +1,716 @@
+              Phase diagram and spin correlations of the Kitaev-Heisenberg model:
+                                                Importance of quantum eﬀects
+
+                                   Dorota  Gotfryd,1, 2  Juraj  Rusnaˇcko,3, 4  Krzysztof  Wohlfeld,1
+                                  George  Jackeli,5, 6  Jiˇr´ı  Chaloupka,3, 4  and  Andrzej  M.  Ole´s2, 6
+                                          1Institute  of  Theoretical  Physics,  Faculty  of  Physics,
+                                    University  of  Warsaw,  Pasteura  5,  PL-02093  Warsaw,  Poland
+                                 2Marian  Smoluchowski  Institute  of  Physics,  Jagiellonian  University,
+                                          prof.    S.   Lojasiewicza  11,  PL-30348  Krak´ow,  Poland
+                                    3Central  European  Institute  of  Technology,  Masaryk  University,
+                                            Kamenice  753/5,  CZ-62500  Brno,  Czech  Republic
+                                    4Department  of  Condensed  Matter  Physics,  Faculty  of  Science,
+                                  Masaryk  University,  Kotl´aˇrsk´a  2,  CZ-61137  Brno,  Czech  Republic
+                                      5Institute  for  Functional  Matter  and  Quantum  Technologies,
+                              University  of  Stuttgart,  Pfaﬀenwaldring  57,  D-70569  Stuttgart,  Germany
+                6Max  Planck  Institute  for  Solid  State  Research,  Heisenbergstrasse  1,  D-70569  Stuttgart,  Germany
+                                                            (Dated:  August 19, 2016)
+                   We  explore  the  phase  diagram  of  the  Kitaev-Heisenberg  model  with  nearest  neighbor  interac-
+                tions on the honeycomb lattice using the exact diagonalization of ﬁnite systems combined with the
+                cluster mean ﬁeld approximation, and supplemented by the insights from the linear spin-wave and
+                second–order perturbation theories.  This study conﬁrms that by varying the balance between the
+                Heisenberg  and  Kitaev  term,  frustrated  exchange  interactions  stabilize  in  this  model  four  phases
+                with magnetic long range order:  N´eel phase, ferromagnetic phase, and two other phases with co-
+                existing antiferromagnetic and ferromagnetic bonds, zigzag and stripy phases.  They are separated
+                by two disordered quantum spin-liquid phases, and the one with ferromagnetic Kitaev interactions
+                has a substantially broader range of stability as the neighboring competing ordered phases, ferro-
+                magnetic and stripy, have very weak quantum ﬂuctuations.  Focusing on the quantum spin-liquid
+                phases, we study spatial spin correlations and dynamic spin structure factor of the model by the
+                exact diagonalization technique, and discuss the evolution of gapped low-energy spin response across
+                the quantum phase transitions between the disordered spin liquid and magnetic phases with long
+                range order.
+
+
+                    I.    INTRODUCTION                                        tions [24].  We emphasize that below we call a KSL also
+                                                                              disordered spin-liquid states which arise near the Kitaev
+  Frustration in magnetic systems occurs by competing                         points in presence of perturbing Heisenberg interactions
+exchange interactions and leads frequently to disordered                      ∝J.
+spin-liquid states [1–3]. Recent progress in understanding                       By analyzing possible couplings between the Kramers
+transition  metal  oxides  with  orbital  degrees  of  freedom                doublets it was proposed that the microscopic model ad-
+demonstrated many unusual properties of systems with                          equate  to  describe the  honeycomb iridates  includes  Ki-
+active t2g  degrees  of  freedom  —  they  are  characterized                 taev  interactions  accompanied  by  Heisenberg  exchange
+by  anisotropic  hopping  [4–8]  which  generates  Ising-like                 in  form  of  the  Kitaev-Heisenberg  (KH)  model  [22,  25].
+orbital interactions [9–17], similar to the orbital superex-                  Soon after the experimental evidence was presented that
+change  in eg  systems  [18,  19].   Particularly  challenging                several features of the observed zigzag order are indeed
+are 4d and 5d transition metal oxides,  where the inter-                      captured  by  the  KH  model  [26–34].   Its  parameters  for
+play between strong electron correlations and spin-orbit                      A2IrO3  compounds  are  still  under  debate  at  present
+interaction leads to several novel phases [20, 21].  In iri-                  [35, 36].  One ﬁnds also a rather unique crossover from
+dates the spin-orbit interaction is so strong that spins and                  the quasiparticle states to a non-Fermi liquid behavior by
+orbital operators combine to newS = 1/2 pseudospins at                        varying  the  frustrated  interactions  [37].   Unfortunately,
+each site [22], and interactions between these pseudospins                    however,  it  was  recently  realized  that  this  model  does
+decide about the magnetic order in the ground state.                          not explain the observed direction of magnetic moments
+  The A2IrO3 (A=Na, Li) family of honeycomb iridates                          in Na2IrO3  and its extension is indeed necessary to de-
+has attracted a lot of attention as these compounds have                      scribe the magnetic order in real materials [38, 39].  For
+t2g  orbital  degree  of  freedom  and  lie  close  to  the  ex-              example,  bond-anisotropic  interactions  associated  with
+actly  solvable S  =  1/2  Kitaev  model  [23].   This  model                 the trigonal distortions have to play a role to explain the
+has a number of remarkable features,  including the ab-                       diﬀerences  between  Na2IrO3  and  Li2IrO3  [40],  the  two
+sence of any symmetry breaking in its quantum Kitaev                          compounds with quite diﬀerent behavior reminiscent of
+spin-liquid  (KSL)  ground  state,  with  gapless  Majorana                   the  unsolved  problem  of  NaNiO2  and  LiNiO2  in  spin-
+fermions  [23]  and  extremely  short-ranged  spin  correla-                  orbital physics [19].  On the other hand, the KH model
+                                                                                                                                                  2
+
+might  be  applicable  in  another  honeycomb  magnet α-                    problem obtained within the CMFT is introduced in Sec.
+RuCl3, see e.g.  a recent study of its spin excitation spec-                III C. The numerical results are presented and discussed
+trum [41].                                                                  in  Sec.   IV:  (i)  the  phase  transitions  and  the  phase  di-
+  Understanding the consequences of frustrated Heisen-                      agram  are  introduced  in  Sec.   IV A,  and  (ii)  the  phase
+berg interactions on the honeycomb lattice is very chal-                    boundaries, the values of the ground state energies and
+lenging and has stimulated several studies [42–44].  The                    the magnetic moments obtained by diﬀerent methods are
+KH  model  itself  is  highly  nontrivial  and  poses  an  even             presented and discussed in Secs.  IV B and IV C, and (iii)
+more interesting problem in the theory [25, 34, 45, 46]:                    we  discuss  the  compatibility  of  the  Kitaev  interaction
+Kitaev  term  alone  has  intrinsic  frustration  due  to  di-              with diﬀerent spin ordered states in Sec.  IV C. Spin cor-
+rectional  Ising-like  interactions  between  the  spin  com-               relations obtained for various phases are presented in Sec.
+ponents  selected  by  the  bond  direction  [23].   In  addi-              V. The dynamical spin susceptibility and spin structure
+tion,  these  interactions  are  disturbed  by  nearest  neigh-             factor are presented for diﬀerent phases in Sec.  VI. Fi-
+bor Heisenberg exchange which triggers long-range order                     nally,  in Sec.  VII we present the main conclusions and
+(LRO) suﬃciently far from the Kitaev points [25, 34, 45,                    short  summary.   The  paper  is  supplemented  with  Ap-
+46].   In  general,  ferromagnetic  (FM)  and  antiferromag-                pendix where we explain the advantages of the lineariza-
+netic (AF) interactions coexist and the phase diagram of                    tion procedure implemented on the CMFT on the exam-
+the KH model is quite rich as shown in several previous                     ple of a single hexagon.
+studies [25, 34, 45–48].  Finally, the KH model has also a
+very interesting phase diagram on the triangular lattice                             II.    KITAEV-HEISENBERG MODEL
+[49–52].  These studies motivate better understanding of
+quantum eﬀects in the KH model on the honeycomb lat-
+tice in the full range of its competing interactions.                          We start from the KH Hamiltonian with nearest neigh-
+  The ﬁrst purpose of this paper is to revisit the phase                    bor interactions on the honeycomb lattice in a form,
+diagram  of  the  KH  model  and  to  investigate  it  further                            H≡K ∑           Sγ                Si· Sj,          (2.1)
+by combining exact diagonalization (ED) result [34] with                                                    iSγj  +J∑
+                                                                                                    ⟨ij⟩‖γ             ⟨ij⟩
+the  self-consistent  cluster  mean  ﬁeld  theory  (CMFT),                  where γ  = x,y,z  labels the bond direction.  The Kitaev
+supplemented by the insights from the linear spin-wave                      term∝K favors local bond correlations of the spin com-
+(LSW)  theory  and  the  second–order  perturbation  the-                   ponent interacting on the particular bond.  The superex-
+ory  (SOPT).  The  main  advantage  of  CMFT  is  that  it                  change J  is  of  Heisenberg  form  and  alone  would  gen-
+goes beyond a single site mean ﬁeld classical theory and                    erate  a  LRO  state,  antiferromagnetic  or  ferromagnetic,
+gives  not  only  the  symmetry-broken  states  with  LRO,                  depending  on  whether J >  0  or J <  0.   We  ﬁx  the
+but  also  includes  partly  quantum  ﬂuctuations,  namely                  overall  energy  scale, J2 +K2  =  1,  and  choose  angular
+the ones within the considered clusters [42, 53].  In this
+way the treatment is more balanced and may allow for                        parametrization
+disordered states in cases when frustration of interactions                                              K = sinϕ,                             (2.2)
+dominates.  We present below a complete CMFT treat-                                                      J = cosϕ,                             (2.3)
+ment of the phase diagram which includes also the Kitaev
+term in MF part of the Hamiltonian and covers the en-                       varying ϕ   within   the   interval ϕ ∈   [0, 2π].      This
+tire parameter space (in contrast to the earlier prototype                  parametrization exhausts all the possibilities for nearest
+version of CMFT calculation on a single hexagon for the                     neighbor interactions in the KH model.
+KH model [54]).  Note that the CMFT complements the                            While zigzag AF order was observed in Na2IrO3  [28–
+ED which is unable to get symmetry breaking for a ﬁnite                     32],  its  microscopic  explanation  has  been  under  debate
+system, but nevertheless can be employed to investigate                     for a long time.  The ab initio  studies [55, 56] give mo-
+the phase transitions in the present KH model by eval-                      tivation to investigate a broad regime of parameters K
+uating the second derivative of the ground state energy                     (2.2)  and J  (2.3).   Further  motivation  comes  from  the
+to  identify  phase  transitions  by  its  characteristic  max-             honeycomb magnet α-RuCl3  [41].  Note that we do not
+ima  [25,  34].   ED  result  can  be  also  used  to  recognize            intend to identify the parameter sets representative for
+the type of magnetic order by transforming to reciprocal                    each  individual  experimental  system,  but  shall  concen-
+space and computing spin-structure factor.  The second                      trate instead on the phase diagram of the model Eq. (2.1)
+purpose is to investigate further the diﬀerence between                     with nearest neighbor interactions only.
+quantum KSL regions around both Kitaev points men-
+tioned in Ref.  [34] and LRO/KSL boundaries.
+  The paper is organized as follows:  In Sec.  II we intro-                             III.    CALCULATION METHODS
+duce  the  KH  model  and  deﬁne  its  parameters.   In  Sec.
+III we present three methods of choice:  (i) the exact di-                                    A.    Exact diagonalization
+agonalization in Sec.  III A, (ii) the self-consistent CMFT
+in  Sec.   III B,  and  (iii)  linear  spin  wave  theory  in  Sec.            We  perform  Lanczos  diagonalization  for N  =  24-site
+III D. An eﬃcient method of solving the self-consistence                    cluster  with  periodic  boundary  conditions  (PBC).  This
+                                                                                                                                                       3
+
+cluster respects all the symmetries of the model, includ-
+ing hidden ones.  Among the accessible clusters it is ex-
+pected to have the minimal ﬁnite-size eﬀects.
+
+
+               B.    Cluster mean ﬁeld theory
+
+  A method which combines ED with an explicit break-
+ing  of  Hamiltonian’s  symmetries  is  the  so-called  self-
+consistent CMFT. It has been applied to several models
+with  frustrated  interactions,  including  Kugel-Khomskii
+model  [53].   The  method  was  also  extensively  used  by
+Albuquerque et al.  [42] as one of the means to establish
+the full phase diagram of Heisenberg-J2-J3 model on the
+honeycomb lattice.
+  Within CMFT the internal bonds of the cluster [con-
+necting the circles in Fig.  1(a)] are treated exactly.  The
+corresponding part HIN  of the Hamiltonian is the near-
+est neighbor KH Hamiltonian, Eq.  (2.1).  The external
+bonds that connect the boundary sites (•) with the corre-
+sponding boundary sites of periodic copies of the cluster
+(2) are described by the MF part of the Hamiltonian,                          FIG. 1.  (a) 24-site cluster and the introduction of the mean
+            HMF≡K ∑            ⟨Szi⟩Szj +J∑⟨Szi⟩Szj,        (3.1)             ﬁelds.  Gray (black) circles indicate internal (boundary) sites.
+                         [ij]‖z                [ij]                           In  CMFT  the  internal  bonds  of  the  cluster  are  treated  ex-
+                                                                              actly while the external bonds crossing the cluster boundary
+where [ij] marks the external bonds.  Since the ordered                       (dashed) are treated on the MF level.  The sites marked by
+moments in KH model align always along one of the cubic                       2 generate an eﬀective magnetic ﬁelds on the boundary sites
+axes x, y, z (see e.g.  Ref. [25]) we have put                                •.  Labels x, y and z stand for three inequivalent bond direc-
+                                                                              tions determining the active productsSγiSγj  in Kitaev part of
+                                                                              the  Hamiltonian  (2.1),  e.g.   bonds  of x  direction  contribute
+                         ⟨⃗Si⟩·⃗Sj≡⟨Szi⟩Szj                       (3.2)       with the SxiSxj  product to the Hamiltonian.  The pseudospin
+                                                                              axes used here are parallel to the cubic axes indicated in the
+in HMF to simplify the calculations.                                          top  view  of  a  single  octahedron.   (b)  Unit  cells:  for  honey-
+  The  averages⟨Szi⟩  generate  eﬀective  magnetic  ﬁelds                     comb lattice (coinciding with single hexagon of that lattice),
+acting  on  the  boundary  sites  of  the  cluster.   The  total              for triangular lattice (inner dotted hexagon) and zigzag mag-
+Hamiltonian                                                                   netic  unit  cell  (dashed  rectangle).   Black  and  white  circles
+                                                                              indicate  one  of  three  equivalent  zigzag  patterns.   (c)  Corre-
+                         H≡HIN +HMF,                       (3.3)              sponding Brillouin zones and special q  points for the lattice
+                                                                              constant a = 1.
+is diagonalized in a self-consistent manner, taking slightly
+diﬀerent approach than the one presented in Ref.  [42]:                       point of such a mapping.  To ﬁnd the leading instability,
+instead  of  starting  with  random  wave  function  our  al-                 we may consider the case of small initial averages in the
+gorithm  begins  with  expectation  values⟨Szi⟩ini  on  each                  CMFT calculation and identify the pattern characterized
+boundary  site i  of  the  cluster.   These  can  represent  a                by the fastest growth during the iterations.  To this end
+certain pattern (zigzag, stripy, N´eel, FM) or be set ran-                    we linearize the above mapping.
+domly to have a “neutral” starting point.  After diago-                          In  the  lowest  order  the  mapping  corresponds  to  the
+nalizing the Hamiltonian (3.3) (again by the ED Lanczos                       multiplication of the vector of the averages{⟨Szi⟩in} by
+method) the ground state of the system is obtained and                        the matrix,
+we recalculate the expectation values⟨Szi⟩ to be used in
+the  second  iteration.   The  procedure  is  repeated  until                                            Fij = ∂⟨Szi⟩ﬁn
+self-consistency is reached.                                                                                      ∂⟨Szj⟩in,                         (3.4)
+
+                                                                              where i  and j  run  through  the  cluster  boundary  sites.
+        C.    Linearized cluster mean ﬁeld theory                             During iterations, the patterns corresponding to the in-
+                                                                              dividual eigenvectors of the matrix F  grow as λn, where
+  A single iteration of the self-consistent MF calculation                    λ  is  a  particular  eigenvalue  and n  is  the  number  of  it-
+may be viewed as a nonlinear mapping of the set of ini-                       erations.   The  ordering  pattern  obtained  by  CMFT  is
+tial averages{⟨Szi⟩in} to the resulting averages{⟨Szi⟩ﬁn}.                    then given by the eigenvector with largest λmax > 1.  In
+The  self-consistent  solution  is  then  a  stable  stationary               the  quantum  KSL  regimes,  all  the  eigenvalues  are  less
+                                                                                                                                                 4
+
+                                                                           formations.
+                                                                              While the spin wave dispersion relations are usually of
+                                                                           prime interest [25, 29, 34, 59],  there are also two other
+                                                                           quantities which can easily be calculated using LSW and
+                                                                           which  will  be  important  in  the  discussion  that  follows:
+                                                                           (i) the value of the total ordered moment⟨M⟩ per site,
+                                                                           and (ii) the total energy per site⟨E⟩.  These observables
+                                                                           are calculated in a standard way [57, 58] and expressed
+                                                                           in terms of the eigenvalues, i.e., spin-wave energies ωkα,
+                                                                           and  the  eigenvector  components  (vkαλ)  of  the  bosonic
+                                                                           Hamiltonian before the Bogoliubov transformation:
+                                                                                                       ∑        ∫
+                                                                                ⟨M⟩ =S−   1LV
+                                                                                                    α,λ=1,...,L  k∈BZ|vkα,λ|2 d2k,     (3.5)
+
+                                                                           and
+                                                                                    ⟨E⟩ =Eclass [S2→S(S + 1)]∫
+                                                                                            +  S         ∑
+FIG. 2.     (a) The values of λ obtained by the linearization                                  2LV    α=1,...,L  k∈BZωkα d2k,           (3.6)
+of CMFT for an embedded cluster of N = 24 sites with ﬁxed
+magnetic order patterns: FM, AF, stripy, and zigzag. Leading               where  the  choice  of  the  sign  of  the  eigenvalues  and
+λ > 1 indicates the order that sets in.  The disordered KSL                the  normalization  of  their  eigenvectors  is  described  in
+phase  is  indicated  by  the  red  color.   (b)  Second  derivative       Ref. [57].  HereEclass is the classical ground state energy
+of the ground state energy,−d2E0(ϕ)/dϕ2, obtained by ED.                   per site, e.g.
+Adopted from Ref. [34].
+                                                                                                   Eclass =−JzS2/2,                      (3.7)
+than 1 and no magnetic order emerges.  An example of                       with z  =  3  for  the  N´eel  phase  at K  =  0  and S  =  1/2
+linearized CMFT applied to a single hexagon with PBC                       is the value of spin quantum number. L in Eqs.  (3.5)-
+can be found in the Appendix.                                              (3.6)  is  the  number  of  the  eigenvalues  of  the  problem
+  A modiﬁed version of this method, used to obtain Fig.                    (spin-wave modes) and α enumerates these modes.  For
+2(a), assumes a particular ordered pattern (N´eel, zigzag,                 all  cases  except  for  the  zigzag  order  [25],  the  integrals
+FM, or stripy phase) and uses a single spin average⟨Sz⟩in                  go  over  the  two-sublattice  (L  =  2)  rectangular  Bril-
+distributed along the boundary sites outside the cluster,                  louin zone (BZ) [60] with its volume V  = 8π2/3√3 and
+with the signs consistent with this pattern.  The resulting                −π/√3≤ kx≤ π/√3,−2π/3≤ ky≤ 2π/3 (as already
+values,⟨Szi⟩ﬁn, are then averaged correspondingly. In this                 mentioned  we  assume  the  lattice  constant a  =  1).   For
+case the matrixF is reduced to a single valueλ plotted in                  the  zigzag  state L  =  4  and  the  rectangular  BZ  can  be
+Fig.  2(a).  We observe that the largest eigenvalue either                 chosen as: −π/√3≤kx≤π/√3 and−π/3≤ky≤π/3
+drops below 1 when the disordered KSL state takes over,                    and its volume is V  = 4π2/3√3.
+or interchanges with another eigenvalue corresponding to
+a diﬀerent ordered phase.
+                                                                                  IV.    QUANTUM PHASE TRANSITIONS
+
+                D.    Linear spin-wave theory                                                     A.    Phase diagram
+
+  The LSW method is a basic tool to determine spin ex-                        Here we supplement the ED–based phase diagram for
+citations and quantum corrections in systems with long-                    the KH model established in Ref. [34] with the one ob-
+range order [57]. For systems with coexisting AF and FM                    tained within CMFT. Figure 3 displays the phase bound-
+bonds quantum corrections are smaller than for the N´eel                   aries  obtained  with  ED  [34],  within  CMFT,  as  well  as
+phase but are still substantial forS = 1/2 spins [58].  For                classical  (Luttinger-Tisza)  phase  boundaries.   The  lat-
+the KH model the LSW theory [25, 29, 34] has to be im-                     ter  are  included  for  completeness  and  to  highlight  the
+plemented separately for each of the four ordered ground                   fact  that  the  quantum  ﬂuctuations  stabilize  the  KSL
+states:  N´eel (N), zigzag (ZZ), FM, or stripy (ST). Then                  phases  beyond  single  points,  see  below.    To  examine
+for a particular ground state the Hamiltonian is rewrit-                   them in more detail it is instructive to analyze the data
+ten  in  terms  of  the  Holstein-Primakoﬀ  bosons  [29,  59]              in Fig. 2(a) for the boundaries obtained from linearized
+and only quadratic terms in bosonic operators are kept.                    CMFT and Fig. 2(b) for the peaks in the second deriva-
+The spectrum of such quadratic Hamiltonian is ﬁnally ob-                   tive of energy,−d2E0(ϕ)/dϕ2,  giving phase boundaries
+tained using the successive Fourier and Bogoliubov trans-                  in ED [34].
+                                                                                                                                                  5
+
+                                                                            ﬁnite  intervals  of ϕ  when  quantum  ﬂuctuations  are  in-
+                                                                            cluded, see the second, third and fourth column in Table
+                                                                            I. The expansion of N´eel and zigzag phases beyond clas-
+                                                                            sical boundaries is given by particularly large corrections
+                                                                            and is well visible.
+                                                                               The most prominent feature in the phase diagram de-
+                                                                            scribed  above  is  however  the  diﬀerence  in  size  between
+                                                                            two KSL regions, already addressed before using ED [34]
+                                                                            and also visible now in the CMFT data.  Therefore, the
+                                                                            CMFT result supports the claim from Ref.  [34] that the
+                                                                            stability  of  KSL  perturbed  by  relatively  small  Heisen-
+                                                                            berg  interaction  depends  on  the  nature  of  the  phases
+                                                                            surrounding the spin liquid and the amount of quantum
+                                                                            ﬂuctuations  that  they  carry.   In  the  following  we  dis-
+                                                                            cuss  the  above  issues  more  thoroughly,  examining:   (i)
+                                                                            ground state energy curves emerging from ED, CMFT,
+                                                                            SOPT within the linked cluster expansion and LSW, (ii)
+                                                                            the ordered moment given by various methods, (iii) the
+                                                                            spin–spin correlation functions, and (iv) the spin struc-
+                                                                            ture factor as well as the dynamical spin susceptibility in
+                                                                            the vicinity of the Kitaev points.
+FIG.  3.      T=  0  phase  diagram  for  KH  model.   The  outer
+ring is composed from ED data for the 24-site cluster, repro-
+ducing the result from Ref.  [34] in the new parametrization,
+the middle ring shows CMFT results also for 24-site cluster
+and the inner black circle represents the classical result.  The                       B.    Quantum corrections:  energetics
+convention  used  for  the  angular  parameter ϕ  which  deter-
+mines coupling constants [see Eqs.  (2.2) and (2.3)] is shown
+in  the  center  of  the  inner  circle.   The  colors  represent  par-        We  start  the  discussion  of  quantum  corrections  to
+ticular phases, shown also as mini-drawings next to suitable                the  energy  of  the  ordered  phases  by  noting  that,  even
+regions  of  the  phase  diagram.   Starting  from ϕ  =  0  green
+colored region corresponds to N´eel order, red — KSL, yellow                though it properly captures ﬁnite order parameters, the
+— zigzag order, dark blue — FM, red — KSL, light blue —                     CMFT  looses  quantum  energy  on  the  external  bonds
+stripy phase and again green — N´eel phase.                                 and does not therefore provide a reliable estimate of the
+                                                                            ground-state  energy.   Instead,  the  energy  obtained  us-
+                                                                            ing  the  ED  calculations  [see  Fig.   4(a)]  will  be  treated
+  It is clearly visible that all the methods that include                   as  a  reference  value.    This  is  supported  by  the  fact
+quantum ﬂuctuations give quantum versions of the four                       that  the  ED  phase  boundaries  were  roughly  conﬁrmed
+classically established magnetic phases: N´eel, zigzag, FM                  by tensor networks (iPEPS) [48] and DMRG results [47]:
+and  stripy.   As  the  most  important  eﬀect  we  note  that              While the iPEPS phase boundaries agree with ED for AF
+when quantum ﬂuctuations are included within a classi-                      KSL/LRO transitions and the boundaries between diﬀer-
+cal phase,  the energy is generally lowered and that the                    ent LRO phases diﬀer only slightly from those found in
+emerging phase is expected to expand beyond the classi-                     ED (iPEPS: zigzag/FM – 0.808π, stripy/N´eel – 1.708π),
+cal boundaries, but only in case if a phase which competes                  for  FM  KSL/LRO  transition  however  the  iPEPS  re-
+with  it  has  weaker  quantum  ﬂuctuations.   This  implies                sult KSL/stripy – 1.528π).  On the other hand, DMRG
+that phases of AF nature will expand at the expense of                      boundaries  agree  perfectly  with  ED  and  due  to  four–
+the FM ones as the latter phases have lower energy gains                    sublattice dual transformation [10, 25] one can reproduce
+by quantum ﬂuctuations (which even vanish exactly for                       the FM/zigzag as well as FM/KSL boundaries.  Only the
+the FM order at K = 0 and J < 0).                                           extent of the AF spin-liquid phase cannot be extracted
+  We summarize the phase boundaries obtained within                         from this result, but that is already conﬁrmed by iPEPS.
+diﬀerent methods in Table I. One ﬁnds substantial cor-                         Fig.  4(a) shows a quite remarkable agreement between
+rections to the quantum phase transitions which follow                      the energy values and critical values ofϕ obtained by the
+from quantum ﬂuctuations.  These corrections are quite                      simplest SOPT [25] and our reference ED results.  This
+substantial in both KSLs at the Kitaev points (K = +1,                      suggests  that  this  analytical  method  can  be  utilized  to
+ϕ =  12π and K =−1, ϕ =  32π, ﬁrst column of Table I).                      get  better  insight  to  the  quantum  contributions  to  the
+Indeed,  in  the  classical  approach  massively  degenerate                ground state energy.  For the four phases with LRO, the
+ground states exist just at isolated points but they are                    energy per siteE, written as a sum of the classical energy
+replaced by disordered spin-liquid states that extend to                    Eclass  and the quantum ﬂuctuation contribution ∆E, is
+                                                                                                                                                      6
+
+
+TABLE  I.  Phase  boundaries  for  KH  model,  parameterized
+by  the  angle ϕ  (in  units  of π),  see  Eqs.   (2.2)  and  (2.3).
+Columns:   classical  Luttinger-Tisza  approximation,  second–
+order  perturbation  theory,  exact  diagonalization,  and  self–
+consistent cluster mean ﬁeld theory.
+
+ boundary          classical         SOPT          ED          CMFT
+ N´eel/KSL              0.5             0.492         0.494          0.493
+KSL/zigzag             0.5             0.507         0.506          0.505
+ zigzag/FM            0.75             0.813         0.814          0.825
+  FM/KSL               1.5             1.463         1.448          1.481
+KSL/stripy             1.5             1.530         1.539          1.517
+stripy/N´eel            1.75             1.705         1.704          1.699
+
+
+obtained as:
+
+               EN =−18(K + 3J)−  116(K + 3J),         (4.1)
+
+              EZZ =−18(K−J)−  116(K−J),             (4.2)
+             EFM = +1                            K2
+                         8(K + 3J) +  116      K + 2J,           (4.3)
+             EST = +1                        (K + 2J)2
+                         8(K−J) +  116            K   .         (4.4)
+In addition, to get the LRO/KSL phase boundary points
+in Table I, we estimate the energy of the KSL phase as
+
+                EKSL≃ 32(K +J)⟨SγSγ⟩Kitaev,            (4.5)                  FIG. 4.    (a) Comparison between ground state energies per
+                                                                              site obtained using various methods: classical Luttinger-Tisza
+using  the  analytical  result  for  the  Kitaev  points  [24],               approximation  (dashed  black),  SOPT  (solid  red),  LSW  ap-
+⟨SγSγ⟩Kitaev≈±0.131.                                                          proximation (dashed red), ED for 24-site cluster (solid blue,
+  The two spin-liquid phases in the phase diagram of KH                       see  [34]  for  this  result  in  a  diﬀerent  parametrization),  and
+model diﬀer strongly in their extent, despite the formal                      CMFT  (solid  green).   (b)  Ordered  moment  value  obtained
+equivalence  of  the  FM  and  AF  Kitaev  points  provided                   from  CMFT  (green  line)  and  LSW  (dashed  red  line).   For
+by an exact mapping of the Hamiltonian [23].  As men-                         CMFT the values were obtained by averaging±⟨Szi⟩ over the
+tioned earlier, this is due to the fact that the two KSLs                     boundary sites, with the signs determined by the particular
+compete with LRO phases of a distinct nature.  Here we                        type of magnetic order.
+give a simple interpretation based on the strength of the
+quantum corrections of the LRO phases estimated using
+(4.1)–(4.4).  Later,  in Secs.  V and VI we illustrate the                    point the contribution of quantum ﬂuctuations decreases
+diﬀerent nature of the transitions between FM and AF                          rapidly  allowing  for  large  extent  of  the  FM  spin-liquid
+KSL and the surrounding it LRO phases in terms of spin                        phase. Note, that both these latter phases contain a point
+correlations and spin dynamics.                                               which is exactly ﬂuctuation free — for FM phase when
+  Let us  now  compare the  quantum ﬂuctuation  contri-                       frustration is absent (K  = 0), and for stripy phase it is
+bution and the classical one.  For the LRO phases sur-                        related to the FM one by the interaction transformation
+rounding  the  AF  spin  liquid  —  N´eel  and  zigzag  —  we                 [39] at K =−2J.
+always have ∆E/Eclass =  12  as deduced from Eqs.  (4.1)                         Moving  to  the  CMFT  energy  analysis  (green  line  in
+and (4.2), i.e., only  23EN and  23EZZ are found in the clas-                 Fig. 4(a)) one should also keep in mind that within the
+sical approach.  This guarantees that the quantum phase                       CMFT method the external bonds between⟨Szi⟩ andSzj
+transition between these two types of order occurs at the                     do not include quantum ﬂuctuations fully.  This implies
+same  value  of ϕ  = π/2  in  SOPT  and  in  the  classical                   worse  estimate  of  the  energy  for  regions  of  the  phase
+approach  that  do  not  capture  the  spin-liquid  phase  in                 space that allow quantum ﬂuctuations.  As a consequence
+between these ordered states, see Fig. 4(a).  In contrast,                    the region of stability of FM spin-liquid phase is smaller
+the phases neighboring to the FM spin liquid — FM and                         than that obtained in the ED. Finally, the estimates ob-
+stripy — would reach the value of ∆E/Eclass  =  12  only                      tained from LSW, which represents a harmonic approxi-
+at the FM Kitaev point with J  = 0 and away from this                         mation to the quantum ﬂuctuations, are typically better
+                                                                                                                                                 7
+
+than those from the CMFT but not as good as those from                      ﬂuctuation–free point atϕ =π (FM) andϕ =− arctan 2
+SOPT, see dashed red lines in Fig.   4(a).  As expected,                    (stripy) and predicts a broader region of FM KSL phase
+the  LSW  energy  ﬁts  well  with  ED  curve  for  FM  and                  [46].  The order parameter is also qualitatively correctly
+stripy phases with less quantum ﬂuctuations and starts to                   estimated and is reduced more to m≃ 0.3 for both N´eel
+diverge when beyond quantum phase transitions within                        and zigzag phases [46].  However, while the ordered mo-
+N´eel and zigzag phases.                                                    ment values obtained by CMFT are consistent with the
+                                                                            four–sublattice dual transformation, the ordered moment
+                                                                            data  from  the  high–order  perturbation  theory  [46]  are
+      C.    Quantum corrections:  ordered moment                            not,  as  the  ordered  moment  values  diﬀer  at  the  points
+                                                                            connected  by  the  mapping.   Unfortunately  the  largest
+  As usual, getting the correct value of the ordered mo-                    diﬀerence  appears  near  the  FM  LRO/KSL  boundaries.
+ment turns out to be a more diﬃcult task than estimat-                      This observation uncovers certain limits of the high–order
+ing  the  ground  state  energy.   This  is  primarily  due  to             perturbation theory.
+the  fact  that  the  ED  does  not  capture  the  symmetry-
+broken states and the ordered moment can only be indi-                         D.    Quantum corrections:  naive interpretation
+rectly extracted from the m2; moreover, the SOPT may
+not be reliable here.  Hence, we are mostly left with the
+results obtained with CMFT and LSW. We discuss the                             Let us conclude the discussion of the quantum correc-
+corresponding data [shown in Fig. 4(b)] together with the                   tions  with  the  following  more  general  observation:  De-
+several values given already in the literature.                             veloping the argumentation presented by Iregui, Corboz,
+  Let  us  begin  with  the  Heisenberg  AF  point ϕ  =  0:                 and Troyer [48], the dependence of the quantum correc-
+here it is expected that the ordered moment should be                       tion  to  the  energy  and  to  the  ordered  moment  on  the
+strongly reduced by quantum ﬂuctuations.  LSW approx-                       angleϕ suggests that the Kitaev interaction is less “com-
+imation  estimates  the  ordered  moment  value  at  0.248                  patible” with the FM/stripy ground states than with the
+[60].   Similar  values  were  extracted  from m2  in  quan-                N´eel/zigzag ones.  This can be understood in the simple
+tum  Monte  Carlo  (0.268  [61–63])  and  ED  calculations                  picture of the KH model on a 4-site segment of the hon-
+(0.270 [42]).  In the last case however the authors admit                   eycomb  lattice  consisting  of  three  bonds  attached  to  a
+that the set of clusters for ﬁnite size scaling was chosen                  selected lattice site, as presented below.
+so as to make the best agreement with quantum Monte                            Starting with ϕ =π (FM ground state.  e.g.  along the
+Carlo.  Another method — series expansion (high order                       z quantization axis) and increasingϕ leads to an addition
+perturbation theory) [46] sets ordered moment value at                      of the FM Kitaev term,  which favors FM-aligned spins
+a somewhat higher value of 0.307.  While all the above                      along thex,y, andz quantization axes for thex,y, andz
+results  seem  roughly  consistent,  CMFT  value  seems  to                 directional bonds, respectively. It can easily be seen that,
+stand  out  (0.374  for ϕ  =  0).   Nevertheless,  one  should              e.g.  for thex bond, the eigenstate of the FM Kitaev-only
+note  that  the  ordered  moment  estimated  from m2  for                   Hamiltonian on that bond (|↑x↑x⟩) has a 25% overlap
+24–site  cluster  ED  equals  0.45  [42]  which  is  above  the             with  the  FM  ground  state, |⟨↑z↑z | ↑x↑x⟩|2  =   14.   In
+CMFT value.  This suggests that at this point the ﬁnite                     contrast, while a similar situation happens for they bond,
+size scaling is important.                                                  for  the z  bond  there  is  a  100%  overlap  between  such
+  Before transferring to the frustrated regime we brieﬂy                    states.
+mention  that  the  the  trivial  ordered  moment  value  at                   Next,  we  perform  a  similar  analysis  for ϕ  =  0  and
+ϕ = π is here correctly reproduced by both CMFT and                         ﬁrstly assume that we have a classical ground state.  In
+LSW. Besides, for the regions around the ﬂuctuation–free                    this  case  for  the  “unsatisﬁed”  bonds  from  the  point  of
+FM (and stripy) point the ordered moments predicted by                      view of the increasing AF Kitaev interaction we also ob-
+CMFT and LSW also match.  Following the ground state                        tain that the eigenstate of the AF Kitaev-only Hamilto-
+energy  analysis,  LSW  gives  the  correct  result  because                nian (|↑x↓x⟩) on that bond has a 25% overlap with the
+quantum ﬂuctuations contribution is small compared to                       classical N´eel ground state — e.g.: |⟨↑z↓z|↑x↓x⟩|2 =  14.
+the  classical  state.   The  further  we  move  towards  the               However, this situation changes once we consider that the
+Kitaev points, however, the more incorrect the LSW ap-                      spin quantum ﬂuctuations dress the classical N´eel ground
+proximation should be because of the strong reduction of                    state.   This  can  be  best  understood  if  we  assumed  the
+the ordered moment due to the growing frustration.                          unrealistic  but  insightful  case  of  very  strong  quantum
+  In contrast, the lack of quantum ﬂuctuations on the ex-                   ﬂuctuations  destroying  the  classical  N´eel  ground  state:
+ternal bonds makes CMFT steadily biased except for FM                       then  for  the x  bond  a  singlet  could  be  stabilized  and
+and stripy phases.  However,  since for the internal part                   the overlap between such a state and the state “favored”
+of the cluster the ﬂuctuations are still fully included, the                by the Kitaev term increases to 50%: |⟨0|↑x↓x⟩|2  =  12.
+frustration  should  be  well  handled  and  CMFT  should                   This suggests that the N´eel ground state, which contains
+give  more  predictable  results  than  LSW  in  frustrated                 quantum  spin  ﬂuctuations,  is  more  “compatible”  with
+parts  of  the  phase  diagram.   Here  it  is  also  important             the  states  “favored”  by  the  Kitaev  terms  than  the  FM
+to stress, that the series expansion captures correctly the                 ground state, resulting in more stable values of ordered
+                                                                                                                                                 8
+
+                                                                            complementary components (red curve).  In contrast, the
+                                                                            next nearest and further neighbor correlations disappear,
+                                                                            see Figs.  5(b) and 5(c).  While moving away from the Ki-
+                                                                            taev points the absolute values of the correlations enter
+                                                                            the regions of slow growth — these are signatures of the
+                                                                            critical  spin-liquid  phases  and  they  look  similar  in  AF
+                                                                            and FM spin liquid cases.  At some point however pro-
+                                                                            ceeding further results in rapidly growing absolute values
+                                                                            which mark KSL/LRO boundaries.
+                                                                               Furthermore,  Figs.    5(b)  and  5(c)  prove  that  there
+                                                                            is  a  qualitative  diﬀerence  between  the  two  spin-liquid
+                                                                            regimes.   This  is  observed  in  the  rapid  growth  of  spin
+                                                                            correlations at the onset of LRO: step-like jump visible
+                                                                            in  Fig.   5(b)  contrasts  with  smoother  crossover  seen  in
+                                                                            Fig.   5(c).   Below  we  investigate  this  distinct  behavior
+                                                                            by analyzing the dynamical spin susceptibility for vari-
+                                                                            ous available phases.  After Fourier transformation of the
+                                                                            z–component correlations,  we obtain the spin structure
+                                                                            factor to be discussed in the context of the spin suscep-
+                                                                            tibility also in Sec. VI.
+
+
+                                                                                      VI.    SPIN SUSCEPTIBILITY AND
+                                                                                EXCITATIONS IN THE VICINITY OF THE
+FIG. 5.    (a) Spin correlations⟨Si· Sj⟩ obtained within ED                                        KITAEV POINTS
+
+for  the  bonds  between  nearest  neighbors  (black  line),  spin             Below  we  study  the  spin  dynamics  within  the  KH
+correlations  of  the  components  active  in  the  Kitaev  inter-          model by analyzing the dynamical spin susceptibility at
+action,⟨SγiSγj⟩ (blue line), and complementary spin compo-
+nents,⟨S¯γ                                                                  T  = 0,
+          iS¯γj⟩ (red line).  Below further neighbor spin correla-
+tions|⟨Si·Sj⟩| are shown:  (b) near the AF spin-liquid phase,                                    ∫ ∞   ⟨Φ0|[Sαq (t),Sα−q(0)]⏐⏐ Φ0⟩ eiωt dt,
+and (c) for the angle ϕ interval including the FM spin-liquid                   χαα(q,ω) =i
+phase.                                                                                             0                                         (6.1)
+
+                                                                            with the Fourier-transformed spin operator deﬁned via
+moment for N´eel phase.  It seems that the above diﬀer-                                                √     ∑
+ence is visible in CMFT data but not in LSW ones.  We                                           Sαq  =    1N      e−iq·RSαR                   (6.2)
+shall discuss this issue further by analyzing spin correla-                                                   R
+tions below.                                                                and|Φ0⟩ denoting the cluster ground state.  For ω > 0,
+                                                                            the imaginary part of χ(q,ω) reads as
+
+               V.    SPIN CORRELATIONS                                       χ′′αα(q,ω) =−Im⟨Φ0|Sαq               1
+                                                                                                             ω +EGS−H +iδ Sα−q|Φ0⟩,
+  Additional information about the ground state is given                                                                                     (6.3)
+by spin–spin correlation functions.  In Fig.   5(a) one can                 which can be conveniently expressed as a sum over the
+observe isotropic stable⟨Sγ                                                 excited states{|ν⟩},
+                                iSγj⟩ correlations in almost the
+entire AF phase (⟨Si· Sj⟩≈−0.36 for ϕ = 0), while for                            χ′′αα(q,ω) =π∑         |⟨ν|Sα−q|Φ0⟩|2δ(ω−Eν),       (6.4)
+FM phase the anisotropy quickly develops when moving                                                |ν⟩
+away from FM Heisenberg point ϕ = π  (here⟨Si· Sj⟩
+reaches the classical value 0.25). This again demonstrates                  where  the  excitation  energy Eν   is  measured  relative
+that the AF (and zigzag) phase is more robust and uni-                      to  the  ground  state  energy EGS.    We  have  evaluated
+form than FM (and stripy) phase.                                            χαα(q,ω)  by  ED  on  a  hexagonal  cluster  of N   =  24
+  Moreover,  spin-spin  correlations  allow  us  to  conﬁrm                 sites.   In  the  ED  approach,  the  exact  ground  state  of
+the disordered regions around the Kitaev points as crit-                    the cluster|Φ0⟩ is found by Lanczos diagonalization, the
+ical  cases  of  quantum  spin  liquid  [64].   At  the  Kitaev             operator Sα−q  is  applied,  and  the  average  of  the  resol-
+points we observe the expected undisturbed KSL pattern:                     vent 1/(z−H) is determined by Lanczos method using
+non–zero values of nearest neighbor correlations between                    normalized Sα−q|Φ0⟩ as a starting vector [65].
+spin  components  active  in  the  Kitaev  interaction  (blue                  In our case of the KH model, the calculation generally
+curve in Fig.    5(a)) and vanishing correlations between                   requires a relatively large number of Lanczos steps (up
+                                                                                                                                                   9
+
+                                                                            of the individual LRO phases.  The structure factor pat-
+                                                                            tern, see Figs. 6(c) and 6(f), changes accordingly between
+                                                                            the sharply peaked one in LRO phases and a wave-like
+                                                                            form  characteristic  for  nearest  neighbor  correlations  in
+                                                                            the spin-liquid phases.
+                                                                               After entering the spin-liquid phase, further changes of
+                                                                            the spin response are very diﬀerent for the AF and FM
+                                                                            case.  In the AF case, there is a sharp transition — a level
+                                                                            crossing at our cluster, so that the ground state changes
+                                                                            abruptly.   The  original  intense  pseudo-Goldstone  mode
+                                                                            as well as many other excited states become inactive in
+                                                                            the spin-liquid phase.  The observed low–energy gap in
+                                                                            χ′′ varies only slightly with ϕ.
+                                                                               In  contrast,  when  entering  the  FM  spin-liquid  phase
+                                                                            the excitation that used to be the gapless magnon mode
+                                                                            is characterized by a gradually increasing gap which cul-
+                                                                            minates at the Kitaev point.  Starting from the Kitaev
+                                                                            point, the gradual reduction of the low–energy gap inχ′′
+                                                                            due to the Heisenberg perturbation manifests itself by a
+                                                                            development  of  spin  correlations  beyond  nearest  neigh-
+                                                                            bors (already reported in Fig. 2 of Ref. [25]) and an in-
+                                                                            crease  of  the  static  susceptibility  to  the  magnetic  ﬁeld
+                                                                            Zeeman-coupled to the order parameter of the neighbor-
+                                                                            ing LRO phase.  This susceptibility then diverges at the
+                                                                            transition point (see also Fig. 3 of Ref. [25]).
+
+
+                                                                                   VII.    SUMMARY AND CONCLUSIONS
+
+                                                                               In the present paper we studied the phase diagram of
+                                                                            the Kitaev-Heisenberg model by a combination of exact
+FIG. 6.   (a) Dynamical spin susceptibility χ′′(q,ω) obtained               diagonalization and cluster mean ﬁeld theory (CMFT),
+by ED near the AF KSL phase at the characteristic wavevec-                  supplemented by the insights from linear spin-wave the-
+tor  of  the  AF  order, q  =  Γ′.   (b)  The  same  for  the  zigzag       ory  and  the  second–order  perturbation  theory.    Both
+wavevector q = M.  (c) Brillouin zone portraits of the spin-                methods  allowed  to  stabilize  previously  known  ordered
+structure factor⟨Sz−qSzq⟩ at ϕ = 87.5◦, 90◦, and 92.5◦ (inter-              phases:  N´eel, zigzag, FM and stripy.  Moreover, the or-
+polated from the ED data). The inner hexagon is the Brillouin               dered  moment  analysis  provided  by  cluster  mean  ﬁeld
+zone of the honeycomb lattice, the outer one corresponds to                 approach demonstrates N´eel–zigzag and FM–stripy con-
+the triangular lattice with the missing sites ﬁlled in.  (d,e) The          nections described before [34].  Compared to the previous
+same as in panels (a,b) but for the interval containing the FM              CMFT studies utilizing N = 6 site cluster (see Ref.  [54]
+(q  = Γ) and stripy (q  = X) phase.  (f) Brillouin zone por-                or the Appendix), we have used a suﬃciently large clus-
+traits of the spin-structure factor obtained atϕ = 255◦, 270◦,              ter  of N  =  24  sites  preserving  the  lattice  symmetries
+and 285◦.                                                                   and improving the ratio between internal and boundary
+
+                                                                            bonds.  This led to a balanced approach which allowed us
+to  one  thousand)  to  achieve  convergence  of  the  dense                to treat both ordered and disordered (spin-liquid) states
+high-energy part of the spectrum.  Having the advantage                     on equal footing.
+of  being  exact,  the  method  is  limited  by  the q  vectors                As the main result, the present study uncovers a funda-
+accessible  for  a  ﬁnite  cluster  and  compatible  with  the              mental diﬀerence between the onset of broken symmetry
+PBC,  and  by  ﬁnite-size  eﬀects  due  to  small N.   These                phases in the vicinity of Kitaev points with antiferromag-
+concern mainly the low-energy part of χ′′  and lead e.g.                    netic or ferromagnetic interactions.  While the spin liq-
+to  an  enlarged  gap  of  spin  excitations  in  LRO  phases               uids obtained atK = +1 andK =−1 are strictly equiv-
+of AF nature.  Nevertheless, a qualitative understanding                    alent and can be transformed one into the other in the
+can still be obtained.                                                      absence of Heisenberg interactions (at J = 0), spin exci-
+  The evolution of numerically obtainedχ′′ with varying                     tations and quantum phase transitions emerging at ﬁnite
+ϕ is presented in Figs. 6(a) and 6(b) for the region includ-                J  are very diﬀerent in both cases.  For antiferromagnetic
+ing AF spin-liquid phase, as well as in Figs. 6(d) and 6(e)                 Kitaev spin liquid phase (K≃ 1) one ﬁnds that a gap
+                                                                                                                           ′  and q = M  when
+for the region including the FM spin-liquid phase.  The                     opens abruptly in χ′′(q,ω) at q = Γ
+transitions are well visible at the characteristic q vectors                the ground state changes to the critical Kitaev quantum
+                                                                                                                                               10
+
+spin liquid. This phase transition is abrupt and occurs by
+level crossing.  In contrast, for ferromagnetic spin liquid
+K≃−1 the gaps in χ′′(q,ω) at q = Γ and q =X  open
+gradually  from  the  points  of  quantum  phase  transition
+from  ordered  to  disordered  phase.   With  much  weaker
+quantum corrections for ordered phases in the regime of
+ferromagnetic Kitaev interactions, the spin liquid is more
+robust near K  =−1 as a phase that contains quantum
+ﬂuctuations and survives in a broader regime than near
+K  =  1  when  antiferromagnetic  Kitaev  interactions  are
+disturbed by increasing (antiferromagnetic or ferromag-
+netic) Heisenberg interactions.  This behavior is reminis-
+cent of the ferromagnetic Kitaev model in a weak mag-
+netic ﬁeld [64].
+
+                                                                           FIG. 7.     Full linearized CMFT result for a single hexagon.
+                  ACKNOWLEDGMENTS                                          Blue lines represent all emerged positive eigenvalues λ, while
+                                                                           maximal λ larger than 1 is indicated in red.
+
+  We thank Giniyat Khaliullin for insightful discussions.
+We kindly acknowledge support by Narodowe Centrum                          Figs.   7  and  8  provides  the  phase  diagram  for  a  single
+Nauki (NCN, National Science Center) under Project No.                     hexagon:  N´eel phase for ϕ∈ [0, 0.5)π, KSL for ϕ = π
+2012/04/A/ST3/00331.  J. R. and J. C. were supported                       zigzag phase forϕ∈ (0.5, 0.555)π, disordered region I for2 ,
+by  Czech  Science  Foundation  (GAˇCR)  under  Project                    ϕ∈ (0.555, 0.864)π, FM phase forϕ∈ (0.864, 1.5)π, KSL
+No.    GJ15-14523Y  and  by  the  project  CEITEC  2020                    for ϕ =  3
+(LQ1601)  with  ﬁnancial  support  from  the  Ministry  of                 tion), ϕ∈ (1.5, 1.64)π (CMFT), disordered region II for2π, stripy phase for ϕ∈ (1.5, 1.62)π (lineariza-
+Education, Youth and Sports of the Czech Republic un-                      ϕ∈ (1.62, 1.684)π (linearization) and ϕ∈ (1.64, 1.684)π
+der the National Sustainability Programme II. Access to                    (CMFT), and N´eel phase forϕ∈ (1.684, 2]π.  In contrast
+computing  and  storage  facilities  owned  by  parties  and               toN = 24 cluster the two spin-liquid regions are replaced
+projects contributing to the National Grid Infrastructure                  by single points ϕ = π
+MetaCentrum,  provided  under  the  program  “Projects                        Striking diﬀerence between phase diagrams for 24-site2  and ϕ =  32π.
+of  Large  Research,  Development,  and  Innovations  In-
+frastructures” (CESNET LM2015042), is acknowledged.
+G. J. is supported in part by the National Science Foun-
+dation under Grant No.  NSF PHY11-25915.
+
+
+     Appendix:   Comparison between CMFT and
+         linearized CMFT for a single hexagon
+
+  Here  we  compare  linearization  results  for  a  single
+hexagon  with  full  CMFT  to  see  how  well  linearized
+CMFT performs as a shortcut method.  It is important
+to realize that this cluster is not compatible with stripy
+or zigzag order because of their four-site magnetic unit
+cell, see Fig.  1(b), and they are suppressed within vast
+regions  of ϕ  compared  to  the  24-site  case.   The  size  of
+the system allows for quick CMFT computations and en-
+ables detailed comparison between the two approaches.
+Moreover,  speciﬁc problems linked to the above incom-
+patibility make the N  = 6-site cluster a good test case
+to illustrate the linearized CMFT.
+  Following  the  procedure  described  in  Sec.    III C,  6              FIG. 8.    (a) Spin patterns obtained for a single hexagon by
+eigenvalues λi  are produced for each value of ϕ param-                    CMFT. From the left: N´eel, zigzag, FM and stripy.  (b) Phase
+eter.   The  corresponding  spin  patterns  are  inferred  by              diagram for a single hexagon determined by|⟨Szi⟩|.  Red and
+inspecting  the  eigenvectors.   Only  the  patterns  associ-              blue sites (see inset) are nonequivalent in the present CMFT
+ated  with λi >  1  are  able  to  grow  during  iterations                due to the approximation given by Eq.  (3.2) which generates
+and  eventually  stabilize  as  a  self-consistent  solution  of           the terms∝ J  that add to Kitaev term only on the vertical
+full  CMFT.  Comparison  of  both  methods  presented  in                  bonds⟨ij⟩‖z in the MF part of the Hamiltonian (2.1).
+                                                                                                                                                         11
+
+and  6-site  clusters  is  the  reduction  of  the  zigzag  and                 iterations  of  the  self-consistent  loop.   To  overcome  this
+stripy  phases  and  the  emergence  of  two  regions  of  dis-                 issue we introduce a damping into a self-consistent loop
+order  indicated  by  two  gray-shaded  regions.    Here  all                   by taking (1−d)⟨Szi⟩ﬁn +d⟨Szi⟩ini  as the new averages.
+λi <  1  and  no  spin  pattern  is  strong  enough  to  stabi-                 Here d < 1 is a suitably chosen damping factor.  With
+lize.  Zigzag pattern emerges from CMFT with random                             this modiﬁcation CMFT produces one ﬁnite stripy order
+initial values of⟨Szi⟩ without additional help.  Stripy pat-                    suggested by linearization.  However since the parasitic
+tern however is more diﬃcult to catch.  As one can see                          negative λi  grows  enormously  in  magnitude  as  we  ap-
+in  Fig.   7,  two  diﬀerent λi  corresponding  to  two  stripy                 proach the phase boundary an extreme damping has to
+patterns exchange at ϕ = 1.568π.  Unfortunately,  huge                          be included making the phase boundary hard to deter-
+parasitic oscillations make these patterns extremely dif-                       mine by using CMFT.
+ﬁcult to stabilize within CMFT. These stem from a large                            In conclusion,  it is evident that the ordered patterns
+negative λi that previously corresponded to FM pattern                          suggested  by  linearization  were  reproduced  by  CMFT
+and decreased rapidly for ϕ > 1.5π.  If one recalls that                        within regions dictated by the maximal λi > 1.  More-
+the  equivalent  of  one  iteration  in  linearized  version  of                over, the linearized procedure indicated possible diﬃcul-
+CMFT is in fact multiplication by λi, one can easily see                        ties with stabilizing stripy phases that had to be cured
+that  large  negative λi  would  cause  oscillations  with  an                  by a strong damping introduced into the self-consistent
+exponentially  growing  amplitude  when  performing  the                        loop.
+
+
+
+
+
+ [1]  Bruce Normand, Cont. Phys. 50, 533 (2009).                                      Rev. B 70, 184430 (2004).
+ [2]  Leon Balents, Nature (London) 464, 199 (2010).                            [19]  A. Reitsma, L. F. Feiner, and A. M. Ole´s, New J. Phys.
+ [3]  L. Savary and L. Balents, arXiv:1601.03742 (2016).                              7, 121 (2005).
+ [4]  G. Khaliullin and S. Maekawa, Phys. Rev. Lett. 85, 3950                   [20]  W. Witczak-Krempa,  G. Chen,  Y. B. Kim,  and L. Ba-
+     (2000);  G. Khaliullin,  P. Horsch,  and A. M. Ole´s,  ibid.                     lents, Annu. Rev. Condens. Matter Phys. 5, 57 (2014).
+     86, 3879 (2001).                                                           [21]  W. Brzezicki, A. M. Ole´s, and M. Cuoco, Phys. Rev. X 5,
+ [5]  A.   B.   Harris,   T.   Yildirim,   A.   Aharony,   O.   Entin-                011037 (2015); W. Brzezicki, M. Cuoco, and A. M. Ole´s,
+     Wohlman,  and  I.  Ya.  Korenblit,  Phys.  Rev.  Lett.  91,                      J. Supercond. Novel Magn. 29, 563 (2016).
+     087206 (2003).                                                             [22]  G.  Jackeli  and  G.  Khaliullin,  Phys.  Rev.  Lett.  102,
+ [6]  M.  Daghofer,  K.  Wohlfeld,  A.  M.  Ole´s,  E.  Arrigoni,                     017205 (2009).
+     and  P.  Horsch,  Phys.  Rev.  Lett.  100,  066403  (2008);                [23]  A. Kitaev, Ann. Phys. (N.Y.) 321, 2 (2006).
+     K.  Wohlfeld,  M.  Daghofer,  A.  M.  Ole´s,  and  P.  Horsch,             [24]  G.  Baskaran,  S.  Mandal,  and  R.  Shankar,  Phys.  Rev.
+     Phys. Rev. B 78, 214423 (2008).                                                  Lett. 98, 247201 (2007).
+ [7]  M. Daghofer, A. Nicholson, A. Moreo, and E. Dagotto,                      [25]  J. Chaloupka, G. Jackeli, and G. Khaliullin, Phys. Rev.
+     Phys. Rev. B 81,  014511 (2010);  A. Nicholson,  W. Ge,                          Lett. 105, 027204 (2010).
+     X. Zhang, J. Riera, M. Daghofer, A. M. Ole´s, G. B. Mar-                   [26]  Y.  Singh  and  P.  Gegenwart,  Phys.  Rev.  B 82,  064412
+     tins,  A. Moreo,  and E. Dagotto,  Phys. Rev. Lett. 106,                         (2010); F. Trousselet, G. Khaliullin, and P. Horsch, ibid.
+     217002 (2011).                                                                   84, 054409 (2011).
+ [8]  P. Wr´obel and A. M. Ole´s, Phys. Rev. Lett. 104, 206401                  [27]  X.  Liu,  T.  Berlijn,  W.-G.  Yin,  W.  Ku,  A.  Tsvelik,  Y.-
+     (2010); P. Wr´obel, R. Eder, and A. M. Ole´s, Phys. Rev.                         J.  Kim,  H.  Gretarsson,  Y.  Singh,  P.  Gegenwart,  and
+     B 86, 064415 (2012).                                                             J. P. Hill, Phys. Rev. B 83, 220403(R) (2011).
+ [9]  S. Di Matteo, G. Jackeli, C. Lacroix, and N. B. Perkins,                  [28]  Y. Singh, S. Manni, J. Reuther, T. Berlijn, R. Thomale,
+     Phys.  Rev.  Lett.  93,   077208  (2004);   S.  Di  Matteo,                      W. Ku,  S.  Trebst,  and  P.  Gegenwart,  Phys. Rev. Lett.
+     G. Jackeli, and N. B. Perkins, Phys. Rev. B 72, 024431                           108, 127203 (2012).
+     (2005).                                                                    [29]  S. K. Choi, R. Coldea, A. N. Kolmogorov, T. Lancaster,
+[10]  G. Khaliullin, Prog. Theor. Phys. Suppl. 160, 155 (2005).                       I.  I.  Mazin,  S.  J.  Blundell,  P.  G.  Radaelli,  Y.  Singh,
+[11]  G.  Jackeli  and  D.A.  Ivanov,  Phys.  Rev.  B  76,  132407                    P.  Gegenwart,  K.  R.  Choi,  S.-W.  Cheong,  P.  J.  Baker,
+     (2007).                                                                          C.  Stock,  and  J.  Taylor,  Phys.  Rev.  Lett. 108,  127204
+[12]  G.  Jackeli  and  D.I.  Khomskii,  Phys.  Rev.  Lett.  100,                     (2012).
+     147203 (2008).                                                             [30]  F.    Ye,    S.    Chi,    H.    Cao,    B.    C.    Chakoumakos,
+[13]  F. Kr¨uger, S. Kumar, J. Zaanen, and J. van den Brink,                          J. A. Fernandez-Baca, R. Custelcean, T. F. Qi, O. B. Ko-
+     Phys. Rev. B 79, 054504 (2009).                                                  rneta, and G. Cao, Phys. Rev. B 85, 180403 (2012).
+[14]  Gia-Wei   Chern   and   N.   Perkins,   Phys.   Rev.   B  80,             [31]  R. Comin, G. Levy, B. Ludbrook, Z.-H. Zhu, C. N. Veen-
+     220405(R) (2009).                                                                stra,  J. A. Rosen, Y. Singh,  P. Gegenwart,  D. Stricker,
+[15]  A. van Rynbach, S. Todo, and S. Trebst, Phys. Rev. Lett.                        J.  N.  Hancock,  D.  van  der  Marel,  I.  S.  Elﬁmov,  and
+     105, 146402 (2010).                                                              A. Damascelli, Phys. Rev. Lett. 109, 266406 (2012).
+[16]  F. Trousselet, A. Ralko, and A. M. Ole´s, Phys. Rev. B                    [32]  H. Gretarsson, J. P. Clancy, X. Liu, J. P. Hill, E. Bozin,
+     86, 014432 (2012).                                                               Y. Singh, S. Manni, P. Gegenwart, J. Kim, A. H. Said,
+[17]  G. Chen and L. Balents,  Phys. Rev. Lett. 110,  206401                          D.  Casa,  T.  Gog,  M.  H.  Upton,  H.-S.  Kim,  J.  Yu,
+     (2013).                                                                          V. M. Katukuri,  L. Hozoi,  J. van den Brink,  and Y.-J.
+[18]  M. Daghofer, A. M. Ole´s, and W. von der Linden, Phys.                          Kim, Phys. Rev. Lett. 110, 076402 (2013).
+                                                                                                                                                             12
+
+[33]  F.  Trousselet,  M.  Berciu,  A.  M.  Ole´s,  and  P.  Horsch,                    L.  Liang,  Q.  Niu,  and  S.  Qin,  ibid. 87,  041107  (2013);
+     Phys. Rev. Lett. 111, 037205 (2013).                                               E. Sela, H.-C. Jiang, M. H. Gerlach, and S. Trebst, ibid.
+[34]  J. Chaloupka, G. Jackeli, and G. Khaliullin, Phys. Rev.                           90, 035113 (2014).
+     Lett. 110, 097204 (2013).                                                    [48]  J. Osorio Iregui, P. Corboz, and M. Troyer, Phys. Rev.
+[35]  V. M. Katukuri, S. Nishimoto, V. Yushankhai, A. Stoy-                             B 90, 195102 (2014).
+     anova, H. Kandpal, S. Choi, R. Coldea, I. Rousochatza-                       [49]  K. Li, S.-L. Yu, and J.-X. Li, New J. Phys. 17, 043032
+     kis, L. Hozoi, and J. van den Brink, New. J. Phys. 16,                             (2015).
+     013056 (2014).                                                               [50]  M.  Becker,  M.  Hermanns,  B.  Bauer,  M.  Garst,  and
+[36]  S. M. Winter, Y. Li, H. O. Jeschke, and R. Valent´ı, Phys.                        S. Trebst, Phys. Rev. B 91, 155135 (2015).
+     Rev. B 93, 214431 (2016).                                                    [51]  G. Jackeli and A. Avella, Phys. Rev. B 92, 184416 (2015).
+[37]  F.  Trousselet,  P.  Horsch,  A.  M.  Ole´s,  and  W.-L.  You,              [52]  I. Rousochatzakis, U. K. R¨ossler, J. van der Brink, and
+     Phys. Rev. B 90, 024404 (2014).                                                    M. Daghofer, Phys. Rev. B 93, 104417 (2016).
+[38]  S.    H.    Chun,    J.-W.    Kim,    J.    Kim,    H.    Zheng,            [53]  W. Brzezicki, J. Dziarmaga, and A. M. Ole´s, Phys. Rev.
+     C.   C.   Stoumpos,   C.   D.   Malliakas,   J.   F.   Mitchell,                   Lett.  109,  237201  (2012);   Phys.  Rev.  B  87,  064407
+     K.  Mehlawat,  Y.  Singh,  Y.  Choi,  T.  Gog,  A.  Al-Zein,                       (2013); W. Brzezicki and A. M. Ole´s, Phys. Rev. B 83,
+     M.  Moretti  Sala,  M.  Krisch,  J.  Chaloupka,  G.  Jackeli,                      214408 (2011).
+     G.  Khaliullin,  and  B.  J.  Kim,  Nature  Physics 11,  462                 [54]  D. Gotfryd and A. M. Ole´s,  Acta Phys. Polon. A 127,
+     (2015).                                                                            318 (2015).
+[39]  J. Chaloupka and G. Khaliullin, Phys. Rev. B 92, 024413                     [55]  K. Foyevtsova, H. O. Jeschke, I. I. Mazin, D. I. Khomskii,
+     (2015).                                                                            and R. Valent´ı, Phys. Rev. B 88, 035107 (2013).
+[40]  J. G. Rau and H. Y. Kee, arXiv:1408.4811 (2014).                            [56]  V. M. Katukuri, S. Nishimoto, V. Yushankhai, A. Stoy-
+[41]  A. Banerjee, C. A. Bridges, J.-Q. Yan, A. A. Aczel, L. Li,                        anova, H. Kandpal, S. Choi, R. Coldea, I. Rousochatza-
+     M. B. Stone, G. E. Granroth, M. D. Lumsden, Y. Yiu,                                kis,  L.  Hozoi  and  J.  van  den  Brink,  New  J.  Phys. 16,
+     J. Knolle, S. Bhattacharjee, D. L. Kovrizhin, R. Moess-                            013056 (2015).
+     ner,  D. A. Tennant,  D. G. Mandrus,  and S. E. Nagler,                      [57]  L.  R.  Walker,  Spin  Waves  and  Other  Magnetic  Modes
+     Nat. Mat. 15, 733 (2016).                                                          in  Magnetism (Academic Press, New York and London,
+[42]  A.  F.  Albuquerque,  D.  Schwandt,  B.  Het´enyi,  S.  Cap-                      1963).
+     poni,  M.  Mambrini,  and  A.  M.  La¨uchli,  Phys.  Rev.  B                 [58]  M. Raczkowski and A. M. Ole´s, Phys. Rev. B 66, 094431
+     84, 024406 (2011).                                                                 (2002).
+[43]  D.  C.  Cabra,  C.  A.  Lamas,  and  H.  D.  Rosales,  Phys.                [59]  P. A. Maksimov and A. L. Chernyshev, Phys. Rev. B 93,
+     Rev. B 83, 094506 (2011); A. Kalz, M. Arlego, D. Cabra,                            014418 (2016).
+     A.  Honecker,  and  G.  Rossini,  ibid. 85,  104505  (2012);                 [60]  Zheng Weihong, J. Oitmaa, and C. J. Hamer, Phys. Rev.
+     H. D. Rosales, D. C. Cabra, C. A. Lamas, P. Pujol, and                             B 44, 11869 (1991).
+     M. E. Zhitomirsky, ibid. 87, 104402 (2013).                                  [61]  J.  D.  Reger,  J.  A.  Riera,  and  A.  P.  Young,  J.  Phys.:
+[44]  X. Y. Song, Y. Z. You, and L. Balents, Phys. Rev. Lett.                           Condens. Matter 1, 1855 (1989).
+     117, 037209 (2016).                                                          [62]  E.  V.  Castro,  N.  M.  R.  Peres,  K.  S.  D.  Beach,  and
+[45]  J. G. Rau, Eric Kin-Ho Lee, and H. Y. Kee, Phys. Rev.                             A. W. Sandvik, Phys. Rev. B 73, 054422 (2006).
+     Lett. 112, 077204 (2014).                                                    [63]  U. L¨ow, Condens. Matter Phys. 12, 497 (2009).
+[46]  J. Oitmaa, Phys. Rev. B 92, 020405(R) (2015).                               [64]  K.  S.  Tikhonov,  M.  V.  Feigel’man,  and  A. Yu. Kitaev,
+[47]  H.-C.  Jiang,  Z.-C.  Gu,  X.-L.  Qi,  and  S.  Trebst,  Phys.                    Phys. Rev. Lett. 106, 067203 (2011).
+     Rev.  B  83,  245104  (2011);  J.  Reuther,  R.  Thomale,                    [65]  P. Fulde, Electron  Correlations  in  Molecules  and  Solids,
+     and  S.  Trebst,  ibid. 84,  100406  (2011);  I.  Kimchi  and                      Springer   Series   in   Solid-State   Sciences,    Vol.   100
+     Y. Z. You, ibid. 84, 180407 (2011); R. Schaﬀer, S. Bhat-                           (Springer-Verlag, Berlin/Heidelberg/New York, 1995).
+     tacharjee, and Y. B. Kim, ibid. 86, 224417 (2012); Y. Yu,

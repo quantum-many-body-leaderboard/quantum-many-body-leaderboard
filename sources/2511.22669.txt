@@ -1,0 +1,573 @@
+Accurate computation of the energy variance for ground states and⟨⟨L            †L⟩⟩for steady
+                                                           states using iPEPS
+
+                               Emilio  Cort´es  Estay,1  Naushad  A.  Kamar,1  and  Philippe  Corboz1
+                                      1Institute  for  Theoretical  Physics,  University  of  Amsterdam,
+                                       Science  Park  904,  1098  XH  Amsterdam,  The  Netherlands
+                   Infinite projected entangled-pair states (iPEPS) provide a powerful tensor network ansatz for two-
+                dimensional quantum many-body systems in the thermodynamic limit. In this paper we introduce an
+                approach to accurately compute the energy variance of an iPEPS, enabling systematic extrapolations
+                of the ground-state energy to the exact zero-variance limit.  It is based on the contraction of a large
+                cell of tensors using the corner transfer matrix renormalization group (CTRMG) method, to evaluate
+                the correlator between pairs of local Hamiltonian terms. We show that the accuracy of this approach
+                is substantially higher than that of previous methods, and we demonstrate the usefulness of variance
+                extrapolation for the Heisenberg model, for a free fermionic model, and for the Shastry-Sutherland
+                model. Finally, we apply the approach to compute⟨⟨L              †L⟩⟩for an open quantum system described by
+                the LiouvillianL, in order to assess the quality of the steady-state solution and to locate first-order
+                phase transitions, using the dissipative quantum Ising model as an example.
+
+
+                     I.    INTRODUCTION                                          In  this  paper,  we  introduce  a  practical  algorithm  to
+                                                                              compute  the  energy  variance  in  a  controlled  and  accu-
+  Tensor networks provide powerful numerical tools for                        rate way.  It builds upon one of the standard contraction
+studying strongly correlated quantum systems, particu-                        algorithms,  the  corner  transfer  matrix  renormalization
+larly in regimes where Monte Carlo simulations fail due to                    group (CTMRG) method [45–48], which is used to eval-
+the negative sign problem [1].  The best-known example                        uate  all  relevant  pairs  of  Hamiltonian  terms  in  a  large
+are matrix product states which have revolutionized the                       cell.  A similar idea was used in Ref. [49] for the compu-
+study of (quasi) one-dimensional systems [2, 3].  Major                       tation of the dynamical structure factor, involving pairs
+progress  has  also  been  achieved  with  its  higher  dimen-                of single-site operators.  A key feature of this large-cell
+sional generalization, known as projected entangled-pair                      (LC)  CTMRG  algorithm  is  that  the  required  contrac-
+states (PEPS) [4, 5], which have become a state-of-the-                       tion dimensionχis substantially smaller than in previ-
+art  tool  to  study  strongly  correlated  systems,  ranging                 ous  schemes  [44],  making  it  numerically  tractable  even
+from frustrated magnets to strongly correlated electron                       for  large  bond  dimensions.   We  test  the  approach  for
+systems;  see,  e.g.,  Refs.  [6–34].   A  particular  powerful               theS=  1/2  antiferromagnetic  Heisenberg  model,  for
+variant is infinite PEPS (iPEPS) [35], enabling to repre-                     free  fermions  with  a  staggered  chemical  potential,  and
+sent states directly in the 2D thermodynamic limit, with                      for the Shastry-Sutherland model (see also Ref. [50] for
+an accuracy that is controlled by the bond dimensionD                         additional  results),  and  demonstrate  that  the  variance
+of the tensors.                                                               provides a useful quantity to extrapolate the iPEPS en-
+                                                                              ergy.
+  Obtaining  an  accurate  estimate  of  the  ground  state                      Finally,  we  show  how  this  technique  can  be  used  in
+energy  in  the  exact  infinite-Dlimit  is  one  of  the  cen-               the  context  of  open  quantum  systems  to  computeϵ=
+tral  challenges  in  iPEPS  calculations.    A  naive  1/D                   ⟨⟨L†L⟩⟩,  withLthe  Liouvillian,  in  order  to  assess  the
+extrapolation  is  often  neither  controlled  nor  accurate,                 closeness  of  the  iPEPS  to  the  exact  steady  state  char-
+due  to  a  typically  non-monotonic  dependence  onD.                        acterized byϵ= 0.  We demonstrate how this quantity
+Alternatives  are  provided  by  extrapolations  as  a  func-                 can be used to locate first-order phase transitions, using
+tion of truncation error within the full-update imaginary                     the dissipative transverse-field Ising model as an exam-
+time  evolution  algorithm  [16,  36,  37],  or  extrapolation                ple, thus providing a practical tool to study steady-state
+in the inverse correlation length in the case of Lorentz-                     phase diagrams with iPEPS.
+invariant critical states [22, 38, 39].  A common approach
+used  in  other  variational  methods  [40–42]  is  to  extrap-
+olate  the  energy  as  a  function  of  the  energy  variance,                                          II.    METHOD
+Var(E) =⟨H               2⟩ − ⟨H⟩     2 which is zero for an exact eigen-
+state.  However, the computation of⟨H      2⟩involves evalu-                          A.    Introduction to iPEPS and CTRMG
+ating non-local correlators between pairs of Hamiltonian
+terms, which is challenging with iPEPS. While different
+frameworks  have  been  developed  to  compute  the  vari-                       An  iPEPS  is  a  variational  tensor-network  ansatz  for
+ance [43, 44],  including example results for the Heisen-                     representing  2D  states  directly  in  the  thermodynamic
+berg  model  [43],  these  approaches  have  not  yet  found                  limit  [35].   It  consists  of  a  unit  cell  of  rank-5  tensors
+broad applications so far, partly because their implemen-                     A[x,y]       repeated  on  a  square  lattice,  where  each  tensor
+tation is challenging and their computational cost is high.                   has 4 auxiliary legs with bond dimensionDconnecting
+                                                                                                                                                      2
+
+                                                                              Since the iPEPS is not normalized,  the result needs to
+                                                                              be divided by the norm represented by the same network
+                                                                              without the operator.
+                                                                                 In order to obtain the tensor network representation
+                                                                              of the ground state of a given Hamiltonian, the optimal
+                                                                              variational parameters of the tensors need to be deter-
+                                                                              mined.   This  has  traditionally  been  done  by  perform-
+                                                                              ing an imaginary-time evolution based on the simple up-
+                                                                              date [51] or full update [35, 52] method.  More recently,
+                                                                              more accurate optimizations have been achieved by di-
+                                                                              rectly minimizing the variational energy [43, 44, 53], in
+                                                                              particular based on automatic differentiation [53]. In this
+                                                                              work, we use the latter approach to determine the opti-
+                                                                              mal variational parameters.
+
+FIG. 1.  (a) iPEPS with a 3×2 unit cell.  (b) Double-layer
+tensoraat coordinate [x, y], defined as the contraction of the                     B.    Previous methods to compute the energy
+iPEPS tensorAwith its conjugateA                            † along the physical leg.                        variance
+(c) Norm of the state, represented by an infinite square-lattice
+tensor network of theatensors.  (d) In CTMRG the tensor
+network  surrounding  a  central  site  is  effectively  encoded  in             In this section we briefly discuss previous and related
+four corner (C) and edge (T) environment tensors.  The co-                    frameworks to compute the energy variance with iPEPS.
+ordinates [x, y] denote the relative position in the unit cell.               For  simplicity,  we  consider  a  translationally  invariant
+(e) Example of the relevant tensor-network diagram for the                    iPEPS with a single-site unit cell representing the ground
+expectation value of a nearest-neighbor Hamiltonian term in                   state  of  a  nearest-neighbor  HamiltonianH=                 Pb Hb.
+vertical direction (orange rectangle), which is sandwiched be-                The energy variance is defined as
+tween the physical legs of theAandA              † tensors.
+                                                                               Var(E) =⟨H               2⟩−⟨H⟩     2 = X(⟨H   bHb′⟩ − ⟨H  b⟩⟨H   b′⟩)  (1)
+                                                                                                                b,b′
+neighboring tensors and one physical leg with the dimen-
+siond, corresponding to the local Hilbert space of a lat-                     and the variance density, relevant for iPEPS, corresponds
+tice  site;  see  Fig.  1(a).   The  coordinates  [x, y]  indicate            to  the  variance  per  lattice  site.   The  second  term  can
+the position of a tensor within the unit cell.  Combining                     be  easily  obtained  from  local  expectation  values  (cf.
+each tensorA            [x,y]      with its conjugateA               †[x,y]        into a newFig. 1(e)).  The first term, however, is more challenging.
+tensora            [x,y]      (Fig. 1(b)) results in a square-lattice tensor  By exploiting translational invariance, we can reduce the
+network shown in Fig. 1(c), representing the norm of the                      double infinite sum to a single one, by placing the second
+wave function.                                                                term at a certain reference position, e.g. the center of the
+  To  contract  the  infinite  tensor  network,  we  use  the                 system.  Hence, we need to evaluate⟨(       Pb Hb)H  0⟩, with
+CTMRG  method  [45,  46],   generalized  to  large  unit                      H0 a Hamiltonian term at the center.  In the case where
+cells  [47,  48].   In  CTMRG  the  infinite  tensor  network                 the state is not rotationally symmetric, we have to sep-
+surrounding a central site is effectively encoded in an en-                   arately evaluate the Hamiltonian term on the horizontal
+vironment consisting of four corner and four edge tensors;                    and on the vertical bond in the center, or more generally,
+see Fig. 1(d).  In case of a multi-site unit cell, separate                   on all non-equivalent bonds in the unit cell in the case of
+environment  tensors  are  computed  for  each  position  in                  a non-translationally invariant iPEPS.
+the  unit  cell.   These  environment  tensors  are  obtained                    Different frameworks to perform summations of Hamil-
+by an iterative procedure, in which columns and rows of                       tonian  terms  for  iPEPS  have  been  developed  in  the
+the unit cell are absorbed into the environment tensors,                      past.   In  Ref.  [44]  a  CTMRG-based  method  was  intro-
+followed by a renormalization step in which the enlarged                      duced to encode summed Hamiltonian contributions in
+bond dimension is truncated based on a pair of projec-                        so-calledH-environment tensors, similar to the usual cor-
+tors; see Refs. [47, 48] for details. A growth step in which                  ner and edge tensors, but including the summed Hamil-
+a column of tensors is absorbed into the left boundary is                     tonian  terms.   Based  on  theseH-environment  tensors,
+called a left move, and one similarly defines a right, top,                   the variance can be computed by sandwiching an addi-
+and bottom move. The accuracy of the contraction is sys-                      tional Hamiltonian term in the center of the system.  An
+tematically controlled by the boundary bond dimension                         alternative  summation  scheme  is  provided  by  so-called
+χof the environment tensors.                                                  channel environments, introduced in Ref. [43], with ex-
+  Local expectation values can be obtained by sandwich-                       ample  variance  computations  presented  for  the  Heisen-
+ing the operators between the physical legs of the iPEPS                      berg model.
+tensors and embedding them in the corresponding envi-                            One shortcoming of these approaches is that the pro-
+ronment.  Figure 1(e) shows an example of the diagram                         jectors  used  in  the  renormalization  procedure  do  not
+for one of the vertical Hamiltonian terms in the unit cell.                   take into account the presence of the Hamiltonian terms,
+                                                                                                                                                        3
+
+leading  to  a  relatively  slow  convergence  as  a  function
+of  the  contraction  dimensionχ.    While  this  is  not  a
+problem  at  small  bond  dimensions,  for  large  bond  di-
+mensions the requiredχbecomes prohibitively large, as
+we  will  show  in  the  results  section.   The  same  issue  of
+slowχ-convergence was observed for the structure-factor
+computation  [54,  55],  i.e.,  the  summed  two-point  spin-
+spin correlator.  It was shown that speed of convergence
+can be substantially improved by adding a correction to
+the  projectors  [54]  to  account  for  the  presence  for  the
+summed  spin  operators  in  the  CTMRG  environments.
+This  scheme  is  also  closely  related  to  the  generating-
+function approach to compute summed correlation func-
+tions [56, 57]. Applying this idea to the case of a summed                     FIG. 2.    (a) Translationally invariant iPEPS with the unit
+correlation function of Hamiltonian terms is more chal-                        cell enlarged to sizeL×L.  (b) iPEPS wavefunction from (a)
+lenging; for this reason we follow a different route in this                   with a Hamiltonian termH          0 applied in the center of the cell,
+work, inspired by Ref.  [49].                                                  resulting in|Ψ    ′⟩.  (c) The overlap⟨Ψ|Ψ               ′⟩, which we contract
+                                                                               using CTMRG, starting from the central columns.
+
+C.    Variance computation using large-cell CTMRG
+                             contraction                                               Hamiltonian  term,  we  start  from  the  center  and
+                                                                                       perform left moves up to the right boundary and
+   In  Ref.  [49]  an  accurate  scheme  for  computing  two-                          then,  again  starting  from  the  center,  right  moves
+point  spin-spin  correlation  functions  was  introduced  to                          up to the left boundary, followed by analogous top
+evaluate the (dynamical) spin structure factor, based on                               and bottom moves (see below for further details).
+the contraction of a large cell using CTMRG. Here we                                   This  sweeping  procedure  can  be  repeated  several
+adopt and extend this idea to evaluate correlations be-                                times  to  improve  convergence  of  the  environment
+tween Hamiltonian terms, thereby enabling to compute                                   tensors.  In practice, we found that two sweeps are
+the energy variance. We first consider the case of a trans-                            sufficient.
+lationally  invariant  iPEPS  with  a  single  tensorA,  rep-                      4. With the converged CTMRG environment tensors,
+resenting a state|Ψ⟩, together with converged CTMRG                                    we can now readily evaluate ⟨Ψ|H       b|Ψ  ′⟩
+environment tensors, and later explain how to extend the                                                                      ⟨Ψ|Ψ           ′⟩    for each posi-
+scheme to multi-site unit-cell case.                                                   tion of the Hamiltonian termH         b, in a similar fash-
+   The  LC-CTMRG  approach  consists  of  the  following                               ion to a standard local expectation value.
+steps:                                                                            This approach comes with several advantages.  First,
+   1. We first enlarge the unit cell to sizeL×Lby copy-                        the core of the algorithm is based on the large-unit-cell
+       ing  the  tensorAto  all  positions  in  the  cell;  see                CTMRG  algorithm  [47,  48];  i.e.,  existing  codes  can  be
+       Fig. 2(a).  We also initialize the CTMRG environ-                       easily  adapted  to  compute  the  variance  (in  contrast  to
+       ment tensors at each coordinate with the previously                     the  previous  algorithms  [43,  44]  which  are  much  more
+       computed environment tensors.                                           complex).  Second, since the CTMRG scheme is applied
+   2. We apply a Hamiltonian term to the iPEPS in the                          to the computation of the overlap⟨Ψ|Ψ             ′⟩, the CTMRG
+       center of the unit cell, resulting in two new tensors                   projectors used in the renormalization step naturally take
+       BandCwith  enlarged  bond  dimension  between                           the presence ofH    0 into account, leading to a substantially
+       them (Fig. 2(b)), representing a new state|Ψ         ′⟩=                improved accuracy, as we will show in the results section.
+       H0|Ψ⟩. The correlator between a Hamiltonian term                        Third, since each term is computed separately, the con-
+       Hb at a certain position and the one in the center,                     vergence of individual terms and behavior as a function
+       H0 can be rewritten as                                                  of distance can be effectively monitored.
+                                                                                  We end this section with a few more technical details.
+               ⟨Ψ|H      bH0|Ψ⟩                   ⟨Ψ|Ψ     ′⟩                  The precise sequence of update moves for the contraction
+                   ⟨Ψ|Ψ⟩              = ⟨Ψ|H      b|Ψ ′⟩⟨Ψ|Ψ     ′⟩⟨Ψ|Ψ⟩                      (2)with  a  horizontal  Hamiltonian  term  in  the  center  is  as
+                                                                               follows.  Letm=L/2 be the middle position.  We first
+       The second term on the right-hand side simply cor-                      perform a right move at positionx=m+ 1 to initialize
+       responds the local bond energy at the center,⟨H         0⟩,             the environment tensors on the right side (C  2,T 2,C 3) at
+       whereas the first term can be computed based on                         positionm+ 1 (for allypositions), such that they take
+       CTMRG as follows.                                                       into  account  the  updated  bond.   We  then  perform  left
+                                                                               moves from positionx=m−1 up toL−1.  We start
+   3. We  use  CTMRG  to  contract  the  tensor  network                       fromm−1 rather thanmto improve the left boundary
+       representing the overlap⟨Ψ|Ψ             ′⟩.  For a horizontal          tensors (C  1,T 4,C 4) in the vicinity of the newBandC
+                                                                                                                                                      4
+
+tensors. By stopping the sweep atL−1 rather thanLwe
+make sure that the correlations of the center Hamiltonian
+are  not  carried  over  to  the  neighboring  cell.   We  then
+proceed with right moves from positionx=m+ 2 down
+to 2, followed by top moves from positiony=m−1 up to
+L−1 (for allx) and bottom moves fromy=m+ 1 down
+to 2. In practice, we perform a second sweep (without the
+initialization step) to improve convergence. For a vertical
+Hamiltonian term, we proceed in a similar fashion, just
+with all moves and coordinates rotated by 90 degrees.
+  The  computational  cost  of  the  approach  scales  as
+O(L     2) times the scaling of a single CTMRG renormal-
+ization step,O(D               4χ3) (using an iterative solver to com-
+pute  the  CTMRG  projectors).   The  CTMRG  steps  at
+the center of the cell incur an additional prefactor due
+to  the  enlarged  bond  dimensionD                ′  =kD  >  Dof  the
+center bond, but there are onlyO(1) such steps.  Hence,
+compared to a standard evaluation of the energy, which
+requires≈L/2  CTMRG  steps,  the  large-cell  contrac-
+tion is roughly 2(L+k) times more expensive, using two                        FIG. 3.  (a) Convergence of the variance as a function of in-
+sweeps, from the center to the boundaries, as discussed                       verseχforD= 4 and largeL= 30, comparing the previous
+in  the  previous  paragraph.   The  evaluation  of  all  local               H-environment approach from Ref. [44] with the LC-CTMRG
+expectation values isL   2 times more expensive, however,                     method introduced in this work.  (b) Convergence of the vari-
+this part is typically fast compared to the computation                       ance with cell sizeLfor different values ofD.  (c) Energy as
+of the projectors.                                                            a function of the variance.  Using a second-order polynomial
+  In the case of a ground-state iPEPS with a larger unit-                     extrapolation yields a value compatible with the QMC result.
+cell size as a starting point, the computation is repeated                    The inset shows a zoomed-in view.  (d) Energy as a function
+for  each  inequivalent  Hamiltonian  term  position  in  the                 of inverse bond dimension, showing a non-monotonic behav-
+                                                                              ior, which makes it difficult to extrapolate to the infiniteD
+unit cell of the state, which can easily be parallelized for                  limit.
+efficiency. The cell size for the variance evaluation is then
+chosen to be a multiple of the initial unit-cell size.
+                                                                              the  correlation  length,  the  larger  the  required  cell  size
+                                                                              to  capture  all  relevant  terms  contributing  to  the  vari-
+                         III.    RESULTS                                      ance [60].  We note that studying the convergence as a
+                                                                              function ofLdoes not require separate calculations for
+                     A.    Heisenberg model                                   eachL; in practice, one performs a single calculation at
+                                                                              a sufficiently largeL          max, from which one can directly ex-
+  We first benchmark the approach for theS= 1/2 anti-                         tract the data for smallerL, since all relevant terms are
+ferromagnetic Heisenberg model.  We use an iPEPS with                         computed individually.
+two  tensors,  one  for  each  sublattice,  with  implemented                    Finally, the energy as a function of the variance is plot-
+U(1) symmetry [58, 59].                                                       ted  in  Fig.  3(c).   Using  a  second-order  polynomial  fit
+  Figure 3(a) shows the convergence of the variance as                        based on theD= 2. . .5 data,  we obtain an energy in
+a  function  of  inverseχforD=  4,  comparing  the  cur-                      the zero-variance limit ofE   s =−0.669436(21), in agree-
+rent approach with the previousH-environment method                           ment  with  the  quantum  Monte  Carlo  resultE          QMC  =
+from Ref. [44].  The latter displays slow convergence as                      −0.6694421(4) from Ref. [61], illustrating the usefulness
+a  function  ofχ,  with  values  ofχ  >200  required  for  a                  of variance-based energy extrapolations with iPEPS. For
+converged  result.    In  stark  contrast,  the  LC-CTMRG                     comparison, the data is also plotted as a function of in-
+approach  yields  an  accurate  estimate  already  at  much                   verse bond dimension in Fig. 3(d),  which is difficult to
+smaller values, aroundχ= 30, providing clear evidence                         extrapolate due to its non-monotonic behavior.
+of its increased precision.
+  In Fig. 3(b) we show the convergence of the variance                        B.    Free fermions with staggered chemical potential
+as a function of the cell sizeLfor different values ofD.
+The largerDis, the larger the required cell size to reach
+convergence.  This can be naturally understood from the                          While for gapless systems the energy could also be ex-
+fact that the finite bond dimensionDintroduces an effec-                      trapolated based on finite-correlation-length scaling [22,
+tive correlation length, which grows asDincreases and                         38, 39], this is not the case for gapped systems.  To test
+reproduces the infinite correlation length of the gapless                     the variance extrapolation in the latter case, we consider
+ground state in the infinite-Dlimit [38, 39].  The longer                     a model of free fermions on a square lattice, where a gap
+                                                                                                                                                          5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                FIG. 5.  Convergence of the variance as a function of cell size
+                                                                                L, for different values ofχ.  A small value ofχcan lead to an
+                                                                                artificial drift of the variance value with increasing cell size,
+                                                                                as can be seen in theχ= 40 data.
+
+
+                                                                                estimate of the variance for a cell size ofL= 10,  with
+                                                                                a  relative  error  of  only  0.4%.   However,  when  zooming
+FIG.  4.   Energy  per  site  as  a  function  of  the  variance  (left         in (inset),  one can observe a drift of theχ= 40 curve
+panels) and inverse bond dimension 1/D(right panels),  for                      with  increasingL,  such  that  at  largeLthe  result  be-
+two different values of ∆.  The extrapolated results based on                   comes less accurate.  This is due to the fact that smallχ
+the variance are in agreement with the exact results, indicated                 can lead to inaccuracies at long distances, adding noise
+by the green lines.  The dotted lines in the right panels are a                 to  the  variance.   The  connected  correlator  of  Hamilto-
+guide to the eye.                                                               nian terms,⟨H(r)H                       0⟩−⟨H(r)⟩⟨H               0⟩, should vanish in the
+                                                                                large-distance limit; however, contraction errors can lead
+is  induced  by  a  staggered  chemical  potential,  given  by                  to imperfect cancellation at large distances, resulting in
+the Hamiltonian                                                                 an additive contribution with increasingL.  Hence, the
+  ˆH=−t       X                                                                 convergence as a function ofLhas to be monitored and
+                     ˆc  †iσˆc  jσ +H.c. +∆X       ˆn  i−∆  X    ˆn  j, (3)     checked for drifts, especially when relatively small values
+            ⟨i,j,σ⟩                           i∈A           j∈B                 ofχare used.
+
+where ˆc  †iσ (ˆc  iσ) creates (annihilates) an electron with spin
+σ={↑,↓}on sitei, ˆn                         i = Pσ ˆc  †iσˆc  iσ is the number opera-        C.    The Shastry-Sutherland model
+tor,t= 1 the hopping amplitude, and ∆ the magnitude
+of the staggered chemical potential, which has opposite                            The Shastry-Sutherland model [62, 63] is an effective
+signs on the two sublatticesAandB.                                              model of the layered material SrCu2(BO3)2, and has been
+   Figure 4 shows the energy per site as a function of the                      the subject of intense studies over the past decades [42,
+variance and 1/Dfor two different values of ∆ andDin                            64–73]. It is described by a frustratedS= 1/2 spin model
+the range [5,9], computed using sufficiently largeLand                          on an orthogonal dimer lattice, given by the Hamiltonian
+χfor each value ofDfor accurate estimates. Extrapolat-
+ing the energy to the zero-variance limit using a second-                                      H=J     X     Si ·S j +J   ′ X       Si ·S j            (4)
+order polynomial yields an estimate of the ground-state                                                 ⟨i,j⟩                ⟨⟨i,j⟩⟩
+energy in agreement with the exact result, indicated by
+the green lines.  In contrast, it is not obvious how to best                    withJ andJ               ′   the   intra-   and   interdimer   coupling
+extrapolate the data as a function of 1/D.  A common                            strengths,  respectively.    For  small  values  ofJ   ′/Jthe
+approach  is  to  consider  the  range  of  energies  spanned                   ground state is an exact product of dimer singlets [62].
+by the largestDvalue (upper bound) and the linearly                             In theJ     ′/J→ ∞limit, the model reduces to the square-
+extrapolated value.  The latter usually provides a lower                        lattice Heisenberg model with an AF ground state.  For
+bound, since the energy typically converges faster than                         intermediateJ                 ′/Ja valence-bond solid phase is realized,
+linearly.  While the exact result lies within this interval,                    with  strong  bonds  forming  around  plaquettes  [64–66].
+the associated uncertainty is large.                                            More recently, there has been growing consensus regard-
+   We note that also in this case a relatively smallχis                         ing the existence of an additional narrow quantum spin
+sufficient to obtain an accurate estimate of the variance.                      liquid phase between the plaquette and antiferromagnetic
+One subtlety to be careful about is a potential drift of                        phases [42, 50, 67–69, 73].
+the value for large cell sizes and smallχ, as illustrated in                       The  variance  calculation  based  on  LC-CTMRG  was
+Fig. 5.  On the full scale, alreadyχ= 40 provides a good                        already applied in Ref. [50] to extrapolate the energies
+                                                                                                                                                        6
+
+                                                                               via a long-time evolution
+
+                                                                                                      |ρ s⟩⟩=  limT→∞  eTL |ρ 0⟩⟩,                     (6)
+
+                                                                               using  a  Trotter-Suzuki  decomposition  of  the  evolution
+                                                                               operator,  together  with  simple-  or  full-update  schemes
+                                                                               to perform the time evolution [74–76].
+                                                                                  The steady state fulfillsL|ρ               s⟩⟩= 0 in the exact infinite
+                                                                               bond dimension limit; hence the expectation value
+
+                                                                                                         ϵ=⟨⟨ρ        s|L†L|ρ    s⟩⟩                       (7)
+
+                                                                               can  be  used  to  assess  the  closeness  to  the  true  steady
+FIG. 6.  Convergence of the variance as a function of inverse                  state.  This expectation value has the same structure as
+χfor the Shastry-Sutherland model withJ          ′/J= 0.8,D= 5,                ⟨H  2⟩in the energy-variance computation; therefore, we
+comparing  the  previousH-environment  approach  with  the                     can  use  the  LC-CTMRG  approach  (or  previous  frame-
+LC-CTMRG method.                                                               works  [43,  44])  to  accurately  computeϵ(per  site),  en-
+                                                                               abling to assess the quality of the tensor-network repre-
+                                                                               sentation of the steady state.
+of  the  plaquette  and  quantum  spin  liquid  phase  to  de-                    The quantityϵcan also be used to locate a first-order
+termine the phase transition.  A benchmark comparison                          phase transition, inspired by similar ideas from ground-
+between  different  methods  atJ    ′/J=  0.8  showed  that                    state computations.  In the vicinity of a first-order phase
+iPEPS with bond dimensions up toD= 10,  combined                               transition, hysteresis can be observed; i.e., a state in one
+with  the  variance  extrapolation,  provides  the  most  ac-                  phase remains metastable even slightly across the phase
+curate energy estimate of the ground state in the ther-                        transition.  In ground-state calculations, this can be ex-
+modynamic  limit,E          s  =−0.44896(2),  as  compared  to                 ploited by initializing simulations in both phases and tun-
+the  estimate  from  neural  network  quantum  states  [42],                   ing  the  coupling  parameter  across  the  transition  from
+Es  =−0.4486(2),  or  from  density  matrix  renormaliza-                      both sides.  The first-order phase transition can then be
+tion group,E            s =−0.44837(30), [67].                                 found by determining the point where the energies of the
+   While  we  refer  to  Ref.  [50]  for  the  main  data  and                 two states intersect. Here we apply the same idea to open
+extrapolations, here we present another comparison be-                         quantum systems, but instead of considering the energy,
+tween the previousH-environment method [44] with the                           we useϵas the diagnostic quantity.
+LC-CTMRG approach.  Figure 6 shows the energy vari-                               We test this approach for the dissipative quantum Ising
+ance forD= 5 forJ            ′/J= 0.8 as a function of 1/χ.  As                model [77–80], defined by the Hamiltonian and jump op-
+already observed for the Heisenberg model, LC-CTMRG                            erators
+converges  much  more  rapidly  than  theH-environment                                           X                   X
+approach, which is still not fully converged at the largest                            H=    V4       σzi σzj + hx2       σxi ,    Lµ = √γσ−µ     (8)
+bond dimensionχ= 300 tested. This makes it nearly im-                                            ⟨i,j⟩                 i
+possible to extract the variance in a reliable way at even                     where V is the magnitude of the coupling,h                 x the trans-
+larger bond dimensions with theH-environment scheme,                           verse magnetic field strength, andγcontrols the strength
+in contrast to the LC-CTMRG approach.                                          of the dissipation.  We consider the same parameters as
+                                                                               in previous studies [74, 79],V= 5γ,γ= 0.1, where a first
+                                                                               order phase transition was found aroundh             x/γ∼6. . .7
+           IV.    OPEN QUANTUM SYSTEMS                                         between two phases with different densities of up spins.
+                                                                                  We perform iPEPS simulations of the steady state of
+   The  LC-CTMRG  approach  also  finds  useful  applica-                      this  system  using  a  combination  of  simple  update  [74]
+tion  for  steady  states  of  open  quantum  systems.   Con-                  and full update [75],  with the magnitude ofϵas a cri-
+sider an open quantum system described by a Markovian                          terion  for  the  quality  of  the  state,  computed  for  a  cell
+master equation in Lindblad form                                               size ofL= 12 [81].  We start from different initial ran-
+                                                                               dom  iPEPS  on  both  sides  of  the  phase  transition  and
+                                                                               select  the  ones  with  lowestϵ.   Starting  from  these  ref-
+  ˙ρ=L[ρ] =−i[H, ρ]+              X  LµρL†µ − 12{L  †µLµ, ρ}       , (5)       erence states in both phases, we move across the phase
+                               µ                                               transition  from  both  sides.   Throughout  the  evolution,
+                                                                               we monitor the value ofϵand keep the state with lowest
+withLthe Liouvillian superoperator andL                  µ local Lind-         ϵ.  For each value ofD, the transition is determined from
+blad  operators.   For  a  two-dimensional  system,  iPEPS                     the intersection inϵof the two phases, as shown in Fig. 7.
+can be used to represent the vectorized density matrix,                        Based on this procedure, we find that the location of the
+|ρ⟩⟩, and the steady state of the system can be obtained                       transition moves fromh         x/γ= 6.2 forD= 1 to a larger
+                                                                                                                                                       7
+
+                                                                               approach in principle feasible.
+
+
+                                                                                        V.    SUMMARY AND CONCLUSION
+
+                                                                                  In this paper we have introduced and benchmarked the
+                                                                               LC-CTMRG approach to accurately compute the energy
+                                                                               variance  for  iPEPS.  It  is  based  on  evaluating  correla-
+                                                                               tors  between  Hamiltonian  terms  in  a  large  cell  embed-
+                                                                               ded in the infinite system,  where the cell is contracted
+                                                                               using  CTMRG.  The  method  thus  naturally  combines
+                                                                               existing  iPEPS  techniques,  making  its  implementation
+                                                                               relatively  straightforward.   We have demonstrated  that
+                                                                               the variance converges much more rapidly as a function
+                                                                               of  the  contraction  dimensionχthan  in  a  previous  ap-
+                                                                               proach  based  onH-environments  [44],  enabling  precise
+                                                                               estimates of the variance at substantially larger bond di-
+                                                                               mensionsD.
+                                                                                  We have tested the approach for the Heisenberg model
+                                                                               and for an exactly solvable fermionic system. The energy
+                                                                               extrapolated in the variance was found to be in agreement
+                                                                               with the QMC and exact results, respectively, providing
+FIG.  7.   (a)  Up-spin  densityn  ↑  =⟨(1 +σ         z)/2⟩as  a  func-        evidence for the usefulness of the variance extrapolation
+tion ofh    x/γforV= 5 for different values ofD.  Open and                     for iPEPS. A recent application of the approach to the
+full symbols correspond to values from simulations initialized                 Shastry-Sutherland model helped to obtain an accurate
+in the left and right phase,  respectively.  The states remain                 estimate of the first-order phase transition between the
+metastable across the phase transition due to its first-order                  plaquette and quantum spin-liquid phases [50].
+nature.  (b) Expectation value⟨⟨L       †L⟩⟩indicating the close-                 Finally,  we  have  explained  how  the  LC-CTMRG  ap-
+ness to the true steady-state, measured in both phases.  We                    proach can be used to compute⟨⟨L             †L⟩⟩for open quan-
+take the intersection of each pair of curves as an estimate of                 tum systems to measure the closeness to the steady state.
+the location of the first-order transition.  The intersection at               We have shown how this quantity can be used to detect
+the largest bond dimensionD= 4 is found aroundh                                        x/γ= 7.2.a first-order phase transition, with the dissipative quan-
+                                                                               tum Ising model as an example.  We anticipate that this
+                                                                               approach will serve as a practical tool in future studies of
+valueh       x/γ= 6.5 forD= 2, and then toh                    x/γ= 7.2 for    phase diagrams of open quantum systems, to assess the
+D= 3 andD= 4, providing our best estimate.                                     quality of iPEPS representations of steady states, and to
+                                                                               study the evolution toward them.
+   We  note  that  it  would  be  interesting  to  perform  the
+optimization  of  the  steady  state  directly  by  minimiz-
+ing⟨⟨L     †L⟩⟩.   While  this  is  technically  possible  via  au-                               ACKNOWLEDGMENTS
+tomatic differentiation similarly as in ground state opti-
+mization [53], the computational cost would be consider-                          This project has received funding from the European
+ably higher, because of the many terms involved in the                         Research  Council  (ERC)  under  the  European  Union’s
+cell.  On the other hand, the computation of the gradient                      Horizon 2020 research and innovation programme (grant
+for each of these terms could be parallelized, making this                     agreement No.  101001604).
+
+
+
+
+ [1]  M.  Troyer  and  U.-J.  Wiese,  Computational  Complex-                   [4]  F. Verstraete and J. I. Cirac, Renormalization algorithms
+     ity and Fundamental Limitations to Fermionic Quantum                           for Quantum-Many Body Systems in two and higher di-
+     Monte  Carlo  Simulations,  Phys.  Rev.  Lett.94,  170201                      mensions, arXiv:cond-mat/0407066  (2004).
+     (2005).                                                                    [5]  Y.  Nishio,  N.  Maeshima,  A.  Gendiar,  and  T.  Nishino,
+ [2]  S.  R.  White,  Density  matrix  formulation  for  quantum                    Tensor  Product  Variational  Formulation  for  Quantum
+     renormalization groups, Phys. Rev. Lett.69, 2863 (1992).                       Systems, Preprint  (2004), arXiv:cond-mat/0401115.
+ [3]  U. Schollw¨ock, The density-matrix renormalization group                  [6]  P. Corboz and F. Mila, Crystals of bound states in the
+     in  the  age  of  matrix  product  states,  Annals  of  Physics                magnetization plateaus of the Shastry-Sutherland model,
+     326, 96 (2011).                                                                Phys. Rev. Lett.112, 147203 (2014).
+                                                                                                                                                              8
+
+ [7]  P. Nataf, M. Lajk´o, P. Corboz, A. M. L¨auchli, K. Penc,                    [23]  Z.  Shi,   S.  Dissanayake,   P.  Corboz,   W.  Steinhardt,
+     and  F.  Mila,  Plaquette  order  in  the  SU(6)  Heisenberg                       D.  Graf,  D.  M.  Silevitch,  H.  A.  Dabkowska,  T.  F.
+     model on the honeycomb lattice, Phys. Rev. B93, 201113                             Rosenbaum,  F.  Mila,  and  S.  Haravifard,  Discovery  of
+     (2016).                                                                            quantum  phases  in  the  Shastry-Sutherland  compound
+ [8]  H. J. Liao, Z. Y. Xie, J. Chen, Z. Y. Liu, H. D. Xie, R. Z.                       SrCu2(BO3)2 under extreme conditions of field and pres-
+     Huang, B. Normand, and T. Xiang, Gapless Spin-Liquid                               sure, Nat. Comm.13, 2301 (2022).
+     Ground State in theS= 1/2 Kagome Antiferromagnet,                            [24]  W.-Y.  Liu,  J.  Hasik,  S.-S.  Gong,  D.  Poilblanc,  W.-Q.
+     Phys. Rev. Lett.118, 137202 (2017).                                                Chen,  and  Z.-C.  Gu,  Emergence  of  Gapless  Quantum
+ [9]  I.  Niesen  and  P.  Corboz,  Emergent  Haldane  phase  in                        Spin  Liquid  from  Deconfined  Quantum  Critical  Point,
+     theS= 1 bilinear-biquadratic Heisenberg model on the                               Phys. Rev. X12, 031039 (2022).
+     square lattice, Phys. Rev. B95, 180404(R) (2017).                            [25]  O. Gauth´e and F. Mila, Thermal Ising Transition in the
+[10]  J.-Y. Chen, L. Vanderstraeten, S. Capponi, and D. Poil-                           Spin-1/2J                   1−J    2 Heisenberg Model, Phys. Rev. Lett.128,
+     blanc, Non-Abelian chiral spin liquid in a quantum anti-                           227202 (2022).
+     ferromagnet revealed by an iPEPS study, Phys. Rev. B                         [26]  M.  Peschke,  B.  Ponsioen,  and  P.  Corboz,  Competing
+     98, 184409 (2018).                                                                 states in the two-dimensional frustrated kondo-necklace
+[11]  H.-Y.   Lee   and   N.   Kawashima,   Spin-one   bilinear-                        model, Phys. Rev. B106, 205140 (2022).
+     biquadratic  model  on  a  star  lattice,  Phys.  Rev.  B97,                 [27]  J. Hasik, M. Van Damme, D. Poilblanc, and L. Vander-
+     205123 (2018).                                                                     straeten, Simulating Chiral Spin Liquids with Projected
+[12]  S.  S.  Jahromi  and  R.  Or´us,  Spin- 12  Heisenberg  antifer-                  Entangled-Pair  States,  Phys.  Rev.  Lett.129,  177201
+     romagnet on the star lattice:  Competing valence-bond-                             (2022).
+     solid phases studied by means of tensor networks, Phys.                      [28]  A. Sinha,  M. M. Rams,  P. Czarnik, and J. Dziarmaga,
+     Rev. B98, 155108 (2018).                                                           Finite-temperature tensor network study of the Hubbard
+[13]  I. Niesen and P. Corboz, Ground-state study of the spin-1                         model  on  an  infinite  square  lattice,  Phys.  Rev.  B106,
+     bilinear-biquadratic Heisenberg model on the triangular                            195105 (2022).
+     lattice using tensor networks, Phys. Rev. B97, 245146                        [29]  B. Ponsioen, S. S. Chung, and P. Corboz, Superconduct-
+     (2018).                                                                            ing stripes in the hole-doped three-band Hubbard model,
+[14]  H.  Yamaguchi,   Y.  Sasaki,   T.  Okubo,   M.  Yoshida,                          Phys. Rev. B108, 205154 (2023).
+     T. Kida, M. Hagiwara, Y. Kono, S. Kittaka, T. Sakak-                         [30]  Y.  Xu,  S.  Capponi,  J.-Y.  Chen,  L.  Vanderstraeten,
+     ibara, M. Takigawa, Y. Iwasaki, and Y. Hosokoshi, Field-                           J.  Hasik,  A.  H.  Nevidomskyy,  M.  Mambrini,  K.  Penc,
+     enhanced  quantum  fluctuation  in  anS=            12  frustrated                 and D. Poilblanc, Phase diagram of the chiral SU(3) an-
+     square lattice, Phys. Rev. B98, 094402 (2018).                                     tiferromagnet on the kagome lattice, Phys. Rev. B108,
+[15]  A. Kshetrimayum, C. Balz, B. Lake, and J. Eisert, Ten-                            195153 (2023).
+     sor  network  investigation  of  the  double  layer  Kagome                  [31]  E.  L.  Weerda  and  M.  Rizzi,  Fractional  quantum  Hall
+     compound Ca10Cr7O28, Annals of Physics421, 168292                                  states  with  variational  projected  entangled-pair  states:
+     (2020).                                                                            A study of the bosonic Harper-Hofstadter model, Phys.
+[16]  S. S. Chung and P. Corboz, SU(3) fermions on the hon-                             Rev. B109, L241117 (2024).
+     eycomb  lattice  at   13  filling,  Phys.  Rev.  B100,  035134               [32]  J.   Hasik   and   P.   Corboz,   Incommensurate   Order
+     (2019).                                                                            with Translationally Invariant Projected Entangled-Pair
+[17]  B. Ponsioen, S. S. Chung, and P. Corboz, Period 4 stripe                          States:  Spiral States and Quantum Spin Liquid on the
+     in the extended two-dimensional Hubbard model, Phys.                               Anisotropic  Triangular  Lattice,  Phys.  Rev.  Lett.133,
+     Rev. B100, 195141 (2019).                                                          176502 (2024).
+[18]  H.-Y. Lee, R. Kaneko, L. E. Chern, T. Okubo, Y. Yamaji,                     [33]  P.  Schmoll,  J.  Naumann,  E.  L.  Weerda,  J.  Eisert,  and
+     N. Kawashima, and Y. B. Kim, Magnetic field induced                                Y.  Iqbal,  Bathing  in  a  sea  of  candidate  quantum  spin
+     quantum phases in a tensor network study of Kitaev mag-                            liquids:  From the gapless ruby to the gapped maple-leaf
+     nets, Nat. Comm.11, 1639 (2020).                                                   lattice, arXiv:2407.07145 [cond-mat]  (2024).
+[19]  O. Gauth´e, S. Capponi, M. Mambrini, and D. Poilblanc,                      [34]  X.-Y.  Zhang,  Q.  Yang,  P.  Corboz,  J.  Haegeman,  and
+     Quantum spin liquid phases in the bilinear-biquadratic                             Y. He, Topological and Trivial Valence-Bond Orders in
+     two-SU(4)-fermion  Hamiltonian  on  the  square  lattice,                          Higher-Spin Kitaev Models, arXiv:2511.07415 [cond-mat]
+     Phys. Rev. B101, 205144 (2020).                                                    10.48550/arXiv.2511.07415 (2025).
+[20]  J.  L.  Jim´enez,  S.  P.  G.  Crone,  E.  Fogh,  M.  E.  Za-               [35]  J.  Jordan,  R.  Or´us,  G.  Vidal,  F.  Verstraete,  and  J.  I.
+     yed,  R.  Lortz,  E.  Pomjakushina,  K.  Conder,  A.  M.                           Cirac, Classical Simulation of Infinite-Size Quantum Lat-
+     L¨auchli, L. Weber, S. Wessel, A. Honecker, B. Normand,                            tice Systems in Two Spatial Dimensions, Phys. Rev. Lett.
+     C.  R¨uegg,  P.  Corboz,  H.  M.  Rønnow,  and  F.  Mila,  A                       101, 250602 (2008).
+     quantum magnetic analogue to the critical point of wa-                       [36]  P.  Corboz,  Improved  energy  extrapolation  with  infi-
+     ter, Nature592, 370 (2021).                                                        nite projected entangled-pair states applied to the two-
+[21]  P.  Czarnik,  M.  M.  Rams,  P.  Corboz,  and  J.  Dziar-                         dimensional  Hubbard  model,  Phys.  Rev.  B93,  045116
+     maga,  Tensor  network  study  of  them=              12  magnetiza-               (2016).
+     tion  plateau  in  the  Shastry-Sutherland  model  at  finite                [37]  B.-X. Zheng, C.-M. Chung, P. Corboz, G. Ehlers, M.-P.
+     temperature, Phys. Rev. B103, 075113 (2021).                                       Qin, R. M. Noack, H. Shi, S. R. White, S. Zhang, and
+[22]  J.  Hasik,  D.  Poilblanc,  and  F.  Becca,  Investigation  of                    G. K.-L. Chan, Stripe order in the underdoped region of
+     the N´eel phase of the frustrated Heisenberg antiferromag-                         the two-dimensional Hubbard model, Science358, 1155
+     net by differentiable symmetric tensor networks, SciPost                           (2017).
+     Physics10, 012 (2021).                                                       [38]  P. Corboz, P. Czarnik, G. Kapteijns, and L. Tagliacozzo,
+                                                                                        Finite Correlation Length Scaling with Infinite Projected
+                                                                                                                                                              9
+
+     Entangled-Pair States, Phys. Rev. X8, 031031 (2018).                         [57]  W.-L.  Tu,  L.  Vanderstraeten,  N.  Schuch,  H.-Y.  Lee,
+[39]  M. Rader and A. M. L¨auchli, Finite Correlation Length                            N.  Kawashima,  and  J.-Y.  Chen,  Generating  function
+     Scaling in Lorentz-Invariant Gapless iPEPS Wave Func-                              for  projected  entangled-pair  states,  PRX  Quantum5,
+     tions, Phys. Rev. X8, 031030 (2018).                                               010335.
+[40]  S. Sorella, Generalized lanczos algorithm for variational                   [58]  S. Singh, R. N. C. Pfeifer, and G. Vidal, Tensor network
+     quantum monte carlo, Phys. Rev. B64, 024512 (2001).                                states  and  algorithms  in  the  presence  of  a  global  U(1)
+[41]  Y.  Iqbal,  F.  Becca,  S.  Sorella,  and  D.  Poilblanc,  Gap-                   symmetry, Phys. Rev. B83, 115125 (2011).
+     less  spin-liquid  phase  in  the  kagome  spin- 12  Heisenberg              [59]  B. Bauer, P. Corboz, R. Or´us, and M. Troyer, Implement-
+     antiferromagnet, Phys. Rev. B87, 060405 (2013).                                    ing global abelian symmetries in projected entangled-pair
+[42]  L.  L.  Viteritti,  R.  Rende,  A.  Parola,  S.  Goldt,  and                      state algorithms, Phys. Rev. B83, 125106 (2011).
+     F. Becca, Transformer wave function for two dimensional                      [60]  We note that even in the presence of long-range order,
+     frustrated magnets:  Emergence of a spin-liquid phase in                           the correlation length extracted from the connected cor-
+     the Shastry-Sutherland model, Phys. Rev. B111, 134411                              relation function remains finite (at finiteD), because the
+     (2025).                                                                            iPEPS explicitly breaks the symmetry.
+[43]  L. Vanderstraeten, J. Haegeman, P. Corboz, and F. Ver-                      [61]  A. W. Sandvik, Computational Studies of Quantum Spin
+     straete, Gradient methods for variational optimization of                          Systems, inAIP Conference Proceedings, Vol. 1297 (AIP
+     projected entangled-pair states, Phys. Rev. B94, 155123                            Publishing, 2010) pp. 135–338.
+     (2016).                                                                      [62]  B. Sriram Shastry and B. Sutherland, Exact ground state
+[44]  P.  Corboz,  Variational  optimization  with  infinite  pro-                      of a quantum mechanical antiferromagnet, Physica B+C
+     jected  entangled-pair  states,  Phys.  Rev.  B94,  035133                         108, 1069 (1981).
+     (2016).                                                                      [63]  S.  Miyahara  and  K.  Ueda,  Theory  of  the  orthogonal
+[45]  T.  Nishino  and  K.  Okunishi,  Corner  Transfer  Matrix                         dimer Heisenberg spin model for SrCu2(BO3)2, J. Phys.:
+     Renormalization Group Method, J. Phys. Soc. Jpn.65,                                Condensed Matter15, R327 (2003).
+     891 (1996).                                                                  [64]  A. Koga and N. Kawakami, Quantum phase transitions
+[46]  R. Or´us, A. C. Doherty, and G. Vidal, First Order Phase                          in the Shastry-Sutherland model for SrCu2(BO3)2, Phys.
+     Transition in the Anisotropic Quantum Orbital Compass                              Rev. Lett.84, 4461 (2000).
+     Model, Phys. Rev. Lett.102, 077203 (2009).                                   [65]  A.  L¨auchli,  S.  Wessel,  and  M.  Sigrist,  Phase  diagram
+[47]  P. Corboz, S. R. White, G. Vidal, and M. Troyer, Stripes                          of  the  quadrumerized  Shastry-Sutherland  model,  Phys.
+     in  the  two-dimensional  t-J  model  with  infinite  pro-                         Rev. B66, 014401 (2002).
+     jected entangled-pair states, Phys. Rev. B84, 041108(R)                      [66]  P.  Corboz  and  F.  Mila,  Tensor  network  study  of  the
+     (2011).                                                                            Shastry-Sutherland model in zero magnetic field, Phys.
+[48]  P. Corboz, T. M. Rice, and M. Troyer, Competing States                            Rev. B87, 115144 (2013).
+     in  the  t-J  Model:  Uniform  d-Wave  State  versus  Stripe                 [67]  J.  Yang,  A.  W.  Sandvik,  and  L.  Wang,  Quantum  crit-
+     State, Phys. Rev. Lett., 046402 (2014).113                                         icality and spin liquid phase in the Shastry-Sutherland
+[49]  J. D. Arias Espinoza and P. Corboz, Spectral functions                            model, Phys. Rev. B105, L060409 (2022).
+     with infinite projected entangled-pair states, Phys. Rev.                    [68]  L. Wang, Y. Zhang, and A. W. Sandvik, Quantum spin
+     B110, 094314 (2024).                                                               liquid phase in the Shastry-Sutherland model detected by
+[50]  P. Corboz, Y. Zhang, B. Ponsioen, and F. Mila, Quan-                              an improved level spectroscopic method, Chinese Phys.
+     tum Spin Liquid Phase in the Shastry-Sutherland Model                              Lett.39, 077502 (2022).
+     Revealed by High-Precision Infinite Projected Entangled-                     [69]  A. Kele¸s and E. Zhao, Rise and fall of plaquette order
+     Pair States, Phys. Rev. Lett., 186701 (2026).136                                   in  the  Shastry-Sutherland  magnet  revealed  by  pseud-
+[51]  H.  C.  Jiang,  Z.  Y.  Weng,  and  T.  Xiang,  Accurate  De-                     ofermion  functional  renormalization  group,  Phys.  Rev.
+     termination  of  Tensor  Network  State  of  Quantum  Lat-                         B105, L041115 (2022).
+     tice Models in Two Dimensions, Phys. Rev. Lett.101,                          [70]  N. Xi, H. Chen, Z. Y. Xie, and R. Yu, Plaquette valence
+     090603 (2008).                                                                     bond solid to antiferromagnet transition and deconfined
+[52]  H. N. Phien, J. A. Bengua, H. D. Tuan, P. Corboz, and                             quantum critical point of the Shastry-Sutherland model,
+     R.  Orus,  Infinite  projected  entangled  pair  states  algo-                     Phys. Rev. B107, L220408 (2023).
+     rithm improved: Fast full update and gauge fixing, Phys.                     [71]  X. Qian, R. Lv, J. Y. Lee, and M. Qin, From the Shastry-
+     Rev. B92, 035142 (2015).                                                           Sutherland model to theJ       1-J  2 Heisenberg model (2024),
+[53]  H.-J. Liao, J.-G. Liu, L. Wang, and T. Xiang, Differen-                           arXiv:2411.17452 [cond-mat].
+     tiable Programming Tensor Networks, Phys. Rev. X9,                           [72]  W.-Y.  Liu,  X.-T.  Zhang,  Z.  Wang,  S.-S.  Gong,  W.-Q.
+     031041 (2019).                                                                     Chen, and Z.-C. Gu, Quantum Criticality with Emergent
+[54]  B.  Ponsioen,  J.  Hasik,  and  P.  Corboz,  Improved  sum-                       Symmetry  in  the  Extended  Shastry-Sutherland  Model,
+     mations  ofn-point  correlation  functions  of  projected                          Phys. Rev. Lett.133, 026502 (2024).
+     entangled-pair states, Phys. Rev. B108, 195111.                              [73]  A.  Maity,  F.  Ferrari,  J.  Y.  Lee,  J.  Potten,  T.  M¨uller,
+[55]  L.    Vanderstraeten,    L.    Burgelman,    B.    Ponsioen,                      R.   Thomale,    R.   Samajdar,   and   Y.   Iqbal,   Evi-
+     M. Van Damme, B. Vanhecke, P. Corboz, J. Haegeman,                                 dence  for  aZ   2  Dirac  spin  liquid  in  the  generalized
+     and  F.  Verstraete,  Variational  methods  for  contracting                       Shastry-Sutherland model, arXiv:2501.00096 [cond-mat]
+     projected   entangled-pair   states,   Phys.   Rev.   B105,                        10.48550/arXiv.2501.00096 (2024).
+     195140 (2022).                                                               [74]  A.  Kshetrimayum,  H.  Weimer,  and  R.  Or´us,  A  sim-
+[56]  W.-L.  Tu,  H.-K.  Wu,  N.  Schuch,  N.  Kawashima,  and                          ple tensor network algorithm for two-dimensional steady
+     J.-Y. Chen, Generating function for tensor network dia-                            states, Nat. Comm.8, 1 (2017).
+     grammatic summation, Phys. Rev. B103, 205155 (2021).                         [75]  P. Czarnik, J. Dziarmaga, and P. Corboz, Time evolution
+                                                                                        of an infinite projected entangled pair state:  An efficient
+                                                                                                                                                              10
+
+     algorithm, Phys. Rev. B99, 035115 (2019).                                     [79]  H. Weimer, Variational Principle for Steady States of Dis-
+[76]  C.  Mc  Keever  and  M.  H.  Szyma´nska,  Stable  iPEPO                            sipative Quantum Many-Body Systems, Phys. Rev. Lett.
+     Tensor-Network   Algorithm   for   Dynamics   of   Two-                             114, 040402 (2015).
+     Dimensional Open Quantum Lattice Models, Phys. Rev.                           [80]  H. Weimer, Variational analysis of driven-dissipative Ry-
+     X11, 021035 (2021).                                                                 dberg gases, Phys. Rev. A91, 063401 (2015).
+[77]  T. E. Lee, H. H¨affner, and M. C. Cross, Antiferromag-                       [81]  Here we have used a cell sizeL= 12 based on which the
+     netic phase transition in a nonequilibrium lattice of Ry-                           connected correlator is sufficiently converged. However,
+     dberg atoms, Phys. Rev. A84, 031402 (2011).                                         we note that unlike the connected correlator,⟨⟨L                 †(r)L      0⟩⟩
+[78]  M.  Marcuzzi,  E.  Levi,  S.  Diehl,  J.  P.  Garrahan,  and                       does  not  vanish  at  large  distances,  because  typically
+     I.  Lesanovsky,  Universal  Nonequilibrium  Properties  of                          ⟨⟨L⟩⟩ ̸= 0 for the approximate steady-state.
+     Dissipative Rydberg Gases, Phys. Rev. Lett.113, 210401
+     (2014).

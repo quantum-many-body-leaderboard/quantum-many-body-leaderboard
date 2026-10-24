@@ -1,0 +1,1435 @@
+          Phase Diagram of a Frustrated Quantum Antiferromagnet on the Honeycomb Lattice:
+                                   Magnetic Order versus Valence-Bond Crystal Formation
+
+            A. F. Albuquerque,1, 2 D. Schwandt,1, 2 B. Het´enyi,3, 4 S. Capponi,1, 2 M. Mambrini,1, 2 and A. M. L¨auchli3,∗
+                   1Laboratoire de Physique Th´eorique, Universit´e de Toulouse, UPS (IRSAMC), F-31062 Toulouse, France
+                                                  2CNRS,  LPT  (IRSAMC),  F-31062  Toulouse,  France
+                                 3Max Planck Institut f¨ur Physik komplexer Systeme, D-01187 Dresden, Germany
+                      4Institut f¨ur Theoretische Physik, Technische Universit¨at Graz, Petersgasse 16, A-8010 Graz, Austria
+                                                                    (Dated: May 22, 2018)
+                    We present a comprehensive computational study of the phase diagram of the frustratedS = 1/2 Heisenberg
+                 antiferromagnet on the honeycomb lattice, with second-nearest (J2) and third-neighbor (J3) couplings. Using
+                 a combination of exact diagonalizations of the original spin model, of the Hamiltonian projected into the nearest
+                 neighbor short range valence bond basis, and of an effective quantum dimer model, as well as a self-consistent
+                 cluster mean-ﬁeld theory,  we determine the boundaries of several magnetically ordered phases in the region
+                 J2,J3∈ [0, 1], and ﬁnd a sizable magnetically disordered region in between. We characterize part of this mag-
+                 netically disordered phase as a plaquette valence bond crystal phase.  At largerJ2, we locate a sizable region
+                 in which staggered valence bond crystal correlations are found to be important, either due to genuine valence
+                 bond crystal ordering or as a consequence of magnetically ordered phases which break lattice rotational symme-
+                 try.  Furthermore we ﬁnd that a particular parameter-free Gutzwiller projected tight-binding wave function has
+                 remarkably accurate energies compared to ﬁnite-size extrapolated ED energies along the transition line from
+                 conventional N´eel to plaquette VBC phases, a fact that points to possibly interesting critical behavior - such as a
+                 deconﬁned critical point - across this transition. We also comment on the relevance of this spin model to model
+                 the spin liquid region found in the half-ﬁlled Hubbard model on the honeycomb lattice.
+
+                 PACS numbers: 75.10.Kt, 75.10.Jm, 75.40.Mg
+
+
+   Magnetic  frustration  is  a  very  appealing  route  to  weaken
+or destroy magnetic order, which can result in new phases of
+matter:  these phases can usually be classiﬁed and named ac-
+cording to the broken symmetry (spin, lattice) if any, or they
+can belong to the spin-liquid zoo when no symmetry is bro-
+ken1. The quest for a genuine gapped spin-liquid in a spin-1/2
+model with SU(2) symmetry and an odd number of sites in
+the unit cell has started a long-time ago with the proposal by
+Anderson2 that the ground-state of the Heisenberg model on
+the  triangular  lattice  could  be  viewed  as  a  superposition  of
+short-range valence bonds (VB), called a resonating valence
+bond (RVB) state.  For the speciﬁc example of the triangular
+lattice it turned out later however that a magnetically ordered                     FIG. 1. (Color online) (a) Honeycomb lattice with the different spin
+state is realized3.   Up to now,  there is still no ﬁrmly estab-                    exchange  interactions  considered  in  this  paper;  (b)  corresponding
+lished spin-liquid ground-state with the aforementioned prop-                       Brillouin zone with relevant k points.
+erties  in  a  reasonably  realistic  SU(2)  spin  model,  although
+there  are  potential  candidates,  such  as  the  triangular  lattice
+with ring exchange interactions4 or the Heisenberg model on                            In recent years a promising new direction in the search for
+the kagom´e lattice5.  On the other hand, if one considers lat-                     spin liquids has opened up, focusing on the behavior of insu-
+tices with an even number of sites per unit cell, then Hasting’s                    lating phases upon approaching the Mott insulator-metal tran-
+generalization6 of the Lieb-Schultz-Mattis theorem7 does not                        sition.   In  the  half-ﬁlled  triangular  lattice  Hubbard  model  a
+apply, and it is possible in principle to stabilize a magnetically                  picture with a spin bose metal spin liquid phase sandwiched
+disordered ground-state that does not break any symmetry and                        between the metallic phase at smallU/t and the magnetically
+has only trivial topological properties.  One can think for in-                     ordered N´eel phase at largeU/t has emerged10–14    . It has been
+stance of a Heisenberg model on a square bilayer lattice with                       recognized  that  this  spin  liquid  phase  can  be  understood  in
+strong interlayer exchange. The honeycomb lattice is peculiar                       terms of a pure spin model, where the rising charge ﬂuctua-
+in this respect because no simple lattice-symmetry preserving                       tions are cast into an increasingly complex spin Hamiltonian
+deformation is known which would lead to a gapped magnetic                          beyond the Heisenberg model12,14    .  A second striking exam-
+state8.                                                                             ple of a spin liquid located between a magnetically ordered
+
+                                                                                    phase and a (semi)metal has recently been uncovered in the
+                                                                                    half-ﬁlled Hubbard model on the honeycomb lattice15.  Such
+∗ aml@pks.mpg.de
+                                                                                    spin liquid phase is reported to have a small spin gap and no
+2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2. (Color online) Phase diagram of the frustratedS = 1/2 Heisenberg model honeycomb lattice in the regionJ2,J3∈ [0, 1], based on a
+combination of exact diagonalization results discussed in the main text. The 5 regions identiﬁed here correspond to: (I) a N´eel ordered phase
+with staggered magnetization, (II) a collinear magnetically ordered phase, (III) One or several phases corresponding to short or long range
+ordered non-collinear magnetic order, (IV) A different collinear magnetically ordered (or disordered) phase corresponding to phase (IV) in
+Ref.9and         (V) a magnetically disordered phase forming a plaquette valence bond crystal. The ﬁve phases are sketched in the panels around the
+phase diagram. Note that the phases highlighted in grey (III), (IV) show substantial ﬁnite size effects and are therefore difﬁcult to characterize
+precisely.
+
+
+appreciable correlations of any kind.                                               In  this  paper  we  focus  solely  on  antiferromagnetic  interac-
+   This  exciting  ﬁnding  leads  us  to  the  natural  question  of                tions Ja≥  0, set J1  =  1 and restrict ourselves to the win-
+whether this spin liquid phase on the honeycomb lattice can                         dow J2,J3 ∈  [0, 1].   Aspects of this frustrated model have
+also  be  described  within  a  pure S  =  1/2  spin  model,  de-                   been explored previously in the literature, based on spin wave
+spite the vicinity of the insulator to semimetal transition.  A                     theory9,17–19      , a nonlinear sigma model treatment20, Schwinger
+high order derivation of the corresponding spin model is in                         boson  approaches21,22     and  exact  diagonalizations9,23  .   Note
+progress16,  but  the  typical  value  of  the  expansion  parame-                  also that a similar frustrated model gives rise to a rich phase
+ter t/U ∼  0.25  relevant  for  the  spin  liquid  phase  renders                   diagram on the square lattice24,25    .
+this task more challenging in comparison to the triangular lat-                         In this work we thoroughly explore the phase diagram in
+tice, where a typical value for the spin liquid regime is about                     the considered window, based on a combination of exact di-
+t/U∼ 0.11. In the absence of an accurate prediction for a rel-                      agonalizations (EDs) of the spin model (up to 42 spins), EDs
+evant spin model, we start by exploring the effect of the next-                     in the nearest-neighbor valence bond (NNVB) subspace (up to
+to-leading order correction to the nearest neighbor Heisenberg                      96 spins), EDs of an effective quantum dimer model (QDM)
+model,  which is a second neighbor Heisenberg coupling J2                           (corresponding to up to 126 spins), complemented by a self-
+arising at fourth order in t/U.  We thus consider in the fol-                       consistent cluster mean ﬁeld theory (SCMFT) and the study
+lowing a frustratedS  = 1/2 Heisenberg Hamiltonian on the                           of a fully projected Gutzwiller wave function of the half-ﬁlled
+honeycomb  lattice,  where  we  also  include  a  third  neighbor                   honeycomb tight binding ”Dirac sea”.
+couplingJ3 for completeness.                                                            The  key  ﬁnding  of  our  work  is  the  presence  of  a  sizable
+   The   honeycomb   (hexagonal)   lattice   Hamiltonian   [see                     magnetically  disordered  region  adjacent  to  the  well  studied
+Fig.1(a)] reads:                                                                    N´eel phase of the unfrustrated honeycomb Heisenberg model.
+            ∑                    ∑                       ∑                          We identify a large part of this region as a plaquette valence
+ H =J1           Si·Sj +J2              Si·Sj +J3               Si·Sj.  (1)         bond  crystal  (VBC).  Interestingly  we  ﬁnd  evidence  (within
+            ⟨i,j⟩               ⟨⟨i,j⟩⟩                ⟨⟨⟨i,j⟩⟩⟩                    the ED realm) for a possibly continuous phase transition be-
+                                                                                                                                                             3
+
+tween the N´eel phase and a plaquette valence bond crystal.                       pled triangular lattices in the largeJ2  limit; (IV) a collinear
+In addition the energy and some of the key correlations of the                    magnetically ordered phase (corresponding to phase (IV) in
+frustrated spin model in the transition region are well captured                  Ref.9) or a          staggered dimer phase (also called lattice nematic
+by a simple Gutzwiller projected (GP) ”Dirac sea” wave func-                      in Ref.18).  And ﬁnally           (V) a magnetically disordered phase
+tion. These ﬁndings raise the possibility of a continuous quan-                   forming a plaquette valence bond crystal.
+tum phase transition beyond the Ginzburg Landau paradigm in                          Analyzing the magnitude of the ﬁdelity dips it seems likely
+this honeycomb lattice spin model.                                                that the transition from phase (I) to (V) is continuous (corre-
+   The outline of the paper is as follows:  we start by giving                    sponding to a faint feature in the ﬁdelity), while the transitions
+a quick overview of the phase diagram in sectionI. Then the                       from (I) to (II) and (V) to (II), (III) and (IV) seem to be of ﬁrst
+magnetically ordered phases are located using a SCMFT in                          order because of strong avoided level crossings observed on
+sectionII. Next we study the spin model using EDs in sec-                         the clusters considered.  The topology of the phase diagram
+tionIII,  followed  by  EDs  in  the  NNVB  subspace  and  EDs                    and the nature of the phases in the regions (III) and (IV) dis-
+of a QDM which are presented in sectionIV. We close with                          play strong ﬁnite size effects and require further investigations
+a discussion and conclusion sectionV. In the appendices we                        beyond the scope of this work.  We note that phases (II),(III)
+discuss the properties of the Gutzwiller projected ”Dirac sea”                    and (IV) exhibit long range staggered dimer order also in the
+(App.A), present the derivation of an effective quantum dimer                     case of long-range magnetic order,  because in the magneti-
+model from the Hamiltonian projected into the NNVB sub-                           cally ordered phases one of the nearest neighbor (NN) bond
+space (App.B), compare the energies and the ﬁnite size be-                        energies is different from the other two.
+havior of the NNVB versus the QDM approach (App.C) and                               We now proceed to a self consistent cluster mean ﬁeld treat-
+derive  the  expected  correlation  functions  in  model  valence                 ment which is well suited to detect various magnetically or-
+bond crystal states (App.D).                                                      dered phases.
+
+
+          I.    OVERVIEW OF THE PHASE DIAGRAM                                           II.    SELF CONSISTENT CLUSTER MEAN-FIELD
+                                                                                                                  THEORY
+   We start by summarizing the main result of this paper, the
+phase diagram of the frustratedS  = 1/2 Heisenberg Hamil-                            The very same frustration accounting for the rich physics
+tonian Eq. (1) in the considered parameter window displayed                       exhibited  by  the  here  considered  model  [Eq.  (1)]  also  adds
+in Fig.2.  The phase diagram emerges from a combination of                        enormous complexity to the task of determining its properties.
+different information extracted from ED of the spin model:                        In this context, approximate approaches can be valuable and
+   (i) For a ﬁrst analysis without further input we have inves-                   employed in obtaining “draft phase diagrams” that may guide
+tigated the structure of the ﬁdelityf, i.e. the overlap between                   subsequent application of more accurate techniques.  The so-
+ground-states (GS) obtained for different parameters26:                           called self-consistent cluster mean-ﬁeld theory (SCMFT)27,28
+                                                                                  is a tool particularly well suited to this task.   In a nutshell,
+        f(J2,J3|J′2,J′3) =|⟨GS(J2,J3)|GS(J′2,J′3)⟩|,       (2)                    SCMFT consists in diagonalizing the Hamiltonian under in-
+for consecutive points along the two directions of the (J2,J3)                    vestigation  on  small  clusters  that,  besides  including  actual
+plane using a grid spacing of 0.05.  Local minima off  in the                     in-cluster  couplings,  so  that  quantum  ﬂuctuations  at  the  lo-
+directions ofJ2 andJ3 off are indicated by star symbols for                       cal level are partially taken into account, are also coupled to
+both theN  = 24 andN  = 32 samples.  These dips already                           mean ﬁelds that are to be determined self-consistently.  This
+give a ﬁrst impression of some phase boundaries in the phase                      technique has been shown to considerably improve upon more
+diagram.                                                                          conventional mean-ﬁeld approaches for the case of hard-core
+   (ii) In addition we highlight the quantum numbers of the                       bosons on the triangular lattice28 and, more recently, to yield
+lowest excited state and - if not a triplet already - the quantum                 results  that  compare  well  with  the  ones  from  more  sophis-
+numbers of the lowest triplet, both forN = 24. The basic idea                     ticated techniques when applied to an effective model for a
+is that for sufﬁciently large systems the quantum numbers of                      frustrated antiferromagnet.29
+the low energy spectrum are characteristic of the respective                         In applying SCMFT, we consider the clusters comprising
+phases, and can thus be used to chart a phase diagram if used                     N = 6 and 8 sites depicted in the insets of Fig.3. We split the
+with care.  For a detailed discussion of the expected low ly-                     Hamiltonian Eq. (1) according to
+ing energy levels in the different phases we refer to subsec-                                                ˆH =  ˆHin +  ˆHMF.                             (3)
+tionIII A.                                                                         ˆHin accounts for in-cluster couplings,
+   Based on these and further results to be discussed later, the                                                 ∑                       ∑
+following phases are identiﬁed: (I) a N´eel ordered phase with                      ˆHin =∑       Si·Sj +J2             Si·Sj +J3               Si·Sj,  (4)
+a ﬁnite staggered magnetization,  located around the unfrus-                                ⟨i,j⟩               ⟨⟨i,j⟩⟩               ⟨⟨⟨i,j⟩⟩⟩
+trated point J2=J3=0; (II) a magnetically ordered collinear
+phase corresponding to the classical phase (II) in Ref.9arising                   and is treated in an exact way.⟨i,j⟩,⟨⟨i,j⟩⟩ and⟨⟨⟨i,j⟩⟩⟩ re-
+at combined largeJ2 andJ3; (III) one or several phases cor-                       spectively denote nearest-, second-nearest- and third-nearest-
+responding  to  short-range  or  long-range  non-collinear  mag-                  neighbor  in-cluster  sites  (open  circles  in  Fig.3,  where  in-
+netic order, resulting from theJ1,J3 coupling of two decou-                       cluster NN bonds are represented by thick lines).  Couplings
+4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3.  (Color online) Phase diagram obtained from SCMFT as applied to theN  = 8 (a) andN  = 6 (b) clusters.  In the region labeled as
+“disordered” noSU(2)-broken magnetic phases are obtained from the SCMFT procedure for the considered cluster. Insets: clusters employed
+in our SCMFT calculations. Thick lines connecting open circles represent in-cluster couplings and dashed lines coupling to mean ﬁelds (only
+J1 interactions are depicted).
+
+
+to the mean ﬁelds are included inHMF that reads                                    yond  the  classical  domain  of  stability)  by  quantum  ﬂuctua-
+ˆHMF =∑                           ∑                       ∑                        tions.  Note that a magnetically ordered phase of this type is
+                Si·⟨Sj⟩ +J2            Si·⟨Sj⟩ +J3               Si·⟨Sj⟩.          also compatible with the pronounced staggered dimer pattern
+           [i,j]                 [[i,j]]                 [[[i,j]]]                 reported in previous ED studies9,23   forJ2 & 0.4, and the lat-
+                                                                         (5)       tice nematic point of view18.
+Here, Si denotes a spin-operator attached to an in-cluster sitei                      In order to study ﬁnite size effects we apply SCMFT to an
+and is coupled to the mean-ﬁeld given by the expectation value                     N = 6 site cluster and present its phase diagram in Fig.3(b).
+⟨Sj⟩  at  the  “across-the-boundary  site” j  [light-ﬁlled  circles                First,  we  remark  that  this  cluster  [depicted  in  the  inset  of
+in Fig.3], for nearest (        [i,j]; dashed lines in Fig.3), second-             Fig.3(b)] is not compatible with both phases II and IV and that
+nearest  ([[i,j]])  and  third-nearest  ([[[i,j]]])  neighbors.   That             no solutions with⟨Sj⟩⁄= 0 are encountered in some parts of
+is, one may see SCMFT as an exact diagonalization on a ﬁ-                          the region stabilizing these orderings for theN = 8 site clus-
+nite cluster with periodic boundary conditions (PBC), where                        ter [Fig.3(a)]. Furthermore, the size of the region supporting
+“across the boundary” interactions are replaced by couplings                       N´eel order is somewhat reduced31 in comparison with what is
+to mean ﬁelds that are determined in a self-consistent manner.                     observed in Fig.3(a):  we suspect that this may be explained
+One starts from a randomly chosen wave function and com-                           by the fact that the Kekul´e-like state with resonating valence
+putes the mean ﬁelds⟨Sj⟩ at every sitej, that are then used                        bonds  is  particularly  stable  on  the  hexagon-shaped N  =  6
+in settingHMF.  The cluster Hamiltonian Eq. (3) is then di-                        cluster, with the consequence that the “disordered” region is
+agonalized and the so-obtained ground-state wave function is                       overestimated.  More interestingly, and in contrast with what
+used in re-settingHMF; computation proceeds until all⟨Sj⟩                          happens for theN = 8 cluster, a spiral state (phase III) is sta-
+are converged and the existence of SU(2)-broken magnetic                           bilized for largeJ2. Such a state is adiabatically connected to
+phases is signaled by non-vanishing mean ﬁelds,⟨Sj⟩⁄= 0.                           the ground-state forJ2/J1≫ 1, where Eq. (1) decouples into
+   In Fig.3we present the resulting SCMFT phase diagrams                           two triangular lattices, each of which exhibits 120◦ magnetic
+obtained for (a) an N  =  8 cluster and (b) an N  =  6 clus-                       order.
+ter30. For theN = 8 cluster we ﬁrst note the presence of two
+collinear magnetically ordered phases, labeled (I) and (II) in                        Finally,   we   address   the   possible   occurrence   of   non-
+Fig.2.  These phases are also present in the classical version                     magnetic phases for Eq. (1).   We notice the existence of an
+of the model, occupying roughly the same portion of the plane                      extended region in (J2,J3) where vanishing mean-ﬁeld solu-
+(J2,J3)9,17  . Furthermore, the phase labelled as IV in Fig.2—                     tions,⟨Sj⟩ = 0, are obtained for both clusters considered in
+also observed in the classical case but only forJ3 < 0,9,17   —                    Fig.3.  Intersecting the magnetically disordered phases from
+occupies part of the region shown to support a spiral phase                        both phase diagrams (N = 6 andN = 8) we obtain a putative
+in  Ref.17.   This  might  be  an  interesting  effect,  where  the                nonmagnetic region which roughly corresponds to the extent
+collinear  phase  IV  is  stabilized  for  some J3 ≥  0  (i.e.   be-               of phase V in the ED based phase diagram shown in Fig.2.
+                                                                                                                                                             5
+
+   In the following we address the nature of this magnetically                        2.The magnetically ordered phase (II) has three levels per
+disordered region in more detail and determine some of the                                spin sector: the levels in the even spin sectors are found
+phase  boundaries  with  higher  accuracy  based  on  ﬁnite  size                         in Γ A1 and the two-dimensional representation Γ E2.
+extrapolated ED simulations.                                                              The levels in the odd spin sectors belong to the threefold
+                                                                                          degenerate M  momentum,  with even (odd) parity for
+                                                                                          reﬂections along (perpendicular) to the Γ−M axis.
+                III.    EXACT DIAGONALIZATION
+                                                                                      3.The  magnetically  ordered  phase  (IV)  has  three  levels
+   We  now  explore  the  phase  diagram  based  on  large  scale                         per spin sector:  the levels in the even spin sectors are
+ED in theSz  basis of ﬁnite honeycomb lattice samples with                                found in Γ A1 and the two-dimensional representation
+N   =  24, 26, 28, 30, 329,23 , 34, 36, 3833  and  42  sites.    The                      Γ E2.  The levels in the odd spin sectors belong to the
+clusters  with N   =  24, 30, 36, 42  sites  feature  the  two K                          threefold  degenerate M  momentum,  with  even  parity
+points  in  their  Brillouin  zone  [c.f.  Fig.1(b)],  while    N   =                     for both reﬂections along and perpendicular to the Γ−
+24, 28, 32, 36 contain one or several M  points.  The clusters                            M axis.
+N = 24, 26, 32, 38, 42 exhibit six-fold rotational symmetry.                          4.A    columnar (Read-Sachdev32) [cf.  Fig.4(a)] or          pla-
+   We ﬁrst study the low-lying energy spectrum in the full pa-                            quette VBC [cf. Fig.4(b)] has three collapsing singlet
+rameter region in subsectionIII Ain order to provide more                                 levels: one at Γ A1 and a two-dimensionalK A1 repre-
+information on the phase diagram shown in Fig.2.  Then we                                 sentation.  Note that these two VBCs can not be distin-
+address the stability of the N´eel phase (I) by calculating mag-                          guished based on energy level quantum numbers alone.
+netic structure factors and energy scalings in subsectionIII B,
+and close this section with a discussion of the nature of the                         5.A    staggered VBC [cf.  Fig.4(c)] has three collapsing
+dimer-dimer  correlations  in  subsectionIII C,  supporting  the                          levels: Γ A1 and Γ E2 (2-dim representation).
+presence of an extended plaquette valence bond crystal phase.
+                                                                                     It is interesting to note that the level crossing of the excited
+                                                                                  states quantum numbers shown in Fig.2match quite well the
+                 A.    Nature of the lowest excitation                            dips in the ﬁdelity (which is a ground state observable).  The
+                                                                                  quantum numbers carry however more information and allow
+   In compiling the phase diagram shown in Fig.2,  one set                        to label the quantum phases roughly, before studying them in
+of  information  was  gathered  from  the  quantum  numbers  of                   more detail using correlation functions, as we will do in the
+the low-lying excitations.  The idea is that symmetry broken                      following.
+phases must exhibit a speciﬁc set of low lying energy levels,
+which will allow the spontaneous symmetry breaking in the                                             B.    Stability of the N´eel phase
+thermodynamic limit.  In the case ofSU(2) symmetry break-
+ing states, the appropriate structure is called “tower of states”
+(TOS) and has been successfully used to identify magnetically                        The  non-frustrated  model  (J2=J3=0)  is  known  to  pos-
+ordered phases3, as well as spin nematic phases34.  The ﬁnite                     sess antiferromagnetic (AF) long-range order.  This has been
+size behavior of energy gaps is as follows: the levels belong-                    shown by several techniques including linear spin-wave the-
+ing to the symmetry breaking tower states scale as 1/N  with                      ory36, a coupled cluster method37, ED33,37    , series expansions
+system size, while the spin-wave modes scale as 1/L 3,35  . For                   around  the  Ising  limit38,  tensor  network  studies39–41    ,  varia-
+sufﬁciently large system sizes one should therefore detect only                   tional Monte-Carlo42 and quantum Monte-Carlo (QMC) sim-
+states belonging to the TOS manifold in the lowest part of the                    ulations43–45    .  In particular, the staggered moment is m∞  =
+energy spectrum.  In the case of discrete symmetry breaking                       0.2677(6)44, a value that is signiﬁcantly reduced by quantum
+- such as for a VBC - a ﬁnite number of levels is expected to                     ﬂuctuations compared to the classical value of 1/2.
+collapse  rapidly  (exponentially  beyond  a  certain  correlation                   In Fig.5, we plot ED data for the ﬁnite-size magnetic order
+length) onto the ground state. In each case, the quantum num-                     parameter squared46:
+bers of the collapsing levels are determined by the nature of                                                              (∑                )2
+the order parameter, i.e. the broken symmetries, and generally                                 m2(N) =        1                   (−1)i Si                 (6)
+they will be different for distinct phases (but not always).  In                                             N(N + 2)
+the following we summarize the expected quantum numbers                                                                         i
+of low energy levels of several candidate phases (some of the                     for various clusters sizes N  and J2  values (we set J3  =  0
+results were presented earlier in Ref.9). Note that the quoted                    for the moment). Standard ﬁnite-size scaling predicts leading
+quantum numbers are given as appropriate for the N  =  24                         1/L = 1/√N corrections46,47    , which we ﬁnd to be quite well
+sample, and theC6v  point group is located at the center of a                     satisﬁed even for small clusters for the unfrustrated case. The
+hexagon.                                                                          inﬁnite system size estimate including all system sizes shown
+    1.The N   ´eel ordered phase (I) has a simple TOS structure                   (N = 24, 26, 28, 30, 32, 34, 38) ism2(∞) = 0.0684, (m∞ =
+       with one level per total spin:  all even spin sectors be-                  0.262)48.  Our best agreement with QMC is found based on
+       long to the Γ A1 representation, while the odd ones ap-                    the samples withN  = 24, 28, 32 sites only, yielding an esti-
+       pear in Γ B2.                                                              mate of m2(∞)  =  0.0728, corresponding to m∞  =  0.270.
+6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 4.  (Color online) Pictorial representation of the three valence bond crystal candidate states discussed in this work.  The columnar VBC
+(a) is also called Read-Sachdev32 state in the literature, while the staggered dimer VBC is also known as ”lattice nematic”18.
+
+
+
+                                                                                   some uncertainty, this constitutes a critical valueJc2  which is
+                                                                                   larger than the classical estimate 1/617, the linear spin wave9
+                                                                                   and non-linear sigma model20 results of 0.1∼ 0.12, and sub-
+                                                                                   stantially larger than a recent variational Monte Carlo (VMC)
+                                                                                   estimate of 0.0850. Our estimate is however in agreement with
+                                                                                   a Schwinger-boson mean ﬁeld treatment which reported a crit-
+                                                                                   icalJ2 of about 0.221. A possible physical explanation of this
+                                                                                   shift of the transition to larger values of J2  is that in some
+                                                                                   cases quantum ﬂuctuations prefer collinear over spiral states,
+                                                                                   such as e.g. in theJ1−J3 model on the square lattice24,25,51       .
+                                                                                      We have also determined the ordered moment along a sec-
+                                                                                   ond J2  cut at constant J3  =  0.3 (data not shown).   In this
+                                                                                   case the cluster size and shape dependency is even more pro-
+                                                                                   nounced and makes an accurate determination of the critical
+                                                                                   J2 value rather difﬁcult.  Similar extrapolations based on ei-
+                                                                                   ther all samples or only a subset of the samples gives a tran-
+                                                                                   sition point somewhere betweenJ2∼ 0.27− 0.33, although
+FIG.  5.   (Color  online)  Squared  staggered  moment m2  vs 1/L  at              the actual uncertainty is probably larger.
+J3  = 0 for severalJ2 values obtained by ED on the clustersN  =                       In order to corroborate the location of the disappearance of
+24, 26, 28, 30, 32, 34, 38 and the corresponding extrapolations to the             N´eel order, we study the energy per site along the same two
+thermodynamic limit.  In the non-frustrated caseJ2 = 0, we obtain                  constant J3  lines,  one located at J3  =  0 and the other one
+a good agreement with the QMC value when using theN  = 24, 28                      atJ3  =  0.3.  In a N´eel ordered phase the leading ﬁnite size
+and 32 samples alone.  (see text).  Inset:  extrapolated value of the              corrections to the energy per site are expected to scale as
+staggered momentm2∞  as a function ofJ2/J1, vanishing between
+J2/J1∼ 0.17− 0.22, depending on the extrapolation.
+                                                                                                     E/N =eN =e∞− αcN 3/2 +...                  (7)
+
+The discrepancy between the different ED extrapolations re-                        i.e. with a leading 1/L3  correction46,47    , and the coefﬁcient of
+sults in a∼ 5% uncertainty on the magnitude of the magnetic                        this term is proportional to the spin wave velocityc. In Fig.6
+moment.                                                                            (J3  =  0 on the left panel and J3  =  0.3 on the right panel)
+                                                                                   we display the energy per site of samples of up to 42 spins
+   WhenJ2 is switched on we notice that the ﬁnite size data                        in the relevantJ2 range together with the resultingN→∞
+starts to deviate systematically from a straight line in 1/L. We                   estimatee∞.  We extrapolate the energy according to Eq. (7)
+observe that systems which contain an M  point in the Bril-                        up toJ2 = 0.3 forJ3 = 0, and up toJ2 = 0.4 forJ3 = 0.3.
+louin zone (N = 24, 28, 32), behave consistently with respect                      As  can  be  seen  in  Fig.7,  the  prefactor  of  the         1/N 3/2  cor-
+to each other - studying e.g. the derivative dm2/dJ2  - com-                       rection  term  is  reduced  upon  approaching  the  transition  re-
+pared to the other system sizes49. We therefore choose to base                     gion, but seems to stay constant at the transition, in analogy
+one of the extrapolations (solid circles in Fig.5) on this class                   to the frustrated square lattice antiferromagnet46,52    .  Note that
+of samples.  The second estimate is obtained by using all the                      the  shaded  regions  denote  the  approximate  locations  of  the
+shown system sizes (hatched circles in Fig.5).  Now, as    J2 is                   transitions based on the extrapolation of the ordered moment,
+increased starting from zero, the extrapolated staggered mo-                       and the minimum of the velocity agrees reasonably well with
+mentm2(∞) decreases quite rapidly, roughly linear with in-                         those estimates.
+creasingJ2 (inset of Fig.5), and vanishes continuously around                         Returning to the extrapolated energies, we note that for the
+Jc2  = 0.17∼ 0.22, based on the two extrapolations.  Despite                       unfrustratedJ2,J3 = 0 case in Fig.6(left panel) the extrapo-
+                                                                                                                                                                   7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 6. (Color online) Left Panel. ED: Ground state energy of samples up toN = 42 atJ3 = 0, together with the resultingN→∞ estimate.
+For comparison the QMC result atJ2 = 0  43,45     and the energy of the Gutzwiller projected Dirac sea (see App.A) are displayed. The light red
+shaded area denotes the approximate location of the disappearance of N´eel order, while the dark blue shaded region denotes the approximate
+location of the ﬁrst order transition to yet another phase (likely phase IV). Right Panel. ED: Ground state energy of samples up toN = 38 at
+J3 = 0.3J1, together with the resultingN→∞ estimate. For comparison our ALPS QMC result atJ2 = 0 and the energy of the Gutzwiller
+projected Dirac sea (see App.A) are displayed. The light red shaded area denotes the approximate location of the disappearance of N           ´eel order,
+while the dark blue shaded region denotes the approximate location of the ﬁrst order transition to yet another phase (likely phase III). Note
+for both panels the good agreement between the extrapolated ED and QMC results atJ2 = 0 on the one hand, and between the Gutzwiller
+projected Dirac sea wave function and the extrapolated ED data at the magnetic to non-magnetic transition on the other hand.
+
+
+
+                                                                                     at largerJ2 and exhibit a maximum aroundJ2∼ 0.35− 0.4
+                                                                                     forJ3 = 0 andJ2∼ 0.5− 0.6 forJ3 = 0.3.  A comparison
+                                                                                     with the ﬁdelity data shown in Fig.2, suggests that the maxi-
+                                                                                     mum of the energy approximately coincides with the avoided
+                                                                                     level crossing to a different phase.
+                                                                                        Inspired  by  the  success  of  a  simple  Gutzwiller  projected
+                                                                                     half-ﬁlled tight-binding wave function on the triangular lat-
+                                                                                     tice in describing the spin liquid regime on the insulating side
+                                                                                     of  the  Mott  transition12,  we  have  analyzed  a  related  wave
+                                                                                     function on the honeycomb lattice:  the Gutzwiller projected
+                                                                                     half-ﬁlled  honeycomb  tight  binding  wave  function  (termed
+                                                                                     the Gutzwiller projected ”Dirac sea” in the following).  This
+                                                                                     wave function is discussed in some detail in App.A. It is a
+                                                                                     parameter-free variational wave function, and its energy for
+                                                                                     the Hamiltonian considered here is given in Eq. (A1).  This
+FIG. 7.  (Color online)J2  dependence of the 1/L3  correction term                   energy is plotted using a dashed green line in Fig.6.  Quite
+to the energy per site. This quantity is proportional to the spin wave               remarkably the energy is very close to the ﬁnite size extrapo-
+velocity c in the N´eel ordered phase.  At the transition its value is               lated ED energies precisely in the region where the N´eel or-
+expected to be ﬁnite.                                                                der is about to vanish (light red shaded uncertainty regions).
+                                                                                     As discussed in App.A, the Gutzwiller projected Dirac sea
+                                                                                     wave  function  has  algebraically  decaying  spin-spin  correla-
+                                                                                     tions with a sign structure that is identical to the one displayed
+lated energy per sitee∞ is in very good agreement with pub-                          by the N´eel state.  With its algebraically decaying correlation
+lished  QMC  results43,45    ,  and  we  ﬁnd  similarly  good  agree-                this wave function could in principle describe qualitatively a
+ment forJ2  = 0,J3  = 0.3 in Fig.6(right panel), where we                            putative continuous quantum phase transition from the N´eel
+performed ALPS SSE simulations53,54     to obtain an accurate                        ordered phase to a quantum paramagnet.  Inspecting the na-
+estimate for the energy.  For both J3  values the energy then                        ture  of  the  dimer-dimer  correlations  in  the  Gutzwiller  pro-
+ﬁrst rises almost linearly with increasingJ2, as expected for                        jected Dirac sea, the signs of the dimer-dimer correlations are
+this particular N´eel phase (note that the derivative de/dJ2 is                      identical to the ones in the columnar (Read-Sachdev) or pla-
+proportional to⟨Si· Sj⟩ on theJ2 bonds as a consequence of                           quette VBC (disregarding one particular distance highlighted
+the Hellmann-Feynman theorem).  The energy curves ﬂatten                             in  Fig.20).   Given  the  surprisingly  accurate  energy  of  this
+8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 8.  (Color online) Four-spin correlations [Eq. (8)] on an  N  = 24 site cluster for several differentJ2 values and constantJ3 = 0.3: (a)
+(0.0, 0.3) in the N´eel phase I, (b) (0.3, 0.3) in region of the phase transition from phase I to V, (c) (0.5, 0.3) in the plaquette phase V, and
+(d) (0.7, 0.3) in the lattice nematic (staggered dimer VBC) phase III or IV. The reference bond is indicated by the thick-black line.  Negative
+(positive) correlations are represented by red (blue) bonds.
+
+
+
+wave function at the transition, a plausible scenario is the pres-                  ferent values ofJ2 are shown. The panel (a) shows the dimer-
+ence of a continuous N´eel to columnar/plaquette VBC quan-                          dimer correlations deep in the N´eel phase atJ2 = 0,J3 = 0.3,
+tum phase transition in this frustrated honeycomb antiferro-                        where we expect the correlations to decay rapidly, but with a
+magnet.  We will discuss this scenario and other possibilities                      power-law,  due to the coupling to the multi spin wave con-
+in more detail later on.  Let us now consider the dimer-dimer                       tinuum.   In  panel  (b),  at J2  =  0.3,J3  =  0.3,  we  sit  ap-
+correlations in the magnetically disordered phase, in order to                      proximately at the N´eel to paramagnet transition,  and some
+verify whether there is indeed a VBC phase present.                                 of the more distant bonds have changed sign compared to the
+                                                                                    N´eel phase. Note that this correlation pattern matches qualita-
+                                                                                    tively the one of the Gutzwiller projected Dirac sea discussed
+                        C.    Dimer correlations                                    in App.A(as well as the         Z2-liquid discussed in Ref.50), and
+                                                                                    surprisingly also the one reported for the spin liquid regime
+   Real space correlations.   In this section we study dimer-                       of  the  half-ﬁlled  Hubbard  model  in  Ref.15.    Panel  (c)  at
+dimer correlations using ED. Our aim is to highlight the struc-                     J2  = 0.5,J3  = 0.3 shows pronounced and long-ranged cor-
+ture of the correlations along aJ2-cut at constantJ3 = 0.3 for                      relations, which at ﬁrst sight seem to be compatible with ei-
+the N  =  24 sample55.  We measure the following four-spin                          ther a columnar (Read-Sachdev) or plaquette VBC according
+correlation function:                                                               to  App.D.  A  more  quantitative  inspection  reveals  however
+                  (                                                                 that the largest distance positive/negative correlations are re-
+     Cijkl = 4      ⟨(Si· Sj) (Sk· Sl)⟩− (⟨Si· Sj⟩)2)               ,       (8)     spectively close to 0.18 and -0.0935,  which is in favor of a
+                                                                                    (d-wave) plaquette phase.  We revisit the question of colum-
+wherei,j andk,l are nearest-neighbor bonds on the honey-                            nar versus plaquette order again in the context of the effective
+comb lattice. In Fig.8correlation function results for four dif-
+                                                                                                                                                                   9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 9.  (Color online) Left panel: plaquette/columnar VBC structure factorS∗Plaq./Col./Nb forN = 24, obtained using ED in theSz basis,
+as a function of (J2,J3). The radius of the circles is proportional toS∗Plaq./Col./Nb. Numbers correspond to 103S∗Plaq./Col./Nb. Right panel:
+staggered VBC structure factorS∗Stag./Nb forN = 24, obtained using ED in theSz basis, as a function of (J2,J3). The radius of the circles
+is proportional toS∗Stag./Nb.  Numbers correspond to 103S∗Stag./Nb.  Note that the strong plaquette/columnar signal is found within phase
+(V) of Fig.2, while the strong         staggered signal is associated to the phases (II),(III) and (IV).
+
+
+
+quantum dimer model, and corroborate the present ﬁnding of
+a plaquette phase.  Finally, panel (d) at J2  =  0.7,J3  =  0.3
+shows  very  strong  correlations  reminiscent  of  a  staggered
+dimer phase.  We stress again that this ﬁnding alone does not
+discriminate between a spin gapped valence bond crystal or a
+magnetically ordered phase of type (II), (III) or (IV). While
+a  staggered  valence  bond  crystal  neighboring  the  plaquette
+phase  is  likely  (according  to  Refs.9, 18,  and23),  at  larger
+J2 the staggered signal in the dimer-dimer correlations could
+persist despite the appearance of magnetic order.
+   VBC structure factors. It is instructive to grasp correlations
+using integrated quantities such as dimer structure factors. As
+displayed in Fig.24of App.D, two different dimer correlation
+patterns emerge for plaquette/columnar states or a staggered
+state.  In order to detect them, we deﬁne the dimer structure
+factors as:
+
+                       Sα =∑         εα(k,l)Cijkl,                        (9)
+                               ⟨k,l⟩
+
+withα = Plaq./Col. orα = Stag., whereεα(k,l) = +1 if
+⟨k,l⟩ are NN sites such thatCijkl≥ 0 for “pure”α states and
+εVBC(k,l)  =−2 otherwise (strong correlations the closest
+to the reference bond are not included for the related quantity                      FIG. 10. (Color online)Sz version of the dimer correlations obtained
+S∗α; see Ref.24). It is important to stress here that the     Sα are                 using ED in theSz basis forN = 42 atJ2 = 0.3,J3 = 0.
+order parameters detecting lattice symmetry breaking, which
+do not distinguish themselves between genuine VBC ordering
+or a lattice symmetry breaking magnetic state.
+   A full scan of dimer structure factors associated to either                       The  staggered  signal  is  especially  strong  in  the  vicinity  of
+plaquette/columnar  or staggered  valence bond  crystal order                        the J3  =  0 line and close to the avoided level crossing.  In
+is shown in Fig.9.  Consistently with real space dimer cor-                          contrast,  the  columnar/plaquette  signal  is  strongest  around
+relation  analysis,  two  phases  come  up  with  strong  plaque-                    J2 ∼  0.6,J3 ∼  0.4,  and  decreases  upon  approaching  the
+tte/columnar  (left  panel)  or  staggered  (right  panel)  signal.                  J3  = 0 line.  In order to address the behavior atJ3  = 0 we
+10
+
+have also calculated theSz dimer correlations [cf. Eqn. (A2)]
+forJ2 = 0.3,J3 = 0 on theN = 42 sample, which would be
+compatible with a columnar/plaquette VBC. The correspond-
+ing plot shown in Fig.10exhibits a correlation pattern remi-
+niscent of the one expected for columnar/plaquette states, but
+the correlations are not particularly strong, and also exhibit a
+few defects in the form of bond which show inverted corre-
+lations compared to the columnar/plaquette expectations. We
+are thus currently unable to discriminate whether this picture
+corresponds to a columnar/plaquette VBC with a small order
+parameter or a genuine spin liquid, and more work is needed
+to clarify the behavior atJ3∼ 0.
+
+
+
+          IV.    EXACT DIAGONALIZATIONS IN THE
+VALENCE-BOND BASIS AND QUANTUM DIMER MODELS
+
+  A.    Diagonalization in the Nearest-Neighbor Valence-Bond
+                                   Basis
+
+   In this subsection we present results obtained from exact
+diagonalizations in the (variational) basis given by the set of
+nearest-neighbor valence-bond states24,56    .  Recently Mosadeq
+et  al.23  presented  an  analysis  using  the  same  technique  but             FIG. 11. (Color online) Comparison between the ground-state energy
+limited toJ3 = 0 and small system sizes (N = 54). Here we                        obtained from diagonalization in the NNVB and in theSz basis, as a
+consider the more general case of ﬁniteJ3∈ [0, 1] and inves-                     function ofJ2,J3∈ [0, 1].  The radius of the circles is proportional
+tigate considerably larger clusters (N  =  72 for correlations                   to the percent relative error, (ENNVB0  −EED0   )/EED0 × 100.  Data
+andN  = 96 for energies), allowing us to perform systematic                      obtained from a cluster comprisingN = 24 sites.
+ﬁnite size extrapolations.
+
+                                                                                 the restricted NNVB subspace by considering
+                             1.    The Method                                                   ∑
+                                                                                                     αi⟨ϕj| ˆH|ϕi⟩ =E∑αi⟨ϕj|ϕi⟩,           (10)
+                                                                                                  i                           i
+   When  frustration  is  dominant  and  destabilizes  magnetic
+phases it is possible to explicitly take into account that states                for all|ϕj⟩∈{|ϕi⟩}. This last equation is nothing but a gen-
+with non-zero total spin are unimportant in accounting for the                   eralized eigenvalue problem (GEP) for the two matrices with
+low-energy physics and to describe the system solely in terms                    elements  given  byHij  = ⟨ϕj| ˆH|ϕi⟩  andOij  = ⟨ϕj|ϕi⟩,
+of theS = 0 subspace.  This subspace can be spanned by the                       the latter explicitly denoting the non-orthogonality of NNVB
+set of arbitrarily ranged valence-bond (VB) states57,58    , which               states.  However,  it is crucial here that despite of their non-
+forms an over-complete basis and is thus difﬁcult to manipu-                     orthogonality,  the NNVB states are linearly independent on
+late, especially in numerical studies. A natural way of circum-                  most relevant lattices60,61    , and particularly on the honeycomb
+venting this difﬁculty is to impose a cutoff on the maximum                      lattice with periodic boundary conditions considered here61.
+range of the VBs to be considered;  in particular, it is possi-                  GEPs are computationally more demanding than conventional
+ble  to  devise  an  approach  where  only  nearest-neighbor  VB                 eigenvalue problems, especially in the present case where both
+(NNVB) states are taken into account.24,56     While the restric-                Hij  andOij  are dense matrices.  In spite of this, since for a
+tion to NNVB states is obviously a variational approximation,                    given  system  size  the  dimension  of  the  NNVB  subspace  is
+it offers the key numerical advantage of a signiﬁcant reduction                  much  smaller  than  that  of  the  total Sz  =  0  subspace,  the
+of the Hilbert space and has been shown to yield sound results                   method discussed here allows us to treat considerably larger
+for a number of strongly frustrated models, whose low-energy                     clusters, and thus to perform more extended ﬁnite size extrap-
+physics is dominated by short-range spin-singlets.24,56,59                       olations,  than possible within conventional ED. We also re-
+   We brieﬂy recall how the method can be applied and refer                      mark that, as for standard ED, it is possible to take advantage
+to Refs.24and56for details.   We follow a heuristic argu-                        of lattice symmetries, so that the size of the matrices to be con-
+ment and try to formulate the eigenvalue problem in the re-                      sidered is further reduced and, even more importantly, crucial
+stricted NNVB subspace{|ϕi⟩} simply as: ∑iαi ˆH|ϕi⟩  =                           information on quantum numbers is readily available.
+E∑iαi|ϕi⟩.  However, since the set{|ϕi⟩} is not invariant                           Despite such appealing features, due to its variational na-
+under the application ofH,  this relation cannot hold in the                     ture the method just described lacks built-in indicators of its
+particular singlet subspace but can explicitly be enforced in                    own reliability.   This drawback can be circumvented by re-
+                                                                                                                                                             11
+
+lying  on  unbiased  techniques,  such  as  ED  in  the Sz  basis,
+that are used in providing benchmarks to validate the restric-
+tion  to  the  NNVB  manifold.   As  a  ﬁrst  step  in  this  direc-
+tion, in Fig.11we plot results for the relative difference be-
+tween the ground-state energy of the model Eq. (1) obtained
+by solving the GEP in the NNVB basis and from ED in the
+Sz  basis, (ENNVB0  −EED0   )/EED0   , for anN  = 24 site clus-
+ter.  (Qualitatively similar results are obtained for a less sym-
+metric cluster with N  =  30 sites, not shown here.  We note
+however that ﬁnite size effects in the NNVB energy per site
+seem to be surprisingly large, as shown in App.C. The qual-
+itative result regarding the region of best match withSz  ED
+seems to be stable with system size however.)  As expected,
+since  long-range  VBs  are  required  in  accounting  for  long-
+range spin correlations on two-dimensional lattices62,ENNVB0
+compares poorly againstEED0     for couplings expected to sup-
+port magnetic phases (see sectionsI,II, andIII). Conversely,
+(ENNVB0  − EED0   )/EED0    ≲  5%,  in  the  region  of  the  phase
+diagram where magnetically-disordered phases are likely to
+be stabilized, cf. Fig.2;  in particular, for    J3  =  0 small rel-
+ative errors are observed for 0.2 ≲ J2 ≲  0.3, in agreement
+with Ref.23.  The fact that a small number of VB conﬁgura-
+tions (eight NNVB states, as opposed to 19873 in ED in the
+Sz = 0 subspace - lattice symmetries being exploited in both
+cases) is able to reproduce the GS energy in an extended re-
+gion of the parameter space up to a relative error that can be
+as small as∼ 1.5% constitutes good evidence that the NNVB
+subspace may be able to capture the low energy physics of the
+magnetically-disordered  phases.   Of  course,  to  conﬁrm  this
+statement it is crucial to go beyond a simple energy-based cri-                    FIG. 12.  (Color online) Four-spin correlations [Eq. (8)] on an  N  =
+terion and to compare the nature of the correlations contained                     24 site cluster for (J2,J3)  =  (0.5, 0.3),  obtained from (a) ED in
+in this variational wave function and the exact one.  In what                      the Sz  basis and (b) by solving the GEP [Eq. (10)] in the NNVB
+follows we proceed to a thorough characterization of four-spin                     subspace.   The reference bond,  in both panels,  is indicated by the
+correlations.                                                                      thick-black line.
+
+
+
+                       2.    Four-Spin Correlations
+                                                                                   particularly strong correlations at the shortest range (those in-
+   Real space  correlations.   We  compute  the  four-spin  con-                   volving the dimers closest to the reference bond) seemingly
+nected correlation functionCijkl as deﬁned in Eq. (8) in the                       favor the later scenario (see the AppendixD), as vindicated in
+ED section, wherei,j andk,l are pairs of NN sites (dimers)                         Refs.9and23. We remark that evidence in favor of                     plaquette
+on the honeycomb lattice. Cijkl is readily evaluated by ana-                       VBC order is also found from the histogram analysis in the
+lyzing the loop structure in the transition graphs⟨ϕj|ϕi⟩ for                      framework of the effective QDM presented in Sec.IV B.
+non-orthogonal NNVB states, in terms of which the lowest-                             We take advantage of the substantially reduced dimension
+energy  state,  solving  the  GEP,  [Eq.  (10)]  is  expressed  (for               of the NNVB subspace and compute four-spin correlations for
+technical  details  on  how  to  compute  expectation  values  for                 considerably larger clusters, comprising up toN  = 72 sites.
+NNVB states see Ref.63).                                                           The spatial dependence ofCijkl is depicted in Fig.13for the
+   We  once  more  gauge  the  validity  of  our  variational  ap-                 N  = 72 cluster and (J2,J3) = (0.5, 0.3).  An even stronger
+proach and compare the so-obtained results forCijkl against                        resemblance  to  the  correlation  pattern  for  “pure”  columnar
+those from ED for the N  =  24 site cluster and (J2,J3)  =                         and plaquette states is observed than for the smaller cluster
+(0.5, 0.3) in Fig.12. Semi-quantitative agreement is observed,                     withN  = 24 sites [Fig.12(b)], suggesting that the observed
+and interestingly the correlations obtained from the variational                   VBC pattern is not merely a ﬁnite size effect.  This observa-
+approach seem to be systematically smaller than those from                         tion is further corroborated by the data in Fig.14(a), where
+ED,  suggesting  that  the  exclusion  of  longer-range  VBs  has                  we plot|Cijkl| as function ofr (the distance between dimers
+the effect that VBC order is underestimated (see below).  Re-                      i,j  and k,l)  also  for N   =  72  and  (J2,J3)  =  (0.5, 0.3):
+garding the particular kind of VBC order that is stabilized, the                   |Cijkl(r)| decays slowly withr, consistent with saturation at
+two  sets  of  data  in  Fig.12are  consistent  with  both            colum-       large distances, and furthermore positive correlations are ap-
+nar (Read-Sachdev) and plaquette VBC order,  although the                          proximately twice as large as negative ones, as expected for
+12
+
+pure columnar (Read-Sachdev) and plaquette VBC states.                              ture  factors Sα  (see  Eq.9).    Sα  is  expected  to  scale  like
+                                                                                    C∞α  +A/N  and thus the existence ofα VBC phases is sig-
+                                                                                    naled by a ﬁnite value of the bond order parameter C∞α  .  In
+                                                                                    Fig.14(b) we plot    SPlaq./Col./Nb andS∗Plaq./Col./Nb (Nb is
+                                                                                    the total number of bonds considered in the sum) as a func-
+                                                                                    tion of inverse system size, as obtained from bothSz-ED and
+                                                                                    by solving Eq. (10), for      (J2,J3)  =  (0.5, 0.3).  We ﬁrst no-
+                                                                                    tice that, in agreement with our previous remark in connec-
+                                                                                    tion to Fig.12,  larger values for     SPlaq./Col.  and S∗Plaq./Col.
+                                                                                    are obtained withSz-ED and that the restriction to the NNVB
+                                                                                    manifold seemingly underestimates VBC order in the present
+                                                                                    case.    Linear  ﬁts  to  the  NNVB  data  shown  in  Fig.14(b)
+                                                                                    (data  for N  =  18  and  for  the  less  symmetric  cluster  with
+                                                                                    N  =  36 sites are discarded when ﬁtting) yield the estimate
+                                                                                    C∞Plaq./Col.∼ 0.16, close to the value 9/50 = 0.18 expected
+                                                                                    for the pure plaquette VBC state (see the AppendixD).
+                                                                                       Finally, we analyze the strength of VBC order throughout
+                                                                                    the parameter space and in Fig.15we plot    S∗Plaq./Col./Nb for
+                                                                                    theN = 72 site cluster as a function ofJ2,J3∈ [0, 1]. Unlike
+FIG. 13.  (Color online) Four-spin correlations [Eq. (8)] on an  N  =               what happens for smaller clusters, for which correlations mis-
+72  site  cluster  for (J2,J3)  =  (0.5, 0.3),  obtained  by  solving  the          matching the sign structure of the columnar/plaquette VBC
+GEP Eq. (10) in the NNVB subspace.  The thickness of the bonds                      patterns are found in part of the parameter space, four-point
+is proportional to Cijkl  and dark-blue (pale-red) indicates positive               correlations for theN = 72 cluster are always fully consistent
+(negative) values. The reference bond is indicated by the thick-black               with plaquette VBC order up to the point where, for givenJ3
+line.                                                                               and increasing values ofJ2, one enters a regime (highlighted
+                                                                                    in Fig.15) signaled by the occurrence of successive ground
+                                                                                    state  level  crossings  (see  Fig.21left  panel  for     J3  =  0.3),
+                                                                                    likely associated with the breakdown of a description solely
+                                                                                    in terms of NNVB states (see related discussion in App.C).
+                                                                                    Maximal  values  of S∗Plaq./Col./Nb  are  observed  just  before
+                                                                                    the ﬁrst such level crossing occurs.   For comparison we re-
+                                                                                    fer to the same quantity obtained by ED in theSz  using the
+                                                                                    N = 24 cluster in the left panel of Fig.9. For larger    J3 values
+                                                                                    the agreement is quite remarkable, however asJ3 is reduced
+                                                                                    to zero, the VBC correlations are signiﬁcantly reduced in the
+                                                                                    ED approach compared to the NNVB results.
+                                                                                       On  the  other  hand,  the  region  signalled  on  Fig.9(right
+                                                                                    panel) by a strong staggered signal, does not appear to occur
+                                                                                    in a parameter range where the NNVB method can be safely
+                                                                                    used due to a rather modest variational energy (see Fig.11)
+                                                                                    and the successive ground state level crossings (see Fig.15
+                                                                                    and Fig.21left panel for     J3  =  0.3).   It may seem surpris-
+FIG. 14. (Color online) (a)|Cijkl| [Eq. (8)] as a function of distance              ing that a staggered VBC state fails to be naturally captured
+r for theN = 72 site cluster and (J2,J3) = (0.5, 0.3), obtained by                  by the NNVB approach. However two distinct arguments can
+solving the GEP Eq. (10) in the NNVB subspace; positive and nega-                   explain this paradoxical situation.  (i) As mentionned in sec-
+tive correlations are discriminated.  (b) VBC structure factor per per              tionIII C,  no  deﬁnitive  evidence  supports  the  fact  that  the
+number of bonds,SPlaq./Col./Nb, as a function of the inverse system                 ground state is a singlet (non magnetic) state at the thermo-
+sizeN−1 for (J2,J3) = (0.5, 0.3), as obtained from ED and from                      dynamic limit.  In this respect a divergence ofSStag. is only
+the variational approach in the NNVB basis.S∗Plaq./Col. denotes the                 a  signal  of  the  spatial  symmetry  breaking  associated  to  it,
+structure factor obtained by eliminating the strongest correlations en-             but does not preclude the possibility of a (magnetic) nematic
+circling the reference bond and linear ﬁts (full lines; data forN = 18              phase which would obviously be out of reach of the NNVB
+and N  =  36 are excluded from the ﬁt) extrapolate the data to the                  method. (ii) If the ground state is a dressed staggered (singlet)
+thermodynamic limit. In both panels, dotted lines are only guides to                state,  a  good  variational  energy  in  the  NNVB  scheme  may
+the eye.
+                                                                                    be hard to reach due to the structure of the staggered NNVB
+                                                                                    conﬁguration (depicted in Fig.4(c)) : contrary to the case of
+   Dimer structure factors. Reliable extrapolation to the ther-                     the columnar or plaquette states (see Fig.4(a) and (b)), res-
+modynamic limit is achieved from the analysis of VBC struc-                         onating NNVB conﬁgurations needed to dress the pure VBC
+                                                                                                                                                           13
+
+                                                                                 value problem. In practice the transformation is conveniently
+                                                                                 carried out by a truncated diagrammatic expansion, contain-
+                                                                                 ing  only  the  most  relevant  terms.    This  derivation  is  pre-
+                                                                                 sented in App.B, and provides a rather simple quantum dimer
+                                                                                 model with single- and double-hexagon resonance and poten-
+                                                                                 tial terms, that reads
+
+                                                                                 Heff =−t6                   −t10                   + t108
+
+
+                                                                                           + t64              +v10                   − v102                  .
+
+                                                                                                                                                         (11)
+
+                                                                                 Interestingly, the parameters of the effective QDM (given in
+                                                                                 App.B) only depend on the ratio     J2/(J1 +J3), so that the
+                                                                                 physics is invariant along simple isolines in theJ2−J3 plane
+                                                                                 within  the  QDM  description.   In  retrospect  -  comparing  to
+                                                                                 Fig.15— this invariance is also exhibited approximately by
+                                                                                 the NNVB approach, and within the boundaries of the VBC
+                                                                                 phase  also  to  some  extent  in  the Sz-ED  approach  (cf.  left
+                                                                                 panel of Fig.9).
+FIG. 15. (Color online)S∗                                                            The leading contribution of the QDM, with terms on a sin-
+                            Plaq./Col./Nb forN = 72, as obtained by
+solving the GEP Eq. (10) in the NNVB subspace, as a function of                  gle hexagon, is a simple Hamiltonian of the Rokshar-Kivelson
+(J2,J3). The radius of the circles is proportional toS∗Plaq./Col./Nb.            form67, with off-diagonal and diagonal terms with amplitudes
+Numbers correspond to 103S∗Plaq./Col./Nb.                                        t and V  respectively, that has been studied in great detail in
+                                                                                 Ref.68.   It turns out that the ratio     V/t  =  1/4 is ﬁxed (in-
+                                                                                 dependent of J2  and J3),  for which case it was shown that
+                                                                                 the ground state is in the plaquette phase. Since our effective
+state  and  lower  its  variational  energy  involve  long  resonat-             Hamiltonian reduces to this form whenJ2/(J1 +J3) = 3/8
+ing loops in the corresponding overlap diagram (see App.D)                       (i.e. the two-hexagon terms vanish), we expect that plaquette
+hence producing exponentially small overlaps and corrections                     physics will occur in this region.  However, it is not yet clear
+to the bare VBC energy. In summary, this effective locking of                    what will be the extent of this phase,  since when we move
+the staggered NNVB conﬁguration could make it difﬁcult to                        away from this line, the 2-hexagon terms appearing in the ef-
+emerge in the NNVB approach. A route to cure this issue and                      fective QDM might alter this behavior.
+allow a more efﬁcient relaxation to other VB conﬁgurations
+may be to include longer range dimer conﬁgurations assum-
+ing that the GEP remains numerically tractable.                                                         1.    Comparison with NNVB
+
+                                                                                     In deriving the QDM in App.Bwe made several assump-
+   B.    Exact Diagonalization of an Effective Quantum Dimer                     tions and simpliﬁcations.  First of all we neglected subdomi-
+                                  Model                                          nant terms in order to keep the model simple. This may cause
+                                                                                 some approximation errors that can be detected by comparing
+   The NNVB approach used in the previous section requires                       the QDM with NNVB approach.  Secondly, the QDM is de-
+an extensive numerical treatment of the non-orthogonality of                     rived for an inﬁnite lattice66, which substantially improves the
+the VB states. It is therefore numerically demanding and pre-                    ﬁnite size scaling behavior.  As shown in App.Cthe ground
+cludes  the  use  of  efﬁcient  iterative  algorithms,  such  as  the            state energy converges to the same value as the NNVB ap-
+Lanczos64  algorithm.   In  this  respect,  it  would  be  desirable             proach, however for the QDM the convergence is much faster,
+to  base the  study  on a  reliable  (orthogonal) quantum  dimer                 i.e.  it has smaller ﬁnite size corrections.  This validates the
+model (QDM) in order to signiﬁcantly increase the accessible                     quantum dimer model, and also explains the ﬁnite size differ-
+system sizes.                                                                    ences between the QDM and the NNVB approach.
+   Recently,  a  generic  scheme  for  the  derivation  of  QDMs                     A  careful  comparison  between  both  approaches  is  pre-
+from underlying Heisenberg Hamiltonians has been proposed                        sented in AppendixC. In order to illustrate on a speciﬁc ex-
+in  the  context  of  two-dimensional  frustrated  antiferromag-                 ample  how  all  these  methods  agree,  we  have  computed  the
+nets65,66    .    This  method  aims  to  transform  the  generalized            ﬁnite-size gap to the ﬁrst singlet excitation with momentum
+eigenvalue  problem  of  the  Heisenberg  model  in  the  short                  K  for  (J2,J3)  =  (0.5, 0.3).    This  set  of  parameters  was
+range  valence  bond  basis  (which  was  discussed  in  the  pre-               chosen based on ED correlations computed for an N  =  24
+ceding  subsectionIV A 1)  to  an  effective  orthogonal  eigen-                 cluster (with a grid spacing of 0.1), since it provides a strong
+14
+
+                                                                                   tential VBC candidates (columnar versus plaquette) is real-
+                                                                                   ized.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                   FIG. 17. (Color online) (a) all dimers belonging to the same of three
+FIG. 16. (Color online) Finite-size scaling of the singlet gap between             possible columnar states have the same dimer vector associated.  A
+the  ground-state  and  the  lowest  excitation  with  momentum K  for             resonating plaquette contains two different dimer vectors, that con-
+J2 = 0.5 andJ3 = 0.3, obtained by ED in theSz basis, the NNVB                      tribute equally to the resulting histogram.  (b) the phase space built
+and the effective QDM approach.  Note that the singlet gap matches                 by the dimer vectors forms an equilateral triangle, where the corners
+quite well between the different techniques,  despite the somewhat                 represent the columnar states, while the plaquette states are signaled
+poor variational energy of the NNVB and QDM approach.                              by a binomial distribution on the edges.
+
+
+
+plaquette structure factorSVBC (see Eq.9for its deﬁnition).
+As has been discussed already, both plaquette and columnar                                               2.    Dimer Vector Histograms
+VBC have the same discrete symmetry breaking, correspond-
+ing to a 3-fold degeneracy in the thermodynamic limit. For in-                         Studying  (orthogonal)  quantum  dimer  models  offers  two
+creasingly larger cluster sizes, the lowest singlet excitation at                  advantages:  ﬁrst of all one can study larger systems.   Here
+the two equivalentK points should collapse onto the ground-                        for example we were able to study honeycomb samples with
+state. Moreover, because of the ﬁnite correlation length in the                    up toN  = 126 sites, the second, even more interesting point
+VBC,  this  singlet  gap  must  ultimately  vanish  exponentially                  is that one has access to new observables which are hard to
+with increasing system size.                                                       deﬁne and implement in either theSz or the NNVB basis. In
+   In Fig.16, we plot the scaling of this singlet gap          ∆ com-              order  to  detect  the  underlying  phase  of  a  Hamiltonian,  one
+puted with all our numerical techniques.  Unbiased ED data                         usually measures correlations in the ground state, as done in
+already shows a clear indication of a vanishing gap in the ther-                   Sec.IV A 2.  However, the QDM allows for the computation
+modynamic limit, but the scaling seems rather∼ 1/N  since                          of a related useful observable69–73    .   The idea is to associate
+we  cannot  reach  large  enough  cluster  sizes.   Using  NNVB                    a  two-dimensional  vector  to  every  dimer  and  collect  a  his-
+data,  we can extend our computations to larger clusters (up                       togram of the vector occupations.   Writing the ground state
+to N  =  96),  and we observe an excellent agreement when                          |ψ0⟩ =∑
+comparing to ED data.  This is not obvious since for instance                      ﬁgurations|ϕi⟩, one deﬁnes the appropriate histogram asiai|ϕi⟩ as superposition of orthogonal dimer con-
+the variational NNVB energy is not that accurate (see Fig.11
+and App.C), but computing energy differences can give accu-                                             P (Nx,Ny) =  ∑                |ai|2,                   (12)
+rate results when there is a systematic deviation in all energies.                                                        i∈CNx,Ny
+Looking at the scaling of NNVB data, we see a behavior that
+could be compatible with a scaling faster than 1/N, but there                      whereCNx,Ny is indexing all dimer states|ϕi⟩ that have a total
+are still some irregularities in the ﬁnite-size effects due to dif-                dimer vector
+ferent cluster shapes. Our last set of data is obtained from the
+QDM model,  that was simulated up to a N  =  126 cluster:                                                 (Nx,Ny) = ∑               v[i,j].                     (13)
+we note a semi-quantitative agreement with other techniques                                                               [i,j]∈|ϕ⟩
+for the gap numerical data. Moreover, as explained above, the
+QDM has much weaker ﬁnite-size effects, which is clearly ob-                           The left panel of Fig.17illustrates a particular choice of
+served in the plot where ﬁnite-size scaling is much smoother.                      dimer vectors, that assigns three different vectors to the three
+The possibility to access large clusters with small ﬁnite-size                     columnar  (Read-Sachdev)  states.    The  phase  space  of  the
+effects allows us to show convincingly that the gap collapses                      resulting  histogram  forms  a  triangle  illustrated  in  the  right
+fast enough and that the system has long-range VBC order in                        panel, where the corners of the triangle represent the colum-
+the thermodynamic limit.                                                           nar states, while the plaquette states are signaled by a bino-
+   However, it remains to be determined which of the two po-                       mial  distribution  on  the  edges  of  the  triangle.   A  staggered
+                                                                                                                                                           15
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 18.  (Color online) Normalized dimer histogramsP(Nx,Ny), as deﬁned in Eq.(12), obtained within the effective QDM for different
+system sizes atJ3  = 0.  We observe pronounced plaquette VBC signals at the largerJ2 values shown, with a tendency towards a reduced
+radius and a moreU(1)-symmetric behavior as the N´eel phase at smallerJ2 is approached.
+
+
+
+VBC state on the other hand would contribute to the center of                     ited by the histograms upon approaching the N´eel phase may
+the histogram.                                                                    well be a physical feature of the N´eel to VBC transition on the
+   In  Fig.18we  display  dimer  vector  histograms  obtained                     honeycomb lattice.
+within the QDM approach for the three largest samples with
+N = 72, 96 and 126 sites, and for severalJ2 values atJ3 = 0.
+The  parameter  region  in  which  the  QDM  approach  is  ex-                                              V.    CONCLUSION
+pected to be appropriate for the original spin model is high-
+lighted with a white background, whereas the remaining pa-                           In the present work we have analyzed the phase diagram
+rameter region is shaded in grey.  Let us start the discussion                    of  the  frustrated J1− J2− J3  spin-1/2  Heisenberg  model
+atJ2  = 0.4, which is close to the pointJ2  = 3/8 = 0.375,                        on the honeycomb lattice by using a combination of differ-
+where  the  QDM  reduces  to  the  Rokhsar-Kivelson  model  at                    ent ED approaches and a SCMFT treatment.  We have local-
+V/t  =  1/4,  expected  to  display  a  plaquette  VBC  ground                    ized the boundaries of several magnetically ordered phases in
+state68.   Indeed the histogram displays pronounced peaks in                      the the region J2,J3 ∈  [0, 1], and found a sizable magneti-
+the middle of the edges of the triangle, as expected for a pla-                   cally disordered region in between.  We characterize a large
+quette VBC phase. These results thus corroborate the comple-                      part of this magnetically disordered region as a plaquette va-
+mentary ﬁndings based on four-point correlation functions us-                     lence bond crystal phase.  Interestingly we ﬁnd that a partic-
+ing ED in theSz basis and the NNVB approach. Pushing the                          ular  parameter-free  Gutzwiller  projected  tight-binding  wave
+QDM somewhat further into the “unphysical” region of larger                       function has remarkably accurate energies compared to ﬁnite-
+J2,  the  plaquette  signal  is  even  more  pronounced.   On  the                size extrapolated ED energies along the transition line from
+other hand by loweringJ2 towardsJ2∼ 0.2, the histogram                            the well-known N´eel phase to the plaquette VBC, a fact that
+becomes more rounded and fuzzy,  reminiscent of the emer-                         points to possibly interesting critical behavior - such as de-
+gentU(1) symmetry at deconﬁned quantum critical points at                         conﬁned criticality - across the transition. In contrast a direct
+N´eel to VBC transitions69,72–75        . Upon lowering theJ2 param-              N´eel to staggered VBC transition has recently been shown to
+eter, the radius is also somewhat reduced and the dimer cor-                      be strongly ﬁrst order76.
+relation length increases,  however our effective QDM using                          Compared to previous work on theJ1−J2−J3 phase dia-
+nearest-neighbor valence bonds only is not able to reproduce                      gram we localize precisely the magnetic phases (phases I and
+the vanishing of the VBC order parameter (i.e.  the radius of                     II in the phase diagram shown in Fig.2) which have been dis-
+the distribution) as the N´eel phase is approached.  In spite of                  cussed to be present at the semiclassical level9,17,18,21–23             , and
+this  limitation,  the  approximate U(1)-like  symmetry  exhib-                   we  discuss  the  possibility  of  a  reentrant  collinear  magnetic
+16
+
+phase IV in a region at largerJ2, which would nevertheless be                     For even larger values ofJ2/J1  a lattice nematic (staggered
+compatible with the staggered dimer correlations found ear-                       VBC) [c.f.  Refs.9,18, and23and right panel of Fig.9] as
+lier in the relevant region9,18,23      . The possibility of a plaquette          well as magnetically ordered spiral phases can arise.  Based
+phase has been discussed recently in Ref.23restricted to the                      on  the  success  of  the  Gutzwiller  projected  Dirac  sea  wave
+J3  =  0 line, while an earlier work9  reported that the dimer                    function  to  quantitatively  describe  the  energies  at  the  N´eel
+correlations  might  not  be  sufﬁciently  strong  for  a  plaquette              to plaquette VBC transition, as well as the qualitative agree-
+VBC, and put forward the idea of an RVB liquid.                                   ment  with  respect  to  spin-spin  and  dimer-dimer  correlation
+   Here  we  established  that  a  plaquette  phase  does  indeed                 functions, we suggest that a deconﬁned critical point scenario
+occur  for  larger J3  values  when  leaving  the  N´eel  phase  (I)              might describe this particular N´eel to VBC transition on the
+by computing dimer-dimer correlations via exact diagonaliza-                      honeycomb lattice.  Our current ED tools are admittedly not
+tions in the NNVB subspace and the analysis of dimer his-                         perfectly suitable to resolve more complex scenarios, such as
+tograms  within  an  effective  QDM,  and  we  showed  that  the                  an SU(2) algebraic spin liquid region77 with a small but ﬁnite
+phase has a sizable extent in the J3  direction,  including the                   extent. The same is true for a small Z2 spin liquid region78–82
+magnetically disordered region found recently on theJ2 =J3                        appearing between the N´eel and plaquette phase. We also note
+line22 (and thereby clarifying its nature).  The precise fate of                  that a recent instanton analysis of one kind of Z2 spin liquid
+the plaquette VBC upon approaching theJ3 = 0 line is how-                         revealed an instability to a VBC phase83, in agreement with
+ever still an open question.                                                      the plaquette VBC phase we ﬁnd.   Our analysis is however
+   The situation regarding the staggered VBC versus magnetic                      at variance with the phase diagram put forward in the VMC
+order in phases III and IV in Fig.2is not clear yet, and the                      study of Ref.50. In that work the succession of phases is N           ´eel,
+possibility of incommensurate behavior of spin correlations or                    a rather large Z2 spin liquid region, followed by a rotational
+magnetic order renders an ED analysis quite challenging. It is                    symmetry breaking state.
+likely that this question can be more meaningfully addressed                         Regarding the question ii) a recent estimate on the ratio of
+using  coupled-cluster  or  spin  f-RG  techniques,  as  done  re-                J2/J1  in the spin liquid region of the honeycomb Hubbard
+cently in the context of incommensurate spin correlations on                      model  was  put  forward  based  on  continuous  unitary  trans-
+the frustrated square lattice25.                                                  formations in Ref.84,  and a value of about     J2/J1 ∼  0.06
+   At the technical level it is notable that we have found an                     was quoted.   While this value seems to be almost sufﬁcient
+interesting example where we could explicitly show that it is                     to enter a new phase in the J1−J2  model according to the
+possible to derive an effective quantum dimer model which ac-                     VMC analysis of Ref.50, which reported a critical value of
+curately describes the magnetically disordered plaquette VBC                      J2/J1  = 0.08, our ED based value for the critical ratio is at
+region.  Such a connection was conjectured to be present al-                      around three times as large (0.17− 0.22).  We currently be-
+ready some time ago68.  However, no precise connection be-                        lieve that the smallJ2/J1 value in Ref.50is due to a compar-
+tween  a  QDM  and  original  spin  models  could  be  made  at                   atively poor variational energy of the N´eel state, when com-
+that time.  It is still an open question to understand why the                    pared  to  our  ﬁnite  size  extrapolated  ED  energies,  therefore
+NNVB and the QDM approach are currently unable to detect                          shifting the VMC transition to a too smallJ2/J1 value. So we
+and describe the staggered VBC (lattice nematic) discussed                        believe based on our results that a simpleJ1−J2 spin model
+previously.  It might be that both methods are biased towards                     alone does not allow a quantitative description of the spin liq-
+dealing with valence bond conﬁgurations which retain some                         uid phase discovered recently in the Hubbard model15.  More
+ﬂipability on short loops, while the staggered VBC conﬁgu-                        work is needed to understand whether the phase adjacent to
+rations do not contain short ﬂipable loops at all. On the other                   N´eel phase atJ3  = 0 is a plaquette VBC with a small order
+hand it could also be that the lattice nematic state actually is                  parameter or a genuine spin liquid phase, in which case the
+a magnetically ordered state (at least in some part of param-                     J1−J2 model at smallJ2 would at least qualitatively explain
+eter space) which breaks the same lattice symmetries as the                       the physics of the Hubbard model on the insulating side of the
+the staggered VBC, giving rise to qualitatively similar dimer-                    Mott transition. Future efforts will also have to explore the ef-
+dimer correlations.                                                               fects of higher order corrections and thereby unravel whether
+   Returning  to  one  of  the  initial  motivations  —  the  under-              a quantitative spin-only description of the spin liquid phase in
+standing of the magnetism of the half ﬁlled Hubbard model                         the Hubbard model on the honeycomb lattice is possible.
+upon lowering ofU/t, and the possible explanation of the spin                        Note  added:   After  submission  of  this  work  we  became
+liquid behavior found in Ref.15— the questions are: i) what                       aware of Ref.85, where a spin f-RG study of the same model
+is the effect of the sub-leading next nearest neighborJ2 cor-                     is presented.  In that paper a considerably large magnetically
+rection to the nearest neighbor J1  Heisenberg interaction in                     disordered phase is also found.
+terms of new phases arising; and ii) are the required values of
+J2/J1  for new physics beyond the N´eel phase reachable by
+downfolding the Hubbard model to a spin model at intermedi-                                              ACKNOWLEDGMENTS
+ateU/t, or does one have to consider more correction terms?
+   Regarding i): the scenario developed in the present paper is                      The  authors  thank  B.  Clark,  M.  Hermele,  R.  Moessner,
+thatJ2 destabilizes N´eel order somewhere betweenJ2/J1∼                           R.  Thomale  and  A.  Vishwanath  for  useful  discussions  and
+0.17− 0.22, and then a plaquette VBC phase (or a disordered                       C. Weber for correspondence on the variational Monte Carlo
+version thereof) sets in, up to a value ofJ2/J1∼ 0.35− 0.4.                       results.   We  also  acknowledge  interesting  discussions  with
+                                                                                                                                                             17
+
+Z.Y.  Meng,  T.C.  Lang,  S.  Wessel,  F.F.  Assaad  and  A.  Mu-                  studied in this paper.   The ﬁnite size expectation values for
+ramatsu  on  the  results  of  Ref.15.   AML  is  grateful  to  H.-                lattices withN  = 2×L2 withL = 8,..., 14 are displayed
+Y.  Yang  and  K.P.  Schmidt  for  collaboration  on  related  top-                in Fig.19.  Two different data sets are shown, ﬁrst the bare
+ics.   SC and AML acknowledge the KITP for hospitality in                          estimates  with  error  bars  including  all  independent  Markov
+the ﬁnal stage of the project and support through NSF grant                        chains (open symbols), and a second set where the anomalous
+No  PHY  05-51164.    DS  thanks  the  MPI  PKS  for  support                      samples were removed in calculating the mean and the error
+through its visitors program.   This work was performed us-                        bars (hatched symbols).  The later procedure yields estimates
+ing HPC resources from MPG RZ Garching, GENCI-IDRIS                                which show a markedly smoother ﬁnite size behavior and are
+(Grant 2009-100225) and CALMIP. This work is supported                             used to linearly extrapolate the estimates toL→∞  89.  The
+by the French ANR program ANR-08-JCJC-0056-01.                                     energy per site is then found to be approximately:
+
+                                                                                               E(J1,J2,J3)/N≈−0.353× 3/2×J1
+                                                                                                                         +0.128× 3×J2
+                                                                                                                         −0.120× 3/2×J3.        (A1)
+
+                                                                                   As already shown in Fig.6(for    J3  = 0 in the left panel and
+                                                                                   J3 = 0.3 on the right panel), the energy per site of this wave
+                                                                                   function is very close to the extrapolated energy per site of
+                                                                                   the frustrated Heisenberg model close to the supposed N´eel
+                                                                                   to  plaquette  transition.   This  success  is  quite  striking  for  a
+                                                                                   parameter free wave function.
+
+
+
+
+
+FIG. 19.  (Color online) Gutzwiller projected Dirac sea:  Finite size
+scaling behavior and extrapolationL→∞ of the spin correlations
+relevant the energy of the frustrated honeycomb Hamiltonian (1). See
+text for the explanation of the two types of symbols shown.
+
+
+
+
+
+   Appendix A: Properties of the Gutzwiller-Projected Wave
+                                 Function
+
+   Wave  function  approaches  to  strongly  correlated  systems
+can  be  valuable  approximations  because  a  good  variational
+wave function can provide signiﬁcant physical insight due to
+its relative simplicity. In the present study we focus on a (com-
+pletely) Gutzwiller projected half-ﬁlled nearest neighbor hop-
+ping tight binding model on the honeycomb lattice.  As this
+corresponds to a ﬁlled Dirac sea we term the wave function                         FIG.  20.   (Color  online)  Dimer correlations  [Eq.A2]  evaluated in
+Gutzwiller projected (GP) Dirac Sea86.                                             the Gutzwiller projected Dirac sea for aL = 11 sample.  The black
+   Here we use a standard Monte Carlo procedure to evaluate                        bond denotes the reference bond, while the blue (red) bonds denote
+correlation functions of the parameter free wave function ac-                      positive (negative) correlations.  The width of the bonds are propor-
+cording to the update scheme proposed by Ceperley, Chester                         tional to the value of the correlation function. The (E) letter indicates
+and Kalos87.   While doing so we noticed the occurrence of                         hexagons with all negative correlations, while (P) indicates plaque-
+slowly equilibrating starting conﬁgurations which had a sig-                       ttes with a staggered signal. The four bonds indicated by arrows are
+niﬁcant  effect  in  determining  some  of  the  correlation  func-                the only ones that differ in sign from the expectations for a Read-
+tions and their error bars. It is presently not clear to us whether                Sachdev or plaquette VBC.
+this is due to a inefﬁcient Monte Carlo sampling or due to a
+fat  tailed  distribution  for  some  observables,  as  for  example                  This surprising observation raises the question whether the
+discussed in Ref.88for continuum systems.                                          wave  function  exhibits  appropriate  correlations  to  describe
+   First we determine the nearest neighbor, next-nearest and                       such a transition beyond the competitive ground state energy.
+third-nearest neighbor spin-spin correlation function, as they                     We have therefore determined the spin correlation functions at
+allow  us  to  determine  the  variational  energy  of  this  wave                 larger distances and found that correlations are perfectly stag-
+function for theJ1−J2−J3 Heisenberg Hamiltonian [Eq. (1)]                          gered according to the N´eel pattern and decay algebraically as
+18
+
+1/rσs with a decay exponentσs≈ 1.7(2). Next we have mea-                          kinetic term and v6  = t6α4  for the potential one.  Here we
+sured dimer-dimer correlations functions of nearest neighbor                      choose the bipartite convention withα = 1/√2.
+bonds                                                                                Interestingly, the amplitudest6 andv6 depend only on one
+                                                                                  parameter,J eff2   = J2/(J1 +J3).  Note, that this qualitatively
+       Czzijkl =⟨(SziSzj )(SzkSzl )⟩−⟨SziSzj⟩⟨SzkSzl⟩,         (A2)               agrees with the phase diagrams (Figs.2and3) suggested ear-
+and display the correlation pattern for an L  =  11 system in                     lier in this paper. One can therefore simplify the Hamiltonian
+Fig.20.   As already pointed out in Ref.50,  the short range                      to
+                                                                                                                               (                  )
+structure of the dimer correlations in this wave function is sur-                    Heff(J1,J2,J3) = (J1 +J3)Heff               1,  J2              .    (B2)
+prisingly analog to the one found in the spin liquid phase of                                                                       J1 +J3, 0
+the honeycomb Hubbard model15. What has however not been                             One  can  check  easily,  that  this  relation  also  holds  for
+noticed previously is that beyond the four ”inverted” bonds                       processes  that  connect  dimer  conﬁgurations  deﬁned  on  two
+(highlighted by arrows in Fig.20) all the other dimer corre-                      hexagons.  While those contributions cannot be obtained an-
+lations explored here match the signs expected for columnar                       alytically,  we  ﬁnd  some  iterative,  numerical  algorithm,  that
+(Read-Sachdev) or plaquette VBC states as derived in App.D.                       allows for calculating the amplitudes for all possible terms of
+The dimer correlations also seem to decay as a power law, but                     this kind. This algorithm appears to converge rapidly and will
+we have not been able to determine the corresponding decay                        be brieﬂy described in the following.
+exponent accurately enough.                                                          While it is relatively easy to obtain the inverse of an opera-
+   The  correlations  measured  in  the  Gutzwiller  projected                    tor within the present scheme66, calculating the square root is
+Dirac sea qualify this wave function as a viable candidate to                     much less obvious.  We therefore have to go beyond previous
+describe  a  critical  state  separating  a  N´eel  ordered  magnetic             works in order to derive an expression forO−1/2. The idea is
+phase from a VBC of columnar (Read-Sachdev) or plaquette                          to explicitly work in a basis that is formed by all the diagrams
+type. The fact that this wave function simultaneously exhibits                    that are considered. Hence, it is possible to write every sum of
+staggered  N´eel  ﬂuctuations,  as  well  as  columnar/plaquette                  processes as a vector and every fusion as a linear map applied
+VBC ﬂuctuations, is reminiscent of the SU(2) algebraic spin                       to this vector. As an example, in the basis
+liquid  state  on  the  honeycomb  lattice  put  forward  by  Her-                             {                                             }
+mele77,  which  is  however  believed  to  describe  an  extended
+spin liquid region, instead of a single critical point90. Further                                             ,             ,                   ,
+work  is  required  to  understand  whether  this  wave  function
+could  possibly  also  represent  a  deconﬁned  quantum  critical                 the fusion of two ﬂips on a hexagon can be written as
+point74,75     separating the two phases or whether there is indeed
+an extended algebraic spin liquid phase present between the                                                                        
+two ordered phases (N´eel - plaquette VBC) discussed in this                                        0  1  01  0  0· 10   =     01  ,
+paper90.  Yet a different scenario has recently been advocated                                         1  0  0           0            1
+in Refs.50,78–80, where a gapped                  Z2  spin liquid has been
+proposed as a phase neighboring the N´eel ordered phase. Vari-                    resulting in a contribution for a potential term on a hexagon
+ationally the Z2 spin liquid was found50 to be a tiny fraction                    and a kinetic term on two hexagons.
+lower in energy than the GP Dirac sea studied above. Whether
+this is also true beyond the variational realm remains an open                       Generalizing and applying this procedure to a larger basis
+question.                                                                         allows for an iterative solution of
+                                                                                                      1  {
+Appendix B: Derivation of an effective Quantum Dimer Model                                            2    O−1/2,O−1/2}         =O−1,
+
+   In this section we redeﬁne theJ1–J2–J3–Heisenberg model                        to obtainO−1/2.  Putting the result intoB1, we arrive at the
+on the honeycomb lattice (1) as                                                   Hamiltonian Eq. (11), with coefﬁcients given by
+
+
+                 Heff = 43O−1/2HO−1/2 + NJ12 ,               (B1)                             [ 41 hexagon                   2 hexagons(2J eff2 − 1)]    [ 4(8J eff2 − 3)]
+
+whereH is the matrix introduced in sectionIV A 1,    O is the                                   3                             3
+overlap matrix for the NNVB basis states andN is the number                                   t6  −0.6      t10 −0.049218(5)
+of sites.                                                                                                                 v10     0.001562(9)
+   On the honeycomb lattice there is only one elementary pro-
+cess  that  resonates  between  the  two  possible  valence  bond                    Note thatt6 changes sign atJ eff2   = 1/2, whilet10 andv10
+coverings on a hexagon.  As shown in Ref.66, this naturally                       change sign atJ eff2   = 3/8.  The ratio ofv10/t10 does not de-
+leads to a potential term, counting the number of ﬂippable pla-                   pend onJ eff2  , although its analytical value is not known at the
+quettes. The exact amplitudes of both processes are shown to                      present stage.  We note in passing that the model with only
+be given by t6  =−(6J2− 3J1− 3J3)α4/(1−α8) for the                                the most relevantt10 term has been studied in the context of
+                                                                                                                                                              19
+
+supersolids of hardcore bosons on the triangular lattice91,92    ,
+whereas the model att10 =v10 = 0 corresponds to a particu-
+lar point of the Rokhsar-Kivelson model studied in Ref.68.
+   The QDM combines the advantages from both exact diago-
+nalizations in theSz basis which can be performed efﬁciently
+based on the Lanczos algorithm and from the NNVB approach
+which reduces the Hilbert space signiﬁcantly through the re-
+striction to nearest neighbor VB states.  This approach makes
+it possible to study honeycomb samples of up to 126 sites us-
+ing space group symmetries93.
+   One drawback of both the NNVB and the effective quan-
+tum dimer model approach is that they do not presently allow
+to gauge the quality of the approximation with respect to the
+Heisenberg model within the methods themselves. One there-
+fore needs to compare energies or overlaps with exact diago-
+nalization data of the original Heisenberg model for smaller
+system sizes in order to locate the regions in the phase dia-                      FIG. 22. (Color online) Ground-state energies for various sizes vsJ2
+gram where the NNVB approximation is valid.                                        (J3  = 0.3) obtained by different numerical techniques.  Extrapola-
+                                                                                   tions to the thermodynamic limit (see text) are also plotted. Inset: for
+                                                                                   (J2,J3) = (0.2, 0.3), ﬁnite-size scaling of the ground-state energy
+      Appendix C: Comparison Between NNVB and QDM                                  obtained with ED of NNVB and QDM models.
+
+
+
+                                                                                   cated, but one lacks built-in indicators of the convergence of
+                                                                                   the resulting expression.  On the other hand, overlaps are ex-
+                                                                                   actly  dealt  with  within  the  NNVB  approach  (Sec.IV A 1),
+                                                                                   which is therefore immune to this problem,  but this advan-
+                                                                                   tage comes at the cost that the system sizes that can be ana-
+                                                                                   lyzed via the NNVB approach are more restricted than those
+                                                                                   that can be handled by diagonalizing effective QDMs.  Fur-
+                                                                                   thermore, and as far as ﬁnite-size analysis is concerned, the
+                                                                                   formalism  described  in  AppendixBhas  the  advantage  that
+                                                                                   the amplitudes appearing in the effective QDM are computed
+                                                                                   on an inﬁnite lattice,66 implying that faster convergence to the
+                                                                                   thermodynamic limit is attainable within this approach.  Al-
+                                                                                   together, these features imply that the formalisms detailed in
+                                                                                   Sec.IV A 1and AppendixBshould be regarded as comple-
+                                                                                   mentary to one another.  In this sense, extensive comparisons
+                                                                                   between the results obtained from both methods and, due to
+FIG. 21. (Color online) Low-energy spectra for the frustrated model                the variational nature of the NNVB subspace, from unbiased
+Eq. (1), for  J3 = 0.3 and as a function ofJ2, obtained by: (a) solving            techniques such as ED are clearly called for.
+the GEP [Eq. (10)] in the NNVB subspace and (b) performing EDs                        As  a  step  toward  this  goal,  in  Fig.21we  compare  the
+for the effective QDM derived in the AppendixB.                            94 In both panels,low  energy  spectra  obtained  from  NNVB  and  by  diagonal-
+results  have  been  obtained  by  diagonalization  of  an N  =  54  site          izing the effective QDM derived in the App.Bfor the spin
+cluster and energies are relative to the ground-state energy. Note that            model  Eq.  (1)  with  J3  =  0.3  and  varying  values  of J2  (in
+this plot only serves to compare the NNVB and the effective QDM                    both cases, anN  = 54 site cluster has been considered).  We
+approach on a technical level, because theJ2 values considered here
+are beyond the domain of validity of these approaches for the original             ﬁrst remark that overall features are similar in both spectra, in
+Heisenberg model.                                                                  spite of the subtlety that energy levels displaying similar de-
+                                                                                   pendence onJ2 are characterized by different quantum num-
+                                                                                   bers in Fig.21(a) and Fig.21(b).                              94 Another feature salient in
+   Although both the NNVB method discussed in Sec.IV A 1                           Fig.21concerns the fact that, by increasing the value of    J2,
+and the approach relying on EDs of an effective QDM (Ap-                           one enters a regime characterized by the occurrence of succes-
+pendixB) are similar in spirit, for both of them are formulated                    sive level crossings. Note that this plot only serves to compare
+in terms of NNVB degrees of freedom and are thus especially                        the  NNVB  and  the  effective  QDM  approach  on  a  technical
+suitable to the study of quantum spin liquids and VBC states,                      level, because the J2  values considered here are beyond the
+they differ somewhat in detail.  One such difference concerns                      domain of validity of these approaches for the original Heisen-
+the fact that, in deriving an effective QDM, the diagramatic                       berg model.
+expansion  detailed  in  AppendixBmust  eventually  be  trun-                         We proceed to a more systematic comparison and in Fig.22
+20
+
+we plot the ground state energy dependence onJ2 forJ3  =
+0.3, as obtained from NNVB and EDs for the effective QDM,
+for system sizesN  = 24 and 42 (data for otherN  are shown
+only  in  the  inset,  but  are  fully  consistent  with  the  analysis
+that follows).   We ﬁrst notice that much stronger ﬁnite size
+effects are indeed observed for the NNVB data, in agreement
+with our discussion above.  In extrapolating to the thermody-
+namic limit we heuristically assume that the scaling relation
+E0/N ∼ N− 32 , only justiﬁed in the case of the N´eel phase
+(see Sec.III B), also applies in the present case.   As shown
+in the inset in Fig.22, this indeed seems to be the case.  Ex-
+trapolated values for the ground-state energy computed from
+NNVB and from the analysis of the effective QDM are also
+plotted in Fig.22, and from the excellent agreement obtained                      FIG. 23. Overlap⟨ψiα|ψjα⟩ between two distinct plaquette state com-
+we conclude that the dominant terms are correctly taken into                      ponents|ψiα⟩ (blue) and|ψjα⟩ (red).
+account by the truncated expansion detailed in AppendixB.
+Finally,  extrapolated data from both approaches based upon
+NNVB states are compared against those from EDs in theSz
+basis: we observe that agreement is optimal around the region                     pated using a physical argument.  The two states being peri-
+where plaquette VBC order is strongest forJ3 = 0.3 (Fig.15)                       odic, the structure of the scalar product⟨ψ|ψ′⟩ is itself peri-
+and where a description based on NNVB states should be at                         odic.   It is thus tempting to infer that⟨ψ|ψ′⟩∼ αNc  in the
+its most accurate level.                                                          thermodynamic limit,  where Nc  is the number of local pat-
+                                                                                  terns (scaling like the number of sites) and α is related to a
+           Appendix D: Correlations in pure VBC states                            local overlap or ﬁdelity.  In this case, either|ψ⟩  =|ψ′⟩ and
+                                                                                  α = 1 or|ψ⟩⁄=|ψ′⟩ andα < 1 which implies⟨ψ|ψ′⟩ = 0
+   In  this  Appendix,  we  compute  the  expectation  values  of                 for an inﬁnite system.  While qualitatively correct,  the scal-
+the  4-spin  correlation  function  for  the  four  candidate  VBC                ing⟨ψ|ψ′⟩∼ αNp  is actually non-trivial.  Indeed, the scalar
+states denoted|ψc⟩ (Columnar),|ψst⟩ (Staggered),|ψsw⟩ (s-                         product⟨ψ|ψ′⟩ does not generically break into a product of
+wave plaquette) and|ψdw⟩ (d-wave plaquette) in the thermo-                        local disconnected terms but may involve arbitrary scale reso-
+dynamic  limit  (see  Fig.4).   For  the          plaquette  state  indeed,       nances.
+we may consider s-wave or d-wave linear combinations of the                          Let us consider a tensor product state|ψ⟩ =⊗c|ϕc⟩, where
+two VB coverings of a single hexagon.  For inﬁnite systems                        the same structure|ϕc⟩ deﬁned on a clusterc is repeated on the
+each of these states is degenerate since it breaks spatial sym-                   lattice. The state|ψ′⟩ is related to|ψ⟩ by applying the unitary
+metries. This degeneracy is lifted at ﬁnite size and, in order to                 operator  ˆS.  Typically in our case,c is a hexagon, and  ˆS  is a
+allow direct comparison with ﬁnite size numerical results, we                     translation that transforms a hexagon into a neighboring one.
+consider symmetrized trial states with (0, 0) momentum and                        Denoting the density matrixˆρ =|ψ⟩⟨ψ| =⊗c ˆρc , the overlap
+belonging to the trivial point group representation A1.                           can be written,
+   Orthogonality.  The overlap⟨ψiα|ψjα⟩ between two distinct                                                     ( ˆS ˆρ)       (          )
+components  of|ψα⟩  vanishes  exponentially.    This  point  is                                  ⟨ψ|ψ′⟩ = Tr              = Tr    ⊗c ˆS ˆρc  .             (D1)
+rather obvious for|ψc⟩ and|ψst⟩ but deserves more attention
+for|ψsw⟩ and|ψdw⟩.   Generically⟨ψiα|ψjα⟩  =  2nl(i,j)−N/2                           But since  ˆS ˆρc and  ˆS ˆρ′c do not commute in general, the re-( ˆS ˆρc)
+with N  the  size  of  the  system  and nl(i,j)  the  number  of                  lation⟨ψ|ψ′⟩ =∏                      does not hold, which illustrates
+loops of the overlap diagram obtained by superimposing the                                               c Tr
+dimer coverings i and j.  A direct inspection of such a dia-                      the point raised previously according to which⟨ψ|ψ′⟩ cannot
+gram shows that nl(i,j)  = N/6 for the columnar state and                         be interpreted as the product of local quantities.
+nl(i,j) =√N/2 for the staggered state, hence showing that                            However using the H¨older inequality for traces we have for
+any  pair  of  distinct  components  becomes  orthogonal  in  the                 any ﬁniteN,
+thermodynamic limit.                                                                                            ⏐⏐⏐Tr(         )⏐⏐⏐
+   The plaquette state casesα =sw andα =dw are slightly                                           |⟨ψ|ψ′⟩| =          ⊗c ˆS ˆρc
+more involved since⟨ψiα|ψjα⟩ includes 2N/3 overlap contribu-                                                       ⏐⏐⏐⊗c ˆS ˆρc⏐⏐⏐
+tions (see Fig.23). It is possible, albeit not very illuminating,                                            ≤ Tr
+to ﬁnd an upper bound of this sum of terms that goes to zero                                                        (     ⏐⏐⏐ ˆS ˆρc⏐⏐⏐Nc)1/Nc
+when the systems size goes to inﬁnity.                                                                       ≤∏        Tr                    .
+   In fact, such a result is general:  the overlap between two                                                   c
+periodic  states|ψ⟩  and|ψ′⟩  related  by  a  discrete  symmetry
+ˆS  is either 1 or 0 in the thermodynamic limit.  Before actu-                    where| ˆX| denotes (X†X)1/2 andNc is the number of clus-
+ally showing this result let us mention how it can be antici-                     tersc (scaling linearly with the system sizeN).
+                                                                                                                                                                            21
+
+   TakingN to inﬁnity,Nc also goes to inﬁnity and                                             Correlations.    Considering  the  bond  permutation  opera-
+                                                                                          tors  ˆPb, it is straightforward to remark that⟨ψiα| ˆPb|ψjα⟩ and
+                                                    (⏐⏐⏐ ˆS ˆρc⏐⏐⏐)                       ⟨ψiα| ˆPb ˆPb′|ψjα⟩ vanish exponentially to 0 as well since these
+                    |⟨ψ|ψ′⟩|≤   limNc→∞λNc0                                               operators  can  only  produce  local  reconﬁgurations  of  loops.
+                                                                                          It  follows  that  the  three  components  of|ψα⟩  generate  in-
+                                                                                          dependent  contributions  to  the  4-point  correlation  function
+where λ0( ˆX)  stands  for  the  maximal  eigenvalue  of  the                             ⟨ ˆPij ˆPkl⟩−⟨ ˆPij⟩2. Its expectation values for the four trial VBC
+positive-semideﬁnite  operator  ˆX.   It  is  then  straightforward                       states is depicted in Fig.24.  Note that   ⟨ ˆPij ˆPkl⟩−⟨ ˆPij⟩2  =
+to obtain the inequality,                                                                 4(⟨(Si.Sj)(Sk.Sl)⟩−⟨Si.Sj⟩2).
+                                                                                              Note that in Ref.23, the authors claim that the three            pla-
+                                            ⏐⏐⏐⟨ϕc| ˆS|ϕc⟩⏐⏐⏐Nc                (D2)       quette states are not orthogonal in the thermodynamic limit,
+                   |⟨ψ|ψ′⟩|≤   limNc→∞                                                    which is in contradiction with our general result.  However,
+                                                                                          their approximate numerical values for the dimer-dimer corre-
+                                                                                          lations agree with our exact ones.  In Ref.9, the dimer-dimer
+   Two cases can occur : (i)|ϕc⟩ is an eigenstate of  ˆS in which                         correlation between parallel bonds on neighboring hexagons
+case|⟨ψ|ψ′⟩| = 1 or (ii)|ϕc⟩ is not invariant underS which                                is quoted to be 0.01, while we ﬁnd a negative value of−0.09,
+           ⏐⏐⏐⟨ϕc| ˆS|ϕc⟩⏐⏐⏐< 1 and|⟨ψ|ψ′⟩| = 0.                                          a result which agrees in sign with ED data deep in the plaque-
+implies                                                                                   tte phase (see Fig.8c).
+
+
+
+
+
+
+
+ 1  L. Balents,Nature             464, 199 (2010).                                        23  H.   Mosadeq,    F.   Shahbazi,       and   S.   A.   Jafari,      (2010),
+ 2  P. W. Anderson,Mater. Res. Bull.                 8, 153 (1973).                           arXiv:1007.0127.
+ 3  B. Bernu, C. Lhuillier,   and L. Pierre,Phys. Rev. Lett.           69, 2590           24  M. Mambrini, A. L¨auchli, D. Poilblanc,  and F. Mila,Phys. Rev.
+   (1992).                                                                                    B 74, 144422 (2006).
+ 4  G. Misguich, B. Bernu, C. Lhuillier,   and C. Waldtmann,Phys.                         25  J.  Reuther,  P.  W¨olﬂe,  R.  Darradi,  W.  Brenig,  M.  Arlego,   and
+   Rev. Lett. 81, 1098 (1998).                                                                J. Richter,Phys. Rev. B  83, 064416 (2011).
+ 5  S. Yan,  D. A. Huse,   and S. R. White, ArXiv e-prints   (2010),                      26  See e.g. Ref.95for a recent review on ﬁdelity approaches to quan-
+   arXiv:1011.6114 [cond-mat.str-el].                                                         tum phase transitions.
+ 6  M. B. Hastings,Phys. Rev. B               69, 104431 (2004).                          27  E. Zhao and A. Paramekanti,Phys. Rev. B                   76, 195101 (2007).
+ 7  E. H. Lieb, T. D. Schultz,   and D. Mattis,Ann. Phys. (N.Y.)            16,           28  S. R. Hassan, L. de Medici,  and A.-M. S. Tremblay,Phys. Rev. B
+   407 (1961).                                                                                76, 144420 (2007).
+ 8  This is possibly related to the fact that no symmetry-preserving                      29  A. F. Albuquerque, N. Laﬂorencie, J.-D. Picon,  and F. Mila,Phys.
+   tight binding model on the honeycomb lattice is known,  which                              Rev. B 83, 174421 (2011).
+   would gap out the Dirac cones.                                                         30  We notice that within SCMFT not all sites in the N  =  8 clus-
+ 9  J. Fouet, P. Sindzingre,  and C. Lhuillier,Eur. Phys. J. B  20, 241                       ter are equivalent and small inhomogeneities (≲ 5% in all cases
+   (2001).                                                                                    considered) are observed for the mean ﬁelds⟨Sj⟩.
+10  H. Morita, S. Watanabe,   and M. Imada,Journal of the Physical                        31  SCMFT results for anN  = 18 site cluster forJ3 = 0 display a
+   Society of Japan 71, 2109 (2002).                                                          transition from N´eel to “disordered” atJc2≈ 0.213. This is to be
+11  T. Yoshioka, A. Koga,   and N. Kawakami,Phys. Rev. Lett.           103,                   compared with the transition pointsJc2≈ 0.131 andJc2≈ 0.198
+   036401 (2009).                                                                             respectively obtained for the N  =  6 and N  =  8 site clusters.
+12  O. I. Motrunich,Phys. Rev. B                  72, 045105 (2005).                          This suggests that the location of the border for the N´eel phase
+13  D. N. Sheng, O. I. Motrunich,  and M. P. A. Fisher,Phys. Rev. B                           converges  rapidly  with N  and  also  constitutes  further  evidence
+   79, 205112 (2009).                                                                         for the existence of non-magnetic phase(s).
+14  H.-Y. Yang, A. M. L¨auchli, F. Mila,  and K. P. Schmidt,Phys. Rev.                    32  N. Read and S. Sachdev,Phys. Rev. B  42, 4568 (1990).
+   Lett. 105, 267204 (2010).                                                              33  J. Richter, J. Schulenburg,   and A. Honecker,Lect. Notes Phys.
+15  Z. Y. Meng, T. C. Lang, S. Wessel, F. F. Assaad,   and A. Mura-                           645, 85  (2004).
+   matsu,Nature           464, 847 (2010).                                                34  A.  L¨auchli,  J.  C.  Domenge,  C.  Lhuillier,  P.  Sindzingre,    and
+16  H.-Y.  Yang,  A.  M.  L¨auchli,   and  K.  P.  Schmidt,  in  preparation                  M. Troyer,Phys. Rev. Lett.  95, 137206 (2005).
+   (2011).                                                                                35  C. Lhuillier, P. Sindzingre,  and J.-B. Fouet,Can. J. Phys.        79, 1525
+17  E. Rastelli, A. Tassi,  and L. Reatto,Physica B            97, 1  (1979).                 (2001)).
+18  A.  Mulder,   R.  Ganesh,   L.  Capriotti,     and  A.  Paramekanti,                  36  Z. Weihong, J. Oitmaa,  and C. J. Hamer,Phys. Rev. B  44, 11869
+   Phys. Rev. B 81, 214419 (2010).                                                            (1991).
+19  R. Ganesh, D. N. Sheng, Y.-J. Kim,   and A. Paramekanti,Phys.                         37  S. E. Kr¨uger, J. Richter, J. Schulenburg, D. J. J. Farnell,  and R. F.
+   Rev. B 83, 144414 (2011).                                                                  Bishop,Phys. Rev. B             61, 14607 (2000).
+20  T. Einarsson and H. Johannesson,Phys. Rev. B                     43, 5867 (1991).     38  J.  Oitmaa,  C.  Hamer,    and  W.  Zheng,Phys.  Rev.  B            45,  9834
+21  A. Mattsson, P. Frojdh,  and T. Einarsson,Phys. Rev. B                 49, 3997           (1992).
+   (1994).                                                                                39  H.  C.  Jiang,  Z.  Y.  Weng,   and  T.  Xiang,Phys.  Rev.  Lett.            101,
+22  D. C. Cabra, C. A. Lamas,  and H. D. Rosales,Phys. Rev. B           83,                   090603 (2008).
+   094506 (2011).                                                                         40  Z. Y. Xie, H. C. Jiang, Q. N. Chen, Z. Y. Weng,   and T. Xiang,
+22
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 24. 4-point correlation function⟨ ˆPij ˆPkl⟩−⟨ ˆPij⟩2 in the 4 trial VBC states. The reference bond (i,j) is represented using a thick black
+line.  For plaquette states, the correlations values in the vicinity of the reference bond are different from the bulk values and are displayed in
+snapshot frames.
+
+
+
+   Phys. Rev. Lett. 103, 160601 (2009).                                                      54  A.  F.  Albuquerque,  F.  Alet,  P.  Dayal,  A.  Feiguin,  S.  Fuchs,
+41  H. H. Zhao,  Z. Y. Xie,  Q. N. Chen,  Z. C. Wei,  J. W. Cai,   and                          L.  Gamper,   E.  Gull,   S.  G¨urtler,   A.  Honecker,   R.  Igarashi,
+   T. Xiang,Phys. Rev. B           81, 174411 (2010).                                           M. K¨orner, A. Kozhevnikov, A. L¨auchli, S. Manmana, M. Mat-
+42  A. Noorbakhsh,  F. Shahbazi,  S. A. Jafari,   and G. Baskaran,J.                            sumoto,  I.  P.  McCulloch,  F.  Michel,  R.  Noack,  G.  Pawlowski,
+   Phys. Soc. Jpn. 78, 054701 (2009).                                                           L.  Pollet,   T.  Pruschke,   U.  Schollw¨ock,   S.  Todo,   S.  Trebst,
+43  J. D. Reger,  J. A. Riera,   and A. P. Young,J. Phys.:  Condens.                            M. Troyer, P. Werner,  and S. Wessel,J. Magn. Magn. Mater.         310,
+   Matter 1, 1855 (1989).                                                                       1187 (2007), see          http://alps.comp-phys.org.
+44  E. V. Castro, N. M. R. Peres, K. S. D. Beach,  and A. W. Sandvik,                        55  The  next  larger  sample  which  is  compatible  with  the  expected
+   Phys. Rev. B 73 (2006), 10.1103/PhysRevB.73.054422.                                          VBCs  and  has  sixfold  rotation  symmetry  consists  of  42  spins.
+45  U. L¨ow,Condensed Matter Physics  12, 497 (2009).                                           While we have been able to obtain energies for this systems, cal-
+46  H.J. Schulz, T.A.L. Ziman,  and D. Poilblanc,J. Phys. I France                6,            culating four-spin expectation values along a whole cut was pro-
+   675 (1996).                                                                                  hibitive with our given resources.
+47  H. Neuberger and T. Ziman,Phys. Rev. B            39, 2608 (1989).                       56  M. Mambrini and F. Mila,Eur. Phys. J. B         17, 651 (2000).
+48  An earlier ED based estimate33 using also up to 38 sites, but based                      57  L. Hulth´en, Ark. Mat., Astron. Fys. 26, 1 (1938).
+   on a different deﬁnition of the ﬁnite sizem2(N) - and including                           58  M. Karbach, K.-H. M¨utter, P. Ueberholz,   and H. Kr¨oger,Phys.
+   also smaller systems - obtainedm = 0.2788.                                                   Rev. B 48, 13666 (1993).
+49  This also a posteriori justiﬁes our choice for a separate extrapola-                     59  J.-B. Fouet, M. Mambrini, P. Sindzingre,  and C. Lhuillier,Phys.
+   tion for those systems in the unfrustrated case.                                             Rev. B 67, 054411 (2003).
+50  B.  K.  Clark,   D.  A.  Abanin,     and  S.  L.  Sondhi,     (2010),                    60  A. Seidel,Phys. Rev. B           80, 165131 (2009).
+   arXiv:1010.3011.                                                                          61  J. Wildeboer and A. Seidel,   (2011),arXiv:1101.1621v2 [cond-
+51  P. W. Leung and N.-W. Lam,Phys. Rev. B         53, 2213 (1996).                             mat].
+52  J. Richter and J. Schulenburg,Eur. Phys. J. B    73, 117 (2010).                         62  S. Liang, B. Doucot,   and P. W. Anderson,Phys. Rev. Lett.                 61,
+53  F.  Alet,  S.  Wessel,    and  M.  Troyer, Phys.  Rev.  E   71,  036706                     365 (1988).
+   (2005).                                                                                   63  K. S. D. Beach and A. W. Sandvik,Nucl. Phys. B              750, 142 (2006).
+                                                                                                                                                                               23
+
+
+64  C. Lanczos, J. Res. Natl. Bur. Stand. 45, 255 (1950).                                   83  A. Vaezi and X. Wen, ArXiv e-prints   (2011),arXiv:1101.1662
+65  A.  Ralko,  M.  Mambrini,    and  D.  Poilblanc,Phys.  Rev.  B                 80,          [cond-mat.str-el].
+   184427 (2009).                                                                           84  H.  Y.  Yang  and  K.  P.  Schmidt,EPL  (Europhysics  Letters)               94,
+66  D. Schwandt, M. Mambrini,  and D. Poilblanc,Phys. Rev. B      81,                           17004 (2011).
+   214413 (2010).                                                                           85  J. Reuther, D. Abanin,  and R. Thomale, ArXiv e-prints  (2011),
+67  D.  S.  Rokhsar  and  S.  A.  Kivelson,  Phys.  Rev.  Lett.  61,  2376                      arXiv:1103.0859 [cond-mat.str-el].
+   (1988).                                                                                  86  This   wave   function   has   also   been   studied   independently
+68  R. Moessner, S. Sondhi,  and P. Chandra,Phys. Rev. B               64, 144416               in Ref.50, where it served as the prototype wave function for an
+   (2001).                                                                                      algebraic spin liquid (ASL).
+69  A. W. Sandvik,Phys. Rev. Lett.              98, 227202 (2007).                          87  D. Ceperley, G. V. Chester,   and M. H. Kalos,Phys. Rev. B           16,
+70  N. Kawashima and Y. Tanabe,Phys. Rev. Lett.           98, 057202 (2007).                    3081 (1977).
+71  G. Misguich, V. Pasquier,  and F. Alet,Phys. Rev. B         78, 100402                  88  J. R. Trail,Phys. Rev. E       77, 016703 (2008).
+   (2008).                                                                                  89  The system sizes L which are multiples of three have been dis-
+72  J.  Lou,  A.  W.  Sandvik,   and  N.  Kawashima,Phys.  Rev.  B             80,              carded, because the open shell conditions complicate the analysis.
+   180414 (2009).                                                                           90  M. Hermele,  T. Senthil,   and M. P. A. Fisher,Phys. Rev. B  72,
+73  K. S. D. Beach, F. Alet, M. Mambrini,  and S. Capponi,Phys. Rev.                            104404 (2005).
+   B 80, 184401 (2009).                                                                     91  A. Sen, P. Dutt, K. Damle,  and R. Moessner,Phys. Rev. Lett.  100,
+74  T. Senthil, A. Vishwanath, L. Balents, S. Sachdev,  and M. P. A.                            147204 (2008).
+   Fisher,Science  303, 1490 (2004).                                                        92  F. Wang, F. Pollmann,  and A. Vishwanath,Phys. Rev. Lett.          102,
+75  T. Senthil, L. Balents, S. Sachdev, A. Vishwanath,  and M. P. A.                            017203 (2009).
+   Fisher,Phys. Rev. B  70, 144407 (2004).                                                  93  Although this bipartite quantum dimer model allows for winding
+76  A. Banerjee,  K. Damle,   and A. Paramekanti,Phys. Rev. B                   83,             number sectors we currently do not need to exploit this additional
+   134419 (2011).                                                                               symmetry.
+77  M. Hermele,Phys. Rev. B               76, 035125 (2007).                                94  This apparent inconsistency is ascribed to the fact that the NNVB
+78  F. Wang,Phys. Rev. B       82, 024419 (2010).                                               procedure is formulated in terms of actual singlet states,|si,j⟩ =
+79  Y. Lu and Y. Ran,  (2010),arXiv:1005.4229.                                                  √1
+80  Y. Lu and Y. Ran,  (2010),                                                                    2(|↑i↓j⟩−|↓i↑j⟩), that are anti-symmetric under site permu-
+                            arXiv:1007.3266.                                                    tation,|si,j⟩ =−|sj,i⟩, whereas quantum dimers do not possess
+81  A. Vaezi and X. Wen, ArXiv e-prints   (2010),arXiv:1010.5744
+   [cond-mat.str-el].                                                                           internal degrees of freedom and remain invariant under such op-
+82  C. Xu,Phys. Rev. B       83, 024408 (2011)                                                  eration.
+                                            .                                               95  S.-J. Gu,Int. Journ. Mod. Phys. B       24, 4371 (2010).
