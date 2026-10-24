@@ -244,6 +244,12 @@ const flagLabel = r => FLAGS[r.defect.flag]?.[0] ?? r.defect.flag;
 const BELOW_EXACT = ["below exact by &gt; 2&sigma;", "This energy is not a bound and lies more than 2 sigma below the exact energy, so it cannot be the best of its class (rules §6.2). It is not a defect on the row."];
 const belowBadge = () => `<span class="badge flag" title="${esc(BELOW_EXACT[1])}">${BELOW_EXACT[0]}</span>`;
 const isBelow = (inst, r) => classBest(inst).below.includes(r);
+// The venue of a row that is not peer reviewed (RULES.md 8.1). Rows carry no venue field; the
+// reference names the venue, so a reference that names conference or workshop proceedings (the
+// NATO Advanced Research Workshop chapter of Becca, Capriotti & Sorella) reads "proceedings", and
+// any other reads "preprint".
+const PROCEEDINGS = /\bProceedings\b|\bProc\.\s|\bWorkshop\b/i;
+const venueBadge = r => `<span class="badge">${PROCEEDINGS.test(r.reference || "") ? "proceedings" : "preprint"}</span>`;
 function bestTag(inst, r) {
   const tag = bestTagOf(inst, r), tie = classBest(inst).ties.get(r);
   return tag ? `<span class="tag">${tag === "exact" ? boundLabel(r) : tag}</span>`
@@ -1109,7 +1115,7 @@ function rowTable(rows, inst) {
       r.provenance === "secondary" ? '<span class="badge">quoted from another paper</span>' : "",
       r.peer_reviewed === true ? '<span class="badge">peer reviewed</span>' : "",
       r.provenance === "unpublished" ? '<span class="badge">unpublished, re-evaluated by QMBL</span>' : "",
-      r.peer_reviewed === false && r.provenance !== "unpublished" ? '<span class="badge">preprint</span>' : "",
+      r.peer_reviewed === false && r.provenance !== "unpublished" ? venueBadge(r) : "",
       r.submitted_by?.system ? `<span class="badge">submitted by ${esc(r.submitted_by.system)}${r.submitted_by.human_checked ? ", checked by a person" : ""}</span>` : "",
     ].filter(Boolean).join(" ");
     const { sigma } = perSite(r, inst);
