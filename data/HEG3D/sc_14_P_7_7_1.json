@@ -532,6 +532,47 @@
       }
     },
     {
+      "energy": 7.96608060353,
+      "sigma": 0.0001,
+      "energy_variance": null,
+      "dof": 14,
+      "einf": null,
+      "v_score": null,
+      "method": "FN-DMC",
+      "ansatz": "SJB",
+      "method_detail": "extrapolated: Δτ → 0",
+      "method_as_published": "SJB-DMC (N = 14 table)",
+      "family": "DMC",
+      "bound_type": "projected",
+      "bound_type_reason": "projection (GFMC/fixed-node) on a trial state; not a strict variational bound (assigned during source reading)",
+      "reference": "G. Cassella, H. Sutterud, S. Azadi, N. D. Drummond, D. Pfau, J. S. Spencer & W. M. C. Foulkes, Discovering Quantum Phase Transitions with Fermionic Neural Networks, Phys. Rev. Lett. 130, 036401 (2023), arXiv:2202.05183, doi:10.1103/PhysRevLett.130.036401",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-19",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-19",
+        "method": "source text of arXiv:2202.05183 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "E_c = −0.5254(1) (total, Ha)",
+        "note": "Table I, row 'SJB DMC', column rs=1.0; sources/2202.05183.txt line 133; printed correlation energy −0.5254(1) Ha for 14 electrons; E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs); version read: arXiv text, Table I and Supplementary Table III; APS copy not read; 2026-10-24: kept by the loader (same_value_distinct_method; the SJB-VMC row of the same column prints the same -0.5254(1), line 132), checked against sources/2202.05183.txt lines 125-127 and 225-231 (fixed-node DMC from the SJB trial state, extrapolated to zero time step: projected) and line 133; sigma 0.0000994 -> 0.0001 total (the generator's two-digit rounding of the per-electron bar, the slip qmbl-verify 2026-10-19 fixed on the SJB-VMC row) | Correlation energy E_c = E - E_HF, total for the cell, Hartree; 14, 38 or 54 electrons in a simple cubic cell at the Gamma point, a closed shell, so E_HF is the unique plane-wave determinant's. Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+        "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "CASINO",
+            "version": null,
+            "url": "https://vallico.net/casinoqmc/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The Slater-Jastrow-backflow (SJB) VMC and DMC results were calculated using the casino program [43, 44] ... All SJB VMC and DMC calculations were performed using the casino program [43, 44]",
+          "location": "arXiv:2202.05183 (sources/2202.05183.txt line 125), Table I caption; Supplementary Material, Slater-Jastrow-backflow section",
+          "checked_on": "2026-10-25",
+          "pass": "passes/code/libraries-2026-10-25.json"
+        }
+      }
+    },
+    {
       "energy": 7.96580060353,
       "sigma": 0.00003,
       "energy_variance": null,
