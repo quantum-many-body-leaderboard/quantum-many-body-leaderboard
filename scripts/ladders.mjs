@@ -23,7 +23,7 @@ import { MODELS, BOUNDARY, geometry } from "./readme_table.mjs";
 import { groundStateExact } from "./units.mjs";
 import { W, PAD } from "./chart.mjs";
 
-const COUPLINGS = ["J2", "J3", "K", "J", "Gamma", "Jd", "h", "U", "V", "t2", "t3", "rs"]; // t2: the t12 variants at more than one t2; J, t3: t-J
+const COUPLINGS = ["J2", "J3", "K", "J", "Gamma", "Jd", "h", "U", "V", "t2", "t3", "rs", "R", "basis"]; // t2: the t12 variants at more than one t2; J, t3: t-J; R, basis: track 3
 
 // Particles per site: Hubbard files carry Nf = N_up = N_dn, t-V is spinless.
 // The electron gas (track 2) has no filling; its spin polarization zeta = (N_up - N_dn) / N plays
@@ -44,7 +44,9 @@ const sidesOf = inst => inst.lattice.match(/^rectangular-(\d+)x(\d+)$/)?.slice(1
 // (J0.4, tp0.3, tpp-0.2, h2), is a coupling or the filling, labelled from params, not a variant.
 const variantsOf = inst => inst.instance_id.split("/")[1].split("_").slice(2)
   .filter(s => /[A-Za-z]/.test(s) && !(s in BOUNDARY) && s !== "P" && !/^(K|J|G|J3|Jd)-?[\d.]+$/.test(s) &&
-    !(inst.model === "tJ" && /^(J|tp|tpp|h)-?[\d.]+$/.test(s)));
+    !(inst.model === "tJ" && /^(J|tp|tpp|h)-?[\d.]+$/.test(s)) &&
+    // Track 3: the bond length (R1.8) and the basis token (sto6g) are in params, labelled from there.
+    !(/^H(chain|sheet)$/.test(inst.model) && (/^R[\d.]+$/.test(s) || s === inst.instance_id.split("_").pop())));
 const gcd = (a, b) => (b ? gcd(b, a % b) : a);
 
 // The rows a figure draws: a bound, a projection, an extrapolation or a ground-state exact
@@ -141,6 +143,8 @@ const SCAN = {
   J: { of: i => i.params?.J, label: "J" }, Gamma: { of: i => i.params?.Gamma, label: "Gamma" },
   Jd: { of: i => i.params?.Jd, label: "Jd" },
   rs: { of: i => i.params?.rs, label: "rs" },
+  // Track 3 (RULES.md 13.5): energy per atom against the bond length R (bohr) at fixed N, boundary and basis.
+  R: { of: i => i.params?.R, label: "R (bohr)" },
   n: { of: fillingOf, label: "filling n" }, variant: { of: i => variantsOf(i).join(", "), label: "variant" },
 };
 
@@ -180,7 +184,7 @@ function scansOf(instances) {
 export const STRIP = { left: PAD + 56, right: W - PAD - 10, top: 92, bottom: 252, labelY: 40 };
 export const stripX = (k, count) => STRIP.left + ((k + 0.5) / count) * (STRIP.right - STRIP.left);
 
-const AXES = ["J2", "J3", "K", "J", "Gamma", "Jd", "h", "U", "V", "n", "t2", "t3", "rs"];
+const AXES = ["J2", "J3", "K", "J", "Gamma", "Jd", "h", "U", "V", "n", "t2", "t3", "rs", "R"];
 const slug = s => s.replace(/[^\w.]+/g, "_").replace(/^_+|_+$/g, "");
 const multiSize = L => new Set(L.members.map(i => i.n_sites)).size >= 2;
 const drawnCount = L => L.members.reduce((a, i) => a + drawnRows(i).length, 0);
@@ -208,7 +212,7 @@ export function energyFigures(instances) {
     const distinct = (ls, k) => new Set(ls.map(L => String(SCAN[k].of(L.members[0]) ?? ""))).size;
     const [axisKey, values] = AXES.map(k => [k, distinct(sized, k)]).sort((a, b) => b[1] - a[1])[0];
     const axis = values > 1 ? axisKey : null;
-    const facetKey = L => { const i = L.members[0]; return [i.model === "Impurity" ? i.lattice : "", i.boundary, L.shape?.key, ...AXES.filter(k => k !== axis).map(k => SCAN[k].of(i)), ...variantsOf(i)].join("|"); };
+    const facetKey = L => { const i = L.members[0]; return [i.model === "Impurity" ? i.lattice : "", i.boundary, L.shape?.key, ...AXES.filter(k => k !== axis).map(k => SCAN[k].of(i)), i.params?.basis ?? "", ...variantsOf(i)].join("|"); }; // basis: track 3
     const name = f.name.replace(/^size\//, "energy/");
     const facets = [];
     for (const group of Map.groupBy(ladders, facetKey).values()) {

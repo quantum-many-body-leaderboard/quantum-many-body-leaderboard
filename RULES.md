@@ -7,13 +7,17 @@ release. Each accept or reject of a row cites a clause of this file.
 
 Track 1 covers ground-state energies of lattice Hamiltonians computed by any method.
 Track 2 covers ground-state energies of the homogeneous electron gas in a periodic cell, in
-two and three dimensions (§12). A row is a claim about one (Hamiltonian instance, method)
-pair.
+two and three dimensions (§12). Track 3 covers ground-state energies of hydrogen chains and
+square hydrogen sheets, in a stated basis set or basis-free (§13). A row is a claim about one
+(Hamiltonian instance, method) pair.
 
-Out of scope for now: real-time dynamics, finite temperature, molecules, atoms, quantum dots
-and other continuum systems with an external potential. Each needs its own instance
-definition (§12 is the pattern). None opens before track 2 has had its first verification
-pass. Track 2 ranks by energy like track 1 and computes no V-score (§12.2).
+Out of scope for now: real-time dynamics, finite temperature, molecules other than the
+hydrogen chains and sheets of track 3, atoms, quantum dots and other continuum systems with
+an external potential. Each needs its own instance definition (§12 is the pattern), and none
+opened before track 2 had its first verification pass. That pass is done: the second reading
+of the passes of 2026-10-16 to 2026-10-19, four of them electron-gas passes (1079 rows;
+SWEEP.md). Track 3, defined in §13 on 2026-10-20, opened on 2026-10-25. Tracks 2 and 3 rank by energy like
+track 1 and compute no V-score (§12.2, §13.2).
 
 ## 2. Instances
 
@@ -718,3 +722,91 @@ Section 4 applies unchanged. The recurring cases:
 
 Track 2 has its own section and tables. Its figures plot energy per electron against `rs` at
 fixed N and cell, and against N at fixed `rs`, each result a dot.
+
+## 13. Track 3: hydrogen chains and sheets
+
+Sections 2 to 11 apply to track 3 as to track 1. This section states what differs. The
+conventions date from 2026-10-20. The track opened on 2026-10-25 (§1).
+
+### 13.1 Instance
+
+An instance is fixed by its geometry, the number of atoms N, the bond length R (bohr), the
+boundary and the basis set.
+
+- Geometry: `chain` (N equally spaced protons on a line, spacing R) or `sheet` (N = L × L
+  protons on a square grid of spacing R). A dimerised, relaxed or otherwise distorted geometry
+  is not one of these instances.
+- Charge and spin: the neutral system with N electrons, `S_z = 0` for even N and `S_z = 1/2`
+  for odd N, unless the source states another sector. A row from another sector moves to that
+  sector's instance (§2).
+- Boundary: `O` (open: a finite molecule) or `P` (periodic: N atoms in the repeated cell; a
+  chain is periodic along its axis, a sheet in its plane). A periodic instance carries a twist
+  as in §12.1: `Gamma` unless stated; a fixed twist with a stated vector is its own instance;
+  a twist average is not a row.
+- Basis: each basis set is its own instance, named as the source names it (`STO-6G`,
+  `cc-pVDZ`, ...). STO-6G is the main one: for H10 in STO-6G, full CI, DMRG and AFQMC agree
+  (Motta et al., PRX 7, 031059 (2017)). An energy in a basis is a claim about the Hamiltonian
+  projected onto that basis, and full CI in it is that instance's exact energy.
+- Basis-free energies go on a separate instance with `basis = none`: continuum,
+  Born–Oppenheimer, all-electron energies with point protons, from DMC, VMC and real-space
+  neural-network states (FermiNet and its relatives). A complete-basis-set extrapolation is
+  an `extrapolated` row on the `basis = none` instance (§13.4). A pseudopotential changes the
+  Hamiltonian, so its energy is not a `basis = none` row.
+- Thermodynamic-limit (N → ∞) values are not rows, as twist averages are not in §12.
+- Id: `Hchain/chain_<N>_<boundary>_R<R>_<basis>` for chains and
+  `Hsheet/square_<N>_<boundary>_R<R>_<basis>` for sheets. R is in bohr without trailing
+  zeros. The basis is in lower case without punctuation (`sto6g`, `ccpvdz`, `augccpvtz`,
+  `631g`, `none`). Examples: `Hchain/chain_10_O_R1.8_sto6g`, `Hchain/chain_10_O_R1.8_none`,
+  `Hsheet/square_16_P_R1.8_sto6g`. A twist other than Gamma adds `_tw<label>` as in §12.1.
+
+### 13.2 Hamiltonian, units and storage
+
+`H = -1/2 Σ_i ∇_i² - Σ_{i,I} 1/|r_i - R_I| + Σ_{i<j} 1/|r_i - r_j| + Σ_{I<J} 1/|R_I - R_J|`,
+in Hartree atomic units, with fixed protons of charge 1 at the positions R_I. On a basis
+instance, H is projected onto the basis. The nuclear repulsion is a constant and stays in.
+
+- Stored as the total energy in Hartree, nuclear repulsion included. Tables and the site show
+  Hartree per atom.
+- Periodic instances: the Coulomb sums run over all images, Ewald-summed, as for the electron
+  gas (§12.2). The stored energy is that of one repeated cell of N atoms. The treatment of the
+  exchange divergence (a Madelung-type constant, or none) changes a periodic energy at finite
+  N. The row states the source's treatment, and the loader converts from a stated convention.
+  A source that states none is `needs_review` until it is found (§10).
+- The loader converts, never a person by hand: per atom to total (× N); an electronic energy
+  printed without the nuclear repulsion (the loader adds it, computed from N, R and the
+  geometry); an energy per cell of another size. A source that prints an energy per atom
+  without N names no instance and gives no row.
+- `dof` is N. No `einf` is defined, so no V-score is computed; `Var(E)/N` is stored where
+  printed (§9).
+
+### 13.3 What is a row
+
+A finite-N energy at the instance's geometry, R, boundary, twist and basis. Not rows:
+thermodynamic-limit values from any extrapolation or embedding, finite-size-corrected
+energies, twist averages, energies at a dimerised or relaxed geometry, and values read from a
+figure (§8). A correlation energy is a row only where the source prints the reference energy
+it is measured from, on the same instance. The row then stores the sum and keeps the printed
+value as `reported_as`.
+
+### 13.4 `bound_type`
+
+Section 4 applies unchanged. The recurring cases:
+
+- Full CI in the instance's basis: `exact`. DMRG at a stated bond dimension, CASSCF, MRCI,
+  restricted and unrestricted Hartree-Fock, VMC and neural-network states: `variational`.
+  DMRG extrapolated in the truncation error, and selected CI extrapolated in its perturbative
+  correction: `extrapolated`.
+- Phaseless or constrained-path AFQMC, fixed-node and lattice-regularised DMC, coupled cluster
+  (CCSD and higher), MRCI with the Davidson correction (MRCI+Q), and embedding methods that
+  converge with the fragment or active space (DMET, SEET): `projected`.
+- Finite-order perturbation theory (MP2, NEVPT2, GF2), GW, RPA and density functionals:
+  `approximate`. In track 3, CCSD(T) and other perturbative corrections to coupled cluster
+  are `approximate` too, for now (2026-10-21); §4 is unchanged.
+- A complete-basis-set extrapolation: `extrapolated`, on the `basis = none` instance. A method
+  on the `approximate` list stays `approximate` there, as in §12.4.
+- Not settled, `null` until read case by case (§4): free-projection AFQMC.
+
+### 13.5 Site
+
+Track 3 has its own section and tables. Its figures plot energy per atom against R at fixed
+N, boundary and basis, and against N at fixed R, each result a dot.

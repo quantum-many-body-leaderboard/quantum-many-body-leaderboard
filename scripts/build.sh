@@ -5,6 +5,8 @@ node scripts/emit.mjs | tail -n +2
 node scripts/add_stored_rows.mjs
 node scripts/add_exact_rows.mjs
 node scripts/add_allresults_rows.mjs
+# Track 3 (RULES.md 13): the hydrogen chains and sheets of passes/track3/.
+node scripts/add_track3_rows.mjs
 node scripts/add_repo_data_rows.mjs
 node scripts/add_cost_runs.mjs
 node scripts/add_error_metrics.mjs

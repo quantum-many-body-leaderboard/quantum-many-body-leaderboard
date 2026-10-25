@@ -932,8 +932,71 @@ export const FIXED_NODE_ABOVE = "FN on the state above";
 
 export function lookup(published) {
   if (Object.hasOwn(NAMES, published)) return NAMES[published];
+  const t3 = track3Lookup(published);
+  if (t3) return t3;
   for (const [re, f] of PATTERNS) { const m = published.match(re); if (m) return f(m); }
   return null;
+}
+
+// ------------------------------------------------------------------ track 3 (RULES.md 13)
+// A track-3 pass row (passes/track3/, written by scripts/track3/) names its method and, apart, a
+// detail. The loader (add_track3_rows.mjs) writes the published string as "method" or "method
+// [detail]" (track3Published); here each pass method has its name and family, and the detail is the
+// row's own, its complete-basis slot written as the electron gas writes it (1/M: the basis size).
+export const track3Published = (method, detail) => detail ? `${method} [${detail}]` : method;
+const CBS = d => d.replace(/extrapolated: complete basis set/, "extrapolated: 1/M → 0 (complete basis)");
+const CC = { family: "FCIQMC / CC" };
+const TRACK3 = {
+  // phaseless AFQMC where the source says so (ph-AFQMC, as in track 2), else AFQMC
+  "AFQMC": d => /^phaseless/.test(d) ? ["ph-AFQMC", d.replace(/^phaseless(, |; |$)/, d.startsWith("phaseless;") ? "; " : "").replace(/^; /, ""), { family: "AFQMC / GFMC" }]
+    : ["AFQMC", d, { family: "AFQMC / GFMC" }],
+  "AFQMC(UHF)": () => ["ph-AFQMC", "UHF trial", { family: "AFQMC / GFMC" }],
+  "Avg. ITHC (extended AFQMC, 5 seeds)": () => ["ph-AFQMC", "UHF trial, isometric tensor hypercontraction (ITHC) integrals, mean of 5 seeds", { family: "AFQMC / GFMC" }],
+  "Avg. Intermediate (ITHC Cholesky into ipie, 5 seeds)": () => ["ph-AFQMC", "UHF trial, ITHC Cholesky vectors in ipie, mean of 5 seeds", { family: "AFQMC / GFMC" }],
+  "Avg. Standard (ipie AFQMC, 5 seeds)": () => ["ph-AFQMC", "UHF trial, ipie, mean of 5 seeds", { family: "AFQMC / GFMC" }],
+  "GPU sp DF": () => ["ph-AFQMC", "GPU, single precision, density-fitted integrals", { family: "AFQMC / GFMC" }],
+  "GPU dp DF": () => ["ph-AFQMC", "GPU, double precision, density-fitted integrals", { family: "AFQMC / GFMC" }],
+  "GPU sp Chol": () => ["ph-AFQMC", "GPU, single precision, Cholesky integrals", { family: "AFQMC / GFMC" }],
+  "GPU dp Chol": () => ["ph-AFQMC", "GPU, double precision, Cholesky integrals", { family: "AFQMC / GFMC" }],
+  "LR-DMC": d => ["LR-DMC", `trial state: ${d.replace(/^LDA trial state/, "LDA determinant").replace(/^AGP trial state/, "AGP")}`, { family: "DMC" }],
+  "LRDMC with JAGP(cc-pVDZ) nodes": () => ["LR-DMC", "trial state: JAGP, cc-pVDZ trial basis", { family: "DMC" }],
+  "VMC": d => /^AGP determinant with Jastrow factor/.test(d) ? ["JAGP", d.replace(/^AGP determinant with Jastrow factor, /, ""), { family: "classic VMC" }]
+    : ["Slater-Jastrow", d.replace(/ with Jastrow factor/, ""), { family: "classic VMC" }],
+  "JSD(cc-pVDZ)": () => ["Slater-Jastrow", "cc-pVDZ trial basis", { family: "classic VMC" }],
+  "JAGP(cc-pVDZ)": () => ["JAGP", "cc-pVDZ trial basis", { family: "classic VMC" }],
+  "JAGP(cc-pVTZ)": () => ["JAGP", "cc-pVTZ trial basis", { family: "classic VMC" }],
+  "CMO (NQS optimized using the SC iteration scheme)": () => ["RBM", "canonical orbitals, selected-configuration (SC) iteration", { family: "RBM" }],
+  "LMO (NQS optimized using the SC iteration scheme)": () => ["RBM", "localized orbitals, selected-configuration (SC) iteration", { family: "RBM" }],
+  "DeepWF": () => ["DeepWF", "real-space neural-network wave function", { family: "other NQS" }],
+  "FCI": d => ["FCI", d, { family: "other" }],
+  "ED": d => ["ED", d, { family: "other" }],
+  "exact ground-state energy": () => ["ED", "the source calls it the exact ground-state energy in the basis and does not name the method", { family: "other" }],
+  "CAS-ED": d => ["CASCI", d.replace(/^CASCI\(4e,4o\): /, "(4e,4o): "), { family: "FCIQMC / CC" }],
+  "E_FCIQMC (GUGA-FCIQMC, no initiator)": () => ["FCIQMC", "GUGA-FCIQMC, no initiator", CC],
+  "HF": d => ["Hartree-Fock", d, {}],
+  "RHF": d => ["Hartree-Fock", ["restricted", d].filter(Boolean).join(d.startsWith("extrapolated") ? "; " : ", "), {}],
+  "UHF": d => ["Hartree-Fock", ["unrestricted", d].filter(Boolean).join(d.startsWith("extrapolated") ? "; " : ", "), {}],
+  "DMRG": d => ["DMRG", d, { family: "tensor network" }],
+  "LDMRG": d => ["LDMRG", d, { family: "tensor network" }],
+  "SBDMRG": d => ["SBDMRG", d, { family: "tensor network" }],
+  "QFlow(4e,4o)": () => ["QFlow", "(4e,4o) active space", { family: "VQE / circuit" }],
+  "DUCC(6act)-QFlow(4e,4o)": () => ["DUCC-QFlow", "DUCC(6act) downfolded Hamiltonian, (4e,4o) active space", { family: "VQE / circuit" }],
+  "DUCC(7act)-QFlow(4e,4o)": () => ["DUCC-QFlow", "DUCC(7act) downfolded Hamiltonian, (4e,4o) active space", { family: "VQE / circuit" }],
+  "UCCSD (TenCirChem)": () => ["VQE", "UCCSD ansatz, TenCirChem", { family: "VQE / circuit" }],
+  "GF2": d => ["GF2", d, { family: "other" }],
+  "UGF2": d => ["GF2", d, { family: "other" }],
+  "GW": d => ["GW", d, { family: "other" }],
+  "DMET": d => ["DMET", d, { family: "other" }],
+  "SEET": d => ["SEET", d, { family: "other" }],
+  ...Object.fromEntries(["CCSD", "CCSD(T)", "CCSDT", "CCSDTQ", "RCCSD", "RCCSD(T)", "UCCSD", "UCCSD(T)", "MkMRCCSD", "MkMRCCSD(T)", "MP2",
+    "MRCI", "MRCI+Q", "MRCI-F12+Q", "PC-NEVPT2", "SC-NEVPT2"].map(m => [m, d => [m, d, CC]])),
+};
+function track3Lookup(published) {
+  const m = published.match(/^(.+?) \[(.*)\]$/s);
+  const [method, detail] = m && Object.hasOwn(TRACK3, m[1]) ? [m[1], m[2]] : [published, ""];
+  if (!Object.hasOwn(TRACK3, method)) return null;
+  const [name, d, extra] = TRACK3[method](detail);
+  return [name, CBS(d), extra];
 }
 
 // ------------------------------------------------------------------ algorithm and ansatz
@@ -952,9 +1015,13 @@ const NO_ANSATZ = new Set(["DMRG", "ED", "SSE QMC", "QMC", "CT-QMC", "Exact solu
   // An isometric tensor network optimised by its own sweeps (arXiv:2112.08394), not by VMC; a
   // fermionic PEPS (arXiv:1908.10000), named as a tensor network like PEPS; the power-Lanczos
   // projection of arXiv:cond-mat/0104067, which names its RVB start state in the detail.
-  "isoTNS", "fPEPS", "Power-Lanczos"]);
+  "isoTNS", "fPEPS", "Power-Lanczos",
+  // Track 3 (RULES.md 13): basis-set quantum chemistry, embedding and Green's-function methods,
+  // DMRG variants and the quantum-flow algorithms carry no ansatz.
+  "FCI", "CASCI", "CCSD(T)", "RCCSD", "RCCSD(T)", "UCCSD", "UCCSD(T)", "MkMRCCSD", "MkMRCCSD(T)", "MRCI", "MRCI+Q",
+  "MRCI-F12+Q", "PC-NEVPT2", "SC-NEVPT2", "GF2", "GW", "DMET", "SEET", "LDMRG", "SBDMRG", "QFlow", "DUCC-QFlow"]);
 // Projector algorithms by their short names.
-const PROJECTOR = { "Fixed-node DMC": "FN-DMC", "Fixed-node GFMC": "FN-GFMC", "Fixed-phase DMC": "FP-DMC" };
+const PROJECTOR = { "Fixed-node DMC": "FN-DMC", "Fixed-node GFMC": "FN-GFMC", "Fixed-phase DMC": "FP-DMC", "LR-DMC": "LR-DMC" };
 // Short ansatz names; a name not listed is its own short name.
 const SHORT = { "Slater-Jastrow": "SJ", "Slater-Jastrow-backflow": "SJB", "Slater-backflow-Jastrow": "SJB",
   "Iterative backflow": "iterative BF", "iterative backflow": "iterative BF", "Tensor backflow": "tensor BF",

@@ -710,6 +710,7 @@ loader, never by hand.
 | t-J | total energy in units of t, exchange J (S·S − n n/4), couplings normalised to t = 1 ([RULES.md §2.1](RULES.md#21-instance-names)) | per site: divide by `n_sites` |
 | Impurity | total energy | no meaningful per-site energy |
 | HEG2D, HEG3D (track 2) | total energy, Hartree, Ewald sum with the Madelung term (RULES.md 12.2) | per electron: divide by N (`n_sites` holds N) |
+| Hchain, Hsheet (track 3) | total energy, Hartree, nuclear repulsion included; periodic cells Ewald-summed (RULES.md 13.2) | per atom: divide by N (`n_sites` holds N) |
 
 An instance on a cluster that its source defines (the honeycomb, Shastry-Sutherland and t-J
 families) carries a `cluster` field: the shape in words and where the source defines it. A t-J
@@ -719,8 +720,12 @@ or a t-J source in units of J) carries `normalised`: `{ factor, source_couplings
 loader has divided the printed energy by `factor`.
 
 `dof` is the spin count for spin models, `N_up + N_dn` for Hubbard and t-J, and the particle
-count for **spinless** t-V. `einf` is `0` for traceless spin Hamiltonians and
-`U * N_up * N_dn / n_sites` for the plain Hubbard model.
+count for **spinless** t-V; for the electron gas and the hydrogen chains and sheets it is N. `einf`
+is `0` for traceless spin Hamiltonians and `U * N_up * N_dn / n_sites` for the plain Hubbard
+model; tracks 2 and 3 have none.
+
+A track-3 instance (`Hchain`, `Hsheet`) carries `params` { N_up, N_dn, R (bohr), basis (as the source
+names it, or `none`), twist on a periodic cell }.
 
 Two Hubbard instances carry further couplings. VarBench names them by suffix, and `params`
 states them in the form of VarBench's Eq. (S6).

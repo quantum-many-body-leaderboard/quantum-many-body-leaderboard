@@ -68,6 +68,8 @@ export const MODELS = [
   ["Impurity", "Impurity"],
   ["HEG3D", "Electron gas, 3D"],
   ["HEG2D", "Electron gas, 2D"],
+  ["Hchain", "Hydrogen chain"],
+  ["Hsheet", "Hydrogen sheet"],
 ];
 
 // Boundary codes as defined in vendor/varbench/lattice.md. Periodic is the default and
@@ -78,6 +80,9 @@ export const BOUNDARY = { O: "open", PO: "periodic/open", PA: "periodic/antiperi
 export function geometry(inst) {
   const n = inst.n_sites;
   if (/^HEG/.test(inst.model)) return `${inst.lattice} cell, N = ${n}`;
+  // Track 3 (RULES.md 13.1): N atoms on a line or a square grid.
+  if (inst.model === "Hchain") return `H${n} chain`;
+  if (inst.model === "Hsheet") return `H${n} sheet (${Math.sqrt(n)}x${Math.sqrt(n)})`;
   const cells = inst.lattice.match(/^([a-z]+)-(\d+(?:x\d+)+)$/);
   if (cells) {
     const product = cells[2].split("x").reduce((a, b) => a * Number(b), 1);
@@ -94,6 +99,10 @@ export function instanceLabel(inst) {
   const p = inst.params ?? {};
   if (/^HEG/.test(inst.model))
     return [geometry(inst), `rs = ${p.rs}`, p.N_dn === 0 || p.N_up === 0 ? "polarized" : p.N_up === p.N_dn ? "unpolarized" : `N↑ = ${p.N_up}, N↓ = ${p.N_dn}`,
+      ...(p.twist && p.twist !== "Gamma" ? [`twist ${p.twist}`] : [])].join(", ");
+  // Track 3: the bond length R in bohr and the basis set ("basis-free" for basis = none).
+  if (inst.model === "Hchain" || inst.model === "Hsheet")
+    return [geometry(inst), BOUNDARY[inst.boundary] ?? "periodic", `R = ${p.R}`, p.basis === "none" ? "basis-free" : p.basis,
       ...(p.twist && p.twist !== "Gamma" ? [`twist ${p.twist}`] : [])].join(", ");
   const parts = [geometry(inst)];
   if (BOUNDARY[inst.boundary]) parts.push(BOUNDARY[inst.boundary]);
@@ -125,7 +134,7 @@ export function instanceLabel(inst) {
 
 export function byGeometry(a, b) {
   const key = i => [i.lattice, i.n_sites, i.boundary ?? "", i.params?.Nf ?? 0,
-    i.params?.J2 ?? i.params?.h ?? i.params?.U ?? i.params?.V ?? 0, i.instance_id];
+    i.params?.J2 ?? i.params?.h ?? i.params?.U ?? i.params?.V ?? i.params?.R ?? 0, i.instance_id];
   const ka = key(a), kb = key(b);
   for (let k = 0; k < ka.length; k++) {
     if (ka[k] === kb[k]) continue;
