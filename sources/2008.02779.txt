@@ -1,0 +1,545 @@
+     Correlation-Driven Phenomena in Periodic Molecular Systems from Variational
+                                  Two-electron Reduced Density Matrix Theory
+
+                                                Simon  Ewing  and  David  A.  Mazziotti∗
+              Department  of  Chemistry  and  The  James Frank  Institute,  The University  of  Chicago,  Chicago  USA
+                                                     (Dated:  Submitted March 13, 2021)
+                  Correlation-driven phenomena in molecular periodic systems are challenging to predict computa-
+                tionally not only because such systems are periodically inﬁnite but also because they are typically
+                strongly correlated. Here we generalize the variational two-electron reduced density matrix (2-RDM)
+                theory to compute the energies and properties of strongly correlated periodic systems.  The 2-RDM
+                of the unit cell is directly computed subject to necessary N-representability conditions such that the
+                unit-cell 2-RDM represents at least one N-electron density matrix.  Two canonical but non-trivial
+                systems,  periodic  metallic  hydrogen  chains  and  periodic  acenes,  are  treated  to  demonstrate  the
+                methodology.  We show that, while single-reference correlation theories do not capture the strong
+                (static) correlation eﬀects in either of these molecular systems, the periodic variational 2-RDM the-
+                ory predicts the Mott metal-to-insulator transition in the hydrogen chains and the length-dependent
+                polyradical formation in acenes.  For both hydrogen chains and acenes the periodic calculations are
+                compared with previous non-periodic calculations with the results showing a signiﬁcant change in
+                energies and increase in the electron correlation from the periodic boundary conditions.  The 2-RDM
+                theory, which allows for much larger active spaces than are traditionally possible, is applicable to
+                studying correlation-driven phenomena in general periodic molecular solids and materials.
+
+
+                    I.    INTRODUCTION                                       ground-state  energy  in  the  given  basis  set.    Further-
+                                                                             more, because the constraints known asp-positivity con-
+  Computing   the   electronic   structure   of   extended                   ditions  restrict  the  metric  matrices  of q  particles  and
+molecules  and  materials  can  reveal  important  informa-                  (p− q)  holes  to  be  positive  semideﬁnite  [34,  35],  the
+tion such as the band gap, reactivity, and bulk properties                   variational  2-RDM  method  has  a  well-deﬁned,  physical
+such as conductivity or polarizability.  As such, accurate                   solution  even  in  the  presence  of  strong  electron  corre-
+methods  for  computing  the  electronic  structure  of  ma-                 lation.   The  2-positivity  conditions,  which  include  the
+terials is of interest to many ﬁelds, including the study                    nonnegativity  of  the  particle-particle  2D,  hole-hole  2Q,
+of  inorganic  polymers,  organic  electronics,  semiconduc-                 and  particle-hole  2G  matrices,  have  been  shown  to  be
+tors,  and  superconductors  [1–12].   Electronic  structure                 capable of describing strongly correlated phenomena in-
+calculations on extended materials are only computation-                     cluding polyradical character in extended conjugated sys-
+ally  tractable  in  cases  where  periodic  boundary  condi-                tems  [27,  36],  ligand  non-innocence  in  transition-metal
+tions can be imposed, which separate the electrons and                       complexes  [37,  38],  non-superexchange  mechanisms  in
+orbitals  into  smaller,  periodically  repeating,  unit  cells.             bridged  transition-metal  dimers  [39],  and  exciton  con-
+Commonly  used  methods  for  such  calculations  include                    densation in electron double layers [12].
+density  functional  theory  (DFT)  [13–16],  GW  approxi-                      Extension  of  the  v2RDM  theory  to  treat  periodic
+mations  [17],  quantum  Monte  Carlo  methods  [18],  and                   boundary  conditions  allows  us  to  treat  the  electronic
+coupled cluster (CC) theory [19].  Many of these meth-                       structure of strongly correlated periodic molecules with-
+ods,  however,  have  diﬃculty  computing  strongly  corre-                  out performing multiple molecular (open boundary con-
+lated periodic materials with high accuracy at an eﬃcient                    dition)  calculations  and  extrapolating  to  the  inﬁnite-
+computational cost, and hence, there is a need for further                   length limit.  Because the periodic v2RDM method with
+advances in methods and theories.                                            the  2-positivity  conditions  only  scales  as O(r6)  where
+  Here we present an approach to the calculation of elec-                    r  is  the  number  of  active  orbitals  in  the  unit  cell,  we
+tronic  structures  for  periodic  materials  in  the  gamma-                can perform calculations with much larger active spaces
+point approximation based on the variational calculation                     than possible with traditional methods [37, 40].  Through
+of  the  2-electron  reduced  density  matrix  (2-RDM).  In                  the N-representability conditions the v2RDM theory in-
+the  variational  2-RDM  (v2RDM)  method  [20–33],  the                      cludes multi-body correlation that are diﬃcult for many
+2-RDM  is  constrained  by N-representability  conditions                    traditional  periodic  methods  to  capture.   Although  we
+that are necessary for the 2-RDM to represent at least                       present  the  periodic  v2RDM  method  in  the  gamma-
+oneN-electron density matrix.  Because these conditions                      point approximation here, the formalism can be extended
+are  necessary,  the  minimization  of  the  energy  with  re-               to  include k-point  sampling.   To  demonstrate  the  pe-
+spect  to  the  2-RDM  generates  a  lower  bound  on  the                   riodic  v2RDM  theory,  we  treat  two  extended  systems,
+                                                                             known for exhibiting strong electron correlation:  hydro-
+                                                                             gen  chains  and  acene  chains.    Both  systems  are  diﬃ-
+                                                                             cult  to  treat  accurately  with  traditional  methods  like
+∗ damazz@uchicago.edu
+                                                                             second-order many-body perturbation theory, conﬁgura-
+                                                                                                                                                   2
+
+tion  interaction  with  single  and  double  excitations,  or               energy  in  Eq.  3,  with  the  2-RDM  as  the  fundamental
+coupled  cluster  theory  with  single  and  double  excita-                 variable  rather  than  the  wavefunction  [22,  24,  47].   Of-
+tions  extended  to  periodic  boundary  conditions.    The                  ten, the v2RDM method is combined with the notion of
+hydrogen chains undergo a Mott metal-to-insulator tran-                      an active space, a set of orbitals that are correlated in a
+sition [41, 42] upon dissociation with the insulator phase                   mean ﬁeld of the remaining orbitals [27, 48].  A system
+being strongly correlated, whereas the acene chains be-                      where n electrons are allowed to ﬁll r spatial orbitals is
+come  strongly  correlated  with  polyradical  character  as                 denoted an [n,r] active space.  If n is equal to the total
+the lengths of the chains increase.                                          number of electrons andr is equal to the size of the basis
+                                                                             set, then the calculation approximates the energies from
+                                                                             full conﬁguration interaction (FCI).
+                          II.    THEORY                                         Central  to  RDM  calculations  is  the  concept  of N-
+                                                                             representability, which requires that an RDM represents
+  We discuss the v2RDM theory, periodic boundary con-                        a  physical N-electron  density  matrix  [35,  43,  49].   The
+ditions,  and  their  combination  into  a  periodic  v2RDM                  simplest and most familiarN-representability constraint
+method.                                                                      is the Pauli exclusion principle, which states that eigen-
+                                                                             values  of  the  spatial  1-RDM  must  lie  between  0  and
+                                                                             2.    Similar  constraints  exist  for  the  2-electron  RDM,
+A.    Variational 2-electron Reduced Density Matrix                          the particle-hole RDM (2G), and the 2-hole RDM (2Q),
+                              Methods                                        namely  2D≽  0,  2G≽  0,  and  2Q≽  0,  restricting  the
+                                                                             eigenvalues of all three matrices to be non-negative.  All
+  The 1-RDM and 2-RDM are deﬁned by integrating the                          three  of  these  constraints  restrict  the  space  of  valid  2-
+full N-electron density matrix over the spatial and spin                     RDMs because 2G and 2Q are related by linear mappings
+coordinates of all but one or two electrons, respectively.                   to the 2-RDM [22]. Minimizing the energy from a 2-RDM
+Using second quantization, we can represent the elements                     subject  to  these  constraints  generates  an  optimization
+of the 1- and 2-RDMs as                                                      problem  known  as  a  semideﬁnite  program  [47,  50–52].
+                                                                             The solution of the semideﬁnite program yields a lower
+                        1Dij =⟨Ψ|ˆa†                                         bound to the ground-state energy from a complete active
+                                       i ˆaj|Ψ⟩                          (1)
+                                                                             space conﬁguration interaction (CASCI) calculation [48]
+                                                                             but with a computational scaling that is polynomial in
+                   2Di,j                                                     the size of the active space.
+                       k,l = 12⟨Ψ|ˆa†i ˆa†jˆalˆak|Ψ⟩                    (2)
+
+where  ˆa†m  and  ˆam  are  the  second-quantized  creation                              B.    Periodic Boundary Conditions
+and  annihilation  operators  for  spin  orbital |ψm⟩  [20–
+23, 26, 43, 44].  Notably, the 1-RDM can be derived from
+the 2-RDM by integrating over the spatial and spin co-                          For  molecules  with  extended  structures,  additional
+ordinates for one of the two electrons.  These spin RDMs                     symmetries  must  be  exploited  to  make  accurate  elec-
+can be converted into spatial RDMs by tracing over the                       tronic structure calculations tractable.  Calculations on
+spin of the electrons. Eigenvalues of spatial 1-RDMs, also                   periodic molecules can be altered to account for the pe-
+known as spatial natural orbital occupation numbers [45],                    riodic  boundary  conditions  (PBCs)  of  the  molecule  by
+represent the numbers of electrons in the spatial orbitals,                  using periodic basis functions.  Bloch waves are the sim-
+and by the Pauli exclusion principle they are constrained                    plest  way  to  construct  a  complete  basis  set  of  periodic
+to  lie  between  0  and  2.   A  signature  of  strong  correla-            functions,  but  the  underlying  structure  for  these  basis
+tion, or contributions from multiple Slater determinants,                    functions can vary,  and are usually chosen to be either
+is  the  presence  of  fractionally  ﬁlled  orbitals,  which  are            Gaussian  [53,  54]  or  plane  waves  [55–58].   In  general,
+characterized by eigenvalues of the spatial 1-RDM near                       Bloch waves can be deﬁned as
+one [46].  Similarly, eigenvalues of 2-RDMs represent the
+number of electrons in each two-electron function, known                                             |Ψk(r)⟩ =eik·ru(r)                         (4)
+as a geminal, and partially-ﬁlled geminals contribute to
+correlation.                                                                 where u(r)  is  a  function  for  which  the  periodic  bound-
+  For  systems  that  have  at  most  pairwise  interactions,                ary conditions are satisﬁed andk is a momentum vector.
+the  molecular  energy  can  be  written  as  a  functional  of              For many cases, the gamma point, where onlyk = 0 wave
+the 2-electron reduced density matrix:                                       vectors are included in the basis set, gives an accurate ap-
+                                                                             proximation to the complete basis while greatly simplify-
+                 E = Tr(1H1D) + Tr(2V 2D)                 (3)                ing the computational complexity.  Although plane waves
+                                                                             automatically satisfy the periodic boundary conditions,
+where  1H and  2V  are the reduced Hamiltonian matrices                      they do not resolve atomic details as readily as Gaussian
+of the 1-electron and 2-electron integrals. The variational                  basis functions.  In the case of Gaussian functions peri-
+2-RDM  (v2RDM)  method  minimizes  the  ground-state                         odic boundary conditions can be imposed through a local
+                                                                                                                                                   3
+
+basis approximation [54]:                                                    allows the wavefunction to change phase between repeat-
+                                                                             ing units within the cell.  Although k-point calculations
+                  |Ψk(r)⟩ =∑        eik·Tu(r−T )                  (5)        allow  sampling  of  the  Brillouin  zone,  adding  repeating
+                                T                                            units  to  the  unit  cell  reduces  the  size  of  the  Brillouin
+where T  is  a  lattice  translational  vector,  and u(r−T )                 zone,  meaning  that  less  sampling  is  needed.   We  chose
+is a local Gaussian atomic basis function.  This approxi-                    to  use  this  method  to  analyze  our  systems  due  to  the
+mation accounts for periodicity by summing over images                       computational  ease,  and  we  will  examine  the  eﬀects  of
+of each basis function in neighboring cells.  As the num-                    k-point calculations on strong correlation in the future.
+ber of translational vectors in the sum over T  increases,
+the wavefunction will more closely approach the periodic                                              III.    RESULTS
+boundary conditions, because the closest cells are being
+explicitly included.  Once the basis set is chosen to satisfy                                          A.    Methods
+the boundary conditions, the 1-electron and 2-electron in-
+tegral matrices can be computed and used in the v2RDM                          Hydrogen  chain  symmetric  dissociation  curves  were
+method.  We use the PySCF built-in integration methods                       computed with H10 in the unit cell, using the correlation-
+to evaluate these integrals using the local basis approxi-                   consistent polarized valence double-zeta (cc-pVDZ) [59]
+mation.                                                                      basis set.  Both molecular and periodic calculations were
+  Without the use of periodic boundary conditions, ex-                       completed  in  a  [10,20]  active  space.   Additional  calcu-
+tended  systems  are  typically  approximated  by  comput-                   lations were performed using DFT (B3LYP functional),
+ing molecular systems of varying sizes and extrapolating                     conﬁguration interaction with single and double excita-
+to  the  inﬁnite  limit.   In  this  form  of  analysis,  several            tions (CISD), and Møller-Plesset 2nd-order perturbation
+assumptions  are  made  about  the  energy  density  of  the                 theory (MP2) [60] methods.  Each of these calculations
+system so that the energies of the diﬀerent systems can                      were performed using the implementations in PySCF.
+be subtracted,  leaving an  “eﬀectively  edgeless” system.                     Additionally,  the  electronic  structure  of  acene  chains
+Namely,  it  is  assumed  that  the  system  is  long  enough                were computed using the periodic v2RDM method and
+that the system can be broken into several classes of edge
+subsystems and edgeless (quasi-periodic) subsystems. By                      the  6-31g  basis  set,  with  crystal  structure  coordinates
+subtracting the energy of smaller systems that contain no                    obtained from the American Mineralogist Crystal Struc-
+(or fewer) edgeless subsystems, the energy of the central                    ture Database [61] and explicitly shown in the Supporting
+systems  can  be  approximated.   However,  gamma  point                     Information Table S2.  A series of calculations were per-
+calculations  compute  these  systems  directly  due  to  the                formed, with 1-10 repetitions of the unit cell inside the
+PBCs  used  in  the  unit  cell,  and  these  calculations  are              periodic box.  For each calculation, we used a [4,4] active
+often much cheaper because there is no need to compute                       space per repeated unit, which accounts for the complete
+the electronic structure of a supercell.  Additionally, we                   π-space.   Therefore,  the  10-unit  calculation  had  an  ac-
+posit that gamma point calculations better represent the                     tive  space  of  [40,40].   This  procedure  ensured  that  the
+extended systems than molecular calculations of the same                     energy per repeated unit and occupation numbers were
+size,  for two main reasons:  ﬁrst,  molecular calculations                  converged, and revealed information about the parity of
+typically require several calculations to get an energy so                   the periodic orbitals.  The occupation numbers from pe-
+that the analysis above can be performed.  Second,  pe-                      riodic v2RDM were then compared to those obtained via
+riodic calculations eliminate the computational time and                     gamma-point calculations using PySCF-builtin periodic
+power needed to compute the electronic structure of the                      coupled cluster methods [54].  Finally, the energy, natu-
+edge subsystems, which are ultimately discarded.  Addi-                      ral orbital (NO) occupation numbers, and several forms
+tionally, this discarding of data unnecessarily complicates                  of  entropy  were  computed  for  molecular  acene  chains
+the analysis of these computations for obervables other                      with  2,  4,  6,  and  8  rings,  using  the  v2RDM  method.
+than the energy.                                                             The molecular calculations had active spaces of [10,10],
+  In  both  forms  of  analysis,  the  assumption  that  the                 [18,18],  [26,26],  and  [34,34],  respectively,  corresponding
+(quasi) periodic unit cells are identical - no phase change                  once  again  to  the  full π-space.    Geometries  for  these
+between cells - can be relaxed to get a more accurate rep-                   molecular chains were obtained from the supplementary
+resentation  of  the  extended  structure,  since  long-range                data  from  Ref.  [2].   These  results  are  compared  to  the
+order can aﬀect the electronic structure in extended sys-                    calculations using the periodic method.
+tems.  For molecular calculations,  the analysis above is
+simply extended further to larger systems, which reduces
+the inaccuracy due to each approximation.  Using PBCs,                                            B.    Hydrogen Chain
+there are two main methods for relaxing this assumption:
+including k-points or including more repeating units in                        Previous work on the extended hydrogen chain has fo-
+the  unit  cell.   Including k-points  explicitly  adds  basis               cused  on  obtaining  the  dissociation  curve  through  var-
+functions that allow for phase changes between unit cells.                   ious  extrapolation  techniques,  starting  from  molecular
+Similarly, including more repeating units in the unit cell                   calculations  [63,  64].    Molecular  energies  for  multiple
+                                                                                                                                                     4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1.  The acene chain systems used for calculations have various numbers of repetitions of the unit cell inside one periodic
+box.  Every unit cell contains 4 carbon atoms and 2 H atoms, for a total of 26 electrons and 40 orbitals in the 6-31G basis set.
+Of those orbitals, 4 electrons and 4 orbitals ([4,4] active space) were used from each unit cell in the active space calculations.
+
+
+                                                                              develop as the separation distance decreases.  The equi-
+                                                                              librium bond length lies at 0.95-1.05 ˚A, and the periodic
+                                                                              system has a deeper well by 6.6 millihartrees per atom.
+                                                                              This agrees with previous work by Motta  et  al. [63] that
+                                                                              indicates through extrapolating molecular calculations to
+                                                                              the inﬁnite limit that the periodic system has a deeper
+                                                                              well by about 4 millihartrees per atom.
+                                                                                 One metric that has been used [65–67] to discuss the
+                                                                              Mott metal-to-insulator transition is the sum of the mag-
+                                                                              nitudes of the oﬀ-diagonal elements of the 1-RDM in the
+                                                                              atomic orbital basis,  denoted γ.  Because the metal-to-
+                                                                              insulator  transition  is  a  long-range  eﬀect,  we  ignore  el-
+                                                                              ements  corresponding  to  orbitals  on  a  single  atom,  in-
+                                                                              stead summing over the oﬀ-diagonal elements that cor-
+                                                                              respond to electron density shared between atoms.  We
+                                                                              add  these  elements  of  the  1-RDM  in  quadrature,  as  a
+FIG. 2.  Dissociation curves for H10, using molecular v2RDM                   parallel  to  the  Frobenius  norm  of  the  matrix.   See  the
+and periodic v2RDM with a [10,20] active space and the cc-                    Supporting Information for additional details.  When the
+pVDZ  basis  set.   Results  agree  with  previous  data  [62,  63],          system  has  long-range  order,  this  metric  will  be  large,
+showing the equilibrium bond length at 0.95-1.05 ˚A. A com-                   indicating strong metallic behaviour, and when the sys-
+parison to a periodic CASCI method is presented in the Sup-                   tem  has  no  long-range  order,  this  metric  will  be  small,
+porting Information Table S1.                                                 indicating strong insulating behaviour.  Fig. 3 shows the
+                                                                              metric as a function of the atomic spacing in H10.  The
+                                                                              Mott transition metric for periodic Hartree-Fock calcu-
+chain  lengths  are  calculated,  and  then  compared  with                   lations is nearly constant for all bond lengths.  A similar
+each other to extrapolate to the inﬁnite chain length, or                     absence of the transition to an insulator is seen from the
+the  thermodynamic,  limit.   We  use  the  PBC  approach                     DFT  with  the  B3LYP  functional,  MP2,  and  CISD  (As
+to  compute  the  ground  state  energy  of  the  hydrogen                    observed in previous work [51], the coupled cluster cal-
+chain,  which  removes  the  edge  eﬀects  entirely  without                  culations with single and double excitations do not con-
+extrapolation.  To verify the periodic-system-to-molecule                     verge far beyond the equilibrium bond length, and hence,
+limit, we present ground-state energies for 1-, 2-, and 3-                    it is not included in the reported data).  By contrast, the
+dimensional hydrogen clusters with varying periodic box                       periodic v2RDM calculations exhibit the expected tran-
+sizes in Supporting Information Figure S1.                                    sition from metallic to insulating properties as the bond
+  Examining the dissociation curve for H10 in Fig. 2 we                       length increases.
+observe that the molecular and periodic systems converge
+to  the  same  energy,  around  5  hartrees,  as  the  spacing
+between  hydrogen  atoms  increases.   In  this  regime,  the                                         C.    Acene Chain
+hydrogen  atoms  begin  to  behave  independently,  so  the
+total  energy  is  approximately  10  times  the  energy  of  a                  NO  occupations  for  periodic  calculations  are  shown
+single  hydrogen  atom.   However,  interesting  diﬀerences                   in  Table  I  and  Figure  4,  which  show  that  the  known
+                                                                                                                                                            5
+
+
+                                                                Natural Orbital Occupation Numbers
+                                         1 unit cell                 2 unit cells                3 unit cells                 4 unit cells
+                                     CCSD    v2RDM       CCSD    v2RDM       CCSD    v2RDM       CCSD    v2RDM
+                   HONO-2        1.9594          -            1.9082      1.9036        1.9361      1.9321        1.8992      1.8662
+                   HONO-1        1.9580      1.9842        1.9055      1.8918        1.9032      1.8515        1.8992      1.8662
+                   HONO           1.9440      1.9743        1.4740      1.3558        1.9032      1.8515        1.7194      1.3479
+                   LUNO           0.0475      0.0263        0.5215      0.6457        0.0902      0.1511        0.2782      0.6597
+                   LUNO+1       0.0391      0.0152        0.0845      0.1109        0.0902      0.1511        0.0922      0.1309
+                   LUNO+2       0.0301          -            0.0841      0.0943        0.0548      0.0688        0.0922      0.1309
+
+
+TABLE I. Natural orbital occupations for acene chains with 1-4 unit cells in the periodic box.  v2RDM calculations show strong
+correlation for even numbers of unit cells, whereas CCSD fails to recover strong correlation except in the 2 unit cell calculation.
+CCSD calculations were only performed up to 4 unit cells due to the expensive memory requirements for longer chains.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                 FIG. 4.    NO occupations for periodic (a) and molecular (b)
+                                                                                 acene chain calculations. In (a), the even-unit calculations are
+                                                                                 colored  blue  and  the  odd-unit  calculations  are  colored  red,
+                                                                                 to  emphasize  the  diﬀerences  in  occupation  trends  between
+FIG.  3.    Mott  metal-to-insulator  metric  as  a  function  of                the  two  sets  of  calculations.   Notably,  the  odd-unit  calcula-
+hydrogen  atom  spacing  for  H10,  for  various  periodic  meth-                tions have a similar HONO and LUNO occupation trend as
+ods.  Hartree-Fock and other post-Hartree-Fock calculations                      the molecular calculations, whereas the even-unit calculations
+produce a metric that is relatively constant across all bond                     have the same HONO and LUNO occupations across all cal-
+lengths,  whereas  both  molecular  [65]  and  periodic  v2RDM                   culations.
+
+calculations have an appropriate transition from metal to in-
+sulator as the bond length increases.
+                                                                                 same parity [36].  Although one unit cell contains only 4
+                                                                                 carbon atoms and 2 hydrogen atoms, gamma-point cal-
+polyradical nature [68–70] of acene chains is only recov-                        culations should be performed on a box containing two
+ered  by  v2RDM  for  periodic  boxes  with  an  even  num-                      unit cells to accurately reﬂect molecular properties.
+ber  of  unit  cells  included.   The  coupled  cluster  singles-                    Electron  densities  for  8  ring  molecular,  8-unit  peri-
+doubles (CCSD) method with periodic boundary condi-                              odic, and 9-unit periodic calculations are included in Fig-
+tions  only  recovers  static  correlation  in  the  2  unit  cell               ure 5.  These images show clearly that the HONO-1 and
+case.   Notably,  the  CCSD  calculation  does  not  exhibit                     LUNO+1  orbitals  from  the  molecular  calculation  have
+signiﬁcant static correlation in the 4 unit cell case. Multi-                    even parity, while the HONO and LUNO have odd par-
+reference wavefunctions are needed to accurately capture                         ity.  Additionally, the electron density of the even parity
+static correlation, and CCSD, a single-reference method,                         orbitals remain unchanged in the 8-unit periodic calcula-
+fails  to  accurately  capture  static  correlation  in  larger                  tion, and the odd parity orbitals remain unchanged in the
+systems.   This  result  is  consistent  with  previous  limi-                   9-unit  periodic  calculation  (after  translation  along  the
+tations  with  CCSD  observed  in  the  computation  of  ﬁ-                      periodic axis).  As a result, the occupations of the HONO
+nite acene chains [27].  The highest-occupied natural or-                        and  LUNO  closely  match  those  in  the  9-unit  periodic
+bitals (HONOs) and lowest-unoccupied natural orbitals                            calculation, whereas the HONO-1 and LUNO+1 orbital
+(LUNOs)  that  display  biradical  character  have  a  180◦                      occupations  closely  match  those  in  the  8-unit  periodic
+phase change between unit cells (5), which explains the                          calculation  (shown  in  Figure  4).   Notably,  each  orbital
+requirement for an even number of unit cells to achieve                          in  the  9-unit  periodic  calculation  has  a  single  ”defect”
+the  biradical  character.    This  also  agrees  with  previ-                   which looks like the electron density along the edge of the
+ous molecular (non-periodic) calculations suggesting this                        molecular calculation.  Because there are an odd number
+                                                                                                                                                     6
+
+of repeating units in the unit cell, and gamma point cal-
+culations can only recover orbitals with an even number
+of antinodes, the defects eﬀectively stretch an even num-
+ber of antinodes across the unit cell.  Finally, the symme-
+try of the 8-unit periodic calculation HONO and LUNO
+explain  the  early  convergence  of  the  occupation.   Since
+these orbitals are just 4 copies of the 2-antinode pattern
+fully contained in 2 repeated units, these orbitals in par-
+ticular  stay  the  same  for  any  even  number  of  repeated
+units in the unit cell.
+
+
+
+
+
+
+
+
+
+
+
+                                                                              FIG. 6.  1-electron Von Neumann entropy and connected en-
+FIG.  5.    Images  of  electron  density  for  HONO-1,  HONO,                tropy (2Sc) of molecular and periodic acene chains of various
+LUNO,  and  LUNO+1  for  molecular  (8-acene,  (a))  and  pe-                 lengths.   Periodic  calculations  have  active  spaces  of  [4n, 4n]
+riodic (8-unit, (b), and 9-unit, (c)) calculations.  The dashed               where n is the number of repeated units in the unit cell, and
+lines in the structures for the periodic calculations represent               molecular calculations have active spaces of [4n + 2, 4n + 2]
+the lattice boundary.                                                         where n  is  the  number  of  rings  in  the  calculation.   The  en-
+                                                                              tropy of each calculation has been divided by the number of
+                                                                              orbitals to get an intensive entropy measure that can be com-
+  Earlier results using molecular DMRG [2] also indicate                      pared directly between calculations.
+the  polyradical  behaviour  of  acene  chains,  but  signiﬁ-
+cant static correlation is only recovered for chain lengths                   tensive  forms  of  the  entropy.   Because  the  all  calcula-
+longer  than  6  rings,  and  the  partial  occupation  levels                tions performed use the completeπ-space, these intensive
+only reach the values obtained here (1.35 HONO and 0.66                       quantities are directly comparable.
+LUNO occupations for 6 unit cells) for chain lengths of                         The  intensive  VNE  is  relatively  constant  for  both
+10 rings.  Thus, we conclude that this periodic v2RDM                         molecular  and  periodic  calculations,  indicating  that  bi-
+method accurately captures strong correlation eﬃciently                       partite correlation is not increasing, despite the increase
+compared to DMRG methods, in that fewer atoms and                             in  correlation  as  longer  chains  are  considered.   In  con-
+orbitals are needed to observe strong correlation eﬀects.                     trast,  the connected entropy increases steadily as chain
+Additionally, this method is generalizable to 2- or 3- di-                    length increases, indicating an increase in tripartite cor-
+mensional systems (by summing over neighboring cells in                       relation.    Additionally,  the  periodic  calculations  have
+2 or 3 axes in Equation 5), whereas DMRG methods are                          more  of  each  type  of  entropy  than  the  molecular  cal-
+typically restricted to 1-dimensional systems.                                culations,  for  all  chain  lengths.   As  a  result,  the  2-unit
+  For the both the periodic and molecular acene calcu-                        periodic  calculation  recovers  more  correlation  than any
+lations, we include the 1-electron Von Neumann Entropy                        molecular  calculation  performed,  which  emphasizes  the
+(1-VNE) and a 2-electron form of entropy of quantum en-                       importance of including periodic boundary conditions to
+tropy (we call the connected entropy) originally created                      capture static correlation in extended systems.
+by Prezhdo [71] in Figure 6.  The connected entropy is
+deﬁned as:
+
+                                                                                    IV.    DISCUSSION AND CONCLUSIONS
+                    2Sc =NS(1D)−S(2D)                     (6)
+                                                                                We have generalized the variational 2-electron reduced
+where N   is  the  number  of  electrons  and S(M)   =                        density  matrix  (v2RDM)  electronic  structure  theory,
+−Tr(M lnM)  is  the  Von  Neumann  entropy.   Both  the                       which incorporates periodic boundary conditions for ex-
+1-VNE  and  the  connected  entropy  are  extensive,  and                     tended  structures.   Using  periodic  boundary  conditions
+the 1-VNE quantiﬁes the amount of bipartite correlation                       can  greatly  simplify  the  computational  complexity  and
+whereas the connected entropy quantiﬁes the amount of                         accuracy of calculations by removing edge eﬀects.  Even
+tripartite  correlation  in  the  system.   To  compare  these                gamma-point calculations, for which the electronic struc-
+quantities  between  calculations,  we  divide  each  by  the                 ture  repeats  with  no  phase  change  between  unit  cells,
+number of orbitals in the calculation to compare the in-                      and  therefore,  does  not  account  for  long-range  or  low-
+                                                                                                                                                        7
+
+frequency contributions to the wavefunction, can recover                       used  for  gamma-point  electronic  structure  calculations,
+a large proportion of the correlation due to periodicity.                      but  we  speculate  that  periodic  calculations  with  more
+The  proposed  periodic  v2RDM  method  was  shown  to                         k-points can capture the parity with even a single unit
+account  for  a  large  degree  of  static  correlation  due  to               cell.
+the  multireference  nature  of  2-RDMs  and  to  correlate                       Due to the ability to represent multireference systems,
+electrons between periodic cells.  The ability to capture                      the 2-RDM methods can accurately capture strongly cor-
+strong correlation in extended structures will prove ben-                      related materials without the exponential scaling of full
+eﬁcial in the study of many systems,  including systems                        conﬁguration interaction, allowing the use of much larger
+with extendedπ-systems, inorganic polymers, and mate-                          active spaces than traditionally possible for such systems.
+rials, among others.                                                           The combination of these attributes has the potential for
+   Additionally, we have conﬁrmed previous work regard-                        more realistic descriptions of correlation-driven phenom-
+ing the equilibrium bond length of the extended hydro-                         ena  in  extended π-systems,  semiconductors,  supercon-
+gen chain.  This is signiﬁcant because we can eﬃciently                        ductors,  organometallic  polymers,  as  well  as  other  ma-
+recover an accurate estimate for the ground-state energy                       terials.
+of the hydrogen chain system without performing expen-                         Data Availability:  The data that support the ﬁndings
+sive  calculations  with  diﬀerent  chain  lengths.   We  also                 of this study are available from the corresponding author
+showed  that  the  periodic  v2RDM  method  can  capture                       upon reasonable request.
+the metal-to-insulator transition for the hydrogen chain,
+which Hartree-Fock, MP2, CISD, and CCSD calculations
+are unable to do.  The success of the v2RDM method is
+due  to  its  accurate  treatment  of  the  strong  correlation                                    ACKNOWLEDGMENTS
+upon dissociation and its correct description of the peri-
+odic nature of the wavefunction.  With the application of
+this method to the acene chain, we have shown that par-                           D.M.  gratefully  acknowledges  the  U.S.  National  Sci-
+ity eﬀects require that two crystallographic unit cells are                    ence Foundation Grant No.  CHE-1565638 for support.
+
+
+
+
+ [1]  Andr´e, J. M.; Vercauteren, D. P.; Bodart, V. P.; and Frip-                    tin,  nickel,  and  palladium  compounds.     Chem.  Sci.,
+     iat, J. G. Ab initio calculations of the electronic structure                   11(4):1066–1078, Jan 2020.
+     of  helical  polymers.   J.  Comput.  Chem.,  5(6):535–547,               [10]  Benayad, N.;  Djermouni, M.;  and Zaoui, A.  Electronic
+     Dec 1984.                                                                       structure   of   new   superconductor   La0.5Th0.5OBiS2:
+ [2]  Hachmann, J.; Dorando, J. J.; Avi´ls, M.; and Chan, G.                         DFT study.  Comput. Condens. Matter, 1(1):19–25, Dec
+     K.  L.   The  radical  character  of  the  acenes:   A  density                 2014.
+     matrix  renormalization  group  study.   J.  Chem.  Phys.,                [11]  Xu Liu; Lin Zhao; Shaolong He; Junfeng He; et al. Elec-
+     127(13):134309, Oct 2007.                                                       tronic  structure  and  superconductivity  of  FeSe-related
+ [3]  Dimitrakopoulos,  C.  and  Malenfant,  P.   Organic  Thin                      superconductors - IOPscience. J. Phys. Condens. Matter,
+     Film Transistors for Large Area Electronics. Adv. Mater.,                       27(18), Apr 2015.
+     14(2):99–117, Jan 2002.                                                   [12]  Safaei,  S.  and  Mazziotti,  D.  A.   Quantum  signature  of
+ [4]  Reese, C.; Roberts, M.; Ling, M. M.; and Bao, Z. Organic                       exciton condensation.  Phys. Rev. B, 98(4):045122, July
+     thin ﬁlm transistors.  Mater. Today, 7(9):20–27, 2004.                          2018.
+ [5]  Chen, L.; Batra, R.; Ranganathan, R.; Sotzing, G.; et al.                [13]  Hohenberg,  P.  and  Kohn,  W.   Inhomogeneous  electron
+     Electronic Structure of Polymer Dielectrics:  The Role of                       gas.  Phys. Rev., 136(3B):B864, Nov 1964.
+     Chemical and Morphological Complexity. Chem. Mater.,                      [14]  Kohn,  W.  and  Sham,  L.  J.    Self-consistent  equations
+     30(21):7699–7706, Nov 2018.                                                     including  exchange  and  correlation  eﬀects.   Phys.  Rev.,
+ [6]  Kaewmeechai, C.; Laosiritaworn, Y.; and Jaroenjittichai,                       140(4A):A1133, Nov 1965.
+     A.  P.    Electronic  structure  of  nontoxic-inorganic  per-             [15]  Enkovaara,  J.;  Rostgaard,  C.;  Mortensen,  J.  J.;  Chen,
+     ovskite:  CsMgBr3 using DFT calculation - IOPscience.                           J.; et al.  Electronic structure calculations with GPAW:
+     J. Phys. Conf. Ser., 1380, June 2019.                                           a real-space implementation of the projector augmented-
+ [7]  Kim, J.  Band Structure Calculations of Strained Semi-                         wave method.  J. Phys. Condens. Matter, 22(25):253202,
+     conductors   Using   Empirical   Pseudopotential   Theory.                      June 2010.
+     Technical report, 2011.                                                   [16]  Sundararaman,  R.  and  Arias,  T.  A.   Regularization  of
+ [8]  Zerveas, G.; Caruso, E.; Baccarani, G.; Czornomaz, L.;                         the  Coulomb  singularity  in  exact  exchange  by  Wigner-
+     et al.  Comprehensive comparison and experimental val-                          Seitz truncated interactions:  Towards chemical accuracy
+     idation  of  band-structure  calculation  methods  in  III-V                    in nontrivial systems.  Phys. Rev. B, 87(16):165122, Apr
+     semiconductor  quantum  wells.   Solid.  State.  Electron.,                     2013.
+     115:92–102, Jan 2016.                                                     [17]  Hedin, L.  New Method for Calculating the One-Particle
+ [9]  Xie,  J.;  Boyn,  J.  N.;  Filatov,  A.  S.;  McNeece,  A.  J.;                Green’s Function with Application to the Electron-Gas
+     et  al.     Redox,   transmetalation,   and  stacking  prop-                    Problem.  Phys. Rev., 139(3A):A796, 1965.
+     erties  of  tetrathiafulvalene-2,3,6,7-tetrathiolate  bridged             [18]  Caﬀarel,  M.  and  Claverie,  P.   Development  of  a  pure
+                                                                                                                                                              8
+
+     diﬀusion quantum Monte Carlo method using a full gen-                              quantum  mechanics  onto  four  particles.   Phys.  Rev.  A,
+     eralized Feynman-Kac formula. I. Formalism.  J. Chem.                              63(4):042113, 2001.
+     Phys., 88:1088, 1988.                                                        [35]  Mazziotti, D. A. Structure of Fermionic density matrices:
+[19]  Coester,  F.    Bound  states  of  a  many-particle  system.                      Complete N-representability conditions. Phys. Rev. Lett.,
+     Nucl. Phys., 7(C):421–424, 1958.                                                   108(26):263002, June 2012.
+[20]  McWeeny, R.  Some Recent Advances in Density Matrix                         [36]  Hemmatiyan,   S.   and   Mazziotti,   D.   A.       Unravel-
+     Theory.  Rev. Mod. Phys., 32(2):335–369, Apr 1960.                                 ing  the  Band  Gap  Trend  in  the  Narrowest  Graphene
+[21]  Nakata, M.; Nakatsuji, H.; Ehara, M.; Fukuda, M.; et al.                          Nanoribbons from the Spin-Adapted Excited-Spectra Re-
+     Variational calculations of fermion second-order reduced                           duced  Density  Matrix  Method.     J.  Phys.  Chem.  C,
+     density matrices be semideﬁnite programming algorithm.                             123(23):14619–14624, June 2019.
+     J. Chem. Phys., 114(19):8282–8292, May 2001.                                 [37]  Schlimgen, A. W.;  Heaps, C. W.;  and Mazziotti, D. A.
+[22]  Mazziotti, D. A. Variational minimization of atomic and                           Entangled Electrons Foil Synthesis of Elusive Low-Valent
+     molecular ground-state energies via the two-particle re-                           Vanadium Oxo Complex. J. Phys. Chem. Lett., 7(4):627–
+     duced density matrix.  Phys.  Rev.  A, 65(6):62511, June                           631, Feb 2016.
+     2002.                                                                        [38]  McIsaac,  A.  R.  and  Mazziotti,  D.  A.     Ligand  non-
+[23]  Zhao,  Z.;  Braams,  B.  J.;  Fukuda,  M.;  Overton,  M.  L.;                     innocence  and  strong  correlation  in  manganese  super-
+     et al.  The reduced density matrix method for electronic                           oxide  dismutase  mimics.    Phys.  Chem.  Chem.  Phys.,
+     structure  calculations  and  the  role  of  three-index  rep-                     19(6):4656–4660, Feb 2017.
+     resentability  conditions.   J.  Chem.  Phys.,  120(5):2095–                 [39]  Boyn,  J.  N.;  Xie,  J.;  Anderson,  J.  S.;  and  Mazziotti,
+     2104, Feb 2004.                                                                    D. A.  Entangled Electrons Drive a Non-superexchange
+[24]  Gidofalvi,  G.  and  Mazziotti,  D.  A.   Spin  and  symme-                       Mechanism in a Cobalt Quinoid Dimer Complex. J. Phys.
+     try  adaptation  of  the  variational  two-electron  reduced-                      Chem. Lett., 11(12):4584–4590, June 2020.
+     density-matrix  method.    Phys.  Rev.  A,  72(5):052505,                    [40]  Montgomery, J. M. and Mazziotti, D. A. Strong Electron
+     2005.                                                                              Correlation in Nitrogenase Cofactor,  FeMoco.   J.  Phys.
+[25]  Canc`es,  E.;  Stoltz,  G.;  and  Lewin,  M.   The  electronic                    Chem. A, 122(22):4988–4996, 2018.
+     ground-state  energy  problem:   A  new  reduced  density                    [41]  Bendazzoli, G. L.; Evangelisti, S.; and Monari, A.  Full-
+     matrix  approach.   J.  Chem.  Phys.,  125(6):064101,  Aug                         conﬁguration-interaction  study  of  the  metal-insulator
+     2006.                                                                              transition  in  a  model  system:   Hn  linear  chains  n=4,
+[26]  Mazziotti,  D.  A.,  editor.    Reduced-density-matrix  me-                       6,...,  16.   Int.  J.  Quantum  Chem.,  111(13):3416–3423,
+     chanics  :  with  applications  to  many-electron  atoms  and                      Nov 2011.
+     molecules.   John  Wiley  and  Sons,  Inc.:   Hoboken,  NJ,                  [42]  Motta,    M.;    Genovese,    C.;    Ma,    F.;    Cui,    Z.-H.;
+     2007.                                                                              et  al.   Ground-state  properties  of  the  hydrogen  chain:
+[27]  Gidofalvi,   G.   and   Mazziotti,   D.   A.      Active-space                    insulator-to-metal transition, dimerization, and magnetic
+     two-electron   reduced-density-matrix   method:     Com-                           phases.  Nov 2019.
+     plete  active-space  calculations  without  diagonalization                  [43]  Coleman, A. J.  Structure of Fermion Density Matrices.
+     of   the   N   -electron   Hamiltonian.      J.   Chem.   Phys.,                   Rev. Mod. Phys., 35(3):668–686, July 1963.
+     129(13):134108, Oct 2008.                                                    [44]  Garrod, C. and Percus, J. K. Reduction of the N-particle
+[28]  Greenman, L. and Mazziotti, D. A. Strong electron corre-                          variational  problem.   J.  Math.  Phys.,  5(12):1756–1776,
+     lation in the decomposition reaction of dioxetanone with                           Dec 1964.
+     implications for ﬁreﬂy bioluminescence.  J. Chem. Phys.,                     [45]  L¨owdin,  P.  O.  and  Shull,  H.    Natural  orbitals  in  the
+     133(16):164110, Oct 2010.                                                          quantum  theory  of  two-electron  systems.    Phys.  Rev.,
+[29]  Shenvi,   N.   and   Izmaylov,   A.   F.      Active-space   N-                   101(6):1730–1739, Mar 1956.
+     representability  constraints  for  variational  two-particle                [46]  Head-Gordon,  M.     Characterizing  unpaired  electrons
+     reduced  density  matrix  calculations.   Phys.  Rev.  Lett.,                      from the one-particle density matrix.  Chem. Phys. Lett.,
+     105(21):213003, Nov 2010.                                                          372(3-4):508–511, Apr 2003.
+[30]  Verstichel, B.; Van Aggelen, H.; Poelmans, W.; and Van                      [47]  Mazziotti,  D. A.  Large-scale semideﬁnite programming
+     Neck, D. Variational two-particle density matrix calcula-                          for many-electron quantum mechanics.  Phys. Rev. Lett.,
+     tion for the hubbard model below half ﬁlling using spin-                           106(8):083001, Feb 2011.
+     adapted lifting conditions. Phys. Rev. Lett., 108(21), May                   [48]  Roos, B. O.; Taylor, P. R.; and Sigbahn, P. E.  A com-
+     2012.                                                                              plete active space SCF method (CASSCF) using a den-
+[31]  Mazziotti, D. A. Two-electron reduced density matrix as                           sity matrix formulated super-CI approach. Chem. Phys.,
+     the  basic  variable  in  many-electron  quantum  chemistry                        48(2):157–173, May 1980.
+     and physics, Jan 2012.                                                       [49]  Mazziotti,  D.  A.     Variational  reduced-density-matrix
+[32]  Mazziotti,  D.  A.    Enhanced  Constraints  for  Accurate                        method  using  three-particle  N  -representability  condi-
+     Lower  Bounds  on  Many-Electron  Quantum  Energies                                tions with application to many-electron molecules. Phys.
+     from Variational Two-Electron Reduced Density Matrix                               Rev. A, 74(3):032501, Sep 2006.
+     Theory.  Phys. Rev. Lett., 117(15), Oct 2016.                                [50]  Vandenberghe,  L. and Boyd,  S.  Semideﬁnite Program-
+[33]  Fosso-Tande,  J.;  Nguyen,  T.-S.;  Gidofalvi,  G.;  and De-                      ming.  Soc. Ind. Appl. Math., 38(1):49–95, 1996.
+     Prince,  A.  E.     Large-Scale  Variational  Two-Electron                   [51]  Mazziotti, D. A. Realization of quantum chemistry with-
+     Reduced-Density-Matrix-Driven Complete Active Space                                out wave functions through ﬁrst-order semideﬁnite pro-
+     Self-Consistent Field Methods.  J.  Chem.  Theory  Com-                            gramming.  Phys. Rev. Lett., 93(21):213001, Nov 2004.
+     put., 12(5):2260–2271, May 2016.                                             [52]  Mazziotti,  D.  A.   First-order  semideﬁnite  programming
+[34]  Mazziotti,  D.  A.  and  Erdahl,  R.  M.   Uncertainty  rela-                     for  the  two-electron  treatment  of  many-electron  atoms
+     tions and reduced density matrices: Mapping many-body                              and  molecules.    ESAIM  Math.  Model.  Numer.  Anal.,
+                                                                                                                                                               9
+
+     41(2):249–259, Mar 2007.                                                            A   variational   Monte   Carlo   study.      Phys.   Rev.   B,
+[53]  Soler, J. M.; Artacho, E.; Gale, J. D.; Garc´ıa, A.; et al.                        84(24):245117, Dec 2011.
+     The SIESTA method for ab initio order-N materials sim-                        [63]  Motta,  M.;  Ceperley,  D.  M.;  Chan,  G.  K.-L.;  Gomez,
+     ulation.   J.  Phys.  Condens.  Matter,  14(11):2745–2779,                          J. A.; et al.  Towards the Solution of the Many-Electron
+     2002.                                                                               Problem in Real Materials:  Equation of State of the Hy-
+[54]  Sun, Q.; Berkelbach, T. C.; Blunt, N. S.; Booth, G. H.;                            drogen  Chain  with  State-of-the-Art  Many-Body  Meth-
+     et al. PySCF: the Python-based simulations of chemistry                             ods.  Phys. Rev. X, 7(3):31059, Sep 2017.
+     framework.  Wiley  Interdiscip.  Rev.  Comput.  Mol.  Sci.,                   [64]  Fripiat,  J.  G.;  Dehalle,  J.;  and  Andr´e,  J.  M.   Electron
+     8(1), 2018.                                                                         correlation in linear hydrogen chains.   Int.  J.  Quantum
+[55]  Giannozzi, P.; Baroni, S.; Bonini, N.; Calandra, M.; et al.                        Chem., 23(4):1179–1189, 1983.
+     QUANTUM  ESPRESSO:  A  modular  and  open-source                              [65]  Sinitskiy,  A.  V.;  Greenman,  L.;  and  Mazziotti,  D.  A.
+     software  project  for  quantum  simulations  of  materials.                        Strong  correlation  in  hydrogen  chains  and  lattices  us-
+     J. Phys. Condens. Matter, 21(39):395502, 2009.                                      ing the variational two-electron reduced density matrix
+[56]  Gonze,  X.;  Beuken,  J.  M.;  Caracas,  R.;  Detraux,  F.;                        method.  J. Chem. Phys., 133(1):014104, July 2010.
+     et  al.   First-principles  computation  of  material  proper-                [66]  Smart,    S.   E.   and   Mazziotti,    D.   A.       Quantum-
+     ties: The ABINIT software project. Comput. Mater. Sci.,                             classical  hybrid  algorithm  using  an  error-mitigating  N
+     25(3):478–492, Nov 2002.                                                            -representability condition to compute the Mott metal-
+[57]  Kresse, G. and Furthm¨uller, J. Eﬃciency of ab-initio to-                          insulator transition.   Phys.  Rev.  A, 100(2):022517,  Aug
+     tal energy calculations for metals and semiconductors us-                           2019.
+     ing a plane-wave basis set. Comput. Mater. Sci., 6(1):15–                     [67]  Tsuchimochi,  T.  and  Scuseria,  G.  E.    Strong  correla-
+     50, 1996.                                                                           tions via constrained-pairing mean-ﬁeld theory. J. Chem.
+[58]  Payne, M. C.;  Teter, M. P.;  Allan, D. C.;  Arias, T. A.;                         Phys., 131(12):121102, Sep 2009.
+     et  al.    Iterative  minimization  techniques  for  ab  initio               [68]  Bendikov, M.; Duong, H. M.; Starkey, K.; Houk, K. N.;
+     total-energy calculations:  Molecular dynamics and con-                             et al.  Oligoacenes:  Theoretical prediction of open-shell
+     jugate  gradients.    Rev.  Mod.  Phys.,  64(4):1045–1097,                          singlet  diradical  ground  states.    J.  Am.  Chem.  Soc.,
+     1992.                                                                               126(24):7416–7417, June 2004.
+[59]  Dunning, T. H.  Gaussian basis sets for use in correlated                    [69]  Jiang, D. E. and Dai, S. Electronic ground state of higher
+     molecular calculations. I. The atoms boron through neon                             acenes.  J. Phys. Chem. A, 112(2):332–335, Jan 2008.
+     and hydrogen.  J. Chem. Phys, 90:1007, 1989.                                  [70]  Ni,  Y.;  Gopalakrishna,  T.  Y.;  Phan,  H.;  Herng,  T.  S.;
+[60]  Møller,  C.  and  Plesset,  M.  S.   Note  on  an  approxima-                      et al. A Peri-tetracene Diradicaloid: Synthesis and Prop-
+     tion  treatment  for  many-electron  systems.   Phys.  Rev.,                        erties. Angew. Chemie - Int. Ed., 57(31):9697–9701, July
+     46(7):618–622, Oct 1934.                                                            2018.
+[61]  Downs, R. T. and Hall-Wallace, M. The American Miner-                        [71]  Luzanov, A. V. and Prezhdo, O. High-order entropy mea-
+     alogist crystal structure database. Am. Mineral., 88:247–                           sures and spin-free quantum entanglement for molecular
+     250, 2003.                                                                          problems. Molecular Physics, 105(19-22):2879–2891, Oct
+[62]  Stella,  L.;  Attaccalite,  C.;  Sorella,  S.;  and  Rubio,  A.                    2007.
+     Strong  electronic  correlation  in  the  hydrogen  chain:

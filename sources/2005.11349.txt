@@ -1,0 +1,1034 @@
+Exploring Hilbert space on a budget: Novel benchmark set and
+performance metric for testing electronic structure methods in the regime
+of strong correlation
+          Nicholas H. Stair1,a) and Francesco A. Evangelista1,b)
+          Department of Chemistry and Cherry Emerson Center for Scientiﬁc Computation, Emory University, Atlanta, GA,
+          30322
+          Thisworkexplorestheabilityofclassicalelectronicstructuremethodstoeﬃcientlyrepresent(compress)theinformation
+          content of full conﬁguration interaction (FCI) wave functions. We introduce a benchmark set of four hydrogen model
+          systems of diﬀerent dimensionality and distinctive electronic structures: a 1D chain, a 1D ring, a 2D triangular lattice,
+          anda3Dclose-packedpyramid. Toassesstheabilityofacomputationalmethodtoproduceaccurateandcompactwave
+          functions, we introduce the accuracy volume, a metric that measures the number of variational parameters necessary
+          to achieve a target energy error. Using this metric and the hydrogen models, we examine the performance of three
+          classical deterministic methods: i) selected conﬁguration interaction (sCI) realized both via an a posteriori (ap-sCI)
+          and variational selection of the most important determinants, ii) an a posteriori singular value decomposition of the
+          FCI tensor (SVD-FCI), and iii) the matrix product state representation obtained via the density matrix renormalization
+          group (DMRG). We ﬁnd that DMRG generally gives the most eﬃcient wave function representation for all systems,
+          particularly in the 1D chain with a localized basis. For the 2D and 3D systems, all methods (except DMRG) perform
+          best with a delocalized basis, and the eﬃciency of sCI and SVD-FCI is closer to that of DMRG. For larger analogs of
+          themodels,DMRGconsistentlyrequiresthefewestparameters,butstillscalesexponentiallyin2Dand3Dsystems,and
+          the performance of SVD-FCI is essentially equivalent that of ap-sCI.
+
+
+I.INTRODUCTION                                                                 Fortunately,formanygroundandlow-lyingstates,thecom-
+                                                                            plexity of the wave function is reduced by symmetry restric-
+  Anoutstandingchallengeinmodernelectronicstructurethe-                     tions,sparsitybreadbynon-interactingdeterminants,andreg-
+oryissolvingthemany-bodySchrödingerequationforstrongly                      ular structure resulting from the local nature of Coulombic
+correlated electrons.  The availability of accurate computa-                correlation. Muchworkhasthusbeendevotedtothedevelop-
+tionalmethodsforstronglycorrelatedsystemsisimperativeto                     ment of methods that can exploit sparsity or use decomposi-
+studyamyriadofimportantphenomenasuchasbondbreaking                          tion techniques to compactly approximate the wave function.
+andphotochemicalprocesses,1,2  molecularmagnetism,3 high-                   However, it is not generally known what approaches are the
+temperature superconductivity,4 and many others.5–8  In brief,              most eﬃcient (i.e., which ones can reach a target accuracy
+strongcorrelationariseswhenthecostofpromotingelectrons                      using the fewest parameters) given the physical dimension of
+to higher energy orbitals is small in comparison to the elec-               the system, the degree of correlation strength, and choice of
+tron pairing energy (Coulombic repulsion).  Consequently,                   molecular orbitals.
+stronglycorrelatedelectronscannotbequalitativelydescribed                      Understandingthedegreetowhichdiﬀerentwavefunctions
+byamean-ﬁeldpicturebecausethewavefunctionmaycontain                         may be compressed is important to guide future development
+nontrivialcontributionsfrommanySlaterdeterminants.9,10  In                  of both classical and quantum computational methods.14 In
+this situation, electronic structure methods that build upon a              particular, there is a growing need for benchmark sets that
+mean-ﬁeld reference cannot eﬀectively approximate the wave                  may be used to compare classical and new quantum algo-
+function with a polynomial number of parameters and, there-                 rithmsinvariousregimesofelectroncorrelation. Sincemany
+fore,oftenyieldinaccurateenergiesandmolecularproperties.                    classes of emerging quantum algorithms—such as variational
+  The full conﬁguration interaction (FCI) expansion cap-                    quantum eigensolvers15–18   and quantum subspace diagonal-
+tures all correlation eﬀects for  N electrons in  L spatial or-             ization techniques19–22  —use parameterized ansätze, one way
+bitals. RestrictingFCItoacompleteactivespace(CAS),with                      to compare them to classical algorithms is to quantify their
+(CASSCF)11 or without (CASCI) orbital optimization is also                  eﬃciency in terms of classical resources needed to achieve
+acommonstrategywhenstrongcorrelationeﬀectsarelimited                        a target energy accuracy. Such characterization is also use-
+tofeworbitals. However,thesizeoftheFCI(orCASSCF)de-                         ful in answering whether or not a quantum algorithm has an
+terminant space scales like a binomial coeﬃcient in N and L,                advantage over a purely classical approach.
+makingthesemethodsintractableformostsystemsofchemical                          Thegoalofthisworkistoexaminehowtobestcompressthe
+interest12 containing more than approximately 18 electrons in               FCI wave function of strongly correlated systems using clas-
+18 orbitals (18e,18o)—although massively-parallel computa-                  sical methods. To this end, we introduce a benchmark set and
+tionshaverecentlymanagedtopushthisﬁgureto(22e,22o).13                       a simple metric to analyze the performance of a method. We
+                                                                            consider three families of deterministic methods that system-
+                                                                            aticallyapproachFCIinanear-continuousfashion: i)selected
+                                                                            CI(sCI),23–26   ii)singularvaluedecompositionFCI(SVD-FCI)
+a)Electronic mail:nstair@emory.edu                                          (related to the methods discussed in Refs.27–29), and iii)
+b)Electronic mail:francesco.evangelista@emory.edu                           the density matrix renormalization group (DMRG).30 These
+                                                                                                                                                    2
+
+exemplify diﬀerent strategies to approximate the exact wave                  temsin2-and3D.1Dhydrogensystemshaverecentlybeenthe
+function;however,theyallconvergetotheexactenergyinthe                        subject of comprehensive benchmark studies aimed at treat-
+limitofnotruncation,andtheiraccuracycanbecontrolledby                        ingstrongcorrelationinrealmaterials.92–94   Hydrogenlattices
+a single parameter.                                                          with localized spins are also related to the more fundamen-
+  Selected CI schemes approximate the FCI solution using                     tal Heisenberg and Hubbard models, exhibiting similar spin
+a subset of the full determinant space.  Therefore, they are                 correlation patterns and band structures. Our benchmark set
+most eﬃcient when the exact wave function has a sparse                       contains four H10 models: the well-investigated 1D chain and
+structure.   Contrary to other forms of truncated CI, se-                    ring, as well as a 2D triangular lattice (referred to as “sheet”
+lected CI methods identify an optimal determinant basis us-                  throughout the paper), and a 3D close-packed pyramid. For
+ing an iterative selection procedure that gradually expands                  each model, we consider both the eﬀect of the H–H distance
+the determinant space.  Although selected CI23–26   was pro-                 onthestrengthofcorrelation,andtheuseofdiﬀerentmolecu-
+posed decades ago, in recent years it has received renewed                   larorbitalbases(delocalized/localized). Wecharacterizethese
+attention with new deterministic,31–42   stochastic,43–48   and              modelsbycomputingvariousmetricsofcorrelation,including
+semistochastic49–52   variants being proposed. The closely re-               the norm of the two-body cumulant, the total quantum infor-
+lated family of determinant-based Monte Carlo methods53–60                   mation, and spin-spin correlation functions. Additionally, to
+has also been explored.                                                      investigate the compression eﬃciency as a function of system
+  Thesingularvaluedecompositionﬁndsuseinseveralareas                         size, we also consider H12, H14 , and H16 analogs of the four
+of quantum chemistry as a way to achieve low-loss compres-                   models.
+sionofdata.61–68   TheSVDcanbeappliedtocompresstheFCI                           Since the methods considered here play an important role
+stateoncethecoeﬃcientvectorisreshapedasamatrix,arepre-                       as substitutes for FCI in multireference treatments of elec-
+sentationnaturallysuggestedbystring-basedCIalgorithms.69                     tron correlation,95–100   we are particularly interested in assess-
+Taylor has proposed to reduce the memory requirements of                     ing their performance when applied only to valence orbitals.
+FCI by performing a SVD decomposition at each iteration                      To simulate this scenario, our computations employ a mini-
+of the Davidson procedure.28 Another method that employs a                   mal basis set.  Note, that this treatment may be considered
+compressed representation of the FCI vector is rank-reduced                  equivalenttodiagonalizingavalenceeﬀectiveHamiltonian101
+FCI(RR-FCI),originallyproposedbyKoch27 andrecentlyex-                        with interactions modiﬁed by dynamical correlation eﬀects.
+tended by Fales and co-workers.29 RR-FCI approximates the                    It is important to point out that since we only consider zero-
+FCIsolutionwithapolardecompositionoftheFCIvector(rep-                        temperature quantum chemistry approaches, we focus in par-
+resentedasamatrix)combinedwithvariationalminimization                        ticularonregimesofelectroncorrelationthatrangefromweak
+oftheenergy. WenotethatbothTaylor’s“gzip”approachand                         to medium/strong.  We intentionally avoid the limit of inﬁ-
+RR-FCI approaches cannot be justiﬁed on the basis of a sym-                  nite H–H separation, because all the models considered here
+metry or a physical principle, although a variant of RR-FCI                  develop a massively degenerate ground state containing 210
+that exploits locality has been proposed (see Ref.70).                       states.  At large separation, it is ludicrous to characterize a
+  Tensor network states (TNSs) represent a broad family of                   groundstate,andone shouldinsteadseektocomputethermal
+methods that approximate the FCI coeﬃcients (viewed as a                     averages employing a ﬁnite-temperature approach.102–104
+tensor)withacollectionoftensorsconnectedbycontractions.                         To compare the performance of each method, we evaluate
+ThesimplesttypeofTNSisamatrixproductstate(MPS),the                           theerrorintheenergyandthetwo-bodydensitycumulantasa
+underlying ansatz71–73   of the density matrix renormalization               functionofthenumberofvariationalparameters. Theseerrors
+group (DMRG).30 MPSs are able to maximally exploit local                     measure how well electronic correlation eﬀects are preserved
+orbital entanglement, that is, for states that satisfy an area               inthecompression,andthereforecanindicatethequalityofan
+law for the entanglement entropy, MPSs can yield near-exact                  approximatewavefunctionanditsproperties. Fromthisinfor-
+resultsin1Dandquasi-1Dsystems.74,75  Thegeneralizationof                     mation,weextractasinglemetric,theaccuracyvolume,which
+theMPSansatztotwo-(2D)andthree-dimensional(3D)TNS                            measures the number of variational parameters necessary to
+using high-order tensor factorizations is also an active area of             achieve a target energy error. Although the accuracy volume
+research.75–77   Inpractice,thevariationaloptimizationofTNSs                 does not take into account the actual cost of a computation,
+suﬀers from very high scaling and is less eﬃcient relative                   this metric serves as a proxy for the computational resources
+to MPSs.  DMRG (as applied to quantum chemistry),78–82                       required by each method, independently of implementation
+has been tremendously successful in describing the ground                    details.  We also compare the energy errors produced with
+statesofquasi-linearmolecularsystems. Forexample,DMRG                        Hartree–Focktheory,second-orderMøller–Plessetmany-body
+has enabled the investigation of long hydrogen chains,78,83–86               perturbation theory (MP2), coupled cluster theory with sin-
+oligoacenes,87–89   and large biochemically-relevant transition              gles and doubles (CCSD),105 CCSD with perturbative triples
+metal complexes with up to 100 orbitals.90,91                                [CCSD(T)],106thecompletelyrenormalizedCCapproachwith
+  Totesttheperformanceofelectronicstructuretheoriesinthe                     perturbative triples [CR-CC(2,3)],107 and the variational two-
+strongly correlated regime, we have introduced a benchmark                   particle reduced density matrix (V2RDM) method.108–112    We
+setofone,two,andthree-dimensional(3D)hydrogensystems.                        have collected the data generated in this study in an online
+These systems model strongly correlated electrons in signiﬁ-                 repository113 inthehopethatitwillbeusefulinfuturestudies.
+cantly diﬀerent regimes and dimensionalities, and allow us to                   Theremainderofthisarticleisorganizedasfollows: Sec.II
+explore the physics of Mott insulators and spin frustrated sys-              deﬁnes the accuracy volume, summarizes the three methods
+                                                                                                                                                  3
+
+compared in this study, and deﬁnes the metrics used to assess               setof N-electrondeterminants(HN)formsaHilbertspaceof
+correlationstrengthinthehydrogenmodelsystems. SectionIII                    dimension|HN|  =  NH. Using this notation, the FCI wave
+provides the computational details of our study. Numerical                  function is written as a linear combination of determinants,
+results are reported in Sec.IV, and Sec.VIsummarizes our                    each parameterized by a coeﬃcient (Ci1,...,iN≡ CI)
+ﬁndingsanddiscussestheirrelevanceinthecontextofclassical                                        KÕ                             NHÕ
+and quantum algorithms for strongly correlated systems.                         |ΨFCI⟩ =                Ci1···iN|Φi1···iN⟩ =       CI|ΦI⟩.  (2)
+II.THEORY                                                                                  i1<i2<...<iN                         I
+                                                                            An equivalent way to express the FCI wave function em-
+A.  Deﬁnition of the accuracy volume                                        ploys occupation vectors.  In this representation, each de-
+  For a systematically improvable method X we indicate the                  terminant |ΦI⟩ is associated with a vector of length  K,
+energycomputedusing Npar parametersas EX(Npar). Wethen                      |n⟩  = |n1, n2,..., nK⟩, where  ni ∈ {0, 1} is the occupation
+deﬁnetheaccuracyvolume,VX(α),tobethesmallestnumber                          numberofspinorbitalψi. TheFCIwavefunctionrepresented
+of parameters such that the error per electron with respect to              in the occupation vector form is given by
+                                                                                                 Õ                             Õ
+the FCI energy (EFCI) is less than or equal to 10−α:                                  |ΨFCI⟩ =       Cn1...nK|n1... nK⟩ =          Cn|n⟩    (3)
+                                                                                                 {ni}                           n
+        VX(α) = Npar :|EX(Npar)− EFCI|N    ≤ 10−α Eh.    (1)                where the sum over all occupation vectors ({ni}≡ n) is re-
+                                                                            stricted to N-electron determinants (˝i nj = N) of given spin
+For convenience, in the rest of the paper we always assume                  and spatial symmetry.
+the target energy error is 1 mEh for the H10 systems, which                 1.  Selected CI
+correspondstoa0.1mEherrorperelectron(α = 4)andusethe
+more compact symbolVX instead. For methods that exploit                        Selected CI methods approximate the FCI wave function
+the sparsity of the FCI wave function (e.g., selected CI), the              using a subsetM (model space) of the full determinant space
+accuracyvolumeisameasureofthenumberofSlaterdetermi-                                                           Õ
+nants or conﬁguration state functions (equal to the number of                                      |ΨsCI⟩ =         ˜CI|ΦI⟩.             (4)
+parameters). Thisliteralinterpretationoftheaccuracyvolume                                                     I∈M
+doesnotextendtoapproximationschemesbasedontensorde-                         All ﬂavors of selected CI aim to approximate the FCI vector
+composition, in which case it only reﬂects the total number                 with the smallest number of elements and diﬀer primarily in
+of parameters employed. We intend the accuracy volume to                    thewaytheydeterminethesetM. ForsCImethods,wereport
+be used as a performance metric of a method, since it ap-                   Npar asthesizeofthespaceM (orequivalently,thesizeofthe
+proximately measures the computational resources (memory                    vector  ˜CI).
+and CPU) necessary to achieve a target accuracy.  Because                      The ﬁrst approach we consider consists of an a posteriori
+theaccuracyvolumecanbeequallyappliedtopurelyclassical                       selectedCI(ap-sCI)compressionoftheexactFCIwavefunc-
+and hybrid quantum-classical methods, it provides a straight-               tion. This compressed representation is obtained by sorting
+forward way to compare the two on more equal footing. Our                   the determinants according to their weight wI  =|CI|2, and
+deﬁnitionofVX [Eq.(1)]considerstheenergyerrorperelec-                       discarding elements with the smallest weight while satisfying
+trontoallowthecomparisonofsystemswithdiﬀerentnumbers                        the condition          Õ
+ofelectrons. Thisapproachisconsistentwiththefactthatap-
+proximate methods that are size consistent, when applied to                                                 |CI|2 < τsCI.               (5)
+noninteracting fragments, give an error that is additive in the                                       I<M
+error of each fragment. We also choose to deﬁneVX as the
+absolute number of parameters, as opposed to the fraction of                The compressed ap-sCI vector  ˜CI is then normalized and the
+the total Hilbert space, since the former is proportional to                energy is computed as the expectation value of the Hamilto-
+the computational resources required by a method. In con-                   nian. Even though this compression scheme does not yield a
+trast, a comparison based on the fraction of Hilbert space                  variationally optimal solution, the error in the ap-sCI energy
+parametersemployedbyamethodwouldbedependentonthe                            is quadratic in the wave function error. Still, this ideal (albeit
+exploitable symmetries for the orbitals that are chosen (e.g.               impractical) version of selected CI is useful in assessing the
+symmetry adapted delocalized vs. localized orbitals) making                 error introduced by the diﬀerent selection schemes used in
+comparisonsofdiﬀerentcomputationslessindicativeofactual                     practical sCI approaches.
+computational resources.                                                       The second approach we consider, the adaptive conﬁgu-
+                                                                            ration interaction (ACI),40,42   identiﬁes the spaceM via an
+B.  Overview of the computational methods                                   iterativeprocedurethatseekstocontroltheenergyerror. ACI
+  Givenabasisof K spinorbitals{ψp}with p = 1,..., K,we                      is unique in the regime of selected CI methods as it aims
+indicate a generic N-electron determinant|ψi1···ψiN⟩ using                  to approximate the FCI energy within a user-speciﬁed error
+the notation|ΦI⟩ where the multindex  I  =(i1,..., iN) rep-                 toleranceσ
+resents an ordered list of indices (i1 < i2 < ... < iN). The                                        EACI(σ)− EFCI≈σ,              (6)
+                                                                                                                                                  4
+
+where EACI(σ) is the ACI energy. In ACI, the model space                    variational minimization of the energy, in this work we con-
+is divided into two spacesM  =P∪Q, whereP contains                          sideronlyanaposterioricompression. Tothisendweperform
+the most important determinants andQ contains singly and                    thesingularvaluedecompositionoftheFCIcoeﬃcientmatrix,
+doubly excited determinants spawned fromP.  New candi-                      C = USV, where we assume that the entries of C are real. To
+date determinants (ΦA) for the model space are selected from                ﬁnd the most compact reduced-rank approximations of C we
+thesinglyanddoublyexciteddeterminantsgeneratedfromthe                       reconstruct an approximate matrix ~CSVD deﬁned as
+currentP space. Each candidate determinant is ranked by its
+energycontribution,ϵ(ΦA),aquantityestimatedbydiagonal-                                                  ~CSVD = U~SV,                 (9)
+izing the Hamiltonian in the basis of the ACI wave function
+at the current iteration and ΦA. To determine an improved                   where ~S is a truncated version of S. Assuming the singular
+model space, the candidate determinants are sorted according                values si  =  Sii are sorted in decreasing order, we keep in ~S
+to|ϵ(ΦA)| and unimportant elements are removed until the                    the diagonals  s1,..., sR such that the sum of the square of
+sum of their estimated energy is less than or equal toσ                     the elements excluded is less than a user-provided threshold
+                          Õ                                                 (τSVD)
+                                |ϵ(ΦI)|≤ σ.               (7)                                           Õ
+                         ΦI <M                                                                               s2i < τSVD.               (10)
+                                                                                                       i=R+1
+Optionally,additionaldeterminantsareincludedinM ateach
+iteration to ensure spin completeness.                                      Therefore, R represents the rank of ~CSVD and the error in the
+  After adding these determinants, the Hamiltonian is diago-                FCI wave function is given by
+nalized and a newP space is formed by coarse grainingM
+according to their weight using a cumulative metric similar                                       ‖C− ~CSVD‖F <√τSVD,            (11)
+to Eq. (7). The course graining step increases the overall ef-
+ﬁciency of the procedure and reduces the dependency of the                  where‖·‖F is the Frobenius norm. The SVD-FCI energy is
+ﬁnal solution on the initial guess (usually the HF determinant              computed as
+or a small CASCI).
+  The ﬁnal ACI energy is computed by diagonalization of                                         ESVD-FCI =(~CSVD)†H~CSVD,          (12)
+the Hamiltonian in the model space basis. However, during
+the selection process it is possible to accumulate the estimate             and although it does not correspond to the optimal energy
+of the energy contributions from the discarded determinants                 for a wave function of rank  R, this estimate deviates from
+(EPT2) and this quantity can be added to the ACI energy to                  the variational energy by a quadratic term.  For SVD-FCI,
+obtain an improved energy (EACI+PT2).                                       we calculate the number of parameters as  Npar  =  R(Nα +
+2.  Singular value decomposition FCI                                        Nβ), where we have assumed that the singular values ~S are
+                                                                            folded into either U or V. Note that with no truncation, the
+  In this work we consider an a posteriori rank reduction of                SVD-FCI requires twice the number of parameters as the size
+the FCI tensor obtained via a singular value decomposition                  of the Hilbert space.  We also point out that since the FCI
+(SVD-FCI).Ourapproachisessentiallyidenticaltothe“gzip”                      wave function is invariant with respect to unitary rotations of
+treatmentusedbyTaylor(Ref.28)withthecaveatthatweonly                        the orbitals, the rank R SVD approximation yields the same
+performSVDoftheﬁnalconvergedwavefunctionratherthan                          approximate wave function in any orbital basis. However, the
+ateachFCIiteration. TheSVD-FCIapproachisalsoinspired                        number of parameters may diﬀer from one orbital basis to
+by the the rank-reduced FCI method (RR-FCI).27,29  However,                 anotherifsymmetryisemployedandtheSVDisappliedonly
+because we do not variationally optimize the SVD-FCI wave                   to the non-zero blocks of C.
+function, RR-FCI would yield lower energies than SVD-FCI                    3.  Density-matrix renormalization group
+for a speciﬁed rank (particularly at low ranks).
+  SVD-FCI starts from a string-based representation of the                     The matrix product state representation at the basis of the
+FCI wave function,114 in which each determinant is labeled                  DMRG is a conceptually diﬀerent form of compression that
+byseparatemulti-indices(strings)foralphaandbetaelectrons                    aims to exploit the local character of entanglement. A MPS
+(Iα and Iβ), and the determinant|ΦI⟩ =|ΦIαΦIβ⟩ factorizes                   decomposition of the FCI tensor in the occupation number
+intoproductsofalpha(ΦIα)andbeta(ΦIβ)spinorbitals. Con-                      representation is given by
+sequently,theFCIvector CI isrepresentedasamatrixindexed
+bystringconﬁgurations(Iα/Iβ),(C)IαIβ  = CIαIβ,andthewave                                  Cn1...nK≈ CDMRGn1...nK  = An11 An22 ··· AnKK ,      (13)
+function is written as
+                            NαÕ NβÕ                                         where,foragivenvalueoftheoccupationnumber nj,ageneric
+                |ΨFCI⟩ =            CIαIβ|ΦIαΦIβ⟩,         (8)              term Anjj  isa M× M matrix,exceptfortheﬁrstandlastterms
+                            Iα   Iβ                                         which are a row and a column vector of size M, respectively.
+                                                                            Given an occupation number pattern (n), the corresponding
+where Nα and Nβ are the number of alpha and beta strings,                   tensor element  Cn1...nK is approximated by the product of
+respectively. WhiletheoriginalRR-FCIalgorithmisbasedon                      all the Anjj  matrices.  Quantum chemistry implementations
+                                                                                                                                                    5
+
+of DMRG exploit the symmetry group of the Hamiltonian                        and it is similarly deﬁned using doubles amplitudes (tabij )
+(particle number, spin, point group) to induce a block-sparse                with the above equation modiﬁed to make this metric orbital
+structureintheMPStensors Anjj ,withconsequentreductionin                     invariant.124
+computationalandstoragecosts. Wecalculate NparforDMRG                        2.  Measures based on the two-body density
+asthesumofthenumberofparametersineachsitetensor Anjj                         cumulant
+in the converged MPS, taking into account the block struc-
+ture induced by symmetries (assuming at most abelian point                      Thenormofthetwo-bodycumulant(λλλ2)hasbecomeawell
+groups).                                                                     established metric of correlation.125–129    This quantity is the
+  Formally, the MPS representation can be derived by per-                    portionofthetwo-bodydensitymatrixγγγ2 thatisnotseparable
+forming a series of successive SVDs on the FCI tensor (ap-                   into one-body contributions, and it is deﬁned as
+propriately reshaped), at each step retaining only  M terms.
+Therefore,itisexactinthelimitof M→ NH. Inpractice,the                                            λrspq =γrspq−γrpγsq +γrpγqs,          (16)
+DMRG method directly builds the MPS representations via                      whereγpq andγrspq are the one- and two-body reduced density
+a sweep algorithm using a ﬁxed value of M speciﬁed by the                    matrices:
+user. For chemical applications, the quality of the MPS as a
+functionof M iscontrolledbytwochoices: thetype(localized                          γpq  =⟨Ψ| a†paq|Ψ⟩,  γpqrs  =⟨Ψ| a†pa†qasar|Ψ⟩.   (17)
+vs. delocalized) and ordering of the orbitals. These aspects
+present a challenge for practical calculations since diﬀerent                The information contained in λλλ2 can be distilled down to a
+orbital types and orderings can dramatically aﬀect the ﬁnal                  single value metric via its Frobenius norm:
+outcome of a calculation. Although there are rules of thumb                                                   √Õ
+forspeciﬁccases—suchaschoosinglocalizedorbitalsordered                                              ‖λλλ2‖F =         |λrspq|2,            (18)
+tobespatiallyadjacentforelongatedmolecules115—thechoice                                                          pqrs
+of these parameters is generally a non-trivial problem beyond
+1D. Various approaches to ordering delocalized orbitals have                 which captures both spin entanglement and Coulombic cor-
+also been explored.116–119                                                   relation eﬀects,127,129    and is null for a single determinant.
+                                                                             The two-body density cumulant also has a direct connection
+C.  Metrics of strong electronic correlation                                 to the number of eﬀectively unpaired electrons, which itself
+1.  Metrics based on mean-ﬁeld and coupled cluster                           has been used as a metric of correlation.130–132    For two non-
+wave functions                                                               interacting fragments A and B with no interfragment spin en-
+                                                                             tanglement, the square Frobenius norm is additive,127,129   that
+  In computational quantum chemistry, the prevailing mea-                    is‖λλλ2(A)‖2F +‖λλλ2(B)‖2F  = ‖λλλ2(A··· B)‖2F, where “A··· B”
+sure of electronic correlation is the correlation energy. This               indicates A and B at inﬁnite separation.  Therefore, in our
+metric dates back to the work of Löwdin120 and is deﬁned as                  comparison of the models we report the square Frobenius
+the diﬀerence between the FCI and mean-ﬁeld (EMF) energy                     norm.
+                                                                                Moreover, the two body cumulant is directly related to the
+                        Ecorr = EFCI− EMF.             (14)                  deﬁnition of the intrinsic correlation energy (ICE) proposed
+The correlation energy may be further partitioned into dy-                   by Kutzelnigg.10 By expressing the energy in terms of 1- and
+namical and non-dynamical contributions, as proposed by                      2-RDMs and expanding the latter in terms of the two-body
+Sinanoˇglu and others.121,122                                                cumulants, one may rewrite the two-body contribution to the
+  Onecansimilarlyestimatecorrelationeﬀectsfromthemag-                        total energy as a sum of Coulombic, exchange, and correla-
+nitudeoftheoverlapoftheHartree–Fockdeterminantwiththe                        tion contributions, E2 = ECoul + Eex + EICE. Here, EICE is a
+normalized FCI wave function,|CHF|  = |⟨ΦHF|Ψ⟩|.  This                       puretwo-bodypotentialenergy termwhichmaybeexpressed
+metrichasbeendiscussedasadiagnostictoolfordetermining                        using the two-body cumulant represented in coordinate space
+thequalityofsingle-referenceelectroncorrelationmethods.123                   [λ2(1, 2; 1, 2)] as
+However,forinﬁnitesystems|CHF|→ 0,sothismetricisprob-                                        Õ                        „ λ2(1, 2; 1, 2)
+ablysuitedonlyforcomparingsystemswiththesamenumber                               EICE =  14       λpqrs⟨rs‖pq⟩ =  12           r12        dτ1dτ2.
+of electrons.                                                                               pqrs
+  Inthecontextofcoupledclustertheory,severaldiagnostics                                                                                         (19)
+havebeenintroduced. The D1diagnosticcapturesdeﬁciencies                      This intrinsic correlation energy has the advantage of being
+in the reference, and is deﬁned as the 2-norm of the matrix of               deﬁned irrespective of a reference mean-ﬁeld wave function.
+singles cluster amplitudes(T)ia = tai , where the indices i and              3.  Spin correlation metrics
+a span the occupied and virtual orbitals, respectively. This
+metric is deﬁned as                                                             Wealsocharacterizeelectronicstatesusingvariousmetrics
+                                    √                                        basedonthespin-spincorrelationfunctionastheyarehelpfuln
+                    D1 =‖T‖2 =        λmax(TTT),          (15)               diagnosingspinfrustration. Thespin-spincorrelationfunction
+                                                                             (Aij), deﬁned as
+where λmax(TTT) indicates the largest eigenvalue of the ma-
+trix TTT.  The  D2 diagnostic is a measure of correlation,                                       Aij =⟨ˆSi· ˆSj⟩−⟨ˆSi⟩·⟨ˆSj⟩,          (20)
+                                                                                                                                                  6
+
+measures the irreducible correlation of total spin (ˆSi) for two            The SOEE of orbital φi is then computed as the Shannon
+localized spatial orbitals φi and φj. In this work we employ                entropy with respect to the four occupations
+Pipek–Mezey localized orbitals133 to deﬁne spin-spin corre-                                                 4Õ
+lation metrics.  We also compute the spin-spin correlation                                        Si =−        ρipp ln(ρipp).            (29)
+density Ai(r), which can be used to graphically represent the                                              p=1
+spatial correlations of spin with respect to a localized orbital
+φi. For well localized atomic orbitals,  Ai(r) can be approxi-                 The total quantum information (Itot) is given as the sum of
+mated as                                     Õ                              the SOEEs for all spatial orbitals
+   Ai(r) =⟨ˆSi· ˆS(r)⟩−⟨ˆSi⟩·⟨ˆS(r)⟩≈             Aij|φj(r)|2,  (21)                                             LÕ
+                                               j                                                         Itot =     Si.                (30)
+where ˆS(r) is the total spin operator in real space,|φj(r)|2 is                                                i=1
+the spatial density of the j-th orbital, and Aij are elements of            Largevaluesof Itot indicatedeparturefromintegerorbitaloc-
+the spin-spin correlation function.                                         cupationsandareassociatedwithstrongcorrelationeﬀects.139
+  Additionally,weconsiderthreescalarmetricsintroducedin                     We note, however, that the value of Itot is not invariant with
+previous molecular spin frustration studies: i) the sum of the              respect to unitary rotations of the orbitals, and therefore, will
+absolute value of the spin-spin correlations⟨S2⟩abs,134Õ                    dependonthetypeoforbitalbasisemployedinacomputation.
+                      ⟨S2⟩abs =      |⟨ˆSi· ˆSj⟩|,            (22)          III.COMPUTATIONAL DETAILS
+                                  ij
+ii) the sum of the absolute value of the long range spin-spin                  Theground-statesingletenergiesandtwo-bodydensitycu-
+correlations⟨S2⟩abs,lr,                                                     mulantsofthemodelsystemswerecalculatedusingFCI,ACI,
+                           Õ                   Õ                            and DMRG. The ap-sCI and SVD-FCI wave functions were
+  ⟨S2⟩abs,lr =⟨S2⟩abs−         |⟨ˆSi· ˆSi⟩|− 2      |⟨ˆSk· ˆSl⟩|,  (23)     obtainedfromFCIwavefunctionsasdescribedinSecs.IIB1
+                            i                  ⟨kl⟩
+and iii) the sum of the nearest-neighbor spin-spin interactions             andIIB2, respectively. All computations employed self con-
+⟨S2⟩nn,                                                                     sistentﬁeld(SCF)orbitalsobtainedwiththeopen-sourcequan-
+                                 Õ                                          tum chemistry package Psi4140,141   and used a STO-6G basis
+                       ⟨S2⟩nn =      ⟨ˆSk· ˆSl⟩,             (24)           set.142 Canonical (delocalized) orbitals were computed using
+                                  ⟨kl⟩                                      restricted Hartree–Fock (RHF). Localized orbitals were ob-
+                                                                            tainedbyﬁrstperformingarestrictedopen-shellHartree-Fock
+where i and j index all orbital sites, and⟨kl⟩ is a double sum              (ROHF)computationusingmaximummultiplicity(e.g., S = 5
+over nearest neighbor orbital sites.                                        forH10)andthenlocalizingtheorbitalswiththePipek–Mezey
+4.  Metrics based on quantum information theory                             (PM)133 procedure (allowing rotations among all orbitals).
+                                                                               ComputationsbasedoncanonicalRHForbitalswererunin
+  Metrics inspired by quantum information theory have also                  D2h symmetry for the H10 chain, ring, and sheet and in C2v
+been recently used to investigate various phenomena related                 symmetryfortheH10pyramid. TheH12,H14,andH16analogs
+to strong correlation and entanglement,135 and ﬁnd several                  of the four systems were run with the same symmetry as their
+applications in computational chemistry.118,119,136–138                     H10counterpartswiththeexceptionoftheH14pyramid,which
+  Weconsidertwoquantities,thesingle-orbitalentanglement                     used D2h symmetry. Allcomputationsusinglocalizedorbitals
+entropy(SOEE)andthetotalquantuminformation(Itot),both                       were performed in C1 symmetry. The ranges of threshold pa-
+ofwhichcanbederivedfromthe1-and2-RDMs. TheSOEE                              rametersusedforeachmethodaregivenintheSupplementary
+describes the entanglement of a spatial orbital φi with the                 Material.
+remaining bath orbitals. For a given spatial orbitalφi, we can                 MP2, CCSD, and CCSD(T) computations were performed
+write four occupation patterns for the correspondingα and β                 usingthe Psi4,whileV2RDMcalculationsemployedtheopen
+spin orbitals|p⟩≡|niαniβ⟩∈{|00⟩,|01⟩,|10⟩,|11⟩}, which                      source v2rdm-CASSCFplugin.112 CR-CC(2,3)computations
+we label with the index  p  =  1, 2, 3, 4. The reduced density              were performed using GAMESS.143 FCI and ACI computa-
+matrix ρipq  = Trbath[⟨p|Ψ⟩⟨Ψ|q⟩] is computed by projecting                 tions were performed using our open-source code Forte.144
+thewavefunctionontosingle-orbitalconﬁgurations|q⟩and|p⟩                     AllACIcomputationsincludedadditionaldeterminantstoen-
+of orbitalφi and tracingout allother degreesof freedom. For                 sure spin completeness of theP andQ spaces.  The rank-
+states with ﬁxed number of electrons, this matrix is diagonal               reduction procedure used for SVD-FCI and the a posteriori
+with elements given by                                                      determinantscreeningprocedureforap-sCIwereimplemented
+                                                                            in a development version of Forte.
+                   ρi11 = 1−γiαiα−γiβiβ +γiαiβiαiβ,          (25)              Density matrix renormalization group calculations were
+                   ρi22 =γiα                                                performedwith CheMPS2.145 DMRGcalculationsassociated
+                            iα−γiαiβiαiβ,                  (26)             with a particular ﬁnal value of  M were preceded by three
+                   ρi33 =γiβiβ−γiαiβiαiβ,                  (27)             preliminary computations with smaller bond dimension and
+                   ρi44 =γiαiβ                                              added noise.  This procedure has been shown to make the
+                            iαiβ.                       (28)                overallDMRGcalculationconvergemorerapidlyandproduce
+                                                                                                                                                     7
+
+more accurate results.78,146   In the ﬁrst two preliminary com-
+putations  M is set to 150, 500, 500, and 500 (for H10, H12,
+H14,andH16 respectively)tobuildaninitializationforthelast
+two instructions with a larger value of M. In cases where the
+ﬁnal value of  M is less than the values speciﬁed above, the
+samevalueof M isusedforthethreepreliminarycalculations
+andfortheﬁnalcalculation. Asmentionedalready,duetothe
+block structure of the DMRG tensors induced by symmetries,
+theﬁnalMPSingeneraldoesnotcorrespondtoasetofdense
+matrices of dimension M2. For DMRG calculations using a
+localizedbasis,orbitalsforthe1Dchainandringwereordered
+tobespatiallyconsecutive. Localizedorbitalsforthe2Dsheet
+and 3D pyramid systems used a Fiedler vector ordering de-
+rived from the two electron integrals to account fo physical
+proximity and orbital overlap.82 Plots of the localized orbitals
+and the site orderings are reported in the Supplementary Ma-
+terial. For canonical MOs, orbitals were grouped into blocks
+byirreduciblerepresentationand(withineachirreduciblerep-                      FIG. 1. Structure of the H10 model systems studied in this work.
+resentation) ordered energetically. For calculations using D2h                Geometriesareparameterizedbythenearest-neighborH–Hdistance
+symmetry, the irreducible representation blocks were ordered                  (r), indicated by green dashed lines.
+as Ag, B1u, B3u, B2g, B2u, B3g, B1g, Au such that blocks corre-
+sponding to bonding and anti-bonding orbitals were adjacent
+ontheDMRGlattice. Thisstrategyhasbeenshowntobesuc-                            systems, there are interesting discrepancies between the met-
+cessful for several DMRG studies81,147–149     and is rationalized            rics. For example, at r  = 1.5 Å the 1D chain has the second
+by quantum information principles.119 For calculations using                  largestabsolutevalueof Ecorr (0.4038 Eh),thelargestabsolute
+symmetries other than  D2h, the ordering of the irreducible                   value of intrinsic correlation energy (1.066 Eh), a high‖λλλ2‖2F
+representations followed Cotton’s ordering.                                   value (6.11), and the largest  D2 value (0.70); however, this
+IV. RESULTS                                                                   system unexpectedly displays a relatively large weight of the
+                                                                              Hartree–Fock determinant (|CHF|  = 0.67). A comparison of
+   In this section we analyze the results of our study for the                the ring with the chain, shows that the former is slightly less
+H10 models. Fig.1shows the structure of the four H    10 model                correlatedthanthelatter. Inthecaseofthe2Dsheetat r = 1.5
+systems. The geometry of each model is controlled by a pa-                    Å, all metrics of correlation indicate that this system has the
+rameter r whichdeterminesthenearestneighborH–Hdistance                        smallest degree of electron correlation. In contrast, the 3D
+(inÅ).Thegeometriesofallmodels,rawdataforthepotential                         pyramiddisplaysthestrongestcorrelationeﬀects,yieldingthe
+energy curves, and energy errors are collected in a GitHub                    largestabsolutevalueof Ecorr(0.4051 Eh),alargeintrinsiccor-
+repository.113                                                                relation energy (0.9765 Eh), and the smallest HF determinant
+   The r values considered here (0.75–2.0 Å) cover both the                   weight (|CHF|  =  0.62). However, strong correlation in the
+weak and strong electron correlation regimes of each model.                   3D system is not reﬂected in the value of‖λλλ2‖2F (3.54), which
+Thispointcanbequantiﬁedbyestimatingthe U/t ratioofthe                         is smaller than that of both 1D systems (≈ 6). The quantum
+Hubbard Hamiltonian:                                                          informationmetric(inadelocalizedbasis) Idtot paintsasimilar
+                 (                           )                                picture: the pyramid total information lies in between that of
+    ˆH =−t  Õ                                       Õ                         the1Dsystemsandthelesscorrelated2Dsystem. However,in
+                  ˆa†i,σ ˆai+1,σ + ˆa†i+1,σ ˆai,σ+ U     ˆni↑ ˆni↓,  (31)     alocalizedbasis,thesamemetric Iltot decreasesforallsystems
+            i,σ                                       i                       as a function of r. This behavior is interesting as it suggests
+where t and U are obtained by ﬁtting the excitations energies                 that quantum information metrics could potentially be useful
+(forsingletandtripletstates)oftheHubbarddimertothoseof                        for choosing orbitals to use with various approximate meth-
+the H2 molecule with bond length r. Using this approach, we                   ods. AsdiscussedinmoredetailinSec.IVB,thelowvalueof
+ﬁnd that U/t ranges from about 0.94 at r = 0.75 Å to 8.55 at                  ‖λλλ2‖2F observedforthe3Dpyramidislikelyaconsequenceof
+r = 2.0 Å.                                                                    spin frustration, which results in a rapid decay of spin corre-
+                                                                              lation functions. We also note that after r = 1.5 Å the ground
+A.  Ground and low-lying electronic states                                    stateofthe3Dpyramidcrossesseverallow-lyingsingletstates
+                                                                              andby r = 2.0Åitcorrespondstothethirdexcitedstateof Ag
+   Wehavefoundavarietyofinterestingcharacteristicsinthe                       symmetry. See the Supplementary Material for a plot of the
+groundandlowlyingexcitedstatesoftheH10 modelsystems.                          low-lyingstatesofthe3Dpyramidintherange r =1.5–2.0Å.
+MetricsofcorrelationforthegroundstateofthefourH10 sys-                           The small discrepancies observed in the various metrics
+temsasafunctionofthe r arereportedinTab.I.Asexpected,                         can be owed to the fact that they measure diﬀerent aspects
+the numbers show an increase in correlation as r increases                    of correlation. While Ecorr and|CHF| quantify the deﬁciency
+across all four systems. However, when comparing diﬀerent                     of the mean-ﬁeld treatment (measured in both energetic and
+                                                                                                                                                               8
+
+            TABLEI.PropertiesofthesingletgroundstateofthefourH10systemsatdiﬀerentvaluesoftheH–Hdistance(r). Summary
+            ofcorrelationmetrics: correlationenergy(Ecorr),thesquaredFrobeniusnormofthetwo-bodydensitycumulant(‖λλλ2‖2F),
+            coupled-cluster amplitude diagnostics (D1 and D2), magnitude of the Hartree Fock coeﬃcient in the normalized FCI
+            expansion (|CHF|), and total quantum information in a RHF canonical basis (Idtot) and a localized basis (Iltot). For the
+            H10 pyramid at r = 2.0 Å, the data reported correspond to an excited state adiabatically connected to the ground state at
+            smaller values of r. See Supplemental Material for details.
+
+            System                    r /Å           EFCI /Eh         Ecorr /Eh         EICE /Eh   ‖λλλ2‖2F            D1            D2   |CHF|            I dtot            I ltot
+                                0.75   −5.228560   −0.1082   −0.2628       0.61     0.018     0.202       0.96      1.24     13.74
+            H10 1DChain         1.00   −5.415393   −0.1678   −0.4351       1.46     0.015     0.302       0.91      2.57     13.52
+                                1.50   −5.036293   −0.4038   −1.0662       6.11     0.010     0.696       0.67      7.42     11.99
+                                2.00   −4.790989   −0.7912   −1.6754      13.27         -         -       0.37     11.78      9.22
+
+                                0.75   −5.151378   −0.1026   −0.2323       0.43     0.000     0.122       0.97      1.01     13.81
+            H10 1DRing          1.00   −5.422958   −0.1475   −0.3650       1.02     0.000     0.189       0.94      2.05     13.67
+                                1.50   −5.048052   −0.3616   −1.0197       5.96     0.000     0.643       0.67      7.28     12.24
+                                2.00   −4.794398   −0.7678   −1.6659      13.64         -         -       0.32     11.87      9.35
+
+                                0.75   −3.917633   −0.1040   −0.2325       0.35     0.008     0.107       0.98      0.85     13.65
+            H10 2DSheet         1.00   −4.891538   −0.1393   −0.3262       0.71     0.014     0.159       0.95      1.58     13.56
+                                1.50   −4.903192   −0.2868   −0.7820       2.85     0.038     0.337       0.79      5.47     12.92
+                                2.00   −4.739235   −0.6886   −1.6949       9.22         -         -       0.21     12.36      9.44
+
+                                0.75   −2.853673   −0.1737   −0.4151       1.13     0.015     0.320       0.93      1.77     13.54
+            H10 3DPyramid       1.00   −4.269379   −0.2397   −0.5811       2.28     0.031     0.486       0.84      3.13     13.40
+                                1.50   −4.733459   −0.4051   −0.9765       3.54     0.067     0.635       0.62      6.88     12.67
+                                2.00*  −4.694062   −0.7480   −1.7252       3.59     0.093     0.685       0.25     12.62      9.48
+
+
+wave function terms), quantities like‖λλλ2‖2F and  Itot capture
+onlystatisticalaspectsofcorrelation. Theintrinsiccorrelation
+energy (EICE) appears to oﬀer a good compromise between
+the mean-ﬁeld and statical measures of correlation; neverthe-
+less, its value is signiﬁcantly larger than the Ecorr values and
+captures contributions due to Coulomb repulsion (i.e., absent
+Coulomb repulsion, EICE is zero even for a correlated state).
+The D1 and D2 metrics measure the importance of orbital ro-
+tations (D1) and correlation eﬀects (D2) in the CCSD wave
+function. Inparticular,since D1 isnotdirectlyrelatedtoelec-
+troncorrelation,itsbehaviorisverydiﬀerentfromthatof D2,
+with the latter growing with r in all models. In contrast, D1
+decreases in the 1D chain, it is identically zero in the 1D ring
+due to the diﬀerent symmetry of singly excited determinants,
+and it grows with r in the 2D and 3D models.
+   Another common approach to diagnose the onset of strong
+correlation is symmetry breaking of the Hartree–Fock solu-
+tion. The Coulson–Fischer point (here deﬁned in terms of the
+restricted→unrestrictedsymmetrybreaking)ofthechainand
+ring models is found at r  = 0.85 Å and 1.05 Å, respectively.
+Consistentwiththelowerdegreeofcorrelationinthe2Dsheet,                             FIG.2. Densityofstateswithﬁxedelectronnumberconvolutedwith
+the corresponding UHF solution exhibits spin-contamination                         aGaussianfunction[Dg(E),deﬁnedinEq.(32)]computedfromthe
+atapointfartheroutinthedissociationcurve(1.35Å).Instead,                           50 lowest singlet, triplet, and quintet states of the H10 systems at an
+the 3D pyramid exhibits symmetry breaking at the smallest                          H–H distance (A) r = 1 Å and (B) r = 1.5 Å. The density of states
+distance (0.70 Å) compared to the other three systems.                             was convoluted with a Gaussian function of exponentα = 105 E−2h .
+   Lastly,wecharacterizethestrengthofcorrelationsbycom-
+puting the density of states (DOS) with ﬁxed particle number                       NotethatthisquantityisdiﬀerentfromtheDOScomputedfor
+[D(E)]. For convenience, we convolute the density of states                        electron attached/detached states.
+with a Gaussian function of exponentα and shift the energies                          Figure2showstheenergyspectraintherange0–0.5           Eh (0–
+by the ground state energy (E0). This convoluted DOS is ex-
+pressed in terms of excitation energies ∆Ei = Ei− E0, where                        13.6eV)relativetothegroundstatefromcomputationsofthe
+Ei areenergiesofsinglet,triplet,andquintetelectronicexcited                        lowest50singlet,triplet,andquintetstatesoftheH10 systems.
+states, and it is given by                                                         At shorter bond lengths (r  = 1.0 Å), the 1D and 2D systems
+                             Õ                                                     showlargegapsbetweenthegroundstateandthelowesttriplet
+                 Dg(E) =          exp(−α(∆Ei− E)2).        (32)                    state. However,thisgapclosessigniﬁcantlyinthe3Dpyramid
+                               i                                                   to ca.  0.044  Eh.  At longer bond lengths (r  =  1.5 Å), the
+                                                                                                                                                    9
+
+singlet-triplet gap decreases for all systems. Interestingly, the            TABLE II. Ground-state of the four Hn systems at an H–H distance
+3Dpyramidshowsanalmostzerogap(ca. 0.007 Eh)andsev-                           r  = 1.50 Å. Sum of the absolute value of the spin-spin correlations
+eralsingletnear-degeneratestatesaccumulateneartheground                      (⟨S2⟩abs), the sum of the absolute value of the long range spin-spin
+state.                                                                       correlations(⟨S2⟩abs,lr),andthesumofthenearestneighborspin-spin
+                                                                             interactions (⟨S2⟩nn). See Eqs. (22)–(24) for the deﬁnition of these
+                                                                             metrics.
+B.  Spin correlation and frustration                                         System                 n   ⟨S2⟩abs   ⟨S2⟩abs,lr   ⟨S2⟩nn
+                                                                                                 10      17.42         5.25   −3.10
+                                                                             Hn Chain            12      21.77         7.18   −3.72
+  We have found that there are signs of spin frustration                                         14      26.29         9.27   −4.35
+in the 2D sheet and 3D pyramid models.   Frustration                                             10      18.66         6.51   −3.16
+is indicated by the inability to satisfy antiferromagnetic                   Hn Ring             12      24.13         9.39   −3.84
+interactions—a condition which is not mathematically rigor-                                      14      28.95        11.91   −4.42
+ous but that has, nonetheless, been used to deﬁne systems as                                     10      11.55         2.46   −1.94
+spin frustrated150—and the lack of long range antiferromag-                  Hn Sheet            12      14.31         2.59   −2.66
+netic ordering beyond nearest-neighbor interactions.                                             14      17.16         3.63   −3.06
+  The spin-spin correlation densities shown in Fig.3A and                                        10      10.86         3.04   −1.19
+                                                                             Hn Pyramid          12      18.06         4.02   −3.63
+B indicate clear antiferromagnetic ordering beyond nearest                                       14      18.30         5.94   −2.40
+neighbors in the 1D chain and ring. Each localized spin is
+anti-correlated with its nearest neighbor, as depicted by the
+adjacent red and blue shading. Fig.3C shows spin-spin cor-                   C.  Performance of sCI, SVD-FCI, and DMRG
+relation density for the four symmetry unique sites in the 2D                   Having characterized the nature of the ground state of the
+sheet. Incontrasttothe1Dmodels,itcanbeseenthatthereis                        H10 models we now proceed to analyze the eﬃciency with
+nowaytosimultaneouslysatisfyallantiferromagneticinterac-                     whichsCI,SVD-FCI,andDMRGapproximatethewavefunc-
+tions for the 2D sheet, and consequentially, spin correlations
+decay more rapidly.  This is also the case for the 3D pyra-                  tions of these systems.
+mid (see Fig.3D), for which each site is anti-correlated with                   InFig.4weplottheenergyerror[      EX(Npar)−EFCI]asafunc-
+all other sites, suggesting no antiferromagnetic ordering be-                tion of the number of variational parameters for the H10 sys-
+yond nearest neighbors. Tab.IIsummarizes spin correlation                    tems in the regime of strong electron correlation (r = 1.5 Å).
+properties for the H10, H12, and H14 systems at r  =  1.5 Å.                 The accuracy volume may be obtained from these plots by
+As is the case with the 2-body cumulant norm, the H10 1D                     ﬁnding the number of parameters corresponding to a 1 mEh
+chain and ring systems have larger absolute spin correlation                 error. When using canonical orbitals, we see that DMRG af-
+⟨S2⟩abs (17.42and18.66,respectively)thanthe2Dor3Dsys-                        fords the most compact representation, althoughVap-sCI and
+tems (11.55 and 10.86, respectively). The short-range nature                 VACI+PT2 arewithinafactorof1.5–2ofVDMRG. ACIwithout
+of spin correlation of the 2D and 3D H10 systems is also in-                 the PT2 correction always requires more variational parame-
+dicated by their smaller value of⟨S2⟩abs,lr (2.46 and 3.04),                 ters to match the accuracy of ap-sCI and ACI+PT2, andVACI
+compared to the 1D systems (5.25 and 6.51, for the chain and                 is 2–3 timesVDMRG. For all four H10 systems, SVD-FCI ex-
+ring respectively). These results are consistent with the spin               hibits the worst eﬃciency, although only by a small margin,
+correlation density analysis in Figs.3. We note that the scal-               suchthatVSVD-FCIis2–4timesgreaterthanVDMRG. Notethat
+ing of⟨S2⟩abs and⟨S2⟩abs,lr with n for the sheet and pyramid                 we include two sets of results for DMRG: the lowest energy
+systems is (in most cases) linear or super-linear, which is not              eigenvalue found during all DMRG sweep optimizations (la-
+expectedforsystemsabsentoflongrangespinordering. How-                        beledDMRG,seeRef.145fordetails),andtheenergyobtained
+ever, this is likely because the lattice sizes considered are still          fromthereduceddensitymatricesoftheﬁnalMPS(indicated
+relatively small, and the addition of two hydrogens at a time                withDMRG*). Whenalargebondnumber M isused,thetwo
+does not extend the lattices in a completely uniform manner,                 energyvaluesarenearlyidentical,butforsmallervaluesof M,
+thus altering (possibly greatly) the frustrated character. It is             theDMRG*valuemaybeslightlyhigherthantheDMRGone.
+also possible to observe a lack of long-range correlation and                   Whenusinglocalizedorbitals,weseethatDMRGagainpro-
+ordering for the 2D sheet and 3D pyramid by considering the                  duces the most compact representation and by a much larger
+radialdistributionofspin-spincorrelationsandabsolutespin-                    marginforallfourH10 systems. Inparticular,forthe1Dchain
+spin correlations reported in the Supplementary Material.                    VDMRG is two orders of magnitude lower than all other meth-
+                                                                             ods. ComparingtheaccuracyvolumeofDMRGwithdiﬀerent
+  Itisevidentfromthevariousmetricsofcorrelation,theDOS                       orbital bases, one notices that the localized basis is more ef-
+plots,andouranalysisofspincorrelation,thattheH10 lattices                    ﬁcient in the 1D systems, while the delocalized basis leads to
+display a broad range of correlation regimes. Therefore, we                  smallerVDMRG for the 3D model. For the 2D model, the lo-
+believe it is important to consider the 2D and 3D models in                  calized and canonical basis yield comparableVDMRG values.
+future benchmarks of electronic structure methods because                    The advantage of using canonical orbitals is inconsistent with
+theycapturesomeaspectofthephysicsofspinfrustrationthat                       previous ﬁndings,82 and it is likely due to the size of the sys-
+are not displayed by 1D hydrogen models.                                     tems considered here. In this case, the compression aﬀorded
+                                                                                                                                                     10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.3. Spincorrelationdensity Ai(r)oftheH10 modelsatanH–Hdistance r = 1.25Åplottedfor(A)theedgeandcentrallocalizedMOsites
+ofthehydrogenchain,(B)thesymmetryuniquesiteofthehydrogenring,(C)thefoursymmetryuniquesitesoftheH10 sheet,and(D)thetwo
+symmetry unique sites of the H10 pyramid. Positive and negative values of Ai(r) are indicated in red and blue, respectively, and in each plot
+the localized orbitalφi is denoted by an asterisk.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 4. Ground-state of the four H10 models at an H–H distance r = 1.5 Å. Energy error with respect to FCI vs. number of parameters (Npar)
+of approximate methods. The gray shaded region represents chemically accurate energies (error less than 1mEh).
+
+
+by using a localized basis is outweighed by the advantages of                     Fig.5shows plots of       Npar vs. the two-body cumulant error
+using point group symmetry. When comparing results across                      ‖∆λλλ2‖F for the four H10 systems at r  =  1.5 Å. These plots
+canonicalandlocalizedorbitalsfortheothermethods,weﬁnd                          do not include ACI+PT2 results since second-order correc-
+that the accuracy volume is always smaller in the delocalized                  tions to the ACI 1- and 2-RDMs were not available. We ﬁnd
+basis,sothereisnoadvantagetoorbitallocalization. Thisisin                      similar trends for the eﬃciency to representλλλ2 as we do for
+agreementwithpastobservations100thatlocalizationisbeneﬁ-                       the energy, with the caveat that in a canonical basis, ap-sCI
+cialforsCImethodsonlyafteracertainsystemsizeisreached.                         generallygivesthebestcompressioneﬃciency. Itcanbeseen
+ItisinterestingtoobservethattheaccuracyvolumeforDMRG                           that with canonical orbitals, ap-sCI actually preserves the ac-
+andsCImirrorsthebehaviorofthetotalquantuminformation                           curacy of the two-body density cumulant after compression
+for both delocalized and localized bases (see Tab.I), suggest-                 better than DMRG does for the 1D chain, and similarly to
+ing that this metric may be useful for determining the best                    DMRG for the other three systems.  There is also a larger
+orbital basis to use at a given geometry.                                      disparity in the performance of ap-sCI and ACI for cumu-
+  Wenotethatforthesheetandpyramid,thereareafewvalues                           lantcompressionperformance,whichcanbeattributedtotwo
+ofσ forwhichtheACIresultsdonotconvergemonotonically                            reasons. First,ACIaddsadditionaldeterminantsateachitera-
+and lead to small bumps.  We have also encountered cases                       tiontoensurespincompleteness(thecompressedap-sCIwave
+where the iterative ACI algorithm ﬁnds the ﬁrst excited state                  function is not guaranteed to be an eigenfunction of spin).
+due to near-degeneracies, an issue that may be resolved us-                    Second,ACIselectsdeterminantsaccordingtotheirenergetic
+ing a state-averaged version of the method.42 These incorrect                  contribution, and not explicitly their contribution to the wave
+energies were not included in Fig.4.                                           function. SVD-FCI is the least eﬃcient in compressing the
+                                                                                                                                                                11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.5. Ground-stateofthefourH10 modelsatanH–Hdistance r = 1.5Å.Densitycumulanterror‖∆λλλ2‖F withrespecttoFCIvs. numberof
+parameters (Npar) of approximate methods.
+
+              TABLEIII.Accuracyvolume(VX)computedforthegroundstateoftheH10 modelsforvariousmethods. Valuesare
+              reportedforbothlocalizedanddelocalizedmolecularorbitalbases. TheHilbertspacesize(|HN|)forallmodelsin C1
+              symmetryis63504. Hilbertspacesizeswiththelargestabeliansymmetryexploitedinthecomputationsarereported
+              in the table. ACI+PT2 values with a< sign indicate that the energy error with the reported number of parameters is
+              signiﬁcantlylowerthan1.0mEh. FindingmoreprecisevaluesofVX forACI+PT2ischallengingastheenergyerror
+              is not monotonic as a function ofσ.
+
+                                                     Delocalized(RHFCanonical)                   Localized(Pipek–Mezey)
+              System   |HN|      r /Å  ap-sCI    ACI  ACI+PT2  SVD-FCI  DMRG  ap-sCI    ACI  ACI+PT2  SVD-FCI  DMRG
+                                     0.75    1491   2066    <335      5292    2600  41872  46882     45052     10584     468
+              1DChain    31752       1.00    5122   6978   <2156     10584    4896  35962  42332     39510     21168     388
+                           (D2h)     1.25   11201  14231      7347     17136    9598  29148  35306     30732     34272     376
+                                     1.50   18176  22989     16356     26964   12674  20424  26008     20564     53928     176
+
+                                     0.75     577    873    <181      2784     740  53358  56244     53448     11088    3359
+              1DRing     15912       1.00    2019   2803       663      5328    1522  49982  53364     50084     21168    3164
+                           (D2h)     1.25    4791   6384      2701      9492    2663  45452  49537     43486     37800    2688
+                                     1.50    8520  11056      7895     16296    4034  36450  41254     34134     65016    1884
+
+                                     0.75     766   1102    <218      2532    1117  53252  59470     58050     10080    4649
+              2DSheet    15912       1.00    1899   2809    <718      4296    1853  51822  58256     56252     17136    4071
+                           (D2h)     1.25    4139   5283      3478      7848    2626  50318  57036     53852     31248    4113
+                                     1.50    8667  11122      6468     15156    4218  47916  54466     49540     60480    4192
+
+                                     0.75    1478   2115    <787      4044    1630  44062  56232     55452     16128   10832
+              3DPyramid  15912       1.00    2755   3605   <1607      7056    2250  45812  55986     55078     28224   12556
+                           (C2v)     1.25    4997   6530      2869      9864    2927  45844  56348     52728     39312   10998
+                                     1.50    8097  10519      6457     13152    3495  43932  53280     48580     52416    9489
+
+
+wave function for the 1D systems, but does nearly as well as                        of parameters to achieve chemical accuracy.  In a localized
+ACI for the 2D sheet and 3D pyramid. However, it possible                           basisVDMRG,Vap-sCI, andVACI decrease with increasing r,
+thatifvariationaloptimizationisusedforSVD-FCIthecumu-                               suggesting that these methods can exploit the local character
+lanterrormayincrease,similarlytothebehaviorobservedfor                              ofcorrelation,althoughinmostcasesnotenoughtooutweigh
+ACI.Whenusinglocalizedorbitals,itcanbeseenthatDMRG                                  thebeneﬁtsofsymmetry-adapteddelocalizedorbitals. Inade-
+likewiseshowsthebestcompressioneﬃciencywithrespectto                                localizedbasis,wenotethatforsmallvaluesof r theACI+PT2
+‖∆λλλ2‖F, especially for the 1D chain and ring systems.                             produces very accurate results with very few parameters, out-
+   As shown in Tab.Iof Sec.IVA, the degree of correlation                           performing DMRG using just a few hundred determinants. It
+forallmodelsincreasesastheH–Hdistance r becomeslarger.                              is interesting to note that compression eﬃciency for SVD-
+In Tab.IIIwe can see thatin a delocalized basisthe complex-                         FCI decreases dramatically as r increases, suggesting that the
+ity of the wave function, as gauged byVX, also increases as r                       method is not able to take advantage of local correlation. Ad-
+becomes larger, such that all methods require a larger number                       ditionally, it can be seen that at more contracted geometries
+                                                                                                                                                12
+
+(smaller values of r), there is less of a disparity between the             they do not capture the dissociation of the H10 systems even
+compression performance of the various approaches.                          qualitatively, giving energy errors well over 100–200 mEh for
+                                                                            r≥ 1.6 Å.
+D.  Comparison   with   other   electronic   structure                         The three coupled cluster variants—CCSD, CCSD(T), and
+methods                                                                     CR-CC(2,3)— achieve chemical accuracy for the 1D chain
+  It is interesting to use the H10 models to benchmark the                  andringsystemsfor r≤ 1.0Å,anddivergebeginningaround
+robustness and accuracy of conventional methods that em-                    r ≥  1.5 Å, past the Coulson–Fisher point. Performance for
+ploy a ﬁxed number of parameters. Fig.6compares the en-                     CCSD, CCSD(T), and CR-CC(2,3) is slightly worse for the
+ergy errors relative to FCI for RHF, MP2, CCSD, CCSD(T),                    2D sheet and 3D pyramid, where chemical accuracy is only
+CR-CC(2,3),V2RDMwiththetwo-bodypositive-semideﬁnite                         achieved for r≤ 0.75 Å, and divergence is seen once again at
+P, Q, and G conditions (V2RDM-PQG), and V2RDM-PQG                           larger values of r. For all four systems, when r > 1.25 Å, the
+with additional three-body positive semideﬁnite T2 condi-                   magnitudeoftheHFcoeﬃcient|CHF|intheFCIwavefunction
+tions (V2RDM-PQGT2).  RHF deviates signiﬁcantly from                        is less (or signiﬁcantly less) than 0.9. It is worth mentioning
+                                                                            here, however, that a handful of hydrogen systems have been
+                                                                            investigated with variants of CC that provide stable results
+                                                                            relativetotheexamplesinFig.6. Namely,thepairedcoupled
+                                                                            cluster doubles (pCCD)151 and the singlet pCCD (CCD0).152
+                                                                               The V2RDM approaches achieve the best descriptions of
+                                                                            the potential energy surfaces compared to the other methods
+                                                                            used in this section.  Enforcing the PQG conditions during
+                                                                            the optimization gives a good qualitative description of the
+                                                                            dissociations,butstillproduceslargequantitativeerrorsinthe
+                                                                            rangeof10–50mEhforthe1Dchainandringsystemsand50–
+                                                                            200 mEh errors for the 2D sheet and 3D pyramid. Enforcing
+                                                                            the additional T2 condition improves the V2RDM results sig-
+                                                                            niﬁcantly,suchthatenergyerrorsforthechainandringsystems
+                                                                            at r = 1.50Åare3.0mEh and7.4mEh,respectively. Itcanbe
+                                                                            seen,however,thatforthe2Dsheetand3Dpyramid,V2RDM-
+                                                                            PQGT2failstoproducechemicallyaccurateresultsbyalarge
+                                                                            margin,witherrorsoftheorderof10–50mEh atstretchedge-
+                                                                            ometries. Interestingly,theperformanceofV2RDMisfarless
+                                                                            sensitive to r than RHF, MP2, or CC as indicated by smaller
+                                                                            values of nonparallelism error (the maximum error minus the
+                                                                            minimum error over the entire range of r). Additionally, the
+                                                                            error for V2RDM has a maximum in the re-coupling region
+                                                                            (r ≈  1.5 Å), while all other methods generally decrease in
+                                                                            accuracy with increasing r.
+
+                                                                            V. SCALING  OF  THE  ACCURACY  VOLUME  AND
+                                                                                SIZE CONSISTENCY
+
+                                                                               In this section we discuss some of the formal properties of
+                                                                            themethodsandpresentnumericalresultsconcerningscaling
+                                                                            of the accuracy volume and size consistency. We begin by
+                                                                            comparing the scaling with respect to system size. sCI may
+                                                                            be considered a zero-dimensional ansatz, in the sense that it
+                                                                            is particularly eﬃcient in the description of few electrons in
+                                                                            many virtual orbitals, especially due to the PT2 correction. If
+FIG.6. Ground-statepotentialenergycurvesofthefourH10 models.                onedemandsthatthesCIenergyissizeconsistentforasetnon-
+Energyerror(∆E)withrespecttoFCIforvariouselectronicstructure                interactingfragments A··· B··· C···,oneconcludesthatthe
+methods as a function of the H–H distance (r).  The gray shaded             numberofparametersgrowsas NANBNC.... Inotherwords,
+region indicates the range of r for which the restricted Hartree–Fock       the sCI accuracy volume (per electron) grows exponentially
+solution is stable.                                                         withthenumberofelectrons N (albeitwithasmallerprefactor
+                                                                            than FCI),VsCI∝ exp(N). In practice we ﬁnd this to be the
+FCI for all four systems, even near the H2 equilibrium geom-                case for ACI using localized orbitals. To achieve an accuracy
+etry (re  =  0.74 Å), where it gives errors of approximately                of approximately  10−4  Eh per electron for a system of ﬁve
+80–100 mEh. MP2 reduces the energy error near re to about                   non-interactingH2moleculesrequires2380parameters,rather
+10 mEh. While the RHF and MP2 energies do not diverge,                      than the 20 parameters required by a product state built from
+                                                                                                                                                  13
+
+solutions for each H2 molecule.                                              and (B3u), respectivly, diﬀerent from that of all other systems
+  Our analysis also suggests that the SVD-FCI approach suf-                  (Ag). Additionally,wenoteasmalldipinthecurveforthe3D
+fers from exponential growth of the accuracy volume (inde-                   systems at 14 hydrogens, which we attribute to the diﬀerent
+pendently from dimensionality), although, to the best of our                 symmetry used for that lattice, D2h as opposed to C2v. It can
+knowledge a formal analysis has not been reported. Even in                   be seen that DMRG again provides the best compression of
+the best case scenario, the number of parameters for a rank 1                the wave function as measured by the accuracy of the energy
+SVD-FCI approximation scales as NSVD-FCI∝ 2√NH, which                        for diﬀerent systems sizes. In a localized basis, a polynomial
+impliesVSVD-FCI ≥  2√NH.  We likewise observe that for                       ﬁt ofVDMRG as a function of the number of hydrogens (n)
+the same system of dissociated hydrogens, SVD-FCI requires                   gives a scaling proportional to n2.1 for the chain and n3.3 for
+14616 parameters to achieve approximately 10−4 Eh per elec-                  thering,demonstratingtheadvantageofthismethodsforone-
+tron. LiketheresultforsCI,thisindicatesthatSVD-FCIwith                       dimensional systems.  It is also worth pointing out that for
+a ﬁxed number of parameters is not size consistent.                          the larger systems (H12–H16), it is advantageous (though still
+  In the case of a DMRG, a MPS with bond dimension  M                        exponentially scaling) to use localized orbitals with DMRG
+can describe a system with entanglement entropy S bound by                   even for the 2D systems. This result is consistent with other
+the condition S≤  log2 M,75 or equivalently, exp(S)≤  CM,                    DMRG studies comparing localized vs.  canonical orbitals
+with C a constant. For gapped systems of dimensionality D                    for ﬁnite 2D arene systems.82 For all the other methods,VX
+that satisfy an area law, the entanglement entropy is expected               in a delocalized basis appears to scale exponentially with a
+to scale as S∝  LD−1 (plus logarithmic corrections for non-                  prefactor smaller than that of FCI.
+gappedsystems),where L isthelengthscaleofthesystem.153                          Itmaybehelpfultothereadertonotethatforallthesystems
+Therefore, inDMRGthe bonddimension M scalesat mostas                         considered here we ﬁnd that in many cases the FCI compu-
+exp(γLD−1)∝  exp(γN(D−1)/D). Similarly, we estimate that                     tations are still faster than ACI and DMRG even up to 16
+the accuracy volume of DMRG scales asVDMRG∝  NM2  =                          electrons. On a single node, FCI computations run in about
+N exp(2γN(D−1)/D). For one dimensional systems (D  =  1)                     1 second up to 3 hours for the H10–H16 systems, whereas the
+VDMRG isindependentofsystemsizeandthegroundstatecan                          implementation of DMRG used in this work can take up to
+be well approximated by a ﬁnite bond dimension.  Beyond                      1–2 days on a single node for the more challenging 2D and
+one dimension, this analysis suggests that the DMRG bond                     3D systems. We observe the most striking diﬀerence in the
+dimension grows exponentially. However, for D = 2, DMRG                      case of DMRG applied to the 1D systems, where even a very
+isalreadyexponentiallymoreeﬃcientthansCIsinceVDMRG∝                          accuratecomputationinalocalizedbasiscantakeontheorder
+N exp(2γN1/2) . This in practice implies that DMRG is still                  of 1 second even for H16.
+applicable without exponential cost to both one-dimensional
+and “thin” two-dimensional problems.154                                      VI.CONCLUSIONS AND FUTURE WORK
+  DMRG is formally size consistent, giving additively sepa-
+rable energies for non-interacting fragments  A··· B, so long                   This work accomplishes two main goals. Firstly, we pro-
+as the orbitals are localized on either  A or B.79,115   If the or-          pose a series of benchmark hydrogen models with a tunable
+bitalsintheDMRGlatticeareorderedbysubsystem([A··· B])                        degree of correlation that cover a wide range of electronic
+then the wave function for noninteracting fragments becomes                  structures. These include 1D hydrogen chains and rings with
+aproductstateoftheMPSon Aand B. ThenaMPSobtained                             antiferromagneticgroundstates,a2Dtriangularlattice(sheet)
+by concatenating the MPS of A and B with a bond of dimen-                    with spin frustrated interactions, and a 3D pyramid system
+sion one (M  =  1) is suﬃcient to represent the product state                that displays both spin frustration and a vanishing energy gap
+andsatisfysizeconsistency. ThisimpliesthattheV A+BDMRG fora                  (dense manifold of near-degenerate states). We analyze these
+systemofnon-interactingfragmentsisapproximatelyequalto                       systems with various correlation metrics and by computing
+V ADMRG +VBDMRG. In practice we have found this to be nearly                 their low-energy spectra and spin-spin correlation functions.
+true, a product state for a system of ﬁve non-interacting H2                 The models are found to have drastically diﬀerent electronic
+molecules has 20 parameters, and DMRG can reproduce the                      structuresdependingonthephysicaldimension. Inparticular,
+FCI energy exactly with a bond dimension as small as M = 3                   since 2D and 3D systems exhibit some of the ﬁngerprints of
+(with 60 parameters). In principle DMRG should be able to                    spinfrustrationandtheyarenoteﬃcientlyapproximatedwith
+achievethisresultalreadywith M = 2,butweﬁndthatinstead                       MPS, they nicely complement benchmark sets based on 1D
+it converges to a local minimum rather than the FCI energy.                  lattices. Our comparison of diﬀerent metrics of correlation
+  Finally, we present numerical results for the scaling with                 alsohighlightstheimportanceofusingmultipledescriptorsto
+system size of the accuracy volume for analogous of our four                 characterize electronic states, as our results clearly show that
+model systems with upt to up to sixteen hydrogens. In Fig.7,                 they measure diﬀerent aspects of correlation.
+weplottheaccuracyvolumefor n=10,12,14,16at r = 1.5Å,                            Secondly, using the hydrogen models, we compare the per-
+corresponding to absolute energy errors of 1.0, 1.2, 1.4, and                formance of selected CI, SVD-FCI, and DMRG in various
+1.6mEh,respectively. Forcomparison,wehavealsoincluded                        regimes of strong electron correlation. We focus in particular
+thesizeoftheFCIspace(in C1 symmetry)andacurvewith n4                         on determining the ability of each method to eﬃciently com-
+scaling, which is proportional to the number of Hamiltonian                  press the information content of the FCI wave function. To
+matrix elements. We note that the ground states of the H12                   quantify this property, we introduce a new metric, the accu-
+ring, H16 ring, and H16 sheet have symmetries (B1g), (B1g),                  racy volume (VX), which corresponds to the minimum num-
+                                                                                                                                                    14
+
+                                                                              method to accurately represent electron distributions, namely
+                                                                              thecumulantofthetwo-bodydensitymatrix. Inthiscase,the
+                                                                              trends are similar to those observed for the energy, with the
+                                                                              diﬀerence that sCI shows better performance for the 2D and
+                                                                              3D systems in a delocalized basis.
+                                                                                 In analyzing the compressibility of the wave functions for
+                                                                              H12, H14, and H16 analogs of the four H10 models, we have
+                                                                              determined that DMRG consistently shows the smallest accu-
+                                                                              racy volume, and that the performance of SVD-FCI is more
+                                                                              on par with that of ap-sCI for the larger systems, suggesting
+                                                                              that future developments of RR-FCI methods such as those in
+                                                                              Refs.27and29are certainly worthwhile, especially for sys-
+                                                                              tems larger than those considered in this study. Despite the
+                                                                              signiﬁcant reduction in the number of parameters relative to
+                                                                              theFCIwavefunctionaﬀordedbyselectedCI,SVD-FCI,and
+                                                                              DMRG, none of these methods bring a reduction in scaling
+                                                                              from exponential to polynomial in the general case.  Alter-
+                                                                              native methods, such as higher-dimensional tensor network
+                                                                              states, quantum Monte Carlo, and quantum computational al-
+                                                                              gorithms, may be required to circumvent storage cost of an
+                                                                              exponentially scaling wave function.
+                                                                                 We note that while the accuracy volume is a generally ap-
+                                                                              plicable metric for determining the performance of a method,
+                                                                              thebenchmarksetconsideredhereusesaminimalbasis,isre-
+                                                                              stricted to small systems amenable to FCI computations, and
+                                                                              does not include atoms with more complex electronic struc-
+                                                                              tures. Therefore, one should be cautious in extrapolating the
+                                                                              relativeperformanceofthemethodsinthecaseofmorecom-
+                                                                              plex systems. In future studies it might be also interesting to
+                                                                              investigate the advantages of employing other orbitals bases,
+                                                                              like natural orbitals and split-localized orbitals. In addition,
+                                                                              ourworkhasfocusedonlytwotensordecompositionmethods.
+                                                                              Itwouldbeinterestingtoexaminetheaccuracyvolumeofpro-
+FIG. 7. Accuracy volume (VX) for various approximate methods as               jected entangled-pair states,155 the multi-scale entanglement
+a function of the number of number of hydrogen atoms (n) for the              renormalization ansatz,156 tree tensor network states,76,77,139
+four Hn models. For comparison we also report the number of FCI               and other more general tensor network states. With appropri-
+determinants (in C1 symmetry) and the curve n4. The 12, 14, and               ate modiﬁcations, the accuracy volume is also applicable to
+16 hydrogen chains, rings, sheets, and pyramids are extensions of             stochastic methods,157,158   both in real and determinant space,
+the H10 models in that the additional hydrogens are placed within             and could provide a way to compare these approaches to de-
+thesamelatticestructure. Unlessotherwisenoted,allresultsemploy
+canonical RHF orbitals.                                                       terministic methods like the ones considered in this work.
+                                                                                 Our work does raise a few important questions as we (po-
+                                                                              tentially)approachaneraofquantumadvantageformolecular
+ber of variational parameters necessary to achieve a target                   computations. Although quantum computational algorithms
+energy error (in our case, deﬁned as 1mEh).  As expected,                     areabletoavoidtheexplicitstorageofthewavefunction,they
+DMRG aﬀords the most eﬃcient representation for the 1D                        still suﬀer from non-trivial classical computational overhead.
+H10 chainandring,usingatleastanorderofmagnitudefewer                          For example, the quantum phase estimation159,160   (QPE) al-
+parameters to achieve the same level of energy or two-body                    gorithm relies on time evolution of the Hamiltonian, which
+cumulant accuracy compared to the other methods.  Never-                      implies a computational scaling and storage costs (ignoring
+theless, this eﬃciency is gradually lost when going from 1D                   the cost of state preparation) at least proportional to K4 in a
+to higher-dimensional systems. In contrast, all ﬂavors of sCI                 delocalizedbasis,althoughmoreeﬃcientrepresentationshave
+perform best in a delocalized basis but are generally less eﬃ-                been recently proposed.161,162   For the purpose of comparing
+cientthanDMRG.TheSVD-FCI,whichweuseasaproxyfor                                theresourcecostofclassicalandquantumalgorithms,inFig.7
+rank-reducedFCI,isgenerallyfoundtobethemostineﬃcient                          we have also reported an estimate of the resources needed by
+approach to approximate the H10 wave functions. However,                      quantumalgorithmscomputedas n4,where nisthenumberof
+as mentioned previously in Sec.IIB2, the variational opti-                    hydrogenatoms(equaltothenumberofspatialorbitals). This
+mizationinRR-FCIwouldyieldloweraccuracyvolumesthan                            plot shows that classical compression approaches use more
+SVD-FCI, likely making RR-FCI more competitive with sCI                       than n4 parametersevenwithsystemsassmallas12electrons.
+and DMRG. We have similarly analyzed the ability of each                      While this prefatory comparison highlights the importance of
+                                                                                                                                                                      15
+
+quantum algorithm development even for modestly sized sys-                                2D. Roca-Sanjuán, F. Aquilante,  and R. Lindh, Wiley Interdiscip. Rev.
+tems,italsosuggestsathresholdforthemaximumnumberof                                         Comput. Mol. Sci. 2, 585 (2012).
+classical parameters a quantum algorithm should employ. In                                3J. P. Malrieu, R. Caballol, C. J. Calzado, C. de Graaf, and N. Guihery,
+other words, a successful quantum algorithm should achieve                                 Chem. Rev. 114, 429 (2014).
+                                                                                          4P. A. Lee, Rep. Prog. Phys. 71, 012501 (2007).
+aVX smaller (and with lower n-scaling) than state-of-the art                              5M. Imada, A. Fujimori, and Y. Tokura, Rev. Mod. Phys. 70, 1039 (1998).
+classical methods such as selected CI and DMRG for a given                                6M. B. Salamon and M. Jaime, Rev. Mod. Phys. 73, 583 (2001).
+level of accuracy. The competitiveness of any quantum al-                                 7Y. Tokura, Rep. Prog. Phys. 69, 797 (2006).
+                                                                                          8G. Murthy and R. Shankar, Rev. Mod. Phys. 75, 1101 (2003).
+gorithm could be tested for various regimes of correlation by                             9D. P. Tew, W. Klopper,  and T. Helgaker, J. Comput. Chem.  28, 1307
+comparing the computational resources (classical variational                               (2007).
+parameters) required to achieve a 1 mEh energy error with                                10W.Kutzelnigg,inExplicitly Correlated Wave Functions in Chemistry and Physics,
+those reported in TableIII.                                                                edited by J. Rychlewski (Springer, 2003) pp. 3–90.
+   In summary, this study has explored the limits of classical                           11B. O. Roos, P. R. Taylor, and P. E. M. Siegbahn, Chem. Phys. 48, 157
+state-of-the-art electronic structure methodologies as applied                             (1980).
+                                                                                         12R. Laughlin and D. Pines, Proc. Natl. Acad. Sci. U.S.A 97, 28 (2000).
+to strongly correlated electrons. The hydrogen benchmark set                             13K. D. Vogiatzis, D. Ma, J. Olsen, L. Gagliardi, and W. A. De Jong, J.
+and the accuracy volume metric are two new tools that will                                 Chem. Phys. 147, 184111 (2017).
+beusefulinguidingthedevelopmentofthenextgenerationof                                     14S. McArdle, S. Endo, A. Aspuru-Guzik, S. C. Benjamin, and X. Yuan,
+classical and hybrid quantum-classical methods for strongly                                Rev. Mod. Phys. 92, 015003 (2020).
+                                                                                         15A.Peruzzo,J.McClean,P.Shadbolt,M.-H.Yung,X.-Q.Zhou,P.J.Love,
+correlated systems. An important open problem in electronic                                A. Aspuru-Guzik, and J. L. O’Brien, Nat. Commun. 5, 4213 (2014).
+structure theory is identifying the practical limits of classi-                          16M.-H. Yung, J. Casanova, A. Mezzacapo, J. Mcclean, L. Lamata,
+cal methods and knowing under what circumstances quantum                                   A. Aspuru-Guzik, and E. Solano, Sci. Rep. 4, 3589 (2014).
+algorithms can overcome these limits. This work approaches                               17J. R. McClean, J. Romero, R. Babbush,  and A. Aspuru-Guzik, New J.
+thisproblemfromacomputationalperspectiveandshedssome                                       Phys. 18, 023023 (2016).
+                                                                                         18H. R. Grimsley, S. E. Economou, E. Barnes,  and N. J. Mayhall, Nat.
+light on the ﬁrst aspect; in future work we plan to investigate                            Commun. 10, 1 (2019).
+the ability of various quantum algorithms to go beyond the                               19J. R. McClean, M. E. Kimchi-Schwartz, J. Carter,  and W. A. de Jong,
+limits of classical methods.                                                               Phys. Rev. A 95, 042308 (2017).
+                                                                                         20M. Motta, C. Sun, A. T. Tan, M. J. O’Rourke, E. Ye, A. J. Minnich, F. G.
+SUPPLEMENTARY MATERIAL                                                                     Brandão, and G. K.-L. Chan, Nat. Phys. 16, 1 (2019).
+                                                                                         21R. M. Parrish and P. L. McMahon, e-print arXiv:1909.08925 [quant-ph]
+                                                                                         22N. H. Stair, R. Huang, and F. A. Evangelista, J. Chem. Theory Comput.(2019).
+   Rangesofthresholdparametersusedforeachsystematically                                    16, 2236 (2020).
+improvable method, examples of the localized orbitals with                               23B.Huron,J.-P.Malrieu, andP.Rancurel,J.Chem.Phys.                58,5745(1973).
+corresponding DMRG ordering, spin-spin radial distribution                               24R. J. Buenker and S. D. Peyerimhoﬀ,Theor. Chim. Acta             35, 33 (1974).
+function for each H10 model, and potential energy curves for                             25R. J. Buenker and S. D. Peyerimhoﬀ,Theor. Chim. Acta             39, 217 (1975).
+the low-lying states of the H10 pyramid are included in the                              26S.Evangelisti,J.-P.Daudey, andJ.-P.Malrieu,Chem.Phys.       75,91 (1983).
+supplementary material.                                                                  27H. Koch and E. Dalgaard,Chem. Phys. Lett.         198, 51 (1992).
+                                                                                         28P. R. Taylor,J. Chem. Phys.  139, 074113 (2013).
+                                                                                         29B. S. Fales, S. Seritan, N. F. Settje, B. G. Levine, H. Koch,  and T. J.
+ACKNOWLEDGMENTS                                                                            Martínez, J. Chem. Theory Comput. 14, 4139 (2018).
+                                                                                         30S. R. White,Phys. Rev. Lett.            69, 2863 (1992).
+   TheauthorswouldliketothankSebastianWoutersforhelp-                                    31V. García, O. Castell, R. Caballol, and J.-P. Malrieu,Chem. Phys. Lett.
+fulconversationsregardingDMRGcalculations,GarnetChan                                     32F. Neese, J. Chem. Phys. 119, 9428 (2003).238, 222 (1995).
+for discussions on the scaling of DMRG, and Mario Motta                                  33H. Nakatsuji and M. Ehara, J. Chem. Phys. 122, 194108 (2005).
+for his insights on spin frustrated lattices.  This work was                             34M. L. Abrams and C. D. Sherrill,Chem. Phys. Lett.     412, 121 (2005).
+supported by the U.S. Department of Energy under Award                                   35L. Bytautas and K. Ruedenberg,Chem. Phys.    356, 64 (2009).
+                                                                                         36R. Roth,Phys. Rev. C       79, 064324 (2009).
+No. DE-SC0019374 and a Camille Dreyfus Teacher-Scholar                                   37F. A. Evangelista, J. Chem. Phys. 140, 124114 (2014).
+Award (TC-18-045). N.H.S. was supported by a fellowship                                  38P. J. Knowles, Mol. Phys. 113, 1655 (2015).
+from The Molecular Sciences Software Institute under NSF                                 39W. Liu and M. R. Hoﬀmann, J. Chem. Theory Comput. 12, 1169 (2016).
+grant ACI-1547580.                                                                       40J. B. Schriber and F. A. Evangelista, J. Chem. Phys. 144, 161106 (2016).
+                                                                                         41A.A.Holmes,N.M.Tubman, andC.J.Umrigar,J.Chem.TheoryComput.
+DATA AVAILABILITY                                                                          12, 3674 (2016).
+                                                                                         42J. B. Schriber and F. A. Evangelista, J. Chem. Theory Comput. 13, 5354
+                                                                                           (2017).
+   The geometries of the hydrogen models, energy errors at                               43J. C. Greer,J. Chem. Phys.  103, 1821 (1995).
+eachvalueof Npar forap-sCI,ACI,SVD-FCIandDMRG,and                                        44J. C. Greer,J. Comput. Phys.  146, 181 (1998).
+                                                                                         45J. Coe, P. Murphy, and M. Paterson,Chem. Phys. Lett.              604, 46 (2014).
+rawdataforthepotentialenergycurvesoftheH10modelsusing                                    46J. P. Coe and M. J. Paterson,J. Chem. Phys.              139, 154103 (2013).
+RHF, MP2, CCSD, CCSD(T), CR-CC(2,3), V2RDM-PQG,                                          47J. P. Coe and M. J. Paterson,J. Chem. Phys.              137, 204108 (2012).
+V2RDM-PQGT2, and FCI are openly available on GitHub,                                     48W. Győrﬀy, R. J. Bartlett, and J. C. Greer,J. Chem. Phys.  129, 064103
+reference number113.                                                                       (2008).
+                                                                                         49S. Sharma, A. A. Holmes, G. Jeanmairet, A. Alavi, and C. J. Umrigar,J.
+  1D. K. Mok, R. Neumann, and N. C. Handy, J. Phys. Chem. 100, 6225                        Chem. Theory Comput. 13, 1595 (2017).
+
+   (1996).
+                                                                                                                                                                                     16
+
+
+50A.A.Holmes,C.J.Umrigar, andS.Sharma,J.Chem.Phys. 147,164111                                   95T. Yanai, Y. Kurashige, E. Neuscamman, and G. K.-L. Chan, J. Chem.
+  (2017).                                                                                          Phys. 132, 024105 (2010).
+51A.D.Chien,A.A.Holmes,M.Otten,C.J.Umrigar,S.Sharma, andP.M.                                    96M.Saitow,Y.Kurashige, andT.Yanai,J.Chem.Phys. 139,044118(2013).
+  Zimmerman,J. Phys. Chem. A         122, 2714 (2018).                                          97Y. Kurashige, J. Chalupský, T. N. Lan, and T. Yanai, J. Chem. Phys. 141,
+52J. Li, M. Otten, A. A. Holmes, S. Sharma, and C. J. Umrigar, J. Chem.                            174111 (2014).
+  Phys. 149, 214110 (2018).                                                                     98S. Guo, M. A. Watson, W. Hu, Q. Sun,  and G. K.-L. Chan, J. Chem.
+53G. H. Booth, A. J. W. Thom, and A. Alavi,J. Chem. Phys.     131, 054106                          Theory Comput. 12, 1583 (2016).
+  (2009).                                                                                       99S. Wouters, V. Van Speybroeck, and D. Van Neck, J. Chem. Phys. 145,
+54D.Cleland,G.H.Booth, andA.Alavi,J.Chem.Phys.     132,041103(2010).                               054120 (2016).
+55G. H. Booth, D. Cleland, A. J. W. Thom, and A. Alavi,J. Chem. Phys.                          100J.B.Schriber,K.P.Hannon,C.Li, andF.A.Evangelista,J.Chem.Theory
+  135, 084104 (2011).                                                                              Comput. 14, 6295 (2018).
+56D.Cleland,G.H.Booth, andA.Alavi,J.Chem.Phys.     134,024112(2011).                           101K. F. Freed, J. Chem. Phys. 60, 1765 (1974).
+57D.Cleland,G.H.Booth,C.Overy, andA.Alavi,J.Chem.TheoryComput.                                 102A. R. Welden, A. A. Rusakov, and D. Zgid, J. Chem. Phys. 145, 204106
+
+58R. E. Thomas, C. Overy, G. H. Booth, and A. Alavi,J. Chem. Theory8, 4138 (2012).             103A.F.WhiteandG.K.-L.Chan,J.Chem.TheoryComput. 14,5690(2018).(2016).
+
+  Comput. 10, 1915 (2014).                                                                     104G.Harsha,T.M.Henderson, andG.E.Scuseria,J.Chem.TheoryComput.
+59G. H. Booth, S. D. Smart, and A. Alavi,Mol. Phys.     112, 1855 (2014).                          15, 6127 (2019).
+60G. Li Manni, S. D. Smart, and A. Alavi, J. Chem. Theory Comput. 12,                          105G. D. Purvis III and R. J. Bartlett, J. Chem. Phys. 76, 1910 (1982).
+  1245 (2016).                                                                                 106K.Raghavachari,G.W.Trucks,J.A.Pople, andM.Head-Gordon,Chem.
+61T.Kinoshita,O.Hino, andR.J.Bartlett,J.Chem.Phys.        119,7756(2003).                          Phys. Lett. 157, 479 (1989).
+62O.Hino,T.Kinoshita, andR.J.Bartlett,J.Chem.Phys.        121,1206(2004).                      107P. Piecuch and M. Włoch, J. Chem. Phys. 123, 224105 (2005).
+63C.A.Lewis,J.A.Calvin, andE.F.Valeev,J.Chem.TheoryComput.  12,                                108F. Colmenero and C. Valdemoro, Phys. Rev. A 47, 979 (1993).
+  5868 (2016).                                                                                 109H. Nakatsuji and K. Yasuda, Phys. Rev. Lett. 76, 1039 (1996).
+64P.-O. Löwdin and H. Shull,Phys. Rev.          101, 1730 (1956).                              110D. A. Mazziotti, Phys. Rev. A 57, 4219 (1998).
+65F. A. Bischoﬀ and E. F. Valeev,J. Chem. Phys.  134, 104104 (2011).                           111D. A. Mazziotti, Chem. Rev. 112, 244 (2011).
+66P. Å. Malmqvist and V. Veryazov,Mol. Phys.  110, 2455 (2012).                                112J. Fosso-Tande, T.-S. Nguyen, G. Gidofalvi,  and A. E. DePrince III, J.
+67G. J. O. Beran and M. Head-Gordon,J. Chem. Phys.                        121, 78 (2004).          Chem. Theory Comput. 12, 2260 (2016).
+68I. Mayer,Chem. Phys. Lett.  437, 284 (2007).                                                 113F.   A.   Evangelista   and   N.   H.   Stair,   “Github   repository:
+69P. J. Knowles and N. C. Handy, Chem. Phys. Lett. 111, 315 (1984).                                https://github.com/evangelistalab/hydrogen-models-data,” (2020).
+70M. Weinstein, A. Auerbach, and V. R. Chandra,Phys. Rev. E                84, 056701          114N. C. Handy, Chem. Phys. Lett. 74, 280 (1980).
+  (2011).                                                                                      115S. Wouters and D. Van Neck, Eur. Phys. J. D 68, 272 (2014).
+71S. Östlund and S. Rommer, Phys. Rev. Lett. 75, 3537 (1995).                                  116Ö. Legeza, J. Röder, and B. Hess, Phys. Rev. B 67, 125114 (2003).
+72J. Dukelsky, M. A. Martín-Delgado, T. Nishino, and G. Sierra, EPL 43,                        117G.Moritz,B.A.Hess, andM.Reiher,J.Chem.Phys. 122,024107(2005).
+  457 (1998).                                                                                  118O. Legeza and J. Sólyom,Phys. Rev. B       68, 195116 (2003).
+73U. Schollwöck, Ann. Phys. (N. Y.) 326, 96 (2011).                                            119J. Rissler, R. M. Noack, and S. R. White, Chem. Phys. 323, 519 (2006).
+74J. Eisert, M. Cramer, and M. Plenio, Rev. Mod. Phys 20, 30 (2009).                           120P.-O. Löwdin, Adv. Chem. Phys. 2, 207 (1958).
+75G. Evenbly and G. Vidal,J. Stat. Phys.        145, 891 (2011).                               121O.SinanogluandD.Fu-TaiTuan,Annu.Rev.Phys.Chem. 15,251(1964).
+76V. Murg, F. Verstraete, O. Legeza, and R. M. Noack,Phys. Rev. B    82,                       122R. J. Bartlett and J. F. Stanton (Wiley Online Library, 1994) pp. 65–169.
+  205105 (2010).                                                                               123T. J. Lee and P. R. Taylor, Int. J. Quantum Chem. 36, 199 (1989).
+77N. Nakatani and G. K.-L. Chan,J. Chem. Phys.          138, 134113 (2013).                    124I. M. B. Nielsen and C. L. Janssen, Chem. Phys. Lett. 310, 568 (1999).
+78G. K.-L. Chan and M. Head-Gordon,J. Chem. Phys.                        116, 4462 (2002).     125A.V.LuzanovandO.V.Prezhdo,Int.J.QuantumChem.               102,582(2005).
+79G. K.-L. Chan and S. Sharma, Annu. Rev. Phys. Chem. 62, 465 (2011).                          126Z. Huang, H. Wang, and S. Kais,J. Mod. Opt.         53, 2543 (2006).
+80G. Moritz, A. Wolf, and M. Reiher,J. Chem. Phys.  123, 184105 (2005).                        127T. Juhász and D. A. Mazziotti,J. Chem. Phys.                 125, 174105 (2006).
+81Y. Kurashige and T. Yanai,J. Chem. Phys.         130, 234114 (2009).                         128A. V. Luzanov and O. Prezhdo,Mol. Phys.               105, 2879 (2007).
+82R.Olivares-Amaya,W.Hu,N.Nakatani,S.Sharma,J.Yang, andG.K.-L.                                 129D. R. Alcoba, R. C. Bochicchio, L. Lain, and A. Torre,J. Chem. Phys.
+  Chan,J. Chem. Phys.          142, 034102 (2015).                                                 133, 144104 (2010).
+83J.Hachmann,W.Cardoen, andG.K.-L.Chan,J.Chem.Phys. 125,144101                                 130R. C. Bochicchio,J. Mol. Struc.-Theochem.       429, 229 (1998).
+  (2006).                                                                                      131L.Lain,A.Torre,D.R.Alcoba, andR.C.Bochicchio,Chem.Phys.Lett.
+84A. O. Mitrushchenkov, G. Fano, R. Linguerri,  and P. Palmieri, Int. J.                           476, 101 (2009).
+  Quantum Chem. 112, 1606 (2012).                                                              132D.R.Alcoba,R.C.Bochicchio,L.Lain, andA.Torre,Chem.Phys.Lett.
+85S.Wouters,P.A.Limacher,D.VanNeck, andP.W.Ayers,J.Chem.Phys.                                      429, 286 (2006).
+  136, 134110 (2012).                                                                          133J. Pipek and P. G. Mezey, J. Chem. Phys. 90, 4916 (1989).
+86Y. Ma and H. Ma, J. Chem. Phys. 138, 224105 (2013).                                          134C.A.Jiménez-Hoyos,R.Rodríguez-Guzmán, andG.E.Scuseria,J.Phys.
+87J.Hachmann,J.J.Dorando,M.Avilés, andG.K.-L.Chan,J.Chem.Phys.                                     Chem. A 118, 9925 (2014).
+  127, 134309 (2007).                                                                          135K. Boguslawski and P. Tecmer,Int. J. Quantum Chem.  115, 1289 (2015).
+88C.Raghu,Y.A.Pati, andS.Ramasesha,Phys.Rev.B                    65,155204(2002).              136K.Boguslawski,P.Tecmer,G.Barcza,Ö.Legeza, andM.Reiher,J.Chem.
+89C. Raghu, Y. Anusooya Pati, and S. Ramasesha,Phys. Rev. B                    66, 035116          Theory Comput. 9, 2959 (2013).
+  (2002).                                                                                      137C. J. Stein and M. Reiher, Chimia 71, 170 (2017).
+90Y. Kurashige, G. K.-L. Chan, and T. Yanai,Nat. Chem.         5, 660 (2013).                  138E.Fertitta,B.Paulus,G.Barcza, andÖ.Legeza,Phys.Rev.B 90,245129
+91S. Sharma, K. Sivalingam, F. Neese, and G. K.-L. Chan,Nat. Chem.           6,                    (2014).
+  927 (2014).                                                                                  139V.Murg,F.Verstraete,R.Schneider,P.R.Nagy, andO.Legeza,J.Chem.
+92A. V. Sinitskiy, L. Greenman, and D. A. Mazziotti, J. Chem. Phys. 133,                           Theory Comput. 11, 1027 (2015).
+  014104 (2010).                                                                               140R. M. Parrish, L. A. Burns, D. G. Smith, A. C. Simmonett, A. E. De-
+93M. Motta, D. M. Ceperley, G. K.-L. Chan, J. A. Gomez, E. Gull, S. Guo,                           Prince III, E. G. Hohenstein, U. Bozkaya, A. Y. Sokolov, R. Di Remigio,
+  C.A.Jiménez-Hoyos,T.N.Lan,J.Li,F.Ma,                 etal.,Phys.Rev.X 7,031059                   R. M. Richard,    et al., J. Chem. Theory Comput. 13, 3185 (2017).
+  (2017).                                                                                      141D.G.Smith,L.A.Burns,A.C.Simmonett,R.M.Parrish,M.C.Schieber,
+94M. Motta, C. Genovese, F. Ma, Z.-H. Cui, R. Sawaya, G. K. Chan,                                  R. Galvelis, P. Kraus, H. Kruse, R. Di Remigio, A. Alenaizan,               et al., J.
+  N. Chepiga, P. Helms, C. Jimenez-Hoyos, A. J. Millis,                 et  al., e-print       142W.J.Hehre,R.F.Stewart, andJ.A.Pople,J.Chem.Phys. 51,2657(1969).Chem. Phys. 152, 184108 (2020).
+  arXiv:1911.01618 [quant-ph] (2019).
+                                                                                                                                                                                 17
+
+
+143G.M.Barca,C.Bertoni,L.Carrington,D.Datta,N.DeSilva,J.E.Deustua,                           151P. A. Limacher, P. W. Ayers, P. A. Johnson, S. De Baerdemacker,
+   D. G. Fedorov, J. R. Gour, A. O. Gunina, E. Guidez,         et al., J. Chem. Phys.            D. Van Neck, and P. Bultinck, J. Chem. Theory Comput. 9, 1394 (2013).
+   152, 154102 (2020).                                                                       152I.W.Bulik,T.M.Henderson, andG.E.Scuseria,J.Chem.TheoryComput.
+144F. A. Evangelista, “Forte: an open source plugin for strongly correlated                      11, 3171 (2015).
+   electronic systems,” (2020).                                                              153M. B. Hastings, Phys. Rev. B 69, 104431 (2004).
+145S. Wouters, W. Poelmans, P. W. Ayers, and D. Van Neck, Comput. Phys.                      154E. M. Stoudenmire and S. R. White, Annu. Rev. Condens. Matter Phys. 3,
+   Commun. 185, 1501 (2014).                                                                     111 (2012).
+146G. Moritz and M. Reiher, J. Chem. Phys. 124, 034103 (2006).                               155F. Verstraete and J. I. Cirac, e-print arXiv:0407066 [cond-mat.str-el]
+147T. Yanai, Y. Kurashige, E. Neuscamman, and G. K.-L. Chan, J. Chem.                            (2004).
+   Phys. 132, 024105 (2010).                                                                 156G. Vidal, Phys. Rev. Lett. 99, 220405 (2007).
+148G.Barcza,Ö.Legeza,K.H.Marti, andM.Reiher,Phys.Rev.A 83,012508                             157R. J. Needs, M. D. Towler, N. D. Drummond, and P. L. Ríos, J. Phys.:
+
+149K.Boguslawski,P.Tecmer,Ö.Legeza, andM.Reiher,J.Phys.Chem.Let.(2011).                      158M.MottaandS.Zhang,WileyInterdiscip.Rev.Comput.Mol.Sci. 8,1364Condens. Matter 22, 023201 (2009).
+
+
+150M.L.Baker,G.A.Timco,S.Piligkos,J.S.Mathieson,H.Mutka,F.Tuna,3, 3129 (2012).               159D. S. Abrams and S. Lloyd, Phys. Rev. Lett. 79, 2586 (1997).(2018).
+
+   P. Kozłowski, M. Antkowiak, T. Guidi, T. Gupta,          et al., Proc. Natl. Acad.        160D. S. Abrams and S. Lloyd, Phys. Rev. Lett. 83, 5162 (1999).
+   Sci. U.S.A 109, 19113 (2012).                                                             161R.Babbush,N.Wiebe,J.R.McClean,J.McClain,H.Neven, andG.K.-L.
+                                                                                                 Chan, Phys. Rev. X 8, 011044 (2018).
+                                                                                             162J.R.McClean,F.M.Faulstich,Q.Zhu,B.O’Gorman,Y.Qiu,S.R.White,
+                                                                                                 R. Babbush, and L. Lin, e-print arXiv:1909.00028 [quant-ph] (2019).

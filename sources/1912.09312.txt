@@ -1,0 +1,276 @@
+               An  eﬃcient  method  for  strongly  correlated  electrons  in  one  dimension
+
+                                                          Ion   Mitxelena1   and   Mario   Piris1,2
+
+
+                              1Kimika  Fakultatea,   Euskal   Herriko   Unibertsitatea   (UPV/EHU)   and   Donostia
+                           International   Physics   Center   (DIPC),  P.K.  1072,   20080   Donostia,   Euskadi,   Spain.
+                           2Basque   Foundation   for  Science   (IKERBASQUE),   48013   Bilbao,  Euskadi,   Spain.
+
+
+
+                     The  one-particle  reduced  density  matrix  functional  theory  in  its  natural  orbital  functional  (NOF)
+                  version   is   used   to   study   strongly   correlated   electrons.     We   show   the   ability   of   the   Piris   NOF   7
+                  (PNOF7) to describe non-dynamic correlation  eﬀects  in one-dimensional  (1D) systems.  An extensive
+                  study  of  1D  systems  that  includes  Hydrogen  (H)  chains  and  the  1D  Hubbard  model  with  periodic
+                  boundary  conditions  is  provided.   Diﬀerent  ﬁlling  situations  and  large  sizes  with  up  to  122  electrons
+                  are  considered.   Compared  to  quasi-exact  results,  PNOF7  is  accurate  in  diﬀerent  correlation  regimes
+                  for   the  1D   Hubbard  model  even   away   from   the  half-ﬁlling,   and  maintains   its   accuracy   when   the
+                  system  size  increases.   The  symmetric  and  asymmetric  dissociations  of  the  linear  H  chain  composed
+                  of  50  atoms  are  described  to  remark  the  importance  of  long-range  interactions  in  presence  of  strong
+                  correlation  eﬀects.   Our  results  compare  remarkably  well  with  those  obtained  at  the  density-matrix
+                  renormalization  group  level  of  theory.
+
+                     Keywords:   Strong  Electron  Correlation,  Hubbard  model,  Hydrogen  chain,  Dissociation,  Reduced
+                  Density  Matrix,  Natural  Orbital  Functional
+
+
+                       I.      INTRODUCTION                                            ciation  limit  in  H  chains.
+                                                                                       The   natural   orbital   functional   theory   (NOFT)   [10,   11]
+One-dimensional   (1D)   many-electron   systems   remain   a                          constitutes  an  alternative  to  highly  correlated  methods.
+non-trivial    problem    for    electronic    structure    methods.                   The   energy   is    expressed   in   terms    of   natural   orbitals
+Density   functional   theory   in   its   conventional   local   or                   (NOs)  and  their  occupation numbers (ONs),  so that  from
+semilocal   approximations   is   not   able   to   provide   a   cor-                 the   outset   NOFT  correctly  handles   the   multiconﬁgura-
+rect  description  of  correlated  insulators  [1],  conﬁguration                      tional  character  inherent  in  strongly  correlated  systems.
+interaction  methods  cannot  deal  with  too  large  systems,                         A   route   for   the   construction   of   an   approximate   natu-
+and   coupled  cluster   singles  and   doubles  with   perturba-                      ral   orbital   functional   (NOF)   involves   the   employment
+tive  triples  (CCSD(T))  shows  instabilities  at  large  inter-                      of   necessary  N -representability   conditions   for   the   two-
+atomic  distances  in  1D  chains  of  Hydrogen (H)  atoms  [2].                       particle   reduced   density   matrix   (2RDM)   [12].     Appro-
+Recently,   signiﬁcant   progress   has   been   made   in   lattice                   priate   2RDM   reconstructions   have   led   to   diﬀerent   im-
+density  functional  theory  [3].   Nevertheless,  the  density-                       plementations  known  in  the  literature  as  PNOFi  (i=1-7)
+matrix  renormalization  group  (DMRG)  algorithm  [4]  re-                            [13,  14].
+mains   the   most   accurate   method   for   studying   1D   sys-                    The  electron  pairing  approach  came  to  the  NOFT  with
+tems,   including   gapless   chains   [5,   6].     Consequently,   it                the  proposal  of  PNOF5  [15].   The  latter  is  closely  related
+will  be  employed  as  benchmark  in  this  work.                                     to   geminal   approaches,   since   it   corresponds   to   an   an-
+                                                                                       tisymmetrized   product   of   strongly   orthogonal  geminals
+The  electronic  wavefunction is  taken  as  a  linear  combina-                       [16].     PNOF5   draws   a   system   of  N    electrons   as   inde-
+tion  of  geminal  functions  to  have  a  non-factorial  scaling.                     pendent   electron   pairs   providing   a   good   description   of
+In  this  context,  variational  Monte  Carlo  calculations  us-                       the  intrapair  electron  correlation,  but  lacks  the  correla-
+ing  a  Jastrow-antisymmetrized  geminal  power  wavefunc-                             tion  between  pairs.    Consequently,   a  bad   description  of
+tion   has   recently   been   used   [7]   to   successfully   investi-               the   strong   correlation   limit   is   obtained   [17].     To   intro-
+gate  periodic  1D  H  chains.   Another  approach  based  on                          duce interpair electron correlation eﬀects in singlet states,
+geminal   expansions   is   the   antisymmetric   product   of   1-                    PNOF7  was  proposed  [14,  17],  namely,
+reference-orbital  geminals  (AP1roG).  The  optimized  or-
+bital  version  of  AP1roG  (OO-AP1roG)  has  proven  [8]  to                                                          N/2          N/2
+                                                                                                                E =    ∑Eg +        ∑Efg                                        (1)
+be  a  reliable  method  for  strongly  correlated  1D  systems,
+such  as  the  1D  Hubbard  model  with  periodic  boundary                                                            g=1          f⁄=g
+conditions,  as  well  as  for  metallic  and  molecular  H  rings.                    where
+Nevertheless,   it   has   recently   been   shown   [9]   that   con-
+tributions  from  singly  occupied  states  are  important  in                                     Eg = 2  ∑
+the  strong  correlation  limit,  so  OO-AP1roG  needs  to  in-                                            {    √p∈Ωg npHpp +    ∑q,p∈Ωg ΠqpLpq                     (2)
+clude  open-shell conﬁgurations to  accurately describe  the                                      Πqp =             nqnp ,     q = p  or q, p >  N2
+U/t → ∞  limit  in  the  1D  Hubbard  model  and  the  disso-                                                  −√nqnp ,     q = g  or p = g
+                                                                                                                                                                       2
+    Efg =   ∑         ∑
+
+              p∈Ωf   q∈Ωg [nqnp (2Jpq − Kpq) − ΦqΦpLpq]                      (3)               4.0        N=14                        N=30N=50                        N=122
+                        Φp = √np(1 − np).                                                                                                   ❑OO−AP1roG
+                                                                                               3.0                                          ❍  PNOF7
+np   stands   for   the   ON   of   the   spatial   NO  |p⟩.   Hpp   de-
+notes   the   diagonal   elements   of   the   one-particle   part   of                        2.0                               0.10
+the  Hamiltonian  involving  the  kinetic  energy  and  the  ex-                                                                 0.08
+ternal  potential  operators.  Jpq  and Kpq  refer  to  the  usual                             1.0
+                                                                                                                                 0.06
+Coulomb   and   exchange   integrals,  ⟨pq|pq⟩   and  ⟨pq|qp⟩
+respectively,    whereas  Lpq    denotes    the    exchange-time-                              0.0
+inversion  integral ⟨pp|qq⟩.                                                                        0          4          8          12         16         20
+The  orbital  space  is  divided  into  N/2  mutually  disjoint                                                                  U/t
+subspaces  Ωg,   so   that  ∑p∈Ωg np  =  1.     Taking   into   ac-                    Figure  1:   Energy  diﬀerences  (a.u.)   with  respect  to  the  exact
+count  the  spin,  each Ωg   contains  solely  an  electron  pair,                     results  for  the  1D  Hubbard  model  at  half-ﬁlling  with  periodic
+and  the  normalization  condition  for  the  one-particle  re-                        boundary conditions.   OO-AP1roG and  exact  data  from  [8,  9].
+duced  density  matrix  (1RDM)  is  automatically  fulﬁlled:                           For U/t = 20,  only  the  result  is  reported  for N  = 14.
+2 ∑p np   =   N .       Restriction   of   the   ONs   to   the   range
+0  ≤  np  ≤  1   represents   a   necessary   and   suﬃcient   con-
+dition  for  ensemble N -representability  of  the  1RDM  [18].                        analogous  to   the   kinetic   energy,   and  U   is   the   electron-
+It  should  be  noted  that Eg  reduces  to  the  NOF  obtained                        electron  on-site  interaction  parameter.  σ  =  α, β   stands
+from a two-electron singlet wavefunction, so the ﬁrst term                             for  the  spin.  a†r,σ (ar,σ)  is  the  creation  (annihilation)  op-
+of  PNOF7  accurately  describes  the  sum  of  electron-pair                          erator,  so  nr,σ  =  a†r,σar,σ   gives  the  number  of  electrons
+energies.    The  second  term  correlates  the  motion  of  the                       on  site r  with  spin σ.
+electrons   in   diﬀerent   pairs   with   parallel   and   opposite
+spins.    For  the  latter,   the  particle-hole  symmetry  is  ex-                    Let  us  restrict  to  the  repulsive  Hubbard  model,  hence U
+plicitly   considered  through  Φp   in   the  L-term.    This   re-                   is  always  positive.  U/t  is  used  as  a  dimensionless  mea-
+sembles  the  original  formulation  of  Bardeen,  Cooper  and                         sure   for   the   relative  contribution   of   both   terms,   there-
+Schrieﬀer   (BCS)   [19],   which   uses   these   types   of   inter-                 fore,  at U/t → 0  (metallic  state)  the  mean-ﬁeld  theories
+actions  for  all  orbitals.    The  BCS  method  is  one  of  the                     work   well   due   to   the   lack   of   two-electron   interactions,
+best  mean-ﬁeld  approaches  to  the  Hubbard  model  with                             whereas  at U/t → +∞  (insulating  state)  strong  correla-
+attractive  interactions  [20],  but  underestimates  the  cor-                        tions  play  the  dominant  role  keeping  electrons  away  from
+relation   eﬀects   in   systems   with   repulsive   Hamiltonians                     each  other.
+[21].     For   the   latter,   recent   studies   [17,   22,   23]   suggest          In  Fig.   1,  we  report  the  PNOF7  energy  diﬀerences  with
+that  PNOF7  could  correctly  recover  the  strong  correla-                          respect  to   the   exact  results  for   the   1D  Hubbard  model
+tion  limit.   In  this  paper,  we  provide  an  extensive  study                     at  half-ﬁlling.   The  number  of  sites  varies  from  14  to  122
+of  H  chains  composed  of  50  atoms  and  the  1D  Hubbard                          in  small  and  intermediate  correlation  regimes.   For  com-
+model   in   many   ﬁlling   situations,   sizes,   and   correlation                  parison,  OO-AP1roG  results  [9]  have  been  included.   The
+regimes.                                                                               data  sets  used  in  this  ﬁgure  can  be  found  in  the  Supple-
+The  solution  is  established  by  optimizing  the  energy  (1-                       mental Material (Table III).  Note  that OO-AP1roG dete-
+3)  with  respect  to  the  ONs  and  to  the  NOs,  separately.                       riorates  for  large  systems  (some  errors  fall  out  of  Fig.   1),
+The   conjugate   gradient  method   is   used   to   perform   the                    as well as for large U/t values.  Conversely, PNOF7 is able
+optimization  of  the  energy  with  respect  to  auxiliary  vari-                     to  hold  its  accuracy  with  respect  to  exact  results  when
+ables   that   enforce  automatically   the  N -representability                       the   system   size  increases.    For   a   given  system,   PNOF7
+bounds  of  the  1RDM.  The  self-consistent  procedure  pro-                          converges  to   the   exact   results  in   the   strong   correlation
+posed  in  [24]  yields  the  NOs  by  an  iterative  diagonaliza-                     limit.
+tion  procedure,  in  which         orbitals  are  not  constrained  to                Since  the  particle-hole  symmetry  is  explicitly  introduced
+remain  ﬁxed  along  the  orbital  optimization  process.   All                        into  the  functional  (1-3),   PNOF7  is  expected  to  be  ap-
+calculations have been carried out using the  DoNOF code                               propriate  for  the  half-ﬁlling  case.    Now  we  test  the  per-
+developed  in  our  group.                                                             formance   of   PNOF7   away   from   half-ﬁlling   where   the
+First,  we  show  the  ability  of  PNOF7  to  describe  the  1D                       particle-hole  symmetry  is  broken,  so  that  inhomogeneous
+Hubbard  model.    The  latter  has  the  advantage  of  being                         phases  can  appear  [25].    The  energy  per  site  for  the  1D
+extremely  simple  and  is  a  useful  tool  for  benchmarking                         Hubbard   model   is   shown   in   Table   I.   We   focus   on   the
+[25].   The  1D  Hubbard  Hamiltonian  reads  as                                       strong   correlation  limit,   i.e.,   large  U/t   values,   which   is
+ H = −t   ∑           (a†r,σar′,σ + a†                          nr,αnr,β    (4)        particularly  problematic  for   geminal-based  theories  like
+                                        r′,σar,σ) + U ∑                                OO-AP1roG   [9].     For   reference,   we   use   the   variational
+             ⟨r,r′⟩,σ                                       r                          2RDM   (v2RDM)   with   P,   Q   and   G  N -representability
+where  ⟨r, r′⟩   indicates   only   near-neighbors   hopping   be-                     constraints   values   and   quasi-exact   results   of   the   vari-
+tween  the  sites r  and r′.  t > 0  is  the  hopping  parameter                       ational   Matrix   Product   State   (vMPS)   algorithm   taken
+                                                                                                                                                                        3
+
+
+Table  I:  Energy  per  site  (a.u.)    for  1D  Hubbard  model  away                   Table   II:   Equilibrium   distances   (Re)   and   dissociation   ener-
+from half-ﬁlling at U/t → 100.   Reference vMPS, v2RDM, and                             gies  (De)  for  the  symmetric  dissociation   of  linear  H50   using
+exact  data  from  [26].  Nsites  and N   stands  for  the  number  of                  the  STO-6G  basis  set.    RHF,  MP2,   PBE,  OO-AP1roG,  and
+sites  and  electrons,  respectively.                                                   DMRG  data  from  [8].
+        Nsites    N      PNOF7      vMPS       v2RDM     Exact*
+           20          12      -0.6025      -1.0312      -1.2177      -1.0008                          RHF     MP2      PBE     OO-AP1roG         PNOF7       DMRG
+                   16      -0.3820      -0.4951      -0.7860      -0.4639                 Re (Å)      0.940    0.955   0.971         0.966          0.976       0.970
+           50          20      -0.9081              -               -1.2191      -1.0008  De  (eV )   199.0    144.1   146.6          82.2           86.9       89.7
+                   40      -0.4444              -               -0.7862      -0.4671
+
+*Exact  results  correspond  to U/t → ∞.                                                Fock    (RHF),    second-order    Möller-Plesset    pertubation
+                                                                                        theory   (MP2),   CCSD,   and   CCSD(T).   All   calculations
+                                                                                        were  carried  out   using   the  STO-6G  minimal  basis  [29].
+from  Ref.   [26].                                                                      There  is  an  outstanding  agreement  between  PNOF7  and
+Table   I   shows  that   PNOF7   remains   close  to   vMPS   for                      DMRG   along   the   dissociation   curve,   specially   at   large
+N  =  16   in   20   sites   chain,   whereas   it   lacks   correlation                bond  distances  (insulating  phase)  as  well  as  at  short  H-H
+energy  for N  = 12.   In  the  case  of  50  sites,  PNOF7  pro-                       distances  (metallic  phase).   At  the  equilibrium  distance,
+duces  accurate  energies  and  it  approaches  the  exact  re-                         PNOF7  underestimates  slightly  the  correlation,  however
+sult.   Consequently,  PNOF7  turns  out  to  be  particularly                          an   inspection   of   spectroscopic   constants   (see   Table   II)
+accurate  from  a  certain  amount  of  electrons,  from  which                         shows  that  PNOF7  agrees  with  DMRG  better  than  stan-
+the  strong  correlation  limit  is  described  successfully.   It  is                  dard  methods  such  as  RHF,  MP2,  or  the  Perdew-Burke-
+worth  noting  that  PNOF7  is  more  accurate  than  v2RDM                             Ernzerhof  (PBE)  density  functional.   These  methods  fail
+when  only  two-particle  conditions  are  applied.   It  has  re-                      dramatically  at  the  dissociation  limit  [8]  since  the  occu-
+cently  been  emphasized  [27,  28]  that  three-particle  con-                         pancies  become   strongly  fractional  at   intermediate  and
+ditions  are  needed  in  v2RDM  to  accurately  describe  the                          long  H-H  distances,  a  behavior  that  PNOF7  (see  Fig.   3)
+strong  correlation  limit  of  the  Hubbard  model.                                    and   OO-AP1roG   (see   Fig.     4   in   Ref.     [8])   correctly   re-
+In   a   minimal   basis   set,   there   is   only   one   band   in   1D              produce.   Non-integer  occupations  also  make  CCSD  and
+systems,  therefore,  as  long  as  long-range  interactions  are                       CCSD(T)  not  convergent  [2],  so  the  latter  can  be  exclu-
+negligible,  a  linear  chain  composed  of  H  atoms  resembles                        sively employed in  the equilibrium  region.  Note  that OO-
+the  1D  Hubbard  model.   Such  a  chain  composed  of  50  H                          AP1roG   underestimates   the   equilibrium   distance   (Re)
+atoms  is  a  simple  prototype  of  strong  correlation,  and  a                       and  dissociation  energy  (De),  whereas  PNOF7  underes-
+challenging  test  [2]  for  non-dynamic  correlation.                                  timates De  and  yields  slightly  large Re.
+In  order  to  study  the  eﬀect  of  long-range  interactions,  let                    Fig.      4   shows   the   energies   obtained   for   the   asymmet-
+us  show  the  ability  of  PNOF7  to  describe  bond-breaking                          ric   dissociation   of   linear  H50.     It   should   be   noted   that
+processes.    Fig.    2  shows  the  energies  obtained  for  sym-                      the   energy   decreases   monotonically   from   the   reference
+metric stretching of linear H50  by using PNOF7,  together                              state   composed   of   equidistant   H   atoms   to   the   set   of
+with  reference  DMRG  results  and  other  well-established                            independent  H2   molecules.    In   the   asymmetric   stretch-
+electronic  structure  methods,  namely,  restricted  Hartree-                          ing,  we  alternate  the  bond-stretching,  so  that  half  of  the
+
+
+
+                                                                                                     2
+         −14.0                                                                                     1.8                                           HSOO
+                       DMRG               RHF            CCSD                                                                                   LWOO
+         −16.0        PNOF7               MP2          CCSD(T)                                     1.6
+                                                                                                   1.4
+         −18.0                                                                                     1.2
+
+         −20.0                                                                                       1
+                                                                                                   0.8
+         −22.0                                                                                     0.6
+
+         −24.0                                                                                     0.4
+         −26.0                                                                                     0.2
+                                                                                                     0
+         −28.0                                                                                          0.6   0.8    1    1.2   1.4   1.6  1.8    2    2.2   2.4
+                  0.6    0.8    1    1.2    1.4   1.6   1.8     2    2.2                                                        RH−H (Å)
+                                        RH−H (Å)
+
+                                                                                        Figure  3:   ONs  of  the  highest  strongly  occupied  NO  (HSOO)
+Figure 2:  Symmetric dissociation  of linear H50  using the STO-                        and  the  lowest  weakly  occupied  NO  (LWOO)  for  the  symmet-
+6G  basis  set.   RHF,  MP2,  CCSD,  CCSD(T),  and  DMRG  data                          ric  dissociation  of  linear H50  at  the  PNOF7/STO-6G  level  of
+from  [2].                                                                              theory.
+                                                                                                                                                                            4
+
+
+          −25.0                                                                           The   results   obtained  for  H50   chains  prove  that   numer-
+                       DMRG                RHF          CCSD(T)                           ical   accuracy   of   PNOF7   is   comparable   to   that   of   the
+          −25.5        PNOF7               MP2             CCSD
+                                                                                          DMRG  in  many  diﬀerent  correlation regimes.  This  study
+          −26.0                                                                           includes  the  PNOF7  in  the  list  of  highly  correlated meth-
+
+          −26.5                                                                           ods  to  study  any  system  related  to  linear  H  chains  [30].
+
+          −27.0                                                                           With  the  present  work,  a  step  forward  has  been  taken  in
+
+          −27.5                                                                           the  development  of  eﬃcient  methods  for  strong  correla-
+
+          −28.0                                                                           tion.   With  a  mean-ﬁeld  scaling,  the  PNOF7  approxima-
+          −28.5                                                                           tion  compares  with  state-of-the-art  methods  for  describ-
+                                                                                          ing  strongly  correlated  electrons,  e.g.   DRMG,  quantum
+          −29.0                                                                           Monte Carlo or complete active space conﬁguration inter-
+                   0.8     1      1.2    1.4    1.6     1.8     2     2.2
+                                         RH−H (Å)                                         action  methods,   and  overcomes  the  problems  shown  by
+                                                                                          similar  approaches  in  the   strong  correlation  limit.    The
+Figure   4:    Asymmetric   dissociation   of   linear  H50   using   the                 present  paper   will  have  a   signiﬁcant  impact  on   the  de-
+STO-6G basis set.   RHF, MP2,  CCSD, CCSD(T), and  DMRG                                   velopment  of  new  materials  in  which  large  unit  cells  are
+data  from  [2].                                                                          required.
+                                                                                          Acknowledgments:       Financial    support    comes    from
+                                                                                          MCIU/AEI/FEDER,  UE  (PGC2018-097529-B-100)  and
+bonds  remain  ﬁxed,  while  the  other  half  is  stretched.   In                        Eusko  Jaurlaritza  (Ref.   IT1254-19).   The  authors  thank
+the  dissociation  limit,   we  have  25  near-independent  H2                            for   technical   and   human   support   provided  by   IZO-SGI
+molecules.     Similar   to   symmetric   dissociation,   PNOF7                           SGIker  of  UPV/EHU  and  European  funding  (ERDF  and
+agrees  with   DMRG   over   large  bond   distances,   whereas                           ESF).    I.M.  is  grateful  to  Vice-Rectory  for  research  of  the
+there  are  slight  diﬀerences  at  shorter  bonds.                                       UPV/EHU  for  the  Ph.   D.  grant  (PIF//15/043).
+
+
+
+
+ [1]   D.  J.  Carrascal,  J.  Ferrer,  J.  C.  Smith,  and  K.  Burke,  J.                     Phys.  J.  B  91,  109  (2018).
+      Phys.:   Condens.  Matter  27,  393001  (2015).                                     [18]   A.  J.  Coleman,  Rev.  Mod.  Phys.  35,  668  (1963).
+ [2]   J.  Hachman,  W.  Cardoen,  and  G.  K.-L.  Chan,  J.  Chem.                       [19]   J.   Bardeen,   L.   N.   Cooper,   and   J.   R.   Schrieﬀer,   Phys.
+      Phys.  125,  144101  (2006).                                                              Rev.  108,  1175  (1957).
+ [3]   T.  S.  Müller,  W.  Töws,  and  G.  M.  Pastor,  Computation                      [20]   M.  Qin,  H.  Shi,  and  S.  Zhang,  Phys.  Rev.  B  94,  085103
+      7,  66  (2019).                                                                           (2016).
+ [4]   S.  R.  White,  Phys.  Rev.  Lett.  69,  2863  (1992).                             [21]   T.  Tsuchimochi  and  G.  E.  Scuseria,  J.  Chem.  Phys. 131,
+ [5]   T.  Papenbrock,  T.  Barnes,  D.  J.  Dean,  M.  V.  Stoitsov,                           121102  (2009).
+      and  M.  R.  Strayer,  Phys.  Rev.  B  68,  024416  (2003).                         [22]   I.  Mitxelena,  M.  Piris,  and  M.  A.  R.  Mayorga,  J.  Phys.
+ [6]   V.  O.  Cheranovskii,  V.  V.  Slavin,  A.  L.  Tchougréeﬀ,  and                         Condens.  Matter  29,  425602  (2017).
+      R.  Dronskowski,  J.  Phys.:   Condens.  Matter  31,  305601                        [23]   I.   Mitxelena,   M.   Piris,   and   M.   Rodríguez-Mayorga,   J.
+      (2019).                                                                                   Phys.  Condens.  Matter  30,  089501  (2018).
+ [7]   L.  Stella,  C.  Attaccalite,  S.  Sorella,  and  A.  Rubio,  Phys.                [24]   M.  Piris  and  J.  M.  Ugalde,  J.  Comput.  Chem.  30,  2078
+      Rev.  B  84,  245117  (2011).                                                             (2009).
+ [8]   K.     Boguslawski,     P.     W.     Ayers,     P.     Bultinck,     S.     D.    [25]   J.   P.   F.   and   LeBlanc,   A.   E.   Antipov,   F.   Becca,   I.   W.
+      Baerdemacker,     and    D.    V.    Neck,     Phys.    Rev.    B    89,                  Bulik,  G. K.-L. Chan,  C.-M. Chung, Y. Deng,  M. Ferrero,
+      201106(R)  (2014).                                                                        T.  M. Henderson,  C. A. Jiménez-Hoyos,  et al.,  Phys. Rev.
+ [9]   K.  Boguslawski,  P.  Tecmer,  and  Ö.  Legeza,  Phys.  Rev.  B                          X  5,  1  (2015).
+      94,  155126  (2016).                                                                [26]   B.  Verstichel,  H.  van  Aggelen,  W.  Poelmans,  S.  Wouters,
+[10]   M.  Piris  and  J.  M.  Ugalde,  Int.  J.  Quantum  Chem.  114,                          and D. V. Neck, Comput. Theor. Chem. 1003,  12   (2013).
+      1169  (2014).                                                                       [27]   N.   C.   Rubin   and   D.   A.   Mazziotti,   Theor.   Chem.   Acc.
+[11]   K.  Pernal  and  K.  J.  H.  Giesbertz,  Top.  Curr.  Chem. 368,                         133,  1492  (2014).
+      125  (2016).                                                                        [28]   B.    Verstichel,     H.    van    Aggelen,     W.    Poelmans,     and
+[12]   M.  Piris,  Int.  J.  Quantum  Chem.  106,  1093  (2006).                                D.  Van  Neck,  Phys.  Rev.  Lett.  108,  213001  (2012).
+[13]   M.  Piris,  Int.  J.  Quantum  Chem.  113,  620  (2013).                           [29]   B.  P.  Pritchard,   D.  Altarawy,   B.  Didier,  T.  D.  Gibson,
+[14]   M.  Piris,  Phys.  Rev.  Lett.  119,  063002  (2017).                                    and  T.  L.  Windus  (2019  (in  preparation)).
+[15]   M. Piris,  X. Lopez,  F. Ruipérez, J. M. Matxain,  and J. M.                       [30]   M.  Motta,  D.  M.  Ceperley,  G.  K.-L.  Chan,  J.  A.  Gomez,
+      Ugalde,  J.  Chem.  Phys.  134,  164102  (2011).                                          E.  Gull,  S.  Guo,  C.  A.  Jiménez-Hoyos,  T.  N.  Lan,  J.  Li,
+[16]   M.  Piris,  J.  M.  Matxain,  and  X.  Lopez,  J.  Chem.  Phys.                          F.  Ma,  et  al.,  Phys.  Rev.  X  7,  031059  (2017).
+      139,  234109  (2013).
+[17]   I.  Mitxelena,  M.  Rodríguez-Mayorga,  and  M.  Piris,  Eur.
+                                                                                                                                                                                                                          5
+
+
+Table  III:  Energies  (a.u.)   for  the  1D  Hubbard  model  at  half-ﬁlling  with  periodic  boundary  conditions.   OO-AP1roG,  RHF,  and
+exact  data  from  Ref.   [8,  9].
+                                                         Nsites      U/t          RHF          OO-AP1roG       PNOF7          EXACT
+                                                                         2         -10.9758           -11.6627            -11.8230          -11.9543
+                                                            14           4          -3.9758              -7.2701               -7.9610             -8.0883
+                                                                         8          10.0242              -3.6471               -4.5228             -4.6131
+                                                                        20        52.0242              -1.4132               -1.8932             -1.9340
+                                                                         2         -23.2671           -24.7779            -25.1161        −25.3835
+                                                            30           4          -8.2671            -15.5495            -17.0035        −17.2335
+                                                                         8          21.7329              -7.8152              -9.78283          −9.8387
+                                                                         2         -38.7039           -41.2570            -41.7650        −42.2443
+                                                            50           4         -13.7039           -25.9154            -28.2696        −28.6993
+                                                                         8          36.2961            -13.0253            -16.3215        −16.3842
+                                                                         2         -94.3524        −100.6497                -101.9499           −103.0211
+                                                           122           4         -33.3524          −63.2336           -69.0861        −70.0003
+                                                                         8          88.6476           −31.7817           -39.6698        −39.9619

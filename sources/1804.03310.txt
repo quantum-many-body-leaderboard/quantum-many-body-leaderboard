@@ -1,0 +1,692 @@
+     Phaseless Auxiliary-Field Quantum Monte Carlo on Graphical Processing Units
+
+                                   James  Shee,∗  David  R.  Reichman,  and  Richard  A.  Friesner
+                     Department  of  Chemistry,  Columbia  University,  3000  Broadway,  New  York,  NY,  10027
+
+                                                                Evan  J.  Arthur
+                        Schr¨odinger  Inc.,  120  West  45th  Street,  New  York,  New  York  10036,  United  States
+
+                                                                  Shiwei  Zhang
+                    Department  of  Physics,  College  of  William  and  Mary,  Williamsburg,  Virginia  23187-8795
+
+                  We present an implementation of phaseless Auxiliary-Field Quantum Monte Carlo (ph-AFQMC)
+                utilizing  graphical  processing  units  (GPUs).   The  AFQMC  method  is  recast  in  terms  of  matrix
+                operations which are spread across thousands of processing cores and are executed in batches using
+                custom Compute Uniﬁed Device Architecture kernels and the hardware-optimized cuBLAS matrix
+                library.  Algorithmic advances include a batched Sherman-Morrison-Woodbury algorithm to quickly
+                update  matrix  determinants  and  inverses,  density-ﬁtting  of  the  two-electron  integrals,  an  energy
+                algorithm involving a high-dimensional precomputed tensor, and the use of single-precision ﬂoating
+                point arithmetic.  These strategies result in dramatic reductions in wall-times for both single- and
+                multi-determinant trial wavefunctions.  For typical calculations we ﬁnd speed-ups of roughly two
+                orders  of  magnitude  using  just  a  single  GPU  card.   Furthermore,  we  achieve  near-unity  parallel
+                eﬃciency  using  8  GPU  cards  on  a  single  node,  and  can  reach  moderate  system  sizes  via  a  local
+                memory-slicing approach.  We illustrate the robustness of our implementation on hydrogen chains
+                of  increasing  length,  and  through  the  calculation  of  all-electron  ionization  potentials  of  the  ﬁrst-
+                row transition metal atoms.  We compare long imaginary-time calculations utilizing a population
+                control algorithm with our previously published correlated sampling approach, and show that the
+                latter improves not only the eﬃciency but also the accuracy of the computed ionization potentials.
+                Taken together, the GPU implementation combined with correlated sampling provides a compelling
+                computational method that will broaden the application of ph-AFQMC to the description of realistic
+                correlated electronic systems.
+
+
+                    I.    INTRODUCTION                                       to perform hardware-optimized matrix operations in se-
+                                                                             rial and in “batches,” and the use of single-precision (sp)
+  Auxiliary-Field  Quantum  Monte  Carlo  (AFQMC)  is                        ﬂoating-point  arithmetic  with  signiﬁcant  gains  in  com-
+a  computational  method  capable  of  predicting  ground-                   putational speed.  In recent years the use of GPUs has
+state  observables  of  chemical  systems  with  very  high                  been  extended  well  beyond  traditional  image  visualiza-
+accuracy.[1–23] For ﬁnite-sized systems such as molecules                    tion tasks into many ﬁelds such as machine learning[28]
+in Gaussian basis sets,  AFQMC calculations scale with                       and molecular mechanics.[29] Of particular relevance to
+the   fourth   power   of   the   system   size,   which   com-              our  work  presented  here  is  the  progress  in  performing
+pares  favorably  with  traditional  wavefunction  methods                   electronic  structure  calculations  on  GPUs.   This  hard-
+such as second-order Møller-Plesset Perturbation Theory                      ware  has  been  utilized  to  eﬃciently  evaluate  the  inte-
+(MP2),[24]  Coupled  Cluster  (CC)  approaches,[25]  and                     grals required in ab-initio calculations,[30–33] to perform
+Complete  Active  Space  methods  such  as  CASSCF[26]                       Hartree-Fock[34, 35] (HF) and Density Functional The-
+and  CASPT2.[27]  However,  the  prefactor  of  a  typical                   ory (DFT) calculations,[36–38] and to study model sys-
+AFQMC  calculation  is  relatively  large.    Recently  we                   tems such as the Hubbard Model within the dynamical
+have introduced a correlated sampling (CS) approach for                      cluster  approximation[39]  and  the  Ising  model.[40,  41]
+quantities involving energy diﬀerences which is capable of                   In  addition  there  have  been  recent  GPU  implemen-
+reducing computational prefactors by approximately an                        tations  of  MP2,[42–45]  CC  methods,[46]  TDDFT,[47]
+order of magnitude.[20] In this work we present a diﬀer-                     Conﬁguration  Interaction  (CI),[48,  49]  and  CASSCF
+ent but complementary strategy involving hardware op-                        approaches.[50,  51]  Eﬃcient  algorithms  to  compute  en-
+timization  on  graphical  processing  units  (GPUs)  which                  ergy  gradients[52,  53]  and  tensor  contractions[54]  have
+can  drastically  reduce  the  prefactors  in  calculations  of              also been developed.
+general ground-state properties.                                                With respect to Quantum Monte Carlo (QMC) meth-
+  GPUs have several distinct advantages over traditional                     ods,  GPU  implementations  have  been  formulated  pri-
+Central  Processing  Units  (CPUs),  including  the  ability                 marily for real-space approaches.  For example, Diﬀusion
+                                                                             Monte Carlo (DMC) with sp arithmetic has been accel-
+                                                                             erated by a factor of∼6x on a GPU versus a quad-core
+                                                                             CPU.[55] A recent study employing a multi-GPU imple-
+∗ js4564@columbia.edu
+                                                                             mentation has reported speed-ups of a factor of 10-15x
+                                                                                                                                                  2
+
+relative  to  a  quad-core  CPU  for  Variational  and  Diﬀu-               form[60, 61]
+sion  MC  for  real  materials.[56]  Very  recently  an  open-                                      ∫ ∞        (e− 1     )   √
+source QMC suite, QMCPACK,[57] has released scalable                                     1                           2x2α      ∆τxαˆvα,         (2)
+implementations of real-space methods including Varia-                                 e 2 ∆τ ˆv2α =              √         e
+                                                                                                     −∞dxα           2π
+tional, Diﬀusion, and Reptation MC. An implementation                       the   imaginary-time   propagator   can   be   expressed   as
+of auxiliary-ﬁeld QMC is mentioned in Ref.  57, although                    an  exponential  of  a  one-body  operator  integrated  over
+data  illustrating  its  eﬃciency  and  accuracy  is  not  yet              auxiliary-ﬁelds
+available.                                                                                                  ∫
+  In this paper we detail our GPU implementation of the                                        e−∆τ ˆH =       dxP (x) ˆB(x).                    (3)
+phaseless variant of auxiliary-ﬁeld QMC (ph-AFQMC),
+and illustrate its performance and accuracy via calcula-                    This  integral  is  evaluated  using  a  Monte  Carlo  tech-
+tions  of  the  total  energies  of  linear  chains  of  hydrogen           nique  in  which  the  wavefunction  is  represented  as  a
+atoms and the all-electron ionization potentials (IPs) of                   weighted  sum  of  Slater  determinants.   A  theorem  due
+the  ﬁrst-row  transition  metal  (TM)  atoms.   We  explic-                to Thouless[62] enables the propagation of the Slater de-
+itly compare our GPU wall-times with comparable CPU                         terminants along “paths” deﬁned by a set of auxiliary-
+timings.   Speed-ups  from  the  GPU  port  of  two  orders                 ﬁelds, which in practice can be accomplished via matrix-
+of magnitude are seen in large systems, with the poten-                     matrix  multiplications.    Each  auxiliary-ﬁeld  is  shifted
+tial  for  even  greater  reductions  of  the  scaling  prefactor           by  a  force-bias  chosen  to  minimize  the  ﬂuctuations  in
+depending on the system-size.  The robustness and accu-                     a walker’s weight.  With this choice the weights are up-
+racy of our implementation are shown by comparing our                       dated  after  each  propagation  step  by  a  factor  propor-
+calculated values to either exact numerical techniques or                   tional  to e−∆τEL,  where  the  local  energy  is  deﬁned  as
+experiment.
+  Our paper is organized as follows: In Sec. II we provide                  EL  = ⟨ψT| ˆH|φ⟩⟨ψT|φ⟩  ,  and|ψT⟩  is  a  trial  wavefunction,  typ-
+a concise review of AFQMC and the phaseless constraint.                     ically  taken  as  a  single  Slater  determinant  or  a  linear
+In Sec.  III we detail our GPU implementation and high-                     combination of determinants.
+light  signiﬁcant  algorithmic  additions.   In  Sec.   IV  and                For the Coulomb interaction, the propagator in Eq. (3)
+V we present timing and accuracy results for the hydro-                     has  an  imaginary  component  which  rotates  the  walker
+gen  chains  and  TM  IPs,  respectively,  and  comment  on                 orbitals  and  weights  in  the  complex  plane,  leading  in-
+the advantages of the correlated sampling approach.  In                     evitably  to  divergences  and  an  exponentially  decaying
+Sec.  VI we conclude with a summary of our results and                      signal to noise ratio.  The phaseless approximation can
+a discussion of future work.                                                be used to constrain the weights to be real and positive.
+                                                                            This involves taking the real-part of the local energy, and
+                                                                            multiplying  the  resulting  weights  by max{0,cos(∆θ)},
+         II.    BRIEF OVERVIEW OF AFQMC                                     where  ∆θ  = Im{ln⟨ψT|φτ+∆τ⟩
+                                                                                                        ⟨ψT|φτ⟩ }.   The  latter  breaks  the
+  Detailed expositions of AFQMC and the phaseless con-                      rotational symmetry of the random walk in the complex
+straint can be found elsewhere.[1, 3, 20] In this section we                plane by choosing a unique gauge for|Φ0⟩ (and eliminates
+highlight only aspects that are directly relevant to this                   walkers whose weights have undergone phase rotations in
+work.                                                                       excess of±π2 ).  We note that the severity of the phaseless
+  The  ground  state  of  a  many-body  wavefunction |Φ⟩                    constraint can be systematically reduced with the use of
+can  be  obtained  via  imaginary-time  propagation,  i.e.                  trial wavefunctions which even more closely represent the
+limN→∞(e∆τ(E0− ˆH))N|Φ⟩  =|Φ0⟩,  if⟨Φ0|Φ⟩⁄=  0.   The                       true ground-state.
+
+general electronic Hamiltonian is
+        M∑                         M∑                                                    III.    GPU IMPLEMENTATION
+  ˆH =           ∑                           ∑
+             Tij      c†iσcjσ+ 12      Vijkl      c†iσc†jτclτckσ,  (1)         In contrast to traditional computing paradigms which
+         ij       σ               ijkl        σ,τ
+                                                                            utilize CPUs to execute all computing tasks, we employ
+whereM is the size of an orthonormal one-particle basis,                    a strategy in which CPUs oﬄoad a majority of the com-
+σ  and τ  denote  electron  spin,  and c†iσ  and ciσ  are  the              putational eﬀort to one or more GPU cards.  A typical
+second-quantized fermionic creation and annihilation op-                    GPU  device  has  4-12  GB  of  memory  which  is  separate
+erators. The matrix elements,Vijkl, can be expressed as a                   from  that  accessible  by  the  CPU;  therefore,  data  must
+sum over products of three-index quantities via Cholesky                    be  allocated  on  both  the  host  and  device,  and  inter-
+decomposition[12] (CD) or Density-Fitting[58] (DF) pro-                     communication  between  these  diﬀerent  memory  spaces
+cedures, allowing Eq.  (1) to be written as the sum of all                  requires the explicit copying of data back and forth.  In
+one-body operators plus a two-body operator of the formˆH2 =− 1∑            this  work  great  care  is  taken  to  minimize  such  trans-
+          2    α ˆv2α.                                                      fers, and we create custom memory structures that orga-
+  After utilizing a Trotter-Suzuki decomposition[59] and                    nize memory addresses and facilitate switching between
+the Hubbard-Stratonovich transformation written in the                      sp and double-precision (dp).
+                                                                                                                                                   3
+
+  Once the relevant data resides on the GPU(s), we sim-
+ply  call  Nvidia’s  Compute  Uniﬁed  Device  Architecture
+(CUDA)  Basic  Linear  Algebra  Subprograms  (cuBLAS)
+library  whenever  possible,  e.g.,  to  execute  the  matrix-
+matrix  multiplications  that  propagate  walker  determi-
+nants.  However,  our largest speed-ups relative to CPU
+execution are obtained by writing custom C/CUDA func-
+tions for all signiﬁcant parts of the code, e.g.  calculation
+of the force-bias, local energy, etc.
+  A relatively new addition to the cuBLAS library are so-
+called ”batched” functions which perform many smaller
+operations  simultaneously,  e.g.   a  set  of  matrix-matrix
+multiplies  or  lower-upper  (LU)  decompositions.   These
+batched functions are well-suited for operations that are
+individually  too  small  to  parallelize  eﬀectively  across
+thousands of cores.  We utilize this feature heavily in our
+implementation of Sherman-Morrison-Woodbury (SMW)
+updates to quickly compute equal-time Green’s functions                      FIG. 1:  Propagation time vs the number of conﬁgurations in the
+when  multi-determinant  trial  functions  are  used.    We                         CASSCF trial wavefunction for the Mn atom in the
+note  that  previous  Diﬀusion  MC  studies  have  utilized                   aug-cc-pwCVQZ-DK basis.  Calculations use sp, a CD threshold
+similar SMW updates,[56, 63, 64] and Ref.  65 has also                      of 10−4Ha, 20 walkers and imaginary-time trajectories of length 1
+presented fast updates and memory-saving techniques for                            Ha−1 with a time step of ∆τ = 0.005 Ha−1.  Walker
+multi-determinant  CI  trial  wavefunctions  in  AFQMC.                           orthonormalization and local energy measurements were
+                                                                                        performed every 2 and 20 steps, respectively.
+Given  a  reference  matrix A,  the  following  formulas  are
+used to compute the determinants and inverses of matri-
+ces which diﬀer from A by one or more row or column:                        in the spin-free case (for simplicity), are of the form:
+
+det(A +UiVTi  ) =det(I +VTi A−1Ui)det(A)                                                       ∑
+(A +UiVTi  )−1 =A−1−A−1Ui(I +VTi A−1Ui)−1VTi A−1.                                Yijab =∑           LαikLαjl[ψ†T,akψ†T,bl−ψ†T,alψ†T,bk],     (5)
+                                                                                            kl   α
+                                                                   (4)
+In the context of ph-AFQMC, suppose we use a multi-                         where theLα arise from decomposing the two-electron in-
+determinant  trial  wavefunction, |ΨT⟩  = ∑                                 tegrals via CD or DF (Vijkl =∑αLαikLαjl), indicesi,j,k,l
+                                                         i=0ci|ψT,i⟩,       run from 1 toM (basis size) while indicesa,b run from 1
+where⟨ψT,i|ψT,j⟩ =δij.  Then, for the kth walker deter-                     toN (number of electrons). ψT  is a matrix with columns
+minant|φk⟩, A = [ψT,i=0]†[φk], where the square brack-                      composed  of  the  orbitals  in  the  trial  function.   Impor-
+ets denote a matrix representation, Ui,Vi  are of dimen-                    tantly, the sums over k,l and over auxiliary-ﬁelds α, the
+sion Nσ  x Ei,  where Nσ  is  either  the  number  of  spin-                number  of  which  typically  scales  as  2-10M,  need  only
+up or spin-down electrons, and Ei  is the number of ex-                     be computed once at the start of the simulation.  Using
+citations  required  to  form  the ith  conﬁguration  of  the               Eq.   (5)  the  energy  expression  is  then  recast  in  terms
+multi-determinant  expansion  from  the  reference  conﬁg-                  of  large  matrix  operations  in  order  to  realize  maximal
+uration.   The  determinant  and  inverse  of  the  reference               GPU-acceleration.
+matrix corresponding to zero excitations (i = 0) is com-                       Finally we introduce the use of DF in AFQMC calcu-
+puted ﬁrst for spin-up and spin-down conﬁgurations, fol-                    lations, where eﬀective densities ¯ρij(r) are ﬁt to auxiliary
+lowed by batched SMW updates for all i⁄= 0.  Sub-cubic                      basis functions, χ(r):
+scaling with respect to particle number is achieved since
+Ei <<Nσ. Fig. 1 highlights the eﬃciency of our batched                                     ∫
+implementation of the SMW algorithm, for the Mn atom                              Vijkl =      dr1dr2φi(r1)φj(r1)  1r12φk(r2)φl(r2)       (6)
+in the aug-cc-pwCVQZ-DK basis (185 basis functions, 25                                     ∫
+electrons).   “Propagation  time”  denotes  the  total  wall-                           ∼      dr1dr2 ¯ρij(r1)  1
+time  minus  the  time  spent  on  initial  setup,  e.g.,  mem-                                                 r12 ¯ρkl(r2),                       (7)
+ory allocation, input/output, and precomputation of the
+operators and required intermediates.  Previously, going                    where  ¯ρij(r)  = ∑µdijµχµ(r).    By  construction, µ <
+from,  e.g.,  10 to 1200 determinants would multiply the                    M,  typically  reducing  the  number  of  auxiliary-ﬁelds  in
+propagation  time  by  a  factor  of  120.   In  contrast,  our             AFQMC to∼2M.  In addition to reducing the memory
+SMW algorithm reduces this to a mere factor of 3.9.                         footprint  and  speeding  up  the  calculation  of  the  force-
+  We  have  developed  a  GPU-optimized  algorithm  for                     bias and the assembly of the one-body operator in Eq.
+evaluating the local energy of a walker.  4-index tensors                   (2), fewer auxiliary-ﬁelds generally leads to a reduction
+are precomputed once at the start of a simulation, which,                   in statistical noise.
+                                                                                                                                                4
+
+     IV.    ILLUSTRATION WITH HYDROGEN                                     means of decomposing the two-electron terms are shown
+                             CHAINS                                        in Fig.  2.  For H60 DF is 2.0x faster than CD in sp and
+                                                                           1.5x faster in dp.  Sp is 2.1x faster than dp when DF is
+  In this section we explore the eﬀects on both computa-                   used, and 1.6x faster using CD. Generally we ﬁnd that the
+tional eﬃciency and accuracy due to the use of sp vs dp,                   relative speed-ups aﬀorded by sp over dp, and DF over
+and DF vs CD for linear chains of hydrogen atoms. These                    CD,  increase  with  system  size.   The  non-monotonicity
+systems have played an important role in benchmarking                      of the propagation times vs system size is a unique and
+new theories of correlated electronic materials.[7, 21, 66–                rather unexpected artifact of the GPU architecture, and
+70]  While  these  systems  do  not  capture  many  nuances                we observe that the sp (dotted) and dp (lines) trajecto-
+of  more  realistic  molecular  systems,  they  are  neverthe-             ries move together, suggesting a diﬀerent treatment of sp
+less a useful prototype capable of (1) yielding wall-time                  and dp at the hardware level.  At this time our CPU code
+and scaling insights due to the ability to systematically                  optimized with the SMW formula and precomputing al-
+increase the system size, (2) providing an atomistic ana-                  gorithms is not able to treat unrestricted trial functions.
+logue of well-studied model systems such as the Heisen-                    For  the  sake  of  fair  comparisons  we  will  compare  CPU
+berg  and  Hubbard  models  albeit  with  a  more  realistic               vs GPU timings only for restricted (multi-determinant)
+description of long-range Coulomb interactions, while (3)                  trials.
+exhibiting strong static correlation at large bond lengths.
+
+
+                A.    Computational Details
+
+  For all hydrogen chain calculations we use the cc-pVDZ
+basis,  for which there is abundant benchmark data.[21]
+In this basis there are 5 basis functions per electron,  a
+notably  smaller  number  than  used  in  typical  molecular
+calculations.  The Weigend Coulomb-ﬁtting basis set[71]
+is  employed  as  the  auxiliary  basis  for  DF,  and  CDs  in
+this section employ a threshold of 10−5Ha (as chosen in
+Ref.  21).
+  We  use  PySCF[72]  to  compute  all  inputs  required  of
+our ph-AFQMC code.  Unless otherwise speciﬁed we use
+an imaginary-time step of 0.005 Ha−1.  Walker orbitals
+are orthonormalized after every two propagation steps, to
+preserve the anti-symmetry of the walker conﬁgurations                       FIG. 2:  Propagation time using 1 GPU for hydrogen chains of
+and also to keep the magnitude of orbital coeﬃcients and                      varying lengths, comparing two types of two-electron integral
+associated quantities as small as possible (thus extending                   decompositions, DF vs CD with a 10−5 cutoﬀ, within both sp
+the accuracy of sp).  We employ the hybrid method of ph-                        and dp.  UHF trial functions are used, and 24 walkers are
+AFQMC[11] to minimize evaluations of the local energy,                       propagated for an imaginary-time segment of length 1 Ha−1.
+which  is  measured  every  0.1 Ha−1.   The  total  number
+of walkers is ﬁxed throughout each simulation, and when                       In  Table  I  we  benchmark  the  performance  of  ph-
+required we use a population control (PC) algorithm at                     AFQMC  with  CD  using  multi-determinant  trial  func-
+intervals of 0.1 Ha−1.  Long imaginary-time runs utiliz-                   tions.  Compared to our CPU code in dp, which also uses
+ing PC use a reblocking analysis[73] to obtain statistical                 SMW and precomputing in the measurements of the local
+errors  uncontaminated  by  autocorrelation.   All  calcula-               energies, our GPU-accelerated code in sp achieves large
+tions are run on Nvidia GeForce GTX 1080 GPUs, with                        speed-ups ranging from 87.2x with two determinants to
+2.1 GHz Intel Xeon CPUs.                                                   670.1x with 1000 determinants.  Importantly we ﬁnd that
+                                                                           the relative speed-up increases with the number of deter-
+                                                                           minants present in the trial function. Apart from roughly
+                          B.    Timings                                    a factor of 2 in time due to the use of sp on the GPU,
+                                                                           the chief source of the speed-ups is the batched nature of
+  Employing  an  unrestricted  HF  trial  for  ph-AFQMC                    the evaluation of mixed-expectation values involving the
+has  been  shown  to  produce  very  accurate  energies  for               trial wavefunction.
+hydrogen chains near their equilibrium bond lengths.[21]                      To parallelize across GPU cards on a single node, we
+Using a bond length of 1.880(2) Bohr as given by Density                   divide  the  total  number  of  walkers  into  subsets  which
+Matrix Renormalization Group (DMRG) in the cc-pVDZ                         are independently propagated and measured on diﬀerent
+basis, we compare propagation times using a single GPU                     GPU cards.  We use Open Multi-Processing (OpenMP)
+card for an increasing number of hydrogen atoms.  Sam-                     to  achieve  shared-memory  parallelization  of  the  CPU
+ple propagation times for several variants of precision and                threads, and to each CPU thread we associate a partner
+                                                                                                                                                      5
+
+
+                                       TABLE I: Propagation times (in seconds) for an H50 chain with a
+                                     varying number of determinants that comprise the trial wavefunction.
+                                   We use CD with a 10−5 cutoﬀ, and show the speed-up of a single GPU in
+                                                            sp over a single CPU in dp.
+
+                                               Ndet = 2 Ndet = 50 Ndet = 100 Ndet = 500 Ndet = 1000
+                                   GPU sp   99.9         105.3         111.8           158.0           218.7
+                                   CPU dp   8775.2     15019.7     22993.7       79713.3       148544.2
+                                   Speed-up  87.8x       142.7x       205.6x         504.6x         679.1x
+
+
+GPU device. Fig. 3 highlights the near-unity parallel eﬃ-                     Bohr, and compare with results from a recent study[21]
+ciency of our implementation, deﬁned as the multi-GPU                         presenting data from state-of-the-art methods including
+speed-up  over  1  GPU  divided  by  the  number  of  GPUs                    ph-AFQMC,  DMRG,  and  restricted  CCSD(T),  among
+utilized.                                                                     others.   DMRG  is  essentially  exact  for  one-dimensional
+                                                                              systems,[66] and RCCSD(T) is expected to provide a high
+                                                                              level of accuracy as the bond-length is near its equilib-
+                                                                              rium value.[74]
+                                                                                 Our GPU results are shown in Table II along with the
+                                                                              previously  published  data.   The  diﬀerences  in  the  total
+                                                                              energies of sp vs dp for our GPU calculations are 1.2(9)
+                                                                              mHa for DF and 0.7(8) mHa for CD. Importantly, both
+                                                                              of these are smaller than the resolution required for chem-
+                                                                              ical accuracy (1.6 mHa), conﬁrming that for this system
+                                                                              size we can take advantage of the hardware-optimized sp
+                                                                              arithmetic  on  the  GPU  without  incurring  a  signiﬁcant
+                                                                              loss of accuracy.
+
+                                                                               TABLE II: Total electronic energies [Ha] of H50 at R = 1.8 Bohr
+                                                                                in the cc-pVDZ basis.  Propagation times [hours] are presented
+                                                                               using 8 CPU/GPU pairs.  We use 1000 walkers propagated for a
+                                                                                         length of 200 Ha−1 (including equilibration).
+
+
+FIG. 3:  Parallel eﬃciency of our ph-AFQMC code illustrated on                                          Electronic Energy  Propagation Time
+H50.  We use a CASSCF trial wavefunction with 44 determinants,                  GPU sp DF             -125.2107(7)          14.6
+and 800 walkers propagated for 0.5 Ha−1 with ∆τ = 0.01 Ha−1.                    GPU dp DF            -125.2119(6)          31.4
+                                                                                GPU sp Chol           -125.2239(6)          27.8
+  To  treat  larger  system  sizes  we  have  implemented  a                    GPU dp Chol          -125.2246(5)          45.2
+local  memory  strategy  which  spreads  slices  of  the  4-                    CPU dp Ref. 21       -125.2242(8)
+dimensional  tensors  in  Eq.   (5)  across  8  cards  for  the                 RCCSD(T) Ref. 21  -125.2067
+entire  simulation.   At  the  intervals  where  the  energy  is                DMRG Ref. 21        -125.2210(1)
+measured, the random walkers propagated on, e.g., GPU
+0  are  sent  to  GPUs  1-7  to  compute  the  components  of                    DF produces about half the number of auxiliary-ﬁelds
+the two-electron energy derived from the elements stored                      compared with CD (550 vs 1105), reducing propagation
+locally  on  GPUs  1-7.   This  is  done  simultaneously  for                 times by a factor of 1.9 for sp and 1.4 for dp.  In terms of
+walkers on all GPUs, after which the energy components                        the resulting accuracy, it is well known that while the DF
+are gathered and tallied for each walker.  The nodes uti-                     decomposition may not be suﬃcient to produce total en-
+lized have 8 GPU cards each with 8 GB of RAM. Using                           ergies within chemical accuracy, it can recover sub-mHa
+DF and sp, this local memory-slicing algorithm enables                        accuracy in the calculation of relative energies.[75, 76] In-
+us to treat systems as large as H100  in the double-zeta                      deed, we ﬁnd that for the total energy of H50 DF diﬀers
+basis (M = 500, N = 100).                                                     from CD with a 10−5  cutoﬀ by 13.2(9) mHa in sp and
+                                                                              12.7(8) mHa in dp, respectively.  Yet to put these errors
+                          C.    Accuracy                                      into context we note in passing that DF ph-AFQMC in
+                                                                              both sp and dp produces total energies for this system
+                                                                              that are closer to the DMRG reference by∼ 4 mHa than
+  To  benchmark  the  accuracy  of  our  algorithm  when                      RCCSD(T),  known  to  many  as  the  “gold  standard”  of
+sp  and  DF  are  used,  we  compute  the  total  energy  of                  quantum chemistry.[77, 78]
+H50  in  the  cc-pVDZ  basis  with  a  bond  length  of  1.8                     To conclude this section we illustrate the capacity of
+                                                                                                                                                   6
+
+DF and more aggressive CD truncation thresholds to re-                         To compare calculations in ﬁnite basis sets to exper-
+cover chemically accurate energy diﬀerences for the de-                     iments  we  extrapolate  the  correlation  energies  to  the
+protonation  of  methanol.   Table  III  shows  errors  of∼3                Complete Basis Set (CBS) limit using two data points ﬁt
+mHa for the total energies of the neutral and deproto-                      to 1/x3  (x = 3, 4 for TZ,QZ).[14, 80, 83] We conﬁrmed
+nated species; however the deviation of the energy diﬀer-                   for a subset of the atoms that the inclusion of the aug-
+ence from that of the most stringent CD cutoﬀ is negligi-                   cc-pwCV5Z-DK energies did not signiﬁcantly change the
+ble, taking statistical errors into account.  In this molec-                extrapolated results, consistent with Ref.  80.  Following
+ular case, compared to H50, we ﬁnd a more pronounced                        Ref.  79  and  our  own  observation  that  the  HF  energies
+reduction  in  the  number  of  auxiliary-ﬁelds,  implying  a               converge relatively quickly in this sequence of basis sets,
+∼4x speed-up (vs∼2x for the hydrogen chain) over CD                         we use the 5Z value for the CBS HF energies.
+with a 10−5 threshold.                                                         The  Trotter  error  due  to  ﬁnite  imaginary-time  dis-
+TABLE III: Accuracy of DF and CDs with various cutoﬀs for the               cretization can be extrapolated to 0 using progressively
+     deprotonation energy of methanol.  Sp is used, and long                smaller time steps.  Here we use ∆τ  = 0.005, 0.01, and
+imaginary-time trajectories are stabilized with PC. NAFs denotes            0.02 Ha−1.  For Co through Zn we compared the CBS
+              the resulting number of auxiliary-ﬁelds.                      estimate  from  such  an  extrapolation  with  values  from
+                                                                            the  smallest  time-step  only,  ∆τ  =  0.005 Ha−1.   In  the
+            NAFs  MeOH           MeO−           ∆E− ∆ECD10−6                latter approach we observe a substantial yet systematic
+DF          142     -155.8503(4)  -148.5340(7)  -0.0004(10)                 cancellation of error, and CBS estimates of equivalent ac-
+CD 10−2  187     -155.8144(6)  -148.4985(4)  -0.0008(10)                    curacy compared to the 3-point extrapolation approach
+                                                                            are shown in Table V. In light of this data we use only
+CD 10−3  385     -155.8531(4)  -148.5357(4)  0.0007(9)                      ∆τ = 0.005 Ha−1 for all calculations.
+CD 10−4  471     -155.8542(4)  -148.5366(4)  0.0009(9)                         Details of the CS procedure can be found in Ref.   20.
+CD 10−5  617     -155.8544(4)  -148.5371(3)  0.0007(8)                      In short, we run a set of independent calculations called
+CD 10−6  855     -155.8533(5)  -148.5366(4)  0                              repeats,  each  of  which  uses  a  distinct  random  number
+                                                                            seed to propagate both the neutral and cationic species
+                                                                            such  that  pairs  of  walkers  sample  the  same  auxiliary-
+                                                                            ﬁelds.   After  an  initial  equilibration  period,  cumulative
+    V.    IPS OF TRANSITION METAL ATOMS                                     averages  of  the  energy  diﬀerence  are  computed  along
+                                                                            each of the imaginary-time trajectories, and are averaged
+  In  this  section  we  compute  the  IPs  of  the  ﬁrst-row               among the set of repeats to obtain an estimate of statis-
+TM atoms correlating all electrons, and compare the cal-                    tical error.  In the present case, stochastic error cancel-
+culated ph-AFQMC results to experiment and previous                         lation  leads  to  a  pronounced  reduction  in  the  variance
+electronic structure calculations.                                          of the IPs, and allows converged measurements to be at-
+                                                                            tained  at  short  imaginary  times.   We  will  show  in  the
+                                                                            next section that this leads not only to signiﬁcant reduc-
+                 A.    Computational Details                                tions in computational cost, relative to the uncorrelated
+                                                                            approach, but also to systematically improved accuracy.
+  Our  computational  protocol  begins  with  a  restricted
+(open-shell) HF calculation.  We visually inspect the oc-                                     B.    Results and Discussion
+cupied  orbitals  of  this  solution  to  ensure  that  the  elec-
+tron conﬁgurations shown in Table IV are obtained.  For
+some atomic species, HF provides a qualitatively incor-                        Tables VI and VII summarize our results for the all-
+rect  description  of  the  single-particle  orbital  occupan-              electron IPs of the ﬁrst-row TM atoms.  We show values
+cies, requiring initialization from custom density matri-                   obtained from both PC and CS ph-AFQMC approaches,
+ces to converge subsequent HF calculations to the target                    and compare with experimental and CCSD(T) values.
+ground-state  conﬁgurations.   We  note  that  for  the  V+                    The active spaces employed for the neutral and cationic
+cation  the  initial  density  matrix  guess  was  constructed              species in the TZ and QZ basis sets are described in de-
+with  the L  =  2  orbital  unoccupied.    In  all  cases  the              tail in Tables VIII and IX. In general,  the use of trun-
+canonical  HF  orbitals  are  used  to  initialize  a  restricted           cated  CASSCF  trial  wavefunctions  in  ph-AFQMC  in-
+CASSCF calculation.                                                         volves subtleties that require careful consideration, since
+  All ph-AFQMC calculations in this section use a CD                        the CASSCF calculation itself becomes a pre-processing
+cutoﬀ of 10−4.  We utilize basis sets that have been op-                    element  of  higher  computational  scaling,  and  the  trun-
+timized to account for scalar relativistic eﬀects[80], and                  cation breaks size extensivity.  This approach is viable if
+use the spin-free exact two-component approach[81, 82]                      the ph-AFQMC result converges quickly with trial wave-
+to  decouple  the  electronic  degrees  of  freedom  from  the              functions generated from active spaces much smaller than
+Dirac equation.  This approximation produces one-body                       the full Hilbert space.  For atoms and molecules this is
+terms which we simply add to the non-relativistic Hamil-                    typically the case, and an internal validation procedure
+tonian in Eq.  (1).                                                         within  ph-AFQMC  can  be  employed  involving  a  series
+                                                                                                                                                          7
+
+
+                      TABLE IV: Target electron conﬁgurations and spin-multiplicities (2S + 1), from Refs.  79 and 80.
+
+                       System       Sc        Ti        V         Cr        Mn       Fe        Co        Ni        Cu         Zn
+                       Neutral       4s23d1  4s23d2  4s23d3  4s13d5  4s23d5  4s23d6  4s23d7  4s23d8  4s13d10  4s23d10
+                       Spin Mult.  2          3          4          7          6          5          4          3          2            1
+                       Cation        4s13d1  4s13d2  3d4       3d5       4s13d5  4s13d6  3d8       3d9       3d10       4s13d10
+                       Spin Mult.  3          4          5          6          7          6          3          2          1            2
+
+
+
+        TABLE V: Comparison of CBS IPs [eV] for Co, Ni,                          TABLE VII: Same as Table VI, but for atoms in the right-half of
+          Cu, and Zn with ∆τ → 0 vs ∆τ = 0.005 Ha−1                                                              the row.
+               computed in sp with ph-AFQMC/PC.
+                                                                                                        Fe         Co        Ni         Cu        Zn
+                             Co        Ni         Cu        Zn                     ph-AFQMC/PC  7.86(2)  7.89(3)  7.59(3)  7.55(3)  9.37(3)
+       Expt.                    7.87      7.59      7.73      9.39                 ph-AFQMC/CS  7.89(2)  7.87(3)  7.61(2)  7.68(3)  9.37(3)
+       ∆τ→ 0                7.87(3)  7.61(3)  7.54(3)  9.33(4)                     Expt.                   7.90      7.87      7.59      7.73      9.39
+       ∆τ = 0.005Ha−1  7.89(3)  7.59(3)  7.55(3)  9.37(3)                          CCSD(T)            7.89      7.88      7.59      7.72      9.37
+
+
+  TABLE VI: Calculated ph-AFQMC IPs [eV] in the CBS limit
+    computed with sp and ∆τ = 0.005 Ha−1, compared with                         5p orbitals with ﬁve 4d in the CASSCF active space to
+    experimental and CCSD(T) values.  Experimental IPs have                     accommodate the double-shell eﬀect.
+                  spin-orbit contributions removed.
+                                                                                   The case of Cu proves to be particularly challenging,
+                        Sc         Ti         V          Cr         Mn          and illustrates an additional merit of the CS approach.
+  ph-AFQMC/PC  6.51(1)  6.71(2)  6.74(1)  6.75(2)  7.41(2)                      A  trial  function  with  18  active  orbitals  approaches  the
+                                                                                memory limit of traditional CASSCF solvers, but is still
+  ph-AFQMC/CS  6.52(3)  6.80(3)  6.74(3)  6.74(3)  7.45(3)                      insuﬃcient  to  produce  results  of  the  desired  accuracy
+  Expt.                   6.56      6.83      6.73      6.77      7.43          within ph-AFQMC/PC. With additional active orbitals,
+  CCSD(T)            6.54      6.81      6.73      6.79      7.42               approximate  CASSCF  solvers  utilizing  DMRG[86]  did
+    Ref.  80                                                                    converge,  but  only  a  subset  of  the  resulting  conﬁgura-
+                                                                                tions and CI coeﬃcients could be accessed with the cur-
+                                                                                rent implementation of selected CI in PySCF. Even with
+of  calculations  using  various  active  space  and  truncta-                  moderate selection cutoﬀs, when such a wavefunction was
+tion  cutoﬀs.   In  particular,  for  Fe-Zn  we  started  by  in-               used as a trial function in ph-AFQMC we found a sig-
+cluding the 4s and 3d electrons in an active space com-                         niﬁcant increase in statistical error, in addition to larger
+posed of 13 active orbitals.  While the resulting truncated                     deviations of the resulting IP from experiment.
+CASSCF trial wavefunctions produced suﬃciently accu-                               In  contrast  to  regular  ph-AFQMC/PC,  which  stabi-
+rate  ph-AFQMC/PC  results  in  the  CBS  and  ∆τ →  0                          lizes  long  imaginary-time  trajectories,  a  key  advantage
+limits for Co, Ni, and Zn, 18 orbitals were required in the                     of the CS approach is that averaging among independent
+case of Fe.  The improvement in the IP resulting from the                       repeats  at  short  times  allows  for  not  only  a  vast  vari-
+inclusion of a second shell of d orbitals in the CASSCF                         ance reduction when the auxiliary ﬁelds are correlated,
+active space is a manifestation of the so-called “double-                       but also the ability to converge measurements of the en-
+shell” eﬀect.[84, 85] We ﬁnd that this eﬀect is less pro-                       ergy diﬀerence before the full onset of the bias that results
+nounced in the case of all-electron ph-AFQMC since the                          from the phaseless constraint.  Even though the phaseless
+application ofe−τ ˆH  to walker conﬁgurations can explore                       approximation is made after each time step, the walker
+the space of excitations into virtuald orbitals even if such                    weights at early times stay relatively closer to their true
+excitations are not represented in the trial function.                          unconstrained values than at long times when the phase-
+   For the left half of the 1st row of transition metals in                     less constraint has fully equilibrated. To illustrate this we
+the periodic table, Sc-Mn, we designate the 3p electrons                        plot the IP of Cu in the TZ basis at short imaginary-times
+as active in addition to the 4s and 3d electrons.  In an                        in Fig.  4.  At longer imaginary times (not shown),  the
+eﬀort to maintain consistency (i.e.  to include HF virtuals                     CS IP eventually returns to the ph-AFQMC/PC result,
+of similar character in the initial guesses for the CASSCF                      yet from 2-7Ha−1, ph-AFQMC/CS unambiguously con-
+procedure) among all atoms in the row, for those in the                         verges on an answer consistent with iFCI-QMC, which is
+left-half we start with 16 active orbitals.  This produced                      expected to be very accurate here,[79] and moreover after
+accurate ph-AFQMC/PC results for Sc and Cr.  For V                              CBS extrapolation is within range of chemical accuracy
+we  noticed  a  sharp  drop  in  energy  in  both  the  neutral                 with respect to experiment.
+and cationic species going from 16 to 19 active orbitals;                          The case of Ni is also quite remarkable.  Both CS and
+for Mn an accurate IP required the replacement of three                         PC methods produce IPs consistent with the experimen-
+                                                                                                                                                          8
+
+
+                                   TABLE VIII: Number of active electrons and orbitals in the CASSCF trial
+                                         wavefunctions for the cation/neutral species, and the number of
+                                   determinants kept in the ph-AFQMC trial function accounting for 99.5% of
+                                      the CI weight.  For all species in this table the 3p electrons are active.
+
+                                                    Sc           Ti             V                Cr               Mn
+                                   Active Space  8/9e,16o  9/10e,16o  10/11e,19o  11/12e,16o  12/13e,18o†
+                                   Ndets TZ       146/224  240/442    366/751      303/271      423/584
+                                   Ndets QZ       143/439  293/388    300/903      92/262        852/1266
+                                     † Three 5p orbitals replaced by ﬁve 4d orbitals in the active space.
+
+
+                                    TABLE IX: Same as Table VIII, but for Cu and Zn with 99.0% of the CI
+                                                                     weight retained.
+
+                                                      Fe           Co           Ni             Cu              Zn
+                                     Active Space  7/8e,18o  8/9e,13o  9/10e,13o  10/11e,18o  11/12e,13o
+                                     Ndets TZ       23/227    210/85    138/156    374/322      299/518
+                                     Ndets QZ       23/121    237/66    159/161    504/507      277/526
+
+
+
+                                                                                   TABLE X: Comparison of ph-AFQMC IPs for Ni, as obtained
+                                                                                  with CS and regular ph-AFQMC/PC, with CCSD(T) in triple-
+                                                                                   and quadruple- zeta basis sets and in the CBS limit.[80] The
+                                                                                 CCSD(T) values were obtained with a composite method, namely
+                                                                                  cc-pVxZ-DK results plus a core-valence correction, which is the
+                                                                                  diﬀerence in the cc-pwCVxZ-DK basis of CCSD(T) calculations
+                                                                                      with active spaces deﬁned by 3s3p3d4s and 3d4s orbitals
+                                                                                  (x=T,Q). QMC results used the aug-cc-pwCVxZ-DK basis sets.
+
+                                                                                                   CCSD(T)  ∆QMC/CS  ∆QMC/PC
+                                                                                             TZ    7.68           7.68(1)         7.56(2)
+                                                                                             QZ    7.63           7.64(1)         7.57(1)
+                                                                                             CBS  7.59           7.61(2)         7.59(3)
+
+
+                                                                                the  ability  to  consistently  produce  chemically  accurate
+                                                                                results while using sp is reassuring, given that the total
+       FIG. 4:  Comparison of the IP of Cu as a function of                     energies involved in these calculations are on the order of
+      imaginary-time produced from ph-AFQMC/CS in the                           ∼ -1000Ha. This implies that mHa energy scales require
+        aug-cc-pwCVQZ-DK basis compared to the regular                          precision out to at least 7 signiﬁcant ﬁgures, which would
+ ph-AFQMC/PC result in the same basis.  The i-FCIQMC result                     be stretching the typical capabilities of sp arithmetic in
+   in the aug-cc-pVQZ-DK basis is indicated by a dashed line.                   deterministic algorithms.
+                                                                                   Table  XI  shows  the  total  propagation-times  required
+                                                                                to produce the ﬁnal IPs in Tables VI and VII, which ac-
+tal  value  and  each  other  in  the  CBS  limit,  however  a                  count  for  calculations  of  the  total  energies  of  the  neu-
+detailed  comparison  with  CCSD(T)  values  in  each  ba-                      tral  and  cation  in  the  TZ  and  QZ  basis  sets.    8-core
+sis  set,  shown  in  Table  X,  reveals  that  this  agreement                 CPU times are estimated by scaling the propagation time
+is  due  to  fortuitous  cancellations  of  error.   While  the                 of a small 20 walker system propagated for 1 Ha−1  by
+CCSD(T)  values  approach  the  CBS  limit  from  above,                        the required factors to reproduce the parameters of the
+the ph-AFQMC/PC values approach the same value from                             GPU/PC  calculations,  i.e.   2000  walkers  propagated  in
+below.  ph-AFQMC/CS calculations, on the other hand,                            the TZ/QZ bases for 120/130 Ha−1  for Cr and Fe, and
+produce statistically consistent results with CCSD(T) in                        for  200/230 Ha−1  for  Cu.   We  assume  perfect  parallel
+each basis and in the CBS limit.                                                eﬃciency in projecting our single-core CPU estimates to
+   For the case of Ti we chose to use CS as an alternative                      8-cores.  Obtaining comparable error bars using CS with
+to increasing the size of the active space.  Generally, for                     our GPU code required the propagation of 200 walkers
+all  atoms  in  this  work  CS  results  exhibit  equivalent  or                in the TZ/QZ bases for 5/3 Ha−1 for Cr, 4/3 Ha−1 for
+better  accuracy  compared  to  the  conventional  method                       Cr,  and  10/6 Ha−1  for  Cu.   For  Cr  and  Cu  we  use  16
+of running ph-AFQMC calculations with PC. Moreover,                             repeats in both basis sets, and for Fe we found that only
+                                                                                                                                                   9
+
+5/8  repeats  in  TZ/QZ  are  needed.   We  note  that  the                          VI.    CONCLUSIONS AND OUTLOOK
+larger wall-times for Cu are due to 1) the larger number
+of both particles and determinants in the trial functions                      We  have  designed  a  GPU  implementation  of  ph-
+employed, and 2) the relatively poor trial function (com-                    AFQMC  for  single-  and  multi-determinant  trial  wave-
+pared  to  the  exact  ground  state)  which  leads  to  longer              functions which can drastically reduce the scaling pref-
+propagation  and  equilibration  times  in  the  PC  and  CS                 actor  in  realistic  electronic  structure  calculations  with
+methods,  respectively.  It may be the case that the rel-                    near-unity parallel eﬃciency.  Our strategy utilizes new
+atively  small  atomic  radius  of  Cu  results  in  larger  dy-             batched SMW and energy algorithms, along with the use
+namical correlations compared to the rest of the atoms                       of  sp  and  the  DF  decomposition.   We  validate  perfor-
+in  the  row,  which  are  unaccounted  for  in  the  CASSCF                 mance enhancement with ph-AFQMC calculations of lin-
+trial  wavefunctions  (this  explanation  is  consistent  with               ear chains of hydrogen atoms and the atomic IPs of Sc
+the  relative  diﬃculty  we  encountered  previously  in  cal-               through Zn, ﬁnding speed-ups relative to the CPU in dp
+culating the electron aﬃnity of the ﬂourine atom [20]).                      of two orders of magnitude and which increase with the
+The corresponding speed-ups for these selected atoms are                     number  of  determinants  in  the  trial  wavefunction.   For
+shown in Table XII.                                                          H50  and  TM  IPs,  sp  is  suﬃcient  to  produce  accuracy
+TABLE XI: Total propagation times [hours] required to produce                on  the  scale  of  1  kcal/mol  with  respect  to  exact  meth-
+        the ﬁnal all-electron ph-AFQMC IPs in this work.                     ods and experiment,  respectively.  In this work we also
+                                                                             demonstrate  that  our  previously  outlined  CS  approach
+                                     Cr        Fe        Cu                  to ph-AFQMC enables both additional speed-ups of an
+                                                                             order  of  magnitude,  as  well  as  the  ability  to  converge
+       Est.  8-core CPU PC dp  9784.5  6966.9  34150.3                       measurements before the full onset of the bias due to the
+       8-card GPU PC sp         50.5     47.5     136.4                      phaseless  constraint.   For  all  TM  atoms,  CS  produces
+       8-card GPU CS sp          2.4       0.9       6.0                     equivalent and often more accurate IPs, and in a fraction
+                                                                             of the wall-time.
+                                                                               We  are  optimistic  that  in  the  near  future  the  inves-
+TABLE XII: Speed-ups corresponding to the timings in Table XI.               tigation of many large, realistic systems will be feasible
+        All CPU/GPU calculations use dp/sp respectively.                     with  ph-AFQMC.  In  what  follows  we  anticipate  issues
+                                                                             of scalability and describe the possible solutions we en-
+                                     Cr       Fe       Cu                    vision.  To enable large-scale calculations that eﬃciently
+          GPU PC vs CPU PC  194x   138x   250x                               utilize  available  High-Performance  Computing  clusters,
+          GPU CS vs GPU PC  21x     53x     23x                              we have designed a simple and scalable scheme to paral-
+                                                                             lelize across GPU nodes.  Once a small walker population
+          GPU CS vs CPU PC  4100x  7700x  5700x                              is equilibrated, data can be copied to all available nodes
+                                                                             and used to initialize independent trajectories on sepa-
+  We  conclude  this  section  with  a  few  remarks.   Cur-                 rate  nodes,  each  with  a  diﬀerent  random  number  seed.
+rently  we  use  a  simple  combing  method[87]  to  imple-                  These sub-trajectories can later be combined into a sin-
+ment PC. More sophisticated schemes are possible which                       gle trajectory from which averages and error bars can be
+may improve the statistical accuracy of the calculation.                     obtained.
+While  this  would  slightly  reduce  the  wall-times  for  the                We note that our current memory limitation is rather
+ph-AFQMC/PC method, the accuracy of the results with                         artiﬁcial in the sense that GPU architectures and com-
+respect to experiments will be unchanged, since any bias                     puting  capabilities  are  improving  at  a  rapid  pace,  sug-
+due to PC vanishes when a large population (∼2000 walk-                      gesting that the memory capacity of GPU cards will con-
+ers) is used.  At the time of writing, auxiliary basis sets                  tinue to increase.  Also, Message Passing Interface (MPI)
+optimized for the scalar relativistic Hamiltonian and DK                     could be used to extend our local memory-slice scheme to
+basis  sets  used  in  this  work  are  not  publicly  available.            multiple nodes.  Finally, we note the plausibility of utiliz-
+The ability to use a DF decomposition would certainly                        ing CPU memory to store high-dimensional tensors, rely-
+provide additional speed-ups,  although its eﬀect on ac-                     ing on rapidly improving data transfer rates to send slices
+curacy remains to be tested for these TM systems.  Fi-                       to the GPUs.  At the time of writing, Nvidia’s NVLink
+nally, we note that the capacity of our GPU code to treat                    boasts speeds of∼300 GB/sec on Tesla V100 GPUs. This
+O(1000) determinants in the trial wavefunction will likely                   technology provides a shared virtual memory space and
+enable  the  accurate  study  of  many  strongly-correlated                  in time may completely eliminate the need to explicitly
+systems.  We anticipate that fewer determinants will be                      transfer information from host memory to GPU memory
+needed for metal-ligand complexes (in which the ligand is                    or between two GPU cards on the same node.
+a non-metal), as TM atoms typically exhibit larger static                      The incorporation of additional theoretical approaches
+correlation eﬀects than most coordinated complexes.  In                      that would capture the same level of accuracy with di-
+addition, the use of symmetry constraints in the CASSCF                      minished  computational  cost  are  also  currently  under
+calculations will greatly reduce the number of conﬁgura-                     consideration.   One  possibility  is  the  use  of  Canonical
+tions in the CI expansions.                                                  Transcorrelation  theory  to  produce  an  eﬀective  Hamil-
+                                                                                                                                                     10
+
+tonian with the electron cusps analytically removed,[88]                      spin-  states  of  catalytic  metalloporphyrins[95,  96]  and
+which is related to the Jastrow factor in DMC. We an-                         iron-sulfur clusters,[97] and the computation ofpKas for
+ticipate that this will reduce the number basis functions                     the oxygen evolving complex of Photosystem II.[98] Our
+required to reach the CBS limit.[89, 90] In addition, one                     method may also open the door to the accurate and fully
+may exploit real-space locality in the context of electronic                  ab initio  investigation of strongly correlated solids such
+excitations, which also has the potential to drastically re-                  as high-temperature superconducting materials.[99, 100]
+duce both the current scaling and memory demands.[91–                         These and other targets of study will be the subject of
+93] Lastly,  we note that when sp is insuﬃcient,  mixed-                      future investigations.
+precision  matrix  strategies,  which  are  well-studied  and
+relatively straightforward to implement,[42, 56, 94] may
+be employed.                                                                                VII.    ACKNOWLEDGEMENTS
+  Combining the speed-ups due to the GPU and CS, we
+now have a robust and eﬃcient computational protocol                             JS gratefully acknowledges Mario Motta and Hao Shi
+that  is  approximately  three  orders  of  magnitude  faster                 for providing scripts to initialize HF calculations of hy-
+than  previous  AFQMC  procedures  for  large  systems.                       drogen chains and V+, respectively, and Qiming Sun for
+Once the memory bottleneck is alleviated with the strate-                     help  with  PySCF.  JS  would  also  like  to  thank  Roald
+gies mentioned above,  systems that previously were in-                       Hoﬀmann and Kirk A. Peterson for insightful discussions
+accessible to study with ph-AFQMC will soon be within                         about TM atoms.  DRR acknowledges funding from NSF
+reach.    Future  targets  include  low-energy  redox-  and                   CHE-1464802; SZ from NSF DMR-1409510.
+
+
+
+
+
+  [1]  M.     Motta     and     S.     Zhang,     arXiv     preprint            [20]  J. Shee, S. Zhang, D. R. Reichman,  and R. A. Friesner,
+      arXiv:1711.02242  (2017).                                                      J. Chem. Theory Comput. 13, 2667 (2017).
+  [2]  S. Zhang, J. Carlson,  and J. E. Gubernatis, Phys. Rev.                  [21]  M. Motta, D. M. Ceperley, G. K.-L. Chan, J. A. Gomez,
+      Lett. 74, 3652 (1995).                                                         E. Gull, S. Guo, C. A. Jim´enez-Hoyos, T. N. Lan, J. Li,
+  [3]  S. Zhang and H. Krakauer, Phys. Rev. Lett. 90, 136401                         F.  Ma,  A.  J.  Millis,  N.  V.  Prokof’ev,  U.  Ray,  G.  E.
+      (2003).                                                                        Scuseria,  S. Sorella,  E. M. Stoudenmire,  Q. Sun,  I. S.
+  [4]  W.  Al-Saidi,  S.  Zhang,    and  H.  Krakauer,  J.  Chem.                    Tupitsyn, S. R. White, D. Zgid,  and S. Zhang (Simons
+      Phys. 124, 224101 (2006).                                                      Collaboration  on  the  Many-Electron  Problem),  Phys.
+  [5]  W. Al-Saidi, H. Krakauer,  and S. Zhang, Phys. Rev. B                         Rev. X 7, 031059 (2017).
+      73, 075103 (2006).                                                        [22]  M. Motta and S. Zhang, J. Chem. Theory Comput. 13,
+  [6]  W.  Al-Saidi,  H.  Krakauer,    and  S.  Zhang,  J.  Chem.                    5367 (2017).
+      Phys. 125, 154110 (2006).                                                 [23]  B.-X. Zheng, C.-M. Chung, P. Corboz, G. Ehlers, M.-P.
+  [7]  W. A. Al-Saidi, S. Zhang,   and H. Krakauer, J. Chem.                         Qin, R. M. Noack, H. Shi, S. R. White, S. Zhang,  and
+      Phys. 127, 144101 (2007).                                                      G. K.-L. Chan, Science 358, 1155 (2017).
+  [8]  M. Suewattana, W. Purwanto, S. Zhang, H. Krakauer,                       [24]  C. Møller and M. S. Plesset, Phys. Rev. 46, 618 (1934).
+      and E. J. Walter, Phys. Rev. B 75, 245123 (2007).                         [25]  R. J. Bartlett and M. Musia l, Rev. Mod. Phys. 79, 291
+  [9]  W.  Al-Saidi,  H.  Krakauer,    and  S.  Zhang,  J.  Chem.                    (2007).
+      Phys. 126, 194105 (2007).                                                 [26]  B. O. Roos, Adv. Chem. Phys. , 399 (2007).
+ [10]  W. Purwanto, W. Al-Saidi, H. Krakauer,  and S. Zhang,                    [27]  K.  Andersson,  P.-˚A.  Malmqvist,   and  B.  O.  Roos,  J.
+      J. Chem. Phys. 128, 114309 (2008).                                             Chem. Phys. 96, 1218 (1992).
+ [11]  W. Purwanto, H. Krakauer,  and S. Zhang, Phys. Rev.                      [28]  Y. LeCun, Y. Bengio,  and G. Hinton, Nature 521, 436
+      B 80, 214116 (2009).                                                           (2015).
+ [12]  W. Purwanto, H. Krakauer, Y. Virgus,   and S. Zhang,                     [29]  J.  A.  Anderson,  C.  D.  Lorenz,    and  A.  Travesset,  J.
+      J. Chem. Phys. 135, 164105 (2011).                                             Comput. Phys. 227, 5342 (2008).
+ [13]  Y. Virgus, W. Purwanto, H. Krakauer,   and S. Zhang,                     [30]  I.  S.  Uﬁmtsev  and  T.  J.  Martinez,  J.  Chem.  Theory
+      Phys. Rev. B 86, 241406 (2012).                                                Comput. 4, 222 (2008).
+ [14]  W.  Purwanto,  S.  Zhang,   and  H.  Krakauer,  J.  Chem.                [31]  N. Luehr, I. S. Uﬁmtsev,  and T. J. Mart´ınez, J. Chem.
+      Theory Comput. 9, 4825 (2013).                                                 Theory Comput. 7, 949 (2011).
+ [15]  Y. Virgus, W. Purwanto, H. Krakauer,   and S. Zhang,                     [32]  J. Kalinowski, F. Wennmohs,   and F. Neese, J. Chem.
+      Phys. Rev. Lett. 113, 175502 (2014).                                           Theory Comput.  (2017).
+ [16]  W.  Purwanto,  S.  Zhang,   and  H.  Krakauer,  J.  Chem.                [33]  J. Kussmann and C. Ochsenfeld, J. Chem. Theory Com-
+      Phys. 142, 064302 (2015).                                                      put. 13, 3153 (2017).
+ [17]  F. Ma, W. Purwanto, S. Zhang,  and H. Krakauer, Phys.                    [34]  I.  S.  Uﬁmtsev  and  T.  J.  Martinez,  Comput.  Sci.  Eng.
+      Rev. Lett. 114, 226401 (2015).                                                 10, 26 (2008).
+ [18]  W.  Purwanto,  S.  Zhang,   and  H.  Krakauer,  J.  Chem.                [35]  T. Yoshikawa and H. Nakai, J. Comput. Chem. 36, 164
+      Phys. 144, 244306 (2016).                                                      (2015).
+ [19]  F. Ma, S. Zhang,   and H. Krakauer, Phys. Rev. B 95,                     [36]  K. Yasuda, J. Chem. Theory Comput. 4, 1230 (2008).
+      165103 (2017).                                                            [37]  L.  Genovese,  M.  Ospici,  T.  Deutsch,  J.-F.  M´ehaut,
+                                                                                     A.  Neelov,    and  S.  Goedecker,  J.  Chem.  Phys.  131,
+                                                                                                                                                         11
+
+     034103 (2009).                                                              [64]  T.  McDaniel,  E.  DAzevedo,  Y.  Li,  K.  Wong,    and
+[38]  M.   Hacene,    A.   Anciaux-Sedrakian,    X.   Rozanska,                        P. Kent, J. Chem. Phys. 147, 174107 (2017).
+     D. Klahr, T. Guignon,  and P. Fleurat-Lessard, J. Com-                      [65]  H. Shi and S. Zhang, “In preparation,”  (2018).
+     put. Chem. 33, 2581 (2012).                                                 [66]  J.  Hachmann,  W.  Cardoen,    and  G.  K.-L.  Chan,  J.
+[39]  J.   S.   Meredith,   G.   Alvarez,   T.   A.   Maier,   T.   C.                 Chem. Phys. 125, 144101 (2006).
+     Schulthess,  and J. S. Vetter, Parallel Comput. 35, 151                     [67]  T. Tsuchimochi and G. E. Scuseria, J. Chem. Phys. 131,
+     (2009).                                                                           121102 (2009), https://doi.org/10.1063/1.3237029.
+[40]  T. Levy, G. Cohen,   and E. Rabani, J. Chem. Theory                        [68]  A. V. Sinitskiy, L. Greenman,   and D. A. Mazziotti, J.
+     Comput. 6, 3293 (2010).                                                           Chem. Phys. 133, 014104 (2010).
+[41]  B. Block, P. Virnau,  and T. Preis, Comput. Phys. Com-                     [69]  N. Lin, C. Marianetti, A. J. Millis,  and D. R. Reichman,
+     mun. 181, 1549 (2010).                                                            Phys. Rev. Lett. 106, 096402 (2011).
+[42]  R.   Olivares-Amaya,   M.   A.   Watson,   R.   G.   Edgar,                [70]  L. Stella, C. Attaccalite, S. Sorella,  and A. Rubio, Phys.
+     L. Vogt, Y. Shao,  and A. Aspuru-Guzik, J. Chem. The-                             Rev. B 84, 245117 (2011).
+     ory Comput. 6, 135 (2009).                                                  [71]  F. Weigend, Phys. Chem. Chem. Phys. 8, 1057 (2006).
+[43]  A. E. Doran and S. Hirata, J. Chem. Theory Comput.                         [72]  Q.   Sun,   T.   C.   Berkelbach,   N.   S.   Blunt,   G.   H.
+     12, 4821 (2016).                                                                  Booth,   S.   Guo,   Z.   Li,   J.   Liu,   J.   D.   McClain,
+[44]  C. Song and T. J. Mart´ınez, J. Chem. Phys. 144, 174111                          E.  R.  Sayfutyarova,   S.  Sharma,   S.  Wouters,     and
+     (2016).                                                                           G.  K.  Chan,  WIRES  Comput.  Mol.  Sci.  8,  e1340,
+[45]  L.  Vogt,   R.  Olivares-Amaya,   S.  Kermes,   Y.  Shao,                        https://onlinelibrary.wiley.com/doi/pdf/10.1002/wcms.1340.
+     C.  Amador-Bedolla,    and  A.  Aspuru-Guzik,  J.  Phys.                    [73]  H. Flyvbjerg and H. G. Petersen, J. Chem. Phys. 91,
+     Chem. A 112, 2049 (2008).                                                         461 (1989), https://doi.org/10.1063/1.457480.
+[46]  A. E. DePrince III and J. R. Hammond, J. Chem. The-                        [74]  G. D. Purvis III and R. J. Bartlett, J. Chem. Phys. 76,
+     ory Comput. 7, 1287 (2011).                                                       1910 (1982).
+[47]  C.  M.  Isborn,  N.  Luehr,  I.  S.  Uﬁmtsev,    and  T.  J.               [75]  D. B. Krisiloﬀ, C. M. Krauter, F. J. Ricci,   and E. A.
+     Mart´ınez, J. Chem. Theory Comput. 7, 1814 (2011).                                Carter, J. Chem. Theory Comput. 11, 5242 (2015).
+[48]  B. S. Fales and B. G. Levine, J. Chem. Theory Comput.                      [76]  F.  Aquilante,  R.  Lindh,    and  T.  Bondo  Pedersen,  J.
+     11, 4708 (2015).                                                                  Chem. Phys. 127, 114107 (2007).
+[49]  B. S. Fales, Y. Shu, B. G. Levine,  and E. G. Hohenstein,                  [77]  R.  O.  Ramabhadran  and  K.  Raghavachari,  J.  Chem.
+     J. Chem. Phys. 147, 094104 (2017).                                                Theory Comput. 9, 3986 (2013).
+[50]  E. G. Hohenstein, N. Luehr, I. S. Uﬁmtsev,   and T. J.                     [78]  J. A. Pople, Rev. Mod. Phys. 71, 1267 (1999).
+     Mart´ınez, J. Chem. Phys. 142, 224103 (2015).                               [79]  R. E. Thomas, G. H. Booth,  and A. Alavi, Phys. Rev.
+[51]  J. W. Snyder Jr, B. S. Fales, E. G. Hohenstein, B. G.                            Lett. 114, 033001 (2015).
+     Levine,  and T. J. Mart´ınez, J. Chem. Phys. 146, 174113                    [80]  N. B. Balabanov and K. A. Peterson, J. Chem. Phys.
+     (2017).                                                                           123, 064107 (2005).
+[52]  I.  S.  Uﬁmtsev  and  T.  J.  Martinez,  J.  Chem.  Theory                 [81]  W. Kutzelnigg and W. Liu, J. Chem. Phys. 123, 241102
+     Comput. 5, 2619 (2009).                                                           (2005), https://doi.org/10.1063/1.2137315.
+[53]  C. Song and T. J. Mart´ınez, J. Chem. Phys. 147, 161723                    [82]  D. Peng and M. Reiher, Theor. Chem. Acc. 131, 1081
+     (2017).                                                                           (2012).
+[54]  I. A. Kaliman and A. I. Krylov, J. Comput. Chem. 38,                       [83]  T.  Helgaker,  W.  Klopper,  H.  Koch,   and  J.  Noga,  J.
+     842 (2017).                                                                       Chem. Phys. 106, 9639 (1997).
+[55]  A.  G.  Anderson,  W.  A.  Goddard,    and  P.  Schr¨oder,                 [84]  C. W. Bauschlicher, P. Siegbahn,  and L. G. Pettersson,
+     Comput. Phys. Commun. 177, 298 (2007).                                            Theor. Chim. Acta 74, 479 (1988).
+[56]  K.  Esler,  J.  Kim,  D.  Ceperley,   and  L.  Shulenburger,               [85]  K. Andersson and B. O. Roos, Chem. Phys. Lett. 191,
+     Comput. Sci. Eng. 14, 40 (2012).                                                  507 (1992).
+[57]  J. Kim, A. Baczewski, T. Beaudet, A. Benali, C. Ben-                       [86]  Q. Sun, J. Yang,  and G. K.-L. Chan, Chem. Phys. Lett.
+     nett,  M.  Berrill,  N.  Blunt,  E.  J.  L.  Borda,  M.  Ca-                      683, 291 (2017).
+     sula,  D.  Ceperley,  S.  Chiesa,  bryan  K  clark,  R.  Clay,              [87]  H. Nguyen, H. Shi, J. Xu,  and S. Zhang, Comput. Phys.
+     K. Delaney, M. Dewing, K. Esler, H. Hao, O. Heinonen,                             Commun. 185, 3344 (2014).
+     P.  R.  C.  Kent,  J.  T.  Krogel,  I.  Kylanpaa,  Y.  W.  Li,              [88]  T. Yanai and T. Shiozaki, J. Chem. Phys. 136, 084107
+     M. G. Lopez, Y. Luo, F. Malone, R. Martin, A. Math-                               (2012).
+     uriya, J. McMinis, C. Melton, L. Mitas, M. A. Morales,                      [89]  S.  Sharma,  T.  Yanai,  G.  H.  Booth,  C.  Umrigar,   and
+     E. Neuscamman, W. Parker, S. Flores, N. A. Romero,                                G. K.-L. Chan, J. Chem. Phys. 140, 104112 (2014).
+     B.  Rubenstein,   J.  Shea,   H.  Shin,   L.  Shulenburger,                 [90]  G.  Knizia,  T.  B.  Adler,   and  H.-J.  Werner,  J.  Chem.
+     A. Tillack, J. Townsend, N. Tubman, B. van der Goetz,                             Phys. 130, 054104 (2009).
+     J. Vincent, D. C. Yang, Y. Yang, S. Zhang,  and L. Zhao,                    [91]  R. B. Murphy, M. D. Beachy, R. A. Friesner,  and M. N.
+     J. Phys. Condens. Mat.  (2018).                                                   Ringnalda, J. Chem. Phys. 103, 1481 (1995).
+[58]  J. L. Whitten, J. Chem. Phys. 58, 4496 (1973).                             [92]  M. Saitow, U. Becker, C. Riplinger, E. F. Valeev,   and
+[59]  H. F. Trotter, Proc. Am. Math. Soc. 10, 545 (1959).                              F. Neese, J. Chem. Phys. 146, 164105 (2017).
+[60]  R.  Stratonovich,  Dokl.  Akad.  Nauk  SSSR  115,  1097                    [93]  C. Riplinger and F. Neese, J. Chem. Phys. 138, 034106
+     (1957).                                                                           (2013).
+[61]  J. Hubbard, Phys. Rev. Lett. 3, 77 (1959).                                 [94]  D. G¨oddeke, R. Strzodka,  and S. Turek, Int. J. Parallel,
+[62]  D. Thouless, Nucl. Phys. 21, 225 (1960).                                         Emergent Distrib. Syst. 22, 221 (2007).
+[63]  B. K. Clark, M. A. Morales, J. McMinis, J. Kim,   and                      [95]  D. Bykov and F. Neese, Inorg. Chem. 54, 9303 (2015).
+     G. E. Scuseria, J. Chem. Phys. 135, 244105 (2011).
+                                                                                                                                                           12
+
+[96]  J. Shen, M. J. Kolb, A. J. Gottle,  and M. T. Koper, J.                      [98]  M.  Askerka,  G.  W.  Brudvig,   and  V.  S.  Batista,  Ac-
+     Phys. Chem. C 120, 15714 (2016).                                                   counts Chem. Res. 50, 41 (2016).
+[97]  S. Sharma, K. Sivalingam, F. Neese,  and G. K.-L. Chan,                      [99]  J. Orenstein and A. Millis, Science 288, 468 (2000).
+     Nat. Chem. 6, 927 (2014).                                                   [100]  P.  A.  Lee,  N.  Nagaosa,    and  X.-G.  Wen,  Rev.  Mod.
+                                                                                        Phys. 78, 17 (2006).

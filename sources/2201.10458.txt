@@ -1,0 +1,629 @@
+Selected conﬁguration interaction wave functions in phaseless auxiliary ﬁeld quantum
+                                                              Monte Carlo
+
+                                    Ankit  Mahajan,1,∗  Joonho  Lee,2  and  Sandeep  Sharma1,†
+                           1Department  of  Chemistry,  University  of  Colorado,  Boulder,  CO  80302,  USA
+                       2Department  of  Chemistry,  Columbia  University,  New  York,  New  York  10027,  USA
+
+                  We present eﬃcient algorithms for using selected conﬁguration interaction (sCI) trial wave func-
+               tions in phaseless auxiliary ﬁeld quantum Monte Carlo (ph-AFQMC). These advancements, geared
+               towards optimizing computational performance for longer CI expansions,  allow us to use up to a
+               million conﬁgurations feasibly in the trial state for ph-AFQMC. In one example, we found the cost
+               of ph-AFQMC per sample to increase only by a factor of about 3 for a calculation with 104 conﬁg-
+               urations compared to that with a single one, demonstrating the tiny computational overhead due
+               to a longer expansion.  This favorable scaling allows us to study the systematic convergence of the
+               phaseless bias in AFQMC calculations with an increasing number of conﬁgurations and provides a
+               means to gauge the accuracy of ph-AFQMC with other trial states.  We also show how the scalability
+               issues of sCI trial states for large system sizes could be mitigated by restricting them to a moderately
+               sized orbital active space and leveraging the near-cancellation of out of active space phaseless errors.
+
+
+                    1.    INTRODUCTION                                      erating systematically more accurate approximations to
+                                                                            the state of interest by increasing the number of conﬁg-
+  Quantum Monte Carlo (QMC) is a powerful tool in our                       urations  judiciously.   This  attractive  feature  makes  sCI
+arsenal  to  tackle  the  quantum  many-body  problem.1–7                   wave functions natural candidates for trial states in pro-
+Among  various  QMC  approaches,  phaseless  auxiliary-                     jection QMC methods.  Based on signiﬁcant advances in
+ﬁeld quantum Monte Carlo (ph-AFQMC)8 has emerged                            real-space  QMC  algorithms  with  such  trial  states,32,33
+as  an  accurate  and  eﬃcient  method.     While  origi-                   several  papers  have  already  reported  calculations  with
+nally  from  the  condensed  matter  community  (therein                    long sCI expansions in diﬀusion Monte Carlo.34–36 There
+usually  referred  to  as  constrained-path  AFQMC),9–11                    has also been some recent progress for using them in ph-
+ph-AFQMC  has  gained  popularity  in  chemistry  in  re-                   AFQMC,21,24,37 but the commonly used algorithm based
+cent  years.12–24  The  accuracy  and  scalability  of  ph-                 on  the  Sheman-Morrison-Woodbury  identity  has  an  in-
+AFQMC  are  determined  in  large  part  by  the  choice                    herent  computational  bottleneck  with  the  local  energy
+of  the  trial  wave  function.    The  use  of  a  trial  wave             evaluation scaling as O(NcN4), where Nc is the number
+function  becomes  necessary  for  retaining  statistical  ef-              of determinants.  This steeper scaling compared to real-
+ﬁciency (in sample complexity) to control the fermionic                     space methods is due to the Gaussian orbital representa-
+phase  (or  sign)  problem25,26.   The  constraint  imposed                 tion of the electron repulsion interaction.  Furthermore,
+to  control  the  phase  problem  is  called  the  phaseless                the force bias evaluation scales as O(NcN3), which can
+approximation8.     When  the  trial  wave  function  ap-                   be expensive since it is performed once every time step.
+proaches the exact ground state, the corresponding ph-                      Due to these, it has been challenging to scale up the ph-
+AFQMC energy tends to the ground state energy.  The                         AFQMC calculations beyond 100-1000 conﬁgurations.
+commonly used trial wave function for ph-AFQMC is the                          In this work, we propose to use one of the sCI meth-
+broken-symmetry  Hartree-Fock  (HF)  wave  function.   It                   ods, heat-bath CI (HCI)30,38,39, to generate a large trial
+scales  as O(N3)  to  obtain  the  trial  wave  function  and               with up to 106 conﬁgurations.  We then combine several
+O(N5) to perform the ph-AFQMC calculation with the                          algorithmic  advances  made  by  two  of  us27,40  using  the
+trial to obtain energy for a ﬁxed statistical error, where                  generalized  Wick’s  theorem  and  make  further  improve-
+N  is  the  system  size.   Beyond  HF,  one  may  try  to  use             ments to accelerate ph-AFQMC calculations with a large
+a  single  determinant  trial  using  approximate  Bruckner                 trial.  In particular, in our new algorithm, the local en-
+orbitals23,  which  essentially  keeps  the  same  computa-                 ergy evaluation scales asO(NcN +N4), and the force bias
+tional scaling for ph-AFQMC. While single determinant                       evaluation scales as O(Nc +N3).  To alleviate the scal-
+trial wave functions are attractive due to their scalability,               ing issues of sCI wave functions, we study the eﬃcacy of
+their accuracy can be limited and questionable in many                      active space trial states in calculating energy diﬀerences
+examples13,21,27.                                                           and properties.  The active space size is another variable
+  On the other hand, there has been a ﬂurry of develop-                     to  converge  the  phaseless  error  systematically  in  larger
+ments  in  selected  conﬁguration  interaction  (sCI)  meth-                systems while keeping the calculation cost manageable.
+ods  in  the  last  few  years.28–31  Despite  their  steep  (for-          We use the new algorithm for ph-AFQMC with HCI tri-
+mally  exponential)  scaling  with  system  size,  sCI  meth-               als to investigate the behavior of the phaseless bias as a
+ods have increasingly been employed to study moderately                     function of the number of conﬁgurations in the trial for
+sized systems and perform large active space correlated                     several challenging systems.
+calculations.  These methods have the capability of gen-                       This paper is organized as follows:  we ﬁrst review the
+                                                                                                                                                 2
+
+ph-AFQMC algorithm (Section 2), we then discuss how                         where wi  are weights,|φi⟩ are Slater determinants with
+once can drastically speed up the evaluation of force bias                  complex  orbitals  obtained  from  the  orbital  transforma-
+and local energy of sCI trials using the generalized Wick’s                 tions sampled during propagation, and|ψT⟩ is the trial
+theorem  (Section  3),  we  present  results  that  show  how               state used for importance sampling.  More accurate trial
+phaseless  errors  in  the  ground  state  energy  and  dipole              states lead to less noisy weights.  We use the hybrid ap-
+moments change as a function of the number of determi-                      proximation  in  this  paper,  which  avoids  the  expensive
+nants in hydrogen chains, transition metal oxides, and a                    calculation of local energy at each propagation step.  Im-
+few small molecules (Section 4), and we ﬁnally conclude                     portance sampling in AFQMC involves shifting the sam-
+(Section 5).                                                                pled auxiliary ﬁelds by the force bias given as
+
+2.    PHASELESS AUXILIARY FIELD QUANTUM                                                   ¯xγ =−√∆τ⟨ψT|∑ijLγijˆa†i ˆaj|φ⟩
+                       MONTE CARLO                                                                                ⟨ψT|φ⟩     ,              (6)
+
+                                                                            where|φ⟩ is the walker.  The force bias can be thought of
+  We  brieﬂy  summarize  the  procedure  for  phaseless                     as a dynamic correction to the mean-ﬁeld contour shift41
+AFQMC  here  and  refer  the  reader  to  reference  16  for                that vanishes as ∆τ→ 0.  Force bias is not enough, by
+more details.  Consider the  ab  initio  Hamiltonian given                  itself,  to  control  the  large  ﬂuctuations  stemming  from
+by                                                                          the phase problem.  The phaseless constraint can be used
+                                                       2                  to overcome the phase problem at the expense of a sys-
+         ˆH =∑                     ∑∑                                     tematic bias in the sampled wave function.  The size of
+                    hijˆa†i ˆaj + 12           Lγijˆa†i ˆaj  ,       (1)    this phaseless bias is dictated by the accuracy of the trial
+                ij                  γ      ij                               state.
+wherehij are one-electron integrals andLγ                                      After an equilibration time, the energy of the sampled
+                                                    ij are Cholesky         wave function can be measured as
+decomposed two-electron integrals in an orthonormal or-                                                   ∑
+bital basis.  We will use letters N, M, and X  to denote                                           E≈        iwiEL(φi)∑
+the  number  of  electrons,  number  of  orbitals,  and  num-                                                    iwi   ,                         (7)
+ber  of  Cholesky  vectors,  respectively.   We  note  that  in
+chemical  systems,  empirically, X ∼ O(M)  with  a  pro-                    where
+portionality constant usually smaller than 10.  AFQMC
+uses the exponential form of the projector to converge to                                         EL(φi) =⟨ψT| ˆH|φi⟩⟨ψT|φi⟩                          (8)
+the ground state of the Hamiltonian as
+                     e−τ ˆH|ψI⟩ τ→∞−−−−→|Ψ0⟩,                       (2)     is the local energy of the walker|φi⟩.  We note that this
+                                                                            estimator has a zero-variance property i.e.  in the limit
+where τ  is the imaginary time,|Ψ0⟩ is the ground state,                    that the trial state is the exact, ground state the variance
+and|ψI⟩ is an initial state such that⟨ψI|ψ0⟩⁄= 0.  Us-                      of the estimator vanishes.  In practice,  this means that
+ing  the  Hubbard-Stratonovic  transform,  the  short-time                  more accurate trial states lead to less noisy local energy
+exponential projector can be written as                                     values.
+                                ∫                                              It is evident that more accurate trial states lead to less
+                   e−∆τ ˆH =       dxp(x) ˆB(x),                    (3)     noisy simulations and smaller phaseless biases.  But,  in
+                                                                            general, the use of more sophisticated trial states comes
+where x is the vector of auxiliary ﬁelds (one scalar ﬁeld                   at the expense of greater computational cost.  In the fol-
+per  Cholesky  component), p(x)  is  the  standard  normal                  lowing section, we present eﬃcient algorithms to calcu-
+Gaussian distribution of the auxiliary ﬁelds, and  ˆB(x) is                 late force bias and local energy of sCI trial states.
+a complex propagator given by the exponential of a one-
+body operator.  Due to Thouless’ theorem,  ˆB(x) acts on                              3.    SELECTED CONFIGURATION
+a Slater determinant|φ⟩ as                                                              INTERACTION TRIAL STATES
+                         ˆB(x)|φ⟩ =|φ(x)⟩,                          (4)
+where|φ(x)⟩ is another Slater determinant obtained by                          A selected CI wave function is given by
+a linear transformation of the orbitals in|φ⟩.  By impor-                                     Nc∑             Nc∑     kn∏
+tance sampling the auxiliary ﬁelds in equation 3 and ap-                            |ψT⟩ =        cn|ψn⟩ =        cn      ˆa†tnµ ˆapnµ|ψ0⟩,     (9)
+plying the short time propagator suﬃciently many times,                                       n                n       µ
+we  get  a  stochastic  representation  of  the  ground  state
+wave function in the long time limit as                                     where|ψn⟩  are  conﬁgurations  obtained  by  particle-hole
+                                                                            excitations  from  the  reference  conﬁguration|ψ0⟩, Nc  is
+                     |Ψ0⟩∝∑        wi |φi⟩⟨ψT|φi⟩,                      (5) the number of conﬁgurations in the expansion,cn are real
+                                i                                           expansion coeﬃcients,  and kn  are  the excitation  ranks.
+                                                                                                                                                  3
+
+We  will  use  the  indices pµ  and tµ  to  denote  occupied                where the sets of indices{pµ} and{tµ} denote thek×k
+and virtual orbitals, respectively, whereas indices i,j,...                 slice of the G matrix, k being the rank of the excitation.
+will  be  used  for  general  orbitals.   The  orthonormal  or-             This expression is obtained by taking pairwise contrac-
+bital  basis  set  used  in  the  expansion  can  be  chosen  to            tions of the operators in the string of excitations accord-
+be natural orbitals obtained from an HCI calculation or                     ing  to  the  generalized  Wick’s  theorem,  with  the  deter-
+can  be  optimized  using  a  self-consistent  procedure.   In              minant  structure  arising  due  to  fermionic  permutation
+the following,  we use the same basis set to express the                    parity  factors.   Therefore,  the  denominator  in  equation
+Hamiltonian  in  equation  1  and,  in  general,  all  second-              10 can be expressed as                   (           )
+quantized operators refer to this basis.  In our prior work,                                ⟨ψT|φ⟩
+we have proposed eﬃcient algorithms for using selected                                      ⟨ψ0|φ⟩  =∑        cn det    G{pnµ}{tnµ} .             (14)
+CI states in variational Monte Carlo40 and free projection                                                n
+AFQMC.27 These focused on the calculation of local en-                      The  computational  cost  scaling  of  this  overlap  ratio  is
+ergy using the generalized Wick’s theorem.  Here, we dis-                   thus O(Nc)  once  the  Green’s  function  has  been  calcu-
+cuss an algorithm for calculating the force bias required                   lated.    Since  the  Wick’s  theorem  applies  naturally  to
+in ph-AFQMC and brieﬂy summarize the calculation of                         overlap ratios, we will ﬁnd it convenient to express matrix
+local energy.                                                               elements as ratios with the reference overlap⟨ψ0|φ⟩.
+                                                                               To evaluate the numerator of equation 10, consider the
+                        3.1.    Force bias                                  matrix element ratio given by
+                                                                                                            (∏k            )
+                                                                                    ⟨ψn|ˆa†            ⟨ψ0|      µ ˆa†pµˆatµ ˆa†i ˆaj|φ⟩
+  Calculation of the force bias for importance sampling is                                 i ˆaj|φ⟩
+one of the computationally intensive parts of propagation                              ⟨ψ0|φ⟩      =               ⟨ψ0|φ⟩      ,         (15)
+in ph-AFMQC. Substituting the sCI trial state into the                      where we have dropped the conﬁguration index subscript
+force bias expression in equation 6, we get                                 (n)  on  the  excitations  for  clarity.   This  ratio  can  also
+                           ∑    ∑                                           be evaluated using the generalized Wick’s theorem and
+                              n    ijcnLγij⟨ψn|ˆa†i ˆaj|φ⟩                  by choosing the appropriate order of operations one can
+           ¯xγ =−√∆τ               ∑                                        achieve a signiﬁcant reduction in the cost of calculating
+                                      ncn⟨ψn|φ⟩    .       (10)             the numerator.  To this end,  we note that the pairwise
+The  conventional  way  of  evaluating  the  force  bias  pro-              contractions in the string of excitation operators can be
+ceeds by separately calculating the contribution of each                    divided into two groups: i) those without any contrac-
+conﬁguration  in  the  CI  expansion  using  the  Sherman-                  tions between CI excitations and ˆa†i ˆaj,ii) those contain-
+Morrison-Woodbury identity, resulting in a cost scaling                     ing  contractions  between  two  of  the  CI  operators  and
+of O(NcNM +XNM).37 Here we present an algorithm                             ˆa†i ˆaj.  Algebraically, the two terms are given as
+with cost scaling asO(Nc +XM2) by essentially separat-                                (∏k            )                       Gij  Gi{tµ}   
+ing the sum over CI excitations from that over Cholesky                          ⟨ψ0|      µa†pµatµ    ˆa†i ˆaj|φ⟩                         
+integral indices in equation 10.                                                            ⟨ψ0|φ⟩                = det     G{pµ}
+  We  deﬁne  the  Green’s  function  matrix  for  the  refer-                                 (        )                      j   G{pµ}{tµ}
+ence conﬁguration|ψ0⟩ and the walker conﬁguration|φ⟩                              =Gij det     G{pµ}
+as42,43                                                                                           {tµ}
+                                      [                ]j                                         k∑                            (            )
+            Gij =⟨ψ0|ˆa†i ˆaj|φ⟩        φ(ψ†0φ)−1ψ†0                                         +       (−1)1+ν+λGpνj Gitλ det       G{pµ}\pν{tµ}\tλ,
+                       ⟨ψ0|φ⟩     =                     i,         (11)                          ν,λ
+where ψ0  and φ  are  the  orbital  coeﬃcient  matrices  of                                                                                    (16)
+the  corresponding  conﬁgurations,  and  superscripts  and                  where on the ﬁrst line the matrix of size (k + 1)× (k + 1)
+subscripts denote row and column indices,  respectively.                    is  written  in  a  block  form,  and  the  notation {pµ}\pν
+Note  that  since  we  work  in  the  orbital  basis  of  the  CI           indicates the set of indices{pµ} excludingpν.  Using this
+expansion, ψ0 has a particularly simple form with all its                   grouping of terms, we get for the numerator in equation
+columns being unit vectors.  Thus the cost of calculating                   10
+the Green’s function in this basis scales asO(N2M).  For                       ∑    ∑
+convenience, we also deﬁne the related quantity                                          cnLγ          i ˆaj|φ⟩
+                                                                                             ij⟨ψn|ˆa†⟨ψ0|φ⟩
+                                                                                 n   ij
+                                   i|φ⟩                                                (∑                                           
+                Gij =−⟨ψ0|ˆajˆa†⟨ψ0|φ⟩     =Gij−δij.              (12)                                (          ))
+                                                                                    =         cn det    G{pµn}{tµn}  ∑      LγijGij          (17)
+According to the generalized Wick’s theorem43, we have                                     n                            ij             
+
+              ⟨ψ0|∏kµ ˆa†pµˆatµ|φ⟩           (        )                                                    +∑      Itp∑Lγ              ,
+                                               G{pµ}    ,           (13)                                                       ijGpjGit
+                     ⟨ψ0|φ⟩          = det       {tµ}                                                          pt         ij
+                                                                                                                                                   4
+
+where                                                                                                  4.    RESULTS
+               kn∑                                  (                )
+Itp =∑     cn      δpnν,pδtnλ,t(−1)1+ν+λ det          G{pnµ}\pnν{tnµ}\tnλ       In  this  section,  we  present  the  results  of  our  ph-
+        n      ν,λ                                                           AFQMC/HCI calculations and analyze the convergence
+                                                                  (18)       of  the  phaseless  error  for  several  systems.   In  particu-
+is an intermediate formed by summing over the CI con-                        lar,  we  consider  the  utility  of  active  space  trial  states
+ﬁgurations.  The two terms in equation 17 are shown as                       for obtaining accurate energy diﬀerences and dipole mo-
+tensor  contraction  diagrams  in  table  1  for  the  case  of              ments.  We used PySCF44  to obtain molecular integrals
+doubly  excited  CI  conﬁgurations.   Note  that  a  selected                and  to  perform  all  quantum  chemistry  wave  function
+CI state does not necessarily include all excitations of a                   calculations.   The  SHCI  code  Dice  was  used  to  obtain
+given  rank,  but  since  it  is  not  well  suited  for  a  tensor          the trial states.  The code used to perform ph-AFQMC
+representation  we  use  all  doubly  excited  conﬁgurations                 calculations  is  available  in  a  public  repository.45  Input
+in the table.  In practice, the sum over CI excitations in                   and output ﬁles for all calculations can also be accessed
+table 1 is only performed over the conﬁgurations in the                      from a public repository.46  Sources of systematic errors
+selected  CI  state.   The  ﬁrst  term  has  a  cost  scaling  of            in  ph-AFQMC  calculations,  besides  the  phaseless  bias,
+O(Nc +XNM), while the second one using the interme-                          include Trotter error,  population control bias,  errors in
+diate has a scaling of O(Nc +XM2).  If the selected CI                       the Cholesky decomposition of the electron repulsion in-
+state is restricted to an active space of sizeA, the overall                 tegrals,  matrix  exponential  Taylor  series  truncation  er-
+cost can be reduced to O(Nc +XNM +XAM).                                      rors, and bias due to ﬁltering of rare large ﬂuctuations.
+                                                                             We used a conservative time step of 0.005 a.u in all ph-
+                                                                             AFQMC  calculations.   For  population  control,  we  used
+                       3.2.    Local energy                                  the reconﬁguration procedure described in reference 47.
+                                                                             Cholesky decompositions were calculated up to a thresh-
+  The calculation of local energy was discussed in detail                    old error of 10−5.  Matrix exponentials were calculated by
+in reference 27.  Here, we give a brief summary of the al-                   keeping terms up to the sixth power in the Taylor expan-
+gorithm.  Consider the two-body part of the local energy                     sion.   We  ﬁltered  large  ﬂuctuations  by  capping  weights
+(see equation 8), expressed as                                               and local energies.16 Although it is diﬃcult to get an ac-
+                 ∑    ∑                   ⟨ψn|ˆa†                            curate estimate of the systematic errors due to all these
+                                                i ˆa†kˆalˆaj|φ⟩              factors in general, they can be controlled systematically.
+     E2L [φ] =      n    γijklcnLγ∑ ijLγkl      ⟨ψ0|φ⟩      .      (19)      We  estimate  these  errors  to  be  much  smaller  than  the
+
+                                  ncn⟨ψn|φ⟩⟨ψ0|φ⟩                            statistical errors in all the results presented here.
+The calculation of the overlap ratios in the denominator
+is described in the last section for the force bias.  The ma-
+trix element in the numerator for the nth conﬁguration                                           4.1.    Hydrogen chains
+is given by using the Wick’s theorem as
+       (∏k           )                                                        Hydrogen  chain  systems  are  convenient  for  bench-
+ ⟨ψ0|      µ ˆa†pµˆatµ  ˆa†i ˆa†kˆalˆaj|φ⟩     G{i,k}{j,l} G{i,k}{tµ},     marking  due  to  their  simplicity  and  availability  of  ac-
+                ⟨ψ0|φ⟩                    = det   G{pµ}                      curate  density  matrix  renormalization  group  (DMRG)
+                                                    {j,l} G{pµ}{tµ}          ground state energies.48 First, we consider a chain of 50
+                                                                  (20)       equidistant Hydrogen atoms with an interatomic distance
+where  we  have  again  dropped  the  conﬁguration  index                    d = 1.6 Bohr in the minimal sto-6g basis.  We performed
+subscript.  Similar to the force bias calculation, the terms                 ph-AFQMC/HCI calculations on this system using pro-
+in  this  determinant  can  be  split  into  two  groups  based              gressively larger HCI expansion.  These trial states were
+on the kinds of pairwise contractions:  those that do not                    constructed as truncations of the HCI state obtained with
+involve cross  contractions  between  CI  and  Hamiltonian                   ϵ1  = 10−4  in the canonical RHF basis.  Figure 1 shows
+excitation operators and those that involve at least one                     the convergence of the phaseless error (calculated as a dif-
+such  cross  contraction.    The  second  group  containing                  ference to the DMRG energy reported in reference ) with
+cross  contractions  can  be  further  split  into  two  groups              the number of conﬁgurations in the trial state.  We see a
+depending  on  whether  one  or  both  of  the  Hamiltonian                  nearly monotonic decrease in the phaseless error and the
+excitations are cross contracted with CI excitations.  The                   error is less than 2 mH for the trial with 106  conﬁgura-
+resulting terms are shown as a tensor diagram in table 1.                    tions.  The ﬁgure also shows the scaling of the cost of the
+Again, we have used all double excited CI conﬁgurations                      ph-AFQMC  calculation  against  the  number  of  conﬁgu-
+only for representational convenience.  Diﬀerent orders of                   rations with respect to the cost of a single conﬁguration
+performing the tensor contractions lead to diﬀerent cost                     calculation.   Remarkably,  the  cost  factor  for  up  to  104
+scalings, and using the one described in reference 27 leads                  conﬁgurations is less than 10 and increases roughly lin-
+to a scaling ofO(NcX +XNM2).  For a selected CI state                        early with the number of conﬁgurations thereafter.  This
+restricted to an active space of sizeA, this cost is reduced                 observation  is  consistent  with  the  scaling  relations  dis-
+to O(NcX +XNAM +XN2M).                                                       cussed in section 3, with the O(NcX) factor in the cost
+                                                                                                                                                         5
+
+
+TABLE 1.  Summary of computational cost scaling of force bias and two-body local energy calculations (given the reference
+Green’s function matrix G).  SMW refers to overall cost scaling of the algorithm that makes use of the Sherman-Morrison-
+Woodbury formula as described in reference 37.  The last columns shows tensor contraction diagrams for all distinct types of
+pairwise Wick’s contractions using all doubly excited conﬁgurations∑cptquˆa†tˆapˆa†uˆaq|ψ0⟩ as an example. Combining all possible
+contractions of a given type along with the fermionic parity signs (not shown here) leads to the determinant expressions in
+equations 17 and 20.  The same types of terms arise for higher than doubly excited conﬁgurations and the adjacent column
+shows the optimal cost scaling for calculating each type for a general CI trial with Nc conﬁgurations.
+      Quantity             SMW                                                                       This work
+                                              Scaling                           Tensor diagrams for doubly excited conﬁgurations
+
+
+
+
+      Force bias  NM(Nc +X)  Nc +XNM
+
+
+
+
+
+
+                                            Nc +XM 2
+
+
+
+
+
+
+
+    Local energy   NcXN 2M    Nc +XNM
+
+
+
+
+                                           Nc +XN 2M
+
+
+
+
+
+
+
+
+                                            Nc +XM 2
+
+
+
+
+
+
+
+
+
+                                           Nc +XNM 2
+
+
+
+
+
+
+
+                                         X(Nc +NM 2)
+
+
+
+    Key for notation
+    Nc:  number of conﬁgurations, N:  number of electrons, M:  number of orbitals, X:  number of Cholesky vectors
+    c:  CI coeﬃcients, L:  Cholesky vectors, G and G:  Green’s functions
+    i,j,k,l:  Hamiltonian indices; p,q,t,u:  CI excitation indices
+                                                                                                                                                   6
+
+                                                                             culation and generated trial states by truncating the ac-
+                                                                             tive space wave function.  Figure 2 shows the convergence
+                                                                             of the phaseless error with the size of the HCI trial.  For
+                                                                             all three bond lengths, we see a systematic convergence to
+                                                                             an almost vanishing error with the active space trial. The
+                                                                             shortest bond length near equilibrium converges rapidly,
+                                                                             while the stretched bond length requires almost the full
+                                                                             active  space  wave  function  to  reach  convergence.   The
+                                                                             out  of  active  space  phaseless  error,  arising  due  to  not
+                                                                             correlating  any  orbitals  outside  the  active  space  in  the
+                                                                             trial state, is tiny in this case and, more importantly, is
+                                                                             very  similar  for  all  three  bond  lengths.   We  also  show
+                                                                             ph-AFQMC/UHF phaseless errors in the ﬁgure for com-
+                                                                             parison.  ph-AFQMC/UHF is known to be very accurate
+                                                                             for hydrogen chains except at stretched geometries.  At
+FIG.  1.   Convergence  of  the  ph-AFQMC/HCI  phaseless  en-                stretched geometries, a CI expansion based on an unre-
+ergy  error  and  scaling  of  the  cost  of  computation  with  in-         stricted HF reference has been employed in the past as a
+creasing  number  of  conﬁgurations  for  H50  using  the  sto-6g            trial state48 and could be a handy tool in other problems
+basis at d = 1.6 Bohr.  The phaseless error is calculated with               as  well.   The  algorithms  described  in  this  work  can  be
+respect to the near-exact DMRG energy, and the cost factor                   straightforwardly extended to work with UHF-based CI
+is calculated as the ratio of computational costs with respect               expansions.
+to a single conﬁguration calculation.
+
+                                                                                             4.2.    Transition metal oxides
+scaling  of  local  energy  evaluation  dominating  for  large
+HCI expansions.  We found changing the value of ϵ1  or                          A  recent  study  of  transition  metal  oxide  molecules
+slightly changing the selection criterion for choosing the                   reported  benchmark  ground  state  energies  using  vari-
+conﬁgurations to only make a diﬀerence in ph-AFQMC                           ous  accurate  many-body  methods.21  Here,  we  use  ph-
+energies for smaller number of conﬁgurations, leading to                     AFQMC/HCI to study convergence of the phaseless er-
+similar convergence behaviors for longer expansions.                         rors for active space trials in TiO, CrO, MnO, and FeO.
+                                                                             The Trails-Needs pseudopotential and the corresponding
+                                                                             dz basis sets49 were used at equilibrium geometries used
+                                                                             in reference 21.
+                                                                                Figure 3 shows the convergence of phaseless errors with
+                                                                             the number of conﬁgurations in the trial state at equilib-
+                                                                             rium geometries used in reference 21.  We ﬁrst performed
+                                                                             CASSCF calculations with active spaces consisting of the
+                                                                             metal  3d  and  4d  orbitals  and  oxygen  2p  orbitals.   The
+                                                                             HCI trial states were then generated in a space includ-
+                                                                             ing  the  CASSCF  active  orbitals  and  the  core  orbitals,
+                                                                             including all electrons. ϵ1 = 10−5  was used for the HCI
+                                                                             calculations.  Interestingly, for FeO, CrO, and MnO the
+                                                                             phaseless error ﬁrst increases before converging to a ﬁxed
+                                                                             value as the number of conﬁgurations in the trial is in-
+                                                                             creased.  This peculiar behavior highlights the fact that
+                                                                             a  lower  energy  trial  state  does  not  guarantee  a  smaller
+                                                                             phaseless error.  We note that the trends for smaller ex-
+FIG. 2.  ph-AFQMC/HCI phaseless errors for H10  using the                    pansions are dependent on the particular schemes used
+cc-pVDZ basis set at diﬀerent bond lengths.  The trial states                for  choosing  the  orbital  spaces  and  for  truncating  the
+with  diﬀerent  number  of  conﬁgurations  are  constructed  by              HCI states.  But results for a large number of conﬁgura-
+truncating a (10e, 10o) CASSCF wave function in each case.                   tions are largely independent of such somewhat subjec-
+The hollow symbols show ph-AFQMC/UHF phaseless errors.                       tive choices.  For TiO, using more conﬁgurations makes
+(They are almost zero for d = 1.6 Bohr and d = 2.4 Bohr.)                    little diﬀerence to the phaseless error.  We also performed
+                                                                             ph-AFQMC/UHF calculations for comparison and found
+  We also studied the H10 chain in the cc-pVDZ basis at                      the phaseless errors to be 2(1), 5.3(8), -10(1), and 30.6(9)
+diﬀerent  bond  lengths  to  gauge  the  performance  of  ac-                mH for TiO, CrO, MnO, and FeO, respectively.
+tive space trial states.  We ﬁrst performed a (10e,  10o)                       The residual phaseless errors can be attributed solely
+CASSCF (complete active space self consistent ﬁeld) cal-                     to the out of HCI active space correlation.  These errors
+                                                                                                                                                      7
+
+                                                                                                   4.3.    Dipole moments
+
+                                                                                 The mixed estimator of an observable  ˆO in the ground
+                                                                              state is given by
+
+                                                                                                    ⟨O⟩mixed =⟨ψT| ˆO|Ψ0⟩⟨ψT|Ψ0⟩ ,                    (21)
+
+                                                                              where|Ψ0⟩ is the ground state.  In ph-AFQMC, one has
+                                                                              access to an approximate sampling of the ground state,
+                                                                              making  the  calculation  of  this  mixed  estimator  conve-
+                                                                              nient:
+
+                                                                                                                 ∑
+                                                                                                  ⟨O⟩mixed≈          iwiOL(φi)∑
+                                                                                                                         iwi   ,                  (22)
+FIG. 3. Convergence of ph-AFQMC/HCI phaseless energy er-                      where
+rors for four transition metal oxide molecules using the Trail-
+Needs dz pseudopotential and basis set.  SHCI reference en-                                          OL(φi) =⟨ψT| ˆO|φi⟩
+ergies  were  used  as  references  for  calculating  the  phaseless                                                ⟨ψT|φi⟩                        (23)
+errors.   The  trial  states  were  constructed  by  truncating  ac-
+tive  space  HCI  wave  functions.   Hollow  symbols  show  ph-               is the local observable value.
+AFQMC/UHF errors.                                                                For observables  ˆO that do not commute with the sys-
+                                                                              tem Hamiltonian, the mixed estimator has a systematic
+                                                                              bias due to the trial state used to measure the observ-
+                                                                              able.  This bias can be reduced by using the extrapolated
+                                                                              estimator, often employed in diﬀusion Monte Carlo,50–52
+                                                                              given by
+TABLE 2.  CrO ground state energies and out of active space
+phaseless errors at diﬀerent bond lengths.  Bond lengths (d)                        ⟨ ˆO⟩extrapolated = 2⟨ψT| ˆO|Ψ0⟩
+are  in  Bohr,  ph-AFQMC/HCI  and  SHCI  energies  are  in  H,                                               ⟨ψT|Ψ0⟩ −⟨ψT| ˆO|ψT⟩⟨ψT|ψT⟩ ,       (24)
+the phaseless errors are in mH.
+    d       ph-AFQMC/HCI          SHCI          Phaseless error               where the variational estimator of the trial state is used to
+  2.65        -102.4993(5)        -102.5040(5)            4.6(7)              correct the mixed estimator. The accuracy of this extrap-
+  3.06        -102.5531(5)         -102.558421            5.3(5)              olation depends critically on the quality of the trial state.
+  3.59        -102.5269(7)        -102.5325(5)            5.6(8)              Since ph-AFQMC calculations on molecular systems are
+                                                                              typically performed using crude single determinant trials,
+                                                                              extrapolation is not a viable option, and backpropagation
+                                                                              is used to evaluate variational estimators of the sampled
+                                                                              state instead.53 Here, we study the behavior of the mixed
+                                                                              and extrapolated estimators of dipole moments of a few
+can  be  systematically  reduced  by  increasing  the  size  of               small molecules.  Evaluation of the local dipole moment
+the  active  space,  but  getting  vanishing  errors  this  way               for an HCI trial state is similar to the force bias calcula-
+is  unlikely  to  be  practical  for  larger  systems.   On  the              tion outlined in section 3.1 since they both involve matrix
+other  hand,  as  noted  in  section  4.1,  it  is  reasonable  to            elements of one-electron operators.
+expect  near-cancellation  of  this  out  of  active  space  er-                 We ﬁrst look at the exactly solvable problem of NH3 in
+ror  when  energy  diﬀerences  at  diﬀerent  geometries  are                  the 6-31g basis (geometry in the SI). We fully diagonal-
+calculated  using  the  same  active  space.   Similar  trends                ize this (10e, 14o) problem and calculate its ground state
+have been observed in multireference perturbation theo-                       dipole moment.  Mixed and extrapolated ph-AFQMC es-
+ries.  To gauge the eﬃcacy of this heuristic, we calculated                   timators  were  evaluated  with  trial  states  consisting  of
+ph-AFQMC/HCI energies of CrO at three bond lengths                            an increasing number of leading conﬁgurations from the
+using the procedure described above.  Table 2 shows that                      ground state in the RHF canonical orbital basis.  Figure
+the converged phaseless errors are almost identical at the                    4 shows the convergence of the estimators with the trial
+three points.  We note that it is crucial to converge the                     state.  In this case, we see a systematic convergence of the
+phaseless error of the active space trial, and diﬀerent ge-                   variational and mixed estimators to the exact value.  The
+ometries may require trial states with diﬀerent numbers                       extrapolation  works  reasonably  well,  with  consistently
+of conﬁgurations to achieve convergence.  This evidence                       smaller errors than the mixed estimator.
+suggests that in large problems, scalability issues of HCI                       Table 3 shows the calculated dipole moments for three
+trial states can be mitigated using active spaces.                            molecules at equilibrium geometries in the aug-cc-pVQZ
+                                                                                                                                                       8
+
+
+TABLE  3.   Dipole  moments  (in  a.u.)   of  three  molecules  using  the  aug-cc-pVQZ  basis  set.   The  reported  ph-AFQMC/HCI
+values are converged with the number of conﬁgurations in the 50 orbital active space trial state.
+                       Molecule        ph-AFQMC/HCI         RHF     MP2     CCSD    CCSD(T)    Experiment
+                                       Mixed   Extrapolated
+                           CO         0.070(3)     0.044(3)        -0.104    0.108     0.024         0.048           0.04854
+                           BF         0.356(4)     0.321(4)         0.333     0.377     0.314         0.325                 -
+                          H2O        0.726(2)     0.734(2)         0.780     0.733     0.738         0.729           0.73055
+
+
+                                                                              trapolated estimator for small number of conﬁgurations
+                                                                              in the trial is very poor due to the erroneous variational
+                                                                              estimates.  For more than 103  conﬁgurations,  while the
+                                                                              mixed  estimator  seems  to  be  converging  to  a  substan-
+                                                                              tially biased dipole moment value, the extrapolation rec-
+                                                                              tiﬁes  this  bias  reasonably  well.   The  extrapolated  esti-
+                                                                              mators  are  in  good  agreement  with  the  CCSD(T)  and
+                                                                              experimental  values  for  all  three  molecules.   Evidently,
+                                                                              extrapolation eﬀectively corrects the out of active space
+                                                                              bias in the mixed estimator for CO and BF.
+
+
+
+
+
+
+
+
+FIG.  4.   Convergence  of  diﬀerent  estimators  for  the  dipole
+moment of NH3 using the 6-31g basis.  Variational and mixed
+estimators  are  calculated  using  HCI  and  ph-AFQMC/HCI,
+respectively.
+
+
+basis.   The  large  basis  set  precludes  exact  evaluation,
+but CCSD(T) moments are known to be very accurate
+for  the  molecules  considered  here  and  agree  well  with
+the  experimental  values.   We  computed  orbital  relaxed
+coupled cluster and MP2 dipole moments by calculating                         FIG.  5.   Convergence  of  diﬀerent  estimators  for  the  dipole
+energies at two diﬀerent electric ﬁelds and evaluating the                    moment  of  CO  using  the  aug-cc-pVQZ  basis.    Variational
+numerical derivative.  For obtaining ph-AFQMC/HCI es-                         and  mixed  estimators  are  calculated  using  HCI  and  ph-
+timators, we ﬁrst performed a full-valence CASSCF cal-                        AFQMC/HCI, respectively. Trial states are obtained by trun-
+culations.  The trial states were then constructed using                      cating a (14e, 50o) active space HCI wave function.
+HCI to correlate all electrons in a space of 50 CASSCF
+orbitals.  In all cases, both mixed and extrapolated esti-
+mators were nearly converged with the number of conﬁg-
+urations in the active space (details can be found in the                                             5.    CONCLUSION
+SI).  Consider  the  case  of  the  challenging  CO  molecule,
+which has a small dipole moment, and RHF predicts the
+wrong  direction  polarity  in  this  case.   The  convergence                   In this work, we presented eﬃcient algorithms for using
+of  the  dipole  moment  estimators  with  number  of  con-                   selected CI trial states in ph-AFQMC. We demonstrated
+ﬁgurations  in  the  trial  state  is  shown  in  ﬁgure  5.   For             their favorable scaling by showing that simulations with
+a  small  number  of  conﬁgurations  (fewer  than  100),  the                 long sCI expansions incur little overhead.  In our analy-
+variational estimator is qualitatively incorrect similar to                   sis of the convergence of phaseless error in ground-state
+RHF. Adding more conﬁgurations ﬂips the sign, and the                         energies and dipole moments as a function of the num-
+variational estimator seems to eventually converge to the                     ber of conﬁgurations, we found it to be non-monotonic in
+asymptotic value for the truncated space of 50 orbitals.                      some cases,  highlighting the importance of using a suf-
+The mixed estimator also exhibits a non-monotonic con-                        ﬁcient  number  of  determinants  in  these  systems.   The
+vergence with its value for a single determinant close to                     use of states restricted to moderately sized active spaces
+the experimental value because of a fortuitous cancella-                      yielded excellent results for energy diﬀerences and dipole
+tion  of  mixed  estimator  and  phaseless  biases.   The  ex-                moments.  Our numerical experiments suggest that this
+                                                                                                                                                        9
+
+may be a practical way to tackle larger systems, where                          7  Becca,  F.;  Sorella,  S.  Quantum  Monte  Carlo  approaches
+the generation and handling of sCI states are challeng-                            for correlated systems; Cambridge University Press, 2017.
+ing.  Finally, we showed that the extrapolated estimator                        8  Zhang,  S.;  Krakauer,  H.  Quantum  Monte  Carlo  method
+for dipole moments is accurate if enough conﬁgurations                             using phase-free random walks with Slater determinants.
+are present in the trial state.  If this behavior turns out                        Physical review letters 2003, 90, 136401.
+                                                                                9  Fahy, S.; Hamann, D. Positive-projection Monte Carlo sim-
+to be true in general,  extrapolated estimators could be                           ulation: A new variational approach to strongly interacting
+a  viable  alternative  to  backpropagation  for  calculating                      fermion systems. Physical review letters 1990, 65, 3437.
+ground state properties.                                                       10  Zhang, S.; Carlson, J.; Gubernatis, J. E. Constrained path
+   Our  technique  can  be  employed  in  diﬀerent  ways  for                      quantum Monte Carlo method for fermion ground states.
+studying challenging systems.  It can be used to validate                          Physical review letters 1995, 74, 3652.
+the use of simpler and less expensive trial states in ph-                      11  Zhang, S.; Carlson, J.; Gubernatis, J. E. Constrained path
+AFQMC for large calculations.  ph-AFQMC/HCI can be                                 Monte  Carlo  method  for  fermion  ground  states.  Physical
+adopted as an accurate solver in embedding schemes for                             Review B 1997, 55, 7464.
+                                                                               12  Al-Saidi, W.; Zhang, S.; Krakauer, H. Auxiliary-ﬁeld quan-
+describing the embedded cluster.  It would be interesting                          tum Monte Carlo calculations of molecular systems with
+to study the feasibility of the extrapolated estimator in                          a Gaussian basis. The Journal of chemical physics  2006,
+larger systems and for calculating two-body properties.                            124, 224101.
+Lastly,  we  note  that  this  technique  can  be  utilized  in                13  Al-Saidi, W. A.;  Zhang, S.;  Krakauer, H. Bond breaking
+the quantum-classical hybrid AFQMC (QC-AFQMC) in                                   with auxiliary-ﬁeld quantum Monte Carlo. The Journal of
+prototypical and practical quantum computations.56                                 chemical physics 2007, 127, 144101.
+                                                                               14  Suewattana, M.; Purwanto, W.; Zhang, S.; Krakauer, H.;
+                                                                                   Walter,  E.  J.  Phaseless  auxiliary-ﬁeld  quantum  Monte
+                    DATA AVAILABILITY                                              Carlo calculations with plane waves and pseudopotentials:
+                                                                                   Applications  to  atoms  and  molecules.  Physical  Review  B
+                                                                                   2007, 75, 245123.
+   The  data  that  support  the  ﬁndings  of  this  study  are                15  Purwanto, W.; Zhang, S.; Krakauer, H. An auxiliary-ﬁeld
+available in a public repository at 46.                                            quantum  Monte  Carlo  study  of  the  chromium  dimer.  J.
+                                                                                   Chem. Phys. 2015, 142, 064302.
+                                                                               16  Motta, M.;  Zhang, S. Ab initio computations of molecu-
+                  ACKNOWLEDGEMENTS                                                 lar  systems  by  the  auxiliary-ﬁeld  quantum  Monte  Carlo
+                                                                                   method.  Wiley  Interdisciplinary  Reviews:  Computational
+                                                                                   Molecular Science 2018, 8, e1364.
+   AM  and  SS  were  supported  by  the  National  Science                    17  Hao, H.; Shee, J.; Upadhyay, S.; Ataca, C.; Jordan, K. D.;
+Foundation through the grant CHE-1800584. SS was also                              Rubenstein, B. M. Accurate predictions of electron binding
+partly supported through the Sloan research fellowship.                            energies of dipole-bound anions via quantum Monte Carlo
+JL thanks David Reichman for support and encourage-                                methods. The  journal  of  physical  chemistry  letters  2018,
+ment.  All calculations were performed on the Blanca and                           9, 6185–6190.
+                                                                               18  Motta, M.; Shee, J.; Zhang, S.; Chan, G. K.-L. Eﬃcient ab
+Summit clusters at CU Boulder.                                                     initio auxiliary-ﬁeld quantum Monte Carlo calculations in
+
+                                                                                   Gaussian bases via low-rank tensor decomposition. Journal
+                                                                                   of chemical theory and computation 2019, 15, 3510–3521.
+                          REFERENCES                                           19  Shee, J.; Arthur, E. J.; Zhang, S.; Reichman, D. R.; Fries-
+                                                                                   ner,  R.  A.  Singlet–triplet  energy  gaps  of  organic  biradi-
+ ∗  ankitmahajan76@gmail.com                                                       cals  and  polyacenes  with  auxiliary-ﬁeld  quantum  Monte
+ †  sanshar@gmail.com                                                              Carlo. Journal of chemical theory and computation 2019,
+ 1  Kalos, M. H.; Levesque, D.; Verlet, L. Helium at zero tem-                     15, 4924–4932.
+   perature with hard-sphere and other forces.  Physical  Re-                  20  Shee,  J.;  Rudshteyn,  B.;  Arthur,  E.  J.;  Zhang,  S.;  Re-
+   view A 1974, 9, 2178.                                                           ichman, D. R.;  Friesner, R. A. On Achieving High Accu-
+ 2  Ceperley,  D.;  Chester,  G.  V.;  Kalos,  M.  H.  Monte  Carlo                racy in Quantum Chemical Calculations of 3 d Transition
+   simulation  of  a  many-fermion  study.  Physical  Review  B                    Metal-Containing  Systems:   A  Comparison  of  Auxiliary-
+   1977, 16, 3081.                                                                 Field Quantum Monte Carlo with Coupled Cluster, Den-
+ 3  Ceperley, D. M.; Alder, B. J. Ground state of the electron                     sity  Functional  Theory,   and  Experiment  for  Diatomic
+   gas by a stochastic method. Physical review letters 1980,                       Molecules.  Journal  of  chemical  theory  and  computation
+   45, 566.                                                                        2019, 15, 2346–2358.
+ 4  Nightingale, M. P.; Umrigar, C. J. Quantum Monte Carlo                     21  Williams,  K.  T.;   Yao,  Y.;   Li,  J.;   Chen,  L.;   Shi,  H.;
+   methods  in  physics  and  chemistry;  Springer  Science  &                     Motta,  M.;  Niu,  C.;  Ray,  U.;  Guo,  S.;  Anderson,  R.  J.,
+   Business Media, 1998.                                                           et al. Direct comparison of many-body methods for realis-
+ 5  Foulkes,  W.;  Mitas,  L.;  Needs,  R.;  Rajagopal,  G.  Quan-                 tic electronic Hamiltonians. Physical Review X  2020, 10,
+   tum Monte Carlo simulations of solids. Reviews of Modern                        011041.
+   Physics 2001, 73, 33.                                                       22  Lee,  J.;   Reichman,  D.  R.  Stochastic  resolution-of-the-
+ 6  Booth, G. H.; Gr¨uneis, A.; Kresse, G.; Alavi, A. Towards                      identity  auxiliary-ﬁeld  quantum  Monte  Carlo:    Scaling
+   an  exact  description  of  electronic  wavefunctions  in  real                 reduction  without  overhead.  The  Journal  of  Chemical
+   solids. Nature 2013, 493, 365.                                                  Physics 2020, 153, 044131.
+                                                                                                                                                          10
+
+
+23  Lee,  J.;  Malone,  F.  D.;  Morales,  M.  A.  Utilizing  essen-             38  Sharma,  S.;  Holmes,  A.  A.;  Jeanmairet,  G.;  Alavi,  A.;
+   tial symmetry breaking in auxiliary-ﬁeld quantum Monte                            Umrigar,  C.  J.  Semistochastic  Heat-Bath  Conﬁguration
+   Carlo:  Application  to the  spin gaps  of the C36  fullerene                     Interaction  Method:   Selected  Conﬁguration  Interaction
+   and an iron porphyrin model complex. Journal of chemical                          with Semistochastic Perturbation Theory. J. Chem. The-
+   theory and computation 2020, 16, 3019–3027.                                       ory Comput. 2017, 13, 1595–1604, PMID: 28263594.
+24  Shi, H.; Zhang, S. Some recent developments in auxiliary-                    39  Smith,  J.  E.;  Mussard,  B.;  Holmes,  A.  A.;  Sharma,  S.
+   ﬁeld quantum Monte Carlo for real materials. The Journal                          Cheap and near exact CASSCF with large active spaces.
+   of Chemical Physics 2021, 154, 024107.                                            J. Chem. Theory Comput. 2017, 13, 5468–5478.
+25  Loh  Jr,  E.;   Gubernatis,  J.;   Scalettar,  R.;   White,  S.;             40  Mahajan, A.; Sharma, S. Eﬃcient local energy evaluation
+   Scalapino,  D.;  Sugar,  R.  Sign  problem  in  the  numerical                    for multi-Slater wave functions in orbital space quantum
+   simulation  of  many-electron  systems.  Physical  Review  B                      Monte Carlo. The Journal of Chemical Physics 2020, 153,
+   1990, 41, 9301.                                                                   194108.
+26  Troyer,  M.;  Wiese,  U.-J.  Computational  complexity  and                  41  Rom,  N.;   Charutz,  D.;   Neuhauser,  D.  Shifted-contour
+   fundamental   limitations   to   fermionic   quantum   Monte                      auxiliary-ﬁeld   Monte   Carlo:     circumventing   the   sign
+   Carlo   simulations.   Physical   review   letters   2005,   94,                  diﬃculty  for  electronic-structure  calculations.  Chemical
+   170201.                                                                           physics letters 1997, 270, 382–386.
+27  Mahajan,  A.;  Sharma,  S.  Taming  the  Sign  Problem  in                   42  L¨owdin, P.-O. Quantum theory of many-particle systems.
+   Auxiliary-Field  Quantum  Monte  Carlo  Using  Accurate                           I.  Physical  interpretations  by  means  of  density  matri-
+   Wave  Functions.  Journal  of  Chemical  Theory  and  Com-                        ces,  natural  spin-orbitals,  and  convergence  problems  in
+   putation 2021, 17, 4786–4798.                                                     the method of conﬁgurational interaction. Physical Review
+28  Giner, E.; Scemama, A.; Caﬀarel, M. Using perturbatively                         1955, 97, 1474.
+   selected conﬁguration interaction in quantum Monte Carlo                      43  Balian, R.; Brezin, E. Nonunitary Bogoliubov transforma-
+   calculations.  Canadian  Journal  of  Chemistry  2013,  91,                       tions and extension of Wick’s theorem. Il Nuovo Cimento
+   879–885.                                                                          B (1965-1970) 1969, 64, 37–55.
+29  Evangelista,  F.  A.  Adaptive  multiconﬁgurational  wave                    44  Sun,  Q.;  Berkelbach,  T.  C.;  Blunt,  N.  S.;  Booth,  G.  H.;
+   functions.  The  Journal  of  Chemical  Physics  2014,  140,                      Guo, S.; Li, Z.; Liu, J.; McClain, J. D.; Sayfutyarova, E. R.;
+   124114.                                                                           Sharma,  S.;  Wouters,  S.;  Chan,  K.-L.  G.  PySCF:  the
+30  Holmes, A. A.; Tubman, N. M.; Umrigar, C. J. Heat-Bath                           Python-based simulations of chemistry framework. WIREs
+   Conﬁguration Interaction:  An Eﬃcient Selected Conﬁgu-                            Comput. Mol. Sci. 2018, 8, e1340.
+   ration Interaction Algorithm Inspired by Heat-Bath Sam-                       45  https://github.com/sanshar/VMC/.
+   pling.  J.  Chem.  Theory  Comput.  2016,  12,  3674–3680,                    46  https://github.com/ankit76/ph_afqmc.
+   PMID: 27428771.                                                               47  Buonaura, M. C.; Sorella, S. Numerical study of the two-
+31  Tubman,   N.   M.;   Lee,   J.;   Takeshita,   T.   Y.;   Head-                  dimensional  Heisenberg  model  using  a  Green  function
+   Gordon,  M.;  Whaley,  K.  B.  A  deterministic  alternative                      Monte  Carlo  technique  with  a  ﬁxed  number  of  walkers.
+   to the full conﬁguration interaction quantum Monte Carlo                          Physical Review B 1998, 57, 11446.
+   method.  The  Journal  of  chemical  physics  2016,   145,                    48  Motta, M.; Ceperley, D. M.; Chan, G. K.-L.; Gomez, J. A.;
+   044112.                                                                           Gull, E.; Guo, S.; Jim´enez-Hoyos, C. A.; Lan, T. N.; Li, J.;
+32  Filippi, C.;  Assaraf, R.;  Moroni, S. Simple formalism for                      Ma, F.,  et al. Towards the solution of the many-electron
+   eﬃcient  derivatives  and  multi-determinant  expansions  in                      problem in real materials:  Equation of state of the hydro-
+   quantum  Monte  Carlo.  The  Journal  of  chemical  physics                       gen chain with state-of-the-art many-body methods. Phys-
+   2016, 144, 194105.                                                                ical Review X  2017, 7, 031059.
+33  Assaraf, R.; Moroni, S.; Filippi, C. Optimizing the Energy                   49  Trail, J. R.; Needs, R. J. Shape and energy consistent pseu-
+   with Quantum Monte Carlo:  A Lower Numerical Scaling                              dopotentials for correlated electron systems. The Journal
+   for Jastrow–Slater Expansions. J. Chem. Theory Comput.                            of chemical physics 2017, 146, 204107.
+   2017, 13, 5273–5281, PMID: 28873307.                                          50  Whitlock, P.; Ceperley, D.; Chester, G.; Kalos, M. Proper-
+34  Dash, M.; Moroni, S.; Scemama, A.; Filippi, C. Perturba-                         ties of liquid and solid He 4. Physical Review B 1979, 19,
+   tively selected conﬁguration-interaction wave functions for                       5598.
+   eﬃcient geometry optimization in quantum Monte Carlo.                         51  Ceperley, D. M.;  Kalos, M.  Monte  Carlo  methods  in  sta-
+   Journal  of  chemical  theory  and  computation  2018,  14,                       tistical physics; Springer, 1986; pp 145–194.
+   4176–4182.                                                                    52  Rothstein, S. M. A survey on pure sampling in quantum
+35  Pineda Flores, S. D.; Neuscamman, E. Excited state spe-                          Monte  Carlo  methods.  Canadian  Journal  of  Chemistry
+   ciﬁc multi-Slater Jastrow wave functions.  The  Journal  of                       2013, 91, 505–510.
+   Physical Chemistry A 2019, 123, 1487–1497.                                    53  Motta,   M.;    Zhang,   S.   Computation   of   ground-state
+36  Benali, A.; Gasperich, K.; Jordan, K. D.; Applencourt, T.;                       properties  in  molecular  systems:   Back-propagation  with
+   Luo, Y.; Bennett, M. C.; Krogel, J. T.; Shulenburger, L.;                         auxiliary-ﬁeld quantum Monte Carlo. Journal of chemical
+   Kent,  P.  R.;  Loos,  P.-F.,  et  al.  Toward  a  systematic  im-                theory and computation 2017, 13, 5367–5378.
+   provement  of  the  ﬁxed-node  approximation  in  diﬀusion                    54  Muenter, J. Electric dipole moment of carbon monoxide.
+   Monte  Carlo  for  solids—A  case  study  in  diamond.  The                       Journal of Molecular Spectroscopy 1975, 55, 490–491.
+   Journal of Chemical Physics 2020, 153, 184111.                                55  Lide, D. R. CRC handbook of chemistry and physics; CRC
+37  Shee, J.; Arthur, E. J.; Zhang, S.; Reichman, D. R.; Fries-                      press, 2004; Vol. 85.
+   ner, R. A. Phaseless auxiliary-ﬁeld quantum Monte Carlo                       56  Huggins,  W.  J.;  O’Gorman,  B.  A.;  Rubin,  N.  C.;  Reich-
+   on graphical processing units. Journal  of  chemical  theory                      man,  D.  R.;  Babbush,  R.;  Lee,  J.  Unbiasing  Fermionic
+   and computation 2018, 14, 4109–4121.                                              Quantum Monte Carlo with a Quantum Computer. arXiv
+                                                                                     2021,

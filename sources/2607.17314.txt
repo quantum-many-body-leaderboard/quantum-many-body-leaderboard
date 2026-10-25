@@ -1,0 +1,1005 @@
+Interpolative Separable Density-Fitting for Transcorrelated Hamiltonians
+          Ke Liao,1, 2,a)  Yifan Cheng,1 Werner Dobrautz,3, 4 Tianyu Zhu,2,b)  and Ali Alavi1,c)
+          1)Max  Planck  Institute  for  Solid  State  Research,  Heisenbergstrasse  1,  70569  Stuttgart,
+          Germany
+          2)Department of Chemistry, Yale University, Sterling Chemistry Laboratory, 225 Prospect St, New Haven, CT 06511,
+          USA
+          3)Center for Advanced Systems Understanding (CASUS), Helmholtz-Zentrum Dresden-Rossendorf (HZDR),
+          02826 G¨orlitz, Germany
+          4)Center for Scalable Data Analytics and Artificial Intelligence (ScaDS.AI), TU Dresden, 01062 Dresden,
+          Germany
+          (Dated:  21 July 2026)
+          The transcorrelated (TC) method folds a Jastrow correlator into the Hamiltonian by similarity transformation,
+          building the electron–electron cusp into the effective interaction and thereby dramatically accelerating the
+          convergence of correlated calculations toward the complete-basis-set (CBS) limit.  We make this framework
+          practical for large systems and flexible, multi-center correlators by compressing the grid-evaluated TC integrals
+          with the interpolative separable density-fitting (ISDF) approximation, combined with the effective two-body
+          (xTC) treatment of the three-body operator.  This low-rank representation reduces storage and integration
+          costs by orders of magnitude, and a multi-GPU implementation with automatic differentiation of the correlator
+          makes the construction routine for large basis sets.  We demonstrate the resulting ISDF-xTC-CCSD method
+          on the linear hydrogen chain, reaching the joint thermodynamic and CBS limits with basis sets up to cc-pV5Z
+          in agreement with state-of-the-art many-body references to within about 1 mHa/atom, and on the benzene
+          ground-state energy with up to 1200 orbitals (cc-pCV5Z), where the method attains state-of-the-art accuracy
+          at the coupled cluster singles and doubles level and its CBS extrapolation is markedly more robust than that
+          of conventional coupled-cluster methods.
+
+
+I.    INTRODUCTION                                                              The  transcorrelated  (TC)  method,  originally  intro-
+                                                                             duced by Boys and Handy6–10, realizes this idea.  Simi-
+  The accurate treatment of electron correlation is the                      larity transforming the Hamiltonian with a Jastrow fac-
+central challenge ofab initioelectronic structure theory,                    tor,   ¯H=F      −1   ˆHFwithF=e                   ˆτ  ,  builds  the  electron–
+and  a  major  practical  obstacle  is  the  slow  convergence               electron cusp and other correlation effects directly into
+of  correlated  energies  with  the  size  of  the  one-particle             the  Hamiltonian,  markedly  accelerating  basis-set  con-
+basis.  Because an antisymmetric product of smooth or-                       vergence and extending the reach of low-order coupled-
+bitals cannot reproduce the cusp in the wavefunction as                      cluster approximations into strongly correlated regimes.
+two electrons coalesce, correlation energies converge only                   The  price  is  that  the  transcorrelated  Hamiltonian  ac-
+asO(X        −3  )  in  the  cardinal  numberXof  a  correlation-            quires,  beyond  the  usual  two-body  interaction,  an  ad-
+consistent  basis  set1,2,  so  that  reaching  the  complete-               ditional  effective  two-body  term  and  a  genuine  three-
+basis-set  (CBS)  limit  with  orbital-product  expansions                   body  operator,  whose  explicit  (rank-six)  treatment  is
+alone demands prohibitively large bases.                                     prohibitive   beyond   small   systems.      Interest   in   the
+  A well-established route around this bottleneck is to                      method  has  grown  steadily  across  several  groups  and
+build the electron–electron cusp directly into the wave-                     correlation  treatments.   Tsuneyuki  and  co-workers  pi-
+function.   Explicitly  correlated  R12  and  F12  methods                   oneered  its  application  to  solids,  coupling  the  correla-
+augment the orbital expansion with terms that depend                         tor  optimization  to  variational  Monte  Carlo  and  de-
+explicitly on the interelectronic distancer                 12, restoring theveloping  efficient  plane-wave  algorithms  and  correlated
+cusp  and  accelerating  basis-set  convergence  by  roughly                 band  structures11–14.    Alavi  and  co-workers  combined
+two  cardinal  numbers3–5.   These  methods  deliver  near-                  the TC method with full configuration-interaction quan-
+CBS  correlation  energies  in  modest  bases,  but  require                 tum  Monte  Carlo15,16,  coupled-cluster  theory17–19,  and
+specialized  many-electron  integrals  and  are  tailored  to                the  density-matrix  renormalization  group20,  developed
+particular correlation-method implementations.  A com-                       systematic Jastrow-factor optimizations21,22,  and intro-
+plementary strategy, pursued here, folds the correlation                     duced the effective transcorrelated (xTC) scheme17,23,24,
+factor into the Hamiltonian itself rather than the wave-                     which  removes  the  three-body  bottleneck  by  contract-
+function.                                                                    ing  the  three-body  operator  with  the  reference  one-
+                                                                             particle  density  matrix  into  an  effective  two-body  cor-
+                                                                             rection,  restoring  the  formal  scaling  of  a  conventional
+                                                                             two-body   method.      Reiher   and   co-workers   formu-
+a)Electronic mail:  ke.liao.whu@gmail.com                                    lated transcorrelated matrix-product operators and non-
+
+b)Electronic mail:  tianyu.zhu@yale.edu                                      iterative  triples  corrections25,26;   Ten-no  introduced  a
+c)Electronic mail:  a.alavi@fkf.mpg.de                                       nonunitary  projective  transcorrelation  inspired  by  the
+                                                                                                                                                        2
+
+F12 ansatz27; and Giner and co-workers constructed in-                         core storage that accelerates both the ISDF integral con-
+expensive  three-body  correlation  factors  with  analytic                    struction and the downstream CCSD solver, keeping the
+integrals28,29.  These developments have been applied to                       approach  tractable  for  up  to  1200  orbitals  in  large  ba-
+atoms  and  small  molecules30,  the  uniform  electron  gas                   sis  sets;  and  (iv)  integration  with  a  restricted  CCSD
+and periodic solids15,17,31, and even quantum-computing                        solver for non-Hermitian transcorrelated integrals, build-
+hardware32—but almost always for relatively small sys-                         ing on earlier transcorrelated coupled-cluster work17–19.
+tems.                                                                          We validate the ISDF approximation on two benchmarks:
+   Scaling the transcorrelated method to larger systems                        the linear hydrogen chain, where transcorrelation acceler-
+exposes  a  second,  less  widely  appreciated  bottleneck:                    ates basis-set convergence and the thermodynamic-limit
+the evaluation of the transcorrelated two-body integrals                       energies  agree  with  state-of-the-art  AFQMC+∆DMRG
+themselves.  For simple correlators these can be obtained                      references50  to  within  1  mHa/atom,  and  the  benzene
+analytically25,28,29, but analytic schemes are correlator-                     molecule,  where  the  construction  remains  tractable  up
+specific  and  become  cumbersome—or  intractable—for                          to the cc-pCV5Z basis (N  orb = 1200).
+the flexible, multi-center correlators, such as the Boys–
+Handy10 or Drummond–Towler–Needs33 forms, that are
+needed  to  capture  electron–electron,  electron–nucleus,                     II.    THEORETICAL FRAMEWORK
+and three-body electron–electron–nucleus correlation si-
+multaneously.   Numerical  real-space  integration  is  fully                  A.    Transcorrelation theory
+general and correlator-agnostic, but its naive cost is pro-
+hibitive:  evaluating  the  transcorrelated  two-body  inte-                      The transcorrelated Hamiltonian is obtained by a sim-
+grals  requires  a  double  sum  over  grid  points  for  ev-                  ilarity transformation of the bare electronic Hamiltonian
+ery  orbital  pair,  scaling  asO(N          2g N 2orb)  in  the  number        ˆHin first quantization:
+of  grid  pointsN   g;  explicit  evaluation  of  the  full  three-
+body  (rank-six)  integrals  is  more  expensive  still;  and                                      ¯H=F      −1    ˆH F,       F=e       ˆτ  ,                 (1)
+even  after  the  xTC  contraction  eliminates  the  explicit
+three-body tensor, the assembly of the effective two-body                      whereFis the Jastrow factor and ˆτis the Jastrow oper-
+correction—the  dominant  cost  in  practice—couples  the                      ator.  The production correlator contains a one-electron
+same  double  grid  sums  toO(N         gN 4orb)  orbital-pair  con-           nuclear-cusp termχ(r)                21  and a symmetric two-electron
+tractions. None of these costs is affordable for production                    termu          2(r  i,r j). For a fixedN-electron system these com-
+calculations without further factorization.                                    bine into a single symmetric effective pair kernel,
+   We address this bottleneck with the interpolative sep-
+arable density-fitting (ISDF) approximation34–36, which                          u(r    i,r j) =u    2(r  i,r j) + χ(r    i) +χ(r        j)
+compresses products of orbitals (and orbital gradients) on                                                          N−1           ,
+a real-space grid into a low-rank representation anchored                                        NX             NX                   NX
+at a small set of interpolation points, and which has accel-                              ˆτ=        χ(r    i) +    u2(r  i,r j) =       u(r    i,r j)(2)
+erated density fitting34,36, hybrid density-functional the-                                      i             i<j                  i<j
+ory and exact exchange in molecules and solids35,37–39,                                            NX
+GWand random-phase-approximation calculations        40–42,                                  =  12     u(r    i,r j),       F(R) =       Yeu(r    i,r j),
+post-Hartree–Fock  methods43–47,  quantum  embedding                                              i̸=j                              i<j
+and  local  correlation  in  crystalline  materials48,   and
+compact   Hamiltonian   representations   for   quantum                        where the second equality holds because each electron la-
+computing49.    We  show  that  the  transcorrelated  two-                     bel appears in exactlyN−1 ordered pairs, so the 1/(N−
+body  (K)  and  effective  two-body  (xTC,  ∆U)  integrals                     1)  factor  inuresums  the  one-body  term  exactly.   The
+inherit  this  low-rank  structure,  and  we  build  them  for                 one-body  factor  is  thereby  represented  exactly  within
+a  general  differentiable  Jastrow  factor  whose  gradients                  the same pair-product form used by the integral kernels.
+are obtained by automatic differentiation, eliminating the                     The effectiveuis real-valued and symmetric,u(r                             i,r j) =
+need for hand-coded, correlator-specific integral routines.                    u(r    j,r i), and collects the one-electron nuclear-cusp cor-
+   This  work  contributes:   (i)  an  ISDF  factorization  of                 rection  together  with  the  electron–electron,  electron–
+the  transcorrelatedKand  ∆Uintegrals  for  a  general                         nucleus,  and  three-body  electron–electron–nucleus  con-
+grid-evaluated  correlator,  with  a  pivoted-Cholesky  se-                    tributions inu    2.  In the expansion below,P(r         i1, . . . ,r in)
+lection  of  interpolation  points  that  is  independent  of                  denotes  the  symmetrizer  over  the  electron  coordinates
+the Jastrow; (ii) a GPU-compatible Jastrow-optimization                        listed as its arguments, i.e. the sum over alln! permuta-
+workflow that combines the reference-variance VMC ob-                          tions of thenelectron labels.
+jective  of  Ref.  21—complementary  to  recent  determin-                        Expanding  ¯Hvia the Baker–Campbell–Hausdorff for-
+istic  Jastrow-optimization  schemes22—with  automatic-                        mula,  and  using  the  fact  that  ˆτ depends  only  on  the
+differentiation gradients and Polyak–Ruppert parameter                         electron  positions  and  contains  no  gradient  or  integral
+averaging;  (iii)  a  GPU-accelerated  producer/consumer                       operators, the series terminates at the second commuta-
+pipeline  with  multi-GPU  dispatch  support  and  out-of-                     tor and produces at most three-body operators:
+                                                                                                                                                                      3
+
+                                ¯H=     ˆH+ [    ˆH,ˆτ] +       12[[ ˆH,ˆτ],ˆτ]
+                                                               h                          ∇iu(r    i,r j)2 +∇   iu(r    i,r j)· ∇  ii
+                                   =  ˆH−   XP(r     i,r j)      1
+                                                                 2∇2i u(r    i,r j) +  12
+                                              i<j                                                                                                                  (3)
+                                      −  X        P(r     i,r j,r k)∇  iu(r    i,r j)· ∇  iu(r    i,r k).
+                                          i<j<k
+
+
+
+Projected onto a set of one-electron orbitals{ϕ                p},    ¯Has-      sumes the second-quantized form
+                                                                                                   ¯H=h       pq a†paq +  12 (V   pqrs −K    pqrs )a †pa†qasar
+                                                                                                           −  16 Lpqrstu a†pa†qa†rauatas,                         (4)
+
+                                                                                      where the Einstein summation convention is used.  The
+                                                                                      two-bodyKand three-bodyLcorrections are
+
+
+
+                       Kpqrs  =  ˆP12
+ϕp(1)ϕ     q(2) 12∇21u(1,2) +          12(∇  1u(1,2))        2 +∇    1u(1,2)· ∇            1  ϕr(1)ϕ     s(2) ,
+                       Lpqrstu =  ˆP123 ⟨ϕ  p(1)ϕ     q(2)ϕ     r(3)|∇      1u(1,2)· ∇            1u(1,3)|ϕ            s(1)ϕ     t(2)ϕ     u(3)⟩,                                               (5)
+
+
+
+with the shorthandϕ                   p(i)≡ϕ        p(r  i) andu(i, j)≡u(r                      i,r j).not separately impose the same-spin cusp condition ( 14);
+                                                                                      all systems studied here are closed-shell.  The remaining
+                                                                                      cIk, together with the nonlinear scale parametersdandb                              I,
+B.    Jastrow correlator used in this work                                            are optimized freely by VMC. The one-electron termχis
+                                                                                      the nuclear-cusp factor of Ref. 21; the composite correla-
+   We  use  the  flexible  multi-center  Boys–Handy  (BH)                             tor used in production is specified in the Computational
+correlator10, which captures electron–electron, electron–                             Details.   All correlator derivatives entering the integral
+nucleus,  and  three-body  electron–electron–nucleus  cor-                            kernels are obtained by forward-mode automatic differ-
+relation,  with its linear and nonlinear parameters opti-                             entiation, which is robust to arbitrary monomial degrees
+mized by variational Monte Carlo (VMC). The BH form                                   (m  k, nk, ok).
+is written not in terms of the bare interparticle distances
+but in terms of bounded, monotonescaled distances
+                                                                                      C.    Variance optimization of the correlator by variational
+            ¯r  iI  =     bI riI                                                      Monte Carlo
+                       1 +b   I riI ,       ¯r   ij  =     d rij1 +d r   ij ,        (6)
+withr        iI  =r   i −R   I, r iI  =|r    iI|, r  ij  =|r    i −r   j|,  and           The linear coefficients{c     Ik}and the nonlinear scale pa-
+variational  scale  parametersb         I  >0  (nucleus-resolved)                     rameters{b                  I, d}in Eqs. (6)–(7) are optimized by varia-
+andd >0.  The scaled variables satisfy ¯r∈[0,1), so that                              tional Monte Carlo prior to the TC integral construction.
+monomials  ¯r  m  remain  bounded  at  long  range,  and  all                         Following  the  reference-variance  approach  of  Ref.  21,
+positive integer powers can be mixed without divergence.                              which has been shown to optimize transcorrelated corre-
+The correlator reads                                                                  lators more reliably than energy minimization, we min-
+                           X        h                           i                     imize  the  variance  of  the  local  energy  of  the  Slater–
+     u2(r  i,r j) = X            cIk  ¯r  mkiI   ¯r  nkjI  + ¯r  mkjI  ¯r  nkiI¯r  okij ,     (7)Jastrow trial wavefunction ΨT (R) =F(R) Φ                  0(R), with
+                        I    k                                                        Φ0 the Hartree–Fock reference determinant.
+                                                                                          a.    Sampling from the reference determinant.A dis-
+where  (m  k, nk, ok)  are  user-chosen  non-negative-integer                         tinctive  feature  of  thereference-varianceprotocol         21  is
+exponents andc       Ik  are the linear variational coefficients.                     that Monte Carlo configurations are drawn from the ref-
+A dedicated term withm        k  =n   k  = 0 ando       k  = 1 is re-                 erence  density|Φ    0(R)|        2  rather  than  from  the  Slater–
+tained in a cusp-normalized form, with its masked pref-                               Jastrow  density|Ψ   T (R)|        2.   The  sampling  distribution
+actor fixed so that the summed short-range slope satis-                               is therefore held fixed throughout the parameter update
+fies  the  opposite-spin  electron–electron  Kato  condition,                         and only the local energy
+∂u2/∂rij|rij→0    = 1/2.  The same spin-independent two-
+electron correlatoru                    2 is applied to every electron pair, so                              Eloc(R;θ)  =           ˆHΨ    T (R)
+it satisfies the opposite-spin Kato cusp exactly but does                                                                           ΨT (R)       ,                  (8)
+                                                                                                                                                            4
+
+depends on the Jastrow parametersθthrough the trial                                 d.    Optimization   schedule.The   two-stage   warm-
+wavefunction ΨT , with the transcorrelated Hamiltonian¯H(θ)  given  by  Eq.  (3).   This  fixed  sampling  distribu-up/refinement  optimization  schedule  and  the  Polyak–
+                                                                                 Ruppert parameter averaging used to define the produc-
+tion has two operational advantages:  the sampler need                           tion correlator are described in Supporting Information
+not be re-equilibrated after each parameter update, and                          Section??.
+the walker state stores only Slater matrices and their in-
+verses.  These are updated at costO(N              2el) per proposal
+(see Supporting Information Section??), while the Jas-                           D.    Interpolative Separable Density-Fitting
+trow  enters  only  throughE                loc  and  never  through  the
+Metropolis acceptance ratio.                                                        The  integration  grid  underlying  the  ISDF  factoriza-
+   b.    Objective  function.Concretely,  at  optimization                       tion is a Becke-partitioned atomic grid51 with Treutler–
+stepswe  sampleN                      w  walker  positions{R                  (s)k  }Nwk=1   fromAhlrichs radial nodes, Lebedev angular grids, and Bragg–
+|Φ 0|2.      Holding   this   batch   fixed,   writeE          k(θ)    =         Slater  radii,  yielding  points{r      g}Ngg=1   and  weights{w     g}
+Eloc(R  (s)k  ;θ) and define its raw mean and mean absolute                      that absorb the nuclear partitioning and radial Jacobian.
+deviation (MAD) as                                                               We use PySCF grid level 2 throughout, as in Ref. 21.
+                                 X                                                  a.    Low-rank structure. The approximation relies on
+              ms(θ) =      1Nw        Ek(θ),                                     a compact representation of orbital products. The point-
+                                  k                                              wise Coulomb kernel itself is not low rank on the grid,
+                                 X                                      (9)      but  the  contracted  four-index  tensor  inherits  low  rank
+                ds(θ) =      1Nw      |E k(θ)−m         s(θ)|.                   from the orbital overlap density
+                                  k
+For outlier protection, each local energy is clipped to the                                               ρpq(r)≡ϕ         p(r)ϕ     q(r),                     (13)
+interval set by the raw mean and MAD,                                            because rank(AB)≤min[rank(A),rank(B)].  The same
+             eEk(θ) = clip   Ek(θ), m      s(θ)−5d           s(θ),               argument guarantees that the transcorrelated integralsK
+                               ms(θ) + 5d      s(θ)  .                  (10)    andLadmit a low-rank representation of rank at most
+                                                                                 Nµ, whereN           µ is the numerical rank ofρ   pq(r) on the cho-
+The mean is then recomputed from the clipped energies,                           sen grid.
+and the fixed-batch objective is                                                    b.    Pivot  selection  by  pivoted  Cholesky.We  select
+                             X                                                   the scalar-channel interpolation points{r      (ϕ)µ  }N(ϕ)µ
+           eEs(θ) =      1        eEk(θ),                                                                                                      µ=1    by an
+                       Nw                                                        iterative pivoted  Cholesky  decomposition(rather  than
+                              k                                       (11)       by  QR-column-pivoting34,35  ork-means       37  as  in  previ-
+                                  Xh eEk(θ)−         eEs(θ) i2 .                 ous ISDF implementations), in the spirit of the pivoted-
+           σ2s(θ) =         1Nw −1                                               Cholesky grid-point selection introduced for least-squares
+                                    k
+No external reference energy enters the objective.  The                          tensor  hypercontraction52.    Fusing  the  orbital  indices
+update  in  Eq.  (12)  evaluates  the  gradient  of  Eq.  (11)                   into a single row indexpqand indexing the grid points
+atθ    (s)   .   The  variance  of  Eq.  (11)  vanishes  only  if  Φ0            by  the  column,  the  overlap-density  matrixM              (pq),g       =
+is  an  exact  (right)  eigenstate  of   ¯H(θ);  within  the  fi-                ϕp(r  g)ϕ  q(r  g) has the separable Gram
+nite Boys–Handy parameterization the optimizer instead                                                               X                         2,
+seeks  the  lowest  attainable  variance,  approaching  this                                     (M  ⊤M)    gg′ =          ϕp(r  g)ϕ  p(r  g′)
+zero-variance principle to the extent that the correlator                                                            Xp                                 (14)
+can absorb the transcorrelated Hamiltonian into the ref-                                D(ϕ)g   ≡(M     ⊤M)    gg =        ϕp(r  g)2 2,
+erence determinant.                                                                                                     p
+   c.    Newton  optimizer  with  Gauss–Newton  curvature.
+Because  the  objective  Eq.  (11)  has  the  structure  of  a                   which avoids ever forming theN       2orb ×N   g  matrixMex-
+sum of squared residualsr                k(θ) =    eEk(θ)−eEs(θ), we use         plicitly.   In  the  actual  quadrature  implementation  the
+a Newton-type update with Gauss–Newton curvature,                                pivot selection is performed on the weight-scaled orbitals
+                           NwX                                                   ϕwp (r  g) =w    1/2g   ϕp(r  g), so the scalar Cholesky matrix is
+       Cij[θ]  =       1        ∂θirk ∂θjrk  +λ δ   ij,
+                     Nw                                               (12)                                    X                          2,
+                          k=1                                                                      S(ϕ)gg′  =        ϕwp (r  g)ϕ  wp (r  g′)
+          ∆θ=−η C           −1  ∇θσ2s,                                                                            Xp                                    (15)
+with   an   adaptive   Tikhonov   shiftλ and   an   exact                                          D(ϕ)g    =w    2g    ϕp(r  g)2 2.
+Cholesky-based  solve  of  the  linear  system.     Gauss–                                                           p
+Newton matches the quadratic structure of Eq. (11) near
+the optimum and converges in far fewer steps than plain                          Because  the  two-bodyK     (1)  kernel  (in  Section  III),  in
+stochastic gradient descent.                                                     which  the  gradient  acts  on  an  orbital,   involves  the
+                                                                                                                                                                    5
+
+orbital–gradient productϕ        p(r)∇ϕ         q(r), we perform asec-                TABLE  I:  Fixed-rank,  weight-scaled  pivoted-Cholesky
+ondpivoted Cholesky on the diagonal                                                   selection (scalar branch).
+                      X                          ∂cϕp(r  g)2
+      D(∇)g    =w    2g      ϕp(r  g)2  X                          ,      (16)           1:Input:ϕ                p(r  g), positive weightsw   g, target rankN          (ϕ)µ   .
+                         p                  p,c                                          2:d   g ←w     2g P
+                                                                                                             p ϕp(r  g)22.
+with the corresponding column                                                            3:forµ= 1, . . . , N                (ϕ)µ   do
+             X                            X                                              4:    g   ⋆ ←arg max    g dg; record pivotr  µ ←r    g⋆.
+ S(∇)gg′  =        ϕwp (r  g)ϕ  wp (r  g′)       ∂cϕwp (r  g)∂  cϕwp (r  g′)  .          5:    s   g ←w    gwg⋆ Pp ϕp(r  g)ϕ  p(r  g⋆)2.
+                p                            p,c                                         6:    L   gµ ←  sg − Pλ<µ LgλLg⋆λ/pdg⋆.
+                                                                          (17)           7:    d   g ←max(d              g −L    2gµ,0).
+Both production decompositions run to prescribed ranks                                   8:end for
+N (ϕ)µ    andN        (∇)µ   ;  there is no residual-tolerance stopping                  9:returnexactlyN                                 (ϕ)µ    pivots{r       µ}and factorL.
+criterion.  The ranks are set from the chosen rank ratios
+and the two resulting pivot sets are subsequently fused.
+The decomposition itself is matrix-free (Section IV B).                               Thus the scalar auxiliary uses scalar–scalar pivot factors,
+   c.    Pivot fusion.We take theunionof the two pivot                                whereas each Cartesian gradient auxiliary uses a gradi-
+sets  as  the  final  interpolation  set,  denote  its  cardinal-                     ent factor on one orbital index and a scalar factor on the
+ity  byN  µ,  and  relabel  its  points{r      µ}Nµµ=1  .   This  forces              other.  Following traditional ISDF terminology we refer
+the scalar and gradient auxiliary bases to share a single                             toξand      ˜ξas theauxiliary densityandauxiliary gradient
+pivot indexµ, so that the pivot-point tensorsC                          pq (r  µ) =   density, respectively.
+ϕp(r  µ)ϕ  q(r  µ)  and  ˜Cpq(r  µ)  =ϕ   p(r  µ)∇ϕ     q(r  µ)  appear  si-             e.    Grid-batched  streaming.The tensorsξ                          µ(r  g) and
+multaneously  in  the  later  contractions  without  any  re-                         ˜ξµ(r  g)  are  the  only  objects  whose  storage  grows  with
+indexing  or  interpolation  between  incompatible  pivot                             the  dense  grid  sizeN       g.   They  are  therefore  evaluated
+sets. Because the gradient pivots are largely distinct from                           in  grid  batches  and,  when  necessary,  streamed  to  disk
+the scalar ones, the fused set is roughly twice the size of a                         rather than held in device or host memory.  During in-
+single channel, but every intermediate in theKand ∆U                                  tegral assembly, batches are brought back to the device
+assembly addresses a single auxiliary dimension.                                      asynchronously by a depth-one prefetch mechanism,  so
+   d.    Auxiliary  basis  fitting.Given  the  fused  pivots,                         that host-to-device transfer overlaps with compute.
+ISDF approximates the densities as
+
+             ρpq(r)≈     X      ξµ(r)C      pq (r  µ),                                III.    ISDF REPRESENTATION OF THE TC INTEGRALS
+                            µ
+  ϕp(r)∂     cϕq(r)≈     X      ˜ξcµ(r)    ˜Cp,cq   (r  µ),       c∈ {x, y, z},       A.    Two-bodyKintegrals
+
+                            µ
+                                                                          (18)           The real-space expression for the two-body correction
+whereξ           µ(r) and the component-specific     ˜ξcµ(r) are deter-               in Ref. 54 separates naturally into three kernels:
+mined  by  minimizing  the  Frobenius  norm  of  the  resid-                              Kpq(1)rs     =⟨ϕ     p(1)ϕ     q(2)|∇      1u(1,2)· ∇            1 |ϕ r(1)ϕ     s(2)⟩,
+ual,  following  the  least-squares  fitting  strategy  first  in-
+troduced for tensor hypercontraction53 and later adopted                                  Kpq(2)rs     = 
+ϕp(1)ϕ     q(2)∇21u(1,2)      ϕr(1)ϕ     s(2) ,
+for ISDF35.  The associated normal equations                                              Kpq(3)rs     = 
+ϕp(1)ϕ     q(2) (∇  1u(1,2))        2  ϕr(1)ϕ     s(2) .
+             X(CC  ⊤)µν ξν(r) =   X             Cpq (r  µ)ρ  pq(r),       (19)                                                                                  (21)
+
+              ν                             pq                                        Collecting the three kernels with the symmetrization  ˆP12,
+                                                                                      the two-body kernel entering Eq. (4) is
+are  solved  directly  through  a  Cholesky  factorization  of                                              h                                        i
+the denseN          µ ×N   µ Gram matrix (CC  ⊤)µν =G    2µν, where                          Kpqrs  =  ˆP12   Kpq(1)rs     +  12Kpq(2)rs     +  12Kpq(3)rs,       (22)
+Gµν = Pp ϕp(r  µ)ϕ  p(r  ν) (see Section IV B for the numer-
+ical safeguards).  The gradient auxiliary basis  ˜ξcµ  is ob-                         with   ˆP12 T pqrs   =T    pqrs  +T    qpsr   denoting  electron-1↔2  ex-
+tained by solving the analogous system three times, one                               change,  which  simultaneously  interchangesp↔qand
+per  Cartesian  component,  but  with  the  mixed  normal-                            r↔sin the physicists’ index convention used here.  To
+equation matrix                                                                       avoid the numerically expensive Laplacian, we integrate
+                    X                                 X                               by parts, a reformulation first used in the supplementary
+( ˜Cc ˜Cc⊤ )µν =           ∂cϕp(r  µ)∂  cϕp(r  ν)            ϕq(r  µ)ϕ  q(r  ν)   ,   material of Ref. 54, to rewrite
+                        p                                 q
+                                                                          (20)          Kpq(2)rs     =− ⟨ϕ     p(1)ϕ     q(2)|∇      1u(1,2)· ∇            1 |ϕ r(1)ϕ     s(2)⟩
+and  a  right-hand  side  formed  from  the  correspond-                                             − ⟨ϕ  r(1)ϕ     s(2)|∇      1u(1,2)· ∇            1 |ϕ p(1)ϕ     q(2)⟩,
+ing  gradient–scalar  product  at  the  target  grid  point.                                                                                                    (23)
+                                                                                                                                                                     6
+
+which    reduces K    (2)    to    two  K   (1)-style    evalua-                      relation  ∆U    pqrs  =  ∆U    qpsr .   To  specify  the  four  terms  be-
+tions    with    swapped    orbital    labels;     the    surface                     fore applying ISDF, define the orbital-pair and density-
+terms   vanish   for   the   localized   square-integrable   or-                      matrix-contracted fields
+bital   products   used   here.      WritingK           (1,swap)pqrs              =                   ρab(r  g) =ϕ   a(r  g)ϕ  b(r  g),
+⟨ϕ  r(1)ϕ     s(2)|∇      1u(1,2)· ∇            1 |ϕ p(1)ϕ     q(2)⟩for the swapped
+contraction, so thatK         (2) =−K        (1) −K    (1,swap)   , Eq. (22)                          ργ(r  g) = X      γut ρtu(r  g),
+reduces to the form assembled in practice,                                                                          tu
+                       h                                          i                                  βus (r  g) = X     γut ρts(r  g),
+     Kpqrs  =  12  ˆP12 Kpq(1)rs    −K    pq(1,swap)rs            +K    pq(3)rs.     (24)                            t
+We therefore discuss onlyK         (1) andK        (3) in what follows.                                 Aab,g = X                                                (29)
+   Substituting the ISDF factorizations in Eq. (18) yields                                                          g′  wg′ρab(r  g′)∇u(r         g,r g′),
+  Kpq(1)rs     = X                                                                                      Aγ,g = X
+                                                                                                                    g′  wg′ργ(r  g′)∇u(r         g,r g′),
+                g,g′ wgwg′ ϕp(r  g)∇ϕ     r(r  g)·∇u(r        g,r g′)
+                   ×ϕ   q(r  g′)ϕ  s(r  g′)                               (25)                          Bus,g = X
+                                                                                                                    g′  wg′βus (r  g′)∇u(r         g,r g′).
+            = Xu(1)µν · ˜Cpr(r  µ)C  qs(r  ν),                                        The pre-ISDF contributions are then
+                 µν
+with  thevector-valuedJastrow  kernel  (three  Cartesian                                Term1 = 2X           wgρpr(r  g)A  γ,g·A qs,g,
+components)                                                                                              g
+     u(1),cµν    = X                                                                    Term2 =−  X           wgρpr(r  g)X      Bus,g·A qu,g,
+                 g,g′ wg wg′ ˜ξcµ(r  g)ξ  ν(r  g′)∂  cu(r    g,r g′),     (26)                            g                  u
+                                                                                        Term3 =−  X           wgApr,g·Xβus (r  g)A  qu,g +B   us,gρqu(r  g) ,
+       u(1) ∈R   Nµ×N   µ×3  .
+                                                                                                          g                u
+The analogousK                    (3) expression reads                                  Term4 = X          wgργ(r  g)A  pr,g·A qs,g.
+   Kpq(3)rs     = Xu(3)µν Cpr (r  µ)C  qs(r  ν),                                                       g
+                                                                                                                                                                 (30)
+                 µν                                                                   Throughout this section,µ, ν, λlabel auxiliary (ISDF) in-
+      u(3)µν  = X                                                                     dices, so thatr        µ denotes the corresponding pivot point;
+                g,g′ wgwg′ ξµ(r  g)ξ  ν(r  g′) ∇u(r        g,r g′)2,   (27)          g, g′ label grid points,c∈ {x, y, z}labels Cartesian com-
+                                                                                      ponents,αlabels columns of the density projector, and
+where nowu   (3) ∈R   Nµ×N   µ  isscalar(no Cartesian com-                            p, q, r, s, t, ulabel MO indices.  We keep the pivot-tensor
+ponent) because it contracts the squared gradient.                                    notation of Eq. (18), writing scalar factors asC    pq (r  µ) and
+                                                                                      reserving  ˜Cpq(r  µ) for gradient factors.  We pre-compute
+B.    Effective two-body correction∆Ufrom xTC                                         three orbital-independent intermediates,
+
+   Explicit evaluation of the rank-sixLtensor in Eq. (4) is                                             Gν = XCtu(r  ν)γ  ut ,
+                                                                                                                  tu
+prohibitive already for moderate system sizes.  Following                                              Lusν = Xγut  Cts(r  ν),
+the xTC scheme of Ref. 23 we instead absorbLinto an                                                                                                              (31)
+effective  two-body  correction  by  contracting  two  of  its                                                     t
+three pairs with the Hartree–Fock one-particle reducedDE                                               Gcµ,g = X
+density  matrixγ             ut   =a†tau  ,  defined  here  as  the  one-                                         g′  wg′ ξµ(r  g′)∂  cu(r    g,r g′).
+spin  spatial-orbital  density  (occupied  eigenvalues  equal                         HereG         ν  is  the  density  matrix  contracted  against  an
+to one).  We keep the physicists’ index convention used                               ISDF  vertex,L           usν  is  the  corresponding  density-dressed
+throughout the article: in ∆U    pqrs , the pairs (p, r) and (q, s)                   vertex with one open orbital pair, andG       cµ,g is a grid-local
+are the bra–ket orbital pairs of electron 1 and electron 2,                           gradient–interaction kernelencoding the action of∇uon
+respectively.   The  result  is  a  sum  of  four  contributions                      the auxiliary basis.  Inserting Eq. (18) into Eq. (29) gives
+that,  after  inserting  the  ISDF  factorizations  (18),  each                       the direct mapping
+take a form well suited to grid-batched contraction:
+ ∆U    pqrs  =−    ˆP12 Term1 + Term2 + Term3 + Term4 , (28)                           ργ(r  g)≃  XGλξλ(r  g),   A   ab,g ≃ XCab (r  µ)G  µ,g,
+                                                                                                        λ                                 µ                      (32)
+with the electron-1↔2 exchange                    ˆP12T pqrs  =T    pqrs +T    qpsr  act-βus (r  g)≃  XLusνξν(r  g),  B   us,g ≃ XLusνGν,g.
+ing as in Eq. (22), which enforces the particle-exchange                                                ν                                 ν
+                                                                                                                                                               7
+
+Thus Terms 1 and 4 generate theD       (1) andD        (4) kernels                    c.    Low-rank projector for Terms 2 and 3. A key al-
+below, while Terms 2 and 3 generateX                 (2) andX        (3), re-      gorithmic  ingredient  of  our  implementation  is  that  the
+spectively.                                                                        density-matrix contraction inside the exchange kernel can
+   a.    Terms  1  and  4  (factorizable).Both  terms  re-                         be applied through a low-rank projector.  Observing that
+duce to a pureN          2µ contraction, with dominant grid cost                     X                             X
+O(N     gN 2µ):                                                                           Y us,g,c Zqu,g,c = X          Lusν Gcν,g Cqu(r  µ)G  cµ,g
+                                                                                     u,c                      u,c  hXµ,ν                i X
+      Term4 = XCpr (r  µ)D  (4)µν Cqs(r  ν),                                                              = X             LusνCqu(r  µ)          Gcν,gGcµ,g   ,
+                    µν       X                !                                                               µν      u                      c
+                                                                                                                                                           (37)
+         D(4)µν  = X     ˜w  g     Gcµ,gGcν,g    ,                                 the bracketed density contraction can be written in fac-
+                     g          c                                                  tored form by decomposing the reference density matrix
+                       X                                                           asγ=L         QL⊤Q, withL        Q the code-level low-rank projector:
+            ˜w  g =w   g    Gλ ξλ(r  g),                                                         X
+                         λ                                              (33)                          LusνCqu(r  µ) = XPsν,αPqµ,α,
+      Term1 = 2X          Cpr (r  µ)D  (1)µν Cqs(r  ν),                                            u                      α
+                      µν                                                                                     Psν,α = XCts(r  ν)(L   Q)tα,
+         D(1)µν  = Xwg ξµ(r  g)V  ν,g,                                                                                                                     (38)
+                                                                                                                           t
+                     g                                                                                       Pqµ,α = XCqu(r  µ)(L   Q)uα.
+         Vν,g = XHgc Gcν,g,    Hgc = XGλGcλ,g.                                                                            u
+                     c                             λ                               For the closed-shell Hartree–Fock reference used here,γ
+The intermediatesD                        (4) andD        (1) are ofO(N          2µ).is idempotent in the MO basis, soL    Q coincides with the
+   b.    Terms 2 and 3 (non-factorizable).These contri-                            density  projector  itself.   The  naiveO(N       gN 2µ)  exchange
+butions retain one open orbital index inherited from the                           contraction  is  thereby  replaced  by  anO(N          gNµNorb)
+density matrix.  Introducing                                                       contraction;  the  measured  speedup  is  reported  in  Sec-
+                                                                                   tion IV B.
+                      Y us,g,c = XLusν Gcν,g,                                         d.    Final assembly.Combining the four terms,
+
+                                   ν                                    (34)           Dµν ≡D    (4)µν  + 2D  (1)µν ,       Xqsµ ≡X    (2)qsµ +X    (3)qsµ,   (39)
+                      Zqu,g,c = XCqu(r  ν)G  cν,g,                                 the final assembly is
+                                   ν                                                                               hX
+one obtains                                                                                     ∆U    pqrs  =−   ˆP12     Cpr (r  µ)D  µνCqs(r  ν)
+                                                                                                                      µν
+ Term2 =−  X          Cpr (r  µ)X  (2)qsµ,                                                                                                    i            (40)
+                  µ                                                                                                  − X      Cpr (r  µ)X  qsµ .
+                                                                                                                          µ
+   X(2)qsµ = X     wg ξµ(r  g)X      Y us,g,c Zqu,g,c,                             The  assembly  scales  asO(N          4orbNµ)  in  work  and  pro-
+                g                u,c
+ Term3 =−  X          Cpr (r  µ)X  (3)qsµ,    X(3)qsµ =X    (3,1)qsµ   +X    (3,2)qsµ  ,ducesO(N                 4orb)  CCSD-facing  tensor  blocks  when  those
+                                                                                   blocks are materialized—identical in logical size to the fi-
+                  µ                                                                nal contraction step of a conventional density-fitted ERI
+                                                                        (35)       assembly—and dominates the end-to-end cost for large
+with                                                                               Norb.
+              X(3,1)qsµ   = X   wg Gcµ,g  X     ˜Lus,g Zqu,g,c,
+
+
+                            g,c             u                                      C.    Assembly of the effective xTC Hamiltonian
+                  ˜Lus,g = X    Lusν ξν(r  g),
+
+                            ν             X                             (36)          The  two-body  kernels  of  the  preceding  sections  de-
+              X(3,2)qsµ   = X   wg Gcµ,g       Y us,g,c bCqu,g,                    liver the correctionsK                    pqrs  and ∆U    pqrs .  Contracting these
+                            g,c             u                                      against the closed-shell reference one-particle density ma-
+                 bCqu,g = X     Cqu(r  ν)ξ  ν(r  g).                               trix reduces the transcorrelated Hamiltonian to a stan-
+                                                                                   dard  zero-,  one-,  and  two-body  operator,  which  is  the
+                            ν                                                      object handed to the coupled-cluster solver.  It is conve-
+The dominant grid cost of Terms 2–3 isO(N        gNµN 2orb),                       nient to collect the two-body correction into
+set by the contraction over the open orbital indexu; the                                                  W pqrs ≡ −K    pqrs + ∆U    pqrs ,                  (41)
+storage of the resulting intermediates and their disk stag-
+ing are discussed in Section IV C.                                                 so that the effective two-body integrals areV       pqrs  +W    pqrs .
+                                                                                                                                                               8
+
+TABLE II: ISDF-xTC: assembly of the effective transcor-                            one-body increment
+related Hamiltonian.                                                                                               X      2 ∆U    poqo −∆U       pooq.         (42)
+                                                                                                 ∆h    pq =−    12
+   1:Obtain  molecular  orbitals{ϕ                   p(r)}(Hartree–Fock  or                                       o∈occ
+      MP2 natural orbitals) and reference density matrixγ            ut .
+   2:Build Becke atomic grid{r            g, wg}; evaluateϕ             p and∇ϕ          pThe effective one-body (Fock) operator adds to ∆hthe
+      on the grid.                                                                 mean-field contraction of the two-body correctionWover
+   3:Pivot  selection:weighted  pivoted  Cholesky  onϕϕ                            the occupied space,
+      andϕ∇ϕ; fuse pivot sets.                                                                                                 2W   pi           ,        (43)
+   4:Auxiliary fit:solve normal equations forξ              µ(r) and                             f xTC
+       ˜ξcµ(r) (batched Cholesky with adaptive jitter, optional                                   pq    = ∆h    pq + X              qi −W    piiq
+      HDF5 streaming).                                                                                                 i∈occ
+
+   5:Form pivot-point tensorsC                pq (r  µ),  ˜Cpq(r  µ).              comprising a Coulomb-type term (weight 2 for the closed
+   6:Kkernels:assembleu                             (1)µν , u (3)µν  with doubly-blockedshell)  and  an  exchange-type  term.   This  correction  is
+      grid sums; contract intoK     (1), K(3).                                     added  to  the  bare-Hamiltonian  Fock  matrix  built  from
+   7:xTC  correction:form  the  derivation-definedG                                      ν,V; becauseKand ∆Uare non-Hermitian,f                                                          xTC is stored
+      Gcµ,g, L usν, Y  us,g,c,  andZ       qu,g,c;  assembleD      (1), D (4),     without symmetrization.
+      X(2), andX        (3) (including  ˜Lus,g and bCqu,g) on streamed                b.    Scalar  constant.The fully-contracted remainder
+      grid  shards  using  the  low-rank  projector  and  upper-                   is a scalar that shifts the reference energy,
+      triangular symmetry.                                                                                             X
+   8:Assemble ∆U       pqrs .                                                                        ExTC                    ∆h    ii +E    nuc,             (44)
+   9:Pass the transformed one- and two-body integralsh+                                                 0     =−    23
+      ∆h,V−K+ ∆Uto the CCSD solver.                                                                                   i∈occ
+
+                                                                                   formed from the same one-body operator ∆htraced over
+                                                                                   the occupied orbitals, together with the nuclear repulsion
+                                                                                   Enuc.
+                                                                                      c.    Assembled      Hamiltonian.The      Hamiltonian
+                                                                                   handed to the solver retains the original one- and two-
+   a.    One-body correction and Fock operator.A partial                           electron integrals, with the one-body part renormalized
+contraction of ∆Uover the occupied orbitals defines the                            by ∆hand the two-body part xTC-corrected,
+
+
+                                ¯HxTC =E    xTC                                        V pqrs −K    pqrs + ∆U    pqrs a†pa†qasar,                            (45)
+                                              0     +  hpq + ∆h    pq a†paq +  12
+
+
+
+whereh           pq are the bare one-electron integrals and ∆hand                  sors rather than relating them by transposition. The one-
+ExTC0      are given by Eqs. (42) and (44).  From this  ¯HxTC                      body Fock matrix and the scalar constant are assembled
+the coupled-cluster solver builds its reference Fock matrix                        as  described  in  Section  III C;  like  the  two-body  blocks
+in  the  usual  closed-shell  way;  the  xTC  contribution  to                     they are non-Hermitian and stored without symmetriza-
+that Fock isf    xTC  of Eq. (43).  BecauseKand ∆Uare                              tion.
+non-Hermitian, all one- and two-body integrals are stored                             Although  carrying  the  ISDF  factorization  directly
+without symmetrization.                                                            through the CCSD amplitude equations can yield lower-
+
+                                                                                   scaling  formulations,  that  reduction  is  not  used  in  the
+IV.    IMPLEMENTATION                                                              present study. Here, ISDF is used to construct the trans-
+                                                                                   formed integral blocks, which are then supplied to a con-
+A.    Integration with CCSD                                                        ventional  projective  CCSD  contraction  sequence,  mod-
+                                                                                   ified  only  as  required  to  retain  the  independent  non-
+                                                                                   Hermitian blocks described above.  The factor-direct for-
+   The transformed one- and two-body integrals,  ˜hpq  =                           mulation now under development retains the full doubles-
+hpq + ∆h    pq and  ˜V pqrs  =V    pqrs  −K    pqrs + ∆U    pqrs , respectively,   amplitude tensor but contracts its virtual indices sequen-
+are supplied to a restricted CCSD solver adapted to the                            tially with the ISDF factors, applies the central kernels in
+non-Hermitian transcorrelated Hamiltonian.  The trans-                             the  resulting  occupied-pair/interpolation-rank  interme-
+formed two-body correction is−K+ ∆U.  It preserves                                 diates, and back-transforms sequentially. This avoids ex-
+particle  exchange,W             pqrs   =W    qpsr ,  but  breaks  the  Her-       plicit construction of the four-virtual integral tensor and
+mitian  pair-block  relationW               pqrs   =W    rspq  and  hence  the     reduces the dominant contraction from nominal sixth- to
+bare  ERI’s  eight-fold  symmetry.   The  solver  therefore                        fifth-order  scaling,  without  introducing  a  separate  fac-
+treats non-equivalent integral blocks as independent ten-                          torization of the doubles amplitudes.  Development and
+                                                                                                                                                           9
+
+validation of this lower-scaling solver will be pursued in                       O(N      2µ).   The  final  assembly  of  the  full  four-index  ten-
+future work.                                                                     sor  in  Eqs.  (25)–(27)  first  contracts  one  auxiliary  in-
+   The complete non-equivalent block list, together with                         dex atO(N          2µN 2orb) cost and then contracts the remain-
+the   block-by-block   tiling,   streaming,   and   on-the-fly                   ing  auxiliary  index  into  the  four  open  orbital  indices
+(vvvv) protocol, is given in Supporting Information Sec-                         atO(N         µN 4orb)  cost.    The  latter  is  the  dominant  step
+tion??.                                                                          whenever  four-index  CCSD-facing  blocks  are  material-
+                                                                                 ized.   Those  blocks  haveO(N        4orb)  logical  size,  but  pro-
+                                                                                 duction assembly streams panels of widthBin one or-
+B.    Numerical implementation notes                                             bital index, giving peak panel storageO(BN                     3orb) in ad-
+                                                                                 dition  to  theO(N            2µ)  kernels  rather  than  holding  the
+   a.    Correlator  evaluation.The  one-electron  termχ                         full tensor in memory.  By contrast, a direct dense grid
+is evaluated through the same ordered-pair interface as                          evaluation of the same integrals without density fitting
+u2, entering each ordered pair asχ(r        i)/(N−1); summing                    would scale asO(N          2g N 2orb), carrying the full grid-pair sum
+its derivative overj̸=ireconstructs∇                                 iχ(r    i) exactly, sointo  every  orbital-pair  contraction;  the  ISDF  compres-
+this  evaluation  is  equivalent  to  the  symmetric  effective                  sionN         2orb →N    µ (withN          µ a small multiple ofN    orb) and
+kernel of Eq. (2).                                                               the removal of the dense grid index from the final ten-
+   b.    VMC numerics.The fixed reference density|Φ                        0|2   sors are what render the construction tractable. Thus the
+is  sampled  with  Gaussian  single-electron  Metropolis–                        low-rank compression removes the dense grid dependence
+Hastings proposals and Sherman–Morrison determinant                              from the transcorrelated-kernel intermediates, while the
+updates.  The parameter-space dimension is modest for                            final solver interface is still handled as tiled or streamed
+the  BH  correlator  (typicallyN                p ≲100),  so  the  dense         four-index data.  To keep the peak working memory in-
+Gauss–Newton curvature matrix of Eq. (12) is stored and                          dependent ofN   g, we organize both grid sums as doubly-
+factorized directly.                                                             blocked loops over the bra and ket grid batches, and block
+   c.    Matrix-free  pivot  search.The  pivoted  Cholesky                       the pivot-to-orbital contraction over the auxiliary index
+selection  of  Section  II D  never  materializes  the  orbital-                 µ; Jastrow derivatives are obtained by forward-mode au-
+pair  matrixMor  the  dense  grid-by-grid  Gram  matrix                          tomatic differentiation of the correlator at every grid-pair
+S.   After  a  pivotg       ⋆  is  chosen,  the  new  Cholesky  col-             batch.
+umn  isL   gµ  =  (S  gg⋆ − P                             dg⋆,  and  the            The asymptotic scaling in Table III hides a practical
+                                   λ<µ LgλLg⋆λ)/ p                               bottleneck:  several blocks of ∆Uare too large to hold in
+residual diagonal is updated asd    g ←d    g −L    2gµ.  Each it-               GPU memory.  For an illustrative all-electron benzene-
+eration stores only the residual diagonal, the previously                        scale sizing case (N  occ  = 21,N      vir ≈200,  double preci-
+accepted Cholesky columns, and one newly generated col-                          sion) the (ovvv) and (vovv) panels of ∆Uare each about
+umnS        gg⋆ computed from orbital values (and, for the gra-                  1.3 GB and the dense (vvvv) panel is about 13 GB; by
+dient  branch,  orbital  gradients)  at  the  candidate  pivot                   Nvir ≈300, these grow to about 4.5 GB and 65 GB, re-
+and  all  grid  points.   This  keeps  the  pivot  search  linear                spectively.  The (ovvv) and (vovv) panels are therefore
+inN    g per accepted pivot and avoids theN       2orbNg storage                 staged to disk and, during CCSD, streamed back to de-
+that an explicit orbital-pair matrix would require.                              vice memory one orbital tile at a time, while the dense
+   d.    Auxiliary-fit   robustness.Should   the   Cholesky                      (vvvv) panel is either contracted on the fly or,  when a
+factorization of the fitting Gram matrix of Section II D                         materialized (vvvv) is required,  staged to disk through
+fail  due  to  near-singularity,  a  small  adaptive  Tikhonov                   the  same  pipeline.    The  exchange-kernel  intermediate
+shift is added to the diagonal and the decomposition is                          X(2)qsµ  of Section III is disk-staged the same way:  it car-
+retried.                                                                         riesO(N             2orbNµ) storage, which for benzene at cc-pCV5Z
+   e.    Measured impact of the low-rank projector.In our                        (N  orb = 1200,N          µ ≈26,000) would occupy∼300 GB in
+benchmarks the low-rank projector of Section III yields                          double precision, far exceeding device memory.
+roughly  a  five-fold  end-to-end  wall-clock  speedup  (up                         b.    Symmetry  exploitation.The  intermediateX                                           qsµ
+to  nine-fold  for  the  isolatedQ-matrix  contraction)  in                      inherits  the  symmetryX                  qsµ  =X   sqµ  of  the  underly-
+a  benchmark  usingN           ch  ≈10N        orb  per  channel  (N  µ  ∼       ing  orbital  pair  (q, s),  because  the  gradient  auxiliary
+20N     orb  after  fusion),  while  preserving  agreement  with                 basis  enters  only  through  the  symmetric  combination
+the  dense  reference  tensor  toO(10      −10  )  relative  Frobe-              P
+nius error.                                                                      the upper-triangular (q≤s) panels and copies the lower-c Gcµ,gGcν,g.  The orbital tiling therefore computes only
+
+                                                                                 triangular panels by transposition, cutting the work and
+                                                                                 storage footprint on the non-factorizable terms roughly
+C.    Multi-GPU pipeline and out-of-core storage                                 in half.
+                                                                                    c.    Out-of-core  assembly.Two  distinct  multi-GPU
+   a.    Scaling  and  memory  management.The  kernels                           paths  are  used.   During  ISDF  kernel  construction,  the
+u(1)  andu       (3)  are  orbital-independent  and  assembled                   dense grid dimension is sharded across devices; every de-
+once.  Their construction scales asO(N          2g Nµ) (using each               vice accumulates a partial kernel,  and a collective sum
+auxiliary vector only once per grid pair) and storage is                         combines  those  partial  results.    After  the  kernels  are
+                                                                                                                                                         10
+
+
+TABLE III: Dominant cost and storage of the ISDF-xTC pipeline.  Storage entries denote peak intermediate storage
+except where final four-index solver blocks are materialized or staged as logical CCSD-facing tensors.
+              Step                                                         Dominant work           Peak/logical storage
+              Pivoted Cholesky                   O(N                     gN2µ)               O(N       gNµ)
+              Auxiliary fit (batched)                      O(N       gN2µ)               O(N        2µ)
+              K(1), K(3) kernels                      O(N                  2g Nµ)               O(N        2µ)
+              Kfour-index assembly                   O(N                2µN2orb +N   µN4orb)O(N        2µ +BN    3orb) peak;O(N              4orb) logical
+              ∆UTerms 1,4                              O(N                 gN2µ)               O(N        2µ)
+              ∆UTerms 2,3 (with low-rank projector)O(N                       gNµNorb)         O(N        2orbNµ)
+              ∆Uassembly                               O(N                   4orbNµ)             O(N        4orb)
+
+
+formed,  four-index  CCSD-facing  orbital  panels  are  in-                      tems (two nucleus types).  The parameters are optimized
+dependent:   whole  panels  are  assigned  round-robin  to                       by reference-variance VMC as described in Section II C; a
+individual GPUs and written through a bounded asyn-                              warm-up/refinement protocol is used, and the production
+chronous queue, with no cross-device reduction between                           correlator is obtained by averaging the stationary tail of
+panels.  Chunk-aligned on-disk datasets and the two exe-                         the  refinement  trajectory.   Walker  counts,  step  counts,
+cution paths are detailed in Supporting Information Sec-                         learning rates, burn-in, and averaging-window details are
+tion??.                                                                          collected in Supporting Information Section??.
+   d.    Memory-aware   tile   selection.Given   a   user-                          c.    Coupled  cluster.The  non-Hermitian  transcorre-
+supplied (or auto-detected) device-memory budget,  the                           lated  integrals  are  passed  to  a  restricted  CCSD  solver
+panel block sizeb       panel is chosen by a binary search that                  following  the  projective  non-Hermitian  transcorrelated
+fits  the  simultaneous  peak  workspace:  the  ISDF  inter-                     coupled-cluster framework of Refs. 17–19 (maximum 100
+mediateD, the orbital tile ofX, the pivot tensorC, and                           iterations,  level  shift  0.1),  with  the  (vvvv)  block  con-
+the current output tile.  The same procedure selects the                         tracted  on  the  fly.    The  rate-limiting  (vvvv)  integral
+grid-batch size for the kernel computations so that the                          tiles feeding the  ˆT2  residual are assembled on the GPU
+pipeline remains compute-bound on the device.                                    through the same multi-device pipeline used for the ISDF
+                                                                                 construction, while the remaining amplitude-update con-
+                                                                                 tractions run on the host.  For the largest benzene cal-
+V.    COMPUTATIONAL DETAILS                                                      culation (cc-pCV5Z,N                       orb = 1200) the CCSD iterations
+                                                                                 ran on eight NVIDIA B200 GPUs and reached practical
+   All  calculations  were  carried  out  withpytcrelease                        convergence in∼29 h.
+v0.1.0(commit09e0235), interfaced withPySCF                                                          55,56;d.    Systems and hardware. Table IV collects the sys-
+code and reproducibility scripts are linked in the  Data                         tem sizes and ISDF ranks.  The hydrogen-chain rows re-
+and  Code  Availability  statement.   The  transcorrelated                       port  the  cc-pV5Z  MP2NO  production  spaces  used  for
+integral construction and the coupled-cluster solver are                         the large-chain calculations and cutoff checks; the energy
+implemented  in  JAX57  in  double  precision  throughout.                       figures below retain explicit basis labels.  Ethylene uses
+The mean-field reference is restricted Hartree–Fock.                             cc-pVTZ, and benzene uses the cc-pCVDZ, cc-pCVTZ,
+   a.    Grid and ISDF.The production calculations use                           cc-pCVQZ, and cc-pCV5Z bases.  Calculations were run
+Becke partitioning, Treutler–Ahlrichs radial nodes, Lebe-                        on NVIDIA A100, H200, and B200 GPUs according to
+dev  angular  grids,  andPySCFlevel  2  pruning,  a  grid                        system size: the H10 and small molecular references used
+setting validated for transcorrelated integral evaluation                        a single A100 or H200, the longer hydrogen chains (H20–
+in Ref. 21, whose convergence tests we adopt here.  In-                          H50) used single H200 or B200 devices, and the benzene
+terpolation points are obtained by pivoted Cholesky de-                          cc-pCV5Z calculation used eight B200 GPUs.
+composition of the scalar (ϕϕ) and gradient (ϕ∇ϕ) den-
+sities.  We denote the prescribed rank of each channel by
+Nch,  settingN              (ϕ)µ    =N    (∇)µ    ≡N    ch  =  12N     orb,  and  take
+the union of the two pivot sets.  The final auxiliary di-
+mensionN               µ ≡N    fused  is listed in Table IV and satisfies
+Nfused ≈1.8 – 2.2N             ch.  The adequacy of this rank is es-
+tablished in Fig. 1.
+   b.    Jastrow  and  VMC.The correlator is a compos-
+ite of a one-body nuclear-cusp factor and a Boys–Handy
+form with 17 terms per nucleus type [Eqs. (6)–(7)], yield-
+ing on the order of 20 free parameters for the hydrogen
+chain (one nucleus type) and 40 for the molecular sys-
+                                                                                                                                                       11
+
+TABLE IV: System sizes and ISDF parameters:  number                            (Alg. I), independently of the correlator, alternative dif-
+of  orbitalsN               orb,  grid  pointsN   g  (PySCFlevel  2),  and     ferentiable correlators can be used without changing the
+fused auxiliary dimensionN                    fused (union of the scalar and   pivot-selection procedure.  The rank-convergence bench-
+gradient pivot sets, each capped atN    ch = 12N     orb).  For                mark shown here uses the Boys–Handy/nuclear-cusp cor-
+the hydrogen-chain rows, the listed cc-pV5Z entries are                        relator of the production calculations.
+production MP2NO orbital spaces:N              orb is the occupied
+Hartree–Fock space plus the retained virtual MP2 natu-
+ral orbitals, andN        fused is the corresponding ISDF fused
+dimension.
+            System  Basis  N           orb        Ng  Nfused
+            H10       cc-pV5Z       105   53 720   2 363
+            H20       cc-pV5Z       210  107 440   4 547
+            H30       cc-pV5Z       315  161 160   6 833
+            H40       cc-pV5Z       420  214 880   9 077
+            H50       cc-pV5Z       525  268 600  11 592
+            C2H4    cc-pVTZ      116   43 904   2 460
+            C6H6    cc-pCVDZ   138   99 480   3 670
+            C6H6    cc-pCVTZ   342   99 480   8 877
+            C6H6    cc-pCVQZ   684   99 480  16 389
+            C6H6    cc-pCV5Z  1200   99 480  25 894
+
+
+
+VI.    RESULTS                                                                 FIG.  1:  Convergence  of  the  ISDF  approximation  with
+                                                                               rank   ratioN          ch/Norb   for   ethylene   (C2H4,   cc-pVTZ,
+A.    Accuracy of the ISDF approximation                                       Norb   =   116,  VMC-optimized  Boys–Handy  Jastrow):
+                                                                               ISDF-xTC-CCSD  total-energy  error|∆E               tot| measured
+   Because  the  entire  scheme  rests  on  a  low-rank  ISDF                  relative  to  an  explicit  dense  non-ISDF  reference.   The
+representation  of  the  transcorrelated  integrals,  we  first                vertical line marks the production settingN              ch = 12N     orb.
+verify that this approximation is systematically conver-
+gent.  We do not evaluate the full three-bodyLtensor
+in the production calculations; the approximation being
+accelerated is therefore the established xTC Hamiltonian                       B.    Hydrogen chain in the thermodynamic limit
+rather than a dense three-body transcorrelated reference.
+Prior  work  has  benchmarked  xTC  and  non-Hermitian                             For the cc-pV5Z production orbital spaces summarized
+transcorrelated solvers in molecular and strongly corre-                       in Table IV, we use MP2 natural-orbital (MP2NO) trun-
+lated settings, including transcorrelated N2 binding and                       cations:   the  virtual  space  is  rotated  to  the  eigenbasis
+dissociation  curves16,19,20,23;  the  convergence  test  here                 of the MP2 one-particle density matrix and truncated by
+therefore  isolates  the  additional  ISDF  truncation  error                  natural-orbital occupation32, retainingn                  keep/Natom = 10
+introduced by the grid-based factorization.  For ethylene                      virtual  natural  orbitals  per  atom.    A  complementary
+(C2H4,  cc-pVTZ,N       orb  =  116)  with  a  VMC-optimized                   route to reducing basis-set errors at small-basis cost is the
+Boys–Handy  Jastrow,  Fig.  1  reports  the  ISDF-xTC-                         additive reference correction of Hauskrechtet al.  58, which
+CCSD total-energy error as a function of the per-channel                       retains the small-basis xTC correlation energy while im-
+rank ratioN    ch/Norb, measured against an explicit dense                     porting  the  reference  contribution  from  a  larger  basis;
+(non-ISDF) transcorrelated reference evaluated with the                        here  we  instead  work  directly  in  the  large  basis  with
+same  Jastrow  and  solver  convention.   The  dense  refer-                   MP2NO-truncated virtual spaces.  We first establish the
+ence  givesE    tot  =−78.4904432130  Ha,  while  the  high-                   accuracy  of  this  truncation  and  how  the  cc-pV5Z  data
+est  ISDF  rank  shown  (N  ch  =  20N     orb)  givesE    tot  =              are obtained.  Figure 2 shows the cc-pV5Z convergence
+−78.4904435930  Ha,  differing  by  only  3.8×10               −7    Ha        test for H10 atr= 1.4 bohr, a representative short-side
+(0.38µHa).  The ISDF truncation error in the total en-                         bound-region  separation.   This  focused  cutoff  diagnos-
+ergy falls below 1 mHa byN  ch ≈6N      orb and is converged                   tic usesn        keep = 100,150,200, whereas the binding-curve
+to<0.01  mHa  byN              ch  =  10N     orb.   The  lowest  ratio        extrapolations  in  Fig.  3  below  use  100,200,300  at  ev-
+shown (N  ch = 4N  orb) is under-resolved (error∼18 mHa)                       ery separation; the two datasets serve different purposes
+because the more diffuse triple-zeta basis raises the nu-                      and are fitted independently using the same inverse-count
+merical rank of the orbital-product densities.  Since the                      form. Increasing the cutoff from 10 to 15 and 20 retained
+ISDF pivots are selected from the orbital products alone                       virtuals per atom changes the energy by only 0.051 and
+                                                                                                                                                   12
+
+0.025 mHa/atom,  respectively.  Because cc-pV5Z has a                           With  the  MP2NO  truncation  validated,  Fig.  3  com-
+finite virtual space (n  vir = 544 for H10), the physical full-              pares   xTC-CCSD   and   canonical   CCSD   at   the   cc-
+virtual limit lies at the finite abscissa 1/(n       vir/Natom) =            pVTZ, cc-pVQZ, and cc-pV5Z levels against an accurate
+10/544≈0.018  rather  than  at  the  origin;  evaluating                     MRCI+Q+F12 reference50; for xTC-CCSD the cc-pV5Z
+the  linear  fit  in  1/(n      keep/Natom)  there  places  the  full-       curve is obtained from the MP2NO series exactly as es-
+virtual  cc-pV5Z  limit  within  0.005  mHa/atom  of  the                    tablished above. Canonical CCSD remains well above the
+MRCI+Q+F12 reference, essentially coincident with the                        reference at every basis—1.3–2.3 mHa/atom at cc-pVQZ
+full-virtual cc-pVQZ result (+0.008 mHa/atom). The ex-                       and  still∼1.1–1.5  mHa/atom  even  at  the  full  cc-pV5Z
+trapolated 5Z and QZ full-virtual energies thus agree to                     basis—whereas xTC-CCSD lies within 0.6 mHa/atom at
+∼0.003 mHa/atom,  indicating that cc-pVQZ is already                         cc-pVTZ  overr=  1.2–2.8  bohr  and,  over  the  central
+essentially at the basis-set limit for this system.  The fi-                 bound  regionr=  1.4–2.4  bohr,  agrees  with  the  refer-
+niten        keep/Natom = 10 production cutoff is within about               ence to within 0.1 mHa/atom at cc-pVQZ—comparable
+0.12  mHa/atom  of  that  extrapolated  limit,  well  below                  to  the  reference’s  own  extrapolation  uncertainty.   Over
+the 1 mHa/atom scale used in the chain benchmarks. Be-                       the  broader  1.2–2.8  bohr  window,  xTC-CCSD  at  cc-
+cause only three cutoff points enter this empirical inverse-                 pVTZ  already  surpasses  canonical  CCSD  at  cc-pV5Z.
+count fit, its intercept has no independent statistical error                This rapid convergence motivates retaining the cc-pVTZ
+estimate  and  can  retain  fit-form  bias;  the  quoted  sub-               thermodynamic-limit  series  as  a  lower-cost  reference
+mHa comparisons diagnose the selected linear extrapola-                      trend,  with  the  residual  basis  and  virtual-orbital  cut-
+tion rather than establish sub-mHa certainty in the full-                    off error quantified by the cc-pV5Z MP2NO diagnostic
+virtual limit.                                                               above.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  2:    Convergence  of  the  H10   cc-pV5Z  MP2NO                       FIG. 3: Basis-set convergence on the H10 chain: per-atom
+virtual-orbital  cutoff  atr =  1.4  bohr.    The  horizon-                  energy deviation from the MRCI+Q+F12 CBS-limit ref-
+tal  axis  is  the  inverse  retained-orbital  count  per  atom,             erence  for  xTC-CCSD  (filled  symbols)  and  canonical
+1/(n      keep/Natom),  so  the  full-virtual  limit  lies  at  the  fi-     CCSD  (open  symbols)  at  cc-pVTZ  (circles),  cc-pVQZ
+nite  abscissa  1/(n      vir/Natom)  =  10/544  (cc-pV5Z  has               (squares),  and cc-pV5Z (triangles),  versus H–H separa-
+nvir = 544 for H10); the vertical axis is the per-atom en-                   tion.  For xTC-CCSD the cc-pV5Z point is the MP2NO
+ergy deviation from the MRCI+Q+F12 reference.  Filled                        series  (n  keep  =  100,200,300)  extrapolated  to  the  finite
+diamonds are the finiten     keep/Natom = 10, 15, 20 results;                full-virtual limitn          keep =n    vir = 544; for canonical CCSD
+the dashed line is an unweighted linear least-squares fit,                   it is the full (untruncated) cc-pV5Z result.  Both there-
+evaluated  at  the  full-virtual  abscissa  (open  diamond)                  fore reach the full-virtual limit.  The shaded band is the
+to  estimate  the  full-virtual  limit.   The  dashed  horizon-              reference  extrapolation  uncertainty.   xTC-CCSD  at  cc-
+tal line marks the reference and the solid line the full-                    pVTZ already outperforms canonical CCSD at cc-pV5Z,
+virtual cc-pVQZ result.  The extrapolated cc-pV5Z limit                      and its cc-pVQZ and cc-pV5Z results coincide within the
+agrees  with  cc-pVQZ  to∼0.003  mHa/atom,  indicating                       reference uncertainty over the bound region.
+that  cc-pVQZ  is  essentially  at  the  basis-set  limit  here,
+and the production cutoffn            keep/Natom  = 10 lies within              We benchmark ISDF-xTC-CCSD on the linear hydro-
+∼0.12 mHa/atom of the limit, supporting its use for the                      gen chain, a canonical strongly-correlated model, over a
+longer chains.                                                               range of interatomic separationsr= 1.4–2.8 bohr.  The
+                                                                                                                                                      13
+
+upper  end  of  this  range  reflects  the  domain  where  the
+single-reference,  non-Hermitian  CCSD  solver  converges
+robustly for these transcorrelated chains; more stretched
+geometries require a multireference treatment beyond the
+present  solver.   For  the  TDL  series  plotted  here,  each
+ruses  finite  chains  ofN=  20,  30,  40,  and  50  atoms
+in  the  cc-pVTZ  basis;  we  extrapolate  the  total  energy
+per  atom  to  the  thermodynamic  limit  (TDL)  by  a  lin-
+ear least-squares fit in 1/N,E       tot(N)/N=E               TDL +a/N
+(the  per-separation  fits  are  collected  in  the  Supporting
+Information,  Fig.??).   Residual  and  fit-form  sensitiv-
+ity  checks  are  reported  there;  they  support  the  head-
+line  1  mHa/atom  comparison  while  cautioning  against
+overinterpreting  differences  of  a  few  tenths  of  a  mHa.
+The extrapolated TDL energies are compared with the
+AFQMC+∆DMRG  reference  data  of  Mottaet  al.             50,
+alongside the LR-DMC(LDA), RCCSD, and RCCSD(T)
+results from the same compilation50 (Fig. 4).  Across all
+separations  studied,  ISDF-xTC-CCSD  agrees  with  the
+reference  to  within±1  mHa/atom,  a  substantial  im-                        FIG.  4:   Deviation  of  the  per-atom  energy  from  the
+provement over canonical RCCSD, whose deviation ap-                            AFQMC+∆DMRG  reference  for  the  hydrogen  chain
+proaches 2 mHa/atom near equilibrium.  It matches the                          as   a   function   of   H–H   separationr.      The   ISDF-
+accuracy  of  RCCSD(T)  and  LR-DMC(LDA)  while  re-                           xTC-CCSD  thermodynamic-limit  result  (this  work,  cc-
+taining  theO(N            6)  cost  of  CCSD,  avoiding  both  the            pVTZ; filled stars) stays within±1 mHa/atom (shaded
+O(N      7)  perturbative-triples  step  of  RCCSD(T)  and  the                band)  across  the  studied  xTC  range  of  separations
+stochastic  sampling  of  the  diffusion  Monte  Carlo  refer-                 (1.4–2.8  bohr),   outperforming  RCCSD  and  tracking
+ences.   An  analogous  TDL  series  in  the  cc-pV5Z  basis                   CBS-extrapolated RCCSD(T) and continuous-space LR-
+with  the  MP2NO  cutoffn           keep/Natom  =  10  (open  stars            DMC(LDA).  Open  stars  (dashed)  show  the  cc-pV5Z
+in Fig. 4; per-separation fits in Fig.??and Table??of                          MP2NO thermodynamic-limit series, which reduces the
+the Supporting Information) reduces the maximum ab-                            maximum  absolute  reference  deviation  from  0.63  to
+solute reference deviation from 0.63 to 0.31 mHa/atom                          0.31  mHa/atom  and  supports  residual  orbital-basis  ef-
+and  supports  residual  orbital-basis  effects  below  about                  fects below about 0.6 mHa/atom over this range at the
+0.6 mHa/atom over this range at the stated MP2NO cut-                          stated  MP2NO  cutoff.   Error  bars  on  both  TDL  series
+off.                                                                           show  the  1σintercept  standard  errors  of  the  1/Nfits
+                                                                               (Tables in the Supporting Information).
+
+C.    Ground-state energy of benzene
+                                                                               tures about 64% of the CCSD-to-CCSD(T) CBS gap (39
+   Figure 5 shows the basis-set convergence of the ben-                        of  61  mHa)  at  the  formal  scaling  of  CCSD,  without  a
+zene  energy  relative  to  the  CBS  Hartree–Fock  limit,                     perturbative-triples step or explicitly correlated neural-
+∆E    HF,CBS       =E−E           HF,CBS     ,  across  the  cc-pCVXZ  se-     network  ans¨atze  such  as  the  Psiformer60.   Beyond  the
+ries.   At  finiteXthis  quantity  is  not  the  conventional                  CBS  value  itself,  transcorrelation  makes  the  extrapo-
+basis-specific correlation energyE(X)−E                            HF(X); only itslation  markedly  more  robust  to  the  choice  of  fit  form:
+CBS limit equals the CBS correlation energy.  Extrapo-                         the exponential and inverse-power extrapolations of the
+lating to the complete-basis-set (CBS) limit, ISDF-xTC-                        xTC-CCSD correlation energy agree to 1.1 mHa, whereas
+CCSD  recoversE      corr,CBS      ≈ −1.418E              h,  which  lies  be- for  canonical  CCSD  and  CCSD(T)  they  differ  by  7.6
+tween the canonical CCSD (≈ −1.379E                h) and CCSD(T)              and 8.0 mHa, respectively.  Each CBS value is a three-
+(≈ −1.440E                h) CBS values59: about 39 mHa more corre-            parameter  fit  to  the  three  points  (cc-pCVTZ/QZ/5Z),
+lation than CCSD, but still roughly 22 mHa short of the                        so this spread quantifies the sensitivity to the fit form,
+CCSD(T)/CBS benchmark. It closely matches the three-                           not a statistical uncertainty; the fit forms and fitted pa-
+layer FermiNet variational Monte Carlo (VMC) result (≈                         rameters  are  tabulated  in  the  Supporting  Information.
+−1.417E              h)59; the deeper four-layer VMC (≈ −1.426E                h)The  smoother,  accelerated  basis-set  convergence  of  the
+and  the  fixed-node  diffusion  Monte  Carlo  (DMC)  Fer-                     transcorrelated  correlation  energy  renders  the  extrapo-
+miNet results (≈ −1.436 and−1.440E                               h  for the three-lated  CBS  limit  far  less  sensitive  to  the  extrapolation
+and  four-layer  ans¨atze)  recover  progressively  more  cor-                 scheme.
+relation, the four-layer FermiNet-DMC essentially reach-                          Figure 6 reports the wall-clock time required to build
+ing the CCSD(T)/CBS benchmark59.  Since xTC intro-                             the ISDF-xTC intermediates for benzene on a single B200
+duces  no  explicit  triples,  this  CCSD-level  method  cap-                  GPU  across  the  cc-pCVXZ  (X=  D,  T,  Q,  5)  series,
+                                                                                                                                                       14
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  5:   Complete-basis-set  extrapolation  of  the  ben-                     FIG.   6:    Basis-set   scaling   of   the   ISDF-xTC   setup
+zene  energy  relative  to  the  CBS  Hartree–Fock  limit,                      time  for  benzene  on  a  single  B200  GPU.  Filled  points
+∆E    HF,CBS       =E−E           HF,CBS     ,  plotted  againstX           −3    (car-(cc-pCVTZ/QZ/5Z)  define  the  power-law  fitT[s]   =
+dinal  numberXof  cc-pCVXZ,X=  D,T,Q,5).   The                                  0.030N           1.76orb    (dashed);   the  cc-pCVDZ  point  (open)  is
+horizontal axis is used only as a conventional visualiza-                       excluded  from  the  fit.   Annotations  give  the  absolute
+tion of cardinal-number convergence; the xTC-CBS val-                           setup  time  in  seconds;  the  lower  axis  listsN        orb  and
+ues are obtained from exponential and inverse-power ex-                         the fused auxiliary dimensionN                    f ≡N    fused.  Setup cov-
+trapolations, not from an assumedX             −3   law.  ISDF-xTC-             ers  grid/orbital  preparation,  ISDF  decomposition,  and
+CCSD  (this  work)  is  compared  with  canonical  CCSD                         K/∆Ukernel/intermediate  construction,  but  excludes
+and CCSD(T)59.  Horizontal lines show literature bench-                         SCF/VMC, four-index materialization, and CCSD itera-
+marks  from  FermiNet-VMC/DMC59,  Psiformer60,  and                             tions.
+best  single-determinant  DMC.  Solid  and  dotted  curves
+denote the two CBS fits; open and filled stars mark the
+corresponding  extrapolated  CBS  values.   Error  bars  at                     VII.    CONCLUSIONS
+the CBS limit span the exponential-versus-inverse-power
+fit-form spread (1.1,  7.6,  and 8.0 mHa for xTC-CCSD,                             We   have   presented   an   ISDF   construction   of   the
+CCSD, and CCSD(T)); with exact three-point fits this                            transcorrelated  Hamiltonian  for  general  differentiable
+is a fit-form sensitivity, not a statistical standard error.                    Jastrow correlators.  The method evaluates the transcor-
+Numerical values are collected in Supporting Information                        related  integrals  on  a  real-space  grid,  compresses  the
+Table??.                                                                        orbital-pair and orbital-gradient densities into a low-rank
+                                                                                ISDF form,  and combines this with the xTC reduction
+spanningN                  orb = 138 to 1200.  The setup time scales em-        of the three-body operator to an effective two-body cor-
+pirically asT[s]≈0.030N                          1.76orb   over this range, below therection.   Because  the  compact  auxiliary  dimensionN                   µ
+formalO(N                   2orbN 2µ) worst case; we emphasize that this is a   (a small multiple ofN    orb) replaces both the dense grid
+three-point power-law fit over the accessible range rather                      indexN          g  in  the  final  integral  tensors  and  the  orbital-
+than  an  asymptotic  scaling  result,  with  the  largest  cc-                 pair  countN  2orb  in  the  kernel  intermediates,  this  low-
+pCV5Z calculation (N  orb = 1200,N           fused = 25894) com-                ers grid-dependent storage and integration costs by or-
+pleting in≈2.3 h.  Here “setup” starts with grid/orbital                        ders of magnitude relative to dense grid evaluation while
+preparation and includes the fixed-rank ISDF decompo-                           retaining the flexibility of numerical integration.  Auto-
+sition and theK/∆Ukernel/intermediate construction.                             matic differentiation supplies Jastrow gradients, and an
+It excludes SCF, VMC optimization and history loading,                          out-of-core GPU producer/consumer pipeline makes the
+four-index  CCSD-facing  block  materialization,  and  the                      construction tractable for hundreds of orbitals and large
+CCSD iterations.                                                                basis sets.
+                                                                                   The ISDF approximation is systematically convergent:
+                                                                                for  ethylene  in  a  triple-zeta  basis  the  ISDF  truncation
+                                                                                error in the total energy falls well below 1 mHa by a per-
+                                                                                channel rank ratioN          ch/Norb ≈10—with the production
+                                                                                settingN              ch  =  12N     orb  comfortably  converged.   On  the
+                                                                                linear hydrogen chain, transcorrelation strongly acceler-
+                                                                                                                                                           15
+
+ates basis-set convergence: xTC-CCSD at the triple-zeta                           results reported within this paper.
+level  already  surpasses  canonical  CCSD  at  quintuple-
+zeta  overr =  1.2–2.8  bohr,  and  the  thermodynamic-                            1W. Kutzelnigg and J. D. Morgan, “Rates of convergence of the
+limit energies agree with AFQMC+∆DMRG references                                    partial-wave expansions of atomic correlation energies,” J. Chem.
+to  within  1  mHa/atom  across  a  wide  range  of  bond                           Phys.96, 4484–4508 (1992).
+                                                                                   2T. Helgaker, W. Klopper, H. Koch, and J. Noga, “Basis-set con-
+lengths.  For benzene, the method recovers a complete-                              vergence  of  correlated  calculations  on  water,”  J.  Chem.  Phys.
+basis-set correlation energy well beyond that of canoni-                            106, 9639–9646 (1997).
+cal CCSD and comparable to neural-network variational                              3W.  Kutzelnigg,  “r12-dependent  terms  in  the  wave  function  as
+Monte Carlo, while remaining tractable up to cc-pCV5Z.                              closed sums of partial wave amplitudes for large l,” Theor. Chim.
+In both cases transcorrelation substantially improves the                           Acta68, 445–469 (1985).
+                                                                                   4W. Klopper and W. Kutzelnigg, “Møller–plesset calculations tak-
+accuracy  of  an  otherwise  approximate  coupled-cluster                           ing care of the correlation cusp,” Chem. Phys. Lett.134, 17–22
+treatment, recovering—at the formal scaling of CCSD—                                (1987).
+a substantial part of the correlation energy that conven-                          5C.  H¨attig,  W.  Klopper,  A.  K¨ohn,  and  D.  P.  Tew,  “Explicitly
+tionally  requires  perturbative  triples  or  a  considerably                      correlated electrons in molecules,” Chem. Rev.112, 4–74 (2012).
+larger basis.                                                                      6S. F. Boys, “Some bilinear convergence characteristics of the so-
+   Natural    next    steps    include    periodic    systems31,                    lutions of dissymmetric secular equations,” Proc. R. Soc. Lond.
+pseudopotentials  for  heavier  elements61,   higher-order                         7S. F. Boys and N. C. Handy, “A condition to remove the inde-A309, 195–208 (1969).
+coupled-cluster    treatments    of    the    transcorrelated                       terminacy in interelectronic correlation functions,” Proc. R. Soc.
+Hamiltonian26,   stochastic  treatments  (e.g.  AFQMC),                             Lond. A309, 209–220 (1969).
+                                                                                   8S.  F.  Boys  and  N.  C.  Handy,  “The  determination  of  energies
+and alternative or neural-network Jastrow forms.  More                              and wavefunctions with full electronic correlation,” Proc. R. Soc.
+broadly, the combination of automatically differentiable                            Lond. A310, 43–61 (1969).
+correlators with low-rank, GPU-accelerated integral con-                           9S. F. Boys and N. C. Handy, “A calculation for the energies and
+struction makes the transcorrelated method a practical                              wavefunctions for states of neon with full electronic correlation
+route  to  high  accuracy  in  compact  basis  sets  across  a                      accuracy,” Proc. R. Soc. Lond. A310, 63–78 (1969).
+                                                                                  10S. F. Boys and N. C. Handy, “A first solution, for LiH, of a molec-
+range  of  downstream  solvers,  from  coupled  cluster  to                         ular transcorrelated wave equation by means of restricted numer-
+stochastic and tensor-network approaches.                                           ical integration,” Proc. R. Soc. Lond. A311, 309–329 (1969).
+                                                                                  11N.  Umezawa  and  S.  Tsuneyuki,  “Transcorrelated  method  for
+                                                                                    electronic systems coupled with variational Monte Carlo calcula-
+DATA AND CODE AVAILABILITY                                                          tion,” J. Chem. Phys.119, 10015–10031 (2003).
+                                                                                  12R. Sakuma and S. Tsuneyuki, “Electronic structure calculations
+                                                                                    of  solids  with  a  similarity-transformed  Hamiltonian,”  J.  Phys.
+   The  numerical  data  plotted  in  all  figures,  together                       Soc. Jpn.75, 103705 (2006).
+with the plotting scripts that reproduce them, are avail-                         13M. Ochi, K. Sodeyama, R. Sakuma, and S. Tsuneyuki, “Efficient
+able  in  the  repositoryhttps://github.com/nickirk/                                algorithm of the transcorrelated method for periodic systems,”
+tc-isdf-data. Thepytccode used to produce these re-                                 J. Chem. Phys.136, 094108 (2012).
+                                                                                  14M. Ochi, R. Arita, and S. Tsuneyuki, “Correlated band structure
+sults is available athttps://github.com/nickirk/pytc                                of a transition metal oxide ZnO obtained from a many-body wave
+(releasev0.1.0,  commit09e0235;  also  distributed  as                              function theory,” Phys. Rev. Lett.118, 026402 (2017).
+pytc-qc0.1.0 on PyPI).                                                            15H. Luo and A. Alavi, “Combining the Transcorrelated Method
+                                                                                    with Full Configuration Interaction Quantum Monte Carlo:  Ap-
+                                                                                    plication to the Homogeneous Electron Gas,” J. Chem. Theory
+                                                                                    Comput.14, 1403–1411 (2018).
+ACKNOWLEDGMENTS.                                                                  16J. P. Haupt, E. M. C. Christlmaier, P. L´opez R´ıos, N. A. Bog-
+                                                                                    danov, D. Kats, and A. Alavi, “Transcorrelated methods for mul-
+   K.L. (the work performed at Yale) and T.Z. are sup-                            17K.  Liao,  T.  Schraivogel,  H.  Luo,  D.  Kats,  and  A.  Alavi,  “To-tireference problems,” J. Chem. Phys.163, 144113 (2025).
+ported by the National Science Foundation under Grant                               wards efficient and accurate ab initio solutions to periodic sys-
+No.   CHE-2337991.   K.L.  (the  work  performed  at  Max                           tems via transcorrelation and coupled cluster theory,” Phys. Rev.
+Planck Institute for Solid State Research) is supported                             Research3, 033072 (2021).
+                                                                                  18T. Schraivogel, A. J. Cohen, A. Alavi, and D. Kats, “Transcor-
+by the Max Planck Society.  W. D. acknowledges funding                              related coupled cluster methods,” J. Chem. Phys.155, 191101
+from the German Federal Ministry of Research, Technol-                              (2021).
+ogy  and  Space  (BMFTR)  under  the  research  program                           19T. Schraivogel, E. M. C. Christlmaier, P. L´opez R´ıos, A. Alavi,
+Quantensysteme and funding measure Quantum Futur 3                                  and  D.  Kats,  “Transcorrelated  coupled  cluster  methods.  II.
+for project No.  13N17229 as well as the Helmholtz As-                              Molecular systems,” J. Chem. Phys.158, 214106 (2023).
+                                                                                  20K. Liao, H. Zhai, E. M. Christlmaier, T. Schraivogel, P. L´opez
+sociation via Initiative and Networking Fund (INF) for                              R´ıos,  D.  Kats,  and  A.  Alavi,  “Density  matrix  renormalization
+projects No.  VH-NG-21-08 under the Helmholtz Inves-                                group  for  transcorrelated  hamiltonians:   Ground  and  excited
+tigator program as well Projects KA-QUS-02 (qFLOW)                                  states in molecules,” J. Chem. Theory Comput.19, 1734–1743
+and KA-QUS-03 (QT-Batt) under the Helmholtz Quan-                                   (2023).
+                                                                                  21J. P. Haupt, S. M. Hosseini, P. L´opez R´ıos, W. Dobrautz, A. Co-
+tum Use case call.  A.A. acknowledges generous funding                              hen, and A. Alavi, “Optimizing jastrow factors for the transcor-
+from  the  Max  Planck  Society.   The  authors  thank  the                         related method,” J. Chem. Phys.158, 224105 (2023).
+Yale Center for Research Computing for providing com-                             22M.-A.  Filip,  E.  M.  C.  Christlmaier,  J.  P.  Haupt,  D.  Kats,
+putational resources and support that contributed to the                            P.   L´opez   R´ıos,   and   A.   Alavi,   “Deterministic   optimisation
+                                                                                                                                                                        16
+
+  of   jastrow   factors,”   J.   Chem.   Phys.163,   084107   (2025),                  43E. G. Hohenstein,  R. M. Parrish, and T. J.  Mart´ınez, “Tensor
+  arXiv:2506.04895 [physics.chem-ph].                                                      hypercontraction  density  fitting.  I.  quartic  scaling  second-  and
+23E. M. Christlmaier, T. Schraivogel, P. L´opez R´ıos, A. Alavi, and                       third-order Møller–Plesset perturbation theory,” J. Chem. Phys.
+  D. Kats, “xTC: An efficient treatment of three-body interactions                         137, 044103 (2012).
+  in  transcorrelated  methods,”  The  Journal  of  Chemical  Physics                   44J. Lee, L. Lin, and M. Head-Gordon, “Systematically improvable
+  159, 014113 (2023).                                                                      tensor  hypercontraction:  Interpolative  separable  density-fitting
+24D.  Kats,  E.  M.  C.  Christlmaier,  T.  Schraivogel,  and  A.  Alavi,                  for molecules applied to exact exchange, second- and third-order
+  “Orbital optimisation in xTC transcorrelated methods,” Faraday                           møller–plesset perturbation theory,” J. Chem. Theory Comput.
+  Discuss.254, 382–401 (2024).                                                             16, 243–263 (2020).
+25A. Baiardi, M. Lesiuk, and M. Reiher, “Explicitly correlated elec-                    45F. D. Malone,  S. Zhang, and M. A. Morales, “Overcoming the
+  tronic structure calculations with transcorrelated matrix product                        memory bottleneck in auxiliary field quantum monte carlo sim-
+  operators,” J. Chem. Theory Comput.18, 4203–4217 (2022).                                 ulations with interpolative separable density fitting,” J. Chem.
+26M.  M¨orchen,  A.  Baiardi,  M.  Lesiuk,  and  M.  Reiher,  “Non-                        Theory Comput.15, 256–264 (2019).
+  iterative  triples  for  transcorrelated  coupled  cluster  theory,”  J.              46F.  D.  Malone,  S.  Zhang,  and  M.  A.  Morales,  “Accelerating
+  Chem. Theory Comput.  (2025), 10.1021/acs.jctc.4c01062.                                  auxiliary-field  quantum  monte  carlo  simulations  of  solids  with
+27S. L. Ten-no, “Nonunitary projective transcorrelation theory in-                         graphical processing units,” J. Chem. Theory Comput.16, 4286–
+  spired by the F12 ansatz,” J. Chem. Phys.159, 171103 (2023).                             4297 (2020).
+28E. Giner, “A new form of transcorrelated hamiltonian inspired                         47Z. Luo, X. Qin, W. Hu, and J. Yang, “Low-rank approximations
+  by range-separated DFT,” J. Chem. Phys.154, 084119 (2021).                               for accurate and efficient plane-wave second-order møller–plesset
+29A. Ammar, A. Scemama, and E. Giner, “Biorthonormal orbital                               perturbation theory,” J. Chem. Theory Comput.21, 8787–8798
+  optimization with a cheap core-electron-free three-body correla-                         (2025).
+  tion  factor  for  quantum  monte  carlo  and  transcorrelation,”  J.                 48J. Yang, N. Zhang, S. Yuan, J. Yu, H.-Z. Ye, and G. K.-L. Chan,
+  Chem. Theory Comput.19, 4883–4896 (2023).                                                “Ab initio many body quantum embedding and local correlation
+30M.-A. Filip, P. L´opez R´ıos, J. P. Haupt, E. M. C. Christlmaier,                        in crystalline materials using interpolative separable density fit-
+  D. Kats, and A. Alavi, “Transcorrelated methods applied to sec-                          ting,”  (2026), arXiv:2601.16379 [physics.chem-ph].
+  ond row elements,” J. Chem. Phys.162, 064110 (2025).                                  49J. Lee, D. W. Berry, C. Gidney, W. J. Huggins, J. R. McClean,
+31K. Simula, J. Hauskrecht, E. M. C. Christlmaier, P. L´opez R´ıos,                        N. Wiebe, and R. Babbush, “Even more efficient quantum com-
+  D.  Kats,  D.  Usvyat,  and  A.  Alavi,  “A  transcorrelated  wave-                      putations of chemistry through tensor hypercontraction,” PRX
+  function  framework  for  solids:  An  application  to  bulk  and  de-                   Quantum2, 030305 (2021).
+  fected  silicon,”  Phys.  Rev.  B   (2025),  arXiv:2512.08276  [cond-                 50M. Motta, D. M. Ceperley, G. K.-L. Chan, J. A. Gomez, E. Gull,
+  mat.mtrl-sci].                                                                           S.  Guo,  C.  A.  Jim´enez-Hoyos,  T.  N.  Lan,  J.  Li,  F.  Ma,  A.  J.
+32W. Dobrautz, I. O. Sokolov, K. Liao, P. L´opez R´ıos, M. Rahm,                           Millis, N. V. Prokof’ev, U. Ray, G. E. Scuseria, S. Sorella, E. M.
+  A. Alavi, and I. Tavernelli, “Toward real chemical accuracy on                           Stoudenmire, Q. Sun, I. S. Tupitsyn, S. R. White, D. Zgid, and
+  current quantum hardware through the transcorrelated method,”                            S. Zhang, “Towards the solution of the many-electron problem
+  J. Chem. Theory Comput.20, 4146–4160 (2024).                                             in real materials:  Equation of state of the hydrogen chain with
+33N. D. Drummond, M. D. Towler, and R. J. Needs, “Jastrow cor-                             state-of-the-art  many-body  methods,”  Phys.  Rev.  X7,  031059
+  relation factor for atoms,  molecules,  and solids,” Phys. Rev. B                        (2017).
+  70, 235119 (2004).                                                                    51A.  D.  Becke,  “A  multicenter  numerical  integration  scheme  for
+34J. Lu and L. Ying, “Compression of the electron repulsion inte-                          polyatomic molecules,” J. Chem. Phys.88, 2547–2553 (1988).
+  gral tensor in tensor hypercontraction format with cubic scaling                      52D. A. Matthews, “Improved grid optimization and fitting in least
+  cost,” J. Comput. Phys.302, 329–335 (2015).                                              squares tensor hypercontraction,” J. Chem. Theory Comput.16,
+35W.  Hu,  L.  Lin,  and  C.  Yang,  “Interpolative  separable  density                    1382–1385 (2020).
+  fitting decomposition for accelerating hybrid density functional                      53R. M. Parrish, E. G. Hohenstein, T. J. Mart´ınez, and C. D. Sher-
+  calculations  with  applications  to  defects  in  silicon,”  J.  Chem.                  rill, “Tensor hypercontraction. II. least-squares renormalization,”
+  Theory Comput.13, 5420–5431 (2017).                                                      J. Chem. Phys.137, 224106 (2012).
+36X.  Qin,  W.  Hu,  and  J.  Yang,  “Interpolative  separable  density                 54A. J. Cohen, H. Luo, K. Guther, W. Dobrautz, D. P. Tew, and
+  fitting for accelerating two-electron integrals:  A theoretical per-                     A. Alavi, “Similarity transformation of the electronic Schr¨odinger
+  spective,” J. Chem. Theory Comput.19, 679–693 (2023).                                    equation via Jastrow factorization,” J. Chem. Phys.151, 061101
+37K.  Dong,  W.  Hu,  and  L.  Lin,  “Interpolative  separable  density                    (2019).
+  fitting through centroidal voronoi tessellation with applications                     55Q.  Sun,  T.  C.  Berkelbach,  N.  S.  Blunt,  G.  H.  Booth,  S.  Guo,
+  to hybrid functional electronic structure calculations,” J. Chem.                        Z.  Li,  J.  Liu,  J.  D.  McClain,  E.  R.  Sayfutyarova,  S.  Sharma,
+  Theory Comput.14, 1311–1320 (2018).                                                      S. Wouters, and G. K.-L. Chan, “PySCF: the Python-based sim-
+38K. Wu, X. Qin, W. Hu, and J. Yang, “Low-rank approximations                              ulations of chemistry framework,” WIREs Comput. Mol. Sci.8,
+  accelerated  plane-wave  hybrid  functional  calculations  withk-                        e1340 (2018).
+  point sampling,” J. Chem. Theory Comput.18, 206–218 (2022).                           56Q. Sun, X. Zhang, S. Banerjee, P. Bao, M. Barbry, N. S. Blunt,
+39A. Rettig, J. Lee, and M. Head-Gordon, “Even faster exact ex-                            N. A. Bogdanov, G. H. Booth, J. Chen, Z.-H. Cui, J. J. Eriksen,
+  change for solids via tensor hypercontraction,” J. Chem. Theory                          Y.  Gao,  S.  Guo,  J.  Hermann,  M.  R.  Hermes,  K.  Koh,  P.  Ko-
+  Comput.19, 5773–5784 (2023).                                                             val,  S.  Lehtola,  Z.  Li,  J.  Liu,  N.  Mardirossian,  J.  D.  McClain,
+40W.  Gao  and  J.  R.  Chelikowsky,  “Accelerating  time-dependent                        M. Motta, B. Mussard, H. Q. Pham, A. Pulkin, W. Purwanto,
+  density functional theory and GW calculations for molecules and                          P.  J.  Robinson,  E.  Ronca,  E.  R.  Sayfutyarova,  M.  Scheurer,
+  nanoclusters with symmetry adapted interpolative separable den-                          H.  F.  Schurkus,  J.  E.  T.  Smith,  C.  Sun,  S.-N.  Sun,  S.  Upad-
+  sity fitting,” J. Chem. Theory Comput.16, 2216–2223 (2020).                              hyay, L. K. Wagner, X. Wang, A. White, J. D. Whitfield, M. J.
+41C.-N.  Yeh  and  M.  A.  Morales,  “Low-scaling  algorithm  for  the                     Williamson, S. Wouters, J. Yang, J. M. Yu, T. Zhu, T. C. Berkel-
+  random phase approximation using tensor hypercontraction with                            bach,  S.  Sharma,  A.  Y.  Sokolov,  and  G.  K.-L.  Chan,  “Recent
+  k-point  sampling,”  J.  Chem.  Theory  Comput.19,  6197–6207                            developments in the PySCF program package,” J. Chem. Phys.
+  (2023).                                                                                  153, 024109 (2020).
+42C.-N. Yeh and M. A. Morales, “Low-scaling algorithms for GW                           57J. Bradbury, R. Frostig, P. Hawkins, M. J. Johnson, Y. Katariya,
+  and constrained random phase approximation using symmetry-                               C.  Leary,  D.  Maclaurin,  G.  Necula,  A.  Paszke,  J.  VanderPlas,
+  adapted interpolative separable density fitting,” J. Chem. Theory                        S. Wanderman-Milne, and Q. Zhang, “JAX: composable trans-
+  Comput.20, 3184–3198 (2024).                                                             formations of Python+NumPy programs,”http://github.com/
+                                                                                                                                                                         17
+
+
+  jax-ml/jax(2018).                                                                        national Conference on Learning Representations (ICLR)(2023)
+58J.  Hauskrecht,  K.  Simula,  Y.  Cheng,  E.  M.  C.  Christlmaier,                      arXiv:2211.13672 [physics.chem-ph].
+  D. Kats, and A. Alavi, “An additive reference correction scheme                        61K.  Simula,  E.  M.  C.  Christlmaier,  M.-A.  Filip,  J.  P.  Haupt,
+  for  the  transcorrelated  method,”     (2026),  arXiv:2606.31625,                       D. Kats,  P. L´opez R´ıos, and A. Alavi, “Transcorrelated theory
+  arXiv:2606.31625 [physics.chem-ph].                                                      with  pseudopotentials,”  J.  Chem.  Theory  Comput.21,  5155–
+59W. Ren, W. Fu, X. Wu, and J. Chen, “Towards the ground state                             5170 (2025).
+  of molecules via diffusion monte carlo on neural networks,” Nat.
+  Commun.14, 1860 (2023).
+60I.  von  Glehn,  J.  S.  Spencer,  and  D.  Pfau,  “A  self-attention
+  ansatz for ab-initio quantum chemistry,” inThe Eleventh Inter-

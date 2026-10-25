@@ -1,0 +1,371 @@
+Assessing the Accuracy of the Jastrow Antisymmetrized Geminal Power
+in the  H4 Model System
+           C. Genovese,1 A. Meninno,2 and S. Sorella1, 3
+           1)SISSA  –  International  School  for  Advanced  Studies,  Via  Bonomea  265,  34136  Trieste,
+           Italy;a)
+           2)Dipartimento  di  Fisica  –  Università  di  Pisa,  Largo  Bruno  Pontecorvo  3,  56126  Pisa,
+           Italy;
+           3)Democritos  Simulation  Center  CNR–IOM  Istituto  Ofﬁcina  dei  Materiali,  34151  Trieste,
+           Italy.
+           (Dated: 20 May 2019)
+           We report a quantum Monte Carlo (QMC) study, on a very simple but nevertheless very instructive model system of
+           four hydrogen atoms, recently proposed in Ref. 1. We ﬁnd that the Jastrow correlated Antisymmetrized Geminal Power
+           (JAGP) is able to recover most of the correlation energy even when the geometry is symmetric and the hydrogens lie
+           on the edges of a perfect square.  Under such conditions the diradical character of the molecule ground state prevents
+           a single determinant ansatz to achieve an acceptable accuracy, whereas the JAGP performs very well for all geome-
+           tries.  Remarkably, this is obtained with a similar computational effort.  Moreover we ﬁnd that the Jastrow Factor is
+           fundamental in promoting the correct resonances among several conﬁgurations in the JAGP, that cannot show up in
+           the pure Antisymmetrized Geminal Power (AGP). We also show the extremely fast convergence of this approach in
+           the extension of the basis set.  Remarkably only the simultaneous optimization of the Jastrow and the AGP part of our
+           variational ansatz is able to recover an almost perfect nodal surface, yielding therefore state of the art energies, almost
+           converged in the complete basis set limit (CBS), when the so called Diffusion Monte Carlo is applied.
+
+
+   In recent years much progress has been made in the deﬁ-                      method for implementing the FNA that is called lattice reg-
+nition of variational wave functions (WF) capable to describe                   ularized diffusion Monte Carlo (LRDMC)13.  While usually
+rather accurately the electron correlation. To this purpose two                 a short imaginary time approximation is applied to the prop-
+strategies have been employed: i) the use of multi-determinant                  agator for its ﬁnite time evaluation, in the LRDMC a lattice
+wave functions2–4 or ii) exploiting the large variational free-                 regularization is employed in the physical space by using a
+dom  that  can  be  achieved  by  applying  a  correlation  term,               ﬁnite mesh approximation14.
+dubbed Jastrow factor (JF), to a generic pairing function5–7.                      A widely used ansatz for the WF is the single Slater deter-
+Even if the latter approach cannot be systematically improved,                  minant (SD). The SD can be taken directly from Hartree-Fock
+it  may  open  the  way  to  deal  with  large  systems,  thanks  to            (HF) or density functional theory (DFT) calculations without
+the moderate scaling with the number of electrons.  Indeed,                     further optimizations. Unfortunately this approach can fail to
+the corresponding correlated WF, can be simulated efﬁciently                    describe the exact ground state WF and its nodes and there-
+within a statistical method, based on quantum Monte Carlo8.                     fore a more complex procedure is often required.  Depending
+Thanks to well established advances9,10 in this ﬁeld, it is pos-                on the problem it may be necessary to further optimize the SD
+sible  nowadays  to  compute  the  total  energy  of  a  given  cor-            parameters or to change the ansatz.   Instead of the SD it is
+related ansatz and to optimize several variational parameters                   possible to consider more advanced WF using multidetermi-
+with  a  computational  effort  scaling  at  most  with  the  fourth            nant ansatzes within, for instance, Full Conﬁguration Interac-
+power of the number of electrons.                                               tion (FCI) or Complete Active Space CAS(n,m), with n active
+   A good variational ansatz allows a good description of the                   electrons in m orbitals, or a more accurate single determinant
+ground state by energy optimization.  Moreover an even bet-                     Geminal WF (AGP)5,15–19. It is well known that it is possible
+ter characterization can be obtain by applying the so called                    to improve considerably the correlation energy by multiplying
+diffusion Monte Carlo (DMC) method with the Fixed Node                          a given ansatz by a JF. The WF built with an AGP and a JF
+approximation (FNA)11,12.  Within this projection method it                     is indicated as JAGP, while the SD and the JF as JSD. Once
+is  possible  to  obtain  the  lowest  energy  state  constrained  to           the ansatz of the WF is given it is also important to choose an
+have the same signs of a chosen trial WF, in the conﬁguration                   appropriate atomic basis set. Enlarging the basis set allows us
+space where electron positions and spins are given.  The con-                   to be closer to the CBS limit, but at the same time increases
+nected regions of space with the same sign are called nodal                     the number of variational parameters. It is therefore important
+pockets and the surface determining this pockets,  satisfying                   to have a compact description of the WF by using an atomic
+WF= 0, the nodal surface.  Usually the energy optimization,                     basis set as small as possible.
+implemented here,  has been shown to be very successful to                         Even relatively simple systems can hide pitfalls that can be
+determine the nodal surface of the WF as we will show also                      very difﬁcult to solve. The case of the (H2)2, a system of two
+in the present study.  In this work we have used a particular                   diatomic molecule of hydrogen at equilibrium distance, ﬁrst
+
+                                                                                introduced in QMC literature by Anderson20,21, is emblematic
+                                                                                from this point of view:  as recently shown by Gasperich et
+a)Electronic mail: claudio.genovese@sissa.it
+                                                                                al.1, a single SD can only give a very poor description of this
+                                                                                                                                                               2
+
+system when it approaches the square geometry. This is due to                      notation.  The use of a double zeta basis indicates that for the
+the degeneracy of the frontier orbitals in the square limit that                   description of the 1s orbital of the hydrogen we are using the
+a single SD is not able to reproduce.  In this paper we show                       s-waves and the p-waves orbitals, while for the triple zeta we
+that a single AGP determinant enriched with the JF correlator                      are using also d-waves orbitals.
+allows a perfect description of the ground state.                                     In order to introduce the AGP WF we ﬁrst deﬁne a singlet
+   The simplicity of this model system allows us to study the                      wavefunction of an electron pair:
+role of the optimization in determining an accurate nodal sur-
+face,  because,  by  repeating  several  times  the  optimization,                           ψ2(r1σ1,r2σ2) =   1√
+we can be safely conﬁdent that the absolute minimum energy                                                             2 (|↑↓⟩−|↓↑⟩) f (r1,r2)         (3)
+WF is obtained.   On the other hand we can also verify that                        where  f  is  the  so  called  geminal  function,  that  is  assumed
+our stochastic optimization22 works also when we remove the                        to be symmetric,  namely  f (r1,r2) =  f (r2,r1),  for a perfect
+Jastrow  from  our  ansatz,  providing  the  lowest  energy  AGP,                  singlet. The geminal function  f  is expanded as
+clearly with much larger computational effort compared to de-
+terministic methods, that, to our knowledge, are not available                                        f (r1,r2) =∑λk,lφk(r1)φl(r2).                    (4)
+for the AGP. This tool has been proved to be very useful in                                                          k,l
+this work because we are able to show that the use of a pure
+AGP determinant (without any JF) can give rise not only to a                          The generalization to a many electron WF requires an an-
+poor description of the electronic correlation, but also a qual-                   tisymmetrization of N/2 electron pairs of the form given in
+itatively wrong picture of the chemical bond.                                      Eq. (3). The value of the WF for a given electronic conﬁgura-
+   Moreover, similarly to what found in the benchmark study                        tion is given by the determinant of the matrix F
+of  the  hydrogen  chain23),  the  fullﬁllment  of  the  electron-
+electron  and  electron-ion  cusp  conditions,  obtained  with  a                                              ⟨x|AGP⟩ = detF                                (5)
+suitably chosen JF, makes the convergence to the CBS par-
+ticularly fast and efﬁcient , requiring only a double zeta gaus-                   where the N/2× N/2 matrix F  is deﬁned as Fi, j =  f (ri,r j),
+sian basis set (cc-pVDZ) for the accurate description of the                       with  the  row  index  i  corresponding  to  the  up  electrons  and
+corresponding nodal surface. Remarkably, the DMC energies                          the column index  j to the down ones.  In the case in which
+obtained with the double zeta JAGP trial WF are better than                        N↑⁄= N↓, we assume, without loss of generality that N↑ > N↓.
+the ones obtained with the CAS(2,2) and CAS(4,4) and also                          If it is then necessary we add N↑− N↓ columns to the matrix,
+with the full conﬁguration interaction (FCI) calculated with a                     corresponding to the unpaired orbitals written in the same ba-
+quadruple zeta basis1.                                                             sis set.   Thus the matrix is a N↑× N↑  square matrix and its
+                                                                                   determinant can be evaluated,  yielding also in this case the
+                                                                                   value of the AGP.
+I.   WAVE FUNCTIONS AND PROCEDURE                                                     For our calculations we often initialize the AGP or the SD
+                                                                                   WFs starting from a DFT calculation22, within the LDA ap-
+   For this study we used WFs given by the product of a deter-                     proximation.  Thus it is important to translate without loss of
+minant, SD or AGP, and a JF, optimized with standard stochas-                      information the SD into an AGP.
+tic  techniques13.   For  all  the  calculations  we  used  the  Tur-                 A SD is characterized by its set of MOs
+boRVB package.24                                                                                                       Norb∑
+   The value of the WF for an electronic conﬁguration X is                                                Φmolα   (r) =     Pµ,αφµ(r),                        (6)
+given as                                                                                                                i=1
+
+                 ⟨x|Ψ⟩ = Ψ(X) = J(X)×Ψdet(X)                  (1)                  that uniquely deﬁne it.
+                                                                                      We can recast the SD into an AGP whose matrix F is diag-
+We will ﬁrstly describe the determinant part of the WF, mov-                       onal in the basis of the MOs.  The obtained geminal function
+ing then to the description of the JF used.                                        can be written as
+   In  TurboRVB  we  use  an  atom-centered  basis  set  of  Norb                                                   ¯λα,αΦmol
+orbitals{φI,ν(r)}, where I and ν indicate the ν-th orbital cen-                                     f (r,r′) =∑             α   (r)Φmolα   (r′),                 (7)
+tered on the I-th atom at the position RI.  For this study stan-                                                 α
+dard gaussian basis sets are chosen for the determinant, with                      where  the  diagonal  form  of  the  matrix  ¯λ  is  ensured  by  the
+orbital types:                                                                     orthogonality of the MOs.  If we substitute the expression (6)
+                                                                                   in (7) we can have the description of the pairing function in
+                        φI,ν(r) = e−|r−RI|2Zν    Y νl,m,                          (2)the originally chosen basis set
+
+where Zν is a numerical coefﬁcient that describes how diffuse                                                     λ  = P↑ ¯λPT↓ .                                   (8)
+the atomic orbital is around the atom, while Y νl,m is the spheri-
+cal harmonic function relative to the orbital type of ν. For the                   In this way the SD is translated into an AGP of the same form
+sake of compactness one can enumerate the basis as {φµ(r)}                         given in Eq. (5), where the geminal functions have the same
+combining the indices ν and I in a single index µ for a lighter                    expression of Eq. (4) once the matrix (8) is substituted into
+                                                                                                                                                                3
+
+                                                                                   ational parameter. The electron-electron term is written as
+                                                                                                              Uee = ∑uee(ri,r j),                           (12)
+                                                                                                                      i< j
+                                                                                   where the sum is extended over the pairs of different electrons
+                                                                                   and where
+
+                                                                                      uee(ri,r j) =  |ri−r j|2(1 + bee|ri−r j|) +∑gk,l ¯φk(ri) ¯φl(r j).    (13)
+                                                                                                                                  k,l
+                                                                                   The ﬁrst term in the Eq. (13) deals explicitly with the cusp
+                                                                                   conditions of the electron-electron potential with bee as varia-
+                                                                                   tional parameter, the second term instead takes explicitly into
+                                                                                   account the correlation via a pairing function in the same form
+FIG. 1.  Stylized picture of the system.  While ry is kept constant for            of Eq. (4) with the matrix g as variational parameters. Here the
+all the calculations at a distance equal to 2.4 a.u., the distance rx is           sum over k and l is extended over a basis set similar to the one
+varied for different system shapes.                                                used for the determinant, namely determined by atomic-like
+                                                                                   wave functions of the form
+
+Eq. (7). The SD written in this way appears as an AGP but for                                                ¯φJ,µ(r) = e−|r−RJ|Zµ   Y µl,m,                         (14)
+each conﬁguration x the WF value is unchanged.                                     with µ denoting the orbital type and RJ the nuclear positions
+   When  we  initialize  the  WF  from  a  set  of  MOs,  we  have                 of the atoms considered; as already done in the Eq. (13) we
+the same value for the AGP and the SD and the differences                          combine µ and J in a single index.
+between the ansatzes can be seen only after the energy op-                             The geometry of the system studied has a ﬁxed bond dis-
+timization.  The AGP always provides an energy lower than                          tance along the y direction ry = 2.4 a.u..  This value gives the
+the SD one, due to the larger variational freedom.  Indeed, in
+the case of the SD, the matrix λ, is constrained to have only                      lowest energy result for the square geometry26.  As sketched
+N/2 orthogonal MOs25, corresponding therefore to a number                          in Fig. (1), we study the system as a function of the distance
+of variational parameters much smaller than the one required                       rx between the two vertical molecules.
+for the AGP.                                                                           For the optimization of the JAGP and JSD WFs we used the
+   The  two  different  WFs  that  we  have  introduced  do  not                   same procedure. We consider two types of initializations that
+describe well the correlation between the electrons.   Within                      we denote in the following by OPT rx > ry or OPTrx < ry, to
+QMC, it is easy to improve the quality of the WF, by multi-                        indicate that the tetragonal symmetry is broken.  In the ﬁrst
+plying the SD and the AGP with an exponential JF. This factor                      (second) case we take rx = 4a.u.  (rx = 1.8a.u.)  and perform
+has also another important effect, as it speeds up the conver-                     a DFT calculation for the initial Slater determinant while the
+gence to the CBS by improving the description of the atomic                        Jastrow is all zero but the initial one and two body parameters
+core, and thus not requiring large Zν values in the basis set. In                  are set to a non vanishing value bee = 1/2 and bei = 1.3.  We
+particular our JF is in the form                                                   initially optimize only the JF and we proceed with the full op-
+                                                                                   timization of the AGP or SD with the JF. Then we move the
+                            J(X) = eUei+Uee,                               (9)     atoms to a new position close to the original one mantaining
+                                                                                   the values of the variational parameters. If the new solution is
+where Uei  is  a  single  body  term  dealing  explicitly  with  the               reasonably close to the previous one, the stochastic optimiza-
+electron-ion interaction and Uee is a many-body term to take                       tion drives the WF to its new minimum. We iterated this pro-
+into  account  the  electronic  correlation.   The  JF  is  particu-               cedure to obtain the WFs at all the rx distances for the JAGP
+larly useful because, with an appropriate choice, it is possi-                     and JSD. As we will discuss more extensively later, the JAGP
+ble  to  satisfy  exactly  the  electron-electron  and  electron-ion               optimization does not depend much on the starting WF, that is
+cusp conditions of the many-body WF, a consequence of the                          instead crucial for the JSD. In this latter case the optimization
+Coulomb 1/r singularity at short distance.  The single body                        procedure determines completely different results depending
+term is indeed written in the form                                                 on the initial geometry, when we get close to the symmetric
+                                    #el∑                                           square case.
+                            Uei =       uei(ri),                             (10)      For the optimization of the AGP without the JF we followed
+                                    i=1                                            two  different  procedures  yielding  the  same  results.   In  one
+                                                                                   case  we  started  for  every  geometry  from  the  corresponding
+with uei being                                                                     optimized  JAGP  WF:  we  set  the  JF  to  1  and  we  optimized
+                            #ions∑                                                 the  AGP  from  there.   In  the  second  case  we  have  used  the
+             uei(ri) =−          ZI 1− exp(bei|ri−RI|)                             same procedure adopted for the the JAGP and JSD cases and
+                             I=1                bei              ,           (11)  obtained consistent energy values, validating the optimization
+                                                                                   procedure even in this difﬁcult case without the Jastrow factor.
+where ZI is the atomic number of the atom I and bei is a vari-
+                                                                                                                                                                  4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2. Comparison between the variational energies of the different
+WFs. In orange the energies of the JSD starting from the calculation
+at large rx, in red the ones starting from the small rx, while in green
+the JAGP variational energies are reported.
+
+
+TABLE I. Variational energies for different optimized WFs. The ba-
+sis set used for the AGP and SD is indicated between round paren-
+thesis. We show one point for each case: rx = ry, rx < ry and rx > ry.
+All the energies are expressed in Hartree.
+   rx         JSD(cc-pVDZ)      JAGP(cc-pVDZ)     JAGP(cc-pVTZ)
+   1.80−2.1909± 0.0003−2.1957± 0.0004−2.1953± 0.0003
+   2.40−2.0694± 0.0004−2.1075± 0.0004−2.1084± 0.0003
+   3.00−2.1435± 0.0003−2.1491± 0.0003−2.1504± 0.0003
+
+
+
+II.   RESULTS AND DISCUSSION
+
+   The variational energies for the considered WFs are visi-
+ble in Fig. (2) and reported in Table (I). As shown in Fig. (2),
+the  JSD  values  are  reasonably  accurate  when  the  system  is
+far  from  the  square  geometry,  but  very  poor  when  rx≈ ry.
+We notice that for the JSD the starting point is fundamental
+and the optimization result can signiﬁcantly differ depending
+on the two different initializations.  A particularly evident ef-
+fect is the crossing of the JSD energy dispersions in Fig. (2).
+As expected this problem does not affect the JAGP WF that
+shows the correct proﬁle because , close to the square geom-
+etry contains implicitly the two important Slater determinants
+with strong bonds either in the x or in the y direction. The opti-
+mizations of the JAGP both from OPTrx > ry and OPTrx < ry
+
+
+
+TABLE II. Difference between the energies calculated with the DMC
+performed using the nodes of the JAGP, the ones of the CAS(4,4) and
+the FCI1. All the energies are expressed in Hartree.
+
+      rx                  JAGP                     CAS(4,4)               FCI
+      2.188−2.1307± 0.0001−2.13033± 0.00010−2.1297                                   FIG. 3.  Density plot on the xy plane of the systems for the square
+      2.400−2.1125± 0.0002−2.11193± 0.00005−2.1114                                   geometry for the JAGP and JS WFs. In panel (a) the density obtained
+      2.646−2.1257± 0.0001−2.12558± 0.00003−2.1248                                   with the JAGP WF, in the panel (b) the density of the JSD optimized
+                                                                                     from rx > ry, while in the panel (c) the one of the JSD from rx < ry.
+                                                                                                                                                             5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 4.  Comparison between the DMC energy calculated using the
+node of the JAGP (cc-pVDZ) and the FCI (cc-pVQZ) calculation.
+On this scale the error bars of the DMC calculation are not visible.
+
+
+lead exactly to the same result. The qualitative difference be-
+tween the two ansatzes is clearly shown in Fig. 3.  The MOs
+try to localize the charge between two pairs of atoms to form
+two H2 molecules.  In particular the JSD binds the atoms that
+are  at  smaller  distances  in  the  initial  geometry:  if  we  con-
+sider the OPTrx > ry case we obtain an higher charge density
+along the y direction, while if we start from the OPTrx < ry
+case an higher charge along the x direction shows up.   The
+JAGP, instead, can resonate between these two conﬁgurations
+and catch the resonance valence bond (RVB)27 behaviour ex-
+pected for the ground state of the square geometry.                               FIG. 5. AGP and JAGP energies. In panel (a) we compare the values
+   The JAGP result is not only good at the variational level,                     at the VMC level, while in panel b the corresponding DMC energies,
+but  it  provides  also  particularly  accurate  nodal  surfaces  for             within FNA, are shown.
+the DMC calculations. Indeed, as we can notice from Fig. (4)
+and from Table (II), the DMC energies calculated using the
+nodes of the JAGP (cc-pVDZ) are lower then the ones calcu-                        out (AGP) JF, even considering that the JF> 0 cannot change
+lated with the multi-determinant WF CAS(4,4), and FCI with                        the signs of the WF, and only the optimization of the AGP in
+the quadruple zeta basis1.  This shows that even with a small                     presence of the JF leads to a very accurate nodal surface.  In
+basis  set  the  JAGP  leads,  in  this  controlled  case,  to  almost            Fig. 5a we can see that the variational energies of the AGP WF
+optimal nodes and, by consequence, very accurate DMC en-                          are indeed considerably higher compared to the JAGP ones.
+ergies.  This is indeed remarkable, considering also that other                   The  smoothness  of  the  curve  and  the  reproducibility  of  the
+more standard methods suffer not only for poor accuracy but                       results indicate that the optimization is not stuck in spurious
+also for the too large extension of the basis set.  It also worth                 local minima. Instead the DMC results shown in Fig. 5b indi-
+noticing that we obtain an higher gain in the region rx≈ ry                       cate an unphysical jump of the energy between two different
+where the RVB picture is more relevant.                                           phases.  When rx≥ ry the AGP is able to give very good en-
+   Thanks to the simplicity of the H4 molecule, and the limited                   ergies that differ only few mH from the JAGP ones.  Instead,
+number of variational parameters involved in our WFs, we can                      when rx < ry we can see a clear jump in the energy indicating
+use this model to study the genuine AGP without any JF. This                      that the nodal surface of the WF is not correctly described by
+case is particularly difﬁcult with our stochastic optimization                    the AGP. However also in this regime the nodes are still better
+method because the statistical ﬂuctuations of the energy are                      that the ones provided by the JSD WF, with energy values be-
+much larger.  In principle the AGP should be able to describe                     tween the ones of the JSD and the JAGP. In order to check that
+the static correlation of this molecule also without JF, with the                 this transition was not due to some optimization error we have
+two main contributions in the WF shown pictorially in Fig. 3a.                    calculated the WFs for rx < ry starting from rx = ry, obtain-
+At the variational level a much worse energy for the AGP WF                       ing exactly the same VMC and DMC results.   Qualitatively
+is expected bacause the correlation described by the JF is very                   speaking, when the AGP is optimized in presence of the JF,
+important.  However, it is very interesting to observe that the                   it can resonate between the correct conﬁgurations by avoiding
+DMC results are signiﬁcantly different with (JAGP) or with-                       double occupancies of singlet electron pairs27,28, that are en-
+                                                                                                                                                                              6
+
+ergetically unfavorable. In some sense the Jastrow correlation                             methods are too much expensive and the single determinant
+drives the optimization of the AGP toward the correct ground                               approach does not work well.
+state energy and nodal surface.
+   Finally, as we can see from Table (I), the JAGP is almost
+converged  to  the  CBS  limit  with  only  the  double  zeta  cc-                          1K.  Gasperich,  M.  Deible,    and  K.  D.  Jordan,  The  Journal  of  Chemical
+pVDZ basis. The differences in energy with the cc-pVTZ are                                   Physics 147, 074106 (2017), https://doi.org/10.1063/1.4986216.
+much below one mH per atom. This fast convergence is due to                                 2C. Filippi and C. J. Umrigar, The Journal of Chemical Physics 105, 213
+the term in the Eq. (10) that fulﬁlls the electron-ion cusp con-                             (1996), https://doi.org/10.1063/1.471865.
+ditions and allows us to use a very small basis set to describe                             3J.  Kolorenˇc  and  L.  Mitas,  Reports  on  Progress  in  Physics  74,  026502
+the system.  In the AGP the number of variational parameters                                 (2011).
+                                                                                            4M.  A.  Morales,  J.  McMinis,  B.  K.  Clark,  J.  Kim,    and  G.  E.  Scuse-
+scales with the square of the number of elements of the basis.                               ria, Journal of Chemical Theory and Computation 8, 2181 (2012), pMID:
+It is therefore very important to reach a very accurate descrip-                             26588949, https://doi.org/10.1021/ct3003404.
+tion with the smallest possible basis set. This can have a very                             5M.  Casula  and  S.  Sorella,  The  Journal  of  Chemical  Physics  119,  6500
+dramatic impact for large systems where the dimension of the                                 (2003), https://doi.org/10.1063/1.1604379.
+                                                                                            6M. Bajdich, L. Mitas, L. K. Wagner,  and K. E. Schmidt, Phys. Rev. B 77,
+basis set is one of the most important bottlenecks of our JAGP                               115112 (2008).
+calculations.                                                                               7M. Bajdich, L. Mitas, G. Drobný, L. K. Wagner,  and K. E. Schmidt, Phys.
+                                                                                             Rev. Lett. 96, 130201 (2006).
+                                                                                            8W. M. C. Foulkes,  L. Mitas,  R. J. Needs,   and G. Rajagopal, Rev. Mod.
+III.   CONCLUSION                                                                            Phys. 73, 33 (2001).
+                                                                                            9S. Sorella, Phys. Rev. B 64, 024512 (2001).
+                                                                                           10C. J. Umrigar, J. Toulouse, C. Filippi, S. Sorella,  and R. G. Hennig, Phys.
+   In this work we have applied state of the art QMC tech-                                   Rev. Lett. 98, 110201 (2007).
+niques to a very simple system that has been used for bench-                               11C.  A.  Melton,  M.  C.  Bennett,   and  L.  Mitas,  The  Journal  of  Chemical
+marking their accuracy in describing the strong electron cor-                                Physics 144, 244113 (2016), https://doi.org/10.1063/1.4954726.
+                                                                                           12W. Lester, Recent Advances in Quantum Monte Carlo Methods, New direc-
+relations. We have shown that the use of the JAGP wave func-                                 tions for adult and continuing education No. pt. 1 (World Scientiﬁc, 1997).
+tion is not only qualitatively correct but allows an almost ex-                            13S. Sorella and L. Capriotti, The Journal of Chemical Physics 133, 234111
+act description of the ground state with a computational effort                              (2010), https://doi.org/10.1063/1.3516208.
+similar  to  the  widely  used  JSD,  that  miserably  fails  in  this                     14M. Casula, S. Moroni, S. Sorella,  and C. Filippi, The Journal of Chemical
+system, even within the more accurate DMC approach.  We                                      Physics 132, 154113 (2010), https://doi.org/10.1063/1.3380831.
+                                                                                           15M. Casula, C. Attaccalite,  and S. Sorella, The Journal of Chemical Physics
+have also shown that the full optimization of our JAGP ansatz                                121, 7110 (2004), https://doi.org/10.1063/1.1794632.
+guarantees a very fast convergence in the basis set, so that no                            16E. Neuscamman, Phys. Rev. Lett. 109, 203001 (2012).
+kind of extrapolation is necessary for almost converged results                            17E.  Neuscamman,  The  Journal  of  Chemical  Physics 139,  181101  (2013),
+in the CBS limit.  Considering the above remarkable proper-                                  https://doi.org/10.1063/1.4829536.
+                                                                                           18E.  Neuscamman,  The  Journal  of  Chemical  Physics 139,  194105  (2013),
+ties of our JAGP ansatz, the extension to larger systems has                                 https://doi.org/10.1063/1.4829835.
+been already employed in several cases, but its accuracy has                               19L. Stella, C. Attaccalite, S. Sorella,  and A. Rubio, Phys. Rev. B 84, 245117
+not been deeply investigated. Thanks to the simplicity of this                               (2011).
+model system we were also able to prove that the AGP alone,                                20J. B. Anderson, J. Chem. Phys. 63, 1499 (1975).
+without the use of a JF, miserably fails,  leading not only to                             21J.  B.  Anderson,  International  Journal  of  Quantum  Chemistry  15,  109
+inaccurate  DMC  energies  but  qualitatively  wrong,  as  a  dis-                           (1979), https://onlinelibrary.wiley.com/doi/pdf/10.1002/qua.560150111.
+                                                                                           22F. Becca and S. Sorella, Quantum Monte Carlo Approaches for Correlated
+continuity of the energy landscape as a function of the atomic                               Systems (Cambridge University Press, 2017).
+positions was reported.  In this case the wrong nodal surface                              23M. Motta, D. M. Ceperley, G. K.-L. Chan, J. A. Gomez, E. Gull, S. Guo,
+determined  by  the  AGP  for  small  rx,  was  not  detectable  at                          C. A. Jiménez-Hoyos, T. N. Lan, J. Li, F. Ma, A. J. Millis, N. V. Prokof’ev,
+the VMC level, because the optimized VMC energy was in-                                      U. Ray, G. E. Scuseria, S. Sorella, E. M. Stoudenmire, Q. Sun, I. S. Tupit-
+deed a smooth and continuous function of rx, as it should be                                 syn,  S. R. White,  D. Zgid,   and S. Zhang (Simons Collaboration on the
+from  general  grounds.   This  example  leads  us  to  conclude                           24“Turborvb     website,”     https://people.sissa.it/~sorella/web/Many-Electron Problem), Phys. Rev. X 7, 031059 (2017).
+that the AGP optimization, in principle possible with a very                                 index.html.
+cheap and deterministic algorithm similar to the HF self con-                              25M. Marchi, S. Azadi, M. Casula,  and S. Sorella, The Journal of Chemical
+sistent method, is completely useless, as it can lead to spurious                            Physics 131, 154116 (2009), https://doi.org/10.1063/1.3249966.
+                                                                                           26D. M. Silver and R. M. Stevens, The Journal of Chemical Physics 59, 3378
+and qualitatively wrong results, in this sense much worse than                               (1973), https://doi.org/10.1063/1.1680481.
+simpler HF or DFT calculations.  This work clearly indicates                               27L.  Pauling,  The  nature  of  the  chemical  bond  (Cornell  University  Press,
+that  instead  the  JAGP  ansatz  opens  the  way  to  tackle  even                          1960).
+more complicated systems, when standard quantum chemistry                                  28P. W. Anderson, Science 235, 1196 (1987).

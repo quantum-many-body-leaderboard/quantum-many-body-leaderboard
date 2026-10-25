@@ -1,0 +1,726 @@
+Renormalization group approach to second-order Green’s function theory
+           Joshua Krieger1 and Johannes Tölle2,a)
+           1)University of Münster, Institute of Physical Chemistry, Corrensstraße 28/30, 48149 Münster, Germany; Center for Multiscale Theory
+           and Computation, 48149 Münster, Germany; International Graduate School BACCARA, 48149 Münster.
+           2)Department of Chemistry, University of Hamburg, 22761 Hamburg, Germany; The Hamburg Centre for Ultrafast Imaging (CUI),
+           Hamburg 22761, Germany; Center for Multiscale Theory and Computation, University of Münster, 48149 Münster, Germany.
+           In this work, we introduce a new approach for constructing a renormalized and regularized Fock matrix for self-consistent
+           field calculations. The scheme relies on second-order perturbation theory and is conceptually related to quasiparticle
+           self-consistent second-order Green’s function theory (GF2).  The regularization is derived within the framework of
+           perturbative similarity renormalization group (SRG) theory.  By optimizing both the regularization and spin-scaling
+           parameters, we introduce three SRG-qsGF2 variants that enable accurate predictions of quasiparticle energies and dipole
+           moments. Lastly, we demonstrate that formulating second-order perturbation theory for the total electronic energy using
+           the renormalized SRG-qsGF2 Fock matrix as the unperturbed Hamiltonian mitigates divergence problems commonly
+           observed in conventional Møller–Plesset perturbation theory.
+
+
+I.    INTRODUCTION                                                                   variant (Dyson) ADC(2)2,5   is commonly used. A variety of self-
+                                                                                     consistent GF2 variants have been presented in the past, includ-
+   The one-particle electronic Green’s function is a central                         ing self-consistency in imaginary time and frequency31–33     and
+quantity for studying (electronic) interacting quantum many-                         in a moment based formulation relying on auxiliary states35,36    .
+body systems. It encodes both spectral (dynamical) informa-                         A procedure, to the best of our knowledge not yet extensively
+tion (such as ionization potentials and electron affinities) and                     discussed in the literature, is the quasiparticle self-consistent
+static ground-state properties (such as electron densities and                       GF2 (qsGF2) scheme, c.f. Ref.37.
+total energies), c.f. Refs. 1–4. However, the exact computation                         A potential reason for this is related to the well-known diver-
+of the Green’s function is generally only feasible for systems                       gence issues in second-order perturbation theory, when orbital
+consisting of a small number of electrons.                                           energies approach degeneracy38. For the second-order ground-
+   Therefore,  several  approximate  procedures  for  comput-                        state energy within Møller–Plesset (MP2) and second-order
+ing the one-particle Green’s function have been developed,                           Brillouin–Wigner perturbation theory, several regularization
+c.f.  Refs.  5–9.   These  can  be  divided  into  procedures  that                  schemes have been proposed to mitigate these issues39–45    . Reg-
+either approximate the ground-state wave function which is                           ularization strategies for qsGF2 have not been explored so
+subsequently used in construction of the one-particle Green’s                        far.
+function (G)      7,8,10,11        , or approaches that correct the poles of            In this manuscript, we aim to show how the perturbative
+a reference (mean-field) non-interacting Green’s functionG                   0       analysis of the similarity renormalization group (SRG) flow
+through the Dyson equation12                                                         equations46–48      of GF2, as recently applied to the qsGWfor-
+                                                                                     malism in Ref. 49, can be used to derive a regularized qsGF2
+                 G(ω)=G                0(ω)+G           0(ω)Σ   ΣΣ(ω)G(ω),                (1)scheme (SRG-qsGF2). Subsequently, we will demonstrate that
+                                                                                     the resulting quasiparticle energies, when combined with a suit-
+where perturbative approximations for the self-energy ΣΣΣ are                        able regularization parameter and spin-scaling techniques50–52    ,
+employed1,2  .                                                                       result in mean-absolute and mean-signed errors (MAEs/M-
+   A  common  approximation  is  theGWapproximation                13,               SEs) that rival those of self-consistentGWvariants                                          53–55    . Fur-
+which  has  emerged  as  a  standard  method  for  computing                         thermore, we demonstrate the good accuracy of the proposed
+quasiparticle  energies  in  both  extended14–16      and  molecular                 methodology for determining dipole moments for a benchmark
+systems4,17–22      , due to its balance of accuracy and computa-                    set of 46 molecular systems, achieving CCSD level accuracy
+tional cost. Within the GW approximation, ΣΣΣ is a functional of                    when compared to experimental values. Lastly, we make use
+the interacting Green’s functionG. In its most commonly used                         of the SRG-qsGF2 Fock matrix in a second-order perturbation
+single-shot variant, G0W03, ΣΣΣ depends on the initial mean-field                    theory procedure for determining the ground-state electronic
+non-interacting Green’s functionG                   0. To circumvent this addi-      energy. Here, we demonstrate that the divergence issues along
+tional approximation, several self-consistent variants ofGW                          the dissociation coordinate for typical molecular systems are
+have been proposed. These include fully self-consistentGW                            significantly mitigated, extending the applicability of second-
+(scGW)                23,24    ,  quasiparticle  self-consistentGW(qsGW)                                                           25–27    ,order perturbation theory for ground-state energies.
+and partially self-consistent schemes such as eigenvalue-only
+self-consistentGW(evGW)                                                      28,29    .
+As  an  alternative  to  the  GW  approximation,  second-order                       II.    THEORY
+Green’s function perturbation theory (GF2)30–34    , or its one-shot
+                                                                                     A.    Second-order Green’s Function Perturbation Theory
+
+                                                                                        Throughout  this  work  we  use  the  common  notation  for
+a)Electronic mail:jojotoel@gmail.com
+                                                                                     occupied  (i,j,k,...       )  and  virtual  (a,b,c,...        )  and  general
+                                                                                                                                                                                          2
+
+(p,q,r,...        ) orbital indices.  Making use of this notation, the                           Augmenting the Hartree–Fock Fock operator with Eq. (10)
+second-order Green’s function perturbation theory (GF2) self-                                    allows  to  determine  the  orbitals  and  orbital  energies  self-
+energy is defined as30,35,36                                                                     consistently from
+                              X     ⟨pa||i j⟩⟨i j||qa⟩                                                                   h ˆf HF +  ˆf qsGF2i
+           ΣGF2pq  (ω)=       1                                                                                          |            {z            }|ϕ p⟩=ϵ      p|ϕ p⟩,                  (12)
+                            2  i ja  ω+ϵ       a−ϵ   i−ϵ    j
+                              X                                                                                                    ˆf tot
+                        + 1         ⟨pi||ab⟩⟨ab||qi⟩
+                           2   iab  ω+ϵ       i−ϵ   a−ϵ   b                                      with
+                                                                                                                                          X
+                        =   W2h1p  ω1−C          2h1p −1   W2h1p †                                                               ˆf HF =       FHFpq a†paq,                          (13)
+                                                                           pq                                                              pq
+                        +   W2p1h  ω1−C          2p1h −1   W2p1h †
+                                                                           pq,       (2)         whereF              HFpq  denotes the Hartree–Fock Fock matrix, and
+with                                                                                                                         ˆf qsGF2 =   X
+                                                                                                                                               FqsGF2pq     a†paq.                      (14)
+                     C2h1pi ja,klb    =(−ϵ         a +ϵ   i +ϵ    j)δ  ikδ jlδab,                  (3)                                     pq
+
+                    C2p1habi,cd j     =(−ϵ         i +ϵ   a +ϵ   b)δ  acδbdδi j,                 (4)
+                                                                                                 B.    Similarity renormalization group
+and
+                             W2h1p         √                                                         Since orbital energy differences enter the denominator of
+                                p,i ja   =   12⟨pa||i j⟩,                          (5)           FqsGF2pq     , it is prone to divergences. Several techniques have been
+                                                                                                 proposed to mitigate this issue, cf. Refs. 38,41,57,58.  Here,
+                             W2p1hp,abi   =   1√2⟨pi||ab⟩,                          (6)          we make use of the similarity renormalization group (SRG)
+                                                                                                 approach42,46–48         to derive a renormalized effective Fock matrix˜F(s)expression depending on a regularization parameter   s.
+where ϵp denotes orbital energies.  Furthermore, we use the                                      This idea closely follows Ref. 49, where the SRG framework
+following convention for the two-electron integrals                                              has been applied to the GW approximation.
+                           Z        Z                                                                The general idea of the SRG approach is the continuous
+          ⟨pq||rs⟩=            dx       dx ′ϕp(x)ϕ      r(x)ϕ      q(x′)ϕ  s(x′)|r−r  ′|                     (7)transformation of a Hamiltonian matrix such that certain sub-
+                          Z        Z                                                             spaces become decoupled, i.e.,59
+                       −       dx       dx ′ϕp(x)ϕ       s(x)ϕ      q(x′)ϕ  r(x′)|r−r  ′|     ,      (8)                        ˆH(s)=         ˆU(s)       ˆH ˆU†(s),                         (15)
+
+assuming real-valued orbitals throughout this work.                                              with  ˆU(s)denoting a unitary anti-Hermitian transformation
+   Note that the underlying static effective Hamiltonian, which                                  matrix [ ˆU(s)= − ˆU†(s)] and   s the so-called flow parameter
+will be used in Sec.II Bis                                                                       that is defined in the range of [0,∞   ). Furthermore,  ˆU(0)=1
+                               F       W2h1p  W2p1h.                (9)so that  ˆHremains unchanged fors=0.
+                                 W2h1p †   C2h1p      0                                              The evolution of Eq. (15) follows the ordinary differential
+                   HGF2 =        W2p1h †      0      C2p1h                                       equation59
+
+                                                                                                                                 d ˆH(s)
+The effective Hermitian static self-energy used in the quasipar-                                                                   ds    = hη,  ˆH(s)    i,                          (16)
+ticle self-consistent (qs) GF2 procedure is49,56
+                               hΣGF2                                                             with
+             FqsGF2pq     =  12   pq  (ϵ  p)+ Σ  GF2pq  (ϵ  q)i
+                               X     ∆pa                                                                                          ˆη=     d ˆU(s)ds     ˆU†(s).                            (17)
+                        =  1           i j  + ∆qai j⟨pa||i j⟩⟨i j||qa⟩
+                            4   i ja ∆pai j ·∆ qai j                                             In this work, Wegner’s canonical generator46
+                              X     ∆piab + ∆qiab
+                        + 14         ∆pi            ⟨pi||ab⟩⟨ab||qi⟩,       (10)                                   η(s)=     h ˆHd(s),      ˆH(s)    i = h ˆHd(s),      ˆHod(s)  i            (18)
+                               abi     ab·∆ qiab
+with                                                                                             is chosen as the flow generator. Wegner’s generator partitions
+                                                                                                 the Hamiltonian into a diagonal(               ˆHd)and an off-diagonal(                      ˆHod)
+                  ∆pq...rs...   =ϵ    p +ϵ   q +···−ϵ       r−ϵ    s−... .             (11)      part,  resulting in a monotonic decrease of the off-diagonal
+                                                                                                 elements. This holds true as long asη(s),0.                 59
+                                                                                                                                                                                    3
+
+
+1.   Perturbative analysis                                                                    A detailed derivation is also presented in the SI, Sec. S1. From
+                                                                                              Eq. (25) it is evident that the second-order renormalized Fock
+   Following Refs. 42,49, a perturbative analysis of the flow                                 matrixF               (2)(s)is zero for   s  =0and has the form of static
+equations for the effective Hamiltonian [Eq. (9)] will be per-                                renormalization of quasiparticle energies similar to Eq. (12)
+formed in the following.  The diagonal part of the effective                                  for  s→∞  .  In particular both expressions share the same
+Hamiltonian reads                                                                             diagonal elements in this limit. We therefore denoteF               (2)(s)as
+                                                 ,                      (19)FSRG−qsGF2       (s) in the following.
+                                    F     0        0                                             Based onF      SRG−qsGF2        (s)a self-consistency procedure similar
+                          Hd =      0  C2h1p     0                                            to Eq. (12) can be defined, resulting in the SRG-qsGF2 method.
+                                    0     0     C2p1h                                         The computational cost of the construction of the static self-
+and the off-diagonal part is                                                                  energyF      SRG−qsGF2       (s)exhibits a formal scaling of O(non2vn2bf),
+                                                                                              where no and nv are the number of occupied and virtual orbitals,
+                             0        W2h1p  W2p1h.               (20)and nbf denotes the total number of basis functions. The trans-
+                               W2h1p †      0         0                                       formation of the four center integrals required forF       SRG−qsGF2        (s)
+                   Hod =       W2p1h †      0         0                                       into molecular orbital (MO) basis however scales on the order
+                                                                                              O(n5bf), resulting in an overall O(n5bf)scaling of the SRG-qsGF2
+                                                                                              method. Improvements to the computational efficiency will be
+The perturbative analysis of the SRG equations starts from                                    briefly discussed in Sec.III.
+[compare Eq. (9)]
+
+                            HqsGF2 =H    d +λH       od,                         (21)         C.    Spin-Component Scaling
+
+whereH              od is the perturbation andλ denotes the perturbation
+parameter. The SRG Hamiltonian [H(    s,λ  )] and the flow gener-                                Within  second-order  Møller–Plesset  perturbation  theory
+ator [ηηη(s,λ  )] can now be expanded in a power series in λ, and                             (MP2),  the  overall  accuracy  can  be  drastically  improved
+atN-th order one finds                                                                        through scaling of same- and opposite-spin correlation energy
+                        1    dNH(s,λ)      λ=0                                          contributions (c  SS andc        OS)50,51    .
+                       N!        dλ   N           =H    (N)   (s),                   (22)        Similarly60,  we apply the spin-component scaling (SCS)
+                                                                                              scheme  to  the  SRG-qsGF2  self-energy.   Dividing  the  two-
+and                                                                                           electron integrals into same-spin and opposite-spin contribu-
+                                           λ=0                                          tions, the SCS-SRG-qsGF2 spin-integrated self-energy reads
+                         1    dNηηη(s,λ)          =ηηη(N)   (s).                    (23)                                     X
+                        N!        dλ   N                                                             FSRG−qsGF2                       ∆pai j  + ∆qai j
+                                                                                                        pq            (s)=         ∆pa 2 +  ∆qa 2 (pi|a j    )
+Since at zeroth order the perturbation is zero, the zeroth order                                                             i ja     i j          i j
+Hamiltonian is independent of s, i.e.,H         (0)(s)=H      (0)(0)=H          d.                                           × (c  SS +c    OS) (qi|a j    )−c    SS (pi|a j    )"  ∆pa
+Similarly, the zeroth order off-diagonal Hamiltonian (H        (0)od (s)=                                                                       2+ ∆qa 2 s#
+0) and flow generator are zero (ηηη(0)(s)=0).                                                                                ×   1−e  −      i j      i j
+   At second order, one finds                                                                                                X        ∆pi
+                                                                                                                          +              ab + ∆qiab
+            dH   (2)(s)                                                 i.      (24)                                               ∆pi 2 +  ∆qi       2 (pa|ib     )
+                ds      = hηηη(1)(s),H       (1)(s)  i + hηηη(2)(s),H       (0)d                                             abi      ab           ab
+                                                                                                                             × (c  SS +c    OS) (qa|ib     )−c    SS (qb|ia     )"  ∆pi
+                                                                                                                                                2+ ∆qi 2 s#
+Following  the  derivation  presented  in  Ref.  49,  the  one-                                                              ×   1−e  −      ab      ab      ,                   (26)
+particle/one-hole blockF                               (2)(s) reads
+
+                           X        ∆pai j  + ∆qai j                                          with(       pq|rs     )denoting the two-electron integrals over spatial
+          F(2)pq (s)=      12    ∆pa 2 +  ∆qa 2⟨pa||i j⟩⟨i j||qa⟩                             orbitals in chemists’ notation. We investigate the choice of cSS
+                           i ja     i j          i j                                          andc        OS in Sec.IV A.
+                       "           ∆pa 2+ ∆qa 2
+                                    i j      i j s#
+                    ×   1−e  −
+
+                          X         ∆piab + ∆qiab                                             D.    Renormalized Quasiparticle Møller–Plesset Perturbation
+                    + 12         ∆pi 2 +  ∆qi       2⟨pi||ab⟩⟨ab||qi⟩                         Theory
+                           abi     ab           ab
+                       "           ∆pi 2+ ∆qi 2
+                                    ab      ab   s#                                              Making use of the renormalized SRG-qsGF2 Fock matrix,
+                    ×   1−e  −                      .                               (25)      an alternative partitioning of one- and two-electron terms in
+                                                                                                                                                                        4
+
+the electronic Hamiltonian can be achieved                                              energy correction.  Following the derivation of Ref. 42, the
+                  ˆH=     ˜f+   ˆV                                                    (27)SRG-QP-PT2 correlation energy is
+                  ˜f = XhFHFpq  +F    SRG−qsGF2                                                          ESRG−QP−PT2             (s)=
+                                         pq            (s)  i a†paq              (28)                          FSRG−qsGF2  2
+                        pq                                                                               X        ia
+                  ˆV=     ˆH−     ˜f,                                                    (29)                       QP∆ia         1−e  −2s   (QP∆ia)2
+                                                                                                           ia
+allowing for a perturbative treatment of the interaction, similar                                              X     |⟨i j||ab⟩  |2                  2
+to Møller–Plesset perturbation theory                                                                    + 1                       1−e  −2s    QP∆i jab .             (35)
+                                                                                                             4  i jab  QP∆i jab
+                                 ˆH=     ˜f+λ    ˆV.                                (30)A derivation is also presented in the SI, Sec. S2.
+
+In the following, we will not take the s dependence of the or-
+bitals and  ˜f  (vide infra) into account and refer to the perturba-                    III.    COMPUTATIONAL DETAILS
+tion expansion as QP-PT. The motivation for this repartitioning
+is the inclusion of static self-energy-like contributions, which
+are expected to yield a better zeroth-order description of the                             The methods outlined in Sec.IIwas implemented within
+system compared to the HF Fock matrix and might accelerate                              the RI approximation66,67     in a development version ofSeren-
+the overall convergence of the perturbation series and mitigate                         ity68–70    , and will be made publicly available in the upcoming
+divergence61–65    .                                                                    release 1.7.0.
+   QP-PT0 is given as the sum over the occupied quasiparticle                              The SRG-qsGF2 with the RI approximation has a formal
+orbital energies, and the first order energy correction (QP-PT1)                        scaling ofO(nonvn2bfnaux), where  no and nv are the number of
+reads                                                                                   occupied and virtual orbitals, nbf the number of basis functions
+                                                                                        andn        aux the number of basis functions in the auxiliary basis.
+                 E(1) =⟨Φ|        ˆV|Φ⟩                                                    To reduce the number of auxiliary basis functions, we make
+                          X                                                             use of naturally auxiliary functions (NAF)71–73    . We have found
+                       =       −12⟨i j||i j⟩−F          SRG−qsGF2ii     .             (31)that an eigenvalue threshold of10 −2   yields an error in the quasi-
+                           i j                                                          particle energies on the same order as the error introduced by
+At second order (QP-PT2), we obtain                                                     the RI approximation.  We will therefore choose the eigen-
+                                                                                        value threshold of 10−2   in all calculations using NAFs, unless
+                     X    |F SRG−qsGF2             X    |⟨i j||ab⟩  |2                  stated otherwise. A detailed discussion of using the NAF ap-
+            E(2) =           ia   |2                                 ,       (32)       proximation in the present context, related to thresholds and
+                               QP∆ia       + 14           QP∆i j                        starting point dependence can be found in the SI, Sec. S3. For
+                      ia                           i j,ab       ab
+                                                                                        all qsGF2 calculations, performed in this work, we employ
+with  QP∆i j...                                                                         the DIIS74–76     method for convergence acceleration and make
+            ab...    denoting the quasiparticle orbital energy differ-                  use of the following convergence thresholds for self-consistent
+ences following the definition of Eq.11. Thus, the full QP-PT2                          field procedures: i)5 × 10−8   a.u.      for the change in energy; ii)
+energy reads                                                                            1× 10−8   a.u.      for the root mean square deviation (RMSD) of
+                      EQP−PT2      =E    (0) +E    (1) +E    (2)                        the density matrix; iii) and a threshold of5 × 10−7   a.u.      for the
+                                  =E    HF +E    (2).                             (33)  largest coefficient in the DIIS          [F,P   ] error vector75. Throughout
+                                                                                        Hartree atomic units (a.u.) are used.
+We would like to point out again that the orbitals used for
+evaluating the HF energy are not the HF orbitals, but the quasi-                        IV.    APPLICATION
+particle orbitals obtained within the SRG-qsGF2 procedure.
+   Although the appearance of quasiparticle energies in the                             A.    Quasiparticle energies
+denominators of Eq. (32) is likely to mitigate divergencies in
+the QP-PT2 energy correction, they could still occur (compare                              First, we will investigate the performance of the SRG-qsGF2
+Sec.IV C).  For  MP2  several  regularization  strategies  have                         method for calculating principal quasiparticle energies (IPs
+been developed in the literature38,41,57,58          , like the SRG-MP2                 and EAs) and investigate the role of the flow-parameter s. For
+formalism of Evangelista42. In this case the MP2 energy reads                           this, we will make use of the GW50 benchmark set49, which
+           ESRG−MP2       (s)=                                                          consists of 50 atomic and small molecular systems. Reference
+                            1  X    |⟨i j||ab⟩  |2                 2                    ∆CCSD(T) ionization potentials (IPs) and electron affinities
+                                                   1−e  −2s    ∆i jab.      (34)        (EAs) have been taken from Ref. 49. All calculations on the
+                            4  i jab    ∆i jab                                          GW50 benchmark set were performed in aug-cc-pVTZ basis
+                                                                                        set77–80     and corresponding auxiliary basis set81,82    , except for
+Since the SRG formalism was already adapted to the qsGF2                                systems containing lithium, sodium, or potassium.  In these
+self-energy, it will be also used for regularizing the QP-PT2                           cases, the def2-TZVPPD83,84     auxiliary basis set is used.
+                                                                                                                                                                  5
+
+   TableIdisplays the MAEs of the IPs and EAs for different
+values of the SRG parameter s. From Eq. (25) it can be seen
+that the regularization vanishes for s→∞  , while for s =0,
+the second-order contribution to the Hamiltonian completely
+vanishes,  yielding  the  Hartree–Fock  quasiparticle  energies.
+Ideally, s is chosen as large as possible while still ensuring the
+convergence of the calculations. However, already for s =10
+the calculation for the ozone molecule does not converge, and
+the number of non-converging calculations increases further
+for larger values of  s.  At the same time, the MAEs of the
+IPs and EAs significantly increase when going from s =1to                            FIG. 1.  Violinplots of the HOMO a) and LUMO energy b) error
+s =10, and decrease again for higher values of        s. Examples                    distributions in the GW50 benchmark set for SRG-qsGF2, SRG-SOS-
+of convergent and divergent molecular systems with respect to                        qsGF2 and SRG-SCS-qsGF2, as well as SRG-qsGW                    49.  The data
+the choice of s can be found in the SI, Sec . S4A. Note that the                     for SRG-qsGWare taken from                     49.   All qsGF2 calculations were
+s-dependence for SRG-qsGWis significantly smaller                         49.        performed using the aug-cc-pVTZ basis77–80    .
+
+
+TABLE I. Number of converged (conv.)  SRG-qsGF2 calculations,                        considers both the IP and EA errors was also explored. A set
+mean absolute errors (MAE) and mean signed error (MSE) for ion-                      of parameters that balances IP and EA MAEs can be obtained
+ization potentials (IPs) and electron affinities (EAs) in eV relative to             by normalizing the errors according to the maximum observed
+∆CCSD(T) reference values for the GW50 benchmark set in aug-cc-                      IP and EA MAE, respectively
+pVTZ basis set.
+
+s                   1                      10                   100                  1000  FMAE(c)=           IPMAE(c)
+conv.             50                     49                    45                     31                  max(IP   MAE(c))    +      EAMAE(c)max(EA   MAE(c)) .        (36)
+
+           IP         EA         IP        EA        IP        EA        IP        EAHere,cis a vector of the three parametersc=(                                cSS   cOS   s)
+MAE   0.446    0.189    1.388   0.256   1.325   0.243   1.255    0.156              The  optimized  parameter  becomec  = (                cSS   cOS   s)  =
+MSE−0.347−0.005−1.388  0.083−1.325  0.114−1.255  -0.005                             (0.6  1.0  0.7         ), resulting in an IP MAE of0  .21 eV and an EA
+                                                                                     MAE of0 .20 eV. This parametrization will be referred to as
+                                                                                     SRG-SCS-qsGF2 in the following.
+   Following the ideas of regularization strategies used in the                         The optimal spin-scaling factors found for both SRG-SOS-
+context of orbital-optimized MP241, we will use s as an em-                          qsGF2 and SRG-SCS-qsGF2 differ significantly from the com-
+pirical parameter to minimize the MAE of the IPs and EAs                             monly used scaling factors in the case of SCS/SOS-MP2           50,51,85       .
+for the GW50 benchmark set. Details of the optimization pro-                        These  are  cSS  =0 .33and      cOS  =1 .20for  SCS-MP2  and
+cess are presented in the SI, Sec. S4B. Optimization of the                          cSS =0 .00,     cOS =1 .30for SOS-MP2. However, the SRG-SOS-
+SRG-parameter (without employing spin scaling) in order to                           qsGF2 factors match the IP optimized∆MP2-SOS(IP)                           86–89
+balance the overall error in the IPs and EAs for the GW50                            parameters (cCS =0 .0,   cOS =1 .0).  In the case of SRG-SCS-
+benchmark set shows that the IP error exhibits a significantly                       qsGF2, both cSS =0 .6and   cOS =1 .0are each approximately
+larger dependence on s than the EAs. The optimal value for s                        1.5 times larger than the∆MP2(IP) parameters (       cSS =0 .38and
+with respect to the IP MAE is s =0 .525, resulting in a MAE of                       cOS =0 .67) of Refs.     86–89. This difference could be related to
+0.25 eV for IPs and an MAE of0 .20 eV for EAs. The resulting                         the stronger regularization in the case of the SRG-SCS-qsGF2
+method will be denoted as SRG-qsGF2 in the following.                               variant, which results in an increased suppression of contribu-
+   Next, we investigate the possibility of further reducing the                      tions with small denominators ofF     SRG−qsGF2       , requiring larger
+error in the quasiparticle energies by applying the spin compo-                      SCS parameters to recover the lost contribution.
+nent scaling formalism50,51     within the SRG-qsGF2 procedure.                         Fig.1depicts the IP and EA error distributions with re-
+Similarly to the SRG parameter optimization, the variation of                        spect to∆CCSD(T) of the three qsGF2 parametrizations (SRG-
+the EA MAE across different parameter choices is significantly                       qsGF2, SRG-SOS-qsGF2, SRG-SCS-qsGF2) for the GW50
+smaller than the IP MAE (SI, Sec. S4B). We therefore focus                           benchmark set.   Additionally,  the error distribution for the
+on minimizing the IP error first. The optimization of the SCS                        SRG-qsGWprocedure of Ref.                    49 (s =1000) is presented, ex-
+parameters and the SRG parameter with respect to the IP error                        hibiting an IP and EA MAE of0 .19/0  .12eV. It can be seen
+yields cSS =0 .0,   cOS =1 .0, and   s =1 .4as the optimal set of                    that the SRG-qsGF2 procedure results in a wider spread in
+parameters, and will thus be denoted SRG-SOS-qsGF2. This                             the deviations for IPs and EAs when compared to SRG-qsGW,
+choice of parameters shows a minimal IP MAE of0 .13 eV,                              manifesting in increased MAEs. In contrast, SRG-SOS-qsGF2
+however, the EA MAE increases to0 .26 eV from0   .20 eV.                             exhibits a similar error distribution for the IPs, but a wider
+We note that a minimal EA MAE of0 .189 eV is recorded                                spread for EAs. Overall, the spread in the EA errors remains
+at cSS  =  cOS  =  s =1 .0, however, the IP MAE increases to                         fairly consistent between the qsGF2 variants.  For all three
+0.447 eV, hence, we do not consider optimizing for the EA                            SRG-qsGF2 variants, the largest deviations in IPs and EAs are
+error to be expedient. While optimizing for the EA MAE alone                         caused by systems that were particularly prone to divergencies
+might not be feasible, searching for a set of parameters that                        in qsGF2. For example, in the case of SRG-SCS-qsGF2, the
+                                                                                                                                                                6
+
+largest outliers in the IPs and EAs arise for MgO (−0.75eV)                         beyond quasiparticle energies will be assessed next.
+and C2H4 (1 .11eV), respectively. Both systems start diverging
+already for smaller s. In the case of MgO, a small s parameter
+actually increases the IP error of MgO compared to HF and                           B.    Dipole moments
+only improves the IP for larger s [see Fig. S2 c) in the SI].
+While not quite matching the accuracy of the SRG-qsGWpro-                              Having parametrized three different SRG-qsGF2 variants
+cedure, SRG-qsGF2, and particularly its spin-scaled variants,                      with respect to quasiparticle energies, we will now assess their
+yield reasonably accurate IPs and EAs at reduced computa-                           performance for calculating molecular dipole moments.  For
+tional cost [O(n5)compared to O(n6)for SRG-qsGWwithin                               this, the dipole moments of several prototypical small molecu-
+their sum-over-states expressions].                                                 lar systems are investigated in a first step. Calculations were
+   Next, we investigate the transferability of the parametriza-                     performed using the def2-QZVPPD basis set84 with geometries
+tions, deduced from the GW50 benchmark set, for the three                           taken from Ref.92.
+SRG-qsGF2 variants against the full GW100 benchmark set.                               TableIIIcompares the errors in the dipole moments calcu-
+In this case, the def2-TZVPP basis set90 with the correspond-                       lated using the different SRG-qsGF2 parametrizations, as well
+ing auxiliary basis set has been employed.83,84    . The results for                as dipole moments from HF and CCSD(T)92. All SRG-qsGF2
+the GW100 benchmark set were evaluated using the updated                            parametrizations significantly improve upon the HF results,
+CCSD(T) reference energies presented in Ref. 22.  All SRG-                          resulting in MAEs comparable to those of CCSD(T) when
+qsGF2 results were obtained using the revised geometries for                        compared to experiment. Notably, all three SRG-qsGF2 vari-
+vinyl bromide and phenole from Ref 19, while the original                           ants correctly predicted the sign of the CO dipole moment, a
+geometries were used for G0W0@HF, qsGW, and sc         GW. Fur-                     notoriously difficult problem for HF theory         93.
+thermore, in the case of scGW, IP energies for seven systems
+were unavailable. The resulting metrics for the deviations in
+the IPs with respect to∆CCSD(T) reference values are pre-                          TABLE III. Comparison of the errors (in Debye) of dipole moments
+sented in Tab.II, and the error distributions for the IPs are                       relative to experimental values94 for CCSD(T)92, HF, SRG-qsGF2,
+shown in Fig.2.  Tab.IIalso contains reference             G0W0@HF,                 SRG-SCS-qsGF2,  and  SRG-SOS-qsGF2.   Calculations  were  per-
+qsGW(not regularized) and scGWresults of Refs.                     55. From         formed using the def2-QZVPPD basis set.84
+Fig.2and Tab.IIit is evident that the performance of all three                                                               SRG-    SRG-SCS-      SRG-SOS-
+SRG-qsGF2 variants is retained when moving from the GW50                              molecule  exp.  CCSD(T)    HF         qsGF2      qsGF2         qsGF2
+to the full GW100 benchmark set.  The resulting MAEs for                              HF           1.82     –0.04      0.10    –0.04       –0.03          –0.01
+the IPs are0  .27 eV in the case of SRG-qsGF2,0         .13 eV for                    CO           0.11      0.04      –0.38    0.13         0.10            0.04
+SRG-SOS-qsGF2, and0  .21 eV for SRG-SCS-qsGF2. When                                   H2O         1.85     -0.02      0.13    –0.03        0.02            0.03
+comparing SRG-qsGF2 and SRG-SCS-qsGF2 toG     0W0@HF                                  NH3         1.47      0.03       0.12     0.05         0.05            0.06
+and qsGW(without regularization),  comparable MAEs are                                H2S          0.97      0.01       0.19     0.04         0.03            0.02
+observed. The SRG-SOS-qsGF2 variant results in the lowest                             MAE                     0.03       0.17     0.06         0.05            0.03
+overall MAE, RMSD, and standard deviation of error (SDE).                             MSE                     0.00       0.02     0.03         0.03            0.03
+Furthermore, the SRG-qsGF2 MAE is comparable to the scGW                              max                       0.04       0.38     0.13         0.10            0.06
+MAE, while the two other SRG-qsGF2 parametrizations per-
+form better. Notably, a smaller MSE for all three SRG-qsGF2                            To  further  assess  the  performance  of  the  different  SRG-
+variants compared toG     0W0@HF, qsGW, and sc         GW is found,                 qSGF2  variants  in  predicting  dipole  moments,  we  bench-
+indicating that the error distribution largely centered around                      marked them against a larger set of 37 molecular systems. This
+zero, compare also Fig.2.                                                           benchmark set has been previously employed to evaluate the
+                                                                                    accuracy of various electronic structure methods to determine
+TABLE II. Metrics of the principal IP errors (in eV) of GW100 bench-                dipole moments95. The set comprises primarily small organic
+mark with respect to∆CCSD(T) for SRG-sqGF2, SRG-SOS-qsGF2,                          molecules along with several diatomic species, including those
+SRG-SCS-qs-GF2, G0W0@HF15, qsGW      27 and scGW53,54   .  Calcula-                 listed in TableIII. Since the geometries were not provided in
+tions were performed using the def2-TZVPP basis set83,90    .                       Ref. 95, we generated them as described below: The set of 37
+             Method                  MAE  MSE  RMSD  SDE                            geometries was obtained via MP2 geometry optimizations with
+                                                                                    ORCA 6.0.196–100     of the minimum energy conformers gener-
+             SRG-qsGF2           0.27   –0.09    0.34    0.33                       ated by CREST101–103      . The OO-MP2 results in this benchmark
+             SRG-SOS-qsGF2   0.13   –0.02    0.18    0.18                          were also calculated usingORCA 6.0.1. The complete results
+             SRG-SCS-qsGF2   0.21   –0.05    0.28    0.28                           and the included molecules can be found in Tab. S2 in the SI.
+             G0W0@HF             0.30   –0.26    0.36    0.24                          First, we compare dipole moments on the newly generated
+             qsGW               0.21   –0.18    0.27    0.20                        using MP2 to the MP2 results from Ref. 95. We find an overall
+             scGW               0.29   –0.27    0.36    0.25                        mean absolute difference between the two of0    .009Debye. The
+                                                                                    largest deviation of0 .14 Debye is found for cytosine. Notably,
+   Having established three parameterized SRG-qsGF2 vari-                           the MP2 dipole moments from the geometries used in this study
+ants for the GW50 benchmark set and explored the transfer-                          are in better agreement with the experimental values of Ref. 95,
+ability to the larger GW100 benchmark set, the performance                         yielding a MAE of0 .093 Debye compared to0 .098 Debye
+                                                                                                                                                               7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2. Histogram of the errors with respect to∆CCSD(T) for the IPs of the GW100 benchmark set         22,91    : a) SRG-qsGF2, b) SRG-SOS-qsGF2
+and c) SRG-SCS-qsGF2. All calculations were performed using the def2-TZVPP basis set.83,90
+
+
+as reported in Ref. 95 (TableIV). Given this overall small                         SOS-qsGF2. Additionally, we consider SRG-qsGF2 in com-
+deviation, we include the comparison to CCSD of Ref. 95 in                         bination with second-order perturbation theory for the limit
+the present study.                                                                 s→∞  , denoted as QP(∞)-PT2.  Furthermore, we compare
+   The MAEs and RMSDs of the three SRG-qsGF2 methods                               the resulting potential energy surfaces (PES) to CCSD, MP2,
+relative to experimental reference values are summarized in                        OO-MP2104,105      and its regularized variantκ-OO-MP241,106    . H2
+TableIV. All three SRG-qsGF2 variants provide a more ac-                           calculations were performed using the cc-pVDZ basis set77–82    ,
+curate description of dipole moments than OO-MP2.  While                           the sto-3g107–109       basis set for N2, and cc-pVTZ77–82      for H10.
+SRG-qsGF2 delivers dipole moments of comparable quality to                         The CCSD calculations for H2 and H10 were performed using
+MP2, the spin-component-scaled variants exhibit substantially                      Serenity1.6.3.                    68–70     CCSD calculations for N2 and all OO-MP2
+smaller deviations from experiment. In particular, SRG-SOS-                        calculations were performed withORCA          96–100     6.0.1, and the
+qsGF2 not only performs best among the three parametriza-                          κ-OO-MP2 calculations were performed withQChem6.1                           110.
+tions, but also outperforms all other methods listed in TableIV.                   Reference dissociation curves were obtained from full config-
+                                                                                   uration interaction (FCI) calculations for H2 and N2 through
+                                                                                   PySCF      111–113      , and MRCI+Q calculations for H                   10 taken from
+TABLE IV. MAE and RMSD in Debye w.r.t to experimental dipole                       Ref. 114. All calculations are based on restricted Hartree–Fock
+moments taken from Ref.95(cc-pVTZ                77–80    ).                       (RHF) reference wave functions.
+                                                                                      The dissociation curves are shown in Figure3. Figure3a)
+                    method                  MAE  RMSD                              depicts the ground-state dissociation curve of H2. Around the
+                    CCSDa)                  0.079   0.133                          equilibrium distance, all second-order methods give similar
+                    SRG-qsGF2          0.096   0.149                               results, which are about10   −2   Ha higher in energy than the
+                    SRG-SCS-qsGF2  0.088   0.142                                   FCI energy.  Note that CCSD is identical to FCI in this case
+                    SRG-SOS-qsGF2  0.079   0.129                                   and is not explicitly shown. At larger distances (around 3 Å)
+                    OO-MP2               0.113   0.129                             MP2 starts to diverge and fails to qualitatively describe the
+                    MP2                      0.093   0.150                         PES. OO-MP2 diverges at shorter distances, and the optimiza-
+                    MP2a)                    0.098   0.168                         tion procedure did not converge beyond 4 Å. This behavior
+                            a) taken from Ref.95                                   is cured byκ-OO-MP2, which does not diverge, but exhibits
+                                                                                   discontinuities beyond 12 Å.
+                                                                                      The unregularized expression for QP(∞)-PT2 also diverges,
+                                                                                   but at a slightly larger distance when compared to MP2. The
+C.    Potential Energy Surfaces                                                    QP(M)-PT2 energies for the H              2  system are independent of
+                                                                                   cSS, as the single occupied orbital results in the cancellation
+   Next, we investigate the ability of the SRG-qsGF2 in combi-                     of the same-spin contribution, and since the parameter sets all
+nation with second-order perturbation theory (PT2, Sec.II D)                       use cOS =1, the only quantitative differences in the potential
+to describe the dissociation curves of H2, N2, and H10.  For                       energy surfaces are due to the different choice of regularization
+this, we make use of the Hamiltonian partitioning of Eq. (27).                     parameter s, together with the reference orbitals and quasipar-
+The resulting methods will be denoted as QP(M)-PT2, with                           ticle energies from the underlying SRG-qsGF2 calculations.
+M  referring to the three parametrization for the underlying                       In the case of QP(SOS)-PT2, the regularization parameter is
+SRG-qsGF2 approach also used of the PT2 correction, i.e.,                          largest with s =1 .4, hence, the energy difference to the FCI
+QP-PT2 in the case of SRG-qsGF2, QP(SCS)-PT2 in the case                           results is the smallest.
+of SRG-SCS-qsGF2, and QP(SOS)-PT2 in the case of SRG-                                 In case of the N2 dissociation [Figure3b)], OO-MP2 and
+                                                                                                                                                          8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3.   Dissociation curves for a) H2 (cc-pVDZ), b) N2 (sto-3g) and c) a linear H10 (cc-pVTZ). The MRCI+Q results were taken from Ref.             114
+
+
+MP2 diverge at relatively short internuclear distances.  Also,                  for IPs and EAs is minimized within this benchmark set. Fur-
+CCSD starts diverging at a distance of around 1.8 Å  and the                    thermore, we have explored the possibility of applying spin-
+amplitude optimization becomes unstable beyond 2.1 Å. In-                       component scaling (SCS) procedures within the SRG-qsGF2
+terestingly, the QP(∞)-PT2 energies do not diverge along the                    framework to further reduce the error, resulting in three differ-
+potential energy curve and result in the overall best agreement                 ent SRG-qsGF2 parametrizations, which we denoted as SRG-
+with the FCI reference. In contrast, the regularized QP(M)-PT2                  qsGF2, SRG-SCS-qsGF2, and SRG-SOS-qsGF2. We assessed
+energies start to differ around 1.2 Å. The regularized energies                 the transferability of these parametrizations by benchmarking
+(QP(M)-PT2 and     κ-OO-MP2) appear to approach a constant                      error in IPs of the full GW100 benchmark set, finding simi-
+value in the dissociation limit. However, the QP(M)-PT2 vari-                   lar performance when compared to the GW50 benchmark set.
+ants provide a better qualitative description compared to the                   Notably, the SRG-SOS-qsGF2 parametrization yields lower
+κ-OO-MP2 energies, plateauing at shorter distances.  Within                     MAE, RMSD, and SDE thanG          0W0@HF, qsGWand scGW                   27.
+the QP(M)-PT2 procedures, an offset for QP(SOS)-PT2 is ob-                         In the next step, we investigated the performance of the dif-
+served, whereas QP-PT2 and QP(SCS)-PT2 result in overall                        ferent SRG-qsGF2 parametrizations for calculating molecular
+similar energies.                                                               dipole moments for prototypical small molecules as well as
+   For the linear H10 molecule, the dissociation curves of the                  a larger set of 37 small molecular systems, finding that all
+different methods show a qualitatively similar behavior as for                  three parametrizations significantly improve upon HF results,
+the dissociation of H2. Around the equilibrium distance, the                    yielding dipole moments that are comparable to CCSD. Fur-
+CCSD energy (per hydrogen atom) agrees within    1 mHA                          thermore, we found an improved description when compared
+of the MRCI+Q reference, while the various second-order ap-                     to MP2 and OO-MP2. This highlights the promise of the SRG-
+proaches deviate by 5 to 8 mHa per hydrogen atom. However,                      qsGF2 procedure for the description of molecular properties.
+at distances larger than 1.5 Å, the CCSD calculations fails to                     Finally,  we  investigated  the  usage  of  the  effective  SRG-
+converge, while the MP2, OO-MP2, and QP(∞)-PT2 energies                         qsGF2 Hamiltonian [Eq. (27)] in second-order perturbation
+start diverging at distances beyond 3 Å. OO-MP2 becomes nu-                     theory. By redefining the fluctuation potential, this approach
+merically unstable beyond a bond length of 3.5 Å. In contrast,                  is free of double counting and allows for the usage of quasi-
+QP(M)-PT2 and    κ-OO-MP2 yield non-divergent PESs, with                        particle energies and orbitals instead of Hartree–Fock ones in
+the dissociation behavior mimicking that of H2.                                 regular MP2. Applying the same regularization procedure to
+                                                                                the energy correction, the QP-PT2 energies yield descriptions
+                                                                                of comparable accuracy to other second-order methods, and
+V.    CONCLUSION AND OUTLOOK                                                    cure the divergent behavior, as well as show improved stability
+                                                                                at larger bond lengths.
+   In this work, we investigate the performance of the quasi-                      Having established the SRG-qsGF2 framework, several av-
+particle self-consistent GF2 (qsGF2) method in combination                      enues for future research open up. For example, the application
+with a regularization procedure deduced from the perturbative                   of the SRG-qsGF2 procedure for calculating excited states via
+analysis at second-order within the similarity renormalization                  either a∆SCF approach or linear-response theory is an in-
+group (SRG) framework, denoted as SRG-qsGF2.                                    teresting direction to pursue115,116     .   Particularly,  leveraging
+   By investigating the convergence behavior of SRG-qsGF2                       the Hamiltonian partitioning of Eq. (27) in combination with
+with respect to the regularization parameter s for the GW50                     CC2117/ADC(2)  118 might improve the description of excita-
+benchmark set, we decided to choose s such that the MAE                         tion energies. Furthermore, reducing the overall computational
+                                                                                                                                                                                           9
+
+cost of the SRG-qsGF2 procedure via the usage of efficient                                         17F. Bruneval, “Ionization energy of atoms obtained from gw self-energy
+integral decomposition techniques such as tensor hypercontrac-                                       or from random phase approximation total energies,”J. Chem. Phys136
+tion (THC)119–121       or alternative compression approaches is of                                  (2012), 10.1063/1.4718428.
+          –124             .                                                                       18M. J. van Setten, F. Weigend, and F. Evers, “The gw-method for quantum
+interest35,36,122                                                                                    chemistry applications:  Theory and implementation,”J. Chem. Theory
+                                                                                                     Comput.9, 232–246 (2013).
+                                                                                                   19M. J. Van Setten, F. Caruso, S. Sharifzadeh, X. Ren, M. Scheffler, F. Liu,
+ACKNOWLEDGEMENT                                                                                      J. Lischner, L. Lin, J. R. Deslippe, S. G. Louie,          et al., “Gw 100:  Bench-
+                                                                                                     marking g 0 w 0 for molecular systems,”J. Chem. Theory Comput.11,
+                                                                                                     5665–5687 (2015).
+                                                                                                   20D. Golze, J. Wilhelm, M. J. Van Setten, and P. Rinke, “Core-level binding
+   J.T. acknowledges funding from the Fonds der Chemischen                                           energies from gw: An efficient full-frequency approach within a localized
+Industrie (FCI) via a Liebig fellowship and support by the                                           basis,”J. Chem. Theory Comput.14, 4856–4869 (2018).
+Cluster of Excellence “CUI: Advanced Imaging of Matter”                                            21A. Förster and L. Visscher, “Low-order scaling g 0 w 0 by pair atomic
+of the Deutsche Forschungsgemeinschaft (DFG) (EXC 2056,                                              density fitting,”J. Chem. Theory Comput.16, 7381–7399 (2020).
+funding ID 390715994).   J.K. acknowledges funding from                                            22F. Bruneval, N. Dattani, and M. J. Van Setten, “The GW Miracle in Many-
+by the Ministry of Culture and Science of the State North                                            Body Perturbation Theory for the Ionization Potential of Molecules,”Front.
+Rhine–Westphalia within the International Graduate School                                            Chem.9, 749779 (2021).
+                                                                                                   23A. Stan,  N. E. Dahlen, and R. V. Leeuwen, “Fully self-consistent                  GW
+for Battery Chemistry, Characterization, Analysis, Recycling                                         calculations for atoms and molecules,”Europhys. Lett.76, 298–304 (2006).
+and Application (BACCARA).                                                                         24A. Stan, N. E. Dahlen, and R. Van Leeuwen, “Levels of self-consistency in
+                                                                                                     the gw approximation,”J. Chem. Phys.130(2009), 10.1063/1.3089567.
+                                                                                                   25M.  van  Schilfgaarde,  T.  Kotani,  and  S.  Faleev,  “Quasiparticle  Self-
+                                                                                                     Consistent G W Theory,”Phys. Rev. Lett.96, 226402 (2006).
+REFERENCES                                                                                         26T.  Kotani,  M.  Van  Schilfgaarde,  and  S.  V.  Faleev,  “Quasiparticle  self-
+                                                                                                     consistent G W method:  A basis for the independent-particle approxi-
+                                                                                                     mation,”Phys. Rev. B76, 165106 (2007).
+                                                                                                   27F. Kaplan, M. E. Harding, C. Seiler, F. Weigend, F. Evers, and M. J. Van Set-
+  1A. L. Fetter and J. D. Walecka,       Quantum theory of many-particle systems
+   (Courier Corporation, 2012).                                                                      ten, “Quasi-Particle Self-Consistent       GW for Molecules,”J. Chem. Theory
+  2J.      Schirmer,                                                                                 Comput.12, 2528–2541 (2016).
+                         Many-body methods for atoms, molecules and clusters,                      28C.  Faber,  C.  Attaccalite,  V.  Olevano,  E.  Runge,  and  X.  Blase,  “First-
+   Vol. 94 (Springer, 2018).                                                                         principles gw calculations for dna and rna nucleobases,”Phys. Rev. B
+  3D. Golze, M. Dvorak, and P. Rinke, “The GW Compendium: A Practical                                83, 115123 (2011).
+   Guide to Theoretical Photoemission Spectroscopy,”Front. Chem.7, 377                             29T. Rangel, S. M. Hamed, F. Bruneval, and J. B. Neaton, “Evaluating the gw
+   (2019).                                                                                           approximation with ccsd (t) for charged excitations across the oligoacenes,”
+  4A. Marie, A. Ammar, and P.-F. Loos, “The gw approximation: A quantum
+   chemistry perspective,” in      Adv. Quantum Chem., Vol. 90 (Elsevier, 2024)                    30L. J. Holleboom and J. G. Snijders, “A comparison between the MoJ. Chem. Theory Comput.12, 2834–2842 (2016).
+   pp. 157–184.                                                                                                                                                                    /ller–
+  5J. Schirmer, L. S. Cederbaum, and O. Walter, “New approach to the one-                            Plesset and Green’s function perturbative approaches to the calculation of
+   particle green’s function for finite fermi systems,”Phys. Rev. A28, 1237                          the correlation energy in the many-electron problem,”J. Chem. Phys.93,
+   (1983).                                                                                         31N. E. Dahlen and R. Van Leeuwen, “Self-consistent solution of the Dyson5826–5837 (1990).
+
+  6L. J. Holleboom and J. G. Snijders, “A comparison between the Mo/ller–
+   Plesset and Green’s function perturbative approaches to the calculation of                        equation for atoms and molecules within a conserving approximation,”J.
+   the correlation energy in the many-electron problem,”J. Chem. Phys.93,                          32J. J. Phillips and D. Zgid, “Communication: The description of strong cor-Chem. Phys.122, 164102 (2005).
+
+   5826–5837 (1990).                                                                                 relation within self-consistent Green’s function second-order perturbation
+  7M. Nooijen and J. G. Snijders, “Coupled cluster approach to the single-                           theory,”J. Chem. Phys.140, 241101 (2014).
+   particle green’s function,”Int. J. Quantum Chem.44, 55–83 (1992).                               33A. A. Rusakov and D. Zgid, “Self-consistent second-order Green’s function
+  8M. Nooijen and J. G. Snijders, “Coupled cluster green’s function method:
+   Working equations and applications,”Int. J. Quantum Chem.48, 15–48                                perturbation theory for periodic systems,”J. Chem. Phys.144, 054106
+   (1993).                                                                                         34A. R. Welden, A. A. Rusakov, and D. Zgid, “Exploring connections between(2016).
+
+  9N. E. Dahlen and R. van Leeuwen, “Self-consistent solution of the dyson
+   equation for atoms and molecules within a conserving approximation,”J.                            statistical mechanics and Green’s functions for realistic systems: Tempera-
+   Chem. Phys.122(2005), 10.1063/1.1884965.                                                          ture dependent electronic entropy and internal energy from a self-consistent
+ 10J. Schirmer, “Closed-form intermediate representations of many-body prop-                         second-order Green’s function,”J. Chem. Phys.145, 204106 (2016).
+                                                                                                   35O. J. Backhouse and G. H. Booth, “Efficient Excitations and Spectra within
+   agators and resolvent matrices,”Phys. Rev. A43, 4647 (1991).                                      a Perturbative Renormalization Approach,”J. Chem. Theory Comput.16,
+ 11K. Chatterjee and A. Y. Sokolov, “Second-order multireference algebraic
+   diagrammatic construction theory for photoelectron spectra of strongly                          36O. J. Backhouse, M. Nusspickel, and G. H. Booth, “Wave Function Perspec-6294–6304 (2020).
+
+   correlated systems,”J. Chem. Theory Comput.15, 5908–5924 (2019).                                  tive and Efficient Truncation of Renormalized Second-Order Perturbation
+ 12F. J. Dyson, “The s matrix in quantum electrodynamics,”Phys. Rev.75,                              Theory,”J. Chem. Theory Comput.16, 1090–1104 (2020).
+   1736 (1949).                                                                                    37E. Monino and P.-F. Loos, “Connections and performances of Green’s
+ 13L. Hedin, “New Method for Calculating the One-Particle Green’s Function                           function methods for charged and neutral excitations,”J. Chem. Phys.159,
+   with Application to the Electron-Gas Problem,”Phys. Rev.139, A796–                                034105 (2023).
+   A823 (1965).                                                                                    38I. Sawicki, V. Triglione, S. Jana, and S. ´Smiga, “An Analysis of Regularized
+ 14R.  Godby,  M.  Schlüter,  and  L.  Sham,  “Accurate  exchange-correlation
+   potential for silicon and its discontinuity on addition of an electron,”Phys.                     Second-Order Energy Expressions in the Context of Post-HF and KS-DFT
+   Rev. Lett.56, 2415 (1986).                                                                        Calculations: What Do We Gain and What Do We Lose?”J. Chem. Theory
+ 15M. S. Hybertsen and S. G. Louie, “Electron correlation in semiconductors                          Comput.21, 2928–2941 (2025).
+                                                                                                   39D. Stück and M. Head-Gordon, “Regularized orbital-optimized second-
+   and insulators:  Band gaps and quasiparticle energies,”Phys. Rev. B34,                            order perturbation theory,”J. Chem. Phys.139, 244109 (2013).
+   5390 (1986).                                                                                    40Y.-y. Ohnishi, K. Ishimura, and S. Ten-no, “Interaction Energy of Large
+ 16F. Aryasetiawan and O. Gunnarsson, “The gw method,”Rep. Prog. Phys.
+   61, 237 (1998).                                                                                   Molecules  from  Restrained  Denominator  MP2-F12,”J.  Chem.  Theory
+                                                                                                                                                                                              10
+
+  Comput.10, 4857–4861 (2014).                                                                       65L.  B.  Dittmer  and  M.  Head-Gordon,  “Repartitioning  the  hamiltonian
+41J. Lee and M. Head-Gordon, “Regularized Orbital-Optimized Second-Order                               in  many-body  second-order  brillouin–wigner  perturbation  theory:  Un-
+  Møller–Plesset Perturbation Theory: A Reliable Fifth-Order-Scaling Elec-                             covering  new  size-consistent  models,” J.  Chem.  Phys.162(2025),
+  tron Correlation Model with Orbital Energy Dependent Regularizers,”J.                                https://doi.org/10.1063/5.0242211.
+  Chem. Theory Comput.14, 5203–5219 (2018).                                                          66D. E. Bernholdt and R. J. Harrison, “Large-scale correlated electronic
+42F. A. Evangelista, “A driven similarity renormalization group approach to                            structure calculations: The RI-MP2 method on parallel computers,”Chem.
+  quantum many-body problems,”J. Chem. Phys.141, 054109 (2014).                                        Phys. Lett.250, 477–484 (1996).
+43Y. Garniron, T. Applencourt, K. Gasperich, A. Benali, A. Ferté, J. Paquier,                        67R. Bauernschmitt, M. Häser, O. Treutler, and R. Ahlrichs, “Calculation of
+  B. Pradines, R. Assaraf, P. Reinhardt, J. Toulouse,            et al., “Quantum pack-                excitation energies within time-dependent density functional theory using
+  age 2.0: An open-source determinant-driven suite of programs,” J. Chem.                              auxiliary basis set expansions,”Chem. Phys. Lett.264, 573–578 (1997).
+  Theory Comput.15, 3591–3609 (2019).                                                                68J. P. Unsleber, T. Dresselhaus, K. Klahr, D. Schnieders, M. Böckers, D. Bar-
+44K. Carter-Fenk, J. Shee, and M. Head-Gordon, “Optimizing the regulariza-                             ton, and J. Neugebauer, “Serenity : A subsystem quantum chemistry pro-
+  tion in size-consistent second-order brillouin-wigner perturbation theory,”                          gram,”J. Comput. Chem.39, 788–798 (2018).
+  J. Chem. Phys.159(2023), 10.1063/5.0174923.                                                        69N. Niemeyer, P. Eschenbach, M. Bensberg, J. Tölle, L. Hellmann, L. Lampe,
+45M.-F. Chen, J. Zhang, H. Q. Dinh, A. Rettig, and J. Lee, “Regularized                                A. Massolle, A. Rikus, D. Schnieders, J. P. Unsleber, and J. Neugebauer,
+  perturbation theory for ab initio solids,”J. Phys. Chem. Lett.16, 11373–                             “The subsystem quantum chemistry programSerenity,”WIREs Comput.
+  11381 (2025).                                                                                        Mole. Sci.13, e1647 (2023).
+46F. Wegner, “Flow-equations for Hamiltonians,”Ann. Phys.506, 77–91                                  70D.  Barton,  M.  Bensberg,  M.  Böckers,  T.  Dresselhaus,  P.  Eschenbach,
+  (1994).                                                                                              N.  Göllmann,  L.  Hellmann,  L.  Lampe,  A.  Massolle,  N.  Niemeyer,
+47S. D. Głazek and K. G. Wilson, “Renormalization of Hamiltonians,”Phys.                               N. Ramez, A. Rikus, D. Schnieders, J. Tölle, J. P. Unsleber, K. Wegner, and
+  Rev. D48, 5863–5872 (1993).                                                                          J. Neugebauer,“Qcserenity/serenity: Release 1.6.1,”Zenodo (2024).
+48S. D. Glazek and K. G. Wilson, “Perturbative renormalization group for                             71M. Kállay, “A systematic way for the cost reduction of density fitting
+  Hamiltonians,”Phys. Rev. D49, 4214–4218 (1994).                                                      methods,”J. Chem. Phys.141, 244113 (2014).
+49A. Marie and P.-F. Loos, “A Similarity Renormalization Group Approach                              72D. Mester, P. R. Nagy, and M. Kállay, “Reduced-cost linear-response CC2
+  to Green’s Function Methods,”J. Chem. Theory Comput.19, 3943–3957                                    method based on natural orbitals and natural auxiliary functions,”J. Chem.
+  (2023).                                                                                              Phys.146, 194102 (2017).
+50S. Grimme, “Improved second-order Møller–Plesset perturbation theory by                            73J.  Tölle,   N.  Niemeyer,  and  J.  Neugebauer,  “Accelerating  analytic-
+  separate scaling of parallel- and antiparallel-spin pair correlation energies,”                      continuation gw calculations with a laplace transform and natural auxiliary
+  J. Chem. Phys.118, 9095–9102 (2003).                                                                 functions,”J. Chem. Theory Comput.20, 2022–2032 (2024).
+51S. Grimme, L. Goerigk, and R. F. Fink, “Spin-component-scaled electron                             74P. Pulay, “Convergence acceleration of iterative sequences. the case of scf
+  correlation methods,”WIREs Comput. Mol. Sci.2, 886–906 (2012).                                       iteration,”Chem. Phys. Lett.73, 393–398 (1980).
+52J. C. Cruz, E. Opoku, S.  ´Smiga, I. Grabowski, J. V. Ortiz, and S. Hirata,                        75P. Pulay, “ImprovedSCFconvergence acceleration,”J. Comput. Chem.3,
+  “Performance of the spin-component-scaled methods for energy bands,”                                 556–560 (1982).
+  Mol. Phys. , e2504545 (2025).                                                                      76T. P. Hamilton and P. Pulay, “Direct inversion in the iterative subspace
+53F. Caruso, P. Rinke, X. Ren, A. Rubio, and M. Scheffler, “Self-consistent G                          (DIIS) optimization of open-shell, excited-state, and small multiconfigura-
+  W : All-electron implementation with localized basis functions,”Phys. Rev.                           tion SCF wave functions,”J. Chem. Phys.84, 5728–5734 (1986).
+  B88, 075105 (2013).                                                                                77T. H. Dunning, “Gaussian basis sets for use in correlated molecular calcula-
+54F. Caruso, P. Rinke, X. Ren, M. Scheffler, and A. Rubio, “Unified descrip-                           tions. I. The atoms boron through neon and hydrogen,”J. Chem. Phys.90,
+  tion of ground and excited states of finite systems: The self-consistent G W                         1007–1023 (1989).
+  approach,”Phys. Rev. B86, 081102 (2012).                                                           78R. A. Kendall, T. H. Dunning, and R. J. Harrison, “Electron affinities of
+55F.  Caruso,  M.  Dauth,  M.  J.  Van  Setten,  and  P.  Rinke,  “Benchmark  of                       the first-row atoms revisited. Systematic basis sets and wave functions,”J.
+  GW Approaches for the         GW 100 Test Set,”J. Chem. Theory Comput.12,                            Chem. Phys.96, 6796–6806 (1992).
+  5076–5087 (2016).                                                                                  79B. P. Prascher, D. E. Woon, K. A. Peterson, T. H. Dunning, and A. K.
+56S. Ismail-Beigi, “Justifying quasiparticle self-consistent schemes via gradi-                        Wilson, “Gaussian basis sets for use in correlated molecular calculations.
+  ent optimization in Baym–Kadanofftheory,”J. Phys.: Condens. Matter29,                                VII. Valence, core-valence, and scalar relativistic basis sets for Li, Be, Na,
+  385501 (2017).                                                                                       and Mg,”Theor. Chem. Acc.128, 69–82 (2011).
+57C. J. N. Coveney and D. P. Tew, “A Regularized Second-Order Correlation                            80D. E. Woon and T. H. Dunning, “Gaussian basis sets for use in corre-
+  Method from Green’s Function Theory,”J. Chem. Theory Comput.19,                                      lated molecular calculations. IV. Calculation of static electrical response
+  3915–3928 (2023).                                                                                    properties,”J. Chem. Phys.100, 2975–2988 (1994).
+58J. Shee, M. Loipersberger, A. Rettig, J. Lee, and M. Head-Gordon, “Regu-                           81F. Weigend, A. Köhn, and C. Hättig, “Efficient use of the correlation con-
+  larized Second-Order Møller–Plesset Theory: A More Accurate Alternative                              sistent basis sets in resolution of the identity mp2 calculations,”J. Chem.
+  to Conventional MP2 for Noncovalent Interactions and Transition Metal                                Phys.116, 3175–3183 (2002).
+  Thermochemistry for the Same Computational Cost,”J. Phys. Chem. Lett.                              82C. Hättig, “Optimization of auxiliary basis sets for ri-mp2 and ri-cc2 calcu-
+  12, 12084–12097 (2021).                                                                              lations: Core-valence and quintuple-ζ basis sets for h to ar and qzvpp basis
+59S.     Kehrein,      The Flow Equation Approach to Many-Particle Systems,                            sets for li to kr,”Phys. Chem. Chem. Phys.7, 59–66 (2005).
+  Springer  Tracts  in  Modern  Physics  Ser  No.  v.217  (Springer  Berlin/                         83F. Weigend, M. Häser, H. Patzelt, and R. Ahlrichs, “RI-MP2: Optimized
+  Heidelberg, Berlin, Heidelberg, 2006).                                                               auxiliary basis sets and demonstration of efficiency,”Chem. Phys. Lett.294,
+60J. C. Cruz, E. Opoku, S.  ´Smiga, I. Grabowski, J. V. Ortiz, and S. Hirata,                          143–152 (1998).
+  “Performance of the spin-component-scaled methods for energy bands,”                               84A. Hellweg and D. Rappoport, “Development of new auxiliary basis func-
+  Mol. Phys. , e2504545 (2025).                                                                        tions of the Karlsruhe segmented contracted basis sets including diffuse
+61P. J. Knowles and N. C. Handy, “Convergence of projected unrestricted                                basis functions (def2-SVPD, def2-TZVPPD, and def2-QVPPD) for RI-MP2
+  Hartee-Fock Moeller-Plesset series.”J. Phys. Chem.92, 3097–3100 (1988).                              and RI-CC calculations,”Phys. Chem. Chem. Phys.17, 1010–1017 (2015).
+62P. J. Knowles, “Perturbation-adapted perturbation theory,”J. Chem. Phys.                           85Y. Jung, R. C. Lochan, A. D. Dutoi, and M. Head-Gordon, “Scaled opposite-
+  156(2022), 10.1063/5.0079853.                                                                        spin second order Møller–Plesset correlation energy: An economical elec-
+63A. Gombas, P. R. Surjan, and Á. Szabados, “Analysis and assessment of                                tronic structure method,”J. Chem. Phys.121, 9793–9802 (2004).
+  knowles’ partitioning in many-body perturbation theory,”J. Chem. Theory                            86S. ´Smiga and I. Grabowski, “Spin-Component-Scaled∆MP2 Parametriza-
+  Comput.20, 5094–5104 (2024).                                                                         tion:  Toward a Simple and Reliable Method for Ionization Energies,”J.
+64Á. Szabados, A. Gombás, and P. R. Surján, “Knowles partitioning at the                               Chem. Theory Comput.14, 4780–4790 (2018).
+  multireference level,”J. Phys. Chem. A128, 9311–9322 (2024).                                       87S.  ´Smiga,  S. Sieci´nska, and I. Grabowski, “From simple molecules to
+                                                                                                       nanotubes. Reliable predictions of ionization potentials from the∆MP2-
+                                                                                                                                                                                              11
+
+
+   SCS methods,”New J. Phys.22, 083084 (2020).                                                          Albrecht, A. Aldossary, E. Alguire, J. H. Andersen, V. Athavale, D. Bar-
+ 88E. Opoku, F. Pawłowski, and J. V. Ortiz, “A new generation of diagonal                               ton,  K.  Begam,  A.  Behn,  N.  Bellonzi,  Y.  A.  Bernard,  E.  J.  Berquist,
+   self-energies for the calculation of electron removal energies,”J. Chem.                             H. G. A. Burton, A. Carreras, K. Carter-Fenk, R. Chakraborty, A. D. Chien,
+   Phys.155, 204107 (2021).                                                                             K. D. Closser, V. Cofer-Shabica, S. Dasgupta, M. De Wergifosse, J. Deng,
+ 89E. Opoku, F. Pawłowski, and J. V. Ortiz, “Electron Propagator Self-Energies                          M. Diedenhofen, H. Do, S. Ehlert, P.-T. Fang, S. Fatehi, Q. Feng, T. Fried-
+   versus Improved GW100 Vertical Ionization Energies,”J. Chem. Theory                                  hoff, J. Gayvert, Q. Ge, G. Gidofalvi, M. Goldey, J. Gomes, C. E. González-
+   Comput.18, 4927–4944 (2022).                                                                         Espinoza, S. Gulania, A. O. Gunina, M. W. D. Hanson-Heine, P. H. P.
+ 90F. Weigend and R. Ahlrichs, “Balanced basis sets of split valence, triple                            Harbach, A. Hauser, M. F. Herbst, M. Hernández Vera, M. Hodecker, Z. C.
+   zeta valence and quadruple zeta valence quality for H to Rn: Design and                              Holden, S. Houck, X. Huang, K. Hui, B. C. Huynh, M. Ivanov, Á. Jász,
+   assessment of accuracy,”Phys. Chem. Chem. Phys.7, 3297 (2005).                                       H. Ji, H. Jiang, B. Kaduk, S. Kähler, K. Khistyaev, J. Kim, G. Kis, P. Klun-
+ 91M. J. Van Setten, F. Caruso, S. Sharifzadeh, X. Ren, M. Scheffler, F. Liu,                           zinger, Z. Koczor-Benda, J. H. Koh, D. Kosenkov, L. Koulias, T. Kowalczyk,
+   J. Lischner, L. Lin, J. R. Deslippe, S. G. Louie, C. Yang, F. Weigend, J. B.                         C. M. Krauter, K. Kue, A. Kunitsa, T. Kus, I. Ladjánszki, A. Landau, K. V.
+   Neaton, F. Evers, and P. Rinke, “GW 100:  Benchmarking                     G  0 W  0  for            Lawler, D. Lefrancois, S. Lehtola, R. R. Li, Y.-P. Li, J. Liang, M. Lieben-
+   Molecular Systems,”J. Chem. Theory Comput.11, 5665–5687 (2015).                                      thal, H.-H. Lin, Y.-S. Lin, F. Liu, K.-Y. Liu, M. Loipersberger, A. Luenser,
+ 92H. Sekino and R. J. Bartlett, “Molecular hyperpolarizabilities,”J. Chem.                             A. Manjanath, P. Manohar, E. Mansoor, S. F. Manzer, S.-P. Mao, A. V.
+   Phys.98, 3022–3037 (1993).                                                                           Marenich, T. Markovich, S. Mason, S. A. Maurer, P. F. McLaughlin, M. F.
+ 93G.  E.  Scuseria,  M.  D.  Miller,  F.  Jensen,  and  J.  Geertsen,  “The  dipole                    S. J. Menger, J.-M. Mewes, S. A. Mewes, P. Morgante, J. W. Mullinax, K. J.
+   moment of carbon monoxide,”J. Chem. Phys.94, 6660–6663 (1991).                                       Oosterbaan, G. Paran, A. C. Paul, S. K. Paul, F. Pavoševi´c, Z. Pei, S. Prager,
+ 94C. Adamo, M. Cossi, G. Scalmani, and V. Barone, “Accurate static polar-                              E. I. Proynov, Á. Rák, E. Ramos-Cordoba, B. Rana, A. E. Rask, A. Rettig,
+   izabilities by density functional theory: Assessment of the PBE0 model,”                             R. M. Richard, F. Rob, E. Rossomme, T. Scheele, M. Scheurer, M. Schnei-
+   Chem. Phys. Lett.307, 265–271 (1999).                                                                der, N. Sergueev, S. M. Sharada, W. Skomorowski, D. W. Small, C. J. Stein,
+ 95A. L. Hickey and C. N. Rowley, “Benchmarking Quantum Chemical Meth-                                  Y.-C. Su, E. J. Sundstrom, Z. Tao, J. Thirman, G. J. Tornai, T. Tsuchimochi,
+   ods for the Calculation of Molecular Dipole Moments and Polarizabilities,”                           N. M. Tubman, S. P. Veccham, O. Vydrov, J. Wenzel, J. Witte, A. Yamada,
+   J. Phys. Chem. A118, 3678–3687 (2014).                                                               K. Yao, S. Yeganeh, S. R. Yost, A. Zech, I. Y. Zhang, X. Zhang, Y. Zhang,
+ 96F. Neese, “Software update: the orca program system, version 5.0,”WIRES                              D. Zuev, A. Aspuru-Guzik, A. T. Bell, N. A. Besley, K. B. Bravaya, B. R.
+   Comput. Molec. Sci.12, e1606 (2022).                                                                 Brooks,  D. Casanova,  J.-D. Chai,  S. Coriani,  C. J. Cramer,  G. Cserey,
+ 97F. Neese, “The shark integral generation and digestion system,”J. Comp.                              A. E. DePrince, R. A. DiStasio, A. Dreuw, B. D. Dunietz, T. R. Furlani,
+   Chem. , 1–16 (2022).                                                                                 W. A. Goddard, S. Hammes-Schiffer, T. Head-Gordon, W. J. Hehre, C.-P.
+ 98F. Neese, “The orca program system,”WIRES Comput. Molec. Sci.2,                                      Hsu, T.-C. Jagau, Y. Jung, A. Klamt, J. Kong, D. S. Lambrecht, W. Liang,
+   73–78 (2012).                                                                                        N. J. Mayhall, C. W. McCurdy, J. B. Neaton, C. Ochsenfeld, J. A. Parkhill,
+ 99F. Neese, “Software update: the orca program system, version 4.0,”WIRES                              R. Peverati, V. A. Rassolov, Y. Shao, L. V. Slipchenko, T. Stauch, R. P.
+   Comput. Molec. Sci.8, 1–6 (2018).                                                                    Steele,  J.  E.  Subotnik,  A.  J.  W.  Thom,  A.  Tkatchenko,  D.  G.  Truhlar,
+100F. Neese, F. Wennmohs, U. Becker, and C. Riplinger, “The orca quantum                                T. Van Voorhis, T. A. Wesolowski, K. B. Whaley, H. L. Woodcock, P. M.
+   chemistry program package,”J. Chem. Phys.152, Art. No. L224108 (2020).                               Zimmerman, S. Faraji, P. M. W. Gill, M. Head-Gordon, J. M. Herbert,
+101P. Pracht, F. Bohle, and S. Grimme, “Automated exploration of the low-                               and A. I. Krylov, “Software for the frontiers of quantum chemistry:  An
+   energy chemical space with fast quantum chemical methods,”Phys. Chem.                                overview of developments in the Q-Chem 5 package,”The . Chem. Phys.
+   Chem. Phys.22, 7169–7192 (2020).                                                                     155, 084801 (2021).
+102S. Grimme, “Exploration of Chemical Compound, Conformer, and Reaction                            111Q. Sun,  X. Zhang,  S. Banerjee,  P. Bao,  M. Barbry,  N. S. Blunt,  N. A.
+   Space with Meta-Dynamics Simulations Based on Tight-Binding Quantum                                  Bogdanov, G. H. Booth, J. Chen, Z.-H. Cui, J. J. Eriksen, Y. Gao, S. Guo,
+   Chemical Calculations,”J. Chem. Theory Comput.15, 2847–2862 (2019).                                  J. Hermann, M. R. Hermes, K. Koh, P. Koval, S. Lehtola, Z. Li, J. Liu,
+103P. Pracht, S. Grimme, C. Bannwarth, F. Bohle, S. Ehlert, G. Feldmann,                                N.  Mardirossian,  J.  D.  McClain,  M.  Motta,  B.  Mussard,  H.  Q.  Pham,
+   J. Gorges, M. Müller, T. Neudecker, C. Plett, S. Spicher, P. Steinbach, P. A.                        A. Pulkin, W. Purwanto, P. J. Robinson, E. Ronca, E. R. Sayfutyarova,
+   Wesołowski, and F. Zeller, “CREST—A program for the exploration of                                   M. Scheurer, H. F. Schurkus, J. E. T. Smith, C. Sun, S.-N. Sun, S. Upadhyay,
+   low-energy molecular chemical space,”J. Chem. Phys.160, 114110 (2024).                               L. K. Wagner,  X. Wang,  A. White,  J. D. Whitfield,  M. J. Williamson,
+104P. Pulay and S. Saebo, “Orbital-invariant formulation and second-order                               S. Wouters, J. Yang, J. M. Yu, T. Zhu, T. C. Berkelbach, S. Sharma, A. Y.
+   gradient evaluation in Møller–Plesset perturbation theory,”Theor. Chem.                              Sokolov, and G. K.-L. Chan, “Recent developments in the PySCF program
+   Acc.69, 357–368 (1986).                                                                              package,”J. Chem. Phys.153, 024109 (2020).
+105F. Neese, T. Schwabe, S. Kossmann, B. Schirmer, and S. Grimme, “As-                              112Q. Sun, T. C. Berkelbach, N. S. Blunt, G. H. Booth, S. Guo, Z. Li, J. Liu,
+   sessment of Orbital-Optimized,  Spin-Component Scaled Second-Order                                   J. D. McClain, E. R. Sayfutyarova, S. Sharma, S. Wouters, and G. K.-L.
+   Many-Body Perturbation Theory for Thermochemistry and Kinetics,”J.                                   Chan, “PySCF: The Python-based simulations of chemistry framework,”
+   Chem. Theory Comput.5, 3060–3073 (2009).                                                             WIREs Comput. Molec. Sci.8, e1340 (2018).
+106J. Shee, M. Loipersberger, A. Rettig, J. Lee, and M. Head-Gordon, “Regu-                         113Q. Sun, “Libcint: An efficient general integral library for Gaussian basis
+   larized Second-Order Møller–Plesset Theory: A More Accurate Alternative                              functions,”J. Comput. Chem.36, 1664–1671 (2015).
+   to Conventional MP2 for Noncovalent Interactions and Transition Metal                            114M. Motta, D. M. Ceperley, G. K.-L. Chan, J. A. Gomez, E. Gull, S. Guo,
+   Thermochemistry for the Same Computational Cost,”J. Phys. Chem. Lett.                                C. A. Jiménez-Hoyos, T. N. Lan, J. Li, F. Ma, A. J. Millis, N. V. Prokof’ev,
+   12, 12084–12097 (2021).                                                                              U. Ray, G. E. Scuseria, S. Sorella, E. M. Stoudenmire, Q. Sun, I. S. Tupitsyn,
+107R. F. Stewart, “Small Gaussian Expansions of Slater-Type Orbitals,”J.                                S. R. White, D. Zgid, S. Zhang, and Simons Collaboration on the Many-
+   Chem. Phys.52, 431–438 (1970).                                                                       Electron Problem, “Towards the Solution of the Many-Electron Problem in
+108W. J. Hehre, R. F. Stewart, and J. A. Pople, “Self-consistent molecular-                             Real Materials: Equation of State of the Hydrogen Chain with State-of-the-
+   orbital methods. i. use of gaussian expansions of slater-type atomic orbitals,”                      Art Many-Body Methods,”Phys. Rev. X7, 031059 (2017).
+   J. Chem. Phys.51, 2657–2664 (1969).                                                              115A. T. Gilbert, N. A. Besley, and P. M. Gill, “Self-consistent field calculations
+109W. J. Hehre, R. Ditchfield, R. F. Stewart, and J. A. Pople, “Self-consistent                         of excited states using the maximum overlap method (mom),”J. Phys. Chem.
+   molecular orbital methods. iv. use of gaussian expansions of slater-type                             A112, 13164–13171 (2008).
+   orbitals. extension to second-row molecules,”J. Chem. Phys.52, 2769–                             116L. Paetow and J. Neugebauer, “Excited state dipole moments fromδscf: a
+   2773 (1970).                                                                                         benchmark,”Phys. Chem. Chem. Phys.27, 16354–16370 (2025).
+110E. Epifanovsky, A. T. B. Gilbert, X. Feng, J. Lee, Y. Mao, N. Mardirossian,                      117O. Christiansen, H. Koch, and P. Jørgensen, “The second-order approximate
+   P. Pokhilko, A. F. White, M. P. Coons, A. L. Dempwolff, Z. Gan, D. Hait,                             coupled cluster singles and doubles model cc2,”Chem. Phys. Lett.243,
+   P. R. Horn, L. D. Jacobson, I. Kaliman, J. Kussmann, A. W. Lange, K. U.                              409–418 (1995).
+   Lao, D. S. Levine, J. Liu, S. C. McKenzie, A. F. Morrison, K. D. Nanda,                          118A.  B.  Trofimov  and  J.  Schirmer,  “An  efficient  polarization  propagator
+   F. Plasser, D. R. Rehn, M. L. Vidal, Z.-Q. You, Y. Zhu, B. Alam, B. J.                               approach to valence electron excitation spectra,”J. Phys. B: At. Mol. Opt.
+                                                                                                                                                                                                   12
+
+   Phys.28, 2299 (1995).                                                                               122C. J. Scott, O. J. Backhouse, and G. H. Booth, “A “moment-conserving” re-
+119E. G. Hohenstein, R. M. Parrish, and T. J. Martínez, “Tensor hypercontrac-                              formulation of gw theory,”J. Chem. Phys.158(2023), 10.1063/5.0143291.
+   tion density fitting. i. quartic scaling second-and third-order møller-plesset                      123O. J. Backhouse, M. K. Allen, C. J. Scott, and G. H. Booth, “Self-consistent
+   perturbation theory,”J. Chem. Phys.137(2012), 10.1063/1.4732310.                                        gw via conservation of spectral moments,”J. Chem. Theory Comput.21,
+120R. M. Parrish, E. G. Hohenstein, T. J. Martínez, and C. D. Sherrill, “Tensor                            8963–8981 (2025).
+   hypercontraction. ii. least-squares renormalization,”J. Chem. Phys.137                              124J. Tölle and G. Kin-Lic Chan, “Ab-g0w0: A practical g0w0 method without
+   (2012), 10.1063/1.4768233.                                                                              frequency integration based on an auxiliary boson expansion,”J. Chem.
+121D. A. Matthews, “Improved grid optimization and fitting in least squares                                Phys.160(2024), 10.1021/jp801738f.
+   tensor hypercontraction,”J. Chem. Theory Comput.16, 1382–1385 (2020).

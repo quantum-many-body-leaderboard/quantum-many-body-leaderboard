@@ -1,0 +1,763 @@
+    Solving Many-Electron Schr¨odinger Equation Using
+                              Deep Neural Networks
+
+                    Jiequn Hana, Linfeng Zhanga,∗, Weinan Ea,b,c
+
+aProgram  in Applied  and Computational Mathematics,  Princeton University, Princeton,
+                                         NJ 08544,  USA
+     bDepartment of Mathematics,  Princeton University, Princeton, NJ 08544,  USA
+           cBeijing  Institute of Big Data Research, Beijing,  100871,  P.R. China
+
+
+
+
+Abstract
+We introduce a new family of trial wave-functions based on deep neural net-
+works to solve the many-electron Schr¨odinger equation.  The Pauli exclusion
+principle  is dealt  with explicitly  to ensure  that the  trial wave-functions  are
+physical.   The  optimal  trial  wave-function  is  obtained  through  variational
+Monte Carlo and the computational cost scales quadratically with the num-
+ber  of  electrons.  The  algorithm  does  not  make  use  of  any  prior  knowledge
+such  as  atomic  orbitals.   Yet  it  is  able  to  represent  accurately  the  ground-
+states  of  the  tested  systems,  including  He,  H2,  Be,  B,  LiH,  and  a  chain  of
+10  hydrogen  atoms.   This  opens  up  new  possibilities  for  solving  large-scale
+many-electron Schr¨odinger equation.
+Keywords:    Schr¨odinger equation, Variational Monte Carlo, Deep neural
+networks, Trial wave-function
+
+
+1.  Introduction
+    An  accurate  quantum  mechanical  treatment  of  the  interaction  between
+many  electrons  and  ions  is  the  foundation  for  modeling  physical,  chemi-
+cal,  and  biological  systems.   Theoretically,  these  systems  are  described  by
+the  many-electron  Schr¨odinger  equation,  which  consists  of  the  kinetic  and
+Coulomb interaction terms [1].  Solving the Schr¨odinger equation accurately
+
+
+
+   ∗Corresponding author
+    Email addresses: jiequnh@princeton.edu (Jiequn Han), linfengz@princeton.edu
+(Linfeng Zhang), weinan@math.princeton.edu (Weinan E)
+
+
+Preprint submitted to Elsevier                                                                       December 17, 2018
+for  real  physical  systems  has  been  prohibitively  diﬃcult  due  to  the  high
+dimensionality  of  the  Hilbert  space  involved,  the  high  degree  of  entangle-
+ment  produced  by  the  electron-electron  and  electron-ion  interactions,  and
+the  notorious  Pauli  exclusion  principle  imposed  on  the  wave-function,  i.e.,
+the  wave-function  has  to  change  its  sign  when  two  identical  electrons  ex-
+change places [2].
+    Developing eﬃcient algorithms for this problem is among the most heroic
+endeavors  in  computational  science  and has  achieved  remarkable  successes.
+An incomplete list of the major methodologies developed so far includes the
+Hartree-Fock (HF) based methods [3, 4], conﬁguration interaction (CI) based
+methods  [5–8],  coupled  cluster  (CC)  based  schemes  [9–12],  Monte  Carlo-
+based  approaches  [13–20],  and  the  more  recently  developed  density  matrix
+renormalization  group  (DMRG)  theory  [21–25]  and  density  matrix  embed-
+ding theory (DMET) [26–28].  We refer to Refs. [29–31] for a more detailed
+review of these advances.
+    Of particular interest to this work is the variational Monte Carlo (VMC)
+scheme which uses variational principle and Monte Carlo sampling to obtain
+the best parametrized trial wave-function [13–15, 20].  Naturally the key com-
+ponent is the representation of the trial wave-functions.  The most commonly
+used trial wave-functions typically consist of an anti-symmetric Slater deter-
+minant [32] multiplied by a symmetric Jastrow correlation factor [33].  There
+have been tremendous eﬀorts on improving the nodal surface (a subspace on
+which the function value equals zero and across which it changes the sign) of
+the  anti-symmetric  part  of  the  trial  wave-function  and  the  representability
+of the symmetric part [34–37].
+    With  remarkable  advances  in  many  ﬁelds  such  as  computer  vision  and
+speech recognition, the deep neural network (DNN) has shown great capac-
+ity in approximating high-dimensional functions (see, e.g., review [38] and the
+references  therein).   Furthermore,  DNN  has  been  successfully  used  in  solv-
+ing general high-dimensional partial diﬀerential equations [39–42] and certain
+quantum many-body problems for Bosonic and lattice systems [43–47].  How-
+ever,  there  have  been  few  attempts  to  solve  the  many-electron  Schr¨odinger
+equations  based  on  DNN,  and  this  constitutes  the  main  objective  of  this
+work.
+    To  achieve  this,  we  develop  a  general  and  eﬃcient  DNN  representation
+for the many-electron wave-function satisfying the Pauli exclusion principle.
+The resulted trial wave-function can naturally ﬁt into the framework of VMC
+to  optimize  the  parameters  in  our  model.   As  preliminary  tests,  we  show
+
+                                                2
+Figure  1:   (color  online).   Schematic  plot  of  DeepWF,  taking  H10  as  an  example.    r↑
+and  r↓  denote  the  positions  of  5  electrons  of  spin-up  and  5  of  spin-down,  respectively,
+and  RH  denotes  the  positions  of  10  hydrogen  atoms.    (a)  the  entire  wave-function
+Ψ(r; R) =  S(r; R)A↑(r↑)A↓(r↓),  decomposed into symmetric function  S(r; R) and two
+anti-symmetric functions A↑(r↑), A↓(r↓), with respect to spin-up and spin-down electrons;
+(b) anti-symmetric function A↑(r↑) for spin-up electrons; (c) symmetric function  ˜Si(Ri)
+as  the  contribution  of  particle  i  in  the  symmetric  function  log(S2(r; R)).   See  text  for
+details.
+
+that this DNN-based trial wave-function  is able to produce reasonably well
+ground-state energies for some small systems, such as Be, B, LiH, and a chain
+of  10  hydrogen  atoms  (H10).    In  addition,  learning  from  scratch  without
+any  prior  knowledge  and  without  resorting  to  a  reference  of  atomic  bases,
+the DNN-based wave-function is able to reproduce the electronic structures
+of  the  tested  systems.   We  call  the  methodology  introduced  here  the  Deep
+WaveFunction  method,  abbreviated  DeepWF.  This  paper  only  reports  our
+initial results.  There is still a huge room for improvement.
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                    3
+2.  Method
+
+    We consider a system of N electrons and M ions, under the Born-Oppenheimer
+approximation [48].  This system is described by the Hamiltonian
+
+                               N∑           N∑   N∑        1
+                   ˆH = − 12       ∇2i +              |ri − rj|
+
+                              i=1          i=1 j=i+1
+                            M∑    N∑      ZI          M∑     M∑      ZIZJ
+                        −             |ri − RI| +                 |RI − RJ|,                   (1)
+                            I=1  i=1                  I=1 J=I+1
+
+where  r  =  (r1, . . . , rN)  and  R  =  (R1, . . . , RM)  are  the  coordinates  of  the
+electrons and the ions, respectively, and ZI denotes the nuclear charge.  Since
+ˆH is spin-independent, it is valid to assume that the ﬁrst N↑ electrons are of
+spin-up  and  the  remaining  N↓  =  N  − N↑  electrons  are  of  spin-down  [20].
+Accordingly,  we  can  write  the  wave-function  in  a  spin-independent  form
+Ψ(r; R).   Let  Ntp  be  the  number  of  ion  types  in  the  system,  then  there
+are  Ntp + 2  types  of  particles  in  total,  taking  into  account  the  electrons  of
+spin-up and spin-down separately.
+    In this work we restrict our attention to the ground state of the system.
+The  variational  principle  states  that  the  wave-function  associated  with  the
+ground state  minimizes  within  the  required  symmetry  the  following  energy
+functional
+                                       ∫ Ψ∗(r; R) ˆHΨ(r; R) dr
+                            E[Ψ] =      ∫ Ψ∗(r; R)Ψ(r; R) dr  .
+
+    We now discuss how to represent the wave-function Ψ(r; R) with DNN.
+The  trial  wave-functions  are  assumed  to  be  real-valued.   The  primary  goal
+is  to  ensure  that  the  represented  wave-function  satisﬁes  the  anti-symmetry
+property.  To this end, we decompose the wave-function as
+
+                            Ψ(r; R) = S(r; R)A↑(r↑)A↓(r↓),
+
+where  r↑, r↓  denote  the  positions  of  spin-up  and  spin-down  electrons,  re-
+spectively.   We  require  S(r, R)  to  be  symmetric  and  A↑(r↑), A↓(r↓)  to  be
+both  anti-symmetric.   As  an  analogy,  one  can  view  S(r; R)  as  a  Jastrow
+factor and  A↑(r↑), A↓(r↓)  as  Slater  determinant-like  functions.  In  practice,
+
+
+                                                 4
+log(Ψ2(r; R)) is more convenient for implementing VMC. From this perspec-
+tive, the introduced decomposition of wave-function becomes
+
+                        log(Ψ2(r; R))
+                     = ˜S(r; R) + log(|A↑(r↑)|2) + log(|A↓(r↓)|2),                       (2)
+
+where  ˜S(r; R) := log(S2(r; R)) is still a general symmetric function.  On the
+other hand, although being symmetric, log(|A↑(r↑)|2) and log(|A↓(r↓)|2) have
+singularities on the nodal surface.  Therefore we need to secure this property
+by representing A↑(r↑) and A↓(r↓) directly.  In the following we discuss how
+to  represent  A↑(r↑), A↓(r↓),  and  ˜S(r; R)  with  DNN  and  how  to  learn  the
+optimal parameters using VMC. See Fig. 1 for a schematic illustration.
+    The  basic  building  block  for  the  anti-symmetric  function  A↑(r↑)  is  an
+ansatz
+                               a↑(r↑) =      ∏        a↑0(ri, rj),                                    (3)
+                                           1≤i<j≤N↑
+where a↑0 is a general two-body anti-symmetric function with M1-dimensional
+output, i.e., a↑0(ri, rj) = −a↑0(rj, ri), and the products are component-wise.
+In  (3)  we  have  assumed  N↑  ≥  2.   Such  representation  can  be  viewed  as  a
+generalization  of  the  Laughlin  wave-function  [49],  which  describes  well  the
+anomalous quantum  Hall eﬀect.  A related model is the so-called correlator
+product state (CPS) [37], which works well for lattice systems and has natural
+connections with some recently proposed neural-network quantum states [50,
+51].   In  practice,  we  let  a↑0(ri, rj)  =  Net↑anti(ri, rj, rji) − Net↑anti(rj, ri, rji),
+where Net↑anti(·) is represented by a DNN. By convention rji = |rji| = |rj −ri|
+denotes  the  Euclidean  distance  between  particles  i  and  j.   Next  a↑  is  fed
+into another DNN Net↑odd, which outputs a scalar and satisﬁes Net↑odd(x) =
+−Net↑odd(−x).   We  can  further  adjust  its  scale  and  deﬁne  A↑(r↑)  through
+log |A↑(r↑)| = fodd log |Net↑odd(a↑(r))|  where  fodd  is  a positive  scalar  factor.
+The sign of A↑(r↑) is taken as the same as Net↑odd(a↑(r↑)) such that A↑(r↑)
+inherits  the  anti-symmetry.   The  same  construction  introduced  above  are
+applied to spin-down electrons and yield A↓(r↓).
+    While DNN-based anti-symmetric function has seldom been investigated
+in the literature, DNN-based symmetric function has gained wide attentions
+recently  in  modeling  many-body  potential  energy  surface  [52–56],  free  en-
+ergy surface  [57–59],  etc.  For instance,  the Deep  Potential-Smooth Edition
+(DeepPot-SE) model is able to eﬃciently describe the interatomic potential
+
+                                                5
+energy  of  both  ﬁnite  and  extended  systems    [55].   A  crucial  step  there  is
+to faithfully map the input atomic coordinates onto a symmetry-preserving
+feature space.  Therefore, it shares the symmetric property of the Jastrow fac-
+tor, and might become a more general Jastrow factor that is able to better
+capture the many-body correlations between the electrons and ions.
+    We  extend  the  DeepPot-SE  model  to  construct  ˜S(r; R).  For later  con-
+venience,  we  regard  R  as  (rN+1, . . . , rN+M)  and  let  ¯r  :=  (r1, · · · , rN+M).
+For each particle i, we consider its neighboring environment in terms of the
+Cartesian coordinates:
+
+                  Ri = {s(r1i)T , · · · , s(rji)T , · · · }T  ∈ R(N+M−1)×4,                   (4)
+
+where  s(rji) = (rji/r2ji, 1/rji) ∈ R4, j  ∈ {1, . . . , N + M}\{i},  are extended
+relative coordinates.  Then we decompose  ˜S(r; R) into the sum of contribu-
+tions from each particle and an extra asymptotic term, i.e.,
+
+                                                        N+M∑
+                             ˜S(r; R) =  ˜Sasy(¯r) +           ˜Si(Ri).                                (5)
+
+                                                         i=1
+
+    We deﬁne  ˜Si  in a way that guarantees the symmetric property.  We ﬁrst
+construct a series of embedding networks Netαiαjebd  , each mapping the extended
+relative  coordinates  s(rji) to  M2  components.  Here  αi  denotes  the  type  of
+particle i, and the parameters of Netαiαjebd   depend on the types of both particle
+i and its neighbor particle j.  The embedding matrix Gi ∈ R(N+M−1)×M2  and
+the encoded feature matrix Di ∈ RM2×4 of particle i are then deﬁned as
+
+                                (Gi)jk = (Netαiαjebd  (s(rji)))k,                                     (6)
+                                Di = (Gi)T Ri.                                                           (7)
+
+By deﬁnition one can check that the feature matrix Di is invariant under the
+permutation  of  particles  in  the  same  type,  and  its  M2 × 4  components  are
+ﬁnally reshaped into a vector to serve as the input of a ﬁtting network Netαiﬁt
+and yield  ˜Si.
+    The remaining term  ˜Sasy(¯r) should also be symmetric and serve the ad-
+ditional  purposes  of  making  the  trial  wave-function  close  to  some  desired
+
+
+
+
+
+                                                 6
+asymptotic properties.  This term has the form
+
+                                        N+M∑            N∑  rik + fdecr2ik
+                        ˜Sasy(¯r) = −          Zk−N           rik + 0.5
+
+                                       k=N+1           i=1
+                                        N∑    N∑      rij
+                                    +              rij + 1,                                             (8)
+                                        i=1 j=i+1
+
+where  fdec  is  a  positive  scalar  as  decay  factor.   The  ﬁrst  purpose  is  to  en-
+sure  that  Ψ(r; R)  is  square  integrable  when  fdec  is  large  enough  such  that
+Ψ(r; R) has exponential decay for the electrons that are far away.  The sec-
+ond  purpose  is  related  to  the  so-called  cusp  conditions,  meaning  that  the
+trial wave-function has the correct singular behavior when two particles are
+close to each other [60].  If we let log(Ψ2(r; R)) =  ˜Sasy(¯r),  it can be shown
+from (8) that for 1 ≤ i < j ≤ N,  N + 1 ≤ k ≤ N + M,
+                      1   ∂Ψ  ⏐⏐⏐⏐rik=0 = −Zk−N,      1    ∂Ψ   ⏐⏐⏐⏐rij=0 = 1
+
+                      Ψ  ∂rik                          Ψ  ∂rij             2.                        (9)
+
+This indicates Ψ(r; R) meets the cusp conditions of both the electron-nuclear
+pairs and unlike spin pairs (see e.g., [20, 60] for more details).  In numerical
+computation  we  ﬁnd  that  adding  ˜Sasy(¯r)  makes  the  training  process  much
+more stable, even though the cusp conditions are not strictly satisﬁed due to
+the inﬂuence of  ˜Si and A(r) on the terms in (9).
+    We  denote  all  the  parameters  in  the  DNNs  (Net↑anti,  Net↓anti,  Net↑odd,
+Net↓odd,  Netαiαjebd  ,  and  Netαiﬁt),  the  two  scalar  factors  (fodd  and  fdec)  together
+as θ and the associated trial wave-function as Ψθ(r) (below for convenience
+we  ignore  the  dependence  on  R,  the  clamped  ion  positions).  θ  are  initial-
+ized randomly from a Gaussian distribution without any pre-training on pre-
+calculated wave-functions.  We use VMC to optimize the trial wave-function.
+Speciﬁcally, we keep track of Nwk walkers to approximate the squared wave-
+function through an empirical distribution.  The learning process consists of
+two phases,  the sampling phase  and the optimization phase,  which  we pro-
+ceed with alternatively.  In the sampling phase of step t, we run several steps
+of the Metropolis-Hasting algorithm to update the positions of the walkers,
+according to a target probability proportional to Ψ2θt(r).  In the optimization
+phase of step t, we aim to minimize the second moment of the local energy
+Eloc(r) with  respect  to a ﬁxed  reference  energy  Eref.  Here  the local energy
+
+                                                 7
+is deﬁned as Eloc(r) :=  ˆHΨθ(r)/Ψθ(r).  Accordingly, the objective function
+has the explicit form
+                                      ∫ Ψ2θ(r)(Eloc(r) − Eref)2 dr
+                       ΩEref(θ) :=              ∫ Ψ2θ(r) dr              .
+
+In numerical  computation, in order to reduce the variance when evaluating
+the objective function, we use a technique called correlated sampling.  Assum-
+ing the walkers’ current positions {r(1), r(2), . . . , r(Nwk)} approximate the dis-
+tribution Ψ2θt(r) well, we deﬁne a reweighting factor wi := Ψθ(r(i))/Ψθt(r(i))
+and rewrite the objective function as
+                           ∫ Ψ2θt(r)(Ψ2θ(r)/Ψ2θt(r))(Eloc(r) − Eref)2 dr
+             ΩEref(θ) =               ∫ Ψ2θt(r)(Ψ2θ(r)/Ψ2θt(r)) dr
+                           ∑Nwk
+                        ≈      i=1  w2i (Eloc(r(i)) − Eref)2∑Nwk.
+
+                                          i=1  w2i
+Note here we take θt as constants and view both wi and Eloc(r(i)) as functions
+of the parameters θ given the walker’s position r(i).  The gradients ∇θΩEref(θ)
+are  computed  by  the  backpropagation  algorithm  and  used  to  update  the
+parameters through θt+1 = θt −η∇θΩEref(θt), with η being the learning rate.
+Motivated  by  the  idea  of  stochastic  gradient  descent  (SGD),  we  actually
+evaluate ∇θΩEref(θ) with a random batch of data i ∈ B ⊆ {1, . . . , Nwk} and
+update θt with a few steps.
+
+3.  Results  and  Discussion
+
+    Using the algorithm described above, for a series of benchmark systems,
+we obtain the optimized  parameters θ∗  and run further Monte Carlo simu-
+lations for several statistical properties.  The network structure and training
+scheme  are  detailed  in  the  appendix.   In  Table  1,  we  present  the  ground
+state energies of H2, He, LiH, Be, B, and a chain of 10 hydrogen atoms un-
+der open boundary conditions.  Note that for H2  and He we don’t have the
+anti-symmetric part in the wave-function.  Overall the ground-state energies
+obtained by DeepWF show great consistency with the benchmarks.  However,
+as the number of electrons increases, the accuracy deteriorates.
+    In Fig. 2, we plot the potential energy curves of H2 and H10 as a function
+of bond length.  The result for H2  is very close to the benchmark.  For H10,
+
+                                               8
+Table 1:  Ground-state energy of several systems obtained by DeepWF. The bond length
+of H2, LiH, and H10  is 1.4, 1.62, and 1.8 a.u., respectively.  The benchmarks for H2, He,
+LiH, Be, and B are taken from the Computational Chemistry Comparison and Benchmark
+(CCCBDB) DataBase   [61], at the level of conﬁguration interaction, singles and doubles
+(CISD) theory.  The benchmark for H10 is taken from [31], at the level of multi-reference
+conﬁguration with the Davidson correction (MRCI+Q) [7].  All the benchmark results are
+extrapolated to  the  complete basis set  (CBS)  limit.   The  relative diﬀerence  (Rel.   Diﬀ)
+is reported.  We notice that since we try to use a consistent and accurate theory for the
+benchmark,  the  corresponding  energies  may  not  be  the  lowest  state-of-art  values.   For
+example, in Ref. [62], C. L. Pekeris et.  al.  already obtained a value of -2.903724351 a.u.
+for the ground-state energy of He.
+
+            System      DeepWF [a.u.]      Benchmark [a.u.]      Rel.  Diﬀ
+               H2                -1.1738                     -1.1741                 0.26%
+               He                -2.9036                     -2.9029                -0.02%
+               LiH               -7.8732                     -8.0243                 1.88%
+               Be               -14.6141                   -14.6190                0.03%
+                B                -24.2124                   -24.6006                1.58%
+               H10                -5.5685                     -5.6655                 1.71%
+
+
+
+
+            −0.40                       Benchmark
+                                        DeepWF
+            −0.45
+
+            −0.50
+
+            −0.55
+            −0.60                      (a)  H2                                   (b)  H10
+                     0.6   1.2   1.8   2.4   3.0   3.6Lb  [a.u.]0.6   1.2   1.8   2.4   3.0   3.6Lb  [a.u.]
+
+
+Figure 2:  Potential energy per  atom  E(Lb, N)/N  vs.  bond length  Lb  for (a)  H2  (N  =
+2),  and (b)  H10  (N  = 10).  The benchmark result for  H2  is  obtained using the  PySCF
+package [63], at the level of full CI. The benchmark result for H10  is taken from [31], at
+the level of MRCI+Q [7].  Both the benchmark results are extrapolated to the CBS limit.
+
+
+                                                       9
+          1.1  (a)  Be              sto6g         0.75    (b)  LiH
+                                    ccpv5z
+          0.9                       DeepWF        0.60
+          0.7                                     0.45
+          0.5                                     0.30
+          0.3                                     0.15
+          0.1                                     0.00
+            0.0   1.0   2.0   3.0   4.0   5.0            -4.0   -2.0    0.0    2.0    4.0
+                     Distance  [a.u.]                          Distance  [a.u.]
+
+Figure 3:  Spatial distribution functions of electrons in diﬀerent systems.  (a) radial distri-
+bution of 4 electrons in a Be atom; (b) axial distribution of 4 electrons in a LiH molecule.
+The results obtained using the PySCF package [63] with the sto6g and the ccpv5z bases
+are plotted for comparison.
+
+the  DeepWF  shows  a  good  relative  energy,  with  the  correct  prediction  of
+local minimum, but is still a bit above the benchmark result.
+    Finally, Fig. 3 plots the spatial distributions of electrons in diﬀerent sys-
+tems.   In  the  case  of  radial  distribution  function  of  electrons  in  a  Be  atom
+(Fig. 3 (a)), it is remarkable that the DeepWF learns from scratch the shell
+structure  of  the  electrons  and  shows  great  consistency  with  the  result  ob-
+tained using the ccpv5z  basis  [64].  As a comparison,  the sto6g basis  [65] is
+not enough to describe the electronic dispersion.  In the case of axial distri-
+bution function of electrons in a LiH molecule (Fig. 3 (b)), DeepWF and the
+other two methods show excellent agreement.
+    What is appealing to us is the simplicity of the proposed approach.  Ob-
+viously there is a huge room for further improvement.  In terms of the repre-
+sentation  of DeepWF,  the  symmetric  part is  relatively  general,  considering
+the success of a similar version in representing the inter-atomic potential en-
+ergy  surface.   However,  the  anti-symmetric  ansatz,  although  appealing  due
+to its quadratic scaling, might not be suﬃcient in representing the electronic
+correlations caused by the Pauli exclusion rule.  Second, in terms of optimiza-
+tion, techniques  for accelerating VMC through more eﬃcient  sampling  (see
+e.g.  [66, 67]) can be directly adapted into our DeepWF method.  Optimiza-
+tion method  other  than  the  SGD-like  correlated  sampling  method  can  also
+
+
+                                                 10
+be employed.  In any case, we hope that ideas presented here will add some
+ammunition  to  the  heroic  endeavor  of  attempting  to  solve  the  many-body
+Schr¨odinger equation.
+
+Acknowledgments
+    The authors acknowledge M. Motta for helpful discussions.  This work is
+supported in part by Major Program of NNSFC under grant 91130005, ONR
+grant N00014-13-1-0338 and NSFC grant U1430237.  We are grateful for the
+computing  time provided  by  the  High-performance Computing  Platform of
+Peking  University  and the TIGRESS High Performance  Computing  Center
+at Princeton University.
+
+References
+
+ [1]  P. A. M. Dirac, Quantum mechanics of many-electron systems, Proceedings
+     of the Royal Society A 123 (792) (1929) 714–733.
+
+ [2]  W.  Pauli,  ¨Uber  den  zusammenhang  des  abschlusses  der  elektronengruppen
+     im atom mit der komplexstruktur der spektren, Zeitschrift f¨ur Physik 31 (1)
+     (1925) 765–783.
+
+ [3]  C. Roothaan, Self-consistent ﬁeld theory for open shells of electronic systems,
+     Reviews of Modern Physics 32 (2) (1960) 179–185.
+
+ [4]  J. Pople, R. Nesbet, Self-consistent orbitals for radicals, The Journal of Chem-
+     ical Physics 22 (3) (1954) 571–572.
+
+ [5]  J. A. Pople, M. Head-Gordon, K. Raghavachari, Quadratic conﬁguration in-
+     teraction. A general technique for determining electron correlation energies,
+     The Journal of Chemical Physics 87 (10) (1987) 5968–5975.
+
+ [6]  H.-J.    Werner,     P.    J.    Knowles,     An    eﬃcient    internally    contracted
+     multiconﬁguration–reference  conﬁguration  interaction  method,  The Journal
+     of Chemical Physics 89 (9) (1988) 5803–5814.
+
+ [7]  P. J. Knowles, H.-J. Werner, An eﬃcient method for the evaluation of coupling
+     coeﬃcients in conﬁguration interaction calculations, Chemical Physics Letters
+     145 (6) (1988) 514–522.
+
+
+
+
+                                               11
+ [8]  T. Shiozaki, G. Knizia, H.-J. Werner, Explicitly correlated multireference con-
+     ﬁguration interaction:  MRCI-F12, The Journal of Chemical Physics 134 (3)
+     (2011) 034113.
+
+ [9]  G.  D.  Purvis III,  R.  J.  Bartlett,  A  full  coupled-cluster  singles  and  doubles
+     model: The inclusion of disconnected triples, The Journal of Chemical Physics
+     76 (4) (1982) 1910–1918.
+
+[10]  J. Paldus, X. Li, A critical assessment of coupled cluster method in quantum
+     chemistry, Advances in Chemical Physics 110 (1999) 1–175.
+
+[11]  R. J. Bartlett, M. Musia/suppressl, Coupled-cluster theory in quantum chemistry, Re-
+     views of Modern Physics 79 (1) (2007) 291.
+
+[12]  I.  Shavitt,  R.  J.  Bartlett,  Many-Body  Methods  in  Chemistry  and  Physics:
+     MBPT and Coupled-Cluster Theory, Cambridge University Press, 2009.
+
+[13]  W.  L.  McMillan,  Ground  state  of  liquid  He  4,  Physical  Review  138  (2A)
+     (1965) A442.
+
+[14]  D. Ceperley, G. Chester, M. Kalos, Monte Carlo simulation of a many-fermion
+     study, Physical Review B 16 (7) (1977) 3081–3099.
+
+[15]  D. Bressanini, P. J. Reynolds, Between classical  and quantum Monte Carlo
+     methods:  “Variational” QMC, Advances in Chemical Physics 105 (1999) 37–
+     64.
+
+[16]  R. Blankenbecler, D. Scalapino, R. Sugar, Monte Carlo calculations of coupled
+     boson-fermion systems. I, Physical Review D 24 (8) (1981) 2278.
+
+[17]  S. Zhang, J. Carlson, J. Gubernatis, Constrained path Monte Carlo method
+     for fermion ground states, Physical Review B 55 (12) (1997) 7464.
+
+[18]  S. Zhang, H. Krakauer, Quantum Monte Carlo method using phase-free ran-
+     dom walks with Slater determinants, Physical Review Letters 90 (13) (2003)
+     136401.
+
+[19]  K. Van Houcke,  E. Kozik, N. Prokofev, B. Svistunov, Diagrammatic Monte
+     Carlo, Physics Procedia 6 (2010) 95–105.
+
+[20]  W. Foulkes, L. Mitas, R. Needs, G. Rajagopal, Quantum Monte Carlo simu-
+     lations of solids, Reviews of Modern Physics 73 (1) (2001) 33.
+
+
+
+                                                 12
+[21]  S. R. White, Density matrix formulation for quantum renormalization groups,
+     Physical Review Letters 69 (19) (1992) 2863.
+
+[22]  S. R.  White,  R.  L.  Martin,  Ab initio quantum chemistry  using the density
+     matrix renormalization group, The Journal of Chemical Physics 110 (9) (1999)
+     4127–4130.
+
+[23]  G. K.-L. Chan, M. Head-Gordon, Highly correlated calculations with a poly-
+     nomial cost algorithm:  A study of the density matrix renormalization group,
+     The Journal of Chemical Physics 116 (11) (2002) 4462–4476.
+
+[24]  G. K.-L. Chan, A. Keselman, N. Nakatani, Z. Li, S. R. White, Matrix product
+     operators, matrix product states, and ab initio density matrix renormalization
+     group algorithms, The Journal of Chemical Physics 145 (1) (2016) 014102.
+
+[25]  E. M. Stoudenmire, S. R. White, Sliced basis density matrix renormalization
+     group for electronic structure, Physical Review Letters 119 (4) (2017) 046401.
+
+[26]  G. Knizia, G. K.-L. Chan, Density matrix embedding: A simple alternative to
+     dynamical mean-ﬁeld theory, Physical Review Letters 109 (18) (2012) 186404.
+
+[27]  G.  Knizia,  G.  K.-L.  Chan,  Density  matrix  embedding:   A  strong-coupling
+     quantum embedding theory,  Journal of Chemical Theory and Computation
+     9 (3) (2013) 1428–1432.
+
+[28]  S. Wouters, C. A. Jim´enez-Hoyos, Q. Sun, G. K.-L. Chan, A practical guide to
+     density matrix embedding theory in quantum chemistry, Journal of Chemical
+     Theory and Computation 12 (6) (2016) 2706–2719.
+
+[29]  J.  Grotendorst,  Modern  Methods  and  Algorithms  of  Quantum  Chemistry,
+     John von Neumann Institute for Computing, 2000.
+
+[30]  A. Szabo, N. S. Ostlund, Modern Quantum Chemistry:  Introduction to Ad-
+     vanced Electronic Structure Theory, Courier Corporation, 2012.
+
+[31]  M. Motta, D. M. Ceperley, G. K.-L. Chan, J. A. Gomez, E. Gull, S. Guo, C. A.
+     Jim´enez-Hoyos,  T. N. Lan, J. Li, F. Ma, et al., Towards the solution of the
+     many-electron  problem in real materials:  equation  of state of the hydrogen
+     chain  with  state-of-the-art  many-body  methods,  Physical  Review  X  7  (3)
+     (2017) 031059.
+
+[32]  J. C. Slater, Note on Hartree’s method, Physical Review 35 (2) (1930) 210.
+
+
+
+                                                13
+[33]  R. Jastrow, Many-body problem with strong forces, Physical Review 98 (5)
+      (1955) 1479.
+
+[34]  C. Umrigar, K. Wilson, J. Wilkins, Optimized trial wave functions for quan-
+      tum Monte Carlo calculations, Physical Review Letters 60 (17) (1988) 1719.
+
+[35]  C.  Umrigar,  J.  Toulouse,  C.  Filippi,  S.  Sorella,  R.  G.  Hennig,  Alleviation
+      of  the fermion-sign  problem  by  optimization  of  many-body wave  functions,
+      Physical Review Letters 98 (11) (2007) 110201.
+
+[36]  M. Casula,  S. Sorella,  Geminal  wave functions with Jastrow correlation:  A
+      ﬁrst application to atoms, The Journal of Chemical Physics 119 (13) (2003)
+      6500–6511.
+
+[37]  H. J. Changlani, J. M. Kinder, C. J. Umrigar, G. K.-L. Chan, Approximating
+      strongly  correlated  wave  functions  with  correlator  product  states,  Physical
+      Review B 80 (24) (2009) 245116.
+
+[38]  Y.  LeCun,  Y.  Bengio,  G.  Hinton,  Deep  learning,  Nature 521  (7553)  (2015)
+      436.
+
+[39]  J. Han, A. Jentzen, W. E, Solving high-dimensional partial diﬀerential equa-
+      tions using deep learning, Proceedings of the National Academy of Sciences
+      115 (34) (2018) 8505–8510.
+
+[40]  W. E, J. Han, A. Jentzen, Deep learning-based numerical methods for high-
+      dimensional parabolic partial diﬀerential equations and backward stochastic
+      diﬀerential  equations,  Communications  in Mathematics  and Statistics  5 (4)
+      (2017) 349–380.
+
+[41]  J.  Berg,  K.  Nystr¨om,  A  uniﬁed  deep  artiﬁcial  neural  network  approach
+      to   partial   diﬀerential   equations   in   complex   geometries,   arXiv   preprint
+      arXiv:1711.06464.
+
+[42]  Y.  Khoo,  J.  Lu,  L.  Ying,  Solving  parametric  PDE  problems  with  artiﬁcial
+      neural networks, arXiv preprint arXiv:1707.03351.
+
+[43]  H. Saito, Method to solve quantum few-body problems with artiﬁcial neural
+      networks, Journal of the Physical Society of Japan 87 (7) (2018) 074002.
+
+[44]  G. Carleo, M. Troyer, Solving the quantum many-body problem with artiﬁcial
+      neural networks, Science 355 (6325) (2017) 602–606.
+
+
+
+                                                 14
+[45]  X. Gao, L.-M. Duan, Eﬃcient representation of quantum many-body states
+     with deep neural networks, Nature Communications 8 (1) (2017) 662.
+
+[46]  H. Saito, Solving the Bose–Hubbard model with machine learning, Journal of
+     the Physical Society of Japan 86 (9) (2017) 093001.
+
+[47]  Z.  Cai,  J.  Liu,  Approximating  quantum  many-body  wave  functions  using
+     artiﬁcial neural networks, Physical Review B 97 (3) (2018) 035116.
+
+[48]  M.  Born,  R.  Oppenheimer,  Zur  quantentheorie  der  molekeln,  Annalen  Der
+     Physik 389 (9) (1927) 1–31.
+
+[49]  R. B. Laughlin, Anomalous quantum Hall eﬀect:  An incompressible quantum
+     ﬂuid with fractionally  charged  excitations,  Physical  Review  Letters  50 (18)
+     (1983) 1395.
+
+[50]  I.  Glasser,  N.  Pancotti,  M.  August,  I.  D.  Rodriguez,  J.  I.  Cirac,  Neural-
+     network  quantum  states,  string-bond  states,  and  chiral  topological  states,
+     Physical Review X 8 (1) (2018) 011006.
+
+[51]  S. R. Clark, Unifying neural-network quantum states and correlator product
+     states via tensor networks, Journal of Physics A: Mathematical and Theoret-
+     ical 51 (13) (2018) 135301.
+
+[52]  J. Behler, M. Parrinello, Generalized neural-network representation of high-
+     dimensional potential-energy surfaces, Physical Review Letters 98 (14) (2007)
+     146401.
+
+[53]  J.  Han,  L.  Zhang,  R.  Car,  W.  E,  Deep  potential:  a  general  representation
+     of a many-body potential energy surface, Communications in Computational
+     Physics 23 (3) (2018) 629–639.
+
+[54]  L. Zhang, J. Han, H. Wang, R. Car, W. E, Deep potential molecular dynamics:
+     A scalable model with the accuracy of quantum mechanics, Physical Review
+     Letters 120 (2018) 143001.
+
+[55]  L.  Zhang,  J.  Han,  H.  Wang,  W.  A.  Saidi,  R.  Car,  W.  E,  End-to-end  sym-
+     metry preserving inter-atomic potential energy model for ﬁnite and extended
+     systems, in:  Advances of the Neural Information Processing Systems (NIPS),
+     2018.
+
+
+
+
+
+                                                 15
+[56]  K. Sch¨utt, P.-J. Kindermans, H. E. S. Felix, S. Chmiela, A. Tkatchenko, K.-R.
+      M¨uller, Schnet:  A continuous-ﬁlter convolutional  neural network for model-
+      ing  quantum  interactions,  in:   Advances  in  Neural  Information  Processing
+      Systems (NIPS), 2017, pp. 992–1002.
+
+[57]  L.  Zhang,  H.  Wang,  W.  E,  Reinforced  dynamics  for  enhanced  sampling  in
+      large atomic and molecular systems, The Journal of Chemical Physics 148 (12)
+      (2018) 124113.
+
+[58]  L.  Zhang,  J.  Han,  H.  Wang,  R.  Car,  W.  E,  DeePCG:  constructing  coarse-
+      grained models via deep neural networks,  The Journal of Chemical Physics
+      149 (3) (2018) 034101.
+
+[59]  E.  Schneider,  L.  Dai,  R.  Q.  Topper,  C.  Drechsel-Grau,  M.  E.  Tuckerman,
+      Stochastic neural network approach for learning high-dimensional free energy
+      surfaces, Physical Review Letters 119 (15) (2017) 150601.
+
+[60]  T.  Kato,  On  the  eigenfunctions  of  many-particle  systems  in  quantum  me-
+      chanics,  Communications  on  Pure  and  Applied  Mathematics  10  (2)  (1957)
+      151–177.
+
+[61]  R. D. Johnson III, CCCBDB computational chemistry comparison and bench-
+      mark database, NIST Standard Reference Database Number 101.
+
+[62]  K. Frankowski, C. L. Pekeris, Logarithmic terms in the wave functions of the
+      ground state of two-electron atoms, Physical Review 146 (1966) 46–49.
+
+[63]  Q. Sun, T. C. Berkelbach,  N. S. Blunt, G. H. Booth, S. Guo, Z. Li, J. Liu,
+      J. D.  McClain,  E. R. Sayfutyarova,  S. Sharma,  et al.,  PySCF: the Python-
+      based simulations of chemistry framework, Wiley Interdisciplinary Reviews:
+      Computational Molecular Science 8 (1) (2018) e1340.
+
+[64]  D.  E.  Woon,  T.  H.  Dunning  Jr,  Gaussian  basis  sets  for  use  in  correlated
+      molecular  calculations.  V.  Core-valence  basis  sets  for  boron  through  neon,
+      The Journal of Chemical Physics 103 (11) (1995) 4572–4585.
+
+[65]  W.  J.  Hehre,  R.  F.  Stewart,  J.  A.  Pople,  Self-consistent  molecular-orbital
+      methods. I. Use of Gaussian expansions of Slater-type atomic orbitals,  The
+      Journal of Chemical Physics 51 (6) (1969) 2657–2664.
+
+[66]  R. Lee, G. Conduit, N. Nemec, P. L. R´ıos, N. Drummond, Strategies for im-
+      proving the eﬃciency of quantum Monte Carlo calculations, Physical Review
+      E 83 (6) (2011) 066706.
+
+                                                 16
+[67]  M. Dewing, Improved eﬃciency with variational Monte Carlo using two level
+     sampling, The Journal of Chemical Physics 113 (13) (2000) 5123–5125.
+
+[68]  D. Kingma, J. Ba, Adam:  a method for stochastic optimization, in:  Proceed-
+     ings  of  the  International  Conference  on  Learning  Representations  (ICLR),
+     2015.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                 17
+Appendix   A.  Details  of the  Training  Procedure for Each  System
+
+
+
+Table A.1:  Hyperparameters related to network structure and training scheme for  each
+system.
+
+ System        Netanti♭            Netαiαjebd                Netαiﬁt           LR scheme♮     Eref♯
+    H2                  -              (20, 40, 80)     (160, 80, 40)     (5e-4, 1e-8)      -1.3
+    He                  -              (20, 40, 80)     (160, 80, 40)     (5e-4, 1e-8)      -3.0
+   LiH        (40, 40, 40)     (20, 40, 80)     (160, 80, 40)     (5e-4, 1e-8)     -10.0
+    Be         (40, 40, 40)     (20, 40, 80)     (160, 80, 40)     (5e-4, 1e-8)     -16.0
+     B          (40, 40, 40)     (20, 40, 80)     (160, 80, 40)     (5e-4, 1e-8)     -26.0
+   H10        (40, 40, 40)     (20, 40, 80)     (160, 80, 40)     (1e-4, 1e-8)      -6.0
+
+
+♭The network is represented by the number of nodes in each hidden layer, from input to
+output.  The activation function is always hyperbolic tangent, i.e., σ(x) = tanh(x).  Netanti
+is not used for two-electron systems H2 and He.  The parameters of Net↑anti and Net↓anti are
+shared except in the case of B, where the number of spin-up and spin-down electrons are
+diﬀerent by one.  Net↑odd and Net↓odd are chosen to be identity functions in this work, since
+we ﬁnd no signiﬁcant eﬀect of network approximation to this term in the tested systems.
+♮We  use  Adam  stochastic gradient descent  method  [68]  to  optimize  all  the  parameters.
+The  ﬁrst  number  denotes  the  starting learning rate and  the  second  denotes the  ending
+learning rate.  The learning rate is a exponential decay function respect to the number of
+epochs, where the decay factor is determined by the starting/ending learning rates and
+total number  of epochs.  In all the  tested systems,  we call 24 batch stochastic gradient
+descent  iterations  as  an  epoch  and  allow  each  sample  to  be  used  multiple  times  in  an
+epoch.  The batch size and total number of epochs are always 256 and 5000, respectively.
+♯The  hyperparameters  related  to  VMC  sampling  are  the  same  for  all  the  tested  sys-
+tems  except  the  reference  energy  Eref.   We  use  Nwk  =  2048  walkers  and  run  80  steps
+of Metropolis-Hasting sampling each time after one epoch iteration of parameters.  The
+proposal distribution is Gaussian, with the standard deviation being adjusted on the ﬂy
+such that the acceptance rate stays between 15% and 75%.
+
+
+
+
+
+
+
+
+
+
+
+                                                      18

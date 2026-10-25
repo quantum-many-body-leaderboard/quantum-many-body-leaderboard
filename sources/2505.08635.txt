@@ -1,0 +1,495 @@
+  Augmenting Density Matrix Renormalization Group with Matchgates and Clifford
+                                                                    circuits
+
+                        Jiale  Huang,1,∗   Xiangjian  Qian,1, 2,∗   Zhendong  Li,3,†   and  Mingpu  Qin1, 4,‡
+                     1Key  Laboratory  of  Artificial  Structures  and  Quantum  Control  (Ministry  of  Education),
+                   School  of  Physics  and  Astronomy,  Shanghai  Jiao  Tong  University,  Shanghai  200240,  China
+                        2Tsung-Dao  Lee  Institute,  Shanghai  Jiao  Tong  University,  Shanghai  200240,  China
+                   3Key  Laboratory  of  Theoretical  and  Computational  Photochemistry,  Ministry  of  Education,
+                              College  of  Chemistry,  Beijing  Normal  University,  Beijing  100875,  China
+                                            4Hefei  National  Laboratory,  Hefei  230088,  China
+                                                         (Dated:  December 23, 2025)
+                  Matchgates and Clifford circuits are two types of quantum circuits which can be efficiently sim-
+                ulated classically, though the underlying reasons are quite different.  Matchgates are essentially the
+                single particle basis transformations in the Majorana fermion representation, which can be easily
+                handled classically, while the Clifford circuits can be efficiently simulated using the tableau method
+                according to the Gottesman-Knill theorem.  In this work, we propose a new wave-function ansatz
+                in  which  matrix  product  states  are  augmented  with  the  combination  of  Matchgates  and  Clifford
+                circuits (dubbed MCA-MPS) to take advantage of the representing power of all of them.  Moreover,
+                the optimization of MCA-MPS can be efficiently implemented within the Density Matrix Renor-
+                malization Group method.  Our benchmark results on one-dimensional hydrogen chain show that
+                MCA-MPS can improve the accuracy of the ground-state calculation by several orders of magnitude
+                over MPS with the same bond dimension.  This new method provides us a useful approach to study
+                quantum many-body systems.  The MCA-MPS ansatz also expands our understanding of classically
+                simulatable quantum many-body states.
+
+
+  Introduction–The classical simulation of strongly cor-                     sically.  Clifford circuits [17] and Matchgates [18] are two
+related   quantum   many-body   systems   is   one   of   the                types of classically simulatable quantum circuits.  In the
+most  important  tasks  in  the  study  of  condensed  mat-                  (Majorana) fermion representation, Matchgates is essen-
+ter physics.  Over the past decades, many different types                    tially  the  evolution  of  Gaussian  states  [19],  which  can
+of  many-body  methods  were  proposed  [1–7]  which  can                    be easily handled classically.  Clifford circuits that con-
+effectively  handle  different  categories  of  quantum  sys-                sist  solely  of  Clifford  gates  (Hadamard  gate,  the  phase
+tems.  Tensor Network State (TNS) is one representative                      gate S, and the controlled-NOT gate) can be efficiently
+of  them  which  stems  from  the  famous  Density  Matrix                   simulated  using  the  tableau  method  according  to  the
+Renormalization  Group  (DMRG)  method  [8].   DMRG                          Gottesman–Knill theorem [17, 20, 21].  Giving that MPS,
+is  now  the  workhorse  for  one  dimensional  (1D)  quan-                  Matchgates, Clifford circuits can efficiently describe dif-
+tum  many-body  systems  because  the  underlying  wave-                     ferent types of quantum states (low-entangled states, sta-
+function ansatz,  Matrix  Product  States (MPS)  [9],  can                   bilizer states, Gaussian states respectively), it is tempt-
+capture the entanglement structure of 1D quantum sys-                        ing to combine them to construct more powerful ansatz.
+tems.  DMRG has difficulty for higher dimensional quan-                         In [22], the Clifford Circuits Augmented Matrix Prod-
+tum systems and new ansatzes were proposed by general-                       uct  States  (CAMPS)  method  was  proposed  (also  see
+izing MPS to higher dimension (such as PEPS [10], PESS                       [23, 24]), in which MPS is augmented with Clifford cir-
+[11], MERA [12, 13] and so on [5, 6]) to encode the en-                      cuits.   To  solve  the  ground  state  of  a  quantum  system
+tanglement entropy area law [14] of quantum many-body                        with CAMPS, the MPS part needs only to deal with the
+systems.  Nevertheless, DMRG is still widely used in the                     so  called  Non-stabilizerness  Entanglement  Entropy  [25]
+study of quasi-1D systems because of its low cost and ac-                    because the Clifford circuits can take care of the contri-
+curate ground state can be obtained by pushing the bond                      bution from stabilizer, making the accuracy significantly
+dimension to large numbers.  There are also attempts to                      higher than MPS with the same bond dimensions.  The
+enhance the representing power of MPS by augmenting                          optimization  of  both  MPS  and  Clifford  circuits  can  be
+it with disentanglers with its friendly computational cost                   efficiently  implemented  by  a  slight  modification  of  the
+retained [15].                                                               DMRG method.  Later on, CAMPS was also generalized
+  The  developments  in  the  field  of  quantum  comput-                    to  the  study  of  time  evolution  [26,  27]  and  the  calcu-
+ing and quantum information [16] have identified special                     lation of finite temperature properties [28].  It was also
+quantum circuits which can be efficiently simulated clas-                    applied to fermion models [29] by mapping the fermion
+                                                                             degrees of freedom to spin ones with the Jordan-Wigner
+                                                                             transformation.   With  CAMPS,  it  was  also  found  that
+∗ These authors contributed equally to this work.                            duality (like the Kramer-Wannier self-duality) in certain
+† zhendongli@bnu.edu.cn                                                      one-dimensional quantum system can be represented as
+‡ qinmingpu@sjtu.edu.cn
+                                                                             Clifford circuits [30, 31].
+                                                                                                                                                    2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  1.   Schematic  illustration  of  MCA-MPS.  Left:   The  structure  of  the  MCA-MPS  ansatz,|MCA-MPS⟩ =CG|MPS⟩,
+depicting  the  sequential  application  of  Matchgate  circuitsGand  Clifford  circuitsCto  the  Matrix  Product  State|MPS⟩
+corresponding  to  HamiltonianH.   Notice  that  we  only  deal  with|MCA-MPS⟩which  is  less  entangled  than|MPS⟩.   Right:
+The equivalent transformation of the Hamiltonian, where the original HamiltonianHis transformed to a effective Hamiltonian
+(H  MCA-MPS =CGHG   †C†) by the successive application of Matchgates and Clifford circuits.
+
+
+  Matchgates were first proposed in [18] and are proved                      MPS with the same bond dimension.
+to  be  classically  simulatable.   Later  on,  it  was  realized               Method–To synergistically leverage the distinct repre-
+that  the  circuits  built  from  Matchgates  are  essentially               sentational capabilities of Matrix Product States, Match-
+the transformations describing the evolution of Gaussian                     gate, and Clifford circuits, we introduce the new MCA-
+states [19], which is known to be classically simulatable.                   MPS ansatz.  Its structure, depicted in Fig.  1, is defined
+In this regard, the studies of the combination of Match-                     as:
+gates and MPS has a long history in the form of single                                           |MCA-MPS⟩=CG|MPS⟩                  (1)
+particle basis transformation [32, 33].
+  In this work, we propose a new ansatz in which MPS                         where|MPS⟩represents a standard MPS efficiently cap-
+is augmented with both Matchgates and Clifford circuits                      turing low entanglement state,Gdenotes Matchgate cir-
+(dubbed MCA-MPS). The representing power of the in-                          cuits, andCare Clifford circuits.  Here, the Matchgate
+tegration  of  Matchgates  and  Clifford  circuits  was  pre-                and Clifford circuits act as disentanglers applied to the
+viously  studied  in  [34].   It  is  known  that  Clifford  cir-            original|MPS⟩, resulting in the final ansatz|MCA-MPS⟩.
+cuits  can  describe  quantum  states  with  large  entangle-                Matchgate  circuitsGimplement SO(2N)  transforma-
+ment [35] (and correlation) but they are not universal for                   tions  within  the  Majorana  fermion  representation  [19]
+quantum computing.  Clifford circuits can only describe                      (γ  i →O    i,jγj  with matrixO∈SO(2N) andγ                                   i  are Ma-
+stabilizer  state.    The  distance  between  a  given  quan-                jorana operators).  This component enables the efficient
+tum state and a stabilizer state is usually called magic                     representation of Gaussian states.  The subsequent Clif-
+or non-stabilizerness and many quantities has been pro-                      ford circuitsCfurther enhances the ansatz by applying
+posed to quantify it [36–41]. The quantum states describe                    Pauli-basis transformations.
+by Matchgates are Gaussian states, which have no two-                           The MCA-MPS ansatz is variationally optimized using
+body correlation but can host large magic [42].  In this                     a modified Density Matrix Renormalization Group algo-
+sense,  the  combination  of  Clifford  circuits  and  Match-                rithm through a sequential procedure.  First, the Matrix
+gates can complement each other to increase the repre-                       Product State component is initialized and refined via a
+senting power.  It is known that MPS can describe “gen-                      standard DMRG optimization to yield a suitable initial
+eral” low-entangled states.  Given these facts, the MCA-                     state.  Subsequently, the Matchgate circuits G are intro-
+MPS,  which  take  advantage  of  the  representing  ability                 duced and optimized to reduce entanglement entropy and
+of all ingredients in it, should be a powerful ansatz.  We                   further minimize the ground-state energy (see Ref.  [44]
+show that the optimization of all the MPS, Matchgates,                       for details).  Physically, this optimization of Matchgates
+Clifford  circuits  in  MCA-MPS  can  be  efficiently  imple-                is equivalent to an adaptive single-particle basis rotation.
+mented by a slight modification of the DMRG method.                          Following this, the Clifford circuitsCis applied and op-
+We also benchmark MCA-MPS on one-dimensional hy-                             timized  to  achieve  additional  energy  and  entanglement
+drogen chain system and two-dimensional hydrogen lat-                        reduction (see Ref.  [22] for details).  These optimization
+tice (see Supplemental Material [43]).  The results show                     steps are integrated within the DMRG framework.  Both
+MCA-MPS  can  significantly  improve  the  accuracy  of                      the Matchgates and Clifford circuit optimization can be
+ground state energy by several orders of magnitude over                      performed after the eigen-state is obtained for the effec-
+                                                                                                                                                       3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2.  Ground-state energy error (in the unit of Hartree) for                FIG. 3.  Entanglement entropy of the 1D hydrogen chain H12
+the 1D hydrogen chain H12 (with restricted Hartree-Fock or-                    for MPS, CAMPS and MCA-MPS. The entropy is computed
+bital) relative to exact energy, plotted against bond dimension                for a bipartition of the system into two equal halves and plot-
+D. Results are shown for both MPS, CAMPS and MCA-MPS.                          ted as a function of bond dimensionD.  We can find that the
+Errors are defined as|E     exact −E    MPS|,|E    exact −E    CAMPS|and       entanglement  entropy  is  converged  with  small  bond  dimen-
+|E exact−E    MCA-MPS|respectively.  The inset displays the ratio              sion in MCA-MPS. The entanglement entropy in MCA-MPS
+of the error of MPS over MCA-MPS, quantifying the improve-                     is reduced by a factor about 4 to the MPS results, consistent
+ment achieved by MCA-MPS over standard MPS with same                           with the significant improvement of ground state energy ac-
+bond  dimension.   We  can  find  that  MCA-MPS  can  achieve                  curacy in Fig. 2.
+several  orders  of  magnitude  and  the  improvement  becomes
+more dramatic with the increase of bond dimension.
+                                                                               optimal  strategy  involves  an  initial  Matchgate  applica-
+tive Hamiltonian in DMRG and before the truncation is                          tion to transform the Hamiltonian into a structure char-
+performed with a singular value decomposition [22].  The                       acterized byO(N        4) terms. Subsequently, Clifford circuits
+optimization of Clifford circuits is conducted in the Pauli                    can operate on this structured Hamiltonian, transforming
+basis.  Matchgate circuit optimization can proceed in ei-                      theseO(N                4) terms to optimize the ground state represen-
+ther the Pauli or fermionic basis.  If the fermionic basis                     tation further.  Inverting this order is detrimental:  initial
+is  employed  for  the  Matchgate  optimization,  a  Jordan-                   Clifford transformations, though preserving the number
+Wigner transformation is utilized to map fermionic oper-                       of  Pauli  strings,  do  not  generally  conserve  the  interac-
+ators to spin operators prior to the optimization of Clif-                     tion form in the Majorana fermion representation.  This
+ford circuits.                                                                 can  convert  two-body  interactions  into  complex  many-
+   In  the  MCA-MPS  framework,|MPS⟩ is  associated                            body ones, rendering subsequent Matchgate application,
+with the original HamiltonianH, while the final ansatz                         increasing the number of interaction terms in the trans-
+|MCA-MPS⟩ corresponds  to  the  transformed  effective                         formed Hamiltonian.
+HamiltonianH                         MCA-MPS:                                     Model–We test the MCA-MPS method in the 1D hy-
+                                                                               drogen chain [45] with 12 atoms (H12) at an equal bond
+             HMCA-MPS =CGHG   †C† = X                  aiPi           (2)      distanceR= 1                 ˚A  in the minimal atomic basis (STO-3G
+                                                   i                           withN= 24 and the number of total electronsN                       e = 12).
+                                                                               We  choose  the  restricted  Hartree-Fock  (RHF)  orbitals
+whereP           i is Pauli string anda       i is the corresponding coef-     for  testing  our  algorithm.   The  deliberate  use  of  RHF
+ficient. We highlight the critical importance of the opera-                    orbitals instead of local atomic basis is to illustrate the
+tional sequence when combining Matchgates and Clifford                         power of MCA-MPS. Because the RHF orbitals are delo-
+circuits.  We take the common two-body interactions as                         calized and hence more entangled, which makes the tra-
+an  example  in  the  following  discussion.   While  Match-                   ditional DMRG calculations more challenging.  The sec-
+gates  can  change  the  number  of  Hamiltonian’s  Pauli                      ond quantization Hamiltonian of the system for ab initio
+string composition, they are limited to generating a spe-                      DMRG[46–49] has the following form:
+cific subset of at mostO(N                4) (withNthe number of or-
+bitals or single particle basis) Pauli strings, because the                         H=   X      tijc†iσcjσ +   X         Vijklc†iαc†jβckβclα,     (3)
+effect  of  Matchgate  can  be  represented  asγ    i →O    i,jγj                         i,j,σ               i,j,k,l,α,β
+with matrixO∈SO(2N) andγ                                   i are Majorana operators
+[19].  Clifford circuits, in contrast, can inter-convert Pauli                 wheret           ij  andV       ijkl  are molecular integrals andc       (†)iσ   are
+strings but conserve the Hamiltonian’s term count.  The                        Fermionic  annihilation  (creation)  operators.    We  only
+                                                                                                                                                    4
+
+                                                                             and for CAMPS it also increases at smallD.  Conversely,
+                                                                             the  MCA-MPS  exhibits  a  significantly  lower  entangle-
+                                                                             ment entropy that shows little dependence onD.  This
+                                                                             significant  reduction  and  rapid  saturation  of  entangle-
+                                                                             ment entropy in MCA-MPS suggest that the Matchgates
+                                                                             and Clifford circuits efficiently capture the dominant en-
+                                                                             tanglement features, leaving a less entangled state for the
+                                                                             subsequent  MPS  representation.   This  leads  to  a  more
+                                                                             compact and efficient description of the system’s overall
+                                                                             entanglement.  The dramatic reduction in entanglement
+                                                                             entropy  is  consistent  to  the  significant  improvement  in
+                                                                             the ground state energy accuracy shown in Fig. 2.
+                                                                                We emphasize that the orbital choice critically impacts
+                                                                             the  performance  of  the  Matchgate  and  Clifford  com-
+                                                                             ponents  in  our  MCA-MPS  ansatz.   With  orthonormal-
+                                                                             ized atomic orbitals (OAOs), for example, the Matchgate
+                                                                             component offers no improvement beyond MPS, whereas
+FIG. 4.  Similar as Fig. 2: energy error (in the unit of Hartree)            the Clifford component still provides a significant error
+for the 1D hydrogen chain H12 relative to exact energy but for               reduction (Fig. 4). This underscores the necessity of com-
+OAO orbitals.  For OAO orbitals the Matchgate offers no im-                  bining both circuit types to ensure optimal performance
+provement.  So only results for MPS and CAMPS are shown.                     across general cases (See Supplemental Material [43] for
+Errors are defined as|E     exact −E    MPS|and|E          exact −E    CAMPS|2D systems).
+respectively. The inset displays the ratio of these errors, quan-
+tifying the improvement achieved by CAMPS over standard                         As analyzed above and in Supplemental Material [43],
+MPS with same bond dimension.  We can find that CAMPS                        the  sequential  optimization  reveals  a  strong  synergy.
+can achieve several orders of magnitude and the improvement                  Clifford circuits continue to lower the energy significantly
+becomes more dramatic with the increase of bond dimension.                   even  after  Matchgate  optimization  converges,  confirm-
+                                                                             ing  that  they  optimize  the  ground  state  from  different
+                                                                             angles.   We  can  also  perform  a  global  optimization  of
+consider particle-number preserved Matchgates (equiva-                       Matchgate and Clifford circuits, in which Clifford circuits
+lent to orbital transformation) in this work for simplicity.                 optimization is applied to the orbitals in the intermediate
+In the optimization of Matchgates, we treat each spatial                     steps of Matchgate optimizations.  This joint optimiza-
+orbital as one site in the DMRG calculation (with local                      tion method in principle could find global minimum since
+dimensiond=  4 andD=  50).   In the optimization of                          the converged orbitals from Matchgate optimization isn’t
+the Clifford circuits, the spin up and spin down orbitals                    necessarily the best orbital for the following Clifford cir-
+are treated as two independent sites (with local dimen-                      cuits optimizations (See Supplemental Material [43] for
+siond=  2),  making  the  application  of  Clifford  circuit                 detailed results).
+straightforward [29].                                                           Discussion–In  this  work,  we  provide  benchmark  re-
+  Results–The exact ground-state energy for the hydro-                       sults of MCA-MPS method on 1D hydrogen chain instead
+gen chain H12  in the given basis is−6.452816 Hartree.                       of simpler lattice models because the interaction term in
+In Fig.  2, we show the comparison of the error in ground                    the original Hamiltonian of 1D Hydrogen chain (or gen-
+state  energy  (in  the  unit  of  Hartree)  with  MPS  and                  eral molecule systems) is dense (i.e., scale asN     4 withN
+MCA-MPS.  The  errors  are  defined  as|E     exact −E    MPS|,              the number of total orbitals or single particle basis).  As
+|E exact −E    CAMPS|and|E          exact −E    MCA-MPS|respectively.        was  discussed,  the  transformation  of  Hamiltonian  with
+As  shown  in  Fig.    2,  MCA-MPS  method  yields  sub-                     particle  number  preserved  Matchgates  is  equivalent  to
+stantially more accurate ground-state energies than both                     the unitary transformation of the single particle orbitals,
+MPS and CAMPS method.  The error for MCA-MPS is                              which  transform  local  interactions  like  the  ones  in  the
+consistently several orders of magnitude smaller.  We also                   Hubbard model to long-range ones, significantly increas-
+notice that the ratio of MPS error to MCA-MPS error                          ing the computational complexity even though the trans-
+grows with bond dimensionD, as depicted in the inset of                      formation with Clifford circuits doesn’t increase the num-
+Fig.  2.  This ratio reaches approximately 100 atD= 100                      ber of terms in the Hamiltonian.  So to apply MCA-MPS
+and  escalates  to  more  than  1000  byD=  300,  under-                     to  lattice  models  like  Hubbard  model,  we  need  to  find
+scoring the powerful synergy of Matchgates and Clifford                      ways to reduce the terms in the matchgate-transformed
+circuits in enhancing the accuracy of ground-state energy                    Hamiltonian.   In  this  work,  the  optimization  of  match-
+calculations.                                                                gates  and  Clifford  circuits  are  implemented  separately.
+  Fig.  3  illustrates  the  entanglement  entropy  (for  a                  It is also possible to find ways to optimize them simul-
+mid-chain  bipartition)  of  the  1D  H12  system  for  MPS,                 taneously or iteratively to improve the accuracy.  It will
+CAMPSand MCA-MPS methods.  For MPS, entangle-                                be interesting to also implement basis truncation [50] in
+ment entropy steadily increases with bond dimensionD,                        MCA-MPS  to  study  systems  with  large  basis  set.   We
+                                                                                                                                                         5
+
+only  consider  U(1)  symmetry  preserved  Matchgates  in                       of classically simulatable quantum many-body states.  In
+this work, it is also possible to release this constraint to                    the future, it will be interesting to explore the combina-
+gain further improvement in certain cases.                                      tion of other classical many-body methods with different
+   Conclusion and perspectives–We develop a new wave-                           types of classically simulatable quantum circuits.
+function ansatz called MCA-MPS in which MPS is aug-                                Note  added:Upon  completing  our  work,  we  became
+mented with both Matchgates and Clifford circuits.  We                          aware of similar works [51, 52], where the combination of
+also  show  the  optimization  of  all  the  MPS,  Clifford                     Clifford circuits, Matchgates and MPS are also discussed.
+circuits,  and  the  matchgates  in  MCA-MPS  can  be  ef-                         Acknowledgments:MQ  acknowledges  the  support
+fectively  implemented  by  a  minor  modification  of  the                     from the National Key Research and Development Pro-
+DMRG  method.    Our  benchmark  results  on  the  one-                         gram  of  MOST  of  China  (2022YFA1405400),  the  Na-
+dimensional hydrogen chain and two dimensional lattice                          tional   Natural   Science   Foundation   of   China   (Grant
+systems  show  that  the  MCA-MPS  method  can  signifi-                        No.     12274290),   the  Innovation  Program  for  Quan-
+cantly improve the accuracy of the ground-state calcula-                        tum  Science  and  Technology  (2021ZD0301902).     ZL
+tion by several orders of magnitude over MPS with the                           acknowledges  the  support  from  the  Quantum  Science
+same bond dimension.  This new method provides us a                             and Technology-National Science and Technology Major
+useful approach to study quantum many-body systems.                             Project (2023ZD0300200) and the Fundamental Research
+The MCA-MPS ansatz also expands our understanding                               Funds for the Central Universities.
+
+
+
+
+
+ [1]A.  Georges,  G.  Kotliar,  W.  Krauth,  and  M.  J.  Rozen-                      and  T.  Xiang,  Tensor  Renormalization  of  Quantum
+     berg, Dynamical mean-field theory of strongly correlated                         Many-Body Systems Using Projected Entangled Simplex
+     fermion systems and the limit of infinite dimensions, Rev.                       States, Phys. Rev. X4, 011025 (2014).
+     Mod. Phys.68, 13 (1996).                                                   [12]G. Evenbly and G. Vidal, Entanglement Renormalization
+ [2]G. Kotliar, S. Y. Savrasov, K. Haule, V. S. Oudovenko,                            in two spatial dimensions, Phys. Rev. Lett.102, 180406
+     O.  Parcollet,  and  C.  A.  Marianetti,  Electronic  struc-                     (2009).
+     ture calculations with dynamical mean-field theory, Rev.                   [13]G.  Vidal,  Entanglement  Renormalization,  Phys.  Rev.
+     Mod. Phys.78, 865 (2006).                                                        Lett.99, 220405 (2007).
+ [3]J. Carlson, S. Gandolfi, F. Pederiva, S. C. Pieper, R. Schi-                [14]J.  Eisert,  M.  Cramer,  and  M.  B.  Plenio,  Colloquium:
+     avilla,  K.  E.  Schmidt,  and  R.  B.  Wiringa,  Quantum                        Area laws for the entanglement entropy, Rev. Mod. Phys.
+     monte  carlo  methods  for  nuclear  physics,  Rev.  Mod.                        82, 277 (2010).
+     Phys.87, 1067 (2015).                                                      [15]X. Qian and M. Qin, Augmenting Density Matrix Renor-
+ [4]W.  M.  C.  Foulkes,  L.  Mitas,  R.  J.  Needs,  and  G.  Ra-                    malization  Group  with  Disentanglers,  Chinese  Physics
+     jagopal, Quantum monte carlo simulations of solids, Rev.                         Letters40, 057102 (2023).
+     Mod. Phys.73, 33 (2001).                                                   [16]M.  A.  Nielsen  and  I.  L.  Chuang,Quantum  Computa-
+ [5]J.  I.  Cirac,  D.  P´erez-Garc´ıa,  N.  Schuch,  and  F.  Ver-                   tion  and  Quantum  Information:  10th  Anniversary  Edi-
+     straete,  Matrix  product  states  and  projected  entangled                     tion(Cambridge University Press, 2010).
+     pair states:  Concepts, symmetries, theorems, Rev. Mod.                    [17]D. Gottesman, Stabilizer Codes and Quantum Error Cor-
+     Phys.93, 045003 (2021).                                                          rection (1997), arXiv:quant-ph/9705052 [quant-ph].
+ [6]T.  Xiang,Density  Matrix  and  Tensor  Network  Renor-                     [18]L.  G.  Valiant,  Quantum  computers  that  can  be  simu-
+     malization(Cambridge University Press, 2023).                                    lated  classically  in  polynomial  time,  inProceedings  of
+ [7]J.  P.  F.  LeBlanc,  A.  E.  Antipov,  F.  Becca,  I.  W.  Bu-                   the Thirty-Third Annual ACM Symposium on Theory of
+     lik, G. K.-L. Chan, C.-M. Chung, Y. Deng, M. Ferrero,                            Computing, STOC ’01 (Association for Computing Ma-
+     T.  M.  Henderson,  C.  A.  Jim´enez-Hoyos,  E.  Kozik,  X.-                     chinery, New York, NY, USA, 2001) p. 114–123.
+     W.  Liu,  A.  J.  Millis,  N.  V.  Prokof´ev,  M.  Qin,  G.  E.            [19]R. Jozsa and A. Miyake, Matchgates and classical simu-
+     Scuseria,  H.  Shi,  B.  V.  Svistunov,  L.  F.  Tocchio,  I.  S.                lation of quantum circuits, Proceedings of the Royal Soci-
+     Tupitsyn, S. R. White, S. Zhang, B.-X. Zheng, Z. Zhu,                            ety A: Mathematical, Physical and Engineering Sciences
+     and E. Gull (Simons Collaboration on the Many-Electron                           464, 3089 (2008).
+     Problem),  Solutions  of  the  Two-Dimensional  Hubbard                    [20]S. Aaronson and D. Gottesman, Improved Simulation of
+     Model:  Benchmarks and Results from a Wide Range of                              Stabilizer Circuits, Phys. Rev. A70, 052328 (2004).
+     Numerical Algorithms, Phys. Rev. X5, 041041 (2015).                        [21]S. Anders and H. J. Briegel, Fast Simulation of Stabilizer
+ [8]S.  R.  White,  Density  matrix  formulation  for  quantum                        Circuits using a Graph-state Representation, Phys. Rev.
+     renormalization groups, Phys. Rev. Lett.69, 2863 (1992).                         A73, 022334 (2006).
+ [9]S.      ¨Ostlund  and  S.  Rommer,  Thermodynamic  limit  of                [22]X. Qian, J. Huang, and M. Qin, Augmenting density ma-
+     Density  Matrix  Renormalization,  Phys.  Rev.  Lett.75,                         trix  renormalization  group  with  clifford  circuits,  Phys.
+     3537 (1995).                                                                     Rev. Lett.133, 190402 (2024).
+[10]F. Verstraete and J. I. Cirac, Renormalization algorithms                   [23]S. Masot-Llima and A. Garcia-Saez, Stabilizer tensor net-
+     for  Quantum-Many  Body  Systems  in  two  and  higher                           works:  Universal quantum simulator on a basis of stabi-
+     dimensions,  arXiv  e-prints  ,  cond-mat/0407066  (2004),                       lizer states, Phys. Rev. Lett.133, 230601 (2024).
+     arXiv:cond-mat/0407066 [cond-mat.str-el].                                  [24]G. Lami, T. Haug, and J. De Nardis, Quantum state de-
+[11]Z.  Y.  Xie,  J.  Chen,  J.  F.  Yu,  X.  Kong,  B.  Normand,                     signs with clifford-enhanced matrix product states, PRX
+                                                                                                                                                                6
+
+     Quantum6, 010345 (2025).                                                            the  results  of  2D  hydrogen  lattice  systems  benchmark,
+[25]J. Huang, X. Qian, and M. Qin, Non-stabilizerness En-                                the numerical results of synergy between Matchgate and
+     tanglement Entropy:  a measure of hardness in the clas-                             Clifford Circuits and the optimization of Matchgate.
+     sical simulation of quantum many-body systems, arXiv                          [44]Z.  Li,  Entanglement-minimized  orbitals  enable  faster
+     e-prints   ,   arXiv:2409.16895   (2024),   arXiv:2409.16895                        quantum   simulation   of   molecules,   arXiv   e-prints   ,
+     [quant-ph].                                                                         arXiv:2506.13386 (2025), arXiv:2506.13386 [quant-ph].
+[26]X.  Qian,  J.  Huang,  and  M.  Qin,  Clifford  circuits  aug-                 [45]M. Motta, D. M. Ceperley, G. K.-L. Chan, J. A. Gomez,
+     mented time-dependent variational principle, Phys. Rev.                             E. Gull, S. Guo, C. A. Jim´enez-Hoyos, T. N. Lan, J. Li,
+     Lett.134, 150404 (2025).                                                            F. Ma, A. J. Millis, N. V. Prokof’ev, U. Ray, G. E. Scuse-
+[27]A.  F.  Mello,  A.  Santini,  G.  Lami,  J.  De  Nardis,  and                        ria, S. Sorella, E. M. Stoudenmire, Q. Sun, I. S. Tupit-
+     M. Collura, Clifford dressed time-dependent variational                             syn,  S.  R.  White,  D.  Zgid,  and  S.  Zhang  (Simons  Col-
+     principle, Phys. Rev. Lett.134, 150403 (2025).                                      laboration on the Many-Electron Problem), Towards the
+[28]X. Qian, J. Huang, and M. Qin, Augmenting Finite Tem-                                solution of the many-electron problem in real materials:
+     perature  Tensor  Network  with  Clifford  Circuits,  arXiv                         Equation of state of the hydrogen chain with state-of-the-
+     e-prints   ,   arXiv:2410.15709   (2024),   arXiv:2410.15709                        art many-body methods, Phys. Rev. X7, 031059 (2017).
+     [quant-ph].                                                                   [46]S. R. White and R. L. Martin, Ab initio quantum chem-
+[29]J.  Huang,  X.  Qian,  and  M.  Qin,  Clifford  circuits  Aug-                       istry using the density matrix renormalization group, J.
+     mented Matrix Product States for fermion systems, arXiv                             Chem. Phys.110, 4127 (1999).
+     e-prints   ,   arXiv:2501.00413   (2024),   arXiv:2501.00413                  [47]G. K.-L. Chan and S. Sharma, The density matrix renor-
+     [cond-mat.str-el].                                                                  malization  group  in  quantum  chemistry,  Annu.  Rev.
+[30]C.  Fan,  X.  Qian,  H.-C.  Zhang,  R.-Z.  Huang,  M.  Qin,                          Phys. Chem.62, 465 (2011).
+     and T. Xiang, Disentangling critical quantum spin chains                      [48]S. Szalay, M. Pfeffer, V. Murg, G. Barcza, F. Verstraete,
+     with clifford circuits, Phys. Rev. B111, 085121 (2025).                             R.  Schneider,  and  ¨O.  Legeza,  Tensor  product  methods
+[31]M.  Frau,  P.  Sonya  Tarabunga,  M.  Collura,  E.  Tirrito,                         and  entanglement  optimization  for  ab  initio  quantum
+     and M. Dalmonte, Stabilizer disentangling of conformal                              chemistry, Int. J. Quantum Chem.115, 1342 (2015).
+     field  theories,  arXiv  e-prints  , arXiv:2411.11720  (2024),                [49]A. Baiardi and M. Reiher, The density matrix renormal-
+     arXiv:2411.11720 [quant-ph].                                                        ization group in chemistry and molecular physics: Recent
+[32]C. Krumnow, L. Veis, O. Legeza, and J. Eisert, Fermionic                             developments  and  new  challenges,  J.  Chem.  Phys.152
+     orbital optimization in tensor network states, Phys. Rev.                           (2020).
+     Lett.117, 210402 (2016).                                                      [50]H.-G. Luo, M.-P. Qin, and T. Xiang, Optimizing hartree-
+[33]A.-K. Wu, B. Kloss, W. Krinitsin, M. T. Fishman, J. H.                               fock   orbitals   by   the   density-matrix   renormalization
+     Pixley, and E. M. Stoudenmire, Disentangling interact-                              group, Phys. Rev. B81, 235129 (2010).
+     ing systems with fermionic gaussian circuits: Application                     [51]B. Kang, C. Zhao, Z. Liu, X. Gao, and S. Choi, 2d quon
+     to quantum impurity models, Phys. Rev. B111, 035119                                 language:  Unifying framework for cliffords, matchgates,
+     (2025).                                                                             and beyond (2025), arXiv:2505.06336 [quant-ph].
+[34]A.   M.   Projansky,    J.   Necaise,   and   J.   D.   Whit-                  [52]Z. Feng, Z. Liu, F. Lu, and N. Wang, Quon classical sim-
+     field,   Gaussianity   and   Simulability   of   Cliffords   and                    ulation:  Unifying clifford, matchgates and entanglement
+     Matchgates,  arXiv  e-prints  ,  arXiv:2410.10068  (2024),                          (2025), arXiv:2505.07804 [quant-ph].
+     arXiv:2410.10068 [quant-ph].
+[35]A. Nahum, J. Ruhman, S. Vijay, and J. Haah, Quantum
+     entanglement  growth  under  random  unitary  dynamics,
+     Phys. Rev. X7, 031016 (2017).
+[36]S. Bravyi, D. Browne, P. Calpin, E. Campbell, D. Gosset,
+     and M. Howard, Simulation of quantum circuits by low-
+     rank stabilizer decompositions, Quantum3, 181 (2019).
+[37]S. Bravyi, G. Smith, and J. A. Smolin, Trading classical
+     and quantum computational resources, Phys. Rev. X6,
+     021043 (2016).
+[38]S. Bravyi and D. Gosset, Improved classical simulation
+     of  quantum  circuits  dominated  by  clifford  gates,  Phys.
+     Rev. Lett.116, 250501 (2016).
+[39]V.  Veitch,  S.  A.  H.  Mousavian,  D.  Gottesman,  and
+     J.  Emerson,  The  resource  theory  of  stabilizer  quantum
+     computation, New Journal of Physics16, 013009 (2014).
+[40]H.  Pashayan,  J.  J.  Wallman,  and  S.  D.  Bartlett,  Esti-
+     mating outcome probabilities of quantum circuits using
+     quasiprobabilities, Phys. Rev. Lett.115, 070501 (2015).
+[41]L.  Leone,  S.  F.  E.  Oliviero,  and  A.  Hamma,  Stabilizer
+     R´enyi Entropy, Phys. Rev. Lett.128, 050402 (2022).
+[42]M.  Collura,   J.  De  Nardis,   V.  Alba,  and  G.  Lami,
+     The quantum magic of fermionic Gaussian states, arXiv
+     e-prints   ,   arXiv:2412.05367   (2024),   arXiv:2412.05367
+     [quant-ph].
+[43]See  Supplemental  Material  for  additional  details  about
+                                                                                                                                                     1
+
+  Supplementary Materials for “Augmenting Density Matrix Renormalization Groupwith Matchgates and Clifford circuits”
+
+
+
+
+
+                           CONTENTS
+
+    References                                                                 5
+
+A.  2D results                                                                 1
+
+B.  Joint optimization of Matchgate and Clifford
+    circuits                                                                      1
+
+C.  The optimization of Matchgate                                2
+
+
+                   Appendix A: 2D results
+
+  To test our method on 2D systems, we simulate a 16-
+atom  (4  by  4)  hydrogen  plane  (R=  1      ˚A)  in  a  mini-
+mal  basis,  corresponding  toN=  32  orbitals  at  half-
+filling  (N  e   =  16).    We  compare  the  performance  of                 FIG. S1. 2D OAO results for MPS, MA-MPS and MCA-MPS.
+standard MPS, MA-MPS (Matchgate-augmented MPS),                               Errors (in the unit of Hartree) are defined as|E     ref −E    MPS|,
+and  our  full  MCA-MPS  ansatz.    These  methods  are                       |E ref −E    MA-MPS|and|E          ref −E    MCA-MPS|respectively.  The in-
+benchmarked  across  two  orbital  basis  (orthonormalized                    set displays the ratio of MPS error to MCA-MPS error, quan-
+atomic orbitals (OAOs) and localized molecular orbitals                       tifying  the  improvement  achieved  by  MCA-MPS  over  stan-
+(LMOs)) against a high-accuracy SU(2) DMRG reference                          dard MPS with same bond dimension.
+energy ofE    ref =−7.785104 (D= 3000).  The detailed re-
+sults for each orbital basis are presented in Figs. S1-S2.
+  While MCA-MPS consistently outperforms MPS, the
+relative contributions of the Matchgate and Clifford com-
+ponents are strongly basis-dependent.  For OAO orbitals,
+both components contribute significantly, leading to the
+most  pronounced  improvement  in  MCA-MPS.  The  re-
+sults  from  LMO  basis  are  different,  where  Matchgates
+offer a modest gain and Clifford circuits provide a signif-
+icant one.
+  This basis-dependent performance highlights the com-
+plementary  roles  of  Matchgates  and  Clifford  circuits,
+likely in capturing different aspects of the electronic cor-
+relation.  It thus emphasizes the importance of their com-
+bined use within the MCA-MPS framework to achieve ro-
+bust performance across diverse orbital representations.
+
+
+ Appendix B: Joint optimization of Matchgate and                              FIG. S2. 2D LMO results for MPS, MA-MPS and MCA-MPS.
+                         Clifford circuits                                    Errors (in the unit of Hartree) are defined as|E     ref −E    MPS|,
+                                                                              |E ref −E    MA-MPS|and|E          ref −E    MCA-MPS|respectively.  The in-
+  A potential concern with sequential optimization is the                     set displays the ratio of MPS error to MCA-MPS error, quan-
+risk  of  trapping  the  ansatz  in  a  local  minimum,  which                tifying  the  improvement  achieved  by  MCA-MPS  over  stan-
+would  preclude  access  to  the  global  ground  state.   We                 dard MPS with same bond dimension.
+demonstrate here that the two components act synergis-
+tically rather than competitively.
+  We also perform a joint optimization of Matchgate and                          Fig.  S3  tracks  the  energy  evolution  of  the  H12  chain
+Clifford circuits in which Clifford circuit optimization is                   with  restricted  Hartree-Fock  orbital.     The  MA-MPS
+applied  to  each  intermediate  orbitals  in  the  Matchgate                 ansatz (blue curve,D= 600) serves as a baseline, reflect-
+optimization process.                                                         ing energy minimization driven exclusively by Matchgate
+                                                                                                                                                         2
+
+                                                                                for Clifford circuit optimization.  But in this specific case,
+                                                                                it turns out the converged orbitals from the Matchgate
+                                                                                optimization indeed gives the best orbitals for the follow-
+                                                                                ing Clifford circuit optimization.  Nevertheless, in prac-
+                                                                                tical calculation, the joint optimization should be tested
+                                                                                to find global minimum in MCA-MPS.
+                                                                                      Appendix C: The optimization of Matchgate
+
+                                                                                   To optimize the matchgate,  in this work we adopted
+                                                                                the  randomized  orbital  optimization  algorithm  in  Ref.
+                                                                                [44],  which  simultaneously  optimize  the  energy  and  re-
+                                                                                duce  the  entanglement.   Specifically,  for  a  given  MPS,
+                                                                                the  givens  rotations  between  adjacent  sites  are  applied
+                                                                                to minimize the entanglement
+                                                                                                                                    cosθ−sinθ
+                                                                                  (˜ˆa  †iσ, ˜ˆa  †jσ) = (ˆa  †iσ,ˆa   †jσ)G(θ), G(θ) =sinθ  cosθ      .
+FIG. S3.  Evolution of the ground-state energy error (in the                                                                                         (S1)
+unit of Hartree) for the H12 chain.  The red curve represents                   Then, a layer of random swaps (θ∈ {0, π/2}) in a linear
+the baseline MA-MPS (D= 600) optimized solely via Match-                        layout is applied in order to jump out of local minimum,
+gates.  The other curves (MCA-MPS) show energies obtained
+by applying Clifford optimization to intermediate MA-MPS                        followed by a sequence of givens rotations to prevent the
+states (starting fromD= 100) at iteration steps.                                random swaps creating too large perturbation.  The ob-
+                                                                                tained set of gates are applied to transform the Hamilto-
+                                                                                nian, and a small number of DMRG sweeps is applied to
+updates.  To assess the full MCA-MPS performance, we                            minimize the energy.  Based on the optimized energy and
+extract system snapshots at various Matchgate iterations                        entanglement entropy, a decision is made to accept or re-
+and subject them to subsequent Clifford circuit optimiza-                       ject the current set of gates.  This procedure is repeated
+tion.                                                                           for  a  number  of  iterations  until  the  energy  lowering  is
+   The  Matchgate  optimization  approaches  convergence                        small enough.
+after  approximately  40  iterations.    Crucially,  the  full                     To  elucidate  the  quantum  circuit  implementation  of
+MCA-MPS  ansatz  consistently  outperforms  the  MA-                            the orbital optimization, we establish the equivalence be-
+MPS  baseline  throughout  the  entire  process.   Even  in                     tween  the  givens  rotation  in  Eq.  (S1)  and  the  nearest-
+the  saturation  regime  (iterations  40–50),  the  introduc-                   neighbor matchgates.  The linear transformation of oper-
+tion  of  Clifford  circuits  yields  a  substantial  energy  re-               ators corresponds to a unitary gate  ˆU(θ) acting on the
+duction,  lowering  the  energy  error  from∼5×10               −7    to        two-site Hilbert space spanned by{|00⟩,|01⟩,|10⟩,|11⟩}.
+1.5×10       −7  .  If the Matchgate and Clifford sectors were                  In this basis, the vacuum|00⟩is invariant under the pas-
+strongly competitive, the optimal Matchgate circuits for                        sive  rotation.   The  single-particle  sector  transforms  ac-
+a  pure  MA-MPS  would  differ  drastically  from  that  re-                    cording toG(θ), while the doubly occupied state trans-
+quired for the full MCA-MPS ansatz,  rendering the se-                          forms as  ˆU|11⟩= (detG)|11⟩.  Since detG= 1 for the
+quential procedure inefficient. Instead, the consistent im-                     Givens rotation, the|11⟩state remains unchanged.  This
+provement implies that these components target different                        yields  the  explicit  matrix  representation  of  a  particle-
+Hilbert space sectors. Matchgates minimize Gaussian en-                         conserving matchgate:
+tanglement, while Clifford circuits resolve the remaining
+non-stabilizerness.  Consequently, this decoupling allows                                                    1     0         0      0
+the  sequential  optimization  to  effectively  approach  the                                                0  cosθ−sinθ 0          .             (S2)
+global ground state.                                                                             M(θ) =        0  sinθ  cosθ  0
+   In principle, the joint optimization could find a global                                                    0     0         0      1
+minimum since the converged orbitals in the Matchgate
+optimization process is not necessarily the best orbitals

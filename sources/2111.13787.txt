@@ -1,0 +1,2304 @@
+   Addressing Strong Correlation  by Approximate  Coupled-Pair
+ Methods with  Active-Space and  Full Treatments  of  Three-Body
+                                                  Clusters
+
+                        Ilias  Magoulas,1  Jun  Shen,1  and  Piotr  Piecuch1, 2, ∗
+
+                      1Department  of  Chemistry,  Michigan  State  University,
+
+                                 East  Lansing,  Michigan  48824,  USA
+
+                               2Department  of  Physics  and  Astronomy,
+
+                Michigan  State  University,  East  Lansing,  Michigan  48824,  USA
+                                        (Dated:  November 30, 2021)
+                                                   Abstract
+
+  When the number of strongly correlated electrons becomes larger, the single-reference coupled-
+cluster (CC) CCSD, CCSDT, etc. hierarchy displays an erratic behavior, while traditional multi-
+
+reference approaches may no longer be applicable due to enormous dimensionalities of the under-
+
+lying model spaces.  These diﬃculties can be alleviated  by the approximate coupled-pair (ACP)
+theories,  in  which  selected  (T2)2  diagrams  in  the  CCSD  amplitude  equations  are  removed,  but
+
+there is no generally accepted and robust way of incorporating connected triply excited (T3) clus-
+ters within the ACP framework.  It is also not clear if the speciﬁc combinations of (T2)2 diagrams
+
+that work well for strongly correlated minimum-basis-set model systems are optimum when larger
+
+basis sets are employed.  This study explores these topics by considering a few novel ACP schemes
+
+with the active-space and full treatments of T3 correlations and schemes that scale selected (T2)2
+diagrams by factors depending on the numbers of occupied and unoccupied orbitals.  The perfor-
+
+mance of the proposed ACP approaches is illustrated by examining the symmetric dissociations of
+
+the H6 and H10 rings using basis sets of the triple- and double-ζ  quality and the H50 linear chain
+treated with a minimum basis, for which the conventional CCSD and CCSDT methods fail.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+∗ Corresponding author; e-mail:  piecuch@chemistry.msu.edu.
+
+
+                                                       1
+I.     INTRODUCTION
+
+   The  size  extensive  methods  based  on  the  exponential  wave  function  ansatz  [1,  2]  of
+coupled-cluster (CC) theory [3–8],
+
+                                                |Ψ⟩ = exp(T )|Φ⟩,                                                          (1)
+
+where                                                      N∑
+                                                    T  =       Tn                                                                (2)
+                                                          n=1
+is the cluster operator, Tn is the n-particle–n-hole component of T , N is the number of corre-
+lated electrons, and |Φ⟩ is the reference (e.g., Hartree–Fock) determinant deﬁning the Fermi
+vacuum, have become a de facto standard for high-accuracy quantum chemistry calculations
+[9, 10].  This is, in signiﬁcant part, related to the fact that the conventional single-reference
+CC  hierarchy,  including  the  CC  approach  with  singles  and  doubles  (CCSD),  where  T  is
+truncated at T2 [11–14], the CC method with singles, doubles, and triples (CCSDT), where
+T  is truncated at T3 [15–17], the CC approach with singles, doubles, triples, and quadruples
+(CCSDTQ),  where  T  is  truncated  at  T4  [18–21],  etc.,  and  its  extensions  to  excited  states
+and properties other than energy through the equation-of-motion [22–29] and linear response
+[30–38] formalisms rapidly converge to the exact, full conﬁguration interaction (FCI), limit
+in  weakly  correlated  systems.   Higher-order  CC  methods,  such  as  CCSDT  and  CCSDTQ,
+can also describe multi-reference situations involving smaller numbers of strongly correlated
+electrons,  encountered,  for example,  when  single  and double  bond  dissociations  are exam-
+ined, allowing one to capture the relevant many-electron correlation eﬀects in a conceptually
+straightforward fashion through particle–hole (p–h) excitations from a single determinant.
+   Unfortunately,  the  conventional  CCSD,  CCSDT,  CCSDTQ,  etc.  hierarchy  may  exhibit
+an erratic behavior and the lack of systematic convergence toward the exact, FCI, limit, if
+the system under consideration is characterized by the strong entanglement of larger num-
+bers of electrons, as in the Mott metal–insulator transitions [39–41], which can be modeled
+by  the  Hubbard  Hamiltonian  [42–44]  (see,  e.g.,  Refs.  [45,  46]  and  references  therein)  or
+the linear chains, rings, or cubic lattices of the equally spaced hydrogen atoms that change
+from  a  weakly  correlated  metallic  state  at  compressed  geometries  to  an  insulating  state
+with strong correlations in the dissociation region (see, e.g., Refs. [47–54]).  The analogous
+challenges  apply  to the  strongly  correlated  π-electron  networks  in cyclic  polyenes  [55,  56],
+
+                                                         2
+as  described  by  the  Hubbard  and  Pariser–Parr–Pople  (PPP)  [57–59]  Hamiltonians,  which
+can  be  used  to  model  one-dimensional  metallic-like  systems  with  Born–von  K´arm´an  peri-
+odic  boundary  conditions  and  a  half-ﬁlled  band  [60–67].   When  the  numbers  of  strongly
+correlated electrons and open-shell sites from which these electrons originate become larger,
+traditional  multi-reference  methods  of  the  CC  [9,  10,  68–71]  and  non-CC  [72–74]  types,
+which  typically  build  upon  complete  active-space  self-consistent  ﬁeld  (CASSCF)  [75,  76],
+become inapplicable as well (in part, due to rapidly growing dimensionalities of the under-
+lying  multi-conﬁgurational  reference  or model  spaces  with  the numbers  of active  electrons
+and orbitals, which are further complicated by considerable additional computational costs
+of  determining  the  remaining  dynamical  correlation  eﬀects  needed  to  obtain  a  quantita-
+tive description).  Even the increasingly popular and undoubtedly promising substitutes for
+CASSCF, such as the density-matrix renormalization group (DMRG) approach [77–83] (cf.
+Ref. [84] for a recent perspective), FCI Quantum Monte Carlo [85–89], and various selected
+CI techniques [90–104], or methods that replace complete active spaces by their incomplete
+or multi-layer counterparts (cf., e.g., Refs. [105–110] for selected examples), which allow one
+to use  signiﬁcantly  larger  numbers  of  active  electrons  and  orbitals  compared  to CASSCF-
+based schemes, begin to wear out when the number of strongly correlated electrons is on the
+order  of  40–50.  This  is  especially  true  when  one  wants  to  capture  the  missing  dynamical
+correlations  (cf.,  e.g.,  Refs.  [111–116])  and  use  basis  sets  much  larger  than  the  minimum
+one.   While  there  has  been  a  lot  of  activity  directed  toward  addressing  these  and  related
+issues,  the  challenge  of  strong  correlation  remains,  awaiting  a  satisfactory  solution.   It  is,
+therefore,  desirable  to explore  various  unconventional  methodologies  capable  of accurately
+describing weak as well as strong correlation regimes, especially those that formally belong
+to the single-reference CC framework, which is characterized by an ease of implementation
+and  application  that  cannot  be  matched  by  genuine  multi-reference  theories.   To  do  this,
+one has to understand the origin of the erratic behavior of conventional single-reference CC
+approaches in the presence of strong correlations.
+
+   The  catastrophic  failures  of  the  traditional  CCSD,  CCSDT,  CCSDTQ,  etc.  hierarchy
+in  all  of  the  aforementioned  and  similar  situations,  relevant  to  condensed  matter  physics,
+materials science, and the most severe cases of multiple bond breaking (e.g., the celebrated
+chromium dimer), are related to the observation that in order to describe wave functions for
+N  strongly correlated electrons one is essentially forced to deal with a FCI-level description
+
+                                                         3
+of these N  electrons, which in a conventional CC formulation requires the incorporation of
+virtually all cluster components Tn, including TN.  Indeed, as shown, for example, in Fig. 2
+of Ref. [117], using the 12-site, half-ﬁlled attractive pairing Hamiltonian with equally spaced
+levels,  or  slide  17  of  Ref.  [118],  in  which  the  10-site  Hubbard  Hamiltonian  with  half-ﬁlled
+band is examined, the higher-order Tn  components of the cluster operator, which normally
+decrease  with  n,  remain  large  for  larger  n  values  approaching  N  in  a  strongly  correlated
+regime.    This  is  not  a  problem  for  the  single-reference  CC  ansatz  when  the  number  of
+strongly correlated electrons N  is small (e.g., 2 in single bond breaking or 4 in double bond
+breaking), but becomes a major issue when N  is larger.
+   The  consequences  of  the  above  observations  manifest  themselves  in  various,  sometimes
+dramatic, ways.  For example, one experiences a disastrous behavior of the traditional CCSD,
+CCSDT, CCSDTQ, etc. hierarchy,  which  produces large errors, branch point singularities,
+and  unphysical  complex  solutions  in  calculations  for  strongly  correlated  one-dimensional
+systems  modeled  by  the  Hubbard  and  PPP  Hamiltonians  or  Hn  rings,  linear  chains,  and
+cubic lattices undergoing metal–insulator transitions [54, 60–67, 117, 119–121].  One can also
+show, using spin-symmetry breaking and restoration arguments, combined with the Thouless
+theorem [122, 123] and a subsequent cluster analysis [124] of projected unrestricted Hartree–
+Fock (PUHF) wave functions similar to Refs. [125, 126], that if we insist on the wave function
+ansatz in terms of the T2  cluster component, the resulting strongly correlated PUHF state
+has a non-intuitive polynomial rather than the usual exponential form [127–129] (cf., also,
+Refs. [117, 120, 121]).  This means that in seeking a computationally manageable CC-type
+solution  to  a  problem  of  strong  correlation  involving  the  entanglement  of  many  electrons,
+which would avoid the combinatorial scaling of FCI while eliminating failures of the CCSD,
+CCSDT, CCSDTQ, etc. hierarchy, one has to resign from the conventional CC treatments in
+which the cluster operator T  is truncated at a given many-body rank and all terms resulting
+from the exponential wave function ansatz are retained.
+   Among  the  most  interesting  solutions  in  this  category  are  the  approaches  discussed  in
+Refs. [117, 119–121, 127–139].  Another promising direction, which is the focus of this study,
+is the idea of the approximate coupled-pair (ACP) approaches [60–67, 125, 126, 140–146] and
+their various more recent reincarnations or modiﬁcations, including the 2CC approach and
+its nCC extensions [147, 148], the orbital invariant coupled electron pair approximation with
+an extensive  renormalized  triples correction [149],  the parameterized  CCSD  methods [150]
+
+                                                        4
+and  their  CCSDT-type  counterparts  [151],  and  the  distinguishable  cluster  approximation
+with  doubles  (DCD)  or  singles  and  doubles  (DCSD)  [52,  152–155]  (see,  also,  Refs.  [156–
+158])  and  its  DCSD(T)  [154]  and  DCSDT  [151,  159,  160]  extensions  to  connected  triples
+(see Ref. [161] for a review).  At the doubles or singles and doubles levels, the ACP methods
+have the relatively inexpensive n2on4u or  N  6 computational costs similar to CCD/CCSD, but
+by using the appropriately chosen subsets of non-linear (T2)2  diagrams of the CCD/CCSD
+amplitude equations, they greatly improve the performance of CCD/CCSD in strongly cor-
+related situations,  including  single and multiple  bond dissociations [52, 150, 152–156, 162]
+and, what is particularly intriguing, the low-dimensional metallic-like systems and symmet-
+rically stretched hydrogen rings, linear chains, and cubic lattices, where the conventional CC
+treatments completely  break down [52, 60–67] (we use the usual notation in which  no  and
+nu  are the numbers of correlated occupied and unoccupied orbitals, respectively, and  N   is
+a measure of the system size).  As further elaborated on in Section II, these improvements in
+the performance of conventional single-reference CC approaches are not a coincidence.  One
+can prove that there exist subsets of CCSD diagrams that result in an exact description of
+certain  strongly  correlated  minimum-basis-set  model  systems  [64,  125, 126],  i.e.,  the  ACP
+methodologies provide a rigorous basis for developing relatively inexpensive CC-like schemes
+for strong correlations (a multi-reference extension of the ACP ideas can also help genuine
+multi-reference  CC approaches,  especially  when  multi-determinantal  model spaces  become
+inadequate [163], but in this study we focus on the single-reference ACP framework).
+
+   Having stated all of the above, there remain several open problems that need to be ad-
+dressed  before  the  ACP  methods  can  be  routinely  applied  to  realistic  strongly  correlated
+systems, i.e., systems involving larger numbers of strongly correlated electrons described by
+ab  initio  Hamiltonians  and  larger  basis  sets.   One  of  the  main  problems  is  the  neglect  of
+connected triply excited (T3) clusters in typical ACP methods.  The low-dimensional model
+systems with small band gaps, such as the aforementioned cyclic polyenes near their strongly
+correlated limits, do not suﬀer from this a lot [63, 65], since their accurate description relies
+on  Tn  clusters  with  even  values  of  n  >  2,  but  one  cannot  produce  quantitative  results  in
+the  majority  of  realistic  chemistry  applications  without  T3.   The  previous  attempts  to  in-
+corporate  connected  triply  excited  clusters  within  the  ACP  framework  using  conventional
+arguments based on the many-body perturbation theory (MBPT), similar to those exploited
+in CCD[ST] ≡ CCD+ST(CCD) [164], CCSD[T] ≡ CCSD+T(CCSD) [165], CCSD(T) [166],
+
+                                                        5
+or CCSDT-1 [167, 168], have  only been  partly successful  [63, 65, 66, 126, 146, 154].  They
+improved  the  ACP  results  in  the  weakly  and  moderately  correlated  regions  of  the  cyclic
+polyene models, but did not help in the strongly correlated regime [63, 65].  The aforemen-
+tioned proposals how to include connected triply excited clusters in the parameterized CCSD
+and DCSD methods [151, 154, 159, 160] and the nCC approaches with n > 2, which incor-
+porate T3 as well [147, 148], while being helpful in some cases of bond breaking, have never
+been  applied  to  strongly  correlated  systems  involving  the  entanglement  of  larger  numbers
+of electrons.  Thus, it remains unclear how to produce a computationally eﬃcient ACP-type
+procedure  that would  include  the  information  about connected  triply  excited  clusters  and
+work well in such situations at the same time.  Another open problem pertains to the fact
+that the speciﬁc combinations of (T2)2 diagrams that result in the ACP methods that work
+well in the strongly correlated regime of the minimum-basis-set model systems, such as the
+π-electron  networks  of  cyclic  polyenes,  as  described  by  the  Hubbard  and  PPP  Hamiltoni-
+ans  [60–67,  125,  126,  140]  (see  Section  II  for  further  information),  may  not  necessarily  be
+optimum when larger basis sets are employed.
+
+   We examine both of these topics in the present study.  We deal with the problem of the
+missing T3 physics by adopting the active-space CC ideas [21, 25, 26, 169–189] to incorporate
+the dominant triply excited amplitudes in the ACP methods in a robust, yet computation-
+ally aﬀordable,  manner.  We show  that the active-space  triples  ACP  approaches  examined
+in  this  work,  which,  following  the  naming  convention  introduced  in  Refs.  [177,  178],  are
+collectively  abbreviated  as  ACCSDt,  do  not  suﬀer  from  the  previously  observed  [63,  65]
+convergence problems resulting from the use of MBPT-based estimates of T3  contributions
+within the ACP framework in a strongly correlated regime.  Furthermore, by incorporating
+the leading triply excited cluster amplitudes in an iterative manner, the ACCSDt methods
+developed in this study allow the T1  and T2  clusters and, in particular, the subsets of (T2)2
+contributions responsible  for an accurate description  of strong correlations, to relax in the
+presence of the dominant T3  amplitudes.  The active-space ACCSDt schemes are also char-
+acterized by the systematic convergence toward their ACCSDT parents, in which T3 clusters
+are treated fully, when the numbers of active occupied and active unoccupied orbitals used
+in the ACCSDt calculations increase.  The issue of adjusting the (T2)2 diagram combinations
+in the ACP amplitude equations to the numbers of occupied and unoccupied orbitals used in
+the calculations is explored in this study by testing a novel form of the ACP theory, abbre-
+
+                                                       6
+viated as ACCSD(1,3 ×     nono+nu + 4 ×     nuno+nu ), and its extensions accounting for T3 correlations,
+abbreviated as ACCSDt(1,3 ×      nono+nu  + 4 ×      nuno+nu ) and ACCSDT(1,3 ×      nono+nu  + 4 ×      nuno+nu ),
+which utilize the no- and nu-dependent scaling factors multiplying the (T2)2  diagrams kept
+in  the  calculations.    At  the  singles  and  doubles  level  and  when  no  =  nu,  i.e.,  when  a
+minimum  basis  set  is  employed,  the  ACCSD(1,3 ×      nono+nu  + 4 ×      nuno+nu )  scheme  reduces  to
+the  DCSD  approach  of  Ref.  [52],  which,  in  analogy  to  the  closely  related  ACP-D13  and
+ACP-D14  methods  introduced  in  Ref.  [64],  becomes  exact  in  the  strongly  correlated  limit
+of cyclic polyenes modeled by the Hubbard and PPP Hamiltonians.  At the same time, the
+ACCSDT(1,3 ×      nono+nu  + 4 ×      nuno+nu ) approach becomes equivalent  to the ACP-D14 method
+of Ref. [64] augmented with T1 and T3 clusters when no ≪ nu, which does, based on our nu-
+merical tests, including those discussed in Section III, improve the ACCSDT(1, 3+42  ) results,
+obtained by embedding ACCSD(1, 3+42  ) = DCSD in CCSDT, in calculations using larger basis
+sets.  By examining the symmetric dissociations of the H6 and H10 rings, as described by ba-
+sis sets of the triple- and double-ζ quality, for which the exact, FCI, calculations are feasible,
+and the H50 linear chain treated with a minimum basis, for which the nearly exact, DMRG,
+results are available [47], we show that the active-space  ACCSDt(1,3 ×      nono+nu  + 4 ×      nuno+nu )
+method and its ACCSDT(1,3 ×      nono+nu + 4 ×      nuno+nu ) parent accurately reproduce the FCI (H6
+and H10) and DMRG (H50) energetics, while improving the ACCSD(1,3 ×      nono+nu + 4 ×     nuno+nu )
+results and eliminating catastrophic failures of CCSD and CCSDT in the strongly correlated
+regions.  Because of the use of basis sets larger than a minimum one in calculations for the
+H6  and H10  ring systems, we also demonstrate that ACCSDt(1,3 ×      nono+nu  + 4 ×      nuno+nu ) and
+other  ACCSDt  schemes  recover  the  corresponding  ACCSDT  results,  including  a  strongly
+correlated regime, at the tiny fraction of the computational cost.
+
+
+
+
+II.     THEORY AND  COMPUTATIONAL  DETAILS
+
+
+   A.     Overview  of  the  ACP  Schemes
+
+
+   Historically, a variety of diﬀerent ways of rationalizing the ACP and related methods using
+subsets  of non-linear  diagrams within  a  CCD/CCSD  framework  have  been  considered  (cf.
+Refs. [52, 60, 64, 65, 125, 126, 140–145, 147–150, 161]).  Given the objectives of this study, we
+begin our discussion with the past numerical observations and mathematical analyses that
+
+                                                        7
+allow us to understand the ability of such methods to describe strongly correlated electrons.
+Let us focus for a moment on a simpler CCD case, so that we do not have to worry about
+the  less  essential,  but more  numerous,  contributions  containing  the T1  cluster  component.
+Using the language of Goldstone–Brandow (Goldstone–Hugenholtz) diagrams, utilized in the
+derivations whenever the orthogonally spin-adapted description [14, 34, 125, 126, 140, 190–
+197], important for the understanding of the earliest ACP models, is desired, one may show
+that of the ﬁve Goldstone–Brandow (T2)2 diagrams of the CCD amplitude equations,
+   ⟨ΦAB⏐⏐[HN(1 + T2 +  1              ⏐⏐Φ⟩ =  Sr⟨ΦAB⏐⏐[HN(1 + T2)]C⏐⏐Φ⟩ +            5∑
+ Sr    IJ                     2T 22 )]C              IJ                                 Λ(2)k  (AB, IJ; Sr) = 0,
+                                                                                    k=1
+                                                                                                                 (3)
+represented  in  Eq.  (3)  by  the  Λ(2)k  (AB, IJ; Sr), k  =  1–5,  terms  and  shown  in  Fig.  1  as
+diagrams (1)–(5), only two, namely, diagrams (4) and (5), which are separable over the hole
+line(s), are needed to eliminate the pole singularities plaguing linearized CCD in situations
+involving electronic quasi-degeneracies [60–62, 141–143].  Here, we use the notation in which
+HN  = H −⟨Φ|H|Φ⟩ is the Hamiltonian in the normal-ordered form and subscript C indicates⟩
+the  connected  operator product.  The  ⏐⏐ΦABIJ          Sr  states  in  Eq.  (3),  where  I  and  J  designate
+the  occupied  and  A  and  B  the  unoccupied  spatial  orbitals  in  the  closed-shell  reference
+determinant  |Φ⟩ and Sr  = 0 or 1 is  the  intermediate  spin  quantum  number,  represent  the
+singlet particle-particle–hole-hole (pp–hh) coupled orthogonally spin-adapted doubly excited
+conﬁguration  state  functions  (CSFs).  Using  these  functions,  the  T2  operator  entering  Eq.
+(3), represented in Fig. 1 by the oval-shaped vertices, is deﬁned as
+
+                               1∑                   ⟩          ∑       1∑                              ⟩
+        T2|Φ⟩ =    ∑               tIJAB(Sr) ⏐⏐ΦABIJ Sr =  14             (N ABIJ  )−2 tIJAB(Sr) ⏐⏐ΦABIJSr ,       (4)
+                   I≤J,A≤B   Sr=0                             IJAB   Sr=0
+where tIJAB(Sr) are the corresponding spin-adapted doubly excited cluster amplitudes and
+
+                                      N ABIJ   = [(1 + δIJ)(1 + δAB)]−1/2,                                              (5)
+
+with  δIJ  and  δAB  designating  Kronecker  deltas,  is  the  appropriate  normalization  factor
+[14, 125, 126, 140, 191–193].  The ACP approach obtained using only the 4th and 5th (T2)2
+contributions in Eq. (3), Λ(2)4  (AB, IJ; Sr) and Λ(2)5  (AB, IJ; Sr), respectively,  has originally
+been  called  ACP-D45 [141–143] or ACCD  [144, 145].  As  shown  in Refs.  [60–62, 141–145],
+using the aforementioned cyclic polyene models, CNHN, in a π-electron approximation, de-
+scribed by the Hubbard and PPP Hamiltonians, where one places N  = 4n + 2, n = 1, 2, . . . ,
+
+                                                        8
+carbon  atoms  on  a  ring,  and  several  ab  initio  systems,  including  small  hydrogen  clusters,
+beryllium atom, and small molecules, the ACP-D45 method is as accurate as CCD in weakly
+correlated  cases  with  no  electronic  quasi-degeneracies,  while  representing  an  excellent  ap-
+proximation in strongly correlated, highly degenerate situations, where the linearized CCD
+[60–62,  141–143]  or  even  the  full  CCD  [60–66],  CCD  corrected  for  connected  triples  via
+perturbative approximations of the CCD[ST] or CCSD[T] and CCSDT-1 types [63, 65, 66],
+CCSDT  [67],  and  CCSDTQ  [67]  are  plagued  with  singularities  or  divergent  behavior.   At
+the time of the initial discovery of the ACP-D45 or ACCD scheme, this remarkable behavior
+was partially explained by the mutual cancellation of the contributions arising from the ﬁrst
+three diagrams in Fig. 1, observed numerically [60, 141–143] and advocated mathematically
+by  considering  the  limit  of  non-interacting  electron  pairs  [144].   However,  this  could  not
+explain  why  the  ACP-D45  approach,  using  only  two  of  the  ﬁve  (T2)2  Goldstone–Brandow
+diagrams of CCD, works so well in the strongly correlated, β = 0, limit of the cyclic polyene
+models, where CCD completely fails, producing branch point singularities and complex so-
+lutions for cyclic polyenes with 14 or more carbon sites as β  approaches 0 from the weakly
+correlated  β  ≪  0  region  [60–66]  (β  is  the  parameter  scaling  the  one-electron  part  of  the
+Hubbard or PPP Hamiltonians; in the Hubbard Hamiltonian case, β is equivalent to −t/U,
+where t and U  are the parameters controlling the kinetic energy characterizing the hopping
+of electrons between nearest neighbors and on-site electron-electron repulsion, respectively).
+In fact, it was observed that ACP-D45 is exact in the strongly correlated, β = 0, limit of the
+Hubbard model [60–66], while being accurate for the PPP Hamiltonian and other β values.
+Other selections of CCD or CCSD (T2)2 diagrams were considered by several authors in re-
+cent years [52, 147, 148, 150, 152–158], with some choices being similar or even identical to
+the original ACP approaches examined in Refs. [60–67, 125, 126, 140–146], seeking diagram
+combinations that work better than CCD/CCSD in bond breaking situations, but none of
+these recent studies have provided rigorous mathematical arguments why the ACP methods,
+such as ACP-D45, can be exact or nearly exact in strongly correlated situations of the type
+of those created by the cyclic polyene models in the β ≈ 0 region.
+
+   The  major  breakthrough  in  the  understanding  of  the  superb  performance  of  the  ACP-
+D45 approach in a strongly correlated regime came in 1984 [125], followed by two other key
+articles  published  in  1991 [64] and  1996 [126].  By  performing cluster  analysis  [124]  of the
+PUHF wave function within the orthogonally spin-adapted framework, in which the PUHF
+
+                                                       9
+state  was  assumed  to  be  exact,  and  using  the  philosophy  of  the  externally  corrected  CC
+methods  [125,  126,  161,  198–209],  the  authors  of  Refs.  [125,  126]  demonstrated  that  the
+T4  cluster  component  extracted  from  PUHF  with  the  help  of  the  Thouless  theorem  and
+read into the  CCD  system,  Eq.  (3),  (Ref. [125]) or its  CCSD  extension  (Ref. [126]) as the⟨ΦAB⏐⏐(HNT4)C⏐⏐Φ⟩ contribution cancels out the ﬁrst three of the ﬁve diagrams in Fig. 1,
+
+Sr   IJ
+while multiplying the ﬁfth diagram in the equations projected on the singlet pp–hh coupled⟩
+orthogonally spin-adapted doubly excited ⏐⏐ΦABIJ             Sr  CSFs with the intermediate spin Sr = 1
+by  a factor  of 9 (in  principle,  the  analogous  T3-containing  contributions  should  have  been
+read  into  the  CCD  or  CCSD  systems  too,  but  they  were  not,  since  T3  extracted  from  the
+PUHF  wave  function,  represented  as  a  CC  state  relative  to  the  restricted  Hartree–Fock
+(RHF) reference determinant,  vanishes [125, 126]).  The PUHF wave function provides ex-
+act energies and cluster amplitudes for the PPP and Hubbard Hamiltonian models of cyclic
+polyenes in the strongly correlated, β = 0, limit, so the resulting ACP-D459  theory, abbre-
+viated as ACPQ [125] or ACCD′  [126], using Λ(2)4  (AB, IJ; Sr) + (2Sr + 1)2Λ(2)5  (AB, IJ; Sr)
+instead of ∑5k=1 Λ(2)k  (AB, IJ; Sr) to represent  the (T2)2  contributions within the CCD sys-
+tem, Eq. (3), is mathematically exact in this limit, in complete agreement with the numerical
+observations  [60–67] (the T1  contributions  can be ignored here,  since  T1  = 0 for the  cyclic
+polyene  models  described  by  the  PPP  and  Hubbard  Hamiltonians).   The  aforementioned
+factor of 9, which is simply the square of the multiplicity associated with the intermediate
+spin  value  Sr  =  1,  was  a  result  of  using  the  orthogonally  spin-adapted  formalism;  with-
+out  using  this  formalism  and  without  the  exploitation  of  the  appropriate  many-body  and
+angular momentum  diagrammatic techniques  in Refs. [125, 126], one would not be able to
+see the emergence of (2Sr + 1)2  at the Λ(2)5  (AB, IJ; Sr) term corresponding to diagram (5)
+in  a  transparent  manner.   The  original  derivation  in  Ref.  [125]  assumed  that  the  PUHF
+wave function has no singlet-coupled singly excited CSFs relative to RHF, which is true for
+the PPP and Hubbard Hamiltonian models of cyclic polyenes due to symmetry, but not in
+general,  so  the  ACP-D459  = ACPQ  = ACCD′  scheme  and  its  more  complete  CCSD-level
+extension, where the T1 clusters are included as well, termed ACCSD′ [126], were rederived
+in Ref. [126].  Reference [126] also examined the CCSDQ′ approach and its triples-corrected
+CCSDQ′ + T(CCSDQ′) = CCSDQ′[T] extension, where one does not make any assumptions
+regarding the accuracy of PUHF and extracts the T4 cluster component from a PUHF wave
+function as is, showing additional improvements in some cases, but our focus here is on the
+
+                                                       10
+philosophy represented by the ACP methods, such as ACCSD′.  If the above factor of 9 at
+the ﬁfth diagram in Fig. 1 for the Sr = 1 case is ignored (and for the cyclic polyene models,
+as described  by  the  PPP  and Hubbard  Hamiltonians,  Λ(2)5  (AB, IJ; Sr) is  generally  small),
+the ACP-D459 = ACPQ = ACCD′  scheme,  derived in Ref. [125] and extended to a singles
+and doubles level in Ref. [126], reduces to the original ACP-D45 or ACCD approach of Refs.
+[141–145].  In fact, in the strongly correlated, β = 0, limit of cyclic polyenes described by the
+Hubbard  Hamiltonian,  the  Λ(2)5  (AB, IJ; Sr  = 1)  term  vanishes  [64],  so  that  the  ACP-D45
+approximation becomes exact in this case, as observed numerically [60–66].  When the above
+factor of 9 is included, as in the ACP-D459 = ACPQ = ACCD′ or ACCSD′ approaches, one
+ends up with an exact description of the strongly correlated, β = 0, limit of cyclic polyenes
+with 4n + 2 carbons on a ring and described by either the Hubbard or PPP Hamiltonians.
+This result is independent of n, i.e., it remains valid in the thermodynamic limit.
+
+   There are other selections  of the (T2)2  diagrams entering the CCD or CCSD amplitude
+equations that can also be exact in the strongly correlated regimes of model Hamiltonians.  In
+Ref. [64], the exactness of ACP-D459 = ACPQ = ACCD′ in the strongly correlated, β = 0,
+limit of the cyclic polyene models described by the Hubbard and PPP Hamiltonians was re-
+examined using back substitution of the exact T2  amplitudes extracted from a PUHF wave
+function into the CCD and ACP-D459  systems.  By doing so, it was proven that the exact
+T2 amplitudes satisfy the latter system, but not the former one, showing that ACP-D459 is
+exact when β  = 0 and CCD is not (as already mentioned,  CCD behaves  erratically in the
+β  =  0  limit).   Encouraged  by  the  usefulness  of  such  an  analysis,  the  authors  of  Ref.  [64]
+searched  for other  combinations  of  the  CCD  (T2)2  diagrams  that produce  exact  results  at
+β  =  0,  discovering  several  possibilities.   One  of  them,  using  diagrams  (1)  and  (4)  in  Fig.
+1  and  deﬁning  the  ACP-D14  approach,  is  Λ(2)1  (AB, IJ; Sr) + Λ(2)4  (AB, IJ; Sr).   As  shown
+in  Ref.  [64]  for  the  cyclic  polyene  models,  which  have  several  symmetries,  including  the
+p–h symmetry, Λ(2)3  (AB, IJ; Sr) = Λ(2)4  (AB, IJ; Sr), i.e., diagrams (3) and (4) in Fig. 1 are
+equivalent in this case.  Thus, one can also propose two other methods, ACP-D13 and ACP-
+D1(3+4)/2, which correspond to the following expressions for the (T2)2 contributions within
+a  CCD  or  CCSD  framework:   Λ(2)1  (AB, IJ; Sr) + Λ(2)3  (AB, IJ; Sr)  and  Λ(2)1  (AB, IJ; Sr) +
+[Λ(2)3  (AB, IJ; Sr) + Λ(2)4  (AB, IJ; Sr)]/2,  respectively.   All  three  methods,  ACP-D13,  ACP-
+D14,  and  ACP-D1(3+4)/2,  are  exact  in  the  strongly  correlated,  β  =  0,  limit  of  cyclic
+polyenes  described  by  the  Hubbard  and  PPP  Hamiltonians,  i.e.,  it  is  worth  considering
+
+                                                      11
+them all.  The performance of the ACP-D14 approach in the calculations for cyclic polyenes
+in  the  entire  range  of  β  values,  from  the  weakly  to  the  strongly  correlated  regimes  and
+systems  as  large  as  C22H22,  was  examined  in  Ref.  [64],  showing  the  excellent  and  non-
+singular behavior similar to the ACP-D459 = ACPQ = ACCD′ methods tested in Refs. [60–
+66].  The calculations using the other two approaches, ACP-D13 and ACP-D1(3+4)/2, were
+not reported in Ref. [64], since they would produce identical results due to the p–h symmetry
+intrinsic to the cyclic  polyene models.  The ACP-D1(3+4)/2 approach, rationalized by the
+1991 analysis in Ref. [64], is equivalent to the recently pursued DCD method of Refs. [52, 152–
+155].   By  averaging  diagrams  (3)  and  (4),  which  are  the  p–h  versions  of  each  other,  the
+ACP-D1(3+4)/2  =  DCD  model  attempts  to  reinforce  the  p–h  symmetry,  even  if  there  is
+none in the Hamiltonian.  Time will tell if it is beneﬁcial to do this in ab initio applications
+involving strongly correlated situations, that is, if using DCD and its CCSD-like extension,
+termed  DCSD  [52,  152–155],  is  an  overall  better  idea  than  using  the  older  ACP-D459  =
+ACPQ  =  ACCD′  and  ACCSD′  approaches.   The  performance  of  the  latter  approach  in
+bond  breaking  situations  was  examined  as  early  as  in  1996  [162],  but  our  knowledge  of
+the relative  performance of these  diﬀerent  ACP  variants,  especially  in large-scale  ab  initio
+studies, is still rather limited, although various combinations of (T2)2 diagrams within CCSD
+have been examined in Refs. [52, 150, 152–156, 158], showing encouraging results.
+
+   There is no doubt that numerical tests of the various ACP-type approximations will con-
+tinue  to  be  helpful,  but  in  order  for  these  methods  to  become  successful  and  widely  used
+in  the  longer  term,  especially  in  the  examination  of  problems  involving  larger  numbers  of
+strongly correlated electrons that cannot be handled by the existing multi-reference methods,
+selected CI, or DMRG, one has to address several issues.  The above discussion implies that
+the ACP-D13, ACP-D14, ACP-D1(3+4)/2 = DCD, and ACP-D459 = ACPQ = ACCD′ ap-
+proaches, obtained by considering subsets of (T2)2 diagrams within the CCD system, Eq. (3),
+and their extensions incorporating T1  clusters are more robust than the traditional CCSD,
+CCSDT, CCSDTQ, etc. hierarchy in strongly correlated situations, but the main rationale
+behind their usefulness is based on considering strongly correlated limits of highly symmetric,
+minimum-basis-set, model Hamiltonians.  It is not immediately obvious that the same com-
+binations of (T2)2 diagrams remain optimum when larger basis sets, required by quantitative
+ab initio  quantum chemistry, are employed.  More importantly, as already explained above,
+the T3 physics is absent in the ACP approaches derived within a CCD/CCSD framework or
+
+                                                      12
+its PUHF-driven externally corrected extensions, in which, as shown, for example, in Refs.
+[125, 126], T3 = 0.  In other words, the ACP methods obtained by selecting and modifying
+(T2)2 diagrams within CCD or CCSD, while capturing strong non-dynamical correlations in
+a computationally manageable fashion, even when the numbers of strongly correlated elec-
+trons are larger, and providing T1 and T2 clusters that are more accurate than those obtained
+with CCD or CCSD, oﬀer incomplete information about dynamical correlation eﬀects, which
+cannot  be  accurately  described  without  the  connected  T3  clusters.   As  pointed  out  in  the
+Introduction, the previously developed ACP schemes  corrected for the eﬀects of connected
+triply  excited  clusters  using  arguments  originating  from  MBPT  [126,  140,  146]  have  only
+had partial success  when  examining  cyclic  polyene  models  [63, 65, 66],  whereas  the recent
+attempts to include T3 correlations in parameterized CCSD and DCSD [151, 154, 159, 160]
+or  via  the  nCC  hierarchy  [147,  148]  have  not  been  applied  to  strongly  correlated  systems
+involving the entanglement of larger numbers of electrons that interest us in this study most.
+It is, therefore, useful to consider alternative ways of handling connected triply excited clus-
+ters  within  the  ACP  methodology  that  might  result  in  practical  computational  schemes,
+while having the potential for working well in a strongly correlated regime.  We discuss such
+approaches in the next subsection.
+
+
+
+   B.     The  Proposed  ACP  Approaches
+
+
+   In searching for the combinations of (T2)2  diagrams that might potentially improve  the
+ACP  results  corrected  for  T3  correlations  when  larger  basis  sets  are  employed,  it  is  worth
+noticing  that  one  could  retain  the  exactness  of  the  ACP  approaches  using  diagrams  (1),
+(3), and (4) in Fig. 1 in the strongly correlated limit of cyclic polyenes, as described by the
+Hubbard and PPP Hamiltonians, by considering other combinations of diagrams (3) and (4)
+than those used  in the ACP-D13,  ACP-D14, and ACP-D1(3+4)/2 = DCD methods.  One
+could, in fact, replace the ∑5k=1 Λ(2)k  (AB, IJ; Sr) contribution to the CCD system, Eq. (3),
+originating from the ﬁve (T2)2 diagrams shown in Fig. 1, by
+
+                 Λ(2)1  (AB, IJ; Sr) + λ Λ(2)3  (AB, IJ; Sr) + (1 − λ) Λ(2)4  (AB, IJ; Sr)                   (6)
+
+with  an  arbitrary  value  of  λ,  and  still  be  exact  in  the  β  =  0  limit  of  the  cyclic  polyene
+models.   In  ACP-D1(3+4)/2  =  DCD  and  its  DCSD  extension  incorporating  T1  clusters,
+
+                                                       13
+one  uses  λ  =    12,  which  is  appropriate  for  cyclic  polyenes,  as  described  by  the  Hubbard
+and  PPP  Hamiltonians  that  have  the  p–h  symmetry,  and  justiﬁed  in  the  case  of  other
+strongly correlated systems, such as the hydrogen clusters examined in this work described
+by  the  ab  initio  Hamiltonians,  as  long as  one  uses  a minimum  basis  set,  for which  the  p–
+h  symmetry  is  approximately  satisﬁed,  but  this  does  not  necessarily  mean  that  λ  =   12  is
+the  optimum  choice  for  larger  basis  sets,  particularly  when  the  predominantly  dynamical
+T3  correlations are included in the calculations.  By numerically examining several strongly
+correlated systems treated with various basis sets, including the dissociating rings and linear
+chains composed of varying numbers of hydrogen atoms, such as those discussed in Section
+III, we have noticed that the ACP-D14 approximation, which uses λ = 0 in Eq. (6), works
+better when applied to the (T2)2 diagrams of the CCSDT amplitude equations projected on
+the  doubly  excited  CSFs  than its  λ =   12  ACP-D1(3+4)/2 = DCD counterpart  when  nu  is
+greater than no.  This is especially true in the nu ≫ no  case, i.e., when larger basis sets are
+employed.  This observation suggests that in the case of the ACP approaches using diagrams
+(1),  (3),  and  (4)  of  Fig.  1  within  the  CCSDT-type  framework,  it  might  be  beneﬁcial  to
+scale up diagram (4) in Eq. (6) by decreasing the coeﬃcient λ, i.e., by increasing (1 − λ) at
+Λ(2)4  (AB, IJ; Sr), when nu  becomes larger.  The simplest expression for λ that allows us to
+accomplish this objective,  while being invariant with respect to no  and nu  if both of these
+numbers  are  simultaneously  scaled  by  the  same  factor,  is  λ  =       nono+nu .   At  the  singles  and
+doubles  level,  the  resulting  ACP  scheme,  in  which  the  ∑5k=1 Λ(2)k  (AB, IJ; Sr) contribution
+to the CCSD  equations  projected  on the  doubly  excited  CSFs is  replaced  by  Eq.  (6) with
+λ =      nono+nu , is referred to as the ACCSD(1,3×     nono+nu +4×     nuno+nu ) method.  When no = nu, the
+ACCSD(1,3×     nono+nu +4×     nuno+nu ) scheme reduces to the DCSD approach, which is, in view of
+the above discussion, a desired behavior.  At the same time, ACCSD(1,3×     nono+nu +4×     nuno+nu )
+becomes  equivalent  to  the  extension  of  the  ACP-D14  approximation  to  the  singles  and
+doubles level when nu → ∞.
+
+   In  analogy  to  the  ACP-D13,  ACP-D14,  and  ACP-D1(3+4)/2  approaches  augmented
+with the T1 clusters within a CCSD framework, abbreviated in this article as ACCSD(1,3),
+ACCSD(1,4),  and  ACCSD(1, 3+42  ),  respectively,  which  correspond  to  setting  λ  in  Eq.  (6)
+at  1  [ACCSD(1,3)],  0  [ACCSD(1,4)],  and   12  [ACCSD(1, 3+42  )],  the  ACCSD(1,3 ×       nono+nu  +
+4 ×       nuno+nu )  scheme  is  exact  in  the  strongly  correlated,  β  =  0,  limit  of  cyclic  polyenes,
+C4n+2H4n+2, as described by the Hubbard and PPP Hamiltonians, independent of the value
+
+                                                        14
+of n.  Being equivalent to the DCSD method when no = nu, it is also exact for two-electron
+systems  or  non-interacting  electron  pairs  in  a  minimum  basis  set  description.   Although,
+unlike  DCSD,  the  ACCSD(1,3 ×      nono+nu  + 4 ×      nuno+nu )  approach  is  no  longer  exact  for  two-
+electron  systems  when  nu  >  no,  the  errors  relative  to  FCI  for  species  like  H2  and  HeH+
+remain  very  small,  on  the  order  of  1–2  %  of  the  correlation  energy,  even  when  nu  ≫  no.
+Furthermore, as shown in Section III, using the symmetric dissociations of the H6  and H10
+rings as examples, the use of the ACCSD(1,3 ×     nono+nu + 4 ×     nuno+nu ) protocol within a CCSDT
+framework  through  the  ACCSDT(1,3 ×      nono+nu  + 4 ×      nuno+nu )  approach  and  its  active-space
+ACCSDt(1,3 ×      nono+nu  + 4 ×      nuno+nu )  counterpart,  which  we  discuss  next,  in  applications  to
+strongly correlated systems described by basis sets larger than a minimum one improves the
+results compared to the ACCSDT and ACCSDt calculations that adopt the (T2)2  diagram
+selections deﬁning ACCSD(1,3), ACCSD(1,4), and ACCSD(1, 3+42  ).  While we will continue
+examining this theory aspect in the future, the beneﬁts of applying the ACCSD(1,3×     nono+nu +
+4 ×      nuno+nu ) approximation within a CCSDT-level description outweigh the loss of exactness
+in calculations for two-electron systems with nu > no, especially when the errors relative to
+FCI are as small as mentioned above (and none when nu = no).
+   Given the above discussion, we now move to the robust ways of incorporating T3 correla-
+tions in the ACP schemes in which the ∑5k=1 Λ(2)k  (AB, IJ; Sr) contribution to the amplitude
+equations projected on the doubly excited CSFs is replaced by Eq. (6).  Although our focus
+is on including the connected triply excited clusters in the ACCSD(1,3 ×      nono+nu + 4 ×      nuno+nu )
+approach  corresponding  to  λ  =       nono+nu  through  the  use  of  the  active-space  ACCSDt(1,3 ×
+
+  no
+no+nu  + 4 ×      nuno+nu )  approximation  and  its  ACCSDT(1,3 ×      nono+nu  + 4 ×      nuno+nu )  parent,  we
+discuss the analogous ACCSDt and ACCSDT extensions of the ACCSD(1,3), ACCSD(1,4),
+and ACCSD(1, 3+42  ) = DCSD methods as well.
+   We recall that the main idea of all active-space CC methods and their excited-state and
+open-shell  extensions  is  that of  the  selection  of the  leading  higher–than–two-body  compo-
+nents of the cluster and excitation operators, such T3 or T3 and T4, with the help of a small
+subset of orbitals around the Fermi level relevant to the quasi-degeneracy problem of interest
+[21, 25, 26, 169–185, 187–189] (see Ref. [186] for a review).  Typically, this is accomplished by
+partitioning the spin-orbitals used in the calculations into the core, active occupied, active
+unoccupied,  and virtual subsets  and constraining  the spin-orbital indices  in the Tn  cluster
+amplitudes  with  n  >  2  and  the  corresponding  excitation  operators  such  that  one  can  re-
+
+                                                       15
+produce the parent CCSDT, CCSDTQ, etc. energetics, including problems characterized by
+stronger  multi-reference  correlations,  at the  small  fraction  of the  computational  costs  and
+with minimum loss of accuracy.  In the leading approach in the active-space CC hierarchy,
+which was originally developed and implemented in Refs. [21, 170, 171, 173, 175] and which
+is nowadays abbreviated as CCSDt [177, 178], we approximate the cluster operator T  by
+
+                                           T (CCSDt) = T1 + T2 + t3,                                                    (7)
+
+where  T1  and  T2  are  the  usual  one-  and  two-body  components  of  T ,  treated  fully,  and
+the  three-body  component  t3,  written  in  the  conventional  spin-orbital  notation  in  which
+i, j, k, . . . (a, b, c, . . .) designate the spin-orbitals occupied (unoccupied) in the reference de-
+terminant |Φ⟩, is deﬁned as
+                                            t3|Φ⟩ =  ∑       tijk     bc⟩.                                                     (8)
+                                                              abc |Φaijk
+                                                      i<j<k
+                                                      a<b<c
+The underlined bold indices in the triply excited cluster amplitudes tijkabc and the correspond-
+ing  triply  excited  determinants  |Φabc⟩  entering  Eq.  (8)  denote  active  spin-orbitals  in  the
+                                             ijk
+respective categories (k       active occupied and a         active unoccupied ones).  The singly, doubly,
+and triply excited amplitudes (or their spin-adapted counterparts) needed to determine the
+cluster operator T (CCSDt), Eq. (7), are obtained in the usual way by projecting the electronic
+Schr¨odinger  equation,  with the CCSDt wave  function |Ψ(CCSDt)⟩ = exp(T (CCSDt))|Φ⟩ in it,
+on  the  excited  Slater  determinants  (in  the  spin-adapted  case,  CSFs)  corresponding  to  the
+content of T (CCSDt).  As in the case of all single-reference CC theories, the CCSDt energy is
+obtained by projecting the Schr¨odinger equation on the reference determinant |Φ⟩.
+   The CCSDt methodology has several features that are useful in the context of the ACP
+considerations  pursued  in  this  study.   First,  and  foremost,  it  allows  us  to  bring  informa-
+tion  about  the  leading  T3  correlations,  which  are  absent  in  ACCSD(1,3),  ACCSD(1,4),
+ACCSD(1, 3+42  ) = DCSD, and ACCSD(1,3×     nono+nu +4×     nuno+nu ), in a computationally eﬃcient
+manner.  Indeed, if No (< no) and Nu (≪ nu) designate the numbers of the active occupied
+and  active  unoccupied  orbitals,  respectively,  the  CCSDt  protocol,  as  brieﬂy  summarized
+above, replaces the expensive  computational steps of the parent CCSDT treatment, which
+scale  as  n3on5u,  by  the  much  more  manageable  NoNun2on4u  operations.   At  the  same  time,
+the CCSDt calculations reduce the ∼ n3on3u (i.e.,  N  6-type) storage requirements associated
+with the full treatment of triply excited cluster amplitudes tijkabc to the much less demanding
+
+                                                        16
+∼  NoNun2on2u  (N  4-like)  level.   The  NoNun2on4u  computational  steps  of  CCSDt,  which  are
+essentially equivalent to the polynomial,  N  6-type, steps of CCSD multiplied by a relatively
+small prefactor proportional to the number of singles in the active space, are also much less
+expensive than typical costs of the CASSCF-based multi-reference CC or CI computations.
+   Another desirable  feature of the CCSDt methodology is its non-perturbative character,
+which  reduces  the  risk  of  introducing  divergent  behavior  in  a  strongly  correlated  regime
+observed  in  the  earlier  ACP  computations  using  MBPT-based  treatments  of  triples  [63,
+65,  66].   The  iterative  character  of  CCSDt,  which,  unlike  in  the  previously  explored  non-
+iterative  triples  corrections  to  the  ACP  and  related  DCSD  approaches  [63,  65,  66,  126,
+140,  146,  154],  allows  one  to  adjust  the  T1  and  T2  clusters,  including  the  (T2)2  diagrams
+responsible for capturing strong correlations, to the dominant T3 contributions, so that the
+relevant  dynamical  and non-dynamical  correlation eﬀects  are properly  coupled,  is a useful
+feature too.  Last but not least,  the deﬁnition of the triply excited  cluster  amplitudes  tijkabc,
+Eq.  (8),  adopted  by  the CCSDt  philosophy  guarantees  systematic  convergence  toward  the
+full treatment of triples as No and Nu approach no  and nu, respectively.
+   All of this suggests that one should be able to eﬃciently incorporate the connected triply
+excited clusters in the ACP considerations by replacing the CCSDt amplitude equations,
+
+                       ⟨Φai |[HN(1 + T1 + T2 +  12T 21  + t3 + T1T2 +  16T 31 )]C|Φ⟩ = 0,                        (9)
+
+         ⟨Φabij |[HN(1 + T1 + T2 +  12T 21  + t3 + T1T2 +  16T 31  + T1t3 +  12T 21 T2 +   124T 41 )]C|Φ⟩
+                              5∑
+                         +       Λ(2)k  (ab, ij) = 0,                                                                                (10)
+                            k=1
+                      ⟨Φabc|[HN(T2 + t3 + T1T2 + T1t3 +  1
+                          ijk                                         2T 22  +  12T 21 T2
+                                        + T2t3 +  12T 21 t3 +  12T1T 22  +  16T 31 T2)]C|Φ⟩ = 0,                      (11)
+where |Φai ⟩ and |Φabij ⟩ are the singly and doubly excited determinants, |Φabc⟩ are the selected
+                                                                                                 ijk
+triply excited determinants entering the deﬁnition of t3, Eq. (8), and Λ(2)k  (ab, ij), k = 1–5,
+are  the  ﬁve  Goldstone–Hugenholtz  diagrammatic  contributions  to  the  ⟨Φabij |(HN 12T 22 )C|Φ⟩
+term  in  the  equations  projected  on  the  doubly  excited  determinants,  by  their  ACCSDt
+counterparts, in which we replace Eq. (10) in the above system by
+
+         ⟨Φabij |[HN(1 + T1 + T2 +  12T 21  + t3 + T1T2 +  16T 31  + T1t3 +  12T 21 T2 +   124T 41 )]C|Φ⟩
+
+                         + Λ(2)1  (ab, ij) + λ Λ(2)3  (ab, ij) + (1 − λ) Λ(2)4  (ab, ij) = 0.                        (12)
+
+                                                          17
+As  already  alluded  to  above,  in  this  study  we  focus  on  the  ACCSDt(1,3 ×       nono+nu  + 4 ×
+
+  nu
+no+nu ) approach, in which λ in Eq. (12) is set at       nono+nu , and its performance in the strongly
+correlated  situations  created  by  the  H6  and  H10  rings  and  the  H50  linear  chain,  for  which
+the  exact,  FCI,  or  nearly  exact,  DMRG,  data  are  available,  although  the  closely  related
+ACCSDt(1,3), ACCSDt(1,4), and ACCSDt(1, 3+42  ) schemes  corresponding to λ = 1, 0, and
+
+1
+2,  respectively,  are  considered  in  our  calculations  as  well.   Along  with  the  ACCSDt(1,3 ×
+  no
+no+nu + 4 ×     nuno+nu ), ACCSDt(1,3), ACCSDt(1,4), and ACCSDt(1, 3+42  ) methods, we examine
+their ACCSDT(1,3×     nono+nu +4×     nuno+nu ), ACCSDT(1,3), ACCSDT(1,4), and ACCSDT(1, 3+42  )
+parents, which are obtained by replacing t3 in Eqs. (9), (11), and (12) by its T3 counterpart,
+i.e.,  by  making  all  orbitals  used  to  deﬁne  the  triply  excited  amplitudes  and  determinants
+active.  Unlike in Refs. [147, 148, 151, 159, 160], where the authors were primarily interested
+in retaining the exactness for three-electron systems, we do not attempt to alter or simplify
+the amplitude equations corresponding to the projections on the triply excited determinants
+in  our  ACCSDt  and  ACCSDT  schemes.   Our  main  interest  in  this  exploratory  study  is
+the  examination  of  a  strongly  correlated  regime  of  the  type  of  metal–insulator  transitions
+modeled  by  the  dissociating  hydrogen  rings  and  linear  chains,  and  model  systems  that
+were used in the past to advocate diagram cancellations in similar situations, including the
+aforementioned  cyclic  polyenes  in  the  Hubbard  and  PPP  Hamiltonian  description,  do  not
+provide any speciﬁc guidance how to handle the connected triply excited clusters.  Thus, as
+shown  in  Eq.  (11),  we  keep  all  terms  in  the  CC  equations  projected  on  the  triply  excited
+determinants  resulting  from  the  use  of  the  exponential  wave  function  ansatz  in  which  the
+cluster operator T  is truncated at the three-body component, and then, whenever possible,
+i.e., when  the  basis  set used  in the calculations  is  larger than a minimum  one,  reduce  the
+computational costs associated with the full treatment of T3  by constraining the indices in
+the tijkabc  amplitudes following the CCSDt recipe deﬁned by Eq. (8).
+
+
+
+   C.     Computational Details
+
+
+   All of the triples-corrected ACP methods discussed in Section II B, which emerge from re-
+placing Eq. (10) in the CCSDt/CCSDT system by Eq. (12) with the appropriate λ values, in-
+cluding ACCSDt(1,3×     nono+nu +4×     nuno+nu ), ACCSDt(1,3), ACCSDt(1,4), and ACCSDt(1, 3+42  ),
+where the connected triply excited clusters are treated using active orbitals, and their respec-
+
+                                                        18
+tive ACCSDT(1,3×     nono+nu +4×     nuno+nu ), ACCSDT(1,3), ACCSDT(1,4), and ACCSDT(1, 3+42  )
+parents, in which T3 clusters are treated fully, have been implemented in our local version of
+the GAMESS package [210–212].  The resulting codes, which work with the RHF as well as
+restricted  open-shell  Hartree–Fock  references,  and  the  analogous  computer  programs  that
+enable the ACCSD(1,3×     nono+nu +4×     nuno+nu ), ACCSD(1,3), ACCSD(1,4), and ACCSD(1, 3+42  )
+= DCSD calculations, in which the connected triply excited clusters are neglected, have been
+generated  by  making  suitable  modiﬁcations  in  our  previously  developed  [213–216]  CCSD,
+CCSDt, and CCSDT GAMESS routines.  As in the case of other CC methodologies pursued
+by  our  group in  the past  (cf. Section  III.B  in  Ref. [212]  for the  relevant  information),  our
+plan is to make all of the above ACP schemes, with and without connected triples, available
+in the oﬃcial GAMESS distribution.
+
+   In  order  to test  the  performance  of  the  ACP  methods  implemented  in  this  work,  espe-
+cially  the  beneﬁts  oﬀered  by  the  active-space  ACCSDt(1,3 ×      nono+nu  + 4 ×      nuno+nu )  scheme
+and its ACCSDT(1,3 ×      nono+nu + 4 ×      nuno+nu ) parent compared to the remaining ACCSDt and
+ACCSDT approaches discussed in Section II B and the underlying ACCSD approximations
+in  a  strongly  correlated  regime,  we  carried  out  a  series  of  calculations  for  the  symmetric
+dissociations  of the  H6  and H10  rings and the H50  linear chain,  for which  the conventional
+CCSD, CCSDt, and CCSDT methods fail as the H–H distances simultaneously increase.  In
+the case of the D6h-symmetric  H6  and D10h-symmetric H10  ring systems,  we employed  the
+largest basis sets that allowed us to perform the exact, FCI, computations using the deter-
+minantal FCI code [106, 107, 217] available in GAMESS. Those were the polarized valence
+correlation-consistent basis set of the triple-ζ  quality using spherical d functions, commonly
+abbreviated  as  cc-pVTZ  [218],  for  H6,  which  results  in  the  many-electron  Hilbert  space
+spanned by ∼ 109  singlet CSFs, and the double-ζ  (DZ) basis of Refs. [219, 220] in the case
+of H10, giving rise to a FCI problem on the order of 107 singlet CSFs (we could not use basis
+sets of the triple-ζ quality or a DZ basis augmented with polarization functions in the latter
+case, since the resulting Hamiltonian diagonalizations using the FCI algorithms available in
+GAMESS  turned  out  to be  prohibitively  expensive  for  us).  In  addition  to  illustrating  the
+computational eﬃciency of our active-space ACCSDt schemes compared to their ACCSDT
+counterparts, the use of basis sets larger than a minimum one for the H6 and H10 systems al-
+lows us to demonstrate that scaling diagrams (3) and (4) in ACCSDt(1,3×     nono+nu +4×     nuno+nu )
+and ACCSDT(1,3×     nono+nu +4×     nuno+nu ) with factors depending on the numbers of occupied and
+
+                                                      19
+unoccupied orbitals involved in the calculations can beneﬁt the resulting energetics.  When
+considering  the  symmetric  dissociation  of the equidistant  H50  linear chain,  we  had to pro-
+ceed diﬀerently.  In this case,  the exact Hamiltonian diagonalization becomes prohibitively
+expensive  even  when  a  minimum  basis  set  is  employed  (when  no  =  nu  =  25,  one  already
+needs ∼ 1027 singlet CSFs to deﬁne the corresponding many-electron Hilbert space).  Thus,
+in applying the ACP approaches examined in this study to the H50 linear chain, we relied on
+the nearly exact results reported for this system in Ref. [47], which were obtained with the
+DMRG algorithm abbreviated as LDMRG(500) and the STO-6G minimum basis set [221].
+All of the CC (CCSD, CCSDt, and CCSDT) and ACP (ACCSD, ACCSDt, and ACCSDT)
+calculations reported in this article employed the RHF determinant as a reference.
+   In  line  with  the  nature  of  strong  correlations  created  by  the  dissociations  of  the  above
+hydrogen clusters, the active orbitals used in the ACCSDt and CCSDt calculations consisted
+of the molecular orbitals (MOs) that correlate with the 1s shells of the hydrogen atoms.  This
+means  that  the  ACCSDt  and  CCSDt  computations  for  the  H6  ring  were  performed  using
+three  active  occupied  and  three  active  unoccupied  orbitals  (No  =  Nu  =  3),  whereas  the
+analogous calculations for the H10 system used ﬁve active occupied and ﬁve active unoccupied
+MOs (No = Nu = 5).  Because of the use of the cc-pVTZ basis for H6  and the DZ basis for
+H10, i.e., basis sets that are considerably larger than a minimum one, the numbers of active
+unoccupied orbitals used in the ACCSDt and CCSDt computations for the dissociating H6
+and  H10  rings,  especially  for  H6,  were  much  smaller  than  the  numbers  of  all  unoccupied
+MOs  characterizing  these  systems  (81  and  15,  respectively).   In  the  case  of  the  H50  linear
+chain,  where,  to  be  consistent  with  Ref.  [47]  that  provided  the  LDMRG(500)  reference
+data,  we  had  to  use  the  STO-6G  minimum  basis  set,  the  only  meaningful  active  space  is
+that incorporating all 25 occupied and all 25 unoccupied orbitals.  Thus, our ACCSDt and
+CCSDt results for this system are equivalent to those obtained in the respective ACCSDT
+and  CCSDT  calculations.    Furthermore,  since  no  =  nu  in  this  case  and  the  diﬀerences
+between  the  ACCSDT(1,3 ×      nono+nu  + 4 ×      nuno+nu )  =  ACCSDT(1, 3+42  ),  ACCSDT(1,3),  and
+ACCSDT(1,4)  energies  for  the  H50  linear  chain  described  by  the  STO-6G  basis  set  are
+rather small (for each of the studied geometries, less than 1% of the correlation energy), in
+reporting our results for this system we focus on the ACCSDT(1, 3+42  ) calculations and the
+associated ACCSD(1, 3+42  ) = DCSD, CCSD, and CCSDT data.
+
+   All of the calculations for the symmetric dissociations of the H6 and H10 rings reported in
+
+                                                      20
+this article employed the following grid of internuclear separations between the neighboring
+hydrogen atoms, denoted as RH–H, to determine the corresponding potential energy curves
+(PECs):  0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0, 2.1, 2.2, 2.3, 2.4,
+and 2.5 ˚A. The PECs characterizing the symmetric dissociation of the H50 linear chain were
+calculated at the geometries deﬁned by the RH–H  values used in Ref. [47], namely, 1.0, 1.2,
+1.4, 1.6, 1.8, 2.0, 2.4, 2.8, 3.2, and 3.6 bohr (the authors of Ref. [47] considered one additional
+H–H distance of 4.2 bohr, but we run into diﬃculties with converging our ACCSDT(1, 3+42  )
+calculations in this case, so the largest H–H separation reported in this work is 3.6 bohr).
+
+
+
+
+III.     NUMERICAL  RESULTS
+
+
+   A.     Symmetric  Dissociation  of  the  H6  and  H10  Rings
+
+
+   We  begin  our  discussion  of  the  numerical  results  obtained  in  this  work  by  examining
+the  D6h-symmetric  dissociation  of  the  six-membered  hydrogen  ring,  as  described  by  the
+cc-pVTZ  basis  set.    The  information  about  the  ground-state  PECs  of  the  H6/cc-pVTZ
+system obtained in the conventional CCSD, CCSDt, and CCSDT calculations, their ACCSD,
+ACCSDt,  and  ACCSDT  counterparts,  and  the  exact  FCI  diagonalizations  is  summarized
+in Tables I–III and Fig. 2.  Table I reports the results of the computations performed with
+the  various  CCSD-type  levels,  including  CCSD,  ACCSD(1,3),  ACCSD(1, 3+42  )  =  DCSD,
+ACCSD(1,3 ×      nono+nu  + 4 ×      nuno+nu ), and ACCSD(1,4).  The  analogous results  obtained with
+the CCSDt-type methods, which describe the eﬀects of T3 correlations with the help of active
+orbitals, including CCSDt, ACCSDt(1,3), ACCSDt(1, 3+42  ), ACCSDt(1,3×     nono+nu +4×     nuno+nu ),
+and ACCSDt(1,4), are shown in Table II. Table III summarizes the calculations carried out
+with the CCSDT, ACCSDT(1,3), ACCSDT(1, 3+42  ), ACCSDT(1,3 ×      nono+nu + 4 ×      nuno+nu ), and
+ACCSDT(1,4),  approaches,  in  which  T3  clusters  are  treated  fully.   As  already  alluded  to
+above, because of the use of the cc-pVTZ basis set in our calculations for the hexagonal H6
+system,  the dimension of the corresponding many-electron Hilbert space is on the order of
+109 (in our FCI calculations employing the determinantal GAMESS routines that permit the
+use of Abelian symmetries,  the number of determinants relevant to the exact ground-state
+problem, i.e., the Sz = 0 determinants belonging to the Ag  irreducible representation of the
+largest Abelian subgroup of D6h, which  is D2h, was 1,139,812,264).  The ACCSD(1, 3+42  ) =
+
+                                                      21
+DCSD calculations for the symmetric dissociation of the H6 ring system were also reported
+in Ref. [52], but, unlike in the present study, the authors of Ref. [52] used a minimum basis
+set,  which  results  in  the  many-electron  Hilbert  space  7  orders  of  magnitude  smaller  than
+that  generated  with  cc-pVTZ,  and  did  not  consider  the  eﬀects  of  T3  correlations  on  the
+resulting PEC. It is, therefore, interesting to examine how the use of a much larger cc-pVTZ
+basis and the incorporation of the connected triply excited clusters in the calculations aﬀects
+the observations made in Ref. [52].  It is also worth investigating if the replacement  of the
+ACCSDT(1, 3+42  ) scheme and its active-space ACCSDt(1, 3+42  ) counterpart, which build upon
+DCSD,  by  the  ACCSDT(1,3 ×      nono+nu  + 4 ×      nuno+nu )  and  ACCSDt(1,3 ×      nono+nu  + 4 ×      nuno+nu )
+approaches proposed in this work provides improvements  over the results of the analogous
+ACCSDT(1, 3+42  ) and ACCSDt(1, 3+42  ) calculations.
+
+   As  shown  in  Tables  I–III  and  Fig.  2,  the  conventional  CCSD,  CCSDt,  and  CCSDT
+methods applied to the symmetric dissociation of the H6/cc-pVTZ ring system fail when the
+strongly correlated region of larger H–H separations is considered.  In fact, they break down
+rather quickly as the RH–H values increase.  This can be illustrated by the very large negative
+errors  relative  to  FCI  resulting  from  the  CCSD,  CCSDt,  and  CCSDT  calculations  in  the
+RH–H ≥ 2.0 ˚A region, which grow, in absolute value, from about 25–35 mEh at RH–H = 2.0 ˚A
+to gargantuan 237–246 mEh  when the distance between the neighboring H–H atoms in the
+hexagonal  H6  system  reaches  2.5  ˚A.  All  three  CC  approaches  produce  completely  erratic,
+similarly  shaped,  PECs,  with  an unphysical  hump  at the  intermediate  stretches  of the  H–
+H bonds and a well-displayed  downhill  behavior as the RH–H  values approach the strongly
+correlated  asymptotic  region.   As  one  might  have  anticipated  based  on  the  examination
+of  strongly  correlated  model  systems  [67,  117,  118]  (cf.,  also,  Refs.  [63,  65]),  the  explicit
+inclusion  of  the  connected  triply  excited  clusters  through  the  full  CCSDT  treatment  and
+its active-space CCSDt counterpart oﬀers no help in this regard.  The CCSDt and CCSDT
+approaches improve the CCSD results in the weakly correlated equilibrium region, reducing
+the 4.424 mEh error relative to FCI obtained with CCSD at RH–H = 1.0 ˚A to 1.804 mEh and
+0.160 mEh, respectively,  but they are as inaccurate as CCSD (or even less accurate) when
+the H–H distances become larger.  The only beneﬁt of using CCSDt is a major reduction in
+the computational timings compared to CCSDT, from 98 s per iteration in the latter case
+to 6 s per iteration in the case of the former method (timings obtained using a single core of
+the Precision 7920 system from Dell equipped with 10-core Intel Xeon Silver 4114 2.2 GHz
+
+                                                       22
+processor  boards),  with  minimum  loss  of  accuracy,  especially  at  larger  H–H  separations,
+but the fact that the CCSDt approach faithfully reproduces the CCSDT PEC at the small
+fraction of the eﬀort is of no help here, since both PECs are qualitatively incorrect.
+   A quick inspection of Fig. 2 reveals that all ACP methods examined in this study, without
+and  with  the  connected  triples,  provide  qualitatively  correct  PECs  for the  D6h-symmetric
+dissociation  of  the  H6/cc-pVTZ  ring.   As  demonstrated  in  Tables  I–III  and  Fig.  2,  they
+eliminate the erratic behavior of the conventional CCSD, CCSDt, and CCSDT approaches
+in  a  strongly  correlated  regime,  while  producing  the  energies  that  remain  close  to  those
+obtained with FCI at all H–H separations considered in our calculations.  Focusing ﬁrst on
+the ACP methodologies with up to two-body clusters, meaning ACCSD(1,3), ACCSD(1, 3+42  )
+=  DCSD,  ACCSD(1,3 ×      nono+nu  + 4 ×      nuno+nu ),  and  ACCSD(1,4),  the  ACCSD(1,3)  scheme,
+which  corresponds  to  setting  λ  in  Eqs.  (6)  and  (12)  at  1,  performs  the  best,  generating  a
+PEC  that  closely  reproduces  its  exact,  FCI,  counterpart.   This  can  be  illustrated  by  the
+small  mean  unsigned  error  (MUE)  and  mean  signed  error  (MSE)  values  relative  to  FCI
+characterizing  the  ACCSD(1,3)  PEC,  which  are  0.675 mEh  and  −0.311  mEh,  respectively
+(see  Table  I). The  ACCSD  approach  at the  other  end  of the  spectrum,  i.e.,  ACCSD(1,4),
+which  is  obtained  by  using  λ  =  0  in  Eqs.  (6)  and  (12),  while  being  qualitatively  correct,
+does not work as well as its ACCSD(1,3) counterpart, increasing the MUE and MSE values
+relative  to  FCI  to  more  than  9  mEh.   As  a  result,  the  ACCSD(1, 3+42  )  =  DCSD  method,
+which  treats  diagrams  (3)  and  (4)  shown  Fig.  1  on  equal  footing  by  setting  λ  in  Eqs.  (6)
+and (12) at  12, produces a PEC that is more or less the average of the PECs obtained in the
+ACCSD(1,3)  and  ACCSD(1,4)  calculations  [see  panels  (a)  and  (d)  of  Fig.  2  and  Table  I].
+This should be contrasted by the ACCSD(1,3 ×      nono+nu + 4 ×      nuno+nu ) computations, in which
+λ in Eqs.  (6) and (12) is set  at       nono+nu  and  which  result  in  a PEC  similar  to that obtained
+with the ACCSD(1,4) approach,  improving the ACCSD(1,4) energetics  only slightly.  This
+behavior  of the  ACCSD(1,3 ×      nono+nu  + 4 ×      nuno+nu ) method  can  be  understood  if we  realize
+that the  numbers  of occupied  and unoccupied  orbitals  involved  in  the  calculations  for the
+H6/cc-pVTZ system are 3 and 81, respectively, so that nu = 27no ≫ no, making the scaling
+factors at diagrams (3) and (4) in Eqs. (6) and (12) close to 0 and 1, respectively,  and the
+ACCSD(1,3 ×      nono+nu + 4 ×      nuno+nu ) approach similar to ACCSD(1,4).
+
+   Based on the above discussion, one might crown the ACCSD(1,3) scheme the best ACP
+approach  examined  in  the  present  study,  but  this  would  be  misleading.    Given  the  to-
+
+                                                        23
+tal neglect  of T3  correlations  in the  ACCSD(1,3)  (and  all other  ACCSD)  calculations,  the
+excellent performance of the ACCSD(1,3) method in reproducing the FCI energetics charac-
+terizing the metal–insulator transition in the hexagonal H6/cc-pVTZ system discussed here
+is  fortuitous.   As  explained  in  Section  II A,  the  ACP  approaches  can  be  very  eﬀective  in
+capturing the non-dynamical correlation eﬀects associated with the entanglement of larger
+numbers  of  electrons  by  taking  advantage  of  the  cancellations  of  certain  (T2)2  diagrams
+in  the  CCD/CCSD  equations  projected  on  the  doubly  excited  CSFs  or  determinants  in  a
+strongly  correlated  regime  modeled  by  the  Hubbard  and  PPP  Hamiltonians.  However,  as
+pointed out above, in Section II A as well, the diagram cancellations within the CCD/CCSD
+amplitude equations that result in the ACP methods of the ACCSD(1,3), ACCSD(1,4), or
+ACCSD(1, 3+42  ) = DCSD type do not describe the T3 physics needed to capture much of the
+remaining dynamical and non-dynamical correlations and obtain a quantitative description
+of realistic systems described by ab initio Hamiltonians.  It is, therefore, essential to examine
+what happens when the various ACCSD approaches considered in this study are embedded
+in the CCSDt/CCSDT amplitude equations following the recipe discussed in Section II B.
+
+   As shown in Tables II and III and panels (b), (c), (e), and (f) in Fig. 2, the inclusion of the
+connected triply excited clusters in the ACP schemes, following the procedure described by
+Eqs. (9), (11), and (12), has interesting eﬀects on the ACCSD(1,3), ACCSD(1, 3+42  ) = DCSD,
+ACCSD(1,3 ×      nono+nu  + 4 ×      nuno+nu ),  and ACCSD(1,4)  energetics.  The  selection  of the  (T2)2
+diagrams (1) and (3) of Fig. 1, which  produced the most accurate PEC for the symmetric
+dissociation  of  the  H6/cc-pVTZ  system  among  the  various  ACCSD  methods  considered
+in  this  work,  results  in  the  worst  description  when  the  ACCSDT(1,3),  ACCSDT(1, 3+42  ),
+ACCSDT(1,3 ×      nono+nu  + 4 ×      nuno+nu ),  and  ACCSDT(1,4)  PECs  and  their  analogs  obtained
+in the active-space ACCSDt(1,3), ACCSDt(1, 3+42  ), ACCSDt(1,3 ×      nono+nu  + 4 ×      nuno+nu ), and
+ACCSDt(1,4)  calculations  are  compared  with  one  another.   To  make  matters  worse,  the
+ACCSDt(1,3) and ACCSDT(1,3) approaches, in spite of accounting for T3 correlations, are
+considerably less accurate than their ACCSD(1,3) counterpart, in which the connected triple
+excitations are ignored.  This is in sharp contrast with the remaining ACCSDt and ACCSDT
+methods considered in this study, which all improve the underlying ACCSD results.  There
+is,  however,  a  signiﬁcant  diﬀerence  between  the  ACCSDT(1,3 ×      nono+nu  + 4 ×      nuno+nu )  and
+ACCSDT(1,4)  approaches  and  their  active-space  ACCSDt(1,3 ×       nono+nu  + 4 ×      nuno+nu )  and
+ACCSDt(1,4)  counterparts,  which  are  obtained  by  including  the  connected  triply  excited
+
+                                                      24
+clusters on top of ACCSD(1,3 ×      nono+nu + 4 ×      nuno+nu ) and ACCSD(1,4), respectively, and the
+ACCSDT(1, 3+42  )  and  ACCSDt(1, 3+42  )  approximations  that  build  upon  ACCSD(1, 3+42  )  =
+DCSD. The ACCSD(1,4), ACCSDt(1,4), and ACCSDT(1,4) methods form a systematically
+improvable hierarchy, with the MUE values relative to FCI decreasing from 9.349 mEh in the
+case of ACCSD(1,4) to 2.129 mEh, when the ACCSDt(1,4) approximation to ACCSDT(1,4)
+is  employed,  and  to  1.304  mEh  in  the  ACCSDT(1,4)  case.   The  ACCSD(1,3 ×       nono+nu  +
+4 ×      nuno+nu ),  ACCSDt(1,3 ×       nono+nu  + 4 ×      nuno+nu ),  and  ACCSDT(1,3 ×       nono+nu  + 4 ×       nuno+nu )
+approaches behave in a similar manner, with the corresponding MUE values relative to FCI
+decreasing  from  9.037  mEh  to  1.818  mEh  and  1.150  mEh,  respectively,  further  improving
+the ACCSDt(1,4) and ACCSDT(1,4) results, but the analogous DCSD-based sequence, i.e.,
+ACCSD(1, 3+42  ) = DCSD, ACCSDt(1, 3+42  ), and ACCSDT(1, 3+42  ), is no longer as systematic.
+Indeed, while the ACCSDt(1, 3+42  ) and ACCSDT(1, 3+42  ) calculations that include information
+about  T3  clusters  are  more  accurate  than  their  ACCSD(1, 3+42  )  counterpart,  in  which  the
+eﬀects of connected triples are neglected, the improvements  oﬀered by the ACCSDt(1, 3+42  )
+and  ACCSDT(1, 3+42  )  methods  compared  to  ACCSD(1, 3+42  )  are  rather  small,  reducing  the
+MUE  value  relative  to  FCI  characterizing  the  ACCSD(1, 3+42  )  calculations,  of  4.770  mEh,
+to  2.585  mEh  and  3.486  mEh,  respectively.   Furthermore,  unlike  in  the  ACCSDt(1,4)  vs.
+ACCSDT(1,4)  and  ACCSDt(1,3 ×       nono+nu  + 4 ×       nuno+nu )  vs.    ACCSDT(1,3 ×       nono+nu  + 4 ×
+
+  nu
+no+nu ) computations, we do not observe improvements in the results, when the active-space
+ACCSDt(1, 3+42  )  approach  is  replaced  by  its  ACCSDT(1, 3+42  )  parent.   One  should  always
+observe  improvements,  when  going  from  the  CCSDt-level  using  small  numbers  of  active
+orbitals  to  its  CCSDT-type  counterpart  in  larger  basis  set  calculations,  but  this  is  not
+the case when the PECs describing  the symmetric  dissociation of the H6/cc-pVTZ system
+obtained  with  the ACCSDt(1, 3+42  ) and ACCSDT(1, 3+42  ) methods  are compared  with each
+other.   The  ACCSDt(1,4)/ACCSDT(1,4)  and,  especially,  the  ACCSDt(1,3 ×      nono+nu  + 4 ×
+
+  nu
+no+nu )/ACCSDT(1,3 ×      nono+nu + 4 ×      nuno+nu ) pairs behave more systematically in this regard.
+   It  is  clear  from  the  results  presented  in  Tables  II  and  III  and  panels  (b),  (c),  (e),  and
+(f)  of  Fig.  2  that  from  all  T3-corrected  CC  and  ACP  methods  investigated  in  this  study,
+the ACCSDt(1,3 ×      nono+nu  + 4 ×      nuno+nu ) and ACCSDT(1,3 ×      nono+nu  + 4 ×      nuno+nu ) approaches
+provide the most accurate description of the dissociating H6/cc-pVTZ ring that undergoes
+a transition from the weakly correlated metallic phase near the equilibrium geometry to the
+strongly correlated insulator at larger values of RH–H.  They  eliminate  dramatic failures of
+
+                                                       25
+CCSDt  and  CCSDT  at  larger  H–H  separations,  they  signiﬁcantly  improve  the  underlying
+ACCSD(1,3×     nono+nu +4×     nuno+nu ) PEC, and they oﬀer impressive, millihartree-type, accuracies
+in the entire region of the RH–H values examined in this work, recovering 99–100 % of the FCI
+correlation energy independent of RH–H.  It is also encouraging to observe that the no- and
+nu-dependent diagram scaling factors adopted in the ACCSDt(1,3 ×      nono+nu + 4 ×      nuno+nu ) and
+ACCSDT(1,3×     nono+nu +4×     nuno+nu ) schemes improve the ACCSDt(1, 3+42  ) and ACCSDT(1, 3+42  )
+results  and  their  ACCSDt(1,3)/ACCSDT(1,3)  and  ACCSDt(1,4)/ACCSDT(1,4)  counter-
+parts.  To appreciate the signiﬁcance of these ﬁndings even more, one should point out that
+the costs of the ACCSDt(1,3 ×      nono+nu + 4 ×     nuno+nu ) computations for the H6/cc-pVTZ system
+are not much greater than those characterizing the CCSD and ACCSD approximations.  In-
+deed, we needed 2 s per iteration on a single core of the aforementioned Dell architecture to
+perform the CCSD or ACCSD calculations, which should be compared to 6 s required by the
+corresponding ACCSDt(1,3×     nono+nu +4×     nuno+nu ) runs.  The ACCSDT(1,3×     nono+nu +4×     nuno+nu )
+method,  which  oﬀers  a  full  treatment  of  T3  correlations,  improving  the  already  excellent
+ACCSDt(1,3 ×      nono+nu  + 4 ×      nuno+nu )  PEC  even  further,  oﬀers  promise  too.   Obviously,  the
+ACCSDT(1,3 ×      nono+nu  + 4 ×      nuno+nu ) approach, using all triply excited cluster amplitudes, is
+less practical than its active-space ACCSDt(1,3×     nono+nu +4×     nuno+nu ) counterpart, which uses
+their small fraction, but with less than 100 s per iteration on a single core of Dell machine
+used in our computations for the H6/cc-pVTZ system, it is orders of magnitude less expen-
+sive  than  the  exact  Hamiltonian  diagonalizations,  while  providing  similar  results.  Indeed,
+our  FCI  calculations  for  the  H6/cc-pVTZ  system  required  more  than  7  h  per  iteration  on
+the same core, even though they exploited the D2h  symmetry that was not used in our CC
+and  ACP  runs.   Having  said  all  this,  the  most  important  ﬁnding  of  our  calculations  for
+the symmetric dissociation of the H6/cc-pVTZ ring is the observation that the active-space
+ACCSDt(1,3×     nono+nu +4×     nuno+nu ) approach provides the results of the near-FCI quality, cap-
+turing virtually all of the relevant dynamical and non-dynamical correlations, even at larger
+H–H separations, faithfully reproducing the accurate parent ACCSDT(1,3×     nono+nu +4×     nuno+nu )
+data at the small fraction of the computational cost, and reducing the timings of the exact
+Hamiltonian diagonalizations from hours per iteration to seconds.
+
+   To  further  investigate  the  performance  of  the  ACP  methods,  especially  those  that  in-
+corporate  T3  physics,  in  a  strongly  correlated  regime  coupled  with  non-trivial  dynamical
+correlations,  we  studied  the  D10h-symmetric  dissociation  of  the  H10  ring,  as  described  by
+
+                                                       26
+the DZ basis set.  The ground-state PECs of the H10/DZ system resulting from the CCSD,
+CCSDt, and CCSDT calculations, the corresponding ACCSD, ACCSDt, and ACCSDT runs,
+and the exact FCI computations are shown in Tables IV–VI and Fig. 3.  Table IV summa-
+rizes  the  various  CCSD-type  calculations,  including  CCSD,  ACCSD(1,3),  ACCSD(1, 3+42  )
+= DCSD, ACCSD(1,3 ×      nono+nu  + 4 ×      nuno+nu ), and ACCSD(1,4).  The results of the CCSDt,
+ACCSDt(1,3), ACCSDt(1, 3+42  ), ACCSDt(1,3×     nono+nu +4×     nuno+nu ), and ACCSDt(1,4) compu-
+tations are shown in Table V. The CCSDT, ACCSDT(1,3), ACCSDT(1, 3+42  ), ACCSDT(1,3×
+
+  no
+no+nu + 4 ×      nuno+nu ), and ACCSDT(1,4) calculations are summarized in Table VI.
+   The  symmetric  dissociation  of  the  H10  system  is  more  challenging  than  the  previously
+discussed H6 ring, since the ground electronic state of H10, when all H–H distances are simul-
+taneously  stretched,  involves  the entanglement  of 10 electrons,  which  is  an increase  in the
+number of strongly correlated electrons by two thirds.  Because of the use of a smaller basis
+set,  the  dimension  of  the  many-electron  Hilbert  space  characterizing  the  D10h-symmetric
+H10/DZ  system  is  smaller  compared  to  H6  using  the  cc-pVTZ  basis  [the  number  of  the
+Sz  = 0 determinants  of the Ag(D2h) symmetry  used  in our FCI  GAMESS calculations  for
+the H10/DZ system was 60,095,104, as opposed to 1,139,812,264 used for H6/cc-pVTZ], but
+the  challenge  of  strong  correlations  created  by  the  simultaneous  dissociation  of  all  H–H
+bonds in the H10 ring is more severe than in the case of its hexagonal H6 cousin.  This can be
+seen when examining the performance of the CCSD, CCSDt, and CCSDT approaches.  As
+shown in Tables IV–VI and Fig. 3, the PECs resulting from the CCSD, CCSDt, and CCSDT
+calculations are not only incorrectly shaped, exhibiting an unphysical hump at the interme-
+diate stretches of the H–H bonds, but they cannot be continued beyond RH–H ≈ 1.7 ˚A. The
+CCSDt and CCSDT methods reduce the ∼4–7 mEh errors relative to FCI obtained with the
+CCSD approach in the equilibrium (RH–H ≈ 1.0 ˚A) region to small fractions of a millihartree,
+but when RH–H > 1.7 ˚A, the CCSD, CCSDt, and CCSDT calculations diverge,  even when
+initiated from the converged cluster amplitudes obtained at the neighboring geometries from
+the RH–H ≤ 1.7 ˚A region.  As argued in Refs. [60, 63], using detailed mathematical analysis
+of the analytic properties of non-linear CC equations and the relevant numerical evidence,
+this is, most likely, caused by the existence of branch point singularities in the vicinity of the
+RH–H ≈ 1.7 ˚A geometry and the CCSD, CCSDt, and CCSDT solutions becoming complex
+when  RH–H  >  1.7  ˚A.  The  singularities  and  divergences  of  this  kind  were  observed  in  the
+conventional  CC  calculations  for  the  cyclic  polyene  models  with  14  or  more  carbon  sites
+
+                                                     27
+[60–67],  and  we  believe  that  our  CCSD,  CCSDt,  and  CCSDT  computations  for the  D10h-
+symmetric dissociation of the H10 ring suﬀer from similar problems once the region of larger
+H–H separations is reached.
+
+   Tables IV–VI and Fig. 3 demonstrate that all ACP methods investigated in this work are
+capable  of eliminating  the  singular  behavior  observed  in  the  CCSD,  CCSDt,  and  CCSDT
+calculations for the dissociating H10  system.  As was the case with the smaller H6  ring, the
+ACCSD(1,3), ACCSD(1, 3+42  ) = DCSD, ACCSD(1,3 ×      nono+nu + 4 ×      nuno+nu ), and ACCSD(1,4)
+approaches and their ACCSDt and ACCSDT counterparts produce the qualitatively correct
+PECs  that  are  in  reasonable  agreement  with  FCI,  even  when  the  H–H  bonds  in  H10  are
+signiﬁcantly stretched.  Although the DZ basis set used in our calculations for the H10 system,
+in which no  = 5 and nu = 15, is much smaller than the cc-pVTZ basis used in the case of
+H6, many of the accuracy patterns observed in the ACP computations for the H6 ring apply
+to  the  symmetric  dissociation  of  its  ten-membered  analog.  For  example,  among  the  ACP
+schemes truncated at T2  examined in this study, the ACCSD(1,3) method is most accurate
+and the ACCSD(1,4) approach performs worst, increasing the MUE and MSE values relative
+to FCI obtained with ACCSD(1,3), of 12.572 mEh, to 15.505 mEh [see Table IV and panels
+(a)  and  (d)  in  Fig.  3].    In  analogy  to  the  hexagonal  H6  system,  the  ACCSD(1, 3+42  )  =
+DCSD and ACCSD(1,3 ×      nono+nu + 4 ×     nuno+nu ) methods, which average the contributions from
+diagrams  (3)  and  (4)  of  Fig.  1,  produce  the  PECs  located  between  the  ACCSD(1,3)  and
+ACCSD(1,4)  ones.   The  ACCSD(1,3 ×      nono+nu  + 4 ×      nuno+nu )  PEC  is  closer  to  that  obtained
+in  the  ACCSD(1,4)  calculations,  since  the  λ  factor  entering  Eqs.  (6)  and  (12)  used  by
+ACCSD(1, 3+42  ) is  12, whereas the ACCSD(1,3 ×      nono+nu + 4 ×     nuno+nu ) approach proposed in this
+work  adopts the  weighted  average  deﬁned  by  λ =       nono+nu ,  which  in the  case  of the  H10/DZ
+system  considered  here  corresponds  to  setting  λ  at   14,  increasing  the  relative  contribution
+of diagram (4) in Eqs. (6) and (12).  Compared to the H6/cc-pVTZ system, the diﬀerences
+among the ACCSD(1,3), ACCSD(1, 3+42  ), ACCSD(1,3×     nono+nu +4×     nuno+nu ), and ACCSD(1,4)
+PECs  corresponding  to  the  symmetric  dissociation  of  the  H10  ring  are  smaller,  which  is  a
+consequence  of  the  use  of  a  smaller  DZ  basis  set  in  the  latter  case  [in  the  extreme  limit
+of a minimum basis, where the p–h symmetry is approximately satisﬁed, the ACCSD(1,3),
+ACCSD(1, 3+42  ), ACCSD(1,3×     nono+nu +4×     nuno+nu ), and ACCSD(1,4) results would be virtually
+identical], but the overall accuracy patterns characterizing the ACP methods with up to two-
+body clusters, especially the superior performance of the ACCSD(1,3) approximation, hold.
+
+                                                       28
+   Because  of  the  use  of  a  smaller  DZ  basis  in  our  calculations  for  the  H10  system,  the
+similarities in the performance of the ACP methods using diﬀerent ways of mixing diagrams
+(3)  and  (4)  in  Eqs.  (6)  and  (12)  are  also  observed  at  the  ACCSDt  and  ACCSDT  levels,
+but,  as  shown  in  Tables  V  and  VI  and  panels  (b),  (c),  (e),  and  (f)  of  Fig.  3,  the  PECs
+resulting from the ACCSDt(1,3 ×      nono+nu + 4 ×      nuno+nu ) and ACCSDT(1,3 ×      nono+nu + 4 ×      nuno+nu )
+calculations are most accurate when the H–H distances are larger.  All of the ACP approaches
+with the connected triply excited clusters examined in this work, including ACCSDT(1,3),
+ACCSDT(1, 3+42  ), ACCSDT(1,3 ×      nono+nu  + 4 ×      nuno+nu ), and ACCSDT(1,4) and their active-
+space ACCSDt(1,3), ACCSDt(1, 3+42  ), ACCSDt(1,3 ×      nono+nu + 4 ×      nuno+nu ), and ACCSDt(1,4)
+counterparts,  oﬀer  major improvements  in  the  underlying  ACCSD(1,3),  ACCSD(1, 3+42  )  =
+DCSD,  ACCSD(1,3 ×       nono+nu  + 4 ×       nuno+nu ),  and  ACCSD(1,4)  results,  reducing  the  MUE
+and  MSE  values  relative  to  FCI  by  factors  of  ∼2–4,  but,  as  in  the  case  of  the  symmetric
+dissociation  of  the  H6  ring,  the  ACCSDt(1,3 ×       nono+nu  + 4 ×       nuno+nu )  and  ACCSDT(1,3 ×
+
+  no
+no+nu  + 4 ×       nuno+nu )  methods  perform  best  overall.    Independent  of  the  H–H  separation,
+including the RH–H values as large as 2.5 ˚A (we recall that the equilibrium value of RH–H is
+about 1.0 ˚A), they reproduce the FCI correlation energies to within 1–2 % or about 3.8–3.9
+mEh  on  average.   If  we  limit  ourselves  to  the  RH–H  =  0.6–2.0  ˚A  region,  the  errors  in  the
+ACCSDt(1,3 ×      nono+nu + 4 ×      nuno+nu ) and ACCSDT(1,3 ×      nono+nu + 4 ×      nuno+nu ) energies relative
+to FCI  are  in the  ∼1–3  mEh  range.  Given  the  dramatic failure  and  the  singular  behavior
+of the conventional CCSDt and CCSDT approaches and the MUE values characterizing the
+ACCSDt(1,3×     nono+nu +4×     nuno+nu ) and ACCSDT(1,3×     nono+nu +4×     nuno+nu ) calculations being 3–4
+times smaller compared to ACCSD(1,3), ACCSD(1, 3+42  ), ACCSD(1,3 ×      nono+nu + 4 ×      nuno+nu ),
+and  ACCSD(1,4),  we  are  encouraged  by  the  performance  of  the  ACCSDt(1,3 ×      nono+nu  +
+4 ×      nuno+nu )  and  ACCSDT(1,3 ×       nono+nu  + 4 ×       nuno+nu )  schemes  developed  in  this  work.   It
+is  also  encouraging  that  the  unscaled  ACCSDt(1,4)  and  ACCSDT(1,4)  methods,  which
+correspond to setting λ in Eqs. (6) and (12) at 0 and which build upon the old ACCSD(1,4)
+approximation  proposed  in  Ref.  [64]  by  incorporating  T3  correlations  in  it,  are  practically
+as  accurate.    In  particular,  they  improve  the  results  obtained  with  the  ACCSDt(1, 3+42  )
+and ACCSDT(1, 3+42  ) approaches, which extend the ACCSD(1, 3+42  ) = DCSD scheme to the
+CCSDt/CCSDT-type treatments of the connected triples.
+
+   Last but not least, our calculations for the symmetric dissociation of the H10 ring system
+summarized  in  Tables  V  and  VI  and  panels  (b),  (c),  (e),  and  (f)  conﬁrm  the  previous
+
+                                                        29
+observation that the active-space ACCSDt methods faithfully reproduce the corresponding
+ACCSDT  energetics,  even  at  larger  H–H  separations,  at  the  small  fraction  of  the  compu-
+tational cost.  The  diﬀerences  between  the ACCSDt(1,3),  ACCSDt(1, 3+42  ),  ACCSDt(1,3 ×
+
+  no
+no+nu   +  4  ×        nuno+nu ),   and   ACCSDt(1,4)   results   and   their   respective   ACCSDT(1,3),
+ACCSDT(1, 3+42  ), ACCSDT(1,3 ×      nono+nu  + 4 ×      nuno+nu ), and ACCSDT(1,4) parents obtained
+for  the  H10  system  are  smaller  than  in  the  case  of  the  previously  discussed  H6  ring,  since
+the  DZ  basis  set  used  in  our calculations  for H10  is  much  smaller  than  the  cc-pVTZ  basis
+employed  in  the  H6  case  and,  as  a  consequence,  the  number  of  active  unoccupied  orbitals
+used in the ACCSDt calculations for the H10/DZ system is a signiﬁcant fraction (one third)
+of  all  unoccupied  MOs,  but  we  still  see  substantial  reduction  in  the  computational  eﬀort
+oﬀered  by  the  active-space  treatment  of  triples  compared  to  the  corresponding  ACCSDT
+levels, from 2 s per iteration on a single core of the aforementioned Dell node in the case of
+ACCSDT to 0.7 s in the ACCSDt case.
+
+
+
+   B.     Symmetric  Dissociation  of  the  H50  Linear Chain
+
+
+   Having analyzed the performance of the various ACP approaches, especially those incor-
+porating the connected three-body clusters, in calculations for the symmetric dissociations
+of  the  six-  and  ten-membered  hydrogen  rings,  we  proceed  to  the  examination  of  our  ﬁnal
+example, which is the H50  linear chain.  As in the case of the H6 and H10 systems discussed
+in Section III A, we model the transition from the weakly correlated metallic regime in the
+equilibrium  region,  where  the  distances  between  the  adjacent  hydrogen  atoms  are  around
+1.8  bohr,  to  the  strongly  correlated  insulator  phase  by  simultaneously  stretching  all  H–H
+bonds.  Putting aside the periodic nature of the H6 and H10 ring structures, the main diﬀer-
+ence between the H6  and H10  clusters and the H50  linear chain is a much larger number of
+the strongly correlated electrons in the latter system,  which results in an enormous many-
+electron  Hilbert  space,  spanned  by  ∼  1027  singlet  CSFs  when  the  minimum  basis  set  is
+employed  and  even  larger  numbers  of  CSFs  when  larger  basis  sets  are  considered.   As  al-
+ready alluded to above, the exact Hamiltonian diagonalizations for the many-electron Hilbert
+spaces of such dimensionalities are outside reach of the best FCI algorithms and most pow-
+erful computer architectures  available today, so in evaluating the performance of the ACP
+approaches considered in this work in calculations for the symmetric dissociation of the H50
+
+                                                        30
+linear chain, we relied on the nearly exact PEC obtained in the LDMRG(500) computations
+using the STO-6G minimum basis set reported in Ref. [47].  Because of the use of the mini-
+mum basis, for which no = nu = No = Nu = 25, our ACCSDt and CCSDt calculations for
+the  H50  system  are equivalent  to  their  ACCSDT  and  CCSDT  counterparts  and  the  PECs
+obtained  with  the  ACCSDT(1,3 ×      nono+nu  + 4 ×      nuno+nu )  =  ACCSDT(1, 3+42  ),  ACCSDT(1,3),
+and  ACCSDT(1,4)  approaches  are  nearly  identical,  so  in  the  discussion  below  we  concen-
+trate  on  the  ACCSDT(1, 3+42  )  results  and  the  results  generated  with  CCSD,  CCSDT,  and
+ACCSD(1, 3+42  ) = DCSD. The DCSD calculations for the symmetric dissociation of the H50
+linear chain, as described by the STO-6G basis set, were also reported in Ref. [52], but the
+authors  of  Ref.  [52]  did  not  consider  T3  correlations  in  their  work.   Our  computations  for
+the H50/STO-6G system discussed in this section allow us to investigate if the inclusion of
+the  connected  triply  excited  clusters  via  the  ACCSDT(1, 3+42  ) scheme  implemented  in  this
+study can improve the DCSD PEC presented in Ref. [52].
+   The information about the ground-state PECs  corresponding  to the symmetric  dissoci-
+ation  of  the  H50  linear  chain,  as  described  by  the  STO-6G  basis,  which  resulted  from  our
+CCSD, CCSDT, ACCSD(1, 3+42  ) = DCSD, and ACCSDT(1, 3+42  ) calculations, along with the
+reference LDMRG(500) energetics taken from Ref. [47], is summarized in Table VII and Fig.
+4.   As  one  might  anticipate,  given  the  large  number  of  strongly  correlated  electrons,  the
+H50  system is much more challenging than the previously discussed H6 and H10  rings.  This
+becomes apparent when we look at the results of the CCSD and CCSDT calculations, which
+fail  to  converge  already  near  the  equilibrium  region,  most  likely  due  to  the  emergence  of
+branch point singularities  and the real solutions of the corresponding amplitude equations
+becoming  complex  as  all  H–H  bonds  of  the  H50  linear  chain  are  simultaneously  stretched.
+As pointed out in Section III A, the singularities and divergences of this kind were observed
+in the studies of cyclic polyene models reported in Refs. [60–67].  The fact that we could not
+converge the CCSD and CCSDT amplitudes for the H50  system already in the equilibrium
+region is consistent with the observations made in Refs. [60, 63–65, 67] that the branch point
+singularities plaguing conventional CC calculations move toward the regions of weaker cor-
+relations as the system size increases.  The CCSDT method oﬀers signiﬁcant improvements
+in  the  CCSD  energies  at  compressed  H–H  distances,  but  this  is  not  helpful,  since  neither
+CCSD nor CCSDT solutions can be continued beyond the equilibrium region.
+
+   In  view  of  the  above  failures  of  the  conventional  CCSD  and  CCSDT  approaches,  it  is
+
+                                                       31
+encouraging  to  see  that  our  ACCSDT(1, 3+42  )  scheme  provides  a  non-singular  and  reliable
+description of the H50 linear chain in the entire range of H–H separations considered in this
+work, including the H–H bond lengths as large as twice the equilibrium  value of RH–H, re-
+ducing the MUE relative to the LDMRG(500) reference data that characterizes the already
+well-behaved ACCSD(1, 3+42  ) = DCSD method, of more than 47 mEh, to less than 14 mEh
+(see Table VII and Fig. 4).  The improvements  in the results obtained with the lower-rank
+ACCSD(1, 3+42  ) approach,  which  neglects  T3  contributions,  oﬀered by  the  ACCSDT(1, 3+42  )
+method,  which  includes  them,  are especially  signiﬁcant  when  RH–H  ≥ 2.0 bohr,  i.e.,  when
+the CCSDT calculations stop converging.  While it is possible that the PEC representing the
+symmetric dissociation of the H50 linear chain obtained with ACCSDT(1, 3+42  ) starts behav-
+ing erratically when RH–H ≫ 3.6 bohr, the error reductions compared to ACCSD(1, 3+42  ) in
+the strongly correlated RH–H = 2.0–3.6 bohr region, from about 34–113 mEh  to 5–22 mEh,
+are quite remarkable.  The errors relative to the nearly exact LDMRG(500) data obtained in
+the ACCSDT(1, 3+42  ) calculations for the H50/STO-6G system are larger, in absolute value,
+than the errors relative to FCI characterizing the ACCSDT(1, 3+42  ) and other ACCSDT com-
+putations for the H6 and H10 rings, but we have to keep in mind that H50 is much larger than
+H6 and H10, so the errors relative to exact or nearly exact computations are expected to be
+larger  too.   What  is  more  important  is  the  observation  that  the  ACCSDT(1, 3+42  )  calcula-
+tions for the dissociating H50/STO-6G linear chain reproduce the LDMRG(500) correlation
+energies,  which  we  use  as  a  reference  in  this  study,  to  within  1–2  %.  This  is  a  noticeable
+improvement  over  the  underlying  ACCSD(1, 3+42  )  approach,  which  gives  2–5  %  diﬀerences
+with  the  correlation  energies  obtained  in  the  LDMRG(500)  calculations  reported  in  Ref.
+[47].  It is encouraging to observe that the ACCSDT(1, 3+42  ) approach and most of the other
+methods in this category examined in this work, including ACCSDT(1,3×     nono+nu +4×     nuno+nu )
+and ACCSDT(1,4) and their active-space variants, are capable of reproducing the exact or
+nearly exact correlation energies in the strongly correlated systems of the type of the hydro-
+gen clusters discussed here and in Section III A to within 1–2 %, independent of the system
+size  and  size  of  the  basis  employed  in  the  calculations,  substantially  improving  the  corre-
+sponding ACCSD computations.  The ACCSDT(1, 3+42  ) approach is more expensive than its
+lower-rank  ACCSD(1, 3+42  ) = DCSD  counterpart,  increasing  0.8 s  per iteration  on a single
+core of the Dell machine used in the present study to 482 s, when the H50/STO-6G system
+is examined.  We have to realize, however, that a few minutes per iteration on a single core
+
+                                                      32
+for a system containing 50 strongly correlated electrons is an insigniﬁcant eﬀort, given the
+observed  improvements  in the description of the corresponding PEC over CCSD, CCSDT,
+and  ACCSD(1, 3+42  )  oﬀered  by  ACCSDT(1, 3+42  )  in  the  region  of  stretched  H–H  distances,
+not to mention the fact that FCI calculations for H50 are not feasible.
+
+
+
+IV.     CONCLUSIONS
+
+
+   It is well established that the conventional single-reference CCSD, CCSDT, etc. hierarchy,
+in which the cluster operator T  is truncated at a given many-body rank, displays an erratic
+behavior  when  the  number  of  strongly  correlated  electrons  becomes  larger  than  in  typical
+multi-reference  situations  in  chemistry  involving  single  or  double  bond  breaking.   At  the
+same time, traditional multi-reference approaches may become inapplicable due to the pro-
+hibitively large dimensionalities of the underlying multi-conﬁgurational model spaces when
+the  numbers  of  active  electrons  and  orbitals  become  larger.   The  ACP  theories,  in  which
+one  uses  subsets  of  non-linear  (T2)2  diagrams  in  the  CCD  or  CCSD  amplitude  equations,
+are capable of capturing strong correlations involving the entanglement of larger numbers of
+electrons, but they neglect the physics associated with the connected triply excited clusters
+needed for a more quantitative description.  Furthermore, the speciﬁc combinations of (T2)2
+diagrams that work well in the strongly correlated regime of the minimum-basis-set model
+systems used in the past to rationalize the ACP methods may not necessarily be optimum
+when  larger  basis  sets  and  more  substantial  dynamical  correlations  are  involved.   The  ob-
+jective  of  this  study  has  been  to  examine  both  topics  and  suggest  and  test  solutions  that
+might help develop better and more quantitative ACP models in the future.
+   In  this  work,  we  dealt  with  the  issue  of  the  missing  T3  physics  by  combining  the  se-
+lected  ACP  schemes,  including  the  previously  formulated  ACCSD(1,3),  ACCSD(1,4),  and
+ACCSD(1, 3+42  ) = DCSD approaches and the novel ACCSD(1,3×     nono+nu +4×     nuno+nu ) method-
+ology,  in  which  diagrams  (3)  and  (4)  of  Fig.  1  are  scaled  by  factors  depending  on  the
+numbers  of  occupied  (no)  and  unoccupied  (nu)  orbitals,  with  the  idea  of  capturing  the
+leading  triply  excited  cluster  amplitudes  using  active  orbitals,  which  was  previously  ex-
+ploited  in  the  CCSDt  and  similar  methods.   The  resulting  ACCSDt(1,3),  ACCSDt(1,4),
+ACCSDt(1, 3+42  ),  and  ACCSDt(1,3 ×      nono+nu  + 4 ×      nuno+nu )  methods,  which  are  obtained  by
+considering  the  appropriate  subsets  of  (T2)2  diagrams  in  the  amplitude  equations  pro-
+
+                                                        33
+jected on the doubly excited determinants within the CCSDt system, their more expensive
+ACCSDT(1,3),  ACCSDT(1,4),  ACCSDT(1, 3+42  ),  and  ACCSDT(1,3 ×      nono+nu  + 4 ×      nuno+nu )
+parents,  in  which  T3  component  is  treated  fully,  obtained  from  CCSDT,  and  the  under-
+lying  ACCSD(1,3),  ACCSD(1,4),  ACCSD(1, 3+42  ),  and  ACCSD(1,3 ×       nono+nu  + 4 ×       nuno+nu )
+approximations  were  implemented  and  tested  using  the  symmetric  dissociations  of the  H6
+and  H10  rings,  as  described  by  the  cc-pVTZ  and  DZ  basis  sets,  and  the  H50  linear  chain
+treated  with  STO-6G.  We  used  these  three  systems  as  our  numerical  examples,  since  the
+linear chains and rings of the equally spaced hydrogen atoms can be used to model metal–
+insulator  transitions  in  which  the  weakly  correlated  metallic  phase  at  compressed  geome-
+tries  becomes  the strong correlated  insulator  at larger H–H separations.  The  T3-corrected
+ACCSDt(1,3 ×      nono+nu + 4 ×      nuno+nu ) and ACCSDT(1,3 ×      nono+nu + 4 ×      nuno+nu ) schemes and their
+lower-rank ACCSD(1,3×     nono+nu +4×     nuno+nu ) counterpart, in which the connected triply excited
+clusters are neglected, were used to investigate if the no- and nu-dependent scaling factors at
+diagrams (3) and (4) can help to improve accuracies when basis sets are larger than a mini-
+mum one.  We gauged the performance of the various ACP schemes examined in this work by
+comparing the resulting PECs for the H6/cc-pVTZ, H10/DZ, and H50/STO-6G systems with
+their exact, FCI (H6/cc-pVTZ and H10/DZ) or nearly exact, DMRG (H50/STO-6G) counter-
+parts.  The FCI PECs for the symmetric dissociations of the H6/cc-pVTZ and H10/DZ ring
+systems were generated in this work using GAMESS. The reference PEC for the symmetric
+dissociation of the H50 linear chain, as described by the STO-6G basis, was taken from Ref.
+[47], where the authors used the LDMRG(500) approach.  We also included the conventional
+CCSD, CCSDt, and CCSDT methods in our calculations.
+
+   We demonstrated that all ACP approaches examined in this study, without and with the
+connected triples, provide qualitatively correct PECs, eliminating the erratic and, in the case
+of H10 and H50, singular behavior of CCSD, CCSDt, and CCSDT in the strongly correlated
+regime.  Of all ACP methods including T3 correlations, the ACCSDt(1,3×     nono+nu +4×     nuno+nu )
+approach and its ACCSDT(1,3 ×      nono+nu + 4 ×     nuno+nu ) parent, which in the minimum-basis-set
+case become equivalent to ACCSDt(1, 3+42  ) and ACCSDT(1, 3+42  ), respectively, turned out to
+be overall most accurate, improving the corresponding ACCSD(1,3 ×      nono+nu + 4 ×      nuno+nu ) [in
+the case of ACCSDt(1, 3+42  ) and ACCSDT(1, 3+42  ), ACCSD(1, 3+42  ) = DCSD] PECs, especially
+in the regions of larger H–H separations, where correlations become stronger.  In general, it
+was promising to ﬁnd out that the ACCSDT(1,3 ×      nono+nu + 4 ×      nuno+nu ), ACCSDT(1,4), and
+
+                                                      34
+ACCSDT(1, 3+42  )  methods  and  their  more  economical  active-space  ACCSDt(1,3 ×      nono+nu  +
+4 ×      nuno+nu ), ACCSDt(1,4), and ACCSDt(1, 3+42  ) counterparts reproduce the exact or nearly
+exact correlation energies in the hydrogen clusters, which model transitions from the weakly
+correlated  metallic  regime  to the  strongly  correlated  insulator  phase,  to  within  1–2 %,  re-
+ducing errors in the underlying ACCSD computations in a substantial manner.  It was also
+encouraging  to  observe  that  all  ACCSDt  schemes,  which  use  active  orbitals  that  reﬂect
+on  the  nature  of  strong  correlations  of  interest  to  identify  the  dominant  T3  contributions,
+faithfully  reproduce  the  results  of  the  corresponding  ACCSDT  calculations,  in  which  the
+connected  three-body clusters  are treated fully,  at the small fraction of the computational
+eﬀort.  While the no- and nu-dependent scaling factors at diagrams (3) and (4) did not help
+the ACCSD calculations, they seem to be useful in improving the accuracies of the ACCSDt
+and  ACCSDT  computations  when  larger  basis  sets  are  employed.   Having  said  this,  there
+may be other, better ways of improving accuracies of T3-corrected ACP approaches in cal-
+culations  for  strongly  correlated  systems  involving  the  entanglement  of  larger  numbers  of
+electrons and using larger basis sets, and we will search for such ways in the future.
+
+   Among the other issues we would like to pursue is search for diagram cancellations within
+the externally corrected CCSDt and CCSDT amplitude equations projected on triples that
+would  be  consistent  with  the  (T2)2  diagram  selections  used  by  the  ACP  methods  in  the
+equations projected on doubles.  While some diagram selections within the CCSDT equations
+were  considered  in  Refs.  [147,  148,  151,  159,  160],  it  remains  unclear  if  the  resulting  or
+similar methods can handle strongly correlated systems involving the entanglement of larger
+numbers  of  electrons.   As  pointed  out  in  Section  II,  model  systems  that  were  used  in  the
+past to justify the (T2)2  diagram cancellations deﬁning the ACP schemes  by extracting T4
+contributions from the wave functions obtained by projecting out the singlet components of
+the UHF determinants breaking the S2 symmetry, but not Sz, do not oﬀer any guidance how
+to handle T3  clusters,  since the Tn  components with odd values of n ≥ 3 are absent in the
+resulting PUHF states [125, 126].  In order to see the emergence of T3 contributions through
+spin-symmetry breaking and restoration, one has to break the S2 as well as Sz symmetries, as
+in Ref. [129].  Thus, it would be worth examining if the considerations reported in Ref. [129]
+allow one to come up with diagram cancellations or combinations within the CCSDt/CCSDT
+amplitude equations that could describe strong correlations, as understood throughout the
+present article, while accounting for the connected triply excited clusters at the same time.
+
+                                                       35
+   FUNDING
+
+
+   This  work  has  been  supported  by  the  Chemical  Sciences,  Geosciences  and  Biosciences
+Division,  Oﬃce  of  Basic  Energy  Sciences,  Oﬃce  of  Science,  U.S.  Department  of  Energy
+(Grant No.  DE-FG02-01ER15228).
+
+
+
+
+   ORCID
+
+
+Ilias Magoulas https://orcid.org/0000-0003-3252-9112
+Jun Shen https://orcid.org/0000-0003-1838-3719
+Piotr Piecuch https://orcid.org/0000-0002-7207-1815
+
+
+
+
+
+  [1]  J. Hubbard, Proc. R. Soc. London A 240, 539 (1957).
+
+  [2]  N. M. Hugenholtz, Physica 23, 481 (1957).
+
+  [3]  F. Coester, Nucl. Phys. 7, 421 (1958).
+  [4]  F. Coester and H. K¨ummel, Nucl. Phys. 17, 477 (1960).
+
+  [5]  J.  ˇC´ıˇzek, J. Chem. Phys. 45, 4256 (1966).
+  [6]  J.  ˇC´ıˇzek, Adv. Chem. Phys. 14, 35 (1969).
+
+  [7]  J.  ˇC´ıˇzek and J. Paldus, Int. J. Quantum Chem. 5, 359 (1971).
+
+  [8]  J. Paldus, J.  ˇC´ıˇzek,  and I. Shavitt, Phys. Rev. A 5, 50 (1972).
+  [9]  J. Paldus and X. Li, Adv. Chem. Phys. 110, 1 (1999).
+
+ [10]  R. J. Bartlett and M. Musia/suppressl, Rev. Mod. Phys. 79, 291 (2007).
+
+ [11]  G. D. Purvis, III and R. J. Bartlett, J. Chem. Phys. 76, 1910 (1982).
+
+ [12]  J. M. Cullen and M. C. Zerner, J. Chem. Phys. 77, 4088 (1982).
+ [13]  G.  E.  Scuseria,   A.  C.  Scheiner,   T.  J.  Lee,   J.  E.  Rice,     and  H.  F.  Schaefer,   III,
+
+       J. Chem. Phys. 86, 2881 (1987).
+ [14]  P. Piecuch and J. Paldus, Int. J. Quantum Chem. 36, 429 (1989).
+
+ [15]  J. Noga and R. J. Bartlett, J. Chem. Phys. 86, 7041 (1987), ibid. 89, 3401 (1988) [Erratum].
+
+ [16]  G. E. Scuseria and H. F. Schaefer, III, Chem. Phys. Lett. 152, 382 (1988).
+ [17]  J. D. Watts and R. J. Bartlett, J. Chem. Phys. 93, 6104 (1990).
+
+                                                         36
+[18]  N. Oliphant and L. Adamowicz, J. Chem. Phys. 95, 6645 (1991).
+
+[19]  S. A. Kucharski and R. J. Bartlett, Theor. Chim. Acta 80, 387 (1991).
+
+[20]  S. A. Kucharski and R. J. Bartlett, J. Chem. Phys. 97, 4282 (1992).
+[21]  P. Piecuch and L. Adamowicz, J. Chem. Phys. 100, 5792 (1994).
+
+[22]  K. Emrich, Nucl. Phys. A 351, 379 (1981).
+
+[23]  J. Geertsen, M. Rittby,  and R. J. Bartlett, Chem. Phys. Lett. 164, 57 (1989).
+[24]  J. F. Stanton and R. J. Bartlett, J. Chem. Phys. 98, 7029 (1993).
+
+[25]  K. Kowalski and P. Piecuch, J. Chem. Phys. 115, 643 (2001).
+
+[26]  K. Kowalski and P. Piecuch, Chem. Phys. Lett. 347, 237 (2001).
+[27]  S. A. Kucharski, M. W/suppressloch, M. Musia/suppressl,  and R. J. Bartlett, J. Chem. Phys. 115, 8263 (2001).
+
+[28]  M. K´allay and J. Gauss, J. Chem. Phys. 121, 9257 (2004).
+
+[29]  S. Hirata, J. Chem. Phys. 121, 51 (2004).
+[30]  H. Monkhorst, Int. J. Quantum Chem. Symp. 11, 421 (1977).
+
+[31]  E. Dalgaard and H. Monkhorst, Phys. Rev. A 28, 1217 (1983).
+
+[32]  D. Mukherjee and P. K. Mukherjee, Chem. Phys. 39, 325 (1979).
+
+[33]  H. Sekino and R. J. Bartlett, Int. J. Quantum Chem. Symp. 18, 255 (1984).
+[34]  M. Takahashi and J. Paldus, J. Chem. Phys. 85, 1486 (1986).
+
+[35]  H. Koch and P. Jørgensen, J. Chem. Phys. 93, 3333 (1990).
+[36]  H. Koch, H. J. A. Jensen, P. Jørgensen,  and T. Helgaker, J. Chem. Phys. 93, 3345 (1990).
+
+[37]  A. E. Kondo, P. Piecuch,  and J. Paldus, J. Chem. Phys. 102, 6511 (1995).
+
+[38]  A. E. Kondo, P. Piecuch,  and J. Paldus, J. Chem. Phys. 104, 8566 (1996).
+[39]  N. F. Mott, Proc. Phys. Soc. A 62, 416 (1949).
+
+[40]  N. F. Mott, Rev. Mod. Phys. 40, 677 (1968).
+
+[41]  N.  F.  Mott,  Metal-Insulator Transitions  (Taylor  and  Francis,  London,  1974;  2nd  edition
+
+     1990, 1990).
+[42]  J. Hubbard, Proc. R. Soc. London A 276, 238 (1963).
+
+[43]  J. Hubbard, Proc. R. Soc. London A 277, 237 (1964).
+[44]  J. Hubbard, Proc. R. Soc. London A 281, 401 (1964).
+
+[45]  D. Vollhardt, Rev. Mod. Phys. 56, 99 (1984).
+
+[46]  M. Imada, A. Fujimori,  and Y. Tokura, Rev. Mod. Phys. 70, 1039 (1998).
+[47]  J. Hachmann, W. Cardoen,  and G. K.-L. Chan, J. Chem. Phys. 125, 144101 (2006).
+
+                                                       37
+[48]  G. L. Bendazzoli, S. Evangelisti,  and A. Monari, Int. J. Quantum Chem. 111, 3416 (2011).
+
+[49]  M. Motta,  D. M. Ceperley, G. K.-L. Chan, J. A. Gomez,  E. Gull, S. Guo, C. A. Jim´enez-
+
+      Hoyos,  T.  N.  Lan,  J.  Li,  F.  Ma,  A.  J.  Millis,  N.  V.  Prokof’ev,  U.  Ray,  G.  E.  Scuseria,
+      S. Sorella, E. M. Stoudenmire, Q. Sun, I. S. Tupitsyn, S. R. White, D. Zgid,  and S. Zhang,
+
+      Phys. Rev. X 7, 031059 (2017).
+
+[50]  T. Tsuchimochi and G. E. Scuseria, J. Chem. Phys. 131, 121102 (2009).
+[51]  A. V. Sinitskiy, L. Greenman,  and D. A. Mazziotti, J. Chem. Phys. 133, 014104 (2010).
+
+[52]  D. Kats and F. R. Manby, J. Chem. Phys. 139, 021102 (2013).
+
+[53]  E.     Pastorczak,      J.     Shen,      M.     Hapka,      P.     Piecuch,           and     K.     Pernal,
+      J. Chem. Theory Comput. 13, 5404 (2017).
+
+[54]  N. H. Stair and F. A. Evangelista, J. Chem. Phys. 153, 104108 (2020).
+
+[55]  R. Pauncz, J. de Heer,  and P.-O. L¨owdin, J. Chem. Phys. 36, 2247 (1962).
+[56]  R. Pauncz, J. de Heer,  and P.-O. L¨owdin, J. Chem. Phys. 36, 2257 (1962).
+
+[57]  R. Pariser and R. G. Parr, J. Chem. Phys. 21, 466 (1953).
+
+[58]  R. Pariser and R. G. Parr, J. Chem. Phys. 21, 767 (1953).
+
+[59]  J. A. Pople, Trans. Faraday Soc. 49, 1375 (1953).
+[60]  J. Paldus, M. Takahashi,  and R. W. H. Cho, Phys. Rev. B 30, 4267 (1984).
+
+[61]  J. Paldus, M. Takahashi,  and R. W. H. Cho, Int. J. Quantum Chem. Symp. 18, 237 (1984).
+[62]  M. Takahashi and J. Paldus, Phys. Rev. B 31, 5121 (1985).
+
+[63]  P. Piecuch, S. Zarrabian, J. Paldus,  and J.  ˇC´ıˇzek, Phys. Rev. B 42, 3351 (1990).
+
+[64]  P. Piecuch and J. Paldus, Int. J. Quantum Chem. Symp. 25, 9 (1991).
+[65]  J. Paldus and P. Piecuch, Int. J. Quantum Chem. 42, 135 (1992).
+
+[66]  P. Piecuch, J.  ˇC´ıˇzek,  and J. Paldus, Int. J. Quantum Chem. 42, 165 (1992).
+
+[67]  R. Podeszwa, S. A. Kucharski,  and L. Z. Stolarczyk, J. Chem. Phys. 116, 480 (2002).
+
+[68]  I. Lindgren and D. Mukherjee, Phys. Rep. 151, 93 (1987).
+[69]  P. Piecuch and K. Kowalski, Int. J. Mol. Sci. 3, 676 (2002).
+
+[70]  D. I. Lyakh, M. Musia/suppressl, V. F. Lotrich,  and R. J. Bartlett, Chem. Rev. 112, 182 (2012).
+[71]  F. A. Evangelista, J. Chem. Phys. 149, 030901 (2018).
+
+[72]  P.    G.    Szalay,     T.    M¨uller,     G.    Gidofalvi,     H.    Lischka,         and    R.    Shepard,
+
+      Chem. Rev. 112, 108 (2012).
+[73]  D. Roca-Sanju´an, F. Aquilante,  and R. Lindh, WIREs Comput. Mol. Sci. 2, 585 (2012).
+
+                                                         38
+[74]  S.  Chattopadhyay,   R.  K.  Chaudhuri,  U.  S.  Mahapatra,   A.  Ghosh,     and  S.  S.  Ray,
+
+      WIREs Comput. Mol. Sci. 6, 266 (2016).
+
+[75]  K.    Ruedenberg,     M.    W.    Schmidt,     M.    M.    Gilbert,         and    S.    T.    Elbert,
+      Chem. Phys. 71, 41 (1982).
+
+[76]  B. O. Roos, Adv. Chem. Phys. 69, 399 (1987).
+
+[77]  S. R. White, Phys. Rev. Lett. 69, 2863 (1992).
+[78]  S. R. White and R. L. Martin, J. Chem. Phys. 110, 4127 (1999).
+
+[79]  A.   O.   Mitrushenkov,    G.   Fano,    F.   Ortolani,    R.   Linguerri,       and   P.   Palmieri,
+
+      J. Chem. Phys. 115, 6815 (2001).
+[80]  G. K.-L. Chan and M. Head-Gordon, J. Chem. Phys. 116, 4462 (2002).
+
+[81]  G. K.-L. Chan and S. Sharma, Annu. Rev. Phys. Chem. 62, 465 (2011).
+
+[82]  S. Keller, M. Dolﬁ, M. Troyer,  and M. Reiher, J. Chem. Phys. 143, 244118 (2015).
+[83]  G.    K.-L.    Chan,     A.    Keselman,     N.    Nakatani,     Z.    Li,         and    S.    R.    White,
+
+      J. Chem. Phys. 145, 014102 (2016).
+
+[84]  A. Baiardi and M. Reiher, J. Chem. Phys. 152, 040903 (2020).
+
+[85]  G. H. Booth, A. J. W. Thom,  and A. Alavi, J. Chem. Phys. 131, 054106 (2009).
+[86]  D. Cleland, G. H. Booth,  and A. Alavi, J. Chem. Phys. 132, 041103 (2010).
+
+[87]  W. Dobrautz, S. D. Smart,  and A. Alavi, J. Chem. Phys. 151, 094104 (2019).
+[88]  K. Ghanem, A. Y. Lozovoi,   and A. Alavi, J. Chem. Phys. 151, 224108 (2019).
+
+[89]  K. Ghanem, K. Guther,  and A. Alavi, J. Chem. Phys. 153, 224115 (2020).
+
+[90]  J. L. Whitten and M. Hackmeyer, J. Chem. Phys. 51, 5584 (1969).
+[91]  C. F. Bender and E. R. Davidson, Phys. Rev. 183, 23 (1969).
+
+[92]  B. Huron, J.-P. Malrieu,  and P. Rancurel, J. Chem. Phys. 58, 5745 (1973).
+
+[93]  R. J. Buenker and S. D. Peyerimhoﬀ, Theor. Chim. Acta 35, 33 (1974).
+
+[94]  J. B. Schriber and F. A. Evangelista, J. Chem. Phys. 144, 161106 (2016).
+[95]  J. B. Schriber and F. A. Evangelista, J. Chem. Theory Comput. 13, 5354 (2017).
+
+[96]  N.   M.   Tubman,   J.   Lee,   T.   Y.   Takeshita,   M.   Head-Gordon,      and   K.   B.   Whaley,
+      J. Chem. Phys. 145, 044112 (2016).
+
+[97]  N. M. Tubman, C. D. Freeman, D. S. Levine, D. Hait, M. Head-Gordon,  and K. B. Whaley,
+
+      J. Chem. Theory Comput. 16, 2139 (2020).
+
+
+
+                                                        39
+ [98]  W.  Liu  and  M.  R.  Hoﬀmann,  J. Chem. Theory Comput. 12, 1169 (2016),  ibid.  12,  3000
+
+       (2016) [Erratum].
+
+ [99]  N. Zhang, W. Liu,  and M. R. Hoﬀmann, J. Chem. Theory Comput. 16, 2296 (2020).
+[100]  A.       A.       Holmes,         N.       M.       Tubman,                and       C.       J.       Umrigar,
+
+       J. Chem. Theory Comput. 12, 3674 (2016).
+
+[101]  S.   Sharma,    A.   A.   Holmes,    G.   Jeanmairet,    A.   Alavi,       and   C.   J.   Umrigar,
+       J. Chem. Theory Comput. 13, 1595 (2017).
+
+[102]  J.    Li,     M.    Otten,     A.    A.    Holmes,     S.    Sharma,          and    C.    J.    Umrigar,
+
+       J. Chem. Phys. 149, 214110 (2018).
+[103]  Y. Garniron, A. Scemama, P.-F. Loos,  and M. Caﬀarel, J. Chem. Phys. 147, 034101 (2017).
+
+[104]  Y. Garniron,  T. Applencourt,  K. Gasperich,  A.  Benali,  A. Ferte,  J. Paquier,  B.  Pradines,
+
+       R.   Assaraf,   P.   Reinhardt,   J.   Toulouse,   P.   Barbaresco,   N.   Renon,   G.   David,   J.-
+       P.   Malrieu,    M.   Veril,    M.   Caﬀarel,    P.-F.   Loos,    E.   Giner,       and   A.   Scemama,
+
+       J. Chem. Theory Comput. 15, 3591 (2019).
+
+[105]  P. A. Malmqvist, A. Rendell,  and B. O. Roos, J. Phys. Chem. 94, 5477 (1990).
+
+[106]  J. Ivanic, J. Chem. Phys. 119, 9364 (2003).
+[107]  J. Ivanic, J. Chem. Phys. 119, 9377 (2003).
+
+[108]  D. Ma, G. Li Manni,  and L. Gagliardi, J. Chem. Phys. 135, 044128 (2011).
+[109]  K.   D.   Vogiatzis,    G.   Li   Manni,   S.   J.   Stoneburner,   D.   Ma,      and   L.   Gagliardi,
+
+       J. Chem. Theory Comput. 11, 3010 (2015).
+
+[110]  M. R. Hermes and L. Gagliardi, J. Chem. Theory Comput. 15, 972 (2019).
+[111]  Y. Kurashige and T. Yanai, J. Chem. Phys. 135, 094104 (2011).
+
+[112]  S.     Guo,      M.     A.     Watson,      W.     Hu,      Q.     Sun,          and     G.     K.-L.     Chan,
+
+       J. Chem. Theory Comput. 12, 1583 (2016).
+
+[113]  N. Nakatani and S. Guo, J. Chem. Phys. 146, 094102 (2017).
+[114]  S. Sharma and G. K.-L. Chan, J. Chem. Phys. 141, 111101 (2014).
+
+[115]  L. Freitag, S. Knecht, C. Angeli,  and M. Reiher, J. Chem. Theory Comput. 13, 451 (2017).
+[116]  D. Ma, G. Li Manni, J. Olsen,  and L. Gagliardi, J. Chem. Theory Comput. 12, 3208 (2016).
+
+[117]  M.   Degroote,    T.   M.   Henderson,    J.   Zhao,    J.   Dukelsky,       and   G.   E.   Scuseria,
+
+       Phys. Rev. B 93, 125124 (2016).
+
+
+
+                                                           40
+[118]  G. E. Scuseria, lecture entitled “Symmetry, Degeneracy and Strong Correlation,” presented
+
+       during the Workshop of the Espace de Structure Nucl´eaire Th´eorique on “Many-Body Pertur-
+
+       bation Theories in Modern Quantum Chemistry and Nuclear Physics,” CEA Saclay, France,
+       March 26-30, 2018; see http://esnt.cea.fr/Phocea/Page/index.php?id=79.
+
+[119]  I.       W.       Bulik,         T.       M.       Henderson,                and       G.       E.       Scuseria,
+
+       J. Chem. Theory Comput. 11, 3171 (2015).
+[120]  J.    A.    Gomez,     M.    Degroote,     J.    Zhao,     Y.    Qiu,         and    G.    E.    Scuseria,
+
+       Phys. Chem. Chem. Phys. 19, 22385 (2017).
+
+[121]  J. A. Gomez, T. M. Henderson,  and G. E. Scuseria, Mol. Phys. 115, 2673 (2017).
+[122]  D. J. Thouless, Nucl. Phys. 21, 225 (1960).
+
+[123]  D. J. Thouless, The Quantum Mechanics of Many-Body Systems  (Academic Press, 1961).
+
+[124]  J.  ˇC´ıˇzek, J. Paldus,  and L. ˇSroubkov´a, Int. J. Quantum Chem. 3, 149 (1969).
+[125]  J. Paldus, J.  ˇC´ıˇzek,  and M. Takahashi, Phys. Rev. A 30, 2193 (1984).
+
+[126]  P. Piecuch, R. Tobo/suppressla,  and J. Paldus, Phys. Rev. A 54, 1210 (1996).
+
+[127]  Y. Qiu, T. M. Henderson,  and G. E. Scuseria, J. Chem. Phys. 145, 111102 (2016).
+
+[128]  Y. Qiu, T. M. Henderson,  and G. E. Scuseria, J. Chem. Phys. 146, 184105 (2017).
+[129]  T. M. Henderson and G. E. Scuseria, Phys. Rev. A 96, 022506 (2017).
+
+[130]  P.  A.  Limacher,  P.  W.  Ayers,  P.  A.  Johnson,  S.  De  Baerdemacker,  D.  Van  Neck,    and
+       P. Bultinck, J. Chem. Theory Comput. 9, 1394 (2013).
+
+[131]  T.     M.     Henderson,      I.     W.     Bulik,      T.     Stein,           and     G.     E.     Scuseria,
+
+       J. Chem. Phys. 141, 244104 (2014).
+[132]  T.   M.   Henderson,   G.   E.   Scuseria,   J.   Dukelsky,   A.   Signoracci,      and   T.   Duguet,
+
+       Phys. Rev. C 89, 054305 (2014).
+
+[133]  T. Stein, T. M. Henderson,  and G. E. Scuseria, J. Chem. Phys. 140, 214113 (2014).
+
+[134]  J. J. Shepherd, T. M. Henderson,  and G. E. Scuseria, Phys. Rev. Lett. 112, 133002 (2014),
+       ibid. 112, 209901 (2014) [Erratum].
+
+[135]  J. J. Shepherd, T. M. Henderson,  and G. E. Scuseria, J. Chem. Phys. 144, 094112 (2016).
+[136]  J. A. Gomez, T. M. Henderson,  and G. E. Scuseria, J. Chem. Phys. 144, 244117 (2016).
+
+[137]  K. Boguslawski and P. Tecmer, J. Chem. Theory Comput. 13, 5966 (2017).
+
+[138]  P.  A.  Johnson,   P.  A.  Limacher,   T.  D.  Kim,   M.  Richer,   R.  A.  Miranda-Quintana,
+       F.  Heidar-Zadeh,  P.  W.  Ayers,  P.  Bultinck,  S.  De  Baerdemacker,    and  D.  Van  Neck,
+
+                                                          41
+       Comput. Theor. Chem. 1116, 207 (2017).
+
+[139]  A. Marie, F. Kossoski,  and P.-F. Loos, J. Chem. Phys. 155, 104105 (2021).
+
+[140]  P. Piecuch and J. Paldus, Theor. Chim. Acta 78, 65 (1990).
+[141]  B. G. Adams, K. Jankowski,  and J. Paldus, Phys. Rev. A 24, 2316 (1981).
+
+[142]  K. Jankowski and J. Paldus, Int. J. Quantum Chem. 18, 1243 (1980).
+
+[143]  B. G. Adams, K. Jankowski,  and J. Paldus, Phys. Rev. A 24, 2330 (1981).
+[144]  R. A. Chiles and C. E. Dykstra, Chem. Phys. Lett. 80, 69 (1981).
+
+[145]  S. M. Bachrach, R. A. Chiles,  and C. E. Dykstra, J. Chem. Phys. 75, 2270 (1981).
+
+[146]  P. Piecuch, R. Tobo/suppressla,  and J. Paldus, Int. J. Quantum Chem. 55, 133 (1995).
+[147]  R. J. Bartlett and M. Musia/suppressl, J. Chem. Phys. 125, 204105 (2006).
+
+[148]  M. Musia/suppressl and R. J. Bartlett, J. Chem. Phys. 127, 024106 (2007).
+
+[149]  M. Nooijen and R. J. Le Roy, J. Molec. Struct.:  THEOCHEM 768, 25 (2006).
+[150]  L. M. J. Huntington and M. Nooijen, J. Chem. Phys. 133, 184109 (2010).
+
+[151]  V. Rishi and E. F. Valeev, J. Chem. Phys. 151, 064102 (2019).
+
+[152]  D. Kats, J. Chem. Phys. 141, 061101 (2014).
+
+[153]  D. Kats, D. Kreplin, H.-J. Werner,  and F. R. Manby, J. Chem. Phys. 142, 064111 (2015).
+[154]  D. Kats, J. Chem. Phys. 144, 044102 (2016).
+
+[155]  D. Kats, Mol. Phys. 116, 1435 (2018).
+[156]  V. Rishi, A. Perera,  and R. J. Bartlett, J. Chem. Phys. 144, 124117 (2016).
+
+[157]  V. Rishi, A. Perera, M. Nooijen,  and R. J. Bartlett, J. Chem. Phys. 146, 144104 (2017).
+
+[158]  V. Rishi, A. Perera,  and R. J. Bartlett, Mol. Phys. 117, 2201 (2019).
+[159]  D. Kats and A. K¨ohn, J. Chem. Phys. 150, 151101 (2019).
+
+[160]  T. Schraivogel and D. Kats, J. Chem. Phys. 155, 064101 (2021).
+
+[161]  J. Paldus, J. Math. Chem. 55, 477 (2017).
+
+[162]  P. Piecuch, A. E. Kondo, V. ˇSpirko,  and J. Paldus, J. Chem. Phys. 104, 4699 (1996).
+[163]  P. Piecuch, R. Tobo/suppressla,  and J. Paldus, Chem. Phys. Lett. 210, 243 (1993).
+
+[164]  K. Raghavachari, J. Chem. Phys. 82, 4607 (1985).
+[165]  M. Urban, J. Noga, S. J. Cole,  and R. J. Bartlett, J. Chem. Phys. 83, 4041 (1985), ibid. 85,
+
+       5383 (1986) [Erratum].
+
+[166]  K.    Raghavachari,     G.    W.    Trucks,     J.    A.    Pople,          and    M.    Head-Gordon,
+       Chem. Phys. Lett. 157, 479 (1989).
+
+                                                          42
+[167]  Y. S. Lee and R. J. Bartlett, J. Chem. Phys. 80, 4371 (1984).
+
+[168]  Y. S. Lee,  S. A. Kucharski,   and R. J. Bartlett,  J. Chem. Phys. 81, 5906 (1984),  ibid.  82,
+
+       5761 (1985) [Erratum].
+[169]  N. Oliphant and L. Adamowicz, J. Chem. Phys. 94, 1229 (1991).
+
+[170]  N. Oliphant and L. Adamowicz, J. Chem. Phys. 96, 3739 (1992).
+
+[171]  P. Piecuch, N. Oliphant,  and L. Adamowicz, J. Chem. Phys. 99, 1875 (1993).
+[172]  P. Piecuch and L. Adamowicz, Chem. Phys. Lett. 221, 121 (1994).
+
+[173]  P. Piecuch and L. Adamowicz, J. Chem. Phys. 102, 898 (1995).
+
+[174]  V. Alexandrov, P. Piecuch,  and L. Adamowicz, J. Chem. Phys. 102, 3301 (1995).
+[175]  K. B. Ghose, P. Piecuch,  and L. Adamowicz, J. Chem. Phys. 103, 9331 (1995).
+
+[176]  K. B. Ghose, P. Piecuch, S. Pal,  and L. Adamowicz, J. Chem. Phys. 104, 6582 (1996).
+
+[177]  P. Piecuch, S. A. Kucharski,  and R. J. Bartlett, J. Chem. Phys. 110, 6103 (1999).
+[178]  P. Piecuch, S. A. Kucharski,  and V. ˇSpirko, J. Chem. Phys. 111, 6679 (1999).
+
+[179]  K. Kowalski and P. Piecuch, Chem. Phys. Lett. 344, 165 (2001).
+
+[180]  K. Kowalski and P. Piecuch, J. Chem. Phys. 113, 8490 (2000).
+
+[181]  K.    Kowalski,     S.    Hirata,     M.    W/suppressloch,     P.    Piecuch,         and    T.    L.    Windus,
+       J. Chem. Phys. 123, 074319 (2005).
+
+[182]  P.    Piecuch,     S.    Hirata,     K.    Kowalski,     P.-D.    Fan,         and    T.    L.    Windus,
+       Int. J. Quantum Chem. 106, 79 (2006).
+
+[183]  J. R. Gour, P. Piecuch,  and M. W/suppressloch, J. Chem. Phys. 123, 134113 (2005).
+
+[184]  J. R. Gour, P. Piecuch,  and M. W/suppressloch, Int. J. Quantum Chem. 106, 2854 (2006).
+[185]  J. R. Gour and P. Piecuch, J. Chem. Phys. 125, 234107 (2006).
+
+[186]  P. Piecuch, Mol. Phys. 108, 2987 (2010).
+
+[187]  J. Shen and P. Piecuch, J. Chem. Phys. 138, 194102 (2013).
+
+[188]  J. Shen and P. Piecuch, Mol. Phys. 112, 868 (2014).
+[189]  A. O. Ajala, J. Shen,  and P. Piecuch, J. Phys. Chem. A 121, 3469 (2017).
+
+[190]  J.  ˇC´ıˇzek, Theor. Chim. Acta 6, 292 (1966).
+[191]  J. Paldus, B. G. Adams,  and J.  ˇC´ıˇzek, Int. J. Quantum Chem. 11, 813 (1977).
+
+[192]  J. Paldus, J. Chem. Phys. 67, 303 (1977).
+
+[193]  B. G. Adams and J. Paldus, Phys. Rev. A 20, 1 (1979).
+[194]  R. A. Chiles and C. E. Dykstra, J. Chem. Phys. 74, 4544 (1981).
+
+                                                          43
+[195]  J. Geertsen, S. Eriksen,  and J. Oddershede, Adv. Quantum Chem. 22, 167 (1991).
+
+[196]  P. Piecuch and J. Paldus, Theor. Chim. Acta 83, 69 (1992).
+
+[197]  P. Piecuch and J. Paldus, J. Chem. Phys. 101, 5875 (1994).
+[198]  J. Paldus and J. Planelles, Theor. Chim. Acta 89, 13 (1994).
+
+[199]  L. Z. Stolarczyk, Chem. Phys. Lett. 217, 1 (1994).
+
+[200]  G. Peris, J. Planelles,  and J. Paldus, Int. J. Quantum Chem. 62, 137 (1997).
+[201]  G. Peris, J. Planelles, J.-P. Malrieu,  and J. Paldus, J. Chem. Phys. 110, 11708 (1999).
+
+[202]  X. Li and J. Paldus, J. Chem. Phys. 107, 6257 (1997).
+
+[203]  X. Li and J. Paldus, J. Chem. Phys. 108, 637 (1998).
+[204]  X. Li and J. Paldus, J. Chem. Phys. 124, 174101 (2006).
+
+[205]  E. Xu and S. Li, J. Chem. Phys. 142, 094119 (2015).
+
+[206]  J. E. Deustua, I. Magoulas, J. Shen,  and P. Piecuch, J. Chem. Phys. 149, 151101 (2018).
+[207]  G.   J.   R.   Aroeira,    M.   M.   Davis,    J.   M.   Turney,       and   H.   F.   Schaefer,    III,
+
+       J. Chem. Theory Comput. 17, 182 (2021).
+
+[208]  S.    Lee,     H.    Zhai,     S.    Sharma,     C.    J.    Umrigar,         and    G.    K.-L.    Chan,
+
+       J. Chem. Theory Comput. 17, 3414 (2021).
+[209]  I.    Magoulas,     K.    Gururangan,    P.    Piecuch,     J.    E.    Deustua,        and    J.    Shen,
+
+       J. Chem. Theory Comput. 17, 4006 (2021).
+[210]  M.  W. Schmidt,  K.  K. Baldridge,  J. A.  Boatz,  S. T. Elbert,  M.  S. Gordon,  J. H.  Jensen,
+
+       S.  Koseki,  N.  Matsunaga,  K.  A.  Nguyen,  S.  Su,  T.  L.  Windus,  M.  Dupuis,    and  J.  A.
+
+       Montgomery, Jr., J. Comput. Chem. 14, 1347 (1993).
+[211]  M. S. Gordon and M. W. Schmidt, in Theory and Applications of Computational  Chemistry:  The First Forty Years,
+
+       edited by C. E. Dykstra, G. Frenking, K. S. Kim,  and G. E. Scuseria (Elsevier, Amsterdam,
+
+       2005) pp. 1167–1189.
+
+[212]  G.  M.  J.  Barca,  C.  Bertoni,  L.  Carrington,  D.  Datta,  N.  De  Silva,  J.  E.  Deustua,  D.  G.
+       Fedorov, J. R. Gour, A. O. Gunina, E. Guidez, T. Harville, S. Irle, J. Ivanic, K. Kowalski,
+
+       S. S. Leang, H. Li, W. Li, J. J. Lutz, I. Magoulas, J. Mato, V. Mironov, H. Nakata, B. Q.
+       Pham,  P.  Piecuch,  D.  Poole,  S.  R.  Pruitt,  A.  P.  Rendell,  L.  B.  Roskop,  K.  Ruedenberg,
+
+       T. Sattasathuchana,  M. W. Schmidt,  J. Shen,  L. Slipchenko,  M.  Sosonkina,  V. Sundriyal,
+
+       A. Tiwari, J. L. Galvez Vallejo, B. Westheimer, M. W/suppressloch, P. Xu, F. Zahariev,   and M. S.
+       Gordon, J. Chem. Phys. 152, 154102 (2020).
+
+                                                           44
+[213]  J. Shen and P. Piecuch, Chem. Phys. 401, 180 (2012).
+
+[214]  J. Shen and P. Piecuch, J. Chem. Phys. 136, 144104 (2012).
+
+[215]  J. Shen and P. Piecuch, J. Chem. Theory Comput. 8, 4968 (2012).
+[216]  N. P. Bauman, J. Shen,  and P. Piecuch, Mol. Phys. 115, 2860 (2017).
+
+[217]  J. Ivanic and K. Ruedenberg, Theor. Chem. Acc. 106, 339 (2001).
+
+[218]  T. H. Dunning, Jr., J. Chem. Phys. 90, 1007 (1989).
+[219]  T. H. Dunning, Jr., J. Chem. Phys. 53, 2823 (1970).
+
+[220]  T. H. Dunning, Jr. and P. J. Hay, in Methods of Electronic Structure Theory, edited by H. F.
+
+       Schaefer, III (Springer, Boston, 1977) pp. 1–27.
+[221]  W. J. Hehre, R. F. Stewart,  and J. A. Pople, J. Chem. Phys. 51, 2657 (1969).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                         45
+TABLE I. A comparison of the energies obtained with the CCSD and various ACCSD approaches
+
+with the exact FCI data for the symmetric dissociation of the H6 ring, as described by the cc-pVTZ
+basis set, at selected bond distances between neighboring H atoms RH–H (in ˚A).a
+
+
+RH–H                  CCSD                                                                             ACCSD                                                                                    FCI(1,3)                (1,  3+4
+                                                                                       2   )b             (1, 3 ×       nono+nu  + 4 ×       nuno+nu )                (1,4)
+0.6                          3.422                 −0.242                   1.557                                      3.144                                    3.262                     −2.858958
+0.7                          3.593                 −0.320                   1.618                                      3.321                                    3.448                     −3.176147
+0.8                          3.823                 −0.417                   1.695                                      3.541                                    3.679                     −3.331124
+0.9                          4.103                 −0.534                   1.788                                      3.809                                    3.959                     −3.396176
+1.0                          4.424                 −0.665                   1.906                                      4.132                                    4.297                     −3.410069
+1.1                          4.774                 −0.805                   2.059                                      4.522                                    4.705                     −3.394673
+1.2                          5.139                 −0.944                   2.263                                      5.003                                    5.206                     −3.362943
+1.3                          5.489                 −1.068                   2.543                                      5.608                                    5.833                     −3.322850
+1.4                          5.758                 −1.156                   2.934                                      6.381                                    6.634                     −3.279466
+1.5                          5.802                 −1.175                   3.479                                      7.377                                    7.662                     −3.236119
+1.6                          5.309                 −1.088                   4.219                                      8.638                                    8.960                     −3.195040
+1.7                          3.647                 −0.865                   5.165                                   10.165                                  10.529                     −3.157716
+1.8                       −0.380                 −0.508                   6.266                                   11.872                                  12.280                     −3.125051
+1.9                       −8.826                 −0.071                   7.388                                   13.563                                  14.012                     −3.097433
+2.0                     −24.720                    0.350                   8.337                                   14.963                                  15.445                     −3.074787
+2.1                     −51.331                    0.660                   8.931                                   15.813                                  16.314                     −3.056686
+2.2                     −89.837                    0.803                   9.073                                   15.975                                  16.478                     −3.042507
+2.3                   −137.197                    0.782                   8.776                                   15.463                                  15.951                     −3.031571
+2.4                   −187.824                    0.635                   8.135                                   14.417                                  14.876                     −3.023237
+2.5                   −237.074                    0.416                   7.277                                   13.027                                  13.447                     −3.016948
+MUEc                  39.624                    0.675                   4.770                                      9.037                                    9.349                        —
+MSEd               −34.095                 −0.311                   4.770                                      9.037                                    9.349                        —
+
+
+ a   The FCI energies are total energies in hartree, whereas all of the remaining energies are errors relative
+    to FCI in millihartree.
+b   Equivalent to the DCSD approach of Ref. [52].
+
+ c   Mean unsigned error.
+
+d   Mean signed error.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                         46
+TABLE II. A comparison of the energies obtained with the CCSDt and various ACCSDt approaches
+
+with the exact FCI data for the symmetric dissociation of the H6 ring, as described by the cc-pVTZ
+basis set, at selected bond distances between neighboring H atoms RH–H (in ˚A).a
+
+
+RH–H                 CCSDt                                                                           ACCSDt                                                                                   FCI(1,3)                (1,  3+4
+                                                                                      2   )             (1, 3 ×       nono+nu  + 4 ×       nuno+nu )                (1,4)
+0.6                           2.548                 −1.234                  0.615                                     2.243                                     2.365                     −2.858958
+0.7                           2.419                 −1.660                  0.345                                     2.103                                     2.235                     −3.176147
+0.8                           2.235                 −2.247               −0.043                                     1.880                                     2.023                     −3.331124
+0.9                           2.018                 −2.962               −0.515                                     1.608                                     1.766                     −3.396176
+1.0                           1.804                 −3.757               −1.021                                     1.339                                     1.514                     −3.410069
+1.1                           1.609                 −4.592               −1.519                                     1.114                                     1.309                     −3.394673
+1.2                           1.414                 −5.454               −1.992                                     0.953                                     1.170                     −3.362943
+1.3                           1.111                 −6.428               −2.504                                     0.809                                     1.053                     −3.322850
+1.4                           0.669                 −7.437               −2.974                                     0.766                                     1.040                     −3.279466
+1.5                        −0.074                 −8.459               −3.375                                     0.855                                     1.163                     −3.236119
+1.6                        −1.438                 −9.451               −3.673                                     1.104                                     1.451                     −3.195040
+1.7                        −4.014               −10.345               −3.837                                     1.516                                     1.904                     −3.157716
+1.8                        −8.888               −11.062               −3.852                                     2.051                                     2.478                     −3.125051
+1.9                      −17.983               −11.538               −3.744                                     2.611                                     3.069                     −3.097433
+2.0                      −34.481               −11.755               −3.576                                     3.059                                     3.535                     −3.074787
+2.1                      −62.336               −11.747               −3.432                                     3.266                                     3.744                     −3.056686
+2.2                   −102.675               −11.583               −3.387                                     3.160                                     3.624                     −3.042507
+2.3                   −150.692               −11.337               −3.483                                     2.735                                     3.172                     −3.031571
+2.4                   −199.899               −11.068               −3.726                                     2.041                                     2.442                     −3.023237
+2.5                   −246.321               −10.805               −4.094                                     1.154                                     1.516                     −3.016948
+MUEb                  42.231                    7.746                  2.585                                     1.818                                     2.129                        —
+MSEc                −40.649                 −7.746               −2.489                                     1.818                                     2.129                        —
+
+
+ a   The FCI energies are total energies in hartree, whereas all of the remaining energies are errors relative
+    to FCI in millihartree.  The CCSDt and ACCSDt approaches employed three active occupied and three
+    active unoccupied MOs corresponding to the 1s shells of the individual H atoms.
+b   Mean unsigned error.
+
+ c   Mean signed error.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                      47
+TABLE III. A comparison of the energies  obtained with the CCSDT and various ACCSDT ap-
+
+proaches with the exact FCI data for the symmetric dissociation of the H6  ring, as described by
+the cc-pVTZ basis set, at selected bond distances between neighboring H atoms RH–H (in ˚A).a
+
+
+RH–H                 CCSDT                                                                          ACCSDT                                                                                  FCI(1,3)                (1,  3+4
+                                                                                      2   )             (1, 3 ×       nono+nu  + 4 ×       nuno+nu )                (1,4)
+0.6                           0.079                 −3.952               −1.996                                 −0.279                                 −0.151                     −2.858958
+0.7                           0.095                 −4.233               −2.123                                 −0.277                                 −0.139                     −3.176147
+0.8                           0.116                 −4.609               −2.304                                 −0.295                                 −0.146                     −3.331124
+0.9                           0.140                 −5.074               −2.530                                 −0.325                                 −0.162                     −3.396176
+1.0                           0.160                 −5.621               −2.792                                 −0.356                                 −0.175                     −3.410069
+1.1                           0.166                 −6.241               −3.079                                 −0.374                                 −0.174                     −3.394673
+1.2                           0.137                 −6.932               −3.381                                 −0.365                                 −0.143                     −3.362943
+1.3                           0.031                 −7.692               −3.686                                 −0.307                                 −0.059                     −3.322850
+1.4                        −0.235                 −8.512               −3.973                                 −0.172                                     0.106                     −3.279466
+1.5                        −0.823                 −9.369               −4.213                                     0.072                                     0.385                     −3.236119
+1.6                        −2.046               −10.216               −4.371                                     0.457                                     0.808                     −3.195040
+1.7                        −4.493               −10.982               −4.411                                     0.989                                     1.380                     −3.157716
+1.8                        −9.245               −11.585               −4.316                                     1.631                                     2.061                     −3.125051
+1.9                      −18.225               −11.959               −4.109                                     2.286                                     2.747                     −3.097433
+2.0                      −34.617               −12.084               −3.855                                     2.817                                     3.296                     −3.074787
+2.1                      −62.392               −11.995               −3.635                                     3.095                                     3.576                     −3.056686
+2.2                   −102.685               −11.760               −3.526                                     3.048                                     3.514                     −3.042507
+2.3                   −150.676               −11.452               −3.567                                     2.673                                     3.111                     −3.031571
+2.4                   −199.857               −11.129               −3.764                                     2.019                                     2.421                     −3.023237
+2.5                   −246.248               −10.820               −4.092                                     1.165                                     1.528                     −3.016948
+MUEb                  41.623                    8.811                  3.486                                     1.150                                     1.304                        —
+MSEc                −41.531                 −8.811               −3.486                                     0.875                                     1.189                        —
+
+
+ a   The FCI energies are total energies in hartree, whereas all of the remaining energies are errors relative
+    to FCI in millihartree.
+b   Mean unsigned error.
+
+ c   Mean signed error.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                       48
+TABLE IV. A comparison of the energies obtained with the CCSD and various ACCSD approaches
+
+with the exact FCI data for the symmetric dissociation of the H10  ring, as described by the DZ
+basis set, at selected bond distances between neighboring H atoms RH–H (in ˚A).a
+
+
+RH–H                CCSD                                                                             ACCSD                                                                                     FCI(1,3)                (1,  3+4
+                                                                                   2   )b             (1, 3 ×       nono+nu  + 4 ×       nuno+nu )                (1,4)
+0.6                         2.461                  0.412                   0.945                                      1.204                                     1.458                     −4.581177
+0.7                         2.942                  0.498                   1.071                                      1.348                                     1.619                     −5.133564
+0.8                         3.519                  0.708                   1.314                                      1.606                                     1.890                     −5.400721
+0.9                         4.157                  1.053                   1.689                                      1.992                                     2.285                     −5.513021
+1.0                         4.878                  1.591                   2.265                                      2.582                                     2.886                     −5.538852
+1.1                         5.691                  2.435                   3.164                                      3.501                                     3.821                     −5.516586
+1.2                         6.510                  3.744                   4.552                                      4.917                                     5.257                     −5.468944
+1.3                         7.013                  5.701                   6.620                                      7.022                                     7.388                     −5.409818
+1.4                         6.288                  8.451                   9.520                                      9.972                                   10.370                     −5.347723
+1.5                         1.896                11.987                 13.258                                    13.773                                   14.209                     −5.287756
+1.6                    −13.106                16.041                 17.575                                    18.168                                   18.647                     −5.232798
+1.7                    −66.276                20.069                 21.930                                    22.618                                   23.144                     −5.184271
+1.8                       NCc                    23.410                 25.650                                    26.446                                   27.026                     −5.142644
+1.9                       NCc                    25.531                 28.163                                    29.075                                   29.715                     −5.107796
+2.0                       NCc                    26.191                 29.172                                    30.197                                   30.903                     −5.079254
+2.1                       NCc                    25.462                 28.691                                    29.809                                   30.585                     −5.056349
+2.2                       NCc                    23.636                 26.967                                    28.146                                   28.985                     −5.038308
+2.3                       NCc                    21.090                 24.372                                    25.568                                   26.453                     −5.024332
+2.4                       NCc                    18.193                 21.298                                    22.468                                   23.370                     −5.013655
+2.5                       NCc                    15.248                 18.087                                    19.193                                   20.080                     −5.005591
+MUEd                 NAe                    12.572                 14.315                                    14.980                                   15.505                         —
+MSEf                  NAe                    12.572                 14.315                                    14.980                                   15.505                         —
+
+
+ a   The FCI energies are total energies in hartree, whereas all of the remaining energies are errors relative
+    to FCI in millihartree.
+b   Equivalent to the DCSD approach of Ref. [52].
+
+ c   No convergence.
+
+d   Mean unsigned error.
+ e   The mean errors are not reported because CCSD does not converge at larger values of RH–H.
+
+ f   Mean signed error.
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                       49
+TABLE V. A comparison of the energies obtained with the CCSDt and various ACCSDt approaches
+
+with the exact FCI data for the symmetric dissociation of the H10  ring, as described by the DZ
+basis set, at selected bond distances between neighboring H atoms RH–H (in ˚A).a
+
+
+RH–H                CCSDt                                                                           ACCSDt                                                                                    FCI(1,3)                 (1,  3+4
+                                                                                 2   )             (1, 3 ×       nono+nu  + 4 ×       nuno+nu )                 (1,4)
+0.6                         0.455                −1.751               −1.181                                  −0.904                                  −0.633                      −4.581177
+0.7                         0.554                −2.110               −1.502                                  −1.209                                  −0.922                      −5.133564
+0.8                         0.416                −2.726               −2.081                                  −1.773                                  −1.473                      −5.400721
+0.9                         0.349                −3.218               −2.541                                  −2.221                                  −1.912                      −5.513021
+1.0                         0.181                −3.735               −3.019                                  −2.686                                  −2.369                      −5.538852
+1.1                      −0.084                −4.169               −3.399                                  −3.050                                  −2.724                      −5.516586
+1.2                      −0.650                −4.477               −3.634                                  −3.266                                  −2.933                      −5.468944
+1.3                      −1.956                −4.591               −3.654                                  −3.266                                  −2.931                      −5.409818
+1.4                      −4.961                −4.457               −3.399                                  −2.994                                  −2.672                      −5.347723
+1.5                    −11.879                −4.091               −2.881                                  −2.468                                  −2.182                      −5.287756
+1.6                    −28.679                −3.630               −2.233                                  −1.824                                  −1.609                      −5.232798
+1.7                    −81.643                −3.315               −1.692                                  −1.300                                  −1.193                      −5.184271
+1.8                       NCb                   −3.398               −1.510                                  −1.144                                  −1.178                      −5.142644
+1.9                       NCb                   −4.043               −1.862                                  −1.523                                  −1.712                      −5.107796
+2.0                       NCb                   −5.295               −2.810                                  −2.494                                  −2.832                      −5.079254
+2.1                       NCb                   −7.106               −4.333                                  −4.029                                  −4.497                      −5.056349
+2.2                       NCb                   −9.380               −6.355                                  −6.055                                  −6.626                      −5.038308
+2.3                       NCb                 −12.001               −8.762                                  −8.462                                  −9.114                      −5.024332
+2.4                       NCb                 −14.806             −11.381                                −11.083                                −11.806                      −5.013655
+2.5                       NCb                 −17.551             −13.966                                −13.660                                −14.471                      −5.005591
+MUEc                 NAd                      5.793                   4.110                                     3.770                                     3.790                         —
+MSEe                  NAd                   −5.793               −4.110                                  −3.770                                  −3.790                         —
+
+
+a   The FCI energies are total energies in hartree, whereas all of the remaining energies are errors relative
+    to FCI in millihartree.  The CCSDt and ACCSDt approaches employed ﬁve active occupied and ﬁve
+    active unoccupied MOs corresponding to the 1s shells of the individual H atoms.
+b   No convergence.
+
+ c   Mean unsigned error.
+
+d   The mean errors are not reported because CCSDt does not converge at larger values of RH–H.
+ e   Mean signed error.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                   50
+TABLE VI.  A comparison of the energies  obtained with the CCSDT and various  ACCSDT ap-
+
+proaches with the exact FCI data for the symmetric dissociation of the H10 ring, as described by
+the DZ basis set, at selected bond distances between neighboring H atoms RH–H (in ˚A).a
+
+
+RH–H               CCSDT                                                                          ACCSDT                                                                                    FCI(1,3)                 (1,  3+4
+                                                                                  2   )             (1, 3 ×       nono+nu  + 4 ×       nuno+nu )                 (1,4)
+0.6                         0.065                −2.167               −1.591                                  −1.311                                  −1.037                      −4.581177
+0.7                         0.094                −2.602               −1.986                                  −1.688                                  −1.398                      −5.133564
+0.8                         0.110                −3.054               −2.404                                  −2.093                                  −1.790                      −5.400721
+0.9                         0.101                −3.485               −2.805                                  −2.482                                  −2.172                      −5.513021
+1.0                         0.035                −3.894               −3.175                                  −2.841                                  −2.523                      −5.538852
+1.1                      −0.170                −4.262               −3.491                                  −3.141                                  −2.815                      −5.516586
+1.2                      −0.703                −4.535               −3.691                                  −3.323                                  −2.989                      −5.468944
+1.3                      −1.991                −4.631               −3.693                                  −3.305                                  −2.969                      −5.409818
+1.4                      −4.986                −4.487               −3.428                                  −3.023                                  −2.700                      −5.347723
+1.5                    −11.897                −4.115               −2.904                                  −2.490                                  −2.205                      −5.287756
+1.6                    −28.687                −3.649               −2.251                                  −1.842                                  −1.626                      −5.232798
+1.7                    −81.631                −3.330               −1.706                                  −1.313                                  −1.206                      −5.184271
+1.8                       NCb                   −3.408               −1.520                                  −1.153                                  −1.187                      −5.142644
+1.9                       NCb                   −4.049               −1.867                                  −1.528                                  −1.717                      −5.107796
+2.0                       NCb                   −5.296               −2.811                                  −2.494                                  −2.833                      −5.079254
+2.1                       NCb                   −7.101               −4.329                                  −4.025                                  −4.493                      −5.056349
+2.2                       NCb                   −9.371               −6.346                                  −6.045                                  −6.618                      −5.038308
+2.3                       NCb                 −11.988               −8.750                                  −8.449                                  −9.100                      −5.024332
+2.4                       NCb                 −14.790             −11.365                                −11.068                                −11.791                      −5.013655
+2.5                       NCb                 −17.533             −13.927                                −13.644                                −14.459                      −5.005591
+MUEc                 NAd                      5.887                   4.202                                     3.863                                     3.881                         —
+MSEe                  NAd                   −5.887               −4.202                                  −3.863                                  −3.881                         —
+
+
+a   The FCI energies are total energies in hartree, whereas all of the remaining energies are errors relative
+    to FCI in millihartree.
+b   No convergence.
+
+ c   Mean unsigned error.
+
+d   The mean errors are not reported because CCSDT does not converge at larger values of RH–H.
+ e   Mean signed error.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                    51
+TABLE  VII.  A  comparison  of  the  energies  obtained  with  the  CCSD,  ACCSD(1, 3+42  )  =  DCSD,
+
+CCSDT, and ACCSDT(1, 3+42  ) approaches with the nearly exact LDMRG(500) data for the sym-
+metric dissociation of the H50 linear chain, as described by the STO-6G basis set, at selected bond
+
+distances between neighboring H atoms RH–H (in bohr).a
+
+RH–H                       CCSD                      ACCSD(1, 3+42   )                     CCSDT                     ACCSDT(1, 3+42   )                     LDMRG(500)
+
+1.0                              11.90                                  6.30                                    0.27                                  −6.68                                     −17.28407
+1.2                              16.28                                  9.12                                    0.29                                  −9.08                                     −22.94765
+1.4                              20.99                                12.78                                 −0.10                                −11.37                                     −25.59378
+1.6                              26.01                                17.82                                 −1.71                                −13.26                                     −26.71944
+1.8                              31.00                                24.87                                 −6.96                                −14.62                                     −27.03865
+2.0                              34.60                                34.30                                  NCb                                 −15.73                                     −26.92609
+2.4                              NCb                                  59.23                                  NCb                                 −22.04c                                    −26.16057
+2.8                              NCb                                  86.24                                  NCb                                 −22.47d                                   −25.27480
+3.2                              NCb                                106.45                                  NCb                                 −18.78d                                   −24.56828
+3.6                              NCb                                113.43                                  NCb                                    −4.66d                                   −24.10277
+MUEe                        NAf                                  47.05                                  NAg                                     13.87                                           —
+MSEh                        NAf                                  47.05                                  NAg                                 −13.87                                           —
+
+
+a   The LDMRG(500) energies, taken from Ref. [47], are total energies in hartree.  The remaining energies
+    are errors relative to LDMRG(500) in millihartree.  In this case no = nu, so that
+    ACCSD(1,3 ×      nono+nu + 4 ×      nuno+nu ) = ACCSD(1, 3+42  ) = DCSD and
+    ACCSDT(1,3 ×      nono+nu + 4 ×      nuno+nu ) = ACCSDT(1, 3+42  ).
+b   No convergence.
+ c   We were unable to converge this energy to an accuracy better than 1 mEh.  The reported value
+    corresponds to the last CC iteration.
+d   We were unable to converge this energy to an accuracy better than 0.1 mEh.  The reported value
+    corresponds to the last CC iteration.
+ e   Mean unsigned error.
+
+ f   The mean errors are not reported because CCSD does not converge at larger values of RH–H.
+
+g   The mean errors are not reported because CCSDT does not converge at larger values of RH–H.
+
+h   Mean signed error.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                          52
+FIG. 1.  Goldstone–Brandow orbital diagrams for the (T2)2 contributions Λ(2)k  (AB, IJ; Sr), k = 1–5,
+
+to the CCD or CCSD equations projected on the singlet pp–hh coupled orthogonally spin-adapted
+doubly excited ⏐⏐ΦAB⟩
+                      IJ   Sr  states.  The intermediate spin quantum number Sr in the deﬁnition of the
+⏐⏐ΦAB⟩
+   IJ   Sr states and the associated doubly excited cluster amplitudes tIJAB(Sr) in the deﬁnition of the
+orthogonally  spin-adapted  T2  operators,  represented by  the Brandow-type,  oval-shaped  vertices,
+
+is 0 or 1.  The occupied orbital indices  M  and  N,  the unoccupied orbital indices  E  and  F,  and
+the  intermediate  spin  quantum  numbers  ~Sr  and  ~S′r  are  summed  over.   The   SAB  =  1 + (AB)
+
+and   SIJ  =  1 + (IJ)  operators  at  the  diagrams  are  index  symmetrizers  that  translate  into  the
+
+symmetrizers or antisymmetrizers,   SAB(Sr) = 1 + (−1)Sr(AB) and  SIJ(Sr) = 1 + (−1)Sr(IJ),
+respectively, in the resulting algebraic expressions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                          53
+FIG.  2.   Ground-state  PECs  [panels  (a)–(c)]  and  errors  relative  to  FCI  [panels  (d)–(f)]  for  the
+
+symmetric dissociation of the H6  ring resulting from the CCSD and various ACCSD [panels (a)
+and (d)],  CCSDt and various ACCSDt [panels (b) and (e)],  and CCSDT and various ACCSDT
+
+[panels (c) and (f)] calculations using the cc-pVTZ basis set.  The CCSDt and ACCSDt approaches
+
+employed a minimum active space consisting of three occupied and three lowest-energy unoccupied
+
+MOs that correlate with the 1s shells of the individual hydrogen atoms.  The FCI PEC included
+in panels (a)–(c) is shown to facilitate comparisons.
+
+
+
+                                                        54
+FIG.  3.   Ground-state  PECs  [panels  (a)–(c)]  and  errors  relative  to  FCI  [panels  (d)–(f)]  for  the
+
+symmetric dissociation of the H10 ring resulting from the CCSD and various ACCSD [panels (a)
+and (d)],  CCSDt and various ACCSDt [panels (b) and (e)],  and CCSDT and various ACCSDT
+
+[panels  (c)  and  (f)]  calculations  using  the  DZ  basis  set.   The  CCSDt  and  ACCSDt  approaches
+
+employed  a minimum active space consisting of ﬁve occupied and ﬁve lowest-energy  unoccupied
+
+MOs that correlate with the 1s shells of the individual hydrogen atoms.  The FCI PEC included
+in panels (a)–(c) is shown to facilitate comparisons.  Note that the CCSD, CCSDt, and CCSDT
+
+calculations failed to converge in the RH–H ≥ 1.8 ˚A region.
+
+                                                        55
+FIG.  4.   Ground-state  PECs  for  the  symmetric  dissociation  of  the  H50  linear  chain  obtained  in
+
+the (a) CCSD and ACCSD(1, 3+42  ) and (b) CCSDT and ACCSDT(1, 3+42  ) calculations  using the
+
+STO-6G basis set.  In this case  no = nu = No = Nu, so that ACCSD(1, 3+42  ) = DCSD is equiva-
+lent to ACCSD(1,3 ×      nono+nu + 4 ×      nuno+nu ) and ACCSDT(1, 3+42  ) is equivalent to ACCSDt(1, 3+42  ),
+
+ACCSDt(1,3 ×      nono+nu + 4 ×      nuno+nu ), and ACCSDT(1,3 ×      nono+nu + 4 ×      nuno+nu ).  The LDMRG(500)
+
+PEC included for comparison purposes is based on the data reported in Ref. [47].  The insets show
+the errors relative  to LDMRG(500).   Note that the CCSD calculations  failed to converge  in the
+
+RH–H > 2.0 bohr region.  We could not converge the CCSDT equations beyond RH–H = 1.8 bohr.
+
+
+
+
+                                                         56

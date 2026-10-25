@@ -1,0 +1,2202 @@
+     Scalable quantum circuit generation for iterative
+         ground state approximation using Majorana
+                                        Propagation
+
+         Rahul Chakraborty1†  ,  Aaron Miller1†  ,  Anton Nyk¨anen1†  ,
+             ¨Ozlem Salehi1*†   ,  Fabio Tarocco1,  Fabijan Pavoˇsevi´c1,
+                 Pi A. B. Haase1,  Martina Stella1,  Adam Glos1
+
+        1Algorithmiq Ltd, Kanavakatu 3 C, FI-00160 Helsinki, Finland.
+
+
+       *Corresponding author(s). E-mail(s):ozlem.salehi@algorithmiq.fi;
+                   †These authors contributed equally to this work.
+
+
+
+                                              Abstract
+      We introduce the Adaptive Derivative-Assembled Pseudo-Trotter ansatz Varia-
+      tional Majorana Propagation Eigensolver (ADAPT-VMPE), a quantum-inspired
+      classical  algorithm  that  exploits  Majorana  Propagation  (MP)  to  produce  cir-
+      cuits for approximating the ground state of molecular Hamiltonians. Equipped
+      with the theoretical guarantees of MP, which provide controllable bounds on the
+      approximation error, ADAPT-VMPE offers an efficient and scalable approach for
+      iterative ansatz construction. A theoretical analysis of the computational com-
+      plexity  demonstrates  that  it  is  polynomial  in  both  the  number  of  qubits  and
+      the number of iterations. We present an in-depth analysis of circuit construction
+      strategies,  analyzing  their  impact  on  convergence  and  provide  practical  guid-
+      ance for efficient ansatz generation. Using ADAPT-VMPE, we construct up to
+      100-qubit ans¨atze for a strongly correlated photosensitizer currently undergoing
+      human clinical trials for cancer treatment. Our results demonstrate that constant
+      overlap with the ground state across system sizes can be reached in polynomial
+      time with polynomially sized circuits.
+
+
+
+Understanding and accurately modeling quantum many-body systems lies at the heart
+of many fundamental problems in physics and chemistry. This task is notoriously dif-
+ficult for classical computers due to the exponential growth of the underlying Hilbert
+space with increasing system size. Quantum computing offers a promising alternative
+
+
+                                                   1
+for  overcoming  this  limitation  by  leveraging  quantum  mechanical  principles  to  effi-
+ciently represent and simulate complex quantum systems that are otherwise intractable
+on  classical  hardware  [1, 2].  Among  the  various  application  domains  of  quantum
+computing, quantum chemistry is often regarded as one of the most promising candi-
+dates for achieving practical quantum advantage [3–5], as those problems naturally fit
+quantum hardware [6,7].
+    In quantum chemistry, most applications ultimately reduce to solving the electronic
+structure  problem  [8],  which  involves  estimating  ground-  and  excited-state  proper-
+ties  of  a  Hamiltonian  describing  the  system’s  dynamics.  While  numerous  classical
+approaches exist, qubit-based quantum computing offers alternative strategies. A com-
+mon approach is to prepare a quantum circuit that approximates the ground state of
+the Hamiltonian. One of the earliest and most prominent algorithms for this task is the
+Quantum Phase Estimation (QPE) algorithm [9]. Given an initial state with non-zero
+overlap with an eigenstate of the Hamiltonian, QPE can estimate the corresponding
+eigenvalue with high precision while projecting the state onto that eigenstate. In par-
+ticular, if the initial state has sufficient overlap with the ground state, QPE can yield
+an accurate estimate of the ground-state energy. However, the deep circuits required
+by QPE make it impractical for near-term quantum hardware. As an alternative, the
+Variational Quantum Eigensolver (VQE) [10] and its extensions [6,11–17] were pro-
+posed for the noisy intermediate-scale quantum (NISQ) era [18,19]. VQE is a hybrid
+quantum–classical algorithm in which a parameterized quantum circuit (ansatz) pre-
+pares  trial  states,  while  a  classical  optimizer  iteratively  updates  the  parameters  to
+minimize the expectation value of the Hamiltonian measured on a quantum device.
+    On a fault-tolerant quantum computer, QPE could potentially provide an expo-
+nential advantage over classical algorithms for ground state preparation. However, this
+framework presents a challenge which is often overlooked. The success probability of
+the algorithm depends on the overlap between the initial state and the target eigen-
+state. While the Hartree-Fock determinant overlaps well enough with the ground state
+for small systems, this may not be the case for large or correlated systems. The expo-
+nential decay of the overlap is known as theorthogonality  catastrophe[20] and has
+significant consequences. For instance, in Ref. [3], the authors show that two different
+initial state preparation methods based on Slater determinants can yield only 10−7
+overlap for FeMoCo, an iron sulfur cluster containing 8 transition metal atoms. This
+would require 107 repetitions of the QPE procedure, which would take a lot of time
+on quantum hardware. This presents the need for initial state preparation methods
+that are able to produce at least polynomially decreasing overlap in the system size.
+On the other hand, such initial state preparation methods should be efficient, that is,
+they should run in polynomial time, to enable significant quantum advantage.
+    Heuristic  state  preparation  methods  are  therefore  likely  to  become  essential  to
+quantum simulation. Originally conceived in the context of near-term quantum com-
+puting, where resources are particularly scarce, VQE can prove a valuable source of
+inspiration for such heuristics. However, despite its promise for near-term quantum
+hardware, VQE faces several fundamental challenges that limit its practical deploy-
+ment on current quantum devices. Hardware constraints such as noise, limited qubit
+
+
+
+
+                                                    2
+connectivity, and statistical errors associated with the estimation of expectation val-
+ues  can  significantly  degrade  performance  and  hinder  convergence,  particularly  for
+large-scale systems [21]. Moreover, as the system size or circuit depth increases, the
+gradient of the cost function can vanish exponentially, a phenomenon known as barren
+plateaus [22,23], making the classical optimization step extremely difficult. In addi-
+tion, each step requires the measurement of complex observables to high precision, a
+notoriously difficult task on quantum computers [1,24], making VQE costly not only in
+the NISQ regime but also in the fault-tolerant (FT) era. Under these constraints, effi-
+cient and noise-robust ground state preparation becomes critical in the NISQ regime,
+as limited coherence times and high error rates restrict circuit depth, and poor states
+can further amplify measurement overhead and optimization difficulties in variational
+algorithms.
+    Consequently,  developing  scalable  ground  state  preparation  methods  using  only
+classical  resources  is  a  foundational  requirement  for  achieving  practical  quantum
+advantage across both near-term and fault-tolerant quantum computers. In the lit-
+erature, various methods of this kind have been proposed. Ground state preparation
+methods  that  synthesize  quantum  circuits  based  on  the  sum  of  Slater  determi-
+nants [20,25] or matrix product state (MPS) [26,27] have been mostly considered for
+molecules of small size, or require a vast amount of resources [28]. In Ref. [29–31], the
+authors consider sparse wave-function simulation (SWCS) for directly constructing cir-
+cuits. In addition, the unitary cluster Jastrow ansatz [12] can be warm-started based
+on Coupled Cluster Singles and Doubles [32] calculations that are routinely feasible on
+classical computers for small and moderately sized molecular systems. Classical sim-
+ulation of the iterative qubit coupled cluster (iQCC) method and variational double
+bracket  flow  (vDBF)  [33–36]  classically  evolves  the  Hamiltonian  to  iteratively  con-
+struct an ansatz. Recently, new experiments with iQCC [35,37] and with vDBF [36]
+were made for up to≈200 and 128 qubits, respectively.
+    In this paper, we introduce a novel state preparation algorithm, the ADAPT Vari-
+ational Majorana Propagation Eigensolver (ADAPT-VMPE). ADAPT-VMPE is an
+efficient and customizable classical algorithm for ground state preparation. It builds
+an ansatz iteratively, in the spirit of the ADAPT-VQE algorithm [15], by growing the
+ansatz one gate at a time, selecting elements that result in the greatest improvement
+from a predefined pool of gates. ADAPT-VMPE runs entirely in Fermionic space and
+thus constructs a Fermionic ansatz, delaying the choice of the Fermion-to-qubit (F2Q)
+mapping until the circuit is executed on a quantum computer. At the gate selection
+and parameter optimization stages, ADAPT-VMPE removes the need for quantum
+resources by exploiting the Majorana Propagation (MP) algorithm [38] for approximat-
+ing the expectation value of the given Hamiltonian with respect to the quantum circuit.
+The approximation error arising from MP is theoretically guaranteed to decay expo-
+nentially in its cutoff parameter for unstructured circuits, and computing expectation
+values to a fixed accuracy requires only polynomial resources.This makes ADAPT-
+VMPE  a  scalable  algorithm  whose  convergence  stands  on  solid  theoretical  grounds.
+This favorable scaling enables studying more complex molecular systems and supports
+hybrid classical-quantum strategies, suggesting potential for quantum advantage.
+
+
+
+
+                                                     3
+    In  the  NISQ  era,  ADAPT-VMPE  can  be  viewed  as  a  stand-alone  ground  state
+energy approximation algorithm when combined with some post-processing methods
+such as the Virtual Linear Map Algorithm (VILMA) to improve convergence to the
+target state [39]. Yet the applicability of ADAPT-VMPE is not limited to the NISQ
+era, as it can also be used as a ground state preparation algorithm for algorithms like
+QPE in the FT era. ADAPT-VMPE can generate high-overlap states at attainable
+circuit  cost,  which  makes  it  a  strong  candidate  for  ground  state  preparation.  We
+showcase our results for a derivative of the TLD-1433 molecule [40], a ruthenium-based
+(Ru(II)) bipyridine complex currently undergoing human clinical trials for non-muscle
+invasive  bladder  cancer,  which  we  refer  to  as  Complex  A  throughout  the  text.  In
+particular, we show that constant overlap with the ground state across system sizes
+can be reached in polynomial time, demonstrating the scalability of our method.
+    Our  scheme  distinguishes  itself  from  existing  iterative  ground-state  preparation
+methods in several ways. It is tailored to construct an ansatz in the Fermionic space,
+which has proven to have better convergence properties than those constructed in the
+qubit space [41]. The use of Majorana Propagation allows efficient approximation of
+multiple expectation values, enabling optimization of all parameters in the ansatz at
+each iteration. This in turn allows the incorporation of orbital rotations [42,43], in the
+present case restricted to the active space, as a part of the ansatz, significantly enhanc-
+ing the performance of the algorithm, which from now on we will call active rotations.
+ADAPT-VMPE also allows the placement of newly selected gates at any point in the
+ansatz, providing essential performance improvements for certain molecules. Regard-
+ing these aspects, we present a comparison highlighting the advantages of our method
+against other iterative ansatz construction algorithms.
+
+1  Results
+1.1  Introduction to ADAPT-VMPE
+Given a second-quantized Hamiltonian, state preparation algorithms aim to construct
+a  quantum  state  that  approximates  the  ground  state.  Among  the  various  classical,
+quantum,  and  hybrid  methods  for  state  preparation,  ADAPT-VMPE  falls  into  the
+category  of  those  that  construct  a  quantum  state  iteratively.  In  this  category,  one
+typically starts with a simple ansatz (often the one implementing the Hartree-Fock
+determinant), and gradually adds parameterizable gates in order to allow convergence
+to  the  ground  state.  Several  key  components  and  properties  that  impact  both  the
+convergence  and  performance  can  be  identified.  First  and  foremost,  the  pool  must
+be specified, a set of gates that can be added to the ansatz. Even once such a pool
+is  specified,  one  still  needs  to  decide  by  what  criterion  the  best  gate  or  gates  are
+selected, and where the gate should be placed in the current ansatz. Once the ansatz
+is  temporarily  fixed,  some  of  the  parameters  may  be  optimized  to  further  decrease
+the energy of the corresponding state. In the following paragraphs, we focus on some
+aspects of the iterative procedure.
+
+
+
+
+
+                                                    4
+Fig. 1  Overview of the ADAPT-VMPE algorithm for constructing a fermionic ansatz
+from a molecular Hamiltonian.The algorithm is initialized with Hartree–Fock state, followed by
+active rotations. A Fermionic-local operator pool is defined, and the method proceeds iteratively. At
+each iteration, operators in the pool are evaluated using GGF or gradient selection, and the selected
+operator is appended to the circuit in either the Schr¨odinger or Heisenberg representation. Pool trim-
+ming may be applied to reduce the number of candidate operators. After each addition, all variational
+parameters  are  optimized  before  the  next  iteration.  The  whole  pipeline  works  in  polynomial  time
+thanks to using Majorana Propagation in gate selection and parameter optimization.
+
+Pool selection.The choice of pool plays a vital role: we can roughly split the most
+commonly used pools into two categories. The first comprises gates that directly gen-
+erate a physical evolution of the wavefunction [15,41,44]. Such gates are typically
+defined compactly in the Fermionic space via excitation and annihilation operators
+or via Majorana operators, which is why we call them Fermionic-local. The second
+category consists of gates that are qubit-local operations: those gates act only on a
+bounded number of qubits (typically no more than four), guaranteeing efficient imple-
+mentation [45–47]. Usually, they are constructed by taking Fermionic-local operators in
+the Jordan-Wigner mapping and dropping the longZ-chain operators. While looking
+simple in qubit space, they no longer describe a simple physical evolution, eventually
+decreasing the performance: this can be observed during ADAPT-VQE optimization
+as presented in Fig.2(a), where the Fermionic-spin pool outperforms its qubit-local
+counterpart  QEB,  and  the  Majoranic  pool  outperforms  its  qubit-local  counterpart
+qubit-ADAPT.
+    Qubit-local pools were introduced mostly because their implementation on a quan-
+tum computer is very efficient, requiring onlyO       (1) CNOTs per gate. However, using
+recent findings, this advantage is largely eliminated: for all-to-all connectivity, select-
+ing  the  optimal  ternary-tree  mapping  [48]  imposes  a  requirement  of  onlyO           (logN     )
+per Fermionic-local gate. The difference is even less striking for limited connectivity:
+
+
+
+
+                                                       5
+for 2D structures like grids or heavy-hexagonal graphs, nodes are typically at aver- √
+age  node-distanceO            N    forN-node  graphs,  requiring  costly  SWAPs  of  similar
+order. The same complexity can be provably achieved with an appropriate F2Q map-
+ping [49]. Taking this into account alongside the convergence rate, one can conclude
+that Fermionic-local operators are the preferable choice.
+Gate selection and parameter optimization.The type of gates is not the only thing
+to specify; it is also essential to decide how gate is selected and where they should be
+placed at each step. In the original ADAPT-VQE paper, as well as in many subsequent
+variants, the quality of the gates is evaluated by computing the gradient at parameter
+θ= 0, as if the gate would be placed at the end of the ansatz (which we call ansatz
+evolution  in  the  Schr¨odinger  picture)  [15].  This  choice  is  important  for  variants  of
+ADAPT-VQE that rely on a quantum computer: it can be implemented by measuring
+the quantum state on a quantum computer and estimating the expectation value of
+the commutator of the gate generator and the Hamiltonian. However, when classical
+simulators  are  used,  we  can  be  much  more  flexible  in  this  choice.  For  example,  in
+Ref. [36,50], gates were always added at the beginning of the ansatz in order to fit
+the  simulator  used,  which  performed  the  evolution  in  the  Heisenberg  picture.  The
+impact of this choice can already be seen for the 16-qubit Hydrogen chain as presented
+in Fig.2(b), and has also been recently analyzed in depth [51], which, following the
+intuition, shows that extending the ansatz in the Schr¨odinger picture performs better.
+It is worth noting that this may depend on the molecule, and e.g. in Fig.2(d) same
+comparison done for Complex A is not showing any difference between Schr¨odinger and
+Heisenberg evolution. Furthermore, instead of selecting the gate based on the gradient,
+one can very efficiently estimate the maximal energy improvement of each gate, e.g., via
+greedy gradient-free (GGF) selection [52] for most of the pools. A comparison between
+gradient selection and GGF is presented in Fig.2(d), where the latter outperforms
+the former.
+    Parameter optimization is a step typically performed for all variational algorithms;
+however,  for  adaptive  ones,  it  has  some  notable  differences.  First,  parameter  opti-
+mization is typically warm-started with the values from previous iterations, greatly
+speeding up and simplifying the process. For newly added gates, the parameter is set
+either to 0 or to the optimal value minimizing the energy from the GGF evaluation.
+Since the latter already yields a remarkable energy improvement, it has been suggested
+many times in the literature that reoptimizing previously added parameters may not
+be needed, which would result in a substantial speed-up. While the speed-up is indeed
+easily observed, this strategy greatly degrades the convergence, as previously added
+gates still have significant potential to improve the state, as observed in Ref. [41] and
+presented in Fig.2(b). Therefore, optimizing all parameters is a highly impactful deci-
+sion and should be preferred when targeting shallow circuits representing particularly
+low-energy states.
+    Recently,  active  rotations  were  proposed  as  a  subroutine  for  classical  quantum
+chemistry methods like DMRG [53], as well as in a VQE-like context [54], to improve
+algorithm performance. While the true ground state is a fixed point for any active
+rotation transformation (Equations 12.2.55 and 12.2.56 in Ref. [8]), optimizing those
+rotations  has  a  significant  impact  on  the  process  of  convergence  to  that  state,  as
+
+
+                                                     6
+Fig. 2  ADAPT-VQE simulations comparing the different strategic choices for the itera-
+tive ansatz generation procedure.(a) ADAPT-VQE simulations performed with different pools
+for 16 qubit H-chain molecule. (b) and (c) ADAPT-VQE simulations run with Majorana Propaga-
+tion simulator performed in different settings for 16 qubit H-chain (b) and 40 qubit Complex A (c).
+Heisenberg and Schr¨odinger versions have been considered with and without active rotations. The
+whole ansatz is optimized at each step except the ‘HE w/o AR w/o opt.’ where no optimization is
+performed at all. In all simulations, the GGF selection method is used for gate selection, and the
+L-BFGS-B algorithm is used for optimization. (d) ADAPT-VQE simulation run with Majorana Prop-
+agation simulator for 40 qubit Complex A. The Heisenberg version has been considered with active
+rotations. The whole ansatz is optimized at each iteration using the L-BFGS-B algorithm.
+
+shown in Fig.2(b) and (c). Being able to reoptimize all parameters at each step makes
+active rotations a natural part of the ansatz in ADAPT-VMPE routine. Furthermore,
+active  rotations  can  be  dressed  to  the  Hamiltonian  resulting  in  a  different  second
+quantized Hamimltonian. Hence, they do not introduce any additional gate cost during
+transpilation, while improving the convergence significantly.
+ADAPT-VMPE.Having identified many of the critical aspects of how such iterative
+procedures should be defined, equipped with the analysis above, we are now ready
+to  propose  ADAPT-VMPE,  an  iterative  method  using  only  classical  resources.  As
+
+
+
+                                                       7
+the name suggests, our circuit optimization relies on Majorana Propagation, an algo-
+rithm for efficient energy estimation of the circuit. The algorithm starts with a circuit
+composed of the Hartree-Fock determinant circuit and a sequence of single-excitation
+operators, which play the role of active rotations. ADAPT-VMPE iteratively loops over
+a pool composed of exponentiations of generators being linear combinations of low-
+length Majorana monomials, such as Majoranic or Fermionic-spin pools, and selects
+the gate based on gradient or GGF evaluation anywhere between the Hartree-Fock
+part and the active rotations. This process is repeated forKiterations; after each gate
+addition, parameter optimization is performed on the currently constructed circuit of
+the form                                                        KY
+
+                  |ψ⟩=    Y          θq,q′(a †qaq′ −a   †q′aq)      exp(θkGk)|HF⟩,                 (1)
+                          q,q′ exp                             k=1
+whereθare optimizable parameters andG                    k  are generators selected during the pool
+selection procedure. The active rotations (left product) can be extracted at any point
+and  efficiently  dressed  onto  the  input  Hamiltonian;  however,  since  Majorana  Prop-
+agation can implement single excitations without any truncation (and thus without
+introducing  error),  it  can  compute  the  expectation  value  of  the  full  state|ψ⟩with
+respect to the Hamiltonian without requiring dressing as a separate process.
+    Using Majorana Propagation not only allows us to implement all the techniques
+mentioned above, but also provides several vital benefits. Any classical simulator nec-
+essarily induces some approximation error (a difference between the true and estimated
+energy of the state) if it is to operate with polynomial resources. Majorana Propagation
+achieves exponential approximation error suppression using only polynomial resources.
+In  addition,  by  construction,  the  landscape  generated  by  Majorana  Propagation  is
+smooth  in  the  optimizedθparameters,  which  simplifies  the  optimization  process.
+Majorana Propagation also allows constructing a surrogate graph that depends only
+on the ansatz structure, not on the values ofθ: such a graph, once constructed, can
+be reused for energy and gradient computation. As we show in AppendixC, while
+a surrogate graph may take 150 seconds to construct for 76 qubits and 300 gates, it
+requires only 1.3 seconds for computing energy and gradient. This type of performance
+is not available for coefficient-based truncation schemes as proposed in [30,50]. The
+surrogate graph can also be easily extended in either the Heisenberg or Schr¨odinger
+picture: the former was explained in the original paper [38], and the extension to the
+Schr¨odinger picture is described in AppendixC.
+Comparison  against  other  methods.Let us compare ADAPT-VMPE against other
+iterative algorithms that use only classical resources: iterative qubit coupled cluster
+(iQCC)  [17],  variational  double  bracket  flow  (vDBF)  [36],  and  sparse  wavefunction
+circuit solver ADAPT-VQE (SWCS) [30]. iQCC is an algorithm that adaptively adds
+qubit-local operations, evolving the ansatz in the Heisenberg picture. The Hamiltonian
+is truncated by disregarding Pauli operators with small coefficients and the landscape
+is optimized with a surrogate function built on top of it. The pool is not fixed; instead,
+it  is  determined  at  each  iteration  based  on  the  evolved  Hamiltonian.  vDBF  is  an
+algorithm similar to iQCC, except the gates considered are Fermionic-local, and only
+the  newly  added  gate  is  optimized.  Both  algorithms  were  recently  tested  for  large
+
+
+                                                     8
+systems, at 200 and 128 qubits, respectively. SWCS presents a different concept, where
+it  is  the  state  that  is  evolved,  and  computational  basis  states  are  removed  if  the
+corresponding amplitudes are of small magnitude. This makes SWCS a special type of
+SCI algorithm aimed at constructing a circuit directly instead of just a combination
+of Slater determinants. The original paper employed a Fermionic-spin pool, which is
+Fermionic-local  [30];  more  recently,  the  same  algorithm  has  been  applied  using  the
+coupled exchange operators (CEO) pool [30,47], which is qubit-local.
+    We summarize the differences between these methods in Table1, comparing all
+aspects discussed in the previous section. Among other differences, ADAPT-VMPE
+is the only method that uses active rotations to improve the convergence rate. It is
+worth noting that active rotations appear to be particularly difficult to combine with
+iQCC or vDBF, where the evolution of the ansatz is made in the Heisenberg picture;
+for these algorithms, elements added first to the ansatz (closest to the Hamiltonian)
+are no longer optimized. Because of this, one cannot place active rotations next to the
+Hamiltonian and reoptimize them alongside the iterative ADAPT ansatz construction.
+As shown in Fig.2, the ability to use and optimize active rotations has an outstanding
+effect on the convergence rate.
+    We would like to point out that neither iQCC nor vDBF works with a fixed pool;
+instead, both generate the pool on the fly based on the evolved Hamiltonian, a con-
+cept we call ‘pool synthesis’ in this paper. From our analysis of the iQCC results for
+N2  [33],  we  can  see  that  a  large  majority  of  the  gates  selected  are  at  most  4-local
+Pauli exponentiations: only 78 out of 1380 gates added were defined over more than
+4 qubits. These gates, with proper corrections with Z Pauli operators, can be made a
+4-length Majorana monomial, e.g., a Fermionic local gate taken from a double excita-
+tion. One should mention that the presence or absence ofZstrings hasno effect on the
+pool selectionwhen done in the Heisenberg picture, sinceZstrings commute with the
+Hartree-Fock state, as already noted in [17]. Since pool selection in the Heisenberg pic-
+ture cannot distinguish between qubit-local and Fermionic-local operations, we claim
+that pool synthesis would effectively select mostly Fermionic-local operations anyway,
+ignoring higher-local Pauli gates. The other gates selected were at most 8-local for
+a 56-qubit system, which would correspond to quadruple excitation Fermionic gates.
+Based on the conclusion that pool synthesis would select Fermionic-local operators, we
+claim that it fits well with ADAPT-VMPE, where Fermionic-local gates are selected
+for high-quality energy approximation with Majorana Propagation. Our initial inves-
+tigation confirms that this technique greatly reduces the time needed for evaluating
+the full pool, as it can extract only the relevant gates to be added by analyzing the
+evolved Hamiltonian.
+
+1.2  Large-scale benchmarks of ADAPT-VMPE
+We present large-scale results for Complex A [40,56]. We used Heisenberg ADAPT-
+VMPE, in which the new gate was always added at the beginning, appending to our
+initial state corresponding to the solution of the Hartree-Fock equations. We consid-
+ered active space sizes resulting in 28, 40, 52, 64, 76, 88, and 100 qubits. For all active
+space  sizes  considered,  we  ran  the  ADAPT-VMPE  algorithm  for  200  iterations  for
+100 qubits, 300 iterations for 88 qubits, and 400 iterations for all other active spaces.
+
+
+                                                    9
+                                          iQCC                     vDBF                 SWCS         ADAPT-VMPE
+continuous parameter
+landscape                 ✓        ×       ×      ✓
+active rotations               ×        ×       ×      ✓
+
+Fermionic-local operations        ×       ✓      ✓      ✓
+
+evolution                                        Heisenberg             Heisenberg         Schr¨odinger       Heisenberg &Schr¨odinger
+
+pool gate selection                           gradient                 gradient              gradient            gradient &GGF
+
+pool synthesis               ✓       ✓       ×                               Underinvestigation
+                                        √                     √                       √                   √
+CNOT per gate        heavy-hexO            N   ,O(N)   O         N   ,O(N)     O         N            O     N
+(typical, worst)     all-to-allO(1),O(N)     O(logN),O(N)       O(1)         O(logN)
+
+RZ per gate                                           1                            1                     4 to 8                     1
+Table 1  Summary of the comparison between iQCC, vDBF, SWCS, and
+ADAPT-VMPE iterative algorithms.To our knowledge, ADAPT-VMPE is the only method
+that attains all the positive properties listed above, which impacts convergence rate and the number
+of CNOTs or T gates. In particular, it is the only algorithm for which the original energy landscape
+is continuous, and that uses active rotations simultaneously. The only property of ADAPT-VMPE
+not presented in this paper is pool synthesis, which is currently under investigation (initial analysis
+suggests a performance gain with no quality drop). For all-to-all connectivity, ADAPT-VMPE is only
+logarithmically far from SWCS and iQCC, which in our opinion is negligible given the improvement
+in convergence. The continuous parameter landscape for iQCC was achieved by building a further
+surrogate function on top of the one constructed by coefficient truncation; see Ref. [34] for details.
+See AppendixEfor CNOT and RZ cost analysis for all considered methods. Both
+Fermionic-local [30] and qubit-local [55] pools have been considered for SWCS.
+
+
+
+As  a  reference,  we  employed  the  Density  Matrix  Renormalization  Group  (DMRG)
+method [57–59]. Using an adequate bond dimension, DMRG yields energies close to
+CASCI/FCI quality. Such methods quickly become unfeasible for large active spaces.
+DMRG is therefore a suitable classical benchmark for assessing the convergence behav-
+ior of our ADAPT-VMPE simulations. For additional details on the computational
+setup, see AppendixA. As shown in Fig.3, the energy converges systematically toward
+the reference energies, confirming the effectiveness of the algorithm. Some performance
+improvements are applied with a negligible impact on quality to speed up the simula-
+tions. The cumulative time for generating the results is presented in Fig.3. From the
+plot, we see that the 100-qubit ansatz with≈100 gates can be generated in≈100
+hours. From the plot, we can confirm that ADAPT-VMPE indeed scales polynomially
+with the number of qubits.
+    The ADAPT-VMPE algorithm is executed with cutoffc= 6 for Majorana Propa-
+gation. We verified the ans¨atze at iterations 100 and 300 (except for 88 and 100 qubits)
+for each active space size with higher cutoffsc= 8 andc= 10. The Table2presents
+the differences between cutoffs 6 and 8, and between 8 and 10. The latter typically
+
+
+
+
+                                                       10
+Fig. 3  Heisenberg ADAPT-VMPE simulations performed for active space sizes ranging
+between 28 and 100 qubits for Complex A.The MP cutoff is set to 6 for all simulations. A pool
+reduction strategy is applied, combining GGF selection with faster gradient selection as described in
+the Methods section. Active rotations are included in the ansatz, and the whole ansatz is optimized
+after adding each gate using the L-BFGS-B optimizer. In (a), the energy error is plotted with respect
+to the energy computed by DMRG. In (b), the scaling of computation time with the number of qubits
+is presented. The cumulative time scales polynomially for all ADAPT iteration counts considered.
+
+
+                                                                   Qubits
+                                28           40           52           64           76              88           100
+
+       100 iter.     c6-c8       0.0178     0.0181     0.0554     0.3125−0.1778     0.4159     1.4753c8-c10     0.0012     0.0008     0.0028     0.0183     0.0895        0.0392     0.0574
+
+       300 iter.     c6-c8       0.0274     0.0420     0.0044     0.2819     0.1028        0.0005     —c8-c10     0.0013     0.0008     0.0039     0.0251     0.0879        0.0006     —
+
+       Table 2   Differences between the energies computed with MP at different
+       cutoffs, in mHa.c6-c8 and c8-c10 denote the difference between cutoffs 6 and 8 and
+       between cutoffs 8 and 10, respectively. We analyzed ADAPT-VMPE circuits with 100
+       and 300 gates for various active space sizes for Complex A. The difference between
+       cutoffs 8 and 10 is typically an order of magnitude smaller than between cutoffs 8 and
+       6. To speed up energy computation, in addition to the standard MP truncation, we
+       employed coefficient-magnitude truncation with thresholdτ= 10              −8   .
+
+
+
+gives values an order of magnitude smaller than the former. In addition, the differ-
+ences between consecutive cutoffs are positive (with the exception of the 76-qubit case
+at 100 iterations), suggesting that the energy computed during ADAPT-VMPE was
+in fact mostlyupper boundingthe true energy of the ansatz. This effect is consistent
+across all considered active space sizes and confirms the high quality of the produced
+circuits.
+    Whether in the NISQ or FT era, it is vital to decrease the overall cost of running
+the circuits. For the NISQ era, a typical choice is to limit the number of two-qubit
+gates,  which  are  the  main  source  of  errors.  As  the  constructed  circuit  consists  of
+Fermionic operators, we need to select a suitable F2Q mapping and transpile the qubit
+circuit on the machine. For this purpose, we use the treespilation procedure described
+
+
+
+                                                         11
+Fig. 4  Energy error vs resource cost of ADAPT-VMPE outcomes transpiled for NISQ
+and FT eras.(a) all-to-all connectivity minimizing 2-qubit gates for the NISQ era, (b)ibm        fezheavy-
+hexagonal  connectivity  minimizing  2-qubit  gates  for  the  NISQ  era,  and  (c)  fault-tolerant  scenario
+minimizing T count.
+
+in [41] for both all-to-all and heavy-hex topologies. Before transpiling the ansatz, we
+remove the active rotations and dress them to the Hamiltonian, transforming it into a
+different second-quantized Hamiltonian, which allows further resource savings. Results
+are presented in Fig.4, and we can see that for all active space sizes, even the most
+complex circuits do not exceed≈8500 CNOTs for both topologies. These numbers
+are  of  the  order  of  what  was  recently  achieved  by  the  IBM  Quantum  Nighthawk
+processor [60]. For the FT era, the typical choice is to minimize the non-Clifford T
+gates.  The  cost  is  estimated  by  transpiling  all  parameters  using  the  Ross-Selinger
+method, which provides the optimal T count in the worst case scenario [61]. In Fig.4,
+we present the T count for the previously produced results for Complex A. The T
+count  for  the  most  complex  100-qubit  ansatz  is  at  most  28,000,  which  is  an  order
+of magnitude smaller than what is typically needed for QPE [62]. We also dress the
+active rotations to the Hamiltonian in the FT setting, as the modified Hamiltonian is
+simpler than the original one, as shown in AppendixF.
+    Like the typical VQE method, our approach is designed for minimizing the energy
+E  :=⟨ψ|H|ψ⟩for a given HamiltonianH. However, the overlap of the constructed
+state with the ground state also has significant implications, in particular for algo-
+rithms like QPE. When searching for the ground state, convergence of the energyEto
+the ground state energy via the variational principle implies that the overlap between
+|ψ⟩and the ground state approaches 1. This holds when methods like QPE can reach
+chemical precision on their own. However, when chemical precision is not achieved, the
+energy alone may not be sufficient to deduce the overlap itself. Therefore, computing
+the overlap with the target state may give additional insight into the state obtained.
+In Fig.5, we show the overlap analysis of the produced states computed using the
+formula described in the Methods section. As shown in the left plot, the lower bound
+on the overlap increases monotonically towards the optimal value of 1. We also show
+that the total number of degrees of freedom scales polynomially to reach a constant
+lower bound on the overlap.
+
+
+
+
+                                                     12
+Fig. 5  Analysis of overlap of the produced states with respect to the ground state for
+Complex A.Subfigure (a) shows that the lower bounds on the overlap increase monotonically with
+iterations. For reference, the dashed lines represent the exact overlaps of the Hartree-Fock determinant
+and  the  ground  state  computed  with  DMRG.  In  (b),  we  compare  the  scaling  of  the  number  of
+Fermionic gates for ADAPT-VMPE to reach 70% and 85% overlap for various active spaces.
+2  Discussion
+
+We presented the ADAPT-VMPE algorithm, an entirely classical algorithm that con-
+structs  a  Fermionic  circuit  approximating  the  ground  state  of  a  second-quantized
+operator.  Using  Majorana  Propagation,  the  algorithm  can  run  using  only  classical
+resources, converging towards the target ground state in polynomial time. Our method
+does not require a GPU, which makes it a particularly inexpensive procedure to run.
+Even for the 100-qubit example of Complex A, our algorithm can generate a circuit
+with≈75% overlap with the target state in only≈350 hours, within only 200 iterations.
+    ADAPT-VMPE is not merely a combination of techniques that happen to fit each
+other: we have analyzed each aspect (parameter optimization, evolution direction, pool
+gate selection) to derive a combination that yields a very high quality algorithm for
+state preparation, while keeping in mind recent F2Q development and transpilation
+techniques, whether for 2D connectivity like heavy-hexagonal or all-to-all connectivity
+for scaling analysis. Our algorithm is a natural fit for Majorana Propagation, which
+additionally allows high-quality expectation value approximation for the circuits we
+use, providing a smooth landscape for optimization. The produced circuits are agnos-
+tic to the architecture, allowing selection of the compilation method and/or quantum
+computer at a later stage. Since the output is defined in the Fermionic space, one can
+adjust the F2Q mapping at any point, using, e.g., treespilation [41] to tailor it to the
+quantum device. We showed that even for the largest active space size, the number
+of 2-qubit operations is of the order of those currently runnable on quantum comput-
+ers [60]. The Fermionic circuits can also be compiled for fault-tolerant machines. The
+most complex circuits produced for 100 qubits require at most≈250,000 T gates if
+active rotations are included in transpilation, or 28,000 otherwise. Both figures are
+orders of magnitude smaller than what is typically needed for QPE. For comparison,
+benchmarks of various QPE implementations indicate that for a≈50 qubit problem,
+
+
+                                                    13
+QPE already requires≈5.3·10                          12 T gates [62]. Recent studies suggest that for phase
+estimation, properly transformed Hamiltonians allow further reducing the number of
+Toffoli gates (each implementable with 7 T gates and some Clifford gates) to 108 for
+≈100 qubit Hamiltonians [63]. Since the cost of implementing ADAPT-VMPE com-
+pared to QPE itself is negligible, we claim the circuits produced by ADAPT-VMPE
+greatly improve upon at least the naive choice of the HF state as an initial state for
+QPE.
+    We would like to stress that other methods exist for state preparation using only
+classical resources. In particular, one can mention synthesizing Matrix Product States
+and Sum of Slater determinants into circuits. Both of these methods produce a wave-
+function  in  a  form  not  directly  runnable  on  a  quantum  computer,  typically  using
+DMRG [58] or the SCI algorithm [64,65]. Comparing against these algorithms is an
+interesting direction for future research.
+
+3  Methods
+3.1  Recap of Majorana Propagation
+Inspired by prior work on Pauli Propagation [66, 67], Majorana Propagation (MP)
+was introduced in [38] as an algorithmic framework to efficiently estimate expecta-
+tion values of Fermionic observables propagated through Fermionic circuits and has
+since then been extensively used and extended in the literature [68–72]. The algorithm
+proceeds by applying successive, controlled truncations during the Heisenberg evolu-
+tion of the observable. Its core insight is to use “monomial length” as a principled
+truncation criterion. For unstructured circuits, high-length Majorana monomials are
+exponentially unlikely to contribute to expectation values, and backflow from high-
+length to lower-length monomials is quadratically suppressed. These properties yield
+concrete performance guarantees: the approximation error decays exponentially with
+the truncation threshold, and computing expectation values to a fixed error for typical
+circuit ensembles requires only polynomial resources.
+    To  ensure  we  are  in  the  regime  where  MP’s  performance  guarantees  apply,  we
+impose the following conditions on the circuit and observable. For the circuit, we con-
+sider instances being products of exponentiations of monomial generatorsM                   γj  drawn
+uniformly at random from the set of length-4 monomials, with angles independently
+sampled  from  [0,2π].  For  the  observable,  we  assume  a  randomly  chosen  second-
+quantized  molecular  Hamiltonian.  While  these  assumptions  may  appear  restrictive
+and not tailored to brickwork-style circuits such as tUPS [14] or Jastrow [12] ans¨atze,
+they accurately model random compilation settings such as qDRIFT [73]. Notably,
+ADAPT-VQE aligns closely with this regime: the algorithm effectively produces an
+unstructured circuit whose generator pool is dominated by length-4 monomials, and
+the  target  observables  are  unstructured  second-quantized  Hamiltonians  subject  to
+symmetries.
+    Concretely, given an observableH=       Pν cνMν  expressed in the Majorana basis,
+an initial Fock basis stateϱ=|n                 1 . . . nn⟩⟨n  1 . . . nn|, and a unitary Fermionic circuit
+
+
+
+
+                                                    14
+CL(⃗θ), the MP algorithm approximates the expectation value
+                          ˜fL(⃗θ)≈f       L(⃗θ) =⟨H⟩           ⃗θ = Trh                   i
+                                                                  ϱ CL(⃗θ)  †HCL(⃗θ)        ,                       (2)
+
+where
+                                                  LY           LY
+                                    CL(⃗θ) =          Uj =         e−iθ    jMγj /2  .                                  (3)
+                                                 j=1          j=1
+The unitaryC              L consists ofLFermionic operators, where each gateU              j is generated by
+a Majorana monomialM                  γj andθ       j ∈Ris a gate parameter. Here we use the shorthand
+notation of greek letters to represent the bitstrings that specify hermitian monomials,
+e.g.,M        ν  =  i|ν|(|ν|−1)/2             mν11  mν22  ···m ν2N2N    whereν∈ {0,1}                      2N  ,  where|ν|             := Pi νi  is
+Majorana monomial length. The MP algorithm back-propagates each monomial inH
+through the gates ofC   L. For each monomial inHthere are three scenarios for the
+propagation through a gate:
+                
+                   Mν                                            if [M ν, Mγj] = 0,
+           Uj−→
+     Mν         cos(θj) Mν + i sin(θj) MγjMν    if{M     ν, Mγj}= 0,                                             (4)
+                   cos(θj) Mν                                if{M     ν, Mγj}= 0 and truncated.
+
+In  other  words,  if  the  propagated  monomialM                  ν  commutes  withM        γj,  thenM        ν  is
+unchanged. Otherwise,M                    ν  branches and produces a new monomial∝M                      γjMν, and
+if  the  resulting  monomial  exceeds  a  truncation  threshold,  it  is  discarded.  At  each
+stage, we update the observable iteratively, starting withH         0  =Hby applying the
+transformationH                            j+1   =e   −iθ    L−j     MγL−j     /2  Hjeiθ L−j     MγL−j     /2  , where we collect the newly
+generated  monomials  to  construct  the  evolved  observableH        j+1 .  After  propagating
+all  monomials  inHthrough  the  circuitC                   L,  we  compute  the  expectation  value  by
+evaluating the surviving monomials on the initial stateϱ. The key insight is to express
+a  Fock-basis  state  in  the  Majorana  basis,  which  reveals  the  structure  of  non-zero
+overlaps. We express the Fock-basis projector|n            1 . . . nN⟩⟨n  1 . . . nN|in the Majorana
+basis as
+
+ |n 1 . . . nN⟩⟨n  1 . . . nN|=    12N   1 + X(−1)     nimi +   X               (−1)     ni+n   jmimj +···      , (5)
+                                               i≤1                  1≤i<j≤N
+
+where    mj  =−im        2j−1     m2j   represents  the  paired  Majorana  operators  for  orbitalj.
+We refer to products of these paired operators, Qj                       mj, aspaired  monomials, which
+form the natural basis for expressing Fock-basis states. Given the evolved observable
+HL = Pν cνMν  and Fock stateϱ=       Pµ bµMµ, the expectation value becomes
+
+                    ˜fL(⃗θ) = Tr  [ϱHL] =   1       X
+                                               2N        cνbµ Tr[MµMν] = X               cνbν,                     (6)
+                                                     ν,µ                             ν
+
+where  we  have  used  the  orthogonality  relation  for  hermitian  Majorana  monomials:
+Tr[MνMµ] = 2Nδν,µ. This simplification shows that only monomials present in both
+
+
+                                                          15
+the evolved observable and the initial Fock-basis state contribute to the expectation
+value,  effectively  filtering  out  all  other  terms.  Thus,  rather  than  computing  a  sum
+over the exponential number of terms in the state, we need only consider the paired
+monomials that overlap with the state.
+    Although  operator  propagation  methods  are  usually  presented  in  the  Heisen-
+berg picture, an equivalent formulation is obtained by forward-propagating the gates
+through  the  state  and  directly  computing  the  overlap  with  the  Hamiltonian.  In
+AppendixC, we show that, under monomial-length truncation, the expectation values
+produced  by  Heisenberg-  and  Schr¨odinger-picture  evolution  are  identical.  Conse-
+quently, all performance guarantees remain unchanged. This equivalence is useful, as
+it allows gates to be appended to either the front or the back of the circuit without
+affecting the approximation error.
+    The  energy  landscape  with  respect  to  each  parameterθ                   j  remains  of  the  form
+Asin   (x+B     ) +C, as in the case of the original gateU              j  [74]. This is important as it
+allows use of the GGF formulas for gate selection when Majoranic pool is used [52].
+In addition, since truncating based on monomial length does not change the branch-
+ing structure, one can create a fixedsurrogate  graphthat, once constructed, allows
+fast repetitive evaluation of  ˜fand its gradient for different parameters. This graph
+can be constructed in both Heisenberg and Schr¨odinger pictures with no impact on
+the approximation error. One can also modify the truncation techniques to improve
+the approximation and/or speed up the surrogate graph construction. Further details
+and  an  intuitive  explanation  of  why  Majorana  Propagation  works  are  reviewed  in
+AppendixC.
+
+3.2  Choice of the pool
+The  choice  of  pool  has  a  significant  impact  on  ADAPT-VQE  and  ADAPT-VMPE
+procedures,  affecting  both  convergence  and  the  final  resource  cost.  Existing  pools
+can be split into two categories: those acting locally in the Fermionic space, such as
+Fermionic [15], Fermionic-spin [44], or Majoranic [41] pools, and those acting locally
+in the qubit space, such as QEB [46] or qubit-ADAPT [45], or CEO [47] pools. As
+shown in the Results section, the former category yields better convergence, which is
+intuitively expected as these pools naturally inhabit the Fermionic space. However,
+when Jordan-Wigner mapping is used, Fermionic pool elements are on averageO        (N)-
+local in qubit space. The qubit-local pools were proposed as a remedy, as each gate is
+at most a 4-local qubit operator.
+    With recent circuit compilation techniques, this discrepancy no longer holds. For
+all-to-all connectivity, one can select a ternary-tree mapping [48] that guarantees a
+Fermionic gate is at mostO        (logN     )-local in qubit space, giving negligible overhead
+over  the  bounded  locality  of  qubit-local  pools.  For  2D-like  structures  such  as  grids
+or  heavy-hexagonal  lattices,  the  four  qubits  acted  on  by  a  QEB  or  qubit-ADAPT √
+operator are typically separated by a distance ofO √                 N     from each other, resulting
+in anO        N     CNOT cost per gate. For Fermionic-local pools, the same scaling is
+achieved with a properly selected Bonsai mapping [49], and can be further optimized
+with the treespilation procedure, making the CNOT cost strictly below that of QEB
+
+
+                                                    16
+or qubit-ADAPT pools [41]. In conclusion, qubit-local pools offer no meaningful per-
+gate advantage over Fermionic-local pools, which combined with better ADAPT-VQE
+convergence motivates use of the latter.
+
+3.3  Complexity analysis of ADAPT-VMPE
+ADAPT-VMPE provably runs in polynomial time in both the number of qubits and
+the  number  of  iterationsK.  The  key  components,  and  at  the  same  time  the  most
+time-consuming  steps,  are  preprocessing  of  the  ansatz  into  the  Majorana  Propaga-
+tion  framework  to  allow  fast  energy  evaluation,  evaluating  pool  elements  to  select
+the most effective gate, and parameter optimization. Assuming Majorana Propaga-
+tion with fixed cutoffc≥6, the preprocessing of the ansatz takesO                (NcK) time. The
+same complexity holds whether a surrogate graph is constructed in the Heisenberg or
+Schr¨odinger picture. For pool selection, evaluating each gate requiresO            (NcK) time,
+resulting in a total time complexity ofO   Nc+4 K since the pool size isO   N4. For
+parameter optimization, single energy and gradient evaluations using the technique
+presented in AppendixCeach takeO            (NcK), to be multiplied by the number of opti-
+mization steps. Since the total number of optimization steps is not expected to grow
+asO   N5, in the worst case the algorithm scales asO   Nc+4 K, which is polynomial
+inNand linear  inKfor  fixed cutoffc≥6. In  practice,  the scaling  is much more
+favourable inN; in particular, our analysis of Fig.3shows that the time scales as
+O N7.07   for 300 iterations.
+
+3.4  Details on large-scale simulations
+To generate circuits for Complex A, we used ADAPT-VMPE as described above. We
+used Majorana Propagation with cutoffc= 6, with the original length truncation, and
+with paired acceptance modification. We used the L-BFGS-B algorithm for parameter
+optimization. New gates were always added to the beginning of the ansatz, right after
+the Hartree-Fock determinant implementation.
+
+Performance improvements
+Although ADAPT-VMPE is provably polynomial, the runtime can be further acceler-
+ated with only a negligible impact on quality. First, one can show that for a Majoranic
+gate from the pool, exchanging a Majorana in the monomial with another one act-
+ing on the same spin-orbitals has no effect on the evolved state up to the sign of the
+parameter, when the gate acts on a computational basis state, an effect similar to the
+one discovered in [17]. This allows reducing the pool size by 8 in Heisenberg ADAPT-
+VMPE, since new gates are always added at the beginning of the circuit. Furthermore,
+we observed that for both gradient and GGF selection, many highly ranked candidate
+gates at a given iteration tend to remain highly ranked in subsequent iterations. Tak-
+ing advantage of this, we introduced a pool trimming strategy in which the full pool is
+evaluated only at selected iterations, while a smaller subset of 5% (for 28 qubits) and
+1% (for other active space sizes) of the full pool is used for 25 steps, after which pool
+trimming is repeated on the full pool. Since our implementation of gradient selection is
+much faster but less accurate than GGF selection, we use the former for trimming the
+
+
+                                                   17
+pool and the latter for selecting the gate to be added in intermediate steps. Further
+explanation and investigations can be found in AppendixD.
+
+Transpilation
+ADAPT-VMPE produces circuits of the form described in Eq. (1), consisting of the
+Hartree-Fock ansatz, Fermionic gates, and active rotations. In principle, we only need
+to  synthesize  the  Hartree-Fock  gates  and  the  gates  added  during  ADAPT-VMPE
+iterations. The active rotations can be implemented in the Heisenberg picture on the
+observable, transforming it into a different second-quantized operator. To compile the
+remaining part of the circuit for a quantum computer, we first select a suitable F2Q
+mapping and then transpile the qubit circuit on the machine. Below we describe the
+compilation procedure used to generate the data for Fig.4; remaining technical details
+can be found in AppendixF.
+    For NISQ transpilation, we used the treespilation procedure [41], which optimizes
+the  CNOT  count  over  tree-based  F2Q  mappings.  Since  the  Ternary  Tree  mapping
+is a special case of the Bonsai mapping, it guarantees implementing ADAPT-VMPE
+circuits inO   (KlogN        ) CNOTs for all-to-all connectivity. For 2D structures such as
+grids  or  heavy-hexagonal  lattices,  optimization  is  performed  over  Bonsai  mappings
+whose  underlying  ternary  tree  is  a  subgraph  of  the  heavy-hexagonal  graph.  In  this
+setting, circuits can be implemented usingO                K√N        CNOTs, a scaling related to the
+height of the ternary tree [49].
+    For the FT era, the goal is to minimize the non-Clifford T gates. Since any exp(iθP)
+for a Pauli operatorPcan be transformed into aZ-rotation via Clifford operations, the
+T-count depends only on the parameterθand not onP, meaning the transpilation cost
+is independent of the selected F2Q mapping. We used the Ross-Selinger method [61]
+to transpile allZrotations in the circuit.
+
+Overlap analysis
+While Majorana Propagation allows faithful energy estimation, it does not allow direct
+computation of the overlap, since Fock states are linear combinations of exponentially
+many Majorana monomials. For this reason, we estimate lower bounds on the overlap
+of the produced state with the ground state of HamiltonianHusing the formula
+                                       ( S1−⟨ψ|H|ψ⟩            S1−S   ⊤
+                                                                     1
+                      |⟨ψ|E      0⟩|2 ≥      S1−E    0    −  pλ2S1−E    0 ,   S⊤1  < S1,
+                                          S1−E            S1−S   ⊤1             ,                               (7)
+                                          S1−E    0 −   pλPS1−E    0 ,         otherwise
+
+whereE            0 is the approximate ground energy,S 1 is the approximate first excited singlet
+energy from the correct particle sector,S          ⊤1  is the approximate first excited non-singlet
+energy, and forH     P  being a nonnegative observable whose null space is spanned by
+singlet  states  of  the  correct  sector,p            :=⟨ψ|H         P |ψ⟩,  andλ             2  (λ  P )  are  the  smallest
+(largest) positive eigenvalues. A proof of the formula can be found in AppendixG. In
+general,H              P  takes the form
+
+                                HP  =A(      ˆN−N       exp)2 +B   ˆS2z +C    ˆS2,                                (8)
+
+
+                                                      18
+whereA, B, C  >0  are  penalty  constants,              ˆNis  the  number  operator,N                 exp  is  the
+number of particles in the system,  ˆSz is thez-spin operator, and        ˆS2 is the total spin
+operator. One can setB= 0 since breakingz-spin symmetry already implies breaking
+total  spin  ˆS2  for  singlet  states.  For  our  calculations,  we  setA=  1,B=  0,  and
+C=      43, givingλ            2  = 1 andλ       P  = max(N          qubits −N   exp, Nexp)2 +  23N. Bounds on the
+eigenvalues are sufficient in place of their exact values. Values forE      0,S 1, andS      ⊤1  were
+approximated with DMRG calculations and are listed in AppendixA. The quantities
+pand⟨ψ|H|ψ⟩were computed with MP at cutoff 6.
+    The HF contribution is estimated by examining the weight of the corresponding
+configuration  state  function/Slater  determinants  in  the  reference  DMRG  MPS.  All
+information related to the DMRG setup and calculations is reported in AppendixA.2.
+Acknowledgments.Work on “Quantum Computing for Photon-Drug Interactions
+in  Cancer  Prevention  and  Treatment”  is  supported  by  Wellcome  Leap  as  part  of
+the Q4Bio Program. We acknowledge EuroHPC Joint Undertaking for awarding the
+projects EHPC-REG-2025R05-171 and EHPC-DEV-2025D30-140 access to Leonardo
+at CINECA, Italy.
+    The authors would like to thank Stefan Knecht, Zolt´an Zimbor´as, and Guillermo
+Garc´ıa P´erez for valuable discussions and comments on the manuscript, and Ludmila
+Botelho and Roberto Di Remigio Eik˚as for assistance with the coding process.
+Author  contributions.    ¨OS,  AN,  AM  and  AG  conceived  the  ADAPT-VMPE
+method. RC,  ¨OS, AN, AM and AG implemented the ADAPT-VMPE method. RC,¨OS, AN, and AG performed the numerical computations related to ADAPT-VMPE.
+
+RC, FP, PH, MS, FT prepared Hamiltonians for the TLD-1433 derivative and ana-
+lyzed its spectrum. AG directed the work. All authors participated in discussions and
+in the writing of the manuscript.
+Competing interests.Elements of this work are included in patent applications
+filed by Algorithmiq Oy currently pending with the European Patent Office and/or
+the United States Patent and Trademark Office.
+Data and code availability.  The data that support the findings of this article are
+available on Zenodo under [75]. The code used to obtain these data cannot be made
+publicly available because it contains commercially sensitive information.
+References
+
+ [1]Cao, Y., Romero, J., Olson, J.P., Degroote, M., Johnson, P.D., Kieferov´a, M.,
+     Kivlichan, I.D., Menke, T., Peropadre, B., Sawaya, N.P.,et al.: Quantum chem-
+     istry in the age of quantum computing. Chemical Reviews119(19), 10856–10915
+     (2019)
+
+ [2]McArdle, S., Endo, S., Aspuru-Guzik, A., Benjamin, S.C., Yuan, X.: Quantum
+     computational chemistry. Reviews of Modern Physics92(1), 015003 (2020)
+
+ [3]Lee, S., Lee, J., Zhai, H., Tong, Y., Dalzell, A.M., Kumar, A., Helms, P., Gray,
+     J., Cui, Z.-H., Liu, W.,et al.: Evaluating the evidence for exponential quantum
+
+
+                                                   19
+     advantage  in  ground-state  quantum  chemistry.  Nature  Communications14(1),
+     1952 (2023)
+
+ [4]Hoefler, T., H¨aner, T., Troyer, M.: Disentangling hype from practicality: On real-
+     istically achieving quantum advantage. Communications of the ACM66(5), 82–87
+     (2023)
+
+ [5]Chan, G.K.-L.: Spiers Memorial Lecture: Quantum Chemistry, Classical Heuris-
+     tics, and Quantum Advantage. Faraday Discussions254, 11–52 (2024)
+
+ [6]Aspuru-Guzik, A., Dutoi, A.D., Love, P.J., Head-Gordon, M.: Simulated quantum
+     computation of molecular energies. Science309(5741), 1704–1707 (2005)
+
+ [7]Elfving, V.E., Broer, B.W., Webber, M., Gavartin, J., Halls, M.D., Lorton, K.P.,
+     Bochevarov,  A.:  How  will  quantum  computers  provide  an  industrially  relevant
+     computational advantage in quantum chemistry? (2020) arXiv:2009.12472 [quant-
+     ph]
+
+ [8]Helgaker,  T.,  Jørgensen,  P.,  Olsen,  J.  (eds.):  Molecular  Electronic-Structure
+     Theory, 1st edn. Wiley & Sons, England (2000)
+
+ [9]Kitaev, A.Y.: Quantum measurements and the Abelian Stabilizer problem (1995)
+     arXiv:9511026 [quant-ph]
+
+[10]Peruzzo,  A.,  McClean,  J.,  Shadbolt,  P.,  Yung,  M.-H.,  Zhou,  X.-Q.,  Love,  P.J.,
+     Aspuru-Guzik, A., O’brien, J.L.: A variational eigenvalue solver on a photonic
+     quantum processor. Nature Communications5(1), 4213 (2014)
+
+[11]Lee,  J.,  Huggins,  W.J.,  Head-Gordon,  M.,  Whaley,  K.B.:  Generalized  unitary
+     coupled cluster wave functions for quantum computation. Journal of Chemical
+     Theory and Computation15(1), 311–324 (2018)
+
+[12]Motta, M., Sung, K.J., Whaley, K.B., Head-Gordon, M., Shee, J.: Bridging phys-
+     ical  intuition  and  hardware  efficiency  for  correlated  electronic  states:  the  local
+     unitary cluster Jastrow ansatz for electronic structure. Chemical Science14(40),
+     11213–11227 (2023)
+
+[13]Kandala,  A.,  Mezzacapo,  A.,  Temme,  K.,  Takita,  M.,  Brink,  M.,  Chow,  J.M.,
+     Gambetta,  J.M.:  Hardware-efficient  variational  quantum  eigensolver  for  small
+     molecules and quantum magnets. Nature549(7671), 242–246 (2017)
+
+[14]Burton, H.G.: Accurate and gate-efficient quantum ans¨atze for electronic states
+     without adaptive optimization. Phys. Rev. Research6(2), 023300 (2024)
+
+[15]Grimsley, H.R., Economou, S.E., Barnes, E., Mayhall, N.J.: An adaptive varia-
+     tional algorithm for exact molecular simulations on a quantum computer. Nature
+     Communications10(1), 3007 (2019)
+
+
+
+                                                    20
+[16]Ryabinkin, I.G., Yen, T.-C., Genin, S.N., Izmaylov, A.F.: Qubit coupled cluster
+      method: a systematic approach to quantum chemistry on a quantum computer.
+      Journal of Chemical Theory and Computation14(12), 6317–6326 (2018)
+
+[17]Ryabinkin,  I.G.,  Lang,  R.A.,  Genin,  S.N.,  Izmaylov,  A.F.:  Iterative  qubit  cou-
+      pled cluster approach with efficient screening of generators. Journal of Chemical
+      Theory and Computation16(2), 1055–1063 (2020)
+
+[18]Preskill, J.: Quantum computing in the NISQ era and beyond. Quantum2, 79
+      (2018)
+
+[19]Zimbor´as, Z., Koczor, B., Holmes, Z., Borrelli, E.-M., Gily´en, A., Huang, H.-Y.,
+      Cai, Z., Ac´ın, A., Aolita, L., Banchi, L., et al.: Myths around quantum compu-
+      tation before full fault tolerance: What no-go theorems rule out and what they
+      don’t. arXiv preprint arXiv:2501.05694 (2025)
+
+[20]Tubman,  N.M.,  Mejuto-Zaera,  C.,  Epstein,  J.M.,  Hait,  D.,  Levine,  D.S.,  Hug-
+      gins,  W.,  Jiang,  Z.,  McClean,  J.R.,  Babbush,  R.,  Head-Gordon,  M.,  Whaley,
+      K.B.:  Postponing  the  orthogonality  catastrophe:  efficient  state  preparation  for
+      electronic  structure  simulations  on  quantum  devices  (2018)  arXiv:1809.05523
+      [quant-ph]
+
+[21]Tilly, J., Chen, H., Cao, S., Picozzi, D., Setia, K., Li, Y., Grant, E., Wossnig, L.,
+      Rungger, I., Booth, G.H.,et al.: The variational quantum eigensolver: a review
+      of methods and best practices. Physics Reports986, 1–128 (2022)
+
+[22]Wang,  S.,  Fontana,  E.,  Cerezo,  M.,  Sharma,  K.,  Sone,  A.,  Cincio,  L.,  Coles,
+      P.J.: Noise-induced barren plateaus in variational quantum algorithms. Nature
+      Communications12(1), 6961 (2021)
+
+[23]Larocca,  M.,  Thanasilp,  S.,  Wang,  S.,  Sharma,  K.,  Biamonte,  J.,  Coles,  P.J.,
+      Cincio, L., McClean, J.R., Holmes, Z., Cerezo, M.: Barren plateaus in variational
+      quantum computing. Nature Reviews Physics7(4), 174–189 (2025)
+
+[24]Garc´ıa-P´erez,  G.,  Rossi,  M.A.,  Sokolov,  B.,  Tacchino,  F.,  Barkoutsos,  P.K.,
+      Mazzola, G., Tavernelli, I., Maniscalco, S.: Learning to measure: Adaptive infor-
+      mationally  complete  generalized  measurements  for  quantum  algorithms.  PRX
+      Quantum2(4), 040342 (2021)
+
+[25]Fomichev, S., Hejazi, K., Zini, M.S., Kiser, M., Fraxanet, J., Casares, P.A.M., Del-
+      gado, A., Huh, J., Voigt, A.-C., Mueller, J.E.,et al.: Initial state preparation for
+      quantum chemistry on quantum computers. PRX Quantum5(4), 040339 (2024)
+
+[26]Khan,  A.,  Clark,  B.K.,  Tubman,  N.M.:  Pre-optimizing  variational  quantum
+      eigensolvers with tensor networks (2023) arXiv:2310.12965 [quant-ph]
+
+[27]Malz,  D.,  Styliaris,  G.,  Wei,  Z.-Y.,  Cirac,  J.I.:  Preparation  of  matrix  product
+
+
+                                                     21
+     states with log-depth quantum circuits. Phys. Rev. Lett.132(4), 040404 (2024)
+
+[28]Berry, D.W., Tong, Y., Khattar, T., White, A., Kim, T.I., Low, G.H., Boixo, S.,
+     Ding, Z., Lin, L., Lee, S.,et al.: Rapid initial-state preparation for the quantum
+     simulation of strongly correlated molecules. PRX Quantum6(2), 020327 (2025)
+
+[29]Mullinax, J.W., Tubman, N.M.: Large-scale sparse wave function circuit simu-
+     lator for applications with the variational quantum eigensolver. The Journal of
+     Chemical Physics162(7) (2025)
+
+[30]Mullinax, J.W., Anastasiou, P.G., Larson, J., Economou, S.E., Tubman, N.M.:
+     Classical  preoptimization  approach  for  ADAPT-VQE:  Maximizing  the  poten-
+     tial  of  high-performance  computing  resources  to  improve  quantum  simulation
+     of chemical applications. Journal of Chemical Theory and Computation21(8),
+     4006–4015 (2025)
+
+[31]Hirsbrunner, M.R., Chamaki, D., Mullinax, J.W., Tubman, N.M.: Beyond MP2
+     initialization  for  unitary  coupled  cluster  quantum  circuits.  Quantum8,  1538
+     (2024)
+
+[32]Purvis, I. George D., Bartlett, R.J.: A full coupled-cluster singles and doubles
+     model: The inclusion of disconnected triples. The Journal of Chemical Physics
+     76(4), 1910–1918 (1982)
+
+[33]Steiger,  D.S.,  H¨aner,  T.,  Genin,  S.N.,  Katzgraber,  H.G.:  Sparse  simulation  of
+     VQE circuits (2025) arXiv:2404.10047 [quant-ph]
+
+[34]Ryabinkin, I.G., Hosseini Jenab, S.M., Genin, S.N.: Optimization of the Qubit
+     Coupled Cluster Ansatz on classical computers. Journal of Chemical Theory and
+     Computation (2025)
+
+[35]Genin, S.N., Kwon, O., Jenab, S.M.H., Lim, S.-J., Kim, T., Kim, T.-G., Gherib,
+     R., Harper, A.F., Ryabinkin, I.G., Helander, M.G.: Towards quantum advantage
+     in chemistry (2025) arXiv:2512.13657 [physics.chem-ph]
+
+[36]Shrikhande, C., Bachhar, A., Jimenez, A.R., Mayhall, N.J.: Rapid ground state
+     energy  estimation  with  a  sparse  Pauli  dynamics-enabled  variational  double
+     bracket flow (2025) arXiv:2511.21651 [quant-ph]
+
+[37]Jenab,  S.M.H.,  Henderson,  B.,  Genin,  S.N.:  Parallel  iQCC  enables  200  qubit
+     scale quantum chemistry on accelerated computing platforms surpassing classical
+     benchmarks in ruthenium catalysts (2026) arXiv:2603.08883 [quant-ph]
+
+[38]Miller, A., Favre, J., Holmes, Z., Salehi, Chakraborty, R., Nyk¨anen, A., Zimbor´as,
+     Z., Glos, A., Garc´ıa-P´erez, G.: Simulation of fermionic circuits using Majorana
+     propagation (2025) arXiv:2503.18939 [quant-ph]
+
+
+
+
+                                                   22
+[39]Garc´ıa-P´erez, G., Borrelli, E.-M., Leahy, M., Malmi, J., Maniscalco, S., Rossi,
+     M.A.C., Sokolov, B., Cavalcanti, D.: Virtual linear map algorithm for classical
+     boost in near-term quantum computing (2022) arXiv:2207.01360 [quant-ph]
+
+[40]Monro, S., Colon, K.L., Yin, H., Roque, J.I., Konda, P., Gujar, S., Thummel, R.P.,
+     Lilge, L., Cameron, C.G., McFarland, S.A.: Transition metal complexes and pho-
+     todynamic therapy from a tumor-centered approach: Challenges, opportunities,
+     and highlights from the development of TLD1433. Chem. Rev.119(2), 797–828
+     (2019)
+
+[41]Miller, A., Glos, A., Zimbor´as, Z.: Treespilation: Architecture-and state-optimised
+     fermion-to-qubit mappings. npj Quantum Information12(1), 26 (2026)
+
+[42]Burton,  H.G.A.,  Marti-Dafcik,  D.,  Tew,  D.P.,  Wales,  D.J.:  Exact  electronic
+     states  with  shallow  quantum  circuits  from  global  optimisation.  npj  Quantum
+     Information9(1), 75 (2023)
+
+[43]Fitzpatrick,  A.,  Nykanen,  A.,  Talarico,  N.W.,  Lunghi,  A.,  Maniscalco,  S.,
+     Garc´ıa-P´erez,  G.,  Knecht,  S.:  Self-consistent  field  approach  for  the  variational
+     quantum eigensolver: orbital optimization goes adaptive. The Journal of Physical
+     Chemistry A128(14), 2843–2856 (2024)
+
+[44]Tsuchimochi, T., Taii, M., Nishimaki, T., Ten-No, S.L.: Adaptive construction of
+     shallower quantum circuits with quantum spin projection for fermionic systems.
+     Phys. Rev. Research4(3), 033100 (2022)
+
+[45]Tang, H.L., Shkolnikov, V., Barron, G.S., Grimsley, H.R., Mayhall, N.J., Barnes,
+     E., Economou, S.E.: qubit-ADAPT-VQE: An adaptive algorithm for constructing
+     hardware-efficient ans¨atze on a quantum processor. PRX Quantum2(2), 020310
+     (2021)
+
+[46]Yordanov,  Y.S.,  Armaos,  V.,  Barnes,  C.H.,  Arvidsson-Shukur,  D.R.:  Qubit-
+     excitation-based  adaptive  variational  quantum  eigensolver.  Communications
+     Physics4(1), 228 (2021)
+
+[47]Ramˆoa, M., Anastasiou, P.G., Santos, L.P., Mayhall, N.J., Barnes, E., Economou,
+     S.E.: Reducing the resources required by ADAPT-VQE using coupled exchange
+     operators and improved subroutines. npj Quantum Information11(1), 86 (2025)
+
+[48]Jiang,  Z.,  Kalev,  A.,  Mruczkiewicz,  W.,  Neven,  H.:  Optimal  fermion-to-qubit
+     mapping via ternary trees with applications to reduced quantum states learning.
+     Quantum4, 276 (2020)
+
+[49]Miller, A., Zimbor´as, Z., Knecht, S., Maniscalco, S., Garc´ıa-P´erez, G.: Bonsai algo-
+     rithm: Grow your own fermion-to-qubit mappings. PRX Quantum4(3), 030314
+     (2023)
+
+
+
+                                                    23
+[50]Brown, J., Coons, M.P., Lloyd, E., Fleury, A., Bieniasz, K., Senicourt, V., Zarib-
+     afiyan,  A.:  Iterative  qubit  coupled  cluster  using  only  Clifford  circuits.  Physica
+     Scripta100(10), 105401 (2025)
+
+[51]Stadelmann, J.,       ¨Ubelher, J., Ramˆoa, M., Sambasivam, B., Barnes, E., Economou,
+     S.E.: Strategies for overcoming gradient troughs in the ADAPT-VQE algorithm
+     (2025) arXiv:2512.25004 [quant-ph]
+
+[52]Feniou, C., Hassan, M., Claudon, B., Courtat, A., Adjoua, O., Maday, Y., Pique-
+     mal,  J.-P.:  Greedy  gradient-free  adaptive  variational  quantum  algorithms  on
+     a  noisy  intermediate  scale  quantum  computer.  Scientific  Reports15(1),  18689
+     (2025)
+
+[53]Krumnow, C., Veis, L., Legeza, O., Eisert, J.: Fermionic orbital optimization in
+     tensor network states. Phys. Rev. Lett.117, 210402 (2016)
+
+[54]Ratini, L., Capecci, C., Benfenati, F., Guidoni, L.: Wave function adapted Hamil-
+     tonians for quantum computing. Journal of Chemical Theory and Computation
+     18(2), 899–909 (2022)
+
+[55]LaRose, R., Bidart, A., DalFavero, B., Economou, S.E., Mullinax, J.W., Ramˆoa,
+     M.,  Rowland,  J.,  Rubenstein,  B.,  Sawaya,  N.P.,  Vaish,  P.,  et  al.:  The  cost  of
+     quantum algorithms for biochemistry: A case study in metaphosphate hydrolysis
+     (2026) arXiv:2601.19059 [quant-ph]
+
+[56]Tarocco,  F.,  Haase,  P.A.,  Pavoˇsevi´c,  F.,  Krishna,  V.,  Guidoni,  L.,  Knecht,  S.,
+     Stella,  M.:  AEGISS–atomic  orbital  and  Entropy-based  Guided  Inference  for
+     Space Selection–a novel semi-automated active space selection workflow for quan-
+     tum  chemistry  and  quantum  computing  applications  (2025)  arXiv:2508.10671
+     [physics.chem-ph]
+
+[57]White,  S.R.:  Density  matrix  formulation  for  quantum  renormalization  groups.
+     Phys. Rev. Lett.69, 2863–2866 (1992)
+
+[58]Chan, G.K.-L., Sharma, S.: The density matrix renormalization group in quantum
+     chemistry. Annual Review of Physical Chemistry62, 465–481 (2011)
+
+[59]Olivares-Amaya, R., Hu, W., Nakatani, N., Sharma, S., Yang, J., Chan, G.K.-L.:
+     The ab-initio density matrix renormalization group in practice. The Journal of
+     Chemical Physics142(3), 034102 (2015)
+
+[60]IBM: IBM Delivers New Quantum Processors, Software, and Algorithm Break-
+     throughs   on   Path   to   Advantage   and   Fault   Tolerance.https://newsroom.
+     ibm.com/2025-11-12-ibm-delivers-new-quantum-processors,-software,
+     -and-algorithm-breakthroughs-on-path-to-advantage-and-fault-tolerance.
+     [Accessed 11-01-2026] (2025)
+
+
+
+                                                    24
+[61]Ross,  N.J.,  Selinger,  P.:  Optimal  ancilla-free  Clifford+T  approximation  of  z-
+      rotations (2016) arXiv:1403.2975 [quant-ph]
+
+[62]Casares,  P.A.,  Campos,  R.,  Martin-Delgado,  M.A.:  TFermion:  A  non-Clifford
+      gate cost assessment library of quantum phase estimation algorithms for quantum
+      chemistry. Quantum6, 768 (2022)
+
+[63]Low,  G.H.,  King,  R.,  Berry,  D.W.,  Han,  Q.,  DePrince  III,  A.E.,  White,  A.F.,
+      Babbush, R., Somma, R.D., Rubin, N.C.: Fast quantum simulation of electronic
+      structure by spectral amplification. Phys. Rev. X15(4), 041016 (2025)
+
+[64]Whitten, J.L., Hackmeyer, M.: Configuration interaction studies of ground and
+      excited  states  of  polyatomic  molecules.  I.  the  CI  formulation  and  studies  of
+      formaldehyde. The Journal of Chemical Physics51(12), 5584–5596 (1969)
+
+[65]Huron,  B.,  Malrieu,  J.P.,  Rancurel,  P.:  Iterative  perturbation  calculations  of
+      ground and excited state energies from multiconfigurational zeroth-order wave-
+      functions. The Journal of Chemical Physics58(12), 5745–5759 (1973)
+
+[66]Rall,  P.,  Liang,  D.,  Cook,  J.,  Kretschmer,  W.:  Simulation  of  qubit  quantum
+      circuits via Pauli propagation. Phys. Rev. A99(6), 062337 (2019)
+
+[67]Rudolph,  M.S.,  Jones,  T.,  Teng,  Y.,  Angrisani,  A.,  Holmes,  Z.:  Pauli  prop-
+      agation:  A  computational  framework  for  simulating  quantum  systems  (2025)
+      arXiv:2505.21606 [quant-ph]
+
+[68]D’Anna,   M.,   Nys,   J.,   Carrasquilla,   J.:   Majorana   string   simulation   of
+      nonequilibrium  dynamics  in  two-dimensional  lattice  fermion  systems  (2025)
+      arXiv:2511.02809 [cond-mat.quant-gas]
+
+[69]Alam,  F.,  Bosse,  J.L.,        ˇCepait˙e,  I.,  Chapman,  A.,  Clinton,  L.,  Crichigno,  M.,
+      Crosson, E., Cubitt, T., Derby, C., Dowinton, O., Eassa, N., Faehrmann, P.K.,
+      Flammia, S., Flynn, B., Gambetta, F.M., Garc´ıa-Patr´on, R., Hunter-Gordon, M.,
+      Jones,  G.,  Khedkar,  A.,  Klassen,  J.,  Kreshchuk,  M.,  McMullan,  E.H.,  Mineh,
+      L., Montanaro, A., Mora, C., Morton, J.J.L., Nocera, A., Patel, D., Rolph, P.,
+      Santos, R.A., Seddon, J.R., Sheridan, E., Somogyi, W., Svensson, M., Vaishnav,
+      N., Wang, S.Y., Wright, G., Chertkov, E., Dreyer, H., Foss-Feig, M.: Fermionic
+      dynamics on a trapped-ion quantum computer beyond exact classical simulation
+      (2025) arXiv:2510.26300 [quant-ph]
+
+[70]Bak´o,  B.,  Kolarovszki,  Z.,  Zimbor´as,  Z.:  Fermionic  Born  Machines:  Classi-
+      cal  training  of  quantum  generative  models  based  on  fermion  sampling  (2025)
+      arXiv:2511.13844 [quant-ph]
+
+[71]Facelli, G., Fawzi, H., Fawzi, O.: Fast convergence of Majorana Propagation for
+      weakly interacting fermions (2026) arXiv:2601.05226 [quant-ph]
+
+
+
+                                                     25
+[72]Rudolph,  M.S.,  Angrisani,  A.,  Wright,  A.,  Sanderski,  I.,  Puig,  R.,  Holmes,
+      Z.:  Thermal  state  simulation  with  Pauli  and  Majorana  Propagation  (2026)
+      arXiv:2602.04878 [quant-ph]
+
+[73]Campbell, E.: Random compiler for fast Hamiltonian simulation. Phys. Rev. Lett.
+      123, 070503 (2019)
+
+[74]Ostaszewski, M., Grant, E., Benedetti, M.: Structure optimization for parame-
+      terized quantum circuits. Quantum5, 391 (2021)
+
+[75]Chakraborty,  R.,  Miller,  A.,  Nyk¨anen,  A.,  Salehi,        ¨O.,  Tarocco,  F.,  Pavoˇsevi´c,
+      F., Haase, P.A.B., Stella, M., Glos, A.https://doi.org/10.5281/zenodo.19207034
+      (2026)
+
+[76]Chan, G.K.-L., Head-Gordon, M.: Highly correlated calculations with a polyno-
+      mial cost algorithm: A study of the density matrix renormalization group. The
+      Journal of Chemical Physics116(11), 4462–4476 (2002)
+
+[77]Motta,  M.,  Ceperley,  D.M.,  Chan,  G.K.-L.,  Gomez,  J.A.,  Gull,  E.,  Guo,  S.,
+      Jim´enez-Hoyos, C.A., Lan, T.N., Li, J., Ma, F., Millis, A.J., Prokof’ev, N.V., Ray,
+      U., Scuseria, G.E., Sorella, S., Stoudenmire, E.M., Sun, Q., Tupitsyn, I.S., White,
+      S.R.,  Zgid,  D.,  Zhang,  S.:  Towards  the  solution  of  the  many-electron  problem
+      in real materials: Equation of state of the hydrogen chain with state-of-the-art
+      many-body methods. Phys. Rev. X7, 031059 (2017)
+
+[78]Motta, M., Genovese, C., Ma, F., Cui, Z.-H., Sawaya, R., Chan, G.K.-L., Chepiga,
+      N., Helms, P., Jim´enez-Hoyos, C., Millis, A.J., Ray, U., Ronca, E., Shi, H., Sorella,
+      S., Stoudenmire, E.M., White, S.R., Zhang, S.: Ground-state properties of the
+      hydrogen chain: Dimerization, insulator-to-metal transition, and magnetic phases.
+      Phys. Rev. X10(3) (2020)
+
+[79]Kendall, R.A., Dunning, T.H. Jr., Harrison, R.J.: Electron affinities of the first-
+      row atoms revisited. Systematic basis sets and wave functions. J. Chem. Phys.
+      96(9), 6796–6806 (1992)
+
+[80]Møller, C., Plesset, M.S.: Note on an approximation treatment for many-electron
+      systems. Phys. Rev.46, 618–622 (1934)
+
+[81]Truong, T.N., Stefanovich, E.V.: A new method for incorporating solvent effect
+      into  the  classical,  ab  initio  molecular  orbital  and  density  functional  theory
+      frameworks for arbitrary shape cavity. Chem. Phys. Lett.240(4), 253–260 (1995)
+
+[82]Barone,  V.,  Cossi,  M.:  Quantum  calculation  of  molecular  energies  and  energy
+      gradients in solution by a conductor solvent model. J. Phys. Chem. A.102(11),
+      1995–2001 (1998)
+
+[83]Ernzerhof,  M.,  Scuseria,  G.E.:  Assessment  of  the  Perdew–Burke–Ernzerhof
+
+
+                                                    26
+     exchange-correlation functional. J. Chem. Phys.110(11), 5029–5036 (1999)
+
+[84]Adamo,  C.,  Barone,  V.:  Toward  reliable  density  functional  methods  without
+     adjustable  parameters:  The  pbe0  model.  J.  Chem.  Phys.110(13),  6158–6170
+     (1999)
+
+[85]Weigend, F., Ahlrichs, R.: Balanced basis sets of split valence, triple zeta valence
+     and  quadruple  zeta  valence  quality  for  H  to  Rn:  Design  and  assessment  of
+     accuracy. Phys. Chem. Chem. Phys.7, 3297–3305 (2005)
+
+[86]Neese, F.: The ORCA program system. WIRES Comput. Molec. Sci.2(1), 73–78
+     (2012)
+
+[87]Gilbert,  A.T.B.,  Besley,  N.A.,  Gill,  P.M.W.:  Self-consistent  field  calculations
+     of  excited  states  using  the  maximum  overlap  method  (MOM).  The  Journal  of
+     Physical Chemistry A112(50), 13164–13171 (2008)
+
+[88]Rappoport, D., Furche, F.: Property-optimized Gaussian basis sets for molecular
+     response calculations. J. Chem. Phys.133, 134105 (2010)
+
+[89]Andrae, D., H¨außermann, U., Dolg, M., Stoll, H., Preuß, H.: Energy-adjusted ab
+     initio pseudopotentials for the second and third row transition elements. Theor.
+     Chim. Acta77(2), 123–141 (1990)
+
+[90]Zhai, H., Larsson, H.R., Lee, S., Cui, Z.-H., Zhu, T., Sun, C., Peng, L., Peng,
+     R., Liao, K., T¨olle, J., et al.: Block2: A comprehensive open source framework to
+     develop and apply state-of-the-art DMRG algorithms in electronic structure and
+     beyond. J. Chem. Phys.159(23) (2023)
+
+[91]Rudolph, M.S., Fontana, E., Holmes, Z., Cincio, L.: Classical surrogate simulation
+     of quantum systems with LOWESA (2023) arXiv:2308.09109 [quant-ph]
+
+[92]Mitarai, K., Negoro, M., Kitagawa, M., Fujii, K.: Quantum circuit learning. Phys.
+     Rev. A98(3), 032309 (2018)
+
+[93]Zhang,  Z.-J.,  Kyaw,  T.H.,  Kottmann,  J.S.,  Degroote,  M.,  Aspuru-Guzik,  A.:
+     Mutual information-assisted adaptive variational quantum eigensolver. Quantum
+     Science and Technology6(3), 035001 (2021)
+
+[94]GitHub    -    otilumionics/iqcc-hamiltonians.https://github.com/otilumionics/
+     iqcc-hamiltonians. [Accessed 30-01-2026]
+
+[95]GitHub        -        quantum-programming/pygridsynth.   https://github.com/
+     quantum-programming/pygridsynth. [Accessed 15-12-2025]
+
+[96]Ratini,  L.,  Capecci,  C.,  Guidoni,  L.:  Optimization  strategies  in  wahtor  algo-
+     rithm for quantum computing empirical ansatz: a comparative study. Electronic
+     Structure5(4), 045006 (2023)
+
+
+                                                    27
+A  Molecules description
+A.1  H-chain
+Hydrogen chains are widely used as benchmark systems because they combine strong,
+tunable electron correlation with a simple, scalable geometry [76–78], and are generally
+used for benchmarking quantum algorithms for state preparation. The most common
+form of a hydrogen chain is defined by selecting the desired number of hydrogen atoms
+and  placing  them  equidistantly  in  a  linear  configuration  with  bond  distancer.  In
+standard settings, the number of electrons equals the number of hydrogen atoms. In
+our case, we selected a chain of eight hydrogen atoms separated by a bond distance
+r= 1.5      ˚A. The initial SCF calculation was performed with the cc-pVTZ [79] basis
+set. To recover additional correlation, we performed an MP2 [80] calculation on top
+of the SCF one. From the obtained wavefunction, we built the 1-RDM and computed
+the natural orbitals, restricted to the virtual space, defining a set of Frozen Natural
+Orbitals (FNOs). The active space is then defined by combining canonical HF orbitals
+for the occupied space with the leading FNOs for the virtual space. In total, the active
+space is composed of 8 electrons in 8 orbitals, i.e., 16 qubits. Additionally, the particle
+number operator was added as a penalty with a coefficient of 0.1. The reference energy,
+obtained with a CASCI calculation, is−9.057128 Ha.
+
+A.2  Complex A
+Complex A used in this work is TLD-1411 (rac-[Ru(bpy)2(IP-3T)]Cl2) [40], employed
+in  place  of  TLD-1433  for  computational  practicality.  TLD-1411  is  a  ruthenium(II)
+polypyridyl   complex   and   a   very   close   structural   analogue   of   TLD-1433   (rac-
+[Ru(dmb)2(IP-3T)]Cl2),  a  drug  currently  undergoing  human  clinical  trials  for  the
+treatment of non-muscle-invasive bladder cancer. The two compounds share an almost
+identical molecular scaffold and highly similar electronic structures. The only struc-
+tural difference lies in the ancillary ligands: TLD-1411 contains bpy (2,2’-bipyridine)
+ligands, while TLD-1433 contains dmb (4,4’-dimethyl-2,2’-bipyridine) ligands.
+    The presence of methyl substituents in the dmb ligand introduces minor electronic
+and steric effects, leading to very similar absorption properties, excited-state energet-
+ics, and photochemical pathways relevant to their therapeutic activity. The qualitative
+trends  obtained  for  TLD-1411  are  therefore  expected  to  be  directly  transferable  to
+TLD-1433, without affecting the generality of the conclusions.
+    The  geometry  of  TLD-1411  was  optimized  in  water  using  the  Conductor-like
+Polarizable  Continuum  Model  (C-PCM)  [81, 82].  Calculations  employed  the  PBE0
+functional [83,84] together with the def2-TZVP basis set [85] in the Orca code [86]. The
+identification of the relevant occupied molecular orbitals used to construct the active
+spaces required for a reliable description of the excitations investigated in this work was
+carried out following the procedure outlined in Ref. [56]. The resulting active spaces
+include orbitals originating from two main regions of interest within the molecule: the
+ruthenium center and the elongated thiophene tail (further details can be found in
+Ref. [56]). For the occupied space, we employed canonical Unrestricted Hartree-Fock
+orbitals obtained from a ∆-SCF [87] calculation using the def2-SVDP [88] basis set in
+
+
+
+                                                    28
+water and the cc-PVDZ-pp pseudopotential [89]. The virtual space was defined using
+Frozen Natural Orbitals generated from an unrestricted MP2 calculation, tailored to
+the specific canonical occupied orbitals. In particular, we selected active space sizes
+composed of 14, 20, . . . , 50 orbitals, resulting in 28, 40, . . . , 100 qubits, with 14, 20,
+. . . , 50 particles.
+    All DMRG reference energies and approximated eigenstate estimates, reported in
+Tab.3and Tab.4respectively, are obtained using theBlock2[90] implementation
+of the algorithm. Given the unrestricted nature of the orbitals, the non-spin-adapted
+DMRG modeSymmetryType.SZwas used for all calculations. We stress that the ref-
+erence  energies  are  approximations  of  the  true  ground  state  given  a  specific  bond
+dimension. The true ground state may lie slightly lower than the reported reference
+energies. Energies in Tab.3are computed using state-specific DMRG targeting the
+lowest singlet state, imposingspin=0.
+    To compute the lower bound on the overlap as described in AppendixG, we require
+approximations  of  several  eigenstates  of  the  Hamiltonians.  The  values  reported  in
+Tab.4are obtained in a mixed fashion. The two singlet roots S        0 and S1 are obtained
+by performing a two-root state-averaged DMRG calculation followed by refinement
+with state-specific DMRGs using an orthogonality projector (to prevent the second
+root from collapsing onto S0). Two further eigenstates have been computed: the lowest
+triplet stateT          1  and the lowest quintet stateQ. For these, we run two independent
+state-specific  DMRG  calculations  targeting  the  lowest  solution  withspin=2for  T                       1
+andspin=4for the quintetQ.
+    Since Majorana monomials can break all number,z-spin, andS               2 symmetries,S                   ⊤1
+was selected to be the smaller of the T1 andQstate energies. Other possible candidates
+forS    ⊤1  could include doublet states with one extra or one missing electron; however,
+even-length Majorana monomials from the Majoranic pool [41] construct states that
+are  superpositions  of  Fock  states  of  the  same  parity  as  the  Hartree-Fock  state,  so
+we omit these states from our analysis. Given that Ru(II) polypyridyl complexes are
+low-spin d6 closed-shell systems, their lowest excitations correspond to single-electron
+transitions of singlet and triplet spin multiplicities. Other multiplicities would require
+higher  excitation  manifolds  and  lie  significantly  higher  in  energy.  We  verified  this
+computationally, confirming that no low-lying quintet or septet states are present.
+B  Electronic Structure Problem
+
+In  the  second  quantization  representation,  the  Fock  space  ofNspin-orbitals  (or
+Fermionic  modes)  is  spanned  by  the  set  of  basis  states  or  Slater  determinants,
+|D⟩=|n            1, n2, . . . , nN⟩, wheren             p ∈ {0,1}denotes the occupation number of thep-th
+spin-orbital. The Fermionic creation and annihilation operators that act on this space
+are defined as
+                                                         Pp−1
+             a†p |n 1, n2, . . . ,0 p, . . . , nN⟩= (−1)    q=1  nq |n 1, n2, . . . ,1 p, . . . , nN⟩,          (9)
+
+and
+
+                                                         Pp−1
+             ap |n 1, n2, . . . ,1 p, . . . , nN⟩= (−1)     q=1  nq |n 1, n2, . . . ,0 p, . . . , nN⟩         (10)
+
+
+                                                      29
+                         Active space                  χ                                  S             0
+                         14e14o (28q)                         2000              −3441.833359
+                         20e20o (40q)                         2000              −3441.852417
+                         26e26o (52q)                         2000              −3441.891128
+                         32e32o (64q)                         2500              −3441.947764
+                         38e38o (76q)                         3000              −3442.039072
+                         44e44o (88q)                         3000              −3442.087434
+                        50e50o (100q)                        4000             −3442.181423                †
+                        Table 3  Reference DMRG energies (in Ha) for S0
+                        calculated with different bond dimensions (χ) for
+                        different active spaces.Active spaces are denoted as number
+                        of electrons, number of spatial orbitals, and number of qubits in
+                        parentheses. (†): Energy reference obtained using optimal
+                        orbital reordering [59], allowing escape from local minima.
+
+
+
+
+
+     Active spaceχ               S             0                         S1                         T1                        Q
+     14e14o (28q)       750 −3441.833345−3441.629474    −3441.629250−3441.421192
+     20e20o (40q)      1000−3441.852286−3441.711514−3441.711676  −3441.508494
+     26e26o (52q)      1500−3441.890803−3441.750981−3441.751480  −3441.549015
+     32e32o (64q)      1500−3441.945401−3441.818441−3441.820526  −3441.647886
+     38e38o (76q)      1500−3442.030816−3441.902673−3441.907115  −3441.733918
+     44e44o (88q)      1500−3442.075085−3441.946636−3441.952030  −3441.781578
+    50e50o (100q)     2000−3442.169287                †    −3442.045607         †    −3442.013096         ∗              —
+    Table 4  Reference DMRG energies (in Ha) for different multiplicity states
+    calculated with different bond dimensions (χ) for various active spaces.Active
+    spaces are denoted as number of electrons, number of spatial orbitals, and number of qubits
+    in parentheses. (†): S    0 and S1 were obtained using optimal orbital reordering [59], allowing
+    escape from local minima. (*): For this specific root, the lowest energy was obtained with
+    standard ordering, leading to an unusual S0 <S   1 <T   1 state ordering. For the 100q case,
+    following the trend of previous active spaces for which T1 is the lowest non-singlet root, we
+    omitted the Q1 calculation.
+
+
+
+respectively. These operators satisfy the anticommutation relations
+
+                                 {a  p, aq}={a      †p, a†q}= 0,     {a        p, a†q}=δ     pq.                         (11)
+
+TheFermionic vacuum state|vac                 f⟩is a unique state satisfyinga                   p |vac f⟩= 0 for all
+p= 1, . . . , N. All other basis states, collectively forming the Fock space, are generated
+by applying creation operators to the vacuum:
+
+
+                                                                    NY
+                                         |n 1n2 . . . nN⟩:=             (a †p)np |vac f⟩.                                (12)
+                                                                   p=1
+
+
+
+
+
+
+                                                                 30
+    TheN-mode second-quantized Fermionic Hamiltonian can be expressed in terms
+of creation and annihilation operators as
+
+
+                                     NX                     NX
+                            H=           hpqa†paq +               hpqrsa†pa†qaras,                         (13)
+                                   p,q=1                p,q,r,s=1
+
+whereh           pq andh       pqrs are the one-electron and two-electron integrals, respectively.
+    Alternatively,  the  Fermionic  space  can  be  defined  using  Majorana  operators
+{m  k}2Nk=1   where
+                             m2p−1      :=a    †p +a   p,       m2p   := i(a  †p −a   p).                          (14)
+The 2Noperators are algebraically independent, meaning that no two distinct prod-
+ucts of Majorana operators, when ordered by index, yield the same operator. These
+operators are unitary, self-adjoint, and satisfy{m              p, mq}= 2δ    pq. Products of Majo-
+rana operatorsM             ν = irνmν11  mν22  ···m ν2N2N    can be represented uniquely up to a sign by
+a binary vectorν= (ν              1, . . . , ν2N  ) whereν           i ∈ {0,1}, andr                 ν =|ν|(|ν| −1)/2, where|ν|
+is the Hamming weight ofν, called its length. The resulting 4      N  Hermitian operators
+{M  ν}ν, referred to as Majorana monomials, form a basis for Hermitian operators.
+    Using Majorana monomials, theN-mode second-quantized Fermionic Hamiltonian
+can be expressed as
+
+
+                                 2NX                      2NX
+                         H=           ic pqmimj +                cpqsrmpmqmrms,                     (15)
+                                p,q=1                  p,q,r,s=1
+
+for real coefficientsc   pq andc       pqsr. This is a direct consequence of the relationship given
+in Eq. (14). The expression can be restated as
+
+                                              H=   X      ανMν,                                              (16)
+                                                       ν
+
+whereM           ν  are Majorana monomials of length 2 or 4.
+
+C  Majorana Propagation
+
+Surrogate Graph
+One  key  aspect  of  the  operator-length  truncation  criterion  is  that  it  enables  the
+construction of a so-called surrogate graph. This graph symbolically tracks the propa-
+gation of monomials through the circuit, allowing different parameters ⃗θto be plugged
+in  for  rapid  evaluation  without  re-evolving  the  entire  operator  for  each  parameter
+choice. This idea has been leveraged in prior work on Pauli propagation [91]; here,
+we  use  it  to  substantially  accelerate  the  optimisation  of  gate  parameters.  The  sur-
+rogate  graph  is  possible  because  low-length  monomials  dominate  the  contribution
+to  the  expectation  value,  and  the  truncation  criterion  is  independent  of  the  gate
+parameters. This contrasts with propagation schemes that rank terms by coefficient
+magnitude [17,33,34]: in those cases, the surrogate graph would depend on the gate
+
+
+                                                       31
+parameters and would need to be reconstructed for every parameter vector, resulting
+in a non-continuous landscape that complicates parameter optimization. Our method,
+after precompilation of the surrogate graph, allows for fast evaluation of expectation
+values and provides analytically provable convergence guarantees [38].
+
+Truncation criteria
+A central ingredient in MP is the truncation criterion used during propagation to curb
+the  exponential  growth  in  the  number  of  terms.  This  choice  directly  impacts  both
+efficiency and accuracy. MP usesoperator lengthas its truncation rule, defined as the
+number  of  Majorana  operators  appearing  in  a  monomial:  monomials  whose  length
+exceeds a chosen threshold are discarded during propagation.
+    The original analysis of MP [38] shows that for unstructured circuits composed
+of  random  length-4  monomial  generators,  high-length  monomials  are  exponentially
+unlikely to affect expectation values. The intuition is twofold. First, in a system with ∼ O(N      ℓ)  monomials  of
+Nspin  orbitals  (or  2NMajorana  modes),  there  are       2Nℓ
+lengthℓ, which grows polynomially withNfor fixedℓ. Thus, operator length induces
+a natural hierarchy of polynomial subspaces whose dimension increases exponentially
+withℓ. Second, consider the overlap of some monomial with Fock-basis states. Only
+paired  monomials  have  non-zero  overlap,  and  for  a  given  even  length  2ℓ,  there  are ∼ O(N      ℓ) paired monomials, a vanishing fraction of the  2N monomials of
+only  Nℓ                                                                              2ℓ
+length 2ℓasNgrows. Consequently, high-length monomials rarely overlap with the
+Fock-basis state and contribute negligibly to the expectation value.
+    Beyond this exponential suppression, MP also exhibits aquadratic backflowsup-
+pression from high-length to low-length monomials during propagation. Even when
+high-length  terms  are  generated,  their  influence  on  the  low-length  subspace  (which
+dominates  the  expectation  value)  is  quadratically  damped.  Together,  these  effects
+justify operator length as a robust truncation criterion: discarding high-length mono-
+mials greatly reduces computational cost while maintaining a controlled approximation
+error.  The  analysis  in  [38]  provides  rigorous  guarantees  under  this  scheme:  the
+approximation  error  decays  exponentially  with  the  truncation  threshold,  and  com-
+puting expectation values to a fixed error for typical circuit ensembles requires only
+polynomial  resources.  These  guarantees  assume  unstructured  circuits  composed  of
+random  length-4  monomial  generators  and  random  second-quantized  Hamiltonians,
+assumptions closely aligned with ADAPT-VQE settings.
+    In  addition  to  the  length-based  truncation  criterion,  one  can  also  consider  the
+following alternative schemes:
+•  Generalised  length  truncation:  Analogous  to  Pauli  weight  in  qubit  systems,
+  where{X             i, Yi, Zi} are  anticommuting  qubit-local  operators  each  contributing
+  one  unit  to  the  weight,  we  define  a  generalized  length  for  Majorana  monomi-
+  als.  On  each  modej,  the  Fermionic-locally  acting  anticommuting  operators  are
+  {m  2j−1     , m2j  , m2j−1     m2j }. The generalized length of a monomial is defined as the
+  number of Fermionic modes it acts on, irrespective of whether the action is by a
+  single Majorana operator or a paired operator. With this definition, the number of3ℓ =O(N         ℓ).Among these, there are
+  monomials of fixed generalized lengthℓis          Nℓ
+
+
+
+                                                     32
+   N fully paired monomials, which have standard Majorana length 2ℓ. At a fixed
+    ℓ
+  cutoffℓ, the generalized scheme therefore retains all paired monomials that would
+  only be included at cutoff 2ℓunder the standard Majorana-length definition. Equiv-
+  alently,  to  include  the  same  set  of  paired  monomials,  the  standard  scheme  must
+  raise  its  cutoff  fromℓto  2ℓ,  increasing  the  total  number  of  retained  monomials
+  fromO(N              ℓ) toO(N          2ℓ  ). This criterion is natural in the Heisenberg picture, where
+  the objective is to parameterize operator growth paths from the initial observable
+  to paired monomials that overlap with the state. Under this redefinition, the same
+  paths are retained at fixed scaling, and the theoretical analysis of Ref. [38] continues
+  to apply.
+•  Coefficient-magnitude truncation: Discard monomials with|c                                ν|< τfor a cho-
+  sen thresholdτ, thereby controlling graph growth during propagation and retaining
+  only terms likely to contribute.
+•  Coefficient-magnitude acceptance: Retain monomials with|c                                 ν| ≥τirrespective
+  of their length, prioritising potentially impactful contributions even when they are
+  of high length.
+•  Paired  acceptance:  Retain  all  paired  monomials,  irrespective  of  their  length.
+  These  are  precisely  the  monomials  that  contribute  to  expectation  values  in  the
+  Heisenberg picture and are therefore always retained in our Heisenberg-picture sim-
+  ulations,  in  combination  with  length-based  truncation.  Although  this  acceptance
+  rule permits exponentially many terms in principle, in practice it does not lead to
+  uncontrolled growth. When the circuit is generated by length-two and length-four
+  Majorana  monomial  rotations,  paired  monomials  above  the  length  cutoff  cannot
+  transform  into  other  paired  monomials  without  passing  through  an  intermediate
+  high-length  unpaired  monomial.  Since  such  intermediate  terms  are  not  accepted,
+  the propagation of paired monomials remains effectively bounded.
+    Applying these alternative schemes yields different efficiency–accuracy trade-offs.
+Coefficient-magnitude  truncation  typically  accelerates  evaluation,  but  the  induced
+truncation  depends  on  the  gate  parameters,  preventing  a  single  surrogate  graph
+from being reused across different ⃗θ. Conversely, coefficient-magnitude acceptance can
+improve accuracy by keeping large contributions even at high length, at the cost of
+larger graphs. When a good prior parameter ⃗θ0 is available (e.g., from rotosolve [74]),
+one can build a locally faithful surrogate. Fix a neighbourhood Θ ={   ⃗θ: |   ⃗θ−  ⃗θ0| ≤ ⃗δ}
+and  construct  the  graph  by:  (i)  accepting  monomials  that  exceed  the  acceptance
+threshold somewhere in Θ, and (ii) truncating monomials that remain below the trun-
+cation threshold throughout Θ. This retains terms that may become significant under
+plausible parameter updates while discarding those unlikely to matter, enabling fast,
+reusable evaluations within Θ. In contrast to methods from the literature [17,33,34],
+we do not use coefficient-magnitude truncation or acceptance to control the size of the
+Hamiltonian. In our experiments, (generalized) length truncation is the only criterion
+that ensures the state remains polynomial in size.
+
+
+
+
+
+
+
+                                                     33
+Equivalence to Schr¨odinger picture simulation
+While MP is naturally formulated in the Heisenberg picture, it can be shown to be
+equivalent to a Schr¨odinger picture simulation under length truncation. This equiva-
+lence is particularly useful when considering the addition of gates to an existing circuit,
+as in ADAPT-VQE, where one often prefers to add a gate at the end of the circuit
+rather than at the beginning.
+    To understand this equivalence, consider the evolution of the initial stateϱthrough
+the  circuitC            L(⃗θ)  in  the  Schr¨odinger  picture.  Sinceϱcontains  exponentially  many
+terms, a truncation scheme is again required to control growth. We begin by trun-
+cating the initial stateϱto include only paired monomials up to length 2ℓ. We then
+propagate each monomial inϱthrough the circuitC                  L(⃗θ) using the same branching
+rules as in Equation (4), but with a negative sign in front of the sinθ         j term due to the
+reversed direction of propagation. At each step, monomials whose length exceeds 2ℓ
+are discarded. After propagating through all gates, we compute the expectation value
+by evaluating the overlap with the observableH.
+    The  equivalence  between  the  Schr¨odinger  and  Heisenberg  pictures  under  length
+truncation arises because both approaches effectively track the same computational
+paths. In the Heisenberg picture, we track paths from the observable to the state; in
+the Schr¨odinger picture, we track paths from the initial state to the observable. In
+both  cases,  the  length-based  truncation  criterion  ensures  that  only  paths  involving
+low-length monomials are retained. Since only paired monomials of length up to 2ℓ
+contribute to the final expectation value, both pictures consider the same set of com-
+putational paths, and consequently yield identical expectation values for any choice
+of parameters ⃗θ. When coefficient-based truncation schemes are employed, however,
+this equivalence no longer holds, as the sets of retained paths differ between the two
+pictures depending on the parameter values.
+
+Analytical gradient with respect to circuit parameters
+Variational  quantum  algorithms  rely  on  classical  optimizers  to  determine  optimal
+circuit parameters. For VQEs, gradient-based methods such as the Broyden-Fletcher-
+Goldfarb-Shanno  (BFGS)  algorithm  are  commonly  employed.  These  optimisation
+methods  require  computation  of  the  gradient,  which  can  be  approximated  using
+finite  differences  or  computed  exactly  using  parameter-shift  methods  for  certain
+gate  types  [92].  Thanks  to  the  surrogate  graph,  our  approach  enables  analytical
+computation of the surrogate model’s gradient.
+    To compute the approximate energy gradient, we express the gradient element with
+respect to a single parameterθ                   j of thej-th gate as
+                              ∂
+                             ∂θj  ˜f(  ⃗θ) = Tr ϱj−1      ∂∂θjU†j Hj+1  Uj     ,                            (17)
+
+
+whereH           j+1   is the observable back-propagated through gates (j+ 1) toL, andϱ                 j−1
+is the state forward-propagated through gates 1 to (j−1). At the level of individual
+Majorana monomials, taking the parameter derivative yields the following branching
+
+
+
+                                                     34
+        #qubits     # monomials       preprocessing              energy estimation         energy and gradient
+                                                time[s]                time [s]             estimation time[s]
+           28                 100                     1.0072                    0.0136                         0.0358
+           28                 300                     3.4245                    0.0364                         0.1034
+           40                 100                     3.7154                    0.0340                         0.0842
+           40                 300                    11.4904                   0.0806                         0.1810
+           52                 100                    11.5886                   0.1401                         0.2578
+           52                 300                    30.6624                   0.1399                         0.4111
+           64                 100                    30.2919                   0.2346                         0.3903
+           64                 300                    68.7662                   0.3279                         0.6531
+           76                 100                    80.6944                   0.4539                         0.6514
+           76                 300                   150.8662                  0.5877                         1.2993
+        Table 5  Time required for preprocessing, single energy computation, and
+        single energy-and-gradient computation for various active space sizes and
+        numbers of ADAPT gates (monomials).We used the circuits produced by
+        ADAPT-VMPE for Complex A. Times presented are averages over 60 runs.
+
+
+
+rule for propagation through a single gate:
+                        0                                                  if [M ν, Mγj] = 0,
+ ∂                         −sin   (θj) Mν + i cos(θj) MγjMν    if{M     ν, Mγj}= 0,
+∂θj U†j Mν Uj →         
+                           −sin   (θj) Mν                                 if{M     ν, Mγj}= 0 and truncated.
+                                                                                                                      (18)
+We implement this using a sliding-window scheme that maintains copies of both the
+evolved state and the Hamiltonian. The state is propagated forward up to gatej−1,
+while  the  observable  is  back-propagated  from  gatej+ 1  to  gateL.  The  derivative
+with  respect  to  the  gate  parameter  is  then  evaluated  using  the  expression  above.
+When multiple gates share the same parameter, the chain rule applies and we sum the
+individual contributions to obtain the total gradient.
+     This  approach  allows  analytical  computation  of  the  surrogate  model’s  gradient
+in  time  proportional  to  a  single  energy  evaluation.  Table5reports  the  time  spent
+on surrogate-graph preparation (preprocessing), energy evaluation, and joint energy-
+and-gradient evaluation. Preparing the surrogate graph is the dominant cost but is
+performed only once per parameter-optimization step. In contrast, energy and gra-
+dient evaluations are substantially faster, and computing the gradient in addition to
+the energy incurs at most a threefold overhead relative to energy evaluation alone,
+independent of system size and the number of ADAPT-VMPE iterations.
+
+Efficient gradient selection for ADAPT-VQE
+The ADAPT-VQE algorithm iteratively constructs a parameterized quantum circuit
+by selecting gates from an operator pool that best improve the variational energy. At
+iterationL, the algorithm selects the unitary
+
+                                                 UL =e   −iθ   LMγL/2  ,
+
+
+
+
+                                                            35
+which maximizes the magnitude of the energy gradient with respect toθ    L evaluated
+atθ    L = 0.
+    In the Heisenberg picture, the selection gradient is given by
+                      ∂      h                  iθL=0
+                     ∂θL Tr    UL ϱ U†LHL−1              =−Tr     [HL−1     [M γL, ϱ]  ] ,                  (19)
+
+
+while in the Schr¨odinger picture it can be written as
+                        ∂      h                 iθL=0
+                      ∂θL Tr    ϱL−1     U†LHUL           = Tr[ϱL−1     [M γL, H]   ] .                    (20)
+
+
+In  these  expressions,  the  newly  selected  gate  is  applied  to  the  initial  state  or
+Hamiltonian, respectively.
+    To evaluate the commutator [M γL, ϱ] in the Heisenberg picture, it is sufficient to
+retain only those terms that contribute to the trace. Assuming that only length-two
+and  length-four  Majorana  operators  are  in  the  pool,  and  noting  that  a  length-four
+Majorana generator can increase or decrease the length of a Majorana monomial in the
+state by at most two, capturing all terms that may appear in the evolved Hamiltonian
+requires setting the maximum monomial length in the initial state toℓ+ 2, whereℓis
+the cutoff used for the Hamiltonian. The number of terms required in the initial state,
+therefore, needs to beO  N(ℓ+2)/2       to include all monomials relevant to the gradient
+computation.
+    One  can  then  compute  the  commutator  [M γL, ϱ]  for  each  gate  in  the  pool  and
+search for it in the evolved Hamiltonian representation withO(1) complexity, since
+the evolved operator is stored as a hash map. Thus, for cutoff-6, the complexity is
+O(KN      4), whereKis the number of elements in the pool.
+    In the Schr¨odinger case, we consider the commutators [M γL, H]. In general, there
+areO    N4 terms in second quantized Hamiltonians, so computing the commutator
+for each gate has complexityO(KN        4) forKpool elements, which is independent of
+the cutoff.
+
+D  Performance Improvements to ADAPT-VMPE
+
+Gate  selection  is  a  vital  and  time-consuming  part  of  ADAPT-VMPE.  This  follows
+from the fact that a potentially large description of the evolved Hamiltonian (up to
+O Ncutoff terms) must be evaluated against Θ(N      4) pool candidates. While polyno-
+mial in principle, the time required for pool evaluation grows rapidly with the number
+of qubits. Below we present several non-exclusive methods by which this process can
+be substantially accelerated with negligible impact on circuit quality.
+
+D.1  Pool reduction for Majoranic pool for Heisenberg
+       ADAPT-VMPE
+SupposeM      ν  andM       ν′  are even-length Majorana monomials acting on the same set
+of  modes,  with  the  same parity  of  odd indices,  at  each  mode  acting  with only  one
+
+
+                                                    36
+Majorana operator. Then there exists an even-size setJsuch that
+
+                         Mν′ =η M   νQ,       Q:=   Y           ¯mj,       η∈ {±1},                      (21)
+                                                           j∈J
+
+where each  ¯mj  =−im       2j−1     m2j   is a paired Majorana operator. Because|J|is even,
+Q2 =I. Also,Qis diagonal in the Fock basis, so for any Fock state|⃗n⟩,
+
+                                    Q|⃗n⟩=s            J |⃗n⟩,       s     J ∈ {±1}.                                  (22)
+
+Usinge           iθA = cos(θ)I+isin     (θ)Afor involutory HermitianA,
+
+            eiθMν′ |⃗n⟩=     (cosθ+isinθ ηM                  νQ)|⃗n⟩=     (cosθ+iηs           J sinθ M     ν)|⃗n⟩
+                         = (cosθ+isin          (ηsJθ) Mν)|⃗n⟩=     (cosθ+isin          (±θ   ) Mν)|⃗n⟩       (23)
+                         = (cos(±θ   ) +isin    (±θ   ) Mν)|⃗n⟩=e         i±θM    ν |⃗n⟩,
+
+which shows that the effect ofM   ν′  andM       ν  on a Fock state is the same up to the
+change of the phase ofθ. This is the same orbit-equivalence mechanism observed in
+the Jordan-Wigner mapping in qubit space [17].
+
+D.2  Pool trimming
+In the ADAPT-VMPE procedure, all gates in the predefined poolPmust be evaluated
+at each step to select the gate to be added to the ansatz. However, the size of typical
+pools consisting of single and double excitations grows asO   N4 with the number
+of qubitsN, making the pool evaluation step time-consuming for large systems. One
+possible  solution  is  to  evaluate  only  a  subsetP            i  ⊆Pof  the  pool  at  each  stepi.
+To our knowledge, few studies address this problem, except [93], which uses mutual
+information  from  classical  methods  like  DMRG  to  reduce  the  pool,  and  the  recent
+work [55], in which the best pool elements are retained and supplemented with random
+operators each iteration.
+    Fixed  pool  trimming  relies  on  the  observation  that  pool  elements  that  fail  to
+improve the current energy at a given point are unlikely to improve it in later iterations
+either. This allows some elements to be removed from the pool, reducing the number
+of candidates to inspect. This observation is illustrated in Fig.6, which analyzes how
+the selected pool elements at each iteration performed across subsequent iterations.
+The ranks determined from the first iteration show that the same ansatz would have
+been obtained using only the best 8,000 elements. In a more extreme case, keeping
+only the best 250 pool elements for the first 20 iterations yields the same ansatz. As
+the number of iterations increases, the ranks of the selected elements (as determined
+from the first iteration) grow; recomputing ranks at iteration 26 again yields smaller
+ranks for a certain number of subsequent iterations, with the same pattern repeating
+at iterations 51 and 76.
+    To  implement  the  pool  trimming  procedure,  we  start  withP         1  =P.  Each  pool
+elementp  j ∈Pis assigned a rankr               1j ∈ {1, . . . ,|P|}based on the evaluation results.
+
+
+                                                        37
+Fig. 6  Analysis of rank persistence among ADAPT-VMPE iterations for various ref-
+erence ranks.Ranks of the selected elements are computed at iterations 1, 26, 51, and 76 (rank 1
+indicates the best gate). Marker placed at (x, y) with color corresponding tok∈ {1,26,51,76}itera-
+tion, should be understood as gate selected atx-th iteration was assigned a rankyatk-th iteration..
+The simulation is performed using ADAPT-VMPE with the L-BFGS-B optimizer in the Heisenberg
+setting with the Majoranic pool for the 40-qubit Complex A Hamiltonian. The pool contains 14,250
+elements.
+
+Pool elements whose ranks exceed a thresholdτare removed, giving                  ˜P={p        j |p∈
+Pandr          1j  < τ}. For a predetermined number of stepsk= 2,3, . . . , κ−1, ADAPT-
+VMPE uses the trimmed poolP   k  =  ˜P, after which the full pool is re-evaluated by
+settingP             κ =P, yielding a new set of ranks{r                   κj }. This full re-evaluation is motivated
+by  Fig.6,  which  shows  that  as  the  iteration  number  grows,  the  ranks  of  selected
+elements also increase, indicating the need for periodic re-ranking.
+    There are two hyperparameters: pool cutoff thresholdτ(the number of pool ele-
+ments to retain) andκ(the frequency of full pool re-evaluation). For example, for the
+40-qubit Complex A case, settingτ= 300 andκ= 25 yields the same ansatz after 100
+iterations while providing a significant reduction in the number of gate evaluations.
+
+D.3  Mixed selection procedure
+Two methods dominate the literature for gate selection. The first, gradient selection,
+prefers gatesU(θ) that maximize the magnitude of the derivative of Tr           ϱU†(θ)HU(θ)       
+atθ=  0:  the  larger  this  value,  the  greater  the  expected  improvement  when  the
+corresponding gate is added. The second, GGF selection [52], directly estimates the
+expected energy improvement when optimizing minθ Tr ϱU†(θ)HU(θ)       . Depending on
+the generatorG, finding the optimalθmay require evaluating the expectation value
+at only a few values ofθ. In particular, ifGis a Pauli string or Majorana monomial,
+evaluations at only 3 values are needed. A particular benefit of this method is that it
+not only selects a gate to be appended to the ansatz, but also proposes a good initial
+value for parameter optimization.
+    While both methods can improve the current quantum state, we found that GGF
+selection outperforms gradient selection, as shown in Fig.7. On the other hand, our
+
+
+                                                      38
+implementation allows much faster gradient evaluation than GGF selection. This moti-
+vates using gradient selection for pool trimming (as a fast approximate assessment)
+and GGF selection for the intermediate gate selection steps from the trimmed pool.
+As shown in Fig.7, this mixed approach matches GGF selection in quality while being
+substantially faster.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. 7  Comparison of convergence and performance of GGF, gradient-based, and mixed
+gate selection.The simulation is performed using ADAPT-VMPE with the L-BFGS-B optimizer
+in the Heisenberg setting with the Majoranic pool for the 40-qubit Complex A Hamiltonian, using
+fixed  trimming  withτ=  285  andκ=  25.  “Gradient  +  GGF”  identifies  the  case  where  gradient
+selection  is  used  only  when  the  full  pool  is  evaluated,  and  GGF  selection  is  used  in  intermediate
+steps. The left plot shows that gradient selection alone performs worse than GGF selection and the
+mixed approach. Despite its quality, GGF selection alone is time-consuming, as shown in the right
+plot. Combining gradient and GGF, using the former for pool trimming and the latter for selection,
+substantially speeds up gate selection.
+
+
+E  Transpilation cost analysis
+E.1  All-to-all connectivity
+For all-to-all connectivity, implementing Pauli exponentiation exp(iθP ) for ak-local
+operator  requires  2k−2  =O         (k)  CNOT  operators,  which  is  optimal.  Both  iQCC
+and vDBF, due to pool synthesis, can in principle select an arbitrary operator, which
+is  why  their  CNOT  cost  may  reachO  (N)  in  the  worst  case.  In  practice,  however,
+both algorithms are expected to select much cheaper operators. iQCC typically selects
+operators that are at most 4-local; these reflect Fermionic double excitation operators
+up to the missingZPauli strings removed by the authors, as confirmed by the log
+files  in  [94]  for  N      2,  givingO       (1)  cost  per  gate  added.  For  similar  reasons,  vDBF  is
+expected to typically select 4-length Majorana monomials. With the ternary-tree F2Q
+mapping [48], each Majorana operator becomesO              (logN     )-local, so the product of 4
+such  operators  is  alsoO      (logN     )-local,  giving  a  typical  CNOT  cost  ofO   (logN     )  for
+vDBF.
+
+
+
+
+                                                       39
+    SWCS, when using Fermionic-spin pool, can attain benefits from proper Fermionic-
+spin selection, yielding a guaranteedO       (logN     ) CNOT cost per gate. Otherwise, when
+using CEO pool, aO  (1) CNOT cost per gates is achieved.
+    ADAPT-VMPE uses only 2- and 4-length Majorana monomials by construction.
+As for vDBF, the typical and worst-case CNOT cost isO   (logN     ).
+
+E.2  Heavy-hexagonal connectivity
+For limited connectivity, implementing exp(iθP ) requiresO            (kST) CNOTs, wherek            ST
+is the number of nodes in the Steiner tree spanned by the qubits on whichPacts. This
+complexity can be achieved either via the Steiner tree implementation of [41] or via
+an appropriate SWAP sequence. The valuek        ST may be as small ask, but can also be
+much larger; one can formally show thatk        ST =O   (dk) where √dis the maximum inter-
+node distance in the connectivity graph, which isO                 N     for heavy-hexagonal or 2D
+grid topologies. This follows by noting that a valid Steiner tree1 can be constructed by
+successively connecting vertices via shortest paths and removing any resulting cycles.
+For randomly selected qubits, as is typical in ADAPT-VQE-like ansatz construction,
+this scaling is expected to hold.                  √
+    From these results, iQCC requiresO                N     CNOTs in the typical scenario (and
+O(N) in the worst case), using the arguments from the previous subsection. Similarly, √
+each gate added by SWCS requiresO                 N     CNOTs when CEO pool is used.
+    For  vDBF,  ADAPT-VMPE  and  SWCS  using  Fermionic-spin  pool,  using  the
+optimal  ternary-tree  mapping  produces √   O         (logN     )-local  Pauli  operators,  requiring
+O     NlogN        CNOTs.  However,  using  a  Bonsai  F2Q  mapping,  it  can  be  formally √
+shown that onlyO           N    CNOTs are required [49], and the optimal Steiner tree for
+such mappings can be found in polynomial time [41].
+
+E.3  Number of RZ gates
+Since iQCC, vDBF, and ADAPT-VMPE each add a single-Pauli-exponentiation oper-
+ator per iteration, the number of RZ gates per gate added equals 1. For SWCS, either
+the  Fermionic-spin  pool  is  used  [29],  which  requires  8  RZ  gates  per  operator  upon
+decomposition, or the CEO pool [47], which requires 4.
+F  Compilation methods for large scale benchmarks
+F.1  NISQ
+For  all-to-all  connectivity,  we  used  the  standard  treespilation  algorithm  with  Pauli
+string cost as described in [41]. We ran simulated annealing with a geometric schedule
+T·0.9995       t, starting from 50 and ending at 1. Once the F2Q mapping is selected, we
+transform the Fermionic circuit into a qubit circuit, transpile using the Steiner method
+from [41], and further fine-tune with the Qiskit transpiler at optimization level 2, with
+
+
+
+  1We use ‘Steiner tree’ to mean any tree connecting all the terminals, not necessarily the optimal one.
+
+                                                   40
+Fig.  8  Change  of  theL        1  norm  of  operator  coefficients  and  the  number  of  significant
+terms  with  consecutive  actively  rotated  Hamiltonians.The  number  of  terms  is  computed
+as the number required to reachp∥H∥norm forp= 99% andp= 99.9%, whereHis the original
+Hamiltonian. Both measures are commonly used to quantify the complexity of the Hamiltonian when
+used in QPE. Active rotations, as optimized during the ADAPT-VMPE iterations, tend to simplify
+the Hamiltonian: theL      1  norm of the coefficients decreases substantially (left), and the number of
+Pauli operators required to reach 99% and 99.9% of the operator norm also decreases with iterations.
+Dressing active rotations is an exact unitary transformation of the Hamiltonian, so the spectrum is
+preserved.
+
+basis gatescxandu. Active rotations were not transpiled, as they are applied to the
+Hamiltonian.
+    For  heavy-hexagonal  connectivity,  we  used  the  topology  of  the  IBM  Fez  quan-
+tum  computer  and  ran  treespilation  to  find  a  Bonsai  F2Q  mapping  whose  ternary
+tree preserves the topology. This also provides an initial layout used for the Steiner
+method. We then applied Qiskit transpilation with the IBM Fez topology using the
+same settings as for all-to-all connectivity.
+
+F.2  Fault-tolerant
+For FT algorithms like QPE, the cost also depends on the number of Paulis in the
+operator  and  theL      1  norm  of  the  operator  coefficients.  Since  active  rotations  may
+increase  this  number,  it  might  in  general  be  preferable  to  implement  them  as  part
+of the state preparation circuit. However, for the molecules considered in this paper,
+this does not appear to be the case, as presented in Fig.8: operators dressed with
+active rotations appear to be simpler than the originals. Therefore, in the main text we
+present the T count for the case where active rotations are dressed to the Hamiltonian,
+while Fig.9presents both variants.
+    Since limited connectivity and the choice of Bonsai F2Q mapping have no impact
+on the number of T gates (as SWAP operators are Clifford), we selected Jordan-Wigner
+mapping and all-to-all connectivity. We then transpiled the qubit circuit into Clifford
+andZ-rotation gates using Steiner decomposition [41], and compiled further to obtain
+a circuit reproducing the original state with error at mostε= 10         −4  . EachZ-rotation
+was  decomposed  into  single-qubit  Clifford  and  T  gates  with  infidelity      ε#RZ,  using
+
+
+                                                       41
+Fig. 9  Energy error as a function of T count cost for (a) without and (b) with active
+rotations included in transpilation.In (a), the active rotations are dressed to the Hamiltonian;
+in (b), they are transpiled as part of the ansatz.
+
+pygridsynth[95], an implementation of a variant of the Ross-Selinger algorithm [61].
+After this step, the circuit consists only of Clifford and T gates, and we computed the
+count of the latter.
+
+G  Overlap bounds
+
+This section is dedicated to the formal derivation of the overlap of a quantum state
+|ψ⟩with the ground state of a molecular HamiltonianH.
+
+
+Theorem 1LetHbe a molecular Hamiltonian and let|E               0⟩,|E    1⟩be the ground state and
+first  excited  state  with  corresponding  energiesE       0, E1.  LetE   0  < E1.  Let|ψ⟩be  a  quantum
+state such thatE       :=⟨ψ|H|ψ⟩ ∈(E                     0, E1). Then
+
+                                            |⟨ψ|E      0⟩|2 ≥1−      E−E      0E1 −E   0 .                                           (24)
+
+
+
+ProofLet|ψ⟩be of the form|ψ⟩=                  Pi αi |E i⟩, where|E        i⟩are eigenvectors ofH. One has
+
+       E−E      0 =⟨ψ|H|ψ⟩ −E                   0 = Xα∗kαmEm ⟨E  k|E m⟩ −E   0 = X|α k|2Ek −E   0
+                                              k,m                                         k                             (25)
+                  ≥(1− |α        0|2)E  1 +|α    0|2E0 −E   0 = (E  1 −E   0)(1− |α       0|2),
+and from this
+                                                1− |α   0|2 ≤  E−E      0E1 −E   0 ,                                               (26)
+
+which after basic transformation and given|α     0|=|⟨ψ|E          0⟩|proves the statement.        □
+     The above theorem is useful when the only information about the state|ψ⟩is its
+energy.  It  effectively  reflects  the  intuition  that  the  worst-case  overlap  occurs  when
+
+
+                                                             42
+|ψ⟩is a superposition of|E           0⟩and|E          1⟩. However, solutions to molecular Hamiltonians
+typically  belong  to  a  subspace  defined  by  symmetry  constraints  on  the  number,z-
+spin, andS        2 operators. We assume hereafter that the ground state is a singlet from a
+particular particle sector; the theorems can be readily adapted to other cases. We will
+refer to a state as non-singlet if its spin multiplicity differs from singlet or if it belongs
+to the wrong particle-number sector.
+
+                                                                            S⊤1E
+Theorem 2LetHbe  a  Hamiltonian  and  let|E               0⟩,                       ,|S  1⟩be  the  ground  state  (a  sin-
+glet state), the lowest-energy non-singlet eigenstate, and the first singlet excited state, with
+corresponding  energiesE  0, S⊤1 , S1.  LetE   0  < S1.  Let|ψ⟩be  a  quantum  state  with  expecta-
+tion  valueE∈(E                 0, S1).  LetΠ     S  be  the  projection  onto  the  space  of  singlet  states  and  let
+|α S⊤|2 = 1− ⟨ψ|Π       S |ψ⟩be the overlap of the state with the non-singlet space. Then
+
+                                    |⟨ψ|E      0⟩|2 ≥  S1 −ES1 −E   0 − |α S⊤|2 S1 −S   ⊤1S1 −E   0 .                                (27)
+
+
+
+ProofAny quantum state can be written uniquely (up to a phase of theα’s) in the following
+form
+                                      |ψ⟩=α         0 |E 0⟩+α     S |ψ S⟩+α     S⊤ |ψ S⊤⟩,                                  (28)
+where|ψ           S⟩is  a  state  orthogonal  to|E       0⟩satisfying⟨ψ                   S|Π S |ψ S⟩ =  1,  and|ψ         S⊤⟩is  the
+remaining part satisfying⟨ψ                  S⊤|Π S |ψ S⊤⟩= 0. Assuming all states on the right-hand side
+are normalized,
+                                              |α 0|2 +|α    S|2 +|α    S⊤|2 = 1.                                           (29)
+In addition,
+             E=⟨ψ|H|ψ⟩
+                 = (α ∗0 ⟨E  0|+α   ∗S ⟨ψ  S|+α   ∗S⊤ ⟨ψ  S⊤|)H(α        0 |E 0⟩+α     S |ψ S⟩+α     S⊤ |ψ S⊤⟩)
+                 ≥ |α 0|2E0 +|α    S|2S1 +|α    S⊤|2S⊤1                                                                       (30)
+                    + 2 Re(α     ∗0αS ⟨E  0|H|ψ     S⟩)
+                    + 2 Re(α     ∗0αS⊤ ⟨E  0|H|ψ     S⊤⟩)
+                    + 2 Re(α     ∗SαS⊤ ⟨ψ  S|H|ψ     S⊤⟩)
+where we used⟨E          0|H|E      0⟩=E     0,⟨ψ   S|H|ψ     S⟩ ≥S   1,⟨ψ   S⊤|H|ψ     S⊤⟩ ≥S   ⊤1 . The last three
+terms all vanish. Indeed,
+                                            ⟨E  0|H|ψ     S⟩=E     0 ⟨E  0|ψ S⟩= 0                                         (31)
+by  definition  of|ψ    S⟩;  similarly⟨E                   0|H|ψ     S⊤⟩ =  0.  Finally, ⟨ψ    S|H|ψ     S⊤⟩ =  0  because
+[H,Π  S]  =  0  (sinceHis  a  molecular  Hamiltonian),  meaning  singlet  states  are  mapped  to
+singlet states, and the singlet and non-singlet subspaces are orthogonal. This yields
+                             E≥ |α    0|2E0 +|α    S|2S1 +|α    S⊤|2S⊤1
+                                 =|α    0|2E0 + (1− |α     0|2 − |α S⊤|2)S  1 +|α    S⊤|2S⊤1                                  (32)
+                                 =S   1 +|α    0|2(E  0 −S   1) +|α    S⊤|2(S ⊤1  −S   1),
+
+where  we  used  Eq.  (29)  to  eliminate|α        S|2.  A  simple  algebraic  rearrangement  gives  the
+required statement, noting thatE        0 < S1 by assumption.                         □
+
+
+
+                                                                43
+     Theorem2provides a bound for bothS                     ⊤1   < S1  andS      ⊤1   > S1, improving upon
+Theorem1in both cases. Indeed, ifS                      1 < S⊤1 , thenE         1 ≡S    1, making the first term of
+the bound equal to that of Theorem1. The subtracted term then becomes negative,
+contributing positively to the bound for any|α|. IfS         ⊤1  < S1, assumingE∈(E                          0, S⊤1 )
+(the range required for Theorem1withE                             1 ≡S   ⊤1 ), the difference between the two
+bounds is
+
+    S1 −E
+   S1 −E    0 − |α S⊤|2 S1 −S   ⊤1S1 −E    0 −  S⊤1  −ES⊤1  −E    0
+
+        = (S  1 −E)(S        ⊤1  −E    0)− |α   S⊤|2(S  1 −S   ⊤1 )(S   ⊤1  −E    0)−(S      ⊤1  −E)(S          1 −E    0)(S  1 −E    0)(S   ⊤1  −E    0)
+
+                = −S    1E0 −ES   ⊤1  +S   ⊤1 E0 +S    1E− |α    S⊤|2(S  1 −S   ⊤1 )(S   ⊤1  −E    0)(S  1 −E    0)(S   ⊤1  −E    0)
+
+                                      =          S1 −S   ⊤1              E−E       0 − |α S⊤|2(S  ⊤1  −E    0).   (33)
+                                          (S  1 −E    0)(S   ⊤1  −E    0)
+
+The leading fraction is positive by assumption. Let|β|          2 denote the overlap with the
+singlet space; since it is at least as large as the overlap with the ground state alone, it
+satisfies the same bound from Theorem1. In addition,|β|                                         2 = 1− |α   S⊤|2. Therefore,
+
+              E−E       0 − |α S⊤|2(S  ⊤1  −E    0) =E−E          0 −(1− |β|           2)(S   ⊤1  −E    0)
+                                                       =E−S        ⊤1  +|β|       2(S  ⊤1  −E    0)                    (34)
+
+                                                       ≥E−S        ⊤1  +  S⊤1  −ES⊤1  −E    0 (S  ⊤1  −E    0) = 0,
+
+which confirms that the bound from Theorem2is tighter than that from Theorem1.
+     Theorem2requires  knowledge  of  the  overlap|α                             S⊤|2,  which  may  in  general  be
+difficult to estimate. What is readily accessible is the expectation value with respect
+to number,z-spin andS               2 symmetries, or the corresponding penalty Hamiltonians. We
+now introduce a suitable penalty Hamiltonian.
+
+
+Definition  1LetH        P   be  a  Hermitian  operator.  We  call  it  a  (λ  2, λP )-singlet  penalty
+Hamiltonianif it satisfies all of the following conditions simultaneously:
+1.H   P ≥0,
+2.the nullspace ofH       P  is the space of all singlet states,
+3.the smallest positive eigenvalue ofH       P  is bounded below byλ  2,
+4.the spectrum is bounded above byλ      P .
+
+
+     SuchH  P  can  be  easily  constructed  by  an  appropriate  combination  of  penalty
+Hamiltonians for the number,z-spin, andS               2 symmetries. The following theorem pro-
+vides a bound when|α           S⊤|2 is unknown, but the expectation value of|ψ⟩with respect to
+
+
+
+                                                             44
+HP  is available. This value can be approximated, e.g., with the Majorana Propagation
+simulator or directly with a QPU.
+
+                                     S⊤1E
+Theorem 3LetH,|E        0⟩,                   ,|S  1⟩, E  0, S⊤1 , S1 be as in Theorem2. LetH          P  be a(λ    2, λP )-
+singlet penalty Hamiltonian and letp     :=⟨ψ|H        P |ψ⟩ ∈[0, λ          2]. Then
+
+                                                      S1−E             S1−S   ⊤1
+                               |⟨ψ|E      0⟩|2 ≥     S1−E    0 −  pλ2  S1−E    0 ,    S⊤1  < S1,                              (35)
+                                                     S1−E              S1−S   ⊤1    .
+                                                     S1−E    0 −   pλP  S1−E    0 ,   otherwise
+
+
+ProofObserve that
+             p=⟨ψ|H          P |ψ⟩
+               = (α ∗0 ⟨E  0|+α   ∗S ⟨ψ  S|+α   ∗S⊤ ⟨ψ  S⊤|)H   P (α  0 |E 0⟩+α     S |ψ S⟩+α     S⊤ |ψ S⊤⟩)                  (36)
+               =|α    S⊤|2 ⟨ψ  S⊤|H P |ψ S⊤⟩,
+where we usedH        P |E 0⟩=H     P |ψ S⟩= 0, since both states are singlet states. Since|ψ            S⊤⟩is a
+non-singlet state,⟨ψ           S⊤|H P |ψ S⊤⟩ ∈[λ    2, λP ] by definition ofH   P . Therefore,
+
+                                               |α S⊤|2 =             p⟨ψ  S⊤|H P |ψ S⊤⟩                                             (37)
+
+gives                                                p
+
+                                                    λP  ≤ |α S⊤|2 ≤  pλ2 .                                                (38)
+     Since the exact value of|α    S⊤|2 is unknown, we must account for the worst possible case.
+This leads to different expressions depending on whetherS            ⊤1  < S1 or not. AssumingS              ⊤1  < S1
+and using Theorem2:
+                 |⟨ψ|E      0⟩|2 ≥  S1 −E                                                            S1 −S   ⊤1
+                                    S1 −E   0 − |α S⊤|2 S1 −S   ⊤1S1 −E   0  ≥  S1 −ES1 −E   0 −  pλ2S1 −E   0 .            (39)
+In the opposite case:
+                 |⟨ψ|E      0⟩|2 ≥  S1 −E                                                             S1 −S   ⊤1
+                                    S1 −E   0 − |α S⊤|2 S1 −S   ⊤1S1 −E   0  ≥  S1 −ES1 −E   0 −   pλPS1 −E   0 .           (40)
+These two cases give the required statement.                                                   □
+
+     Both  bounds  in  Theorem3coincide  atS                   ⊤1   =S    1  =E    1,  trivially  recovering
+Theorem1. We conclude with a generalization to the case whereS                         ⊤1  is unknown.
+
+                                     S⊤1E
+Theorem 4LetH,|E        0⟩,                   ,|S  1⟩, E  0, S1, HP , pbe as in Theorem3. Then
+                                                       ( S1−E
+                                     |⟨ψ|E      0⟩|2 ≥     S1−E    0 −  pS1−Eλ2 ,   S⊤1  < S1,
+                                                           S1−E    0 ,           otherwise.                                                  (41)
+
+
+
+
+
+
+
+
+                                                                45
+                        #qubits      ADAPT-VMPE       lower bound           exact
+                                           iterations          on overlap [%]     overlap [%]
+                                            0 (HF)                   64.19                 92.60
+                        40 qubits              25                       85.05                 96.95
+                                               50                       91.51                 98.25
+                                              100                      94.97                 99.01
+                                            0 (HF)                   36.40                 87.97
+                        52 qubits              25                       72.72                 94.58
+                                               50                       80.61                 96.53
+                                              100                      86.37                 97.41
+                      Table 6  Lower bound for 40 and 52 qubits and for HF
+                      and 25, 50 and 100 ADAPT-VMPE iterations.We can
+                      see that both the lower bound on the overlap, and the exact
+                      overlap calculated with sparse-wavefunction statevector
+                      simulations of the ADAPT-VMPE circuit against DMRG
+                      outcome to dressed Hamiltonian are monotonically increasing
+                      with the number of iterations, however the latter are much
+                      larger.
+
+
+
+
+ProofUsing Theorem3,                          
+
+                                                 S1−E            S1−S   ⊤1
+                             |⟨ψ|E      0⟩|2 ≥   S1−E    0 −  pλ2S1−E    0 ,    S⊤1  < S1,                          (42)
+                                                S1−E             S1−S   ⊤1   .
+                                                 S1−E    0 −   pλPS1−E    0 ,   otherwise
+For the caseS      ⊤1  < S1:
+                                    |⟨ψ|E      0⟩|2 ≥  S1 −E             S1 −S   ⊤1
+                                                      S1 −E   0 −  pλ2   S1 −E   0
+                                                  ≥  S1 −E               S1 −E   0                                  (43)
+                                                      S1 −E   0 −  pλ2   S1 −E   0
+                                                  ≥  S1 −ES1 −E   0 −  pλ2 .
+
+For the other case:
+                            |⟨ψ|E      0⟩|2 ≥  S1 −E             S⊤1  −S   1
+                                             S1 −E   0 +   pλP   S1 −E   0  ≥  S1 −ES1 −E   0 .                           (44)
+                                                                                                                       □
+
+    If  the  relation  betweenS     ⊤1   andS       1  is  unknown,  one  can  always  use  the  weaker
+bound   S1−ES1−E    0 −  pλ2 .
+    The lower bound computed with the Theorem above assumes the produced state
+is a particularly unfortunate superposition of ground and eigenstates, therefore it is
+expected that the real overlap is much higher that the estimated bound. We performed
+a  separate  analysis  as  describe  below,  and  summarize  our  finding  in  Table6.  Our
+estimation of the exact overlap with the ground state was made by computing overlap
+between the DMRG solution and the sparse wavefunction simulation of circuit. The
+DMRG solution has been computed through the extraction of the determinants and
+related CI weights from the MPS wavefunction associated with the ground state of
+the actively rotated Hamiltonian. Following the same setup for the reference energies
+reported in Table3, a non-spin adapted DMRG modeSymmetryType.SZwas used to
+
+
+                                                           46
+solve the eigenvalue problem on the Hamiltonians for each of the two active spaces
+under analysis, i.e. 40 and 52 qubits. In particular, for the former we selected all the
+determinants  with  an  absolute  coefficient  magnitude  above  10−7  ,  and  10−6    for  the
+latter.
+    Since  sparse  wavefunction  simulator  cannot  effectively  generate  a  superposition
+of Slater determinants constructed with active rotations, we executed DMRG on the
+integrals dressed with active rotations found by ADAPT-VMPE. In order to obtain
+the dressed integrals, ˜hpq and ˜hpqrs, the unitary transformationUmust be defined as
+
+                                               U=  YeGkθk,                                               (45)
+                                                       k
+
+whereG           k is the generator of thek-th orbital rotation between orbitalpandqdefined
+asa   †qap−a   †paq, as in Eq. (1). Then, the unitary can be applied to the original integrals,
+hpq andh       pqrs, obtaining the dressed integrals as
+
+                          ˜hpq =U   iphijUjr,    ˜hpqrs =U   ipUjqhijklUkrUls,                       (46)
+
+whereh           pq  is the original one-body tensor andh       pqrs  is the original two-body tensor
+(a  more  detailed  explanation  of  the  procedure  can  be  found  in  Reference  [96]).  In
+particular, the transformationUis split betweenαandβspin sectors. Following this
+rule, the transformation needs to be applied accordingly to the nature of the tensors,
+i.e.αtransformation onαindexed tensors,βtransformation ofβindexed tensors.
+    The  remaining  part  of  the  ADAPT-VMPE  circuit  was  simulated  with  sparse
+wavefunction, truncating terms with coefficient magnitude 10−8    or less.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                       47

@@ -1,0 +1,2244 @@
+TenCirChem: An Efficient Quantum
+Computational Chemistry Package for the NISQ
+Era
+Weitang Li,∗,† Jonathan Allcock,‡ Lixue Cheng,† Shi-Xin Zhang,† Yu-Qin Chen,†
+Jonathan P. Mailoa,† Zhigang Shuai,¶,§ and Shengyu Zhang∗,‡
+†Tencent Quantum Lab, Shenzhen, 518057, China
+‡Tencent Quantum Lab, Hongkong, 999077, China
+¶Department of Chemistry, Tsinghua University, Beijing, 100084, China
+§School of Science and Engineering, The Chinese University of Hong Kong, Shenzhen,
+518172, China
+E-mail: liw31@gmail.com; shengyzhang@tencent.com
+Abstract
+TenCirChem is an open-source Python library for simulating variational quan-
+tum algorithms for quantum computational chemistry. TenCirChem shows high-
+performance on the simulation of unitary coupled-cluster circuits, using compact rep-
+resentations of quantum states and excitation operators. Additionally, TenCirChem
+supports noisy circuit simulation and provides algorithms for variational quantum dy-
+namics. TenCirChem’s capabilities are demonstrated through various examples, such
+as the calculation of the potential energy curve of H 2O with a 6-31G(d) basis set using
+a 34-qubit quantum circuit, the examination of the impact of quantum gate errors on
+the variational energy of the H 2 molecule, and the exploration of the Marcus inverted
+1
+arXiv:2303.10825v2  [quant-ph]  15 Jun 2023
+region for charge transfer rate based on variational quantum dynamics. Furthermore,
+TenCirChem is capable of running real quantum hardware experiments, making it a
+versatile tool for both simulation and experimentation in the field of quantum compu-
+tational chemistry.
+1 Introduction
+Quantum computation leverages quantum effects to store and process data, which could
+lead to a revolution in computational chemistry. 1–5 With the advent of noisy intermediate
+scale quantum (NISQ) computing 6 , devices with tens of error-prone qubits are increasingly
+becoming available for use to researchers and the public. 7–10 Since such devices are not
+capable of running large-depth structured quantum algorithms, the question of how to best
+utilize them to solve chemistry problems is of deep scientific and commercial significance.
+In recent years, following pioneering proposals such as the variational quantum eigensolver
+(VQE),11 research has focused on variational algorithms based on parameterized quantum
+circuits (PQC). 12–14 In the long term, the quantum phase estimation (QPE) algorithm offers
+a promising route to evaluating the energy of molecular systems, as it may potentially provide
+an exponential advantage over classical full configuration interaction (FCI) treatment. 15,16
+However, compared with VQE, the circuit depths required to run QPE are typically far too
+deep to run on near-term quantum devices, making VQE the approach of choice in the NISQ
+era.
+VQE uses a parameterized quantum circuit to represent a system’s wavefunction and
+works by tuning the circuit parameters to minimize the energy variationally. In this set-
+ting, the quantum circuit plays the same role as the ansatz in classical quantum chemistry
+algorithms and, similarly, a variety of different ans¨ atze have been proposed. The first such
+proposal was the disentangled unitary coupled cluster (UCC) ansatz, 11 which is a variant
+of the classical coupled cluster method. While disentangled UCC differs from the tradi-
+tional UCC ansatz developed for classical computers, 17,18 for brevity, in the following, we
+2
+will omit the word “disentangled”. UCC is known to be difficult to implement in classical
+computers, yet the ansatz can be transformed into a PQC straightforwardly 19 and imple-
+mented on a quantum computer. While excitations are commonly restricted to single and
+double excitations – a case referred to as UCCSD – a number of other variants of UCC
+have also been proposed. 20–22 Another popular family of ans¨ atze is the hardware-efficient
+ansatz (HEA), 23 which is designed to be first and foremost easily implementable on a target
+quantum hardware platform, and includes fewer quantum chemistry heuristics compared to
+UCC. In addition to ground state properties, such as molecular energy, chemists are also
+interested in quantum dynamics. 24 Under the PQC framework, the time evolution of the
+circuit parameters can be determined using time-dependent variational principles. 25,26
+While the quality and availability of quantum computing hardware continue to improve,
+the majority of real experiments are currently still constrained to small numbers of qubits
+and very shallow circuits .23,27–31 Furthermore, optimizing circuit parameters on real devices
+is challenging: gradient-based methods are inefficient, as they rely on computing finite differ-
+ences or parameter-shifts, 32,33 and both gradient and gradient-free methods are susceptible
+to noise. These factors mean that, for the foreseeable future, the classical simulation of
+variational quantum algorithms will play an important role in studying and analyzing their
+performance and viability. Although a variety of simulation software is currently available,
+there remain opportunities to significantly improve efficiency, functionality, and flexibility.
+Here we introduce TenCirChem, an efficient open-source Python library for simulat-
+ing variational quantum chemistry algorithms, designed to be easy to use as a black box
+while allowing for a high degree of flexibility and customizability. TenCirChem is powered
+by TensorCircuit, 34 a recently released quantum circuit simulation package featuring an
+advanced tensor network contraction simulation engine. A recently developed algorithm
+to efficiently simulate the UCC ansatz on classical computers 35–37 is also implemented in
+TenCirChem with notable performance optimizations. We demonstrate how to use Ten-
+CirChem by providing concrete code snippets, as well as links to online tutorials for features,
+3
+such as efficient UCC calculation, noisy circuit simulation, and quantum dynamics simula-
+tion. In the examples, we include an accurate UCCSD potential energy curve of the water
+molecule corresponding to 34 qubits, the influence of quantum gate error rate and measure-
+ment shots on VQE energy, the spin relaxation dynamics of the spin-boson model, and much
+more.
+The paper is structured as follows. In the rest of the section, we briefly review variational
+quantum algorithms for quantum chemistry and existing simulation packages. In Sec. 2,
+we present the overall architecture and workflow of TenCirChem with an emphasis on
+related theoretical background. Secs. 3, 4, and 5 illustrate the features contained in the
+TenCirChem modules through code snippets and detailed simulation examples.
+1.1 Variational quantum algorithms for quantum chemistry
+Variational quantum algorithms for quantum chemistry have been an active area of research
+since the original VQE proposal. 11 For both ground state properties and quantum dynamics,
+while details vary, proposed protocols typically adhere to the following workflow:
+Input. The input to the problem is the system Hamiltonian in second-quantized form. For
+electronic structure problems, this can be expressed as
+H =
+∑
+pq
+hpqa†paq + 12 ∑pqrs hpqrsa†pa†qaras + Enuc, (1)
+where hpq and hpqrs = [ ps|qr] are one-electron and two-electron integrals, and a†p, ap are
+fermionic creation and annihilation operators, respectively, acting on the p-th spin-orbital.
+Enuc is the nuclear repulsion energy. For quantum dynamics simulations, the Hamiltonian
+varies from system to system, and may contain only electronic terms 38,39 or both electronic
+and vibrational terms. 40,41 The latter is referred to as vibronic-coupling Hamiltonians.
+4
+Conversion to qubits. The Hamiltonian, either electronic or vibronic-coupling, is con-
+verted into an N -qubit Hamiltonian of the form
+H =
+M∑
+j
+αjPj, (2)
+where the αj are real coefficients, M is the total number of terms, and the Pj are Pauli
+strings of the form Pj = σi1 ⊗ σi2 ⊗ . . . σiN where the σik are single qubit Pauli operators
+or the identity. For electronic Hamiltonians, the Jordan-Wigner transformation, 42 parity
+transformation 43,44 and Bravyi-Kitaev transformation 44 are popular choices to perform this
+conversion. The Jordan-Wigner and Bravyi-Kitaev transformations require one qubit per
+spin-orbital, while the parity transformation is able to save 2 qubits, relative to these other
+methods, due to electron number conservation in each spin sector. For vibronic-coupling
+Hamiltonians, the nuclear states also need to be encoded into qubits via unary or binary
+encodings. 45
+Choice of ansatz. A parameterized ansatz state |ψ(θ)⟩ = U (θ) |ψ0⟩ is selected, where U (θ)
+is the unitary corresponding to a quantum circuit characterized by a vector θ of tunable
+parameters, and |ψ0⟩ is a chosen reference state or initial state. The core role of quantum
+computers or quantum processing units (QPUs) in variational algorithms is to use quantum
+circuits to execute U (θ) and prepare |ψ(θ)⟩. Thus, the ability of the variational ansatz in
+expressing the system wavefunction is a key factor impacting the accuracy of variational
+quantum algorithms for quantum chemistry. For electronic Hamiltonians, the proposed
+ans¨ atze generally fall into unitary coupled cluster (UCC) based approaches, 11,21,46–48 and
+hardware-efficient ans¨ atze.23,27–31 For quantum dynamics simulation, the appropriate family
+of ansatz varies from system to system. The variational Hamiltonian ansatz49,50 and adaptive
+ansatz 51 automate the task of constructing problem-specific circuit ans¨ atze.
+5
+Updating parameters. In the case of VQE, because the true ground state energy E0 of
+the system gives a lower bound on the energy expectation value ⟨H⟩θ := ⟨ψ(θ)| H |ψ(θ)⟩,
+⟨H⟩θ is minimized with respect to the parameters θ, which in turn gives an upper bound
+on E0 i.e.,
+E0 ≤ minθ ⟨H⟩θ.
+The quality of this bound depends on the chosen ansatz. In general, the function is non-
+convex and one can only expect to find a local minimum, which depends on the parameter
+initializations and the optimization protocol used. For dynamics problems, the parame-
+ters are propagated according to time-dependent variational principles, of which McLach-
+lan’s variational principle is among the most popular choices for quantum computing. 26,52
+McLachlan’s variational principle minimizes the distance between the ideal time derivative
+−iH |ψ(θ)⟩, i.e. and actual time derivative ∂∂t |ψ(θ)⟩
+min
+˙θ
+‖‖‖‖( ∂∂t + iH) |ψ(θ)⟩‖‖‖‖. (3)
+At each time step, ˙θ = ∂θ∂t is solved and then θ is evolved numerically according to ˙θ. The
+equation of motion for θk, the kth element in vector θ, is
+∑
+k
+Mjk ˙θk = Vj, (4)
+where
+Mjk = Re
+{ ∂ ⟨ψ|
+∂θj
+∂ |ψ⟩
+∂θk
+}
+, Vj = Im
+{ ∂ ⟨ψ|
+∂θj
+H |ψ⟩
+}
+(5)
+Both Mjk and Vj can be evaluated on a quantum computer with one additional ancilla qubit
+via the Hadamard test. 25 ˙θk can then be deduced using a standard linear equation solver on
+a classical computer. After that, θk is propagated in time with time step τ either by the
+simple forward Euler method θk(t + τ ) = θk(t) + τ ˙θk(t) or more sophisticated initial value
+6
+problem solvers, such as Runge-Kutta solvers.
+1.2 Existing packages: Challenges and opportunities
+A number of useful software packages are currently available, which facilitate the research,
+design, and validation of quantum computational chemistry algorithms. A variety of general
+quantum computing packages, such as QisKit, 53 PennyLane, 54 and MindQuantum, 55
+have modules or sub-packages dedicated to chemistry applications, and there are also stan-
+dalone quantum simulation packages that are mostly or completely designed for quantum
+computational chemistry, such as Tequilla, 56 Q2 Chemistry, 57 and QForte. 58
+The efficiency and scalability of the packages depend crucially on the underlying circuit
+simulation algorithm. The most commonly encountered quantum circuit simulator is stat-
+evector simulator, which is implemented in all simulation packages mentioned above. By
+using statevector simulator, all (exponentially many with respect to the number of qubits)
+amplitudes of the wavefunction are computed and stored. For such simulators, the largest
+simulated UCC circuit to date contains fewer than 30 qubits. 59 In contrast, matrix product
+state (MPS) simulators are able to tackle larger circuits, with around 100 qubits 60,61 pos-
+sible. Among the packages mentioned above, QisKit, PennyLane, and Q2 Chemistry
+have implemented the MPS simulator. However, MPS simulation involves approximations
+which could be problematic for the validation of quantum algorithms. Another challenge
+for software development is noisy circuit simulation and interfacing with hardware. These
+features can help researchers better understand the behavior of quantum algorithms in real-
+world conditions, facilitating the development of noise-resilient quantum algorithms and
+better error mitigation techniques, 47,50,62 which are essential for building practical quantum
+computers. QisKit is currently the only package capable of noisy circuit simulation and
+interfacing with quantum hardware. Furthermore, to the best of the authors’ knowledge,
+quantum dynamics algorithms of molecular systems are not implemented in any packages
+currently available.
+7
+TensorCircuit is a recent open-source quantum circuit simulator based on tensor net-
+work contraction which – in certain cases – enables the simulation of up to 600 qubits without
+any approximation. 34 Differences between tensor network contraction simulators and MPS
+simulators are described in Sec. 2.4. TensorCircuit is built upon industry-leading ma-
+chine learning frameworks, such as JAX 63 and employs automatic differentiation (AD),
+just-in-time (JIT) compilation, and vectorized parallelism to accelerate simulation. Ten-
+sorCircuit also possesses a fully-fledged noise model which enables efficient noisy circuit
+simulation. With its TensorCircuit backend, TenCirChem provides a competitive op-
+tion for developing and analyzing quantum computational chemistry algorithms. The role
+of TensorCircuit in TenCirChem is described in more detail in Sec. 2.1.
+2 TenCirChem Overview and Theoretical Backgrounds
+In this section, we provide a high-level picture of TenCirChem by introducing its archi-
+tecture and typical workflow. In addition, we present the theoretical background relevant to
+the code examples found in Secs. 3, 4 and 5.
+2.1 Architecture and workflow
+Architecture. TenCirChem consists of two primary modules (Fig. 1), corresponding to
+(i) electronic structure and (ii) quantum dynamics. Both modules contain a set of pre-
+built ans¨ atze, and user-specified custom ans¨ atze are also supported. Due to the popularity
+and unique mathematical structure of the UCC ansatz, an efficient simulation engine "
+civector" is implemented specifically for its efficient simulation. The details of the engine
+are included in the Supporting Information. In short, the engine exploits particle number
+conservation to store the system wavefunction inconfiguration interaction vector ("civector
+") form and uses UCC factor expansion to accelerate simulation. This engine relies heavily
+8
+on the FCI module of PySCF 64 for the construction and manipulation of the configuration
+interaction vector. In addition, the gradient is evaluated by auto-differentiation with
+reversible computing, which is more memory-efficient than the traditional reverse-mode auto-
+differentiation implemented in standard machine-learning packages.65 The "tensornetwork
+" engine uses the TensorCircuit tensor network contraction kernels to perform circuit
+simulation. A variant of the "tensornetwork" engine is the "tensornetwork-noise" engine,
+which further includes circuit gate noise and measurement uncertainty in the simulation using
+the relevant utilities implemented in TensorCircuit. The "qpu" engine delegates circuit
+execution to real QPUs through TensorCircuit.
+Figure 1: The architecture of TenCirChem. The electronic structure and quantum dy-
+namics modules are described in depth in Secs. 3, 4 and 5. See Sec. 2.3 for more information
+on the supported ans¨ atze. For more details on engines and backends see Sec. 2.4.
+Workflow. As mentioned in the introduction, the starting point for variational quantum
+chemistry algorithms is normally taken to be the Hamiltonian in the second-quantized form.
+For electronic structure problems, this means specifying the one- and two-electron integrals
+hpq and hpqrs in Eq. 1. In TenCirChem this can be done either directly, by inputting these
+numbers explicitly, or indirectly, by specifying the 3D coordinates, atom types, and basis sets
+9
+of each of the atoms in a molecule and having PySCF compute the integrals automatically.
+The Hamiltonian in quantum dynamics is defined using the Renormalizer 66 package by
+specifying each term in the Hamiltonian.
+Next, the Jordan-Wigner, parity or Bravyi-Kitaev conversion from electronic Hamilto-
+nian (Eq. 1) to qubit Hamiltonian (Eq. 2) is performed by OpenFermion. 67 The encoding
+of nuclear states to qubits and the construction of the ans¨ atze are performed within theTen-
+CirChem package. The workflow and the underlying packages are summarized in Fig. 2,
+in accordance with Sec. 1.1, and will be elaborated on in the following sections. Standard
+infrastructure packages, such as NumPy and SciPy, are omitted for brevity. The specific
+tasks of each underlying package are summarized below:
+• PySCF: specifying molecules; calculating integrals; configuration interaction vector
+construction and manipulation.
+• OpenFermion: specifying operators in fermion operator or qubit operator format;
+conversion from fermion operator to qubit operator.
+• Renormalizer: specifying general quantum dynamics Hamiltonian; conversion from
+symbolic operators to numeric operators.
+• TensorCircuit: constructing custom PQC as ansatz; quantum circuit simulation
+via tensor network contraction; interfacing with QPU.
+Specify
+Hamiltonian Convert to qubits Construct ansatz
+Simulate circuit
+and update
+parameter
+PySCFa
+OpenFermiona
+Renormalizerb
+OpenFermiona
+TenCirChemb TenCirChema,b
+TenCirChema,b
+TensorCircuita,b
+PySCFa
+aFor electronic structure. bFor quantum dynamics.
+Figure 2: Typical workflow of variational quantum algorithms and the underlying packages
+used for each task in TenCirChem.
+10
+2.2 Conversion to qubits
+Quantum simulation of physical systems requires converting fermions (for electronic structure
+calculations) and bosons (for encoding nuclear wavefunctions and quantum dynamics) to
+qubits.
+2.2.1 Electronic Structure
+Fermionic creation and annihilation operators obey the anticommutation properties
+{ai, a†j} = aia†j + a†jai = δij
+{a†i , a†j} = {ai, aj} = 0
+(6)
+while the qubit creation operator c† = 12 (X − iY ) and annihilation operator c = 12 (X + iY )
+obey the commutation properties
+{ci, c†j} = δij, [c†i , c†j] = [ci, cj] = 0. (7)
+To comply with the required fermionic anticommutation properties, the Jordan-Wigner
+transformation 42 can be used to map fermionic ladder operators into products of Pauli Z
+and qubit ladder operators
+aj =
+j−1⨂
+l=0
+Zl ⊗ cj. (8)
+Alternatively, the parity transformation 43,44 achieves the same goal by letting each qubit
+record the parity of all preceding orbitals and itself. The mapping is then
+aj = (cj ⊗ |0⟩ ⟨0|j−1 − c†j ⊗ |1⟩ ⟨1|j−1) ⊗
+N −1⨂
+l=j+1
+Xl (9)
+where N is the total number of qubits. If the ansatz conserves the total particle number,
+then the last qubit will not change during computation and can be removed without loss of
+11
+accuracy. If Sz is also conserved, another qubit can be saved. Thus, the parity transforma-
+tion uses 2 fewer qubits than the Jordan-Wigner transformation. In TenCirChem, both
+transformations are carried out by calling OpenFermion.
+2.2.2 Quantum Dynamics
+One of the key differences between quantum dynamics simulation and electronic structure
+calculations is that quantum dynamics requires incorporating nuclear information in time
+evolution. Similar to the case of electrons, a proper basis set must first be chosen to represent
+the nuclear wavefunction and operators in second-quantized form. 40,62,68 One popular choice
+is the harmonic eigenbasis, in which the nuclear position operator x and momentum operator
+p are expressed as
+x =
+√
+1
+2mω (b† + b),
+p = i
+√ mω
+2 (b† − b),
+(10)
+where m is the oscillator mass, ω is the oscillator frequency and b† (b) are bosonic creation
+(annihilation) operators respectively. The infinite boson levels are then truncated to the
+lowest N levels for further encoding. Other choices for the nuclear basis set include the real-
+space grid basis and a variety of discrete value representations. 69 In any case, each nuclear
+degree of freedom is represented by a finite number of basis states |ψ⟩ = ∑Ni ci |i⟩.
+In quantum simulation, each bosonic basis vector |i⟩ must be encoded into qubits, so
+that the system wavefunction can be described by a quantum circuit and operators can be
+represented by Pauli strings. The principle for the encoding is equivalent to that of encoding
+integers into bit strings, and there are two common encoding strategies – based on unary
+and binary encodings – requiring O(N ) and O(log N ) qubits, respectively.45 Binary encoding
+with Gray codes is a variant of the standard binary encoding that involves changing only
+one bit between consecutive integers, which can be used to facilitate the efficient encoding
+of operators b† and b. TenCirChem supports all of the encoding schemes and by default
+12
+uses binary encoding with Gray codes because of its compact representation. We note that
+an efficient variational encoding scheme requiring only O(1) qubits was proposed recently. 70
+2.3 Supported ans¨ atze
+TenCirChem supports three classes of variational ans¨ atze: (i) Unitary Coupled Cluster
+(UCC) – of which UCCSD, k-UpCCGSD, and paired UCCD (pUCCD) are variants –, (ii)
+Hardware-Efficient, and (iii) Variational Hamiltonian.
+2.3.1 Unitary Coupled Cluster Ansatz
+UCC ans¨ atze have the form
+eT (θ) |ϕ⟩ (11)
+where
+T (θ) =
+∑
+pq
+θpq
+(
+a†paq − h.c.) + ∑
+pqrs
+θpqrs
+(
+a†pa†qaras − h.c.) . . . , (12)
+θ denotes the vector of tunable parameters θpq, θpqrs, . . ., and |ϕ⟩ = |HF⟩ is the Hartree–Fock
+state. In general, excitations of any order are permitted, although it is common to only
+consider single and double excitations, in which case the ansatz is referred to as UCCSD.
+The indices are usually confined to excitations from occupied orbitals to virtual (unoccupied)
+orbitals. “Generalized” excitations do not have to satisfy this requirement . The generalized
+counterpart of UCCSD is UCCGSD. 20
+As the terms in Eq. 12 do not necessarily commute, the exact implementation of Eq. 11 on
+a gate model quantum computer is difficult. In fact, to the best of our knowledge the ansatz
+defined by Eq. 11 and Eq. 12 is never used in any practical VQE algorithm. Instead, one
+considers a Trotterized approximation of the ansatz, also referred to as disentangled UCC. 71
+13
+Although disentangled UCC is traditionally viewed as an approximation to the original UCC,
+it can in fact exactly represent general fermionic states given appropriate operator ordering
+and should probably be considered as an alternative ansatz to the original UCC.71 In general,
+the disentangled UCC ansatz can be written as
+|Ψ(θ)⟩UCC :=
+1∏
+k=Nex
+eθkGk |ϕ⟩ , (13)
+where each Gk is the anti-Hermitian excitation operator for each term in Eq. 12, and Nex
+is the total number of excitations. In the following, the terms eθkGk are referred to as UCC
+factors. The UCC ans¨ atze implemented inTenCirChem can all be viewed as special cases
+of Eq. 13. The specific formulation of UCCSD, k-UpCCGSD, and pUCCD are reviewed in
+the Supporting Information.
+2.3.2 Hardware-Efficient Ansatz
+Hardware-efficient ans¨ atze are designed to be easily implementable on NISQ devices but do
+not necessarily preserve symmetries in molecular systems. Finding the global minimum for
+such circuits can be challenging due to the vanishing gradient phenomenon and the presence
+of local minima. 72,73 However, because the required circuit depths can be much smaller than
+for UCC, hardware-efficient ans¨ atze are widely used in quantum computational chemistry
+experiments performed on real quantum processors. 23,27–31 TenCirChem implements one
+of the most popular hardware-efficient ans¨ atze, theRy ansatz, 30,73–75 whose circuit consists
+of interleaved layers of Ry and CNOT gates
+|Ψ(θ)⟩Ry :=
+1∏
+l=k
+[
+L(l)Ry (θ)L(l)CNOT
+]
+L(0)Ry (θ) |ϕ⟩ , (14)
+14
+where k is the total number of layers, and the layers are defined as
+L(l)CNOT =
+1∏
+j=N −1
+CNOTj,j+1,
+L(l)Ry (θ) =
+1∏
+j=N
+RYj(θlj).
+(15)
+The gate subscripts refer to the qubit index on which the gate acts andN is the total number
+of qubits. An example of the ansatz is depicted in Fig. 6. One reason for using the Ry gate
+is that it enforces the wavefunction coefficients to be real, which is a desired property for
+electronic structure problems.
+As a huge number of possible hardware-efficient ans¨ atze can be defined, instead of pro-
+viding templates for all of them, TenCirChem allows the hardware-efficient ans¨ atze from
+the QisKit library to be directly imported, and other customized ans¨ atze can be defined by
+the user using TensorCircuit (see Sec. 4.1 for examples).
+2.3.3 Variational Hamiltonian Ansatz
+For quantum dynamics simulations, TenCirChem provides utilities to construct the vari-
+ational Hamiltonian ansatz 49,50 based on user-specified Hamiltonians. This type of ansatz
+depends on the Pauli strings Pj contained in the Hamiltonian and thus encodes Hamiltonian
+information. Suppose the Hamiltonian is composed of M Pauli strings Pj, as defined in
+Eq. 2. The corresponding variational Hamiltonian ansatz has the form
+|Ψ⟩ =
+k∏
+l
+M∏
+j
+e−iθlj Pj |ϕ⟩, (16)
+where |ϕ⟩ is the initial state of the system, θkj is the circuit parameter, and k is a parameter
+defining the number of layers in the ansatz. This heuristic construction is based on the fact
+that, in the short time limit, the system wavefunction e−iHt |ϕ⟩ can be exactly described by
+Eq. 16.
+15
+2.4 Engines and Backends
+We use the term “engine” to refer to the methods – such as"tensornetwork" and "civector
+" – used to simulate the quantum circuits in TenCirChem. The term “backend” refers to
+the underlying numerical package used to perform the simulation, such as NumPy and
+JAX. The most common engine in TenCirChem is the "tensornetwork" engine powered
+by TensorCircuit, which views the quantum circuit as a network of low-rank tensors and
+performs circuit simulation via tensor network contraction. 76 This approach can offer signif-
+icant advantages over full statevector simulators which may encounter memory bottlenecks.
+As a result, tensor network contraction is the most frequently used method for performing
+large-scale quantum circuit simulations, such as the simulation of random circuits used in
+quantum supremacy experiments. 77,78 When contracting a tensor network, it is crucial to
+find an efficient contraction path. The default contraction path finder in TenCirChem is
+based on a greedy algorithm, which has minimal overhead, but may not be satisfactory for
+large quantum circuits. The customization of contraction paths is possible via TensorCir-
+cuit.
+We note that the tensor network contraction simulator should not be confused with an
+MPS simulator, 60 although the two do share a number of things in common. In particular,
+the tensor network contraction method does not assume the circuit wavefunction to adopt
+MPS form and does not perform any truncations to the wavefunction.
+The tensor network simulator can also be extended to the simulation of noisy circuits,
+using density matrix ρ. The simulation of noisy quantum circuits is thus twice as memory
+intensive as pure state simulation. We stress that the engine does not perform any truncation
+to the target density matrix, which is different from a number of preceding works. 79,80 In the
+presence of noise, unfortunately, symmetries encoded in the ansatz are broken and cannot be
+exploited. In TensorCircuit, noise channels E are defined by their corresponding Kraus
+16
+operators Ki, i.e.,
+E(ρ) =
+∑
+i
+KiρK †i . (17)
+The action of {Ki} on the circuit is achieved by transforming them into a superoperator.
+More specifically, if the channel acts on N qubits, it is converted to a matrix with size
+4N × 4N , as a node in the density matrix tensor network. We note that TensorCircuit
+supports noisy circuit simulation via Monte-Carlo sampling in addition to using density
+matrices, although this algorithm is not currently implemented in TenCirChem.
+Of the various backends supported by TenCirChem, the JAX backend is perhaps the
+most versatile and can generally be used in most cases. This backend also supports GPU and
+TPU calculations once JAX is properly configured. If the "civector" engine is used, the
+NumPy and CuPy backends are preferred for CPU and GPU calculations, respectively. The
+reason for this is that the code in the "civector" engine is highly optimized and just-in-time
+(JIT) compilation overheads become a bottleneck.
+2.5 Installing and contributing to TenCirChem
+TenCirChem is written in Python and can be installed via pip install tencirchem using
+the command line. The source code is hosted on the GitHub repository https://github.
+com/tencent-quantum-lab/TenCirChem. We welcome all members of the quantum
+chemistry community to contribute to the continued development of TenCirChem.
+3 The Electronic Structure Module I. Unitary-Coupled
+Cluster ansatz
+3.1 Basic Usage
+The basic usage of TenCirChem can be illustrated in five lines of codes, which we demon-
+strate below using the UCCSD ansatz to find the minimum energy of an H 2 molecule:
+17
+1 from tencirchem import M, UCCSD
+2
+3 h2 = M(atom=[["H", 0, 0, 0], ["H", 0, 0, 0.741]])
+4
+5 uccsd = UCCSD(h2)
+6 uccsd.kernel()
+7 uccsd.print_summary(include_circuit=True)
+Code Snippet 1: Simple UCCSD calculation for the hydrogen molecule.
+The remainder of this section will explain Code Snippet 1 in more detail. The corre-
+sponding Jupyter Notebook is available online.
+3.1.1 Defining the molecule and basis set
+TenCirChem uses the PySCF Mole object to define the molecule of interest. In other
+words, from tencirchem import M is equivalent to from pyscf import M . The syntax for
+defining molecules is thus the same as that for PySCF. For example, using 3D coordinates,
+atom types and coordinates (in Angstroms) are specified in a list as shown in Code Snippet 1.
+By default, the STO-3G minimal basis set is used, but PySCF allows other basis sets to be
+specified via the basis argument, e.g.,
+1 h2 = M(atom=[["H", 0, 0, 0], ["H", 0, 0, 0.741]], basis="cc-pvdz")
+Built-in molecules. In addition to specifying molecules by hand, the user can import
+a number of pre-specified molecules in STO-3G basis set from the tencirchem.molecule
+module for debugging and fast prototyping, e.g.,
+1 from tencirchem.molecule import h2, h4, h8
+Once imported, the molecules can be used exactly as if they had been defined manually. The
+coordinates and the basis sets of these built-in molecules can be obtained by inspecting the
+Mole object with m.atom and m.basis respectively. The tencirchem.molecule.h2 molecule
+– with a bond distance of 0.741 ˚A – is frequently used in the following code examples.
+3.1.2 Specifying the ansatz and obtaining reference energies
+Once the h2 molecule has been specified, we initialize the UCCSD ansatz via the line
+18
+1 uccsd = UCCSD(h2)
+In addition to UCCSD, TenCirChem supports the k-UpCCGSD and pUCCD ans¨ atze.
+These are based on the UCC base class, and can be implemented in a similar way to UCCSD
+once imported via:
+1 from tencirchem import KUPCCGSD , PUCCD
+Ansatz information is accessible through class attributes (see Code Snippet 2). The
+conventions for the orbital indices are described in the Supporting Information.
+1 >>> # two single excitations and one double excitation
+2 >>> uccsd.ex_ops
+3 [(3, 2), (1, 0), (1, 3, 2, 0)]
+4 >>> # ‘param_ids ‘ maps excitation operators to parameters
+5 >>> # some excitation operators share the same parameter due to symmetry
+6 >>> uccsd.param_ids
+7 [0, 0, 1]
+8 >>> uccsd.init_guess # generated by MP2
+9 [0.0, -0.07260814651571333]
+10 >>> uccsd.params # the optimized parameters
+11 array([ 3.40632986e-17, -1.12995353e-01])
+Code Snippet 2: Several useful attributes of the UCCSD class. Example corresponds to the
+H2 molecule.
+UCCSD class as a toolbox. The UCCSD class also allows other useful attributes to be
+obtained (see Code Snippet 3). The purpose is to make information in TenCirChem easy
+to inspect, facilitating its use as a handy toolbox. For example, one may use the UCCSD class
+to inspect for molecular attributes, electron integrals, reference energies and the Jordan-
+Wigner transformed Hamiltonian, all of which are available without needing to first call the
+uccsd.kernel() method.
+1 >>> uccsd.n_qubits , uccsd.n_elec
+2 (4, 2)
+3 >>> # PySCF objects
+4 >>> uccsd.mol, uccsd.hf
+5 (<pyscf.gto.mole.Mole at 0x7f9daec92b90 >, <pyscf.scf.hf.RHF at 0x7f9d92d1ec10 >)
+6 >>> # reference energies
+7 >>> uccsd.e_hf, uccsd.e_mp2 , uccsd.e_ccsd , uccsd.e_fci , uccsd.e_nuc
+8 (-1.116706137236105,
+9 -1.1298675557838804,
+10 -1.1372745709766439,
+11 -1.1372744055294395,
+12 0.7141392859919029)
+13 >>> # one and two-body integrals in molecular orbital basis , chemists’ notation
+14 >>> uccsd.int1e.shape , uccsd.int2e.shape
+19
+15 ((2, 2), (2, 2, 2, 2))
+16 >>> uccsd.h_fermion_op # Hamiltonian as openfermion FermionOperator
+17 0.7141392859919029 [] +
+18 -1.2527052599711868 [0ˆ 0] +
+19 -0.48227117798977825 [0ˆ 1ˆ 0 1] +
+20 -0.6745650967143663 [0ˆ 2ˆ 0 2] +
+21 [...... The rest of the output omitted ......]
+22 >>> uccsd.h_qubit_op # Hamiltonian as openfermion QubitOperator
+23 (-0.09835117053027564+0j) [] +
+24 (0.04531660419443148+0j) [X0 X1 X2 X3] +
+25 (0.04531660419443148+0j) [X0 X1 Y2 Y3] +
+26 (0.04531660419443148+0j) [Y0 Y1 X2 X3] +
+27 [...... The rest of the output omitted ......]
+Code Snippet 3: Several other useful attributes of the UCCSD class are also directly available
+without first needing to call the uccsd.kernel() method.
+Specifying integrals directly. Rather than using a molecule as the input to UCCSD,
+one may define a UCCSD object by specifying the one and two electron integrals, without
+needing to explicitly refer to a molecule. That is, applying UCCSD to the second-quantized
+ab initio Hamiltonian Eq. 1 can be done via
+1 uccsd_from_integral = UCCSD.from_integral(int1e , int2e , n_elec , e_core)
+with
+• int1e: an array of shape ( N, N) with p, q-th element storing the one-electron integral
+hpq. Here N is the number of spatial orbitals.
+• int2e: an array of shape (N, N, N, N) with p, q, r, s-th element storing the two-electron
+integral (pq|rs), in spatial orbital and chemists’ notation.
+• n_elec: an integer specifying the total number of electrons in the system. Currently,
+TenCirChem only supports closed-shell molecules.
+• e_core: a floating-point number for the nuclear repulsion energy Enuc or the core
+energy if frozen occupied orbitals are involved.
+3.1.3 Optimizing the energy
+The command uccsd.kernel() runs the optimization procedure to minimize the ansatz
+energy with respect to the variational parameters, and returns the minimum energy found.
+20
+By default, TenCirChem uses the L-BFGS-B optimizer implemented in SciPy. 81 Once
+uccsd.kernel() has been run, the minimum ansatz energy can be accessed byuccsd.energy
+() or uccsd.e_ucc. The system statevector and configuration interaction vector are available
+by uccsd.statevector() and uccsd.civector(), e.g.,
+1 >>> uccsd.civector() # configuration interaction vector
+2 array([ 9.93623806e-01, 1.08284918e-16, 1.08284918e-16, -1.12746318e-01])
+The optimized parameters can be obtained by uccsd.params, and the one- and two-body
+reduced density matrices are available by uccsd.make_rdm1() and uccsd.make_rdm2(), re-
+spectively. Functions such as uccsd.energy, uccsd.statevector, and uccsd.civector also
+accept custom circuit variational parameters . For example,
+1 >>> # if all parameters are zero, then the UCC energy is identical to HF energy
+2 >>> uccsd.energy(np.zeros(uccsd.n_params)), uccsd.e_hf
+3 (-1.1167061372361045, -1.116706137236105)
+3.1.4 Outputting quantum circuits
+The quantum circuit corresponding to the ansatz state can be obtained via
+1 c = uccsd.get_circuit()
+which returns a TensorCircuit Circuit object, which can then be inspected, manipulated
+and executed. For example, a summary of the gates in the circuit can be obtained by
+1 c.gate_summary()
+Also, conversion of the circuit from TensorCircuit to Qiskit format is straightforward:
+1 c_qiskit = c.to_qiskit()
+By default, TenCirChem compiles circuits using the efficient method of Yordanov, Arvidsson-
+Shukur, and Barnes (YAB) 82,83, which is based on multi-qubit controlled rotations (see
+Fig. 3). Currently triple or higher order excitations are not implemented in TenCirChem.
+uccsd.get_circuit(decompose_multicontrol=True) generates the circuit with the multi-
+qubit controlled gate decomposed into elementary rotation gates and CNOT gates. This
+decomposition is useful for noisy circuit simulation or execution on hardware. See Code
+Snippet 10 for an example. Compilation via a more traditional Trotterized method is also
+possible, using
+21
+1 c = uccsd.get_circuit(trotter=True)
+although this can lead to circuits significantly deeper than those compiled by the YAB
+method. 82
+q0 : • Ry(θ0) • • • Ry(θ1) • •
+q1 : X •
+q2 : • Ry(θ0) •
+q3 : X • • • •
+Figure 3: The quantum circuit corresponding to the UCCSD ansatz for the H 2 molecule
+with STO-3G basis, compiled by the method in Ref. 82. The two X gates at the left of
+the circuit are used to create the initial Hartree–Fock state |0101⟩. The multicontrol gate
+applies a parameterized Ry rotation to one of the four qubits, conditioned on the state of
+the other three.
+3.2 Applications and benchmarking
+In this section, we use concrete examples to demonstrate the efficiency and flexibility of
+TenCirChem. All calculations are carried out on a single computational node with the
+"civector" engine. Throughout the paper, the wall time reported only accounts for VQE
+optimization time. Classical pre-processings, such as obtaining integrals and Hartree–Fock
+calculation, are not included in the reported time.
+3.2.1 Hydrogen chains and the hydrogen molecule
+Table 1 gives the time required by TenCirChem to compute the minimum UCCSD energy
+for chains of increasing numbers of hydrogen atoms, using an STO-3G basis set. Atoms
+in each chain are uniformly distributed with an interatomic distance set to 0.8 ˚A. The
+largest system simulated is H 16, corresponding to 32 qubits. For such a system, storing
+the wavefunction in Fock space alone is already an arduous task, while the running time
+for TenCirChem is still acceptable. Whereas other common quantum simulation packages
+22
+usually struggle to simulate H 10 (which requires 20 qubits), TenCirChem is able to obtain
+the UCCSD ground state energy of this chain in 14 seconds on a single GPU node. As a
+concrete example, Qiskit-Nature version 0.5.2 spends 34 seconds simulating H 4 and 943
+seconds simulating H6, and reports an out-of-memory error when simulating larger systems.
+Other packages, such as PennyLane and Tequilla, show similar performance. We note
+that the high efficiency of TenCirChem is primarily due to the "civector" engine and
+hardware acceleration plays a relatively minor role.
+Table 1: UCCSD ground state energy optimization time for hydrogen chains using Ten-
+CirChem. CPU calculations are based on an Intel(R) Xeon(R) Platinum 8255C CPU @
+2.50GHz while GPU calculations use the NVIDIA(R) Tesla(R) V100-PCIE-32GB. Energy
+errors are with respect to FCI energy, and could be reduced by adding more excitation op-
+erators in the ansatz. 71
+Molecule Qubits Excitations Parameters Device Time Energy Error
+(s) (mH) (mH)
+H4 8 18 11 CPU 0.05 -2,167.55 0.01
+H6 12 69 39 CPU 0.4 -3,204.14 0.27
+H8 16 200 108 CPU 1.9 -4,242.52 0.88
+H10 20 467 246 GPU 14 -5,282.21 1.37
+H12 24 954 495 GPU 51 -6,322.29 2.13
+H14 28 1,749 899 GPU 2,093 -7,362.81 2.92
+H16 32 2,976 1,520 GPU 50,909 -8,403.63 3.72
+The hydrogen chain actually represents a class of molecular systems that are particularly
+difficult to simulate in TenCirChem. In these systems, the number of spatial orbitals N
+is the same as the number of electrons M . In the following, we consider a case at the other
+extreme, where M ≪ N , and simulate the potential energy curve of the H 2 molecule using
+the cc-pVTZ basis set. 84 This corresponds to M = 2, N = 28 and a VQE circuit on 56
+qubits. Running on a single laptop CPU, TenCirChem is able to produce all UCCSD
+energy values in Table 2 in 20 seconds. Because of the small value of M , both the dimension
+of the configuration interaction space (784) and the number of excitation operators (155) are
+small. Since the "civector" engine is exact, the small error in Table 2 is likely due to the
+inexactness of the disentangled UCC ansatz.
+23
+Table 2: UCCSD/cc-pVTZ calculation of H 2 in TenCirChem, using a VQE circuit on 56
+qubits. Energy errors are with respect to FCI.
+Atom distance (˚A) Energy(mH) Error (mH)
+0.3 -692.85983 0.00000
+0.6 -1153.51794 0.00000
+0.9 -1160.41280 0.00001
+1.2 -1112.06753 0.00005
+1.5 -1066.16823 0.00014
+1.8 -1034.07993 0.00023
+2.1 -1015.56097 0.00028
+2.4 -1006.42068 0.00029
+2.7 -1002.39048 0.00028
+3.2.2 Potential energy curve of H 2O
+We now compute the potential energy curve of a realistic molecule, H2O. The Python script
+to produce the data is available online. This molecule has been used to benchmark many
+quantum algorithms, 85,86 yet previous works usually use a minimal basis set or small active
+space. Here, we use TenCirChem to calculate the UCCSD energy of H 2O with 6-31G(d)
+basis set 87,88 with only the 1 s orbital of the O atom frozen. This corresponds to 8 electrons
+in 17 orbitals, a quantum circuit on 34 qubits, and an ansatz involving 565 independent
+parameters and 1078 excitations.
+We study the symmetric stretching of the O-H bond with the H-O-H angle fixed at the
+experimental value of 104.45 °. 89 Results are summarized in Fig. 4. The UCCSD energy by
+TenCirChem is very close to the FCI solution with a slight deviation observed at long
+bond lengths. The equilibrium bond length is determined to be 0.97 ˚A, in good agreement
+with the experimental value (0.9584 ˚A). To highlight the necessity of using an appropriate
+basis set, in Fig. 4 the FCI energy using the minimal STO-3G basis set is also given. As
+expected, the energy corresponding to the STO-3G basis set is significantly higher than
+that corresponding to the 6-31G(d) basis set. Furthermore, the equilibrium bond distance
+predicted using the STO-3G basis set is 1.02 ˚A, significantly larger than the experimental
+value. On average, TenCirChem takes approximately 15 minutes to produce each UCCSD
+24
+energy value in Fig. 4, using the same GPU platform as in Table 1.
+1.0 1.5 2.0
+Bond length ( ˚A)
+−76.0
+−75.5
+−75.0
+−74.5
+E (Hartree)
+FCI (STO-3G)
+RHF
+UCCSD
+FCI
+Figure 4: Potential energy curve for the symmetric stretching of the O-H bond in H 2O with
+6-31G(d) basis set. The 1 s orbital of the O atom is frozen and the whole system is described
+by an (8e, 17o) active space and a quantum circuit on 34 qubits. The FCI energy with
+STO-3G basis set is included for comparison.
+3.2.3 Hubbard model
+As a final example, we use TenCirChem and UCCSD to calculate the ground state energy
+of the one-dimensional Hubbard model at half-filling. The full Jupyter Notebook is available
+online. The Hamiltonian is
+H = −t
+∑
+j,σ
+(c†j+1,σcj,σ + c†j,σcj+1,σ) + U ∑
+j
+nj↑nj↓, (18)
+where c†j,σ (cj,σ) creates (annihilates) an electron with spin σ at site j, nj↑ and nj↓ are
+electron occupation number operators at site j, t is the hopping integral and U characterizes
+the Coulomb repulsion interaction strength. We assume periodic boundary conditions.
+Although the Hubbard model is not directly related to any molecular systems, the Hamil-
+tonian is a special case of the ab initio Hamiltonian of Eq. 1, and thus TenCirChem allows
+the construction of the corresponding UCCSD objects by specifying the one-body and two-body
+integrals.
+25
+1 import numpy as np
+2 from tencirchem import UCCSD
+3
+4 n = 6 # the number of sites
+5 n_elec = n # half filled
+6 t = U = 1 # model parameters
+7
+8 # setup the integrals
+9 int1e = np.zeros((n,n))
+10 for i in range(n - 1):
+11 int1e[i, i + 1] = int1e[i + 1, i] = -t
+12 int1e[n - 1, 0] = int1e[0, n - 1] = -t
+13 int2e = np.zeros((n, n, n, n))
+14 for i in range(n):
+15 int2e[i, i, i, i] = U
+16
+17 # do the calculation
+18 uccsd = UCCSD.from_integral(int1e , int2e , n_elec)
+19 uccsd.kernel()
+Code Snippet 4: Calculation of the UCCSD energy of half-filled Hubbard model.
+Results are shown in Fig. 5. When U/t is small, both CCSD and UCCSD coincide well
+with the FCI solution. As U/t increases, CCSD deviates from the FCI solution, whereas
+the UCCSD solution tracks the FCI value much more closely, indicating that UCCSD can
+be better than CCSD at capturing strong correlations, a finding consistent with a previous
+report. 90
+To better recover static correlation using UCCSD, more terms can be added to the UCC
+ansatz or one may consider combining UCC with other algorithms, such as density matrix
+embedding theory. 47,91–94 On average, TenCirChem requires 0.1 seconds to calculate each
+UCCSD energy value in Fig. 5 on a regular CPU without GPU acceleration.
+4 The Electronic Structure Module II. Hardware-efficient
+Ansatz and Noisy Circuit Simulation
+In real-world quantum computing systems, noise and errors are inevitable due to factors such
+as imperfect hardware, decoherence, and finite-shot measurement uncertainty. Noisy circuit
+simulators allow researchers to simulate the effects of noise on quantum circuits and get a
+better understanding of the behavior of quantum algorithms in realistic conditions. In this
+26
+2 4 6 8
+U/t
+−7.5
+−5.0
+−2.5
+0.0
+2.5
+5.0
+E
+RHF
+CCSD
+UCCSD
+FCI
+Figure 5: Ground state energy of one-dimensional half-filled Hubbard model by UCCSD with
+increasing coulomb repulsion strength U/t. The UCCSD energy computed by TenCirChem
+tracks the FCI value significantly better than CCSD does.
+section, we use the hydrogen molecule H2 to illustrate how to perform noisy circuit simulation
+in TenCirChem. After using the parity transformation, the corresponding Hamiltonian
+acts on 2 qubits. The Jupyter Notebook for this section is available online.
+4.1 Basis Usage
+TenCirChem uses the HEA (Hardware-Efficient Ansatz) class for noisy circuit simulation,
+which has a different interface from the UCC classes encountered in Sec. 3. A primary moti-
+vation for using HEA ans¨ atze is that almost all UCC circuits (with perhaps pUCCD circuits
+being the exception) are too large for both noisy circuit simulation as well as execution on
+currently available quantum devices. In contrast, HEA circuits are, by design, constructed
+to be implementable on whatever device is available.
+Another reason is that, from a user’s perspective, the HEA class ought to provide a greater
+degree of low-level customization compared to the UCC classes. For example, for noiseless
+UCC simulation, the ansatz is defined by excitation operators and compilation to native
+gates is of less interest. Conversely, in the context of noisy HEA circuit simulation, it is
+imperative to give users complete control over the ansatz circuit. Nevertheless, noisy UCC
+27
+circuit simulation can be carried out within TenCirChem without much additional effort,
+which will be demonstrated in Sec. 4.1.3.
+4.1.1 Specifying the Hamiltonian and the ansatz
+Unlike UCC, the HEA class is not initialized by specifying the molecule. Rather, HEA takes as
+inputs (i) the Hamiltonian in openfermion.QubitOperator form and (ii) the circuit ansatz.
+Within OpenFermion, the Hamiltonian can be constructed by interfacing with quantum
+chemistry packages, such as PySCF using openfermion.MolecularData.
+1 from openfermion import MolecularData
+2 from openfermionpyscf import run_pyscf
+3
+4 geometry = [["H", [0, 0, 0]], [’H’, [0, 0, 0.741]]]
+5 basis = "STO-3G"
+6 multiplicity = 1
+7 molecule = MolecularData(geometry , basis , multiplicity)
+8 molecule = run_pyscf(molecule)
+9 h_fermion_op = molecule.get_molecular_hamiltonian()
+Code Snippet 5: Construction of the system Hamiltonian in fermion operator form using
+OpenFermion.
+An alternative approach is to use the UCC class attributes, such as uccsd.h_fermion_op.
+1 from tencirchem import UCCSD , parity
+2 from tencirchem.molecule import h2
+3
+4 uccsd = UCCSD(h2)
+5 # Hamiltonian as openfermion.FermionOperator
+6 h_fermion_op = uccsd.h_fermion_op
+7 # use parity transformation for qubit Hamiltonian and remove 2 qubits
+8 h_qubit_op = parity(h_fermion_op , uccsd.n_qubits , uccsd.n_elec)
+Code Snippet 6: Construction of the system Hamiltonian in qubit operator form using UCCSD
+class attributes.
+The ansatz is defined using TensorCircuit. In the example below, we construct a
+1-layer Ry ansatz comprising 4 parameters and the circuit diagram is depicted in Fig. 6.
+The initial parameters create the HF state |01⟩ under parity transformation. In addition
+to defining the ansatz from scratch, it is also possible to use a pre-defined ansatz, which will
+be discussed more thoroughly in Sec. 4.1.3.
+1 import numpy as np
+2 from tensorcircuit import Circuit
+3
+4 n_qubits = 2
+28
+5 n_params = 4
+6 init_guess = [0, np.pi, 0, 0]
+7 def get_circuit(params):
+8 c = Circuit(n_qubits)
+9 # the ansatz body
+10 c.ry(0, theta=params[0])
+11 c.ry(1, theta=params[1])
+12 c.cnot(0, 1)
+13 c.ry(0, theta=params[2])
+14 c.ry(1, theta=params[3])
+15 return c
+Code Snippet 7: Defining the 1-layer Ry ansatz using TensorCircuit.
+q0 : Ry(θ0) • Ry(θ2)
+q1 : Ry(θ1) Ry(θ3)
+Figure 6: Circuit diagram for a 2-qubit 1-layered Ry ansatz. More layers can be added by
+repeating the CNOT and Ry rotation unit.
+4.1.2 Noisy circuit simulation and optimization
+The remaining workflow is similar to the UCCSD case: (i) create an HEA instance, (ii) run the
+kernel, and (iii) print the summary:
+1 from tencirchem import HEA
+2 hea = HEA(h_qubit_op , get_circuit , init_guess , engine="tensornetwork -noise")
+3 hea.kernel()
+4 hea.print_summary()
+The default optimizer used is again L-BFGS-B from SciPy.
+The gradients are evaluated by the parameter-shift rule. 32,33 The parameter-shift rule
+uses two separate circuits to evaluate the gradient of one parameter. Its essence can be
+summarized using a single-qubit single-gate illustrative example. Suppose the circuit wave-
+function is |ψ⟩ = eθR |ϕ⟩ with R2 = −I. This leads to |ψ⟩ = (cos θ + sin θR) |ϕ⟩, and the
+energy expectation is then
+⟨E⟩ (θ) = cos2 θ ⟨ϕ|H|ϕ⟩ + sin θ cos θ ⟨ϕ|RH + HR|ϕ⟩ + sin2 θ ⟨ϕ|RHR|ϕ⟩ . (19)
+29
+Thus
+∂ ⟨E⟩
+∂θ = ⟨E⟩ (θ + π4 ) − ⟨E⟩ (θ − π4 ) . (20)
+The expression is slightly different from the literature where e
+θ
+2 R is usually assumed.
+By default, using the "tensornetwork-noise" engine (line 2) adds isotropic depolarizing
+noise 95 with error probability p = 0.02
+E(ρ) = (1 − p)ρ + p15
+15∑
+i=1
+PjρPj. (21)
+to each CNOT gate in the circuit. Here ρ is the density matrix, and the Pj are the two-qubit
+Pauli matrices (excluding the identity operator I). Hereafter we will also refer to p as the
+CNOT error probability. The value p = 0 .02 corresponds to approximately 98% CNOT
+average gate fidelity, defined as
+F =
+∫
+⟨ψ|E(|ψ⟩ ⟨ψ|)|ψ⟩ dψ = 1 − 45 p. (22)
+Single qubit gate noise is not included. The energy obtained in this case is -1.1203.
+Other noise models can be specified using the NoiseConf class from TensorCircuit,
+as illustrated below:
+1 from tensorcircuit.noisemodel import NoiseConf
+2 from tensorcircuit.channels import isotropicdepolarizingchannel
+3
+4 engine_conf = NoiseConf()
+5 # larger noise , corresponding to 80%
+6 channel = isotropicdepolarizingchannel(p=0.25, num_qubits=2)
+7 engine_conf.add_noise("cnot", channel)
+8
+9 hea = HEA(h_qubit_op , get_circuit , init_guess , \
+10 engine="tensornetwork -noise", engine_conf=engine_conf)
+11 hea.kernel()
+12 hea.print_summary()
+Code Snippet 8: A simple customized noise model with depolarizing error probability
+p = 0 .25, corresponding to average gate fidelity of 80%. The energy obtained is -0.9245,
+higher than the value of -1.1203 obtained from the p = 0.02 case.
+In addition to the depolarizing channel, TensorCircuit supports the amplitude damp-
+ing channel, phase damping channel, and thermal relaxation channel. 95
+30
+The "tensornetwork-noise" engine does not consider measurement uncertainty. Mea-
+surement uncertainty can be accounted for using the "tensornetwork-noise&shot" engine,
+as shown below:
+1 >>> # number of shots: 4096
+2 >>> for i in range(5):
+3 >>> print(hea.energy(engine="tensornetwork -noise&shot"))
+4 -0.9209869918508058
+5 -0.9306141224500795
+6 -0.9176478740443613
+7 -0.929275708950061
+8 -0.9241459510180587
+9 >>> # number of shots: 4096 * 128"
+10 >>> hea.shots = 4096 * 128
+11 >>> for i in range(5):
+12 >>> print(hea.energy(engine="tensornetwork -noise&shot"))
+13 -0.9246797253478469
+14 -0.9251027083245665
+15 -0.9243841547125008
+16 -0.9236478492038139
+17 -0.9248303187894168
+Code Snippet 9: Accounting for measurement uncerainty in noisy circuit simulation using
+the "tensornetwork-noise&shot" engine.
+By default, the number of measurement shots made for each term in the Hamiltonian is
+4096. Increasing the number of measurement shots decreases the energy uncertainty. Here
+the engine is switched temporarily at runtime, and specifying the engine while initializing
+the HEA class is also viable, by hea=HEA(*args, engine=engine) .
+If desired, a real quantum hardware engine can be specified by setting the engine to "qpu
+". The circuit is then executed on a 9-qubit super-conducting QPU hosted by the Tencent
+Quantum Lab quantum cloud service. A private token is required for successful execution.
+The platform is currently under closed beta and we are developing more features. The access
+token and configuration documents can be requested by sending an email to the authors.
+If noiseless results are desired for the HEA ansatz, this can be achieved by using the
+"tensornetwork" engine, i.e., hea.energy(engine="tensornetwork"). In this case, the en-
+ergy is in exact agreement with the FCI energy for the hydrogen molecule system.
+31
+4.1.3 Using pre-defined ans¨ atze
+At the end of the section, we show how to use pre-defined ansatze for noisy circuit simula-
+tion. TenCirChem has implemented the Ry ansatz. In the following code the HEA instance
+is rebuilt using the HEA.ry function, which constructs the qubit Hamiltonian and the Ry
+ansatz automatically. The result after running the kernel is exactly the same as what we’ve
+illustrated step by step above.
+1 hea = HEA.ry(uccsd.int1e , uccsd.int2e , uccsd.n_elec , uccsd.e_core , \
+2 n_layers=1, engine="tensornetwork -noise")
+3 hea.kernel()
+If desired, the UCC ansatz defined in the UCC class can be fed into the HEA class for noisy
+circuit simulation. The following code snippet shows how to simulate the UCCSD circuit
+of the H 2 molecule in the presence of noise. As described in Sec. 3.1.4, TenCirChem
+by default uses a multi-qubit controlled Ry gate for UCC circuit simulation, which has to
+be decomposed into elementary gates before actual execution on quantum computers. The
+gradient is turned off because the parameter-shift rule is not directly applicable to the circuit
+in which multiple gates share the same parameter. The COBYLA optimizer implemented
+in SciPy 81 is used for optimization. The energy obtained is -0.8358, which is significantly
+higher than the energy by the HEA ansatz, because there are 18 noisy CNOT gates in
+the circuit. We comment that simulating UCC circuits with the HEA class is non-standard.
+Usually, it is necessary to simplify the ansatz before execution under realistic hardware
+conditions. 11,12
+1 from functools import partial
+2 get_circuit = partial(uccsd.get_circuit , decompose_multicontrol=True)
+3 hea = HEA(uccsd.h_qubit_op , get_circuit , uccsd.init_guess , \
+4 engine="tensornetwork -noise")
+5 hea.grad = "free"
+6 hea.kernel()
+Code Snippet 10: Noisy simulation of UCC circuits.
+32
+4.2 Applications
+4.2.1 Effect of gate noise on VQE energy
+As a first application, we show how the CNOT depolarizing error affects the optimized VQE
+energy. Results are shown in Fig. 7. The Ry hardware-efficient ansatz and the H 2 molecule
+with parity transformation are used, as in Sec. 4.1.
+We additionally test how the number of ansatz layers affects the obtained energy. If a
+one-layer ansatz is adopted, the energy increases linearly with the error probability up to
+p = 0.8. This is a consequence of the fact that this ansatz, when compiled into a quantum
+circuit, contains only a single CNOT gate. Increasing the number of layers does not lead
+to more accurate energy estimation. Rather, the noise caused by more CNOT gates in
+the ansatz further degrades the results. TenCirChem requires approximately 1 second to
+produce each data point in Fig. 7, which involves iterating the VQE parameter optimization
+procedure until convergence.
+0.0 0.2 0.4 0.6 0.8
+CNOT error probability p
+−1.0
+−0.8
+−0.6
+−0.4
+E (Hartree)
+Noisy 1-layer
+Noisy 2-layer
+Noisy 3-layer
+FCI
+Figure 7: The VQE ground state energy of H 2 with parity transformation in the presence
+of depolarizing error, characterized by the error probability p. The Ry hardware-efficient
+ansatz is used, with between 1 and 3 layers.
+33
+4.2.2 Effect of measurement shots on VQE energy uncertainty
+Here we show how the number of measurement shots Nshots affects the standard deviation
+of the optimized VQE energy. Results are shown in Fig 8. The H 2 molecule of Sec. 4.2.1 is
+used with a single layer Ry ansatz. We test Nshots values from 2 8 to 2 13. For each value of
+Nshots investigated, the system energy E is evaluated 64 times and the standard deviation is
+calculated. Note that the circuit parameters are kept constant at the optimal value and the
+VQE iteration is not run.
+As expected, the standard deviation of E is proportional to
+√
+1
+Nshots . 1 Increasing the error
+probability p causes a larger standard deviation of the energy, although the effect is far less
+significant than that caused by adjusting Nshots. TenCirChem requires approximately 1
+second to produce a single data point in Fig. 8, each of which involves 64 separate energy
+evaluations.
+0.02 0.04 0.06√
+1
+Nshots
+0.005
+0.010
+0.015
+0.020
+0.025
+√
+Var(E) (Hartree)
+p = 0.10
+p = 0.20
+p = 0.40
+Figure 8: The VQE energy in the presence of depolarizing error, characterized by the error
+probability p. The Ry circuit with 1 layer is used as the ansatz.
+4.2.3 Running quantum hardware experiments
+In this section, we use QPUs to compute the VQE energy of the H2 molecule, and the results
+are summarized in Fig. 9. We use the same one-layered Ry ansatz described in previous
+sections. To reduce the computational cost, the parameter vector is reduced to [ θ, π,0, 0]
+34
+with only one variable θ. Noiseless simulation shows that using this ansatz is sufficient to
+reach the FCI energy. On QPU, 8192 shots are taken to determine the expectation value of
+each term in the Hamiltonian. The error is mitigated by standard readout error mitigation.
+For each set of circuit parameters, the energy is evaluated 8 times to produce the final energy
+expectation and its standard deviation. We first compute the potential energy curve using
+the classically optimized parameter and then run the full VQE optimization starting from
+θ = 0. In both cases, the QPU engine can correctly describe the dissociation curve of the
+H2 molecule. Moreover, we observe that the energy standard deviation increases as the
+bond length decreases. This is because at short bond lengths the Pauli strings have large
+coefficients due to strong interaction between the particles.
+0.5 1.0 1.5 2.0
+Bond length ( ˚A)
+−1.1
+−1.0
+−0.9
+−0.8
+−0.7
+−0.6
+E (Hartree)
+FCI
+Noiseless simulator
+QPU (energy only)
+QPU (full VQE)
+Figure 9: The VQE potential energy curve of H2 computed on a QPU backend. QPU energies
+obtained from the classically optimized parameter and full VQE optimization process are
+both shown.
+35
+5 The Quantum Dynamics Module
+5.1 Basic Usage
+5.1.1 Defining the Hamiltonian and basis set
+The first step in quantum dynamics simulations is specifying the Hamiltonian. In this section,
+we focus on the spin-boson model with 1 bosonic mode:
+H = ϵ2 σz + ∆σx + ωb†b + gσz(b† + b) (23)
+where σz = Z and σx = X are Pauli matrices, ϵ is the eigenfrequency and ∆ is the tunnelling
+rate. The spin-boson model is a classical model for a variety of chemical processes, such as
+electron transfer and photochemistry. 96 For ease of demonstration, we truncate the allowed
+boson states to two levels. More sophisticated examples can be found in Sec. 5.3 and in the
+online Jupyter Notebook .
+Defining the system Hamiltonian and basis sets is performed as follows:
+1 from tencirchem import Op, BasisHalfSpin , BasisSHO
+2
+3 epsilon = 0
+4 delta = 1
+5 omega = 1
+6 g = 0.5
+7
+8 ham_terms = [
+9 Op("sigma_z", "spin", epsilon),
+10 Op("sigma_x", "spin", delta),
+11 Op(r"bˆ\dagger b", "boson", omega),
+12 Op("sigma_z", "spin", g) * Op(r"bˆ\dagger+b", "boson")
+13 ]
+14 basis = [BasisHalfSpin("spin"), BasisSHO("boson", omega=omega , nbas=2)]
+Code Snippet 11: Defining the system Hamiltonian and basis set for 1-mode spin-boson
+model.
+The Op and the basis set classes are directly imported from the Renormalizer package.
+Each term in the Hamiltonian takes three arguments: (i) the operator symbol; (ii) the name
+of the associated degree of freedom; and (iii) the (optional) coefficient.
+In setting the basis sets (line 14), BasisSHO refers to the simple harmonic oscillator basis,
+36
+and nbas=2 restricts the phonon states to the lowest two levels.
+Conversion of the Hamiltonian and basis sets into qubits is then performed in Ten-
+CirChem using the qubit_encode_op and qubit_encode_basis commands, as illustrated
+below:
+1 from tencirchem.dynamic import qubit_encode_op , qubit_encode_basis
+2 boson_encoding = "gray"
+3 ham_terms_spin , constant = qubit_encode_op(ham_terms , basis , boson_encoding)
+4 basis_spin = qubit_encode_basis(basis , boson_encoding)
+Code Snippet 12: Transformation from physical basis set into qubit spin basis. Here we use
+the binary encoding with Gray code approach (see Sec. 2.2.2) to encode the bosonic states.
+After transformation, the Hamiltonian and basis sets can be inspected as follows:
+1 >>> ham_terms_spin
+2 [Op(’X’, [’spin’], 1.0),
+3 Op(’Z’, [(’boson’, ’TCCQUBIT -0’)], -0.5),
+4 Op(’Z X’, [’spin’, (’boson’, ’TCCQUBIT -0’)], 0.5)]
+5 >>> basis_spin
+6 [BasisHalfSpin(dof: spin, nbas: 2),
+7 BasisHalfSpin(dof: (’boson’, ’TCCQUBIT -0’), nbas: 2)]
+Code Snippet 13: Inspection of the transformed Hamiltonian.
+As expected, the Hamiltonian is now expressed in terms of Pauli strings and the basis sets
+are all transformed to the spin- 12 basis set. Here, the term in square brackets in each
+operator of the above Code Snippet represents the label(s) of the spin- 12 basis on which the
+Pauli operators are defined. As we restrict to two phonon levels, only one spin- 12 basis set
+with label (’boson’, ’TCCQUBIT-0’) is generated, i.e., the phonon mode is represented by
+a single qubit.
+5.1.2 Construct the ansastz
+The variational Hamiltonian ansatz (see Fig. 10) defined in Eq. 16 can now be constructed
+using the get_ansatz function, and the Jacobian then obtained by get_jacobian_func:
+1 import tensorcircuit as tc
+2 from tencirchem import set_backend
+3 from tencirchem.dynamic import get_ansatz , get_jacobian_func
+4
+5 # dynamics simulation requires auto-differentiation from JAX.
+6 set_backend("jax")
+7
+8 # the initial state
+9 init_circuit = tc.Circuit(len(basis_spin))
+37
+10 # number of layers
+11 n_layers = 3
+12 # get the ansatz. Note that the spin basis is fed in
+13 ansatz = get_ansatz(ham_terms_spin , basis_spin , n_layers , init_circuit)
+14
+15 # ansatz accepts parameters and outputs wavefunction
+16 import numpy as np
+17 print(ansatz(np.zeros(n_layers* len(ham_terms_spin))))
+18 # the function to evaluate the jacobian of the wavefunction
+19 jacobian_func = get_jacobian_func(ansatz)
+Code Snippet 14: Construction of the ansatz and the function to evaluate the Jacobian.
+q0 : e−iθ0X
+e−iθ2ZX
+e−iθ3X
+e−iθ5ZX
+e−iθ6X
+e−iθ8ZX
+q1 : e−iθ1Z e−iθ4Z e−iθ7Z
+Figure 10: Quantum circuit corresponding to the 3-layered variational Hamiltonian ansatz
+for the 1-mode spin-boson model using binary encoding with Gray code. q0 represents the
+spin and q1 represents the boson.
+Here, basis_spin defines the ordering of the qubits in the circuit. More specifically, the
+first and second elements in basis_spin refer to the spin and boson respectively, and thus
+in the quantum circuit the first qubit represents the spin and the second qubit represents
+the boson. Note that the backend needs to be set to JAX explicitly because the default
+NumPy backend does not support automatic differentiation.
+5.1.3 Time evolution
+With the ansatz function to calculate the wavefunction and its Jacobian, the equation of
+motion Eq. 5 can now be readily solved to determine ˙θk. The following code wraps the
+derivative function in SciPy format and solves the initial value problem. The wavefunction
+is evolved from time t = 0 to t = 10 using a time interval of 0 .1.
+1 from tencirchem import get_dense_operator
+2 from tencirchem.dynamic import get_deriv
+3 # the Hamiltonian in dense matrix format
+4 h = get_dense_operator(basis_spin , ham_terms_spin)
+5 # time derivative for circuit parameters in the scipy solve_ivp format
+6 def scipy_deriv(t, _theta):
+7 return get_deriv(ansatz , jacobian_func , _theta , h)
+38
+8 from scipy.integrate import solve_ivp
+9 # time step
+10 tau = 0.1
+11 # initial value
+12 theta = np.zeros(n_layers * len(ham_terms_spin))
+13 for n in range(100):
+14 # time evolution
+15 scipy_sol = solve_ivp(scipy_deriv , [n* tau, (n + 1) * tau], theta)
+16 # time evolved parameter
+17 theta = scipy_sol.y[:, -1]
+Code Snippet 15: Time evolution of the spin-boson system.
+Note that TenCirChem also provides a high-level interface for simulating dynamics,
+e.g.,
+1 from tencirchem import TimeEvolution
+2
+3 te = TimeEvolution(ham_terms , basis)
+4 for i in range(100):
+5 te.kernel(0.1)
+Code Snippet 16: Time evolution of the spin-boson system using the TimeEvolution class.
+Using this interface, the user need only specify the Hamiltonian and the basis sets,
+and encoding to qubits is carried out automatically using binary encoding with Gray code.
+Configuration of the encoding strategy, the circuit initial condition, and the number of layers
+in the ansatz are also supported.
+5.2 Implementation
+TenCirChem uses classical matrix manipulations to calculate theM matrix and V vector in
+the equation of motion (Eq. 4) instead of faithfully simulating the quantum circuit. The first
+step is to obtain the Jacobian ∂|Ψ⟩∂θk by forward-mode auto-differentiation via the JAX back-
+end. Forward-mode auto-differentiation is preferred over reverse-mode auto-differentiation
+in this case, because usually there are more amplitudes in |Ψ⟩ than parameters θk. The
+whole matrix M is then calculated by a single matrix-matrix multiplication according to
+Eq. 5. Similarly, the whole vector V is calculated by computing H |ψ⟩ via a single matrix-
+vector multiplication, and then another matrix-vector multiplication between the Jacobian
+and H |ψ⟩. This implementation minimizes the just-in-time compile time in JAX, because
+evaluating the Jacobian is the only bottleneck that needs to be compiled during the workflow.
+39
+The M matrix is usually not invertible due to linear dependencies in ∂|Ψ⟩∂θk . Its eigenvalues λi
+are modified with λi → λi + ϵe−λi/ϵ for regularization, where ϵ is a pre-defined small number,
+typically 1 × 10−5.
+5.3 Applications
+5.3.1 Spin relaxation of spin-boson model
+Here we show the simulated dynamics of the 1-mode spin-boson model defined in Eq. 23, with
+parameters ϵ = 0, ∆ = 1, ω = 1 and g = 0.5. Unlike the previous example which truncated
+the boson to the lowest two states, here we allow 8 bosonic states, and the corresponding
+circuit acts on 4 qubits. The simulated results are shown in Fig. 11, and are in good
+agreement with the solution with exact diagonalization.
+0.0 2.5 5.0 7.5 10.0
+t
+−1.0
+−0.5
+0.0
+0.5
+1.0
+⟨σz⟩
+Variational
+Exact
+Figure 11: Spin relaxation of the 1-mode spin-boson model simulated by variational quantum
+dynamics.
+5.3.2 Marcus inverted region of the charge transfer model
+In this section, we simulate the charge transfer or oxidation-reduction reaction between two
+molecules using the Marcus model 97
+H = −V (a†0a1 + a†1a0) + ∆Ga†1a1 + ω ∑
+i=0,1
+b†i bi + gω ∑
+i=0,1
+a†i ai(b†i + bi). (24)
+40
+Here a0 and a1 are annihilation operators for the charge on the first and the second molecule
+respectively. We assume transfer integral V = −0.1, dimensionless coupling constant g = 1,
+and vibration frequency ω = 0 .5. The Marcus charge transfer theory predicts that, by
+decreasing the reaction Gibbs free energy change ∆ G, the reaction rate k will first increase
+and then decrease, according to
+k = V 2
+¯h
+√
+πβ
+λ exp
+{
+− β(λ + ∆G)2
+4λ
+}
+(25)
+where λ = 2g2ω is the reorganization energy and β is the inverse temperature. Due to the
+quadratic term on the exponential, the maximum rate is reached when ∆ G = −λ = −1.
+In the simulation, we again truncate the number of boson states to 8, and thus the
+Hamiltonian is encoded into 7 qubits using the Gray code method. The charge is initially
+set to be located at the first molecule and the nuclear coordinates are relaxed according to
+the localized charge. 98 The system is then evolved to t = 8 using TenCirChem and we
+compute ⟨a†0a0⟩ (the charge occupation on the first molecule) as a function of time, with ∆ G
+ranging from 0 to -2. The full Jupyter Notebook is available online.
+Results are shown in Fig. 12(a). During an initial period ( t < 2), the reaction rate
+increases with t. For 2 < t <8, the reaction reaches a steady state and the reaction rate is
+approximately constant.
+In Fig. 12(b) we plot the reaction rate k from t = 2 to t = 8. Since the effect of temper-
+ature is not modeled in this simulation, β is fit to a value of 2.71 by matching the simulated
+k(∆G) data with the least square method. The simulated rate reaches the maximum at
+∆G = −1, in agreement with the theoretical prediction. We also include the charge transfer
+rate from full quantum nuclear tunneling enabled charge transfer theory, 99 which predicts a
+very similar parabolic curve without fitting β.
+41
+0 2 4 6 8
+t
+0.80
+0.85
+0.90
+0.95
+1.00
+Occupation ⟨a†0a0⟩
+(a)
+∆G = 0.0
+∆G = −0.5
+∆G = −1.0
+∆G = −1.5
+∆G = −2.0
+−3 −2 −1 0 1
+∆G
+−2.8
+−2.6
+−2.4
+−2.2
+−2.0
+−1.8
+−1.6
+Transfer rate log10 k
+(b)
+Marcus rate (ﬁtted)
+Full quantum rate
+Simulation rate
+Figure 12: (a) Charge occupation on the first molecule versus time at several values of ∆ G.
+(b) Charge transfer rate k as a function of ∆ G, for 2 < t <8. The dots are from a linear
+fit based on ⟨a†0a0⟩ (t) = −kt + c to the linear region in (a) and the dashed lines are the
+predictions of the Marcus theory (Eq. 25) and full quantum charge transfer theory.
+6 Summary and Outlook
+In this paper, we introduce TenCirChem, a Python-based open-source library for quan-
+tum computational chemistry, hosted on the GitHub repository https://github.com/
+tencent-quantum-lab/TenCirChem. TenCirChem aims to provide both black-box
+calculations of existing quantum algorithms and flexible interfaces for rapid prototyping of
+novel computational methods. TenCirChem features high-performance UCC calculations,
+noisy circuit simulation with both quantum gate error and measurement noise, and vari-
+ational quantum dynamics simulation. TenCirChem is designed to expose its internal
+data structure for inspection and modification, enabling in-depth customization. Although
+written in Python, TenCirChem reaches state-of-the-art performance via the powerful
+TensorCircuit backend and various chemistry-focused optimizations, such as UCC factor
+expansion. Its efficiency is demonstrated by the exact UCCSD simulation of H 16 in STO-3G
+basis (32 qubits), H 2 in cc-pVTZ basis (56 qubits), and H 2O in 6-31G(d) basis (34 qubits),
+requiring only moderate computational time and hardware.
+The development of TenCirChem is an ongoing process. In the future, additional
+QPU engine configuration options will be provided. Features such as support for higher
+42
+order excitations, the treatment of open-shell systems, algorithms for excited states and
+periodic systems, algorithms for fault-tolerant quantum computers, further performance op-
+timization, and more code examples reproducing published algorithms are also under active
+consideration.
+Acknowledgement
+The authors thank Zhaofeng Ye for designing theTenCirChem logo. Weitang Li would like
+to thank Sainan Huai and Tianqi Cai for their helpful discussions. This work is supported
+by the National Natural Science Foundation of China through grant numbers 22273005 and
+21788102. This work is also supported by Shenzhen Science and Technology Program.
+Supporting Information
+The Supporting Information is available free of charge online, including
+• A brief review of UCC ans¨ atze implemented inTenCirChem.
+• The conventions for orbital indices and qubit indices in TenCirChem.
+• The output of the print_summary command.
+• Advanced features of the UCC classes.
+• The algorithm for efficient simulation of UCC circuits.
+References
+(1) McClean, J. R.; Romero, J.; Babbush, R.; Aspuru-Guzik, A. The theory of variational
+hybrid quantum-classical algorithms. New J. Phys. 2016, 18, 023023.
+(2) Cao, Y.; Romero, J.; Olson, J. P.; Degroote, M.; Johnson, P. D.; Kieferov´ a, M.;
+Kivlichan, I. D.; Menke, T.; Peropadre, B.; Sawaya, N. P.; Sim, S.; Veis, L.; Aspuru-
+43
+Guzik, A. Quantum chemistry in the age of quantum computing. Chem. Rev. 2019,
+119, 10856–10915.
+(3) Bauer, B.; Bravyi, S.; Motta, M.; Chan, G. K.-L. Quantum algorithms for quantum
+chemistry and quantum materials science. Chem. Rev. 2020, 120, 12685–12717.
+(4) McArdle, S.; Endo, S.; Aspuru-Guzik, A.; Benjamin, S. C.; Yuan, X. Quantum compu-
+tational chemistry. Rev. Mod. Phys. 2020, 92, 015003.
+(5) Liu, J.; Fan, Y.; Li, Z.; Yang, J. Quantum algorithms for electronic structures: basis
+sets and boundary conditions. Chem. Soc. Rev. 2022,
+(6) Preskill, J. Quantum Computing in the NISQ era and beyond. Quantum 2018, 2, 79.
+(7) Arute, F.; Arya, K.; Babbush, R.; Bacon, D.; Bardin, J. C.; Barends, R.; Biswas, R.;
+Boixo, S.; Brandao, F. G. S. L.; Buell, D. A.; Burkett, B.; Chen, Y.; Chen, Z.;
+Chiaro, B.; Collins, R.; Courtney, W.; Dunsworth, A.; Farhi, E.; Foxen, B.; Fowler, A.;
+Gidney, C.; Giustina, M.; Graff, R.; Guerin, K.; Habegger, S.; Harrigan, M. P.; Hart-
+mann, M. J.; Ho, A.; Hoffmann, M.; Huang, T.; Humble, T. S.; Isakov, S. V.; Jeffrey, E.;
+Jiang, Z.; Kafri, D.; Kechedzhi, K.; Kelly, J.; Klimov, P. V.; Knysh, S.; Korotkov, A.;
+Kostritsa, F.; Landhuis, D.; Lindmark, M.; Lucero, E.; Lyakh, D.; Mandr` a, S.; Mc-
+Clean, J. R.; McEwen, M.; Megrant, A.; Mi, X.; Michielsen, K.; Mohseni, M.; Mu-
+tus, J.; Naaman, O.; Neeley, M.; Neill, C.; Niu, M. Y.; Ostby, E.; Petukhov, A.;
+Platt, J. C.; Quintana, C.; Rieffel, E. G.; Roushan, P.; Rubin, N. C.; Sank, D.;
+Satzinger, K. J.; Smelyanskiy, V.; Sung, K. J.; Trevithick, M. D.; Vainsencher, A.;
+Villalonga, B.; White, T.; Yao, Z. J.; Yeh, P.; Zalcman, A.; Neven, H.; Martinis, J. M.
+Quantum supremacy using a programmable superconducting processor. Nature 2019,
+574, 505–510.
+(8) Gong, M.; Wang, S.; Zha, C.; Chen, M.-C.; Huang, H.-L.; Wu, Y.; Zhu, Q.; Zhao, Y.;
+Li, S.; Guo, S.; Qian, H.; Ye, Y.; Chen, F.; Ying, C.; Yu, J.; Fan, D.; Wu, D.; Su, H.;
+44
+Deng, H.; Rong, H.; Zhang, K.; Cao, S.; Lin, J.; Xu, Y.; Sun, L.; Guo, C.; Li, N.;
+Liang, F.; Bastidas, V. M.; Nemoto, K.; Munro, W. J.; Huo, Y.-H.; Lu, C.-Y.; Peng, C.-
+Z.; Zhu, X.; Pan, J.-W. Quantum walks on a programmable two-dimensional 62-qubit
+superconducting processor. Science 2021, 372, 948–952.
+(9) Xu, S.; Sun, Z.-Z.; Wang, K.; Xiang, L.; Bao, Z.; Zhu, Z.; Shen, F.; Song, Z.; Zhang, P.;
+Ren, W.; Zhang, X.; Dong, H.; Deng, J.; Chen, J.; Wu, Y.; Tan, Z.; Gao, Y.; Jin, F.;
+Zhu, X.; Zhang, C.; Wang, N.; Zou, Y.; Zhong, J.; Zhang, A.; Li, W.; Jiang, W.;
+Yu, L.-W.; Yao, Y.; Wang, Z.; Li, H.; Guo, Q.; Song, C.; Wang, H.; Deng, D.-L. Digital
+Simulation of Projective Non-Abelian Anyons with 68 Superconducting Qubits. Chin.
+Phys. Lett. 2023, 40, 60301–060301.
+(10) Google Quantum AI, Suppressing quantum errors by scaling a surface code logical
+qubit. Nature 2023, 614, 676–681.
+(11) Peruzzo, A.; McClean, J.; Shadbolt, P.; Yung, M.-H.; Zhou, X.-Q.; Love, P. J.; Aspuru-
+Guzik, A.; O’brien, J. L. A variational eigenvalue solver on a photonic quantum pro-
+cessor. Nat. Commun. 2014, 5, 4213.
+(12) O’Malley, P. J. J.; Babbush, R.; Kivlichan, I. D.; Romero, J.; McClean, J. R.;
+Barends, R.; Kelly, J.; Roushan, P.; Tranter, A.; Ding, N.; Campbell, B.; Chen, Y.;
+Chen, Z.; Chiaro, B.; Dunsworth, A.; Fowler, A. G.; Jeffrey, E.; Lucero, E.; Megrant, A.;
+Mutus, J. Y.; Neeley, M.; Neill, C.; Quintana, C.; Sank, D.; Vainsencher, A.; Wenner, J.;
+White, T. C.; Coveney, P. V.; Love, P. J.; Neven, H.; Aspuru-Guzik, A.; Martinis, J. M.
+Scalable quantum simulation of molecular energies. Phys. Rev. X. 2016, 6, 031007.
+(13) Cerezo, M.; Arrasmith, A.; Babbush, R.; Benjamin, S. C.; Endo, S.; Fujii, K.; Mc-
+Clean, J. R.; Mitarai, K.; Yuan, X.; Cincio, L.; Coles, P. J. Variational quantum algo-
+rithms. Nat. Rev. Phys. 2021, 3, 625–644.
+(14) Tilly, J.; Chen, H.; Cao, S.; Picozzi, D.; Setia, K.; Li, Y.; Grant, E.; Wossnig, L.;
+45
+Rungger, I.; Booth, G. H.; Tennyson, J. The variational quantum eigensolver: a review
+of methods and best practices. Phys. Rep. 2022, 986, 1–128.
+(15) Aspuru-Guzik, A.; Dutoi, A. D.; Love, P. J.; Head-Gordon, M. Simulated quantum
+computation of molecular energies. Science 2005, 309, 1704–1707.
+(16) Lee, S.; Lee, J.; Zhai, H.; Tong, Y.; Dalzell, A. M.; Kumar, A.; Helms, P.; Gray, J.;
+Cui, Z.-H.; Liu, W.; Kastoryano, M.; Babbush, R.; Preskill, J.; Reichman, D. R.;
+Campbell, E. T.; Valeev, E. F.; Lin, L.; Chan, G. K.-L. Evaluating the evidence for
+exponential quantum advantage in ground-state quantum chemistry. Nature Commun.
+2023, 14, 1952.
+(17) Bartlett, R. J.; Kucharski, S. A.; Noga, J. Alternative coupled-cluster ans¨ atze II. The
+unitary coupled-cluster method. Chem. Phys. Lett. 1989, 155, 133–140.
+(18) Kutzelnigg, W. Error analysis and improvements of coupled-cluster theory. Theor.
+Chim. Acta 1991, 80, 349–386.
+(19) Anand, A.; Schleich, P.; Alperin-Lea, S.; Jensen, P. W.; Sim, S.; D ´ ıaz-Tinoco, M.;
+Kottmann, J. S.; Degroote, M.; Izmaylov, A. F.; Aspuru-Guzik, A. A quantum com-
+puting view on unitary coupled cluster theory. Chem. Soc. Rev. 2022,
+(20) Lee, J.; Huggins, W. J.; Head-Gordon, M.; Whaley, K. B. Generalized unitary coupled
+cluster wave functions for quantum computation. J. Chem. Theory and Comput. 2018,
+15, 311–324.
+(21) Grimsley, H. R.; Economou, S. E.; Barnes, E.; Mayhall, N. J. An adaptive variational
+algorithm for exact molecular simulations on a quantum computer. Nat. Commun.
+2019, 10, 1–9.
+(22) Elfving, V. E.; Millaruelo, M.; G´ amez, J. A.; Gogolin, C. Simulating quantum chemistry
+46
+in the seniority-zero space on qubit-based quantum computers.Phys. Rev. A 2021, 103,
+032605.
+(23) Kandala, A.; Mezzacapo, A.; Temme, K.; Takita, M.; Brink, M.; Chow, J. M.; Gam-
+betta, J. M. Hardware-efficient variational quantum eigensolver for small molecules and
+quantum magnets. Nature 2017, 549, 242–246.
+(24) Ollitrault, P. J.; Miessen, A.; Tavernelli, I. Molecular quantum dynamics: A quantum
+computing perspective. Acc. Chem. Res. 2021, 54, 4229–4238.
+(25) Li, Y.; Benjamin, S. C. Efficient variational quantum simulator incorporating active
+error minimization. Phys. Rev. X 2017, 7, 021050.
+(26) Yuan, X.; Endo, S.; Zhao, Q.; Li, Y.; Benjamin, S. C. Theory of variational quantum
+simulation. Quantum 2019, 3, 191.
+(27) Colless, J. I.; Ramasesh, V. V.; Dahlen, D.; Blok, M. S.; Kimchi-Schwartz, M. E.;
+McClean, J. R.; Carter, J.; de Jong, W. A.; Siddiqi, I. Computation of molecular
+spectra on a quantum processor with an error-resilient algorithm. Phys. Rev. X. 2018,
+8, 011021.
+(28) Kandala, A.; Temme, K.; C´ orcoles, A. D.; Mezzacapo, A.; Chow, J. M.; Gambetta, J. M.
+Error mitigation extends the computational reach of a noisy quantum processor.Nature
+2019, 567, 491–495.
+(29) Rice, J. E.; Gujarati, T. P.; Motta, M.; Takeshita, T. Y.; Lee, E.; Latone, J. A.;
+Garcia, J. M. Quantum computation of dominant products in lithium–sulfur batteries.
+J. Chem. Phys. 2021, 154, 134115.
+(30) Gao, Q.; Jones, G. O.; Motta, M.; Sugawara, M.; Watanabe, H. C.; Kobayashi, T.;
+Watanabe, E.; Ohnishi, Y.-y.; Nakamura, H.; Yamamoto, N. Applications of quantum
+47
+computing for investigations of electronic transitions in phenylsulfonyl-carbazole TADF
+emitters. npj Comput. Mater. 2021, 7, 70.
+(31) Kirsopp, J. J.; Di Paola, C.; Manrique, D. Z.; Krompiec, M.; Greene-Diniz, G.;
+Guba, W.; Meyder, A.; Wolf, D.; Strahm, M.; Mu˜ noz Ramo, D. Quantum compu-
+tational quantification of protein-ligand interactions. Int. J. Quantum Chem. 2022,
+122, e26975.
+(32) Mitarai, K.; Negoro, M.; Kitagawa, M.; Fujii, K. Quantum circuit learning. Phys. Rev.
+A 2018, 98, 032309.
+(33) Schuld, M.; Bergholm, V.; Gogolin, C.; Izaac, J.; Killoran, N. Evaluating analytic
+gradients on quantum hardware. Phys. Rev. A 2019, 99, 032331.
+(34) Zhang, S.-X.; Allcock, J.; Wan, Z.-Q.; Liu, S.; Sun, J.; Yu, H.; Yang, X.-H.; Qiu, J.;
+Ye, Z.; Chen, Y.-Q.; Lee, C.-K.; Zheng, Y.-C.; Jian, S.-K.; Yao, H.; Hsieh, C.-Y.;
+Zhang, S. Tensorcircuit: A quantum software framework for the NISQ era. Quantum
+2023, 7, 912.
+(35) Chen, J.; Cheng, H.-P.; Freericks, J. K. Quantum-inspired algorithm for the factorized
+form of unitary coupled cluster theory. J. Chem. Theory and Comput. 2021, 17, 841–
+847.
+(36) Kottmann, J. S.; Anand, A.; Aspuru-Guzik, A. A feasible approach for automatically
+differentiable unitary coupled-cluster on quantum computers. Chem. Sci. 2021, 12,
+3497–3508.
+(37) Rubin, N. C.; Gunst, K.; White, A.; Freitag, L.; Throssell, K.; Chan, G. K.-L.; Bab-
+bush, R.; Shiozaki, T. The Fermionic Quantum Emulator. Quantum 2021, 5, 568.
+(38) Lee, C.-K.; Hsieh, C.-Y.; Zhang, S.; Shi, L. Simulation of Condensed-Phase Spec-
+48
+troscopy with Near-Term Digital Quantum Computers. J. Chem. Theory and Comput.
+2021, 17, 7178–7186.
+(39) Lee, C.-K.; Zhong Lau, J. W.; Shi, L.; Kwek, L. C. Simulating energy transfer in
+molecular systems with digital quantum computers. J. Chem. Theory and Comput.
+2022, 18, 1347–1358.
+(40) Ollitrault, P. J.; Mazzola, G.; Tavernelli, I. Nonadiabatic molecular quantum dynamics
+with quantum computers. Phys. Rev. Lett. 2020, 125, 260511.
+(41) Lee, C.-K.; Hsieh, C.-Y.; Zhang, S.; Shi, L. Variational Quantum Simulation of Chem-
+ical Dynamics with Quantum Computers. J. Chem. Theory and Comput. 2022, 18,
+2105–2113.
+(42) Jordan, P.; Wigner, E. ¨Uber das Paulische ¨Aquivalenzverbot. Zeitschrift f¨ ur Physik
+1928, 47, 631–651.
+(43) Bravyi, S. B.; Kitaev, A. Y. Fermionic quantum computation. Ann. Phys. 2002, 298,
+210–226.
+(44) Seeley, J. T.; Richard, M. J.; Love, P. J. The Bravyi-Kitaev transformation for quantum
+computation of electronic structure. J. Chem. Phys. 2012, 137, 224109.
+(45) Sawaya, N. P.; Menke, T.; Kyaw, T. H.; Johri, S.; Aspuru-Guzik, A.; Guerreschi, G. G.
+Resource-efficient digital quantum simulation of d-level systems for photonic, vibra-
+tional, and spin- s Hamiltonians. npj Quantum Inf. 2020, 6, 1–13.
+(46) Nam, Y.; Chen, J.-S.; Pisenti, N. C.; Wright, K.; Delaney, C.; Maslov, D.; Brown, K. R.;
+Allen, S.; Amini, J. M.; Apisdorf, J.; Beck, K. M.; Blinov, A.; Chaplin, V.;
+Chmielewski, M.; Collins, C.; Debnath, S.; Hudek, K. M.; Ducore, A. M.; Keesan, M.;
+Kreikemeier, S. M.; Mizrahi, J.; Solomon, P.; Williams, M.; Wong-Campos, J. D.;
+49
+Moehring, D.; Monroe, C.; Kim, J. Ground-state energy estimation of the water
+molecule on a trapped-ion quantum computer. npj Quantum Inf. 2020, 6, 33.
+(47) Li, W.; Huang, Z.; Cao, C.; Huang, Y.; Shuai, Z.; Sun, X.; Sun, J.; Yuan, X.; Lv, D.
+Toward practical quantum embedding simulation of realistic chemical systems on near-
+term quantum computers. Chem. Sci. 2022, 13, 8953–8962.
+(48) Guo, S.; Sun, J.; Qian, H.; Gong, M.; Zhang, Y.; Chen, F.; Ye, Y.; Wu, Y.; Cao, S.;
+Liu, K.; Zha, C.; Ying, C.; Zhu, Q.; Huang, H.-L.; Zhao, Y.; Li, S.; Wang, S.; Yu, J.;
+Fan, D.; Wu, D.; Su, H.; Deng, H.; Rong, H.; Li, Y.; Zhang, K.; Chung, T.-H.; Liang, F.;
+Lin, J.; Xu, Y.; Sun, L.; Guo, C.; Li, N.; Huo, Y.-H.; Peng, C.-Z.; Lu, C.-Y.; Yuan, X.;
+Zhu, X.; Pan, J.-W. Experimental quantum computational chemistry with optimised
+unitary coupled cluster ansatz. arXiv preprint arXiv:2212.08006 2022,
+(49) Wecker, D.; Hastings, M. B.; Troyer, M. Progress towards practical quantum variational
+algorithms. Phys. Rev. A 2015, 92, 042303.
+(50) Miessen, A.; Ollitrault, P. J.; Tavernelli, I. Quantum algorithms for quantum dynamics:
+a performance study on the spin-boson model. Phys. Rev. Res. 2021, 3, 043212.
+(51) Yao, Y.-X.; Gomes, N.; Zhang, F.; Wang, C.-Z.; Ho, K.-M.; Iadecola, T.; Orth, P. P.
+Adaptive variational quantum dynamics simulations. PRX Quantum 2021, 2, 030307.
+(52) Broeckhove, J.; Lathouwers, L.; Kesteloot, E.; Van Leuven, P. On the equivalence of
+time-dependent variational principles. Chem. Phys. Lett. 1988, 149, 547–550.
+(53) Qiskit contributors, Qiskit: An Open-source Framework for Quantum Computing; IBM,
+2023.
+(54) Bergholm, V.; Izaac, J.; Schuld, M.; Gogolin, C.; Ahmed, S.; Ajith, V.; Sohaib
+Alam, M.; Alonso-Linaje, G.; AkashNarayanan, B.; Asadi, A.; Arrazola, J. M.;
+50
+Azad, U.; Banning, S.; Blank, C.; Bromley, T. R.; Cordier, B. A.; Ceroni, J.; Del-
+gado, A.; Di Matteo, O.; Dusko, A.; Garg, T.; Guala, D.; Hayes, A.; Hill, R.; Ijaz, A.;
+Isacsson, T.; Ittah, D.; Jahangiri, S.; Jain, P.; Jiang, E.; Khandelwal, A.; Kottmann, K.;
+Lang, R. A.; Lee, C.; Loke, T.; Lowe, A.; McKiernan, K.; Meyer, J. J.; Monta˜ nez-
+Barrera, J. A.; Moyard, R.; Niu, Z.; O’Riordan, L. J.; Oud, S.; Panigrahi, A.; Park, C.-
+Y.; Polatajko, D.; Quesada, N.; Roberts, C.; S´ a, N.; Schoch, I.; Shi, B.; Shu, S.; Sim, S.;
+Singh, A.; Strandberg, I.; Soni, J.; Sz´ ava, A.; Thabet, S.; Vargas-Hern´ andez, R. A.;
+Vincent, T.; Vitucci, N.; Weber, M.; Wierichs, D.; Wiersema, R.; Willmann, M.;
+Wong, V.; Zhang, S.; Killoran, N. Pennylane: Automatic differentiation of hybrid
+quantum-classical computations. arXiv preprint arXiv:1811.04968 2018,
+(55) MindQuantum Developer, MindQuantum, version 0.6.0. 2021; https://gitee.
+com/mindspore/mindquantum (Accessed May 29, 2023).
+(56) Kottmann, J. S.; Alperin-Lea, S.; Tamayo-Mendoza, T.; Cervera-Lierta, A.; Lavi-
+gne, C.; Yen, T.-C.; Verteletskyi, V.; Schleich, P.; Anand, A.; Degroote, M.; Chaney, S.;
+Kesibi, M.; Curnow, N. G.; Solo, B.; Tsilimigkounakis, G.; Zendejas-Morales, C.; Iz-
+maylov, A. F.; Aspuru-Guzik, A. Tequila: A platform for rapid development of quantum
+algorithms. Quantum Sci. Technol. 2021, 6, 024009.
+(57) Fan, Y.; Liu, J.; Zeng, X.; Xu, Z.; Shang, H.; Li, Z.; Yang, J. Q2 Chemistry: A quantum
+computation platform for quantum chemistry. arXiv preprint arXiv:2208.10978 2022,
+(58) Stair, N. H.; Evangelista, F. A. QForte: An efficient state-vector emulator and quantum
+algorithms library for molecular electronic structure. J. Chem. Theory and Comput.
+2022, 18, 1555–1568.
+(59) Cao, C.; Hu, J.; Zhang, W.; Xu, X.; Chen, D.; Yu, F.; Li, J.; Hu, H.-S.; Lv, D.;
+Yung, M.-H. Progress toward larger molecular simulation on a quantum computer:
+51
+Simulating a system with up to 28 qubits accelerated by point-group symmetry. Phys.
+Rev. A 2022, 105, 062452.
+(60) Schollw¨ ock, U. The density-matrix renormalization group in the age of matrix product
+states. Ann. Phys. 2011, 326, 96–192.
+(61) Shang, H.; Fan, Y.; Shen, L.; Guo, C.; Liu, J.; Duan, X.; Li, F.; Li, Z. Towards
+practical and massively parallel quantum computing emulation for quantum chemistry.
+npj Quantum Inf. 2023, 9, 33.
+(62) Ollitrault, P. J.; Baiardi, A.; Reiher, M.; Tavernelli, I. Hardware efficient quantum
+algorithms for vibrational structure calculations. Chem. Sci. 2020, 11, 6842–6855.
+(63) Bradbury, J.; Frostig, R.; Hawkins, P.; Johnson, M. J.; Leary, C.; Maclaurin, D.;
+Necula, G.; Paszke, A.; VanderPlas, J.; Wanderman-Milne, S.; Zhang, Q. JAX: com-
+posable transformations of Python+NumPy programs. 2018; http://github.com/
+google/jax (Accessed May 29, 2023).
+(64) Sun, Q.; Berkelbach, T. C.; Blunt, N. S.; Booth, G. H.; Guo, S.; Li, Z.; Liu, J.;
+McClain, J.; Sayfutyarova, E. R.; Sharma, S.; Wouters, S.; Chan, G. K.-L. PySCF: the
+Python-based simulations of chemistry framework. Wiley Interdiscip. Rev. Comput.
+Mol. Sci. 2018, 8, e1340.
+(65) Luo, X.-Z.; Liu, J.-G.; Zhang, P.; Wang, L. Yao. jl: Extensible, efficient framework for
+quantum algorithm design. Quantum 2020, 4, 341.
+(66) Ren, J.; Li, W.; Jiang, T.; Wang, Y.; Shuai, Z. The Renormalizer Pack-
+age. https://github.com/shuaigroup/Renormalizer. 2021; https://github.com/
+shuaigroup/Renormalizer (Accessed May 29, 2023).
+(67) McClean, J. R.; Rubin, N. C.; Sung, K. J.; Kivlichan, I. D.; Bonet-Monroig, X.; Cao, Y.;
+Dai, C.; Fried, E. S.; Gidney, C.; Gimby, B.; Gokhale, P.; H¨ aner, T.; Hardikar, T.;
+52
+Havl ´ ıˇ cek, V.; Higgott, O.; Huang, C.; Izaac, J.; Jiang, Z.; Liu, X.; McArdle, S.; Nee-
+ley, M.; O’Brien, T.; O’Gorman, B.; Ozfidan, I.; Radin, M. D.; Romero, J.; Sawaya, N.
+P. D.; Senjean, B.; Setia, K.; Sim, S.; Steiger, D. S.; Steudtner, M.; Sun, Q.; Sun, W.;
+Wang, D.; Zhang, F.; Babbush, R. OpenFermion: The electronic structure package for
+quantum computers. Quantum Sci. Technol. 2020, 5, 034014.
+(68) McArdle, S.; Mayorov, A.; Shan, X.; Benjamin, S.; Yuan, X. Digital quantum simulation
+of molecular vibrations. Chem. Sci. 2019, 10, 5725–5735.
+(69) Colbert, D. T.; Miller, W. H. A novel discrete variable representation for quantum
+mechanical reactive scattering via the S-matrix Kohn method. J. Chem. Phys. 1992,
+96, 1982–1991.
+(70) Li, W.; Ren, J.; Huai, S.; Cai, T.; Shuai, Z.; Zhang, S. Efficient quantum simulation of
+electron-phonon systems by variational basis state encoder. Phys. Rev. Res. 2023, 5,
+023046.
+(71) Evangelista, F. A.; Chan, G. K.-L.; Scuseria, G. E. Exact parameterization of fermionic
+wave functions via unitary coupled cluster theory. J. Chem. Phys. 2019, 151, 244112.
+(72) McClean, J. R.; Boixo, S.; Smelyanskiy, V. N.; Babbush, R.; Neven, H. Barren plateaus
+in quantum neural network training landscapes. Nat. Commun. 2018, 9, 4812.
+(73) Choy, B.; Wales, D. J. Molecular Energy Landscapes of Hardware-Efficient Ansatz in
+Quantum Computing. J. Chem. Theory and Comput. 2023, 19, 1197–1206.
+(74) Gao, Q.; Nakamura, H.; Gujarati, T. P.; Jones, G. O.; Rice, J. E.; Wood, S. P.; Pis-
+toia, M.; Garcia, J. M.; Yamamoto, N. Computational investigations of the lithium
+superoxide dimer rearrangement on noisy quantum devices. J. Phys. Chem. A 2021,
+125, 1827–1836.
+53
+(75) Mih´ alikov´ a, I.; Pivoluska, M.; Plesch, M.; Fri´ ak, M.; Nagaj, D.;ˇSob, M. The Cost of Im-
+proving the Precision of the Variational Quantum Eigensolver for Quantum Chemistry.
+Nanomaterials 2022, 12, 243.
+(76) Markov, I. L.; Shi, Y. Simulating quantum computation by contracting tensor networks.
+SIAM J. Comput. 2008, 38, 963–981.
+(77) Liu, Y. A.; Liu, X. L.; Li, F. N.; Fu, H.; Yang, Y.; Song, J.; Zhao, P.; Wang, Z.;
+Peng, D.; Chen, H.; Guo, C.; Huang, H.; Wu, W.; Chen, D. Closing the ”quantum
+supremacy” gap: achieving real-time simulation of a random quantum circuit using a
+new Sunway supercomputer. In Proceedings of the International Conference for High
+Performance Computing, Networking, Storage and Analysis . 2021; pp 1–12.
+(78) Pan, F.; Zhang, P. Simulation of quantum circuits using the big-batch tensor network
+method. Phys. Rev. Lett. 2022, 128, 030501.
+(79) Noh, K.; Jiang, L.; Fefferman, B. Efficient classical simulation of noisy random quantum
+circuits in one dimension. Quantum 2020, 4, 318.
+(80) Cheng, S.; Cao, C.; Zhang, C.; Liu, Y.; Hou, S.-Y.; Xu, P.; Zeng, B. Simulating noisy
+quantum circuits with matrix product density operators. Phys. Rev. Res. 2021, 3,
+023005.
+(81) Virtanen, P.; Gommers, R.; Oliphant, T. E.; Haberland, M.; Reddy, T.; Courna-
+peau, D.; Burovski, E.; Peterson, P.; Weckesser, W.; Bright, J.; van der Walt, S. J.;
+Brett, M.; Wilson, J.; Millman, K. J.; Mayorov, N.; Nelson, A. R. J.; Jones, E.; Kern, R.;
+Larson, E.; Carey, C. J.; Polat, ˙I.; Feng, Y.; Moore, E. W.; VanderPlas, J.; Lax-
+alde, D.; Perktold, J.; Cimrman, R.; Henriksen, I.; Quintero, E. A.; Harris, C. R.;
+Archibald, A. M.; Ribeiro, A. H.; Pedregosa, F.; van Mulbregt, P.; SciPy 1.0 Contrib-
+utors, SciPy 1.0: Fundamental Algorithms for Scientific Computing in Python. Nat.
+Methods 2020, 17, 261–272.
+54
+(82) Yordanov, Y. S.; Arvidsson-Shukur, D. R.; Barnes, C. H. Efficient quantum circuits for
+quantum computational chemistry. Phys. Rev. A 2020, 102, 062612.
+(83) Magoulas, I.; Evangelista, F. A. CNOT-Efficient Circuits for Arbitrary Rank Many-
+Body Fermionic and Qubit Excitations. J. Chem. Theory Comput. 2023, 19, 822–836.
+(84) Dunning Jr, T. H. Gaussian basis sets for use in correlated molecular calculations. I.
+The atoms boron through neon and hydrogen. J. Chem. Phys. 1989, 90, 1007–1023.
+(85) Li, Z.; Liu, X.; Wang, H.; Ashhab, S.; Cui, J.; Chen, H.; Peng, X.; Du, J. Quantum
+simulation of resonant transitions for solving the eigenproblem of an effective water
+Hamiltonian. Phys. Rev. Lett. 2019, 122, 090504.
+(86) Ryabinkin, I. G.; Lang, R. A.; Genin, S. N.; Izmaylov, A. F. Iterative qubit coupled
+cluster approach with efficient screening of generators. J. Chem. Theory and Comput.
+2020, 16, 1055–1063.
+(87) Hehre, W. J.; Ditchfield, R.; Pople, J. A. Self-consistent molecular orbital methods.
+XII. Further extensions of Gaussian-type basis sets for use in molecular orbital studies
+of organic molecules. J. Chem. Phys. 1972, 56, 2257–2261.
+(88) Hariharan, P. C.; Pople, J. A. The influence of polarization functions on molecular
+orbital hydrogenation energies. Theor. Chim. Acta 1973, 28, 213–222.
+(89) Hoy, A.; Bunker, P. R. A precise solution of the rotation bending Schr¨ odinger equation
+for a triatomic molecule with application to the water molecule. J. Mol. Spectrosc.
+1979, 74, 1–8.
+(90) Sokolov, I. O.; Barkoutsos, P. K.; Ollitrault, P. J.; Greenberg, D.; Rice, J.; Pis-
+toia, M.; Tavernelli, I. Quantum orbital-optimized unitary coupled cluster methods
+in the strongly correlated regime: Can quantum algorithms outperform their classical
+equivalents? J. Chem. Phys. 2020, 152, 124107.
+55
+(91) Knizia, G.; Chan, G. K.-L. Density matrix embedding: A simple alternative to dynam-
+ical mean-field theory. Phys. Rev. Lett. 2012, 109, 186404.
+(92) Knizia, G.; Chan, G. K.-L. Density matrix embedding: A strong-coupling quantum
+embedding theory. J. Chem. Theory Comput. 2013, 9, 1428–1432.
+(93) Motta, M.; Ceperley, D. M.; Chan, G. K.-L.; Gomez, J. A.; Gull, E.; Guo, S.; Jim´ e
+nez-Hoyos, C. A.; Lan, T. N.; Li, J.; Ma, F.; Millis, A. J.; Prokof’ev, N. V.; Ray, U.;
+Scuseria, G. E.; Sorella, S.; Stoudenmire, E. M.; Sun, Q.; Tupitsyn, I. S.; White, S. R.;
+Zgid, D.; Zhang, S. Towards the solution of the many-electron problem in real materials:
+Equation of state of the hydrogen chain with state-of-the-art many-body methods.Phys.
+Rev. X 2017, 7, 031059.
+(94) Mineh, L.; Montanaro, A. Solving the Hubbard model using density matrix embedding
+theory and the variational quantum eigensolver. Phys. Rev. B 2022, 105, 125117.
+(95) Nielsen, M. A.; Chuang, I. Quantum computation and quantum information; Cambridge
+University Press, 2010.
+(96) Leggett, A. J.; Chakravarty, S.; Dorsey, A. T.; Fisher, M. P.; Garg, A.; Zwerger, W.
+Dynamics of the dissipative two-state system. Rev. Mod. Phys. 1987, 59, 1.
+(97) Shuai, Z.; Li, W.; Ren, J.; Jiang, Y.; Geng, H. Applying Marcus theory to describe the
+carrier transports in organic semiconductors: Limitations and beyond. J. Chem. Phys.
+2020, 153, 080902.
+(98) Kloss, B.; Reichman, D. R.; Tempelaar, R. Multiset matrix product state calculations
+reveal mobile Franck-Condon excitations under strong Holstein-type coupling. Phys.
+Rev. Lett. 2019, 123, 126601.
+(99) Nan, G.; Yang, X.; Wang, L.; Shuai, Z.; Zhao, Y. Nuclear tunneling effects of charge
+transport in rubrene, tetracene, and pentacene. Phys. Rev. B 2009, 79, 115203.
+56
+Supplementary Materials for TenCirChem: An
+Efficient Quantum Computational Chemistry
+Package for the NISQ Era
+Weitang Li,∗,† Jonathan Allcock,‡ Lixue Cheng,† Shi-Xin Zhang,† Yu-Qin Chen,†
+Jonathan P. Mailoa,† Zhigang Shuai,¶,§ and Shengyu Zhang∗,‡
+†Tencent Quantum Lab, Shenzhen, 518057, China
+‡Tencent Quantum Lab, Hongkong, 999077, China
+¶Department of Chemistry, Tsinghua University, Beijing, 100084, China
+§School of Science and Engineering, The Chinese University of Hong Kong, Shenzhen,
+518172, China
+E-mail: liw31@gmail.com; shengyzhang@tencent.com
+S1 Review of UCC ansatz
+We start with the general expression
+|Ψ(θ)⟩UCC :=
+1∏
+k=Nex
+eθkGk |ϕ⟩ . (1)
+S1
+arXiv:2303.10825v2  [quant-ph]  15 Jun 2023
+S1.1 UCCSD
+For the most common case of single and double excitations, the Gk has the form
+Gk =
+
+
+
+a†paq − h.c.,
+a†pa†qaras − h.c.
+(2)
+In this case, the disentangled UCC ansatz – which is known as the UCCSD ansatz – has
+the form
+|Ψ(θ)⟩UCCSD :=
+∏
+pqrs
+eθpqrs (a†pa†qaras−h.c.) ∏
+pq
+eθpq(a†paq−h.c.) |ϕ⟩ . (3)
+If the number of spin-orbitals is N , then the number of gates in the corresponding circuit
+scales as O(N 4). 1
+S1.2 k-UpCCGSD
+This is a variant of the UCC ansatz which satisfies both high accuracy and low (O(N 2)) gate
+count requirements. 2 Here “G”, “p” and “ k” stand for generalized excitation, paired double
+excitations, and repeating the ansatz k times, respectively. By pairing double excitations,
+the number of double excitations is reduced from O(N 4) to O(N 2). More specifically, the
+ansatz has the form
+|Ψ(θ)⟩k-UpCCGSD :=
+k∏
+l=1
+∏
+pq
+eθ(2)kpq (a†pαa†pβ aqβ aqα−h.c.) ∏
+rs
+eθ(1)krs (a†ras−h.c.) |ϕ⟩ . (4)
+Here a†pαa†pβaqβ aqα means spin-paired double excitations from the q-th spatial orbital to the
+p-th spatial orbital.
+S2
+S1.3 pUCCD
+This is an efficient ansatz requiring only O(N ) circuit depth and half as many qubits as other
+UCC ans¨ atze.3–6 pUCCD allows only paired double excitations, which enables one qubit to
+represent one spatial orbital instead of one spin orbital, and removes the need to perform
+the fermion-qubit mapping. Thus, the O(N 2) excitations can be executed on a quantum
+computer efficiently using a compact circuit with a linear depth of Givens-SW AP gates. 4
+The Hamiltonian also takes a simpler form in this case, with only N 2 terms:
+H =
+∑
+p
+hpc†pcp + ∑
+pq
+vpqc†pcq + ∑
+p̸=q
+wpqc†pcpc†qcq + Enuc , (5)
+where hp = 2hpp, vpq = (pq|pq) and ωpq = 2(pp|qq) − (pq|pq). Here p and q are indices for
+spatial orbitals. A drawback of this ansatz is its compromised accuracy, which is comparable
+to the doubly occupied configuration interaction (DOCI) method 7 in quantum chemistry.
+S2 Conventions
+In this section, we introduce the conventions used in TenCirChem, particularly for static
+electronic structure problems.
+Excitations. TenCirChem uses tuples to denote unitary fermionic excitations:
+• (p, q): denotes single excitations a†paq − a†qap
+• (p, q, r, s): denotes double excitations a†pa†qaras − a†sa†raqap
+Higher-order excitations are handled similarly. e.g., a k-th order excitation is represented
+by a tuple of length 2 k, with the first half corresponding to the excitation operators, and
+the second half corresponding to the annihilation operators, and Hermitian conjugation is
+implied, e.g., ( p, q, r, s, t, u) denotes a†pa†qa†rasatau − h.c.
+S3
+Spin-orbital indexing. Spin orbitals are indexed from 0 and ordered according to the
+following rules:
+• Beta (down) spins first, followed by alpha (up) spins
+• Low energy orbitals first, followed by high energy orbitals
+Qubit indexing. Qubits are numbered from 0, with multi-qubit registers numbered with the
+zeroth qubit on the left, e.g. |0⟩q0 |1⟩q2 |0⟩q2. Unless necessary, we will omit subscripts and use
+a more compact notation e.g.|010⟩ to denote multi-qubit states. In quantum circuit diagrams
+qubit numbers increase downwards, starting from qubit zero at the top. Throughout, we
+assume the Jordan-Wigner encoding where the occupancy of spin-orbital i (using the above
+ordering) corresponds to the state of qubit N − 1 − i where N is the total number of qubits.
+In other words, the qubit ordering is reversed spin-orbitals ordering.
+The conventions described above are summarized in Fig. S1, taking a 4-electron and 4-
+orbital system as an example. Following the qubit indexing convention above, the restricted
+Hartree–Fock (HF) state for such a system is represented as 00110011 in bitstring form. The
+highest orbital with α-spin comes first in the bitstring, and the lowest orbital with β-spin
+comes last. In quantum chemistry language, 00110011 refers to a configuration with orbitals
+5, 4, 1, and 0 occupied, while in quantum computing language, 00110011 refers to a direct
+product state with the 2nd, 3rd, 6th, and 7th qubits in state |1⟩ and the rest in state |0⟩.
+Upon application of the excitation operator (6, 2, 0, 4), the HF state transforms to 01100110.
+S3 print_summary output
+In this section, we provide an overview of the output by the print_summary command (see
+Code Snippet 1). This summary is divided into a number of blocks:
+1 ################################ Ansatz ###############################
+2 #qubits #params #excitations initial condition
+3 4 2 3 RHF
+4 ############################### Circuit ###############################
+5 #qubits #gates #CNOT #multicontrol depth #FLOP
+S4
+Figure S1: An example of the conventions used for excitations, orbital indexing, and qubit
+indexing. The HF state of a 4 electron, 4 orbital system is represented as bitstring 00110011.
+The state is excited to 01100110 via the excitation operator (6, 2, 0, 4).
+6 4 15 10 1 9 2160
+7 ############################### Energy ################################
+8 energy (Hartree) error (mH) correlation energy (%)
+9 HF -1.116706 20.568268 -0.000
+10 MP2 -1.129868 7.406850 63.989
+11 CCSD -1.137275 -0.000165 100.001
+12 UCCSD -1.137274 0.000000 100.000
+13 FCI -1.137274 0.000000 100.000
+14 ############################# Excitations #############################
+15 excitation configuration parameter initial guess
+16 0 (3, 2) 1001 1.082849e-16 0.000000
+17 1 (1, 0) 0110 1.082849e-16 0.000000
+18 2 (1, 3, 2, 0) 1010 -1.129866e-01 -0.072608
+19 ######################### Optimization Result #########################
+20 e: -1.1372744055294384
+21 fun: array(-1.13727441)
+22 hess_inv: <2x2 LbfgsInvHessProduct with dtype=float64 >
+23 init_guess: [0.0, -0.07260814651571333]
+24 jac: array([-9.60813938e-19, -1.11022302e-16])
+25 message: ’CONVERGENCE: NORM_OF_PROJECTED_GRADIENT_ <=_PGTOL ’
+26 nfev: 6
+27 nit: 4
+28 njev: 6
+29 opt_time: 0.02926015853881836
+30 staging_time: 4.5299530029296875e-06
+31 status: 0
+32 success: True
+33 x: array([ 1.08284918e-16, -1.12986561e-01])
+Code Snippet S1: UCCSD ansatz applied to the H 2 molecule: output of the print_summary
+command.
+Ansatz (lines 1-3). From here we see that the UCCSD ansatz is mapped (via the Jordan-
+Wigner transformation) to a variational quantum circuit on 4 qubits, with two tunable
+S5
+parameters. The circuit corresponds to 3 excitation operators, which are detailed in the
+Excitations block of the summary. The fact that there are only two tunable parameters
+for three excitation operators is due to symmetry.
+Circuit (lines 4-6). This block details the number of quantum gates that the Jordan-
+Wigner transformed ansatz is compiled to. By default, TenCirChem uses the efficient cir-
+cuit decomposition of 8 for circuit compilation. The circuit depth is estimated using QisKit
+and, as the running time of computing this estimate can be non-negligible for large cir-
+cuits, the include_circuit=True option is by default False. The floating point operation
+count (FLOP) required to calculate the circuit statevector via tensor network contraction is
+estimated by the opt einsum package9 using the default greedy contraction path-finding
+algorithm.
+Note that, in the absence of noise, computing the output of the circuit does not require
+the circuit to first be decomposed explicitly into gates. Instead, TenCirChem makes use of
+UCC factor expansion(See Sec. S5.1) to perform this computation more efficiently. However,
+if one wishes to simulate noisy quantum circuits – corresponding, for instance, to realistic
+quantum hardware – then an explicit gate decomposition is necessary.
+Energy (lines 7-13). This block includes the final UCCSD energy corresponding to the
+optimized parameter values, as well as other benchmark energies computed by PySCF
+at Hartree–Fock, second-order Møller–Plesset perturbation theory (MP2), CCSD, and FCI
+levels of theory.
+Excitations (lines 14-18). This block gives further details on the ansatz, which takes the
+form
+eθ2G2eθ1G1eθ0G0 |HF⟩ ,
+S6
+where θ0 is set to be equal to θ1 due to symmetry, and where
+G0 = a†2a3 − a†3a2,
+G1 = a†0a1 − a†1a0,
+G2 = a†0a†2a3a1 − a†1a†3a2a0.
+The convention for spin-orbital indices is described in Sec. S2. The minimum energy found
+corresponds to parameter values of θ0 = θ1 = 1.05 × 10−16 and θ2 = −1.13 × 10−1. These
+final values were obtained from initial guesses of 0, 0, −0.0726 respectively, which correspond
+to the MP2 excitation amplitudes. The configuration bitstrings obtained after applying
+each excitation to |HF⟩ are also given here. Note that the Hermitian conjugation part
+of the excitation operator annihilates |HF⟩ and thus has no effect. For comparison, the
+configuration bitstring corresponding to the Hartree–Fock state is 0101.
+Optimization Result (lines 19-33). This block gives details of the procedure used to
+optimize the ansatz parameters, including the number of iterations required (nit: 3 ) as well
+as the final energy obtained for the UCCSD ansatz ( e: -1.137... ).
+S4 The UCC classes: advanced features
+S4.1 User-specified UCC ans¨ atze
+UCCSD, k-UpCCGSD, and pUCCD are all special cases of UCC, where the excitations are
+restricted to take a certain form. No setup is required for these three kinds of ansatz from
+users: once imported they can be used directly, e.g., via PUCCD(h2).kernel().
+More general UCC ans¨ atze can be defined by directly specifying the corresponding ex-
+citations. This could be helpful, for instance, in investigating new quantum computational
+chemistry algorithms. In Sec. S4.4, we will illustrate the power of this approach by imple-
+S7
+menting the ADAPT-VQE 10 using TenCirChem, and we first provide a simpler example
+and implement the PUCCD ansatz from scratch (see Code Snippet 2).
+1 import numpy as np
+2 from tencirchem import UCC, PUCCD
+3 from tencirchem.molecule import h4
+4
+5 puccd = PUCCD(h4)
+6 ucc = UCC(h4)
+7
+8 # only paired excitations are included
+9 ucc.ex_ops = [
+10 (6, 2, 0, 4),
+11 (7, 3, 0, 4),
+12 (6, 2, 1, 5),
+13 (7, 3, 1, 5),
+14 ]
+15
+16 e1 = puccd.kernel()
+17 # evaluate UCC energy using the PUCCD circuit parameter
+18 e2 = ucc.energy(puccd.params)
+19 # e1 is the same as e2
+20 np.testing.assert_allclose(e1, e2, atol=1e-6)
+Code Snippet S2: Implementing the PUCCD ansatz from scratch by using a custom UCC
+ansatz.
+Here, a UCC class with only paired excitations is used to reproduce the PUCCD class for
+the H 4 molecule. The configuration is done by directly setting the ex_ops attribute with
+tuples for the excitations. param_ids and initial_guess can be set similarly and the full
+Python script is available online. Although internally the UCC class uses a quantum circuit
+of 8 qubits for simulation and the PUCCD class uses only 4 qubits because of the restriction
+of paired excitations, the corresponding energies with the same set of circuit parameters are
+exactly the same. If custom UCC with paired excitation is desired, the UCC class can be
+initialized with the hcb=True argument. For the index of the spin-orbitals and excitation
+operators, Fig. S1 is a helpful reference.
+S4.2 Active Space Approximation
+As NISQ quantum hardware is limited in the number of qubits available, the active space
+approximation is frequently adopted to reduce the problem size. 5,11–15 In many cases, inner
+shell molecular orbitals can be treated at the mean-field level without significant loss of accu-
+S8
+racy, and this approximation is thus also sometimes dubbed the frozen core approximation.
+Denote the set of frozen occupied spin-orbitals by Ω. The frozen core provides an effective
+repulsion potential V eff to the remaining electrons
+V effpq = ∑
+m∈Ω
+([mm|pq] − [mp|qm]) . (6)
+The frozen core also bears the mean-field core energy which effectively modifies the core
+energy Enuc
+Ecore = Enuc +
+∑
+m∈Ω
+hmm + 12 ∑m,n∈Ω ([mm|nn] − [mn|nm]) . (7)
+Thus, the ab initio Hamiltonian is rewritten as
+H =
+∑
+pq
+(hpq + V effpq )a†paq + ∑
+pqrs
+hpqrsa†pa†qaras + Ecore, (8)
+where p, q, r and s refer to spin-orbitals not included in Ω.
+Making use of an active space approximation in TenCirChem is straightforward :
+1 from tencirchem import UCCSD
+2 from tencirchem.molecule import h8
+3 # (2e, 2o) active space
+4 uccsd = UCCSD(h8, active_space=(2, 2))
+5 uccsd.kernel()
+6 uccsd.print_summary()
+Code Snippet S3: UCCSD calculation of H 8 with (2e, 2o) active space approximation. Note
+that the electron integrals in the active space are readily accessible via uccsd.int1e and
+uccsd.int2e.
+S4.3 Engines, Backends, and GPU
+Different engines can be specified by the engine argument, e.g.,
+1 from tencirchem import UCCSD
+2 from tencirchem.molecule import h4
+3 uccsd = UCCSD(h4, engine="civector -large")
+4 print(uccsd.kernel())
+5 print(uccsd.energy(engine="tensornetwork"))
+and, similar to TensorCircuit, computational backends can be switched at runtime as
+S9
+follows:
+1 from tencirchem import set_dtype , set_backend
+2 set_dtype("complex64")
+3 set_backend("cupy")
+There are two ways to use GPUs with TenCirChem. The first is to set the backend to
+"cupy". The second is to set the backend to "jax" and make sure that CUDA support for
+JAX is properly configured.
+S4.4 Code Example: Implementing ADAPT-VQE
+In this section, we illustrate how to use TenCirChem to build novel algorithms by imple-
+menting ADAPT-VQE. 10 The complete Jupyter Notebook tutorial is available online. The
+first step of the algorithm is to construct an excitation operator pool, as shown below. Here
+we use all of the single and double excitations as described in Eq. 2. Operators with the same
+parameter are grouped together in the operator pool so as to prevent spin contamination.
+1 from tencirchem import UCC
+2 from tencirchem.molecule import h4
+3
+4 ucc = UCC(h4)
+5
+6 # get all single and double excitations
+7 # param_id maps operators to parameters (some operators share the same parameter)
+8 ex1_ops , ex1_param_ids , _ = ucc.get_ex1_ops()
+9 ex2_ops , ex2_param_ids , _ = ucc.get_ex2_ops()
+10
+11 # group the operators to form an operator pool
+12 from collections import defaultdict
+13 op_pool = defaultdict(list)
+14 for ex1_op , ex1_id in zip(ex1_ops , ex1_param_ids):
+15 op_pool[(1, ex1_id)].append(ex1_op)
+16 for ex2_op , ex2_id in zip(ex2_ops , ex2_param_ids):
+17 op_pool[(2, ex2_id)].append(ex2_op)
+18 op_pool = list(op_pool.values())
+Code Snippet S4: Construction of an operator pool for the ADAPT-VQE algorithm.
+Once the operator pool is formed, ADAPT-VQE constructs the ansatz by selecting op-
+erators in the pool iteratively, with new operators chosen to maximize the absolute energy
+gradient. That is, suppose the ansatz wavefunction at a certain point in the process is |ψ⟩
+S10
+and the operator selected is Gk, then the new ansatz, defined to be
+|Ψ⟩ = eθkGk |ψ⟩ , (9)
+has a corresponding energy gradient
+∂ ⟨E⟩
+∂θk
+= 2 ⟨Ψ|HG k|Ψ⟩ . (10)
+ADAPT-VQE selects Gk from the operator pool such that
+∂ ⟨E⟩
+∂θk
+⏐⏐⏐⏐
+θk=0
+= 2 ⟨ψ|HG k|ψ⟩ (11)
+is maximized. If multiple operators sharing the same parameter are added at the same
+time, then their gradients are added together. The iterative process by which the ansatz
+is constructed terminates when the norm of the gradient vector falls below a predefined
+threshold ϵ.
+In the following, |ψ⟩ is obtained by ucc.civector() as a vector in the configuration
+interaction space. ucc.hamiltonian(psi) applies H onto |ψ⟩ and ucc.apply_excitation
+applies Gk onto |ψ⟩.
+1 import numpy as np
+2
+3 ucc.ex_ops = []
+4 ucc.params = []
+5 ucc.param_ids = []
+6
+7 MAX_ITER = 100
+8 EPSILON = 1e-3
+9 for i in range(MAX_ITER):
+10 # calculate gradient of each operator from the pool
+11 op_gradient_list = []
+12 psi = ucc.civector()
+13 bra = ucc.hamiltonian(psi)
+14 for op_list in op_pool:
+15 grad = bra.conj() @ ucc.apply_excitation(psi, op_list[0])
+16 if len(op_list) == 2:
+17 grad += bra.conj() @ ucc.apply_excitation(psi, op_list[1])
+18 op_gradient_list.append(2* grad)
+19 if np.linalg.norm(op_gradient_list) < EPSILON:
+20 break
+21 chosen_op_list = op_pool[np.argmax(np.abs(op_gradient_list))]
+S11
+22 # update ansatz and run calculation
+23 ucc.ex_ops.extend(chosen_op_list)
+24 ucc.params = list(ucc.params) + [0]
+25 ucc.param_ids.extend([len(ucc.params) - 1]* len(chosen_op_list))
+26 ucc.init_guess = ucc.params
+27 ucc.kernel()
+Code Snippet S5: Implementation of the ADAPT-VQE iteration. The complete tutorial is
+available online as a Jupyter Notebook .
+S5 Efficient UCC circuit simulation algorithms
+We now introduce the algorithm behind efficient UCC circuit simulation that makes Ten-
+CirChem capable of accurately simulating deep UCC circuits with more than 32 qubits.
+We will first introduce the UCC factor expansion technique, which forms the backbone of the
+"civector" engine. We then move on to an efficient algorithm to evaluate energy gradients
+with respect to circuit parameters and other implementation details.
+S5.1 UCC factor expansion
+In this section, we introduce the UCC factor expansion technique used to achieve efficient
+simulations of UCC circuits in TenCirChem. Benchmark results are included in the main
+text. We emphasize that the techniques described in this section are specific for efficiently
+simulating an ideal circuit classically, but are not applicable (without large overhead costs)
+for real hardware or noisy circuit simulations.
+S5.1.1 Traditional approach.
+Recall that the general UCC ansatz can be written as |Ψ⟩ = ∏1k=Nex eθkGk |ϕ⟩. To compile
+each UCC factor eθkGk into a quantum circuit, the traditional approach is to transform Gk
+(in the remainder of this section we will refer to Gk simply as G) into commutable Pauli
+strings, and then simulate each Pauli string via Hamiltonian evolution. Another approach is
+the YAB method described in the main text, which relies on multi-qubit controlled rotations.
+S12
+The "tensornetwork" engine follows the YAB method to simulate the UCC circuit.
+S5.1.2 Factor expansion approach.
+In the more efficient "civector" engine, we use a different approach to classically simulate
+the UCC circuit, which involves expanding each UCC factor into a polynomial form, imple-
+mentable only on a classical computer. While this formalism has been published multiple
+times in a variety of contexts, 16–18 to the best of our knowledge, TenCirChem is the first
+package to use such a technique for large-scale UCC circuit simulation.
+In the most general case, G can be written as G = g − g†, with
+gi1...imj1...jm = a†i1 · · ·a†imaj1 · · ·ajm, (12)
+where m is the order of the excitation. g†g is a projector onto the space that is not annihilated
+by g: 18
+(
+gi1...imj1...jm)† gi1...imj1...jm = (1 − ni1) · · ·(1 − nim)nj1 · · ·njm, (13)
+where n is the occupation number operator. It follows that g†gg † = g†. Using this equation,
+together with gg = g†g† = 0, it is straightforward to show that G has the property
+G3 = g† − g = −G. (14)
+The corresponding UCC factor can then be expanded as
+eθG = 1 + θG + θ2G2
+2 − θ3G3! − θ4G24! + θ5G5! + · · ·
+= 1 + G2 + ∑
+j=0
+(−1)jθ2j+1
+(2j + 1)! G −
+∑
+j=0
+(−1)jθ2j
+(2j)! G2
+= 1 + sinθG + (1 − cos θ)G2
+(15)
+In the special case of G2 = −I, the famous formula eθG = cos θ + sin θG is recovered.
+S13
+Supposing |ψ⟩ is any intermediate state during circuit execution, multiplying |ψ⟩ with Eq. 15
+yields
+eθG |ψ⟩ = |ψ⟩ + sin θG |ψ⟩ + (1 − cos θ)G2 |ψ⟩ . (16)
+Thus, to evaluate eθG |ψ⟩ it is sufficient to evaluate G |ψ⟩ and G2 |ψ⟩.
+The advantages of using Eq. 16 compared to the traditional approaches are twofold.
+First, Eq. 15 significantly saves on the number of matrix multiplications required to simulate
+eθG |ψ⟩. Second, as both G and G2 conserve particle numbers in the up and down spin sectors,
+TenCirChem is able to store |ψ⟩ in the particle-number conserving space instead of the
+whole Fock space, just as in the standard FCI calculation. Thus, in the following, we use
+configuration interaction space to denote this particle-number conserving sector of the Fock
+space. In traditional UCC circuit simulations, where each quantum gate is realized by matrix
+multiplication, storing wavefunction in configuration interaction space is not possible because
+a single H gate or X gate is able to destroy the particle number conserving property.
+Representing the quantum state in configuration interaction space greatly reduces the
+memory requirements for UCC simulation. A closed-shell molecule with N spatial orbitals
+and M electrons has Fock space of dimension 2 2N . In contrast, the number of possible
+configurations in each spin sector is C NM/2, and the dimension of its configuration interaction
+space is only
+(
+C NM/2
+)2
+. In addition, because G and |ϕ⟩ are both real, |ψ⟩ can be represented
+by real numbers rather than complex numbers in classical computers. In Table S1, we list
+the memory requirements to represent wavefunctions in configuration interaction spaces and
+Fock spaces for several values of N and M . While the required memory using configuration
+interaction space still scales exponentially, in practice the memory saving compared with
+using Fock space is significant, particularly so when |N − M | is large.
+S14
+Table S1: Memory requirements to represent system wavefunctions in configuration inter-
+action space and Fock space. In configuration interaction space each amplitude is stored
+by a 64-bit floating-point number and in Fock space each amplitude is stored by a 128-bit
+complex number.
+N M Configuration Interaction Space Fock Space Memory SavingDimension Memory Dimension Memory
+2 2 4 32 B 16 256 B 8x
+4 2 16 128 B 256 4.1 kB 32x4 36 288 B 14x
+8 4 784 6.3 kB 65,536 1.0 MB 167x8 4,900 39.2 kB 27x
+16 8 3,312,400 26.5 MB 4,294,967,296 68.7 GB 2,593x16 165,636,900 1.3 GB 52x
+48 4 1,272,384 10.1 MB 7 .9 × 1028 1.3 QB 1 .2 × 1023x
+S5.2 Gradients with respect to circuit parameters
+TenCirChem uses an efficient algorithm to calculate the energy gradient with respect
+to the parameters. 19 The algorithm is applicable to the "civector" engine, and for the "
+tensornetwork" engine traditional auto-differentiation is implemented. For j = 1, 2, . . . , Nex
+define
+|ψj⟩ =
+1∏
+k=j
+eθkGk |ϕ⟩ , (17)
+and |ψ′j⟩
+⟨ψ′j| = ⟨ψ| ˆH
+j∏
+k=Nex
+eθkGk, (18)
+where H is the system Hamiltonian. The energy expectation value can be written as
+⟨E⟩ = ⟨ψ′j+1|ψj⟩, (19)
+and the energy gradient as
+∂⟨E⟩
+∂θj
+= 2⟨ψ′j+1|Gj|ψj⟩. (20)
+Once |ψ⟩ is obtained, ⟨ψ(1)Nex+1| = ⟨ψ| ˆH and |ψNex⟩ = |ψ⟩ are calculated. The remaining
+S15
+⟨ψ′j| and |ψj−1⟩ are then obtained by the recurrence relation
+⟨ψ′j| = ⟨ψ′j+1|eθj Gj ,
+|ψj−1⟩ = e−θj Gj |ψj⟩,
+(21)
+and, for each ⟨ψ′j| and |ψj−1⟩ pair, ∂⟨E⟩∂θj is evaluated by Eq. 20. This algorithm thus computes
+all gradients in one iteration over j, requiring only a constant amount of memory.
+S5.3 Other techniques for efficient simulation
+With UCC factor expansion and efficient gradient computation, TenCirChem is able to
+simulate much larger molecular systems compared to traditional simulation packages. Ten-
+CirChem also use several other techniques to accelerate calculations. In particular (i) initial
+values of θk are set to the corresponding t2 amplitudes obtained by MP2, to enable faster
+convergence; (ii) double excitation operators with t2 very close to zero are screened out by
+default because the excitation is likely prohibited by molecular point-group symmetry;20 (iii)
+double excitation operators are also sorted by t2 amplitudes to avoid ambiguous ans¨ atze.21
+References
+(1) O’Gorman, B.; Huggins, W. J.; Rieffel, E. G.; Whaley, K. B. Generalized swap networks
+for near-term quantum computing. arXiv preprint arXiv:1905.051182019,
+(2) Lee, J.; Huggins, W. J.; Head-Gordon, M.; Whaley, K. B. Generalized unitary coupled
+cluster wave functions for quantum computation. J. Chem. Theory and Comput.2018,
+15, 311–324.
+(3) Henderson, T. M.; Bulik, I. W.; Scuseria, G. E. Pair extended coupled cluster doubles.
+J. Chem. Phys.2015, 142, 214116.
+S16
+(4) Elfving, V. E.; Millaruelo, M.; G´ amez, J. A.; Gogolin, C. Simulating quantum chemistry
+in the seniority-zero space on qubit-based quantum computers.Phys. Rev. A2021, 103,
+032605.
+(5) O’Brien, T. E.; Anselmetti, G.; Gkritsis, F.; Elfving, V. E.; Polla, S.; Huggins, W. J.;
+Oumarou, O.; Kechedzhi, K.; Abanin, D.; Acharya, R.; Aleiner, I.; Allen, R.; Ander-
+sen, T. I.; Anderson, K.; Ansmann, M.; Arute, F.; Arya, K.; Asfaw, A.; Atalaya, J.; Ba-
+con, D.; Bardin, J. C.; Bengtsson, A.; Boixo, S.; Bortoli, G.; Bourassa, A.; Bovaird, J.;
+Brill, L.; Broughton, M.; Buckley, B.; Buell, D. A.; Burger, T.; Burkett, B.; Bush-
+nell, N.; Campero, J.; Chen, Y.; Chen, Z.; Chiaro, B.; Chik, D.; Cogan, J.; Collins, R.;
+Conner, P.; Courtney, W.; Crook, A. L.; Curtin, B.; Debroy, D. M.; Demura, S.; Droz-
+dov, I.; Dunsworth, A.; Erickson, C.; Faoro, L.; Farhi, E.; Fatemi, R.; Ferreira, V. S.;
+Flores Burgos, L.; Forati, E.; Fowler, A. G.; Foxen, B.; Giang, W.; Gidney, C.;
+Gilboa, D.; Giustina, M.; Gosula, R.; Grajales Dau, A.; Gross, J. A.; Habegger, S.;
+Hamilton, M. C.; Hansen, M.; Harrigan, M. P.; Harrington, S. D.; Heu, P.; Hilton, J.;
+Hoffmann, M. R.; Hong, S.; Huang, T.; Huff, A.; Ioffe, L. B.; Isakov, S. V.; Iveland, J.;
+Jeffrey, E.; Jiang, Z.; Jones, C.; Juhas, P.; Kafri, D.; Kelly, J.; Khattar, T.; Khezri, M.;
+Kieferov´ a, M.; Kim, S.; Klimov, P. V.; Klots, A. R.; Kothari, R.; Korotkov, A. N.;
+Kostritsa, F.; Kreikebaum, J. M.; Landhuis, D.; Laptev, P.; Lau, K.; Laws, L.; Lee, J.;
+Lee, K.; Lester, B. J.; Lill, A. T.; Liu, W.; Livingston, W. P.; Locharla, A.; Lucero, E.;
+Malone, F. D.; Mandra, S.; Martin, O.; Martin, S.; McClean, J. R.; McCourt, T.;
+McEwen, M.; Megrant, A.; Mi, X.; Mieszala, A.; Miao, K. C.; Mohseni, M.; Mon-
+tazeri, S.; Morvan, A.; Movassagh, R.; Mruczkiewicz, W.; Naaman, O.; Neeley, M.;
+Neill, C.; Nersisyan, A.; Neven, H.; Newman, M.; Ng, J. H.; Nguyen, A.; Nguyen, M.;
+Niu, M. Y.; Omonije, S.; Opremcak, A.; Petukhov, A.; Potter, R.; Pryadko, L. P.;
+Quintana, C.; Rocque, C.; Roushan, P.; Saei, N.; Sank, D.; Sankaragomathi, K.;
+Satzinger, K. J.; Schurkus, H. F.; Schuster, C.; Shearn, M. J.; Shorter, A.; Shutty, N.;
+Shvarts, V.; Skruzny, J.; Smelyanskiy, V.; Smith, W. C.; Somma, R.; Sterling, G.;
+S17
+Strain, D.; Szalay, M.; Thor, D.; Torres, A.; Vidal, G.; Villalonga, B.; Vollgraff Heid-
+weiller, C.; White, T.; Woo, B. W. K.; Xing, C.; Yao, Z. J.; Yeh, P.; Yoo, J.; Young, G.;
+Zalcman, A.; Zhang, Y.; Zhu, N.; Zobrist, N.; Gogolin, C.; Babbush, R.; Rubin, N. C.
+Purification-based quantum error mitigation of pair-correlated electron simulations.
+arXiv preprint arXiv:2210.107992022,
+(6) Zhao, L.; Goings, J.; Wright, K.; Nguyen, J.; Kim, J.; Johri, S.; Shin, K.; Kyoung, W.;
+Fuks, J. I.; Rhee, J.-K. K.; Rhee, Y. M. Orbital-optimized pair-correlated electron sim-
+ulations on trapped-ion quantum computers. arXiv preprint arXiv:2212.024822022,
+(7) Weinhold, F.; Wilson Jr, E. B. Reduced density matrices of atoms and molecules. I.
+The 2 matrix of double-occupancy, configuration-interaction wavefunctions for singlet
+states. J. Chem. Phys.1967, 46, 2752–2758.
+(8) Yordanov, Y. S.; Arvidsson-Shukur, D. R.; Barnes, C. H. Efficient quantum circuits for
+quantum computational chemistry. Phys. Rev. A2020, 102, 062612.
+(9) Daniel, G.; Gray, J. opt einsum-A Python package for optimizing contraction order for
+einsum-like expressions. J. Open Source Softw.2018, 3, 753.
+(10) Grimsley, H. R.; Economou, S. E.; Barnes, E.; Mayhall, N. J. An adaptive variational
+algorithm for exact molecular simulations on a quantum computer. Nat. Commun.
+2019, 10, 1–9.
+(11) Reiher, M.; Wiebe, N.; Svore, K. M.; Wecker, D.; Troyer, M. Elucidating reaction
+mechanisms on quantum computers. Proc. Natl. Acad. Sci. U.S.A.2017, 114, 7555–
+7560.
+(12) Takeshita, T.; Rubin, N. C.; Jiang, Z.; Lee, E.; Babbush, R.; McClean, J. R. Increas-
+ing the representation accuracy of quantum simulations of chemistry without extra
+quantum resources. Phys. Rev. X.2020, 10, 011004.
+S18
+(13) Mizukami, W.; Mitarai, K.; Nakagawa, Y. O.; Yamamoto, T.; Yan, T.; Ohnishi, Y.-y.
+Orbital optimized unitary coupled cluster theory for quantum computer. Phys. Rev.
+Res. 2020, 2, 033421.
+(14) McCaskey, A. J.; Parks, Z. P.; Jakowski, J.; Moore, S. V.; Morris, T. D.; Humble, T. S.;
+Pooser, R. C. Quantum chemistry as a benchmark for near-term quantum computers.
+npj Quantum Inf.2019, 5, 99.
+(15) Huang, K.; Cai, X.; Li, H.; Ge, Z.-Y.; Hou, R.; Li, H.; Liu, T.; Shi, Y.; Chen, C.;
+Zheng, D.; Xu, K.; Liu, Z.-B.; Li, Z.; Fan, H.; Fang, W.-H. Variational quantum
+computation of molecular linear response properties on a superconducting quantum
+processor. J. Phys. Chem. Lett.2022, 13, 9114–9121.
+(16) Chen, J.; Cheng, H.-P.; Freericks, J. K. Quantum-inspired algorithm for the factorized
+form of unitary coupled cluster theory. J. Chem. Theory and Comput.2021, 17, 841–
+847.
+(17) Kottmann, J. S.; Anand, A.; Aspuru-Guzik, A. A feasible approach for automatically
+differentiable unitary coupled-cluster on quantum computers. Chem. Sci. 2021, 12,
+3497–3508.
+(18) Rubin, N. C.; Gunst, K.; White, A.; Freitag, L.; Throssell, K.; Chan, G. K.-L.; Bab-
+bush, R.; Shiozaki, T. The Fermionic quantum emulator. Quantum 2021, 5, 568.
+(19) Luo, X.-Z.; Liu, J.-G.; Zhang, P.; Wang, L. Yao. jl: Extensible, efficient framework for
+quantum algorithm design. Quantum 2020, 4, 341.
+(20) Cao, C.; Hu, J.; Zhang, W.; Xu, X.; Chen, D.; Yu, F.; Li, J.; Hu, H.-S.; Lv, D.;
+Yung, M.-H. Progress toward larger molecular simulation on a quantum computer:
+Simulating a system with up to 28 qubits accelerated by point-group symmetry. Phys.
+Rev. A2022, 105, 062452.
+S19
+(21) Grimsley, H. R.; Claudino, D.; Economou, S. E.; Barnes, E.; Mayhall, N. J. Is the
+Trotterized UCCSD ansatz chemically well-defined? J. Chem. Theory and Comput.
+2019, 16, 1–6.
+S20

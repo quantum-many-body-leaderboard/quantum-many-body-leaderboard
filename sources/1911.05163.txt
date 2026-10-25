@@ -1,0 +1,680 @@
+            A Multireference Quantum Krylov Algorithm for Strongly
+                                                  Correlated Electrons
+
+                            Nicholas H. Stair, Renke Huang, and Francesco A. Evangelista∗
+
+        DepartmentofChemistryandCherryEmersonCenterforScientiﬁcComputation,EmoryUniversity,
+                                                           Atlanta,GA,30322
+
+                                             E-mail:francesco.evangelista@emory.edu
+
+
+                                                                  Abstract
+            WeintroduceamultireferenceselectedquantumKrylov(MRSQK)algorithmsuitableforquantumsimulation
+        of many-body problems.  MRSQK is a low-cost alternative to the quantum phase estimation algorithm that
+        generates a target state as a linear combination of non-orthogonal Krylov basis states. This basis is constructed
+        from a set of reference states via real-time evolution avoiding the numerical optimization of parameters. An
+        eﬃcientalgorithmfortheevaluationoftheoﬀ-diagonalmatrixelementsoftheoverlapandHamiltonianmatrices
+        isdiscussedandaselectionprocedureisintroducedtoidentifyabasisoforthogonalreferencesthatameliorates
+        thelineardependencyproblem. PreliminarybenchmarksonlinearH6,H8,andBeH2 indicatethatMRSQKcan
+        predict the energy of these systems accurately using very compact Krylov bases.
+
+1.INTRODUCTION                                                             (UCC)15–20   ansatz truncated to single and double excita-
+Solving the electronic many-body Schrödinger equation for                  tions.12,13,21–24       More recently, several groups have studied
+systemsthatdisplaystrongcorrelationeﬀectsisamajorchal-                     alternative ansätze, including mean-ﬁeld references,25 UCC
+lenge in physics and quantum chemistry.1 Quantum compu-                    with general singles and doubles,26 hardware-eﬃcient pa-
+tation2 oﬀers a potential solution to the exponential scaling              rameterizations,27 resource-eﬃcient qubit-space UCC with
+oftheHilbertspacedimensionwithparticlenumber. Recent                       2-qubitentanglers,28,29  generalUCCwithadaptivelyselected
+advances in quantum hardware design, including an early                    unitaries,30 and linear-depth fermionic Gaussian reference
+demonstrations of quantum speedup,3 have motivated the                     states.31 Eﬀorts have also been made to extend the VQE al-
+development of new quantum algorithms that can be exe-                     gorithm to compute excited states32–37   and approaches that
+cutedonsocallednoisyintermediate-scalequantum(NISQ)                        combinevariationalmethodsandphaseestimationhavebeen
+devices, with less than 100 qubits and shallow circuits.4                  suggested.38,39
+  Algorithmsbasedonquantumphaseestimation(QPE),5,6                            Notwithstanding the signiﬁcant impact of VQE schemes,
+were the ﬁrst proposed to compute the ground state ener-                   they have two principal drawbacks. Firstly, VQE methods
+gies of fermionic many-body systems.7 QPE was later ap-                    require measurement of the energy or energy gradients with
+plied to molecular problems8 and has been implemented on                   respect to the variational parameters at each step of the op-
+a photonic quantum device.9 Though QPE is well suited for                  timization process. This results in a signiﬁcant number of
+Hamiltonian simulation on large-scale fault-tolerant quan-                 queriesoftheoptimizationalgorithmtothequantumdevice.
+tum hardware, its application in the NISQ era presents sev-                Secondly, the optimization process in VQE is challenging
+eral challenges due to the poor gate ﬁdelity and the limited               due to the high nonlinearity of the energy (considered as a
+coherence time of devices available in the foreseeable fu-                 functionoftheparameters),intrinsicaccuracylimitationbe-
+ture.10,11   As a result, hybrid quantum-classical algorithms              causeoftheinexactnessoftheansatz40 andstochasticerrors
+requiringshallowercircuits,suchasthevariationalquantum                     thatresultfromﬁnitemeasurementandlossofﬁdelity.41 As
+eigensolver (VQE)12,13   and the quantum approximate opti-                 aconsequence,theoptimizationprocessmaybeslowtocon-
+mization algorithm (QAOA)14 have recently received more                    vergence and may reach a local minimum instead of the true
+attention.                                                                 ground state.
+  In the VQE scheme, a complex trial wave function is                         A third and emerging family of methods, which we refer
+optimized via an algorithm that subdivides the work be-                    to as Quantum Subspace Diagonalization (QSD) schemes,
+tween a classical and quantum computer. In this approach,                  diagonalize the Hamiltonian in a general nonorthogonal ba-
+the variational minimization of the energy is driven by a                  sis of many-body states.32,33,42–45       There is a long tradition
+classical algorithm, while measurement of the energy and                   of using such a strategy in quantum chemistry.46–51   A nat-
+gradients is deployed to a quantum computer.  VQE was                      ural way to extend it to quantum computing is to construct
+originally implemented with the unitary coupled cluster                    a basis of states and measure the corresponding matrix ele-
+
+
+                                                                       1
+ments with a quantum device, and later solve the associated                  states. These references are selected via a scheme that ex-
+generalized eigenvalue problem via a classical computer.32                   ploits quantum measurement to identify the most important
+Compared to a fully classical approach, QSD schemes can                      determinants in a simple trial wave function. The resulting
+take advantage of the ability of quantum computers to store                  multireference selected quantum Krylov (MRSQK) method
+arbitrarily complex states.                                                  is combined with basis generation via real-time propaga-
+  QSD methods mainly diﬀer in the way the many-body                          tion43,45  andbenchmarkedonaseriesofproblemsinvolving
+basis is generated. The quantum subspace expansion (QSE)                     strongly correlated electronic states.
+methodofMcCleanandco-workers,diagonalizestheHamil-                           2.THEORY
+tonian in the basis of states  ˆa†i ˆaj|Ψ⟩, where Ψ is a reference           Consider a molecular Hamiltonian mapped to a set of qubits
+statepreparedviaVQE.32,33,42    MatrixelementoftheHamil-                     ( ˆH)                                Õ
+tonian in this basis are obtained by measuring the three- and                                          ˆH = E0 +      h𝓁 ˆV𝓁              (1)
+four-body density matrices.  QSD approaches are particu-                                                           𝓁
+larly advantageous if the many-body basis is constructed as                  where E0 is a scalar term, the index𝓁 runs over all the terms
+a Krylov space43 and does not require extensive parame-                      in the Hamiltonian,  h𝓁 is a matrix element, and  ˆV𝓁 is the
+ter optimization. This is the case for the Quantum Lanczos                   corresponding operator. Each operator  ˆV𝓁 in   ˆH is a tensor
+(QLanczos)algorithm,43wheretheHamiltonianisdiagonal-                         product of  N𝓁 Pauli operators (a Pauli string) that act on
+ized in a basis of correlated states generated by imaginary-
+time propagation.52 This basis is obtained from a single ref-                distinctqubits,  ˆV𝓁 = ¸N𝓁k=1σ(jk)lk ,where lk∈{X,Y, Z}labels
+erence state by sampling at regular intervals in imaginary                   thePaulioperatortypeand jk indicatesthequbituponwhich
+time. In QLanczos, the imaginary-time propagator is writ-                    said operator is applied.
+ten as a unitary operation times a normalization factor, and                    To deﬁne the MRSQK method, we start by introducing a
+a linear approximation is employed to construct this repre-                  d-dimensional basis of reference states,M0 ={ΦI}, where
+sentation. For each step in the imaginary-time propagation,                  each ΦI is a linear combination of Slater determinants (φµ)
+a linear system of equations must be solved for classically,                 with well deﬁned spin and spatial symmetry
+requiring the measurement of the entries of a matrix and a                                                    Õ
+vector. Recently,Hugginsetal.44 haveproposedanonorthg-                                                |ΦI⟩ =       dµI|φµ⟩              (2)
+onal VQE (NOVQE) scheme whereby the basis is formed                                                             µ
+of  k-fold products of unitary paired coupled cluster with                   From this basis, we generate a nonorthogonal Krylov62,63
+generalized single and double excitations (k-UpCCGSD).53                     spaceKs(M0,  ˆUn)  = {ψα,α  =  1,..., N} by repeated ap-
+Parrish and McMahon,45 investigated a quantum ﬁlter di-                      plication of a family of unitary operators   ˆUn (with  n  =
+agonalization (QFD) formalism in which a basis of states                     0, 1,..., s) to all the elements ofM0.  A generic element
+is generated via an approximate real-time dynamics. QFD                      ψ(n)
+is inspired by classical ﬁlter diagonalization54–57   as well as               I ∈K is given by the action of  ˆUn on ΦI.
+quantum time grid methods,58–61   and may be viewed as a                                           |ψα⟩≡|ψ(n)
+variant of the QLanczos algorithm in which imaginary time                                                     I ⟩ =  ˆUn|ΦI⟩            (3)
+propagation is replaced with a real-time version.                            For convenience, we use the collective index α  =(I, n) to
+  Despite their potential, QSD methods suﬀer from a se-                      identify an element of the basis. The resulting Krylov space
+ries of practical issues, which are the focus of this work.                  has dimension N = d(s + 1).
+The generalized eigenvalue problem associated with a given                      InMRSQK,ageneralstateiswrittenasalinearcombina-
+nonorthogonal basis requires the eﬃcient evaluation of oﬀ-                   tion of the basis{ψα} as
+diagonal matrix elements of the form⟨ψα| ˆO|ψβ⟩.  While
+in the case of QSE and QLanczos these matrix elements                                            Õ                 dÕ   sÕ
+areeasilycomputed,32,43  inthegeneralcasetheirevaluation                                  |Ψ⟩ =       cα|ψα⟩ =             c(n)I    ˆUn|ΦI⟩      (4)
+is more involved.44,45   Another important issue is the lin-                                       α              I=1  n=0
+ear dependency of the basis generated in a QSD procedure.                    Variational minimization of the energy of the state Ψ leads
+This issue introduces numerical instabilities in the general-                to the following generalized eigenvalue problem
+izedeigenvalueproblemandispotentiallyampliﬁedbypoor
+gate ﬁdelity and measurement errors.  Bases generated by                                                  Hc = ScE,                 (5)
+variational optimization44 and real45 or imaginary43 time
+propagation are all plagued (to various degrees) by linear                   wheretheelementsoftheoverlapmatrix(S)andHamiltonian
+dependencies.                                                                (H) are given by
+  InthisworkweformulateaQSDalgorithmthataddresses
+the two problems described above. Firstly, we describe an                                  Sαβ =⟨ψα|ψβ⟩ =⟨ΦI| ˆU†m ˆUn|ΦJ⟩,         (6)
+eﬃcient approach to evaluate the oﬀ-diagonal matrix ele-                                  Hαβ =⟨ψα| ˆH|ψβ⟩ =⟨ΦI| ˆU†m  ˆH ˆUn|ΦJ⟩      (7)
+mentrequiredinQSDmethods,withacostthatisessentially
+identical to that of computing a diagonal matrix element.                    The formalism outlined above lends itself to a large num-
+Secondly,tomitigatethelineardependencyproblemwecon-                          ber of quantum algorithms, depending on: i) how the basis
+sider a multireference approach in which the Krylov space                    M0 is selected, ii) the particular choice of  ˆUn, and iii) the
+is constructed from an initial set of orthogonal reference
+
+                                                                         2
+quantum circuits used to evaluate S and H. In the following                      evolution operator must be suﬃciently accurate. Otherwise
+we describe the combination that deﬁnes our multireference                       the approximate quantum Krylov basis will likely not span
+selected quantum Krylov approach and detail the eﬃcient                          theclassicalKrylovbasisoftheexactHamiltonian,andcon-
+algorithmusedtoevaluateoﬀ-diagonaloverlapandHamilto-                             sequently slow down the convergence of the method.  To
+nian matrix elements and our selection approach to generate                      approximate the real-time evolution one may follow stan-
+the basis of references.                                                         dard approaches like the Trotter-Suzuki decomposition64,65
+                                                                                 oremployatruncatedTaylorseries.66Inthisworkweemploy
+                                                                                 the former methodology, and consider the m-Trotter number
+                                                                                 (step) approximation of non-commuting operators  ˆA and  ˆB
+                                                                                 given by
+                                                                                                                        ˆA  ˆB
+                                                                                                          e ˆA+ ˆB≈ (e m em )m              (9)
+
+                                                                                 which is exact in the limit of m→∞. When applied to the
+                                                                                 real-time propagator this corresponds to the product
+                                                                                          (Ö                 )m      (Ö                         )m
+                                                                                   ˆUn =         ˆUn,𝓁(tn/m)      =        exp(−itnh𝓁/m ˆV𝓁)         (10)
+                                                                                             𝓁                          𝓁
+Figure1: Schematicillustration ofthe multireferenceselectedquan-                 As shown in section4, low Trotter number approximations
+tum Krylov (MRSQK) algorithm. (A) An approximate real-time dy-                   (m = 1, 2)yieldlargeerrorsinthecomputationoftheground
+namics using a single Slater determinant reference (Φ0) is used to               state electronic energy.
+generate a trial state ( ˜Ψ). (B) Measurements of the determinants               2.2 Eﬃcient evaluation of oﬀ-diagonal matrix elements.
+that comprise the trial state are used to determine the probability of           To eﬃciently measure the overlap and Hamiltonian matrix
+hopping (Pµ) to other determinants. This information is employed to
+build two new reference states, Φ1 and Φ2. (C) Finally, three real-              elements [Eqs.6and7], we augment the circuit used to
+time evolutions starting from the references (Φ0, Φ1, Φ2) generate a             buildthebasiswithanancillaryqubitandconstructthestate
+set of 12 Krylov statesψα, which are used to diagonalize the Hamil-              √1
+tonian and obtain the energy of the state Ψ.                                     measuringtheexpectationvalueoftheoperator 2σ+ =σX +2(|ψα⟩⊗|0⟩ +|ψβ⟩⊗|1⟩), and then obtain⟨ψα|ψβ⟩ by
+
+                                                                                iσY on the ancilla qubit.67 To produce the state|ψα⟩ we
+2.1 Choiceoftheunitaryoperators. Inchoosingthefamily                             introduce the unitary operator  ˆUα deﬁned as
+ofunitaryoperators  ˆUn therearetwoprimarycriteriaweaim                                                        ˆUα =  ˆUn ˆUI                (11)
+to satisfy: i) that it generates a basis that well describes
+the eigenstates of  ˆH and ii) that the corresponding quantum                    where   ˆUI generates the reference state|ΦI⟩ from the zero
+circuit is inexpensive to evaluate. These requirements give                      state|¯0⟩ = ˛|0⟩. Thecircuittomeasureoﬀ-diagonalmatrix
+considerable freedom, and a natural choice is a family of                        elements is shown in Fig.2.
+operators based on real-time evolution,   ˆUn  =  exp(−itn  ˆH),
+where tn = n∆t and ∆t is a ﬁxed time step.
+  In fact, it is possible to show that for small ∆t, the basis                             |¯0⟩               ˆUα              ˆUβ
+of statesKs(ΦI,  ˆUn) generated by real-time evolution spans
+a classical Krylov space. Consider a linear combination of                                 |0⟩       H        •        X       •        2σ+
+the elements ofKs(ΦI,  ˆUn) and expand the exponential into
+a Taylor series keeping terms up to order(∆t)s
+
+             sÕ                                                                  Figure 2: General circuit for measuring non-hermitian operators of
+    |Ψ⟩ =        c(n)I   e−in∆t  ˆH|ΦI⟩                                          the form⟨¯0|  ˆU†α ˆUβ|¯0⟩. In this circuit, the ﬁnal measurement corre-
+            n=0                                                                  sponds to separate measurements of X and Y and the evaluation of
+             sÕ  (   sÕ(−in∆t)k        )                                         the expectation value of the operator 2σ+ = X + iY = 2|0⟩⟨1|.
+         =                  k!      c(n)I ˆHk|ΦI⟩ +O(∆ts+1)           (8)
+            k=0    n=0                                                             For  ˆUn constructed out of exponentials of Pauli strings a
+             sÕ  (   sÕ          )                                               crucial simpliﬁcation may be employed that allows the eﬃ-
+         =             Mknc(n)I    ˆHk|ΦI⟩ +O(∆ts+1)                             cientconstructionofthestate   1√
+            k=0    n=0                                                                                                 2(|ψα⟩⊗|0⟩ +|ψβ⟩⊗|1⟩).68
+                                                                                 First, we start by representing the product of Pauli operators
+The square matrix M is invertible, and therefore, the coef-                      in each of terms  ˆV𝓁 as a unitarily-transformed Pauli string
+ﬁcients c(n)I  may be chosen to represent any combination of                     consisting of operators in the Z basis
+theclassicalKrylovbasis{ ˆHk|ΦI⟩} with k = 0,..., s,upto                                                N𝓁Ì                 N𝓁Ì
+higher-order terms.                                                                              ˆV𝓁 =       σ(jk)lk    =H𝓁      σ(jk)Z H𝓁       (12)
+  To realize the MRSQK method on a quantum computer,                                                    k=1                 k=1
+a quantum circuit is required that can approximate the time-
+evolution operator. The analysis presented above, suggests                       whereH𝓁 is a product of single qubit gates that transform
+that it is important that any approximation to the real-time                     each σ(jk)lk  to σ(jk)Z  .69 Consequently, each term in   ˆUn,𝓁  =
+
+                                                                            3
+exp(−itnh𝓁 ˆV𝓁)can be written as                                              MRSQK wave function. Speciﬁcally, we ﬁrst form and di-
+                                                                              agonalize the Hamiltonian in the Krylov spaceKs(Φ0,  ˆUn),
+   ˆUn,𝓁 =H𝓁(e−itnh𝓁 ¸N𝓁k=1σ(jk)Z  )H𝓁 =  ˜Un,𝓁RzN𝓁(2tnh𝓁) ˜Un,𝓁              whereΦ0isasingledeterminant(e.g.,aclosed-shellHartree–
+                                                                  (13)        Fock determinant). The resulting trial wave function  ˜Ψ  =
+where in the second step we have used a well-known rep-                       ˝αψα ˜cα is used to construct a list of potential important
+resentation of the exponential of Pauli strings composed of                   determinants.  Since the probability of measuring a deter-
+CNOT gates (collected in  ˜Un,𝓁) and a Z rotation on the N𝓁                   minant φµ is equal to Pµ  =|⟨φµ| ˜Ψ⟩|2, one can in principle
+qubit (RzN𝓁).67,69   Using the following operator identity in-                formthestate  ˜Ψonaquantumcomputeranddirectlymeasure
+volving the controlled versions of generic unitary operators                  the determinantal composition, which in the Jordan–Wigner
+ˆAand  ˆB (c- ˆAand c- ˆB, see Fig.3).                                        mappingamountstomeasuringtheexpectationvalueof Z for
+                                                                              all wave function qubits. In practice, we approximate Pµ by
+                  (c- ˆB†)(c- ˆA)(c- ˆB) =  ˆB†(c- ˆA) ˆB         (14)        measuring each element of the Krylov basis and estimating
+                                                                              the total probability as a weighted sum over references via
+We can rewrite the controlled unitary evolution operator                                    Õ                      Õ
+(c- ˆUn,𝓁) required to evaluate overlaps as                                         Pµ =|       ⟨φµ|ψα⟩ cα|2≈           |⟨φµ|ψα⟩|2|cα|2    (16)
+                                                                                             α                      α
+                c- ˆUn,𝓁 =  ˜U†n,𝓁[c-RzN𝓁(2θn)] ˜Un,𝓁        (15)             Measurements are accumulated until we form a list of deter-
+
+which  requires  only  one  extra  controlled  operation                      minants of length equal to a small multiple of the number
+c-RzN𝓁(2θn) at the center of the circuit (see Supporting                      of references we aim to select (e.g., 2d). In principle only
+Information Fig. SI1). Controlled unitaries evaluated in this                 a small number of measurements are required because the
+wayrequireatmost 2N𝓁 singlequbitgates, 2N𝓁 CNOTgates,                         values of Pµ need only be qualitatively correct such that the
+and a controlled single-qubit gate.                                           determinants can be sorted.  It should be noted, however,
+  Next,wediscussthetheimplementationoftheunitarythat                          that using Eq. (16) as an importance criterion can lead to
+preparesreferencestatesfrom|¯0⟩ ( ˆUI). When ΦI isasingle                     theoverestimationoftheimportanceofcertaindeterminants
+Slater determinant  ˆUI is a product of X gates. For multide-                 due to neglected sign cancellation. A comparison of the the
+terminantalreferences,onecanapplythelinearcombination                         approximatesamplingbasedonEq.(16)andtheexactweight
+ofunitaries(LCU)algorithm,70 orfollowtheprocedureout-                         ofdeterminantsintheMRSQKwavefunctionshowsthatthe
+lined by Tubman et al.71 This approach requires only one                      formermethodissuﬃcienttoidentifythemostimportantde-
+ancilla qubit andO(nL) one- or two-qubit gates, where  n                      terminants. Alternatively, Ψcouldbedirectlyrepresentedon
+is the number of qubits and L the number of determinants                      a quantum computer via the linear combination of unitaries
+in a particular reference Alternatively, one may target ref-                  (LCU) algorithm,70 so that determinants would be sampled
+erences that are composed of a single conﬁguration state                      directly with their correct probabilities.
+functions72,73  or two electron geminals.74                                      Once formed, the list of potentially important determi-
+  Itiseasytogeneralizethesecircuitstocontrolledversions;                      nants is augmented to guarantee that all spin arrangements
+however,onemaypaythepenaltyofincreasingthenumberof                            of open-shell determinants are included. Next, we diagonal-
+two-qubitgates(afterfactoringthreequbitcontrolgatesinto                       ize the Hamiltonian in this small determinant basis. At this
+two-qubitones). Thissuggeststhatthereferences ΦI should                       stage we identify references in the following way: closed-
+bechosentobecompactmultideterminantalwavefunctions,                           shell determinants are considered individually, while open-
+e.g.,eithersingledeterminantsorasmalllinearcombinations                       shelldeterminantswiththesamespinoccupationpatternare
+of determinants.                                                              groupedtogetherandtheirweightsummed. Lastly,weselect
+˝Evaluation of the Hamiltonian matrix elements  Hαβ  =                        d− 1 largest weighted references beyond the Hartree–Fock
+  𝓁 h𝓁⟨ψα| ˆV𝓁|ψβ⟩ proceedsin ananalogous wayby comput-                       state. References composed of open-shell determinants are
+ingeachterm⟨ψα| ˆV𝓁|ψβ⟩individually. Thecircuitemployed                       normalized to one using the determinant coeﬃcients from
+is analogous to the one in Fig.2with the operator         ˆUβ by              the small classical CI. This procedure generates very com-
+replaced by  ˆV𝓁 ˆUβ. Since each term  ˆV𝓁 contains only product
+ofonequbitoperators,thecorrespondingcontrolledoperator
+contains at most two-qubit operators. The evaluation of S                                      |ψ⟩           ˆB†      ˆA     ˆB
+and Hlendsitselftoahighdegreeofparallelism. AsinVQE
+methods, evaluation of a single matrix element of H may                                        |0⟩           •       •      •
+be parallelized over terms in the Hamiltonian. In addition,                                                      =
+in the MRSQK, one may parallelize over the  N(N− 1)/2
+unique pairs of Krylov states ψα/ψβ. Note that techniques                                      |ψ⟩           ˆB†      ˆA     ˆB
+used to ameliorate ﬁnite measurement errors in VQE75–79
+approaches can also be applied to MRSQK.                                                       |0⟩                   •
+2.3 Reference selection. A third important aspect of the
+MRSQK algorithm is the procedure to select the reference                      Figure 3: Circuit identity used to simplify the controlled version of
+conﬁgurations.  Our approach exploits quantum measure-                         ˆUn,𝓁 [Eq.(14)   ]. ψ isamulti-qubitregisterusedtoencodeaquantum
+ment to identify a set of conﬁgurations starting from a trial                 state and the last qubit is an ancilla.
+
+
+                                                                          4
+pact reference states that can be used with the algorithm for               formation as implemented in OpenFermion83 with default
+computing oﬀ-diagonal matrix elements discussed in sec-                     term ordering. For all calculations, references in MRSQK
+tion2.2.                                                                    were selected using initial QK calculations with s0 = 2 evo-
+2.4 Analysis of computational cost. Thequantumcompu-                        lutions of the Hartree–Fock determinant and a time step of
+tational cost of the MRSQK algorithm is dominated by the                    ∆t  =  0.25 a.u. Parameters such as the time time step (∆t),
+application of the Trotterized Hamiltonian circuits  ˆUn. The               and number of evolutions per reference (s) used in MRSQK
+depth of these circuits scales at worstO(mK4) where m is                    were chosen based on energy accuracy and numerical sta-
+thetrotternumberand K isthenumberofmolecularorbitals.                       bility. We also note that we take the Trotter approximation
+At the minimal Trotter number level(m = 1), the maximum                     with m = 100asagoodapproximationtotheinﬁnite mlimit
+circuitdepthforMRSQKiscomparabletothatofUCCwith                             forthepotentialenergycurvesweplot. Adaptivederivative-
+generalized singles and doubles (employng the same Trotter                  assembled pseudo-Trotter ansatz variational quantum eigen-
+number),andfarshallowerthanQPE.Moreimportantly,the                          solver (ADAPT-VQE)30 calculations were performed with a
+circuitdepthofMRSQKisindependentofsizeoftheKrylov                           in-house code provided by N. Mayhall.
+basisonewishestogenerate,allowingforaﬂexibletradeoﬀ-                        4.NUMERICAL STUDIES AND DISCUSSION
+betweenquantumandclassicalcost(foradesiredlevelofac-                        We benchmark the performance and comparative numerical
+curacy). Forexample,intheNISQdeviceera,onemayavoid                          stability of the MRSQK algorithm with linear chains of six
+larger circuit depths with MRSQK by employing a modest                      and eight hydrogen atoms, two canonical models for one-
+Trotter number, but still achieve a high degree of accuracy                 dimensional materials with correlation strength modulated
+by building a larger Krylov space that will be diagonalized                 bybondlength.84–86   Weutilizepoint-groupsymmetry,which
+classically. In this way MRSQK has both the advantage of                    resultsinadeterminantspacecomprisedof200and2468de-
+selectedCItoexploitwavefunctionsparsityandtheclassical                      terminants for H6 and H8, respectively. We ﬁrst consider H6
+compression aﬀorded by its quantum computational subrou-                    at a site-site distance of 1.50 Å, which exhibits strong elec-
+tines. This ﬂexibility is a feature that distinguishes MRSQK                tron correlation, as indicated by the large correlation energy
+from other QSD methods.                                                     (Ecorr =−0.24681 Eh) and the small weight of the Hartree–
+Table 1: Ground-state energies (in Eh) of H6 and H8 at a site-site          Fock determinant in the FCI expansion (|CHF|2 = 0.634).
+distance of 1.5 Å using exact time-evolution. Energy and overlap               InTab.1weshowacomparisonoftheenergyandoverlap
+conditionnumber k(S)resultsaregivenforasingledeterminant(QK)                matrix condition number for the single reference version of
+using N Krylovbasisstatesand ∆t = 0.5. MRSQKresultsaregiven                 quantum Krylov (QK), taking only the HF determinant as
+for N  = d(s + 1) Krylov basis states using three steps (s = 3) and         a reference, and MRSQK as a function of the total number
+∆t = 0.5a.u. With N greaterthan12states,theconditionnumberfor               of basis states. For H6 we observe that in both the single
+QKdoesnotgrowlargerthan 1018. Thisislikelyaresultoflimitations              and multireference cases, convergence to chemical accuracy
+of double precision arithmetic.                                             (error less than 1 kcal mol−1 = 1.594 mEh) is achieved with
+    N                EQK           k(SQK)          EMRSQK       k(SMRSQK)   only 8 parameters, an order of magnitude smaller than the
+                         H6 (rHH = 1.5 Å)                                   size of FCI space. For the case N  = 12, MRSQK identiﬁes
+    4  −3.015510    3.29×105  −3.015510     3.29×105                        the following three references
+    8  −3.019768   3.60×1011  −3.019301     4.86×105                               |Φ0⟩ =|220200⟩
+   12  −3.020172   1.61×1017  −3.019696     9.39×105                               |Φ1⟩ =|200220⟩
+   16  −3.020192   3.19×1017  −3.019835     5.68×106
+   20  −3.020198   3.86×1017  −3.019929     6.23×106                               |Φ2⟩ =− 0.302|2↑↑↓↓ 0⟩− 0.302|2↓↓↑↑ 0⟩                    (17)
+ FCI  −3.020198                                                                            + 0.275|2↑↓↑↓ 0⟩ + 0.577|2↑↓↓↑ 0⟩
+                         H8 (rHH = 1.5 Å)                                                  + 0.577|2↓↑↑↓ 0⟩ + 0.275|2↓↑↓↑ 0⟩
+    4  −4.017108    1.19×105  −4.017108     1.19×105                        where the orbitals are ordered according to (1ag, 2ag, 3ag,
+    8  −4.026563   1.39×1010  −4.024268     1.50×105                        1b1u, 2b1u, 3b1u) in the D2h point group. These references
+   12  −4.028000   5.11×1014  −4.025894     2.00×105                        arecomprisedoftwoclosed-shellandsixopen-shelldetermi-
+   16  −4.028096   1.33×1017  −4.026042     2.51×105
+   20           –           –  −4.026387     4.27×105                       nants. If we perform a computation with a set of references
+   24           –           –  −4.026457     4.44×105                       consisting of eight individual (uncontracted) determinants,
+ FCI  −4.028152                                                             the resulting Krylov space has dimension 32 and the corre-
+                                                                            sponding energy is−3.019797  Eh, which is only 0.1 mEh
+                                                                            lower than the contracted result (−3.019696).  Turning to
+3.COMPUTATIONAL DETAILS                                                     H8, we ﬁnd that the single-reference QK energy converges
+The MRSQK method was implemented using both an exact                        to chemical accuracy with only 12 parameters, two orders
+secondquantizationformalismandaquantumcomputersim-                          of magnitude fewer than FCI. For the same example, the
+ulatorusingtheopen-sourcepackage QForte.80 Allcalcula-                      MRSQKenergyerroris1.06kcalmol−1 with24parameters,
+tions used restricted Hartree–Fock (RHF) orbitals generated                 only slightly higher than chemical accuracy.
+with Psi481 using a minimal (STO-6G)82 basis. Molecular                        The linear dependency of the basis for H6 and H8—as
+HamiltoniansforthehydrogenandBeH2 systemsweretrans-                         measured by the condition number of the overlap matrix
+lated to a qubit representation via the Jordan–Wigner trans-                [k(S)]—issigniﬁcantlymorepronouncedinthesinglerefer-
+
+                                                                        5
+ence QK than the MRSQK version. In the case of H6, even
+withasmallKrylovbasis(8elements),QKispotentiallyill-
+conditioned[k(S) = 3.60× 1011]. Inthecaseof12(ormore)
+states,theQKeigenvalueproblemisstronglyill-conditioned
+[k(S) = 1.16× 1017],whileMRSQKdisplaysonlyamodest
+condition number, [k(S)  =  9.39× 105].  Importantly, QK
+becomes ill-conditioned before reaching chemical accuracy,
+whereas MRSQK does not, highlighting the importance of
+multireference approach for practical applications.
+  Next, we assess the errors introduced by approximating
+the real-time dynamics with a Trotter approximation.  Ta-
+ble2showstheperformanceofMRSQKusingvariouslevels
+of Trotter approximation for H6 at a bond distance of 1.5 Å.
+While using exact time evolution aﬀords the fastest energy
+convergence with respect to number of Krylov basis states,
+we ﬁnd that chemical accuracy can still be achieved using a
+Trotterized exponential. For example, using a Trotter num-
+ber m = 8, MRSQK gives an error of only 1.1 mEh with a
+basisof20Krylovstates. InTable2wealsoshowacompari-
+sonofMRSQKwithselectedconﬁgurationinteraction(sCI)
+and the adaptive derivative-assembled pseudo-Trotter ansatz
+variational quantum eigensolver (ADAPT-VQE).30 For any
+Trotter number, MRSQK converges signiﬁcantly faster than
+sCI and the ADAPT-VQE method. For example, even with
+thesmallestTrotternumber(m = 1)MRSQKwith20Krylov
+states gives an error of 8.5 mEh, while a sCI wave function                  Figure4: Potentialenergycurve(top)anderror(bottom)forsymmet-
+with 20 determinants yields an error of 58.4 mEh (see Ta-                    ric dissociation of linear H6 in a STO-6G basis. MRSQK computa-
+ble (2) for details of the determinant selection).  In com-                  tionsuse ∆t = 0.5a.u., threetimesteps(s = 3), andﬁvereferences
+parison, an ADAPT-VQE wave function with 20 parameters                       (d  =  5) corresponding to 20 Krylov basis states. The number of
+yields an error of 11.4 mEh. These results demonstrate the                   Trotter steps (m) is indicated in parentheses, while those from exact
+abilityofMRSQKtoparameterizestronglycorrelatedstates                         time evolution are labeled (m =∞).
+
+eﬃcientlyusingasmallfractionofthevariationaldegreesof
+freedom.                                                                     therefore, we report results using ∆t = 2 a.u. In the case of
+  To illustrate the ability of MRSQK to determine accu-                      noTrotterapproximation(m =∞),theMRSQKerrorisless
+rateground-statepotentialenergysurfaces(PES)inthepres-                       than 0.1 mEh across the entire potential energy curve. The
+ence of strong correlation, we examine the dissociation of                   approximate MRSQK scheme based on four Trotter steps is
+the H6 chain and linear BeH2.  Figure4show the en-                           alreadycomparableinaccuracytoCCSD,whileusing m = 8
+ergy and error with respect to FCI for H6, for restricted                    the error falls within chemical accuracy. By analyzing the
+Hartree–Fock(RHF),second-orderMøller–Plessetperturba-                        error plot in the bottom half of Fig.5, we see that there
+tion theory (MP2), coupled cluster with singles and doubles                  are small discontinuities in the curve due to the selection of
+(CCSD),87 and MRSQK with a Krylov basis of 20 states                         a diﬀerent set of reference states. This problem, however,
+(s = 3, d = 5). Withtheonsetofstrongelectroncorrelation,                     is common to all selected CI methodologies,88–92   as well
+single-referencemethods(RHF,MP2,CCSD)failtocapture                           as ADAPT-VQE. These discontinuities may be removed by
+the the correct qualitative features of the PEC. For example,                employing references built from a ﬁxed set of determinants.
+CCSDproducesveryaccurateresultsneartheequilibriumge-
+ometry; however, it dips signiﬁcantly below the FCI energy                   5.CONCLUSIONS
+for bond distances greater than 1.5 Å. In contrast, MRSQK                    In summary, the multireference selected quantum Krylov is
+far outperforms CCSD even with the lowest Trotter num-                       a new quantum subspace diagonalization algorithm for solv-
+ber (m  =  1) and chemically accurate MRSQK results are                      ing the electronic Schrödinger equation on NISQ devices.
+obtained with m = 8.                                                         MRSQK diagonalizes the Hamiltonian in a basis of many-
+  In Figure5we report the potential energy curve for the                     body states generated by real-time evolution of a set of or-
+symmetricdissociationoflinearBeH2. Forthisproblem,the                        thogonal reference states. This approach has two major ad-
+size of the determinant space is 169. Like H6, BeH2 is a                     vantages: (i)itrequiresnovariationaloptimizationofclassi-
+challenging problem for single-reference methods, although                   cal parameters, (ii) it avoids the linear dependency problem
+CCSD shows smaller errors (less than 10 mEh) throughout                      that may plague other QSD methods. Benchmark compu-
+the entire curve. MRSQK computations on BeH2 employed                        tations on H6, H8, and BeH2 show that MRSQK with exact
+30 Krylov states generated by a space of six references and                  time-propagationconvergesrapidlytotheexactenergyusing
+four time steps (s  =  4).  For this problem, we found that                  a number of Krylov states that is a small fraction of the full
+using a larger time step provides more accurate results and                  determinantspace. Whenthereal-timepropagatorisapprox-
+
+
+                                                                         6
+Table 2: Ground-state energies (in Eh) of H6 at a bond distance of 1.5 Å. MRSQK results are given for N = d(s + 1) Krylov basis states using
+three steps (s  =  3) and ∆t  =  0.5 a.u. The quantity m indicates the Trotter number. For each value of N, selected conﬁguration interaction
+(sCI) results were obtained using N determinants with the largest absolute coeﬃcient in the FCI wave function. ADAPT-VQE results show the
+energy with N cluster amplitudes selected from the pool of spin-adapted generalized singles/doubles.
+
+       N              E(m=∞)MRSQK              E(m=8)MRSQK              E(m=4)MRSQK              E(m=2)MRSQK              E(m=1)MRSQK                     EsCI           EADAPT−VQE
+       4   −3.015510   −3.014138   −3.009948   −2.998858   −2.982186   −2.845002    −2.906724
+       8   −3.019301   −3.018341   −3.015872   −3.010035   −3.001195   −2.909404    −2.983042
+      12   −3.019696   −3.018808   −3.016940   −3.013425   −3.008661   −2.926337    −2.995691
+      16   −3.019835   −3.018888   −3.017173   −3.014253   −3.010543   −2.954587    −3.002345
+      20   −3.019929   −3.019054   −3.017614   −3.015311   −3.011663   −2.961772    −3.008847
+     FCI   −3.020198
+
+
+                                                                             fortreatingstronglycorrelatedelectronicsystemswithquan-
+                                                                             tum computation. However, there are several aspects of the
+                                                                             MRSQK that deserve more consideration. The current ref-
+                                                                             erenceselectionstrategymay producediﬀerentsetsofrefer-
+                                                                             ences as the molecular geometry is changed, which in turn
+                                                                             causes small discontinuities in potential energy curves. Se-
+                                                                             lectionproceduresthat,e.g.,identifyreferencesfromasmall
+                                                                             ﬁxed set of orbitals could be used to address this issues. In
+                                                                             this work, we have selected ﬁxed values for the time steps
+                                                                             tn.  Schemes in which the time steps are treated as varia-
+                                                                             tionalparametersmaybeabletorepresentstateswithafewer
+                                                                             number of Krylov states and are worth exploring. Another
+                                                                             important aspect is improving the approximation to the real-
+                                                                             time dynamics. Our results indicate that low Trotter number
+                                                                             approximations (m = 1, 2) commonly used in other context
+                                                                             introduce errors that are too large. It would be desirable to
+                                                                             explore the implementation of real-time dynamics via alter-
+                                                                             nativemethods,e.g. truncatedTaylorseries.66Aninteresting
+                                                                             alternativeistofollowthestrategyofRef.93,whichemploys
+                                                                             anunphysicaldynamicsgeneratedbyasimplefunctionofthe
+                                                                             Hamiltonian. This dynamics still spans the classical Krylov
+                                                                             space and may be implemented with the same number of
+                                                                             gates as a single Trotter number approximation.
+
+                                                                             ACKNOWLEDGEMENTS
+Figure5: Potentialenergycurve(top)anderror(bottom)forsymmet-                 The authors thank Dr. Mario Motta and Dr. Nathan Wiebe
+ric dissociation of linear BeH2 in a STO-6G basis. MRSQK compu-              forhelpfuldiscussions. ThisworkwassupportedbytheU.S.
+tations use ∆t = 2 a.u., four time steps (s = 4), and six references         Department of Energy under Award No. DE-SC0019374.
+(d  =  6) corresponding to 30 Krylov basis states. The number of             N.H.S. was supported by a fellowship from The Molecular
+Trotter steps (m) is indicated in parentheses, while those from exact        Sciences Software Institute under NSF grant ACI-1547580.
+time evolution are labeled (m =∞).
+
+                                                                             REFERENCES
+imated via a Trotter decomposition, modest Trotter numbers
+m = 4, 8 are suﬃcient to ensure that truncation errors yield                  (1)Laughlin, R. B.; Pines, D. The theory of everything.
+chemically accurate potential energy curves. We also report                        Proc. Nat. Acad. Sci. U.S.A. 2000,97, 28–31.
+a comparison of the convergence of the energy of H6 for                       (2)Feynman,R.P.Simulatingphysicswithcomputers.   Int.
+MRSQK, selected conﬁguration interaction (sCI), and the                            J. Theor. Phys. 1982, 21, 467–488.
+state-of-the-art ADAPT-VQE algorithm. In comparing sCI                        (3)Arute, F.;  Arya, K.;  Babbush, R.;  Bacon, D.;
+andMRSQK,thesigniﬁcantlyfasterconvergenceofthelatter                               Bardin, J. C.; Barends, R.; Biswas, R.; Boixo, S.;
+methodindicatesthattheKrylovbasiseﬃcientlycapturesthe                              Brandão,F.G.S.L.;Buell,D.A.;Burkett,B.;Chen,Y.;
+important multideterminantal features of the wave function.                        Chen, Z.; Chiaro, B.; Collins, R.; Courtney, W.;
+ThecomparisonwithADAPT-VQEshowsthatMRSQKcan                                        Dunsworth, A.; Farhi, E.; Foxen, B.; Fowler, A.; Gid-
+achieve a compact representation of the wave function com-                         ney, C.; Giustina, M.; Graﬀ, R.; Guerin, K.; Habeg-
+petitiveevenwithanadaptivestrategythataimstominimize                               ger, S.; Harrigan, M. P.; Hartmann, M. J.; Ho, A.;
+the number of unitary rotations.                                                   Hoﬀmann,M.;Huang,T.;Humble,T.S.;Isakov,S.V.;
+  Together,theseadvantagesmakeMRSQKapromisingtool                                  Jeﬀrey,E.;Jiang,Z.;Kafri,D.;Kechedzhi,K.;Kelly,J.;
+
+
+                                                                        7
+      Klimov, P. V.; Knysh, S.; Korotkov, A.; Kostritsa, F.;                (17)Taube,A.G.;Bartlett,R.J.Newperspectivesonunitary
+      Landhuis, D.; Lindmark, M.; Lucero, E.; Lyakh, D.;                           coupled-cluster theory. Int. J. Quantum Chem. 2006,
+      Mandrà,S.;McClean,J.R.;McEwen,M.;Megrant,A.;                                 106, 3393.
+      Mi, X.; Michielsen, K.; Mohseni, M.; Mutus, J.; Naa-                  (18)Cooper, B.; Knowles, P. J. Benchmark studies of vari-
+      man, O.; Neeley, M.; Neill, C.; Niu, M. Y.; Ostby, E.;                       ational, unitary and extended coupled cluster methods.
+      Petukhov, A.; Platt, J. C.; Quintana, C.; Rieﬀel, E. G.;                     J. Chem. Phys. 2010,133, 234102.
+      Roushan, P.; Rubin, N. C.; Sank, D.; Satzinger, K. J.;                (19)Evangelista,F.A.Alternativesingle-referencecoupled
+      Smelyanskiy, V.;  Sung, K. J.;  Trevithick, M. D.;                           cluster approaches for multireference problems: The
+      Vainsencher, A.; Villalonga, B.; White, T.; Yao, Z. J.;                      simpler, the better. J. Chem. Phys. 2011,134, 224102.
+      Yeh,P.;Zalcman,A.;Neven,H.;Martinis,J.M.Quan-                         (20)Harsha, G.; Shiozaki, T.; Scuseria, G. E. On the dif-
+      tumsupremacyusingaprogrammablesuperconducting                                ferencebetweenvariationalandunitarycoupledcluster
+      processor. Nature 2019, 574, 505–510.                                        theories. J. Chem. Phys. 2018,148, 044107.
+ (4)Preskill, J. Quantum Computing in the NISQ era and                      (21)McClean, J. R.; Romero, J.; Babbush, R.; Aspuru-
+      beyond. Quantum 2018, 2, 79.                                                 Guzik, A. The theory of variational hybrid quantum-
+ (5)Abrams, D. S.; Lloyd, S. Simulation of Many-Body                               classical algorithms. New J Phys 2016, 18, 023023.
+      Fermi Systems on a Universal Quantum Computer.                        (22)O’Malley, P. J. J.; Babbush, R.; Kivlichan, I. D.;
+      Phys. Rev. Lett. 1997,79, 2586–2589.                                         Romero, J.; McClean, J. R.; Barends, R.; Kelly, J.;
+ (6)Abrams, D.; Lloyd, S. Quantum algorithm providing                              Roushan, P.; Tranter, A.; Ding, N.; Campbell, B.;
+      exponential speed increase for ﬁnding eigenvalues and                        Chen, Y.;  Chen, Z.;  Chiaro, B.;  Dunsworth, A.;
+      eigenvectors. Phys. Rev. Lett. 1999, 83, 5162–5165.                          Fowler, A. G.; Jeﬀrey, E.; Lucero, E.; Megrant, A.;
+ (7)Ortiz, G.; Gubernatis, J. E.; Knill, E.; Laﬂamme, R.                           Mutus, J. Y.; Neeley, M.; Neill, C.; Quintana, C.;
+      Quantum algorithms for fermionic simulations. Phys.                          Sank, D.; Vainsencher, A.; Wenner, J.; White, T. C.;
+      Rev. A 2001, 64, 022319.                                                     Coveney, P. V.; Love, P. J.; Neven, H.; Aspuru-
+ (8)Aspuru-Guzik, A.; Dutoi, A. D.; Love, P. J.; Head-                             Guzik, A.; Martinis, J. M. Scalable Quantum Simu-
+      Gordon,M.Simulatedquantumcomputationofmolec-                                 lation of Molecular Energies. Phys. Rev. X  2016, 6,
+      ular energies. Science 2005, 309, 1704–1707.                                 031007.
+ (9)Lanyon, B. P.; Whitﬁeld, J. D.; Gillett, G. G.; Gog-                    (23)Romero, J.; Babbush, R.; McClean, J. R.; Hempel, C.;
+      gin,M.E.;Almeida,M.P.;Kassal,I.;Biamonte,J.D.;                               Love, P. J.; Aspuru-Guzik, A. Strategies for quantum
+      Mohseni, M.; Powell, B. J.; Barbieri, M.; Aspuru-                            computing molecular energies using the unitary cou-
+      Guzik, A.; White, A. G. Towards quantum chemistry                            pled cluster ansatz. Quantum Sci. Technol.  2019, 4,
+      on a quantum computer. Nat. Chem. 2010,2, 106.                               014008.
+(10)McArdle, S.;  Endo, S.;  Aspuru-Guzik, A.;  Ben-                        (24)Barkoutsos,P.K.;Gonthier,J.F.;Sokolov,I.;Moll,N.;
+      jamin,S.;Yuan,X.Quantumcomputationalchemistry.                               Salis, G.; Fuhrer, A.; Ganzhorn, M.; Egger, D. J.;
+      e-print arXiv:1808.10402v2 [quant-ph], 2018.                                 Troyer, M.; Mezzacapo, A.; Filipp, S.; Tavernelli, I.
+(11)Cao, Y.; Romero, J.; Olson, J. P.; Degroote, M.; John-                         Quantum algorithms for electronic structure calcula-
+      son, P. D.; Kieferová, M.; Kivlichan, I. D.; Menke, T.;                      tions: particle/hole Hamiltonian and optimized wave-
+      Peropadre, B.; Sawaya, N. P. D.; Sim, S.; Veis, L.;                          function expansions. Phys. Rev. A 2018,98, 022322.
+      Aspuru-Guzik, A. Quantum Chemistry in the Age of                      (25)Ryabinkin, I. G.; Genin, S. N.; Izmaylov, A. F. Con-
+      Quantum Computing. Chem. Rev. 2019, 119, 10856–                              strained Variational Quantum Eigensolver: Quantum
+      10915.                                                                       Computer Search Engine in the Fock Space. J. Chem.
+(12)Peruzzo, A.; McClean, J.; Shadbolt, P.; Yung, M.-                              Theory Comput. 2018,15, 249–255.
+      H.; Zhou, X.-Q.; Love, P. J.; Aspuru-Guzik, A.;                       (26)Wecker, D.; Hastings, M. B.; Troyer, M. Progress to-
+      O’Brien, J. L. A variational eigenvalue solver on a                          wards practical quantum variational algorithms. Phys.
+      photonic quantum processor. Nat. Commun. 2014, 5,                            Rev. A 2015,92, 042303.
+      4213.                                                                 (27)Kandala, A.; Mezzacapo, A.; Temme, K.; Takita, M.;
+(13)Yung, M. H.; Casanova, J.; Mezzacapo, A.; Mc-                                  Brink, M.; Chow, J. M.; Gambetta, J. M. Hardware-
+      Clean, J.; Lamata, L.; Aspuru-Guzik, A.; Solano, E.                          eﬃcient variational quantum eigensolver for small
+      From transistor to trapped-ion computers for quantum                         molecules and quantum magnets. Nature 2017, 549,
+      chemistry. Sci. Rep. 2014, 4, 3589.                                          242–246.
+(14)Farhi, E.;  Goldstone, J.;  Gutmann, S. A Quan-                         (28)Ryabinkin, I. G.;  Yen, T.-C.;  Genin, S. N.;  Iz-
+      tum Approximate Optimization Algorithm. e-print                              maylov, A. F. Qubit Coupled Cluster Method: A Sys-
+      arXiv:1411.4028v1 [quant-ph], 2014.                                          tematicApproachtoQuantumChemistryonaQuantum
+(15)Kutzelnigg, W. In    Methods of electronic structure the-                      Computer. J. Chem. Theory Comput. 2018, 14, 6317–
+      ory; Henry F Schaefer, I., Ed.; Springer US: Boston,                         6326.
+      MA, 1977; pp 129–188.                                                 (29)Ryabinkin, I. G.; Genin, S. N. Iterative qubit coupled
+(16)Szalay, P. G.; Nooijen, M.; Bartlett, R. J. Alternative                        cluster method: A systematic approach to the full-CI
+      Ansatz in Single Reference Coupled-Cluster Theory                            limit in quantum chemistry calculations on NISQ de-
+      .III.ACriticalAnalysisofDiﬀerentMethods.J.Chem.                              vices. e-print arXiv:1906.11192v1 [quant-ph], 2019.
+      Phys. 1995,103, 281–298.
+
+
+                                                                        8
+(30)Grimsley, H. R.; Economou, S. E.; Barnes, E.; May-                       (44)Huggins,W.J.;Lee,J.;Baek,U.;O’Gorman,B.;Wha-
+      hall, N. J. An adaptive variational algorithm for ex-                        ley,K.B.Non-OrthogonalVariationalQuantumEigen-
+      actmolecularsimulationsonaquantumcomputer.Nat                                solver. e-print arXiv:1909.09114v1 [quant-ph], 2019.
+      Comms 2019, 10, 1–9.                                                   (45)Parrish, R. M.;  McMahon, P. L. Quantum Fil-
+(31)Dallaire-Demers, P.-L.; Romero, J.; Veis, L.; Sim, S.;                         ter Diagonalization:  Quantum Eigendecomposition
+      Aspuru-Guzik, A. Low-depth circuit ansatz for prepar-                        without  Full  Quantum  Phase  Estimation.  e-print
+      ingcorrelatedfermionicstatesonaquantumcomputer.                              arXiv:1909.08925v1 [quant-ph], 2019.
+      Quantum Sci. Technol. 2019, 4, 045005.                                 (46)Löwdin, P. O. On the non-orthogonality problem con-
+(32)McClean, J. R.; Kimchi-Schwartz, M. E.; Carter, J.;                            nected with the use of atomic wave functions in the
+      deJong,W.A.Hybridquantum-classicalhierarchyfor                               theoryofmoleculesandcrystals.J.Chem.Phys. 1950,
+      mitigationofdecoherenceanddeterminationofexcited                             18, 365–375.
+      states. Phys. Rev. A 2017,95, 042308.                                  (47)King, H. F.; Stanton, R. E.; Kim, H.; Wyatt, R. E.;
+(33)Colless,J.I.;Ramasesh,V.V.;Dahlen,D.;Blok,M.S.;                                Parr,R.G.CorrespondingOrbitalsandtheNonorthog-
+      Kimchi-Schwartz, M. E.; McClean, J. R.; Carter, J.;                          onality Problem in Molecular Quantum Mechanics. J.
+      de Jong, W. A.; Siddiqi, I. Computation of Molecular                         Chem. Phys. 1967,47, 1936–1941.
+      SpectraonaQuantumProcessorwithanError-Resilient                        (48)Noodleman, L. Valence bond description of antiferro-
+      Algorithm. Phys. Rev. X 2018,8, 011021.                                      magneticcouplingintransitionmetaldimers.J.Chem.
+(34)Higgott, O.; Wang, D.; Brierley, S. Variational Quan-                          Phys. 1981,74, 5737–5743.
+      tum Computation of Excited States. Quantum 2019, 3,                    (49)Voter, A. F.; Goddard III, W. A. The generalized res-
+      156.                                                                         onating valence bond method: Barrier heights in the
+(35)Nakanishi, K. M.; Mitarai, K.; Fujii, K. Subspace-                             HF + D and HCl + D exchange reactions. J. Chem.
+      search variational quantum eigensolver for excited                           Phys. 1981,75, 3638–3639.
+      states. e-print arXiv:1810.09434v2 [quant-ph], 2018.                   (50)Malmqvist, P.-Å. Calculation of transition density ma-
+(36)Jouzdani, P.; Kostuk, M.; Bringuier, S. A Method of                            trices by nonunitary orbital transformations. Int. J.
+      DeterminingExcited-StatesforQuantumComputation.                              Quantum Chem. 1986,30, 479–494.
+      e-print arXiv:1908.05238v1 [quant-ph], 2019.                           (51)Koch, H.; Dalgaard, E. Linear superposition of opti-
+(37)Parrish, R. M.; Hohenstein, E. G.; McMahon, P. L.;                             mized nonorthogonal Slater determinants for singlet-
+      Martinez, T. J. Quantum Computation of Electronic                            states. Chem. Phys. Lett. 1993, 212, 193–200.
+      Transitions Using a Variational Quantum Eigensolver.                   (52)McArdle, S.;  Jones, T.;  Endo, S.;  Li, Y.;  Ben-
+      Phys. Rev. Lett. 2019,122, 230401.                                           jamin, S. C.; Yuan, X. Variational ansatz-based quan-
+(38)Santagati, R.; Wang, J.; Gentile, A. A.; Paesani, S.;                          tumsimulationofimaginarytimeevolution.npjQuan-
+      Wiebe, N.; McClean, J. R.; Morley-Short, S.; Shad-                           tum Inf 2019,5, 1–6.
+      bolt, P. J.; Bonneau, D.; Silverstone, J. W.; Tew, D. P.;              (53)Lee, J.; Huggins, W. J.; Head-Gordon, M.; Wha-
+      Zhou, X.; O’Brien, J. L.; Thompson, M. G. Witness-                           ley, K. B. Generalized Unitary Coupled Cluster Wave
+      ing eigenstates for quantum simulation of Hamiltonian                        functions for Quantum Computation. J. Chem. Theory
+      spectra. Sci. Adv. 2018,4, eaap9646.                                         Comput. 2018, 15, 311–324.
+(39)Wang, D.; Higgott, O.; Brierley, S. Accelerated Varia-                   (54)Neuhauser, D. Bound state eigenfunctions from wave
+      tionalQuantumEigensolver.Phys.Rev.Lett. 2019,122,                            packets: Time→ energy resolution. J. Chem. Phys.
+      140504.                                                                      1990, 93, 2611–2616.
+(40)Evangelista, F. A.; Chan, G. K.; Scuseria, G. E. Exact                   (55)Neuhauser,D.CircumventingtheHeisenbergprinciple:
+      ParameterizationofFermionicWaveFunctionsviaUni-                              Arigorousdemonstrationofﬁlter-diagonalizationona
+      taryCoupledClusterTheory.e-printarXiv:1910.10130                             LiCN model.J. Chem. Phys. 1994,100, 5076–5079.
+      [physics.chem-ph], 2019.                                               (56)Wall, M. R.; Neuhauser, D. Extraction, through ﬁlter-
+(41)Barkoutsos, P. K.; Nannicini, G.; Robert, A.; Taver-                           diagonalization, of general quantum eigenvalues or
+      nelli, I.; Woerner, S. Improving Variational Quantum                         classical normal mode frequencies from a small num-
+      OptimizationusingCVaR.e-printarXiv:1907.04769v1                              ber of residues or a short-time segment of a signal. I.
+      [quant-ph], 2019.                                                            Theoryandapplicationtoaquantum-dynamicsmodel.
+(42)Takeshita, T.; Rubin, N. C.; Jiang, Z.; Lee, E.; Bab-                          J. Chem. Phys. 1995,102, 8011–8022.
+      bush, R.; McClean, J. R. Increasing the representation                 (57)Mandelshtam, V. A.; Taylor, H. S. A low-storage ﬁlter
+      accuracy of quantum simulations of chemistry without                         diagonalization method for quantum eigenenergy cal-
+      extra quantum resources. e-print arXiv:1902.10679v2                          culationorforspectralanalysisoftimesignals.J.Chem.
+      [quant-ph], 2019.                                                            Phys. 1997,106, 5085–5090.
+(43)Motta, M.; Sun, C.; Tan, A. T. K.; O’ Rourke, M. J.;                     (58)Somma, R.; Ortiz, G.; Gubernatis, J. E.; Knill, E.;
+      Ye, E.; Minnich, A. J.; Brandao, F. G. S. L.; Chan, G.                       Laﬂamme,R.Simulatingphysicalphenomenabyquan-
+      K.-L. Quantum Imaginary Time Evolution, Quantum                              tum networks. Phys. Rev. A 2002, 65, 042323.
+      Lanczos, and Quantum Thermal Averaging. e-print                        (59)O’Brien, T. E.; Tarasinski, B.; Terhal, B. Quantum
+      arXiv:1901.07653v2 [quant-ph], 2019.                                         phaseestimationofmultipleeigenvaluesforsmall-scale
+                                                                                   (noisy) experiments. New J. Phys. 2019,
+
+
+
+                                                                        9
+(60)Kyriienko, O. Quantum inverse iteration algorithm for                   (75)Izmaylov, A. F.; Yen, T.-C.; Ryabinkin, I. G. Revis-
+      near-term quantum devices. e-print arXiv:1901.09988                          ing the measurement process in the variational quan-
+      [quant-ph], 2019.                                                            tum eigensolver: is it possible to reduce the number of
+(61)Somma,R.D.Quantumeigenvalueestimationviatime                                   separately measured operators? Chem. Sci. 2019, 10,
+      series analysis. e-print arXiv:1907.11748 [quant-ph],                        3746–3755.
+      2019.                                                                 (76)Izmaylov, A. F.; Yen, T.-C.; Lang, R. A.; Vertelet-
+(62)Saad, Y.    Iterative Methods for Sparse Linear Systems,                       skyi, V. Unitary partitioning approach to the measure-
+      2nd ed.; Society for Industrial and Applied Mathemat-                        ment problem in the variational quantum eigensolver
+      ics, 2003.                                                                   method. e-print arXiv:1907.09040 [quant-ph], 2019.
+(63)Furche, F.; Krull, B. T.; Nguyen, B. D.; Kwon, J.                       (77)Gokhale,P.;Angiuli,O.;Ding,Y.;Gui,K.;Tomesh,T.;
+      Accelerating molecular property calculations with                            Suchara, M.; Martonosi, M.; Chong, F. T. Minimiz-
+      nonorthonormalKrylovspacemethods.J.Chem.Phys.                                ing state preparations in variational quantum eigen-
+      2016,144, 174105.                                                            solver by partitioning into commuting families. e-print
+(64)Suzuki, M. On the convergence of exponential opera-                            arXiv:1907.13623 [quant-ph], 2019.
+      tors—the Zassenhaus formula, BCH formula and sys-                     (78)Zhao, A.; Tranter, A.; Kirby, W. M.; Ung, S. F.;
+      tematicapproximants.Commun.Math.Phys. 1977,57,                               Miyake, A.; Love, P. Measurement reduction in vari-
+      193–200.                                                                     ational quantum algorithms. e-print arXiv:1908.08067
+(65)Lloyd,S.UniversalQuantumSimulators.    Science 1996,                           [quant-ph], 2019.
+      273, 1073–1078.                                                       (79)Gokhale,P.;Chong,F.T.  O(N3)MeasurementCostfor
+(66)Berry, D. W.; Childs, A. M.; Cleve, R.; Kothari, R.;                           VariationalQuantumEigensolveronMolecularHamil-
+      Somma,R.D.SimulatingHamiltonianDynamicswith                                  tonians. e-print arXiv:1908.11857 [quant-ph], 2019.
+      a Truncated Taylor Series. Phys. Rev. Lett. 2015, 114,                (80)Stair, N. H.; Huang, R.; He, N.; Evangelista, F. A.
+      29–5.                                                                        QFORTE: A quantum computer simulator and algo-
+(67)Somma, R.; Ortiz, G.; Knill, E.; Gubernatis, J. Quan-                          rithms library for molecular electronic structure.
+      tum simulations of physics problems. Int. J. Quantum                  (81)Parrish, R. M.; Burns, L. A.; Smith, D. G.; Simmon-
+      Inf. 2003, 1, 189–206.                                                       ett, A. C.; DePrince III, A. E.; Hohenstein, E. G.;
+(68)Hastings,M.B.;Wecker,D.;Bauer,B.;Troyer,M.Im-                                  Bozkaya, U.;  Sokolov, A. Y.;  Di Remigio, R.;
+      proving QuantumAlgorithms for Quantum Chemistry.                             Richard, R. M. Psi4 1.1: An open-source electronic
+      Quantum Inf. Comput. 2015,15, 1.                                             structure program emphasizing automation, advanced
+(69)Seeley, J. T.; Richard, M. J.; Love, P. J. The Bravyi-                         libraries, and interoperability. J. Chem. Theory Com-
+      Kitaevtransformationforquantumcomputationofelec-                             put. 2017,13, 3185–3197.
+      tronic structure. J. Chem. Phys. 2012,137, 224109.                    (82)Hehre,W.J.;Stewart,R.F.;Pople,J.A.Self-Consistent
+(70)Childs, A. M.; Wiebe, N. Hamiltonian Simulation Us-                            Molecular-OrbitalMethods.I.UseofGaussianExpan-
+      ingLinearCombinationsofUnitaryOperations.Quan-                               sions of Slater-Type Atomic Orbitals. J. Chem. Phys.
+      tum Inf. Comput. 2012,12, 901–924.                                           1969, 51.
+(71)Tubman, N. M.; Mejuto-Zaera, C.; Epstein, J. M.;                        (83)McClean, J. R.;  Sung, K. J.;  Kivlichan, I. D.;
+      Hait, D.; Levine, D. S.; Huggins, W.; Jiang, Z.; Mc-                         Cao, Y.; Dai, C.; Fried, E. S.; Gidney, C.; Gimby, B.;
+      Clean, J. R.; Babbush, R.; Head-Gordon, M. Postpon-                          Gokhale, P.; Häner, T.; Hardikar, T.; Higgott, O.;
+      ingtheorthogonalitycatastrophe: eﬃcientstateprepa-                           Huang, C.; Izaac, J.; Jiang, Z.; Liu, X.; McArdle, S.;
+      ration for electronic structure simulations on quantum                       Neeley, M.; O’Brien, T.; O’Gorman, B.; Ozﬁdan, I.;
+      devices. e-print arXiv:1809.05523 [quant-ph], 2018.                          Radin,M.D.;Romero,J.;Rubin,N.;Sawaya,N.P.D.;
+(72)Sugisaki,K.;Yamamoto,S.;Nakazawa,S.;Toyota,K.;                                 Setia,K.;Sim,S.;Steiger,D.S.;Steudtner,M.;Sun,Q.;
+      Sato, K.; Shiomi, D.; Takui, T. Quantum chemistry                            Sun, W.; Wang, D.; Zhang, F.; Babbush, R. Open-
+      on quantum computers: A polynomial-time quantum                              Fermion: The Electronic Structure Package for Quan-
+      algorithm for constructing the wave functions of open-                       tum Computers. e-print arXiv:1710.07629v5 [quant-
+      shell molecules. J. Phys. Chem. A 2016, 120, 6459–                           ph], 2017.
+      6466.                                                                 (84)Motta,  M.;  Ceperley,  D.  M.;  Chan,  G.  K.-L.;
+(73)Sugisaki,K.;Yamamoto,S.;Nakazawa,S.;Toyota,K.;                                 Gomez,J.A.;Gull,E.;Guo,S.;Jiménez-Hoyos,C.A.;
+      Sato, K.; Shiomi, D.; Takui, T. Open shell electronic                        Lan, T. N.; Li, J.; Ma, F. Towards the solution of the
+      state calculations on quantum computers: A quantum                           many-electron problem in real materials: equation of
+      circuit for the preparation of conﬁguration state func-                      state of the hydrogen chain with state-of-the-art many-
+      tions based on Serber construction. Chem. Phys. Lett.                        body methods. Phys. Rev. X 2017, 7, 031059.
+      X 2019,1, 100002.                                                     (85)Sinitskiy, A. V.; Greenman, L.; Mazziotti, D. A.
+(74)Sugisaki, K.; Nakazawa, S.; Toyota, K.; Sato, K.; Sh-                          Strong correlation in hydrogen chains and lattices us-
+      iomi, D.; Takui, T. Quantum Chemistry on Quantum                             ingthevariationaltwo-electronreduceddensitymatrix
+      Computers: AMethodforPreparationofMulticonﬁgu-                               method. J. Chem. Phys. 2010,133, 014104.
+      rationalWaveFunctionsonQuantumComputerswith-                          (86)Stella,L.;Attaccalite,C.;Sorella,S.;Rubio,A.Strong
+      out Performing Post-Hartree–Fock Calculations. ACS                           electronic correlation in the hydrogen chain: A vari-
+      Cent. Sci. 2019,5, 167–175.
+
+
+                                                                       10
+      ational Monte Carlo study. Phys. Rev. B  2011, 84,
+      245117.
+(87)Shavitt, I.; Bartlett, R. J.    Many-body methods in chem-
+      istry and physics: MBPT and coupled-cluster theory;
+      Cambridge university press, 2009.
+(88)Huron, B.; Malrieu, J. P.; Rancurel, P. Iterative pertur-
+      bationcalculationsofgroundandexcitedstateenergies
+      from multiconﬁgurational zeroth-order wavefunctions.
+      J. Chem. Phys. 1973,58, 5745.
+(89)Schriber, J. B.; Evangelista, F. A. Communication: An
+      adaptiveconﬁgurationinteractionapproachforstrongly
+      correlated electrons with tunable accuracy. J. Chem.
+      Phys. 2016,144, 161106.
+(90)Holmes, A. A.; Tubman, N. M.; Umrigar, C. J. Heat-
+      Bath Conﬁguration Interaction: An Eﬃcient Selected
+      Conﬁguration Interaction Algorithm Inspired by Heat-
+      Bath Sampling. J. Chem. Theory and Comput. 2016,
+      12, 3674–3680.
+(91)Tubman, N. M.; Lee, J.; Takeshita, T. Y.; Head-
+      Gordon, M.; Whaley, K. B. A deterministic alterna-
+      tivetothefullconﬁgurationinteractionquantumMonte
+      Carlo method. J. Chem. Phys. 2016,145, 044112.
+(92)Garniron,  Y.;  Scemama,  A.;  Loos,  P.-F.;  Caf-
+      farel,M.Hybridstochastic-deterministiccalculationof
+      the second-order perturbative contribution of multiref-
+      erence perturbation theory. J. Chem. Phys. 2017, 147,
+      034101.
+(93)Poulin, D.; Kitaev, A.; Steiger, D. S.; Hastings, M. B.;
+      Troyer, M. Quantum Algorithm for Spectral Measure-
+      ment with a Lower Gate Count. Phys. Rev. Lett. 2018,
+      121, 010501.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                         11

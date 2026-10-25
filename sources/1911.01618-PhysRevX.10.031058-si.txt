@@ -1,0 +1,1959 @@
+                                    Ground-state properties of the hydrogen chain:
+                           insulator-to-metal transition, dimerization, and magnetic phases
+          Mario Motta,1, 2, ∗ Claudio Genovese,3, ∗ Fengjie Ma,4, ∗ Zhi-Hao Cui,2, ∗ Randy Sawaya,5, ∗ Garnet Kin-Lic
+          Chan,2 Natalia Chepiga,6 Phillip Helms,2 Carlos Jiménez-Hoyos,7 Andrew J. Millis,8, 9 Ushnish Ray,2 Enrico
+           Ronca,10 Hao Shi,8 Sandro Sorella,3, 11 Edwin M. Stoudenmire,8 Steven R. White,5 and Shiwei Zhang8, 12, †
+                                           1
+                                             IBM Almaden Research Center, San Jose, CA 95120, USA
+              2
+               Division of Chemistry and Chemical Engineering, California Institute of Technology, Pasadena, CA 91125, USA
+                         3
+                           SISSA – International School for Advanced Studies, Via Bonomea 265, 34136 Trieste, Italy
+                                    4
+                                      The Center for Advanced Quantum Studies and Department of Physics,
+                                           Beijing Normal University, Beijing, Beijing 100875, China
+                       5
+                         Department of Physics and Astronomy, University of California, Irvine, CA 92697-4575, USA
+                                           6
+                                             Institute for Theoretical Physics, University of Amsterdam,
+                                    Science Park 904 Postbus 94485, 1090 GL Amsterdam, The Netherlands
+                             7
+                               Department of Chemistry, Wesleyan University, Middletown, CT 06459, United States
+                         8
+                           Center for Computational Quantum Physics, Flatiron Institute, New York, NY 10010, USA
+                                   9
+                                     Department of Physics, Columbia University, New York, NY 10027, USA
+            10
+               Max Planck Institute for the Structure and Dynamics of Matter, Luruper Chaussee 149, 22761 Hamburg, Germany
+              11
+                 Democritos Simulation Center CNR–IOM Istituto Officina dei Materiali, Via Bonomea 265, 34136 Trieste, Italy
+                         12
+                            Department of Physics, College of William and Mary, Williamsburg, VA 23187-8795, USA
+
+
+
+
+∗ These authors contributed equally to this work
+† szhang@flatironinstitute.org
+                                                                                                                                       2
+
+  In this document, we provide additional technical information about the calculations described in the main text, to enable their
+reproducibility. In the first section, we describe the Hamiltonian studied, and the techniques employed to approach the thermo-
+dynamic and infinite basis limits. In the second section, we describe the methodologies used in the present work, computational
+details, and include additional supporting data.
+
+
+                                                      I. GENERAL DEFINITIONS
+
+                                                          A.       Hamiltonian of the system
+
+  A system of N protons at fixed, equally spaced, positions along a line, with N electrons, is described by the Hamiltonian
+
+                                                   N                       N                       N
+                                                   X ∇2        i
+                                                                           X                       X
+                                   Ĥ = E0 −                           +           v(ri , rj ) −             v(ri , Ra ) ,            (1)
+                                                   i=1
+                                                               2           i<j=1                   i,a=1
+
+
+with
+                                                  N
+                                                  X            1                                            1
+                                      E0 =                                          ,    v(r, r′ ) =                      .           (2)
+                                                           |Ra − Rb |                                    |r − r′ |
+                                                 a<b=1
+
+
+In Eq. (1), ri ∈ R3 , Ra = a R ez , are electronic and nuclear coordinates respectively (ez is a unit vector in the z direction),
+atomic units (Bohr aB for lengths, Hartree EHa for energies) are used, and R is termed chain bondlength. Eq. (1) describes the
+neutral H chain with open boundary conditions (OBC). In the present work we studied chains with OBC as well as cells with
+Born-von-Karman periodic boundary conditions [1], which replaces the Hamiltonian (1) by
+
+                                                    N                       N                          N
+                                                    X ∇2                    X                          X
+                                    Ĥ = E0 −                      i
+                                                                       +            v ′ (ri , rj ) +         Vext (ri )       ,       (3)
+                                                     i=1
+                                                               2           i<j=1                       i=1
+
+
+an operator acting on a space of wave-functions with the boundary conditions
+                                                                                                                     π
+                                     Ψ(. . . ri + L ez . . . ) = eikL Ψ(. . . ri . . . ) , |k| ≤                       .              (4)
+                                                                                                                     L
+One has periodic boundary conditions (PBC) across the cell when k = 0.
+   In Eq. (3), electronic positions lie within a hyper-cubic cell r ∈ C = [−L, L] × [−L, L] × [0, N R], where L is a very large
+transverse length (vacuum), and N R the cell length. The electron-electron interaction v(r, r′ ) and external potential Vext (r)
+are periodic functions, with periodicity dictated by the shape of the supercell, and Vext depends on nuclear positions and can
+optionally include a non-local pseudo-potential. Finally, E0 is a constant correction arising from the treatment of long-range
+terms in the Coulomb interactions and pseudopotential.
+   Many of the methods employed work in a finite basis (see Section I C and others for further discussion). The Hamiltonian
+projected into an orthogonal basis of 2M spin-orbitals can be written in second quantization as
+                                          X                                 1 X
+                                   Ĥ =          hpq â†pσ âqσ +                     (pr|qs) â†pσ â†qτ âsτ ârσ               ,   (5)
+                                          pq,σ
+                                                                            2 pqrs,στ
+
+where â†pσ (âpσ ) destroys (creates) an electron in the orbital p with spin σ along the z-axis of a suitable reference frame.
+  As a simplification of the full second-quantized Hamiltonian, in the present work we have also studied the one-band one-
+dimensional (1D) Hubbard model
+                                                 X  †                   X
+                                        Ĥ = −          âiσ âjσ + h.c. +     U â†i↑ âi↑ â†i↓ âi↓ ,                        (6)
+                                                 hiji,σ                                     i
+
+
+where the summation in the one-body part of the Hamiltonian is performed over nearest neighbors indices ij = 1 . . . N in the
+topology of the system (straight-line or ring for OBC, PBC respectively), and U ≥ 0 is a parameter controlling the relative
+importance of the interaction part of the Hamiltonian.
+                                                                                                                                    3
+
+                                                           B. Size effects
+
+
+
+  To approach the thermodynamic limit N → ∞, we studied increasingly large chains with OBC or increasingly large cells
+with PBC. With the latter, we remove part of the size effects by means of the twist-average boundary condition procedure [2]: a
+mesh {ki }N
+          i=1 of twist vectors in the first Brillouin zone of the cell, k ∈ [−π/L, π/L], is chosen. For every ki in such mesh, a
+            k
+
+simulation is conducted, giving access to an approximation for the ground-state wave-function Ψki of the Hamiltonian Eq. (3)
+with boundary conditions dictated by ki . An observable of interest (such as the ground-state energy) is computed as
+
+
+
+
+                                                      Oki = hΨki |Ô|Ψki i ,                                                      (7)
+
+
+
+
+and its average over twists is computed as O = N1k N
+                                                   P k
+                                                      i=1 Oki . For metallic systems, averaging over twist vectors is especially
+important and results in faster convergence to the thermodynamic limit than PBC for many properties, without any signifi-
+cant increase in computational cost in stochastic methods [2]. Complete removal of finite-size effects is achieved combining
+twist-averaging for a cell containing N atoms, and increasing N until the observable of interest has converged or a reliable
+extrapolation is possible.
+
+
+
+
+                                                           C. Basis sets
+
+
+
+   Of the methodologies employed in the present work, VMC and DMC operate directly in a continuum basis, where electrons
+occupy real-space positions r ∈ R3 . Finite basis effects in these methods are typically tiny and enter only via the trial wave-
+function form and the fixed-node approximation (see Sec. II F for details). The other electronic structure methods operate in a
+finite basis. The basis set error can lead to biases in the results, which can be quantitative or qualitative in nature depending on
+the observable of interest and the basis used.
+
+  In the case of independent-electron methods (such as DFT or Hartree-Fock) it is in practice possible to use large basis sets.
+These basis sets can for example, be composed of plane waves, Gaussians, or specialized bases such as sliced Gaussian bases that
+are described in more detail below. The basis set error for mean-field results can thus be controlled reasonably well on the energy
+scale of interest in the current study (e.g. to significantly better than 1 mEh per atom). For example, in the planewave DFT
+calculations (see Sec. II A), convergence with respect to basis error is straightforward to control, and the results are converged
+for the effective Hamiltonian in which the protons are replaced by a pseudopotential.
+
+   For the correlated electronic methods, the basis set error is more problematic both because it is often difficult to use such large
+basis sets, and because the basis set error typically converges more slowly than it does for independent-electron methods. In
+modest to large R regimes, we have demonstrated how the basis set error could be removed and the continuum limit achieved
+in several many-body methods [3]. In the small R metallic regime, this turns out to be more challenging, as discussed in further
+detail below. It is thus necessary to work with a more compact representation. The correlated methods then either use a smaller
+basis of the same kind as the mean-field calculations, or project the large mean-field computational basis onto a smaller, specially
+constructed set. The details of the compact basis construction are reported below for each method. With these restrictions, the
+basis error in the energy in the correlated methods remains larger than 1 mEh per atom, sometimes substantially so. However,
+we only draw conclusions of a qualitative nature that depend on observables that are relatively insensitive to this error. Examples
+where this is not the case, for example precise occupancies in the metallic phase, are briefly discussed in the main text and
+illustrated further below.
+                                                                                                                                         4
+
+                                                  II.   NUMERICAL METHODS AND RESULTS
+
+
+   In this section, technical information is presented in separate subsections under each method, first for mean-field methods, fol-
+lowed by correlated methods. In each subsection, the method is described, followed by computational details, under “Approach
+and computational details”, which may also include data related to technical details (basis set convergence, size convergence,
+etc). Then in “Additional data” other supplementary results computed by the method, if available, are presented, organized
+according to the order of the discussion and figures in the main text.
+
+
+
+
+                                                           A. Density functional theory (DFT)
+
+
+                                                           1.    Approach and computational details
+
+
+   In the present work, the plane-wave basis method and Quantum-ESPRESSO software package [4] were used to perform DFT
+calculations. Generalized gradient approximations (GGA) of Perdew-Burke-Ernzerhof (PBE) have been adopted for exchange-
+correlation potential [5]. The multi-projector optimized norm-conserving Vanderbilt pseudopotential [6, 7] was used to model
+the electron-ion interactions, with the kinetic energy cutoff for wavefunctions fixed at Ecut = 60 Ry. Several other types of
+exchange-correlation functional, including the local density approximation (LDA) of the Perdew-Zunger formula [8], the Heyd-
+Scuseria-Ernzerhof (HSE) screened hybrid functional [9, 10], and the Gaussian-Perdew-Burke-Ernzerhof (Gau-PBE) screened
+hybrid functional [11] were also tested and used for comparison. In order to minimize the interaction between periodic images
+in the x and y directions (H atoms are placed along the z axis), a large vacuum of length L = 40 aB was imposed in all
+calculations.
+   As illustrated in Fig. 1 for a 50-atom supercell at R = 1.4 aB , calculations may predict the wrong ground state if the vacuum
+length L is not large enough.
+
+
+                                                                     FM                               AFM
+
+                                                 -53.805
+
+                                                 -53.810
+                                      E [ERy ]
+
+
+
+
+                                                 -53.815
+
+                                                 -53.820
+
+                                                 -53.825
+                                                            20             25        30        35      40
+                                                                                Lvacuum [aB]
+
+FIG. 1. Effect of increasing the vacuum length L (size of the supercell in directions perpendicular to the chain axis) on DFT-GGA energies,
+for N = 50 atoms, at R = 1.4 aB .
+
+
+
+
+                                                                      2.    Additional data
+
+
+  The DFT-GGA bands for R < 1.1 aB and R ≥ 1.6 aB are shown in Fig. 2. The cells contain N = 33, 20, 24, 30 H atoms for
+R = 0.7 aB to R = 1.0 aB , respectively. Cells of N = 2 atoms are used for R ≥ 1.6 aB .
+  In these regimes, DFT-GGA predicts modulated FM metals and AFM insulators as ground states respectively. Since these
+systems are overall in AFM order, the band structures of spin-up and spin-down parts are the same. Their energy gaps increase
+with R in the insulating phase.
+                                                                                                                                   5
+
+                     2                            2                                       2
+
+                     1                            1                                       1
+
+                     0                            0                                       0
+
+                     -1                          -1                                      -1
+                            R = 0.7                              R = 0.8                                 R = 0.9
+                     -2                          -2                                      -2
+                      0.0     0.5          1.0    0.0              0.5             1.0    0.0              0.5             1.0
+                     2                            4                                       8
+
+                     1                            2                                       4
+      E − EF [eV ]
+
+
+
+
+                     0                            0                                       0
+
+                     -1                          -2                                      -4
+                            R = 1.0                              R = 1.6                                 R = 2.0
+                     -2                          -4                                      -8
+                      0.0     0.5          1.0    0.0              0.5             1.0    0.0              0.5             1.0
+                     8                            8                                       8
+
+                     4
+                                                  4                                       4
+                     0
+                                                  0                                       0
+                     -4
+                            R = 2.4                              R = 2.8                                 R = 3.2
+                     -8                          -4                                      -4
+                      0.0     0.5          1.0    0.0              0.5             1.0    0.0              0.5             1.0
+                                                                 k [2kF]
+
+FIG. 2. Top to bottom: DFT-GGA bands for R < 1.1 aB (modulated FM) and R ≥ 1.6 aB (AFM insulator). Energies are measured from the
+Fermi level, in electronvolts (eV), and momenta in units of the Fermi wave-vector of a paramagnetic ideal Fermi gas with density 1/R.
+
+
+
+
+  In Fig. 3, the orbital characters of the DFT-GGA bands, as analyzed by projection onto atomic orbitals, are shown for R = 0.8,
+1.0, 1.1, 1.6, and 2.0 aB .
+
+
+
+
+  For large R when the system is insulating, the occupied bands consist basically of 1s orbitals, as expected. Bands with 2s
+characters have energy slightly lower than bands with 2px or 2py characters. However, an inversion of the band order is seen as
+R decreases, with bands of mostly 2px or 2py character becoming lower in energy than the 2s one, and thus becoming the first
+bands to be populated. An insulator-to-metal transition occurs, and the system enters a metallic phase.
+                                                                                                                                                                                          6
+
+                               1s                                 2s                                        2pz                               2px                                2py
+                      2.0
+
+                      1.0
+
+                      0.0
+
+                      -1.0
+                                                                                                     R = 0.8
+                      -2.0
+
+
+                      0.5
+
+
+                      0.0
+
+                                                                                                     R = 1.0
+                      -0.5
+
+                      1.0
+
+                      0.0
+
+                      -1.0
+                                                                                                   R = 1.1 σ =↑
+       E − EF [eV ]
+
+
+
+
+                      -2.0
+
+                      1.0
+
+                      0.0
+
+                      -1.0
+                                                                                                   R = 1.1 σ =↓
+                      -2.0
+
+
+                      2.0
+
+
+                      0.0
+
+                                                                                                     R = 1.6
+                      -2.0
+
+
+                      3.0
+
+
+                      0.0
+
+                                                                                                     R = 2.0
+                      -3.0
+                        0.00   0.25   0.50   0.75   0.00   0.25        0.50   0.75   0.00   0.25      0.50        0.75   0.00   0.25   0.50   0.75   0.00   0.25   0.50   0.75     1.00
+
+                                                                                                   k[kF ]
+
+
+
+FIG. 3. DFT-GGA bands for R = 0.8, 1.0, 1.1 aB (modulated FM) and R = 1.6, 2.0 aB (AFM insulator). Projections of DFT orbitals
+onto subspaces spanned by 1s, 2s, 2pz , 2px , 2py orbitals are showed (left to right), centered around the energies E(k) of DFT orbitals. The
+thickness is proportional to the squared amplitude of their projections on the angular-momentum eigenspaces. For R = 1.1 aB , spin-up and
+spin-down bands are shown separately.
+
+
+
+
+   In the intermediate regime, for R between 1.1 and 1.4 aB , long-range FM order develops in the DFT-GGA ground state. The
+spin-resolved and orbital-projected bands for R = 1.2, 1.3, and 1.4 aB are shown in the top panels of Fig. 4, Fig. 5, and Fig. 6,
+respectively, using 2-atom supercells.
+
+
+
+   Bands with 2px or 2py characters have lower energy than the 2s one, and contribute mostly to the spin polarization and
+magnetic order. The influence of the exchange-correlation functional on the electronic structure is studied using an efficient
+hybrid Gau-PBE functional, which goes beyond the standard functionals LDA and GGA. Results are shown in the bottom panels
+of Fig. 4, Fig. 5, and Fig. 6. The two exchange-correlation functionals give similar results, except that the inversion of 2s and
+2px or 2py happens a little later in the Gau-PBE calculations, with the bands of 2s character being lower in energy than the 2px
+and 2py until R = 1.4 aB .
+                                                                                                                                              7
+
+
+
+
+                        1s DFT, GGA            2s DFT, GGA            2pz DFT, GGA            2px DFT, GGA           2py DFT, GGA
+
+
+                  2
+                  1
+                  0
+       E-EF(eV)
+
+
+
+
+                  -1
+                  2
+                  1
+                  0
+                  -1
+
+                       1s DFT, Hybrid         2s DFT, Hybrid         2pz DFT, Hybrid         2px DFT, Hybrid        2py DFT, Hybrid
+
+
+                  2
+                  1
+                  0
+       E-EF(eV)
+
+
+
+
+                  -1
+                  2
+                  1
+                  0
+                  -1
+
+FIG. 4. Spin-resolved and orbital-projected bands for R = 1.2aB , from DFT-GGA (top) and a hybrid Gau-PBE functional (bottom). Projec-
+tions of DFT orbitals onto subspaces spanned by 1s, 2s, 2pz , 2px , 2py orbitals are shown (left to right), centered around the energies E(k) of
+DFT orbitals, with thickness proportional the squared amplitude of their projections on the angular-momentum eigenspaces.
+                                                                                                                  8
+
+
+
+
+                1s DFT, GGA      2s DFT, GGA            2pz DFT, GGA           2px DFT, GGA     2py DFT, GGA
+
+
+           2
+           1
+           0
+E-EF(eV)
+
+
+
+
+           -1
+           2
+           1
+           0
+           -1
+
+                1s DFT, Hybrid   2s DFT, Hybrid        2pz DFT, Hybrid        2px DFT, Hybrid   2py DFT, Hybrid
+
+
+           2
+           1
+           0
+E-EF(eV)
+
+
+
+
+           -1
+           2
+           1
+           0
+           -1
+
+                                  FIG. 5. Similar to Fig. 4, but for R = 1.3aB .
+                                                                                                                  9
+
+
+
+
+                1s DFT, GGA      2s DFT, GGA            2pz DFT, GGA           2px DFT, GGA     2py DFT, GGA
+
+
+           2
+           1
+           0
+E-EF(eV)
+
+
+
+
+           -1
+           2
+           1
+           0
+           -1
+
+                1s DFT, Hybrid   2s DFT, Hybrid        2pz DFT, Hybrid        2px DFT, Hybrid   2py DFT, Hybrid
+
+
+           2
+           1
+           0
+E-EF(eV)
+
+
+
+
+           -1
+           2
+           1
+           0
+           -1
+
+                                  FIG. 6. Similar to Fig. 4, but for R = 1.4aB .
+                                                                                                                                    10
+
+
+
+
+   The magnetic properties of the H chain in the insulating regime, such as the absolute magnetization and charge gap, are shown
+in Fig. 7. Gaps from two standard LDA and GGA exchange-correlation functionals, and two screened hybrid functionals (HSE
+and Gau-PBE) are shown. As R increases, both the absolute magnetization and charge gap increase.
+
+
+
+
+   GGA, which includes more non-local exchange interactions than LDA, predicts a stronger magnetization, and larger charge
+gaps. Both functionals tend to underestimate the charge gap, a fact known as the “band gap problem”. Hybrid functionals
+incorporating a portion of exact exchange from Hartree-Fock theory would give more accurate estimates. However, the metal-
+insulator transition is not sensitive to the exchange-correlation functionals adopted.
+
+
+
+
+                                                                                   4
+                                            GGA                                              GGA
+                                            LDA                                              LDA
+                                0.4         HSE                                              HSE
+                                            Gau-PBE                                3         Gau-PBE
+                    Mabs [uB]
+
+
+
+
+                                                                       Egap [eV]
+
+
+
+
+                                                                                   2
+                                0.2
+                                                                                   1
+
+
+                                 0                                                 0
+                                      1.6   2   2.4      2.8   3.2                     1.6   2   2.4      2.8   3.2
+                                                 R[aB]                                           R [aB]
+
+FIG. 7. The absolute magnetization (left) and charge gap (right) as a function of R from GGA, LDA, HSE, and Gau-PBE calculations in the
+insulating regime.
+
+
+
+
+  Figure 8 gives the detailed spin-density computed from DFT-GGA, shown along a plane containing the chain, to illustrate the
+spin density distributions at R = 0.7 to R = 3.2 aB . Three types of long-range orders are found. For large R (R ≥ 1.6 aB ),
+when the systems is insulating, antiferromagnetic order develops, with alternating spin-up and spin-down along the chain. As R
+decreases, the systems undergoes a metal-insulator transition. As discussed before, the bands of 2px , and 2py characters become
+partially occupied and long-range modulated FM domains are formed. In the intermediate regime (R ≥ 1.1 aB and R < 1.6 aB ),
+the system shows a ferromagnetic order with spin polarization, mostly due to 2px , and 2py bands. As R further decreases, the
+modulation of the FM domains become shorter, as shown in the figures for R = 0.7 to R ≤ 1.0 aB .
+                                                                                                                                                            11
+
+
+
+
+               6                                8   6                                        8   6                                8
+                    R = 0.7                              R = 0.8                                      R = 0.9
+                                                6                                            6                                    6
+
+               3                                4   3                                        4   3                                4
+                                                2                                            2                                    2
+
+               0                                0   0                                        0   0                                0
+                                              −2                                           −2                                   −2
+
+               -3                             −4    -3                                     −4    -3                             −4
+                                              −6                                           −6                                   −6
+
+               -6                             −8    -6                                     −8    -6                             −8
+                    −10       0        10                      −5        0     5                   −10          0         10
+
+
+               6                              4.5   6                                      3.0   6                              1.6
+                    R = 1.0                              R = 1.1                                      R = 1.2
+                                                                                           2.4                                  1.2
+                                              3.0
+               3                                    3                                      1.8   3                              0.8
+                                              1.5
+                                                                                           1.2
+                                                                                                                                0.4
+               0                              0.0   0                                      0.6   0
+                                                                                                                                0.0
+                                                                                           0.0
+                                            −1.5
+                                                                                                                               −0.4
+               -3                                   -3                                   −0.6    -3
+                                            −3.0                                                                               −0.8
+                                                                                         −1.2
+
+               -6                           −4.5    -6                                   −1.8    -6                            −1.2
+                      −10     0   10                      −20            0         20                   −20     0   20
+
+
+
+
+                                                                                                                                      ρ(x, y) [10−4 aB−3]
+      y [aB]
+
+
+
+
+               6                             0.60   6                                     0.20   6                              4.5
+                    R = 1.3                              R = 1.4                                      R = 2.0
+                                             0.45                                         0.15
+                                                                                                                                3.0
+               3                             0.30   3                                     0.10   3
+                                                                                                                                1.5
+                                             0.15                                         0.05
+
+               0                             0.00   0                                     0.00   0                              0.0
+                                            −0.15                                        −0.05
+                                                                                                                               −1.5
+               -3                           −0.30   -3                                   −0.10   -3
+                                                                                                                               −3.0
+                                            −0.45                                        −0.15
+
+               -6                           −0.60   -6                                   −0.20   -6                            −4.5
+                     −10      0    10                          −20       0    20                      -10       0        10
+
+
+               6                               24   6                                       80   6                              160
+                    R = 2.4                              R = 2.8                                      R = 3.2
+                                               18                                           60                                  120
+
+               3                               12   3                                       40   3                               80
+                                                6                                           20                                   40
+
+               0                                0   0                                        0   0                                0
+                                              −6                                          −20                                  −40
+
+               -3                            −12    -3                                    −40    -3                            −80
+                                             −18                                          −60                                  −120
+
+               -6                            −24    -6                                    −80    -6                            −160
+                    -10       0        10                -10             0          10                -10       0        10
+                                                                     x [aB]
+
+
+FIG. 8. Spin-density computed from DFT-GGA, shown along a plane containing the chain, to illustrate the spin density distributions at
+R = 0.7 to R = 3.2 aB .
+
+
+
+
+   The extrapolation of the dimensionless localization length D at R = 1.8, 2.5, and 3.0 aB at DFT level is shown in Fig.√ 9.
+                                                                                                                                    D
+As mentioned in the main text, the electron localization length Λ is related to the complex polarization ZN by Λ = 2πρ
+                                   2                                        2
+and D = − limN →∞ N log |ZN | . In localized systems, limN →∞ |ZN | = 1, and D or Λ is finite; in metallic systems
+limN →∞ |ZN |2 = 0, and D or Λ → ∞. For small R, DFT calculations give |ZN | = 0 across a wide range of system sizes
+N, indicating a metallic ground state. The values of |ZN | are always larger than 0 for large R, in consistent with the insulating
+ground state. However, the values of |ZN | in the insulating phase are sensitive to finite-size effects, as illustrated in the Fig. 9.
+The closer to RMIT , the slower the corresponding localization length D converges. For example, up to N = 160, the values of
+D are far away from convergence at R = 1.8 aB . When R is larger, the convergence becomes much better, as shown as the curve
+of R = 2.5 aB . However, the values of D are still not converged when N = 160, which suggests that the correlation length of
+the MIT ξ is large even at R ∼ 2.5 aB . For R = 3.0 aB , the values of D are almost converged when N ∼ 100, indicating a
+strong electron localization.
+                                                                                                                                          12
+
+                                                200
+
+
+
+                                                150
+
+
+
+
+                             D=-N log (|ZN| )
+                            2
+                                                                        1000                                            R = 3.0 aB
+                                                                                                                        R = 2.5 aB
+
+
+
+
+                                                                    D
+                                                100                      500
+                                                                                                                        R = 1.8 aB
+                                                                           0
+                                                                               0        50          100         150
+                                                 50                                             N
+
+
+
+
+                                                 0
+                                                  0                 50                                    100                 150
+                                                                                               N
+
+FIG. 9. The extrapolation of the dimensionless localization length D at R = 1.8, 2.5, and 3.0 aB at DFT level. Inset: zoomed plot of the main
+figure.
+
+
+                                                      B. Auxiliary-field quantum Monte Carlo (AFQMC)
+
+                                                             1.   Approach and computational details
+
+   The auxiliary-field quantum Monte Carlo (AFQMC) estimates the ground-state properties of a many-fermion system by
+statistically sampling the wave-function e−β Ĥ |ΨI i ∝ |Ψβ i → |ΨG i, where ΨI is an initial wave-function, non-orthogonal to
+the ground state ΨG of Ĥ [12, 13]. For sufficiently large β, expectation values computed over Ψβ gives ground-state averages.
+AFQMC projects ΨI towards ΨG iteratively, writing e−β Ĥ = (e−∆τ Ĥ )n where ∆τ = nβ is a small imaginary-time step. The
+propagator is represented as e−∆τ Ĥ = dx p(x) B̂(x), where B̂(x) is a mean-field propagator, of the form of an exponential
+                                          R
+of one-body operators and depending on the vector x, and p(x) is a probability distribution [14, 15]. This representation maps
+the original interacting system onto an ensemble of non-interacting systems subject to a fluctuating potential. The imaginary-
+time projection can be realized as an open-ended random walk over the auxiliary-field (i.e., mean-field potential) configurations
+[12, 13]. Sampling the trajectories of the random walk leads to a stochastic representation of Ψβ as an ensemble of Slater
+determinants. For general two-body interactions AFQMC has a sign/phase problem, which is controlled by a phaseless gauge
+constraint (CP) on the Slater determinants using a trial wave-function ΨT [12, 13]. (For Hamiltonians that satisfy certain
+symmetry properties, e.g. the Hubbard model at half-filling, AFQMC is free of the sign problem). Here, the trial wave-function
+is typically taken from Hartree-Fock or DFT. The accuracy of the CP AFQMC was extensively benchmarked in both real
+materials [3] and lattice models [16–18].
+   For first-principles materials computations, AFQMC can be carried out using either a plane-wave basis and pseudopotentials
+[12, 19], localized basis sets such as standard Gaussian type orbitals [13], or down-folded Hamiltonians [20]. In this work, we
+used Gaussian bases to study finite chains with OBC, and down-folded bases to study cells with PBC. For OBC calculations,
+the two-body matrix elements (pr|qs) are decoupled into rank-3 tensors with the Cholesky decomposition, using a tolerance of
+δ ≤ 10−5 [21]. The total projection time is typically β = 200 E−1  Ry , although calculations with higher β were performed in some
+cases. The convergence error from the use of a finite β is negligible. Most calculations used ∆τ = 0.005 or 0.01 E−1     Ry , and a
+population of Nw ≃ 400 stochastically sampled Slater determinants. The reported QMC error bars are estimated as one standard
+deviation statistical errors.
+   a. Backpropagation Observables other than the energies can be computed relying on the back-propagation algorithm [22–
+24] in the framework of AFQMC, related to the forward walking method in configurational quantum Monte Carlo [25, 26]. The
+starting point of the BP algorithm is the observation that, for large n and m,
+
+                                                           hΨT |e−m∆τ Ĥ Âe−n∆τ Ĥ |ΨI i
+                                                      A≡                                                   ≃ hΨG |Â|ΨG i .              (8)
+                                                              hΨT |e−(m+n)∆τ Ĥ |ΨI i
+
+Inserting the stochastic representation of the imaginary-time propagator gives
+
+                                                                               X            hΦi |Â|Ψi i
+                                                                   A=                  Wi                       .                        (9)
+                                                                                   i
+                                                                                             hΦi |Ψi i
+                                                                                                                                    13
+
+Here, |Ψi i is a stochastically sampled Slater determinant sampled at imaginary time n ∆τ , Wi its normalized future weight at
+some time (n + m) ∆τ and hΦi | is obtained back-propagating (i.e. propagating as a bra or linear functional, rather than a ket or
+vector) hΨT | along the segment of the future path of |Ψi i, sampled during the time interval between n ∆τ and (n + m) ∆τ [24].
+  In this work, we employed the back-propagation algorithm to evaluate the spin-resolved one-body density matrix,
+
+                                                       ρpq,σ = hΨG |â†pσ âqσ |ΨG i ,                                            (10)
+
+the complex polarization measure
+                                                                2π
+                                                                     P             †
+                                                   Z = hΨG |ei L         pqσ xpq âpσ âqσ   |ΨG i ,                              (11)
+
+where L is the length of the simulation cell and xpq the matrix elements of the position operator x̂, and the spin structure factor
+
+                                            1                                                    
+                                  S(q) =        hΨG |ρ̂s (q)† ρ̂s (q)|ΨG i − |hΨG |ρ̂s (q)|ΨG i|2   ,
+                                           Nw
+                                           X                                                                                      (12)
+                                 ρ̂s (q) =    (−1)σ ρpr (q) â†pσ ârσ ,
+                                             prσ
+
+
+where ρpr (q) are the matrix elements of the density fluctuation operator ρ̂(q) = eiqx̂ . These quantities can be explicitly evaluated
+using a combination of Wick’s and Thouless’s theorems [13]. Indeed, defining the matrices parametrizing the Slater determinants
+in (9) as Φσi and Ψσi , and their Green’s function as
+                                                                        −1
+                                                                    †              †
+                                                    Gσi = Ψσi (Φσi ) Ψσi     (Φσi )               ,                               (13)
+
+one has
+                                                         X
+                                              ρpq,σ =          Wi (Gσi )qp        ,
+                                                           i
+                                                                                         
+                                                                              †   2π
+                                                                                                                                  (14)
+                                                         X        Y det (Φσi ) ei L x Ψσi
+                                                    Z=         Wi                    
+                                                                                 †
+                                                           i      σ    det (Φσi ) Ψσi
+
+and, in the case of a closed-shell system,
+                                               X Wi
+                                     S(q) =                Tr[ρ† (q)Gσi ρ(q) − ρ† (q)Gσi ρ(q)Gσi ] .                              (15)
+                                                   iσ
+                                                      Nw
+
+In the infinite basis limit one has ρ† (q)ρ(q) = ρ(q)ρ† (q) = I, which does not hold for a finite basis. We alleviate this finite-basis
+effect by replacing the estimator of the spin structure factor with
+                                                               X Wi
+                                             S(q) = 1 −                   Tr[ρ† (q)Gσi ρ(q)Gσi ] .                                (16)
+                                                               iσ
+                                                                  Nw
+
+   In Figure 10 we show the AFQMC localization measure as a function of twist vector k for a 40-atom supercell at R = 1.8 aB .
+Localization measure is computed using a back-propagation time of β = 1ERy and a population of Nw = 1000 walkers on
+average.
+   b. Down-folding Down-folding techniques aim at producing model Hamiltonians that capture emergent correlated physics
+of interacting systems, by focussing on a relevant low-energy subspace of the original Hilbert space. In correlated systems,
+the correct effective Hamiltonian is strongly dependent on material-specific properties, motivating the need for general-purpose,
+accurate and systematic procedures.
+   In the present work we resorted to a down-folding technique [20, 27] that expresses down-folded Hamiltonians with respect
+to a truncated basis set of mean-field orbitals of the original system.
+   The construction of the down-folded Hamiltonian begins with a standard DFT calculation for the target system. This is
+done using a plane-wave basis with pseudopotentials. Plane-waves are desirable at this stage, because they provide an unbiased
+representation of the many-body Hamiltonian. We then use the Kohn-Sham (KS) orbitals {χi }M      i=1 as basis set, tuned to eliminate
+less physically relevant high-energy virtual states, based on the Kohn-Sham energies {ǫi }M    i=1 . In this work, the KS orbitals
+used as basis are solved after a self-consistent DFT calculation, adding a potential term in the KS Hamiltonian that confines
+theresulting orbitals according to the electronic density, so that the high-energy orbitals can be highly diffuse but not unbound.
+                                                                                                                                                     14
+
+                                                                        DFT, Re[Z]                                     AFQMC, Re[Z]
+                                                                        DFT,Im[Z]                                      AFQMC, Im[Z]
+
+                                                     0.30
+
+
+
+                                                     0.20
+
+
+
+
+                                      Re[Z], Im[Z]
+                                                     0.10
+
+
+
+                                                     0.00
+                                                            0.00             0.25               0.50               0.75            1.00
+                                                                                               k [2kF ]
+
+FIG. 10. (color online) Detail of the twist-average procedure for the calculation of Re[Z], Im[Z] for a 40-atom supercell at R = 1.8 aB ,
+using AFQMC (red half-filled spheres) and DFT (blue half-filled squares). k is given in units of the Fermi wave-vector 2kF = π/R of a
+paramagnetic 1D ideal Fermi gas with density 1/R.
+
+                     (a) 0.04
+                                                                                             ρregular-up
+                          0.03                                                               ρregular-down
+                                                                                             ρconfined-up
+                          0.02                                                               ρconfined-down
+                                                                                             νconfining-up
+                          0.01                                                               νconfining-down
+
+
+                             0
+                                 0                             10                                   20                            30           40
+                                                                           R (along x direction, in unit bohr)
+                     (b) 0.04
+                                                              0.9
+                          0.03
+                                                              0.6
+                          0.02                                                    νconfining = νconfining*0.1 in the inset
+                                                              0.3
+
+                          0.01                                 0
+                                                                    0        10           20             30       40         50
+                             0
+                                 0                     10                     20                         30                  40           50
+                                                                          R (along xy direction, in unit bohr)
+
+FIG. 11. (color online) The total electron densities ρ (for the lowest 120 orbitals including both occupied and unoccupied orbitals) and
+confining potential ν of both spins added along x and xy directions in the xy plane (z=0) for a 24-atom supercell at R = 0.9 aB with k-point
+(0, 0, 0.075) from DFT non-self-consistent calculations.
+
+
+Figure 11 shows the total electron densities (for the lowest 120 orbitals including both occupied and unoccupied orbitals) and
+confining potential added along x and xy directions in the xy plane (z=0) for a 24-atom supercell at R = 0.9 aB with k-point (0,
+0, 0.075) from DFT non-self-consistent calculations. The electron densities from regular DFT calculations (without confining
+potential) are always finite in the xy plane, which indicate that the orbitals are unbounded. Once the confining potential term is
+added, the electron densities go to zero rapidly and all of the orbitals become bounded.
+   Expressed in this basis, the effective down-folded Hamiltonian is given by one-body and two-body terms whose matrix
+elements read
+
+                                                 hpq = hχp |Ĥ1 |χq i , (pr|qs) = hχp χq |Ĥ2 |χr χs i .                                            (17)
+
+Here Ĥ1 includes all one-body terms in the Hamiltonian and Ĥ2 is the two-body interaction term. These matrix elements, which
+encode the periodicity and the Coulomb interaction in the underlying supercell, can be efficiently computed using fast Fourier
+transform techniques, as the orbitals χp are expressed as linear combination of plane waves, and define a Hamiltonian operator
+that can be treated by any first-principles methodology operating in second quantization. In the present work, we used the
+                                                                                                                                    15
+
+AFQMC to study the down-folded Hamiltonian. For calculations in periodic systems away from the gamma point, the electron
+repulsion integral has 4-fold symmetry, as opposed to the 8-fold symmetry observed in molecules, which in turn requires to
+slightly modify the stochastic representation of the imaginary-time evolution in AFQMC calculations [28, 29]. Use of the down-
+folding techniques allows first-principles (in this case AFQMC) calculations to be performed with a compact Hamiltonian, while
+retaining material-specific properties.
+
+                                                                M =5              M = 20           M = 100
+                                                                M = 10            M = 40
+
+                                              -0.190
+
+
+                                     Z        -0.195
+
+
+                                              -0.200
+
+
+                                              -0.205
+                                                         0.00      0.05          0.10       0.15       0.20
+                                                                                 1/M
+                                                   2.0
+
+                                                   1.5
+                                          Ss (q)
+
+
+
+
+                                                   1.0
+
+                                                   0.5
+
+                                                   0.0
+                                                         0.0        0.5           1.0       1.5        2.0
+                                                                                q[π/R]
+                                              0.020
+
+                                              0.015
+                                     Sc (q)
+
+
+
+
+                                              0.010
+
+                                              0.005
+
+                                              0.000
+                                                         0.0        0.5           1.0       1.5        2.0
+                                                                                q[π/R]
+
+FIG. 12. (color online) Convergence of AFQMC localization measure Z at R = 3.6 aB (top), spin structure factor Ss (q) at R = 0.9 aB
+(middle) and charge structure factor Sc (q) at R = 0.9 aB (bottom) with basis set size M (dark to light red), using a 2-atom supercell.
+
+
+  In Figure 12 we show the convergence of AFQMC properties for 2-atom supercells at R = 0.9 aB (structure factors) and
+R = 3.6 aB (localization) with the size M of the KS basis.
+
+
+                                                                   2.     Additional data
+
+  In Figure 13, we the study the half-filled one-dimensional Hubbard model to check if it can capture the dimer order. Since
+there is no sign problem, the standard metropolis AFQMC algorithm [30, 31] is used and the force bias technique is applied to
+                                                                                                                                                                                                    16
+
+accelerate [32] the Monte Carlo sampling. We set time step τ = 0.01, projection time β = 64t, and only measure the physical
+quantities between 20t and 44t.
+
+
+   For the open boundary condition, we measure the nearest neighbor hopping ĥi = σ â†i+1σ âiσ and find the dimer order along
+                                                                                       P
+
+the chain. For the periodic boundary condition, the correlation function ĥ0 ĥi is measured, which shows the same behavior. Since
+there is no long range order at one dimensional systems, we measure the logarithm of the dimerization order versus logarithm
+of distance and find that the order follows a power-law decay. A free electron wave function is also shown in Figure 13, which
+basically have the same behavior with a faster decay component.
+
+
+
+
+                                       0.65                                                                                              0.28
+
+                                       0.60                                                                                              0.27
+
+
+
+
+                                                                                                  PBC, hĥ0ĥiiAFQMC
+       OBC, hĥiiAFQMC
+
+
+
+
+                                       0.55                                                                                              0.26
+
+                                       0.50                                                                                              0.25
+
+                                       0.45                                                                                              0.24
+
+                                       0.40                                                                                              0.23
+
+                                       0.35                                                                                              0.22
+                                              0         10     20         30      40         50                                                 0         10     20         30      40         50
+                                                                     i                                                                                                 i
+                                       0.88                                                                                              0.50
+
+                                       0.82                                                                                              0.48
+                                       0.76
+                                                                                                    PBC, hĥ0ĥiiFE
+
+
+
+
+                                                                                                                                         0.46
+         OBC, hĥiiFE
+
+
+
+
+                                       0.69                                                                                              0.44
+
+                                       0.62                                                                                              0.42
+
+                                       0.55                                                                                              0.40
+
+                                       0.48                                                                                              0.38
+                                              0         10     20         30      40         50                                                 0         10     20         30      40         50
+                                                                     i                                                                                                 i
+                                       -1.6                                                                                              -2.0
+                                                                                                       PBC, log(hĥ0ĥii − hĥ0ĥi+1i)
+
+
+
+
+                                       -1.9                                                                                              -3.0
+           OBC, log(hĥii − hĥi+1i)
+
+
+
+
+                                       -2.2                                                                                              -4.0
+
+                                       -2.5                                                                                              -5.0
+
+                                       -2.8                                                                                              -6.0
+
+                                       -3.1                                                                                              -7.0
+
+                                       -3.4                                                                                              -8.0
+                                                  0.0    0.5   1.0        1.5   2.0    2.5                                                          0.0    0.5   1.0        1.5   2.0    2.5
+                                                                 log(i + 1)                                                                                        log(i + 1)
+
+                                                                                 P †
+FIG. 13. (color online) Left: expectation value of the hopping operator ĥi =      σ âi+1σ âiσ for a 50-site Hubbard model with OBC using
+AFQMC (top, empty red circles) and the free-electron wave-functions (middle, empty blue triangles), and power-law decay in hĥi i − hĥi+1 i
+(bottom). Right: expectation value of the product ĥ0 ĥi for a 50-site Hubbard model with PBC, using AFQMC (top, filled red circles) and
+the free-electron wavefunction (middle, filled blue triangles), and power-law decay in hĥ0 ĥi i − hĥ0 ĥi+1 i (bottom). Results of the fits in the
+bottom panels are given in Table I.
+                                                                                                                                             17
+
+                                          method α (correlation in PBC) α′ (local order in OBC)
+                                            FE           1.44(7)                0.55(3)
+                                          AFQMC          0.57(8)                0.29(7)
+
+TABLE I. Power-law decay in hĥi i − hĥi+1 i for a 50-site Hubbard model with OBC, and in hĥi ĥ0 i − hĥi+1 ĥ0 i for a 50-site Hubbard model
+with PBC. In both cases, the quantity of interest is fit to the functional form ∝ 1/(i + 1)α .
+                                                                                                                                    18
+
+                                                        C. Coupled cluster (CC)
+
+  Ground-state coupled cluster (CC) calculations assume an ansatz of the form
+
+                                                             |Ψi = eT̂ |Φi                                                        (18)
+
+where T̂ is a sum over particle-hole type excitations and |Φi is a reference determinant, here chosen as a Hartree-Fock deter-
+minant. In this work, we use coupled cluster singles and doubles (CCSD), where T̂ is limited to 1 particle-1 hole (1p1h) and 2
+particle-2 hole (2p2h) excitations. Gaps are calculated using equation-of-motion coupled cluster (IP/EA-EOM-CC). In this case,
+the N − 1 and N + 1 wavefunctions are written in the form
+
+                                                           |Ψ± i = R̂± eT̂ |Φi                                                    (19)
+
+where R̂+ generates the electron attached state, and R̂− the electron ionized state. At the approximation level in this work
+(EA-EOM-CCSD, IP-EOM-CCSD) R̂+ generates 1p, 2p1h excitations, and R̂− generates 1h, 2h1p excitations.
+
+
+
+                                                        1. Computational details
+
+   Hartree-Fock reference calculations were carried out on H atom circular rings of varying length (from 70 to > 500). In the
+limit of infinite H atoms, this will give the same thermodynamic limit as the periodic boundary condition calculations. We used
+several different basis sets including uncontracted STO-3G, STO-6G, aug-cc-pVDZ, and an even-tempered basis supplemented
+with mid-bond basis functions (the uncontraction was used to provide the flexibility to capture both valence like states and diffuse
+states associated with the second band). We found that the qualitative nature of the results presented below were consistent
+between the above bases, and that the character of the second band (2s vs 2p) did not significantly modify the resulting picture.
+For each bond length, we attempted to converge a wide range of Hartree-Fock solutions corresponding to different kinds of
+symmetry breaking, as well as different fillings of the upper and lower bands (see below). Ground-state and equation of motion
+coupled cluster calculations were then carried out starting from the different Hartree-Fock solutions for rings of up to length
+110. EOM-CC gaps were extrapolated to the thermodynamic limit using a simple 1/L formula.
+
+
+
+                                                   2.    Hartree-Fock reference state
+
+    The coupled cluster calculations require a choice of the initial state |Φi. As traditionally done in coupled cluster calculations,
+we used Hartree-Fock reference states. It is possible to find multiple kinds of Hartree-Fock solutions. We classify the orbitals as
+symmetry adapted (sa) (N↑ = N↓ in a band) when the orbitals preserve the translational symmetry of the lattice and are identical
+for up and down spin; broken symmetry (bs) orbitals (N↑ = N↓ in a band), which are accompanied by antiferromagnetic order;
+or ferromagnetic orbitals (fm) (N↓ = 0 in a band). At shorter bond lengths where two bands are occupied, it is possible to
+find stable Hartree-Fock solutions for different choices of partitioning of the electrons between the upper and lower bands. The
+variety of Hartree-Fock solutions that can be found creates significant complexity.
+    In Fig. 14 we show on the right side the energy lowering due to the occupation of the second band compared to the state with
+a single band occupied. On the left side we show the corresponding fractional filling of the second band. In these calculations
+we only used sa orbitals. Note that at intermediate to short bond-lengths a ferromagnetic character in the upper band is lower
+in energy, while at very short bond lengths a paramagnetic solution with no magnetic character in either band is preferred. The
+smooth evolution of the upper band filling is indicative of metallic character.
+    Fig. 15 is a representative plot of the HF energy with a sa character at each bond length with different numbers of electrons in
+the upper band (reasonably well converged to the basis set and thermodynamic limits). One sees the optimal 2nd band filling as
+the dark band of results; other fillings may be then be regarded as reflecting netural excitations. It is clear from this plot that the
+energy evolves relatively smoothly with filling. Moreover, at any given R, there are multiple solutions (with varying upper band
+filling) within a small energy window, as indicated by the wide band formed around the optimal filling white line.
+    Fig. 16 shows the HOMO-LUMO gap at a highly compressed bond-length for different characters of HF solutions, as a
+function of the number of atoms N in the simulated ring. One sees that, out of the different types of Hartree-Fock solution,
+with different kinds of order, one can find both insulating ones (where the gap does not vanish in the thermodynamic limit) and
+metallic ones (with vanishing gap). We regard the solutions with insulating character at compressed bond lengths as artifacts of
+mean-field symmetry-broken states which typically open a gap to develop long-range order.
+                                                                                                                                                                                                                                                                           19
+
+                              0.16                                                                                                                                             0.00
+
+
+
+
+                                                                                                                                                   E2 bands − E1 band [EHa ]
+      second band filling x                                                                                                                                                    -0.01
+                              0.12
+                                                                                                        RHF (sa,sa)                                                                                                                                    RHF (sa,sa)
+                                                                                                        UHF (sa,fm)                                                            -0.02                                                                   UHF (sa,fm)
+                              0.08
+                                                                                                                                                                               -0.03
+                              0.04
+                                                                                                                                                                               -0.04
+
+                              0.00                                                                                                                                             -0.05
+                                       0.9     1.0          1.1   1.2                         1.3          1.4             1.5          1.6                                            0.9    1.0               1.1                 1.2    1.3          1.4   1.5    1.6
+                                                                                                                                                                                                                                      R [aB]
+
+FIG. 14. (color online) Hartree-Fock filling of the second band for short R (left) and corresponding lowering of the energy (right), allowing
+for sa (red circles) or fm (blue squares) character in the second band.
+
+                                                                                                                                           R[aB ]
+                                                                                                  0.9               1.0        1.1       1.2    1.3                              1.4    1.5   1.6
+                                                                                            0.0000
+                                                                                                                                                                                                                0.050
+                                                                                            0.0302
+                                                                    second band filling x
+
+
+
+
+                                                                                            0.0604
+
+
+
+
+                                                                                                                                                                                                                        ∆E(R, x) [EHa]
+                                                                                            0.0906                                                                                                              0.025
+
+                                                                                            0.1208
+
+                                                                                            0.1510
+                                                                                                                                                                                                                0.000
+                                                                                            0.1812
+
+
+                                              FIG. 15. (color online) Hartree-Fock energy as a function of R and filling of the second band x.
+
+
+                              0.07                                                                                  0.21                                                                                        0.21
+                                                                                                                                                                                                                                         UHF (sa,bs)
+                              0.06        RHF (sa,sa), I                                                            0.18                                                                                        0.18                     UHF (sa,bs)
+                              0.05        RHF (sa,sa), II                                                           0.15             UHF (sa,bs)                                                                0.15                     UHF (sa,bs)
+       EN [EHa ]
+
+
+
+
+                                                                                                        EN [EHa ]
+
+
+
+
+                                                                                                                                                                                                    EN [EHa ]
+
+
+
+
+                              0.04        UHF (bs,sa)                                                               0.12             UHF (bs,bs)                                                                0.12                     UHF (sa,bs)
+                              0.03                                                                                  0.09                                                                                        0.09
+                              0.02                                                                                  0.06                                                                                        0.06
+                              0.01                                                                                  0.03                                                                                        0.03
+                              0.00                                                                                  0.00                                                                                        0.00
+                                     0.00 0.52 1.04 1.56 2.08 2.60 3.12                                                    0.00 0.52 1.04 1.56 2.08 2.60 3.12                                                          0.00 0.52 1.04 1.56 2.08 2.60 3.12
+                                                    1    3                                                                                1    3                                                                                      1    3
+                                                    N [10 ]                                                                               N [10 ]                                                                                     N [10 ]
+
+
+FIG. 16. (color online) Hartree-Fock HOMO-LUMO gap for R = 0.96 aB , uncontracted STO-3G basis, with sa (symmetry adapted, N↑ =
+N↓ ), bs (broken symmetry, N↑ = N↓ ) or fm (ferromagnetic, N↓ = 0) character in each band.
+
+
+
+                                                                                                                          3.     Coupled cluster solutions
+
+
+   Starting from the Hartree-Fock solutions, one can then compute the coupled cluster wavefunctions and gaps. Although the
+coupled cluster ground state depends on the nature of the HF reference used, we have chosen to work with metallic HF solutions
+at very short bond lengths.
+   In Fig. 17 we show the EOM-CC charge gaps extrapolated to the TDL computed from representative CC solutions. The
+extrapolated EOM-CCSD gaps vanish at short bond-lengths, indicating metallic character. The large magnitude of the EOM-
+CCSD gaps observed in the insulating regime can be attributed to the incomplete basis set used. The fact that both CCSD and
+UCCSD predict insulating character at long bond lengths can be regarded as a consistency check. Based on these calculations,
+the metal-insulator transition is predicted to take place between R = 1.1 and R = 1.6 a.u., in agreement with other measures in
+this work.
+                                                                                                                                     20
+
+                                                               D             I            D         I
+                                                              ECCSD         ECCSD        EUCCSD    EUCCSD
+
+                                                  9.0
+
+
+                                                  6.0
+
+
+
+
+                                     Egap [eV ]
+                                                  3.0
+
+
+                                                  0.0
+                                                        0.8           1.2        1.6         2.0     2.4
+                                                                                R [aB]
+
+FIG. 17. (color online) EOM-CCSD (violet squares) and EOM-UCCSD (yellow circles), charge gaps. Direct (left-filled symbols) and indirect
+(right-filled symbols) gaps are shown.
+                                                                                                                                   21
+
+                                             D. Density-matrix renormalization group
+
+                                                   1. Gaussian basis convergence
+
+  To obtain a compact basis with which to carry out DMRG calculations, we started with a standard augmented correlation-
+consistent Gaussian basis [33] with periodic boundary conditions (PBC) and different twist k values (here k = 0.0, 0.1, · · · , 0.5).
+The basis of the system is then a set of k-adapted Gaussian basis functions [34, 35],
+                                                            X
+                                                  φkµ (r) =   eik·T φT
+                                                                     µ (r − T)                                                  (20)
+                                                              T
+
+where the summation over lattice vector T is converged with respect to repeated cell images.
+   To assess the rate of convergence of such a crystalline basis for the hydrogen chain we carried out Hartree-Fock, 2nd order
+Moller-Plesset (MP2), CCSD, and full configuration interaction (FCI) calculations (where possible) for a H2 unit cell with PBC
+and H10 molecule with OBC in the aug-cc-pVDZ, aug-cc-pVTZ, and aug-cc-pVQZ bases (aug-DZ, aug-TZ, aug-QZ), as well
+as the non-augmented bases cc-pVDZ, cc-pVTZ, cc-pVQZ, cc-pV5Z (DZ, TZ, QZ, 5Z). Selected results for the H2 cell are in
+Table II, and for the H10 molecule in Table III.
+
+
+TABLE II. Hartree-Fock energy, MP2 and FCI correlation energies (per atom) in Hartrees, H2 unit cell at PBC (R = 0.9 aB ). NAO denotes
+number of atomic orbitals (for H2 ’s).
+
+                                                       NAO    HF      MP2       FCI
+                                              aug-DZ    18 -1.63622 -0.01167 -0.02401
+                                              aug-TZ    46 -1.68709 -0.01432 -0.02588
+                                              aug-QZ    92 -1.68826 -0.01576 -0.02721
+                                                5Z     110 -1.68844 -0.01620 -0.02753
+
+
+
+
+TABLE III. Hartree-Fock energy, MP2 and CCSD correlation energies (per atom) in Hartrees, H10 molecule at OBC (R = 1.0 aB ). CBS
+estimate from extrapolated sliced basis calculation [36]. NAO denotes number of atomic orbitals (for H10 ’s).
+
+                                                       NAO    HF      MP2     CCSD
+                                                DZ      50 -0.40101 -0.01740 -0.02046
+                                                TZ     140 -0.41393 -0.02227
+                                                QZ     300 -0.41505 -0.02337
+                                                5Z     550 -0.41550 -0.02377
+                                              aug-QZ    90 -0.40721 -0.01887 -0.02185
+                                              aug-TZ   230 -0.41495 -0.02257 -0.02517
+                                              aug-QZ   460 -0.41566 -0.02352
+                                               CBS         -0.41575
+
+
+  From these tables, we observe systematic convergence of both the Hartree-Fock and FCI energy as the basis size is increased,
+however, the FCI energy converges much more slowly due to the need to capture the electron-electron cusp. We also see that
+augmented bases perform better than non-augmented bases due to the need to capture diffuse upper bands in the metallic (short
+R) regime of the H chain. As a compromise between cost and accuracy, we chose to use the aug-TZ basis as the basis for
+subsequent calculations, because both the mean-field and correlation energy are converged to within about 1mH per atom in this
+basis.
+
+
+                                           2. Natural orbital basis for DMRG calculations
+
+  To further compress the basis for the DMRG calculations, we constructed natural orbitals from the MP2 wavefunction. We
+then truncated the Hilbert space to a dimension of Nb natural orbitals per hydrogen atom. Such a Hilbert space is referred to as a
+complete active space (CAS) in this procedure. An analogous truncation of the mean-field orbitals is referred to as downfolding
+                                                                                                                                       22
+
+in the AFQMC context. The convergence of the natural orbital and Hartree-Fock (downfolded) active spaces for the correlation
+energy can be seen in test MP2 calculations on a H10 system. Here the underlying aug-cc-pVTZ basis is projected onto the MP2
+natural orbital CAS and downfolded Hartree-Fock CAS with different values of Nb (for test purposes, we used open boundary
+conditions). The percentage of MP2 correlation energy recovered by the active space is shown in Fig. 18. Note that by using
+
+                                                          100
+                                                           90
+
+
+
+                                   MP2 correlation energy [%]
+                                                           80
+                                                           70
+                                                           60
+                                                           50
+                                                           40
+                                                           30
+                                                           20                                    CAS@MP2 natural orbital
+                                                                                                 CAS@HF orbital
+                                                           10
+                                                                               5                     10               15
+                                                                                                Nb
+   FIG. 18. The MP2 correlation energy captured by different numbers of bands Nb with Hartree-Fock orbitals or MP2 natural orbitals.
+
+natural orbitals, with Nb = 5 one already captures about 90 % of the correlation energy in this system. In the following DMRG
+calculations, we keep Nb fixed at 5.
+
+
+                                                                3.   DMRG wavefunction and computational protocol
+
+  The density matrix renormalization group (DMRG) [37] uses a matrix product state (MPS) as the wavefunction ansatz,
+                                              X
+                                     |Ψi =          An1 An2 · · · AnL |n1 n2 · · · nL i                              (21)
+                                                                       n1 ,n2 ,··· ,nL
+
+where L is the number of orbitals in the system and the wavefunction amplitudes are decomposed into a product of tensors An .
+The tensors An (other than An1 and AnL ) are matrices of dimension D × D for a given n; D is termed the bond dimension,
+and controls the accuracy of the DMRG algorithm. As D approaches infinity, DMRG becomes exact. For the ground-state
+of a quasi 1D system, such as the hydrogen chain, D can be truncated to a relatively small number independent of the chain
+length, while keeping a constant accuracy (per atom). The coefficients of An are then variationally optimized by the DMRG
+sweep algorithm [38] so that the energy of the system is minimized. The standard way to apply DMRG in a chemical system
+is to express the Hamiltonian in a finite orthogonal orbital basis [39]. Consequently, the Hamiltonian that is used is that in Eq.
+5. For all calculations we used (split-localized) MP2 natural orbitals [(L)MO] derived from a large Gaussian basis (see above
+Section II D 1) except for the single plot in Fig. 1 which was carried out in a minimal (STO-6G) basis.
+   To perform the DMRG calculations, we followed the strategy described in Ref. [40]. Aside from the minimal basis calculation
+carried out for H50 in the manner described in Ref. [3], split localization of the natural orbitals was carried out with the Edmiston-
+Ruedenberg (ER) method [41] for the natural orbitals of occupied and virtual character. The local orbitals were then reordered
+by the Fiedler algorithm [40]. We carried out a spin-adapted DMRG algorithm, as implemented in the BLOCK program [42–45],
+for a H24 chain with various twists at R = 0.9 aB and R = 2.5 aB . The maximum bond dimension D was limited to 1000 and
+the ground state energy was converged to better than 0.01 mH per atom. The one- and two-particle reduced density matrices
+were then computed both for the natural orbital analysis and to compute the spin structure factor S(q) [see Sec. II B for the
+formula for S(q)].
+
+
+                                                                                   4.    Additional data
+
+  a. k-resolved spin structure factor We show the spin structure factor S(q) at different twists k in Fig. II D 4 a. At R =
+0.9 aB , the S(q) at the Γ point shows a different peak position (i.e. q2 in the main text), compared to S(q) at other twists ks.
+                                                                                                                                 23
+
+This qualitative difference indicates the difference of orbital character with this boundary condition (see below for more details).
+At R = 2.5 aB , although the peak values for different twists ks are different, the peak positions are the same.
+
+
+
+
+                                                       k = 0.0        k = 0.2           k = 0.4
+                                                       k = 0.1        k = 0.3           k = 0.5
+                                           1.2
+
+                                           0.9
+                                    S(q)
+
+
+
+
+                                           0.6
+                                                                                  R = 0.9
+                                           0.3
+
+                                           0.0
+                                                 0.0      0.5        1.0         1.5         2.0
+                                                                   q [2kF ]
+                                           1.6
+
+                                           1.2
+                                    S(q)
+
+
+
+
+                                           0.8
+
+                                           0.4                                    R = 2.5
+
+
+                                           0.0
+                                                 0.0      0.5        1.0         1.5         2.0
+                                                                   q [2kF ]
+
+             FIG. 19. Spin structure factor as a function of q, k from DMRG, at R = 0.9 aB (top) and R = 2.5 aB (bottom).
+
+
+
+
+   b. Orbital character analysis on DMRG natural orbitals We project the DMRG natural orbitals onto the crystalline Gaus-
+sian atomic orbital basis used in the mean-field calculation in order to analyze their character. Note that in the atomic orbital
+basis, the s, pz and dz2 orbitals are of the same symmetry along the bonding direction and are thus σ-like orbitals. px and dxz
+(py and dyz ) are of the same symmetry orthogonal to the bonding direction and should be classified as π-like orbitals. As shown
+in the main text, at R = 0.9 aB , establishing the orbital character around Fermi level is a delicate problem influenced by the
+computational method and boundary conditions such as the k twist. In Fig. 20, we collect the orbital characters of the first 20
+natural orbitals of H24 at R = 0.9 aB from DMRG at three representative k values (0.0, 0.1 and 0.5). At the Γ point, the orbitals
+around the Fermi level are σ-like (s-like). However, at k = 0.1 and k = 0.5, the frontier orbitals contain a mix of s and p
+character. The change in orbital character also influences the occupancy and spin structure factor. In contrast, at R = 2.5 aB , all
+orbitals are s-like (see Fig. 21).
+                                                                                                                                                                                                                                                24
+
+
+                                                                                       s                   py                 dz 2                  dxz                   dx 2 − y 2
+                                                                                       pz                  px                 dyz                   dxy
+
+                         s    1.99e+00      pz      1.98e+00      s       1.98e+00      s       1.97e+00        s     1.94e+00       pz     1.92e+00      s       4.62e-02       dz 2    3.00e-02      s       1.48e-02     dz 2     6.51e-03
+               100 1.99e+00      pz      1.99e+00      s       1.98e+00      s       1.98e+00      s       1.97e+00      pz      1.94e+00      s       4.63e-02      s        3.48e-02      s       1.49e-02      s       7.00e-03      s
+
+
+
+                   75
+      Percentage
+
+
+
+
+                   50
+                   25
+                    0    1       2          3          4          5          6          7          8            9       10 11                 12          13        14           15        16         17         18         19         20
+                                                                                                                       Orbital index
+
+                                                                                                             (a)k = 0.0
+
+
+                                                                                       s                   py                 dz 2                  dxz                   dx 2 − y 2
+                                                                                       pz                  px                 dyz                   dxy
+
+                         pz   1.99e+00      pz      1.98e+00      s       1.98e+00      s       1.97e+00      pz      1.93e+00       pz     1.76e+00      py      1.13e-01         s     5.81e-02      pz      4.49e-02      s       1.94e-02
+               100 1.99e+00              1.98e+00              1.98e+00              1.97e+00              1.94e+00              1.87e+00              1.22e-01               6.07e-02              5.46e-02              1.95e-02
+                                 pz                    pz                    s                     s                     s                    dxz                   dyz                     s                     pz                    s
+
+
+
+                   75
+      Percentage
+
+
+
+
+                   50
+                   25
+                    0    1       2          3          4          5          6          7          8            9       10 11                 12          13        14           15        16         17         18         19         20
+                                                                                                                       Orbital index
+
+                                                                                                             (b)k = 0.1
+
+
+                                                                                       s                   py                 dz 2                  dxz                   dx 2 − y 2
+                                                                                       pz                  px                 dyz                   dxy
+
+                         pz   1.99e+00      s       1.99e+00      s       1.98e+00      s       1.97e+00        s     1.94e+00       dxz    9.63e-01      pz      7.22e-01        dyz    5.04e-02      s       2.45e-02      px      2.05e-02
+               100 1.99e+00              1.99e+00              1.98e+00              1.97e+00              1.94e+00              1.21e+00              9.54e-01               5.27e-02              4.99e-02              2.24e-02
+                                 pz                    pz                    s                     s                     s                    dxz                    pz                     s                     px                   dyz
+
+
+
+                   75
+      Percentage
+
+
+
+
+                   50
+                   25
+                    0    1       2          3          4          5          6          7          8            9       10 11                 12          13        14           15        16         17         18         19         20
+                                                                                                                       Orbital index
+
+                                                                                                             (c)k = 0.5
+
+                        FIG. 20. Orbital character and natural occupancy of the first 20 DMRG natural orbitals of H24 at R = 0.9 aB .
+
+
+
+                                                      E.       Sliced-basis density-matrix renormalization group (sb-DMRG)
+
+                                                                                                           1. Approach
+
+
+   Sliced-basis DMRG (sb-DMRG)[46] runs standard DMRG within a specialized basis set that uses a real-space grid along
+one direction and defines localized basis functions, spanning the transverse direction, at each grid point(defining a ”slice”).
+The merits of using such a basis set manifest as a reduction in the number of interaction terms, going from the usual quartic
+scaling to only quadratic in the number of grid points while also maintaining area-law entanglement scaling. In addition to
+these advantages, an SVD compression of the long-range interactions produces an MPO with a modest bond dimension which
+is nearly independent of the size of the system. This technique allows the method to scale essentially linearly with the number
+                                                                                                                                                                                                                                                 25
+
+
+                                                                                        s                   py                dz 2                  dxz                   dx 2 − y 2
+                                                                                        pz                  px                dyz                   dxy
+
+                          s    1.93e+00      s       1.92e+00      s       1.91e+00      s       1.86e+00        s     1.76e+00      s       1.04e+00      s       2.42e-01        s     1.22e-01      s       7.53e-02      s       5.23e-02
+                100 1.94e+00      s       1.93e+00      s       1.92e+00      s       1.90e+00      s       1.86e+00      s       1.75e+00      s       9.66e-01      s       2.37e-01      s       1.21e-01      s       7.51e-02      s
+
+
+
+                    75
+       Percentage
+
+
+
+
+                    50
+                    25
+                     0    1       2          3          4          5          6          7          8            9       10 11                 12         13         14          15        16         17         18         19         20
+                                                                                                                        Orbital index
+
+                                                                                                              (a)k = 0.0
+
+
+                                                                                        s                   py                dz 2                  dxz                   dx 2 − y 2
+                                                                                        pz                  px                dyz                   dxy
+
+                          s    1.93e+00      s       1.93e+00      s       1.91e+00      s       1.88e+00        s     1.78e+00      s       1.35e+00      s       2.66e-01        s     1.34e-01      s       8.08e-02      s       5.51e-02
+                100 1.94e+00      s       1.93e+00      s       1.92e+00      s       1.90e+00      s       1.85e+00      s       1.73e+00      s       6.47e-01      s       2.08e-01      s       1.08e-01      s       6.85e-02      s
+
+
+
+                    75
+       Percentage
+
+
+
+
+                    50
+                    25
+                     0    1       2          3          4          5          6          7          8            9       10 11                 12         13         14          15        16         17         18         19         20
+                                                                                                                        Orbital index
+
+                                                                                                              (b)k = 0.1
+
+
+                                                                                        s                   py                dz 2                  dxz                   dx 2 − y 2
+                                                                                        pz                  px                dyz                   dxy
+
+                          s    1.94e+00      s       1.93e+00      pz      1.92e+00      s       1.90e+00        s     1.85e+00      s       1.68e+00      s       3.12e-01        s     1.42e-01      s       8.40e-02      s       5.59e-02
+                100 1.94e+00      s       1.93e+00      s       1.92e+00      pz      1.90e+00      s       1.85e+00      s       1.69e+00      s       3.15e-01      s       1.44e-01      s       8.46e-02      s       5.63e-02      s
+
+
+
+                    75
+       Percentage
+
+
+
+
+                    50
+                    25
+                     0    1       2          3          4          5          6          7          8            9       10 11                 12         13         14          15        16         17         18         19         20
+                                                                                                                        Orbital index
+
+                                                                                                              (c)k = 0.5
+
+                         FIG. 21. Orbital character and natural occupancy of the first 20 DMRG natural orbitals of H24 at R = 2.5 aB .
+
+
+
+of atoms.
+  a. Sliced-basis Hamiltonian Starting from the usual electronic structure Hamiltonian for fixed nuclei,
+
+                                                                       
+                                                              1                    1          1
+                                              Z                                      Z
+                                   Ĥ =             ψ̂σ† (r) − ∇2 + v(r) ψ̂σ (r) +                 ψ̂ † (r)ψ̂σ† ′ (r′ )ψ̂σ′ (r′ )ψ̂σ (r)
+                                                                                                 ′| σ
+                                                                                                                                                                                                                                                (22)
+                                                  r           2                    2  r,r′ |r − r
+
+
+the sliced basis functions are constructed by defining a real-space grid along the ẑ direction with grid spacing, a, and local basis
+functions {φi (x, y)}, j = 1, 2, ..., No restricted to live on each point, n = 1, 2, ..., Nz . Within this basis, the Hamiltonian in (22)
+                                                                                                                                         26
+
+may be written as,
+                                       1 X X nn′ †                1 X X nn′ † †
+                                Ĥ =          tij ĉσni ĉσn′ j +      Vijkl ĉσni ĉσ′ n′ j ĉσ′ n′ k ĉσnl                           (23)
+                                       2 ′ ij                     2 ′
+                                           nn                               nn ijkl
+
+where, for ρ = (x, y),
+                                                                                  
+                                                                   1                             1
+                                                     Z
+                                       ′
+                                  tnn
+                                   ij = δnn′               φi (ρ) − ∇2ρ + v(ρ, zn ) φj (ρ) − δij 2 ∆nn′                                (24)
+                                                         ρ         2                            2a
+
+
+                                                                     φi (ρ)φj (ρ′ )φk (ρ′ )φl (ρ)
+                                                               Z
+                                                           ′
+                                                       nn
+                                                     Vijkl =         p                                                                 (25)
+                                                                ρ,ρ′  |ρ − ρ′ |2 + (zn − zn′ )2
+
+The first term in (24) represents the intra-slice hopping and one-body potential terms whereas the second term represents the
+inter-slice hopping where the matrix ∆nn′ comes from approximating the derivatives in the ẑ direction with finite differences.
+For the interactions in (25), the restriction that each local transverse function must live on a slice reduces the total number of
+terms from Nz4 No4 to just Nz2 No4 .
+   In a typical sb-DMRG calculation, both the 1/r decay and functions {φi (x, y)} in (25) can be expressed in terms of Gaussians,
+the former by a fitting procedure and the latter by using standard Gaussian basis sets(see next section). So in addition to reducing
+the number of terms, the integrals become trivial Gaussian integrals which may be stored in tables, making the calculation of
+these integrals very fast.
+   b. Constructing the Transverse Functions The transverse functions are constructed from standard Gaussian basis set func-
+tions which are defined by three numbers, (ζ, n, m) with each function taking the form,
+                                                             r
+                                                                2ζ n m −ζ(x2 +y2 )
+                                                  g(x, y) =       x y e                                                         (26)
+                                                                π
+The values of n and m determine the character of the function(i.e. s-type, p-type etc.) and ζ controls the width. In some basis
+sets, these primitive Gaussians are contracted with others of the same type to form new basis functions. sb-DMRG goes one
+step further and uses the N contracted Gaussians to form No ≤ N functions, {φi (x, y)}. Unlike the contracted Gaussians, these
+functions are orthonormal allowing the integrals used to calculated the Hamiltonian parameters to take a simpler form.
+   First, an uncontracted orthonormal basis is formed from the Ng primitive Gaussians by orthogonalizing each function to the
+rest. The N contracted Gaussians are then projected into this basis, giving a vector η j for the j th contracted Gaussian. A density
+matrix is then formed from the outer product of these vectors and subsequently diagonalized. The first No eigenvectors are taken
+to be an optimal representation of the space spanned by the full contracted Gaussians and are projected back into the original
+uncontracted orthonormal basis. This defines a mapping between the ”optimal” representation and the primitive Gaussians which
+may be used to calculate the Hamiltonian parameters of the previous section.
+   In the main text, the sb-DMRG calculations are done using the basis shown in Fig. 22. This basis set is a slight modification
+of the one defined in the appendix of [3] which is just cc-pVDZ augmented with two diffuse orbitals at ζ = 0.2 and ζ = 0.05.
+
+
+                                                2.    Boundary Conditions at small Atomic Spacing
+
+   For H-Chain systems with atomic spacing R > 1.4aB , regions of about 10aB on either side of the first and last atom are
+included in the discretization to better control for finite-size effects within sb-DMRG. However, for R ≤ 1.4aB , electrons that
+have been pushed out of the main 1s band may begin to occupy these edge regions.
+   A useful quantity to study this is what we are calling the spread, namely hx2 + y 2 i versus z. Specifically, given the single
+particle electron density ρ(x, y, z), the spread is
+
+                                                              dxdy (x2 + y 2 )ρ(x, y, z)
+                                                           R
+                                                 2
+                                               hr i (z) =        R                                                                      (27)
+                                                                   dxdy ρ(x, y, z)
+
+where ρ is the diagonal part of the Green’s function, G(x, y, z, x′ , y ′ , z ′ ) = ij Cij φi (x, y, z)φj (x′ , y ′ , z ′ ), in which the φj
+                                                                                   P
+are the basis functions and Cij is the Green’s function in terms of basis functions. This is essentially a weighted average of the
+spread of each orbital on a slice in which the weight is determined by the occupancy of the orbitals. Large values of hr2 i indicate
+either a high occupancy of the more extended orbitals (what we are interested in) or that the ”1s” orbital itself has spread out.
+   As shown in Fig. 23a, a measure of hr2 i shows a large spread in the edge regions. While this is a legitimate feature of a
+finite hydrogen chain, it results in a slower convergence to the thermodynamic limit, for which there are no edges. In an infinite
+                                                                                                                                          27
+
+
+
+
+FIG. 22. Ng = 12 primitive Gaussians are contracted down to N = 11 Gaussians. These Gaussians are then used to construct the transverse
+functions used in sb-DMRG as described in II E 1 b. There are both wide and narrow Gaussians defined for each type, making the basis set a
+good representation of the complete basis set limit.
+
+
+
+
+                                      (a)                                                                (b)
+FIG. 23. hr 2 i along the chain for H10 at R = 1.1aB using the basis defined in [3] (a) before and (b) after truncating the edge regions. The
+dashed lines indicate the nuclear position.
+
+
+
+
+chain, electrons pushed out of the 1s band can only occupy bulk diffuse 2s or 2p bands. Periodic BCs fix this but are bad for
+DMRG. Instead, hard walls are placed at a distance R/2 beyond the first and last atoms, only in the z direction in order to force
+the occupancy of the higher bands and keep the electrons within the bulk. Fig. 23b shows the spread after such a truncation for
+the same system. The occupancy of the bands may then be verified by calculating the slice natural orbital occupancy in which
+we diagonalize any of the s, px or py blocks of the Green’s function confined to a slice. This is plotted in Fig. 24a for the s
+block of the untruncated chain and in Fig. 24b for the s, px or py blocks of the truncated chain. Beyond the last atom on either
+edge, the ”1s” tends to spread towards the ends before truncation with no occupancy in the p bands. It is only after truncation
+that the higher orbitals become occupied, which is consistent with the measurement of the spread. This scheme is employed in
+all sb-DMRG calculations within the main text, mainly to assess the occupancy of the 2s and 2p as a function of R.
+                                                                                                                                         28
+
+
+
+
+                                                                               -
+
+
+                                      (a)                                                                (b)
+FIG. 24. (a) s band occupancy per slice for H10 at R = 1.1aB using the basis defined in [3] without truncating the edge regions. (b) 1s, 2s,
+px and py occupancy per slice for H10 at R = 1.1aB using the same basis with truncated edge regions. In both figures, the legend gives the
+total values of the occupancy after summing over the slices and the dashed lines indicate the nuclear position.
+
+
+
+
+                                                            DMRG, a = 0.1 aB        DMRG, a = 0.5 aB
+                                                 −4.5
+
+                                                 −5.0
+
+                                                 −5.5
+                                      log(∆N )
+
+
+
+
+                                                 −6.0
+
+                                                 −6.5
+
+                                                 −7.0
+                                                    −6          −5         −4          −3          −2
+                                                                        log(1/N )
+
+     FIG. 25. Dimerization measure ∆N as a function of chain size N from sliced-basis DMRG, at R = 2.0 aB , using a = 0.1, 0.5 aB .
+
+
+
+
+                                                               method       R [aB ] d
+                                                         sb-DMRG, a = 0.1 aB 2.0 0.563(4)
+                                                         sb-DMRG, a = 0.5 aB 2.0 0.552(2)
+
+                   TABLE IV. Power-law decay ∆N = ∆0 N −d in the dimerization measure, from sliced-basis DMRG.
+                                                                                                                                           29
+
+                                     basis        Z1s      Z2s    Z3s   Z4s    Z1p    Z2p    Z1d
+                               modified-ccpVTZ 5.095      1.159 0.3258 0.1027 1.407 0.388 1.057
+                               modified-ccpVDZ 1.962 0.4446 0.122         =     0.2   0.05     =
+                               2-4 body Jastrow 0.01701 0.01701∗ 0.5366   =   0.3022 0.1101 0.2656
+
+TABLE V. The exponents of the uncontracted gaussian basis sets used in this work both for DFT and QMC calculations. In the small R ≤ 1.4
+region we have obviously adopted only the modified ccpVDZ one (see Fig. 26). The last raw refers to the uncontracted basis used for the so
+called two (electron-electon) -three (electron-electron-ion) and four body (electron-electron-ion-ion) Jastrow factors that has been optimized
+for the sample case of ten atoms at R = 1. The Z2s exponent marked by ∗ refers to a standard gaussian multiplied by r 2 where r is the
+electron-ion distance.
+
+
+                            F. Variational and lattice-regularized diffusion Monte Carlo (VMC, LR-DMC)
+
+                                                  1.    Approach and computational details
+
+  In this work we used standard quantum Monte Carlo (QMC) methods by means of correlated variational wave functions
+defined in real space configurations x where the electrons have definite positions ~r1,σ1 , ~r2,σ2 · ~rN,σN and spins σi ± 1/2 along
+the z− quantization axis, where N is the number of electrons. The many body wave function is obtained by applying a positive
+function J(x) symmetric under particle permutations to a Slater Determinant D(x) , antisymmetric under particle permutations:
+
+                                                            ΨT (x) = J(x)D(x)                                                            (28)
+
+thus satisfying Pauli’s principle. Both the Jastrow J(x) and the determinantal D(x) parts are expanded in localized basis sets as
+described in details in Ref.47.
+  The determinant part D(x) is obtained by a DFT calculation using modified ccpVDZ and ccpVTZ basis sets. In the standard
+ccpVTZ we remove he largest Z1s (Z1s = 33.87) exponent and the corresponding contraction because the cusp conditions have
+been fulfilled by a one body Jastrow factor of the type:
+                                                                         1 − exp(−br)
+                                                       u1−body (r) = −                .                                                  (29)
+                                                                               b
+                                                                                                                   √
+This one body Jastrow is included also in the GTO basis set for the DFT (LDA) calculation, where b = 2, whereas b is
+optimized by minimizing the energy in the VMC calculation. The DFT is also defined (within the TurboRVB package[48]) on
+a mesh of lattice space aDF T = 0.1 or smaller, until convergence is reached within 0.001H in the total energy. The use of the
+one body Jastrow factor drastically improves the convergence for aDF T → 0. Within the DFT calculation, satisfying the cusp
+conditions typically improves the quality of the basis at the level of the ccpVQZ and ccpVTZ, for the ccpVTZ and ccpVDZ ones,
+respectively. However all these basis sets remain rather poor for small interatomic distances (see Fig. 26). In order to define a
+simple and compact basis that can be used also in this limit, we have found that it is enough to work with a ccpVDZ basis, again
+with the largest s-wave exponent (Z1s = 13.01) removed, no contraction, and two p-wave gaussians with diffusive exponents
+Z1p = 0.2 and Z2p = 0.05. As it is shown in Fig.(26) with this simple receipt, the quality of the basis is satisfactorily accurate
+(with error less than 1mH/atom) in all the range studied. Similar results can be obtained with standard augmented basis sets with
+triple or quadruple zeta dimensions, but they are certainly computationally much more demanding for QMC. For clarity all the
+basis sets used in this work are summarized in Tab. V:
+   Within periodic boundary conditions in the direction of the chain, assumed to be along the z direction, we use a supercell of
+dimension Lx × Lx × Lz with Lx = Ly = 40a.u., that is large enough for safely neglecting the interaction between the periodic
+images in the x, y directions (error less than 0.0001H per atom). Moreover the basis set (standard for open systems) has been
+periodized according to the standard procedure described in Ref.49, when PBC are applied.
+   For the VMC calculation, the trial function ΨT contains the so called two (electron-electron), three (electron-electron-ion)
+and four bodies (electron-electron-ion-ion) contributions that are expanded in a localized basis different from the determinant
+one. Indeed, in this case, we have used a fully uncontracted basis with the exponents given in the last raw of Tab. V. All the
+corresponding variational parameters (about 1000 for the largest systems), determining the Jastrow factor J(x) are efficiently
+optimized, using the scheme described in Ref.50. Since the Jastrow is not affecting the results for a → 0 presented here, we do
+not describe in details its form and the standard optimization methods used[51].
+   Once the correlated VMC wave function has been prepared with the optimal choice of J(x), we compute the so called fixed
+node energies, by employing a more accurate QMC technique, dubbed LR-DMC, briefly described in the following.
+   The LR-DMC is a projection method[52] that uses the lattice regularization for applying the imaginary time propagator
+exp(−βH) to a trial function ΨT defined in the continuous space. The main approximation is to write the laplacian by means
+of its dicretized expression on a lattice with a grid with lattice space a, e.g. for a single electron wave function depending only
+                                                                                                                                             30
+
+                                                               -10.8
+
+                                                               -11.2
+
+                                                               -11.6
+
+                                                                -12
+
+
+
+
+                                        Energy per atom (eV)
+                                                               -12.4
+
+                                                               -12.8
+                                                                              Quantum ESPRESSO (400 Ry)
+                                                               -13.2          modified ccpVDZ+diffusive
+                                                                              modified ccpVTZ
+                                                               -13.6
+
+                                                                -14
+
+                                                               -14.4
+
+                                                               -14.8
+
+                                                               -15.2
+
+                                                                        1.2    1.6      2        2.4           2.8    3.2   3.6
+                                                                                                 R
+
+FIG. 26. (color online) Validation of the basis set used for the DFT-LDA calculation. Within TurboRVB it is possible to use exactly the same
+basis for QMC and DFT (LDA) calculations. Here the DFT energy is compared with the widely used Quantum ESPRESSO plane-wave DFT
+code[4] for large enough cutoff. By extending the standard ccpVDZ basis with diffusive p orbitals (see text and Tab. V) it is possible to reach
+a satisfactory accuracy even at small R, much better than the ccpVTZ one, even when considering the improvement described in the text and
+verified in Ref.[47] for the N a2 molecule. Indeed without including diffusive p-orbitals, all any standard basis set with no augmentation (i.e.
+without diffusive orbitals, containing gaussians with small exponents) becomes quite poor for the Hydrogen chain system in the small R limit.
+
+
+
+on one variable x: ∇Ψ = ∂x2 Ψ → ∇a Ψ = a12 (Ψ(x + a) + Ψ(x − a) − 2Ψ(x)). The extension of ∇a to higher dimensions
+is straightforward and the continuous space can be sampled ergodically even for finite a > 0 with a much simpler algorithm
+than the original proposal[52], namely by randomizing the directions along which the laplacian is discretized[53]. For a → 0
+and β → ∞ the exact ground state wave function ΨG can be obtained if hΨT |ΨG i =           6 0. However, due to the ”fermion
+sign problem”, an approximation is employed to achieve small and controlled statistical errors: it is required that, during the
+projection, the ”sign” of the propagated wave function is constrained to the one of the chosen trial function:
+
+                                                                       ΨT (x) × hx| exp(−βH)|ΨT i ≥ 0                                      (30)
+
+for any electronic configuration x. For a → 0 the results coincide with the standard Fixed-Node approximation introduced
+long time ago[54]. This scheme is usually employed within the diffusion short time (∆) approximation of the propagator, in a
+                                              β
+way that in the ∆ → 0 limit, by applying it ∆   times, the exact Fixed node projection scheme (30) is recovered, with the well
+established variational property on the estimated energy. In this work we have used the lattice regularization, just because it is
+more conveniently implemented in the TurboRVB package[48], and also because the extrapolations for a → 0 are very well
+behaved and easily controlled in an automatic way.
+   Since with QMC calculations we extract electronic configurations in real space, it is particularly easy to calculate the correla-
+tion functions. Among the ones employed for this study, certainly a crucial role has been played by the Resta-Sorella phase
+
+                                                                                            2π
+                                                                                                 P
+                                                                          ZN = hΨN |ei L             i x̂i   |ΨN i,                        (31)
+
+where N is the number of atoms in the supercell of length L. ZN is a measure of the electron localization[55], yielding the
+metallic or insulating character of the ground state in a simple and direct way. As we have explained in the paper, for a perfect
+crystalline structure, ZN saturated to one for a perfectly localized state for N → ∞, while it vanishes in this limit if there is no
+localization and the ground state is metallic. In our study we have considered large enough systems to establish that there is no
+localization when the atoms are close to each other, while the system becomes insulating for larger lattice spacing as it is shown
+in the paper in Fig. 3b.
+
+
+
+                                                                               2.    Additional data
+                                                                                                                                            31
+
+                                                                                VMC                         DMC
+                                                                     2
+
+
+
+
+                                       E2 bands − E1 band [mEHa ]
+                                                                     0
+                                                                     -2
+                                                                     -4
+                                                                     -6
+                                                                     -8
+                                                                    -10
+                                                                          1.0         1.2            1.4   1.6
+                                                                                            R [aB]
+
+FIG. 27. (color online) VMC (green upward-pointing triangles) and DMC (orange downward-pointing triangles) energy differences as a
+function of the lattice spacing between the optimal wave functions with no constraints on the occupation of the electronic bands and the wave
+functions where the occupation of the p-wave bands is not allowed. For R smaller than R ≃ 1.35aB the occupancy of the p-wave bands
+become necessary for the accurate description of the ground state.
+
+
+
+
+ [1] R. M. Martin, Electronic Structure: Basic Theory and Practical Methods (Cambridge University Press, 2004).
+ [2] C. Lin, F. H. Zong, and D. M. Ceperley, Physical Review E 64, 016702 (2001).
+ [3] M. Motta, D. M. Ceperley, G. K.-L. Chan, J. A. Gomez, E. Gull, S. Guo, C. A. Jiménez-Hoyos, T. N. Lan, J. Li, F. Ma, A. J. Millis, N. V.
+     Prokof’ev, U. Ray, G. E. Scuseria, S. Sorella, E. M. Stoudenmire, Q. Sun, I. S. Tupitsyn, S. R. White, D. Zgid, and S. Zhang (Simons
+     Collaboration on the Many-Electron Problem), Physical Review X 7, 031059 (2017).
+ [4] P. Giannozzi, S. Baroni, N. Bonini, M. Calandra, R. Car, C. Cavazzoni, D. Ceresoli, G. L. Chiarotti, M. Cococcioni, I. Dabo, A. Dal Corso,
+     S. de Gironcoli, S. Fabris, G. Fratesi, R. Gebauer, U. Gerstmann, C. Gougoussis, A. Kokalj, M. Lazzeri, L. Martin-Samos, N. Marzari,
+     F. Mauri, R. Mazzarello, S. Paolini, A. Pasquarello, L. Paulatto, C. Sbraccia, S. Scandolo, G. Sclauzero, A. P. Seitsonen, A. Smogunov,
+     P. Umari, and R. M. Wentzcovitch, Journal of Physics: Condensed Matter 21, 395502 (19pp) (2009).
+ [5] J. P. Perdew, K. Burke, and M. Ernzerhof, Phys. Rev. Lett. 77, 3865 (1996).
+ [6] D. R. Hamann, Phys. Rev. B 88, 085117 (2013).
+ [7] D. R. Hamann, Phys. Rev. B 95, 239906 (2017).
+ [8] J. P. Perdew and A. Zunger, Phys. Rev. B 23, 5048 (1981).
+ [9] J. Heyd, G. E. Scuseria, and M. Ernzerhof, The Journal of Chemical Physics 118, 8207 (2003), https://doi.org/10.1063/1.1564060.
+[10] J. Heyd, G. E. Scuseria, and M. Ernzerhof, The Journal of Chemical Physics 124, 219906 (2006), https://doi.org/10.1063/1.2204597.
+[11] J.-W. Song, K. Yamashita, and K. Hirao, The Journal of Chemical Physics 135, 071103 (2011), https://doi.org/10.1063/1.3628522.
+[12] S. Zhang and H. Krakauer, Physical Review Letters 90, 136401 (2003).
+[13] M. Motta and S. Zhang, WIREs Comput Mol Sci e1364, 1 (2018).
+[14] R. L. Stratonovich, Soviet Physics Doklady 2, 416 (1957).
+[15] J. Hubbard, Physical Review Letters 3, 77 (1959).
+[16] J. P. F. LeBlanc, A. E. Antipov, F. Becca, I. W. Bulik, G. K.-L. Chan, C.-M. Chung, Y. Deng, M. Ferrero, T. M. Henderson, C. A.
+     Jiménez-Hoyos, E. Kozik, X.-W. Liu, A. J. Millis, N. V. Prokof’ev, M. Qin, G. E. Scuseria, H. Shi, B. V. Svistunov, L. F. Tocchio, I. S.
+     Tupitsyn, S. R. White, S. Zhang, B.-X. Zheng, Z. Zhu, and E. Gull (Simons Collaboration on the Many-Electron Problem), Physical
+     Review X 5, 041041 (2015).
+[17] M. Qin, H. Shi, and S. Zhang, Physical Review B 94, 235119 (2016).
+[18] B.-X. Zheng, C.-M. Chung, P. Corboz, G. Ehlers, M.-P. Qin, R. M. Noack, H. Shi, S. R. White, S. Zhang, and G. K.-L. Chan (Simons
+     Collaboration on the Many-Electron Problem), Science 358, 1155 (2017).
+[19] F. Ma, S. Zhang, and H. Krakauer, Physical Review B 95, 165103 (2017).
+[20] F. Ma, W. Purwanto, S. Zhang, and H. Krakauer, Physical Review Letters 114, 226401 (2015).
+[21] W. Purwanto, H. Krakauer, Y. Virgus, and S. Zhang, The Journal of Chemical Physics 135, 164105 (2011).
+[22] S. Zhang, J. Carlson, and J. E. Gubernatis, Physical Review B 55, 7464 (1997).
+[23] W. Purwanto and S. Zhang, Phys. Rev. E 70, 056702 (2004).
+[24] M. Motta and S. Zhang, Journal of Chemical Theory and Computation 13, 5367 (2017), pMID: 29053270.
+[25] M. Kalos, Journal of Computational Physics 1, 257 (1966).
+[26] K. S. Liu, M. H. Kalos, and G. V. Chester, Phys. Rev. A 10, 303 (1974).
+                                                                                                                                          32
+
+[27] W. Purwanto, S. Zhang, and H. Krakauer, Journal of Chemical Theory and Computation 9, 4825 (2013), pMID: 26583401.
+[28] M. Suewattana, W. Purwanto, S. Zhang, H. Krakauer, and E. J. Walter, Physical Review B 75, 245123 (2007).
+[29] M. Motta, S. Zhang, and G. K.-L. Chan, Phys. Rev. B 100, 045127 (2019).
+[30] R. Blankenbecler, D. J. Scalapino, and R. L. Sugar, Phys. Rev. D 24, 2278 (1981).
+[31] S. R. White, D. J. Scalapino, R. L. Sugar, E. Y. Loh, J. E. Gubernatis, and R. T. Scalettar, Phys. Rev. B 40, 506 (1989).
+[32] H. Shi, S. Chiesa, and S. Zhang, Phys. Rev. A 92, 033603 (2015).
+[33] R. A. Kendall, T. H. Dunning Jr, and R. J. Harrison, J. Chem. Phys. 96, 6796 (1992).
+[34] J. McClain, Q. Sun, G. K.-L. Chan, and T. C. Berkelbach, Journal of Chemical Theory and Computation 13, 1209 (2017), pMID:
+     28218843.
+[35] Q. Sun, T. C. Berkelbach, N. S. Blunt, G. H. Booth, S. Guo, Z. Li, J. Liu, J. D. McClain, E. R. Sayfutyarova, S. Sharma, S. Wouters, and
+     G. K.-L. Chan, WIREs Comput. Mol. Sci. 8, e1340 (2018).
+[36] S. R. White and E. M. Stoudenmire, Phys. Rev. B 99, 081110 (2019).
+[37] S. R. White, Phys. Rev. Lett. 69, 2863 (1992).
+[38] S. R. White, Phys. Rev. B 48, 10345 (1993).
+[39] G. K.-L. Chan, A. Keselman, N. Nakatani, Z. Li, and S. R. White, J. Chem. Phys. 145, 014102 (2016).
+[40] R. Olivares-Amaya, W. Hu, N. Nakatani, S. Sharma, J. Yang, and G. K.-L. Chan, J. Chem. Phys. 142, 034102 (2015).
+[41] C. Edmiston and K. Ruedenberg, Rev. Mod. Phys. 35, 457 (1963).
+[42] G. K.-L. Chan and M. Head-Gordon, J. Chem. Phys. 116, 4462 (2002).
+[43] G. K.-L. Chan, J. Chem. Phys. 120, 3172 (2004).
+[44] G. K.-L. Chan and S. Sharma, Annu. Rev. Phys. Chem. 62, 465 (2011).
+[45] S. Sharma and G. K.-L. Chan, J. Chem. Phys. 136, 124121 (2012).
+[46] E. M. Stoudenmire and S. R. White, Physical Review Letters 119, 046401 (2017).
+[47] K. Nakano, R. Maezono, and S. Sorella, Journal of Chemical Theory and Computation 15, 4044 (2019), pMID: 31117480,
+     https://doi.org/10.1021/acs.jctc.9b00295.
+[48] S. Sorella, “TurboRVB quantum Monte Carlo package,” .
+[49] R. Dovesi, R. Orlando, A. Erba, C. M. Zicovich-Wilson, B. Civalleri, S. Casassa, L. Maschio, M. Ferrabone, M. D. L. Pierre, P. D’Arco,
+     Y. Noel, M. Causa, M. Rerat, and B. Kirtman, International Journal of Quantum Chemistry 114, 1287 (2014).
+[50] A. Zen, Y. Luo, S. Sorella, and L. Guidoni, Journal of Chemical Theory and Computation 9, 4332 (2013).
+[51] M. Marchi, S. Azadi, M. Casula, and S. Sorella, The Journal of Chemical Physics 131, 154116 (2009).
+[52] M. Casula, C. Filippi, and S. Sorella, Physical Review Lettersrs 95, 100201 (2005).
+[53] M. Casula, S. Moroni, S. Sorella, and C. Filippi, The Journal of Chemical Physics 132, 154113 (2010).
+[54] P. Reynolds, D. Ceperley, B. Alder, and J. Lester, The Journal of Chemical Physics 77, 5593 (1982).
+[55] R. Resta and S. Sorella, Physical Review Letters 82, 370 (1999).
+
