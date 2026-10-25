@@ -1,0 +1,1099 @@
+                                                           Multireference Correlation in Long Molecules with the Quadratic Scaling Density
+                                                                                    Matrix Renormalization Group
+                                                                                   Johannes Hachmann, Wim Cardoen, and Garnet Kin-Lic Chan
+                                                                                              Department of Chemistry and Chemical Biology,
+                                                                                              Cornell University, Ithaca, NY 14853-1301, USA
+                                                                                                         (Dated: October 21, 2018)
+                                                                        We have devised and implemented a local ab initio Density Matrix Renormalization Group
+arXiv:cond-mat/0606115v3 [cond-mat.str-el] 8 Jun 2006
+
+
+
+
+                                                                     (DMRG) algorithm to describe multireference correlations in large systems. For long molecules
+                                                                     that are extended in one of their spatial dimensions, we can obtain an exact characterisation of
+                                                                     correlation, in the given basis, with a cost that scales only quadratically with the size of the system.
+                                                                     The reduced scaling is achieved solely through integral screening and without the construction of
+                                                                     correlation domains. We demonstrate the scaling, convergence, and robustness of the algorithm in
+                                                                     polyenes and hydrogen chains. We converge to exact correlation energies (with 1-10µEh precision)
+                                                                     in all cases and correlate up to 100 electrons in 100 active orbitals. We further use our algorithm to
+                                                                     obtain exact energies for the metal-insulator transition in hydrogen chains and compare and contrast
+                                                                     our results with those from conventional quantum chemical methods.
+
+
+                                                                         I.   INTRODUCTION                                 factorial scaling, and can thus be applied to large sys-
+                                                                                                                           tems.
+                                                           The electronic structure of a chemical system features             In this work, we will adopt the more modest goal
+                                                        two types of electron correlation. The first is nondynamic         of answering the question of how to describe nondy-
+                                                        correlation. This is associated with the correlation of            namic correlation in systems which are large in only
+                                                        electrons in nearly degenerate valence orbitals. The cor-          one out of their three spatial extents. In quasi-one-
+                                                        rect description of nondynamic correlation is necessary            dimensional systems the physics that is familiar from
+                                                        to establish the qualitative features of chemical bonding.         three-dimensions, is notably modified. This is illustrated
+                                                        The second is dynamic correlation. This is associated              by the organic electronic materials (e.g. conjugated or-
+                                                        with excitations from valence degrees of freedom into the          ganic polymers and carbon nanotubes) which exhibit un-
+                                                        many non-bonding orbitals. The multiple weak excita-               usual interacting electron effects, arising from coupled
+                                                        tions are responsible for establishing the detailed, quan-         quasi-one-dimensional motions of many electrons along
+                                                        titative structure of the electronic wavefunction.                 the conjugated π-backbone. As a simple example, in lin-
+                                                           In general, a correct description of strong nondynamic          ear polyenes, electron-electron interactions contribute to
+                                                        correlation in large systems is very difficult to obtain.          make the lowest excited singlet state (the 1 2Ag state)
+                                                        When nondynamic correlation is important (e.g. during              one of double-excitation nature, rather than the singly
+                                                        bond breaking), a single determinant or electronic config-         excited HOMO → LUMO state as one would expect in
+                                                        uration does not provide the correct qualitative structure         a single particle picture [15, 16, 17]. A more extreme ex-
+                                                        of the wavefunction. Instead, the delicate balance in the          ample of this occurs in metallic nanotubes at low temper-
+                                                        valence degrees of freedom between the kinetic energy,             atures, where at low energies there are no singly excited
+                                                        which favours delocalisation, and the Coulomb energy,              states; all low-energy excitations are of collective nature,
+                                                        which favours localisation, results in competing electronic        and the qualitative electronic structure is of Luttinger
+                                                        configurations and the correct electronic structure con-           liquid form [18, 19, 20].
+                                                        tains contributions from multiple determinants with sig-              Here we demonstrate that the Density Matrix Renor-
+                                                        nificant weights. Complete-Active-Space Self-Consistent-           malization Group (DMRG), which we and others have
+                                                        Field (CASSCF) theories [1] correctly describe this type           recently been investigating in quantum chemistry [21, 22,
+                                                        of structure by expanding the wavefunction in the com-             23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38,
+                                                        plete space of the optimised valence (or “active”) degrees         39, 40, 41], provides a solution to the question of how to
+                                                        of freedom, but do so at the cost of a factorial scaling           flexibly and efficiently describe nondynamic correlation
+                                                        with the number of active electrons. Such calculations             in systems that are large in one of their three spatial di-
+                                                        with more than O (10) electrons remain extremely diffi-            mensions. Our analysis shows that the DMRG behaves
+                                                        cult at this time. Despite the impressive progress in lo-          as a local, multireference, size-consistent/size-extensive,
+                                                        cal Generalised Valence Bond and Coupled Cluster (CC)              and variational theory. From the intrinsic locality of the
+                                                        Theories (e.g. [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14])       DMRG ansatz we formulate a DMRG algorithm, denoted
+                                                        which provide some capacity to break e.g. single bonds,            for convenience as LDMRG, that scales only quadratically
+                                                        such approaches do not possess the flexibility of a true           with the size of the system, without any need for an ar-
+                                                        multireference theory. The fundamental challenge there-            tifical imposition of orbital domains. The multireference
+                                                        fore remains to find a multireference electronic struc-            nature of the ansatz also eliminates any need for sepa-
+                                                        ture method that is sufficiently flexible to correctly de-         rately localised occupied and virtual orbitals. Using this
+                                                        scribe nondynamic correlation, yet which exhibits a non-           algorithm, we carry out numerically exact DMRG calcu-
+                                                                                                                                           2
+
+lations for long molecules, including polyenes in the π-                 be decomposed via two singular value decompositions as
+active space and metallic and insulating hydrogen chains                                         X
+where we correlate up to 100 active electrons in 100 active                         ψ n1 n2 n3 =    Rin1 σ i Sin2 n3
+orbitals.                                                                                                      i
+                                                                                                           X
+   The structure of our discussion is as follows. We first                                            =                       n2 n3
+                                                                                                                   Rin1 σ ′i Rij Rj   (II.3)
+introduce the DMRG wavefunction ansatz in section II.                                                       ij
+There we discuss its multireference, size-consistent and
+size-extensive, variational, and local properties, and the               where in the SVD of Si , all singular values have modu-
+implications for the design of a local DMRG algorithm.                   lus one, since Si is an orthogonal matrix. In this way,
+In section III we show how a simple screening of integral                through repeated SVDs, the k-dimensional coefficient
+amplitudes results in a robust and naturally quadratic-                  tensor can be decomposed as a chain of matrix products,
+scaling DMRG algorithm. In section IV we present cal-
+culations on hydrogen molecular chains and polyenes in
+the π-active space and demonstrate the size-extensivity,                       ψ n1 n2 ...nk = Tr {Rn1 Rn2 . . . σ . . . Rnk } .      (II.4)
+computational scaling, and convergence of the LDMRG                      So far the decomposition is exact since the R matrices
+algorithm. As a difficult test of nondynamic correlation,                are full rank and will grow increasing large as the number
+we further carry out calculations on the metal-insulator                 of orbitals grows.
+transition in hydrogen chains for both symmetric and                        The Matrix Product State which underlies the DMRG
+asymmetric bond stretching, and compare our results                      algorithm, arises by truncating the maximum dimension
+against existing quantum chemical methods (section V).                   of the R matrices to be at most M × M , and thus with
+Finally, our conclusions are presented in section VI.                    this restriction, we write the MPS as
+                                                                                    X
+                                                                          |Ψi =            Tr {Rn1 Rn2 . . . σ . . . Rnk } |n1 n2 . . . nk i.
+                                                                                  n1 n2 ...nk
+                II.    THE DMRG ANSATZ                                                                                           (II.5)
+                                                                            We now establish the relationship between the MPS
+       A.    DMRG and Matrix Product States                              and the usual formulation of the DMRG algorithm. Re-
+                                                                         call that any point in a DMRG sweep, the orbitals are
+                                                                         partitioned into two blocks: a left block (spanning or-
+   In previous work [29], we have described the Renor-                   bitals 1, . . . , f say) and a right block (spanning orbitals
+malization Group formulation of the DMRG algorithm.                      g = f + 1, . . . , k). Through successive renormalisation
+However, as related by Östlund and Rommer [42, 43],                     transformations we obtain an adaptive many-body basis
+and subsequently developed by other authors (see e.g.                    of dimension M to span the orbitals 1, . . . , f ; let us de-
+[44, 45]), the DMRG is also fruitfully analysed from the                 note these many-body states by |lf i. First we enlarge
+viewpoint of the underlying wavefunction ansatz, the Ma-                 the left block by adding the next orbital to give a super-
+trix Product State (MPS). Such a formulation will be                     block with an associated space {|lf i} ⊗ {|ng i}. Next we
+convenient for our present discussion and we will recall                 renormalise this space to form a new many-body basis
+the main points below; for a full presentation, we refer                 {|lg i} for the enlarged block spanning orbitals 1, . . . , g,
+the reader to the excellent review by Schollwöck [45].                  as
+   Consider an N -particle system in a state |Ψi spanned                                                X n
+by k orbitals. In occupation number representation, |Ψi                                         |lg i =   Rgfg |lf ng i          (II.6)
+can be expanded as                                                                                        f ng
+
+                      X                                                  where the rows of the matrix Rng are the M eigenvectors
+        |Ψi =                 ψ n1 n2 ...nk |n1 n2 . . . nk i   (II.1)   of the density matrix of the superblock 1, . . . , g. After
+                n1 n2 ...nk                                              successive renormalisations, we see that the renormalised
+                  P                                                      states take on a matrix product form, e.g.
+where ni = 0, 1;    i ni = N . We now decompose the                                           X n
+high dimensional coefficient tensor ψ into a chained ma-                              |lh i =     Rhgh |lg nh i
+trix product via repeated singular value decompositions                                             gnh
+(SVD). For example, if there are only two orbitals, a sin-                                           X
+                                                                                                                nh     n
+                                                                                                =              Rhg Rgfg |lf ng nh i
+gular value decomposition yields
+                                                                                                    f gng nh
+                                   X                                                            = ...                                 (II.7)
+                      ψ n1 n2 =          Rin1 σ i Rin2          (II.2)
+                                     i                                   where each Rni matrix is truncated to have maximum
+                                                                         dimension M × M .
+where Rn1 and Rn2 are the singular vectors and σ are the                   To complete the identification of the underlying
+singular values. Similarly, for three orbitals, ψ n1 n2 n3 can           DMRG wavefunction with the Matrix Product State,
+                                                                                                                        3
+
+we introduce the corresponding renormalised many-body              and the right block containing orbitals of the sec-
+states |rg i which span the orbitals g = f + 1, . . . , k. In      ond system. Since there is no coupling, the Matrix
+the tensor-product space of the left and right blocks, we          Product State for the total block configuration is a
+can write the full wavefunction in the form                        product |Ψi = |li|ri, where |li is a Matrix Product
+                         X                                         State for the first system considered alone (without
+                   |Ψi =    ψ lf rg |lf rg i.           (II.8)     changing the orbital ordering) and similarly for |ri.
+                          lf r g                                   Consequently, the DMRG energy is size-consistent.
+
+Performing an SVD, we obtain                                     4. Locality and compactness: The number of varia-
+                                                                    tional parameters in the Matrix Product State is
+                                                                    O(M 2 k) and its correlation length is determined by
+                      X
+                |Ψi =    |l̄f iσ f |r̄f i.              (II.9)
+                            f
+                                                                    M . Thus in any system with a finite quantum (i.e.
+                                                                    off-diagonal) correlation length along the DMRG
+Substituting in the matrix product decomposition of the             lattice, we can obtain a given accuracy in the en-
+DMRG many-body basis for the left and right block                   ergy per unit site with constant M , independent of
+basis states from (II.7) in eqn. (II.9) we identify the             the size of the system. In such cases, for a given ac-
+DMRG wavefunction with the Matrix Product State                     curacy, the number of variational parameters in the
+(II.5). Consequently, the DMRG can be viewed as a self-             DMRG scales linearly with the size of the molecule.
+consistent optimisation algorithm for the Matrix Prod-              The restriction to given M determines the finite
+uct State where the renormalisation matrices Rni which              correlation length that is captured by the ansatz;
+parametrise the ansatz are determined one by one from               there is no need to a priori impose any orbital do-
+the density matrices of the blocks after each blocking step         mains. Thus the DMRG is a naturally local scaling
+in a DMRG sweep. The number of retained states in the               ansatz, and so long as the determination of the en-
+DMRG M thus coincides with the dimensionality of the                ergy is also performed with an account of locality
+matrices that parametrise the MPS. We note that the                 (e.g. through screening or multipole expansion) a
+position of σ in the Matrix Product State corresponds               low-order scaling correlation theory arises. Indeed
+to the point of division between left and right blocks in           this is the basis of the quadratic scaling algorithm
+the DMRG algorithm. In principle, the DMRG wave-                    in the next section. Note that a finite correlation
+function varies with different block partitionings along a          length implies only that we are away from a quan-
+sweep, but in practice, the variation is quite small.               tum critical point; such wavefunctions need not be
+                                                                    close to the Hartree-Fock reference in any sense,
+                                                                    as is indeed the case for systems with strong inter-
+ B.   DMRG as a local, multireference, variational,                 actions. Thus, the local correlation nature of the
+       size-consistent ansatz for long systems                      DMRG is different from that of other local corre-
+                                                                    lation methods (such as local CCSD) since these
+  Starting from the perspective above, let us summarise             require the correction to the mean-field reference
+some features of the DMRG/MPS ansatz.                               to be small and to possess finite correlation length.
+                                                                   The DMRG ansatz possesses a further technical
+   1. Variational: Since we can associate a wavefunc-              advantage. Since no localisable Hartree-Fock refer-
+      tion with any DMRG block configuration, and a                ence is required, the favorable scaling of the DMRG
+      DMRG energy is evaluated as an expectation value             is obtained in any local basis, and does not in
+      of such a wavefunction, the energies appearing in            particular need separate localisation in the occu-
+      the DMRG procedure are strictly variational.                 pied and virtual spaces. This is particularly ad-
+                                                                   vantageous when modelling correlated states which
+   2. Multireference: It is clear that the Hartree-Fock            possess a shorter quantum correlation length than
+      reference has no special significance in the DMRG            their parent mean-field reference (e.g. systems with
+      state, and in particular, we do not order or rank            small Hartree-Fock bandgaps), for which orbital lo-
+      excitations relative to a single reference state. Fur-       calisation may be more difficult.
+      thermore, in contrast to selected Configuration In-
+      teraction (CI) theories, none of the coefficients of       5. Long molecules: The Matrix Product State embod-
+      expansion ψ n1 n2 ...nk are restricted to be zero.            ies a finite correlation length as measured along
+                                                                    the DMRG orbital lattice, rather than as neces-
+   3. Size-consistency: Within a physical ordering of the           sarily exists in the physical space. Consequently,
+      orbitals on the DMRG lattice, the Matrix Prod-                we can only hold M constant as the system size
+      uct State for two widely separated systems fac-               increases - and obtain the same relative accuracy
+      torises into the product of Matrix Product States             - if the locality in the physical system maps geo-
+      for each system separately. To see this, first ar-            metrically onto a one-dimensional lattice, i.e. the
+      range the orbitals into left and right blocks, with           system is extended in only one of its three dimen-
+      the left block containing orbitals of the first system,       sions as in a long molecule is avoided. If this is not
+                                                                                                                                          4
+
+       the case, we will require M to scale exponentially
+                                                                           FIG. 1: Standard block configuration in DMRG. From left to
+       in the width of the system to maintain accuracy,
+                                                                           right, L, ◦L , ◦R , R.
+       much like Full Configuration Interaction (FCI) or
+       CASSCF theory. In practice, we have shown that
+       with reasonable M we can still obtain highly accu-
+       rate DMRG energies even in non-one-dimensional
+       molecular systems with up to O(40) active orbitals
+       - i.e. too large to treat using FCI theory - but to
+       model much larger extended non-one-dimensional                      diate operators Aij , Bij , Pij , Qij on the various blocks:
+       networks of strongly interacting electrons, further
+       progress in the DMRG method will be required.                           Ablk
+                                                                                ij(∈blk) =      ai aj                             (III.2)
+                                                                                blk
+                                                                               Bij(∈blk) =      a†i aj                            (III.3)
+                                                                                                  X
+                                                                                  blk
+                                                                                Pij( /
+                                                                                     ∈blk) =             vijkl ak al              (III.4)
+                                                                                                kl∈blk
+                                                                                                 X
+                                                                               Qblk
+                                                                                ij(∈blk)
+                                                                                   /     =               xijkl a†k al             (III.5)
+III.   A QUADRATIC SCALING PARALLELISED                                                         kl∈blk
+             DMRG ALGORITHM
+                                                                                    xijkl =     vijkl − vjikl − vijlk + vjilk .   (III.6)
+
+                                                                              To begin, we employ screening to determine a set of
+   The full computational scaling of a single conventional
+                                                                           significant two index operators that must be considered
+DMRG sweep is O(M 2 k 4 ) + O(M 3 k 3 ). Here, the O(k 4 )
+                                                                           on each block, according to the following criterion:
+scaling arises in essence from the number of two electron
+integrals vijkl in the Hamiltonian H, written in second
+                                                                              Ablk
+                                                                               ij(∈blk) discard if vijkl < thresh1 for all kl ∈ blk
+quantisation as
+                                                                               blk
+                                                                              Bij(∈blk) discard if xijkl < thresh1 for all kl ∈ blk
+                                                                                blk
+             X                    X                                           Pij( /
+                                                                                   ∈blk) discard if vijkl < thresh1 for all kl ∈ blk
+        H=         tij a†i aj +          vijkl a†i a†j ak al .   (III.1)
+                                                                              Qblk
+                                                                               ij(∈blk)
+                                                                                  /     discard if xijkl < thresh1 for all kl ∈ blk.
+              ij                  ijkl
+                                                                                                                                 (III.7)
+
+                                                                           In a DMRG block configuration, there are four kinds of
+   Recall that M can be kept fixed, independent of system                  blocks: the left block L, an orbital to be blocked with the
+size in a long molecule. Thus to implement a quadratic                     left block ◦L , an orbital to be blocked with the right block
+scaling DMRG algorithm we need only screen the con-                        ◦R , and the right block R (Fig. 1). Without screening,
+tributions from the 2 electron integrals. This can be                      the number of two-index operators that must be con-
+achieved by working in a localized basis. (Note we can                     sidered on each block is O(k 2 ), but in each case this is
+use any localised orthonormal basis and we do not need                     reduced to O(k) after screening since eqns. (III.7) require
+to separately localise the occupied and virtual spaces as                  centres i, j to be close in space. Since the number of op-
+is commonly required in local correlation methods. For                     erators is reduced, we also reduce the memory cost to
+example, later in this work, we shall use the basis of over-               O(M 2 k) per sweep iteration (block configuration). The
+lap symmetrically orthonormalised atomic orbitals). As                     disk usage is reduced to O(M 2 k 2 ) per sweep.
+is well understood, in a large system described in a lo-                      Next, we consider the computational costs of the dif-
+calised basis, the number of significant two-electron inte-                ferent manipulations involving the two index operators in
+grals below a given threshold scales only quadratically as                 each of the three stages of a sweep iteration: (1) blocking,
+non-classical Coulomb integrals i.e. integrals of the form                 (2), solving for the wavefunction, and (3) decimation:
+vijkl = 12 (i(1)l(1)|j(2)k(2)) where i(1), l(1) or j(2), k(2)
+functions are widely separated, vanish exponentially with                     1. Blocking: Here we construct representations of the
+the separation between i, l or j, k centres.                                     operators in the tensor product space of a large
+                                                                                 block and an additional orbital; for concreteness,
+   In the DMRG, we work with a number of intermedi-                              we take the large block as the left block L, and
+ate combinations of operators on each of the blocks of                           the additional orbital as ◦L , and we consider the
+orbitals which are subsequently combined to construct                            operator Pij . First, we accumulate PijL , Pij◦L in the
+the full H [29, 31]. A DMRG sweep, consisting of O(k)                            new space {L} ⊗ {◦L }; for each such term, the ac-
+sweep iterations (each comprising a different block con-                         cumulation requires O(M 2 ) time. Since there are
+figuration), requires O(M 2 k 4 )+O(M 3 k 3 ) time, O(M 2 k 2 )                  O(k) screened Pij operators on both blocks L and
+memory, and O(M 2 k 3 ) disk storage. These asymptotic                           ◦L , in total this requires O(M 2 k) time per blocking
+costs originate from manipulating the two-index interme-                         step and thus O(M 2 k 2 ) time per sweep. Next, we
+                                                                                                                              5
+
+      sum over the new terms appearing in eqns. (III.2),
+                                                                   FIG. 2: Geometries of chemical systems used in the LDMRG
+      (III.3) that arise from the combinations k ∈ L, l ∈
+                                                                   study in sec. IV.
+      ◦L and k ∈ ◦L , l ∈ L; each such term requires
+      O(M 2 ) time per blocking step. Without screen-
+      ing the number of new terms become O(k), but
+      with screening we discard any contributions where
+      vijkl < thresh2 for all kl ∈ blk and this decreases
+      the number of new terms to O(1) for each signifi-
+      cant Pij operator per blocking step. Consequently,
+      the time to accumulate the additional contributions
+      is O(M 2 ) × O(1) × no. significant Pij = O(M 2 k)
+      per blocking step, or O(M 2 k 2 ) time per sweep. Re-
+      peating this analysis for the Aij , Bij , Qij operators,
+      we observe that these also involve O(M 2 k 2 ) time
+      per sweep.
+
+   2. Solving for the wavefunction: In an iterative David-
+      son algorithm [46], the contributions of Pij , Qij to
+      the Hamiltonian matrix multiply takes the form
+                          ◦R R
+               L◦L
+                   ⊗ A†ij      )|Ψi, ij (QL◦      ◦R R
+      P                             P
+         ij (Pij                               ⊗ Bij   )|Ψi.       performance of the quadratic-scaling algorithm and ro-
+                                             L
+                                          ij
+                                 3
+      Each ⊗ requires O(M ) time, and thus the over-               bustness of the screening criteria, (iii) convergence of the
+      all cost is determined by the number of ij indices           LDMRG ansatz, and (iv) errors compared against stan-
+      to sum over. From the screening criterion thresh1 ,          dard correlation methods. We have chosen two classes
+      this is O(k) for each block configuration, and thus          of systems as representative “long” molecules: planar
+      the total time for a single Hamiltonian multiply             all-trans-polyenes Ck Hk+2 ranging from k = 4, 8, . . . , 48
+      takes O(M 3 k), or O(M 3 k 2 ) per sweep.                    (modelled in the π z -active space) and hydrogen molecule
+                                                                   chains (H2 )k/2 ranging from k = 10, 20, . . . , 100. The ge-
+   3. Decimation: In the decimation for each two index             ometries of the polyenes (based on [47]) and hydrogen
+      operator, each transformation takes O(M 3 ) time.            chains are given in fig. 2. We note that although the
+      After screening, only O(k) ij indices need be con-           bond-lengths in the hydrogen molecule chains are alter-
+      sidered per block, and thus the time to transform            nating, the molecules are still spaced sufficiently closely
+      all Aij , Bij , Pij , Qij operators is O(M 3 k) per renor-   to be interacting.
+      malisation step, or O(M 3 k 2 ) per sweep.
+
+   In summary, integral screening in the LDMRG reduces                           A.    Computational details
+the total computation cost per sweep to O(M 3 k 2 ) +
+O(M 2 k 2 ) time (i.e. quadratic scaling, since M in long             All electronic integrals were obtained using the Psi3.2
+molecules is independent of system size for a chosen ac-           package [48]. We used an STO-3G minimal basis for the
+curacy and hence a constant), O(M 2 k) memory, and                 polyene calculations and an STO-6G minimal basis for
+O(M 2 k 2 ) disk. Table I summarises the key operations            the hydrogen molecular chains [49, 50]. Polyene calcu-
+and costs of the screened algorithm.                               lations were performed in the π z -active space spanned
+   Finally, we note that the above screening procedure             by one pz orbital on each carbon center, with each car-
+is easily combined with the parallelised algorithm em-             bon atom contributing one electron; thus in Ck Hk+2
+ployed in our previous calculations [31]. Once the list of         we used a (k, k) active space. The remaining electrons
+screened ij indices is determined via eqns. III.7, the sig-        were placed in doubly occupied Restricted Hartree-Fock
+nificant operators are distributed over the processors, and        (RHF) orbitals generated by the PSI3.2 program. Cal-
+all manipulations involving these operators are then car-          culations on the hydrogen chains correlated all electrons.
+ried out in parallel. This screened parallelised algorithm            We used a localized orthonormal basis as input to the
+has been employed to perform the calculations described            LDMRG calculations. In both the polyenes and hydro-
+in the current work.                                               gen chains this was obtained by symmetrically orthonor-
+                                                                   malising (S −1/2 ) the atomic orbital basis. The orthonor-
+                                                                   malised orbitals were then ordered in their natural topo-
+IV.    NUMERICAL ANALYSIS OF THE LDMRG                             logical order i.e. in the order of their originating atoms
+             IN LONG SYSTEMS                                       along the chain. Since each atom contributes only one
+                                                                   basis function, this ordering is unique.
+  In the current section, we report our numerical in-                 The LDMRG calculations were performed with the
+vestigations of (i) the accuracy and extensivity of the            parallel Block code [31] with integral screening as de-
+LDMRG ansatz in long molecules, (ii) computational                 scribed in sec. III, on 4-18 processors. Except where
+                                                                                                                                             6
+
+
+TABLE I: Time, memory, and disk costs associated with the two-index operators in the original DMRG and screened LDMRG
+algorithms. The two-index operators determine the asymptotic computational costs of the algorithm.
+            Operator        Blocking       Solving      Decimation     Memory         Disk
+                         DMRG LDMRG DMRG LDMRG DMRG LDMRG DMRG LDMRG DMRG LDMRG
+             Aij , Bij   M 2 k3 M 2 k2 M 3 k3 M 2 k2 M 3 k3 M 3 k2 M 2 k2  M 2k M 2 k3 M 2 k2
+                           2 4     2 2   3 3       2 2  3 3     3 2  2 2      2
+             Pij , Qij   M k     M k   M k      M k    M k    M k   M k    M k  M 2 k3 M 2 k2
+
+
+stated otherwise (see sec. IV C), we applied screening
+                                                            FIG. 3: All-trans-polyenes: Active space correlation energy
+thresholds of thresh1 = 10−7 Eh and thresh2 = 10−20 Eh .
+                                                            from MP2, CCSD, CCSD(T) and LDMRG(250) as a func-
+No spatial symmetry was used. DMRG sweeps were per-         tion of polyene chain length. On the scale of the graph, the
+formed with progressively increasing M values (a sweep      LDMRG and CC results nearly overlap.
+schedule) and a small amount of random noise (between
+10−6 −10−9 in the matrix norm) was added to the density
+                                                                          0.0
+matrix in the early sweeps (M 6 100) to prevent loss of
+                                                                          -0.1
+quantum numbers [29, 31]. A typical schedule to obtain
+M = 50, 100, 250 DMRG energies is as follows: sweeps                      -0.2
+
+1-6: M = 50 (with noise), sweeps 7-12: M = 50, sweeps                     -0.3
+
+13-18: M = 100 (with noise), sweeps 19-24: M = 100,                       -0.4
+sweeps 25-30: M = 250. We have converged our LDMRG
+
+
+                                                             [E ]
+                                                               h
+                                                                          -0.5
+energies to 8 significant figures; unconverged digits are
+                                                                          -0.6
+
+
+                                                               corr,act
+denoted in italics. Because of the complexity of the ab
+initio DMRG method and the non-linearity of the opti-        E            -0.7
+
+misation, there is a small dependence of the DMRG en-                     -0.8       MP2
+
+ergies on the precise computational setup (e.g. the way                   -0.9       CCSD
+
+in which M is increased in sweeps) which may lead to                      -1.0
+                                                                                     CCSD(T)
+
+some variation in the last significant digit.                                        LDMRG(250)
+                                                                          -1.1
+                                                                                 4   8   12     16   20   24   28   32   36   40   44   48
+
+                                                                                              k {CkHk+2; k active orbitals}
+B.   Accuracy and Extensivity of the DMRG ansatz
+
+   In Tables II and III we present the energies obtained
+with our quadratic scaling LDMRG algorithm for the          dim(H)=1058 . That we are able to obtain a numerically
+all-trans-polyene series and hydrogen molecular chains.     exact correlation energy with the LDMRG illustrates the
+For comparison, we also present second-order Møller-        compactness of the LDMRG description in systems that
+Plesset (MP2) and Coupled Cluster calculations (CCSD,       are still interacting but have finite correlation lengths,
+CCSD(T)) obtained using the Psi3.2 (hydrogen chains)        which allows us to keep M fixed as the system size grows
+and Dalton 2.0 [51] (active-space polyenes) packages.       (see sec. II A). A related feature of the LDMRG ansatz is
+   In the largest M LDMRG calculations shown, the cor-      that of size-consistency/extensivity of the energy, which
+relation energies are exact correlation energies for the    we now discuss.
+many-particle Schrödinger equation to the digits dis-         In fig. 3, we plot the active space correlation energy
+played. For example, in the polyenes, calculations at the   Ecorr,act as a function of polyene chain length. A clear
+LDMRG(500) and LDMRG(1000) level did not change             linear relationship between chain length and correlation
+the energy in the µEh -range. To confirm the exactness      energy is observed. Fig. 4 shows in detail how the ac-
+of our LDMRG calculations, we also performed explicit       tive space correlation energy as well as the total energy
+active space FCI calculations (using Molpro 2002.6          Etot per additionally introduced C4 H4 -unit converges to
+[52]) for C4 H6 and C6 H8 and obtained agreement to all     a constant in the limit of long polyenes.
+displayed digits. Following the discussion in sec. IV A,       We also performed a series of lower accuracy LDMRG
+the hydrogen molecular chain energies are presented to      calculations for the polyenes, with M = 5 − 40 states.
+10µEh precision, corresponding to eight significant fig-    Due to the variational nature of the DMRG, these ap-
+ures in the electronic energy of the longer chains. There   proach the exact energy from above. Fig. 5 presents the
+are only improvements of the order of 1µEh when going       logarithm of the percentage error in the correlation en-
+to LDMRG(100) and thus the LDMRG(50) correlation            ergy relative to the ”exact” LDMRG(250) energies, as a
+energies for the hydrogen molecular chains are exact to     function of chain length. In small systems the LDMRG
+the digits displayed.                                       calculations are exact, since the DMRG states span the
+   The largest Hilbert space considered (for the (H2 )50    whole N -particle space. In the longer polyenes, the per-
+system containing 100 electrons in 100 orbitals) has        centage errors increase to a saturating value, demonstrat-
+                                                                                                                                                     7
+
+                                                                                           polyenes and hydrogen molecular chains. Here sweep
+FIG. 4: All-trans-polyenes: Exact (LDMRG(250)) total en-
+                                                                                           times were measured after several sweeps at a given M
+ergy per additionally introduced C4 H4 -unit. The inlay shows
+the active space correlation energy at CCSD, CCSD(T) and
+                                                                                           level had been performed, to remove the bias that occurs
+LDMRG(250) level of theory per additionally introduced                                     immediately after a transition from a lower M calculation
+C4 H4 -unit.                                                                               in the sweep schedule.
+                                                                                              We fitted the timing data to obtain the computational
+                                                                                           scaling of LDMRG as a function of the number of active
+                                                                                           orbitals. The scaling exponents for the polyenes and the
+                                                                                           (H2 )k/2 -chains with different M and screening thresholds
+                                                                                           are given in tab. V.
+                                                                                              In the polyenes we find a reduced scaling of near-
+                                                                                           quadratic order, with an exponent between 2.1 −
+                                                                                           2.2. For reasonable screening thresholds (i.e. thresh1
+                                                                                           10−6 Eh −10−8 Eh ) no significant differences in the scaling
+                                                                                           is observed. We also do not see a significant scaling de-
+                                                                                           pendence on M . In the hydrogen chains a similar reduced
+                                                                                           scaling was found, in this case with exponents ranging
+                                                                                           from 2.2 − 2.4. In both cases, it is clear that the screened
+                                                                                           LDMRG algorithm has reduced the computational scal-
+                                                                                           ing of the DMRG to quadratic order. As an example of
+                                                                                           absolute times per sweep, for the largest system (H2 )50
+                                                                                           using 18 2.0 GHz Opteron processors, we required 27min
+                                                                                           for M = 50, 37min for M = 100, and 73min for M = 250.
+FIG. 5: All-trans-polyenes: Relative errors in the active space                               Since the LDMRG employs screening, we should assess
+correlation energies for LDMRG with various M (compared                                    the robustness of the criterion that is used. To this end,
+to the exact LDMRG(250) results). The black marked curves                                  we studied the polyene correlation energies computed
+are the errors of MP2, CCSD, and CCSD(T) as reference. The                                 with screening thresholds (thresh1 ) of 10−6 Eh , 10−7 Eh ,
+plot shows absolute magnitudes in logarithmic scale.                                       10−8 Eh and 10−20 Eh (the energy of the latter can be con-
+                                                                                           sidered unscreened). A selection of results is presented
+                   2                                                                       in tab. IV. We observe the correlation energy to be
+              10
+                                                                                M   =5     converged at the µEh level with respect to the screening
+              10
+                   1
+                                                                                           threshold when thresh1 = 10−7 Eh , which is the reason
+                                                                                M   =10    for using this setting during this study. In practice, this
+                                                                                M
+                   0
+              10
+                                                                                           threshold could be relaxed for lower accuracy calcula-
+                                                                                M
+                                                                                    =15
+
+                                                                                           tions.
+                                                                                M
+                                                                                    =20
+| [%]
+
+
+
+
+               -1
+              10
+                                                                                M
+                                                                                    =25
+                                                                                    =30
+   corr,act
+
+
+
+
+               -2
+              10                                                                M
+                                                                                M
+                                                                                    =40
+                                                                                    =50              D.   Sweep and Error Convergence
+E
+
+
+
+
+               -3
+   rel
+
+
+
+
+              10
+
+
+                                                                                M             There are two types of convergence in DMRG calcu-
+|
+
+
+
+
+               -4
+                                                                                    =100
+              10
+                                                                                MP2        lations. The first is the convergence of the energy as a
+               -5
+              10
+                                                                                CCSD       function of the number of sweeps, holding the number
+                                                                                CCSD(T)
+                                                                                           of DMRG states M fixed. We observed that on average,
+                        4    8   12   16    20   24   28   32   36   40   44   48   52     convergence was achieved in only 4−6 sweeps for small M
+                                      k     k k ; k active orbitals}
+                                          {C H
+                                                 +2
+                                                                                           and 2 − 4 sweeps for large M values (not inclusive of the
+                                                                                           noise sweeps and the preceding sweeps in the schedule).
+                                                                                              The second type of convergence relates to the approach
+ing the size-extensivity of the approximate LDMRG cal-                                     of the DMRG energy to the exact energy as the number of
+culations. Similar observations can be made for the hy-                                    retained states M is increased. Here, we analyse our data
+drogen molecular chains.                                                                   for the DMRG calculations on polyenes with different M
+                                                                                           values. The precise analytic form of the DMRG energy
+                                                                                           convergence as a function of M has been a matter of
+                   C.       Computational Scaling and Screening                            debate in the literature [26, 29, 36, 53, 54]. We have
+                                     Robustness                                            previously found good agreement with the proposed form
+                                                                                           of Okunishi et al. [53, 54],
+  In Figure 6 we present the asymptotic computational                                                                         α
+                                                                                                  ∆E(M ) ∼ exp [−κ (log M ) ] , α = 2           (IV.1)
+scaling of the sweep time for the LDMRG calculations
+as a function of the number of active orbitals for the                                     which is slower than exponential but still faster than al-
+                                                                                                                               8
+
+
+TABLE II: All-trans-polyenes: Dimension of the FCI determinant space, total RHF energy, RHF active space electronic energy;
+active space correlation energies at MP2, CCSD, CCSD(T) and different LDMRG levels of theory. All energies are given in
+hartrees.
+                                              Ecorr,act
+ Molecule dim(H)a     ERHF      ERHF,el,act b  MP2       CCSD CCSD(T) LDMRG(50) LDMRG(100) LDMRG(250)c
+               1
+  C4 H6 3.6×10     -153.006 364 -3.169 490 -0.046 529 -0.091 435 -0.091 668  -0.091 502 conv.d     conv.
+               3
+  C8 H10 4.9×10    -304.889 389 -8.426 391 -0.090 346 -0.176 445 -0.177 797  -0.177 127  conv.     conv.
+ C12 H14 8.5×105 -456.773 412 -14.589 838 -0.134 320 -0.260 779 -0.263 575   -0.262 296 -0.262 297 conv.
+               8
+ C16 H18 1.7×10    -608.657 556 -21.345 452 -0.178 366 -0.345 003 -0.349 327 -0.347 399 -0.347 403 conv.
+ C20 H22 3.4×1010 -760.541 718 -28.542 181 -0.222 434 -0.429 210 -0.435 082  -0.432 490 -0.432 498 conv.
+ C24 H26 7.3×1012 -912.425 883 -36.090 721 -0.266 507 -0.513 414 -0.520 840  -0.517 579 -0.517 591 conv.
+ C28 H30 1.6×1015 -1064.310 048 -43.931 953 -0.310 582 -0.597 618 -0.606 599 -0.602 668 -0.602 684 conv.
+ C32 H34 3.6×1017 -1216.194 214 -52.023 816 -0.354 658 -0.681 822 -0.692 358 -0.687 757 -0.687 777 conv.
+               19
+ C36 H38 8.2×10 -1368.078 379 -60.334 842 -0.398 734 -0.766 027 -0.778 118   -0.772 846 -0.772 870 conv.
+ C40 H42 1.9×1022 -1519.962 544 -68.840 593 -0.442 810 -0.850 231 -0.863 879 -0.857 935 -0.857 962 -0.857 963
+ C44 H46 4.4×1024 -1671.846 710 -77.521 543      e          e          e
+                                                                             -0.943 024 -0.943 055 -0.943 056
+               27                                e          e          e
+ C48 H50 1.0×10 -1823.730 875 -86.361 727                                    -1.028 113 -1.028 147 -1.028 149
+ a dim(H)=   kα  kβ                        k/2 2
+             Nα Nβ
+                       , i.e. here dim(H)=   k/2
+                                                    . No point group
+symmetry used.
+ b The active space electronic energy contains the core-active
+
+Coulomb and exchange contributions, but no nuclear repulsion.
+ c All calculations with M > 250 converged.
+ d ”conv.” denotes converged results, where increased M did not
+
+change the significant figures in the energy.
+ eC H
+     44 46 and C48 H50 could not be computed by Dalton due to
+an address limitation.
+
+
+TABLE III: (H2 )k/2 -chains: Dimension of the FCI determinant space, total RHF energy, RHF electronic energy; correlation
+energies at MP2, CCSD, CCSD(T) and LDMRG(50) levels of theory. All energies are given in hartrees.
+                                                                Ecorr
+                                         a
+                     Molecule dim(H)     ERHF       ERHF,el     MP2      CCSD CCSD(T) LDMRG(50)b
+                                    4
+                      (H2 )5 6.4×10     -5.553 26 -16.036 48 -0.068 34 -0.101 93 -0.102 04   -0.102 09
+                      (H2 )10 3.4×1010 -11.088 22 -38.784 11 -0.137 53 -0.203 77 -0.204 04   -0.204 15
+                      (H2 )15 2.4×1016 -16.623 18 -64.210 83 -0.206 72 -0.305 61 -0.306 03   -0.306 21
+                      (H2 )20 1.9×1022 -22.158 14 -91.378 72 -0.275 91 -0.407 44 -0.408 02   -0.408 26
+                                    28
+                      (H2 )25 1.6×10 -27.693 11 -119.841 65 -0.345 10 -0.509 28 -0.510 01    -0.510 32
+                      (H2 )30 1.4×1034 -33.228 07 -149.336 70 -0.414 29 -0.611 12 -0.612 01  -0.612 38
+                      (H2 )35 1.3×1040 -38.763 03 -179.690 11 -0.483 48 -0.712 95 -0.714 00 -0.714 44 c
+                      (H2 )40 1.2×1046 -44.297 99 -210.778 35 -0.552 67 -0.814 79 -0.815 99  -0.816 49
+                      (H2 )45 1.1×1052 -49.832 95 -242.509 08 -0.621 87 -0.916 63 -0.917 98  -0.918 55
+                                    58
+                      (H2 )50 1.0×10 -55.367 92 -274.810 58 -0.691 06 -1.018 47 -1.019 98    -1.020 61
+ a No point group symmetry used.
+ b All calculations with M > 50 converged.
+ c This result lies very close on the rounding
+                                            border, LDMRG(50)
+rounds the last digit to 4, LDMRG(100) to 5.
+
+
+
+gebraic. In fig. 7 we plot the logarithm of the percentage             κ = 1.80 ± 0.03 (for C12 H14 ) and κ = 1.45 ± 0.03 (for
+error in the correlation energy against (log M )2 , which              C48 H50 ).
+shows a clear linear fit. By contrast, the inlay plots
+the logarithm of the percentage error against M , which                  Corresponding to the rapid energy convergence we also
+demonstrates that the error indeed does not decay ex-                  observed a rapid decrease of the truncated weight of the
+ponentially. Fitting our data (omitting M = 5) to the                  density matrix as M is increased. This shows that the
+general form of eqn. IV.1 we obtained an exponent of                   local representation is well suited to the chemical system
+α ∼ 1.6 − 1.8. Fixing α = 2, we obtain values between                  and physical problem at hand [35, 45, 55].
+                                                                                                                                              9
+
+
+TABLE IV: All-trans-polyenes: Active space correlation en-                       FIG. 7: All-trans-polyenes: Convergence of the relative er-
+ergies from LDMRG(250) with screening thresholds 10−6 Eh                         rors in the active space correlation energies for LDMRG as a
+and 10−7 Eh ; absolute and relative errors of 10−6 Eh -screening                 function of M (compared to the exact LDMRG(250) results).
+(compared to the exact results from 10−7 Eh -screening). All                     The main plot shows magnitudes in logarithmic scale over
+energies are given in hartrees.                                                  log (M )2 (with linear fit), the inlay shows them over log(M ).
+                            Ecorr,act
+                  Molecule (10−6 Eh ) (10−7 Eh )   ∆abs      ∆rel [%]
+                   C8 H10 -0.177 127      conv.      0           0
+                  C16 H18 -0.347 405 -0.347 404 -0.000 001 -0.46 ×10−5
+                  C32 H34 -0.687 765 -0.687 777 0.000 008 1.52 ×10−5
+                  C40 H42 -0.857 942 -0.857 963 0.000 021 3.01 ×10−5
+                  C48 H50 -1.028 093 -1.028 149 0.000 056 6.41 ×10−5
+
+
+FIG. 6: (H2 )k/2 -chains (circles) and all-trans-polyenes
+(squares): Asymptotic timing data (i.e. total time per sweep)
+of LDMRG with M = 50 (filled marks) and M = 250 (un-
+filled marks) for 10−7 Eh -screening in log-log-representation
+with linear fit.
+
+
+                              (H2)k/2, LDMRG(50)
+                  4.0
+
+                              (H2)k/2, LDMRG(250)
+                  3.5
+
+                              C H
+                                                                                   Surprisingly we observe that the CCSD(T) results lie
+                               k k+2, LDMRG(50)
+                  3.0                                                            below the exact energies computed with LDMRG. Al-
+                              C H
+                               k k+2, LDMRG(250)                                 though CCSD(T) is not variational in general, it is still
+log(tsweep/min)
+
+
+
+
+                  2.5
+
+                                                                                 uncommon to obtain an energy below the exact energy at
+                  2.0
+                                                                                 an equilibrium geometry. In general the triples correction
+                  1.5                                                            performed relatively badly for the polyenes.
+                  1.0
+                                                                                   In case of the hydrogen chains, the convergence of the
+                                                                                 LDMRG with M was more rapid and results were already
+                  0.5
+                                                                                 exact with M = 50. CCSD(T) also performed better in
+                  0.0                                                            this system, the triples correction improved on CCSD by
+                                                                                 1/2 order of magnitude, and the resulting energies were
+                        3.2         3.4   3.6      3.8   4.0   4.2   4.4   4.6
+                                                                                 consistently above the exact energies.
+                                                     log(k)
+
+
+                                                                                 V.    THE METAL-INSULATOR TRANSITION IN
+            E.          Comparison with Perturbation and Coupled                             LINEAR HYDROGEN
+                                  Cluster Theories
+                                                                                    As an example of a challenging electronic problem, we
+   Since with our larger M LDMRG calculations we have                            studied the symmetric and asymmetric bond stretching
+exact energies at our disposal we can analyze the errors                         in a linear H50 -chain. In both these cases, the system
+at the various levels of theory in more detail.                                  transitions from a state with metallic correlations at com-
+   In the polyene calculations (tab. II) the largest DMRG                        pressed geometries to an insulating state with strong mul-
+absolute error is 35µEh for the C48 H50 molecule at the                          tireference correlation in the dissociation region. This
+M = 50 level. This corresponds to ∼ 10−3 % of the ex-                            bond breaking process hence exhibits a varying nature of
+act active space correlation energy, and ∼ 10−5 % of the                         chemical bonding and electron correlation.
+exact total active space electronic energy. Compared to                             In case of the symmetric dissociation we begin with a
+the Coupled Cluster errors, LDMRG(50) is already bet-                            uniform bond-distance between all H-atoms of R=1.0a0,
+ter by 2-3 orders of magnitude. The LDMRG(100) gives                             and stretch all 49 bonds symmetrically and simultane-
+a further order of magnitude improvement, and is essen-                          ously to R=1.2, 1.4, ..., 4.2a0 . The final structure con-
+tially exact. In our more approximate calculations (fig.                         sists of 50 equidistant, nearly-independent H-atoms on a
+5) we find that LDMRG with M = 10 performs better                                line.
+than MP2, and with M = 15 better than CCSD and                                      In case of the asymmetric dissociation we distinguish
+CCSD(T). The results for M = 5 are not reliable due to                           alternating bonds as intermolecular and intramolecular
+loss of important quantum numbers.                                               with Rinter and Rintra . The first geometry is Rintra =Rinter
+                                                                                                                                   10
+
+
+  TABLE V: Asymptotic scaling exponents (with standard error) of LDMRG depending on M and the screening threshold.
+                                                     Scaling exponent
+                            System (thresh1 [Eh ])     LDMRG(50) LDMRG(100) LDMRG(250)
+                               Ck Hk+2 (10−6 )              2.12±0.02 2.11±0.01 2.07±0.09
+                               Ck Hk+2 (10−7 )              2.11±0.02 2.11±0.01 2.10±0.03
+                               Ck Hk+2 (10−8 )              2.12±0.01 2.07±0.02 2.09±0.03
+                              Ck Hk+2 (10−20 )              3.27±0.08 3.33±0.10 3.53±0.06
+                               (H2 )k/2 (10−7 )             2.36±0.06 2.18±0.05 2.16±0.04
+
+
+=1.4a0. In the following geometries Rintra is kept fixed
+                                                                FIG. 8: Symmetric dissociation of H50 : Potential energy
+at 1.4a0 while Rinter grows to Rinter =1.6, 1.8, ..., 4.2a0 .
+                                                                curves from RHF, MP2, and exact LDMRG. On the scale of
+The final structure consists of 25 equidistant, nearly-         the graph, the few available CCSD and CCSD(T) datapoints
+independent H2 -molecules at equilibrium bond distance          were indistinguishable from the LDMRG data.
+on a line.
+  We computed the electronic energy using the LDMRG
+                                                                         -16
+(with up to 1000 states) in the minimal STO-6G basis,                                                                RHF
+                                                                         -17
+where we correlated all 50 electrons in 50 orbitals.                                                                 MP2
+                                                                         -18
+  All calculations were carried out in the STO-6G basis                                                              LDMRG(500)
+                                                                         -19
+correlating all electrons (50 electrons in 50 orbitals). The
+LDMRG calculations again used the S −1/2 basis.                          -20
+
+                                                                [E ]
+                                                                  h      -21
+
+                                                                         -22
+
+              A.   Symmetric Dissociation                                -23
+                                                                  tot
+                                                                E
+
+
+
+
+                                                                         -24
+
+   The calculated energies for the symmetric dissociation                -25
+
+are summarized in tab. VI. The potential energy curves                   -26
+
+at RHF, MP2, and exact LDMRG level of theory are                         -27
+
+plotted in fig. 8. It can immediately be seen how the                    -28
+
+contribution of correlation increases along the dissocia-                         1.0   1.5   2.0   2.5       3.0   3.5      4.0
+
+tion coordinate: In the dissociation limit the share of the                                         R [a ]
+                                                                                                          0
+correlation energy in the total energy grows to ∼20% and
+in the electronic energy to ∼7%, which emphasizes the
+importance of nondynamic correlation in this problem.
+   As is expected, RHF and MP2 behave poorly as the             FIG. 9: Symmetric dissociation of H50 : Relative errors in the
+chain dissociates. The Coupled Cluster energies cannot          correlation energies at MP2, CCSD, CCSD(T), and different
+even be converged for bond lengths R>2.0a0 . This is            LDMRG levels of theory (compared to the exact LDMRG
+                                                                results) in logarithmic scale.
+a fundamental problem in CC theory that is well docu-
+mented e.g. in the work of Takahashi and Paldus and oth-
+                                                                              2
+ers [56, 57, 58] where in one-dimensional systems, even                  10
+
+for physically relevant coupling parameters, the Coupled
+                                                                              1
+Cluster doubles equations may have no real solutions.                    10                                           MP2
+
+
+The correlation energy errors for different methods rela-                                                             CCSD
+
+tive to the exact LDMRG results are shown in Fig. 9.                     10
+                                                                              0
+                                                                                                                      CCSD(T)
+
+   It is understood that we need to retain more states in                                                             LDMRG(50)
+                                                                [%]
+
+
+
+
+the LDMRG in the metallic regime if we start from a local                 -1
+                                                                         10                                           LDMRG(100)
+                                                                  corr
+
+
+
+
+atomic orbital basis, since we need to capture the delocal-                                                           LDMRG(250)
+                                                                E
+
+
+
+
+isation and long-range off-diagonal correlations [45]. We                 -2
+                                                                  rel
+
+
+
+
+                                                                         10                                           LDMRG(500)
+find that both the convergence with the number of sweeps
+as well as with M is slower as compared to calculations                   -3
+                                                                         10
+in the nonmetallic regime. At R=1.0a0 LDMRG(50)
+is worse than CCSD, LDMRG(100) slightly worse than                        -4
+                                                                         10
+CCSD(T), and for R<1.6a0 LDMRG(50) is still worse
+                                                                                  1.0   1.5   2.0   2.5       3.0   3.5      4.0
+than CCSD(T). In the metallic region LDMRG required
+M = 500 to converge to the numerically exact result.                                                R [a ]
+                                                                                                          0
+
+In essence, by using orthonormalised atomic orbitals, we
+                                                                                                                                    11
+
+
+TABLE VI: Symmetric dissociation of H50 : Total RHF energy, RHF electronic energy; correlation energies at MP2, CCSD,
+CCSD(T) and various LDMRG levels of theory. All energies are given in hartrees.
+                                 Ecorr
+   R [a0 ] ERHF      ERHF,el     MP2      CCSD CCSD(T) LDMRG(50) LDMRG(100) LDMRG(250) LDMRG(500)a
+    1.0 -16.864 88 -191.825 14 -0.361 45 -0.407 29 -0.417 39 -0.402 72 -0.417 27 -0.419 14 -0.419 19
+    1.2 -22.461 27 -168.261 49 -0.401 83 -0.470 11 -0.483 30 -0.475 90 -0.485 21 -0.486 35 -0.486 38
+    1.4 -25.029 76 -150.001 38 -0.444 73 -0.543 03 -0.559 36 -0.557 16 -0.563 30 -0.564 00 -0.564 02
+    1.6 -26.062 25 -135.412 42 -0.491 88 -0.631 18 -0.650 89 -0.652 72 -0.656 74 -0.657 18 -0.657 19
+    1.8 -26.265 98 -123.466 13 -0.545 50 -0.741 67 -0.765 47 -0.769 82 -0.772 42 -0.772 66 -0.772 67
+    2.0 -26.008 20 -113.488 34 -0.607 89 -0.883 29 -0.912 70 -0.916 11 -0.917 76 -0.917 89   conv.b
+                                                 c         c
+    2.4 -24.835 76 -97.735 87 -0.768 83                      -1.324 16 -1.324 77 -1.324 81    conv.
+                                                 c         c
+    2.8 -23.360 81 -85.846 62 -0.995 30                      -1.913 81 -1.913 98 -1.913 99    conv.
+                                                 c         c
+    3.2 -21.896 33 -76.571 41 -1.307 78                      -2.671 90 -2.671 95   conv.      conv.
+                                                 c         c
+    3.6 -20.574 29 -69.174 36 -1.723 32                      -3.528 46 -3.528 48   conv.      conv.
+                                                 c         c
+    4.2 -18.955 95 -60.613 15 -2.558 99                      -4.793 76   conv.     conv.      conv.
+ a All calculations with M > 500 converged.
+ b ”conv.” denotes converged results, where increased M did not
+
+change the significant figures in the energy.
+ c The Coupled Cluster calculations could not be converged. See
+
+text.
+
+
+
+are starting from a particularly unfavourable one-particle
+                                                                  FIG. 10: Asymmetric dissociation of H50 : Potential energy
+basis to describe metallic behaviour. By performing the
+                                                                  curves from RHF, MP2, and exact LDMRG. On the scale
+DMRG in a set of separately localised occupied and vir-           of the graph, the LDMRG, CCSD, and CCSD(T) curves are
+tual orbitals such as Boys orbitals [59], we expect that the      indistinguishable.
+degradation in efficiency of the DMRG would be avoided.
+
+                                                                                                                       RHF
+                                                                          -25
+              B.   Asymmetric Dissociation                                                                             MP2
+
+                                                                                                                       LDMRG(500)
+
+   The calculated energies for the asymmetric dissocia-                   -26
+tion are summarized in table VII. In this system, the re-
+stricted Hartree-Fock reference dissociates correctly (to a
+                                                                  [E ]
+                                                                    h
+
+
+
+
+set of non-interacting hydrogen molecules), which can be                  -27
+                                                                    tot
+
+
+
+
+understood by changing to a localised basis in the space
+                                                                  E
+
+
+
+
+of restricted occupied orbitals. For this reason, the re-
+stricted MP2 and CC theories are also qualitatively cor-                  -28
+rect and we see that their energies (fig. 10) lie parallel
+to the exact LDMRG values along the dissociation curve.
+Unlike in the symmetric dissociation, the correlation en-                 -29
+                                                                                1.5   2.0   2.5            3.0   3.5         4.0
+ergy saturates rapidly to ∼ 1.8% of the total energy as the
+bonds are stretched. Fig. 11 shows how the percentage                                         R
+                                                                                                  inter
+                                                                                                          [a ]
+                                                                                                            0
+errors in the correlation energy for the different methods
+decrease along the dissociation coordinate. Again, we
+see reduced performance of the DMRG in the metallic
+regime due to the unsuitability of the underlying orbital
+basis, but still a systematic convergence with M . For
+large Rinter we observed very rapid convergence with M            density matrix γ during our LDMRG calculations. In fig.
+and number of sweeps, and in fact for Rinter =4.2a0 the           12 we have plotted the off-diagonal decay of the α one-
+LDMRG energy was already exact after 4 noise sweeps               particle density matrix from element γ 25,25 → γ 25,50 . In
+with M = 50. In the limit of complete dissociation, the           the metallic regime (short Rinter ) we see the long-ranged
+CCSD theory becomes exact for this system and this is             oscillations in the off-diagonal elements, while in the insu-
+confirmed by convergence to the LDMRG results.                    lating regime (long Rinter ) the off-diagonal elements de-
+   In order to demonstrate the metal-insulator transition         cay much more rapidly. A similar picture is obtained
+more explicitly we computed the one-particle reduced              from the density matrix during symmetric dissociation.
+                                                                                                                                                        12
+
+
+TABLE VII: Asymmetric dissociation of H50 : Total RHF energy, RHF electronic energy; correlation energies at MP2, CCSD,
+CCSD(T) and various LDMRG levels of theory. All energies are given in hartrees.
+                                      Ecorr
+ Rinter [a0 ] ERHF        ERHF,el     MP2       CCSD CCSD(T) LDMRG(50) LDMRG(100) LDMRG(250) LDMRG(500)a
+    1.4      -25.029 76 -150.001 38 -0.444 73 -0.543 03 -0.559 36 -0.557 16 -0.563 30 -0.564 00 -0.564 02
+    1.6      -25.963 71 -142.811 31 -0.392 61 -0.516 01 -0.522 30 -0.523 02 -0.523 64 -0.523 67   conv.b
+    1.8      -26.617 68 -136.573 91 -0.369 20 -0.505 47 -0.508 73 -0.509 38 -0.509 48   conv.     conv.
+    2.0      -27.071 82 -131.089 88 -0.357 01 -0.503 04 -0.504 97 -0.505 48 -0.505 50   conv.     conv.
+    2.4      -27.609 24 -121.878 99 -0.346 20 -0.507 17 -0.508 03 -0.508 37   conv.     conv.     conv.
+    2.8      -27.873 62 -114.445 23 -0.341 62 -0.512 77 -0.513 22 -0.513 45   conv.     conv.     conv.
+    3.2      -28.004 68 -108.324 99 -0.338 67 -0.516 18 -0.516 42 -0.516 56   conv.     conv.     conv.
+    3.6      -28.069 65 -103.203 54 -0.336 34 -0.517 50 -0.517 63 -0.517 71   conv.     conv.     conv.
+    4.2      -28.111 00 -96.924 54 -0.333 73 -0.517 49 -0.517 54  -0.517 58   conv.     conv.     conv.
+ a All calculations with M > 500 converged.
+ b ”conv.” denotes converged results, where increased M did not
+
+change the significant figures in the energy.
+
+
+
+FIG. 11: Asymmetric dissociation of H50 : Relative errors in          FIG. 12: Asymmetric dissociation of H50 : Half-cross-section
+the correlation energies at MP2, CCSD, CCSD(T), and differ-           of the LDMRG α-one-particle density matrix at α-orbital no.
+ent LDMRG levels of theory (compared to the exact LDMRG               25.
+results) in logarithmic scale.
+                                                                                   0.5
+                                                                                                                                  R       = 1.4a
+                                                                                                                                  inter            0
+
+
+                                                         MP2                       0.4                                            R
+                                                                                                                                  inter
+                                                                                                                                          = 1.6a
+                                                                                                                                                   0
+             1
+        10
+                                                         CCSD                                                                     R       = 2.4a
+                                                                                                                                  inter            0
+
+                                                                                   0.3
+                                                         CCSD(T)                                                                  R       = 4.2a
+             0                                                                                                                    inter            0
+        10
+                                                         LDMRG(50)
+                                                                      25,25+dist
+
+
+
+
+                                                                                   0.2
+[%]
+
+
+
+
+                                                         LDMRG(100)
+         -1
+        10                                               LDMRG(250)
+ corr
+
+
+
+
+                                                                                   0.1
+E
+ rel
+
+
+
+
+         -2
+        10
+                                                                                   0.0
+
+
+         -3
+        10                                                                         -0.1
+
+
+
+         -4                                                                               0   5          10         15        20                   25
+        10
+                 1.5   2.0    2.5            3.0   3.5          4.0
+                                                                                                  dist (distance from diagonal)
+                                R           [a ]
+                                    inter     0
+
+
+
+
+                                                                      a straightforward screening criterion without the impo-
+                       VI.   CONCLUSIONS                              sition of correlation domains. With this active space
+                                                                      method, we could then obtain numerically exact solutions
+   We began this work with the question of how to de-                 of the many-particle Schrödinger equation for all-trans-
+scribe nondynamic correlation in large systems with the               polyenes up to C48 H50 (correlating the π z -electrons) and
+restriction that such systems are large in only one di-               hydrogen molecular chains up to (H2 )50 (correlating 100
+mension. In our investigations, we have shown how the                 electrons in 100 orbitals).
+Density Matrix Renormalization Group (DMRG) pro-                         By construction, a unique advantage of the LDMRG as
+vides a natural answer to this problem. The Matrix                    compared to other local correlation methods is its ability
+Product State that underlies the DMRG is a local, varia-              to capture nondynamic correlation. We can take advan-
+tional, size-consistent/size-extensive, and inherently mul-           tage of locality in multireference problems so long as the
+tireference ansatz that can efficiently exploit the spe-              correlation length is finite. We have demonstrated the
+cial structure of quasi-one-dimensional correlation. Us-              capability and efficiency of the LDMRG in these situa-
+ing the intrinsic locality of the ansatz, we have formu-              tions by obtaining numerically exact correlation energies
+lated a quadratic scaling DMRG algorithm, using only                  in the metal-to-insulator transition of linear H50 -chains,
+                                                                                                                              13
+
+where we correlate 50 electrons in 50 orbitals.                                       Acknowledgments
+  With the possibility of accurately capturing nondy-
+namic correlation in long molecules, we can now begin to
+address the quantitative description of strongly interact-          JH is funded by a Kekulé Fellowship of the Fond
+ing states as found in the spectrum of materials such as         der Chemischen Industrie (Fund of the German Chem-
+the conjugated organic polymers. Here, the natural next          ical Industry). GKC acknowledges support from Cor-
+step would be to combine an LDMRG description of the             nell University and the Cornell Center for Materials Re-
+nondynamic correlation in the active π-space with our re-        search (CCMR). Computations were carried out in part
+cent developments in Canonical Transformation Theory             on the Nanolab-Cluster of the Cornell NanoScale Science
+[60], to incorporate the dynamic correlation that arises         & Technology Facility (CNF), supported by NSF ECS
+in larger basis sets.                                            03-05765.
+
+
+
+
+ [1] B. O. Roos, Adv. Chem. Phys. 69, 399 (1987).                [27] S. R. White and R. L. Martin, J. Chem. Phys. 110, 4127
+ [2] T. Van Voorhis and M. Head-Gordon, Chem. Phys. Lett.             (1999).
+     317, 575 (2000).                                            [28] S. Daul, I. Ciofini, C. Daul, and S. R. White, Int. J.
+ [3] T. Van Voorhis and M. Head-Gordon, J. Chem. Phys.                Quantum Chem. 79, 331 (2000).
+     112, 5633 (2000).                                           [29] G. K.-L. Chan and M. Head-Gordon, J. Chem. Phys.
+ [4] T. Van Voorhis and M. Head-Gordon, J. Chem. Phys.                116, 4462 (2002).
+     115, 7814 (2001).                                           [30] G. K.-L. Chan and M. Head-Gordon, J. Chem. Phys.
+ [5] G. J. O. Beran, M. Head-Gordon, and S. R. Gwaltney,              118, 8551 (2003).
+     J. Chem. Phys. 124, 114107 (2006).                          [31] G. K.-L. Chan, J. Chem. Phys. 120, 3172 (2004).
+ [6] D. Walter and E. A. Carter, Chem. Phys. Lett. 346, 177      [32] G. K.-L. Chan, M. Kállay, and J. Gauss, J. Chem. Phys.
+     (2001).                                                          121, 6110 (2004).
+ [7] D. Walter, A. Venkatnathan, and E. A. Carter, J. Chem.      [33] G. K.-L. Chan and T. Van Voorhis, J. Chem. Phys. 122,
+     Phys. 118, 8127 (2003).                                          204101 (2005).
+ [8] A. Venkatnathan, A. B. Szilva, D. Walter, R. J. Gdanitz,    [34] Ö. Legeza, J. Röder, and B. A. Hess, Mol. Phys. 101,
+     and E. A. Carter, J. Chem. Phys. 120, 1693 (2004).               2019 (2003).
+ [9] B. D. Dunietz and R. A. Friesner, J. Chem. Phys. 115,       [35] Ö. Legeza, J. Röder, and B. A. Hess, Phys. Rev. B 67,
+     11052 (2001).                                                    125114 (2003).
+[10] G. E. Scuseria and P. Y. Ayala, J. Chem. Phys. 111,         [36] G. Moritz, B. A. Hess, and M. Reiher, J. Chem. Phys.
+     8330 (1999).                                                     122, 024107 (2005).
+[11] M. Schütz and H.-J. Werner, Chem. Phys. Lett. 318,         [37] G. Moritz, A. Wolf, and M. Reiher, J. Chem. Phys. 123,
+     370 (2000).                                                      184105 (2005).
+[12] M. Schütz, J. Chem. Phys. 113, 9986 (2000).                [38] G. Moritz and M. Reiher, J. Chem. Phys. 124, 034103
+[13] M. Schütz and H.-J. Werner, J. Chem. Phys. 114, 661             (2006).
+     (2001).                                                     [39] H. Ma, C. Liu, and Y. Jiang, J. Chem. Phys. 120, 9316
+[14] J. E. Subotnik and M. Head-Gordon, J. Chem. Phys.                (2004).
+     123, 064108 (2005).                                         [40] H. Ma, F. Cai, C. Liu, and Y. Jiang, J. Chem. Phys.
+[15] P. Tavan and K. Schulten, Phys. Rev. B 36, 4337 (1987).          122, 104909 (2005).
+[16] K. Nakayama, H. Nakahano, and K. Hirao, Int. J. Quan-       [41] H. Ma, C. Liu, and Y. Jiang, J. Chem. Phys. 123, 084303
+     tum Chem. 66, 157 (1998).                                        (2005).
+[17] J. Lappe and R. J. Cave, J. Phys. Chem. A 104, 2294         [42] S. Östlund and S. Rommer, Phys. Rev. Lett. 75, 3537
+     (2000).                                                          (1995).
+[18] M. Bockrath et al., Nature 397, 598 (1999).                 [43] S. Rommer and S. Östlund, Phys. Rev. B 55, 2164
+[19] S. Belluci, J. Gonzalez, and P. Onorato, Phys. Rev. Lett.        (1997).
+     95, 186403 (2005).                                          [44] F. Verstraete, D. Porras, and J. I. Cirac, Phys. Rev. Lett.
+[20] J. Lee et al., Phys. Rev. Lett. 93, 166403 (2004).               93, 227204 (2004).
+[21] Z. Shuai, J. L. Brédas, S. K. Pati, and S. Ramasesha,      [45] U. Schollwöck, Rev. Mod. Phys. 77, 259 (2005).
+     Proc. SPIE 3145, 293 (1997).                                [46] E. R. Davidson, J. Comp. Phys. 17, 87 (1975).
+[22] D. Yaron, E. E. Moore, Z. Shuai, and J. L. Brédas, J.      [47] J. Catalán and J. L. G. de Paz, J. Chem. Phys. 120,
+     Chem. Phys. 108, 7451 (1998).                                    1864 (2004).
+[23] G. Fano, F. Ortolani, and L. Ziosi, J. Chem. Phys. 108,     [48] T. D. Crawford et al.,           Psi 3.2 (2003),       see
+     9246 (1998).                                                     www.psicode.org.
+[24] G. L. Bendazzoli, G. F. S. Evangelisti, F. Ortolani, and    [49] W. J. Hehre, R. F. Stewart, and J. A. Pople, J. Chem.
+     L. Ziosi, J. Chem. Phys. 110, 1277 (1999).                       Phys. 51, 2657 (1969).
+[25] A. O. Mitrushenkov, G. Fano, F. Ortolani, R. Linguerri,     [50] Basis sets were obtained from the Extensible Compu-
+     and P. Palmieri, J. Chem. Phys. 115, 6815 (2001).                tational Chemistry Environment Basis Set Database,
+[26] A. O. Mitrushenkov, R. Linguerri, P. Palmieri, and               Version 02/25/04, as developed and distributed by the
+     G. Fano, J. Chem. Phys. 119, 4148 (2003).                        Molecular Science Computing Facility, Environmental
+                                                                                                                          14
+
+     and Molecular Sciences Laboratory which is part of the   [54] K. Okunishi, Y. Hieida, and Y. Akutsu, Phys. Rev. E
+     Pacific Northwest Laboratory, P.O. Box 999, Richland,         59, R6227 (1999).
+     Washington 99352, USA, and funded by the U.S. Depart-    [55] Ö. Legeza and G. Fáth, Phys. Rev. B 53, 14349 (1996).
+     ment of Energy. The Pacific Northwest Laboratory is a    [56] M. Takahashi and J. Paldus, Phys. Rev. B 31, 5121
+     multi-program laboratory operated by Battelle Memorial        (1985).
+     Institute for the U.S. Department of Energy under con-   [57] J. Paldus, J. Čı́žek, and M. Takahashi, Phys. Rev. A 30,
+     tract DE-AC06-76RLO 1830. Contact Karen Schuchardt            2193 (1984).
+     for further information.                                 [58] J. Paldus, M. Takahashi, and R. W. H. Cho, Phys. Rev.
+[51] C. Angeli et al.,         Dalton, a molecular elec-           B 30, 4267 (1984).
+     tronic structure program, release 2.0 (2005),      see   [59] S. F. Boys, in Quantum Theory of Atoms, Molecules
+     www.kjemi.uio.no/software/dalton/.                            and the Solid State, edited by P. O. Löwdin, page 253,
+[52] H.-J. Werner et al., Molpro, version 2002.6 (2002), a         Academic, New York, 1968.
+     package of ab initio programs, see www.molpro.net.       [60] T. Yanai and G. K.-L. Chan, J. Chem. Phys. 124, 194106
+[53] G. K.-L. Chan, P. W. Ayers, and E. S. Croot, J. Stat.         (2006).
+     Phys. 109, 289 (2002).
+

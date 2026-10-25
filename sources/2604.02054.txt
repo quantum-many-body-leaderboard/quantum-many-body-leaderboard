@@ -1,0 +1,1945 @@
+   Efficient Auxiliary-Field Quantum Monte Carlo
+         using Isometric Tensor Hypercontraction
+
+
+     Maxine Luo,†,‡,⊥     Victor Chen,¶,⊥    Yu Wang,∗,§    and Christian B. Mendl§,∥
+
+
+ †Max Planck Institute of Quantum Optics, Hans-Kopfermann-Straße 1, 85748 Garching,
+
+                                                Germany
+
+‡Munich Center for Quantum Science and Technology, Schellingstraße 4, 80799 M¨unchen,
+                                                Germany
+
+ ¶Technical University of Munich, Department of Chemistry, Lichtenbergstraße 4, 85748
+
+                                          Garching, Germany
+
+§Technical University of Munich, CIT, Department of Computer Science, Boltzmannstraße
+
+                                    3, 85748 Garching, Germany
+
+   ∥Technical University of Munich, Institute for Advanced Study, Lichtenbergstraße 2a,
+
+                                      85748 Garching, Germany
+
+                        ⊥These authors contributed equally to this work.
+
+                                      E-mail:18yu.wang@tum.de
+
+
+                                                Abstract
+
+          Auxiliary Field Quantum Monte Carlo (AFQMC) has emerged as a powerful frame-
+
+      work for treating strongly correlated electronic systems,  offering a favorable balance
+
+      between computational cost and accuracy.  In this paper, we present a novel AFQMC
+
+      method  that  uses  the  isometric  tensor  hypercontraction  (ITHC)  technique  to  diag-
+
+      onalize  the  two-body  Coulomb  interaction  of  molecular  electronic  Hamiltonians  by
+
+      introducing additional fictitious fermionic modes.  While traditional low rank approx-
+
+      imations such as the Tensor Hypercontraction (THC) decomposition have been used
+
+                                                     1
+       in  AFQMC  in  the  past,  their  conventional  role  has  been  to  provide  compact  repre-
+
+       sentations of the two-electron interaction, thereby reducing the memory footprint.  In
+
+       comparison, our method not only reduces memory usage but also exhibits lower the-
+
+       oretical complexity and better practical performance for both propagation and local-
+
+       energy evaluation compared to the standard AFQMC method.  We demonstrate the
+
+       efficacy of this approach by computing the ground-state energies of a linear H10-chain
+
+       and the benzene molecule.  Our results show that the extended-basis AFQMC recovers
+
+       many-body correlations with a precision comparable to that of high-level wavefunction
+
+       methods  such  as  Coupled  Clusters  (CC)  or  Density  Matrix  Renormalization  Group
+
+       (DMRG), while offering significantly improved scaling.
+
+
+1    Introduction
+
+Solving the electronic Schr¨odinger equation lies at the heart of modern computational chem-
+
+istry and computational material physics.  Electron density-based methods such as Density
+
+Functional  Theory  (DFT)1  have  seen  significant  success  due  to  their  favorable  scaling  of
+
+O(N      3) –O(N         4) withNbeing the number of orbitals, which stems from their dependence on
+
+the electron densityρrather than the many-electron wavefunction      2.  However, DFT often
+
+fails or yields unsatisfactory results when applied to systems with strong electron-electron
+
+correlation2,3  . While correlated methods, such as Configuration Interaction (CI) 4 or Coupled
+
+Clusters (CC)5, can be applied to obtain more accurate results for these correlated systems,
+
+these methods are afflicted by their high computational costs with scalings betweenO(N             4)
+–O(N         10) or even exponential depending on the number of included excited states4–6   .
+
+    Auxiliary  Field  Quantum  Monte  Carlo  (AFQMC)  methods  offer  a  favorable  balance
+
+between computational cost and accuracy and have become increasingly relevant in describ-
+
+ing  many-electron  systems7–9   .   Unlike  DFT  and  traditional  wavefunction-based  methods,
+
+AFQMC  is  a  statistical  method  that  determines  the  system’s  electronic  ground  state  via
+
+stochastic sampling9. Its sole reliance on the many-body Hamiltonian and trial wavefunction,
+
+
+                                                          2
+while maintaining a similar scaling as DFT, renders it a potential alternative to traditional
+
+quantum-chemical methods8–10   .  AFQMC methods have been shown to describe highly cor-
+
+related systems such as the Fermi-Hubbard model11,12    and are free of self-interaction errors9.
+
+While the accuracy of AFQMC methods approaches that of correlated wavefunction-based
+
+methods, their computational cost scaling is significantly lower9.
+
+    A major challenge in AFQMC simulations is the treatment of the two-electron repulsion
+
+integrals (ERIs), which constitute one of the primary memory bottlenecks in large-scale cal-
+
+culations13.  Most contemporary AFQMC implementations employ low-rank representations
+
+of the ERI tensor, such as the Cholesky decomposition, to reduce storage requirements 13.
+
+    Tensor hypercontraction (THC) methods14 based on interpolative separable density fit-
+
+ting (ISDF)13,  provide an alternative low-rank factorization of the ERI tensor that offers
+substantially improved compression.  Originally introduced in quantum chemistry to reduce
+
+the storage and computational costs associated with four-index electron repulsion integrals,
+
+THC methods have recently been adapted to AFQMC14, where Maloneet al.showed that
+
+the THC representation of the ERI tensor can dramatically reduce the memory requirements
+
+of AFQMC calculations while preserving chemical accuracy13.
+
+    In this work, we present a novel, more efficient approach to AFQMC that diagonalizes the
+
+quantum-chemical two-body interaction term in an extended space with additional fictitious
+
+modes.   By  diagonalizing,  we  mean  that  the  two-body  interaction  term  depends  only  on
+
+fermionic number operators.  This simplification technique, also known as Isometric Tensor
+
+Hypercontraction (ITHC), was first proposed in Refs.14,15    in the context of quantum compu-
+
+tation, reducing the resources required to simulate the dynamics of chemical systems.  When
+applied to AFQMC, the resulting Hubbard-like interaction enables the propagation of the
+
+AFQMC walkers with reduced computational complexity and memory usage.  In contrast
+
+to the THC-AFQMC methods already reported in the literature13, our method shows sig-
+
+nificant improvement in the runtime of both propagator and estimator, due to the diagonal
+
+form of the two-body term in the extended basis.  To date, novel methods that accelerate
+
+
+                                                       3
+walker propagation have been scarce; thus, our proposed method represents a new approach
+
+to improving AFQMC methods in general9.
+
+
+2    Theory
+
+This section explains our main algorithmic development: how to employ the isometric tensor
+
+hypercontraction form of the electron repulsion integral tensor in AFQMC calculations.
+
+
+2.1    Notation
+
+                     Table 1:  Notation and abbreviations used in this work.
+
+                       Notation       Description
+                       N              Number of orbitals (original basis)
+                       Ne             Number of electrons
+                       Naux           Number of orbitals (extended basis)
+                                      Number of auxiliary fields
+                       Nw             Number of walkers
+                       p, q, r, s     Indices for orbitals in original space
+                       α, β           Indices for orbitals in extended space
+                       γ              Indices for auxiliary vectors
+                       i, j           Indices for walkers
+                       ITHC           Isometric tensor hypercontraction
+                       ISDF           Interpolative separable density fitting
+                       FCI            Full configuration interaction
+                       MBE-FCI        Many-body expanded FCI
+                       CCSDT          Coupled clusters singles doubles triples
+                       HS             Hubbard-Stratonovich
+
+
+    In Table1, we summarize the notation and abbreviations used in this paper.
+
+
+
+
+
+
+
+                                                      4
+2.2    Diagonalizing the interaction Hamiltonian
+
+The molecular electronic Hamiltonian can be written in second quantization using fermionic
+
+annihilation and creation operators as
+
+
+                                    ˆH=    ˆh+   ˆV
+
+                                           NX                     NX                                                     (1)
+                                       =       hpqˆa  †pˆa  q + 12    Vpqrsˆa  †pˆa  †rˆa  sˆa  q.
+                                           p,q                  p,q,r,s
+
+Here, ˆa  †p and ˆa  q  are the fermionic creation and annihilation operators,h                pq  the one-electron
+
+integrals andV        pqrs the two-body integrals.  Most AFQMC algorithms for quantum chemical
+
+problems  rely  on  a  Cholesky  decomposition  of  the  two-electron  repulsion  integral  (ERI)
+tensorV             pqrs 10,16   .  In our method, however, we employ the isometric tensor hypercontraction
+
+(ITHC) technique recently proposed in15, which factorizes the ERI as
+
+
+                                                    NauxX
+                                         Vpqrs =           upαuqαWαβurβusβ,                                         (2)
+                                                    α,β=1
+
+whereN            aux ≥Nandu               iα is a real isometry.  Unlike generic tensor hypercontraction17–22    , this
+
+special isometric form admits a simple physical interpretation.
+
+    Specifically, we introduceN          aux−Nadditional fictitious modes with annihilation operators
+
+bm, and define a new set of fermionic modes given by the annihilation operators via
+
+
+                                           ˆc  α = X   upαˆa  p + X     vmαˆbm.                                           (3)
+                                                    p               m
+
+This is achieved via the canonical transformation given byuand a complementary isometry
+
+v, namely, the concatenation ofuandvis a square, orthogonal matrix. It allows us to rewrite
+
+the electron-electron interaction term into a Hubbard-type interaction in the extended space,
+
+
+                                                          NauxX
+                                                ˆW=     1      Wαβˆn  αˆn  β,                                                (4)
+                                                       2  α̸=β
+
+
+                                                             5
+where ˆn  α = ˆc  †αˆc  α is the fermionic number operator in the extended space.  The interaction
+
+operator given in Eq. (4) recovers the original two-body term when projected back onto the
+
+physical Hilbert space:
+                                                       ˆV=P      ˆWP.                                                        (5)
+
+
+HerePis the projector to the physical Hilbert space with no fictitious modes.
+
+    It is shown in15 that ITHC has a similar accuracy as generic THC for the same number of
+
+auxiliary modesN       aux. The authors also provided an efficient three-step method for obtaining
+
+ITHC, starting with a generic THC generated by the interpolative separable density fitting
+(ISDF) approach19 and transforming it into the required isometric form.  We also employed
+
+the same method to obtain the ITHC factors in this study, for which a brief review is provided
+
+in AppendixA.
+
+
+2.3    Extended basis AFQMC
+
+AFQMC is based on the imaginary time propagation23
+
+                              |Ψ 0⟩=  lim                                e−∆τ       ˆHn |Ψ init⟩,                            (6)
+
+                                        τ→∞  e−τ    ˆH |Ψ init⟩=  limn→∞
+
+
+where ∆τis an small time step,|Ψ                  0⟩is the ground state and|Ψ           init⟩is an initial state not
+
+orthogonal to|Ψ      0⟩.
+    While  the  ITHC  technique  was  originally  proposed  for  unitary  time  propagation 15,  it
+
+applies  equally  well  to  imaginary  time  propagation.   For  a  short  time  step  ∆τ,  we  make
+
+use of the second-order Trotter-Suzuki decomposition24  and quantum Zeno dynamics25,26   ,
+
+writing
+                                 e−∆τ       ˆH =e   − ∆τ2  ˆhPe   −∆τ       ˆWPe   − ∆τ2  ˆh +O(∆τ              2).                                (7)
+
+
+Notice that here the error is dominated by the Zeno error, while the Trotter error remains
+
+O(∆τ          3)15.  A detailed analysis of different sources of error is provided in AppendixB. This
+
+
+
+                                                              6
+Zeno error translates to an error of orderO(∆τ) in the final equilibrium energy, as we can
+
+think of our simulation evolving under the effective Hamiltonian  ˆHeff =  ˆH+O(∆τ).
+    We realize the imaginary time step in Eq. (7) as follows:  after applyinge                  − ∆τ2  ˆh, we rotate
+
+the walkers to the extended basis, where the Monte Carlo calculation of the two-body inter-
+
+action terme        −∆τ       ˆW  can be performed using solely number operators.  We then rotate back
+
+and project onto the physical Hilbert space.  For a Slater-determinant walker, these basis
+
+changes are equivalent to matrix multiplications with an isometryu                  iα.
+
+    The application ofe   −∆τ       ˆW  resembles other AFQMC algorithms.  We first write  ˆWas a
+
+sum of squares of one-body operators
+
+
+                                              NauxX
+                                    ˆW=     1       Wαβˆn  αˆn  β
+                                           2  α̸=β
+                                              NauxX NauxX                         NauxX                                     (8)
+                                        = 12             wγαwγβˆn  αˆn  β = 12          ˆw   2γ.
+                                              α̸=β  γ=1                           γ=1
+
+Here, the matrixw        γα can be obtained via an eigen- or Cholesky decomposition ofW    αβ, which
+
+is a positive semidefinite matrix.  After that,  a Hubbard-Stratonovich transformation 27  is
+
+performed to yield the AFQMC propagator given as
+
+                                                  Z
+                                     e−∆τ       ˆH = dx  Nauxp(x)      ˆB(x) +O(∆τ                      2),                                   (9)
+
+                                                              √−∆τx·          ˆwPe   − ∆τ
+                                       ˆB(x) =e          − ∆τ2  ˆhPe            2  ˆh,                                        (10)
+
+
+wherexis an auxiliary field vector withN                         aux entries andp(x) denotes the normal distribution.
+
+Note that  ˆB(x) is a one-body operator.
+
+    The  transformation  given  in  Eq.  (9)  maps  an  interacting  many-body  problem  onto  a
+
+sum of non-interacting one-body problems, where the fluctuation beyond the mean-field is
+
+recovered by evaluating the integral over all auxiliary field configurations 27.  The integral in
+
+Eq. (9) is evaluated by sampling the auxiliary fieldxfrom the probability distributionp(x)
+using Monte Carlo methods.  Using this propagator, in principle, one may evolve a set of
+
+                                                               7
+walkers to realize the ground-state projection scheme from Eq. (6). Free-projection AFQMC
+
+(fp-AFQMC), however, suffers from the well-known fermionic sign or phase problem found in
+
+fermionic QMC methods28.  Due to the inherently anti-symmetric nature of fermionic wave
+
+functions,  the  fermionic  sign  problem  of  QMC28,29     will  cause  contributions  with  different
+
+signs to cancel each other.  This leads to an exponential decay of the signal-to-noise ratio in
+
+the QMC sampling process28.
+
+     To overcome the fermionic phase problem in AFQMC, the phaseless approximation (ph-
+
+AFQMC) is used, which employs importance sampling to bias the sampling process and fix
+
+walkers’ phases8,28  .  In ph-AFQMC, the wave function is represented as a weighted sum over
+
+a set of walkers{|ϕ          i(τ)⟩}with weightsw              i(τ)
+
+
+                                                         NwX
+                                           |Ψ(τ)⟩=            wi(τ)      |ϕ i(τ)⟩⟨Ψ  trial|ϕ i(τ)⟩     .                                      (11)
+                                                         i=1
+
+Here,|Ψ             trial⟩is  the  trial  wavefunction  employed  for  the  importance  sampling.   Then,  the
+
+global  energy  estimator  at  a  given  imaginary  timeτis  given  by  the  weighted  statistical
+
+average of local energies
+
+
+                                       NwX                          NwX
+                           E(τ) =           wi(τ)E      loc,i (τ) =      wi(τ)   ⟨Ψ  trial|  ˆH|ϕ     i(τ)⟩⟨Ψ  trial|ϕ i(τ)⟩       .                     (12)
+                                        i                             i
+
+The walker state|ϕ           i(τ)⟩and the weightw          i(τ) are updated by the following rules
+
+
+                                     |ϕ i(τ+ ∆τ)⟩=            ˆB(x     i − ¯xi)|ϕ   i(τ)⟩,                                         (13)
+
+                                      wi(τ+ ∆τ) =I              ph(x  i, ¯xi, τ,∆τ)×w             i(τ).                                (14)
+
+
+Note the shift in the integral variablexin Eq. (9) by the force bias                 ¯x.  It can be shown   28
+
+that the optimal choice for ¯xis given by
+
+
+                                                ¯xi =−  √∆τ   ⟨Ψ  trial| ˆw|ϕ     i⟩⟨Ψ  trial|ϕ i⟩   .                                           (15)
+
+
+                                                                  8
+The corresponding phaseless importance functionI                 ph is given by
+
+
+            Iph(x  i, ¯xi, τ,∆τ) =|S            i(τ,∆τ)e          xi·¯xi−¯xi·¯xi/2 | ×max (0,cos(arg(S           i(τ,∆τ)))).       (16)
+
+
+HereS          i(τ,∆τ) is the overlap ratio of thei-th walker
+
+
+                                     Si(τ,∆τ) =       ⟨Ψ  trial| ˆB(x     i − ¯xi)|ϕ   i(τ)⟩⟨Ψ  trial|ϕ i(τ)⟩              .                                  (17)
+
+
+This modified update rule ensures that the weightsw    i remain real and positive throughout
+
+propagation  but  introduces  a  systematic  bias,  which  vanishes  if  the  trial  state|Ψ            trial⟩is
+
+exactly the ground state. Finally, we noted that the mean-field shift with respect to the trial
+
+wavefunction|Ψ                     trial⟩can be employed to further reduce the variancew                 i 30.
+
+    The  propagation  of  walkers  in  Eq.  (13),  the  evaluation  of  the  force  bias  in  Eq.  (15),
+
+and the evaluation of local energies in Eq. (12) are computationally costly and need special
+
+treatment in our extended basis AFQMC framework. We explain the implementation details
+
+of these parts in Sec.3.
+
+
+3    Implementation Details
+
+
+In  this  section,  we  describe  the  implementation  details  of  our  extended  basis  AFQMC
+
+method.  To realize our extended basis AFQMC propagator, we utilized the Python pack-
+age ipie by Joonho Leeet al.        16,30     as a basis and added an additional propagator and other
+
+functionalities.
+
+
+3.1    Enlarged basis propagator
+
+Since we are using single Slater-determinant states, the application of the imaginary-time
+
+propagator in Eq. (10) can be performed as a simple matrix-matrix multiplication according
+
+to Thouless theorem31.
+
+
+                                                              9
+    After applying the one-body propagatore                   −∆τ      ˆh/2    in the original basis with dimensionN,
+
+thei-th walker which is represented as a determinant matrixB                       (i)   with dimension (N, N  e),
+
+is rotated to the extended space via
+
+
+                                                            NX
+                                                  ˜B(i)αk =     upαB(i)pk .                                                 (18)
+
+                                                           p=1
+
+Here,u           pα is the basis rotation matrix in Eq. (3).  The rotation of the Slater determinants,
+
+as stated in Eq. (18), can be performed at a cost ofO(N                wNauxNNe).
+
+    We then apply the Hubbard-Stratonovich transformed two-body propagator in the ex-
+
+tended basis as
+
+
+
+                                                    √−∆τx·w        )αα ˜Bαk.                                                 (19)
+                                                  (e
+
+
+Since the two-body interaction term is diagonal in the extended space,  i.e.,  only contains
+
+terms proportional to the number operators ˆn  α, this can be done at a cost ofO(N          wNauxNe).
+
+
+3.2    One-body Green’s function and force bias
+
+An important component of the ph-AFQMC is the calculation of the force bias 16,28   .  In our
+
+setup, the force bias is calculated in the extended basis by
+
+                                      ¯x  i,γ =−  X    vγα√∆τ   ⟨Ψ  trial|ˆn    α |ϕ i⟩
+
+                                                   α                 ⟨Ψ  trial|ϕ i⟩   .                                    (20)
+
+
+Therefore, the mixed estimation of ˆn  α is needed, which is the diagonal part of the Green’s
+function in the extended basis.
+
+    The one-body Green’s function can be computed efficiently by first performing a rotation
+
+of the trial state and walkers to the enlarged basis,  as in Eq. (18),  obtaining the rotated
+
+determinant matrices  ˜Aand     ˜Bfor the trial and walker determinants, respectively.  Notice
+
+that the rotation of the trial state matrixAneeds to be performed only once at the beginning
+
+                                                            10
+of the simulation.  Then the Green’s function in the extended basis is calculated using
+
+
+                                     ˜G=     ˜A∗( ˜BT ˜A)   −1   ˜BT =  ˜A∗(B  TA)   −1   ˜BT,                                  (21)
+
+
+where  we  have  used  the  fact  thatuis  an  isometry.   The  evaluation  of  the  full  Green’s
+
+function in the extended basis has a theoretical complexity ofO(N          wN 2auxNe).  As only the
+
+diagonal elements of  ˜Gare required to compute the force bias, the cost can be further reduced
+
+toO(N          wNN 2e  +N    wNauxNe).  Then the force bias is computed via a simple matrix vector
+product, with costO(N              wN 2aux).
+
+    The pseudocode for a complete implementation of one propagation step is given in Alg.1.
+
+The dominant computational cost arises from the basis transformation, leading to an overall
+
+complexity  ofO(N          wNauxNNe),  with  a  memory  usage  ofO(N          2aux).   For  comparison,  the
+
+complexity of the standard AFQMC propagator based on Cholesky decomposition or density
+
+fitting16 isO(N         wNauxN 2) and the memory usage isO(N         auxN 2), since it requires the handling
+
+of  large  Cholesky  tensors.   It  is  known  that  to  achieve  the  same  accuracy,  the  rank  of
+
+the Cholesky tensorN             aux  =N    chol  is usually smaller than the rank of THC decomposition
+
+Naux =N    ithc.  Therefore, the complexity comparison does not necessarily imply a speedup
+
+in a realistic implementation.  However, in our numerical experiments, we observe reduced
+
+runtimes on GPUs for the linear hydrogen chain benchmark, as shown in Sec.4.2.
+
+
+3.3    Energy estimator
+
+The local energy is determined via the mixed estimator9
+
+
+                                               Eloc,i  = ⟨Ψ  trial| ˆH|ϕ     i⟩⟨Ψ  trial|ϕ i⟩  .                                               (22)
+
+
+For Slater-determinant states, this can be computed via the one-particle Green’s function 28.
+
+While  the  one-body  energy  is  evaluated  in  the  original  space,  we  evaluate  the  two-body
+
+
+
+                                                            11
+   Algorithm 1:  Imaginary time propagation
+
+     1:Input:Initial batch of walkers{|ϕ                            i⟩}as Slater determinants, and weightsw        i
+     2:Output:Propagated walkers and updated weights
+     3:foreach walkeri= 1, . . . , N                  w
+     4:     Compute overlap:⟨Ψ                 trial|ϕ i⟩ →ovlp
+     5:     Apply one-body propagator:e                       −∆τ      ˆh/2   |ϕ i⟩ → |ϕ i⟩
+     6:     Rotate the walkers:u|ϕ              i⟩ → |˜ϕi⟩
+     7:     Sample auxiliary fieldsx              i fromp(x)
+     8:     Compute the diagonal part of Green’s function⟨               ˆni⟩
+     9:     Compute force bias:−       √∆τw⟨      ˆni⟩ → ¯xi
+   10:   Force bias factor:x                   i · ¯xi − ¯xi · ¯xi/2→c          fb
+   11:   Two-body propagator:    √−∆τ(x            i − ¯xi)·   ˆw→     ˆT
+   12:   Apply two-body propagator:e                              ˆT |˜ϕi⟩ → |˜ϕi⟩
+   13:   Rotate back to original space:u               −1  |˜ϕi⟩ → |ϕ i⟩
+   14:   Apply one-body propagator:e                        −∆τ      ˆh/2   |ϕ i⟩ → |ϕ i⟩
+   15:   Compute overlap:⟨Ψ                   trial|ψ i⟩ →ovlp     new
+   16:   Update weightw       i according to Eq. (14)
+   17:end for
+
+ Figure 1:  Imaginary-time propagation procedure for the extended-basis AFQMC method.
+
+
+interaction energy in the extended space
+
+                                     D ˆV E        X
+                                             = 12       Wαβ⟨ˆn    αˆn  β⟩
+                                                   α̸=β
+                                                   X                                                                         (23)
+                                             = 12       Wαβ( ˜Gαα ˜Gββ −  ˜Gαβ ˜Gβα),
+                                                   α̸=β
+
+where  ˜Gαβ is the Green’s function in the extended basis andW        αβ is the transformed ERI in
+
+the extended basis representation.
+
+    The computational cost of evaluating the global energy is dominated by the computation
+
+of the Green’s function in the extended basis,  resulting in a computational complexity of
+
+O(N      wN 2auxNe) and a memory requirement ofO(N          2aux). In contrast, the standard ph-AFQMC
+
+method costsO(N                wNauxNN 2e ) for energy estimation16.  Our method thus provides a signif-
+
+icant  reduction  in  computational  cost.   Note  that  previous  studies  used  generic  THC  to
+
+accelerate energy evaluation13, which exhibits computational and memory scaling similar to
+
+
+                                                               12
+our method.
+
+
+3.4    Algorithmic scaling
+
+In this section, we summarize the algorithmic scaling of our ITHC-AFQMC method in terms
+
+of complexity and memory usage, and compare the results to existing THC methods found
+
+in the literature.
+
+    Previous applications of the THC (based on ISDF) in AFQMC have been reported in the
+
+literature by Maloneet al.                13, where they reduced the memory usage down toO(N           2aux)13 and
+
+energy  estimator  complexity  toO(N           2auxNe).   However,  in  this  framework,  THC  primarily
+
+serves  as  a  compression  technique  and  retains  the  conventional  structure  of  the  AFQMC
+
+two-body propagator, which is why the authors reported no significant practical speed-up
+
+compared to standard AFQMC13.
+
+    In  contrast,  the  key  distinction  of  ITHC  is  that  it  serves  not  only  as  a  mathematical
+
+compression technique but also admits a physical interpretation.  In ITHC, the two-body
+interaction becomes diagonal in the extended basis.  This diagonal form significantly sim-
+
+plifies  the  propagator  and  local  energy  estimator.   As  a  consequence,  the  computational
+
+hotspots of the AFQMC workflow, namely walker propagation and local energy evaluation,
+
+can be rewritten in terms of diagonal interactions.  Because of the reasons listed above, the
+
+ITHC method not only acts as a compression method but also significantly speeds up key
+
+computational steps, something the THC-AFQMC method mentioned earlier was unable to
+
+do13.
+
+    We summarized the above discussion in Table2. The improvements in terms of complex-
+
+ity and memory are further supported by the benchmarking experiments of theH       10-chain,
+
+which are discussed in Section4.2.
+
+
+
+
+
+
+
+
+                                                       13
+Table 2:  Comparison of memory performance, propagator complexity, and energy estimator
+complexity  across  different  AFQMC  methods.Ndenotes  the  number  of  orbitals  in  the
+original basis,N           e the number of electrons, andN        aux the the number of auxiliary fields.  The
+THC-AFQMC paper13 does not provide a detailed discussion of the propagator complexity,
+but reports that no significant speedup was observed in numerical experiments.
+
+                     Method           Memory          Propagator        Energy Estimator
+                   Standard16       O(N      auxN 2)  O(N      auxN 2)    O(N      auxNN 2e )
+                     THC13            O(N      2aux)                        O(N      2auxNe)
+                  ITHC (ours)         O(N      2aux) O(N      auxNNe)       O(N      2auxNe)
+
+4    Applications and Benchmarking
+
+
+In this section, we demonstrate that our extended basis AFQMC method is a viable addition
+to the ipie package by applying it to two quantum-chemical systems:  the hydrogen chain
+
+toy model and the benzene molecule.  First, we benchmark the accuracy of our algorithm by
+
+computing the ground-state energy of the H10 chain.  Furthermore, we benchmark the time
+
+scaling of our method against the hydrogen chain with various chain lengths.  We discuss
+
+and compare the results to the standard AFQMC approach.  Additionally, we implement an
+
+intermediate method that only uses the ITHC method to compress the ERI (without rotating
+
+the basis) as an additional reference.  Details of the intermediate method are discussed in
+
+AppendixC. Finally, we demonstrate the algorithm’s ability to capture electronic correlation
+
+by computing the correlation energy of benzene beyond the mean-field approximation, and
+
+analyze the convergence behavior of the correlation energy with respect to the ITHC rank.
+All calculations were run on a single NVIDIA Tesla V100 GPU.
+
+    In AppendixA, we briefly review the ITHC pre-calculation procedure and report its wall
+
+time.  We also provide the ranks and approximation errors of the ITHC factorization used
+
+in extended AFQMC and the Cholesky decomposition employed in standard AFQMC.  The
+
+ITHC data and the integrals for the systems studied in this work are openly available in
+
+Ref.32.
+
+
+
+
+
+
+                                                      14
+4.1H       10-chain ground state energy
+
+To confirm the accuracy and efficiency of our algorithm, multiple benchmarks were run using
+
+the H10-chain toy model with an STO-6G minimal basis set and a single-determinant trial
+
+wavefunction  derived  from  an  unrestricted  Hartree-Fock  (UHF)  calculation 33.   The  inter-
+
+atomic distance was set to 1.6 bohr for the hydrogen chain.  An AFQMC simulation was run
+
+using the standard method in ipie and our extended method.  Additionally, to demonstrate
+
+that the advantage of our method arises from the enlarged-basis framework rather than the
+
+ITHC decomposition itself, we performed an ”intermediate method” simulation.  In this ap-
+proach,  the ITHC is used to generate the Cholesky vectors,  as discussed in AppendixC,
+
+which are then used as inputs to the standard ipie workflow.
+
+    The AFQMC simulations are run with 1000 walkers, a time step of ∆τ= 0.005 a.u., and a
+
+total evolution time of 25 a.u.  The local energy is estimated once per block, which contains
+
+10 imaginary time steps to minimize computational effort while maintaining a significant
+
+sample size.  The results of the three different AFQMC methods are shown in Fig.2.
+
+    The progression of the AFQMC simulation is shown in Fig.2.  After an initial equilibra-
+
+tion period, the AFQMC simulations converged to an average value shown by the blue line
+
+(our method), the red line (standard method), and the green line (intermediate method).
+
+By discarding the first data points beforeτ= 6.25   a.u.  and taking the average, an esti-
+
+mate of the ground-state energy can be obtained.  Notably,  our extended ITHC AFQMC
+approach maintains significantly lower stochastic noise and fluctuations than the standard
+
+and intermediate methods.
+
+    The results shown in Fig.2are based on a single run with one random seed.  In practice,
+
+we find that results can vary substantially across random seeds.  To quantify these statistical
+
+fluctuations  and  compare  the  numerical  stability  of  the  different  methods,  we  performed
+
+five independent simulations for each method with different random seeds and report the
+
+corresponding mean values and standard deviations in Table3. Compared with the standard
+
+and intermediate methods, our ITHC approach yields results within chemical accuracy of
+
+
+                                                      15
+Figure 2: Convergence of the AFQMC simulation energy of the H10-chain using the standard
+AFQMC method (red), our ITHC method (blue), and the intermediate method (green). The
+HF ground-state energy is shown as a black dotted line.  The FCI benchmark is shown as a
+black line with the shaded area representing the range of chemical accuracy (±1.6mE            h).
+
+
+the FCI benchmark−5.384361E                                   h  and maintains substantially smaller standard deviations
+
+across the different tracks, as shown in Table3and visualized in Fig.3.  By contrast, the
+
+intermediate method performs similarly to the standard method.  We report a mean value
+
+of−5.382145E                          h  for  the  standard  method,  which  is  in  line  with  previous  results  reported
+
+by  Maloneet  al.                16.   These  results  indicate  that  our  ITHC-AFQMC  framework  provides
+improved  accuracy  and  numerical  stability  for  the  ground-state  energy  compared  to  the
+
+standard method, at least in the case ofH    10.  And these advantages arise from our unique
+
+propagation algorithm rather than from ITHC compression alone.
+
+
+4.2    Timing benchmarks
+
+It is well documented in the literature that the two most computationally demanding steps
+
+of AFQMC are propagation and local energy evaluation16.  In this section, we compare the
+
+computational efficiency of our proposed methodology with the standard AFQMC imple-
+
+                                                        16
+                                            ITHC         Standard      Intermediate
+                           Seed 1         -5.383847     -5.380919        -5.382167
+                           Seed 2         -5.383656     -5.381657        -5.381872
+                           Seed 3         -5.383896     -5.384778        -5.379899
+                           Seed 4         -5.384092     -5.381426        -5.384150
+                           Seed 5         -5.382526     -5.381946        -5.379865
+                           Avg.           -5.383603     -5.382145        -5.381591
+                           Std.  dev.     0.000556       0.001358         0.001600
+                           Error          0.000757       0.002215         0.002770
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure  3:  The  table  summarizes  the  converged  energies  obtained  across  five  independent
+random seeds for different AFQMC methods, along with their means, standard deviations,
+and errors w.r.t.  the FCI benchmark−5.384361E                                   h.  The lower panel visualizes the averaged
+AFQMC energies, with the error bars representing the standard deviation.  The FCI bench-
+mark is given as a black dotted line, and the shaded area represents the range of chemical
+accuracy (±1.6mE            h).
+
+
+
+
+
+
+
+
+
+
+                                                        17
+mentation  in  the  ipie  package.   We  demonstrate  that  our  approach  yields  superior  GPU
+
+performance in both the propagation and estimator phases,  primarily due to the reduced
+
+theoretical complexity and reduced memory usage afforded by the Hubbard-like represen-
+
+tation  of  the  interaction  in  the  extended  space,  as  stated  in  Sec.3.2.   To  quantify  these
+
+gains, we benchmarked GPU runtimes for a series of one-dimensional hydrogen chains with
+
+variable  lengthN,  enabling  us  to  evaluate  performance  as  a  function  of  system  size.   As
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 4:  Comparison of GPU performance of propagation time (left) and estimator time
+(right) between our method (blue), intermediate method (green), and the standard method
+found in ipie (red) for different lengths of the hydrogen chain.
+
+
+illustrated  in  Fig.4,  the  propagation  times  for  both  methods  are  comparable  for  smaller
+
+systems (N= 10−40).  However, as the chain size increases, our extended method exhibits
+better time performance.
+
+    Regarding the estimator’s performance, the standard method performs similarly to our
+
+method for chain sizes belowN= 20.  However,  the results in Fig.4show that the esti-
+
+mator’s runtime grows more rapidly for the ipie method.  For larger systems, the estimator
+
+implemented in our method is significantly faster.
+
+    Timing benchmarks of the intermediate method show wall times and computational scal-
+
+ing identical to those of uncompressed Cholesky AFQMC within ipie, when performed at the
+
+
+                                                        18
+same Cholesky rank shown in Fig.4. These results indicate that the observed speed-up is not
+
+a direct consequence of the ITHC decomposition itself, but is instead mainly attributable
+
+to the simplified form of the propagator in the extended basis.  Further discussion of the
+
+intermediate method is found in AppendixC.
+
+    To summarize, the results in Fig.4demonstrate that our method achieves superior GPU
+
+performance in both propagation and estimator time, thanks to the lower time and memory
+
+complexity introduced by the Hubbard-like interaction term in the extended space.  Bench-
+
+marking trials involving an intermediate implementation show that the reported speed-up is
+
+mainly attributed to the simplified form of the propagator.  This lower numerical complexity
+
+and more favorable scaling allow the application to larger molecular systems.
+
+
+4.3    Correlation energy of benzene and Zeno error
+
+To determine our method’s ability to capture electronic correlation in simple organic molecules,
+
+we calculated the correlation energy (E  corr) of benzene.  The correlation energy is defined
+as34
+
+
+                                         Ecorr =E    AFQMC −E    UHF.
+
+
+An AFQMC calculation was performed using our extended method and the standard method
+
+in the cc-pVDZ basis set, with a single-determinant UHF trial wavefunction and an active
+
+space of 30 electrons, using 1000 walkers.
+
+    To quantify the effects of finite-step errors, we calculated the average correlation energy
+of benzene for different step sizes,  ∆τ.  We performed extended AFQMC with time steps
+
+ranging  from  ∆τ=  0.001  a.u.   to  ∆τ=  0.005  a.u.   for  a  total  evolution  time  of  10  a.u.
+
+By averaging the data points fromτ= 5 a.u. onwards, an average value was obtained.  To
+
+further reduce noise from statistical fluctuations, five independent simulations were run at
+
+each time step with different random seeds, and the results were averaged.
+
+
+                                                       19
+Figure 5:  Average value of the correlation energy of benzene calculated using our extended
+method with different time steps ∆τ.  The error bars indicate the standard deviation, and
+the linear regression fit is shown as a red dotted line.  The extrapolated value for ∆τ= 0 is
+−861(1)mE                 h.
+
+
+    As shown in Fig.5, the Zeno error becomes significant for large systems, which is con-
+
+sistent  with  the  literature15.   The  correlation  energy  exhibits  a  linear  dependence  on  the
+
+time step ∆τ, agreeing with the theoretical prediction in Sec.2.3.  Therefore, we performed
+
+a  linear  regression  and  extrapolated  to  the  limit  where  ∆τ =  0,  obtaining  the  predicted
+value in the absence of Zeno error.  The accuracy of this extrapolated value is benchmarked
+
+against several high-level methods in Table3         10.  As summarized in Table3and Fig.5, the
+
+extrapolation yields a predicted value of−861(1)mE                     h, which is within 2mE  h  of the exact
+
+value reported in the literature10.  Notably,  this amounts to a relative error of 0.2% with
+
+respect to the many-body expanded full configuration interaction (MBE-FCI) benchmark
+
+of−863.0mE                  h, which is agreed to be exact in the literature10.  While our method still un-
+
+derestimates the correlation energy relative to the exact value in the absence of Zeno error,
+
+the results are nonetheless more accurate than CCSDT. Given the significantly lower com-
+
+putational cost of our AFQMC methodO(N         3) compared to CCSDTO(N                       7) and MBE-FCI,
+
+
+                                                           20
+Table 3:  The correlation energy (E  corr) of benzene in the cc-pVDZ basis set calculated via
+different methods10.  The standard ph-AFQMC was run using an SD trial state, while the
+ph-AFQMC+CAS result was obtained via MSD trial states10. Both ph-AFQMC simulations
+were performed using the QMCPACK package7.
+
+                                         Method                Ecorr (mE  h)
+                                         CCSDT                 −859.9
+                                  Extended AFQMC               −861(1)
+                                         DMRG                  −862.8(7)
+                                        MBE-FCI                −863.0
+                                ph-AFQMC+CAS(6,6)              −864.3(4)
+                                 Standard ph-AFQMC             −866.1(3)
+
+
+these results demonstrate the high efficiency and potential of the extended-basis AFQMC
+
+method in describing many-body effects6.
+
+    Deviations from the exact value10 in the absence of Zeno errors likely occur due to the
+
+limitations of single Slater-determinant trial wavefunctions. Since single Slater-determinants
+
+inherently lack the multi-configurational character required to describe static correlation, a
+more appropriate choice is to use multi-determinant trial states. The authors of ipie reported
+
+a significant improvement in correlation energies when using a multi-determinant trial states
+
+generated from an initial Complete Active Space Self-Consistent Field (CASSCF) 10.  This,
+
+however,  will  significantly  increase  the  computational  effort  required  to  run  an  AFQMC
+
+simulation.  Even though large multi-determinant wavefunctions may yield results that are
+
+close to exact, their unfavorable scaling is a costly trade-off 10.
+
+
+4.4    AFQMC performance with various ITHC ranks
+
+In order to quantify the effect the ITHC rank has on the AFQMC simulation, we investigated
+
+the accuracy of our ITHC-AFQMC method with respect to different ITHC ranks.  For this,
+
+we ran ITHC-AFQMC simulations with varying ranks in the ITHC decomposition for the
+
+benzene molecule.
+
+    First, to demonstrate the reliability of the ITHC decomposition itself, we computed the
+
+
+                                                     21
+ERI  reconstruction  error  for  different  ITCH  ranks.   We  computed  ITHC  decompositions
+
+with ranks ranging from 600 to 1300.  The results are shown in Fig.7(a).  The ERI recon-
+
+struction error decreases systematically as the ITHC rank increases, showing the systematic
+
+improvability  of  the  ITHC  method.   We  also  performed  deterministic  CCSD(T)  calcula-
+
+tions on benzene, where the CCSD(T) correlation energy is shown in Fig.7(b).  In Fig.7
+
+(b) the CCSD(T) correlation energy decreases with increasing ITHC rank, approaching the
+
+benchmark value given in Table3. This behavior demonstrates that the quality of the recon-
+
+structed ERIs systematically improves with increasing ITHC rank, thereby improving the
+
+quality of the CCSD(T) results.
+
+    To determine the effects of ITHC rank on the AFQMC results, we perform 10 independent
+
+AFQMC simulations for each rank, using different random seeds.  The time step is set to
+0.001, and the energy estimate is obtained by averaging over the intervalτ= 5−10 a.u. The
+
+results are presented in Fig.6.  Points of the same color correspond to individual simulations
+
+of the same rank, while the larger blue symbols denote the average energy over all seeds.
+
+The error bars represent the standard error of the mean, and the shaded regions indicate
+
+the 95% confidence intervals.
+
+    For  the  AFQMC  correlation  energy  (the  blue  symbols)  in  Fig.6,  we  observe  greater
+
+variation for lower ITHC ranks (600-800). As the ITHC rank increases (900-1300), the energy
+
+variations become smaller, and a clear convergence trend emerges.  These results indicate a
+
+systematic improvement of AFQMC energies with increasing ITHC rank.  However, we note
+
+that the variation between independent AFQMC simulations with different random seeds is
+
+considerably large.  This suggests a large stochastic uncertainty inherent to AFQMC.
+    Overall, these results indicate that the results of AFQMC simulations can be systemati-
+
+cally improved by increasing the ITHC rank.  This is also corroborated by the deterministic
+
+CCSD(T) calculations, which reveal the expected convergence with increasing ITHC rank,
+
+thereby demonstrating the controllability of the ITHC approximation.
+
+
+
+
+                                                       22
+Figure 6:  Converged AFQMC correlation energies of benzene for different ITHC ranks and
+a timestep ∆τ= 0.001.  Points of the same color indicate the values for different random
+seeds.  The large blue points are averages over all seeds.  Different ITHC ranks are shown in
+different colors.  The error bars show the Standard Error of Means (SEM), while the shaded
+area shows the 95 % confidence interval.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 7:(a)CCSD(T) correlation energy of benzene in the cc-pVDZ basis with 30 electrons
+using ERIs reconstructed with different ITHC ranks and(b)ERI reconstruction error for
+different ITHC decomposition ranks.  As the ITHC rank increases, the ERI reconstruction
+decreases, while the magnitude of the CCSD(T) correlation energy increases and approaches
+a converged value.
+
+
+
+                                                       23
+5    Conclusion and Outlook
+
+
+In this work, we presented a novel AFQMC method that reduces both theoretical complexity
+
+and practical runtime by diagonalizing the ERI in an extended space with additional modes.
+
+The resulting Hubbard-like two-body interaction term is then HS-transformed and used to
+
+perform imaginary-time propagation in an AFQMC simulation.
+
+    We integrated this new method into the existing ipie package and tested its efficacy for
+
+the hydrogen chain and the benzene molecule.  For the H10-chain, ITHC-AFQMC recovered
+
+the ground-state energy within chemical accuracy relative to the FCI result, while exhibiting
+
+improved accuracy and numerical stability compared to the standard method.  For benzene,
+we  recovered  99.8%  of  the  total  correlation  energy.   Timing  benchmarks  further  confirm
+
+that our approach yields superior GPU performance in both propagation and local energy
+
+estimation.  While runtimes are comparable for small systems, the favorable memory usage
+
+of our method,O(N          2aux),  provides a clear advantage as system size increases.  Finally,  we
+
+demonstrated the stability and controllability of the ITHC-AFQMC approach by showing
+
+the convergence of the benzene correlation energy with respect to the ITHC rank.
+
+    We also performed intermediate method simulations, where the ITHC factors are used
+
+as Cholesky vectors within the standard AFQMC workflow.  The numerical results for hy-
+
+drogen chains showed that this intermediate method yields accuracy, numerical stability and
+
+runtimes  comparable  to  the  standard  method.   This  demonstrates  that  the  advantage  of
+
+our method arises from the enlarged-basis framework rather than the ITHC decomposition
+alone.
+
+    Recently, Xuet al.       12 applied a combination of DMRG and AFQMC to describe super-
+
+conductivity  in  the  2D-doped  Fermi-Hubbard  model,  demonstrating  AFQMC’s  ability  to
+
+treat  strongly  correlated  systems.   However,  to  fully  capture  the  electronic  correlation  in
+
+strongly correlated systems,  the transition to multi-determinant trial wavefunctions is es-
+
+sential.   Since  single  Slater-determinants  are  exact  solutions  to  non-interacting  one-body
+
+problems,  they inherently struggle to describe the multi-configurational nature and static
+
+                                                      24
+correlation in complex systems10.  While the authors of the ipie package have demonstrated
+
+that using simple multi-determinant trial states can significantly improve accuracy, yielding
+
+results comparable to MBE-FCI, this approach introduces new challenges10,16   .  Specifically,
+
+the requirement of a CASSCF calculation to generate these determinants imposes a severe
+
+computational bottleneck, potentially limiting the scalability of AFQMC for the large-scale
+
+simulations that QMC methods are designed to enable10.
+
+    Apart from multi-determinant trial states, there are several possible directions for further
+
+improving our method.  At present,  the error in each propagation step scales asO(∆τ               2),
+
+with the dominant contribution arising from the Zeno error.  In previous work on quantum
+
+algorithms15, the authors proposed a simple technique that reduces this error toO(∆τ               3).
+
+However, it is unclear how to adapt this technique to AFQMC while preserving the same
+favorable  computational  scaling.   Moreover,  in  the  current  ITHC  workflow,  although  the
+
+ISDF  procedure  ensures  a  controllable  initial  guess,  the  final  step  still  involves  heuristic
+
+nonlinear optimization,  which provides limited control over convergence and factorization
+
+quality.   By  contrast,  standard  Cholesky  decomposition  and  ISDF-based  THC  offer  more
+
+systematic  and  controllable  procedures.   Developing  more  robust  and  reliable  algorithms
+
+for constructing the ITHC factors is, therefore, an important direction for future work.  In
+
+AppendixA.2, we briefly discuss the possibility of constructing ITHC factors directly using
+
+ISDF.
+
+
+Data availability
+
+The ITHC data, the integrals for the systems studied in this work, and the data that support
+
+the findings of this paper are openly available in Ref.32.  The code is openly available on the
+
+ipie GitHub repository by by Joonho Leeet al.        16,30   .
+
+
+
+
+
+
+
+
+                                                        25
+Acknowledgement
+
+
+We thank Ke Liao and Matthias Knechtges for inspiring discussions.  The research is funded
+
+by THEQUCO as part of the Munich Quantum Valley, which is supported by the Bavarian
+
+State Government with funds from the Hightech Agenda Bayern Plus.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                 26
+A    Pre-processing performance
+
+A.1    Three-step method
+
+Here, we briefly review the method for calculating the ITHC factors 15,35   , and report the com-
+
+putation time and performance metrics of the ITHC factors used in our extended AFQMC
+method in the main text.
+
+    As detailed in15, the ITHC pre-calculation consists of the following three steps:
+
+   1.Computing THC. We first construct a generic tensor hypercontraction (THC) repre-
+
+       sentation,
+
+
+                                                   NauxX
+                                         Vpqrs =         XpαXqαW ′αβXrβXsβ,                                 (24)
+                                                   α,β=1
+
+       using the interpolative separable density fitting (ISDF) approach. The cutoff threshold
+
+       in this algorithm is set to 10−5  .
+       Remark:  We  find  that  a  subsequent  normalization,X                       ′pα  =          Xpα√P
+                                                                                           p |X pα|2, can  improve
+       numerical stability.  To further truncate the THC rank, one may perform pivoted QR
+
+       decomposition on the matrix
+
+
+                            Cαγ = X       X′pαX′qαLpqγ,   where  X         LpqγLrsγ =V    pqrs                   (25)
+                                      pq                                γ
+
+       and retain theαindices with higher importance.   Here,L                     pqγ  could be obtained via
+
+       Cholesky decomposition or singular value decomposition.
+
+   2.ConvertX        ′pα into an isometryu                  pα =µ    αXpα.  The scaling factorµ            α is determined by
+
+       solving the isometric condition
+
+                                       X
+                                            u∗pαuqα = X      XpαXqα|µ α|2 =δ    pq                                (26)
+                                         α                α
+
+
+
+                                                         27
+       under positivity constraints.  Specifically, we minimize
+
+                                           X     X                              !2
+                                                        XpαXqα|µ α|2 −δ    pq                                     (27)
+                                            p,q     α
+
+       subject  to  the  condition|µ                   α|2  ≥δ =  0.3,  using  the  convex  optimization  library
+
+       Cvxpy36,37   .
+
+       Remark:  The existence of an approximate solution for Eq.  (26) is proven in       15, and
+
+       follows from the connection between THC and separable density fitting.
+
+   3.Fine-tuneu               iα.  We minimizeϵ                   ithc
+
+                                         P
+                                ϵithc =      p,q,r,s|Pα,β upαuqαWαβurβusβ −V    pqrs|2P
+
+                                                              p,q,r,s|V pqrs|2                    ,                      (28)
+
+       whereW            αβ is determined through
+
+
+                                     Wαβ =u   −1pq,αVpq,rsu−1rs,β,    upq,α ≡u    pαuqα.                            (29)
+
+
+       Hereu        −1pq,α implies the pseudo-inverse.  The optimization is performed using the Adam
+       optimizer implemented in the Optax library38.  We perform 1000 optimization steps
+
+       using an exponentially decaying learning-rate schedule with an initial learning rate of
+
+       10−3  , a transition period of 1000 steps, and a decay rate of 0.1.  We find that these
+
+       parameter choices generally yield reliable convergence.
+
+    We report the computational time required for each step of the algorithm for the systems
+
+studied in the main text, as shown in Tables4and5.  Steps 1 and 2 were performed using 10
+
+cores of an Intel Xeon CPU 8360Y at 2.40 GHz.  Step 3 was performed on a single NVIDIA
+
+Tesla V100 GPU. Notice that the ITHC precomputation typically requires approximately
+
+100 seconds.  This timescale is much shorter than the wall time required for the AFQMC
+
+simulations, which is typically tens of minutes for non-trivial systems like benzene.
+
+
+                                                          28
+    We also listed the detailed information on the ITHC factors used in our extended AFQMC
+
+method and the Cholesky factors used in the standard AFQMC method.  The Cholesky de-
+
+composition is performed with the integrated module in the ipie library16. Several quantities
+
+are  considered.N                       chol  andN        ithc  denote  the  ranks  of  the  Cholesky  decomposition  and  the
+
+ITHC factorization, respectively.  They correspond to the number of auxiliary fieldsN           aux in
+
+AFQMC.ϵ             chol andϵ        ithc denote the relative errors of the Cholesky- and ITHC-approximated
+
+electron repulsion integral (ERI) tensor,V             ′, evaluated using the Frobenius norm:
+
+                                                   P
+                                             ϵ=       p,q,r,s|V  ′pqrs −V    pqrs|2P
+
+                                                            p,q,r,s|V pqrs|2      .                                           (30)
+
+We also evaluate the maximum norm ofW    αβ  in the ITHC representation, as larger values
+
+generally indicate larger Zeno errors15.  Overall, the ITHC exhibits a larger approximation
+
+error than the Cholesky decomposition.
+
+Table 4:  The performance metric of the Cholesky decomposition and ITHC for hydrogen
+chains.
+
+             Nchol       ϵchol       Nithc       ϵithc       max(W           αβ)Step 1 (s)  Step 2 (s)      Step 3 (s)
+      H10       27   1.83·10        −7  27   7.94·10        −5   15.4            0.24           0.03           75.75
+      H20       57   2.16·10        −7  57   8.82·10        −5   16.0            1.93           0.05          123.43
+      H30       87   2.25·10        −7  87   6.74·10        −5   12.5           13.47           0.17          208.84
+      H40      117   2.28·10        −7 117   6.92·10        −5    5.4           28.81           0.26          219.87
+      H50      147   2.30·10        −7 147   7.40·10        −5    5.2           50.44           0.52          231.99
+      H60      177   2.32·10        −7 177   7.95·10        −5    4.9           81.74           0.87          247.43
+      H70      207   2.32·10        −7 207   8.53·10        −5    4.6          126.10           1.49          277.90
+      H80      237   2.33·10        −7 237   8.97·10        −5    5.4          193.93           2.52          334.74
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                              29
+Table  5:  The  performance  metric  of  the  Cholesky  decomposition  and  ITHC  for  benzene.
+Step 1 is performed only once, after which the resulting factors are truncated to the desired
+ranks.
+
+         Nchol        ϵchol      Nithc         ϵithc        max(W           αβ)Step 1 (s)   Step 2 (s)      Step 3 (s)
+           693   1.16·10        −5 600    3.53×10          −3    9.6            44.92          23.89          445.02
+                                   700    2.11×10          −3    9.5                           32.41          476.39
+                                   800    1.38×10          −3   10.4                           39.38          510.09
+                                   900    9.94×10          −4   11.4                           43.92          558.95
+                                  1000    7.57×10          −4   11.2                           53.73          605.28
+                                  1100    6.47×10          −4   10.6                           59.47          659.92
+                                  1200    5.71×10          −4   13.3                           73.93          714.71
+                                  1300    5.08×10          −4   18.1                           96.47          765.28
+
+
+A.2    ISDF for ITHC
+
+As discussed in the previous section, the current three-step procedure for obtaining ITHC
+
+factors relies on heuristic nonlinear optimization, which provides only limited control over
+
+convergence and factorization quality.  This motivates the question of whether ITHC factors
+can instead be obtained directly using the more controllable ISDF framework.
+
+    Given a real-valued orthonormal spatial orbital basis{χ          p},  the entries of the electron
+
+repulsion integral tensor are defined as
+
+                                      Z     Z
+                           Vpqrs =                              |r−r      ′|χr(r  ′)χ  s(r  ′)d  3r′ d3r.                       (31)
+                                        R3    R3 χp(r)χ      q(r)        1
+
+In ISDF19,20   , the orbital products are approximated as
+
+
+                                                          NISDFX
+                                      χp(r)χ      q(r)≈          ζµ(r)χ      p(x  µ)χ  q(x  µ),                                  (32)
+                                                           µ=1
+
+where the{x         µ}can be interpreted as support points of the interpolating functionsζ                     µ.19
+
+
+
+
+
+
+                                                               30
+    Inserting Eq. (32) into Eq. (31) leads to
+
+
+                                            NISDFX
+                                 Vpqrs ≈            χp(x  µ)χ  q(x  µ)W  µν χr(x  ν)χ  s(x  ν)                              (33)
+                                             µ,ν=1
+
+with                                               Z    Z
+                                         Wµν =                ζµ(r)ζ      ν(r  ′)
+
+                                                     R3   R3     |r−r      ′|    d3r′ d3r.                                     (34)
+
+As noted before19, Eq. (33) is already in THC format.
+
+    In the following, we aim to elucidate under which circumstances Eq. (33) is actually of
+
+ITHC form, i.e., when do the matrices with entriesχ         p(x  µ) form isometries? It turns out that
+
+it is sufficient to impose the following normalization condition on the interpolating functions:
+
+                                                     Z
+
+
+                                                       R3 ζµ(r)d      3r= 1                                                   (35)
+
+for allµ.  Namely, combining this normalization with Eq. (32) leads to
+
+
+     NISDFX                         Z    NISDFX                                     Z
+             χp(x  µ)χ  q(x  µ) =               ζµ(r)χ      p(x  µ)χ  q(x  µ)d  3r≈
+      µ=1                             R3  µ=1                                         R3 χp(r)χ      q(r)d      3r=δ      pq.      (36)
+
+The last equal sign follows from the orthonormalization of the spatial orbital basis{χ             p}.
+
+    Therefore,  in  principle,  finding  interpolation  functions  that  satisfy  condition  (35)  will
+
+directly yield a valid ITHC representation.  We remark that the condition can be relaxed to
+R ζµ(r)d      3r=cfor anyc >0 (independent ofµ), since constant factors can be reabsorbed into
+
+the kernelW          µν. A straightforward approach to satisfy this condition is to choose interpolation
+
+points on a regular grid and interpolation functionsζ                   µ which are translated copies of each
+
+other.  One concrete example is provided by Gausslet basis functions on a Cartesian grid 39.
+
+We leave a further investigation along this direction for future work.
+
+
+
+
+
+
+
+                                                               31
+B    Error bounds
+
+
+In this Appendix, we derive the error bound for a single imaginary time step. The discrepancy
+
+between the exact and numerical evolution is decomposed into three terms.
+
+
+                                   ∥   e−∆τ       ˆH −e   − ∆τ2  ˆhPe   −∆τ       ˆWPe   − ∆τ2  ˆh |ϕ⟩∥
+
+                                    ≤ ∥(e    −∆τ       ˆH −e   −∆τ(       ˆh+P      ˆWP)     )|ϕ⟩∥
+
+                                    +∥      e−∆τ(       ˆh+P      ˆWP)    −e   − ∆τ2  ˆhe−∆τP        ˆWP  e− ∆τ2  ˆh |ϕ⟩∥
+                                                                                                                                             (37)
+                                    +       e− ∆τ2  ˆhe−∆τP        ˆWP  e− ∆τ2  ˆh
+
+                                           −e   − ∆τ2  ˆhPe   −∆τ       ˆWPe   − ∆τ2  ˆh |ϕ⟩
+
+                                    =ϵ    ithc +ϵ    trotter +ϵ    zeno.
+
+
+These  three  terms  correspond  to  the  ITHC  approximation  (ϵ  ithc),  Trotterization  (ϵ  trotter),
+
+and quantum Zeno dynamics (ϵ  zeno), respectively.
+
+     The ITHC error can be reduced by introducing a higher ITHC rank, and its quality is
+studied in the appendixA. The Trotter error is well studied and has been shown to scale
+
+asO(∆τ               3)40.  The Zeno error, given that the target state|ϕ⟩is in the space ofP, can be
+
+expressed as
+
+
+                                  ϵzeno
+
+                                   =       e− ∆τ2  ˆhe−∆τP        ˆWP  Pe   − ∆τ2  ˆh
+
+                                          −e   − ∆τ2  ˆhPe   −∆τ       ˆWPe   − ∆τ2  ˆh |ϕ⟩                                                  (38)
+
+                                   ≤ ∥e  − ∆τ2  ˆh∥ · ∥e  −∆τP        ˆWP  P−Pe         −∆τ       ˆWP∥ · ∥e     − ∆τ2  ˆh∥
+
+                                   =∥e     −∆τP        ˆWP  P−Pe         −∆τ       ˆWP∥,
+
+
+which scales asO(∆τ               2)26.
+
+
+
+
+
+                                                                        32
+C    Intermediate method
+
+
+Here,  we  present  the  detailed  derivation  and  implementation  of  the  intermediate  method
+
+presented in Sec.4.1and4.2.  To precisely isolate the source of the practical gains, we have
+
+implemented and benchmarked an intermediate variant that uses the ITHC representation
+
+solely as an ERI compression tool.  The compressed ERI is converted back into an effective
+
+Cholesky-like factorized form and then executed entirely within a standard,  non-enlarged
+
+basis  ipie  AFQMC  propagator.   We  take  the  form  of   ˆWgiven  in  Eq.  (8)  and  apply  an
+
+eigenvalue decomposition.
+
+
+                                                       NauxX
+                                             Wαβ =          wγαwγβ,
+                                                       γ=1
+
+which allows us to rewrite the ERI into
+
+
+                                            NauxX NauxX
+                                  Vpqrs =              upαuqαwγαwγβurβusβ
+                                            α,β=1 γ=1
+                                            NauxX
+                                         =       Lpqγ Lrsγ ,
+                                            γ=1
+
+which is a Cholesky decomposition, and thus we can employ the Cholesky vectorsL            pqγ   and
+
+Lrsγ  in the standard ipie propagator.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                        33
+References
+
+
+ (1)Kohn, W.; Sham, L. J. Self-Consistent Equations Including Exchange and Correlation
+
+      Effects.Phys. Rev.1965,140, A1133–A1138, DOI:10.1103/PhysRev.140.A1133.
+
+ (2)Jones, R. O. Density functional theory: Its origins, rise to prominence, and future.Rev.
+
+      Mod. Phys.2015,87, 897–923, DOI:10.1103/RevModPhys.87.897.
+
+ (3)Motta, M. et al. Towards the Solution of the Many-Electron Problem in Real Materials:
+
+      Equation of State of the Hydrogen Chain with State-of-the-Art Many-Body Methods.
+
+      Phys. Rev. X2017,7, 031059, DOI:10.1103/PhysRevX.7.031059.
+
+ (4)McLean, A. D.;  Weiss, A.;  Yoshimine, M. Configuration interaction in the hydrogen
+
+      molecule  –  the  ground  state.Rev.  Mod.  Phys.1960, 32,  211–218,  DOI:10.1103/
+
+      RevModPhys.32.211.
+
+ (5)Bartlett, R. J.;  Musia l, M. Coupled-cluster theory in quantum chemistry.Rev.  Mod.
+
+      Phys.2007,79, 291–352, DOI:10.1103/RevModPhys.79.291.
+
+ (6)Borges,  R.  M.;  Colby,  S.  M.;  Das,  S.;  Edison,  A.  S.;  Fiehn,  O.;  Kind,  T.;  Lee,  J.;
+
+      Merrill, A. T.; Merz, K. M.; Metz, T. O.; Nunez, J. R.; Tantillo, D. J.; Wang, L.-P.;
+
+      Wang, S.; Renslow, R. S. Quantum Chemistry Calculations for Metabolomics.Chem.
+
+      Rev.2021,121, 5633–5670, DOI:10.1021/acs.chemrev.0c00901.
+
+ (7)Kim,  J.  et  al.  QMCPACK:  an  open  source  ab  initio  quantum  Monte  Carlo  package
+      for the electronic structure of atoms, molecules and solids.J. Phys. Condens. Matter
+
+      2018,30, 195901, DOI:10.1088/1361-648X/aab9c3.
+
+ (8)Motta, M.;  Zhang, S. Ab initio computations of molecular systems by the auxiliary-
+
+      field quantum Monte Carlo method.WIREs Comput. Mol. Sci.2018,8, e1364, DOI:
+
+      10.1002/wcms.1364.
+
+
+
+                                                      34
+ (9)Lee, J.; Pham, H. Q.; Reichman, D. R. Twenty Years of auxiliary-field quantum Monte
+
+      Carlo in quantum chemistry:  An overview and assessment on main group chemistry
+
+      and bond-breaking.J. Chem. Theory Comput.2022,18, 7024–7042, DOI:10.1021/
+
+      acs.jctc.2c00802.
+
+(10)Lee, J.; Malone, F. D.; Reichman, D. R. The performance of phaseless auxiliary-field
+
+      quantum Monte Carlo on the ground state electronic energy of benzene.J. Chem. Phys.
+
+      2020,153, 126101, DOI:10.1063/5.0024835.
+
+(11)Huang,  E.  W.;  Mendl,  C.  B.;  Liu,  S.;  Johnston,  S.;  Jiang,  H.-C.;  Moritz,  B.;  Dev-
+
+      ereaux,  T.  P.  Numerical  evidence  of  fluctuating  stripes  in  the  normal  state  of  high-
+      Tc cuprate superconductors.Science2017,358, 1161–1164, DOI:10.1126/science.
+
+      aak9546.
+
+(12)Xu, H.; Chung, C.-M.; Qin, M.; Schollw¨ock, U.; White, S. R.; Zhang, S. Coexistence
+
+      of superconductivity with partially filled stripes in the Hubbard model.Science2024,
+
+      384, eadh7691, DOI:10.1126/science.adh7691.
+
+(13)Malone, F. D.; Zhang, S.; Morales, M. A. Overcoming the memory bottleneck in auxil-
+
+      iary field quantum Monte Carlo simulations with interpolative separable density fitting.
+
+      J. Chem. Theory Comput.2018,15, 256–264, DOI:10.1021/acs.jctc.8b00944.
+
+(14)Lee, J.; Berry, D. W.; Gidney, C.; Huggins, W. J.; McClean, J. R.; Wiebe, N.; Bab-
+
+      bush, R. Even more efficient quantum computations of chemistry through tensor hyper-
+
+      contraction.PRX Quantum2021,2, 030305, DOI:10.1103/PRXQuantum.2.030305.
+
+(15)Luo, M.; Cirac, J. I. Efficient simulation of quantum chemistry problems in an enlarged
+
+      basis set.PRX Quantum2025,6, 010355, DOI:10.1103/PRXQuantum.6.010355.
+
+(16)Malone, F. D.; Mahajan, A.; Spencer, J. S.; Lee, J. ipie: A Python-based auxiliary-field
+
+      quantum Monte Carlo program with flexibility and efficiency on CPUs and GPUs.J.
+
+      Chem. Theory Comput.2023,19, 109–121, DOI:10.1021/acs.jctc.2c00934.
+
+                                                      35
+(17)Hohenstein,  E.  G.;  Parrish,  R.  M.;  Mart´ınez,  T.  J.  Tensor  hypercontraction  density
+
+      fitting. I. Quartic scaling second- and third-order Møller-Plesset perturbation theory.
+
+      J. Chem. Phys.2012,137, 044103, DOI:10.1063/1.4732310.
+
+(18)Parrish, R. M.;  Hohenstein, E. G.;  Mart´ınez, T. J.;  Sherrill, C. D. Tensor hypercon-
+
+      traction. II. Least-squares renormalization.J.  Chem. Phys.2012,137, 224106, DOI:
+
+      10.1063/1.4768233.
+
+(19)Lu, J.; Ying, L. Compression of the electron repulsion integral tensor in tensor hyper-
+
+      contraction format with cubic scaling cost.J. Comput. Phys.2015,302, 329–335, DOI:
+
+      10.1016/j.jcp.2015.09.014.
+
+(20)Dong, K.;  Hu, W.;  Lin, L. Interpolative separable density fitting through centroidal
+      Voronoi tessellation with applications to hybrid functional electronic structure calcu-
+
+      lations.J.  Chem.  Theory  Comput.2018, 14,  1311–1320,  DOI: 10.1021/acs.jctc.
+
+      7b01113.
+
+(21)Lee,  J.;  Lin,  L.;  Head-Gordon,  M.  Systematically  Improvable  Tensor  Hypercontrac-
+
+      tion: Interpolative Separable Density-Fitting for Molecules Applied to Exact Exchange,
+
+      Second- and Third-Order Møller-Plesset Perturbation Theory.J. Chem. Theory Com-
+
+      put.2020,16, 243–263, DOI:10.1021/acs.jctc.9b00820.
+
+(22)Matthews,  D.  A.  Improved  Grid  Optimization  and  Fitting  in  Least  Squares  Tensor
+
+      Hypercontraction.J.  Chem.  Theory  Comput.2020, 16,  1382–1385,  DOI:10.1021/
+
+      acs.jctc.9b01205.
+
+(23)Acioli, P. H. Review of quantum Monte Carlo methods and their applications.J. Mol.
+
+      Struct. THEOCHEM1997,394, 75–85, DOI:10.1016/S0166-1280(96)04821-X.
+
+(24)Trotter,  H.  F.  On  the  product  of  semi-groups  of  operators.Proc.  Amer.  Math.  Soc.
+
+      1959,10, 545–551, DOI:10.1090/S0002-9939-1959-0108732-6.
+
+
+                                                       36
+(25)Facchi, P.; Pascazio, S. Quantum Zeno dynamics:  mathematical and physical aspects.
+
+      J. Phys. A: Math. Theor.2008,41, 493001, DOI:10.1088/1751-8113/41/49/493001.
+
+(26)Burgarth,  D.;  Facchi,  P.;  Nakazato,  H.;  Pascazio,  S.;  Yuasa,  K.  Quantum  Zeno  dy-
+
+      namics  from  general  quantum  operations.Quantum2020, 4,  289,  DOI:10.22331/
+
+      q-2020-07-06-289.
+
+(27)Hubbard, J. Calculation of partition functions.Phys. Rev. Lett.1959,3, 77–78, DOI:
+
+      10.1103/PhysRevLett.3.77.
+
+(28)Zhang,  S.;  Krakauer,  H.  Quantum  Monte  Carlo  method  using  phase-free  random
+
+      walks  with  Slater  determinants.Phys.  Rev.  Lett.2003, 90,  136401,  DOI:10.1103/
+
+      PhysRevLett.90.136401.
+
+(29)Li, Z.-X.; Yao, H. Sign-Problem-Free Fermionic Quantum Monte Carlo:  Developments
+
+      and  Applications.Annu.  Rev.  Conden.  Ma.  P.2019, 10,  337–356,  DOI:10.1146/
+
+      annurev-conmatphys-033117-054307.
+
+(30)Jiang, T.;  Baumgarten, M. K.;  Loos, P.-F.;  Mahajan, A.;  Scemama, A.;  Ung, S. F.;
+
+      Zhang, J.; Malone, F. D.; Lee, J. Improved modularity and new features in ipie: Toward
+
+      even larger AFQMC calculations on CPUs and GPUs at zero and finite temperatures.
+
+      J. Chem. Phys.2024,161, 162502, DOI:10.1063/5.0225596.
+
+(31)Thouless, D. J. Stability conditions and nuclear rotations in the Hartree-Fock theory.
+
+      Nucl. Phys.1960,21, 225–232, DOI:10.1016/0029-5582(60)90048-1.
+
+(32)Luo, M.; Chen, V.; Wang, Y.; Mendl, C. B. Efficient Auxiliary-Field Quantum Monte
+
+      Carlo  Using  Isometric  Tensor  Hypercontraction.  2026;https://doi.org/10.5281/
+
+      zenodo.19368252.
+
+(33)Slater, J. C. A Simplification of the Hartree-Fock Method.Phys. Rev.1951,81, 385–
+
+      390, DOI:10.1103/PhysRev.81.385.
+
+
+                                                      37
+(34)Szabo, A.; Ostlund, N. S.Modern quantum chemistry:  Introduction to advanced elec-
+
+      tronic structure theory; Dover Publications:  Mineola, New York, 2012.
+
+(35)Luo, M.https://github.com/carrot6869/Isometric-THC. 2025;https://github.
+
+      com/carrot6869/Isometric-THC, GitHub repository, accessed 2026-04-01.
+
+(36)Diamond,  S.;  Boyd,  S.  CVXPY:  A  Python-embedded  modeling  language  for  convex
+
+      optimization.J. Mach. Learn. Res.2016,17, 1–5.
+
+(37)Agrawal, A.;  Verschueren, R.;  Diamond, S.;  Boyd, S. A rewriting system for convex
+
+      optimization  problems.J.  Control  Decis.2018, 5,  42–60,  DOI:10.1080/23307706.
+
+      2017.1397554.
+
+(38)Hessel, M.; Budden, D.; Viola, F.; Rosca, M.; Sezener, E.; Hennigan, T. Optax:  com-
+
+      posable  gradient  transformation  and  optimisation,  in  JAX!  2020;https://github.
+
+      com/google-deepmind/optax.
+
+(39)Qiu, Y.; White, S. R. Hybrid gausslet/Gaussian basis sets.J. Chem. Phys.2021,155,
+
+      184107, DOI:10.1063/5.0068887.
+
+(40)Childs, A. M.; Su, Y.; Tran, M. C.; Wiebe, N.; Zhu, S. Theory of Trotter Error with
+
+      Commutator Scaling.Phys.  Rev.  X2021, 11, 011020, DOI:10.1103/PhysRevX.11.
+
+      011020.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                      38
+TOC Graphic
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            39

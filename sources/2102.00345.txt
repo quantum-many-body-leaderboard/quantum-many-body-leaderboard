@@ -1,0 +1,1251 @@
+           Simulating Many-Body Systems with a Projective Quantum Eigensolver
+
+                                         Nicholas  H.  Stair∗  and  Francesco  A.  Evangelista†
+Department of Chemistry and Cherry Emerson Center for Scientific Computation, Emory University, Atlanta, GA 30322, USA
+                                                           (Dated:  August 10, 2021)
+                  We  present  a  new  hybrid  quantum-classical  algorithm  for  optimizing  unitary  coupled-cluster
+                (UCC) wave functions deemed the projective quantum eigensolver (PQE), amenable to near-term
+                noisy quantum hardware.  Contrary to variational quantum algorithms, PQE optimizes a trial state
+                using residuals (projections of the Schr¨odinger equation) rather than energy gradients.  We show
+                that the residuals may be evaluated by simply measuring two energy expectation values per ele-
+                ment.   We  also  introduce  a  selected  variant  of  PQE  (SPQE)  that  uses  an  adaptive  ansatz  built
+                from arbitrary-order particle-hole operators, offering an alternative to gradient-based selection pro-
+                cedures. PQE and SPQE are tested on a set of molecular systems covering both the weak and strong
+                correlation regimes, including hydrogen clusters with 4–10 atoms and the BeH2  molecule.  When
+                employing a fixed ansatz, we find that PQE can converge disentangled (factorized) UCC wave func-
+                tions to essentially identical energies as variational optimization while requiring fewer computational
+                resources.  A comparison of SPQE and adaptive variational quantum algorithms shows that—for
+                ans¨atze containing the same number of parameters—the two methods yield results of comparable
+                accuracy.  Finally, we show that SPQE performs similar to, and in some cases, better than selected
+                configuration interaction and the density matrix renormalization group on 1–3 dimensional strongly
+                correlated H10 systems in terms of energy accuracy for a given number of variational parameters.
+
+
+                    I.    INTRODUCTION                                       current noisy intermediate-scale quantum (NISQ) devices
+                                                                             [32].   Several  low-depth  quantum-classical  hybrid  algo-
+  Efficient   quantum   algorithms   for   determining   the                 rithms have been developed for NISQ hardware.  These
+ground  and  excited  states  of  many-body  systems  are                    algorithms prepare and measure properties of many-body
+of  fundamental  interest  to  chemistry,  condensed  mat-                   states  on  a  quantum  device,  but  they  store  and  opti-
+ter physics,  and materials science [1–4].   The ability of                  mize  the  parameters  that  define  such  states  on  a  clas-
+quantum devices to represent N-body states with qubits                       sical  computer.    The  variational  quantum  eigensolver
+scaling linearly in N  make them particularly appealing                      (VQE) approach [33–36] has been used in several land-
+for  representing  highly  entangled  states,  as  is  common                mark experiments, demonstrating quantum calculations
+in systems with strongly correlated electrons.  Therefore,                   on non-trivial molecular systems [3, 37–41].  In VQE, the
+quantum (and hybrid quantum-classical) algorithms of-                        ground state is approximated by a normalized trial state
+fer an alternative to methods such as the density matrix                     |Ψ˜⟩ = Uˆ (t)|Φ0⟩, in which the unitary operator Uˆ (t) de-
+renormalization  group  [5]  (DMRG),  selected  configura-                   pends on the parameter vector t and Φ0 is (usually) an
+tion interaction [6, 7] (SCI), determinant-based Monte-                      unentangled reference state.  The VQE energy (EVQE) is
+Carlo [8], variants of coupled-cluster (CC) theory [9, 10]                   then obtained by minimization of the trial state energy
+amenable to treating strong correlation [11–14], and mul-                    expectation value as
+tireference  CC  (MRCC)  methods  [15–20].    Although                                    EVQE = min
+these  classical  algorithms  can  accurately  predicted  en-                                          t  ⟨Φ0| Uˆ †(t)Hˆ Uˆ (t)|Φ0⟩ .           (1)
+ergies and properties of certain classes of strongly corre-                  The  VQE  scheme  employs  an  optimization  algorithm
+lated  systems,  they  still  have  high-order  polynomial  or               running on a classical computer to minimize the energy
+exponential cost in the general case.                                        expectation value, with all inputs (energy/gradients) be-
+  Since Feynman’s proposal to use a controlled quantum                       ing  evaluated  with  the  help  of  a  quantum  computer.
+system to carry out simulations [21], significant algorith-                  An  important  advantage  of  VQE  over  classical  many-
+mic  and  experimental  advances  have  been  made.   The                    body methods is the ability to use trial states that can-
+earliest demonstrations of quantum simulation for small                      not  be  represented  efficiently  on  a  classical  computer.
+molecules [2] utilized the quantum phase estimation algo-                    VQE was initially implemented with an exponential op-
+rithm [22–24] with Suzuki–Trotter decomposed time evo-                       erator ansatz inspired by unitary coupled-cluster (UCC)
+lution [25, 26] of an adiabatically prepared trial state.  It                theory  [42–48],  but  has  more  recently  been  extended
+is believed that some combination of these techniques will                   to hardware-efficient [3] and qubit-space [49] UCC vari-
+permit the efficient simulation [27–30] of certain classes                   ants as well.  We exclusively use the abbreviation UCC
+of Hamiltonians [31], but that they may require deep cir-                    to  refer  to  unitary  coupled-cluster  theory,  and  not  un-
+cuits with high fidelity, a requirement incompatible with                    restricted  formulations  of  conventional  coupled-cluster
+                                                                             methods  [50],  which  historically  share  this  abbrevia-
+                                                                             tion.  Other promising hybrid approaches include quan-
+∗ nstair@emory.edu                                                           tum imaginary time evolution [51, 52], and quantum sub-
+† francesco.evangelista@emory.edu
+                                                                             space diagonalization techniques [51, 53–56].
+                                                                                                                                                 2
+
+  Despite  the  indisputable  importance  of  VQE  in  the                 propose a new selection scheme for identifying important
+field of quantum simulation, there are a few drawbacks                     operators  based  on  the  residual  vector.   This  selected
+that make its practical application challenging to large-                  variant  of  PQE  (SPQE)  requires  no  pre-defined  opera-
+scale problems.  One such issue is the slow convergence                    tor pool and employs only a small number of measure-
+of  VQE  due  to  noise  in  the  measured  energy  and  gra-              ments to identify important operators.  To demonstrate
+dients, and the large-scale nonlinear nature of the opti-                  the practical advantages of PQE, we perform a compari-
+mization problem.  These issues are compounded by the                      son of VQE and PQE using a fixed dUCC ansatz for sev-
+sizable number of total measurements needed for opera-                     eral molecular systems in the regime of weak and strong
+tor averaging [57].  Another challenge is the potentially                  correlation, also considering the effect of stochastic noise.
+large number of classical parameters and resulting circuit                 Finally, we compare SPQE against the ADAPT-VQE ap-
+depth necessary to predict sufficiently accurate energies.                 proach, selected configuration interaction, and the den-
+These  two  problems  are  likely  exacerbated  in  systems                sity matrix renormalization group.
+with strongly correlated electrons.
+  Progress addressing these deficiencies of VQE has been                                             II.    THEORY
+made  on  several  fronts.    For  example,  grouping  com-
+muting Pauli operators [3, 35, 58–60],  utilizing integral                  A.    The Projective Quantum Eigensolver approach
+factorization  strategies  [61],  and  employing  alternative
+bases [29, 62] have been shown to reduce the number of
+measurements  needed  for  operator  averaging.   Concur-                     In this work, we propose to obtain the ground state of
+rently,  computationally feasible approaches for measur-                   a general many-body system using a projective approach.
+ing analytical gradients with quantum devices using the                    Like in VQE, we approximate the ground state using a
+parameter-shift  rule  [63],  or  its  recent  lower-cost  vari-           trial state |Ψ˜(t)⟩ = Uˆ (t)|Φ0⟩.  After inserting the defi-
+ant  [64],  have  allowed  gradient-based  VQE  to  become                 nition of the trial state in the Schr¨odinger equation and
+potentially  realizable  on  NISQ  hardware.    Other  ad-                 left-multiplying by Uˆ †(t), we obtain the condition
+vances,  of  particular  importance  to  this  work,  include
+VQE  ans¨atze  constructed  iteratively,  as  done  in  the                                   Uˆ †(t)Hˆ Uˆ (t)|Φ0⟩ = E |Φ0⟩ .                  (2)
+adaptive  derivative-assembled  pseudo-Trotterized  VQE
+[36]  (ADAPT-VQE)  and  the  iterative  qubit  coupled-                    Projection  onto  the  reference  state  Φ0  yields  the  PQE
+cluster [65] (iQCC) methods.  The primary advantage of                     energy (EPQE)
+ADAPT-VQE and iQCC is their ability to produce com-
+pact  ans¨atze  that  result  in  fewer  classical  parameters,                          EPQE(t) = ⟨Φ0| Uˆ †(t)Hˆ Uˆ (t)|Φ0⟩ ,             (3)
+and  shallower  quantum  circuits  than  those  from  UCC                  a  quantity  that  is  still  an  upper  bound  to  the  exact
+truncated to a given particle-hole rank.  However, these                   ground state energy. Projections onto the complete set of
+advantages come at the cost of a greater number of en-                     orthonormal many-body basis functions complementary
+ergy and gradient evaluations for optimizing and select-                   to Φ0, here denoted as Q = {Φµ}, yields a set of residual
+ing new unitary operators.  Investigating more efficient                   conditions
+ways to select important operators is an ongoing area of
+research [66, 67].                                                              rµ(t) ≡ ⟨Φµ| Uˆ †(t)Hˆ Uˆ (t)|Φ0⟩ = 0   ∀Φµ ∈ Q,      (4)
+  In this work, we present an alternative to VQE for op-
+timizing the amplitudes of a factorized form of the UCC                    where rµ is an element of the residual vector and µ runs
+ansatz (often referred to as Trotterized [35] or quantum                   over all elements of the many-body basis.  Eqs. (3) and
+[68] UCC), given by a product of exponential operators                     (4) form a system of nonlinear equations in the parame-
+rather than the exponential of a sum of operators.  We                     ter vector t, that may be solved via a classical iterative
+refer to this ansatz as disentangled UCC (dUCC)—a ter-                     solver.  For an approximate ansatz with number of pa-
+minology borrowed from the field of Lie theory—to re-                      rameters less than the dimension of the Q space, Eq. (4)
+flect  the  fact  that  it  is  not  an  approximation  of  UCC            can be enforced only for a subset of the residuals.  Then,
+[69]. Inspired by the projective approach used in classical                the complete projection space Q can be partitioned into
+coupled-cluster theory [10, 15], we propose an alternative                 two sets:  i) R, the space of basis functions Φµ for which
+trial state optimization algorithm that we deem the pro-                   rµ = 0 is enforced, and ii) S = Q\ R the complementary
+jective quantum eigensolver (PQE). PQE does not rely on                    space for which rµ may not be null.
+variational minimization and therefore does not require                       Figure 1 illustrates the connection between the PQE
+evaluation of the energy gradients. Instead, PQE requires                  residual  condition  and  the  uncertainty  in  the  ground-
+only the evaluation of residuals, that is, projections of the              state energy estimated via Eq. (3).  By the Gershgorin
+Schr¨odinger equations onto a linearly independent basis.                  circle theorem, the difference between the exact (E) and
+As shown in this paper, residuals may be easily measured                   the  PQE  (EPQE)  ground-state  energy,  |EPQE − E|,  is
+on NISQ devices with similar or fewer measurements than                    bound by the radius ρ = ∑︁µ̸=0 |rµ|, where µ runs over
+analytical gradients,  and require quantum circuits that                   the entire many-body basis, excluding the reference de-
+contain only one additional exponential term.  We also                     terminant.  Therefore, when the residual is null (ρ = 0),
+                                                                                                                                                      3
+
+the PQE energy is exact. When the PQE equation is sat-                        metrized two-electron integrals, respectively [70].
+isfied only by a subset of the many-body basis—as in the
+case of an approximate trial state—the error |EPQE − E|
+is bound by the sum of the absolute value of the residual                             B.    Traditional and disentangled unitary
+elements |rν| with Φν ∈ S, for which the PQE equation                                              coupled-cluster ans¨atze
+is not satisfied.
+  Note that the residual condition [Eq. (4)] is satisfied by                     In UCC, the reference state is an easily-prepared single
+any eigenstate, and the Gershgorin circle theorem error                       determinant |Φ0⟩ = |ψ1ψ2 ···⟩ specified by the occupied
+bound applies also to excited states.  A potential disad-                     spin orbitals {ψi}.  A UCC unitary is parameterized us-
+vantage is that PQE could converge on an excited state                        ing a pool of anti-Hermitian operators P  = {κˆµ  : µ  =
+(an issue we did not experience in this study).  However,                     1, . . . , Npoolop  }.  A generic anti-Hermitian operator κˆµ  =
+this feature could be used to formulate excited state al-                     τˆµ − τˆ†µ is defined in terms of the particle-hole excitation
+gorithms based on PQE, which use the residual condition                       operators τˆµ ≡ τˆab···
+as a criterion for convergence and do not require costly                      re-interpreted µ as the multi-index µ ≡ ((i, j, ..), (a, b, ..))ij···  = aˆ†aaˆ†b ··· aˆjaˆi.  Note that we have
+measurement  of  the  variance,  as  is  commonly  done  in                   of  unique  excitations  from  hole/occupied  (ψiψj ··· )  to
+VQE [35].                                                                     particle/unoccupied (ψaψb ··· ) spin orbitals.  Using this
+                                                                              parameterization, when a cluster operator κˆµ acts on the
+                                                                              reference, it generates elements of the many-body basis
+                                                                              (excited determinants) of the form
+
+                                                                                                   |Φµ⟩ = κˆµ |Φ0⟩ = |Φab···ij··· ⟩ ,                   (6)
+
+                                                                              and since in the case of a UCC (or dUCC) ansatz there is
+                                                                              a 1-to-1 correspondence between operators and determi-
+                                                                              nants, we may label them with the same index. Note that
+                                                                              this operator basis satisfies the orthonormality condition
+                                                                              ⟨Φ0| κˆ†µκˆν |Φ0⟩ = ⟨Φµ|Φν⟩ = δµν.
+                                                                                 In traditional UCC [42–46], the wave function is gen-
+                                                                              erated by an exponential operator
+                                                                                                                       ∑︁
+                                                                                                     Uˆ (t) = eσˆ = e     µ tµκˆµ,                      (7)
+
+                                                                              assuming the cluster amplitudes tµ are real.  In principle
+                                                                              it  is  possible  to  construct  a  circuit  that  exactly  imple-
+                                                                              ments the action of the UCC operator defined in Eq. (7),
+                                                                              but  in  practice  it  is  common  to  use  a  unitary  with  a
+FIG.  1.   Connection  between  the  norm  of  the  PQE  resid-               simpler, and shallower, circuit. This is frequently accom-
+ual and the energy error via the Gershgorin circle theorem.                   plished using a factorized (disentangled) form of the UCC
+(a)  Structure  of  the  transformed  Hamiltonian  in  the  basis             ansatz
+of  orthogonal  states {Φµ}.   (b)  The  residual  vector  is  the
+first column of the transformed Hamiltonian matrix (first ele-                                          Uˆ (t) = ∏︂etµκˆµ.                          (8)
+ment excluded).  (c) The difference between the approximate                                                        µ
+ground-state  PQE  energy  (EPQE)  and  the  exact  eigenvalue
+(E) is bound by the radius ρ, which is equal to the 1-norm of                 Because the operators κˆµ do not commute, an ansatz of
+the residual vector.  The part of rµ that corresponds to states               the disentangled form is uniquely defined by an ordered
+in  the  projection  manifold  R  is  null  for  the  PQE  solution,          set (or subset) of operators A = (κˆµi  : i = 1, . . . , Nop)
+while elements involving projections on the space S = Q \ R                   built from the pool P.  The operators in A are then used
+is generally nonzero and determines the value of ρ.                           to form an ordered product of exponential unitaries
+
+  The PQE is a general approach,  however,  in the fol-                                    Uˆ (t) = etµ1κˆµ1 etµ2κˆµ2 ··· etµNop κˆµNop ,          (9)
+lowing,  we  will  focus  on  its  applications  to  interacting              where tµi is the amplitude corresponding to the operator
+fermions  using  a  disentangled  (factorized)  form  of  the
+unitary coupled-cluster ansatz.  We assume that our sys-                      κˆµi.
+tem is described by the general two-body Hamiltonian                             The disentangled UCC ansatz may be viewed as a first-
+                                      ∑︂                                      order  Suzuki–Trotter  approximation  to  UCC;  however,
+          Hˆ  = ∑︂    hpqaˆ†paˆq + 1       vpqrsaˆ†paˆ†qaˆsaˆr,        (5)    it  was  recently  shown  [69]  that  dUCC  is  substantially
+                  pq                4 pqrs                                    different from conventional UCC [42–46].  An arbitrary
+                                                                              quantum state can always be represented in the form of
+where aˆp (aˆ†q) is a fermionic annihilation (creation) oper-                 Eq. (9) using particle-hole excitation/de-excitation oper-
+ator, while hpq  and vpqrs  are one-electron and antisym-                     ators [69]. However, only certain operator orderings A of
+                                                                                                                                                 4
+
+a complete operator pool (containing up to N-body par-                      two-qubit operators following standard approaches [33–
+ticle/hole excitations) can represent any quantum state.                    35].
+Nevertheless, orderings that do not satisfy this condition                     To solve the PQE equations we measure the residuals
+can exactly represent states that are close to the refer-                   corresponding to the operators contained in A on a quan-
+ence.  In this work we assume that all operators appear                     tum computer and update the parameter vector using a
+at most once in A, but the more general case in which                       simple quasi-Newton iteration approach
+A contains repetitions has also been considered in other
+contexts [36, 71].                                                                                 t(n+1)
+  For PQE formulated using a UCC or dUCC trial state,                                               µ       = t(n)µ   + r(n)µ∆µ ,                     (11)
+it is possible to show (see Appendix A) that for an exact
+ansatz the residual condition [Eq. (4)] and the VQE en-                     where the superscript “(n)” indicates the amplitude at it-
+ergy stationarity condition (∂EVQE/∂tµ = 0) are equiv-                      eration n. The quantities ∆µ are standard Møller–Plesset
+alent.  However, for an approximate ansatz we find that                     denominators ∆µ ≡ ∆ab···ij···  = ϵi+ϵj+. . .−ϵa−ϵb . . . where
+the gradient of the PQE energy contains a contribution                      ϵi are Hartree–Fock orbital energies.  This update equa-
+due  to  the  nonzero  residual  elements  corresponding  to                tion  is  derived  in  Appendix  B  using  Newton’s  method
+the subspace S:                                                             and taking the leading contributions to the Jacobian to
+                                                                            be the diagonal elements of the Fock operator [72].  It is
+  ∂EPQE(t)                     r∗ν ⟨Φν| Uˆ †(t)∂Uˆ (t)                      further assumed that the amplitudes are small, so that
+       ∂tµ      = 2 Re ∑︂Φν∈S                    ∂tµ   |Φ0⟩ ,   (10)        the Jacobian can be approximated by terms linear in the
+                                                                            operators κˆµ  and issues with non-commuting operators
+where t is a solution of the PQE equations in the projec-                   are avoided. Therefore, convergence of this quasi-Newton
+tion space R.  Suppose that R is chosen to be the space                     scheme is not mathematically guaranteed if one or more
+of single and double excitations and S  its complement.                     amplitudes are large.  We found it useful to improve nu-
+Then this result shows that even if rµ = 0 for all singles                  merical stability and speed up convergence of the PQE
+and doubles, the gradient of EPQE with respect to singles                   equations,  to  combine  amplitude  updates  via  Eq.  (11)
+and doubles may not be zero because residuals rν  corre-                    with the direct inversion of the iterative subspace (DIIS)
+sponding to triple and higher excitations and the term                      convergence accelerator algorithm [73, 74].
+⟨Φ0| Uˆ †(t)∂Uˆ (t)/∂tµ |Φν⟩ are generally not null.  There-                   It is important to note that the current formulation of
+fore, PQE and VQE energies obtained from approximate                        PQE is compatible with any ansatz such that the metric
+ans¨atze will be different.                                                 matrix
+  We  note  that  the  combination  of  PQE  and  dUCC                             Sµiµj = ⟨Φ0| κˆ†µiκˆµj |Φ0⟩ ,   ∀κˆµi, κˆµj ∈ A        (12)
+produces  energies  that  are  additive  for  non-interacting
+fragments (size consistent) when using a localized basis.                   is the identity.  In more general cases (e.g., when Sµiµj
+This property follows from the fact that dUCC excita-                       is  non-diagonal  or  singular),  the  PQE  formalism  re-
+tion operators for non-interacting fragments act only on                    quires  a  generalization  of  the  amplitude  update  equa-
+orbitals localized on each fragment, and therefore, com-                    tions  or  the  use  of  residual  norm  minimization  instead
+mute.  Consequently, the dUCC wave function is multi-                       of Eq. (4).   These variants of PQE would allow one to
+plicatively separable (as long as the order of the opera-                   consider  ans¨atze  that  contain  repeated  operators  in A,
+tors  within  a  fragment  is  preserved).   We  have  verified             employ general many-body operators, or a basis of qubit
+numerically  that  dUCC  with  singles  and  doubles  trial                 operators.  These extensions go beyond the scope of this
+states optimized with PQE energy are size consistent by                     work and will be considered in future studies.
+performing calculations on H4 + H2 separated at a 1000                         There  are  two  advantages  to  the  combination  of  the
+˚A  and  verified  to  within  numerical  convergence  (10−10               PQE and dUCC described above. Firstly, as we will show
+Eh) that the energy is additive in the fragments.                           in the following subsection, one element of the residual
+                                                                            vector (rµ) can be evaluated with essentially the same re-
+      C.    Numerical solution of the dUCC-PQE                              sources required to measure the energy in VQE. Secondly,
+                      amplitude equation                                    the magnitude of the residuals provides an indication of
+                                                                            the  importance  of  an  excitation  operator  κˆµ,  which  in
+  To realize the PQE scheme on a quantum computer,                          turn may be used to define a selection procedure to form
+the  reference  state,  the  Hamiltonian,  and  the  unitary                the sequence of unitiaries that enter in Uˆ (t).  The next
+must be represented in a qubit basis via a fermionic map-                   two subsections describe these two points in detail.
+
+ping.  After such a transformation, the Hamiltonian is a
+sum of the form Hˆ  = ∑︁ℓ hℓOˆ ℓ, where hℓ  is an electron                   D.    Efficient measurement of the residual elements
+integral multiplied by a coefficient and Oˆ ℓ = ∏︁i σˆqℓijℓi  is a
+unique product of σˆx, σˆy, or σˆz Pauli operators acting on                   For  a  trial  state  built  from  the  ordered  pool A,  the
+qubits qℓi.  Similarly, each term in the unitary exp(tµκˆµ)                 number  of  the  residual  elements  that  must  be  evalu-
+may  be  implemented  using  a  combination  of  one-  and                  ated to solve the PQE equations is equal to the size of
+                                                                                                                                                     5
+
+the  pool |A|.   The  PQE  residuals  can  be  expressed  as                 in  the  qubit  basis  will  yield  one  of  the  states  Φµ  with
+the  off-diagonal  matrix  elements  of  the  operator  H¯   =               probability  Pµ  = |r˜µ|2.   Repeated  measurement  of  the
+Uˆ †(t)Hˆ Uˆ (t) as rµ  = ⟨Φµ| H¯ |Φ0⟩ (we use this notation                 state |r˜⟩ provides a way to approximately determine the
+throughout  the  paper,  but  we  note  that  we  never  ex-                 elements of the residual rµ  with the largest magnitude,
+plicitly  form  the  operator  H¯  on  a  classical  computer).              and  the  corresponding  operators  κˆµ  that  should  be  in-
+Then,  in principle,  the residuals can be measured on a                     cluded in the unitary.  When this strategy is combined
+quantum computer using a variant of the Hadamard test                        with an efficient way to prepare the state |r˜⟩, it is much
+[75], but we have found an ancilla-free procedure in which                   more cost effective than evaluating all the elements of rµ
+these matrix elements are computed by measuring diago-                       not included in A via operator averaging [Eq. (14)].
+nal quantities.  Acting on the reference with the operator                      Construction  of  the  state  |r˜⟩  would  require  one  to
+eθκˆµ  yields the state                                                      apply  the  Hamiltonian,  which  is  not  a  unitary  opera-
+                                                                             tor.  Therefore, we evaluate r˜ using the unitary operator
+   |Ωµ(θ)⟩ = eθκˆµ |Φ0⟩ = cos(θ)|Φ0⟩ + sin(θ)|Φµ⟩ ,    (13)                  e−i∆tHˆ  = 1 − i∆tHˆ  + O(∆t2) instead of Hˆ .  By choos-
+noting   that   the   above   expression   is   valid   because              ing a small time step, we can ensure that the nonlinear
+κˆµ |Φ0⟩ = |Φµ⟩ and κˆ2µ |Φ0⟩ = −|Φ0⟩ (see also [47, 48]).                   terms  and  errors  due  to  the  approximate  implementa-
+Taking  the  expectation  value  of  the  similarity  trans-                 tion of e−i∆tHˆ  (e.g., via Trotterization) do not affect the
+formed Hamiltonian with respect to Ωµ(θ) using θ = π/4,                      residual to leading order in ∆t.  The residual state can
+and noting that the wave function is real, leads to the fol-                 then be defined as
+lowing equation for the residual elements                                                 |r˜⟩ = Uˆ †ei∆tHˆ Uˆ |Φ0⟩
+                                                                                                                                                 (15)
+     rµ = ⟨Ωµ(π/4)| H¯ |Ωµ(π/4)⟩ − 12Eµ − 12E0,       (14)                                    = (1 + i∆tUˆ †Hˆ Uˆ )|Φ0⟩ + O(∆t2).
+
+where E0  = ⟨Φ0| H¯ |Φ0⟩ and Eµ  = ⟨Φµ| H¯ |Φµ⟩.  All of                     The  time-evolution  operator  may  be  approximated  via
+these quantities are expectation values of H¯  with respect                  Trotterization [25, 26] in combination with low-rank rep-
+to reference states that are easily generated with short                     resentations of the Hamiltonian [76].  With a sufficiently
+quantum circuits.  The evaluation of the exact residual                      large  number  of  measurements  M  of  the  state |r˜⟩,  we
+via Eq. (14) has a cost similar to the evaluation of exact                   may approximate the values of the (normalized) squared
+gradients in VQE via the shift rule [63, 64].                                residuals as
+
+                                                                                                          |r˜µ|2 ≈ NµM ,                            (16)
+              E.    Efficient operator selection
+                                                                             where Nµ is the number of times the state |Φµ⟩ is mea-
+  In this section, we generalize the PQE method to uti-                      sured.  Encoding the residual in a single quantum state
+lize a flexible dUCC ansatz built iteratively using a full                   allows us to efficiently sample the  entire  operator pool
+operator pool.  As shown in the case of VQE [36, 65], sig-                   without  the  need  to  generate  and  store  individual  ele-
+nificantly more compact and flexible approximations may                      ments of the residual vector in memory.  This distinctive
+be achieved if the operators that define the unitary are                     feature  makes  it  possible  to  employ  this  selection  pro-
+selected according to an importance criterion.  To formu-                    cedure with an operator pool that includes particle-hole
+late a selected version of the PQE approach, we propose                      excitation/de-excitation operators of arbitrary order.
+to combine information about the residual with a cumula-                        To select important operators, we adopt a cumulative
+tive importance criterion.  Since the residuals rµ are zero                  threshold approach that allows us to add a batch of op-
+for an eigenstate, we propose to estimate the importance                     erators at a time.  Our goal is to iteratively construct a
+of the operators κˆµ using the magnitude of the residual                     unitary that contains the fewest operators.  This is real-
+(|rµ|).  However, instead of evaluating the importance of                    ized with a selection procedure that adds the operators
+all the operators in the pool via operator averaging (like                   with the largest value of r˜µ  to A (as motivated by the
+in gradient-based selection schemes [36, 65]), we propose                    Gershgorin circle theorem bounds discussed in Sec. II A),
+to sample a quantum state whose probability amplitudes                       and excludes all other operators in such a way that sum
+encode the importance of all  operators up to rank N.                        of  their  residuals  squared  is  less  than  a  threshold  Ω2.
+  Suppose  that  we  have  determined  a  unitary  Uˆ  that                  Specifically, we enforce that
+satisfies  the  residual  condition  rµ   =  0  for  all  κˆµ  in
+the  current  ordered  set  A.    In  our  approach  we  pre-                               excluded∑︂         excluded∑︂|r˜µ|2
+pare  a  (normalized)  quantum  state  of  the  form |r˜⟩  =                                          |rµ|2 ≈             ∆t2  ≤ Ω2,           (17)
+r˜0 |Φ0⟩+∑︁µ r˜µ |Φµ⟩, where the quantities r˜µ are approx-                                  κˆµ /∈A             κˆµ /∈A
+imately  proportional  to  the  residuals  rµ.   When |r˜⟩  is
+represented in a qubit basis, there is a one-to-one map-                     where we have used the fact that |r˜µ| ≈ ∆t|rµ|.  In prac-
+ping  between  elements  of  the  computational  basis  and                  tice, we sort the operators in ascending order according
+the states Φµ.  Therefore, a measurement of the state |r˜⟩                   to |r˜µ|2, and starting from the first element, we discard
+                                                                                                                                                6
+
+operators until Eq. (17) is satisfied.  The remaining oper-                       which  are  in  turn  used  to  select  important  exci-
+ators are appended to the end of A in order of decreas-                           tations not included in the current pool Ak.  The
+ing |r˜µ|2.  The resulting operator ordering is consistent                        current  operator  set Ak  and  all  the  new  selected
+with the following renormalization transformation of the                          operators are included in the new set Ak+1.  When
+Hamiltonian                                                                       forming this new ordered set, we append the new
+                Hˆ → e−tµ1κˆµ1 Hˆ etµ1 = H¯ 1                                     operators—sorted  in  decreasing  value  of  the  ap-
+                                                                                  proximate squared residual—to Ak.  If the sum in
+                   → e−tµ2κˆµ2 H¯ 1etµ2κˆµ2 = H¯ 2               (18)             Eq. (17) over all approximate residuals is less than
+                   → ···                                                          the threshold Ω2, such that no new operators are
+                                                                                  added, then return the final energy.
+which  begins  with  the  largest  many-body  rotation  and                    3. Solution  of  the  PQE  equations.    Using  the
+gradually  continues  with  smaller  ones.   Note  that  this                     new set Ak+1, solve the PQE equations via quasi-
+ordering is the reverse of the one used in ADAPT-VQE                              Newton  micro-iterations.    These  micro-iterations
+and iQCC, where operators with the largest gradient are                           alternate  the  evaluation  of  the  residuals  [Eq.  (4)]
+applied first to the reference.  In applications of this se-                      and the amplitude update [Eq. (11)].  The micro-
+lection  scheme,  we  found  that  our  operator  ordering  is                    iterations are considered converged when the norm
+more numerically robust and accurate than its reverse.                            of the residual vector ∥r∥ is less than a user spec-
+This selection procedure is easily integrated in the PQE                          ified threshold ωr.  Once converged, this step pro-
+algorithm  by  performing  a  series  of  computations  with                      duces a new set of amplitudes [t(k+1)] and the cor-
+increasingly larger ordered sets.  When no new operators                          responding unitary [Uˆ (k+1)], as well as the updated
+are added to A, the computation is considered converged,
+and the final operator set satisfies Eq. (17).  The details                       energy [E(k+1)].  Increase the macro-iteration num-
+of the selected PQE algorithm are discussed in Sec. II F.                         ber by one (k ← k + 1) and go to Step 2.
+  Throughout this work, we ignore errors that arise from                      All  VQE  and  PQE  methodologies  were  implemented
+finite measurement of the approximate residual |r˜⟩. How-                  in  a  development  branch  of  the  open  source  package
+ever,  since  operator  selection  only  requires  an  approxi-            QForte , and utilize its state–vector simulator. All VQE
+mate determination of the |r˜µ|2 values, it is not necessary               calculations use a micro-iteration convergence threshold
+to perform a large number of measurements.  Indeed, in                     ωg = 10−5 Eh for the gradient norm ∥g∥ and all PQE cal-
+Appendix E, we discuss a simple strategy based on sam-                     culations use a micro-iteration threshold ωr  = 10−5  Eh
+pling |r˜⟩ a fixed number of times that performs as well                   for the residual norm ∥r∥.  Note that when the κˆµ opera-
+as the exact scheme.                                                       tors are mapped to a qubit basis they can be expressed as
+                                                                           a sum of Pauli operator strings that commute [77], and
+      F.    Outline of the selected PQE algorithm                          therefore, a single operator etµκˆµ can be implemented ex-
+                                                                           actly as a product of exponentials without invoking the
+  The combination of the PQE approach with the selec-                      Trotter approximation.
+tion procedure described in Sec. II E leads to a very effi-
+cient flexible ansatz quantum algorithm, which we refer                               III.    RESULTS AND DISCUSSION
+to as selected PQE (SPQE). The selected PQE algorithm
+requires the simultaneous solution of the residual condi-                         A.    Comparison of PQE and VQE with a
+tions and the selection of important excitation operators.                                   disentangled UCC ansatz
+To realize this scheme, we alternate micro-iterations to
+converge the residual equations (for the current ordered                      Our initial goal is to compare the performance of PQE
+operator set) with macro-iterations that perform impor-
+tance selection of new operators.  The SPQE procedure                      and VQE using a unitary coupled-cluster trial state trun-
+is illustrated in Fig. 2 and consists of the following steps:              cated at a given particle-hole excitation level.  We test
+                                                                           these two methods on a family of linear hydrogen chains
+   1. Initialization.  The user provides the occupation                    (with identical nearest-neighbor distance) ranging from
+       numbers that define the reference state Φ0.  Start                  four to ten atoms, both near their equilibrium geometries
+       at  macro-iteration  number  k  =  0  with  an  empty               (rH-H = 0.75 ˚A) and stretched geometries (rH-H = 1.5 ˚A).
+       operator set (A(0) = {}).                                           Hydrogen models such as these have been studied exper-
+   2. Importance  selection.    At  macro-iteration  k,                    imentally  with  VQE  [78]  and  have  recently  been  used
+       perform M measurements in the computational ba-                     as a benchmark for both quantum [36, 55] and classical
+                                                                           [79–81] algorithms.
+       sis for the the state |r˜(k)⟩ = Uˆ (k)†ei∆tHˆ Uˆ (k) |Φ0⟩.             Figure  3  shows  the  energy  convergence  of  PQE  and
+       The number of times the state Φµ  is measured is                    VQE using a disentangled UCC ansatz with singles and
+       accumulated in the variable Nµ. These numbers are                   doubles (dUCCSD). All calculations employed restricted
+       used to estimate the square residuals via Eq. (16),                 Hartree-Fock  (RHF)  orbitals  from  the  quantum  chem-
+                                                                                                                                                 7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2.  Outline of the adaptive PQE algorithm.  Steps labeled “QPU” indicate parts of the algorithm that run on a quantum
+processing unit.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3. dUCCSD energy convergence for linear H4–H10 chains in a STO-6G basis at (a) rH−H = 0.75 ˚A, and (b) rH−H = 1.50 ˚A.
+|E(n) − E(n−1)| is the absolute value of the energy change between subsequent iterations.  Both plots compare PQE vs. VQE
+convergence with respect to number of residual (for PQE) or gradient (for VQE) evaluations (Nres/grad).
+
+
+istry  package Psi4  [82],  and  Pauli-operator  Hamiltoni-                 energy  converges  significantly  faster  than  the  VQE  en-
+ans obtained via the Jordan–Wigner transformation im-                       ergy with number of residual vs. gradient evaluations, re-
+plemented in QForte [83].  To achieve optimal perfor-                       spectively. For example, to converge the near-equilibrium
+mance for both VQE and PQE, we employ the Broyden–                          H10  energy to 10−6  Eh, PQE requires only seven resid-
+Fletcher–Goldfarb–Shannon  (BFGS)  algorithm  [84–87]                       ual  evaluations,  while  VQE  requires  approximately  23
+(as  implemented  in  the  SciPy  [88]  scientific  comput-                 gradient  evaluations.   In  the  case  of  VQE,  we  also  ob-
+ing library) with analytical gradients for VQE, and DIIS                    serve  that  the  number  of  required  gradient  evaluations
+[73,  74]  to  accelerate  amplitude  convergence  of  PQE.                 grows with system size, with H10  taking twice as many
+These computations use the same operator ordering for                       gradient vector evaluations than H4 to converge.  On the
+both approaches, with all amplitudes initialized to zero.                   contrary, PQE computations converge with similar speed
+The ordering of the operators etµiκˆµi  entering Eq. (9) is                 for all equilibrium hydrogen systems. Plots of the energy
+defined by the binary representation of the corresponding                   change vs. the norm of the residual/gradient vector show
+determinants |Φµi⟩ = τˆµi |Φ0⟩ in the occupation number                     similar trends and are reported in Appendix C.
+representation.  Because the disentangled UCCSD state                         At  the  stretched  geometry,  strong  correlation  effects
+cannot exactly parameterize an eigenstate of the Hamil-                     cause  the  disentangled  UCCSD  trial  state  to  perform
+tonian, the numerically converged PQE and VQE ener-                         more poorly, with both PQE and VQE, yielding energy
+gies are not identical.  Nevertheless, for all the cases we                 errors that range from 1.39 mEh (for H4) to 13.59 mEh
+examined the converged PQE and VQE energies differ by                       (for  H10).   We  see  that  PQE  converges  slightly  more
+less than 10−6 Eh.                                                          slowly in the stronger correlation regime, with stretched
+  Near the equilibrium geometry, we find that the PQE                       H10 requiring 13 residual evaluations (instead of seven) to
+                                                                                                                                                 8
+
+converge the energy to 10−6 Eh.  However, PQE always                        of σ  > 0,  the energy convergence of PQE is essentially
+converges faster than VQE, with the latter requiring 19                     identical to that of noiseless PQE until some point, after
+gradient-vector evaluations to converge stretched H10 to                    which the energy error hovers around a finite value. Sim-
+the same accuracy level.  We also find similar trends in                    ilar behavior can be seen for convergence of the residual
+PQE and VQE convergence for BeH2, for which conver-                         vector.  We find that VQE has similar characteristics to
+gence data can be found in Appendix C.                                      PQE in the presence of noise, but that it is able to achieve
+  In summary, this initial set of results suggests that for                 slightly more accurate energies for a given σ value.  With
+a given trial state, optimization via PQE is faster than                    the  same  noise  level,  however,  VQE  generally  requires
+VQE and less dependent on the number of parameters                          two to three times the number of gradient evaluations as
+to optimize.  We expect this to be the case also for VQE                    the number of residual evaluations required by PQE. An
+based on numerical gradients or gradient-free optimiza-                     important aspect of this comparison is that, for a given σ,
+tion methods, since these two variants are known to be                      both the residual and gradient vectors yield comparable
+slower compared to the the BFGS approach adopted here                       asymptotic errors in PQE and VQE, respectively.  Con-
+[77].                                                                       versely, PQE and VQE computations of the comparable
+                                                                            energy accuracy require similar precision in the measure-
+                                                                            ment of the residual and gradient vectors. In Appendix D
+B.    Effect of stochastic errors on the convergence of                     we use this result to estimate the relative cost of PQE
+                         PQE and VQE                                        and VQE via a formal analysis.
+
+  The results presented in the previous section assumed
+error-free  quantum  gates  and  arbitrarily  precise  mea-                  C.    Selected PQE based on a full dUCC operator
+surements.  In practice, calculations performed on NISQ                                                     pool
+hardware are affected by decoherence errors,  poor gate
+fidelity, readout errors, and loss of precision due to insuf-                  Here we compare the results of selected PQE (SPQE)
+ficient measurements.  These sources of error will lead to                  with an arbitrary order particle-hole operator pool, and
+incorrect gradients and residuals that are then passed to                   ADAPT-VQE, which unless otherwise noted, uses a gen-
+a classical optimizer.  Therefore, it is interesting to com-                eralized singles and doubles pool (operators of the form
+pare the resilience of PQE and VQE procedures when the                      aˆ†paˆq and aˆ†paˆ†qaˆsaˆr, where the indices p, q, r, s run over all
+residuals and gradients are affected by stochastic errors.                  spin orbitals). To test these methods, we compute the en-
+  To model the presence of errors, we modify the PQE                        ergy as a function of bond distances for: 1) the symmetric
+procedure by adding to the residual vector a stochastic                     dissociation of the linear BeH2 molecule and 2) the sym-
+error  sampled  from  a  Gaussian  distribution  with  stan-                metric dissociation of a chain of six hydrogen atoms.  In
+dard deviation σ [N (0, σ2)]                                                both cases, there is a build up of strong correlation ef-
+                   rmeasuredµ           = rµ + N (0, σ2).                 (19)fects as the bond length increases.  For each system, we
+                                                                            report  two  sets  of  results  for  SPQE  using  the  cumula-
+For  VQE,  we  similarly  add  stochastic  noise  to  the  ex-              tive threshold Ω = 10−1  and 10−2  Eh,  and two sets of
+act  energy  gradients.   Using  Eq.  (19)  as  a  noise  model             ADAPT-VQE results with gradient threshold 10−1  and
+mainly  emulates  errors  that  arise  from  finite  measure-               10−3 Eh (ϵ1 and ϵ3 in the original notation used by the
+ment.  Because the inexact residuals rmeasuredµ            are used         authors).  Since we later compare these methods to clas-
+to update the cluster amplitudes via Eq. (11), this noise                   sical approaches formulated in a determinant basis,  we
+model also gives rise to control errors, or errors that re-                 do not employ a pool of spin-adapted operators.
+fer to the difference between the unitiaries for noiseless                     The  dissociation  curve  of  BeH2  shown  in  Fig.  5  (a)
+updated amplitudes Uˆ (t) and noisy updated amplitudes                      demonstrates  that  both  SPQE  and  ADAPT-VQE  are
+Uˆ (t + ∆t).   Control  errors  due  to  finite  measurement                able  to  achieve  significantly  smaller  energy  errors  than
+have been modeled this way in previous studies [77] and                     dUCCSD, while using only 10–20 more parameters.  Al-
+will always propagate through optimization on physical                      though  the  two  approaches  employ  different  selection
+hardware.  We note, however, that using Eq. (19) exclu-                     schemes,  the  ADAPT-VQE(ϵ3)  and  SPQE(Ω  =  10−2)
+sively as a noise model is insufficient to capture more nu-                 approaches  produce  compact  trial  states  with  a  simi-
+anced or device-specific errors such as decoherence.  We                    lar  number  of  classical  parameters  and  comparable  er-
+tested  the  performance  of  PQE  and  VQE  under  noise                   rors.   The  same  trends  are  seen  in  symmetric  dissocia-
+by performing a batch of 50 computations on the linear                      tion  curve  of  H6,  which  is  shown  in  Fig.  5  (b).   How-
+H4 molecule with nearest-neighbor distance set to 1.0 ˚A.                   ever,  for  this  system  we  find  that  achieving  sub-mEh
+We use the disentangled UCC ansatz with up to quadru-                       accuracy—particularly with the onset of strongly correla-
+ple excitations, which spans the full operator set for this                 tion at rH−H values greater than 1.5 ˚A, requires a number
+system.                                                                     of parameters that approaches the size of the full Hilbert
+  Figure  4  shows  a  comparison  of  PQE  and  VQE  op-                   space (200) for both ADAPT-VQE and SPQE. The need
+timized  with  various  levels  of  noise,  controlled  by  the             to  saturate  Hilbert  space  to  accurately  describe  H6  is
+magnitude of σ in Eq. (19).  We find that for all values                    likely  due  to  how  small  this  example  is,  and  it  speaks
+                                                                                                                                                  9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 4. Energy and residual/gradient norm (∥r∥)/(∥g∥) convergence of dUCCSDTQ wave functions optimized with PQE/VQE
+with various amounts of stochastic noise added to the residuals/gradients. Energy error is relative to FCI. σ controls the degree
+of noise and is the standard deviation of the normal distribution, centered at the exact residual/gradient value, from which
+all residuals/gradients used in the calculations are randomly sampled [see Eq. (19)].  Values at each PQE/VQE iteration are
+averages over 50 runs on H4 at rH−H = 1.0 ˚A. Error bars denote one standard deviation.
+
+
+more to the ability of the trial states to produced com-                    by the optimization,  and do not include the additional
+pact representations rather than the performance of these                   measurements required for operator selection.
+algorithms in optimizing such ans¨atze.                                        Since  ADAPT-VQE  and  SPQE  select  new  operators
+  The  most  noticeable  difference  between  SPQE  and                     from their pools using different importance criteria, it is
+ADAPT-VQE can be seen in the bottom panel of Fig. 5                         not possible to perform a direct comparison of their per-
+(a)-(b):  for trial states with comparable number of pa-                    formance using fixed thresholds.  To facilitate this com-
+rameters, SPQE requires significantly fewer residual el-                    parison,  in  Table  I  we  report  SPQE  results  using  two
+ement evaluations than gradient element evaluations in                      values of Ω (10−1 and 10−2 Eh) together with ADAPT-
+ADAPT-VQE.  For  example,  at  a  Be–H  bond  distance                      VQE  results  obtained  using  an  ansatz  with  the  same
+of 1.65 ˚A, both methods produce very similar energy er-                    number  of  parameters  as  SPQE.  We  include  ADAPT-
+rors using almost the same number of parameters,  but                       VQE  results  obtained  using  both  a  generalized  singles
+ADAPT-VQE(ϵ3)  requires  the  evaluation  of  35155  ele-                   and  doubles  operator  pool  (GSD),  and  a  particle-hole
+ments of the gradient, whereas SPQE(Ω = 10−2) requires                      singles  and  doubles  pool  (SD).  The  results  in  Tab.  I
+only 1220 elements of the residual.  Importantly, we note                   obtained  with  Ω  =  10−1  Eh  show  SPQE  and  the  two
+that  the  bottom  panels  of  Fig.  5  exclusively  count  the             variants of ADAPT-VQE to perform equally well at all
+number of elements of the gradient or residual required                     bond distances.  The second set of results obtained with
+                                                                                                                                                10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 5.  Ground state potential energy curve for the symmetric dissociation of (a) BeH2 and (b) H6 computed using a minimal
+(STO-6G) basis. The energy error relative to FCI (top), number of classical parameters used (middle), and number of individual
+elements of the gradient (for VQE) or residual (for PQE) evaluated (bottom) are given as a function of the Be–H and H–H bond
+length. Here, ADAPT-VQE uses a generalized singles and doubles operator pool and is optimized with the BFGS algorithm, and
+gradient convergence thresholds 10−1 (ϵ1) and 10−3 (ϵ3).  SPQE results use macro-iteration convergence thresholds Ω = 10−1
+and 10−2.  The top plots also show the energy error corresponding to chemical accuracy, here defined as 1 kcal/mol ≈ 1.59
+mEh.
+
+
+a tighter threshold (Ω = 10−2) show similar performance                     which we consider as a proxy for circuit depth.  Tab. I
+of the methods at short bond lengths, with two notable                      reports  the  number  of  CNOT  gates  for  the  converged
+exceptions.  First, at rH−H = 2.0 ˚A ADAPT-VQE-GSD                          trial  states.    These  numbers  overestimate  the  actual
+yields more accurate results than ADAPT-VQE-SD and                          gate  count  since  they  ignore  optimizations  such  as  the
+SPQE. At this point, the SPQE ansatz contains 55 singles                    cancellation  of  Jordan–Wigner  strings  [89],  especially
+and doubles, and 114 operators of higher rank, yielding                     for  three-  and  higher-body  operators.   We  see  that  at
+an  error  of  about  0.14  mEh,  while  ADAPT-VQE-GSD                      the  larger  threshold  values  (Ω  =  10−1  for  SPQE  and
+is an order of magnitudes more accurate.  Second,  also                     ϵ1  =  10−1  for  ADAPT)  the  number  of  CNOTs  for  all
+at  rH−H  =  2.0  ˚A,  SPQE  uses  only  9537  residual  ele-               three approaches are relatively similar, and are generally
+ment  evaluations,  while  ADAPT-VQE  requires  719390                      within a factor of 2 of one another.  However, at tighter
+(GSD) and 1312127 (SD) gradient element evaluations.                        thresholds the SPQE circuit contains significantly more
+The evaluation of fewer residual elements in SQPE will                      CNOT gates than the one for ADAPT-VQE. For exam-
+correspond  to  approximately  the  same  savings  in  total                ple,  rH−H  =  2.0  ˚A),  114  of  the  169  operators  used  in
+number of measurements (see Appendix D).                                    SPQE are three-body or higher, while ADAPT-SD and
+  A  final  important  aspect  to  compare  between  SPQE                   ADAPT-GSD of course only contain only up to two-body
+and ADAPT-VQE is the number of native CNOT gates,                           operators.   Consequently,  the  SPQE(Ω  =  10−2)  circuit
+                                                                                                                                                              11
+
+
+TABLE I. Ground state of H6 computed using a minimal (STO-6G) basis with RHF orbital convergence threshold of 10−10 Eh.
+Comparison  of  SPQE  with  threshold  Ω  and  ADAPT-VQE  using  the  same  number  of  parameters  as  SPQE.  ADAPT-VQE
+results are computed for both a generalized singles and doubles operator pool (GSD) and a particle hole singles and doubles
+pool (SD). The properties reported are the energy error with respect to FCI [∆E, in Eh ], the number of classical parameters
+used [Npar], the number of parameters corresponding to three-body or higher excitations [NT+], the number of CNOT gates
+used in the unitary [NCNOT] (not optimized), and the total number of residual or gradient element evaluations [Nres or Ngrad].
+r denotes the H-H nearest neighbor distance in ˚Angstrom.
+                       SPQE (Ω = 10−1 Eh)                                          ADAPT-VQE-GSD                                         ADAPT-VQE-SD
+ r                ∆E      Npar      NT+      NCNOT       Nres              ∆E      Npar      NCNOT        Ngrad              ∆E      Npar      NCNOT          Ngrad
+0.50      0.002153          30            0           2400        339      0.002152          30           2400          8378      0.002152          30           2400            8378
+1.00      0.006050          32            0           2720        503      0.005872          32           2720          8399      0.005872          32           2720            8399
+1.50      0.012487          36            0           2944      1103      0.011176          36           3040          8046      0.011176          36           3040            8046
+2.00      0.015066          43            8         20272      1087      0.011204          43           3560        15176      0.010350          43           3312          12592
+
+                       SPQE (Ω = 10−2 Eh)                                          ADAPT-VQE-GSD                                         ADAPT-VQE-SD
+ r                ∆E      Npar      NT+      NCNOT       Nres              ∆E      Npar      NCNOT        Ngrad              ∆E      Npar      NCNOT          Ngrad
+0.50      0.000013          79          24         15568      1127      0.000012          79           6608        87506      0.000085          79           4608          29707
+1.00      0.000031         105          46         33232      2076      0.000033         105           9244      166119      0.000064         105           8128        388182
+1.50      0.000079         166         111        166032      6074      0.000004         166         14528      566143      0.000028         166         12576      1437917
+2.00      0.000141         169         114        226768      9537      0.000018         169         14776      719390      0.000096         169         12944      1312127
+
+
+contains more CNOT gates (226768) than ADAPT-VQE-                                  group symmetries.
+GSD  (14776).   As  discussed  in  Appendix  D,  this  large                          Figure 6 (a) displays the SPQE, ACI, and DMRG en-
+difference in CNOT count is due to the growth in cost to                           ergy error as a function of classical variational parame-
+implement  the  exponential  of  n-body  second-quantized                          ters for the 1D H10  system at a stretched bond length
+operators as a function of n (and the lack of circuit opti-                        of  rH−H  =  1.50  ˚A.  DMRG,  which  is  ideally  suited  to
+mization).  Nevertheless, it is important to note that the                         simulate gapped 1D systems, affords the most compact
+systems studied here are not large enough to draw defini-                          wave  function  for  the  1D  chain,  with  an  accuracy  vol-
+tive conclusions about the relative performance of SPQE                            ume of only 176 variational parameters (V1DDMRG = 176).
+and ADAPT-VQE. For example, the pool of generalized                                The SPQE exponential ansatz is less compact than the
+singles  and  doubles  (GSD)  for  H6  contains  870  opera-                       DMRG matrix product state, with an accuracy volume
+tors,  a  number  significantly  larger  than  the  size  of  the                  V1DSPQE  =  3510  parameters.   We  observe  that  the  ACI
+full Hilbert space (200). This scenario is unlike most sys-                        wave function—a linear ansatz built by selecting the de-
+tems of interest, where the number of generalized singles                          terminants with the largest energy contributions—gives
+and doubles is much less than the number of particle-hole                          the least compact representation, such that V1DACI = 22989
+operators. Unfortunately, our attempts to compare num-                             at the same level of accuracy.  When the ACI energy is
+bers for systems larger than BeH2  and H6  were unsuc-                             augmented with a second-order perturbative correction—
+cessful due to the high computational cost of simulating                           which accounts for determinants excluded from the wave-
+ADAPT-VQE.                                                                         function expansion—a more compact ansatz is sufficient
+   A  second  aspect  we  investigate,  is  the  ability  of  the                  to achieve an energy error of 10−3 Eh. This suggests that
+selected  PQE  approach  to  compactly  represent  wave                            it might be valuable to formulate a classical perturbative
+functions  for  systems  displaying  strong  correlation  ef-                      correction to the SPQE energy to help capture even more
+fects, were many-body methods commonly fail due to the                             correlation energy.
+breakdown  of  the  mean-field  approximation.   We  com-                             Results for the 2D H10  lattice [Fig. 6 (b)] show that
+pare  the  performance  of  SPQE  with  the  adaptive  con-                        SPQE yields a more compact representation than DMRG
+figuration interaction [90] (ACI) and DMRG using data                              or  ACI  until  an  energy  error  of  approximately  1  mEh.
+generated  in  our  recent  benchmark  study  of  hydrogen                         For the 2D system the accuracy volume follows the or-
+systems [81].  In this work, we characterize the resource                          der SPQE (4193) ≈ DMRG (4218) < ACI (11122).  At
+requirements of a computational method X with the ac-                              energy  errors  less  than  1  mEh  DMRG  still  affords  the
+curacy  volume  (VX), defined as the smallest number of                            most compact representation for the 2D system.  Finally,
+parameters necessary to achieve a given energy error per                           for the 3D H10  pyramid lattice shown in Fig. 6 (c), we
+electron (here taken to be 10−4  Eh/electron).  We con-                            find that DMRG yields the most compact representation
+sider three H10  model systems:  a one dimensional (1D)                            (V3DDMRG  =  3549),  but  not  nearly  by  the  same  margin
+linear  chain,  a  two  dimensional  (2D)  triangular  lattice                     as  for  the  1D  system.   Again,  the  SPQE  has  a  signifi-
+and a three dimensional (3D) close-packed pyramid.  Us-                            cantly more compact wave function than ACI such that
+ing  a  minimal  STO-6G  basis  and  a  1  qubit  to  1  spin-                     V3DSPQE  =  5544  and V3DACI  =  10519.   While  further  in-
+orbital  mapping,  the  1D,  2D,  and  3D  H10  models  are                        vestigation of larger strongly-correlated systems will be
+represented with 220 computational basis states, but are                           necessary, it is encouraging to see that SPQE performs
+restricted to 31752 and 15912, and 15912 determinants,                             similarly to or better than two state-of-the-art classical
+respectively, after accounting for spin and Abelian point-                         methodologies when applied to the 2D and 3D H10 sys-
+                                                                                                                                               12
+
+                                                                           classical  coupled-cluster  variants.   Specifically  we  have
+                                                                           included results from Ref. [81] for CC with singles and
+                                                                           doubles excitations [91] (CCSD), CCSD with perturba-
+                                                                           tive  triples  [92]  [CCSD(T)],  and  the  completely  renor-
+                                                                           malized CC with perturbative triples [12] [CRCC(2,3)].
+                                                                           These CC methods are (generally) more computationally
+                                                                           affordable than the other methods. In the 2D and 3D sys-
+                                                                           tems, CCSD performs comparably to dUCC-SQPE (with
+                                                                           the  same  number  of  parameters),  while  CCSD(T)  and
+                                                                           CRCC(2,3) produce more accurate energies. However, all
+                                                                           coupled-cluster energies are more than 10 mEh off from
+                                                                           the FCI energy.  Fig. 6 also reports results computed us-
+                                                                           ing Mukherjee MRCC with singles and doubles [93, 94]
+                                                                           (Mk-MRCCSD) and Mk-MRCCSD augmented with per-
+                                                                           turbative triples [95] [Mk-MRCCSD(T)] using an active
+                                                                           space containing the highest occupied and lowest unoccu-
+                                                                           pied Hartree–Fock orbitals.  The Mk-MRCC results im-
+                                                                           prove  upon  single-reference  coupled-cluster  methods  at
+                                                                           the  cost  of  doubling  the  number  of  cluster  amplitudes.
+                                                                           The Mk-MRCC methods are particularly accurate for the
+                                                                           1D system, where they produce errors of the order of 2–3
+                                                                           mEh.  Despite the improvement shown by the multiref-
+                                                                           erence  CC  methods,  it  is  important  to note  that  these
+                                                                           methods have a computational cost that scales exponen-
+                                                                           tially with the number of active space determinants.
+
+
+
+                                                                                               IV.    CONCLUSIONS
+
+                                                                              In   this   work,   we   present   a   new   NISQ-friendly
+                                                                           algorithm—the projective quantum eigensolver (PQE)—
+                                                                           to compute the ground state of a many-body problem us-
+                                                                           ing disentangled (factorized) unitary coupled-cluster trial
+                                                                           states.  The PQE approach consists of a nonlinear opti-
+                                                                           mization problem whose solution requires the evaluation
+                                                                           of projections of the Schr¨odinger equation onto a many-
+                                                                           body basis (residual vector) but still gives energies that
+                                                                           are a variational upper bound to the ground state energy.
+                                                                           We show how to efficiently evaluate the residual vector
+                                                                           via  measurement  of  simple  expectation  values,  with  a
+                                                                           cost that is twice that of an energy evaluation (per ele-
+                                                                           ment).  For small molecular systems, we find that PQE
+FIG.  6.   Results  for  the  1D,  2D,  and  3D  H10  models  use  a       and VQE with a fixed dUCCSD trial state converge to
+STO-6G  basis  at  rH−H  =  1.50  ˚A.  Singlet  ground  state  en-         nearly identical energies; however, the number of residual
+ergy errors relative to FCI as a function of number of varia-              evaluations required by PQE is smaller than that of the
+tional parameters Npar  for dUCC-SPQE, ACI, and DMRG.                      gradient evaluations needed by VQE. PQE shows similar
+Unsigned energy errors for methods with fixed number of pa-                resiliency as VQE and still converges more rapidly in the
+rameters (taken to be the number of cluster amplitudes) are                presence of stochastic noise.
+shown by colored dots. Energy errors ACI with a second order                  To treat strongly correlated electrons, we introduce a
+perturbative correction (ACI+PT2) are also shown by orange                 selected variant of PQE in which the trial state is con-
+dotted lines.  For ACI+PT2, CCSD(T), CRCC(2,3), and Mk-                    structed iteratively by adding batches of important op-
+MRCCSD(T) we only count the number of nonperturbative                      erators.   The  resulting  SPQE  algorithm  can  construct
+amplitudes.   The  accuracy  volume  threshold  [0.1  mEh  per
+electron] is plotted as a grey dotted line.                                efficient  unitary  circuits  like  ADAPT-VQE,  but  it  re-
+                                                                           quires orders of magnitude fewer residual element evalua-
+                                                                           tions than gradient element evaluations for the latter.  In
+tems.                                                                      SPQE, the selection of new operators is done according to
+                                                                           the magnitude of the elements of the residual vector, and
+  We have also included in Fig. 6 energy errors for several                is performed by sampling a quantum state that directly
+                                                                                                                                              13
+
+encodes in its probability amplitudes the importance of                                     ACKNOWLEDGEMENTS
+the entire operator pool.   Because the selection cost in
+SQPE  is  not  affected  by  the  size  of  the  operator  pool,              This work was supported by the U.S. Department of
+the unitary can include operators of rank up to the total                  Energy under Award No.  DE-SC0019374 and the NSF
+number of particles.                                                       under grant CHE-2038019.  N.H.S. was supported by a
+                                                                           fellowship  from  The  Molecular  Sciences  Software  Insti-
+  Finally, we compare the energy convergence with the                      tute under NSF grant ACI-1547580.
+number of parameters for 1D, 2D, and 3D H10  lattices
+using  SPQE  and  two  classical  methods  well  suited  to
+treat strong electronic correlation:  the adaptive configu-                       Appendix A: Gradient of the PQE energy
+ration interaction and the density matrix renormalization
+group.  Given a target accuracy of up to approximately                        In this section,  we derive an expression for the PQE
+1 mEh, we find that SPQE produces significantly more                       energy gradient.  This result permits us to establish the
+compact  trial  states  for  the  2D  system  than  ACI  and               equivalence of PQE and VQE for an exact UCC or dUCC
+is  comparable  to  DMRG.  However,  DMRG  affords  the                    ansatz,  and  to  characterize  the  gradient  when  PQE  is
+most compact wave function parameterization in 1D, for                     used to optimize approximate trial states.  Consider the
+accuracies below 1 mEh  in 2D, and by a much smaller                       PQE energy expression using a UCC [Eq. (7)] or dUCC
+margin, in 3D. Taken together, PQE and SPQE are very                       [Eq. (9)] ansatz EPQE(t) = ⟨Φ0| Uˆ †(t)Hˆ Uˆ (t)|Φ0⟩.  The
+promising  tools  for  studying  many-body  systems  both                  derivative of EPQE(t) with respect to the parameter tµ
+in the strong and weak correlation regimes using NISQ                      is given by
+hardware.
+                                                                                 ∂EPQE(t)
+  In  summary,   the  PQE  approach  is  a  viable  and                              ∂tµ      = 2 Re⟨Φ0| Uˆ †(t)Hˆ ∂Uˆ (t)∂tµ   |Φ0⟩       (A1)
+more economical alternative to variational quantum algo-
+rithms.  In its current formulation, PQE can be applied                                       = 2 Re⟨Φ0| H¯ Uˆ †(t)∂Uˆ (t)∂tµ   |Φ0⟩ ,
+to  any  trial  state  generated  by  exponentiating  a  set  of
+linearly independent operators with identity metric ma-                    where  we  have  inserted  the  identity  Uˆ †(t)Uˆ (t)  =  1  to
+trix,  as it is the case for disentangled unitary coupled-
+cluster  ans¨atze.   For  these  trial  states,  methods  to  re-          rewrite this expression in terms of H¯ .
+duce the number of measurements and exploit symme-                            Next, we consider the resolution of the identity
+tries [59, 60, 96] developed for VQE can likewise be used                    1 = |Φ0⟩⟨Φ0| +  ∑︂        |Φµ⟩⟨Φµ| + ∑︂        |Φν⟩⟨Φν| ,   (A2)
+to improve PQE. Interesting extensions of PQE include
+a generalization to unitaries that may contain repeated                                         Φµ∈R                  Φν∈S
+operators, that use generalized excitations/de-excitations                 where R is the set of determinants for which the resid-
+pools,  and  hardware-efficient  ans¨atze.   In  particular,  a            ual condition rµ = 0 is enforced, while S contains those
+promising research direction is the formulation of a se-                   determinants for which rν may not be equal to zero.  Af-
+lected PQE using a basis of general one- and two-body                      ter inserting this resolution of the identity into Eq. (A1)
+operators, which could yield trial states with lower circuit               between H¯  and Uˆ †(t) and simplifying the resulting ex-
+depth than the current formulation.  Within the greater                    pression, we may express the gradient as
+ecosystem of quantum algorithms, PQE could be used to
+determine  initial  guess  amplitudes  for  subsequent  opti-                 ∂EPQE(t)
+mization via VQE. Additionally, similarly to VQE, PQE                             ∂tµ      = 2EPQE Re⟨Φ0| Uˆ †(t)∂Uˆ (t)∂tµ   |Φ0⟩
+can  be  used  as  an  alternative  to  adiabatic  approaches
+to prepare initial states for quantum phase estimation.                                        + 2 Re ∑︂       r∗µ ⟨Φµ| Uˆ †(t)∂Uˆ (t)
+Although we only explore applications of PQE for quan-                                                                           ∂tµ   |Φ0⟩
+tum many-body simulation,  the framework outlined by                                                    Φµ∈R
+Eqs. (3) and (4) can be used to solve a variety of eigen-                                      + 2 Re ∑︂      r∗ν ⟨Φν| Uˆ †(t)∂Uˆ (t)
+value problems.  With appropriate modifications, for ex-                                                                        ∂tµ   |Φ0⟩ .
+ample, PQE could be employed to diagonalize covariance                                                  Φν∈S
+matrices (after quantum encoding [97, 98]) for use in ma-                                                                                  (A3)
+chine learning or data-analysis.  Moreover, because there                  The  first  term  in  this  expression  is  null  since  from
+is no requirement that the PQE (or SPQE) trial states
+have low-entanglement, PQE could be used as an alter-                      ⟨Φ0| Uˆ †(t)Uˆ (t)|Φ0⟩ = 1 we can show that the coefficient
+native  to  methods  such  as  quantum  principle  analysis                that multiplies the energy is null:
+[98],  or  variational  quantum  state  diagonalization  [99].             ∂ ⟨Φ0| Uˆ †(t)Uˆ (t)|Φ0⟩
+Most importantly,  the most immediate impact of PQE
+could be speeding up quantum computations on current                                  ∂tµ               = 2 Re⟨Φ0| Uˆ †(t)∂Uˆ (t)∂tµ   |Φ0⟩ = 0.
+or near-term devices.                                                                                                                      (A4)
+                                                                                                                                                  14
+
+The second term in Eq. (A3) is null due to the residual                      ⟨Φν| Uˆ †(t) ∂Uˆ(t)∂tµ  |Φ0⟩ that multiplies the residual is gen-
+condition.  Applying these two simplifications we arrive                     erally non-null for both the UCC and dUCC ans¨atze.  In
+at the gradient expression [Eq. (10)] reported in Sec. II B,                 the case of dUCC, the term corresponding to the deriva-
+containing  only  the  last  term  of  Eq.  (A3).   The  term                tive with respect to i-th amplitude tµi, is given by:
+
+
+
+
+                ⟨Φν| Uˆ †(t)∂Uˆ (t)∂tµi  |Φ0⟩ = ⟨Φν| e−tµNop κˆµNop ··· e−tµi+1κˆµi+1 κˆµietµi+1κˆµi+1 ··· etµNop κˆµNop |Φ0⟩ .            (A5)
+
+
+
+
+The states to the left and right of the operator κˆµi  are                   ally non-null.  For completeness, we also report the same
+general many-body states that potentially span the en-                       expression for the case of traditional UCC, which may be
+tire Hilbert space, and therefore, this quantity is gener-                   obtained using the derivative of the exponential map:
+
+
+                                                                    ∫︂  1
+                                    ⟨Φν| Uˆ †(t)∂Uˆ (t)∂tµi  |Φ0⟩ =
+                                                                     0  dx⟨Φν| e(x−1)σˆκˆµie(1−x)σˆ |Φ0⟩ .                                     (A6)
+
+
+
+ Appendix B: Derivation of the dUCC-PQE update                               contributions, we obtain the following diagonal approxi-
+                             equations                                       mation
+
+  In  this  section,  we  provide  a  derivation  of  the  am-                      Jµν(t) = ⟨Φµ| [Fˆ (0), κˆν]|Φ0⟩ = −∆µδµν,         (B3)
+plitude  update  equation  [Eq.  (11)]  based  on  a  quasi-                 where ∆µ = ϵi +ϵj +. . .−ϵa−ϵb . . . is a standard Møller–
+Newton method for solving general nonlinear equations.                       Plesset denominator corresponding to the excitation op-
+To  find  update  equations  that  relate  new  amplitudes                   erator κˆµ  = aˆ†aaˆ†
+(t(n+1)) to the previous set (t(n)), we expand the resid-                    Jacobian in the expanded residual we obtainb ··· aˆjaˆi − h.c..  Inserting the diagonal
+ual equation [Eq. (4)] as a Taylor series centered around
+the  current  amplitude  vector  displaced  by  an  amount                                rµ(t(n+1)) = rµ(t(n)) − ∆µ∆t(n+1)
+∆t(n+1) = t(n+1) − t(n)                                                                                                         µ      ,         (B4)
+
+   rµ(t(n+1)) = rµ(t(n) + ∆t(n+1))                                           which when solved for rµ(t(n+1)) = 0 yields the update
+                                                                             equation [Eq. (11)].
+                 = rµ(t(n)) + ∑︂      Jµν(t(n))∆t(n+1)ν       + . . . ,
+                                   ν
+                                                                  (B1)         Appendix C: Additional numerical comparison of
+                                                                                                      PQE and VQE
+where  J  is  the  Jacobian  matrix,  defined  as  Jµν(t)  =
+∂rµ(t)/∂tν.   To  avoid  computing  and  inverting  the  Ja-                    Here we provide additional numerical comparison for
+cobian,  we  seek  a  diagonal  approximation  to  J.    We                  PQE and VQE. Table II shows numerics for ground state
+first  note  that  for  both  the  conventional  UCC  and  the               energy  convergence  of  BeH2  using  dUCCSD-PQE  and
+dUCC ans¨atze,  the similarity transformed Hamiltonian                       dUCCSD-VQE.  Figure  7  shows  the  energy  converge  of
+expanded up to linear terms is of the form                                   various hydrogen chain systems with respect to the norm
+                                  ∑︂                                         of the residual vector (for PQE) and gradient vector (for
+    Uˆ †(t)Hˆ Uˆ (t) = Hˆ + tµi       [Hˆ , κˆµi] + O(|t|2).     (B2)        VQE). For both Tab. II and Fig. 7 trends similar to those
+                                    i                                        seen in Fig. 3 are observed.
+We  now  invoke  the  Møller–Plesset  partitioning  of  the
+Hamiltonian and assume that the spin orbitals are canon-                      Appendix D: Formal comparison of PQE and VQE
+ical  (i.e.,  they  diagonalize  the  Hartree–Fock  operator),
+allowing  us  to  write  Hˆ   =  Fˆ (0) + Vˆ (1),  where  Fˆ (0)  =
+∑︁                                                                              We begin by assuming the case of a fixed ansatz, and
+   p ϵpaˆ†paˆp is a zeroth-order diagonal one-body operator,                 since in this case state preparation costs are the same, our
+and Vˆ (1) is a first-order operator that contains two-body                  analysis focuses on how many measurements are neces-
+terms.  Approximating the Jacobian with with the first                       sary to compute the gradients and residuals in the itera-
+two terms of Eq. (B2) and retaining only the zeroth-order                    tive optimization procedure.
+                                                                                                                                                                                                                    15
+
+
+TABLE II. Comparison of the convergence of the ground state energy of BeH2 computed with PQE and VQE using a disentan-
+gled UCCSD trial state.  For a method X = PQE or VQE, this table reports the total energy (EX, in Eh), the energy change
+from the previous to the current iteration (E(n)X  − E(n−1)X      ), the number of residual/gradient evaluations (N·X), and the norm
+of the residual/gradient (∥ · ∥).  The FCI energies at 1.0 and 2.0 ˚A are −15.65068726 and −15.60861964 Eh, respectively.  All
+calculations use a STO-6G basis.
+
+Iteration                EPQE                E(n)PQE − E(n−1)PQE           Nr−evalPQE             ∥rPQE∥                   EVQE                E(n)VQE − E(n−1)VQE           Ng−evalVQE             ∥gVQE∥
+                                                                                       BeH2  (rBe−H  = 1.0 ˚A) UCCSD
+
+    1            −15.6480381687         −0.0233010440                  1                0.2184453066       −15.6448482964         −0.0201111716                  3                0.3114581416
+    2            −15.6500971948         −0.0020590260                  2                0.0613327467       −15.6478816410         −0.0030333446                  5                0.1481817759
+    3            −15.6504069826         −0.0003097878                  3                0.0088860708       −15.6494462890         −0.0015646480                  7                0.1065575796
+    4            −15.6504328168         −0.0000258343                  4                0.0026511924       −15.6499421388         −0.0004958498                  9                0.0634937794
+    5            −15.6504349587         −0.0000021418                  5                0.0005328227       −15.6500470587         −0.0001049199                 10               0.0893255742
+    6            −15.6504350041         −0.0000000454                  6                0.0000763318       −15.6501955946         −0.0001485359                 11               0.0657024179
+    7            −15.6504350044         −0.0000000003                  7                0.0000086198       −15.6502874046         −0.0000918100                 12               0.0690985413
+    8                                                                                                            −15.6503399456         −0.0000525410                 13               0.0453884569
+    9                                                                                                            −15.6503962522         −0.0000563066                 14               0.0249260915
+    10                                                                                                            −15.6504228495         −0.0000265973                 16               0.0137252110
+    11                                                                                                            −15.6504302548         −0.0000074053                 18               0.0073189453
+    12                                                                                                            −15.6504341054         −0.0000038506                 20               0.0037260965
+    13                                                                                                            −15.6504346315         −0.0000005261                 22               0.0023579786
+    14                                                                                                            −15.6504348973         −0.0000002657                 24               0.0014145610
+    15                                                                                                            −15.6504349615         −0.0000000642                 26               0.0008586922
+    16                                                                                                            −15.6504349766         −0.0000000151                 28               0.0006710048
+    17                                                                                                            −15.6504349959         −0.0000000193                 29               0.0003518429
+    18                                                                                                            −15.6504350027         −0.0000000068                 31               0.0001962939
+    19                                                                                                            −15.6504350038         −0.0000000011                 33               0.0001228873
+    20                                                                                                            −15.6504350044         −0.0000000005                 34               0.0000505365
+    21                                                                                                            −15.6504350045         −0.0000000001                 36               0.0000433400
+    22                                                                                                            −15.6504350047         −0.0000000002                 37               0.0000200500
+
+                                                                                       BeH2  (rBe−H  = 2.0 ˚A) UCCSD
+
+    1            −15.5888292373         −0.0721251319                  1                0.2551300809       −15.5797540529         −0.0630499476                  3                0.7559489104
+    2            −15.6022316771         −0.0134024398                  2                0.1072484292       −15.5993381767         −0.0195841238                  5                0.2319720501
+    3            −15.6055237786         −0.0032921016                  3                0.0175246100       −15.6027545167         −0.0034163400                  7                0.1024944422
+    4            −15.6056880097         −0.0001642310                  4                0.0076659595       −15.6041840035         −0.0014294868                  9                0.1471217958
+    5            −15.6057527283         −0.0000647187                  5                0.0051078803       −15.6050561955         −0.0008721920                 10               0.0754837786
+    6            −15.6058044053         −0.0000516769                  6                0.0012840244       −15.6052847256         −0.0002285301                 12               0.0580899178
+    7            −15.6058068352         −0.0000024300                  7                0.0002042506       −15.6055945458         −0.0003098202                 13               0.0291205752
+    8            −15.6058068368         −0.0000000016                  8                0.0000663613       −15.6056501930         −0.0000556471                 15               0.0302968175
+    10           −15.6058068336         −0.0000000000                 10               0.0000040077       −15.6057681510         −0.0000350891                 18               0.01865695959            −15.6058068335            +0.0000000033                  9                0.0000122091       −15.6057330619         −0.0000828689                 16               0.0197063516
+    11                                                                                                            −15.6058033733         −0.0000352223                 19               0.0069816557
+    12                                                                                                            −15.6058052286         −0.0000018553                 21               0.0045627712
+    13                                                                                                            −15.6058057676         −0.0000005391                 23               0.0036888638
+    14                                                                                                            −15.6058065558         −0.0000007882                 24               0.0021623560
+    15                                                                                                            −15.6058067218         −0.0000001661                 26               0.0015523193
+    16                                                                                                            −15.6058068503         −0.0000001285                 27               0.0003628532
+    17                                                                                                            −15.6058068547         −0.0000000044                 29               0.0002829316
+    18                                                                                                            −15.6058068601         −0.0000000054                 30               0.0000872433
+    19                                                                                                            −15.6058068604         −0.0000000003                 32               0.0000660842
+    20                                                                                                            −15.6058068607         −0.0000000002                 33               0.0000166869
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 7. dUCCSD energy convergence for linear H4–H10 chains in a STO-6G basis at (a) rH−H = 0.75 ˚A, and (b) rH−H = 1.50 ˚A.
+|E(n) − E(n−1)| is the absolute value of the energy change between subsequent iterations.  Both plots compare PQE vs VQE
+convergence with respect to norm of the residual-vector (for PQE) or the norm of the gradient-vector (for VQE).
+
+
+    The preferred approach to minimize the energy in VQE                                                        ergy. With this algorithm, computing the gradient vector
+is  via  gradient-based  algorithms.   The  gradient  of  the                                                   so that the 2-norm of the error is within precision ϵ¯grad
+dUCC energy with respect to a cluster amplitude tµ  is                                                          requires a total number of measurements (mgrad) that is
+given by                                                                                                        bound by the inequality [77]
+          ∂EVQE(t)                                                                                                                                                     (︁∑︁
+                                                                                                                                            mgrad ≤ 4Npar                     ℓ |hℓ|)︁2
+                ∂tµ       =2 Re⟨Φ0| Uˆ †(t)Hˆ ∂Uˆ (t)∂tµ   |Φ0⟩        (D1)                                                                                                  ϵ¯2grad     .                (D2)
+Equation (D1) has the form of an off-diagonal matrix ele-                                                           The total number of measurements, and proportionally
+ment of the Hamiltonian, and Romero et al.  [77] showed                                                         the runtime, required for a VQE calculation is dominated
+that it may be measured on a quantum device using one                                                           by the computation of the gradient vector and it is pro-
+ancilla qubit and four time the cost of measuring the en-                                                       portional  to  the  number  of  gradient  vector  evaluations
+                                                                                                                                                 16
+
+(NVQEgrad )  required  to  converge  the  energy.   This  implies           gradients [Eq. (D6)] with the evaluation of a number of
+that the total number of VQE measurements (mVQE) is                         Pauli  terms  that  scales  as  N6  (again  assuming  a  pool
+bounded approximately by                                                    of  general  one  and  two-body  operators).   In  ADAPT-
+                                                                            VQE this cost must then be multiplied by the number
+                      mVQE ≤ NVQEgrad mgrad.                   (D3)         of  iterations  performed.   It  is  important  to  note  that
+This estimate ignores the evaluation of the VQE energy,                     the ADAPT-VQE macro-iteration convergence threshold
+                                                                            ϵα = 10−α is based on the norm of the vector of pool gra-
+which has a cost inferior to that of computing one ele-                     dients [Eq. (D6)], such that ADAPT-VQE is considered
+ment of the gradient vector.  More recently, Kottmann et                    converged when ∥gpool∥ ≤ ϵα.  The number of measure-
+al.  [64] showed that the analytic gradient may be com-                     ments  of  the  approximate  residual  vector  (|r˜⟩)  for  the
+puted with a cost essentially equal to that of two energy                   purpose of selection in SPQE is a parameter of a com-
+evaluations using the so-called parameter-shift-rule [63].                  putation.   In  Appendix  E,  we  show  that  a  probabilis-
+This  procedure  avoids  the  use  of  an  ancilla  qubit  and              tic estimate for the number of measurements required to
+the  number of  measurements  required still  satisfies the                 converge SPQE with a threshold of Ω is of the order of
+bound expressed in Eq. (D2).                                                (∆tΩ)−2.
+  In the case of PQE, the number of measurements mres                          A trade-off of using three- and higher-body operators
+needed to compute the residual vector with precision ϵ¯res                  in  SPQE  is  a  greater  circuit  depth  since  an  operator
+has an upper bound given by                                                 κˆab···ij···  of many-body rank n becomes a sum of 22n−1 Pauli
+                                    (︁∑︁                                    strings after Jordan–Wigner mapping to the qubit basis.
+                   mres ≤ 3Npar          ℓ |hℓ|)︁2                          Since  all  Pauli  strings  that  are  generated  in  this  map-
+                                         ϵ¯2res      .                 (D4) ping  commute,  the  unitary  exp(θ κˆab···ij··· )  can  be  written
+This estimate takes into account the fact that the residual                 as  the  product  of  22n−1  exponentials  of  operators  con-
+can be evaluated as the sum of three terms (with different                  taining Pauli strings of length 2n.
+prefactors),  and  that  E0  in  Eq.  (14)  only  needs  to  be                To  analyze  the  compromise  between  the  rank  of  the
+measured once. The total number of PQE measurements                         operator  pool  and  the  compactness  of  the  ansatz  in
+(mPQE) is bounded by                                                        ADAPT-VQE and SPQE we consider the example of a
+                                                                            three-body  operator  exp(t κˆabcijk).   In  ADAPT-VQE  this
+                       mPQE ≤ NPQE                                          term may be approximated using general two-body op-
+                                    res   mres,                     (D5)    erators as
+where NPQEres    is the number of PQE residual vector evalu-
+ations.  Assuming that the energy gradients in VQE and                           et κˆabcijk  = et [κˆaeij ,κˆbcke] ≈ et κˆaeij et κˆbckee−t κˆaeij e−t κˆbcke,     (D7)
+the  residual  in  PQE  are  measured  with  the  same  pre-
+cision  (ϵ¯grad ≈  ϵ¯res),  we  estimate  that  mres ≈   34mgrad.           where the last term is a lowest-order Trotter approxima-
+This  result  suggest  that  PQE  should  have  a  similar  or              tion of the exponential of the commutator [κˆaeij , κˆbcke] (with
+perhaps  slightly  smaller  cost  per  iteration  than  VQE.                e ̸= a, b, c).  The last term in Eq. (D7) is implemented
+However,  a  more  important  factor  in  determining  the                  as a circuit that contains four different parameters and
+relative performance of VQE and PQE is the number of                        a  product  of  32  exponentials  of  Pauli  strings  of  length
+residual/gradient  evaluations  required,  which  as  shown                 four.  The same three-body excitation is represented in
+in Sec. III, favors PQE over VQE.                                           SPQE using a single parameter and a longer circuit as a
+  A detailed comparison of the adaptive variants of VQE                     product of 32 exponentials of Pauli strings of length six.
+(e.g., ADAPT-VQE) and PQE is more complex due to                            This comparison suggests, in accordance with the results
+the significant differences in the form of the ansatz and                   of our study, that higher-body operators are represented
+the selection procedure used in these two methods.  At                      less  efficiently  with  an  arbitrary  particle-hole  operator
+iteration k, the ADAPT-VQE approach selects the oper-                       pool than a general singles and doubles operator pool.
+ator κˆµ with the largest absolute energy gradient.  This
+selection scheme requires evaluating the gradient g(k)µ   for                     Appendix E: Reduced-cost estimation of the
+all the operators in the pool                                                         approximate residual in selected PQE
+
+                  g(k)µ   = ⟨Ψ(k)| [Hˆ , κˆµ]|Ψ(k)⟩ .               (D6)
+Because most sub-terms of the Hamiltonian will commute                         This appendix explores various methods to reduce the
+with κˆµ, a relatively small number of ⟨κˆµOˆ ℓ⟩ and ⟨Oˆ ℓκˆµ⟩              number  of  measurements  M  required  to  compute  the
+                                                                            approximate the residuals r˜µ  used in the selected PQE
+terms need to be measured.  Both Hˆ  and the operator                       method (see Sec. II E). Selection requires the identifica-
+pool {κˆµ} contain of the order N4 elements (assuming a                     tion of the elements of the approximate residual that cor-
+pool of general one and two-body operators).                                responds to projections onto excited determinants. How-
+  However, it has recently been pointed out [67] that if                    ever, for small values of ∆t, the state |r˜⟩ is dominated by
+the  quantity  [Hˆ , κˆµ]  is  decomposed  in  terms  of  the  re-          the reference determinant Φ0, and consequently, the mea-
+duced density matrices, then one can determine the pool                     surement of important missing excitations may become
+                                                                                                                                                          17
+
+                                                                                 convergence  criterion  for  SPQE  based  on  performing  a
+                                                                                 fixed number of measurements MΩ  on the state |r˜⟩.  In
+                                                                                 such an approach, at each iteration k, the operators κˆµ
+                                                                                 whose corresponding determinants |Φµ⟩ are measured at
+                                                                                 least once (over all MΩ measurements) are added to A.
+                                                                                 Because the residual magnitudes go to zero as the eigen-
+                                                                                 state  is  better  approximated  in  successive  k  iterations,
+                                                                                 it  becomes  increasingly  unlikely  that  any  determinants
+                                                                                 besides the reference |Φ0⟩ will be measured.  The SPQE
+                                                                                 algorithm can then be considered converged when all MΩ
+                                                                                 measurements  yield  the  reference  state.   Starting  from
+                                                                                 Eqs. (16) and (17), and making the assumption that at
+                                                                                 convergence  only  a  single  determinant  Φµ  is  measured
+                                                                                 that is not the reference (i.e., ∑︁µ Nµ = 1), one can use
+FIG.  8.   SPQE  energy  convergence  for  H6  at  a  separation                 a number of measurements
+
+of  rH−H  =  1.0  ˚A,  with  ∆t  =  0.05  au.   Data  sets  with  tri-
+angular markers denote exact operator selection and conver-                                                  MΩ =     1∆t2Ω2 ,                         (E1)
+gence  via  Eqs.  (16)  and  (17)  for  Ω  =  1.0 × 10−1  (yellow)
+and Ω = 5.0 × 10−2 (dark blue).  Data sets with dots denote                      to probabilistically test convergence of the residual vector
+operator  selection  and  convergence  with  a  fixed  number  of                to within the threshold Ω.  In practice we find that us-
+measurements MΩ = 4.0 × 104 (yellow) and MΩ = 1.6 × 105                          ing Eq. (E1) works well compared to the exact threshold
+(dark blue) calculated via Eq. (E1) for the corresponding Ω                      given in Eq. (17).  Figure 8 compares the energy conver-
+values.
+                                                                                 gence with number of selected operators/parameters us-
+                                                                                 ing both convergence criterion corresponding to the same
+inefficient.   In  practice  one  can  consider  an  alternative                 value of Ω.
+
+
+
+
+
+ [1]S.  Lloyd,  Universal  quantum  simulators,  Science     273,                      nents in ursell-type expansion using quantum-field theo-
+     1073 (1996).                                                                      retical methods, J. Chem. Phys. 45, 4256 (1966).
+ [2]A. Aspuru-Guzik, A. D. Dutoi, P. J. Love, and M. Head-                       [11]P.  Piecuch,   S.  Zarrabian,   J.  Paldus,  and  J.        ˇC´ıˇzek,
+     Gordon,  Simulated  quantum  computation  of  molecular                           Coupled-cluster approaches with an approximate account
+     energies, Science 309, 1704 (2005).                                               of triexcitations and the optimized-inner-projection tech-
+ [3]A.  Kandala,   A.  Mezzacapo,   K.  Temme,   M.  Takita,                           nique. II. Coupled-cluster results for cyclic-polyene model
+     M. Brink, J. M. Chow, and J. M. Gambetta, Hardware-                               systems, Phys. Rev. B 42, 3351 (1990).
+     efficient   variational   quantum   eigensolver   for   small               [12]P. Piecuch and M. Wloch, Renormalized coupled-cluster
+     molecules   and   quantum   magnets,   Nature  549,   242                         methods  exploiting  left  eigenstates  of  the  similarity-
+     (2017).                                                                           transformed  hamiltonian,  J.  Chem.  Phys. 123,  224105
+ [4]A. Kandala, K. Temme, A. D. C´orcoles, A. Mezzacapo,                               (2005).
+     J. M. Chow, and J. M. Gambetta, Error mitigation ex-                        [13]P.   A.   Limacher,    P.   W.   Ayers,    P.   A.   Johnson,
+     tends the computational reach of a noisy quantum pro-                             S. De Baerdemacker,  D. Van Neck, and P. Bultinck, A
+     cessor, Nature 567, 491 (2019).                                                   new  mean-field  method  suitable  for  strongly  correlated
+ [5]S.  R.  White,  Density  matrix  formulation  for  quantum                         electrons:   Computationally  facile  antisymmetric  prod-
+     renormalization groups, Phys. Rev. Lett. 69, 2863 (1992).                         ucts of nonorthogonal geminals, J. Chem. Theory Com-
+ [6]B. Huron, J.-P. Malrieu, and P. Rancurel, Iterative per-                           put. 9, 1394 (2013).
+     turbation  calculations  of  ground  and  excited  state  en-               [14]I. W. Bulik, T. M. Henderson, and G. E. Scuseria, Can
+     ergies from multiconfigurational zeroth order wavefunc-                           single-reference  coupled  cluster  theory  describe  static
+     tions, J. Chem. Phys. 58, 5745 (1973).                                            correlation?, J. Chem. Theory Comput. 11, 3171 (2015).
+ [7]R. J. Buenker and S. D. Peyerimhoff, Individualized con-                     [15]J.       ˇC´ıˇzek,  On  the  use  of  the  cluster  expansion  and  the
+     figuration selection in ci calculations with subsequent en-                       technique  of  diagrams  in  calculations  of  correlation  ef-
+     ergy extrapolation, Theor. Chim. Acta 35, 33 (1974).                              fects in atoms and molecules, Adv. Chem. Phys 14, 35
+ [8]G.  H.  Booth,  A.  J.  W.  Thom,  and  A.  Alavi,  Fermion                        (1969).
+     monte carlo without fixed nodes:  A game of life, death,                    [16]I.  Lindgren,  A  coupled-cluster  approach  to  the  many-
+     and annihilation in slater determinant space, J. Chem.                            body perturbation theory for open-shell systems, Int. J.
+     Phys. 131, 054106 (2009).                                                         Quantum Chem. 14, 33 (1978).
+ [9]F. Coester and H. K¨ummel, Short-range correlations in                       [17]B.   Jeziorski   and   H.   J.   Monkhorst,   Coupled-cluster
+     nuclear wave functions, Nuc. Phys. 17, 477 (1960).                                method  for  multideterminantal  reference  states,  Phys.
+[10]J.        ˇC´ıˇzek,  On  the  correlation  problem  in  atomic  and                Rev. A 24, 1668 (1981).
+     molecular  systems.  calculation  of  wavefunction  compo-
+                                                                                                                                                           18
+
+[18]D. I. Lyakh, M. Musial, V. F. Lotrich, and R. J. Bartlett,                  [38]J.   I.   Colless,   V.   V.   Ramasesh,   D.   Dahlen,   M.   S.
+     Multireference  Nature  of  Chemistry:    The  Coupled-                           Blok,  M.  Kimchi-Schwartz,  J.  R.  McClean,  J.  Carter,
+     Cluster View, Chem. Rev. 112, 182 (2012).                                         W. De Jong, and I. Siddiqi, Computation of molecular
+[19]A.  K¨ohn,  M.  Hanauer,  L.  A.  M¨uck,  T.-C.  Jagau,  and                       spectra  on  a  quantum  processor  with  an  error-resilient
+     J.  Gauss,  State-specific  multireference  coupled-cluster                       algorithm, Phys. Rev. X 8, 011021 (2018).
+     theory,  Wiley  Interdiscip.  Rev.:   Comput.  Mol.  Sci.  3,               [39]Y. Shen, X. Zhang, S. Zhang, J.-N. Zhang, M.-H. Yung,
+     176 (2013).                                                                       and  K.  Kim,  Quantum  implementation  of  the  unitary
+[20]F.  A.  Evangelista,  Perspective:  Multireference  coupled                        coupled cluster for simulating molecular electronic struc-
+     cluster  theories  of  dynamical  electron  correlation,  J.                      ture, Phys. Rev. A 95, 020501 (2017).
+     Chem. Phys. 149, 030901 (2018).                                             [40]C. Hempel, C. Maier, J. Romero, J. McClean, T. Monz,
+[21]R. P. Feynman, Simulating physics with computers, Int.                             H. Shen, P. Jurcevic, B. P. Lanyon, P. Love, R. Babbush,
+     J. Theor. Phys 21 (1982).                                                         et al., Quantum chemistry calculations on a trapped-ion
+[22]A. Y. Kitaev, Quantum measurements and the abelian                                 quantum simulator, Phys. Rev. X 8, 031022 (2018).
+     stabilizer problem, arXiv:9511026  (1995).                                  [41]Y.  Nam,  J.-S.  Chen,  N.  C.  Pisenti,  K.  Wright,  C.  De-
+[23]D.  S.  Abrams  and  S.  Lloyd,  Simulation  of  many-body                         laney, D. Maslov, K. R. Brown, S. Allen, J. M. Amini,
+     fermi systems on a universal quantum computer, Phys.                              J. Apisdorf, et al., Ground-state energy estimation of the
+     Rev. Lett. 79, 2586 (1997).                                                       water molecule on a trapped-ion quantum computer, npj
+[24]D. S. Abrams and S. Lloyd, Quantum algorithm provid-                               Quantum Inf. 6, 1 (2020).
+     ing exponential speed increase for finding eigenvalues and                  [42]P.  G.  Szalay,  M.  Nooijen,  and  R.  J.  Bartlett,  Alterna-
+     eigenvectors, Phys. Rev. Lett. 83, 5162 (1999).                                   tive ans¨atze in single reference coupled-cluster theory. iii.
+[25]H. F. Trotter, On the product of semi-groups of opera-                             a critical analysis of different methods, J. Chem. Phys.
+     tors, Proc. Am. Math. Soc. 10, 545 (1959).                                        103, 281 (1995).
+[26]M. Suzuki, Improved trotter-like formula, Physics Letters                    [43]A.  G.  Taube  and  R.  J.  Bartlett,  New  perspectives  on
+     A 180, 232 (1993).                                                                unitary coupled-cluster theory, Int. J. Quantum Chem.
+[27]V. von Burg, G. H. Low, T. H¨aner, D. S. Steiger, M. Rei-                          106, 3393 (2006).
+     her,  M.  Roetteler,  and  M.  Troyer,  Quantum  comput-                    [44]B. Cooper and P. J. Knowles, Benchmark studies of vari-
+     ing enhanced computational catalysis, arXiv:2007.14460                            ational, unitary and extended coupled cluster methods,
+     (2020).                                                                           J. Chem. Phys. 133, 234102 (2010).
+[28]J. Lee, D. Berry, C. Gidney, W. J. Huggins, J. R. Mc-                        [45]F.  A.  Evangelista,  Alternative  single-reference  coupled
+     Clean,  N. Wiebe, and R. Babbush, Even more efficient                             cluster approaches for multireference problems: The sim-
+     quantum computations of chemistry through tensor hy-                              pler, the better, J. Chem. Phys. 134, 224102 (2011).
+     percontraction, arXiv:2011.03494  (2020).                                   [46]G. Harsha, T. Shiozaki, and G. E. Scuseria, On the dif-
+[29]R.  Babbush,  N.  Wiebe,  J.  R.  McClean,  J.  McClain,                           ference between variational and unitary coupled cluster
+     H. Neven, and G. K.-L. Chan, Low-depth quantum sim-                               theories, J. Chem. Phys. 148, 044107 (2018).
+     ulation of materials, Phys. Rev. X 8, 011044 (2018).                        [47]M.-A. Filip and A. J. W. Thom, A stochastic approach
+[30]M.  Reiher,  N.  Wiebe,  K.  M.  Svore,  D.  Wecker,  and                          to unitary coupled cluster, J. Chem. Phys. 153, 214106
+     M.  Troyer,  Elucidating  reaction  mechanisms  on  quan-                         (2020).
+     tum computers, Proc. Natl. Acad. Sci. U.S.A 114, 7555                       [48]J.  Chen,  H.-P.  Cheng,  and  J.  K.  Freericks,  Quantum-
+     (2017).                                                                           Inspired  Algorithm  for  the  Factorized  Form  of  Unitary
+[31]J. Kempe, A. Kitaev, and O. Regev, The complexity of                               Coupled Cluster Theory., J. Chem. Theory Comput. 17,
+     the  local  hamiltonian  problem,  SIAM  J.  Comput.  35,                         841 (2021).
+     1070 (2006).                                                                [49]I. G. Ryabinkin, T.-C. Yen, S. N. Genin, and A. F. Iz-
+[32]J. Preskill, Quantum computing in the nisq era and be-                             maylov, Qubit Coupled Cluster Method:  A Systematic
+     yond, Quantum 2, 79 (2018).                                                       Approach to Quantum Chemistry on a Quantum Com-
+[33]A. Peruzzo, J. R. McClean, P. Shadbolt, M.-H. Yung, X.-                            puter, J. Chem. Theory Comput. 14, 6317 (2018).
+     Q. Zhou, P. J. Love, A. Aspuru-Guzik, and J. L. O’Brien,                    [50]P.  J.  Knowles,  C.  Hampel,  and  H.-J.  Werner,  Coupled
+     A  variational  eigenvalue  solver  on  a  photonic  quantum                      cluster  theory  for  high  spin,  open  shell  reference  wave
+     processor., Nat. Commun. 5, 4213 (2014).                                          functions, J. Chem. Phys. 99, 5219 (1993).
+[34]M.-H. Yung, J. Casanova, A. Mezzacapo, J. R. McClean,                        [51]M. Motta,  C. Sun,  A. T. Tan,  M. J. O’Rourke,  E. Ye,
+     L. Lamata, A. Aspuru-Guzik, and E. Solano, From tran-                             A. J. Minnich, F. G. Brand˜ao, and G. K.-L. Chan, De-
+     sistor to trapped-ion computers for quantum chemistry,                            termining eigenstates and thermal states on a quantum
+     Sci. Rep. 4, 3589 (2014).                                                         computer using quantum imaginary time evolution, Nat.
+[35]J. R. McClean, J. Romero, R. Babbush, and A. Aspuru-                               Phys. 16, 1 (2019).
+     Guzik,   The   theory   of   variational   hybrid   quantum-                [52]S.-N.  Sun,  M.  Motta,  R.  N.  Tazhigulov,  A.  T.  Tan,
+     classical algorithms, New J. Phys. 18, 023023 (2016).                             G. K.-L. Chan, and A. J. Minnich, Quantum computa-
+[36]H. R. Grimsley,  S. E. Economou,  E. Barnes, and N. J.                             tion of finite-temperature static and dynamical proper-
+     Mayhall,  An  adaptive  variational  algorithm  for  exact                        ties of spin systems using quantum imaginary time evo-
+     molecular  simulations  on  a  quantum  computer,  Nat.                           lution, Phys. Rev. X Quantum 2, 010317 (2021).
+     Commun. 10, 1 (2019).                                                       [53]J. R. McClean,  M. E. Kimchi-Schwartz,  J. Carter, and
+[37]P.   J.   J.   O’Malley,   R.   Babbush,   I.   D.   Kivlichan,                    W. A. de Jong, Hybrid quantum-classical hierarchy for
+     J.   Romero,   J.   R.   McClean,   R.   Barends,   J.   Kelly,                   mitigation of decoherence and determination of excited
+     P. Roushan, A. Tranter, N. Ding, et al., Scalable Quan-                           states, Phys. Rev. A 95, 042308 (2017).
+     tum Simulation of Molecular Energies, Phys. Rev. X 6,                       [54]R. M. Parrish and P. L. McMahon, Quantum filter diag-
+     031007 (2016).                                                                    onalization:   Quantum  eigendecomposition  without  full
+                                                                                                                                                            19
+
+     quantum phase estimation, arXiv:1909.08925  (2019).                          [71]J. Lee, W. J. Huggins, M. Head-Gordon, and K. B. Wha-
+[55]N. H. Stair, R. Huang, and F. A. Evangelista, A multiref-                           ley, Generalized unitary coupled cluster wave functions
+     erence quantum krylov algorithm for strongly correlated                            for quantum computation, J. Chem. Theory Comput. 15,
+     electrons, J. Chem. Theory Comput. 16, 2236 (2020).                                311 (2018).
+[56]W. J. Huggins, J. Lee, U. Baek, B. O’Gorman, and K. B.                        [72]T. Helgaker, P. Jørgensen, and J. Olsen, Coupled-cluster
+     Whaley,  A  non-orthogonal  variational  quantum  eigen-                           theory, in  Molecular  Electronic-Structure  Theory  (John
+     solver, New J. Phys. 22, 073009 (2020).                                            Wiley & Sons, Ltd, 2000) Chap. 13, pp. 648–723.
+[57]D. Wecker, M. B. Hastings, and M. Troyer, Progress to-                        [73]P. Pulay, Convergence acceleration of iterative sequences.
+     wards  practical  quantum  variational  algorithms,  Phys.                         the  case  of  scf  iteration,  Chem.  Phys.  Lett.  73,  393
+     Rev. A 92, 042303 (2015).                                                          (1980).
+[58]P.  Gokhale,  O.  Angiuli,  Y.  Ding,  K.  Gui,  T.  Tomesh,                  [74]G. E. Scuseria, T. J. Lee, and H. F. Schaefer, Accelerating
+     M. Suchara, M. Martonosi, and F. T. Chong, Minimizing                              the convergence of the coupled-cluster approach: The use
+     state preparations in variational quantum eigensolver by                           of the diis method, Chem. Phys. Lett. 130, 236 (1986).
+     partitioning  into  commuting  families,  arXiv:1907.13623                   [75]D.  Aharonov,  V.  Jones,  and  Z.  Landau,  A  polynomial
+     (2019).                                                                            quantum algorithm for approximating the jones polyno-
+[59]T.-C. Yen, V. Verteletskyi, and A. F. Izmaylov, Measur-                             mial, Algorithmica 55, 395 (2009).
+     ing all compatible operators in one series of single-qubit                   [76]D. W. Berry, C. Gidney, M. Motta, J. R. McClean, and
+     measurements  using  unitary  transformations,  J.  Chem.                          R.  Babbush,  Qubitization  of  arbitrary  basis  quantum
+     Theory Comput. 16, 2400 (2020).                                                    chemistry leveraging sparsity and low rank factorization,
+[60]V.  Verteletskyi,  T.-C.  Yen,  and  A.  F.  Izmaylov,  Mea-                        Quantum 3, 208 (2019).
+     surement optimization in the variational quantum eigen-                      [77]J. Romero, R. Babbush, J. R. McClean, C. Hempel, P. J.
+     solver using a minimum clique cover, J. Chem. Phys. 152,                           Love, and A. Aspuru-Guzik, Strategies for quantum com-
+     124114 (2020).                                                                     puting molecular energies using the unitary coupled clus-
+[61]W. J. Huggins,  J. R. McClean,  N. C. Rubin,  Z. Jiang,                             ter ansatz, Quantum Sci. Technol. 4, 014008 (2019).
+     N. Wiebe, K. B. Whaley, and R. Babbush, Efficient and                        [78]F. Arute, K. Arya, R. Babbush, D. Bacon, J. C. Bardin,
+     noise resilient measurements for quantum chemistry on                              R. Barends, S. Boixo, M. Broughton, B. B. Buckley, D. A.
+     near-term  quantum  computers,  npj  Quantum  Inf. 7,  1                           Buell,  et  al.,  Hartree-fock  on  a  superconducting  qubit
+     (2021).                                                                            quantum computer, Science 369, 1084 (2020).
+[62]J. R. McClean, F. M. Faulstich, Q. Zhu, B. O’Gorman,                          [79]M. Motta, D. M. Ceperley, G. K.-L. Chan, J. A. Gomez,
+     Y. Qiu,  S. R. White,  R. Babbush, and L. Lin, Discon-                             E. Gull, S. Guo, C. A. Jim´enez-Hoyos, T. N. Lan, J. Li,
+     tinuous galerkin discretization for quantum simulation of                          F. Ma, et al., Towards the solution of the many-electron
+     chemistry, New J. Phys. 22, 093015 (2020).                                         problem in real materials:  equation of state of the hy-
+[63]M. Schuld, V. Bergholm, C. Gogolin, J. Izaac, and N. Kil-                           drogen chain with state-of-the-art many-body methods,
+     loran,  Evaluating  analytic  gradients  on  quantum  hard-                        Phys. Rev. X 7, 031059 (2017).
+     ware, Phys. Rev. A 99, 032331 (2019).                                        [80]M. Motta,  C. Genovese,  F. Ma,  Z.-H. Cui,  R. Sawaya,
+[64]J.  S.  Kottmann,   A.  Anand,  and  A.  Aspuru-Guzik,                              G. K.-L. Chan, N. Chepiga, P. Helms, C. Jim´enez-Hoyos,
+     A   feasible   approach   for   automatically   differentiable                     A. J. Millis, et al., Ground-state properties of the hydro-
+     unitary    coupled-cluster    on    quantum    computers,                          gen  chain:   dimerization,  insulator-to-metal  transition,
+     arXiv:2011.05938  (2020).                                                          and magnetic phases, Phys. Rev. X 10, 031058 (2020).
+[65]I.  G.  Ryabinkin,  R.  A.  Lang,  S.  N.  Genin,  and  A.  F.                [81]N. H. Stair and F. A. Evangelista, Exploring hilbert space
+     Izmaylov, Iterative qubit coupled cluster approach with                            on a budget: Novel benchmark set and performance met-
+     efficient screening of generators, J. Chem. Theory Com-                            ric for testing electronic structure methods in the regime
+     put. 16, 1055 (2020).                                                              of strong correlation, J. Chem. Phys. , 104108 (2020).
+[66]Z.-J. Zhang, T. H. Kyaw, J. S. Kottmann, M. Degroote,                         [82]D. G. Smith, L. A. Burns, A. C. Simmonett, R. M. Par-
+     and A. Aspuru-Guzik, Mutual information-assisted adap-                             rish,  M.  C.  Schieber,  R.  Galvelis,  P.  Kraus,  H.  Kruse,
+     tive variational quantum eigensolver, Quantum Sci. Tech-                           R.  Di  Remigio,  A.  Alenaizan,  et  al.,  Psi4  1.4:   Open-
+     nol. 6, 035001 (2021).                                                             source software for high-throughput quantum chemistry,
+[67]J.   Liu,   Z.   Li,   and   J.   Yang,   An   efficient   adaptive                 J. Chem. Phys. 152, 184108 (2020).
+     variational  quantum  solver  of  the  schrodinger  equa-                    [83]N.    H.    Stair    and    F.    A.    Evangelista,    Qforte:
+     tion based on reduced density matrices, arXiv preprint                             A      quantum      computer      simulator      and      algo-
+     arXiv:2012.07047  (2020).                                                          rithms     library     for     molecular     simulation     (see
+[68]P.  K.  Barkoutsos,  J.  F.  Gonthier,  I.  Sokolov,  N.  Moll,                     https://github.com/evangelistalab/qforte                 and
+     G. Salis, A. Fuhrer, M. Ganzhorn, D. J. Egger, M. Troyer,                          https://education.molssi.org/2020-software-fellow-
+     A. Mezzacapo, S. Filipp, and I. Tavernelli, Quantum al-                            posters/nick-stair).,  (2020).
+     gorithms for electronic structure calculations:  Particle-                   [84]C. G. Broyden, The convergence of a class of double-rank
+     hole  Hamiltonian  and  optimized  wave-function  expan-                           minimization algorithms:  2. the new algorithm, J. Inst.
+     sions, Phys. Rev. A 98, 022322 (2018).                                             Math. Appl. 6, 222 (1970).
+[69]F. A. Evangelista, G. K.-L. Chan, and G. E. Scuseria, Ex-                     [85]R.  Fletcher,  A  new  approach  to  variable  metric  algo-
+     act parameterization of fermionic wave functions via uni-                          rithms, Comput. J 13, 317 (1970).
+     tary coupled cluster theory, J. Chem. Phys. 151, 244112                      [86]D. Goldfarb, A family of variable-metric methods derived
+     (2019).                                                                            by variational means, Math. Comput. 24, 23 (1970).
+[70]T. D. Crawford and H. F. Schaefer, An introduction to                         [87]D. F. Shanno, Conditioning of quasi-newton methods for
+     coupled cluster theory for computational chemists, Rev.                            function minimization, Math. Comput. 24, 647 (1970).
+     Comput. Chem. 14, 33 (2000).
+                                                                                                                                                             20
+
+[88]P.  Virtanen,  R.  Gommers,  T.  E.  Oliphant,  M.  Haber-                           theory:   Formal  developments  and  molecular  applica-
+     land, T. Reddy, D. Cournapeau, E. Burovski, P. Peter-                               tions, J. Chem. Phys. 110, 6171 (1999).
+     son, W. Weckesser, J. Bright, et al., Scipy 1.0: fundamen-                    [94]F.  A.  Evangelista,  W.  D.  Allen,  and  H.  F.  Schaefer,
+     tal  algorithms  for  scientific  computing  in  python,  Nat.                      Coupling term derivation and general implementation of
+     Methods 17, 261 (2020).                                                             state-specific  multireference coupled cluster theories, J.
+[89]M.  B.  Hastings,  D.  Wecker,  B.  Bauer,  and  M.  Troyer,                         Chem. Phys. 127, 024102 (2007).
+     Improving quantum algorithms for quantum chemistry,                           [95]F.  A.  Evangelista,  E.  Prochnow,  J.  Gauss,  and  H.  F.
+     Quantum Info. Comput. 15, 1 (2015).                                                 Schaefer, Perturbative triples corrections in state-specific
+[90]J.  B.  Schriber  and  F.  A.  Evangelista,  Communica-                              multireference  coupled  cluster  theory,  J.  Chem.  Phys.
+     tion:  An adaptive configuration interaction approach for                           132, 074107 (2010).
+     strongly  correlated  electrons  with  tunable  accuracy,  J.                 [96]K. Setia, R. Chen, J. E. Rice, A. Mezzacapo, M. Pistoia,
+     Chem. Phys. 144, 161106 (2016).                                                     and  J.  D.  Whitfield,  Reducing  qubit  requirements  for
+[91]G. D. Purvis III and R. J. Bartlett, A full coupled-cluster                          quantum simulations using molecular point group sym-
+     singles and doubles model: The inclusion of disconnected                            metries, J. Chem. Theory Comput. 16, 6091 (2020).
+     triples, J. Chem. Phys. 76, 1910 (1982).                                      [97]V. Giovannetti, S. Lloyd, and L. Maccone, Quantum ran-
+[92]K.  Raghavachari,   G.  W.  Trucks,   J.  A.  Pople,  and                            dom access memory, Phys. Rev. Lett. 100, 160501 (2008).
+     M. Head-Gordon, A fifth-order perturbation comparison                         [98]S. Lloyd, M. Mohseni, and P. Rebentrost, Quantum prin-
+     of electron correlation theories, Chem. Phys. Lett. 157,                            cipal component analysis, Nat. Phys. 10, 631 (2014).
+     479 (1989).                                                                   [99]R.  LaRose,  A.  Tikku,        ´E.  O’Neel-Judy,  L.  Cincio,  and
+[93]U. S. Mahapatra, B. Datta, and D. Mukherjee, A size-                                 P.  J.  Coles,  Variational  quantum  state  diagonalization,
+     consistent  state-specific  multireference  coupled  cluster                        npj Quantum Inf. 5, 1 (2019).

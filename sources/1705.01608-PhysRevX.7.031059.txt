@@ -1,0 +1,1720 @@
+                                          PHYSICAL REVIEW X 7, 031059 (2017)
+
+
+        Towards the Solution of the Many-Electron Problem in Real Materials: Equation
+          of State of the Hydrogen Chain with State-of-the-Art Many-Body Methods
+     Mario Motta,1 David M. Ceperley,2 Garnet Kin-Lic Chan,3 John A. Gomez,4 Emanuel Gull,5 Sheng Guo,3
+ Carlos A. Jiménez-Hoyos,3 Tran Nguyen Lan,6,5,* Jia Li,5 Fengjie Ma,7 Andrew J. Millis,8 Nikolay V. Prokof’ev,9,10
+Ushnish Ray,3 Gustavo E. Scuseria,4,11 Sandro Sorella,12,13 Edwin M. Stoudenmire,14 Qiming Sun,3 Igor S. Tupitsyn,9,10
+                             Steven R. White,14 Dominika Zgid,6 and Shiwei Zhang1,†
+                              (Simons Collaboration on the Many-Electron Problem)
+                    1
+                   Department of Physics, College of William and Mary, Williamsburg, Virginia 23187, USA
+              2
+              Department of Physics, University of Illinois at Urbana-Champaign, Champaign, Illinois 61801, USA
+                     3
+                       Division of Chemistry and Chemical Engineering, California Institute of Technology,
+                                                 Pasadena, California 91125, USA
+                               4
+                                Department of Chemistry, Rice University, Houston, Texas 77005, USA
+                       5
+                         Department of Physics, University of Michigan, Ann Arbor, Michigan 48109, USA
+                     6
+                      Department of Chemistry, University of Michigan, Ann Arbor, Michigan 48109, USA
+                       7
+                        Department of Physics, Beijing Normal University, Beijing, Beijing 100875, China
+                         8
+                           Department of Physics, Columbia University, New York, New York 10027, USA
+                  9
+                   Department of Physics, University of Massachusetts, Amherst, Massachusetts 01003, USA
+                            10
+                              National Research Center “Kurchatov Institute,” 123182 Moscow, Russia
+                     11
+                       Department of Physics and Astronomy, Rice University, Houston, Texas 77005, USA
+                  12
+                    SISSA-International School for Advanced Studies, Via Bonomea 265, 34136 Trieste, Italy
+                             13
+                                 Democritos Simulation Center CNR-IOM Istituto Officina dei Materiali,
+                                               Via Bonomea 265, 34136 Trieste, Italy
+             14
+               Department of Physics and Astronomy, University of California, Irvine, California 92697-4575, USA
+  (Received 1 May 2017; revised manuscript received 3 August 2017; published 28 September 2017; corrected 24 March 2021)
+                 We present numerical results for the equation of state of an infinite chain of hydrogen atoms. A variety of
+              modern many-body methods are employed, with exhaustive cross-checks and validation. Approaches for
+              reaching the continuous space limit and the thermodynamic limit are investigated, proposed, and tested.
+              The detailed comparisons provide a benchmark for assessing the current state of the art in many-body
+              computation, and for the development of new methods. The ground-state energy per atom in the linear
+              chain is accurately determined versus bond length, with a confidence bound given on all uncertainties.
+              DOI: 10.1103/PhysRevX.7.031059                           Subject Areas: Chemical Physics,
+                                                                                      Computational Physics,
+                                                                                      Condensed Matter Physics
+
+
+
+                    I. INTRODUCTION                                       Often the physical properties of materials and molecules
+   One of the grand challenges in modern science is the                are determined by a delicate quantitative balance between
+accurate treatment of interacting many-electron systems.               competing tendencies, so that accurate computations are
+                                                                       required to predict the outcome. The theoretical frame-
+In condensed phase materials, the challenge is increased by
+                                                                       work for these calculations, the many-particle Schrödinger
+the need to account for the interplay between the electrons
+                                                                       equation, is known [1]. However, the solution of the
+and the chemical and structural environment. Progress in
+                                                                       Schrödinger equation in a many-electron system presents
+addressing this challenge will be fundamental to the
+                                                                       fundamental difficulties originating from combinatorial
+realization of “materials genome” or materials by design               growth of the dimension of the Hilbert space involved,
+initiatives.                                                           along with the high degree of entanglement produced by
+                                                                       the combination of Fermi statistics and electron-electron
+  *
+    On leave from: Ho Chi Minh City Institute of Physics, VAST,        interactions. Computational methods need to reach beyond
+Ho Chi Minh City, Vietnam.                                             the incredible success afforded by density functional theory
+  †
+    shiwei@wm.edu                                                      (DFT) and capture electron correlation effects with suffi-
+                                                                       cient accuracy across different physical parameter regimes.
+Published by the American Physical Society under the terms of             No general, numerically exact method presently exists
+the Creative Commons Attribution 4.0 International license.
+Further distribution of this work must maintain attribution to         that can treat many-electron systems with low computa-
+the author(s) and the published article’s title, journal citation,     tional cost. Except for special cases, known methods either
+and DOI.                                                               have systematic errors which cannot be easily quantified or
+
+
+
+2160-3308=17=7(3)=031059(28)                                   031059-1               Published by the American Physical Society
+MARIO MOTTA et al.                                                                         PHYS. REV. X 7, 031059 (2017)
+
+the computational burden scales exponentially or as a very        model-system methods to real materials, in particular: the
+high power of the system size.                                    presence of strong electron correlations of diverse nature as
+   Recent years have witnessed remarkable progress in the         the H-H distance is varied, and the need to treat the full
+development of new theories, concepts, methodologies,             physical Coulomb interaction and to work in the continuous
+software, and algorithms that have pushed the conceptual          space and thermodynamic limits.
+horizons and technical boundaries of computational many-             Compared to the one-dimensional Hubbard model, the
+body methods and considerably improved our understand-            hydrogen chain has multiple (in principle, infinite) orbitals
+ing of interacting electrons in solids and molecules. A vast      per site, as well as long-range interactions. The use of basis
+suite of methods exist which have different strengths and         sets defines models of the hydrogen chain of increasing
+weaknesses and different domains of applicability, and ever       complexity. In a minimal basis, there is only one band, and
+more are being developed.                                         the problem resembles a one-dimensional Hubbard model
+   It is imperative, under these circumstances, to develop        with long-range interactions. Larger, more realistic, basis
+systematic knowledge by detailed benchmark studies.               sets bring back characteristics of real materials. Thus, one
+Comparison of different methods allows characterization           can neatly and systematically connect from a fundamental
+of relative accuracy and capabilities, which provides a survey    model of strong electron correlation to a real material
+of the state of the art to guide applications. Applying           system. On the other hand, the H chain eliminates complex-
+complementary methods synergistically to the same problem         ities of other materials systems such as the need to
+enables cross-check and validation, leading to a powerful         separately treat core electrons or incorporate relativistic
+new paradigm of attack on difficult problems. Cases where         effects, and is thus accessible to many theoretical methods
+results from different methods agree provide valuable bench-      at their current state of development. As such, the linear
+marks against which new methods can be tested, thereby            hydrogen chain is an ideal first benchmark system for
+facilitating further development and accelerating progress.       testing the ability of many-body theoretical methods to
+                                                                  handle the challenges posed by real materials.
+   Detailed benchmark studies of extended systems have
+                                                                     We study finite chains of increasing length and cross-
+been rare. A major reason is the nature of the problems
+                                                                  check the results against calculations performed using
+involved: while it is reasonably straightforward to compare
+                                                                  periodic boundary conditions. We also present results from
+results obtained for finite systems (such as molecules), or at
+                                                                  calculations formulated in the thermodynamic limit. Most of
+the thermodynamic limit in an independent-electron pic-           the methods employed use a one-particle basis set, and we
+ture, it is challenging to make reliable calculations in the      investigate convergence by obtaining results for a systematic
+thermodynamic limit with many-body methods. A recent              quantum chemistry sequence of basis sets of increasing size.
+success is the benchmark study of the Hubbard model [2],          These results are compared to methods formulated directly in
+and a subsequent multimethod study of the ground-state            real space. With extensive direct comparisons and cross-
+order in the celebrated 1=8-doped case [3]. With real             validations between different methods, we characterize the
+materials, two more challenges arise. First, the general          uncertainties in each approach in detail.
+long-range Coulomb interaction must be treated accurately.           This study presents results obtained from more than a
+Second, many-body calculations often require the use of           dozen many-body computational methods currently used or
+incomplete one-electron basis sets, whose systematic errors       under development in physics and chemistry. A vast amount
+must be removed in order to reach the continuous space, or        of data are produced, providing detailed information in finite-
+complete basis set, limit for physical observables.               length chains and with finite basis sets. In the largest systems
+   In this work, we undertake a comprehensive benchmark           treated, the size of the Hilbert space exceeds 10100 . We
+study of state-of-the-art many-body methods in a more             anticipate that our data, which are made available in the
+realistic context. We choose the linear hydrogen chain—           appendixes and in online repositories [11], will be useful for
+introduced in Ref. [4] and studied at finite lengths and finite   benchmarking other existing and future electronic structure
+basis sets by several groups [5–10]—and investigate its           methods. In addition to the results and comparisons, we
+ground state versus bond length under the Born-                   introduce a variety of methodological developments which
+Oppenheimer approximation of fixed nuclear positions,             are spurred by the benchmark, including new approaches.
+at the thermodynamic and complete basis-set limits.               Combining the strengths of complementary methods, we are
+   Hydrogen is the first element in the periodic table and the    able to determine the energy per atom in the thermodynamic
+most abundant in nature. Studies of the H atom, H2 þ cation,      limit to sub-milli-Hartree accuracy. We hope that the results
+and H2 molecule have served as landmarks in quantum               presented here will serve as a preview of what can be
+physics and chemistry. Despite their deceptive simplicity,        achieved in the predictive computation of the properties of
+bulk H systems are rich and complex. The ground-state             real materials and provide a firm basis for theoretical progress
+properties of the hydrogen chain can differ significantly         in condensed matter physics, quantum chemistry, materials
+from those of simpler systems such as the Hubbard model,          science, and related fields.
+and are, in fact, not completely understood. The linear H            The rest of the paper is organized as follows. In Sec. II,
+chain captures key features that are essential for generalizing   we introduce the linear H chain systems that are studied and
+
+
+                                                            031059-2
+TOWARDS THE SOLUTION OF THE MANY-ELECTRON …                                                     PHYS. REV. X 7, 031059 (2017)
+
+define notation. In Sec. III, we give a brief overview of the                    X
+                                                                                 M
+                                                                                                         1 X M
+many-body methods employed in the present work. More                      Ĥ ¼          hpq â†p âq þ           v â†p â†q âr âs ;   ð2Þ
+                                                                                 pq¼1
+                                                                                                         2 pqrs¼1 pqrs
+details on the methods and some of the computational details
+of each method are given in Appendix A. In Sec. IV, we
+present results for a finite H10 chain: In Sec. IVA, we            where the creation and annihilation operators â† and â obey
+summarize the results within a minimal basis set, in Sec. IV       fermionic anticommutation relations and the indices p,q,r,s
+B, we present the results in the complete basis set (CBS)          run over all M single-electron basis functions.
+limit, and in Sec. IV C, we describe the extrapolation to the         Most calculations are performed using standard
+CBS limit from finite basis-set results. In Sec. V, we present     Gaussian basis sets, but specialized density-matrix renorm-
+results in the thermodynamic limit: Sections VA and V B            alization group (DMRG) calculations using a grid along the
+contain results for the minimal basis and the CBS limit,           nuclear axis and Gaussians along the other two directions
+respectively, while Sec. V C presents finite-size results and      (sliced basis) are also performed, as discussed in Sec. 1 b.
+discusses the procedure for reaching the thermodynamic             Within the Gaussian basis, the matrix elements fh; vg in
+limit. A brief discussion and summary of our work, along           Eq. (2) are readily obtained from standard quantum
+with future prospects, is then given in Sec. VI. In the            chemistry packages. The basis functions are centered on
+Appendixes, we include further descriptions of the methods,        the protons. We use the correlation-consistent cc-pVxZ
+present tables that summarize our data, and provide further        basis set, with x ¼ D, T, Q, and 5, which correspond to
+details of our benchmark results and procedures. A database        m ¼ 5, 14, 30, and 55 orbitals per atom, respectively. For
+of results is also made available electronically [11].             small N, explicit correlation using the F12 technique
+                                                                   [12,13] was also considered to help ascertain the approach
+                                                                   to the CBS limit. Our procedure for extrapolating to the
+                  II. HYDROGEN CHAIN                               CBS limit is described in Secs. IV C and V C.
+  We consider a system composed of N protons, at fixed                H chains with nearest-neighbor proton separation (bond
+equispaced positions along a line, with N electrons. This          length) R of 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.4, 2.8, 3.2, and
+system is described by the Hamiltonian                             3.6 bohr are studied. We focus, in this work, on the ground-
+                                                                   state energy EðN; RÞ for different chain sizes and lengths,
+                  1X N         XN
+                                      1                            and obtain the energy per atom, EðN; RÞ ¼ EðN; RÞ=N, at
+         Ĥ ¼ −         ∇2i þ                                      the thermodynamic limit (TDL),
+                  2 i¼1            jr
+                              i<j¼1 i
+                                      − rj j
+                  X
+                  N
+                           1      XN
+                                           1                                         ETDL ðRÞ ¼ lim EðN; RÞ:                             ð3Þ
+              −                 þ                 ;         ð1Þ                                          N→∞
+                       jr − Ra j a<b¼1 jRa − Rb j
+                  i;a¼1 i
+                                                                   We only consider spin-unpolarized systems, with
+where ðr1 …rN Þ and ðR1 …RN Þ are the coordinates of               N ↑ ¼ N ↓ ¼ N=2. Below, when presenting results on finite
+electrons and nuclei, respectively. We use atomic units            chains, we follow the chemistry convention and use the term
+throughout; i.e., lengths are measured in bohr [aB ¼ ℏ2 =          potential energy curve (PEC), although we always refer to
+ðme e2 Þ] and energies in Hartree (EHa ¼ e2 =aB ). In the          energy per atom, EðN; RÞ. When presenting results for the
+thermodynamic limit of infinite system size at zero temper-        TDL, we use the term equation of state (EOS) to refer to
+ature, which is our primary focus, such a system is                ETDL ðRÞ versus R at zero temperature. Most of the methods
+characterized by only one parameter, the bond length R             consider chains with N ¼ 10–102 atoms. The procedure for
+separating two adjacent atoms.                                     extrapolating to N → ∞ is discussed in Sec. V C.
+   The electron coordinates are continuous in three-
+dimensional space, while the nuclear coordinates are fixed
+on a line; e.g., Ra ¼ aRez , with R the interproton sepa-          III. OVERVIEW OF COMPUTATIONAL METHODS
+ration and a ¼ 1; …; N. Most of our calculations are on               The methods employed in this work include the following:
+such finite-size systems, referred to as open boundary             AFQMC, auxiliary-field quantum Monte Carlo [14–16].
+conditions (OBC). We also perform calculations using               BDMC, bold diagrammatic Monte Carlo [17–19].
+periodic boundary conditions (PBC), in which case a                DMET, density-matrix embedding theory [20–22].
+periodic supercell containing N atoms is treated.                  DMRG, density-matrix renormalization group with a
+   Among the methods employed here, diffusion Monte Carlo          quantum chemistry basis [23–26].
+(DMC) and variational Monte Carlo (VMC) methods operate            FCI, full configuration interaction, i.e., exact diagonalization.
+in first quantization and treat the Hamiltonian in Eq. (1)         GF2, self-consistent second-order Green’s function [27–32].
+directly. The other methods use a finite one-electron basis set,   LR-DMC, lattice-regularized [33] diffusion Monte Carlo [34].
+with a total of M orbitals fφp gM  p¼1 , i.e., m ≡ M=N basis       MRCI and MRCI þ Q, multireference configuration
+functions per atom (including occupied and virtual orbitals).      interaction without (MRCI) and with (MRCI þ Q) the
+The Hamiltonian is written in second-quantized form,               Davidson correction [35,36].
+
+
+                                                             031059-3
+MARIO MOTTA et al.                                                                                   PHYS. REV. X 7, 031059 (2017)
+
+NEVPT2, partially (PC) and strongly contracted (SC)                     CBS limit [regardless of the nature of the mean-field
+variants of the N-electron valence state second-order                   reference (if any) used in the method].
+perturbation theory [37].                                                  In Table I, we summarize the methods using several
+RCCSD and RCCSD(T), coupled-cluster (CC) theory with                    characteristics or criteria. At a high level, the methods can
+full treatment of singles and doubles (RCCSD) and                       be distinguished by general categories such as wave function,
+perturbative treatment of triple excitations [RCCSD(T)],                embedding, and diagrammatic. Wave-function methods
+using RHF as a reference state [38–40].                                 (AFQMC, CC, DMRG, FCI, LR-DMC, MRCI, NEVPT2,
+RHF, restricted Hartree-Fock [41].                                      and VMC) formulate an Ansatz for the ground state and
+SBDMRG, specialized DMRG with sliced basis sets [42].                   compute expectation values of observables and correlation
+SC-GW, fully self-consistent GW [27,43–45].                             functions with respect to the wave function. The Ansatz for the
+SEET, self-energy embedding theory [46–50].                             wave function can be explicit (as in VMC and most quantum
+UCCSD and UCCSD(T), CC theory with full treatment of                    chemistry methods) or reached via an iterative procedure (as
+singles and doubles (UCCSD) and perturbative treatment of               in AFQMC, LR-DMC). The accuracy of a wave-function
+triple excitations [UCCSD(T)], using UHF as a reference state           method is determined by the quality of the underlying Ansatz
+[38–40].                                                                (e.g., form of trial wave function in VMC, size of truncated
+UGF2, spin-unrestricted GF2 [29].                                       space, order of perturbation) and by approximations (if any) in
+UHF, unrestricted Hartree-Fock [51].                                    the realization of the Ansatz (e.g., constraints in QMC) and in
+VMC: variational Monte Carlo [52,53].                                   the evaluation of observables (e.g., nonvariational estimators
+   Detailed descriptions of the methods and specific cal-               in CC methods, mixed estimate or backpropagation in QMC).
+culational details are presented in Appendix A. We focus on             Extrapolations in N (and, in many cases, basis-set size M) are
+many-body methods in this work. The independent-                        needed for wave-function methods.
+electron methods RHF and UHF are listed above, because                     Embedding methods (DMET, SEET) evaluate the prop-
+they are used by many of our methods as reference, initial,             erties of a large system by partitioning it within a basis, e.g.,
+or trial states. Further, we use the RHF to define the                  the spatial or energy basis, into a collection of fragments,
+correlation energy for the purpose of extrapolation to the              embedded in a self-consistently determined environment
+
+TABLE I. Summary of the methods employed in the present work. Methods are classified by type: wave function, embedding, or
+diagrammatic; the use of one-electron Gaussian basis sets (b), sliced-basis sets (sb), or continuous electron positions (cs); whether a self-
+consistency procedure is involved; whether the method is deterministic or stochastic in nature; and whether the method is variational.
+The scaling of the computational cost of key pieces of the algorithm is shown, versus the number of electrons (N), basis set size (M), etc.
+In DMRG, D is the bond dimension kept in the calculation. In SBDMRG, N o is the number of basis function per slice and DðN o Þ the
+compressed MPO size. In Green’s function methods, nτ is the size of the imaginary time grid. In DMET, N f is the number of atoms in
+the fragment and D denotes the bond dimension kept by the DMRG solver. The first scaling corresponds to a DMET calculation with a
+single fragment using translational invariance, while the second corresponds to treating multiple fragments tiling the chain. In SEET,
+N imp is the number of impurities, while ne denotes the number of electrons in the impurity and M s ¼ M A þ M b the number of orbitals
+treated, where M b is the number of bath orbitals. The first scaling corresponds to SEET(CI/GF2), while the second corresponds to SEET
+(CI/HF). In BDMC, n denotes the diagrammatic order.
+
+Method                             Deterministic      Basis set     Self-consistent    Variational                      Scaling
+Wave function      CCSD                 Yes               b              Yes               No                    N 2 M4 þ N 3 M3
+                   CCSD(T)              Yes               b              Yes               No                         N 3 M4
+                   DMRG                 Yes               b              Yes               Yes                   D3 M3 þ D2 M4
+                   SBDMRG               Yes              sb              Yes               Yes                  NRD3 ½N 3o þ DðN o Þ
+                   HF                   Yes               b              Yes               Yes                         M4
+                   FCI                  Yes               b              No                Yes                         ðM NÞ
+                   MRCI                 Yes               b              No                Yes                  >ðN=2ÞN 4 þ N 2 M 4
+                                                                                                                   N
+
+                   NEVPT2               Yes               b              No                No                        ðN=2
+                                                                                                                       N
+                                                                                                                           ÞN 8
+                   AFQMC                No               b                No               No                       N 2 M2 þ M2 N
+                   VMC                  No               cs               No               Yes                       N2M þ N3
+                   LR-DMC               No               cs               No               Yes                       N2M þ N3
+Embedding          DMET                 Yes               b              Yes               No          N 3f D3 þ N 2f D4 ½ðN 3f D3 þ N 2f D4 ÞM
+                   SEET                 Yes               b              Yes               No          N imp ðMnes Þ þ M 5 nτ ½N imp ðMnes Þ þ M 4 
+Diagrammatic       SC-GW              Yes/No              b              Yes               No                            M 4 nτ
+                   GF2                 Yes                b              Yes               No                            M 5 nτ
+                   BDMCn                No                b              Yes               No                            en ln n
+
+
+
+
+                                                                  031059-4
+TOWARDS THE SOLUTION OF THE MANY-ELECTRON …                                                 PHYS. REV. X 7, 031059 (2017)
+
+treated at a more approximate level. The accuracy of an                    IV. RESULTS FOR THE H10 CHAIN
+embedding method is determined by a combination of
+                                                                      In this section, we present results on a finite chain of ten
+several factors including the size of the fragments, the level
+                                                                   atoms. This relatively simple system provides a good
+of accuracy in the treatment of the embedded fragments and
+                                                                   intermediate step in the benchmark, as it removes one of
+environment, and the level of convergence of the self-
+consistency loop. Extrapolations in the fragment size (and         the major challenges, namely, the approach to the thermo-
+in the basis-set size M if a basis set is used) are needed for     dynamic limit. Detailed comparisons can be made as in
+embedding methods.                                                 quantum chemistry, providing insights for the more chal-
+   Diagrammatic methods (BDMC, GF2, SC-GW) evaluate,               lenging case of the TDL. We emphasize the approach to the
+either deterministically (GF2, SC-GW) or stochastically            continuous space limit, with extensive studies on the
+(BDMC), terms in a diagrammatic expansion of a system              removal of any residual finite basis errors. In Sec. IVA,
+property. Diagrammatic expansions can be formulated either         results in the minimal basis are given, for which exact
+in a basis or directly in the continuum, and can be applied to     results from FCI are available for detailed comparison.
+finite systems or directly in the thermodynamic limit. GF2         Final results are presented for the CBS limit in Sec. IV B.
+provides an exact self-consistent evaluation of all second-        Then, in Sec. IV C, we include results using finite basis sets
+                                                                   and discuss the approach to the CBS limit.
+order terms in a perturbative expansion in the interaction;
+SC-GW evaluates a small subset of diagrams to all orders in
+perturbation theory via the solution of self-consistent                    A. Benchmark in the minimal basis set
+equations; BDMC accounts for higher-order vertex correc-              Figure 1 shows a detailed comparison of the potential
+tions within the skeleton expansion by performing a sto-           energy curve, EðN ¼ 10; RÞ versus R, obtained by a variety
+chastic sampling of diagram topologies and internal                of methods, in the minimal STO-6G basis. For all methods,
+integrations, and is limited to situations where the series        the PEC features a familiar short-range repulsion, due to the
+converges. [We note an important ambiguity in the formu-           combined effect of Coulomb repulsion and Pauli exclusion,
+lation of diagrammatic approximations: Hamiltonian terms           followed by a decrease to a minimum value E0 , attained at the
+that are identically zero because of the Pauli exclusion           equilibrium bond length Re . Beyond Re , the PEC monoton-
+principle give rise to diagrams that may not sum to zero           ically increases to an asymptotic value E∞ , the ground-state
+(self-interaction error) in approximations that do not con-        energy of a single H atom. The well depth gives a dissociation
+sider all terms at a given order. The effect of these zero terms   energy De ¼ðE∞ −E0 Þ. Owing to the small size of this chain
+on SC-GW results is illustrated in Appendix A 4.]                  and the STO-6G basis, the PEC can be calculated using
+   Many other types of classification are possible. For            the FCI method, giving the exact values Re ¼ 1.786aB ,
+example, one could characterize a method as deterministic          E0 ¼ −0.542457EHa , and E∞ ¼ −0.471039EHa .
+or stochastic, whether a basis set is used and if so, what            The overall agreement between all the many-body methods
+type, whether a self-consistent procedure is involved,             is quite good. Deviations from FCI are shown in the lower
+whether the computed ground-state energy is variational,           panel of Fig. 1 in a magnified view. We see that the different
+etc. Table I lists some of these classifiers, in addition to the   methods agree with each other and with the exact result at the
+computational scaling of key pieces in each algorithm. It is       level of ∼2mEHa , i.e., about 5% of the dissociation or
+important to note that the classification is meant only as a       cohesive energy. The agreement is better for R ≤ 2.0aB
+general guide, and is in many cases fluid. For instance,           and tends to worsen in many methods as R increases, because
+embedding methods could also be classified by their solver         electronic correlations become more pronounced, increasing
+for the embedding fragments, as wave function (DMET) or            the multireference character of the system.
+diagrammatic (SEET). Depending on the particular form of              MRCI and especially MRCI þ Q are seen to be uni-
+the solver, they could be deterministic (e.g., DMET with a         formly accurate for this system, with discrepancies of μEHa
+DMRG solver as in the present study) or stochastic (if a           or less from FCI. This is also confirmed in the larger
+QMC solver is used [54]). Various methods are shown as             cc-pVDZ basis set (see Sec. IV C), where MRCI þ Q and
+needing a Gaussian basis set, but can also be implemented          DMRG results are virtually indistinguishable. MRCI þ Q
+using other bases (e.g., plane wave with pseudopotentials          can be conveniently carried out for even larger basis sets
+for AFQMC, and SC-GW). The choice of basis set can                 (but not for large N), and we use it as our reference in the
+affect the computational scaling. Note also that the mean-         following sections for the ten-atom chain.
+ing of self-consistency can vary and depend on the type of            Among the other approaches, AFQMC gives results
+methods. In wave-function methods, we use it to indicate           accurate to within 0.2 mEHa . Bias from the CP approxi-
+whether a self-consistent procedure is involved, although          mation is visible in the intermediate region, where the
+this can still have ambiguity since there are sometimes            energy is slightly overestimated, and also at large bond
+multiple ways to obtain the solution. Finally, the scaling we      lengths, where there is an underestimation. Coupled-
+report refers to the canonical implementation of these             cluster methods, especially RCCSD(T), are very accurate
+methods, without any specialized optimizations.                    near equilibrium. Although it is in principle possible to
+
+
+                                                             031059-5
+MARIO MOTTA et al.                                                                         PHYS. REV. X 7, 031059 (2017)
+
+                                                                  illustrated with GF2, using an unrestricted reference state
+                                                                  provides a better estimate of the ground-state energy in that
+                                                                  regime but generates a spurious magnetization. Deviations at
+                                                                  small distances (corresponding to the weak coupling regime)
+                                                                  show that terms beyond the bare second-order or screened
+                                                                  first-order approximation are needed to reach the accuracy of
+                                                                  other methods. We also note that the cancellation of self-
+                                                                  interaction error in SC-GW is subtle and depends on the
+                                                                  treatment of exclusion principle violating terms in the
+                                                                  Hamiltonian (see Appendix 4 d).
+
+                                                                  B. Potential energy curve in the complete basis-set limit
+                                                                     In Fig. 2, we show the final computed potential energy
+                                                                  curves of H10 in the continuous space (complete basis set)
+                                                                  limit, including results obtained from VMC and LR-DMC,
+                                                                  which work in continuous space.
+                                                                     For all our methods that require a basis set, we employ the
+                                                                  correlation-consistent polarized valence x-zeta (cc-pVxZ)
+                                                                  sequence [55], which is designed to include successively
+                                                                  larger shells of polarization functions (x ¼ 2, 3, 4, 5
+
+
+
+
+FIG. 1. Potential energy curve of H10 (top) and deviations from
+FCI (bottom), in the minimal STO-6G basis.
+
+
+dissociate the H chain to the correct energy within RCCSD
+(as a product of dissociated H dimers), there can be
+multiple CC solutions, and in practice a correctly dissoci-
+ating solution is hard to find [38]. UCCSD and UCCSD(T)
+provide accurate results at equilibrium and approach the
+correct result at longer bond lengths, but have large errors at
+the intermediate bond lengths due to spin recoupling.
+   In embedding methods, extending the number X of
+embedded atoms (in DMET[X]) or the number Y of impurity
+orbitals (in SEET-m[Y]) leads to noticeable improvement. In
+the minimal basis, DMET[X] uses X impurity orbitals
+because there is only one orbital per atom. The maximum
+error in DMET[2] is about 2mEHa , while DMET[5] is exact
+by construction. While the SEET-m[4] curve is at a similar
+level of accuracy to DMET[2], a substantial improvement is
+obtained within the mixing scheme (SEET-m[6] curves),
+especially at large bond lengths.
+   As weak coupling methods, the diagrammatic GF2 and
+SC-GW methods have difficulties in the strong coupling            FIG. 2. Top: PEC of H10 in the continuous space, or complete
+regime at large bond lengths. Allowing methods to break spin      basis set (CBS), limit. Bottom: Detailed comparison of the final
+symmetry may lead to an improvement of the energetics. As         H10 PECs, using MRCI þ Q þ F12 results at CBS as reference.
+
+
+
+                                                            031059-6
+TOWARDS THE SOLUTION OF THE MANY-ELECTRON …                                              PHYS. REV. X 7, 031059 (2017)
+
+corresponding to D, T, Q, 5 respectively). The results are ex-   determinant gives a good description of the nodal structure.
+trapolated to the CBS limit, following procedures described      The Antisymmetrized Geminal Power (AGP) trial wave
+in Sec. IV C with further details given in Appendix C 1.         function allows a more sophisticated, multideterminant
+   Our final results in this system give an equilibrium          description of the many-body nodes. Improvement with
+geometry Re ¼ 1.801ð1Þ and energy E0 ¼ −0.5665ð1Þ.               the AGP trial wave function is seen only at the smallest
+The computed PECs are tabulated in the Appendix B.               bond length. The excellent consistency between the
+Deviations from the reference curve are shown in the bottom      LR-DMC results and the basis-set methods provides
+panel, where the combined uncertainties in the reference         another assurance on the robustness of the approach to
+curve (primarily from the extrapolation to the CBS limit) are    the CBS limit in the latter.
+indicated. Our reference curve for this system is obtained
+from MRCI þ Q, extrapolated to the CBS with basis sets up               C. Reaching the complete basis-set limit
+to x ¼ 5. This is confirmed by a separate extrapolation
+including an F12 correction, which gives results in agreement       For each method that utilizes a basis set, the computa-
+within the statistical uncertainties.                            tional cost grows as the basis size M is increased, in some
+   Trends similar to the minimal basis results are observed.     cases very rapidly. In Fig. 3, we show the PEC yielded by
+LR-DMC, which works in continuous electron coordinate            several methods, in the cc-pVxZ bases, taking MRCI þ Q
+space, has only a weak dependence on basis sets originating      as reference. The accuracy of MRCI þ Q is further vali-
+from the representation of the Slater determinant in the         dated by its excellent agreement with DMRG. The general
+trial wave function (and hence the position of the nodes).       trends seen at the minimal basis level are mostly confirmed
+LR-DMC provides an upper bound for the ground-state              with the larger basis sets. Most methods show errors that
+energy. Its quality is determined by the nodal surface of the    remain consistent throughout this family of basis sets
+trial wave function. At large bond length, the nodal             which, though not surprising, is reassuring. As mentioned,
+structure is simpler, consistent with the more quasi-one-        improvements of the results are possible within certain
+dimensional nature of the system. The LR-DMC results are         methods, via larger embedding clusters, using better trial
+very accurate in this regime, indicating that the DFT-LDA        wave functions, or going to higher orders. Examples are
+
+
+
+
+    FIG. 3. Detailed comparison of the H10 PEC in each basis set (cc-pVxZ, x ¼ 2, 3, 4, 5), using MRCI þ Q as reference.
+
+
+
+                                                           031059-7
+MARIO MOTTA et al.                                                                           PHYS. REV. X 7, 031059 (2017)
+
+shown for DMET and SEET; for instance, at the cc-pVDZ               the sliced basis can partially compensate for this. At shorter
+level, increasing the number of embedded atoms from                 distances, the overlapping basis functions between adjacent
+DMET[2] to DMET[5] reduces the maximum error from                   atoms of standard STO-6G give additional degrees of
+∼2 mEHa to 0.5 mEHa . (In the cc-pVTZ and cc-pVQZ                   freedom in the transverse directions, which can improve
+bases, cancellation of errors means that the maximum                the energy at both the Hartree-Fock level and in terms of
+DMET[2] error is ∼1 mEHa .) Since SEET(CI/GF2) works                transverse correlations. In contrast, the sliced basis set has
+in the energy basis, increasing the number of impurity              nearly ideal resolution in the longitudinal direction. At very
+orbitals results in significant improvements. The mixing            short distances, the STO-6G basis becomes nearly linearly
+scheme, which illustrates the strong correlation present in         dependent while the sliced basis does not and consequently
+the active space, recovers results of NEVPT2 quality while          performs significantly better. These complicated competing
+solving impurity problems with only six orbitals.                   transverse and longitudinal effects make it unsurprising that
+   In AFQMC, a multideterminant trial wave function is              the differences between the two energies change sign as a
+used in the dissociation region (last two points, R > 3) as         function of R. For the cc-pVDZ bases, the sliced version is
+discussed in Sec. A, which improves its accuracy by                 uniformly slightly better, probably because the dominant
+∼0.36 mEHa over that with the UHF trial wave function               effect is its improved longitudinal correlation.
+(shown as half filled red circles). For CC methods, the                We extrapolate the finite basis-set results to the CBS
+improvement from the inclusion of the perturbative triples          limit by standard procedures [56,57], taking care to reach
+is systematic and evident. MRCI þ Q energies for the                large basis sets. We first fit the RHF energies ERHF;x ðN; RÞ
+shortest bond lengths and large basis sets rely on a                computed at the cc-pVxZ basis-set level to an exponential
+correction as discussed in Appendix B.                              function
+   Increasing the basis-set size has a dramatic effect on the
+total energy, as seen in Fig. 4. The basis-set dependence is              ERHF;x ðN; RÞ ¼ AðN; RÞ þ BðN; RÞe−xCðN;RÞ :        ð4Þ
+stronger at short bond lengths, with an energy difference of
+∼21 mEHa between cc-pVDZ and CBS, compared to                       The correlation energy
+∼3 mEHa in the bond-breaking regime.
+   The effect of the sliced basis used in the SBDMRG                         Ecorr;x ðN; RÞ ≡ EðN; RÞ − ERHF;x ðN; RÞ         ð5Þ
+method is also illustrated in the main panel in Fig. 4. At the
+STO-6G level there are several competing effects that               is then fitted to a power law:
+account for the deviations between the sliced basis and
+standard basis results. In the large R limit, the single basis                                               βðN; RÞ
+                                                                                Ecorr;x ðN; RÞ ¼ αðN; RÞ þ           :        ð6Þ
+function of STO-6G poorly describes an isolated hydrogen                                                       x3
+atom, and the increased flexibility in the chain direction of
+                                                                    The CBS result is taken as αðN; RÞ þ AðN; RÞ, with a
+                                                                    combined uncertainty estimated from the fitting proce-
+                                                                    dures. We find that using UHF as a reference gives
+                                                                    numerically indistinguishable results, except for very short
+                                                                    bond lengths and large sizes, where convergence of UHF
+                                                                    shows more sensitivity.
+                                                                       To deal with basis-set linear dependence, which becomes
+                                                                    relevant at the shortest bond lengths and largest basis sets,
+                                                                    we apply a threshold to eigenvalues of the overlap matrix.
+                                                                    Threshold values are given under method descriptions in
+                                                                    Appendix A.
+                                                                       The final CBS results are verified with a separate set of
+                                                                    MRCI þ Q calculations augmented by F12 explicit corre-
+                                                                    lation, as illustrated in the inset in Fig. 4. These data are
+                                                                    extrapolated using the same procedure as above. That these
+                                                                    results are consistent with those from the continuous-space
+                                                                    LR-DMC provides a further validation of the procedure.
+
+FIG. 4. Basis set dependence of the PEC in H10 and extrapo-         V. RESULTS IN THE THERMODYNAMIC LIMIT
+lation to the CBS limit. MRCI þ Q and SBDMRG results are
+shown in the main figure for selected basis sets (to avoid             In this section, we present our results in the TDL. The
+cluttering). The inset shows the extrapolation of the correlation   section is structured similarly to the previous one. Results
+energy (from MRCI þ Q) for two sequences of basis sets,             for the minimal basis, which makes the H chain resemble
+cc-pVxZ and with F12, together with LR-DMC, for R ¼ 1.8.            an extended Hubbard model, can be valuable for model
+
+
+                                                              031059-8
+TOWARDS THE SOLUTION OF THE MANY-ELECTRON …                                               PHYS. REV. X 7, 031059 (2017)
+
+studies and are described in some detail in Sec. VA. The             In the lower panel of Fig. 5, a detailed comparison is
+final results for the hydrogen chain at the joint continuous      shown using DMRG as a reference. Most methods show
+space and thermodynamic limits are given in Sec. V B.             similar behaviors as in finite chains. Coupled-cluster
+Section V C discusses our procedures and cross-validations        methods display the same general trends, with RCCSD(T)
+for approaching the thermodynamic limit.                          in particular giving extremely accurate results before the
+                                                                  breakdown at larger bond lengths (R > 2aB ). AFQMC
+        A. Benchmark in the minimal basis set                     yields energies accurate to within 0.15 mEHa per particle
+                                                                  across the bond lengths.
+   The minimal basis-set hydrogen chain is similar to an
+                                                                     SEET is extrapolated to the TDL with respect to the chain
+extended Hubbard model. As such, the results in this basis
+                                                                  length, with the number of orbitals treated by an accurate
+provide a quantitative connection to model studies. The
+                                                                  method fixed to 6. With this constraint, SEET(CI/HF)-
+computed EOS is shown in Fig. 5 for the STO-6G basis set.
+                                                                  m(6,SAO) shows accuracy at the thermodynamic limit com-
+DMRG calculations can be carried out for large system sizes
+                                                                  parable to the ten-atom chain when FCI is used to treat the
+in this basis, and serve as a near-FCI quality benchmark.
+                                                                  impurity and HF to treat the environment, with a maximum
+DMRG results for finite chains, after extrapolation to N →
+                                                                  error of ∼1 mEHa . For stretched distances, SEET-m results
+∞, yield an equilibrium geometry Re ¼ 1.831ð3ÞaB and
+                                                                  improve if HF is used instead of GF2 since the latter [SEET
+ground-state energy per atom of E0 ¼ −0.5407ð2ÞEHa at Re .
+                                                                  (CI/GF2)-m(6,SAO)] results in overcorrelation.
+                                                                     As we discuss in Sec. 3 a, two types of DMET
+                                                                  calculations are performed for the minimal basis. DMET[5]
+                                                                  is from the first type, treating finite chains with fragment
+                                                                  size N f ¼ 5, followed by extrapolation of the chain size N
+                                                                  similar to the procedure used by most other methods whose
+                                                                  results are shown here; this gives a maximum error of
+                                                                  ∼1 mEHa . DMET½∞ shows results from the second type,
+                                                                  which works directly in the large-N limit, and extrapolates
+                                                                  the fragment cluster size N f . Details of the extrapolation
+                                                                  procedure are given in Sec. 3 a. DMET½∞ results should
+                                                                  approach the exact limit similar to DMRG; the DMET½∞
+                                                                  and DMRG energies agree to better than 0.15 mEHa per
+                                                                  particle across all bond lengths.
+                                                                     BDMC3 yields converged results up to R ¼ 2.4. For R ¼
+                                                                  2.8 convergence is reached only at the level of BDMC5 ;
+                                                                  reaching convergence for larger values of R requires even
+                                                                  higher orders. The calculated EOS is in good agreement
+                                                                  with the exact results, and its final error bar of 1 mEHa for
+                                                                  R ≤ 2.4 is dominated by the resolution of the grid of 512
+                                                                  Matsubara frequencies used. For R ¼ 2.8 the error bar of
+                                                                  2 mEHa is dominated by statistical noise in high diagram-
+                                                                  matic orders. (The performance of lower-order BDMCn
+                                                                  calculations is discussed in Appendix A 4, as well as their
+                                                                  relations with SC-GW and other diagrammatic techniques.)
+
+                                                                       B. Equation of state in the complete basis set
+                                                                                and thermodynamic limits
+                                                                     Our final results for the equation of state of the hydrogen
+                                                                  chain are presented in Fig. 6. Detailed numerical data are
+                                                                  tabulated and included in Appendix. For these results,
+                                                                  VMC and LR-DMC are extrapolated to the TDL, while
+                                                                  basis-set methods are extrapolated to the joint TDL þ CBS
+                                                                  limit. We carry out extensive self-consistency and cross-
+                                                                  checks in order to validate the extrapolations, as discussed
+                                                                  in Secs. IV C and V C.
+FIG. 5. Top: Computed equation of state in the minimal basis at      In the bottom panel of Fig. 6, AFQMC results are used as
+the thermodynamic limit. Bottom: Detailed comparison using        a reference, based on its accuracy from the systems that
+DMRG results as reference.                                        have been benchmarked. Large system sizes and basis sets
+
+
+                                                            031059-9
+MARIO MOTTA et al.                                                                        PHYS. REV. X 7, 031059 (2017)
+
+                                                                  Req in the thermodynamic limit. The computed correlation
+                                                                  energy, defined with respect to the RHF energy, is shown in
+                                                                  the inset of Fig. 6.
+                                                                     At the smallest bond lengths (R ≤ 1.2), there is signifi-
+                                                                  cant linear dependence in the basis sets. This causes an
+                                                                  effective reduction in the size of the basis, which can render
+                                                                  the usual Ansatz for basis-set extrapolations unreliable. We
+                                                                  thus avoid performing CBS extrapolations. (All finite-basis
+                                                                  data are listed in the Appendix B and repository [11]. It will
+                                                                  be valuable to develop specifically designed basis-set
+                                                                  sequences or correction methods in this regime.) LR-
+                                                                  DMC results are shown, which provide an upper bound
+                                                                  for the energy. Based on the results in Sec. IV B, the fixed-
+                                                                  node error is estimated to be < 1 mEHa per atom, which is
+                                                                  indicated by the pink error bands on these two points.
+                                                                     LR-DMC results are obtained directly in real space and
+                                                                  provide an independent validation. At large bond lengths,
+                                                                  the fixed-node error in LR-DMC is minimal, as we have
+                                                                  seen in the finite-chain benchmarks. Furthermore, we
+                                                                  perform PBC calculations using LR-DMC to provide a
+                                                                  separate extrapolation to the TDL. The excellent agreement
+                                                                  between LR-DMC and AFQMC at large R is thus a further
+                                                                  indication of the robustness of our procedures for reaching
+                                                                  the infinite basis set and thermodynamic limits. Note that
+                                                                  the VMC results exhibit a different trend from the corre-
+                                                                  sponding LR-DMC, suggesting that the variational many-
+                                                                  body wave function is best at intermediate bond lengths.
+                                                                  This is likely a reflection of the balance between the two
+                                                                  parts that form the VMC Ansatz, namely, the LDA Slater
+                                                                  determinant and the optimized Jastrow factor. The former
+                                                                  becomes more accurate in describing the nodal surface as R
+                                                                  increases, where the latter is evidently more effective at
+                                                                  weaker correlation. Only the determinant part, via the
+FIG. 6. Top: Computed equation of state of the hydrogen chain     nodes that it defines, impacts the DMC results.
+in the thermodynamic limit. The inset shows the corresponding
+                                                                     The DMET[2] results provide an example of an
+correlation energy per particle. Bottom: Detailed comparison
+using AFQMC results as reference (LR-DMC for the shortest two
+                                                                  embedding calculation at the thermodynamic and complete
+bond lengths). The empty circles indicate AFQMC results after a   basis-set limits, with a modest impurity size. The limitation
+correction is applied from the difference with DMRG at the        on the impurity size is from the use of a DMRG impurity
+cc-pVDZ level. The pink error bands indicate all statistical      solver, which becomes expensive in the large basis-set
+uncertainties.                                                    limit.
+                                                                     We comment that various correction schemes can be
+can be reached to minimize the uncertainty in the extra-          applied to our finite-basis and/or finite-size data to provide
+polation to the TDL and CBS limits. We can further                additional estimates from methods not included in Fig. 6.
+quantify the residual systematic errors of the constraint         For example, a residual basis-set correction could be
+in AFQMC from cross-checks with DMRG, by estimating               obtained either from a different method or using a
+their difference, ETDL;DMRG ðRÞ − ETDL;AFQMC ðRÞ, at the          lower-order theory (if available) of the same method,
+cc-pVDZ basis level. This “correction” can be applied to          and applied to DZ or TZ basis results to estimate the
+the AFQMC equation of state at the CBS limit,                     CBS limit. These can be readily retrieved for assessment
+ETDL;AFQMC ðRÞ. The result is shown by the empty circles          from the detailed data provided in the Appendix B and
+and dashed lines in Fig. 6, while original AFQMC data are         repository [11].
+shown with solid circles and lines.
+   Agreement is seen between these results and that                       C. Reaching the complete basis-set and
+from RCCSD(T), which provides another consistency                                 thermodynamic limits
+check. We find an equilibrium bond length of Req ¼                  A key challenge in the ab initio computation of bulk
+1.859ð3Þ aB with an energy of E0 ¼ −0.5659ð3Þ EHa at              materials is to remove finite-size and finite-basis effects so
+
+
+                                                           031059-10
+TOWARDS THE SOLUTION OF THE MANY-ELECTRON …                                                       PHYS. REV. X 7, 031059 (2017)
+
+
+
+
+FIG. 7. Illustration of the extrapolations to the CBS and TDL limits. Results are shown for R ¼ 1.8 aB. The left-hand panel shows
+extrapolation of ECBS ðNÞ versus 1=N, while the right-hand panel shows extrapolation of Ecc-pVxZ ðN → ∞Þ versus 1=x3 . (The correlation
+energy is shown on the right, shifted by the CBS RHF energy.) Final results are consistent within statistical errors and independent of the
+order with which the limits are taken.
+
+
+as to obtain results for the continuous and thermodynamic                 Under this choice, there are still multiple strategies for
+limits. This is important in order to make reliable predictions        finite basis-set methods to approach the combined limits.
+about materials properties and allow direct comparisons with           One could extrapolate to the CBS limit for each finite chain
+experiments. Various choices exist in the calculation. These           of fixed N following the procedure described in Sec. IV C,
+can be at the level of the type of many-body methods, for              and then extrapolate the results in N to the TDL.
+example, the use of particular embedding approaches (versus            Alternatively, one could extrapolate each basis set to the
+those that treat a cluster only, whether finite or periodic), or       TDL, and then extrapolate to the CBS limit, or use a joint
+the use of coordinate space methods like DMC versus basis-             Ansatz and extrapolate both simultaneously. As illustrated
+set methods. They can also be common to classes of methods             in Fig. 7, exchanging the order of the extrapolation leads to
+and decoupled from and independent of the details of the               consistent and robust results.
+underlying many-body methods, for example, the use of                     With the exception of the minimal basis, the TDL
+periodic supercells versus finite clusters, or the choice of           extrapolation for the DMET data is performed using the
+basis sets, etc. By employing many state-of-the-art methods,           same OBC size dependence described above. In the
+we are able to investigate these factors extensively and with          minimal basis, we also carry out DMET calculations
+great care in the present work.                                        directly in the TDL, as mentioned earlier. Additional details
+   Many of our calculations are performed using OBC, i.e.,             on this extrapolation scheme and a comparison of the two is
+treating a finite chain. We find that, somewhat surprisingly,          discussed briefly in the Appendix C 2. Calculations in PBC
+OBC calculations show faster convergence to the TDL than               (including those with BDMC, which uses a ring geometry,
+PBC in the hydrogen chain for all but the smallest few bond            and LR-DMC) are extrapolated to the TDL using the form
+lengths (see Appendix C 2). To extrapolate the finite-N                EðN; RÞ ¼ A0 ðRÞ þ A2 ðRÞN −2 [59], and statistical error
+results to the TDL, we assume that the PEC has the                     bars are propagated following standard procedures in the
+following size dependence:                                             extrapolations.
+
+                                 X
+                                 k
+                                   Ai ðRÞ                                                   VI. CONCLUSIONS
+                    EðN; RÞ ¼               i   ;              ð7Þ
+                                  i¼0
+                                        N                                 We present a comprehensive investigation of the hydro-
+                                                                       gen chain, deploying a vast suite of cutting-edge many-
+where k is a small integer. For k ¼ 1, this gives the                  body numerical methodologies and obtaining a detailed and
+subtraction trick based on a division of surface and bulk              quantitative understanding of current computational capa-
+terms, namely, A0 ¼ ½N 1 EðN 1 Þ − N 2 EðN 2 Þ=½N 1 − N 2            bilities for treating correlated quantum materials. We show
+(omitting R), which has been used, for example, in                     how finite-size effects and finite spatial or other basis-
+DMRG calculations before [58]. In this work, we typically              set resolutions can be systematically removed to reach
+use k ¼ 2, employing N ¼ 10, 30, 50 and, when necessary,               the physically relevant infinite system size and complete
+N ¼ 18, 22, 70, and 102.                                               basis-set limits.
+
+
+                                                               031059-11
+MARIO MOTTA et al.                                                                     PHYS. REV. X 7, 031059 (2017)
+
+   Through the synergistic use of complementary methods,       systems in general. For example, how does the nature of the
+we accurately determine the ground-state energy as a           charge and magnetic orders vary with the bond length? We
+function of interatomic distance. This serves as a proof       are presently investigating these and related questions.
+of concept for a new mode of attack on correlated materials
+by ab initio calculations. The benchmark results will                         ACKNOWLEDGMENTS
+provide a reference on the state of the art in many-body
+                                                                  We gratefully acknowledge the Simons Foundation for
+computation of real materials.
+                                                               funding. We thank E. Kozik, H. Krakauer, M. van
+   Our study captures many of the salient features of
+                                                               Schilfgaarde, H. Shi, B. Svistunov, and N. Tubman for
+predictive computations in real materials. The ability of
+                                                               valuable interactions. Support from National Science
+each many-body method to correctly capture important
+                                                               Foundation (NSF) (Grant No. DMR-1409510) is acknowl-
+physical properties will depend on the material system
+                                                               edged for method development work at William & Mary.
+under study. For example, perturbative or diagrammatic
+                                                               F. M. was also supported by Department of Energy (DOE)
+methods can have better or worse accuracy in systems with
+                                                               (Grant No. DE-SC0001303). The work at the California
+different amounts of electron correlation, the qualities of
+                                                               Institute of Technology was supported by the Department
+the constraints on the sign problem in QMC methods can
+                                                               of Energy, through DOE-SC0008624. G. K.-L. C. is a
+vary with the physical nature of the problem, the rate of      Simons Investigator. The work at Rice University was
+convergence with the fragments or the requirement on the       supported by Grant No. NSF-CHE-1462434. J. A. G.
+impurity solver in embedding methods can differ from           acknowledges support from the National Science
+material to material, the scaling and computational fea-       Foundation Graduate Research Fellowship Program
+sibility of DMRG can change, etc. More benchmark studies       (DGE-1450681). G. E. S. is a Welch Foundation Chair
+of this kind will be highly desirable to broaden the           (C-0036). I. S. T. and N. V. P. acknowledge NSF under
+understanding and identify further limitations as well as      Grant No. PHY-1314735. S. S. acknowledges computa-
+opportunities of development.                                  tional resources provided through the High-Performance
+   The computational cost of each method depends on            Computing Infrastructure (HPCI), Advanced Institute for
+various factors, including the degree to which the algorithm   Computational Science (AICS) projects No. hp120174,
+and codes have been optimized, the level to which one          No. hp140092, No. hp160126, and No. hp170079.
+wishes to take the calculation (the order in perturbative or   S. R. W. and E. M. S. acknowledge support from the
+diagrammatic methods, or the statistical accuracy in           U.S. Department of Energy, Office of Science, Basic
+Monte Carlo methods), etc. The results in this benchmark       Energy Sciences under Grant No. DE-SC0008696. E. G.
+are obtained with moderate computing (order of days on         was also supported by DOE Grant No. ER 46932, J. L. by
+platforms ranging from local clusters to medium-sized          NSF DMR 1606348, and computer resources were pro-
+supercomputers). The computational scaling, which is           vided by TG-DMR130036. D. Z. and T. N. L. were also
+summarized in Sec. III, together with the corresponding        supported from DOE Grant No. ER16391.
+accuracy achieved by each method in the benchmark, will
+provide a rule of thumb on their computational cost.                     APPENDIX A: DESCRIPTION OF
+   The benchmark results indicate that many of the methods                COMPUTATIONAL METHODS
+tested here are capable of reaching an accuracy of 5% of the
+cohesive energy or better, across wide parameter regimes of      In this Appendix, we provide further descriptions of the
+strong electron correlation. A subset of these methods         individual methods used. Following the main text, we
+predicts the equation of state systematically to sub-milli-    group methods into the following categories: deterministic
+Hartree accuracy. Further development may turn these into      wave function (CC, DMRG, MRCI, NEVPT2), stochastic
+post-DFT methods of choice for ground-state studies, and a     wave function (AFQMC, LRDMC, VMC), embedding
+concerted effort to build open-source codes will be invalu-    (DMET, SEET), and diagrammatic (SC-GW, GF2,
+able. Other techniques can more naturally address dynami-      BDMC). The categories are by no means rigid, as a method
+cal and thermodynamical properties, many of which are the      can fit into multiple groups; they are meant to provide a
+outcome of recent research. Continued development along        general guide and help with organization of the discussions.
+these lines will further improve their accuracy and time to
+solution. Further benchmark studies of dynamical and                   1. Deterministic wave function methods
+thermal effects, building on the work done here on the            Deterministic wave-function methods (HF, CC, DMRG,
+equation of state, would also be very desirable.               FCI, MRCI, NEVPT2) range in quality between the
+   It is important to continue to expand the benchmark         mean-field HF and the exact FCI. Correspondingly, their
+studies to more complex materials. Even in this relatively     computational costs vary a great deal. These methods rely
+simple system of the hydrogen chain, important questions       on different types of Ansätze, the nature of which is
+remain on the physics which are of strong interest and         ultimately responsible for their accuracy and computational
+relevance to some of the key issues in strongly correlated     cost.
+
+
+                                                        031059-12
+TOWARDS THE SOLUTION OF THE MANY-ELECTRON …                                            PHYS. REV. X 7, 031059 (2017)
+
+                a. Coupled cluster (CC)                        associated with accessing integrals on a disk [64]. We carry
+   Coupled-cluster theory [38–40] is widely applied, often     out RCCSD and RCCSD(T) calculations for H30 with
+providing accurate and systematically improvable ground-       cc-pVQZ and cc-pV5Z basis and H50 with cc-pVTZ and
+state energies when systems are neither too large nor too      cc-pVQZ basis with this implementation. Even with the AO-
+strongly correlated. The CC wave function is written as        driven technique, the RCCSD calculation for H50 in the cc-
+                                                               pV5Z basis would require at least 4 TB of disk space.
+                                                               Although technically feasible, we do not perform it here. For
+                      jCCi ¼ eT̂ j0i;                 ðA1Þ
+                                                               the largest basis sets cc-pVTZ, cc-pVQZ, and cc-pV5Z at
+                                                               geometries R < 1.6 aB and cc-pVDZ at R < 1.4 aB , the
+where j0i is a single-determinant reference state, and the
+                                                               Gaussian basis is nearly linearly dependent. We remove
+cluster operator is given by
+                                                               linearly dependent vectors with an overlap threshold of 10−7 .
+                             X                                 Although a smaller threshold could be used in the Hartree-
+                        T̂ ¼  tμ t̂μ ;               ðA2Þ
+                             μ
+                                                               Fock calculation, changing the energy by ∼10−6 EHa per
+                                                               atom, we find the resulting CCSD calculations with smaller
+where t̂μ creates an excited determinant jμi containing μ      thresholds to be numerically unstable.
+particle-hole pairs relative to j0i, with amplitude tμ .
+Standard CC theory constructs a similarity-transformed                b. Density-matrix renormalization group
+Hamiltonian                                                                     (DMRG, SBDMRG)
+                                                                 DMRG is a low-entanglement wave-function approxi-
+                        0    −T̂
+                      Ĥ ¼ e Ĥe ;   T̂
+                                                      ðA3Þ     mation [23]. The wave function can be written as
+                                                                               X
+and the energy and amplitudes tμ are obtained by solving                 jΨi ¼    An1 An2 …AnM jn1 n2 …nM i;    ðA5Þ
+the Schrödinger equation projectively:                                           fng
+
+
+                  E ¼ h0jĤ0 j0i;                    ðA4aÞ     where M denotes the number of orbitals in the system. Each
+                                                               An is a D × D matrix of real numbers associated with a
+                                                               single-particle basis function, except for the boundary
+                   0 ¼ hμjĤ0 j0i;        ∀μ:        ðA4bÞ     terms An1 and AnM , which are length-D vectors. D denotes
+                                                               the bond dimension and controls the accuracy of the
+In other words, CC theory diagonalizes the similarity-         simulation; as D increases, the wave function converges
+transformed Hamiltonian in the space spanned by the            to the exact correlated state. In linear systems such as the
+mean-field reference and excitation manifold. Because T̂       hydrogen chains we consider here, provided that the gap of
+is an excitation operator, the commutator expansion used to    the system does not close, the bond dimension required for
+evaluate the amplitudes in Eq. (A4) terminates after four      a given accuracy per atom stays close to a constant,
+nested commutators for all values of μ, because the            independent of the number of atoms. The energy of the
+Hamiltonian contains only one- and two-particle terms.         wave function may be stably computed and variationally
+In this work, we limit T̂ to μ ≤ 2, i.e., CC with single and   optimized through the DMRG sweep algorithm.
+double excitations (CCSD) on restricted Hartree-Fock              In this work, we consider two different kinds of single-
+(RCCSD) and unrestricted Hartree-Fock (UCCSD) refer-           particle basis functions in the DMRG calculations. In the
+ences [60,61]. Since the quality of the reference determines   standard quantum chemistry formulation of DMRG [24–26],
+the quality of the CC wave function, a reference obtained      the single-particle basis is simply an orthogonal basis in the
+from a symmetry-broken mean field can be critical to           space of Gaussian orbitals of the system. This is what we
+getting good CC energies when systems become strongly          refer to as DMRG in the calculations in this work, and details
+correlated. When multiple Hartree-Fock solutions exist, the    can be found in standard references to DMRG in the quantum
+question of which one to use as a reference for the CC         chemistry literature [65]. We carry out Gaussian-based
+calculations can be subtle. In general, our CC calculations    DMRG calculations using the implementation in the
+are performed on the lowest-energy Hartree-Fock determi-       BLOCK code, with the standard settings described in
+nants we could find. In some calculations, we also             Ref. [66]. DMRG energies are computed for H10 (STO-
+perturbatively include triple-excitation effects, denoted      6G, cc-pVDZ, cc-pVTZ bases), H30 (STO-6G, cc-pVDZ),
+CCSD(T) [62].                                                  and H50 (STO-6G), up to a maximum bond dimension of
+   All CC calculations we show here are widely available in    D ¼ 2000. For the STO-6G basis, the DMRG single-particle
+standard quantum chemistry packages [63]. To carry out the     basis is the set of symmetrically orthogonalized AO orbitals.
+larger calculations, we use the high-performance implemen-     For all the other bases, we use split-localized molecular
+tation in the PYSCF package. This uses an AO-driven            orbitals. The split-localized orbitals are ordered by the
+implementation to reduce the input-output (IO) costs           exchange Fiedler vector [66,67]. The estimated maximum
+
+
+                                                        031059-13
+MARIO MOTTA et al.                                                                      PHYS. REV. X 7, 031059 (2017)
+                                                                P     †
+uncertainty in the Gaussian-based DMRG energies is less                                                       ab
+                                                                  σ âaσ âiσ . The parameters c0 , cI , and cij are determined
+than 0.05mEHa per atom.                                         variationally.
+   In addition, we also introduce the sliced basis DMRG            We also consider the explicitly correlated (F12) MRCI
+method (SBDMRG). Here, instead of a 3D Gaussian basis,          approximation [69–71]. Explicit correlation accelerates
+one uses a grid in one direction (z), while using a Gaussian-   convergence to the complete basis-set limit by introducing
+derived basis in the two transverse directions (x,y).           2-external amplitudes with explicit r12 -dependent func-
+Formally, one can write the basis as                            tions. The associated integrals are computed through an
+           ϕjn ðx; y; zÞ ¼ φjn ðx; yÞδ1=2 ðz − zn Þ;   ðA6Þ     auxiliary Gaussian basis. In this work, we use the default
+                                                                F12 settings and auxiliary bases in MOLPRO, including the
+where n labels grid points along the z direction (with grid     singles corrections in the complementary auxiliary basis-set
+spacing a) and j labels the transverse basis function at that   space.
+grid point (or “slice”). The 1=2 power on the Dirac delta          The MRCI wave function does not give an extensive
+function indicates that the basis functions are square-         energy. Defining the MRCI correlation energy as
+normalized. The kinetic energy terms in the Hamiltonian         ΔE ¼ hΨjĤjΨi − hΨ0 jĤjΨ0 i, we define the approximate
+are approximated with a fourth-order finite-difference          size-extensive correlation energy (Q) through the scaling
+second-derivative approximation. For the data presented         ΔE → ΔEð1 − c20 Þ=c20 .
+in Sec. V B, we use a grid spacing of a ¼ 0.1, for which we        With the above techniques, we compute MRCI þ Q and
+estimate an error of about 0.1mEHa per atom. The trans-         MRCI-F12 þ Q wave functions and energies for H10 in the
+verse basis functions φjn ðx; yÞ are derived from a standard    STO-6G and cc-pVxZ (x ¼ 25) bases, using a (10, 10)
+Gaussian, atom-centered basis set. Functions from the           CASSCF initial state.
+standard basis are projected onto each slice, then these
+functions are orthogonalized, keeping the most significant
+ones up to as many as the number of contracted orbitals on           d. N-electron valence state perturbation theory
+each atom. Compared to the original basis, a sliced basis          N-electron valence state perturbation theory (NEVPT)
+has approximately the same transverse resolution, but its       [37] is a multireference second-order perturbation theory
+resolution in the z direction is essentially perfect. Thus,     that is size extensive and free of intruder state problems. It
+energies in the sliced basis are generally lower than in the    uses a zeroth-order CASSCF wave function and Dyall’s
+original basis, due to the improved z correlation. The key      Hamiltonian [72] as the zeroth-order Hamiltonian. From
+advantage of SBDMRG over the standard quantum chem-             this starting point, the first-order wave function and second-
+istry formulation of DMRG is that the local support of the      order energy are defined using the usual Rayleigh-
+basis functions along the grid direction makes the number       Schrödinger perturbation theory. Typically, the first-order
+of Hamiltonian terms proportional to M2 . Using matrix          equation is not solved exactly, but rather in a restricted
+product operator compression techniques, which are quite        variational space. In partially contracted NEVPT2 (PC-
+simple to apply in the sliced basis formulation, the cost of    NEVPT2), the first-order wave function is expanded in
+SBDMRG is further reduced to M, which is the same               the space of 1- and 2-external excitation operators acting on
+scaling as applying DMRG to the 1D Hubbard model. For           the ground-state wave function. In strongly contracted
+more details, see the recent paper [42].                        NEVPT2 (SC-NEVPT2), the expansion space of the
+                                                                first-order wave function is restricted further such that
+ c. Multireference configuration interaction (MRCI)             the amplitudes can be determined without solving any
+                                                                linear equations, and simply from expectation values of the
+   MRCI is a method that incorporates 1- and 2-external
+                                                                zeroth-order wave function.
+excitations on top of an active space wave function. It is a
+                                                                   For the H10 chain, we compute SC-NEVPT2 and PC-
+commonly used method for high-accuracy simulations of
+                                                                NEVPT2 using theMOLPRO package, starting from a
+multireference electronic structure in small molecules.
+                                                                (10,10) CASSCF zeroth-order state. For H30, we carry
+Here, we use a variant of internally contracted MRCI
+                                                                out DMRG-SC-NEVPT2 calculations [73] using the PYSCF
+described by Werner and Knowles [35,36], implemented in
+the MOLPRO package [68]. We start with a CASSCF                 package, starting from a (30,30) DMRG-CASSCF zeroth-
+(complete active space self-consistent-field) wave function     order state computed with split-localized orbitals, using the
+                                                                BLOCK package. The basis linear dependency threshold is
+jΨ0 i. The variational Ansatz is then
+                                                                set to 10−8 . The DMRG-CASSCF calculation is carried out
+                 X              1 X ab a b                      with bond dimension D ¼ 1000, leading to an estimated
+jΨi ¼ c0 jΨ0 i þ     cI jΨI i þ       c Ê Ê jΨ i;   ðA7Þ
+                   I
+                                4 ijab ij i j 0                 energy error of less than 0.1 mEHa . The zeroth-order wave
+                                                                function is constructed by compressing the DMRG-
+where jΨ0 i is the CASSCF wave function, jΨI i is a             CASSCF wave function down to bond dimension
+configuration state function (CSF) with a single external       D ¼ 500, with a compression error in the total energy of
+orbital, and Êai is the spin-summed excitation operator,       less than 0.3 mEHa except at the shortest geometry,
+
+
+                                                         031059-14
+TOWARDS THE SOLUTION OF THE MANY-ELECTRON …                                               PHYS. REV. X 7, 031059 (2017)
+
+R ¼ 1.0 aB , where it is 10 mEHa . The semi-internal com-       alternative and complementary way to address the sign
+ponents of the DMRG-SC-NEVPT2 wave function and                 problem with respect to fixed-node DMC. The random
+energy are approximated using the matrix product state          walks take place in the overcomplete manifold of Slater
+(MPS) compression scheme described in Refs. [74,75],            determinants, in which fermion antisymmetry is by con-
+with a first-order wave function bond dimension of              struction maintained in each walker. Applications have
+D ¼ 1500; these contributions are determined with an            indicated that often this reduces the severity of the sign
+estimated accuracy of 0.1 mEHa .                                problem and, as a result, the phaseless approximation has
+                                                                weaker reliance on the trial wave function [82].
+          2. Stochastic wave-function methods                      For ab initio materials computations, AFQMC can be
+   Stochastic wave-function methods (AFQMC, VMC,                carried out using either a plane-wave basis and pseudopo-
+LRDMC) rely on Monte Carlo sampling to construct an             tentials [16,83], localized basis sets such as standard
+Ansatz for the ground state of the system and compute           Gaussian-type orbitals [84], or general basis sets using
+expectation values of observables. AFQMC and LRDMC              DFT orbitals [85]. In this work, we apply AFQMC
+are both based on mapping the imaginary-time evolution          implemented for Gaussian basis sets to finite chains. In
+onto a random walk. AFQMC is formulated in nonorthog-           all our calculations we use a linear-dependence threshold of
+onal Slater determinant space. LRDMC (and VMC) con-             10−7 in the one-electron basis. The two-body matrix
+ducts the random walk in coordinate space. The fermion          elements vpqrs are decoupled into bilinear form with the
+sign problem has different manifestations in the different      modified Cholesky approach using a tolerance of δ ≤ 10−5
+manifolds, and the constraints to control them lead to          [86]. Results are extrapolated to the TDL and CBS limits.
+different approximations.                                       The total projection time is typically β ¼ 80 EHa, although
+                                                                calculations with β ¼ 220 EHa are performed in some
+ a. Auxiliary-field quantum Monte Carlo (AFQMC)                 cases. The convergence error from the use of a finite β
+   The AFQMC is a wave-function method, which esti-             is negligible. Most calculations use δβ ¼ 0.005 EHa −1 .
+mates the ground-state properties of a many-fermion             Extrapolations are performed where the associated
+system by statistically sampling the wave function              Trotter error is greater than the other uncertainties. The
+e−βĤ jΨ0 i ∝ jΨβ i → jΨG i, where Ψ0 is an initial wave        reported QMC error bars are estimated as 1 standard
+                                                                deviation statistical errors. The CP bias leads to a non-
+function, nonorthogonal to the ground state ΨG of Ĥ
+                                                                variational estimator of the ground-state energy. In our
+[15,16]. For sufficiently large β, expectation values com-
+                                                                calculations, the UHF ground state is taken to be ΨT . For
+puted over Ψβ give ground-state averages. AFQMC proj-
+                                                                the two largest bond lengths (R ¼ 3.2 and 3.6), motivated
+ects Ψ0 towards ΨG iteratively, writing e−βĤ ¼ ðe−δβĤ Þn ,    by the analogy between the H chain and the Heisenberg
+where δβ ¼ ðβ=nÞ is a small imaginary-time step.                model, we employ in this work a new form of trial wave
+                                             R
+The propagator is represented as e−δβĤ ¼ dxpðxÞB̂ðxÞ,          function, a linear combination P of spinon
+                                                                                                     P      excitations on top
+where B̂ðxÞ is a mean-field propagator of the form of an        of the UHF state, jΨT i ¼ sk¼0 i1 <<ik Ci1 …ik jΨi1 …ik i.
+exponential of one-body operators that are dependent on         Spinon excitations Ψi1 …ik are constructed using atomic
+the vector x, and pðxÞ is a probability distribution [76,77].   positions with antiferromagnetic spin ordering, and k pairs
+This representation maps the original interacting system        ði1 ; i1 þ 1Þ…ðik ; ik þ 1Þ of adjacent spins flipped, as initial
+onto an ensemble of noninteracting systems subject to a         conditions for the UHF self-consistence procedure, and
+fluctuating potential. The imaginary-time projection can be     coefficients Ci1 …ik are finally optimized variationally. We
+realized as an open-ended random walk over the auxiliary-       use k ¼ 1, 2 for R ¼ 3.2, 3.6, respectively.
+field (i.e., mean-field potential) configurations [15,16].
+Sampling the trajectories of the random walk leads to a
+                                                                     b. Variational and lattice-regularized diffusion
+stochastic representation of Ψβ as an ensemble of Slater
+                                                                        Monte Carlo (LR-DMC, VMC) method
+determinants.
+   For general two-body interactions AFQMC has a sign or           The LR-DMC is a projection method [33] that uses the
+phase problem, which is controlled by a phaseless gauge         lattice regularization for applying the imaginary time
+constraint (CP) on the Slater determinants using a trial        propagator expð−βĤÞ to a trial function ΨT defined in
+wave function ΨT [16,78]. (For Hamiltonians that satisfy        the continuous space. In this work, improvements including
+certain symmetry properties, e.g., the Hubbard model at         new use of localized basis sets are introduced, which
+half filling, AFQMC is free of the sign problem.) The trial     drastically improves accuracy over previous results [10].
+wave function is typically taken from Hartree-Fock or DFT.      The main approximation is to write the Laplacian by means
+A self-consistent constraint is possible [79] but is not used   of its discretized expression on a lattice with a grid with
+in this work. The accuracy of the CP AFQMC was                  lattice space a, e.g., for a single electron wave function
+extensively benchmarked in both real materials [5,80,81]        depending only on one variable x: ∇Ψ ¼ ∂ 2x Ψ → ∇a Ψ ¼
+and lattice models [2,79]. The CP AFQMC provides an             ð1=a2 Þ½Ψðx þ aÞ þ Ψðx − aÞ − 2ΨðxÞ. The extension of
+
+
+                                                         031059-15
+MARIO MOTTA et al.                                                                         PHYS. REV. X 7, 031059 (2017)
+
+∇a to higher dimensions is straightforward, and the               chain, assumed to be along the z direction, we use a supercell
+continuous space can be sampled ergodically even for              of dimension Lx × Lx × Lz , with Lx ¼ Ly ¼ 40 aB , that is
+finite a > 0 with a much simpler algorithm than the               large enough for safely neglecting the interaction between
+original proposal [33], namely, by randomizing the direc-         the periodic images in the x, y directions (error less than
+tions along which the Laplacian is discretized [87]. For          0.0001 EHa per atom). Moreover, the basis set (standard for
+a → 0 and β → ∞, the exact ground-state wave function             open systems) has been periodized according to the standard
+ΨG can be obtained if hΨT jΨG i ≠ 0. However, due to the          procedure described in Ref. [89], when PBC are applied.
+fermion “sign problem” an approximation is employed to               Before the application of the LR-DMC algorithm, a more
+achieve small and controlled statistical errors: it is required   accurate Jastrow factor is used to define the trial function
+that, during the projection, the sign of the propagated wave      ΨT . This contains the so-called two-, three-, and four-body
+function is constrained to the one of the chosen trial            contributions that are expanded in a localized basis differ-
+function:                                                         ent from the determinant one. All these terms are efficiently
+                                                                  optimized, using the scheme described in Ref. [90]. Since
+               ΨT ðxÞhxj expð−βĤÞjΨT i ≥ 0;             ðA8Þ     the Jastrow is not affecting the results for a → 0 we present
+                                                                  here, we do not describe in detail its form and the standard
+for any electronic configuration x where the spins and the        optimization methods used [91].
+electron positions are defined. For a → 0, the results
+coincide with the standard fixed-node approximation intro-                          3. Embedding theories
+duced a long time ago [34]. This scheme is usually                   Quantum embedding theories (DMET, SEET) are based
+employed within the diffusion short time (Δ) approxima-           on the idea of combining two different types of quantum
+tion of the propagator, in a way that in the Δ → 0 limit, by      calculations: high-level calculations on one or more active
+applying it ðβ=ΔÞ times, the exact fixed-node projection          regions of interest, called fragments, and low-level calcu-
+scheme Eq. (A8) is recovered, with the well -established          lations on the environment surrounding fragments. In
+variational property on the estimated energy. In this work,       various methods, these fragments can be chosen either in
+we use the lattice regularization, just because it is more        the energy or in the local basis.
+conveniently implemented in the TurboRVB package [88],               A quantum embedding theory determines the coupling
+and also because the extrapolations for a → 0 are very well       between fragments and environment self-consistently,
+behaved and easily controlled in an automatic way.                using a variable of interest to provide for feedback.
+   This method is very weakly dependent on the dimension          DMET and SEET, respectively, use the one-particle density
+of the basis set chosen to represent the nodes of the Slater      matrix and the self-energy as variables of interest.
+determinant, and we verify that a negligible error in the
+DMC energy is obtained by using the standard cc-pVTZ                   a. Density-matrix embedding theory (DMET)
+basis, where the largest Z1s (Z1s ¼ 33.87) is removed.
+                                                                     DMET [20,21] provides a framework to approximate
+Indeed, too large exponents are also not necessary in this
+                                                                  expectation values of a large system from embedded calcu-
+approach because the cusp conditions are fulfilled by a
+                                                                  lations. A mean-field wave function Φ over the full system is
+one-body Jastrow factor of the type
+                                                                  used to define the embedding of a fragment defined in terms
+                                         pﬃﬃﬃ                     of a set of L local orbitals. The embedding of Φ splits the
+                              1 − expð− 2rÞ
+              u1-body ðrÞ ¼ −       pﬃﬃﬃ      :          ðA9Þ     occupied and virtual orbitals into ones with and without
+                                      2                           weight in the local fragment. The occupied and virtual set
+                                                                  with weight in the fragment fully span the L local orbitals
+This one-body Jastrow is included also in the GTO basis set       used to define the embedding, as well as an additional set of
+for the DFT (LDA) calculation. The DFT is also defined            (at most L) bath orbitals. In DMET, a high-level calculation is
+(within the TurboRVB package [88]) on a mesh of lattice           carried out in the fragment þ bath orbital space; as the size
+space a ¼ 0.1 or smaller, until convergence is reached            of the embedded fragment L approaches that of the full
+within 0.001 EHa in the total energy. The use of the one-         system, the resulting DMET energy converges to that of a
+body Jastrow factor drastically improves the convergence          high-level calculation on the full system. While DMET can
+for a → 0, and the quality of the basis set as the DFT energy     be used to study finite systems, it provides a natural
+is much lower than the standard one in the original               framework to study systems directly in the TDL. In this
+cc-pVTZ basis. For R < 1.4, we find that the cc-pVDZ              work, we use different DMET strategies for calculations in
+basis can be significantly improved by using p diffusive          finite chains and in the TDL; we refer the reader to
+Gaussian orbitals with small exponents (Z1p ¼ 0.2,                Appendix C 2 for further details about the latter.
+Z2p ¼ 0.05), allowing us to obtain the best variational              As outlined above, the splitting of the full system
+LR-DMC estimates for R ¼ 1.0 and R ¼ 1.2, even better             into fragments requires the introduction of a set of local
+than the ones corresponding to the larger cc-pVTZ basis.          orbitals. In this work, we use intrinsic atomic orbitals
+Within periodic boundary conditions in the direction of the       (IAOs) [92] to define the local basis in the valence space.
+
+
+                                                           031059-16
+TOWARDS THE SOLUTION OF THE MANY-ELECTRON …                                                      PHYS. REV. X 7, 031059 (2017)
+
+                                                                                                 ðK Þ
+                                                                                                 X
+                                                                                                   N
+In our finite-chain calculations, we split the system into
+fragments of x atoms by considering the corresponding                     ΦSEET
+                                                                           MIX ¼ Φweak þ
+                                                                                  tot
+                                                                                                      ðΦAstrong
+                                                                                                           i
+                                                                                                                − ΦAweak
+                                                                                                                     i
+                                                                                                                         Þ
+local valence orbitals. These local orbitals, through the                                          i
+                                                                                                 ðNk Þ
+embedding construction, generate a set of bath orbitals. To                              X
+                                                                                         k¼1 X
+                                                                                                Bki       Bki
+this embedding (fragment þ bath) space, we further add a                                     ðΦstrong − Φweak Þ;               ðA10Þ
+set of local virtual orbitals, built as projected atomic orbitals                        k¼K−1    i
+(PAOs), on the constituent atoms. We use the acronym                where the contributions with  signs are used to account
+DMET[X] for calculations using fragments of size                    correctly for the possible double counting; for details, see
+X ¼ 2, 5.                                                           Ref. [50]. In this paper, Φtot weak is determined from GF2 or
+   Expectation values in DMET (such as the energy and               HF. In general, other choices such as the GW method [94]
+particle number) are computed by partial traces [93] (using         are also possible. ΦAi i stands for all those terms in Φ with all
+the local orbitals in a given fragment) of the contraction of       four indices i, j, k, l of two-body interactions vijkl
+integrals with density matrices. A self-consistency loop can
+                                                                    contained inside orbital subspace Ai . Here, ΦAweak      i
+                                                                                                                                  is the
+be used to uniquely define Φ [20,93]. In this work,
+                                                                    solution for subset Ai within the weak-coupling method,
+however, we use the RHF wave function without further
+optimization. A global chemical potential is used to control        here GF2. ΦAstrongi
+                                                                                           is the solution in the MAi subspace
+the total number of electrons in the system.                        evaluated using a higher-order method suitable for treating
+   Our DMET results are reported using FCI as a solver for          “strong correlation.” We denote this way of performing
+                                                                    SEET calculations as SEET(method strong/method weak)-
+STO-6G basis calculations and larger basis calculations
+                                                                    mð½M A o=basisÞ since here self-energies from intersecting
+with fragments of size 2. Other calculations use DMRG as a
+                                                                    orbital subspaces with M A strongly correlated orbitals are
+solver using a bond dimension of D ¼ 1000. The error due
+                                                                    “mixed” between each other. While in a general case the
+to the DMRG solver is expected to be significantly smaller
+                                                                    self-energy has to be evaluated for ðMMA Þ orbital subgroups,
+than the error due to the fragment sizes considered.
+   We introduce new schemes for basis set and TDL                   where ðMMA Þ can be a fairly large number, in practice one can
+extrapolations in this work, further details for which are          quite trivially reduce it by identifying the most important
+provided in Appendix. C 2.                                          subgroups containing MA orbitals that lead to the signifi-
+                                                                    cant lowering of the ground-state energy; see Ref. [50].
+                                                                       Since calculations can be performed in either the energy or
+        b. Self-energy embedding theory (SEET)                      spatial basis employing NOs or SAOs and LMOs, respec-
+                                                                    tively, as basis functions, we denote these choices using the
+   The SEET [46–50] relies on the assumption that orbitals          “basis” keyword, where tbasis ¼ NO, SAO, or LMO.
+in the system can be separated into S different intersecting           In SEET, the self-energy is constructed as a functional
+or nonintersecting subsets Ai , each containing MAi orbitals,       derivative of the ΦSEET functional and the total SEET self-
+while M R orbitals are contained in the remainder R such            energy contains diagrams from both the strong- and weak-
+that MAi ≪ M for each i. In SEET, orbitals within subsets           coupling methods.
+are strongly correlated and treated nonperturbatively; on              Consequently, each strongly correlated subspace self-
+the other hand, intersubset correlations can be treated             energy is embedded into a weakly correlated self-energy
+either perturbatively or nonperturbatively. In a case of a          generated by all orbitals outside the strongly correlated
+perturbative treatment, the interset correlations between           subspace and accounting for all the nonlocal interactions
+two different orbital sets Ai and Aj , where i ≠ j, or              on the strongly correlated orbital groups [95]. For details
+correlations in the remainder R are assumed to be weaker.           explaining how to evaluate ΣAstrong
+                                                                                                     i
+                                                                                                         and ΣAweak
+                                                                                                                i
+                                                                                                                    , see Refs. [46,49].
+Various ways of choosing the orbital subsets are possible.             We converge the electronic energy to 10−4 EHa . The
+New versions implemented in this work have led to much              inverse temperature β wis set at 100 or 200 EHa −1 depending
+improved accuracy. We employ a selection based on the               on the geometry. The Matsubara freqency grid is generated
+occupancies of natural orbitals (NOs) as well one based on          using the spline’s interpolation [96] with the maximum
+the spatial locality of symmetrically orthogonalized                number of points varying between 20 000 and 50 000. In
+atomic orbitals (SAOs) and localized molecular orbitals             this paper, for the weakly correlated method in SEET, we use
+(LMOs). For details concerning each procedure, see                  GF2 as well as HF. The strongly correlated part of the SEET
+Refs. [48,50].                                                      self-energy is evaluated from the Anderson impurity model
+   In SEET, the solution of the whole physical system is            using FCI or versions of restricted active space CI (RASCI).
+approximated by an affordable but frequently not so                 Note that in all the calculations presented here, SEET is based
+accurate Φ-derivable method suitable for treating weakly            on the RHF reference.
+correlated systems. Subsequently, this approximation is
+corrected within chosen strongly correlated orbital sub-                             4. Diagrammatic methods
+spaces by a nonperturbative method. We demonstrate that               The diagrammatic methods discussed in this work
+the general SEET functional can be written as                       (SC-GW, GF2, BDMC) evaluate, either deterministically
+
+
+                                                             031059-17
+MARIO MOTTA et al.                                                                          PHYS. REV. X 7, 031059 (2017)
+
+(GF2, SC-GW) or stochastically (BDMC), a subset of the                  G ¼ G0 − G0 ΣG;            W ¼ V þ VPW;              ðA11Þ
+terms in a diagrammatic interaction expansion. The meth-
+ods are distinguished by the subsets of diagrams or series       determine G and W, where G0 and V are the bare electronic
+terms that are included in the calculation. The diagram-         propagator and interaction.
+matic methods we discuss in this work are based on the
+Feynman diagrammatic technique formulated in terms of                          c. Self-consistent GW (SC-GW)
+self-consistent propagators and bare or renormalized inter-
+                                                                    The SC-GW approximation truncates the skeleton
+actions [97]. They are formulated at finite temperature but
+                                                                 sequence at the lowest-order graph, so that only the
+evaluated at low enough temperature that the T → 0 limit
+can be taken. Many of the methods are implemented                first-order contribution in the renormalized interaction is
+specifically for the present study. The BDMCn calculations       considered and the second-order exchange diagram is
+are the first attempt to use high-order skeleton diagrams in     neglected. We implement a deterministic procedure of this
+materials to systematically improve GW.                          approximation closely following Refs. [27,43–45]: The
+                                                                 Green’s function is initialized using the HF approximation
+    a. Self-consistent second-order Green’s function             result. We then construct the polarization P ¼ GG and
+                        theory (GF2)                             obtain W from Eq. (A11). After computing the GW self-
+                                                                 energy Σ ¼ −GW, we obtain the updated G by solving
+   The fully self-consistent second-order Green’s function       Dyson’s equation, thus closing the self-consistency loop.
+theory (GF2) [27–32] includes all second-order skeleton          The method is formulated in a grand canonical ensemble,
+diagrams dressed with the renormalized second-order propa-
+                                                                 but the chemical potential μ used in each step is chosen to
+gators and bare interactions. GF2 is formulated as a low-level
+approximation to the exact Luttinger-Ward (LW) functional        preserve the desired electron number. After convergence,
+[43,98] and therefore is Φ derivable, thermodynamically          the total energy is computed from Σ and G.
+consistent, and conserving [43,99]. We solve all the non-           While SC-GW benefits from the conservation of the
+linear equations self-consistently at nonzero temperature        average particle number, energy, momentum, and angular
+using on an imaginary-time mesh [96,100]. At each iteration,     momentum, the size and complexity of W call for appro-
+the self-energy, Green’s function, and Fock matrix are           priate controlled simplifications. Instead of introducing
+updated until convergence is reached, so that the converged      physically motivated approximations that may not respect
+solution is reference independent.                               the conserving properties, we perform systematic linear
+   In the weakly correlated regime, GF2 preserves the            algebra decompositions and truncations on V, W, and G,
+advantages of the second-order Møller-Plesset perturbation       which vastly reduce the numerical effort [101]. We con-
+theory (MP2), while at the same time avoiding the diver-         verge our calculations to a relative precision of 10−7 .
+gences appearing in non-self-consistent zero-temperature         Convergence is reached at inverse temperature β ¼
+formulations of finite-order perturbation theories.              100 E−1Ha , and for about 8000 Matsubara frequencies. A
+   We converge the electronic energy to the threshold of         combination of power and uniform meshes, adaptive grids,
+10−6 EHa . The inverse temperature β is set at 100 or            and spline grids is used for imaginary time and Matsubara
+200 EHa −1 depending on the geometry. The Matsubara              data [96]. The code is based on the ALPS libraries [102]
+freqency grid is generated using splines interpolation [96]      and uses integrals generated by LIBINT [103].
+with between 20 000 and 50 000 points on the Matsubara
+axis. The calculations we present here are based on a RHF             d. Treatment of zero terms in the Hamiltonian
+or UHF reference. We use GF2 to denote the version that is
+based on RHF and does not allow for spin symmetry                   We note an important ambiguity in formulating certain
+breaking. The acronym UGF2 is used to denote a spin-             diagrammatic approximations: Hamiltonian terms that are
+unrestricted version based on UHF.                               identically zero because of the Pauli principle, and thus
+                                                                 have no observable effect on the physical properties of the
+                                                                 system, can be arbitrarily added to a Hamiltonian. While
+             b. Diagrammatic methods with
+                                                                 these terms will evaluate to zero in the exact solution, they
+                renormalized interactions
+                                                                 may evaluate to nonzero values in approximations that
+   The BDMC and SC-GW methods are diagrammatic                   do not consider all terms at a given order. The GW
+approximations formulated in terms of renormalized propa-        approximation is such an approximation, whereas the
+gators G and renormalized (“screened”) interactions W.           GF2 approximation does not suffer from this problem.
+They can be written as approximations to the LW functional          To illustrate the point, consider an ideal spin-polarized
+Φ [43,98], which implies that they are thermodynamically         lattice Fermi gas and add a contact interaction term:
+consistent and conserving [43,99]. The methods require                        X                    X
+the self-consistent determination of propagators G, self-             Ĥ 0 ¼ − tij ψ̂ †j↑ ψ̂ i↑ þ U ψ̂ †i↑ ψ̂ †i↑ ψ̂ i↑ ψ̂ i↑ : ðA12Þ
+energies Σ, screened interactions W, and polarizations P.                       ij                   i
+
+While the expressions for Σ and P are different in the           The system remains noninteracting, and, correspondingly,
+individual methods, the Dyson equations,                         in the diagrammatic expansion based on the bare
+
+
+                                                          031059-18
+TOWARDS THE SOLUTION OF THE MANY-ELECTRON …                                               PHYS. REV. X 7, 031059 (2017)
+
+interaction vertex U, all diagrams of the same order cancel
+each other exactly. However, low-order self-consistent
+theories like GW may break this cancellation by including
+some, but not all, higher-order contributions in U. As a
+result, a low-order self-consistent method would produce
+different answers for Eq. (A12) with U ¼ 0 and U ≠ 0.
+   When the interaction Hamiltonian is projected on the
+orbital basis, similar considerations apply to all terms that
+create or delete two electrons in the same state, meaning that
+one has a choice of keeping or dropping Hamiltonian terms
+based on matrix elements vabad and vbada ; in what follows,
+we call them “zero terms.” In calculations with realistic
+Hamiltonians, these terms are usually kept, and we refer to
+this choice as Hamiltonian Ĥ. In contrast, the lattice model
+Hamiltonian community usually omits zero terms explicitly
+(or nullifies the corresponding matrix elements); we refer to
+this choice as Hamiltonian Ĥ0 . In an exact solution of the
+problem, all physical properties of Ĥ and Ĥ 0 are identical.   FIG. 8. Diagrammatic equation of state in the TDL, at STO-6G
+   One question we answer in this work is how the SC-GW          level. Two SC-GW curves underline the ambiguity of formulating
+                                                                 the Hamiltonian terms that are identically zero because of the
+results depend on the Hamiltonian representation with
+                                                                 Pauli principle (see text). The SC-GWðĤÞ curve corresponds to
+respect to zero terms. The two curves labeled as SC-             the protocol usually used for realistic ab initio Hamiltonians,
+GWðĤÞ and SC-GWðĤ0 Þ in Fig. 8 correspond to the               while the SC-GWðĤ 0 Þ curve corresponds to the one used in the
+outcomes of the SC-GW method when it is applied to Ĥ            lattice model Hamiltonian community. By accounting for higher-
+and Ĥ 0 , respectively. The effect of zero terms is profound.   order vertex corrections, the BDMCn results are observed to
+While the SC-GWðĤÞ curve at higher energy is more               converge towards the estimates from other methods.
+accurate for separations up to the equilibrium distance, it
+becomes less accurate than the SC-GWðĤ 0 Þ curve at             mentioned above, and BDMC1 is identical to SC-GW. To
+                                                                 obtain final answers we either perform an extrapolation to
+R > 2.4aB , and SC-GWðĤ0 Þ appears to produce more
+                                                                 the n → ∞ limit or observe good convergence with increas-
+consistent energy differences at the large separation range.
+                                                                 ing the diagram order. (This was demonstrated for several
+   Given that the two SC-GW answers surround the varia-
+                                                                 Coulomb systems in Refs. [19,107]).
+tional estimate, the difference between them can be used as a
+                                                                    In the orbital representation, each interaction line
+crude estimate of the accuracy of the SC-GW approximation.
+                                                                 depends on four site or atom indices fði; jÞ; ðk; lÞg, four
+This point of view is confirmed by our study of vertex           orbital indices fðα; βÞ; ðγ; δÞg, and two spin indices fσ; σ 0 g
+corrections. When the second-order vertex corrections are        (the Coulomb interaction vertex does not change spin);
+accounted for, the result for Hamiltonian Ĥ0 shifts upwards     to simplify notations we also use a composite index
+by an amount comparable to the difference between the SC-        a ¼ ði; α; σÞ. It is worth mentioning that terms with
+GWðĤÞ and SC-GWðĤ0 Þ curves. The BDMC result starts            u ¼ v ¼ 0, where u ¼ i − j and v ¼ k − l, are relative
+converging to the best variational estimate when higher-order    “distances” between the orbitals, represent the “density-
+corrections are included, as shown in Fig. 8.                    density” part of the interaction potential, and their con-
+                                                                 tribution is dominating in the final answer. Accounting for
+     e. Bold diagrammatic Monte Carlo (BDMC)                     nonzero values of ðu; vÞ in the Dyson equation for W
+   We also develope a stochastic implementation of the           changes the answer at the subpercent level, and the
+G2 W formalism that is able to go beyond the lowest-order        corresponding contribution quickly saturates when sepa-
+                                                                 ration in space between orbital indices, limited by cutoffs
+diagrams. Within the bold diagrammatic Monte Carlo
+                                                                 u and v , is increased. For hydrogen atoms in the single-
+framework (see, e.g., Refs. [17–19]), the configuration
+                                                                 orbital case, we find that energies per atom obtained with
+space of skeleton diagrams for Φ is sampled stochastically
+                                                                 unrestricted summation over ðu; vÞ and with u ¼ v ¼ 2
+starting from vertex corrections to SC-GW. The method
+                                                                 coincide at the level of ∼10−5 in relative units even at the
+can be applied to any system at nonzero temperature
+                                                                 smallest values of lattice constant R considered in this work
+with arbitrary dispersion relation (doped and undoped)
+                                                                 (the agreement is better at larger values of R).
+and with arbitrary shape of the interaction potential
+[17–19,104–106]. Both Σ and P are computed as sums of                 APPENDIX B: TABLES OF RESULTS AND
+skeleton graphs, up to order n; we denote these sums as Σn
+                                                                        ADDITIONAL BENCHMARK DATA
+and Pn and abbreviate the corresponding level of approxi-
+mation as BDMCn . The lowest-order contributions to Σ1 and          In Tables II–VI, we include the numerical values
+P1 are based on products of the G and W functions                of the results presented in some of the figures in the main
+
+
+                                                          031059-19
+MARIO MOTTA et al.                                                                                                PHYS. REV. X 7, 031059 (2017)
+
+TABLE II. Potential energy curve of H10 with the minimal (STO-6G) basis. DMET[5], MRCI, and MRCI þ Q energies coincide with
+FCI to within 10−6 .
+                                                                SEET      SEET       SEET
+                                                              (CI/HF)-m (CI/HF)-m (CI/GF2)-m
+R     AFQMC       DMET[2]     FCI        GF2      SC-GW        (4,SAO) (6,SAO)      (6,SAO)     RCCSD     RCCSD(T)    UCCSD     UCCSD(T)     RHF        UHF
+1.0 −0.38248ð3Þ −0.381 351 −0.382 439 −0.381 012 −0.382 996   −0.3817    −0.3819   −0.3822     −0.382 387 −0.382 432 −0.382 387 −0.382 432 −0.375 174 −0.375 174
+1.2 −0.47667ð3Þ −0.475 497 −0.476 638 −0.474 570 −0.476 870   −0.4758    −0.4760   −0.4761     −0.476 561 −0.476 626 −0.476 561 −0.476 626 −0.467 805 −0.467 806
+1.4 −0.52051ð5Þ −0.519 307 −0.520 509 −0.517 622 −0.520 234   −0.5196    −0.5199   −0.5200     −0.520 401 −0.520 492 −0.520 401 −0.520 492 −0.509 862 −0.509 862
+1.6 −0.53819ð6Þ −0.537 170 −0.538 436 −0.534 488 −0.537 403   −0.5374    −0.5378   −0.5379     −0.538 292 −0.538 414 −0.538 292 −0.538 414 −0.525 628 −0.525 628
+1.8 −0.54218ð6Þ −0.541 097 −0.542 439 −0.537 111 −0.540 312   −0.5413    −0.5418   −0.5418     −0.542 254 −0.542 418 −0.541 742 −0.542 175 −0.527 014 −0.527 745
+2.0 −0.53874ð5Þ −0.537 527 −0.538 963 −0.531 852 −0.535 304   −0.5376    −0.5383   −0.5383     −0.538 745 −0.538 966 −0.537 504 −0.538 049 −0.520 347 −0.523 137
+2.4 −0.52271ð8Þ −0.521 125 −0.522 794 −0.510 567 −0.514 336   −0.5212    −0.5221   −0.5221     −0.522 681 −0.523 088 −0.520 417 −0.520 753 −0.495 606 −0.506 571
+2.8 −0.50507ð5Þ −0.503 220 −0.505 024 −0.485 323 −0.488 955   −0.5034    −0.5044   −0.5045     −0.506 729 −0.507 486 −0.502 820 −0.502 959 −0.465 843 −0.491 183
+3.2 −0.49114ð2Þ −0.489 450 −0.491 038 −0.461 886 −0.464 687   −0.4897    −0.4906   −0.4908     −0.590 076 −0.592 683 −0.489 482 −0.489 521 −0.436 679 −0.481 323
+3.6 −0.48200ð2Þ −0.480 818 −0.481 870 −0.442 549 −0.443 705   −0.4808    −0.4816   −0.4819     −0.664 459 −0.668 234 −0.480 951 −0.480 959 −0.410 493 −0.476 035
+
+
+
+TABLE III. Potential energy curve of H10 extrapolated to the CBS limit. The MRCI þ Q value at R ¼ 1.0 uses the AFQMC energy
+with a correction estimated from the difference between MRCI þ Q and AFQMC energies at R ¼ 1.2. RCC breaks down at R ¼ 3.6
+and, for large basis sets and the shortest bond lengths, DMET[2], PC-NEVPT2, and SC-NEVPT2 are unconvergent due to linear
+dependency issues.
+
+R       AFQMC               DMET[2]      LR-DMC(AGP) LR-DMC(LDA)                      MRCI þ Q          MRCI þ Q þ F12 PC-NEVPT2 SC-NEVPT2
+1.0 −0.44284ð24Þ                        −0.442430ð7Þ         −0.442093ð9Þ         −0.44324ð32Þ         −0.44301ð31Þ                      
+1.2 −0.51489ð14Þ                        −0.514432ð6Þ         −0.514418ð7Þ         −0.51529ð15Þ         −0.51506ð12Þ                      
+1.4 −0.54914ð11Þ −0.54905ð28Þ              −0.548742ð6Þ         −0.548748ð7Þ         −0.54926ð15Þ         −0.54917ð12Þ         −0.54593ð3Þ −0.54569ð3Þ
+1.6 −0.56315ð12Þ −0.56258ð30Þ              −0.562878ð6Þ         −0.562900ð7Þ         −0.56324ð8Þ          −0.56321ð7Þ          −0.56011ð1Þ −0.55991ð1Þ
+1.8 −0.56644ð4Þ −0.56567ð22Þ               −0.566234ð6Þ         −0.566255ð7Þ         −0.56655ð5Þ          −0.56654ð5Þ          −0.56350ð5Þ −0.56333ð6Þ
+2.0 −0.56396ð6Þ −0.56321ð12Þ               −0.563831ð5Þ         −0.563852ð7Þ         −0.56411ð3Þ          −0.56410ð3Þ          −0.56113ð7Þ −0.56099ð8Þ
+2.4 −0.55164ð4Þ −0.55124ð2Þ                −0.551679ð6Þ         −0.551699ð8Þ         −0.55189ð1Þ          −0.55187ð1Þ          −0.54911ð8Þ −0.54902ð9Þ
+2.8 −0.53755ð8Þ −0.53726ð2Þ                −0.537423ð6Þ         −0.537424ð9Þ         −0.53754ð3Þ          −0.53753ð3Þ          −0.53510ð9Þ −0.53504ð9Þ
+3.2 −0.52499ð7Þ −0.52512ð6Þ                −0.524987ð7Þ         −0.524974ð9Þ         −0.52499ð6Þ          −0.52500ð5Þ          −0.52302ð9Þ −0.52299ð9Þ
+3.6 −0.51568ð9Þ −0.51612ð9Þ                −0.515571ð7Þ         −0.515582ð11Þ        −0.51549ð8Þ          −0.51553ð5Þ          −0.51405ð8Þ −0.51403ð8Þ
+
+R       SBDMRG               RCCSD             RCCSD(T)             UCCSD            UCCSD(T)                 UHF            VMC(AGP)           VMC(LDA)
+1.0   −0.44209ð21Þ       −0.44207ð26Þ       −0.44268ð21Þ         −0.44207ð26Þ       −0.44268ð21Þ        −4.15363ð16Þ        −0.441499ð9Þ       −0.44061ð1Þ
+1.2   −0.51399ð15Þ       −0.51432ð19Þ       −0.51490ð19Þ         −0.51432ð19Þ       −0.51490ð19Þ        −4.88368ð5Þ         −0.513646ð9Þ       −0.513225ð8Þ
+1.4   −0.54859ð15Þ       −0.54846ð14Þ       −0.54907ð14Þ         −0.54846ð14Þ       −0.54907ð14Þ        −5.22845ð4Þ         −0.548046ð7Þ       −0.547650ð8Þ
+1.6   −0.56311ð14Þ       −0.56240ð10Þ       −0.56311ð9Þ          −0.56240ð10Þ       −0.56311ð9Þ         −5.36820ð3Þ         −0.562237ð5Þ       −0.561823ð7Þ
+1.8   −0.56666ð14Þ       −0.56565ð4Þ        −0.56638ð4Þ          −0.56533ð4Þ        −0.56623ð4Þ         −5.40150ð2Þ         −0.565634ð5Þ       −0.565201ð6Þ
+2.0   −0.56428ð14Þ       −0.56311ð1Þ        −0.56391ð1Þ          −0.56239ð1Þ        −0.56341ð1Þ         −5.38220ð2Þ         −0.563249ð4Þ       −0.562776ð6Þ
+2.4   −0.55196ð14Þ       −0.55071ð2Þ        −0.55167ð3Þ          −0.54953ð2Þ        −0.55037ð2Þ         −5.281261ð6Þ        −0.551106ð4Þ       −0.550575ð5Þ
+2.8   −0.53765ð14Þ       −0.53632ð5Þ        −0.53749ð6Þ          −0.53519ð5Þ        −0.53577ð6Þ         −5.174240ð5Þ        −0.536832ð3Þ       −0.536201ð5Þ
+3.2   −0.52511ð14Þ       −0.52419ð8Þ        −0.52574ð10Þ         −0.52303ð8Þ        −0.52340ð8Þ         −5.096702ð6Þ        −0.524373ð4Þ       −0.523557ð5Þ
+3.6   −0.51568ð14Þ                                         −0.51407ð10Þ       −0.51428ð10Þ        −5.050387ð7Þ        −0.514968ð3Þ       −0.513869ð6Þ
+
+
+
+              TABLE IV. Potential energy curve of H10 at cc-pVxZ, from the MRCI þ Q method. For large basis sets and the
+              shortest bond lengths, calculations are unconvergent due to linear dependency issues. Additional calculations are
+              performed with F12 corrections.
+
+              R                        cc-pVDZ                           cc-pVTZ                           cc-pVQZ                          cc-pV5Z
+              1.0                    −0.421 954                                                                                        
+              1.2                    −0.502 812                         −0.513 118                                                        
+              1.4                    −0.540 966                         −0.547 756                       −0.548 548                          
+              1.6                    −0.557 110                         −0.561 985                       −0.562 710                      −0.562 932
+              1.8                    −0.561 486                         −0.565 330                       −0.566 068                      −0.566 277
+              2.0                    −0.559 552                         −0.562 892                       −0.563 645                      −0.563 852
+              2.4                    −0.547 661                         −0.550 663                       −0.551 426                      −0.551 651
+              2.8                    −0.533 470                         −0.536 307                       −0.537 099                      −0.537 349
+              3.2                    −0.521 270                         −0.523 817                       −0.524 586                      −0.524 858
+              3.6                    −0.512 397                         −0.514 463                       −0.515 150                      −0.515 425
+
+
+
+
+                                                                         031059-20
+TOWARDS THE SOLUTION OF THE MANY-ELECTRON …                                                                            PHYS. REV. X 7, 031059 (2017)
+
+TABLE V.        Equation of state of the hydrogen chain at the TDL, computed with the minimal basis (STO-6G).
+                                                                                     SEET        SEET
+                                                                                  (CI/GF2)-m   (CI/HF)-m
+R       AFQMC         BDMC       DMET[5]     DMET½∞      DMRG         SC-GW        (6,SAO)     (6,SAO)     RCCSD      RCCSD(T)     UCCSD       UCCSD(T)        UHF
+1.0   −0.33631ð5Þ    −0.337ð1Þ   −0.337 30   −0.336 21   −0.336 31    −0.336 14    −0.3353     −0.3354     −0.335 96   −0.336 25    −0.335 96   −0.336 25     −0.327 42
+1.2   −0.45466ð5Þ    −0.455ð1Þ   −0.455 69   −0.454 70   −0.454 74    −0.454 39    −0.4537     −0.4536     −0.454 28   −0.454 64    −0.453 85   −0.454 37     −0.445 04
+1.4   −0.50999ð4Þ    −0.510ð1Þ   −0.510 81   −0.509 89   −0.509 96    −0.509 30    −0.5088     −0.5088     −0.509 37   −0.509 81    −0.509 06   −0.509 39     −0.499 58
+1.6   −0.53356ð5Þ    −0.533ð1Þ   −0.534 28   −0.533 42   −0.533 56    −0.532 38    −0.5323     −0.5323     −0.532 86   −0.533 37    −0.532 78   −0.533 10     −0.522 18
+1.8   −0.54048ð4Þ    −0.540ð1Þ   −0.541 04   −0.540 34   −0.540 49    −0.538 44    −0.5391     −0.5390     −0.539 67   −0.540 26    −0.539 62   −0.540 01     −0.528 06
+2.0   −0.53846ð7Þ    −0.538ð1Þ   −0.538 88   −0.538 40   −0.538 50    −0.535 12    −0.5369     −0.5371     −0.537 60   −0.538 33    −0.537 40   −0.537 80     −0.525 17
+2.4   −0.52326ð4Þ    −0.522ð1Þ   −0.523 50   −0.523 35   −0.523 36    −0.515 44    −0.5219     −0.5218                        −0.521 82   −0.522 11     −0.509 20
+2.8   −0.50556ð5Þ    −0.506ð2Þ   −0.505 78   −0.505 64   −0.505 64    −0.490 18    −0.5050     −0.5043                        −0.504 06   −0.504 20     −0.493 05
+3.2   −0.49145ð4Þ             −0.491 66   −0.491 45   −0.491 46    −0.465 70    −0.4920     −0.4904                        −0.490 26   −0.490 30     −0.482 38
+3.6   −0.48210ð5Þ             −0.482 40   −0.482 10   −0.482 11    −0.444 46    −0.4836     −0.4816                        −0.481 37   −0.481 38     −0.476 57
+
+TABLE VI. Final equation of state for the hydrogen chain at the thermodynamic limit. LR-DMC results for R ¼ 1.0 and 1.2 are
+−0.4198ð3Þ and −0.4987ð6Þ, respectively.
+                      AFQMCþ                        LR-DMC
+R       AFQMC          ΔDMRG         DMET[2]         (LDA)           SC-NEVPT2      RCCSD        RCCSD(T)        UCCSD             RHF          UHF         VMC(LDA)
+1.4   −0.54044ð35Þ   −0.54022ð35Þ   −0.53858ð27Þ −0.53971ð6Þ −0.53674ð7Þ −0.53895ð19Þ −0.54009ð19Þ −0.53897ð22Þ −0.51133ð3Þ                 −0.51234ð3Þ     −0.53820ð1Þ
+1.6   −0.55971ð36Þ   −0.55959ð37Þ   −0.55730ð34Þ −0.55912ð12Þ −0.55608ð11Þ −0.55821ð13Þ −0.55942ð14Þ −0.55778ð15Þ −0.53097ð2Þ               −0.53256ð2Þ     −0.55767ð7Þ
+1.8   −0.56569ð30Þ   −0.56562ð31Þ   −0.56312ð26Þ −0.56515ð3Þ −0.56220ð4Þ −0.56401ð6Þ −0.56529ð5Þ −0.56354ð7Þ −0.53685ð2Þ                    −0.53925ð1Þ     −0.56346ð1Þ
+2.0   −0.56444ð34Þ   −0.56451ð34Þ   −0.56213ð14Þ −0.56397ð4Þ −0.56117ð8Þ −0.56272ð1Þ −0.56406ð3Þ −0.56238ð2Þ −0.53535ð1Þ                    −0.53894ð1Þ     −0.56216ð1Þ
+2.4   −0.55313ð31Þ   −0.55291ð31Þ   −0.55135ð1Þ −0.55268ð4Þ −0.54999ð9Þ −0.55107ð1Þ −0.55257ð3Þ −0.55105ð2Þ −0.52235ð1Þ                     −0.52978ð1Þ     −0.55004ð1Þ
+2.8   −0.53886ð29Þ   −0.53870ð30Þ   −0.53768ð1Þ −0.53848ð5Þ −0.53594ð10Þ                       −0.53666ð7Þ −0.50495ð1Þ                −0.51883ð1Þ     −0.53482ð1Þ
+3.2   −0.52557ð23Þ   −0.52549ð23Þ   −0.52566ð5Þ −0.52585ð5Þ −0.52362ð10Þ                       −0.52403ð12Þ −0.48754ð1Þ               −0.51058ð1Þ     −0.52250ð1Þ
+3.6   −0.51611ð22Þ   −0.51594ð22Þ   −0.51685ð8Þ −0.51608ð9Þ −0.51443ð9Þ                        −0.51462ð14Þ −0.47157ð4Þ               −0.50556ð1Þ     −0.51273ð1Þ
+
+
+
+
+FIG. 9. Top: EOS in the thermodynamic limit computed with finite basis sets (cc-pVDZ and cc-pVTZ). Middle: Detailed comparison
+using DMRG and AFQMC as reference. Error bars on the DMRG data indicate estimates of the TDL extrapolation uncertainties based
+on the results at the STO-6G level in Fig. 15. AFQMC þ ΔDMRGDZ is shown as reference for TZ (empty red circle), where the
+correction is obtained from the energy difference between DMRG and AFQMC at DZ. Bottom: Correlation energy per particle in the
+TDL, at cc-pVDZ (left) and cc-pVTZ (right) level.
+
+                                                                            031059-21
+MARIO MOTTA et al.                                                                              PHYS. REV. X 7, 031059 (2017)
+
+                                                                        A variety of finite-size and/or finite-basis-set data are
+                                                                     available. Figure 9 shows the equation of state extrapolated
+                                                                     to the TDL at cc-pVDZ and cc-pVTZ level. At cc-pVDZ
+                                                                     level, DMRG provides a highly accurate EOS, with
+                                                                     equilibrium bond length and energy Req ¼ 1.880ð2Þ aB,
+                                                                     E0 ¼ −0.5608ð2Þ EHa . The corresponding correlation
+                                                                     energies, using RHF energies as reference, are shown in
+                                                                     the middle panel of Fig. 9. Figure 10 shows the EOS
+                                                                     extrapolated to the TDL using SBDMRG and DMRG for
+                                                                     STO-6G and cc-pVDZ level basis sets.
+
+                                                                          APPENDIX C: ADDITIONAL DETAILS ON
+                                                                          REACHING THE COMPLETE BASIS SET
+                                                                             AND THERMODYNAMIC LIMITS
+                                                                                  1. Extrapolation to the CBS limit
+FIG. 10. Equation of state in the thermodynamic limit with              Extrapolations of the UHF and UHF-based correlation
+select finite basis sets, by DMRG and SBDMRG. AFQMC                  energy to the CBS limit are illustrated in Fig. 11, for the
+results at the CBS limit are also shown for reference.               representative bond lengths R ¼ 1.8, 2.8 aB . Using RHF as
+                                                                     references gives indistinguishable results.
+text, as well as additional finite-basis and finite-size                Figure 12 shows the effect of the F12 correction on
+data. Lengths are measured in Bohr and energies in                   MRCI þ Q energies. As illustrated in the main text,
+Hartree. Data not included in the appendixes are available           extrapolations to the CBS limit obtained with and without
+online [11].                                                         F12 correction agree with each other to within the fitting
+
+
+
+
+FIG. 11. Illustration of the extrapolation to the CBS limit. Results are shown for H10 at bond lengths, R ¼ 1.8 and 2.8aB . The
+unrestricted Hartree-Fock energy is fitted to an exponential function of the index x ¼ 2, 3, 4, 5 of the cc-pVxZ basis, the correlation
+energy to the power law α þ βx−3.
+
+
+
+                                                             031059-22
+TOWARDS THE SOLUTION OF THE MANY-ELECTRON …                                                  PHYS. REV. X 7, 031059 (2017)
+
+
+
+
+                                                                    FIG. 13. Extrapolation to the thermodynamic limit using
+                                                                    periodic (PBC) versus open (OBC) boundary conditions. Results
+                                                                    are shown from LR-DMC for R ¼ 1.8 aB. Both sets of calcu-
+FIG. 12. Effect of the F12 correction on MRCI þ Q data. A           lations converge to the same result for N → ∞, but convergence
+cc-pVxZ þ F12 calculation yields an energy of cc-pVðx þ 1ÞZ         is more rapid with OBC. The final result for R ¼ 1.8 aB from
+quality. Extrapolations to the CBS agree with each other within     AFQMC (from Fig. 6) is also indicated for reference.
+uncertainties from the fitting procedure.
+
+
+
+
+FIG. 14. Extrapolation of the EOS to the TDL limit, in the minimal STO-6G basis. The energy per particle is fitted to a second-order
+polynomial A0 þ A1 N −1 þ A2 N −2 in N −1 , reflecting the presence of a bulk and a boundary contribution.
+
+
+                                                            031059-23
+MARIO MOTTA et al.                                                                                  PHYS. REV. X 7, 031059 (2017)
+
+uncertainties, confirming the robustness of the extrapola-              H atoms). This is expected from the nature of the long-
+tion procedure.                                                         range Coulomb interaction.
+                                                                           In Fig. 15, we examine the robustness of the
+                2. Extrapolation to the TDL                             extrapolation. Results from the simple subtraction trick
+   As mentioned, we find that the use of finite clusters                separating surface and bulk [i.e., k ¼ 1 in Eq. (7)] are
+(chains) tends to give better convergence to the TDL than               compared with the reference extrapolation using
+with periodic boundary conditions, except for very short                EN 1 ;N 2 ;N 3 ðRÞ. Extrapolations agree with each other to well
+bond lengths. This is illustrated in Fig. 13. The faster                within 1 mEHa , and approach EN 1 ;N 2 ;N 3 ðRÞ as N 1 , N 2 are
+convergence with OBC than PBC is somewhat surprising                    increased. These results suggest that extrapolations
+and counter to commonly held belief. The quasi-one-                     EN 1 ;N 2 ;N 3 ðRÞ to the TDL have a resolution of the order
+dimensional nature of the hydrogen chain is likely an                   of 0.1 mEHa per particle. For most methodologies, there-
+important factor.                                                       fore, the uncertainty on the TDL extrapolation is 1 order of
+   Extrapolations to the TDL are illustrated in the minimal             magnitude smaller than the bias due to the underlying
+basis in Fig. 14 for the bond lengths R ¼ 1.0, 1.4, 1.8, 2.8.           approximations. It is also well within the uncertainty bound
+The importance of the A2 ðRÞN −2 correction is evident in               in our final best estimate of the EOS.
+capturing the size effects. Note that the finite-size effects              Our DMET strategy for calculations that directly access
+are larger at shorter bond lengths (ranging from roughly                the TDL is somewhat different. We start from a RHF
+50 mEHa for R ¼ 1.0 aB to less than 1 mEHa at large                     calculation on a large system (H150 ; H300 ; …). A single
+separation as the chain turns into a collection of uncoupled            fragment around the central H atom is constructed, using
+
+
+
+
+FIG. 15. Illustration of the extrapolation to TDL. Residual errors of fits from different pairs ðN 1 ; N 2 Þ of finite sizes are shown versus
+the reference extrapolation from N ¼ 10, 30, 50. Data are for the minimal STO-6G basis. Large system sizes are investigated in some
+cases to verify convergence.
+
+
+
+                                                                031059-24
+TOWARDS THE SOLUTION OF THE MANY-ELECTRON …                                                   PHYS. REV. X 7, 031059 (2017)
+
+x − 1 neighbors around it. The energy contribution due to           H1950 at R ¼ 1.0 aB ) using a fixed fragment size [22], until
+the central H atom is taken as the energy per atom, while           the change in the energy per atom is smaller than
+the chemical potential is adjusted in the central H atom such       0.01 mEHa . Using this suitably defined full system size
+that its particle number contribution is 1.                         [108], we perform calculations on larger and larger frag-
+   In order to more efficiently access large impurity sizes,        ments [see Fig. 16(b)] and perform a quadratic extrapola-
+we truncate the embedding space such that the bath orbitals         tion with the inverse of fragment size. The fragment size
+with a small norm (< 0.01) are excluded from the high-              extrapolation using the largest 4 or 5 fragment sizes yields
+level calculation. Our DMET results are reported using              the same limit to better than 0.02 mEHa .
+DMRG as a solver and a bond dimension of D ¼ 1000.
+The error from the DMRG solver is less than 1 μEHa in the
+energy per atom. To converge to the TDL it is necessary to
+converge both the full system as well as the fragment size.
+We find that it is necessary for the full system to be very           [1] P. A. M. Dirac, Quantum Mechanics of Many-Electron
+large to converge to the TDL at short bond lengths. We                    Systems, Proc. R. Soc. A 123, 714 (1929).
+                                                                      [2] J. P. F. LeBlanc et al., Solutions of the Two-Dimensional
+carry out calculations on systems of increasing size (up to
+                                                                          Hubbard Model: Benchmarks and Results from a Wide
+                                                                          Range of Numerical Algorithms, Phys. Rev. X 5, 041041
+                                                                          (2015).
+                                                                      [3] B.-X. Zheng, C.-M. Chung, P. Corboz, G. Ehlere, M.-P.
+                                                                          Qin, R. M. Noack, H. Shi, S. R. White, S. Zhang, and
+                                                                          G. K.-L. Chan, Stripe Order in the Underdoped Region of
+                                                                          the Two-Dimensional Hubbard Model, arXiv:1701.00054.
+                                                                      [4] J. Hachmann, W. Cardoen, and G. K.-L. Chan, Multi-
+                                                                          reference Correlation in Long Molecules with the Quad-
+                                                                          ratic Scaling Density Matrix Renormalization Group,
+                                                                          J. Chem. Phys. 125, 144101 (2006).
+                                                                      [5] W. A. Al-Saidi, S. Zhang, and H. Krakauer, Bond Breaking
+                                                                          with Auxiliary-Field Quantum Monte Carlo, J. Chem.
+                                                                          Phys. 127, 144101 (2007).
+                                                                      [6] T. Tsuchimochi and G. E. Scuseria, Strong Correlations
+                                                                          via Constrained-Pairing Mean-Field Theory, J. Chem.
+                                                                          Phys. 131, 121102 (2009).
+                                                                      [7] A. V. Sinitskiy, L. Greenman, and D. A. Mazziotti, Strong
+                                                                          Correlation in Hydrogen Chains and Lattices Using the
+                                                                          Variational Two-Electron Reduced Density Matrix
+                                                                          Method, J. Chem. Phys. 133, 014104 (2010).
+                                                                      [8] D. A. Mazziotti, Large-Scale Semidefinite Programming
+                                                                          for Many-Electron Quantum Mechanics, Phys. Rev. Lett.
+                                                                          106, 083001 (2011).
+                                                                      [9] N. Lin, C. A. Marianetti, A. J. Millis, and D. R. Reichman,
+                                                                          Dynamical Mean-Field Theory for Quantum Chemistry,
+                                                                          Phys. Rev. Lett. 106, 096402 (2011).
+                                                                     [10] L. Stella, C. Attaccalite, S. Sorella, and A. Rubio, Strong
+                                                                          Electronic Correlation in the Hydrogen Chain: A Varia-
+                                                                          tional Monte Carlo Study, Phys. Rev. B 84, 245117 (2011).
+                                                                     [11] M. Motta et al., Github repository, https://github.com/
+                                                                          simonsfoundation/hydrogen-benchmark-PRX/.
+                                                                     [12] W. Kutzelnigg, R12-Dependent Terms in the Wave Func-
+                                                                          tion as Closed Sums of Partial Wave Amplitudes for Large
+FIG. 16. Top: Difference with respect to extrapolated energies            l, Theor. Chim. Acta 68, 445 (1985).
+ETDL ðRÞ ≡ Eð∞; ∞; RÞ in STO-6G DMET calculations of in-             [13] L. Kong and E. F. Valeev, Perturbative Correction for the
+creasing full system size N (using a fixed fragment of size [22])         Basis Set Incompleteness Error of Complete-Active-Space
+for three different geometries. (b) Difference with respect to            Self-Consistent Field, J. Chem. Phys. 133, 174126 (2010).
+extrapolated energies ETDL ðRÞ ≡ Eð∞; ∞; RÞ in STO-6G DMET           [14] R. Blankenbecler, D. J. Scalapino, and R. L. Sugar,
+calculations of increasing fragment size N f (using a fixed full          Monte Carlo Calculations of Coupled Boson-Fermion
+system size N 0 : H1200 for 1.0 and 1.4 aB and H450 for 1.8 aB ).         Systems. I, Phys. Rev. D 24, 2278 (1981).
+The difference between the asymptotic value EðN 0 ; ∞; RÞ and        [15] S. Zhang, J. Carlson, and J. E. Gubernatis, Constrained
+the final extrapolation Eð∞; ∞; RÞ is estimated as Eð∞; ∞; RÞ−            Path Monte Carlo Method for Fermion Ground States,
+EðN 0 ; ∞; RÞ ≃ Eð∞; 22; RÞ − EðN 0 ; 22; RÞ                              Phys. Rev. B 55, 7464 (1997).
+
+
+
+                                                             031059-25
+MARIO MOTTA et al.                                                                         PHYS. REV. X 7, 031059 (2017)
+
+[16] S. Zhang and H. Krakauer, Quantum Monte Carlo Method         [33] M. Casula, C. Filippi, and S. Sorella, Diffusion
+     Using Phase-Free Random Walks with Slater Determi-                Monte Carlo Method with Lattice Regularization, Phys.
+     nants, Phys. Rev. Lett. 90, 136401 (2003).                        Rev. Lett. 95, 100201 (2005).
+[17] K. Van Houcke, E. Kozik, N. Prokof’ev, and B. Svistunov,     [34] P. Reynolds, D. Ceperley, B. Alder, and J. Lester, Fixed-
+     Diagrammatic Monte Carlo, Phys. Procedia 6, 95                    Node Quantum Monte Carlo for Molecules, J. Chem. Phys.
+     (2010).                                                           77, 5593 (1982).
+[18] S. A. Kulagin, N. Prokof’ev, O. A. Starykh, B. Svistunov,    [35] H.-J. Werner and P. J. Knowles, An Efficient Internally
+     and C. N. Varney, Bold Diagrammatic Monte Carlo                   Contracted Multiconfiguration-Reference Configuration
+     Method Applied to Fermionized Frustrated Spins, Phys.             Interaction Method, J. Chem. Phys. 89, 5803 (1988).
+     Rev. Lett. 110, 070601 (2013).                               [36] P. J. Knowles and H.-J. Werner, An Efficient Method for the
+[19] I. S. Tupitsyn, A. S. Mishchenko, N. Nagaosa, and N.              Evaluation of Coupling Coefficients in Configuration
+     Prokof’ev, Coulomb and Electron-Phonon Interactions in            Interaction Calculations, Chem. Phys. Lett. 145, 514
+     Metals, Phys. Rev. B 94, 155145 (2016).                           (1988).
+[20] G. Knizia and Garnet Kin-Lic Chan, Density Matrix            [37] C. Angeli, M. Pastore, and R. Cimiraglia, New Perspec-
+     Embedding: A Simple Alternative to Dynamical Mean-                tives in Multireference Perturbation Theory: The
+     Field Theory, Phys. Rev. Lett. 109, 186404 (2012).                N-Electron Valence State Approach, Theor. Chem. Acc.
+[21] G. Knizia and G. K. -L. Chan, Density Matrix Embedding:           117, 743 (2007).
+     A Strong-Coupling Quantum Embedding Theory, J. Chem.         [38] J. Paldus and X. Li, A Critical Assessment of Coupled
+     Theory Comput. 9, 1428 (2013).                                    Cluster Method in Quantum Chemistry, Adv. Chem. Phys.
+[22] S. Wouters, C. A. Jimenez-Hoyos, Q. Sun, and G. K. -L.            110, 1 (1999).
+     Chan, A Practical Guide to Density Matrix Embedding          [39] R. J. Bartlett and M. Musial, Coupled-Cluster Theory in
+     Theory in Quantum Chemistry, J. Chem. Theory Comput.              Quantum Chemistry, Rev. Mod. Phys. 79, 291 (2007).
+     12, 2706 (2016).                                             [40] I. Shavitt and R. J. Bartlett, Many-Body Methods in
+[23] S. R. White, Density Matrix Formulation for Quantum               Chemistry and Physics (Cambridge University Press,
+     Renormalization Groups, Phys. Rev. Lett. 69, 2863                 New York, 2009).
+     (1992).                                                      [41] C. C. J. Roothaan, Self-Consistent Field Theory for Open
+[24] S. R. White and R. L. Martin, Ab Initio Quantum Chem-             Shells of Electronic Systems, Rev. Mod. Phys. 32, 179
+     istry Using the Density Matrix Renormalization Group,             (1960).
+     J. Chem. Phys. 110, 4127 (1999).                             [42] E. Stoudenmire and S. R. White, Sliced Basis Density
+[25] G. K. -L. Chan and M. Head-Gordon, Highly Correlated              Matrix Renormalization Group for Electronic Structure,
+     Calculations with a Polynomial Cost Algorithm: A Study            Phys. Rev. Lett. 119, 046401 (2017).
+     of the Density Matrix Renormalization Group, J. Chem.        [43] C.-O. Almbladh, U. V. Barth, and R. V. Leeuwen, Varia-
+     Phys. 116, 4462 (2002).                                           tional Total Energies from Φ- and Ψ-Derivable Theories,
+[26] G. K. -L. Chan, A. Keselman, N. Nakatani, Z. Li, and S. R.        Int. J. Mod. Phys. B 13, 535 (1999).
+     White, Matrix Product Operators, Matrix Product States,      [44] A. Stan, N. E. Dahlen, and R. van Leeuwen, Fully Self-
+     and Ab Initio Density Matrix Renormalization Group                Consistent GW Calculations for Atoms and Molecules,
+     Algorithms, J. Chem. Phys. 145, 014102 (2016).                    Europhys. Lett. 76, 298 (2006).
+[27] J. J. Phillips and D. Zgid, Communication: The Descrip-      [45] A. Stan, N. E. Dahlen, and R. van Leeuwen, Levels of Self-
+     tion of Strong Correlation within Self-Consistent Green’s         Consistency in the GW Approximation, J. Chem. Phys.
+     Function Second-Order Perturbation Theory, J. Chem.               130, 114105 (2009).
+     Phys. 140, 241101 (2014).                                    [46] A. A. Kananenka, E. Gull, and D. Zgid, Systematically
+[28] A. A. Rusakov and D. Zgid, Self-Consistent Second-Order           Improvable Multiscale Solver for Correlated Electron
+     Green’s Function Perturbation Theory for Periodic                 Systems, Phys. Rev. B 91, 121111 (2015).
+     Systems, J. Chem. Phys. 144, 054106 (2016).                  [47] T. N. Lan, A. A. Kananenka, and D. Zgid, Communica-
+[29] J. J. Phillips, A. A. Kananenka, and D. Zgid, Fractional          tion: Towards Ab Initio Self-Energy Embedding Theory in
+     Charge and Spin Errors in Self-Consistent Green’s Func-           Quantum Chemistry, J. Chem. Phys. 143, 241102 (2015).
+     tion Theory, J. Chem. Phys. 142, 194108 (2015).              [48] T. Nguyen Lan, A. A. Kananenka, and D. Zgid, Rigorous
+[30] A. R. Welden, A. A. Rusakov, and D. Zgid, Exploring               Ab Initio Quantum Embedding for Quantum Chemistry
+     Connections between Statistical Mechanics and Green’s             Using Green’s Function Theory: Screened Interaction,
+     Functions for Realistic Systems. Temperature Dependent            Nonlocal Self-Energy Relaxation, Orbital Basis, and
+     Electronic Entropy and Internal Energy from a Self-               Chemical Accuracy, J. Chem. Theory Comput. 12, 4856
+     Consistent Second-Order Green’s Function, J. Chem.                (2016).
+     Phys. 145, 204106 (2016).                                    [49] D. Zgid and E. Gull, Finite Temperature Quantum
+[31] N. E. Dahlen and U. von Barth, Variational Energy                 Embedding Theories for Correlated Systems, New J. Phys.
+     Functionals Tested on Atoms, Phys. Rev. B 69, 195102              19, 023047 (2017).
+     (2004).                                                      [50] T. N. Lan and D. Zgid, Generalized Self-Energy Embed-
+[32] N. E. Dahlen and U. von Barth, Variational Second-Order           ding Theory, arXiv:1703.06981.
+     Møller-Plesset Theory Based on the Luttinger-Ward Func-      [51] J. A. Pople and R. K. Nesbet, Self-Consistent Orbitals for
+     tional, J. Chem. Phys. 120, 6826 (2004).                          Radicals, J. Chem. Phys. 22, 571 (1954).
+
+
+
+
+                                                           031059-26
+TOWARDS THE SOLUTION OF THE MANY-ELECTRON …                                                PHYS. REV. X 7, 031059 (2017)
+
+[52] W. L. McMillan, Ground State of Liquid He4 , Phys. Rev.            Chemistry Program Package, Comput. Mol. Sci. 2, 242
+     138, A442 (1965).                                                  (2012).
+[53] D. Ceperley, G. V. Chester, and M. H. Kalos, Monte Carlo      [69] T. Shiozaki, G. Knizia, and H.-J. Werner, Explicitly
+     Simulation of a Many-Fermion Study, Phys. Rev. B 16,               Correlated Multireference Configuration Interaction:
+     3081 (1977).                                                       MRCI-F12, J. Chem. Phys. 134, 034113 (2011).
+[54] B.-X. Zheng, J. S. Kretchmer, H. Shi, S. Zhang, and Garnet    [70] T. Shiozaki and H.-J. Werner, Multireference Explicitly
+     Kin-Lic Chan, Cluster Size Convergence of the Density              Correlated F12 Theories, Mol. Phys. 111, 607 (2013).
+     Matrix Embedding Theory and Its Dynamical Cluster             [71] T. Shiozaki and H.-J. Werner, Explicitly Correlated Multi-
+     Formulation: A Study with an Auxiliary-Field Quantum               reference Configuration Interaction with Multiple Refer-
+     Monte Carlo Solver, Phys. Rev. B 95, 045103 (2017).                ence Functions: Avoided Crossings and Conical
+[55] T. H. Dunning, Jr., Gaussian Basis Sets for Use in                 Intersections, J. Chem. Phys. 134, 184104 (2011).
+     Correlated Molecular Calculations. I. The Atoms Boron         [72] K. G. Dyall, The Choice of a Zeroth-Order Hamiltonian
+     through Neon and Hydrogen, J. Chem. Phys. 90, 1007                 for Second-Order Perturbation Theory with a Complete
+     (1989).                                                            Active Space Self-Consistent-Field Reference Function,
+[56] D. Feller, Application of Systematic Sequences of Wave             J. Chem. Phys. 102, 4909 (1995).
+     Functions to the Water Dimer, J. Chem. Phys. 96, 6104         [73] S. Guo, M. A. Watson, W. Hu, Q. Sun, and G. K. -L. Chan,
+     (1992).                                                            N-Electron Valence State Perturbation Theory Based on a
+[57] T. Helgaker, W. Klopper, H. Koch, and J. Noga, Basis-Set           Density Matrix Renormalization Group Reference Func-
+     Convergence of Correlated Calculations on Water,                   tion, with Applications to the Chromium Dimer and a
+     J. Chem. Phys. 106, 9639 (1997).                                   Trimer Model of Poly (p-Phenylenevinylene), J. Chem.
+[58] E. Stoudenmire and S. R. White, Studying Two-Dimen-                Theory Comput. 12, no. 1583 (2016).
+     sional Systems with the Density Matrix Renormalization        [74] S. Sharma and G. Chan, Communication: A Flexible Multi-
+     Group, Annu. Rev. Condens. Matter Phys. 3, 111 (2012).             Reference Perturbation Theory by Minimizing the Hyller-
+[59] S. Chiesa, D. M. Ceperley, R. M. Martin, and M.                    aas Functional with Matrix Product States, J. Chem. Phys.
+     Holzmann, Finite-Size Error in Many-Body Simulations               141, 111101 (2014).
+     with Long-Range Interactions, Phys. Rev. Lett. 97, 076404     [75] S. Sharma, G. Knizia, S. Guo, and A. Alavi, Combining
+     (2006).                                                            Internally Contracted States and Matrix Product States to
+[60] G. D. Purvis III and R. J. Bartlett, A Full Coupled-Cluster        Perform Multireference Perturbation Theory, J. Chem.
+     Singles and Doubles Model: The Inclusion of Discon-                Theory Comput. 13, 488 (2017).
+     nected Triples, J. Chem. Phys. 76, 1910 (1982).               [76] R. L. Stratonovich, On a Method of Calculating Quantum
+[61] G. E. Scuseria, A. C. Scheiner, T. J. Lee, J. E. Rice, and         Distribution Functions, Sov. Phys. Dokl. 2, 416 (1957).
+     H. F. Schaefer III, The Closed-Shell Coupled Cluster          [77] J. Hubbard, Calculation of Partition Functions, Phys. Rev.
+     Single and Double Excitation (CCSD) Model for the                  Lett. 3, 77 (1959).
+     Description of Electron Correlation. A Comparison with        [78] S. Zhang, Auxiliary-Field Quantum Monte Carlo for
+     Configuration Interaction (CISD) Results, J. Chem. Phys.           Correlated Electron Systems, in Emergent Phenomena
+     86, 2881 (1987).                                                   in Correlated Matter, edited by E. Pavarini,, E. Koch, and
+[62] J. A. Pople, M. Head-Gordon, and K. Rghavachari, Quad-             U. Schollwock (Forschungszentrum Jülich, Julich,
+     ratic Configuration Interaction. A General Technique for           Germany, 2013), Vol. 3.
+     Determining Electron Correlation Energies, J. Chem.           [79] M. Qin, H. Shi, and S. Zhang, Coupling Quantum
+     Phys. 87, 5968 (1987).                                             Monte Carlo and Independent-Particle Calculations:
+[63] M. Frisch, G. W. Trucks, H. B. Schlegel, G. E. Scuseria            Self-Consistent Constraint for the Sign Problem Based
+     et al., Gaussian 09, Revision D.01, Gaussian, Inc., 2013.          on the Density or the Density Matrix, Phys. Rev. B 94,
+[64] H. Koch, O. Christiansen, R. Kobayashi, P. Jorgensen, and          235119 (2016).
+     T. Helgaker, A Direct Atomic Orbital Driven Implementa-       [80] W. Purwanto, H. Krakauer, and S. Zhang, Pressure-
+     tion of the Coupled Cluster Singles and Doubles (CCSD)             Induced Diamond to β-Tin Transition in Bulk Silicon: A
+     Model, Chem. Phys. Lett. 228, 233 (1994).                          Quantum Monte Carlo Study, Phys. Rev. B 80, 214116
+[65] S. Wouters and D. Van Neck, The Density Matrix                     (2009).
+     Renormalization Group for Ab Initio Quantum Chemistry,        [81] Y. Virgus, W. Purwanto, H. Krakauer, and S. Zhang,
+     Eur. Phys. J. D 68, 272 (2014).                                    Stability, Energetics, and Magnetic States of Cobalt
+[66] R. Olivares-Amaya, W. Hu, N. Nakatani, S. Sharma,                  Adatoms on Graphene, Phys. Rev. Lett. 113, 175502
+     J. Yang, and G. K.-L. Chan, The Ab-Initio Density Matrix           (2014).
+     Renormalization Group in Practice, J. Chem. Phys. 142,        [82] W. Purwanto, S. Zhang, and H. Krakauer, Excited
+     034102 (2015).                                                     State Calculations Using Phaseless Auxiliary-Field
+[67] G. Barcza, Ö. Legeza, K. H. Marti, and M. Reiher,                  Quantum Monte Carlo: Potential Energy Curves of Low-
+     Quantum-Information Analysis of Electronic States of               Lying C2 Singlet States, J. Chem. Phys. 130, 094107
+     Different Molecular Structures, Phys. Rev. A 83,                   (2009).
+     012508 (2011).                                                [83] F. Ma, S. Zhang, and H. Krakauer, Auxiliary-Field Quan-
+[68] H.-J. Werner, P. J. Knowles, G. Knizia, F. R. Manby, and           tum Monte Carlo Calculations with Multiple-Projector
+     M. Schütz, MOLPRO: A General-Purpose Quantum                       Pseudopotentials, Phys. Rev. B 95, 165103 (2017).
+
+
+
+
+                                                            031059-27
+MARIO MOTTA et al.                                                                           PHYS. REV. X 7, 031059 (2017)
+
+[84] W. A. Al-Saidi, S. Zhang, and H. Krakauer, Auxiliary-         [96] A. A. Kananenka, A. R. Welden, T. N. Lan, E. Gull,
+     Field Quantum Monte Carlo Calculations of Molecular                and D. Zgid, Efficient Temperature-Dependent Green’s
+     Systems with a Gaussian Basis, J. Chem. Phys. 124,                 Function Methods for Realistic Systems: Using Cubic
+     224101 (2006).                                                     Spline Interpolation to Approximate Matsubara Green’s
+[85] F. Ma, W. Purwanto, S. Zhang, and H. Krakauer, Quantum             Functions, J. Chem. Theory Comput. 12, 2250 (2016).
+     Monte Carlo Calculations in Solids with Downfolded            [97] L. Hedin, New Method for Calculating the One-Particle
+     Hamiltonians, Phys. Rev. Lett. 114, 226401 (2015).                 Green’s Function with Application to the Electron-Gas
+[86] W. Purwanto, H. Krakauer, Y. Virgus, and S. Zhang,                 Problem, Phys. Rev. 139, A796 (1965).
+     Assessing Weak Hydrogen Binding on Caþ Centers: An            [98] J. M. Luttinger and J. C. Ward, Ground-State Energy of a
+     Accurate Many-Body Study with Large Basis Sets, J. Chem.           Many-Fermion System. II, Phys. Rev. 118, 1417 (1960).
+     Phys. 135, 164105 (2011).                                     [99] G. Baym, Self-Consistent Approximations in Many-Body
+[87] M. Casula, S. Moroni, S. Sorella, and C. Filippi, Size-            Systems, Phys. Rev. 127, 1391 (1962).
+     Consistent Variational Approaches to Nonlocal Pseudo-        [100] A. A. Kananenka, J. J. Phillips, and D. Zgid, Efficient
+     potentials: Standard and Lattice Regularized Diffusion             Temperature-Dependent Green’s Functions Methods for
+     Monte Carlo Methods Revisited, J. Chem. Phys. 132,                 Realistic Systems: Compact Grids for Orthogonal Poly-
+     154113 (2010).                                                     nomial Transforms, J. Chem. Theory Comput. 12, 564
+[88] S. Sorella, TurboRVB Quantum Monte Carlo Package,                  (2016).
+     http://people.sissa.it/~sorella/web/.                        [101] F. Caruso, P. Rinke, X. Ren, A. Rubio, and M. Scheffler,
+[89] R. Dovesi, R. Orlando, A. Erba, C. M. Zicovich-Wilson, B.          Self-Consistent GW: All-Electron Implementation with
+     Civalleri, S. Casassa, L. Maschio, M. Ferrabone, M. D. L.          Localized Basis Functions, Phys. Rev. B 88, 075105
+     Pierre, P. D’Arco, Y. Noel, M. Causa, M. Rerat, and B.             (2013).
+     Kirtman, CRYSTAL14: A Program for the Ab Initio              [102] A. Gaenko, A. E. Antipov, G. Carcassi, T. Chen, X. Chen,
+     Investigation of Crystalline Solids, Int. J. Quantum Chem.         Q. Dong, L. Gamper, J. Gukelberger, R. Igarashi, S.
+     114, 1287 (2014).                                                  Iskakov, M. Könz, J. P. F. LeBlanc, R. Levy, P. N. Ma,
+[90] A. Zen, Y. Luo, S. Sorella, and L. Guidoni, Molecular              J. E. Paki, H. Shinaoka, S. Todo, M. Troyer, and E. Gull,
+                                                                        Updated Core Libraries of the ALPS Project, arXiv:
+     Properties by Quantum Monte Carlo: An Investigation on
+                                                                        1609.03930.
+     the Role of the Wave Function Ansatz and the Basis Set in
+                                                                  [103] E. F. Valeev, LIBINT: A Library for the Evaluation of
+     the Water Molecule, J. Chem. Theory Comput. 9, 4332
+                                                                        Molecular Integrals of Many-Body Operators over Gaus-
+     (2013).
+                                                                        sian Functions (version 2.1.0), http://libint.valeyev.net/.
+[91] M. Marchi, S. Azadi, M. Casula, and S. Sorella, Resonat-
+                                                                  [104] N. Prokof’ev and B. Svistunov, Bold Diagrammatic
+     ing Valence Bond Wave Function with Molecular Orbi-
+                                                                        Monte Carlo Technique: When the Sign Problem is
+     tals: Application to First-Row Molecules, J. Chem. Phys.
+                                                                        Welcome, Phys. Rev. Lett. 99, 250201 (2007).
+     131, 154116 (2009).
+                                                                  [105] R. Rossi, Determinant Diagrammatic Monte Carlo in the
+[92] G. Knizia, Intrinsic Atomic Orbitals: An Unbiased
+                                                                        Thermodynamic Limit, Phys. Rev. Lett. 119, 045701
+     Bridge between Quantum Theory and Chemical Concepts,               (2017).
+     J. Chem. Theory Comput. 9, 4834 (2013).                      [106] R. Rossi, N. V. Prokof’ev, B. Svistunov, K. Van Houcke,
+[93] S. Wouters, C. A. Jiménez-Hoyos, Q. Sun, and G. K.-L.              and F. Werner, Polynomial Complexity Despite the
+     Chan, A Practical Guide to Density Matrix Embedding                Fermionic Sign, Europhys. Lett. 118, 10004 (2017).
+     Theory in Quantum Chemistry, J. Chem. Theory Comput.         [107] I. S. Tupitsyn and N. V. Prokof’ev, Stability of Dirac
+     12, 2706 (2016).                                                   Liquids with Strong Coulomb Interaction, Phys. Rev. Lett.
+[94] L. Hedin, New Method for Calculating the One-Particle              118, 026403 (2017).
+     Green’s Function with Application to the Electron-Gas        [108] For R ¼ 1.0 and 1.2aB we perform fragment-size extrap-
+     Problem, Phys. Rev. 139, A796 (1965).                              olations on H1200 , which is not converged with respect to
+[95] A. A. Rusakov, J. J. Phillips, and D. Zgid, Local Hamil-           the full system size. Our extrapolated result includes a full-
+     tonians for Quantitative Green’s Function Embedding                system correction determined from calculations on larger
+     Methods, J. Chem. Phys. 141, 194105 (2014).                        systems, with a fragment of size [22].
+
+
+
+
+                                                           031059-28
+

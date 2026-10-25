@@ -1,0 +1,1236 @@
+∆NO and the complexities of electron correlation in simple hydrogen clusters
+          Ismael A. Elayan,1 Rishabh Gupta,1 and Joshua W. Hollett1, 2, a)
+          1)Department of Chemistry, University of Winnipeg, Winnipeg, Manitoba, R3B 2E9, Canada
+          2)Department of Chemistry, University of Manitoba, Winnipeg, Manitoba, R3T 2N2, Canada
+
+          (Dated:  26 January 2022)
+          The ∆ natural orbital (∆NO) two-electron density matrix (2-RDM) and energy expression are derived from
+          a  multideterminantal  wave  function.   The  approximate  ∆NO  2-RDM  is  combined  with  an  on-top  density
+          functional and a double-counting correction to capture electron correlation.  A trust-region Newton’s method
+          optimization algorithm for the simultaneous optimization of ∆NO orbitals and occupancies is introduced and
+          compared to the previous iterative diagonalization algorithm.  The combination of ∆NO and two diﬀerent
+          on-top density functionals, Colle-Salvetti (CS) and Opposite-spin exponential cusp and Fermi-hole correction
+          (OF),  is  assessed  on  small  hydrogen  clusters  and  compared  to  density  functional,  single-reference  coupled
+          cluster, and multireference perturbation theory (MRMP2) methods.  The ∆NO-CS and ∆NO-OF methods
+          outperform  the  single-reference  methods,  and  are  comparable  to  MRMP2.   However,  there  is  a  distinct
+          qualitative  error  in  the  ∆NO  potential  energy  surface  for  H4  compared  to  the  exact.   This  discrepancy  is
+          explained through analysis of the ∆NO orbitals, occupancies and the two-electron density.
+
+
+I.    INTRODUCTION                                                          sity,  as  well  as  the  energy  and  one-electron  density,  is
+                                                                            more likely to be universally successful.
+  In an eﬀort to create eﬃcient electron structure meth-                      The ∆NO method combines a cumulant functional ap-
+ods, it has become commonplace to combine contrasting                       proach  for  the  treatment  of  static  correlation  with  an
+models of electron correlation (e.g.  wave function, den-                   on-top density functional (or post-HF) to treat dynamic
+sity functional, density matrix functional) in order to ex-                 correlation.12,34     Amongst  other  approaches,  it  most  re-
+ploit their most eﬀective attributes.1–41    Current methods                sembles multiconﬁgurational-pair density funcitonal the-
+that employ such a strategy, vary in computational cost                     ory  (MC-PDFT).28–30,40,68              In  which,  a  multireference
+and accuracy, and in most cases their remains room for                      one-electron  density  matrix  (1-RDM),  and  subsequent
+improvement  in  both  departments.   The  most  common                     one-electron  density,  is  used  to  determine  the  kinetic,
+strategy is to decompose electron correlation into static                   nuclear-potential, and classical Coulomb energy.  The on-
+(strong) and dynamic (weak) correlation, and approach                       top pair density,  obtained from the multireference two-
+each diﬀerently.  The development of these methods in-                      electron  density  matrix  (2-RDM),  is  used  to  create  a
+volves the design of models that precisely capture each                     modiﬁed spin-density28  which is inserted into the usual
+component, and also blend the approaches together in a                      exchange-correlation density functionals (e.g. PBE69) to
+seamless fashion.  The former aspect can be thoroughly                      determine the exchange and correlation energy.  The 2-
+evaluated  by  applying  the  method  to  relatively  simple                RDM can be obtained from a traditional multireference
+systems, such as small hydrogen clusters.                                   self-consistent-ﬁeld28–30,68        ,  a  variational  2-RDM-driven
+  Although  they  are  not  chemically  complex,  the  elec-                complete  active-space  self-consistent  ﬁeld40,  or  another
+tronic  structure  of  H  atom  clusters,  particularly  linear             economical alternative such as a pair-coupled cluster dou-
+chains  and  regular  lattices  of  H  atoms,  can  serve  as  a            bles calculation.70 The ∆NO method uses an on-top den-
+systematic  testing  ground  for  new  treatments  of  elec-                sity functional for only the dynamic correlation energy,
+tron  correlation.42–67      Creating  a  model  that  accurately           where the functional depends directly on the on-top den-
+describes the surprisingly complex features of H cluster                    sity.  The remaining components of the energy are deter-
+potential  energy  surfaces  can  prove  challenging.   There               mined using the approximate ∆NO 2-RDM.
+have been several studies of such clusters with an array                      This work begins by introducing a ∆NO wave function
+of methods, including density functional approximations,                    (SubsectionII A) from which the ∆NO two-electron den-
+natural orbital functionals, and truncated post-HF meth-                    sity matrix and energy expression can be derived.  The
+ods.  These systems have been shown to be eﬀective for                      ∆NO 2-RDM is then supplemented with an ad hoc term
+evaluating the ability of methods to describe both ground                   to correct for missing static correlation between electron
+and  excited  state  properties.   While  it  is  important  for            pairs (SubsectionII B). This is followed by a description
+these methods to accurately describe the potential energy                   of the determination of the dynamic correlation energy
+surface of these “simple” systems, it is also important to                  from the ∆NO 2-RDM (SubsectionII C), and then an ap-
+accurately describe the underlying two-electron density.                    proach to reduce correlation double-counting (Subsection
+A  method  that  correctly  models  the  two-electron  den-                 II D). Then a new optimization algorithm for the ∆NO 2-
+                                                                            RDM is described (SubsectionII E), which involves the
+                                                                            simultaneous  optimization  of  the  orbitals  and  the  elec-
+                                                                            tron transfer variables. The performance of the optimiza-
+a)Corresponding author:j.hollett@uwinnipeg.ca
+                                                                            tion  method  is  then  evaluated  relative  to  the  previous
+                                                                                                                                                   2
+
+∆NO 2-RDM optimization algorithm.  The performance                              The N-representable components of the ∆NO energy
+of ∆NO, in describing potential energy surfaces of small                     expression, E∆NO′, can then be obtained by expanding
+H  clusters,  is  then  compared  to  established  single-  and              the  expectation  value  of  the N-electron  hamiltonian  in
+multireference  methods  (SectionIV).  The  two-electron                     terms ofni, ∆ia, and one and two-electron integrals over
+density is then used to analyze the static correlation pro-                  orbitals.  Initially, the energy may be divided into diago-
+vided by the ∆NO model in the rectangular H4  cluster                        nal and oﬀ-diagonal contributions,
+(SubsectionIV G). Finally, the results of the ∆NO eval-
+uation and analysis are summarized (SectionV).                                            E∆NO′ =⟨Ψ∆NO| ˆH|Ψ∆NO⟩
+                                                                                                    =∑c2IHII +∑             cIcJHIJ,            (7)
+II.    THEORY                                                                                           I              I⁄=J
+                                                                             where
+A.    The ∆NO wave function
+                                                                                                     HIJ =⟨ΨI| ˆH|ΨJ⟩,                         (8)
+  The multideterminantal ∆NO wave function,                                  and the electronic hamiltonian (in atomic units) is given
+                        Ψ∆NO =∑         cIΨI,                         (1)    by
+
+                                     I                                                       N∑              N∑   M∑  ZA       N∑  ∑     1
+                                                                                      ˆH =      − 12∇2i−
+is  deﬁned  with  respect  to  a  reference  conﬁguration  in                               i=1             i=1  A=1  riA +   i=2  j<i  rij,      (9)
+which  all  open-shell  (singly  occupied)  orbitals  are  con-              where M  is  the  number  of  nuclei, ZA  is  the  nuclear
+sidered frozen (i.e. singly occupied in all determinants).                   charge, riA  is  the  electron-nucleus  distance,  and rij  is
+Only  doubly  occupied  orbitals  are  active  and  all  exci-               the  electron-electron  distance.   The  diagonal  contribu-
+tations  are  2n-tuples  (doubles,  quadruples,  ...)   where                tions can be expressed as,
+no electrons are unpaired.  In other words, with respect                                     ∑
+to  the  active  orbitals,  Ψ∆NO  is  seniority-zero.53,63,71–77                                  c2IHII =E∆NO
+Also,  each  active  pair  of  electrons  has  its  own  active                                                 0-1RDM +E∆NOpair ,             (10)
+space,  consisting  of  the  doubly  occupied  orbital  in  the                                I
+reference wave function and some number of vacant (vir-                      whereE∆NO0-1RDM is the energy associated with the zeroth-
+tual) orbitals.  Each determinant of the expansion is then                   order term in the expansion of the two-electron density
+deﬁned by 2n-tuple excitations of the reference conﬁgu-                      matrix (2-RDM) in terms of the one-electron density ma-
+ration,                                                                      trix (1-RDM),34 which is the basis of cumulant functional
+                          ΨI = Ψa¯ab¯bc¯c...                                 theory.78 The 0-1RDM energy is expressed as,
+                                    i¯ij¯jk¯k...                             (2)                         cl∑              op∑
+wherei,j andk refer to reference occupied orbitals, and                                  E∆NO0-1RDM =        2nphpp +         nphpp
+a,b and c refer to all active orbitals.  The absence of a                                                p                 p
+bar,i, indicates anα-spin orbital while the presence of a                                                cl∑  cl∑
+bar, ¯i, indicates a β-spin orbital.  Considering this, it is                                        +           npnq (2Jpq−Kpq)
+useful to deﬁne the determinantal expansion coeﬃcients,                                                  p    q
+cI, as a product of coeﬃcients corresponding to speciﬁc                                                  cl∑ op∑
+double excitations of the active electron pairs,                                                     +           npnq (2Jpq−Kpq)
+                          cI =daidbjdck...                            (3)                                p    q
+                                                                                                         op∑ op∑
+  In order to arrive at the ∆NO formalism, the double                                                +           npnq
+                                                                                                         p    q     2    (Jpq−Kpq),         (11)
+excitation coeﬃcients, dai , are deﬁned in terms of orbital
+occupancies, ni, and electron transfer variables, ∆ia,                       where cl and op denote the set of closed and open-shell or-
+                      dai  =δia√ni−√∆ia,                       (4)           bitals, respectively.  The one-electron integrals over spa-
+                                                                             tial orbitals, φp, are deﬁned as,
+where δia  is the Kroenecker delta and ∆ii = 0.  Orbital                                    ∫         [                      ]
+occupancies,  occupied  and  vacant  (with  respect  to  the                        hpp =      φ∗p(r)   −1               ZA    φ∗p(r)dr        (12)
+reference conﬁguration), are deﬁned as                                                                     2∇2−∑A        rA
+
+                         ni = 1−∑∆ia,                          (5)           where r = (x,y,z) and the two-electron Coulomb, Jpq,
+                                      a                                      and exchange, Kpq, integrals are deﬁned as,
+                        na =∑∆ia.                                (6)                        ∫ φ∗p(r1)φ∗q(r2)φp(r1)φq(r2)
+                                 i                                                  Jpq =
+                                                                                                              r12        dr1dr2         (13)
+                                                                                                                                                  3
+
+and                                                                         and
+              ∫ φ∗p(r1)φ∗q(r2)φq(r1)φp(r2)                                              ξpq =OpVq√np∆pq +OqVp√nq∆qp.         (22)
+      Kpq =                     r12        dr1dr2.        (14)
+                                                                            The time-inversion exchange integral is deﬁned as
+After expanding the expectation values for the diagonal                                   ∫ φ∗p(r1)φ∗p(r2)φq(r1)φq(r2)
+contributions toE∆NO′ [ﬁrst term of Equation (7)], sim-                           Lpq =                     r12        dr1dr2.        (23)
+plifying, and removing the contribution of E∆NO0-1RDM, the
+pair correction energy, E∆NOpair  , remains.  The pair correc-                 The  ∆NO  wave  function  contains  only  2n-tuple  ex-
+tion energy is the ﬁrst term associated with the cumulant                   citations,  in  which  the  electrons  remained  paired,  and
+and is given by,                                                            each  electron  pair  is  excited  to  its  own  (restricted)  ac-
+                E∆NO            ηpq (2Jpq−Kpq),              (15)           tive space.  Therefore, E∆NO′  is an upper bound to the
+                  pair   =∑                                                 more  general  doubly-occupied  conﬁguration  interaction
+                             pq                                             (DOCI) energy.53,80
+where
+         ηpq =δpqnp(1−np)[                                                  B.    The high-spin correction
+
+             + (1−δpq)       OpVq∆pq (nq−np− ∆pq)                              As deﬁned above, the ∆NO wave function and the sub-
+                                                                            sequent  2-RDM  do  not  account  for  the  correlation  be-
+                          +VpOq∆qp (np−nq− ∆qp)]                            tween active  electron  pairs  (interpair  correlation).  The
+                                    ∑                                       high-spin  correction  is  added  to  ∆NO  to  account  for
+                          −VpVq         ∆rp∆rq      .                (16)   this  correlation  exactly  in  the  strong  correlation  limit
+                                     r                                      (e.g.  multiple  bond  dissociation).   The  term  is  ad  hoc,
+                                                                            and therefore does not guarantee N-representability be-
+The Op and Vp coeﬃcients are elements of orbital-basis-                     low the strong correlation limit.  Nevertheless, it proved
+sized vectors consisting of 1s and 0s,                                      eﬀective previously34 and is added to theN-representable
+                            {                                               ∆NO energy, derived in SubsectionII A, to give the total
+                    Op =      1, p∈O                                        ∆NO energy,
+                              0,  otherwise                        (17)                        E∆NO =E∆NO′ +E∆NO
+                                                                                                                         HSC .                  (24)
+                            {                                               The high-spin correction energy is deﬁned as
+                     Vp =     1, p∈V
+                              0,  otherwise                        (18)                          E∆NOHSC  =−∑       κpqKpq,                    (25)
+                                                                                                                pq
+whereO denotes the set of active orbitals that are occu-                    where
+pied in the reference wave function,  andV  denotes the                                           [∑
+set of active vacant orbitals.
+  The  oﬀ-diagonal  terms  of  the  expectation  value  ex-                    κpq = (1−δpq)             ξprξps
+pansion  are  responsible  for  electron  correlation.   In  the                                    r⁄=s
+case of ∆NO,  excitations are limited to low-lying near-                                                  ∑                     ∑       ]
+degenerate orbitals which is aimed at capturing the so-                                     +Wp np            ξqr +Wq nq             ξpr  ,    (26)
+called “static” correlation energy,                                                                 2√2    r              2√2     r
+                      ∑                                                     where the last two terms have been added here for mod-
+                          cIcJHIJ =E∆NOstat                       (19)      elling open-shell systems.  The coeﬃcient Wp indicates if
+                       IJ
+                                                                            the orbital is singly-occupied,
+By employing Slater-Condon rules79 for the evaluation of                                                {
+matrix elements between Slater determinants,  and con-                                           Wp =      1, p∈S
+sidering that the active spaces for the electron pairs are                                                 0,  otherwise                       (27)
+disjoint, the static correlation energy can be simpliﬁed to
+give,                                                                       whereS  is  the  set  of  singly-occupied  orbitals.   By  fol-
+                                                                            lowing the same reasoning as the high-spin correction for
+                 E∆NOstat   =∑    (ζpq−ξpq)Lpq,                (20)         the doubly-occupied active orbitals (ﬁrst term of Equa-
+                              pq                                            tion26),  a factor of              12  for the last two terms would be
+where                                                                       predicted using the strong-correlation limit.34  However,
+                                 ∑√                                         that results in too severe of a correction and therefore,
+                   ζpq =VpVq             ∆rp∆rq,                  (21)      for this ﬁrst application of ∆NO to open-shell systems,
+                                   r                                        it has been reduced by a factor of√2.
+                                                                                                                                                  4
+
+C.    Dynamic correlation                                                   where α and β  denote spin-up and spin-down electrons,
+                                                                            respectively.
+  As  mentioned  above,  the  ∆NO  wave  function  is  de-                     The 2-RDM, and its components, can also be expanded
+signed  to  capture  static  correlation,  which  means  dy-                in an orbital basis,
+namic correlation must be accounted for by some other                          Γ(r1, r2, r′1, r′2) =∑     Γpqrsφ∗p(r′1)φ∗q(r′2)φr(r1)φs(r2).
+means.  In this study, the dynamic correlation energy is                                             pqrs
+captured using an on-top density functional (ODF). The                                                                                         (33)
+dynamic correlation energy, E∆NOdyn  , is added to the total                where, in this case, theφp are the ∆NO orbitals.  Follow-
+∆NO energy to give the total energy including static and                    ing a procedure similar to the derivation of E∆NO′, but
+dynamic correlation,                                                        using second quantization, one can arrive at an expres-
+                                                                            sion for the elements of the spin-resolved ∆NO 2-RDM
+                 E∆NO-dyn =E∆NO +E∆NOdyn .               (28)               over the ∆NO basis,
+
+Within the current formalism, it is necessary to remove                                      Γ∆NO,σσpqrs       = fσσpq npnq +ηpq2     δqspr               (34)
+extra correlation that is erroneously included,  or “dou-
+ble  counted”.   Therefore,  the  total  dynamic  correlation               and
+energy is the sum of the dynamic correlation energy sup-
+plied by the ODF and a double-counting correction,                                               pq npnq +ηpq
+                                                                               Γ∆NO,σσ′pqrs        = fσσ′2     δprδqs
+   E∆NOdyn   =EODF[Γ∆NO(r, r)] +EDC[Γ∆NO(r, r)],    (29)                                             − κpq
+                                                                                                          2 δpsδqr + ζpr−ξpr2   δpqδrs,    (35)
+where both are a function of the two-electron on-top den-                   where σ  = α or β  (with σ⁄= σ′), δqspr  = δprδqs−δpsδqr
+sity, Γ(r, r).  The on-top density is the probability that                  and the fσσ′
+two-electrons may be found at the same coordinate, r.  It                   electrons in singly-occupied orbitals,pq    ensures there are only interactions with α
+may be calculated from the 2-RDM, which is given by
+                                        ∫                                                       fααpq   = 1,                                           (36a)
+   ˜Γ(x1, x2, x′1, x′2) = N(N− 1)           Ψ∗(x′1, x′2, x3,..., xN)                            fαβpq  = 1−Wq,                                 (36b)
+                                2                                                               fβαpq  = 1−Wp,                                  (36c)
+                  × Ψ(x1, x2, x3,..., xN)dx3...dxN,    (30)
+                                                                                                fββpq  = (1−Wp) (1−Wq).               (36d)
+where Ψ is the N-electron wave function and x = (r,ω)                          Two ODFs are used in this study.  The ﬁrst is a com-
+is  a  combination  of  spatial  r  and  spin ω  coordinates.               bination of the Opposite-spin exponential cusp (OSEC)
+The spinless 2-RDM may be obtained through integra-                         and Fermi-hole correction (FHC) functionals, referred to
+tion over the spin-coordinates,                                             as the OF functional.81 The second is the Colle-Salvetti
+                         ∫                       ⏐⏐⏐ω′                      (CS)  functional.82,83     The  OSEC  functional  depends  on
+   Γ(r1, r2, r′1, r′2) =     ˜Γ(x1, x2, x′1, x′2)         dω1dω2,           the totalαβ on-top density, whereas the FHC functional
+
+                                                    1=ω1                    depends on theαα andββ on-top densities (more specif-
+                                                  ω′2=ω2                    ically, their Laplacians),
+                                                                  (31)
+and the aforementioned two-electron density is the diag-                       EOF[Γ(r, r)] =EOSEC[Γαβ(r, r) + Γβα(r, r)]
+onal,  Γ(r1, r2)  =  Γ(r1, r2, r1, r2).   The  spinless  2-RDM
+can then be resolved into diﬀerent spin-components cor-                                      +EFHC[Γαα(r, r)] +EFHC[Γββ(r, r)]    (37)
+responding to the relative spin of electrons 1 and 2,
+                                                                               The FHC functional eﬀectively widens the Fermi-hole,
+Γ(r1, r2, r′1, r′2) = Γαα(r1, r2, r′1, r′2) + Γββ(r1, r2, r′1, r′2)         which exists in any 2-RDM that obeys antisymmetry, us-
+                                                                            ing an exponential-cusp ansatz for the second-order cusp.
+                    + Γαβ(r1, r2, r′1, r′2) + Γβα(r1, r2, r′1, r′2),        The functional is given by
+                                                                  (32)
+                                                                                                                                                 5
+
+
+
+                    ∫ {     (
+  EFHC[Γσσ] =            π   4δ[3√π(δ + 16δ3)− 40δ2− 1]e−    116δ2
+                                                                                              ( 1  )])            }
+                              +√π[3√π(δ + 24δ3)− 48(δ2 + 4δ4)− 1][1 + erf                       4δ        Lσσ(r)
+                                             {                                                                          ( 1   )])}
+                                            /   3δ4(4(δ + 40δ3)e−    116δ2  +√π[1 + 48(δ2 + 4δ4)][1 + erf                  4δ          dr,    (38)
+
+
+
+
+whereLσσ(r) is the Laplacian of the two-electron density                   length,
+with respect to the interelectronic coordinate, u = r1−
+r2, at the electron-electron coalescence point (u = 0),                                          δ≡δ(r) =κLσσ(r)1/8                     (40)
+
+                                                                           where κ = 2.30.84
+       Lσσ(r) =∇2u Γσσ(r + u/2, r− u/2)|u=0,         (39)                     The OSEC functional approximates the inputαβ two-
+                                                                           electron density as constant in the neighbourhood of the
+                                                                           electron-electron  coalescence  point,  and  determines  the
+                                                                           energy associated with introducing an exponential cusp.
+where  r  =    r1+r22    .    The δ  determines  the  correlation          The OSEC energy is given by the functional
+
+
+                                     ∫   2π (                                                                     )])
+                                              2λ (√πλ− 1)e−   14λ2  +√π(√πλ− 2λ2− 1)[1 + erf(  12λ                     Γαβ(r, r)
+            EOSEC[Γαβ(r, r)] =                                                                              )])          dr,         (41)
+                                                          λ2(2λe−   14λ2  +√π (1 + 2λ2)[1 + erf(  12λ
+
+
+
+
+where the correlation length is determined by λ,                           function methods are combined with density functional
+                   λ≡λ(r) =qOSECρ(r)1/3                   (42)             methods in the present manner.  The main motivation for
+                                                                           speciﬁcally using ODFs with ∆NO, is that as electrons
+withqOSEC = 2.54 andρ(r) is the one-electron density.81                    become  strongly  correlated  this  information  is  revealed
+  The Colle-Salvetti ODF depends on the total (sum of                      to the ODF via Γ∆NO.  However, the ODF only depends
+all spin components) on-top density,                                       on  the  OD,  Γ∆NO(r, r),  which  does  not  possess  infor-
+                                                                           mation  regarding  ∆NO  short-range  correlation  beyond
+                            ∫   Γ (r,r)                                    the electron-electron coalescence point (in the neighbour-
+  ECS [Γ (r,r)] =−4a             ρ (r)                                     hood of u = 0).  Because the ODF is not sensitive to the
+                 (                                      )                  eﬀects of correlation at smallu⁄= 0, a correction must be
+                   1 +bρ (r)−8/3e−cρ(r)−1/3L(r)                            applied.
+                             1 +dρ (r)−1/3                 dr    (43)         The  general scheme behind  the derivation of  the OF
+                                                                           functional81  (similar  to  that  of  the  CS  functional82),
+whereL(r) is the Laplacian of the total on-top density at                  is  the  approximation  of  the  exact  two-electron  den-
+u = 0, a = 0.049, b = 0.132, c = 0.2533 and d = 0.349.82                   sity  Γ (r1, r2)  by  the  uncorrelated  two-electron  density
+                                                                           Γ0 (r1, r2) with a cusp, c(u), inserted at u = 0,
+                                                                               Γ (r1, r2) = Γ0 (r1, r2) (1−g(u) [1− Φ(r)c(u)])     (44)
+D.    Double-counting correction
+                                                                           where Φ(r) is a function that maintains the normalization
+  The  ODFs,  OF  and  CS,  are  both  derived  from  cor-                 of Γ (r1, r2).  The correction is applied in the short-range
+recting the two-electron density in the neighbourhood of                   (i.e.  smallu) and the range is controlled by the function
+the electron-electron coalescence point,  or in the short-                 g(u),
+range  of  interelectronic  distance.    Multideterminantal                                          g(u) =e−λ(r)u2,                         (45)
+treatments of electron correlation, such as ∆NO, capture
+the full range of electron correlation.  Therefore, there is               which  depends  on  the  correlation  length λ(r).     The
+overlap,  or  double-counting,  that  can  occur  when  wave               derivation  is  completed  by  Taylor-expanding  Γ0 (r1, r2)
+                                                                                                                                                  6
+
+aboutu = 0. The expansion is zeroth-order for the OSEC                      E.    2-RDM optimization
+functional,
+                     Γ0 (r1, r2)≈ Γ0 (r, r),                     (46)          The  ∆NO  2-RDM  depends  upon  the  ∆NO  orbitals,
+                                                                            {φp},  and  the  electron  transfer  variables, {∆ia}.   The
+and second-order for the FHC functional.  The CS func-                      optimal ∆NO 2-RDM is found by minimizingE∆NO with
+tional  also  uses  a  second-order  expansion,  but  multiple              respect to both{φp} and{∆ia}.  The optimization can
+approximations are made to ensure the integrand is well-                    be  performed  for  both{φp}  and{∆ia}  simultaneously,
+behaved.                                                                    using the trust-region method.
+  If the ODF is to exclusively account for the correlation                     In order to obtain the optimal ∆NO orbitals,{φp}, the
+energy in the short-range, then the short-range correla-                    initial set of orthonormalized orbitals,{˜φr}, are rotated
+tion already present in Γ must be removed,                                  amongst themselves via a unitary transformation,
+
+  E∆NO                                                                                                φp =∑       Urp ˜φr.                          (53)
+     dyn   =E∆NOODF [Γ]                                                                                        r
+               ∫ [Γ(r1, r2)− Γ0(r1, r2)]g(u)                                To determine such a transformation, the unitary matrix
+         − 12                      u         dr1dr2.    (47)                is parameterized with the exponential of a skew matrix,85
+To  arrive  at  a  practical  expression  for  the  double-                 Y,
+counting correction, Γ(r1, r2) and Γ0(r1, r2), are treated                                                 U =eY,                               (54)
+with  a  zeroth-order  Taylor  expansion  about u   =   0                   where
+(i.e. constant), identical to the OSEC functional.  Also,
+the  double-counting  correction  is  not  required  in  the                                    Ypq =ypq,  Yqp =−ypq.                   (55)
+strong  correlation  limit,  when  correlation  causes  elec-
+trons  to  completely  avoid  each  other  and  Γ(r, r)  =  0,                 Any energy, E[y],  that is a functional of a set of or-
+and  must  be  turned  oﬀ.    Therefore,  the  correction  is               bitals, may be expanded about the optimal orbitals, in a
+mutliplied  by  an  electron-pair  speciﬁc  factor,   ΓppΓ0pp ,  and        Taylor series, in terms of the skew matrix parameters, y,
+the resulting double-counting correction is given as                                       E[y]≈E[0] + y· gφ + 1
+                                                                                                                         2y†Hφφy,           (56)
+  E∆NODC   [Γ (r, r)] = 2πcDC(Γpp) Γ0pp (r, r)− Γpp (r, r)                  and  approximated  to  second-order.86–89      The  gradient,
+            ∫ ∑                                                             gφ,  and  hessian,  Hφ,  consist  of  the  ﬁrst  and  second
+                    Op    Γ0pp             λ(r)2     dr    (48)             derivatives of the energy with respect to the skew-matrix
+                p                                                           parameters,
+where Γ0 is the uncorrelated two-electron density, which                                          ⏐⏐⏐⏐y=0                           ⏐⏐⏐⏐y=0
+for ∆NO is given by                                                             gφpq = ∂E∆NO∂ypq        ,  Hφφpq,rs = ∂2E∆NO∂ypq∂yrs      .    (57)
+
+                  Γ∆NO,0 = Γ∆NO0-1RDM + Γ∆NOpair .                (49)      General  expressions  for  the  above  derivatives  may  be
+The two-electron densities are decomposed into electron-                    found elsewhere,86 but for ∆NO speciﬁcally see Appendix
+pair components, which for u = 0, are given by                              A. In the case of  E∆NO, the energy is invariant (gφpq = 0)
+                                                                            with  respect  to  rotations  between  orbital  pairs  where
+      Γ0pp (r,r) =np|φp(r)|4 +∑            ∆pq|φq(r)|4,        (50)         both  belong  to  the  inactive  (frozen)  closed-shell,  open-
+                                                                            shell, or inactive vacant orbital subspaces.  Consequently,
+                                        q                                   optimization must be performed with respect to all other
+and                                                                         possible rotations.
+                                                                               In the case of ∆NO, the energy is also a function of the
+  Γpp (r,r) = Γ0pp (r,r) +∑           ∆pq∆ps|φq(r)|2|φs(r)|2                electron transfer variables,{∆ia}.  To simultaneously op-
+                                                                            timize the energy with respect to both{φp} and{∆ia},
+                                  qs                                        the orbital gradient and hessian are combined with those
+                            − 2∑ξpq|φp(r)|2|φq(r)|2.    (51)                for{∆ia}.   However,  in  order  to  avoid  violation  of N-
+                                   q                                        representability  of  the  1-RDM,  the{∆ia}  are  ﬁrst  pa-
+                                                                            rameterized such that they remain between 0 and 1/2,
+The above correction is added to the OF functional en-
+ergy to give the total dynamic correlation energy.  In the                                            ∆ia = cos2θia
+case of the CS functional,                                                                                         2  .                          (58)
+                        λ(r) =qCSρ(r)1/3                        (52)        The total gradient and hessian are then given by
+                                                                                                  [gφ]             [Hφφ  Hφθ]
+where qCS = 2.29 (original value from CS derivation).                                       g =    gθ   ,    H =     Hφθ  Hθθ      ,             (59)
+                                                                                                                                                     7
+
+where                                                                            When an optimization step is calculated, the unitary
+                                                                              matrix  for  the  orbital  rotation  is  prepared  by  ﬁrst  ap-
+            gθpq = ∂E∆NO                                                      proximating eY to second order,
+                       ∂θpq ,  Hθθpq,rs = ∂2E∆NO∂θpq∂θrs,         (60)
+
+and                                                                                                  U≈ I + Y + 1
+                                                                                                                       2YY†,                     (67)
+                        Hφθpq,rs = ∂2E∆NO∂ypq∂θrs.                       (61) and  then  ensuring  it  is  unitary  by  applying  Gram-
+  Minimization can be performed using the trust-region                        Schmidt orthonormalization.
+
+Newton method, in which an augmented hessian is pre-
+pared and a step is taken within a dynamic trust-region
+radius.  A standard trust-region approach is described in
+Nocedal  and  Wright  (Algorithm  4.1).90  The  procedure                     F.    Conditions of N-representability
+begins with the calculation of an augmented hessian, A,
+                            A = H +ϵI                             (62)           Due  to  the  addition  of  the  high-spin  correction,  the
+                                                                              ∆NO 2-RDM is not strictly N-representable.  Therefore,
+where I is the identity matrix andϵ is chosen such that A                     it is useful to have some means of evaluating the extent
+is positive deﬁnite.  Then a Newton step, p, is calculated                    to whichN-representability might be violated.  The nec-
+by solving                                                                    essary,  but  not  suﬃcient, N-representability  conditions
+                                                                              that  depend  only  on  the  2-RDM  are  referred  to  as  the
+                             Ap =−g.                              (63)        PQG (or DQG) conditions.91–93      They require that the
+                                                                              following  matrices,  in  a  spin-orbital  basis  and  deﬁned
+If the step is within the trust-region radius,p =√p· p<                       in  terms  of  the  second  quantization,  be  positive  semi-
+t,  then the step is taken,  otherwise a subproblem must                      deﬁnite (i.e. all non-negative eigenvalues)
+be solved (Equation 4.5 in reference90) in which a step
+within the trust-region radius is found iteratively.  Each                                         Pijkl =⟨Ψ|a†
+step,  whether  pure  Newton-Raphson  or  a  solution  to                                                          ja†iakal|Ψ⟩,                 (68a)
+the subproblem, is evaluated by comparing the actually                                             Qijkl =⟨Ψ|ajaia†ka†l|Ψ⟩,                 (68b)
+change  in  the  function  (E)  to  the  change  predicted  by                                     Gijkl =⟨Ψ|a†
+a second-order Taylor expansion.  If the reduction is less                                                         jaia†kal|Ψ⟩,                  (68c)
+than a minimum threshold (e.g. 25% of predicted) then
+no step is taken andt is reduced.  If the reduction is more                   where Ψ is the N-electron wave function, a†
+than the minimum, a step is taken, and if it is more than                     creation  and  annihilation  operators,  respectively.   Suf-i  and ai  are
+a maximum threshold (e.g. 75% of predicted) then t is                         ﬁcient conditions for N-representability require the cal-
+increased.                                                                    culation of higher-order matrices and are not considered
+  In order to avoid optimizations to saddle points in{φp}                     here.93,94     For a spin-resolved 2-RDM over spatial orbitals
+and{∆ia} space, a modiﬁcation can be made before com-                         [(??) and (35)], and a diagonal 1-RDM, the elements of
+mencing the trust-region algorithm.  The non-augmented                        P , Q, and G can be expressed as
+hessian is diagonalized to evaluate the eigenvalues,
+
+                            ZTHZ = H′                            (64)                 Pσσ′σσ′pqrs     = Γσσ′pqrs,                                            (69a)
+
+where H′ is a diagonal matrix of hessian eigenvalues and                              Qσσ′σσ′pqrs     = Γσσ′pqrs + δprδqs2     (1−np−nq)
+Z is the matrix that transforms to normal coordinates.
+For any normal coordinate (mode) with a negative eigen-                                             −δσσ′δpsδqr
+value, H′ii < 0, and a gradient component with a mag-                                                           2     (1−np−nq),          (69b)
+nitude  less  than  a  threshold,|g′i| < g0,  the  gradient  is                       Gσσ′σσ′
+ampliﬁed to promote escape from the saddle point,                                        pqrs     = δprδqs2  nq− Γσσ′rqps,                          (69c)
+                           gmod = Zg′mod                           (65)               Gσσσ′σ′pqrs     = Γσσ′qrps    (σ⁄=σ′),                            (69d)
+
+where                                                                         whereσ =α orβ, andσ can be equivalent to σ′ (except
+              {                                                               for Gσσσ′σ′pqrs    ).  The expression of P , Q,  and G in terms
+  g′mod,i =     sign(g′i)g0,     If H′ii < 0 and |g′i|<g0                     of  spatial-orbital  indices  (subscript)  requires  specifying
+                g′i,                 otherwise                          (66)  the  spin-function  (superscript)  used  to  form  the  corre-
+                                                                              sponding spin orbital.  The matrices can be decomposed
+The trust-region method then continues as usual.                              into  spin-blocks  for  construction  and  analysis,  which  is
+                                                                                                                                                    8
+
+evident from their structure,95
+             Pαααα       0           0           0    
+      P  =      0     Pββββ       0           0     ,         (70a)
+                   0           0     Pαβαβ       0
+                  0           0           0     Pβαβα
+             Qαααα       0           0           0  ,         (70b)
+      Q =          0     Qββββ       0           0
+                   0           0     Qαβαβ       0
+                  0           0           0     Qβαβα 
+             Gαααα  Gααββ       0           0       .        (70c)
+      G =      Gββαα  Gββββ       0           0                                              FIG. 1.   Geometries of H clusters
+                   0           0     Gαβαβ       0
+                   0           0           0     Gβαβα
+The  sum  of  the  negative  eigenvalues  of  these  matrices                MINPACK-2,112  translated  to  Fortran  90.    Restricted
+can be used to quantify the extent to which they are not                     Hartree-Fock orbitals are used as the intial guess, and the
+positive semi-deﬁnite and subsequently violate thePQG-                       intial trust-region radius was t = 0.05 with a maximum
+conditions.96 These sums are denoted by                                      radius  value  of  2.00.   The  gradient  threshold,  required
+                                                                             for saddle-point escape, wasg0 = 10−4.  The convergence
+                                     K2∑                                     criteria was ¯g< 10−6 where ¯g = |g|n  is the normalized to-
+                          Xneg =          xi,                          (71)  tal gradient length, wheren is the total number of orbital
+                                     i=1xi<0                                 optimization parameters,{ypq} and{∆ia}.
+                                                                                The OF and CS energies are calculated post-∆NO us-
+where K is the size of the orbital basis, X = P,Q or G                       ing an SG-1 grid113 and Becke atomic weights.114
+and xi is an eigenvalue of X.                                                   The value of the double-counting correction parameter,
+                                                                             cDC, was chosen to minimize the error in the ∆NO-OF,
+                                                                             and  ∆NO-CS,  H2  potential  energy  curves,  relative  to
+III.    METHOD                                                               FCI.  The  values  were  0.40  and  0.35  for  ∆NO-OF  and
+                                                                             ∆NO-CS, respectively.
+
+A.    Reference energies and properties
+                                                                             IV.    RESULTS
+  The  energies  from  single-reference  methods:    com-
+pletely    renormalized    coupled-cluster    (CR-CCL)97,98                  A.    Cluster geometries
+and  spin-unrestricted  density  functional  approximation
+(B3LYP),99–101       and  multireference  energies:   multiref-                 The geometries of the H clusters studied are presented
+erence  self-consistent  ﬁeld  (MRSCF)102  and  multiref-                    in  Figure1.    The  potential  energy  surfaces  were  cal-
+erence  M¨oller-Plesset  second-order  perturbation  theory                  culated with established single-reference (FCI, CR-CCL
+(MRMP2),103–106        were  calculated  using  GAMESS.107                   and B3LYP) and multireference methods (MRSCF and
+The active space for the MRSCF and MRMP2 calcula-                            MRMP2) as well as with ∆NO, ∆NO-OF and ∆NO-CS.
+tions was chosen to be all occupied orbitals of the refer-                   The potential energy surface is deﬁned as,
+ence conﬁguration, and an equivalent number of the low-
+est lying vacant (virtual) orbitals.  Full conﬁguration in-                                      U(X) =E(X) +Vnn(X)                   (72)
+teraction (FCI) energies, and 2-RDMs, were determined
+using Quantum Package 2.108 All calculations were per-                       whereE(X) is the electronic energy provided by the elec-
+formed using the cc-pVTZ basis set.109,110                                   tronic structure method,Vnn(X), is the nuclear-repulsion
+                                                                             energy,  and  both  are  a  function  of  the  nuclear  coordi-
+                                                                             nates, X.
+B.    ∆NO energies and properties
+
+  The ∆NO, ∆NO-OF, and ∆NO-CS calculations were                              B.    2-RDM optimization
+performed with MUNgauss.111 The active space for each
+electron pair consisted of the orbital they occupy in the                       The  most  time  consuming  part  of  the  ∆NO  2-RDM
+reference conﬁguration and one vacant (virtual) orbital.                     optimization is the transformation of the two-electron in-
+The ∆NO 2-RDMs were optimized using the the trust-                           tegrals from the atomic orbital basis to the ∆NO orbital
+region  method  outlined  in  SubsectionII E.  The  itera-                   basis, which scales as NactK4, whereNact is the number
+tive subproblem was solved using the dgqt routine from                       of  active  orbitals  and K  is  the  number  of  atomic  basis
+                                                                                                                                                           9
+
+
+TABLE I.  Comparison of the number of integral transforma-
+tions required to optimize the ∆NO 2-RDM
+                                         integral transformations
+cluster       R (˚A)           IDa                       TRb
+H2                         1.2              170                         10
+H3                         1.2              924                         13
+H4 linear               1.2              252                         47
+H4 square             1.2              320                         20
+
+a ID = iterative diagonalization of pseudo-Fock matrix
+b TR = trust-region method
+
+
+functions. Recently, this cost has been reduced for similar
+calculations in natural orbital functional methods by in-
+troducing the resolution-of-the-identity (DoNOF-RI).115                          FIG.  2.     Error  in  H2  potential  energy  curves  compared  to
+                                                                                 FCI (∆U =U−UFCI).
+   For  the  systems  studied,  the  use  of  the  trust-region
+method, on average, reduced the number of optimization
+steps (and therefore the number of integral transforma-
+tions) by an order of magnitude compared to the previ-                            TABLE II.  Equilibrium bond lengths (in ˚A) of H clusters
+ous iterative diagonalization algorithm12,34,116         (TableI).                                                          cluster
+Furthermore,  the  introduction  of  an  analytical  hessian,                    method             H2            H3          H4 linear        H4 square
+and a saddle-point escape procedure, enabled the trust-                          ∆NO               0.756        0.942           0.908               0.910
+region method to ﬁnd global minima that the previous                             ∆NO-OF        0.739        0.924           0.882               0.863
+iterative-diagonalization algorithm could not locate.                            ∆NO-CS         0.739        0.918           0.879               0.857
+   In some cases, in order to determine whether optimized                        B3LYP            0.744        0.931           0.885               0.841
+2-RDMs  were  indeed  global  minima,  multiple  diﬀerent                        CR-CCL         0.743        0.930           0.887               0.878
+initial  guesses  were  used.   This  includes  using  orbitals                  MRSCF          0.756        0.957           0.906               0.912
+diﬀerent from RHF, including MRSCF orbitals and FCI                              MRMP2          0.745        0.934           0.889               0.868
+natural orbitals, choosing diﬀerent vacant orbitals for the                      FCI                 0.743        0.930           0.887               0.864
+active space, and also using 2-RDMs (both the orbitals
+and the electron-transfer variables) from other cluster ge-
+ometries.  The minima found by the 2-RDM optimization                            ∆NO-CS is dramatically reduced with a maximum error
+algorithm  were  invariant  with  respect  to  the  choice  of                   of∼ 3 kJ mol−1  (a positive deviation near equilibrium,
+initial orbitals or which vacant orbitals to include in the                      and negative at stretched bond lengths).  The error in the
+active space.  Local minima were only located when an                            B3LYP potential energy curve is also included, where the
+alternative 2-RDM guess was supplied from another clus-                          most notable deviation is the energy at the dissociation
+ter geometry (e.g. 2-RDM from H4 at θ = 90◦ for H4 at                            limit.  The dissociation limit predicted by B3LYP is 5.6
+θ = 85◦).                                                                        kJ mol−1 higher than FCI.
+
+                                                                                    The  equilibrium  bond  lengths  and  dissociation  ener-
+C.    H2                                                                         gies  predicted  by  each  method  for  the  various  H  clus-
+                                                                                 ters are presented in TablesIIandIII. In the case of H                    2,
+   The  error  in  the  H2  potential  energy  curves  relative                  ∆NO-OF and ∆NO-CS predict equilibrium bond lengths
+to  the  FCI  result  is  presented  in  Figure2.    To  illus-                  within 0.004 ˚A of the FCI value, 0.0743 ˚A, while the other
+trate the importance of the double-counting correction,                          methods are slightly more accurate.  Also for H2, ∆NO
+the ∆NO-OF and ∆NO-CS result without including the                               and MRSCF are identical and therefore predict that same
+double-counting  correction  (cDC  =  0)  is  shown.   With-                     bond  length  (0.756  ˚A)  and  dissociation  energy  (399  kJ
+out the double-counting correction,  both ∆NO-OF and                             mol−1).
+∆NO-CS  predict∼  30  kJ  mol−1  too  much  correlation                             Other  than  ∆NO  and  MRSCF,  all  methods  predict
+energy  near  the  equilibirum  bond  length  (R  =  0.743                       fairly  accurate  bond  dissociation  energies  for  H2.   The
+˚A).  However,  as  the  amount  a  static  correlation  grows                   high  accuracy  of  ∆NO-OF  (0  kJ  mol−1   error)  and
+with increasing R, the error approaches zero.  The static                        ∆NO-CS  (1  kJ  mol−1  error)  is  due  to  the  calibration
+correlation included in the ∆NO 2-RDM causes the on-                             of  the  double-counting  correction  coeﬃcient, cDC.   The
+top  density  to  vanish,  and  therefore  there  is  no  super-                 strategy is to use the bond of H2 as a prototype for the
+ﬂuous correlation energy at dissociation.  If the double-                        static  and  dynamic  correlation  energy  balance  between
+counting correction is included, the error in ∆NO-OF and                         paired electrons.
+                                                                                                                                                      10
+
+
+TABLE III.  Dissociation energies (in kJ mol−1) of H clusters
+
+                                          cluster
+method             H2           H3          H4 linear          H4 square
+∆NO                399          317              588                   168
+∆NO-OF          454          411              722                   288
+∆NO-CS          455          413              718                   288
+B3LYP             461          444              765                   349
+CR-CCL           454          412              726                   292
+MRSCF            399          327              610                   202
+MRMP2           444          400              713                   278
+FCI                  454          412              733                   288
+
+
+
+
+                                                                               FIG.  4.     Error  in  H3  potential  energy  curves  compared  to
+                                                                               FCI (∆U =U−UFCI).
+
+
+
+                                                                               B3LYP,  the  correlation  energy  is  signiﬁcantly  overesti-
+                                                                               mated around equilibrium R (24 kJ mol−1) and like H2,
+                                                                               the energy at the dissociation limit is incorrect.  These
+                                                                               errors are reﬂected in the predicted equilibrium R values
+                                                                               and dissociation energies (TablesIIandIII).
+                                                                                  Similar  to  H2,  both  ∆NO  and  MRSCF  overestimate
+                                                                               the  equilibrium  separation.    Whereas,  ∆NO-OF  and
+                                                                               ∆NO-CS slightly underestimateRe, by 0.006 ˚A and 0.012
+FIG. 3.    Potential energy of a linear H3  cluster with neigh-                ˚A,  respectively.   The  values  of Re  from  both  MRMP2
+bouring H atoms separated by a distance R.                                     (0.934 ˚A) and B3LYP (0.931 ˚A) diﬀer only slightly from
+                                                                               the FCI value.  Also, like H2, the CR-CCL PEC is equiv-
+                                                                               alent to FCI.
+                                                                                  For those methods designed to capture all the correla-
+D.    H3                                                                       tion energy,  it is only the dissociation energy predicted
+                                                                               by B3LYP (444 kJ mol−1) that diﬀers substantially from
+   The potential energy curves (PECs) for H3, in a linear                      the FCI value (412 kJ mol−1).
+arrangement, are presented in Figure3.  The ∆NO and
+MRSCF PECs are above the PECs of the other methods
+designed to also capture dynamic correlation.  Unlike H2,                      E.    Linear H4
+the  ∆NO  and  MRSCF  PECs  diﬀer  and  it  is  apparent
+that,  even  with  the  high-spin  correction  applied  to  the                   The PECs for the linear H4  cluster, with interatomic
+unpaired electron (Equation25), ∆NO is missing corre-                          spacing R,  are  presented  in  Figure5.   Similar  to  H               3,
+lation at moderately stretched bond lengths.  Neverthe-                        the  ∆NO  and  MRSCF  PECs  appear  above  the  others
+less,  the  correct  dissociation  limit  is  reached  by  ∆NO,                (as expected), and the B3LYP PEC lies below the oth-
+∆NO-OF and ∆NO-CS.                                                             ers  at  equilibrium  and  above  at  dissociation.   Interest-
+   The  error  in  the  PECs,  for  the  methods  that  in-                    ingly, while the CR-CCL PEC is essentially exact close
+clude  both  static  and  dynamic  correlation  (∆NO-OF,                       to Re,  and  eventually  approaches  the  correct  dissocia-
+∆NO-CS,  MRMP2  and  B3LYP),  compared  to the  FCI                            tion limit, there is a signiﬁcant negative deviation from
+PEC  is  shown  in  Figure4.   At  small      R,  ∆NO-OF  and                  the FCI PEC at large R.
+∆NO-CS overestimate the correlation energy by a maxi-                             The error in the linear H4 PECs, compared to FCI, are
+mum of 4 and 11 kJ mol−1, respectively.  At moderately                         explicitly shown in Figure6.  The behaviour of the error
+stretched bond lengths, both ∆NO-OF and ∆NO-CS un-                             in the ∆NO-OF and ∆NO-CS PECs for linear H4 is the
+derestimate the correlation energy (23 and 29 kJ mol−1,                        same as that seen for H2, although substantially larger.
+respectively), which is due to the missing static correla-                     Both  ∆NO-OF  and  ∆NO-CS  underestimate  the  corre-
+tion in ∆NO between the electron pair and the unpaired                         lation  energy  at  small R,  and  overestimate  at  large R,
+electron.                                                                      while eventually reaching the correct dissociation limit.
+   The  largest  deviation  of  the  MRMP2  PEC  from  the                     Like H3, the error in the MRMP2 PEC is largest at small
+FCI  PEC  is  at  small R  (16  kJ  mol−1),  and  the  error                   R  and  decreases  as R  is  increased.   In  the  case  of  CR-
+decreases  monotonically  as R  increases.   In  the  case  of                 CCL, the PEC is essentially exact for small R and then
+                                                                                                                                              11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 5.    Potential energy of a linear H4  cluster with neigh-            FIG. 7.    Potential energy of a square H4 cluster where each
+bouring H atoms separated by a distance R.                                 at is a distance R from the centre (see Figure1).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                           FIG. 8.    Error in square H4  cluster potential energy curves
+                                                                           compared to FCI (∆U =U−UFCI).
+FIG. 6.     Error in linear H4  cluster potential energy curves
+compared to FCI (∆U =U−UFCI).
+
+                                                                           F.    Square H4
+
+                                                                              The  PECs  for  the  dissociation  of  H4  in  a  square  ar-
+begins overestimating the correlation energy at∼ 1.4 ˚A.                   rangement (θ = 90◦, see Figure1) are shown in Figure7.
+The error in the B3LYP PEC is similar that seen for both                   The square arrangement of H atoms results in much more
+H2 and H3.                                                                 varied performance amongst the methods assessed com-
+                                                                           pared to the linear arrangement.  The B3LYP PEC is far
+  With  the  exception  of  ∆NO  and  MRSCF,  all  meth-                   below the others nearRe, but above again at the dissoci-
+ods  provide  good  estimates  of Re  compared  to  FCI,                   ation limit.  There is substantial separation between the
+with  ∆NO-OF  and  ∆NO-CS  showing  the  most  devia-                      ∆NO and MRSCF PECs nearRe.  Furthermore, this sys-
+tion (0.005 and 0.008 ˚A, respectively).  Both ∆NO and                     tem is a known issue for single-reference coupled-cluster
+MRSCF  predict  larger Re  values,  and  are  within  close                methods, and while CR-CCL performs better here than
+agreement with each other (diﬀering by 0.002 ˚A).                          CCSD(T), the error is signiﬁcant.  The explicit errors are
+                                                                           shown in Figure8.
+  The  dissociation  energies  predicted  by  each  method                    The  error  in  the  ∆NO-CS  PEC  is  relatively  small,
+are more varied.  The dissociation energies predicted by                   and provides, arguably, the best agreement with the FCI
+∆NO-OF and ∆NO-CS, 722 kJ mol−1 and 718 kJ mol−1,                          PEC.  The  usual  underestimation  of  the  correlation  en-
+respectively, are in decent agreement with the FCI value,                  ergy at smallR by MRMP2 is relatively small for this sys-
+733 kJ mol−1.  Only CR-CCL provides a better estimate,                     tem, and therefore MRMP2 also provides a good estimate
+726 kJ mol−1.                                                              of the FCI PES. The negative deviation of ∆NO-OF at
+                                                                                                                                                   12
+
+moderateR values reaches a maximum of∼ 14 kJ mol−1                            TABLE IV.  Barrier heighta (in kJ mol−1) forD2h→D4h→
+before going to the correct dissociation limit.  Whereas,                     D2h transition of H4 cluster at varying R.
+the  CR-CCL  PES  overestimates  the  correlation  energy
+by more than 30 kJ mol−1 before approaching the disso-                                                                      R (˚A)
+ciation limit.                                                                method                         0.8                      1.2                      1.7
+  Despite  the  errors  in  the  PECs,  accurate  predictions                 ∆NO                            305                     212                      76
+of  the  FCI Re,  0.864  ˚A,  are  provided  by  ∆NO-OF,                      ∆NO-OF                     287                     200                      76
+∆NO-CS,  MRMP2 and CR-CCL, with values of 0.863,                              ∆NO-CS                      284                     200                      78
+0.857,  0.868 and 0.878,  respectively.  As usual,  the dis-                  B3LYP                         238                     157                      50
+sociation energies vary more widely.  Both ∆NO-OF and                         CR-CCL                      292                     186                      51
+∆NO-CS provide very accurate estimates of the dissoci-                        MRSCF                       281                     190                      72
+ation energy,  and MRMP2 and CR-CCL diﬀer by only                             MRMP2                       286                     204                      80
+10 and 4 kJ mol−1, respectively.  While B3LYP overesti-                       FCI                              293                     208                      81
+mates the dissociation energy by 61 kJ mol−1.                                 a Barrier height is deﬁned as E[90◦] −E[70◦]
+
+
+
+G.    Rectangle to square H4                                                  kJ mol−1, respectively, at R = 1.7 ˚A. At the same time,
+                                                                              the  agreement  of  MRMP2  with  FCI  also  improves,  to
+  At ﬁxedR, ifθ of the,D4h symmetry, square arrange-                          within 4 kJ mol−1 at R = 1.2 ˚A and within 1 kJ mol−1
+ment of H4 (Figure1) is changed from 90     ◦, the result is                  at R = 1.7 ˚A. In contrast, due to the cusp, the CR-CCL
+a rectangular, D2h  symmetry, arrangement.  The PECs                          values worsen.
+forθ = 70◦ toθ = 110◦ (D2h→D4h→D2h) for ﬁxedR                                    Although  the  barrier  heights  predicted  by  ∆NO-OF
+values of 0.8, 1.2 and 1.7 ˚A are presented in Figure9.                       and  ∆NO-CS  are  in  good  agreement  with  FCI  values,
+  Like the PECs for the other H clusters, the ∆NO and                         the  deviation  of  the  PECs  from  FCI  approximately  5◦
+MRSCF PECs lie above those of the methods designed                            from θ  =  90◦  is  concerning.   An  initial  analysis  of  the
+to capture all of the correlation energy.  As R increases,                    correlation captured by ∆NO is provided by the electron
+and static correlation increases while dynamic correlation                    transfer  variables, {∆ia}.   The  values  of  ∆14  and  ∆23
+decreases,  the  ∆NO  and  MRSCF  PECs  approach  the                         from θ = 70◦  to θ = 110◦, at R = 1.7 ˚A, are presented
+others (note the scale of the y-axis in Figure9).                             in  Figure10.   From       θ  =  70◦  to θ  =  77◦,  ∆14  and  ∆23
+  In  the  case  of  CR-CCL,  coupled-cluster  methods  are                   are equivalent, indicating that the motion of both elec-
+known to have a concave (downward pointing) derivative                        tron pairs is correlated in the same manner.  This points
+discontinuity,54,58,67         or cusp, at θ = 90, which becomes              to the rectangular cluster behaving as two H2 molecules,
+more prominent asR increases.  This is in contrast to the                     which is not surprising at particularly large separations
+convex (upward pointing) cusp seen for RHF and spin-                          like R = 1.7 ˚A. Beyond θ = 77◦, the values of ∆14  and
+restricted density functional methods.  The cusp in the                       ∆23  diverge, and there is an obvious transition that oc-
+CR-CCL PEC is barely noticable at R = 0.8 ˚A, but is                          curs  from θ  =  84◦  to θ  =  87◦,  and  from θ  =  93◦  to
+evident at the largerR values.  The MRMP2 PEC closely                         θ  =  96◦  (grey  rectangles).   At  the θ  =  90◦  side  of  the
+resembles the FCI PEC at allR values, and the absolute                        transition, the electron pairs have signiﬁcantly diﬀerent
+error decreases with increasingR.  The height of the PEC                      amounts of static correlation.  The ∆23  electron pair is
+is signiﬁcantly underestimated by B3LYP at allR values.                       very  near  the  strong  correlation  limit,  ∆→  1/2,  while
+  The ∆NO-OF and ∆NO-CS methods accurately model                              ∆14≈ 0.28.  Essentially, there are two regimes of correla-
+the PEC near θ = 70◦ and 90◦, however there is an ob-                         tion.  Forθ near 70◦ (and 110◦) there is the 2 H2 regime,
+vious cusp at θ∼ 85◦  and θ∼ 95◦.  This is due to an                          and for θ near 90◦ there is the H4 regime.
+inadequate description of the 2-RDM upon transitioning                           The presence of two diﬀerent regimes,  or models,  for
+from a D4h to D2h arrangement, which is analysed, and                         the  correlation  in  H4  by  ∆NO,  and  their  transition,  is
+elaborated upon, later.                                                       supported  further  by  an  analysis  of  the  ∆NO  orbitals
+  The barrier height, deﬁned as the diﬀerence in energy                       (Figure11).  From Figure11, it is seen that from             θ = 84◦
+atθ = 90◦ and 70◦, predicted by each method at each R                         to 85◦ the ∆NO orbitals resemble those of two separate
+value is presented in TableIV. At     R = 0.8 ˚A, ∆NO-OF                      H2 molecules, albeit with small tails on the opposite pair
+and  ∆NO-CS  underestimate  the  barrier  by  6  and  9  kJ                   of  protons.   At θ  =  86◦,  the  orbitals  begin  to  extend
+mol−1, respectively.  Compare that to ∆NO, which over-                        signiﬁcantly to the neighbouring pair of protons, and by
+estimates the barrier by 12 kJ mol−1.  MRMP2 provides                         θ = 87◦  they are almost evenly distributed.  This tran-
+accuracy similar to ∆NO-OF and ∆NO-CS,  while CR-                             sition  occurs  quickly  with  respect  to  the  PEC,  in  just
+CCL only diﬀers from the FCI barrier by 1 kJ mol−1.  As                       3◦.
+R is increased, the agreement of ∆NO with FCI improves,                          Analysis of the ∆ values and the orbitals of ∆NO par-
+which highlights the importance of static correlation to                      tially  explains  the  behaviour  of  the  model  for  the  this
+these PECs.  At R = 1.2, ∆NO-OF and ∆NO-CS both                               challenging H4 PEC, but it is does not explain why it dif-
+diﬀer  from  FCI  by  8  kJ  mol−1,  and  diﬀer  by  5  and  3                fers from the FCI result.  A comparison of the ∆NO and
+                                                                                                                                                   13
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                           FIG. 9.   Potential energy of H4 cluster as a function of θ and R (see Figure1).
+
+
+
+                                                                                                                θ (degrees)
+                                                                                   orbital       84           85            86           87
+
+
+                                                                                      1
+
+
+
+
+                                                                                      2
+
+
+
+
+                                                                                      3
+
+
+
+FIG.  10.     ∆  values  for  rectangle-to-square  H4  cluster  as  a                 4
+function of θ at R = 1.7 ˚A.
+
+
+
+FCI  two-electron  densities,  Γ∆NO(r1, r2)  and  Γ(r1, r2),                     FIG. 11.   Change in ∆NO active orbitals of H4 with θ.
+can  show  conclusively  how  the  ∆NO  model  of  electron
+correlation  diﬀers  from  how  the  electrons  actually  be-
+have. The ∆NO and FCI opposite-spin (αβ) and parallel-                        is  much  diﬀerent.   For  electrons  of  opposite-spin,  when
+spin  (αα)  two-electron  densities  for  H4  at θ  =  70◦, 85◦               an α electron is found at the upper-right H atom,  it is
+and  90◦,  with R  =  1.7  ˚A,  are  shown  in  Figure12.                     equally likely to ﬁnd theβ electron at either of the near-
+The two-electron densities are plotted for a test-electron                    est  protons,  with  a  reduced  probability  of  ﬁnding  a β
+placed at the upper right H atom (indicated by an orange                      electron  at  the  furthest  proton.   Comparing  the  ∆NO
+dot).  Therefore, the plots show the probability of ﬁnding                    and FCI two-electron densities, the same qualitative be-
+the other electron(s), opposite or parallel-spin, within the                  haviour is seen but the ∆NO 2-RDM results in too high a
+H4 cluster.                                                                   probability of ﬁnding the β electron on the furthest pro-
+  At θ = 70◦  (left column of Figure12), the ∆NO and                          ton compared to the probability at the nearest protons.
+FCI  two-electron  densities  closely  resemble  each  other.                 In the case of parallel-spin electrons, if an α electron is
+For opposite-spin electrons (top half of Figure12), if an                     found  at  the  upper-right  H  atom  then  it  is  most  likely
+α electron is found at the upper-right H atom, then it is                     that another α electron is on the furthest proton,  with
+most likely to ﬁnd aβ electron on the closest H atom, to                      only a slight chance of an α electron on the nearest pro-
+which it is paired.  It would then be equally likely to ﬁnd                   tons.  Again,  ∆NO models this behaviour qualitatively,
+the other β electron on either of the two more distant H                      but compared to FCI, ∆NO predicts the probability of
+atoms.  In the case of parallel-spin electrons (bottom half                   ﬁnding  an α  electron  on  the  nearest  protons  to  be  too
+of Figure12), if an      α electron is found at the upper-right               high relative to the furthest proton.  This suggests that
+H atom then the other α electron must be found in the                         the amount of exchange, or Fermi correlation, which oc-
+“other” H2 molecule, with an equal probability of being                       curs between parallel-spin electrons, in the ∆NO 2-RDM
+found at either proton.                                                       is slightly inadequate at θ = 90◦.
+  Atθ = 90◦ (right column of Figure12), the behaviour                           Finally, at θ = 85◦ (middle column of Figure12), the
+                                                                                                                                                          14
+
+
+
+
+
+                                                                        Γαβ(r, r0)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                     Γ∆NO,αβ(r, r0)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                        Γαα(r, r0)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                     Γ∆NO,αα(r, r0)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 12.    FCI and ∆NO two-electron densities of H4  cluster when a test electron is placed at a H nucleus,  r0  (orange dot).
+Densities are shown for H4 at R = 1.7 ˚A and θ = 70◦ (left), 85◦ (middle), and 90◦ (right).
+                                                                                                                                                15
+
+                                                                            P  and Q  matrices  have  no  negative  eigenvalues.   This
+                                                                            is completely expected considering that all parallel-spin
+                                                                            terms  of  the  ∆NO  2-RDM  are  derived  from  the  ∆NO
+                                                                            wave function.  The only terms not originating from the
+                                                                            ∆NO wave function are those corresponding to the HSC,
+                                                                            which  are  applied  to  the  opposite-spin  block  of  the  2-
+                                                                            RDM only [Equation (35)].  The oﬀ-diagonal,     Gααββ and
+                                                                            Gββαα,  spin-blocks  of Gσσσσ  contain  2-RDM  elements
+                                                                            corresponding to the HSC and they are responsible for
+                                                                            the  contribution  to Gσσσσneg   .   The  most  severe  violation
+                                                                            of the PQG-condition is seen for Gαβαβ, also known as
+                                                                            the particle-hole density matrix.  The sum of the nega-
+                                                                            tive eigenvalues of Gαβαβ  reach a minimum at θ = 90◦,
+                                                                            where Gαβαβneg     =−0.229.  Due to the fact that the HSC
+FIG. 13.     Sum of the negative eigenvalues of P , Q and G                 is applied to the exchange-like terms (i.e. Γαβpqqp) of the
+for  the  rectangle-to-square  H4  cluster  as  a  function  of θ  at       ∆NO 2-RDM, the sum of the negative eigenvalues of the
+R = 1.7 ˚A.                                                                 Pαβαβ  and Qαβαβ  matrices are equivalent for all values
+                                                                            of θ.  In the case of Pneg  and Qneg, the minimum value
+                                                                            observed is -0.0818, which occurs atθ = 86◦ andθ = 94◦.
+diﬀerence between ∆NO and FCI two-electron densities                        As seen for the energy and orbital occupancies, the viola-
+                                                                            tion of thePQG-conditions exhibits diﬀerent behaviour,
+is the most pronounced.  It is evident that the electrons                   with respect to θ, in the neighbourhood of θ = 90◦ (be-
+of the ∆NO 2-RDM atθ = 85◦ behave more like the elec-                       tween the grey rectangles) compared toθ closer to 70◦ or
+trons atθ = 70◦ (2 H2 regime) than the actual behaviour                     110◦ (outside the grey rectangles).
+given by the FCI two-electron density.  In the case of the
+∆NO two-electron densities, both opposite and parallel-
+spin, the probabilities of ﬁnding electrons on the left-side                V.    CONCLUSIONS
+protons (other H2) is near equivalent.  Whereas, the FCI
+two-electron  density  shows  uneven  probabilities  for  the                 The ∆NO method is one of many that combines diﬀer-
+left-side protons, which more resembles the behaviour at                    ent models for diﬀerent aspects of electron correlation in
+θ = 90◦ (H4 regime).                                                        an eﬀort to eﬃciently capture the total.  The ∆NO-ODF
+  The  inability  of  ∆NO  to  accurately  model  the  PEC                  approach is unique in the manner that it combines an ap-
+fromθ = 70◦ to 90◦, is due to the energetic preference of                   proximate 2-RDM for static correlation with an ODF for
+∆NO to model H4 as 2 H2, at θ values close to 90◦.  The                     dynamic correlation.  With the exception of the high-spin
+error  observed  in  the  parallel-spin  two-electron  density              correction, the ∆NO 2-RDM and energy can be derived
+suggests  that  ∆NO  is  incorrectly  describing  the  corre-               from a multideterminantal wave function with restricted
+lation  between  diﬀerent  electron  pairs  (interpair  corre-              2n-tuple  excitations.   Combining  the  ∆NO  2-RDM  for
+lation),  which  is  similar  to  the  conclusion  reached  in  a           static correlation with an ODF for dynamic correlation
+study with PNOF6.54 For ∆NO, this could mean an er-                         requires  the  inclusion  of  a  double-counting  correction,
+ror  in  the  exchange  component  (Fermi  correlation),  or                which  can  be  done  by  replacing  the  short-range  corre-
+possibly something else, but it implies that the high-spin                  lation counted by the ∆NO 2-RDM.
+correction (HSC) is not adequate.  The HSC provides the                       Previously, ∆NO, and other NOF methods, optimized
+correct description in the strong correlation limit (both                   the 2-RDM through alternating optimization of the oc-
+pairs),  but  it  has  deﬁciencies  for  moderate  amounts  of              cupation numbers and the orbitals until convergence was
+static correlation and must be improved upon.                               reached.  The orbitals themselves were optimized by it-
+  The inadequacy of the HSC is highlighted further by                       erative  diagonalization  of  a  pseudo-Fock  matrix.   The
+examining the N-representabiltity of the ∆NO 2-RDM;                         trust-region Newton method introduced here, which al-
+in particular, the violation of the PQG-conditions (Sub-                    lows  for  simultaneous  optimization  of  the  orbitals  and
+sectionII F).  The  sums  of  the  negative  eigenvalues  of                occupancies, drastically reduces the number of optimiza-
+the P , Q,  and G  matrices  corresponding  to  the  ∆NO                    tion  steps  required  and  has  the  ability  to  identify  and
+2-RDM  for  rectangle-to-square  H4  are  shown  in  Figure                 avoid saddle points.
+13.  The sums are separated into contributions from dif-                      Even  simple  hydrogen  clusters  can  prove  challeng-
+ferent  spin-blocks  of  the P , Q,  and G  matrices.   The                 ing for electronic structure methods, particularly single-
+P   and  Q  matrices  are  separated  into  spin-blocks  for                reference  methods.    Overall,  the  ∆NO-ODF  approach
+each  speciﬁc  spin-pair,  whereas  the G  matrix  is  sepa-                performs well when describing the potential energy sur-
+rated into only three blocks, Gαβαβ, Gβαβα, and Gσσσσ,                      faces of H2, H3 and H4, relative to the more accurate, but
+due to the coupling of the parallel-spin blocks [Equation                   costly, multireference wave function method, MRMP2.
+(70c)].  For all values of   θ, the parallel-spin blocks of the               Analysis of the two-electron density of H4 reveals that
+                                                                                                                                             16
+
+∆NO incorrectly describes interorbital correlation.  De-                  where
+spite being accurate in the strong-correlation limit,  the                              λpq = (2−Wp)np(hpq +Gclpq)
+ad hoc HSC does have deﬁciencies, particularly near the
+D2h→ D4h  transition.  A more complete description of                                        + 2(1−Wp)npGocpq +WpnpGoppq
+interorbital correlation within ∆NO is a target of future                                    + 2∑     ηpr (2⟨pr|qr⟩−⟨pr|rq⟩)
+development.
+                                                                                                   r
+                                                                                             + 2∑     (ζpr−ξpr)⟨pq|rr⟩
+                                                                                                   r
+ACKNOWLEDGMENTS                                                                              − 2∑     κpr⟨pr|rq⟩                               (A4)
+
+                                                                                                   r
+  JWH  thanks  the  Natural  Sciences  and  Engineering                   and the two-electron integrals are deﬁned as follows
+Research  Council  of  Canada  (NSERC)  for  a  Discovery                                 ∫ φ∗p(r1)φ∗q(r2)φr(r1)φs(r2)
+Grant, Compute/Calcul Canada for computing resources                          ⟨pq|rs⟩ =
+and the Discovery Institute for Computation and Synthe-                                                     r12        dr1dr2,     (A5)
+sis for useful consultations.
+                                                                          and
+                                                                                                     (                         )
+                                                                                   Gclpq =∑     P clνµ ⟨pµ|qν⟩− 12⟨pµ|νq⟩        ,           (A6)
+DATA AVAILABILITY                                                                           µν
+
+  The  data  that  support  the  ﬁndings  of  this  study  are                          Goppq =∑     P opνµ (⟨pµ|qν⟩−⟨pµ|νq⟩),         (A7)
+available from the corresponding author upon request.                                            µν
+
+                                                                                                     (                         )
+                                                                                   Gocpq =∑P opνµ      ⟨pµ|qν⟩− 12⟨pµ|νq⟩        ,           (A8)
+Appendix A: ∆NO energy derivatives                                                          µν
+
+  The optimization of the ∆NO 2-RDM is acheived by                        whereµ andν are indices of atomic basis functions.  The
+simultaneously ﬁnding the optimal ∆NO orbitals,{φp},                      density matrices are deﬁned as
+and  electron  transfer  variables, {∆pq}.   The  optimiza-                                               cl∑
+tion is performed using a trust-region Newton algorithm,                                        P clµν =     2npCµpC∗νp                    (A9)
+which  requires  the  analytical  calculation  of  the  energy                                            p
+gradient, g,  and  hessian, H,  with  respect  to  the  skew-             and
+matrix parameters, y, and the variables used to param-
+eterize the electron-transfer variables, θ.                                                               op∑
+  The gradient, with respect to y, is evaluated at y = 0.                                       P opµν  =    npCµpC∗νp,                   (A10)
+The ﬁrst and second derivatives of the individual orbitals,                                               p
+                         ⏐⏐⏐⏐y=0                                          where Cµp is a ∆NO orbital coeﬃcient.
+                   ∂φa         =δaqφp−δapφq                (A1)              For the second derivatives with respect to the orbital-
+                   ∂ypq                                                   mixng parameters, it is useful to decompose E∆NO.  The
+                                                                          one-electron energy is given by
+and                                                                                                   cl∑             op∑
+                        ⏐⏐⏐⏐y=0                                                          E∆NO1e     =    2nphpp +         nphpp,         (A11)
+               ∂2φa           = (δqrδas−δqsδar)φp                                                     p                p
+            ∂ypq∂yrs                                                      and  the  contribution  of E∆NO
+                                                                                                           1e      to  the  orbital  hessian  is
+                              − (δprδas−δpsδar)φq                         given by
+                              + (δpsδaq−δqsδap)φr                              Hφφ,1epq,rs  =
+                              − (δprδaq−δqrδap)φs,        (A2)                 δpr(nαp +nβp +nαr  +nβr−nαq−nβq−nαs−nβs                 )hqs
+can be used to derive expressions for derivatives of the                     +δqs(nαq  +nβq +nαs +nβs−nαp−nβp−nαr−nβr)hpr
+total energy, E∆NO.  The total gradient with respect to                      +δps(nαq  +nβq +nαr  +nβr−nαp−nβp−nαs−nβs                 )hqr
+the orbital-mixing parameters, is given by                                                                                             )hps.
+                                                                             +δqr(nαp +nβp +nαs +nβs−nαq−nβq−nαr−nβr
+                      gφpq = 2 (λqp−λpq),                     (A3)                                                                       (A12)
+                                                                                                                                          17
+
+The  two-electron  energy  associated  with  the  0-1RDM                 given by
+component of the energy is given by                                                           [(δpsΓXrbcd−δprΓXsbcd)⟨qb|cd⟩
+                                                                            Hφφ,Xpq,rs  = 2∑
+                                                                                          bcd                          )⟨sb|cd⟩
+              E∆NO0-1RDM-2e =E∆NO0-1RDM−E∆NO1e  ,          (A13)                             +(δqrΓXpbcd−δprΓXqbcd
+                                                                                             +(δpsΓXqbcd−δqsΓXpbcd)⟨rb|cd⟩
+and the corresponding contribution to the orbital hessian                                                              )⟨pb|cd⟩]
+is                                                                                           +(δqrΓXsbcd−δqsΓXrbcd
+                                                                                               [
+                                                                                       +4∑       ΓXprab⟨qs|ab⟩− ΓXqrab⟨ps|ab⟩
+                                                                                            ab
+Hφφ,0-1RDM-2epq,rs              =([nαp +nβp +nαr  +nβr−nαq−nβq−nαs−nβs                        −ΓXpsab⟨qr|ab⟩ + ΓXqsab⟨pr|ab⟩
+δpr                                                     ]Gclqs
+                           ]Gopqs                                                             +ΓXparb⟨qa|sb⟩− ΓXpasb⟨qa|rb⟩
++[nαp +nαr−nαq−nαs                                                                            −ΓXqarb⟨pa|sb⟩ + ΓXqasb⟨pa|rb⟩
++[nβp +nβr−nβq−nβs         ][2Gocqs−Gopqs  ])                                                 +ΓXpabr⟨qa|bs⟩− ΓXqabr⟨pa|bs⟩
+      ([nαq  +nβq +nαs +nβs−nαp−nβp−nαr−nβr]Gclpr                                                                                ]
++δqs                                                                                          −ΓXpabs⟨qa|br⟩ + ΓXqabs⟨pa|br⟩          (A17)
++[nαq  +nαs−nαp−nαr        ]Goppr                                        and can be found elsewhere.86  In the case of ∆NO,  for
++[nβq +nβs−nβp−nβr         ][2Gocpr−Goppr])                              which the 2-RDM is a JKL-functional, the above expres-
+      ([nαq  +nβq +nαr  +nβr−nαp−nβp−nαs−nβs                             sion can be simpliﬁed due to the fact that each term of the
++δps                                                       ]Gclqr        2-RDM is described by only two indices, rather than four.
+                           ]Gopqr                                        The  simpliﬁcation  can  be  applied  speciﬁcally  to  terms
++[nαq  +nαr−nαp−nαs                                                      involving J, K  or L integrals.  In the case of Coulomb
+                           ][2Gocqr−Gopqr  ])                            integrals, J, the 2-RDM simpliﬁes as Γabcd = δacδbdγab,
++[nβq +nβr−nβp−nβs                                                       giving
+      ([nαp +nβp +nαs +nβs−nαq−nβq−nαr−nβr]Gclps
++δqr                                                                                           E∆NOXJ    =∑   γabJab,                    (A18)
++[nαp +nαs−nαq−nαr         ]Gopqr                                                                          ab
+                           ][2Gocqr−Gopqr  ])                            and leading to the following orbital hessian contribution,
++[nβp +nβs−nβq−nβr                                                        Hφφ,XJpq,rs   = 4(γpr +γqs−γps−γqr) (⟨pr|qs⟩ +⟨ps|qr⟩)
++ 4[(nαp−nαq     ) (nαr−nαs ) +(nβp−nβq      )(nβr−nβs)]⟨pr||qs⟩                            [
++ 4[(nαp−nαq     )(nβr−nβs) +(nβp−nβq) (nαr−nαs )]⟨pr|qs⟩,                          +2∑       δps (γqa +γra−γpa−γsa)⟨qa|ra⟩
+                                                                                         a
+                                                             (A14)                          +δpr (γpa +γra−γqa−γsa)⟨qa|sa⟩
+                                                                                            +δqr (γpa +γsa−γqa−γra)⟨pa|sa⟩]
+where the antisymmetrized two-electron integrals are de-                                    +δqs (γqa +γsa−γpa−γra)⟨pa|ra⟩
+ﬁned as                                                                                                                               (A19)
+
+                 ⟨pr||qs⟩ =⟨pr|qs⟩−⟨pr|sq⟩.             (A15)            In the case of exchange integrals, K, the 2-RDM simpli-
+                                                                         ﬁes as Γabcd =δadδbcγab, giving
+
+                                                                                               E∆NOXK    =∑   γabKab                    (A20)
+  For the contributions to the orbital hessian from the                                                    ab
+remaining components of E∆NO, it is useful to consider                   and leading to the following orbital hessian contribution,
+a general expression for component X,                                     Hφφ,XKpq,rs    = 4(γpr +γqs−γps−γqr) (⟨pr|sq⟩ +⟨ps|rq⟩)
+                                                                                             [
+                  E∆NOX      =∑   ΓXabcd⟨ab|cd⟩               (A16)                 +2∑       δps (γqa +γra−γpa−γsa)⟨qa|ar⟩
+                                                                                          a
+                              abcd                                                          +δpr (γpa +γra−γqa−γsa)⟨qa|as⟩
+                                                                                            +δqr (γpa +γsa−γqa−γra)⟨pa|as⟩]
+where ΓXabcd  is a 2-RDM element, and in this case X  =                                     +δqs (γqa +γsa−γpa−γra)⟨pa|ar⟩
+pair, stat or HSC. The second derivative with respect to                                                                              (A21)
+the skew-matrix parameters for this general expression is
+                                                                                                                                        18
+
+Similarly,  for  time-inversion  eschange  integrals, L,  the           and
+2-RDM  simpliﬁes  as  Γabcd  = δabδcdγac  and  the  orbital                                      [∑     (                          )
+hessian contribution simpliﬁes in the same manner.                           ∂κtu
+  Simultaneous   optimization   of   the   electron-transfer                ∂∆pq  = (1−δtu)               ξuw ∂ξtv∂∆pq  +ξtv∂ξuw∂∆pq
+variables,{∆pq}, and consequently the orbital occupan-                                             v⁄=w                             ]
+cies, requires including the gradient and hessian contri-                           +Wt nt      ∑    ∂ξuv                ∑    ∂ξtv   .
+butions fromθ, whereθpq is related to ∆pq via Equation                                    2√2        ∂∆pq  +Wu nu2√2         ∂∆pq
+(58).  The gradient contributions are given by,                                                  v                        v
+                                                                                                                                    (A28)
+                  gθpq =−sin(2θpq)     ∂E∆NO
+                                2       ∂∆pq                  (A22)       Using the chain rule, the θ contribution to the hessian
+                                                                        can be expressed in terms of derivatives with respect to
+The derivative ofE∆NO                                                   the{∆pq},
+                      0-1RDM with respect to ∆pq is derived
+using the following identity,                                                                                       ∂2E∆NO
+                        ∂nt                                                       Hθθpq,rs = sin(2θpq) sin(2θrs)4  ∂∆pq∂∆rs
+
+                       ∂∆pq  =δqt−δpt,                     (A23)                          −δprδqs cos(2θpq)∂E∆NO
+                                                                                                                 ∂∆pq                 (A29)
+which leads to
+ ∂E∆NO                                                         ).       In the case of the second derivative, it is useful to express
+     0-1RDM                                                             the 0-1RDM and pair contributions together, where
+    ∂∆pq     = 2(hqq−hpp +Gclqq−Gclpp +Gocqq−Gocpp
+                                                            (A24)                 E∆NO0-1RDM-pair =E∆NO0-1RDM +E∆NOpair ,             (A30)
+The contribution to the gradient from the remaining com-
+ponents  of  the  energy  can  be  calculated  by  replacing            and
+the  coeﬃcients, ηtu, ζtu, ξtu  and κtu  [Equations  (15),
+(20) and (25)] with their corresponding derivatives.  The                  ∂2E∆NO
+derivatives of the coeﬃcients are given by                                      0-1RDM-pair
+                    [                                  ]                      ∂∆pq∂∆rs     = 4 (Jpr +Jqs−Jps−Jqr)
+       ∂ηtu          δqt (1− 2nq)−δpt (1− 2np)                                                − 2 (Kpr +Kqs−Kps−Kqr)    (A31)
+      ∂∆pq  =δtu
+                    [      {                                              For the remainder of the contributions to the hessian,
+      + (1−δtu)      OtVu    δptδqu (nu−nt− ∆tu)                        as with the gradient, the second derivatives can be calcu-
+                                                           }            lated by replacing the coeﬃcients, ζtu, ξtu and κtu, with
+                            + ∆tu (δqu +δpt−δptδqu)                     their corresponding second derivative,
+                           {                                                                          (
+                   +VtOu     δpuδqt (nt−nu− ∆ut)                               ∂2ζtu                    δptδsu +δquδst√
+                                                           }                ∂∆pq∂∆rs  =δprVtVu4               ∆pt∆pu
+                            + ∆ut (δqt +δpu−δpuδqt)                                               √                  √       )
+                                                 ]                                       −δqtδst     ∆pu                ∆pt    ,     (A32)
+                   +VtVu (δqt∆pu +δqu∆pt)          ,           (A25)                                 ∆3pt−δquδsu        ∆3pu
+
+
+                                                                                                       (
+                      (    √               √       )                           ∂2ξtu                     −δptδqu−δptδsu√
+      ∂ζtu              δqt    ∆pu            ∆pt     ,       (A26)         ∂∆pq∂∆rs  =δprOtVu4                  nt∆tu
+     ∂∆pq  = VtVu2             ∆pt  +δqu      ∆pu                                                      √             √       )
+                                                                                         −δptδquδsu        nt           ∆tu
+                                                                                                          ∆3tu−δpt       n3t
+                     (        √              √       )                                                (
+    ∂ξtu               δptδqu     nt            ∆tu                                      +δprOuVt        −δpuδqt−δpuδst√
+    ∂∆pq  = OtVu2                ∆tu−δpt         nt                                               4             nu∆ut
+                     (        √              √       )                                                √              √       )
+           + OuVt      δpuδqt     nu            ∆ut    ,     (A27)                       −δpuδqtδst       nu            ∆ut         (A33)
+                2                ∆ut−δpu         nu                                                      ∆3ut−δpu        n3u
+                                                                                                                                                                 19
+
+and                                                                                   20B. G. Janesko, T. M. Henderson,  and G. E. Scuseria, J. Chem.
+                                [∑                                                      Phys. 131, 034110 (2009).
+   ∂2κtu                                (                                             21J.-D. Chai and M. Head-Gordon, J. Chem. Phys. 131, 174105
+∂∆pq∂∆rs  = (1−δtu)                       ξuw  ∂2ξtv∂∆pq∂∆rs +ξtv  ∂2ξuw∂∆pq∂∆rs      22A.  Stoyanova,  A.  M.  Teale,  J.  Toulouse,  T.  Helgaker,    and(2009).
+                                  v⁄=w
+                                                   ∂ξuw                ∂ξtv   )       23S.  Yamanaka,  K.  Nakata,  T.  Ukai,  T.  Takada,   and  K.  Yam-E. Fromager, J. Chem. Phys. 139, 134113 (2013).
+                                       + ∂ξtv∂∆pq ∂∆rs + ∂ξuw∂∆pq      ∂∆rs             aguchi, Int. J. Quantum Chem. 106, 3312 (2006).
+                                                                              ]       24D.  R.  Rohr,  J.  Toulouse,    and  K.  Pernal,  Phys.  Rev.  A  82,
+                     ∑        ∂2ξuv                       ∑        ∂2ξtv                052502 (2010).
+        +Wt nt2√2          ∂∆pq∂∆rs +Wu nu2√2                  ∂∆pq∂∆rs         .     25M. Piris, Phys. Rev. Lett. 119, 063002 (2017).
+                       v                                    v                         26M. Piris, Phys. Rev. A 98, 022504 (2018).
+                                                                       (A34)          27 ´A.  J.  P´erez-Jim´enez,  J.  M.  P´erez-Jord´a,    and  J.  C.  Sancho-
+                                                                                        Garcia, J. Chem. Phys. 127, 104102 (2007).
+   The  hessian  terms  involving  derivatives  with  respect                         28G.  L.  Manni,  R.  K.  Carlson,  S.  Luo,  D.  Ma,  J.  Olsen,  D.  G.
+to both y andθ, can be expressed in terms of derivatives                                Truhlar,  and L. Gagliardi, J. Chem. Theory Comput. 10, 3669
+of λ,                                                                                   (2014).
+                                                                                      29R. K. Carlson, D. G. Truhlar,  and L. Gagliardi, J. Chem. The-
+                                    (∂λqp                  )                            ory Comput. 11, 4077 (2015).
+                                                                                      30L. Gagliardi, D. G. Truhlar, G. L. Manni, R. K. Carlson, C. E.
+        Hφθpq,rs =− sin(2θrs)          ∂∆rs− ∂λpq∂∆rs         .         (A35)           Hoyer,  and J. L. Bao, Acc. Chem. Res. 50, 66 (2017).
+                                                                                      31N.  O.  J.  Malcolm  and  J.  J.  W.  McDouall,  Chem.  Phys.  Lett.
+The  derivative  of  the λpq  component  corresponding  to                              282, 121 (1998).
+                                                                                      32A. K¨ohn, M. Hanauer, L. A. M¨uck, T.-C. Jagau,  and J. Gauss,
+E∆NO0-1RDM [ﬁrst three terms of Equation (A4)] is given by                              WIREs Comput. Mol. Sci. 3, 176 (2013).
+                                                                                      33M. Hubert, E. D. Hedeg˚ard,   and A. J. H. J, J. Chem. Theory
+∂λ0-1RDMpq                                                                              Comput. 12, 2203 (2016).
+                                                                                      34J. W. Hollett and P.-F. Loos, J. Chem. Phys. in press (2019).
+   ∂∆rs     =(2−Wp)[                                                                  35K. Hirao, Chem. Phys. Lett. 190, 374 (1992).
+                                                                                      36S. Grimme and M. Waletzke, J. Chem. Phys. 111, 5645 (1999).)
+                ×   (δps−δpr)(hpq +Gclpq + (1−Wp)Gocpq +WpGoppq37J.  Gr¨afenstein  and  D.  Cremer,  Chem.  Phys.  Lett.  316,  569
+                                                                                  ]     (2000).
+                    + 2 (⟨ps|qs⟩−⟨pr|qr⟩)− (⟨ps|sq⟩−⟨pr|rq⟩)                       .  38C.  Angeli,  R.  Cimiraglia,   and  J.  Malrieu,  Chem.  Phys.  Lett.
+                                                                       (A36)            350, 297 (2001).
+                                                                                      39C.  Angeli,  R.  Cimiraglia,    and  J.  Malrieu,  J.  Chem.  Phys.
+                                                                                        (2002).
+The remaining components of ∂λpq∂∆rs  are derived by sub-                             40M. Mostafanejad,  M. D. Liebenthal,   and A. E. DePrince III,
+stituting the coeﬃcients,ζtu,ξtu andκtu, with their cor-                                Journal of chemical theory and computation 16, 2274 (2020).
+                                                                                      41F. Furche, The Journal of Chemical Physics 129, 114105 (2008).
+responding derivative.                                                                42J. Paldus, P. Piecuch, L. Pylypow,   and B. Jeziorski, Physical
+
+  1J. Cizek, Adv. Chem. Phys. 14, 35 (1969).                                            Review A 47, 2738 (1993).
+  2B. Jeziorski and H. J. Monkhorst, Phys. Rev. A 24, 1668 (1981).                    43K.  Kowalski  and  K.  Jankowski,  Physical  Review  Letters  81,
+
+  3K.  Andersson,  P.  Malmqvist,  B.  O.  Roos,  A.  J.  Sadlej,   and                 1195 (1998).
+                                                                                      44K. Kowalski and K. Jankowski, Chemical physics letters 290,
+   K. Wolinski, J. Phys. Chem. 94, 5483 (1990).                                         180 (1998).
+  4D. K. W. Mok, R. Neumann,  and N. C. Handy, J. Phys. Chem.                         45P.  Schipper,  O.  Gritsenko,   and  E.  Baerends,  The  Journal  of
+   100, 6225 (1996).                                                                    chemical physics 111, 4056 (1999).
+  5N. C. Handy and A. J. Cohen, Mol. Phys. 99, 403 (2001).                            46K. Jankowski and K. Kowalski, The Journal of chemical physics
+  6D. Cremer, Mol. Phys. 99, 1899 (2001).
+  7P. Pulay, Int. J. Quantum Chem. 111, 3273 (2011).                                    110, 3714 (1999).
+  8A. D. Becke, J. Chem. Phys. 138, 074109 (2013).                                    47T. Van Voorhis and M. Head-Gordon, The Journal of Chemical
+
+  9D. L. Crittenden, J. Phys. Chem. A 117, 3852 (2013).                                 Physics 113, 8873 (2000).
+                                                                                      48J. Hachmann, W. Cardoen,   and G. K.-L. Chan, The Journal
+ 10T. Tsuchimochi and T. V. Voorhis, J. Chem. Phys. 141, 164117
+   (2014).                                                                              of chemical physics 125, 144101 (2006).
+                                                                                      49W.  A.  Al-Saidi,  S.  Zhang,   and  H.  Krakauer,  The  Journal  of
+ 11A. J. Wallace and D. L. Crittenden, J. Phys. Chem. A 118, 2138
+   (2014).                                                                              chemical physics 127, 144101 (2007).
+                                                                                      50V. A. Rassolov and F. Xu, The Journal of chemical physics 127,
+ 12J.  W.  Hollett,  H.  Hosseini,   and  C.  Menzies,  J.  Chem.  Phys.
+   145, 084106 (2016).                                                                  044104 (2007).
+                                                                                      51A. V. Sinitskiy, L. Greenman,  and D. A. Mazziotti, The Journal
+ 13E. Ramos-Cordoba, P. Salvador,   and E. Matito, Phys. Chem.
+   Chem. Phys. 18, 24015 (2016).                                                        of chemical physics 133, 014104 (2010).
+                                                                                      52L.  Stella,  C.  Attaccalite,  S.  Sorella,   and  A.  Rubio,  Physical
+ 14C. L. Benavides-Riveros, N. N. Lathiotakis,  and M. A. L. Mar-
+   ques, Phys. Chem. Chem. Phys. 19, 12655 (2017).                                      Review B 84, 245117 (2011).
+                                                                                      53L. Bytautas, T. M. Henderson, C. A. Jim´enez-Hoyos, J. K. Ellis,
+ 15F. A. Evangelista, J. Chem. Phys. 149, 030901 (2018).
+ 16M. Via-Nadal, M. Rodriguez-Mayorga, E. Ramos-Cordoba,  and                           and G. E. Scuseria, J. Chem. Phys. 135, 044119 (2011).
+                                                                                      54E.  Ramos-Cordoba,  X.  Lopez,  M.  Piris,   and  E.  Matito,  The
+   E. Matito, J. Phys. Chem. Lett. 10, 4032 (2019).                                     Journal of chemical physics 143, 164112 (2015).
+ 17E. Fromager, J. Toulouse,  and H. Jørgen Aa. Jensen, J. Chem.                      55I. W. Bulik, T. M. Henderson,   and G. E. Scuseria, Journal of
+   Phys. 126, 074111 (2007).                                                            chemical theory and computation 11, 3171 (2015).
+ 18M. Weimer, F. D. Sala,   and A. G¨orling, J. Chem. Phys. 128,                      56J.  B.  Robinson  and  P.  J.  Knowles,  The  Journal  of  chemical
+   144109 (2008).                                                                       physics 136, 054114 (2012).
+ 19J.  Toulouse,  I.  C.  Gerber,  G.  Jansen,  A.  Savin,    and  J.  G.             57J.  B.  Robinson  and  P.  J.  Knowles,  The  Journal  of  chemical
+   Angy´an, Phys. Rev. Lett. 102, 096404 (2009).
+                                                                                                                                                                      20
+
+  physics 137, 054301 (2012).                                                           88U. Bozkaya and C. D. Sherrill, The Journal of chemical physics
+58J. B. Robinson and P. J. Knowles, Journal of chemical theory                            141, 204105 (2014).
+  and computation 8, 2653 (2012).                                                       89U.  Bozkaya,  Journal  of  chemical  theory  and  computation 12,
+59J. B. Robinson and P. J. Knowles, Physical Chemistry Chemical                           1179 (2016).
+  Physics 14, 6729 (2012).                                                              90J. Nocedal and S. J. Wright, Numerical Optimization (Springer,
+60A. M. Sand and D. A. Mazziotti, Computational and Theoreti-                             New York, New York, 2006).
+  cal Chemistry 1003, 44 (2013).                                                        91C. Garrod and J. K. Percus, Journal of Mathematical Physics
+61P.     A.     Limacher,     P.     W.     Ayers,     P.     A.     Johnson,             5, 1756 (1964).
+  S. De Baerdemacker, D. Van Neck,  and P. Bultinck, Journal of                         92D. A. Mazziotti, Accounts of chemical research 39, 207 (2006).
+  chemical theory and computation 9, 1394 (2013).                                       93D. A. Mazziotti, Phys. Rev. Lett. 108, 263002 (2012).
+62D. Kats and F. R. Manby, The Journal of chemical physics 139,                         94R. R. Li, M. Liebenthal,  and E. DePrince, The Journal of Chem-
+  021102 (2013).                                                                          ical Physics  (2021).
+63T. M. Henderson,  I. W. Bulik,  T. Stein,   and G. E. Scuseria,                       95D. A. Mazziotti, Physical Review A 65, 062511 (2002).
+  The Journal of chemical physics 141, 244104 (2014).                                   96M.  Rodr´ıguez-Mayorga,   E.  Ramos-Cordoba,   M.  Via-Nadal,
+64M. Motta, D. M. Ceperley, G. K.-L. Chan, J. A. Gomez, E. Gull,                          M. Piris,  and E. Matito, Physical Chemistry Chemical Physics
+  S. Guo, C. A. Jim´enez-Hoyos, T. N. Lan, J. Li, F. Ma,  et al.,                         19, 24029 (2017).
+  Physical Review X 7, 031059 (2017).                                                   97P. Piecuch, S. A. Kucharski, K. Kowalski,  and M. Musia l, Com-
+65M. Motta, C. Genovese, F. Ma, Z.-H. Cui, R. Sawaya, G. K.-L.                            puter Physics Communications 149, 71 (2002).
+  Chan,  N.  Chepiga,  P.  Helms,  C.  Jim´enez-Hoyos,  A.  J.  Millis,                 98P. Piecuch and M. W loch, The Journal of chemical physics 123,
+  et al., Physical Review X 10, 031058 (2020).                                            224105 (2005).
+66E. Giner, A. Scemama, P.-F. Loos,  and J. Toulouse, The Jour-                         99A. D. Becke, J. Chem. Phys. 98, 5648 (1993).
+  nal of chemical physics 152, 174104 (2020).                                          100P.  J.  Stephens,  F.  J.  Devlin,  C.  F.  Chabalowski,   and  M.  J.
+67A. Marie, F. Kossoski,  and P.-F. Loos, The Journal of Chemical                         Frisch, The Journal of physical chemistry 98, 11623 (1994).
+  Physics 155, 104105 (2021).                                                          101R. H. Hertwig and W. Koch, Chemical Physics Letters 268, 345
+68A. M. Sand, D. G. Truhlar,   and L. Gagliardi, J. Chem. Phys.                           (1997).
+  146, 034101 (2017).                                                                  102G.  Chaban,  M.  W.  Schmidt,   and  M.  S.  Gordon,  Theoretical
+69J.  P.  Perdew,  K.  Burke,   and  M.  Ernzerhof,  Physical  review                     Chemistry Accounts 97, 88 (1997).
+  letters 77, 3865 (1996).                                                             103K. Hirao, Chemical physics letters 190, 374 (1992).
+70A. J. Garza, I. W. Bulik, T. M. Henderson,  and G. E. Scuseria,                      104K. Hirao, Chemical physics letters 196, 397 (1992).
+  J. Chem. Phys. 142, 044109 (2015).                                                   105K. Hirao, International Journal of Quantum Chemistry 44, 517
+71T. Stein, T. M. Henderson,  and G. E. Scuseria, The Journal of                          (1992).
+  chemical physics 140, 214113 (2014).                                                 106K. Hirao, Chemical physics letters 201, 59 (1993).
+72W.     Poelmans,     M.     Van     Raemdonck,     B.     Verstichel,                107G. M. J. Barca, C. Bertoni, L. Carrington, D. Datta, N. De Silva,
+  S.  De  Baerdemacker,  A.  Torre,  L.  Lain,  G.  E.  Massaccesi,                       J.  E.  Deustua,   D.  G.  Fedorov,   J.  R.  Gour,   A.  O.  Gun-
+  D.  R.  Alcoba,  P.  Bultinck,    and  D.  Van  Neck,  Journal  of                      ina,  E.  Guidez,  T.  Harville,  S.  Irle,  J.  Ivanic,  K.  Kowalski,
+  chemical theory and computation 11, 4064 (2015).                                        S.  S.  Leang,  H.  Li,  W.  Li,  J.  J.  Lutz,  I.  Magoulas,  J.  Mato,
+73Z. Chen, C. Zhou,  and W. Wu, Journal of chemical theory and                            V.  Mironov,  H.  Nakata,  B.  Q.  Pham,  P.  Piecuch,  D.  Poole,
+  computation 11, 4102 (2015).                                                            S.  R.  Pruitt,  A.  P.  Rendell,  L.  B.  Roskop,  K.  Ruedenberg,
+74P.  A.  Limacher,  Journal  of  chemical  theory  and  computation                      T.  Sattasathuchana,  M.  W.  Schmidt,  J.  Shen,  L.  Slipchenko,
+  11, 3629 (2015).                                                                        M.  Sosonkina,  V.  Sundriyal,  A.  Tiwari,  J.  L.  Galvez  Vallejo,
+75R. Van Meer, O. Gritsenko,   and E. Baerends, The Journal of                            B. Westheimer, M. Wloch, P. Xu, F. Zahariev,  and M. S. Gor-
+  chemical physics 148, 104102 (2018).                                                    don,The Journal of Chemical Physics       152, 154102 (2020).
+76F.  Brzek,  K.  Boguslawski,  P.  Tecmer,   and  P.  S.  Zuchowski,                  108Y. Garniron, K. Gasperich, T. Applencourt, A. Benali, A. Ferte,
+  Journal of chemical theory and computation 15, 4021 (2019).                             J. Paquier, B. Pradines, R. Assaraf, P. Reinhardt, J. Toulouse,
+77N. Vu and A. E. DePrince III, The Journal of Chemical Physics                           P.  Barbaresco,  N.  Renon,  G.  David,  J.  P.  Malrieu,  M.  Veril,
+  152, 244103 (2020).                                                                     M. Caﬀarel, P. F. Loos, E. Giner,   and A. Scemama, J. Chem.
+78W.  Kutzelnigg  and  D.  Mukherjee,  J.  Chem.  Phys. 110,  2800                        Theory Comput. 15, 3591 (2019).
+  (1999).                                                                              109B.  P.  Pritchard,  D.  Altarawy,  B.  Didier,  T.  D.  Gibson,   and
+79A.  Szabo  and  N.  S.  Ostlund,  Modern  quantum  chemistry                            T. L. Windus, J. Chem. Inf. Model. 59, 4814 (2019).
+  (Dover, New York, 1996).                                                             110T. H. Dunning Jr., J. Chem. Phys. 90, 1007 (1989).
+80L. Bytautas, G. E. Scuseria,  and K. Ruedenberg, The Journal                         111R. A. Poirier, J. W. Hollett,  and P. L. Warburton, MUNgauss.
+  of chemical physics 143, 094105 (2015).                                                 Memorial  University,  Chemistry  Department,  St.  John’s,  NL
+81J.  W.  Hollett  and  N.  Pegoretti,  J.  Chem.  Phys. 148,  164111                     A1B 3X7 (2015), with contributions from A. Alrawashdeh, J.-
+  (2018).                                                                                 P. Becker, J. Besaw, S.D. Bungay, F. Colonna, A. El-Sherbiny,
+82R. Colle and O. Salvetti, Theor. Chim. Acta 37, 329 (1975).                             T. Gosse, D. Keefe, A. Kelly, D. Nippard, C.C. Pye, D. Reid,
+83R. Colle and O. Salvetti, Theoret. Chim. Acta 53, 55 (1979).                            K. Saputantri, M. Shaw, M. Staveley, O. Stueker, Y. Wang, and
+84This  value  diﬀers  from  the  value  determined  in  reference81,                     J. Xidos.
+  κ = 1.73, because it was found to overestimate the correlation                       112J. J. Mor´e and D. C. Sorensen, SIAM Journal on scientiﬁc and
+  energy between electrons of parallel-spin in these H clusters.                          statistical computing 4, 553 (1983).
+85T. Helgaker, P. Jorgensen,  and J. Olsen, Molecular electronic-                      113P. M. W. Gill, B. G. Johnson,   and J. A. Pople, Chem. Phys.
+  structure theory  (John Wiley & Sons, 2014).                                            Lett. 209, 506 (1993).
+86U.  Bozkaya,  J.  M.  Turney,  Y.  Yamaguchi,  H.  F.  Schaefer  III,                114A. D. Becke, J. Chem. Phys. 88, 2547 (1988).
+  and C. D. Sherrill, The Journal of chemical physics 135, 104103                      115J. F. H. Lew-Yee, M. Piris,  and J. M. del Campo, The Journal
+  (2011).                                                                                 of Chemical Physics 154, 064102 (2021).
+87U. Bozkaya and C. D. Sherrill, The Journal of chemical physics                       116M. Piris and J. M. Ugalde, J. Comput. Chem. 30, 2078 (2009).
+  139, 054104 (2013).

@@ -1,0 +1,534 @@
+        Benchmarking  GNOF  against  FCI  in  challenging  systems  in  one,  two  and  three  dimensions
+
+                                                                                   Ion    Mitxelena
+                                           Donostia   International   Physics   Center   (DIPC),   20018   Donostia,   Euskadi,
+                              Spain;   Euskal   Herriko   Unibertsitatea   (UPV/EHU),  PK   1072,   20080   Donostia,   Euskadi,   Spain
+
+                                                                                    Mario    Piris∗
+                                           Donostia   International   Physics   Center   (DIPC),   20018   Donostia,   Euskadi,
+                                  Spain;   Euskal   Herriko   Unibertsitatea   (UPV/EHU),   PK   1072,   20080   Donostia,   Euskadi,
+                                Spain;   and   Basque   Foundation   for   Science   (IKERBASQUE),  48009   Bilbao,   Euskadi,   Spain
+                                                                               (Dated:   May  16,  2022)
+                       This  work  assess  the  reliability  of  the  recently  proposed  [Phys.   Rev.   Lett.   127,  233001,  2021]  global  natural
+                    orbital  functional  (GNOF)  in  the  treatment  of  the  strong  electron  correlation  regime.  We  ﬁrst  use  an  H10  bench-
+                    mark  set  of  four   hydrogen   model   systems   of  different  dimensionalities   and   distinctive  electronic  structures:   a
+                    1D  chain,  a  2D  ring,  a  2D  sheet,  and  a  3D  close-packed   pyramid.   Second,  we  study  two  paradigmatic  models
+                    for  strongly  correlated  Mott  insulators,  namely  a  1D  H50   chain  and  a  4x4x4  3D  H  cube.   We  show  that  GNOF
+                    without   hybridization   to   other   electronic   structure   methods   and   free   of   tuned   parameters   succeeds   in   treating
+                    weak  and  strong  correlation  in  a  more  balanced  way  than  the  functionals  that  have  preceded  it.
+
+
+                             I.        INTRODUCTION                                              correlated  electronic  structure  leads  to   a   further  reduction  of
+                                                                                                 the  computational cost  of  2RDM  approaches, and  do  not  com-
+   The  vast  majority  of  electronic  structure  methods  are  built                           promise  the  accuracy  for  studying  strongly  correlated  systems
+onto   a   mean-ﬁeld   reference   such   as   the   Hartree-Fock   wave-                        [18,   19].     In   contrast   to   DFT,   the   one-electron   energy   func-
+function.   While  this  approach  is  appropriate  for  most  molec-                            tional   is   exactly   known   in   terms   of   Γ,   however,   we   have   to
+ular   systems,   it   fails   to   describe   strongly   correlated   systems                   settle  for  making  approximations  for  the  reconstruction  of  the
+[1].      The   latter   is   also   one   of   the   main   limitations   of   den-             unknown   electron-electron  interaction   energy   functional.     In
+sity   functional   theory   (DFT)   approximations   [2,   3],   despite                        Ref.     [20],   a   bottom-up   approach   was   derived   to   impose   N-
+recent   efforts   to   overcome   the   associated   fractional   electron                      representability   constraints   on   the   construction   of   the   func-
+problem   [4].      Alternatively,   reduced   density   matrix   (RDM)                          tional,   rather  than  doing  it   along  the   optimization  process  as
+methods    hold    the    promise    to    give    a    complete    description                  it   is   done   in   v2RDM   methods.    Enforcement  of   two-particle
+of    the   electron   correlation   [5–9].       The   second-order   RDM                       positivity   conditions,   together   with   the   electron-pairing   ap-
+(2RDM)  D  alone  is  sufﬁcient  to  describe  many-electron  sys-                               proach,   lead   us   to   PNOF5   [21,   22],    a   natural   orbital   func-
+tems   in   the   non-relativistic  limit,   thus   reducing  dramatically                       tional  (NOF)   that  retrieves  the   Löwdin-Shull  functional  [23]
+the   computational   cost   inherent   to   wavefunction   expansions                           for  singlet  states  in  two-electron  systems.    Note  that  we  refer
+[6].      In   practical   calculations,   however,   the   optimization   of                    to   NOF   since,   in   most   applications,   the   spectral   decomposi-
+the  2RDM  must  be  subject  to  a  set  of  N-representability  con-                           tion  of  the  1RDM  is  used  to  express  it  in  terms  of  the  natural
+ditions   to    assure,    at    least   approximately,    that   the   resulting                orbitals  and  their  occupation  numbers.  PNOF5  constitutes  the
+2RDM  is  derivable  from  an  antisymmetrized  N-electron  den-                                 ﬁrst  N-representable  functional  that  includes  electron  correla-
+sity   matrix   [10].     Two-particle   N-representability   conditions                         tion,   since   it   is   equivalent   to   an   antisymmetrized   product  of
+have   been   shown   to   lead   to   accurate   results   in   many   situa-                   strongly   orthogonal   geminals   [24].     Accordingly,   PNOF5   is
+tions,  and  this  accuracy  can  be  improved  by  including  three-                            able  to  provide  an  accurate  prediction  for  the   dissociation  of
+particle   constraints  [11,   12],   but   sometimes  the   latter   are   es-                  different   chemical   bonds,   including   multiple-bond   dissocia-
+sential  to  describe  some  strongly  correlated  systems  [13–15].                             tions  [25],  by  providing  the  correct  number  of  electrons  at  the
+Unfortunately,   in   the   conventional   formulation   of   the   varia-                       dissociation   limit,   refuting   the   statement   about  1RDM   func-
+tional   2RDM   (v2RDM)   method   [5],   the   inclusion   of   three-                          tionals  recently  made  by  Wenna  et  al.   [3].
+particle  conditions  increases  the  computational  cost  to  O(M9)                                 Strongly  correlated  systems  are  particularly  challenging for
+and  therefore  limits  its  application  to  large  systems,  M  being                          any    electronic    structure    method    including    the    independent
+the  dimension  of  the  single-particle  space.   Recently  [16,  17],                          pair   model   PNOF5   [26,   27].     Recently   [7,   27],   the   incorpo-
+a  new  dual  formulation  of  the  v2RDM  method  has  reduced  to                              ration  of  electron  correlation  between  pairs  has  resulted  in  an
+O(M6)   the   computational  cost   of   implementing  the   T2   con-                           efﬁcient   method   for   strongly   correlated   systems   in   one   and
+dition  in  both  ﬂoating-point  operations  and  memory  storage,                               two  dimensions  [18,  19].    The  resulting  NOF  approximation,
+which   provides  a   signiﬁcant   improvement  in   the   calculation                           PNOF7,    correlates   the   motion   of   the   electrons   in   different
+of  strongly  correlated  systems  with  v2RDM.                                                  pairs   with   parallel   and   opposite   spins   explicitly   considering
+   The  use  of  the  ﬁrst-order  RDM  (1RDM)  Γ  to  describe  the                              particle-hole   symmetry,   in   the   line   of   the   original   formula-
+                                                                                                 tion  of   Bardeen,   Cooper  and   Schrieffer  (BCS)   [28].    PNOF7
+                                                                                                 outperforms   [26,   29]   the   most   common   1RDM   approxima-
+                                                                                                 tions   in    the    description   of    the    one-dimensional   (1D)    Hub-
+∗Electronic  address:   mario.piris@ehu.eus                                                      bard  model  and  its  variant  Aubry-André  model  at  half-ﬁlling.
+                                                                                                                                                                                            2
+
+More  importantly,  PNOF7  and  v2RDM  with  two-  and  three-                                        Next,   we   divide   the   orbital   space   Ω   into   two   subspaces:
+particle  PQGT’  constraints  are  comparable  to  study  the  two-                               Ω =  ΩI ⊕ ΩII.      ΩII    is   composed   of   NII/2   mutually   disjoint
+dimensional   (2D)   Hubbard   model   at   half-ﬁlling,   for   which                            subspaces   Ωg.     Each   of   which   contains   one   orbital |g⟩   with
+they  approach  reference  auxiliary-ﬁeld  quantum  Monte  Carlo                                  g ≤  NII/2,  and  Ng  orbitals | p⟩  with   p >  NII/2,  namely,
+results.    Nevertheless,   only  the   former  retains  its   accuracy  at                                                                                         ⟩}.                                   (1)
+lower   ﬁlling   situations   [19].    In   summary,   PNOF7   compares                                                Ωg ={|g⟩,| p1⟩,| p2⟩,...,⏐⏐ pNg
+with   the   state-of-the-art  methods  for  describing  the   Hubbard                                Taking into account the  spin,  the  total  occupancy for  a  given
+model,   regardless   of   the   dimensionality   and   size   of   the   sys-                    subspace  Ωg  is  2,  which  is  reﬂected  in  the  following  sum  rule:
+tem.     However,   in   the   case   of   hydrogen  (H)   model   systems,
+which  resemble  the  Hubbard  model  with   long-range  interac-                                                                     Ng
+tions,  the  performance  of  PNOF7  is  not  as  accurate  as  for  the                                        ∑     n p =  ng +    ∑    n pi =  1,         g =  1, 2,...,  NII
+Hubbard  model.   The  accurate  description  of  these  models  by                                           p∈ΩII                  i=1                                     2  .                (2)
+a  NOF  is  thereby  the  motivation  of  the  present  work.
+   H  clusters  combined  with  a  minimal  basis  add  a  subtle  de-                            Here,  the  notation  p ∈  ΩII  represents  all  the  indexes  of | p⟩  or-
+localization  to  the  Hubbard  Hamiltonian  and  represent  a  chal-                             bitals   belonging  to   ΩII.     In   general,   Ng   may   be   different  for
+lenging   strong   correlation   problem   [15,   30–32].     In   view   of                      each   subspace.     In   this   work,   Ng   is   equal   to   a   ﬁxed   number
+the  difﬁculties  shown  by  PNOF7  to  describe  the  dissociation                               for   all   subspaces   Ωg ∈  ΩII.     We   adopt   the   maximum   possi-
+of  the  2D  H  lattice  [19]  and  asymmetric  dissociation  of  linear                          ble  value  of  Ng   which  is  determined  by  the  basis  set  used  in
+H  chains  [18],  a  functional form including interpair dynamical                                calculations.  From  (2),  it  follows  that
+correlation  effects  could  be   more  appropriate  to   the   study  of                                                             NII/2(            Ng∑      )
+such  systems.   In  this  vein,  the  recently  proposed  global  NOF                                            2   ∑     n p =  2    ∑       ng +        n pi    =  NII.                         (3)
+(GNOF)   [9]   has   demonstrated   a   balanced   treatment   of   elec-                                           p∈ΩII              g=1             i=1
+tron   correlation   effects   in   molecular   systems   with   different
+spins,  including full  dissociation  curves,  and  ionization  poten-                            Similarly,  ΩI   is   composed  of  NI   mutually  disjoint  subspaces
+tials  of  ﬁrst-row  transition  metal  atoms.   In  this  work,  we  ﬁrst                        Ωg.    In  contrast  to  ΩII,  each  subspace  Ωg ∈  ΩI   contains  only
+study  the  ability  of  GNOF  to  deal  with  the  benchmark  set  of                            one   orbital   g   with   2ng =  1.     It   is   worth   noting   that   each   or-
+1D-,   2D-,   and  three-dimensional-  (3D)   H   systems   employed                              bital  is  completely  occupied  individually,  but  we  do  not  know
+in  Refs.   [15]  and  [32].   Second,  we  analyze  the  GNOF  results                           whether  the  electron  has  α   or  β   spin:  nαg  =  nβg  =  ng =  1/2.  It
+on  two   paradigmatic  models  for  strongly  correlated  Mott  in-                              follows  that
+sulators,   namely   a   1D   H50   chain   and   a   4x4x4   3D   hydrogen                                                                      NΩ
+cube.   We  demonstrate  that  a  pure  NOF  without  hybridization                                                      2   ∑    n p =  2       ∑        ng =  NI.                                       (4)
+to  other  electronic  structure  methods  and  free  of  tuned  param-                                                    p∈ΩI             g=NII/2+1
+eters  is  adequate  to  provide  a  complete  description  of  strongly
+correlated  systems.                                                                              In  Eq.   (4),  NΩ =NII/2 + NI   denotes  the  total  number  of  sus-
+                                                                                                  paces  in  Ω.   Taking  into  account  Eqs.   (3)  and  (4),  the  trace  of
+                                                                                                  the  1RDM  is  veriﬁed  equal  to  the  number  of  electrons:
+       II.        GLOBAL  NATURAL  ORBITAL  FUNCTIONAL
+                                                                                                            2  ∑    n p =  2   ∑      n p + 2   ∑      n p =  NII + NI =  N.            (5)
+   The  nonrelativistic  Hamiltonian  under  consideration  is  spin                                          p∈Ω              p∈ΩII            p∈ΩI
+coordinate  free;  therefore,  a  state  with  total  spin  S  is  a  multi-                      Using  ensemble  N-representability  conditions,  we  can  gener-
+plet,  i.e.,  a  mixed  quantum  state  that  allows  all  possible  Sz  val-                     ate  a  reconstruction  functional  for  the  2RDM  in  terms  of  the
+ues.    Next,   we   brieﬂy  describe  GNOF  for  spin-multiplets.    A                           occupation  numbers  that  leads  to  GNOF:
+more  detailed  description  of  this  JKL-only  NOF  can  be  found
+in  Ref.   [9].                                                                                                       E =  E int ra + E int erHF   + E int erst a   + E int erdyn                                     (6)
+   We   consider  NI   single   electrons  which  determine  the   spin                           The  intra-pair component is  formed by  the  sum  of  the  energies
+S   of  the   system,   and  the   rest  of   electrons  (NII =  N − NI)   are                    of   the   pairs   of   electrons   with   opposite   spins   and   the   single-
+spin-paired,   so   that   all   spins   corresponding   to   NII    electrons                    electron  energies  of  the  unpaired  electrons,  namely
+altogether  provide  a   zero   spin.    We   focus  on   the   mixed  state
+of   highest   multiplicity:     2S +  1 =  NI + 1,  S =  NI/2.      In   the                                                        NII/2               NΩ
+absence  of  single  electrons  (NI =  0),  the  energy  obviously  re-                                                  E int ra =    ∑    Eg +         ∑        Hgg                                        (7)
+duces  to  a  NOF  that  describes  singlet  states.                                                                                  g=1           g=NII/2+1
+   For   an   ensemble   of   pure   states {|SMs⟩},   we   note   that   the
+expected  value  of    ˆSz   for  the  whole  ensemble  is  zero.    Conse-                           Eg =   ∑        n p(2Hp p + Jp p) +         ∑              Π(nq, n p) L pq          (8)
+quently,  the  spin-restricted  theory  can  be  adopted  even  if  the
+total   spin   of   the   system   is   not   zero.     We   use   a   single   set   of                       p∈Ωg                              q, p∈Ωg, p⁄=q
+orbitals  for  α   and  β   spins.  All  the  spatial  orbitals  will  be  then                   where
+doubly  occupied  in  the  ensemble,  so  that  occupancies  for  par-
+ticles  with  α   and  β   spins  are  equal:  nαp =  nβp =  n p.                                              Π(nq, n p) = √nqn p(δqΩa δ pΩa − δqg − δ pg)                    (9)
+                                                                                                                                                                                           3
+
+and    Hp p    are    the    diagonal   one-electron   matrix    elements    of                   numbers  and  to  the  natural  orbitals,  separately.  Therefore,  or-
+the   kinetic   energy   and   external   potential   operators.       Jpq =                      bitals   vary   along   the   optimization   process   until   the   most   fa-
+⟨ pq| pq⟩   and   L pq = ⟨ p p|qq⟩  are   the   Coulomb   and   exchange-                         vorable   orbital   interactions  are   found.    All   calculations   have
+time-inversion   integrals,    respectively.      Ωa    denotes   the   sub-                      been   carried   out   using   the   DoNOF   code   [34].     The   STO-6G
+space  composed  of  orbitals  above  the  level  NΩ  ( p >  NΩ).  The                            basis  set  [35]  was  used  throughout.
+inter-pair  Hartree-Fock  (HF)  term  is
+
+                                    NB    ′ nqn p (2Jpq − Kpq)                                 (10)                                 III.        RESULTS
+                     E int erHF   =∑
+                                  p,q=1                                                                                       A.        H10  benchmark  set
+
+where  Kpq = ⟨ pq|q p⟩  are   the  exchange  integrals.    The   prime
+in  the  summation  indicates  that  only  the  inter-subspace  terms                                GNOF  is  analyzed  in  this  section  by  using  the  H10   bench-
+are  taking  into  account  ( p ∈  Ω f , q ∈  Ωg,  f ⁄= g).  NB  represents                       mark   set   of   1D,   2D   and   3D   H   clusters   introduced   by   Stair
+the  number  of  basis  functions  considered.  The  inter-pair  static                           and   Evangelista   [32]   to   test   methods   that   converge   to   Full-
+component  is  written  as                                                                        Conﬁguration  Interaction   (FCI)   in   the   limit   of   no   truncation
+                  (  NΩ                                                    )′                     of  the  wavefunction  expansion.   Fig.   1  shows  the  structure  of
+                              NB             NB      NΩ            NB                             the  four  H10   model  systems.    The  geometry  of  each  model  is
+  E int erst a    = −∑        ∑       +      ∑       ∑     +       ∑            ΦqΦ p             controlled  by  the   nearest  neighbor  H–H   distance  (in   Å).  Re-
+                     p=1q=NΩ+1           p=NΩ+1q=1            p,q=NΩ+1                            cently  [15],  Li,  Liebenthal  and  DePrince  employed  this  set  in
+                   (NII/2                                         )′                              order   to   assess   the   effect  of   three-particle  N-representability
+                                 NΩ                NΩ       NII/2                                 conditions   (e.g.,    the   T2    condition)   not   only   on   the   energy
+      L pq −   12      ∑         ∑        +        ∑         ∑        Φq Φ pL pq                  curves,   but   also   on   a   variety   of   correlation   metrics   includ-
+                       p=1  q=NII/2+1         p=NII/2+1     q=1                                   ing   different   order   RDMs   based   quantities   and   the   site-wise
+
+                                            NΩ                                                    spin-spin   correlation.     Here,   we   compare   reference   FCI   en-
+                                −  1        ∑         Kpq                                         ergies   with   PNOF7   and   GNOF   calculations.      For   compari-
+                                   4  p,q=NII/2+1                                                 son,   in   some   examples   we   also   report   the   v2RDM   energies
+                                                                                     (11)         obtained   in   Ref.      [15].      It   is   worth   noting   that   according   to
+where   Φ p =√n ph p   with   the   hole   h p =  1 − n p.      Note   that
+Φ p   has   signiﬁcant   values   only   when   the   occupation   number                           FIG.  1:   Structure  of  the  H10  model  systems  studied  in  this  work.
+n p   differs   substantially   from   1   and   0.     Finally,   the   inter-pair
+dynamic  energy  can  be  conveniently  expressed  as
+
+                  NB                                 )](                       )
+   E int erdyn   =∑     ′[ndq ndp +   Π(ndq, ndp           1 − δqΩbI I δ pΩbI I   L pq
+                p,q=1
+                                                                                     (12)
+   In  Eq.  (12),  ΩbII   denotes  the  subspace  composed  of  orbitals
+below  the  level  NII/2  ( p ≤  NII/2),  so  interactions  between  or-
+bitals  belonging  to  ΩbII  are  excluded  from  E int erdyn    .  The  dynamic
+part  of  the  occupation  number  n p  is  deﬁned  as
+
+                                         ( hg  )2
+                                      −    hc
+                       ndp =  n p · e              ,          p ∈  Ωg                                        (13)
+
+with   hc =  0.02√2   [9].    The   maximum  value   of   ndp   is   around
+0.012  in  accordance  with  the  Pulay’s  criterion  that  establishes
+an  occupancy  deviation  of  approximately  0.01  with  respect  to                              Ref.   [32],  the  reported  correlation  regimes  correspond  to  U/t
+1   or   0   for   a   natural  orbital  to   contribute  to   the   dynamic  cor-                ranges   from   about   0.94   at   r =  0.75   Å   to   8.55   at   r =  2.0   Å,
+relation.   Clearly,  GNOF  does  not  take  into  account  dynamic                               where  U  and  t  are  the  repulsion and  hopping parameters  of  the
+correlation  of  the  single  electrons  ( p ∈  ΩI)  via  the  E int erdyn      term.             Hubbard  Hamiltonian,  respectively,  and  r  stands  for  the  near-
+Considering  real  spatial  orbitals  (L pq =  Kpq)  and  n p ≈  ndp,  it  is                     est  neighbor  H–H  distance.    PNOF7   has  been  largely  proved
+not  difﬁcult  to  verify  that  the  terms  proportional  to  the  prod-                         to  be  an  efﬁcient method to  study the  Hubbard model in  differ-
+uct   of   the   occupation   numbers   will   cancel   out,   so   that   only                   ent  ﬁlling  situations,  spin  multiplicities,  and  many  dimensions
+those  terms  proportional  to  Π  will  contribute  signiﬁcantly  to                             [18,   19,   26,   27,   29].     However,   we   have   observed   important
+the  energy.                                                                                      energy  differences  with  respect  to  FCI  in  the  aforementioned
+   It  is  important  to  note  that  GNOF  preserves  the  total  spin  of                       U/t  ranges  due  to  the  simultaneous  presence  of  both  weak  and
+the  multiplet:  < ˆS2> =  S (S + 1)  [33].    The  solution  is  estab-                          strong   electron   correlation   effects.     Hence,   the   here   selected
+lished  by  optimizing  the  energy with  respect  to  the  occupation                            benchmark   set   constitutes   a   challenge   for   NOF   approxima-
+                                                                                                                                                                                             4
+
+tions   and   is   therefore   suitable   for   testing   whether   GNOF   is                      FIG.  3:    Dissociation   energy   curves   corresponding   to   a   2D   sheet   of
+successful  or  not  in  dealing  with  weak  and  strong  correlation                             10  H  atoms.   Energies  (in  Hartrees)  obtained  by  using  FCI,  v2RDM
+in  a  more  balanced  way  than  its  predecessors.                                               with   two-particle   DQG   conditions   (DQG),   including   T2   condition
+                                                                                                   (DQGT2),  and  full  three-particle  positivity  conditions  (3POS).  NOF
+FIG.   2:     Dissociation   energy   curves    corresponding    to   a   1D   lineal              approximations  include  PNOF7  and  GNOF.
+
+chain    of    10    H    atoms.        Energies    (in    Hartrees)    obtained    by    using
+PNOF7,  GNOF,  FCI  and  v2RDM  with  two-particle  DQG  conditions.
+
+
+
+
+                                                                                                       -4.7
+
+
+    -4.8
+                                                                                                       -4.8
+
+                          PNOF7
+                          GNOF
+    -5.0                  FCI                                                                          -4.9                                                          PNOF7
+                          DQG                                                                                                                                        GNOF
+
+                                                                                                                                                                     FCI
+                                                                                                                                                                     3POS
+                                                                                                       -5.0                                                          DQGT2
+    -5.2                                                                                                                                                             DQG
+
+
+
+                                                                                                       -5.1
+
+
+    -5.4                                                                                                     0.9              1.2               1.5              1.8               2.1              2.4               2.7              3.0
+                                                                                                                                              H --- H (Å)
+
+             0.8                   1                  1.2                 1.4                 1.6                 1.8                  2
+                                            H --- H (Å)
+                                                                                                   distances  greater  than  1.5  Å.
+   Fig.     2   shows   the   dissociation   curves  for   a   lineal   chain   of                     From  Fig.    3,  it  can  be  seen  that  PNOF7  describes  the  dis-
+10  H  atoms.   FCI  and  v2RDM  with  DQGT2  or  three-particle                                   sociation  of  the  2D  H  sheet  well,  as  it  was  observed  for  a  4x4
+complete  positivity  (3POS)  conditions  were  found  [15]  to  be                                square  grid  of  H  atoms  [19].   Again,  and  similar  to  the  result
+in  complete  agreement,  so  we  focus  for  this  linear  system  on                             obtained  for  the   linear  array  of   Fig.    2,   the  dynamic  electron
+methods that  consider only  the  two-particle N-representability                                  correlation   present   in   the   equilibrium   region   causes   PNOF7
+conditions  of  the  2RDM.  According to  the  results  obtained  for                              to   stay   very   high   compared  to   FCI   energies.    GNOF   can   re-
+the   2D   Hubbard  model  in   Ref.    [19],   a   NOF   can   outperform                         cover  the  missing  dynamic  correlation  in  PNOF7,  although  it
+v2RDM   with   DQG   conditions.     However,   although   PNOF7                                   provides   a   slightly   shorter   equilibrium   distance   than   FCI.   It
+also   outperformed   v2RDM   with   three-particle   T   conditions                               should  be  noted  that  GNOF  remains  close  to  FCI  throughout
+for  the   2D  Hubbard  Hamiltonian  away  from  half-ﬁlling,  this                                the  entire  dissociation  curve,  showing  a  balanced  treatment  of
+functional is  less  accurate  in  describing  the  dissociation  of  lin-                         dynamic  and  non-dynamic  correlation  effects.
+eal   H10   in   the   equilibrium   region.      Noticeably,   GNOF   cor-                            The  dissociation  of  the  2D  ring  (see  Fig.   1)  with  respect  to
+rectly   recovers   the   lack   of   dynamical   correlation   shown   by                         the  nearest  neighbor  H–H  distances  shows  similar  character-
+PNOF7   in   this   region.      Although   GNOF   slightly   underesti-                           istics  of  the  dissociations  discussed  above.   It  is  worth  noting
+mates  the  equilibrium  distance,  overall  the  dissociation  curve                              that  we  used  this  system  to  discuss  the  phase  dilemma  present
+and  thereby  the  dissociation  energy  compares  better  with  FCI                               in  the  development of  PNOF7  [27].  First  of  all,  the  results  ob-
+than  PNOF7  and  its  predecessors.                                                               tained   [15]   with   three-particle   positivity   conditions   are   very
+   The   addition   of   a   spatial   dimension   increases   the   number                        close   to   the   FCI   values,   so   they   are   not   included   in   Fig.     4,
+of  interatomic interactions,  making  the  bond-breaking process                                  as   we   did   in   the   case   of   the   linear   chain   of   hydrogens.    Ac-
+more  complex.  2D  systems  are  known  to  be  particularly  chal-                               cording  to  Fig.   4,  PNOF7  remains  above  FCI  throughout  the
+lenging   as   the   amount   of   electron   correlation   is   higher   than                     curve,   unlike   what   happens   with   DQG.   GNOF   recovers   the
+in   their   1D   counterparts.     In   Fig.     3,   we   show   the   dissocia-                 dynamic  correlation  and  improves  the  description  of  the  equi-
+tion  curves  for  the  2D  sheet  of  10  H  atoms  shown  in  Fig.    1.                         librium  region  with  respect  to  known  NOFs,   as  was  the  case
+Since  DQG  yields  too  low  energies  along  the  whole  dissoci-                                with  all  systems  studied  so  far.
+ation  curve,  it  is  clear  that  the  two-particle  N-representability                              In  Figs.    3  and  4,   we   must  notice  that  black  GNOF  curves
+conditions   are    useful    only    if    they    are    employed   in    an    ap-              show  a  discontinuity  of  the  derivative  at  1.5  Å  and  1.4  Å,  re-
+proximate 2RDM  reconstruction with  more restrictions,  as  oc-                                   spectively.   It  is  well  known  that  in  the  equilibrium  region  the
+curs  in  the  NOF  approaches  considered,  namely  PNOF7  and                                    dynamic  correlation  predominates  and  that  in  the  dissociation
+GNOF.  PNOF7  shows  good  performance  beyond  interatomic                                        asymptote  the  dominant  character  is  given  by  the  static  corre-
+distances   of   1.5   Å,    where   it   embraces   to    the   DQGT2   and                       lation,  while  in  the  intermediate  region  both  types  of  electron
+3POS   curves.    The   latter   accurately  describe  the   equilibrium                           correlation  compete.   For  both  2D  systems,  the  GNOF  poten-
+region  but  unfortunately  produce  energies  well  below  FCI  for                               tial   energy   curve   (PEC)   shows   that   the   functional   correctly
+                                                                                                                                                                                                    5
+
+FIG.  4:  Dissociation  energy  curves  corresponding  to  a  2D  ring  of  10                        can  observe  that  the  occupancy  for  the  nearest  neighbor  H–H
+H  atoms.    Energies  (in  Hartrees)  obtained   by  using  PNOF7,  GNOF,                            distances ≤  1.5  Å   are  close  to  2,   which  reﬂects  the  dynamic
+FCI  and  v2RDM  with  two-particle  DQG  conditions.                                                 character of  these  solutions  in  accordance with  the  Pulay’s  cri-
+                                                                                                      terion.  On  the  contrary,  the  solutions  corresponding  to  greater
+                                                                                                      distances  have  a  marked  non-dynamic  character.
+                                                                                                          The  existence  of  multiple  solutions  in  the  energy  minimiza-
+
+    -4.7                                                                                              tion  problem  for  a  NOF  is  expected  given  the  non-linear  char-
+                                                                                                      acter  of  the  Euler  equations  [34].   When  the  correlation  has  a
+    -4.8                                                                                              deﬁnite  character  one  of  the  solutions  is  clearly  of  lower  en-
+                          PNOF7                                                                       ergy,   however,   when   both   types   of   correlation   are   important
+    -4.9                  GNOF
+                          FCI                                                                         these  solutions  might  be  close.   For  the  sheet,  GNOF  fails  by
+                          DQG
+    -5.0                                                                                              not  performing  a  correct  balance  of  both  types  of  correlation
+                                                                                                      and  that  is  why  the   discontinuity  appears  in  the  intermediate
+    -5.1                                                                                              region.    The   proper  PEC   is   obtained  when   there   is   a   smooth
+                                                                                                      transition   between   solutions,   as   observed   in   the   case   of   the
+    -5.2
+                                                                                                      chain.
+
+    -5.3                                                                                                  The    H10     benchmark    set    is    completed    with    a    pyramid-
+                                                                                                      shaped   3D   cluster   (see   Fig.      1).      The   energies   obtained   by
+    -5.4                                                                                              using  PNOF7,  GNOF,  FCI,  and  v2RDM  with  two-  and  three-
+
+    -5.5                                                                                              particle   positivity   conditions,   along   the   dissociation   curves
+             0.8                 1.0                 1.2                 1.4                 1.6                 1.8                 2.0with  respect  to  the  nearest  neighbor H–H  distances,  are  shown
+                                             H --- H (Å)
+                                                                                                      in   Fig.    6.    We   can   observe  that  three-particle  constraints  are
+                                                                                                      not  enough  to   avoid   an   overestimation  of   the   correlation  en-
+describes   the   equilibrium   and   dissociation   regions,   but   also                            ergy,   and   PNOF7   shows   the   same   issue   at   interatomic   dis-
+suggests  that  in  these  regions  we  have  two  different  solutions.                              tances  greater  than   1.4  Å.   All   of   these   methods  give   a   mini-
+These  two  different  solutions  have  a  non-smooth  transition  in                                 mum well  beyond FCI,  which  is  located approximately at  1.46
+the  intermediate region, which is  manifested in  the  discontinu-                                   Å.  Despite  the  relative  error  given  by  GNOF  along  the  disso-
+ity  of  the  ﬁrst  derivative  of  the  PEC  with  respect  to  the  nearest                         ciation  curve,   its  corresponding  equilibrium  distance  of   1.41
+neighbor  H–H  distances.   In  the  case  of  the  linear  chain,  both                              Å   compares   well   with   FCI,   as   well   as   the   overall   behavior
+solutions  also  exist  but  GNOF  is  able  to  go  from  one  solution                              along  the   entire   curve.    Thus,   although  a   two-index  approxi-
+to  another  smoothly.                                                                                mation   like   GNOF   does   not   recover   all   electron   correlation,
+                                                                                                      we  can  expect  this  functional  to  offer  a   more  balanced  treat-
+FIG.   5:     Occupancy   (2n p )   of   the   lowest   strongly   occupied   natural                 ment  of  the  different  types  of  electron  correlation  in  complex
+orbital.                                                                                              three-dimensional  physical  and  chemical  problems.
+
+
+                                                                                                      FIG.  6:  Dissociation  energy  curves  corresponding  to  a  3D  pyramid  of
+                                                                                                      10  H  atoms.   Energies  (in  Hartrees)  obtained  by  using  FCI,  v2RDM
+        2                                                                                             with   two-particle   DQG   conditions   (DQG),   including   T2   condition
+                                                                                                      (DQGT2),  and  full  three-particle  positivity  conditions  (3POS).  NOF
+       1.8                                                                                            approximations  include  PNOF7  and  GNOF.
+                                                                       chain
+                                                                       sheet
+
+
+       1.6
+
+
+                                                                                                           -4.5
+       1.4                                                                                                                                                                     PNOF7
+                                                                                                                                                                               GNOF
+                                                                                                                                                                               FCI
+                                                                                                                                                                               3POS
+       1.2                                                                                                 -4.6                                                                DQGT2
+                                                                                                                                                                               DQG
+
+
+
+         1      0.9              1.2              1.5              1.8              2.1             2.4              2.7               3-4.7
+
+                                             H --- H (Å)
+
+   In   order   to   illustrate   the   transition   between   the   two   solu-                           -4.8
+tions,  Fig.   5  shows  the  change  in  the  occupancy  correspond-
+ing  to  the  strongly  occupied  natural  orbital  (1.0 ≤  2n p ≤  2.0)
+with  the  lowest  occupancy.  Note  that  we  report  the  occupancy                                      -4.9
+for   spatial   orbitals   and,   hence,   convergence   to   unity   means                                   1.1                           1.2                           1.3                           1.4                           1.5
+that   the   orbitals   are   half-ﬁlled.     In   the   case   of   the   sheet,   we                                                              H --- H (Å)
+                                                                                                                                                                                                6
+
+   Singlet-Triplet  Gaps                                                                            cube.    The   size   of   these   systems   makes  FCI   calculations  not
+                                                                                                    possible,   so   density-matrix   renormalization   group   (DMRG)
+   In  this  subsection,  we  proceed to  calculate  single-triplet and                             method  is  used  as  reference  whenever  it  is  available  [36].  Hy-
+singlet-quintet  gaps  corresponding  to   the  H10   benchmark  set                                drogen  clusters  exhibit  electron  localization  when  their  atoms
+shown  in  Fig.    1   at  nearest  neighbor  H–H  distances  of  1.0  Å                            are   symmetrically   dissociated.     Thus,   we   stretch   all   internu-
+and  1.5  Å.  These  were  the  distances  used  by  Stair  and  Evange-                            clear  distances  between  adjacent  atoms  simultaneously  to  ob-
+lista  [32]  to  compute  the  density  of  states  from  the  50  lowest                           tain,   at   the   end,   50   and   64   isolated   hydrogen  atoms,   respec-
+singlet,  triplet,  and quintet  states  of  the  H10  systems.  We  focus                          tively   for   the   1D   and   3D   systems.      Similar   to   the   Hubbard
+on   the   gap   calculated   only   from   the   minimum   energy   states                         model   when   the   correlation   regime   is   increased,   a   metal-to-
+corresponding  to   each   spin.     Recall   that   we   use   the   recently                      insulator  transition  is  observed  in  both  systems.   Accordingly,
+introduced   [33]   formalism   for   spin   multiplets   in   the   frame-                         they  are  paradigmatic  models  for  strongly  correlated  Mott  in-
+work   of   NOF   theory   that   guarantees   the   preservation   of   the                        sulators.
+total  spin  of  the  system,  in  addition  to  its  projection.
+                                                                                                    FIG.   7:     Symmetric   dissociation   energy   curves   corresponding   to   a
+TABLE  I:  Lowest  energy   singlet-triplet  and   singlet-quintet  gaps  (in                       1D   H50   chain.     Energies   per   atom   (in   Hartrees)   obtained   by   using
+Hartrees)  at  nearest  neighbor  H–H  distance  of  1.0  Å.  The  FCI  values                      PNOF7,  GNOF,  DMRG  and  v2RDM  with  two-particle  DQG  condi-
+are  inferred  from  Fig.  2  of  Ref.  [32]                                                        tions  (DQG)
+
+
+                                        S  -  T            S  -  Q
+                      system       FCI    GNOF        FCI    GNOF
+                      chain        0.12       0.13    0.47           0.49
+                      ring         0.24       0.29      -                 0.58                          -0.44                                                                PNOF7
+                      sheet        0.22       0.24      -                 0.61                                                                                               GNOF
+                                                                                                                                                                             DMRG
+                      pyramid      0.04       0.01      -                 0.56                          -0.46                                                                DQG
+
+
+
+                                                                                                        -0.48
+   Tables   I   and   II   show   the   lowest   energy   singlet-triplet   and
+singlet-quintet  gaps  obtained  using  GNOF,  and  the  FCI  values
+                                                                                                        -0.50
+inferred  from  Fig.   2  of  Ref.   [32].   At  shorter  bond  length,  the
+1D  and  2D  systems  show  large  gaps  between  the  ground  state
+and   the   lowest   triplet   and   quintet   states,    whereas   at   longer                         -0.52
+bond   length,   the   singlet–triplet   and   singlet-quintet   gaps   de-
+crease   for   all   systems.     Interestingly,   the   3D   pyramid   shows                           -0.54
+a  small  singlet-triplet  gap  at  1.0  Å  and  an  almost  zero  gap  at                                                 1                          1.5                          2                          2.5                          3
+1.5   Å.   In   fact,   GNOF   predicts   that   the   lowest   triplet   state   is                                                             H --- H (Å)
+negligibly  lower  than  the  singlet  state.    We  observe  a  reason-
+able  agreement  between  the  gaps  obtained  with  both  methods,                                     Symmetric    dissociation    energy    curves    corresponding    to
+especially  at  1.5  Å.                                                                             PNOF7,   GNOF,   DMRG   and   v2RDM   with   DQG   constraints
+                                                                                                    are  shown  in  Fig.   7  for  the  H50   chain.   Note  that  DQG  values
+TABLE  II:  Lowest  energy  singlet-triplet  and  singlet-quintet  gaps  (in                        were   inferred   from   Fig.     2   of   Ref.     [37].     The   H50   was   stud-
+Hartrees)  at  nearest  neighbor  H–H  distance  of  1.5  Å.  The  FCI  values                      ied  in  detail  in  Ref.   [18]  in  the  context  of  PNOF7.   Despite  it
+are  inferred  from  Fig.  2  of  Ref.  [32]                                                        compares  well  with  reference  DMRG  energies  along  the  dis-
+                                                                                                    sociation  curve  and  it  exhibits  a   correct  behaviour  of   natural
+                                        S  -  T            S  -  Q                                  occupation numbers (see  Fig.  3  from  Ref.  [18]),  PNOF7  lacks
+                     system        FCI      GNOF       FCI    GNOF                                  dynamical  correlation   at   the   equilibrium   region.    As   already
+                     chain         0.03         0.05   0.14           0.13                          observed  in  the  H10  benchmark  set,  GNOF  not  only  improves
+                     ring          0.05         0.06   0.17           0.16                          the  dissociation  energy  given  by  PNOF7,  but  it  also  sticks  to
+                     sheet         0.06         0.06   0.15           0.13                          DMRG  along  the  full  curve.   More  importantly,  GNOF  accu-
+                     pyramid      0.005    -0.001      0.16           0.15                          racy  and  its  ability  to  retrieve  the  dynamic  correlation  missing
+                                                                                                    in  PNOF7   do  not  deteriorate  going  from  small  to  large  clus-
+                                                                                                    ters.   Electron  correlation  is  thus  correctly  accounted  by  con-
+                                                                                                    sidering  the  dynamic  part  of  the  occupation  numbers  in  Eqs.
+                                                                                                    12  and  13.
+                                                                                                        Regarding   the   performance   of   GNOF   for   a   large   cluster
+                         B.        Large  hydrogen  clusters                                        with   multiple   dimensions,   Fig.     8   shows   the   symmetric   dis-
+                                                                                                    sociation  energy  curves  corresponding to  RHF,  MP2,  PNOF7,
+   In   this   section,   we   discuss   our   results   on   large   hydrogen                      GNOF  and  v2RDM  with  DQG  constraints  for  a  4x4x4  hydro-
+clusters,   namely   a   1D   H50   chain   and   a   4x4x4   3D   hydrogen                         gen  cube.  Here,  the  MP2  and  DQG  values  were  inferred  from
+                                                                                                                                                                                                 7
+
+FIG.   8:     Symmetric   dissociation   energy   curves   corresponding   to   a                    this  ﬁgure.    Anyway,   the   metal-to-insulator  transition  is   well
+4x4x4    hydrogen    cube.       Energies    per    atom   (in   Hartrees)   obtained                captured  by  GNOF  for  large  3D  systems.
+by  using  RHF,  PNOF7,  MP2,  GNOF  and  v2RDM  with  two-particle
+DQG  conditions  (DQG).                                                                              FIG.  9:  Metal-to-insulator  transition  in  the  4x4x4  hydrogen  cube  un-
+                                                                                                     der  the  change  of  the  nearest  neighbor  H–H  distance.
+
+
+
+
+      -0.40
+
+                                                                                                               0.25
+      -0.42
+
+
+                                                                   RHF                                         0.20
+      -0.44                                                        PNOF7
+                                                                   MP2
+                                                                   GNOF                                        0.15
+      -0.46                                                        DQG
+
+                                                                                                                                                                          RHF
+                                                                                                               0.10                                                       DQG
+      -0.48                                                                                                                                                               GNOF
+
+
+
+      -0.50                                                                                                    0.05
+
+
+
+      -0.52      1                          1.5                          2                          2.5                          30.000.5                   1.0                   1.5                   2.0                   2.5                   3.0                   3.5
+
+                                             H --- H (Å)                                                                                          H --- H (Å)
+
+Fig.   6  of  Ref.   [30].   Similar  to  the  result  obtained  for  the  3D
+pyramid   in   Fig.     6,   both   PNOF7   and   DQG   overestimate   the                                                         IV.        CONCLUSIONS
+equilibrium  distance.   It  should  be  noted  that  the  dissociation
+energy  of  PNOF7   is  similar   to  that  of  GNOF,   but  at  the   cost                              In   this   work,   we   have   tested   our   recently  proposed  global
+of  ﬁnding  a  solution  with  a  markedly  non-dynamic  character                                   natural   orbital   functional   (GNOF)   against   the   full   conﬁgu-
+indicated   by   the   occupation  numbers  obtained,   which   is   un-                             ration   interaction   (FCI)    and   density-matrix   renormalization
+expected  for  the  equilibrium  region.   GNOF,  in  contrast,  pro-                                group  (DMRG)  methods  by  using  a  series  of  benchmark  hy-
+vides   an   equilibrium   bond   distance   between   RHF   and   MP2,                              drogen    models    with    a    tunable    degree    of    correlation.        Al-
+and  dissociates  to   the  PNOF7  limit  also   together  with   DQG.                               though   in   some   regions   GNOF   shows   larger   relative   errors
+Unfortunately,   we   do   not   have   a   reliable   reference   curve   to                        than    variational    2RDM    calculations    with    three-particle    N-
+adequately  test  the  accuracy  of  the  method.                                                    representability   constraints,    this    functional   has    shown    cor-
+   To  end  this  section  we  come  up  with  a  study  of  the  metal-                             rect   performance  along   the   complete   dissociation   curves   for
+to-insulator   transition   observed   in   large   systems.     This   tran-                        all   studied   systems   in   one,   two   and   three   dimensions.     The
+sition  has  been  previously  studied  [19,   26]  in   the  framework                              GNOF   curves   remain   close   to   those   of   FCI   and   DMRG,   so
+of   PNOF   methods   for   the   Hubbard   model,   either   looking   at                           its   treatment   of   dynamic   and   static   (non-dynamic  or   strong)
+the  natural  occupation  numbers  or  studying  the  1RDM  in  the                                  electronic   correlations   is   more   balanced   than   in   other   meth-
+site-basis.     In   the   case   of   hydrogen  clusters,   it   is   convenient                    ods  studied  throughout  the  article.   But  there  is  still  room  for
+to  compute  the  average  of  off-diagonal  1RDM  elements.   We                                    improvement.  In  the  2D  systems  we  observed  a  discontinuity
+employ  the  harmonic  average  γ   of  all  the  off-diagonal  1RDM                                 of  the  ﬁrst  derivative in  the  dissociation  curves  at  intermediate
+elements  ΓAOi j      in   the   atomic  orbital  basis  set   [30]   to   describe                  distances.     In   the   future,   we   must   achieve   for   these   systems
+quantitatively  the  metal-insulator  transition,  namely                                            a   smooth  transition  between  the  solutions  that  characterize  a
+                                √                                                                    speciﬁc   type   of   correlation   since   in   the   intermediate   region
+                          γ =              1             (ΓAO                                        both  types  of  correlation  are  equally  important.
+                                     N(N − 1) ∑i⁄= j         i j  )2                                          (14)Previous  attempts  to  recover full  electron  correlation within
+                                                                                                     the  framework  of  ﬁrst-order  reduced  density  matrix  (1RDM)
+   Fig.    9  presents  the  dependence  of  γ   on  the  H–H  distances                             theory   rely   on   hybrid   approaches,   such   as   combining   NOF
+for  the  4x4x4 cube.  RHF  and  DQG  values  were  obtained from                                    with  perturbation  theories  [7,  38–40]  or  with  the  DFT  [3,  41].
+Fig.    7   of   Ref.    [30].    The   loss   of   spatial   correlation  with   in-                Unfortunately,  hybrid  approaches  only  give  access  to  the  en-
+creasing   separation   causes   the   off-diagonal  ΓAOi j       to   approach                      ergy.  It  is  preferable to  develop a  functional that  includes  from
+zero,   and   thus  the   harmonic  average   γ   also   be   close   to   zero.                     the   outset  all  the   electronic  correlation,   so   that   we   also   have
+GNOF  goes  quantitatively  parallel  to  DQG,  as  a  lower  bound                                  access  to  the  correlated  reduced  density  matrices  and  orbitals.
+to   the   latter.    Similar   behavior  was   obtained  in   Ref.    [30]   for                    The  present  work  represents  a  great  step  forward  to  establish
+the   FCI   with   respect   to   DQG   for   the   H14    chain.      Unfortu-                      NOF  among electronic structure  methods for  global  electronic
+nately,   the   lack   of   a   reference   does   not   allow   us   to   be   con-                 correlation  problems  where  mean-ﬁeld  approaches  are  not  ac-
+clusive  about  the   numerical  accuracy  of  the   curves  shown  in                               curate   enough  and   it   is   necessary   to   resort  to   multiple   refer-
+                                                                                                                                                                                                  8
+
+ence   methods   to   correctly   handle   both   types   of   correlation.                          GNOF   symmetric   dissociation   energy  curves,   as   well   as   the
+Recall  that  these  latter  techniques  are  usually  computationally                               dependence   of   the   harmonic   average   of   all   the   off-diagonal
+expensive   and   require   prior   knowledge  of   the   system.     NOF                            1RDM  elements  on  the  bond  stretching,  exhibit  the  expected
+methods,   on  the   contrary,  have  shown  [34]   a   favorable  com-                              behaviour  for  both  the  H50  chain  and  the  4x4x4  H64  cube.
+putational   scaling   of   M   to   the   fourth   power   times   a   prefac-                          The   benchmark   set   used   in   this   work   involves   only   mini-
+tor,   M   being   the   number   of   basis   functions.     In   the   case   of                   mal  basis  that  allowed  us  to  make  comparisons  with  accurate
+GNOF,   this   prefactor   corresponds  to   the   number  of   strongly                             FCI  and  DMRG  calculations.   Our  previous  calculations  with
+occupied  orbitals,  i.e.  NΩ =NII/2 + NI  (see  section  II  above).                                larger  basis  sets,   e.g.    triple  zeta  basis  sets,   showed  excellent
+Recently  [42],   the  resolution  of  the   identity  (RI)   approxima-                             performance of  GNOF,  so  we  expect  the  conclusions  obtained
+tion  has  been  implemented in  DoNOF,  reporting a  quantitative                                   here   to   hold   for   strongly   correlated   systems   in   studies   with
+study   of   the   computational   time   required   to   carry   out   NOF                          larger  basis  with  better  recovery  of  the  dynamic  electron  cor-
+calculations  in   increasing  size   real  molecules.    The   DoNOF-                               relation.
+RI  implementation reduces the  memory and arithmetic scaling
+factors  in  NOF  calculations.
+   The  reported  values  of  the  singlet-triplet  and  singlet-quintet                                                               Acknowledgments
+gaps   demonstrate   the   possibility   of   performing   spin   multi-
+plet  calculations  conserving  the  total  spin  of  the  system  with
+a   NOF.   Our   formalism   differs   from   the   methods   commonly                                   The   authors   thank   for   technical   and   human   support   pro-
+used  in electronic structure calculations that  focus on the  high-                                 vided  by  IZO-SGI  SGIker  of  UPV/EHU  and  European  fund-
+spin  component  or  break  the  spin  symmetry  of  the  system.                                    ing  (ERDF  and  ESF)  and  DIPC  for  the  generous  allocation  of
+   It  has  also  been  shown  that  GNOF  can  describe  the  metal-                                computational  resources.     Financial   support   comes   from   the
+to-insulator  transition  in  large  1D  and  3D  hydrogen  systems.                                 Eusko  Jaurlaritza  (Basque  Government),  Ref.:  IT1254-19.
+
+
+
+
+
+ [1]    D.  P.  Tew,  W.  Klopper,  and  T.  Helgaker,  J.  Comput.  Chem.  28,                      [24]    K.  Pernal,  Comp.  Theor.  Chem.  1003,  127  (2013).
+       1307  (2007).                                                                                 [25]    J.   Matxain,    M.   Piris,   F.   Ruipérez,    X.   Lopez,    and   J.   Ugalde,
+ [2]    A.  J.  Cohen,   P.  Mori-Sánchez,   and   W.  Yang,   Chem.  Rev.   112,                            Phys.  Chem.  Chem.  Phys.  13,  20129  (2011).
+       289  (2012).                                                                                  [26]    I.   Mitxelena,    M.   Piris,   and   M.   Rodríguez-Mayorga,    J.   Phys.
+ [3]    W.  Ai,  W.-H.  Fang,  and  N.  Q.  Su,  J.  Phys.  Chem.  Lett.  13,  1744                          Condens.  Matter  29,  425602  (2017).
+       (2022).                                                                                       [27]    I.  Mitxelena,  M.  Rodríguez-Mayorga,   and  M.  Piris,  Eur.  Phys.
+ [4]    J.  Kirkpatrick,  B.  McMorrow,  D.  H.  P. Turban,  A.  L.  Gaunt,  J.  S.                          J.  B  91,  109  (2018).
+       Spencer,  A.  G.  D.  G.  Matthews,  A.  Obika,  L.  Thiry,  M.  Fortu-                       [28]    J.  Bardeen,  L.  N.  Cooper,  and  J.  R.  Schrieffer,  Phys.  Rev.  108,
+       nato,  D.  Pfau,  et  al.,  Science  374,  1385  (2021).                                              1175  (1957).
+ [5]    D.  A.  Mazziotti,  Chem.  Rev.  112,  244–262  (2012).                                      [29]    I.   Mitxelena,   M.   Piris,   and   M.   Rodríguez-Mayorga,   J.   Phys.:
+ [6]    J.   Fosso-Tande,    T.-S.   Nguyen,    G.   Gidofalvi,    and    A.   E.   De-                      Condens.  Matter  30,  089501  (2018).
+       Prince,  J.  Chem.  Theory  Comput.  12,  2260  (2016).                                       [30]    A.   V.   Sinitskiy,   L.   Greenman,   and   D.   A.   Mazziotti,   J.   Chem.
+ [7]    M.  Piris,  Phys.  Rev.  Lett.  119,  063002  (2017).                                                Phys.  133,  014104  (2010).
+ [8]    A.   O.   Schouten,   L.   M.   Sager,   ,   and   D.   A.   Mazziotti,   J.   Phys.         [31]    M.  Motta,  D.  M.  Ceperley,  G.  K.-L. Chan,  J.  A.  Gomez,  E.  Gull,
+       Chem.  Lett.  12,  9906–9911  (2021).                                                                 S.   Guo,   C.   A.   Jiménez-Hoyos,   T.   N.   Lan,   J.   Li,   F.   Ma,   et   al.,
+ [9]    M.  Piris,  Phys.  Rev.  Lett.  127,  233001  (2021).                                                Phys.  Rev.  X  7,  031059  (2017).
+[10]    D.  A.  Mazziotti,  Phys.  Rev.  Lett.  108,  263002  (2012).                                [32]    N.  H.  Stair  and  F.  A.  Evangelista,  J.  Chem.  Phys.  153,  104108
+[11]    D.  A.  Mazziotti,  Phys.  Rev.  A  74,  032501  (2006).                                             (2020).
+[12]    D.  A.  Mazziotti,  J.  Chem.  Phys.  126,  024105  (2007).                                  [33]    M.  Piris,  Phys.  Rev.  A  100,  32508  (2019).
+[13]    B.  Verstichel,  H.  van  Aggelen,  W.  Poelmans,  and  D.  Van  Neck,                       [34]    M.  Piris and  I.  Mitxelena,  Comput.  Phys.  Commun  259,  107651
+       Phys.  Rev.  Lett.  108,  213001  (2012).                                                             (2021).
+[14]    N.  H.  Rubin  and  D.  A.  Mazziotti,  Theor.  Chem.  Acc.  133,  1492                      [35]    W.  J.  Hehre,  R.  F.  Stewart,  and  J.  A.  Pople,  J.  Chem.  Phys.  51,
+       (2014).                                                                                               2657  (1969).
+[15]    R.  R.  Li,  M.  D.  Liebenthal,  and  A.  E.  DePrince,  J.  Chem.  Phys.                   [36]    J.  Hachmann,  W.  Cardoen,  and  G.  K.-L.  Chan,  J.  Chem.  Phys.
+       155,  174110  (2021).                                                                                 125,  144101  (2006).
+[16]    D.  A.  Mazziotti,  Phys.  Rev.  Lett.  117,  153001  (2016).                                [37]    D.  A.  Mazziotti,  Phys.  Rev.  Lett.  106,  083001  (2011).
+[17]    D.  A.  Mazziotti,  Phys.  Rev.  A  102,  052819  (2020).                                    [38]    M.  Piris,  Phys.  Rev.  A  98,  022504  (2018).
+[18]    I.  Mitxelena  and  M.  Piris,  J.  Phys.  Condens.  Matter  32,  17LT01                     [39]    J.  W.  Hollett  and  P.-F. Loos,  J.  Chem.  Phys.  152,  014101  (2020).
+       (2020).                                                                                       [40]    M.  Rodríguez-Mayorga,  I.  Mitxelena,  F.  Bruneval,  and  M.  Piris,
+[19]    I.  Mitxelena  and  M.  Piris,  J.  Chem.  Phys.  152,  064108  (2020).                              J.  Chem.  Theory  Comput.  17,  7562  (2021).
+[20]    M.  Piris,  Int.  J.  Quantum  Chem.  106,  1093  (2006).                                    [41]    I.  A.  Elayan,  R.  Gupta,  and  J.  W.  Hollett,  J.  Chem.  Phys.  156,
+[21]    M.   Piris,   X.  Lopez,   F.  Ruipérez,   J.   Matxain,   and   J.  Ugalde,   J.                    094102  (2022).
+       Chem.  Phys.  134,  164102  (2011).                                                           [42]    J.  F.  H.  Lew-Yee,  M.  Piris,  and  J.  M.  del  Campo,  J.  Chem.  Phys.
+[22]    M.   Piris,   J.   M.   Matxain,   and   X.   Lopez,   J.   Chem.   Phys.   139,                     154,  064102  (2021).
+       234109  (2013).
+[23]    P.-O.  Löwdin  and  H.  Shull,  Phys.  Rev.  101,  1730  (1956).

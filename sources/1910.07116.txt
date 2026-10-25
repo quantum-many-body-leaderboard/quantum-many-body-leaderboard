@@ -1,0 +1,779 @@
+Third-order algebraic diagrammatic construction theory for electron
+attachment and ionization energies:  Conventional and Green’s function
+implementation
+          Samragni Banerjee1 and Alexander Yu. Sokolov1, a)
+          Department  of  Chemistry  and  Biochemistry,  The  Ohio  State  University,  Columbus,  Ohio  43210,
+          USA
+          We present implementation of second- and third-order algebraic diagrammatic construction theory for eﬃcient
+          and accurate computations of molecular electron aﬃnities (EA), ionization potentials (IP), and densities of
+          states  (EA-/IP-ADC(n),  n  =  2,  3).   Our  work  utilizes  the  non-Dyson  formulation  of  ADC  for  the  single-
+          particle propagator and reports working equations and benchmark results for the EA-ADC(2) and EA-ADC(3)
+          approximations.  We describe two algorithms for solving EA-/IP-ADC equations:  (i) conventional algorithm
+          that uses iterative diagonalization techniques to compute low-energy EA, IP, and density of states, and (ii)
+          Green’s function algorithm (GF-ADC) that solves a system of linear equations to compute density of states
+          directly for a speciﬁed spectral region.  To assess accuracy of EA-ADC(2) and EA-ADC(3), we benchmark
+          their performance for a set of atoms, small molecules, and ﬁve DNA/RNA nucleobases.  As our next step, we
+          demonstrate eﬃciency of our GF-ADC implementation by computing core-levelK-,L-, andM-shell ionization
+          energies of a zinc atom without introducing core-valence separation approximation.  Finally, we use EA- and
+          IP-ADC methods to compute band gaps of equally-spaced hydrogen chains Hn with n up to 150, providing
+          their estimates near thermodynamic limit.  Our results demonstrate that EA-/IP-ADC(n) (n = 2, 3) methods
+          are eﬃcient and accurate alternatives to widely used electronic structure methods for simulations of electron
+          attachment and ionization properties.
+
+
+I.    INTRODUCTION                                                        intensities.   Although  originally  formulated  within  the
+                                                                          framework of time-dependent MBPT, ADC was later red-
+  Accurate computations of electron aﬃnities (EA) and                     erived  in  the  context  of  time-independent  perturbation
+ionization  potentials  (IP)  are  important  for  predict-               theory  using  the  intermediate-state  representation26–28
+ing  properties  of  molecules  and  materials,  such  as  re-            and eﬀective Liouvillean30 approaches.  More recently, it
+dox potentials, band gaps, and photoelectron spectra.1–5                  has been demonstrated that ADC emerges as an approxi-
+For   molecular   systems,   a   variety   of   theoretical   ap-         mation in the linear-response unitary CC (UCC)31,32 and
+proaches  for  computing  EA  and  IP  have  been  devel-                 self-consistent UCC-based polarization propagator33 the-
+oped,  ranging  from  aﬀordable  density  functional  the-                ories.  Although computational scaling of low-order ADC
+ory (DFT) and time-dependent many-body perturbation                       approximations (e.g., ADC(3)) is similar to that of tra-
+theory  (MBPT)6–12  approximations  to  highly  accurate                  ditional CC methods with single and double excitations
+coupled  cluster  (CC)  methods  in  their  state-speciﬁc  or             (CCSD),  computation  of  excitation  energies  and  tran-
+equation-of-motion  (EOM)  formulations.13–23  Although                   sition  properties  using  the  ADC  methods  is  more  eﬃ-
+materials simulations have been traditionally dominated                   cient  due  to  the  non-iterative  and  Hermitian  nature  of
+by  DFT  and  MBPT,  recent  methodological  advances                     the ADC equations.
+and  increase  in  computer  power  have  enabled  compu-                    The  ADC  approximations  have  been  applied  to  sim-
+tations of band structures of three-dimensional semicon-                  ulations of a variety of excited-state properties,  includ-
+ductors using equation-of-motion coupled cluster theory                   ing optical excitation,24,34,35  ionization,25,36–41  core42,43
+(EA/IP-EOM-CC), in a good agreement with experimen-                       and  two-photon44  absorption.   For  computations  of  IP
+tal  results.20,21  Despite  these  initial  successes,  simula-          and EA, the ADC methods were originally formulated25
+tions of EA and IP of solids and large molecular systems                  based  on  the  perturbative  self-energy  expansion  of  the
+using accurate ab initio methods such as EOM-CC are far                   Dyson   equation   (so-called   Dyson   ADC   framework),
+from routine, primarily due to their high computational                   which couples IP (N− 1) and EA (N + 1) components
+cost.                                                                     of  the  one-electron  propagator.   In  1998,  Schirmer  and
+  A less expensive alternative to CC theory for simulat-                  co-workers proposed the non-Dyson ADC formulation,36
+ing excited-state properties of molecules is algebraic di-                which decouples the N± 1 parts of the propagator and
+agrammatic construction theory (ADC).24–29  The ADC                       allows for independent calculations of IP and EA. Since
+approximations  are  derived from  a  perturbative  expan-                then, several implementations of the single-reference non-
+sion  of  propagators,  poles  and  residues  of  which  pro-             Dyson  IP-ADC  methods  up  to  third  order  in  pertur-
+vide information about excitation energies and transition                 bation  theory  (IP-ADC(n),  n  =  2,  3)  have  been  devel-
+                                                                          oped and applied to closed- and open-shell systems.37,41
+                                                                          For  computations  of  IP  of  strongly  correlated  systems,
+                                                                          a multi-reference formulation of IP-ADC(2) has been re-
+a)Electronic mail:  sokolov.8@osu.edu                                     cently implemented in our group.45 Two implementations
+                                                                                                                                                 1
+
+of the non-Dyson EA-ADC(n) (n = 2, 3) approximations                        Lehmann (or spectral) representation:
+have been reported,46,47  although performance of these
+methods has not been documented thoroughly in the lit-                             Gpq(ω) =∑         ⟨ΨN0|ap|ΨN+1n ⟩⟨ΨN+1n |a†q|ΨN0⟩
+erature.                                                                                                     ω−EN+1n      +EN0
+  In this work, we present a new implementation of the                                           n
+non-Dyson EA- and IP-ADC methods up to third order                                           +∑      ⟨ΨN0|a†q|ΨN−1n ⟩⟨ΨN−1n |ap|ΨN0⟩,     (2)
+in perturbation theory (EA-/IP-ADC(n),  n = 2,  3) us-                                           n           ω +EN−1n  −EN0
+ing two algorithms.  In the ﬁrst algorithm,  we take the
+conventional route and use iterative diagonalization tech-                  Here,   the  resolution  of  identity  is  carried  out  over
+niques  to  compute  ionization  and  electron  attachment                  all  exact  eigenstates|ΨN+1n ⟩  (|ΨN−1n ⟩)  of  the  electron-
+energies.    In  the  second  algorithm,  we  bypass  the  di-              attached (-ionized) system with energies EN+1n      (EN−1n     ).
+agonalization  of  the  ADC  eﬀective  Hamiltonian  matrix                  In Eq. (2), the poles ofGpq(ω) provide information about
+and  compute  the  spectral  function  directly  by  solving                vertical electron attachment (ωn =EN+1n −EN0  ) and ion-
+a  system  of  linear  equations  at  each  frequency  of  the              ization (ωn = EN0 −EN−1n     ) energies, while the residues
+external  ﬁeld,  in  a  fashion  similar  to  that  of  Green’s             (e.g., ⟨ΨN0|ap|ΨN+1n ⟩⟨ΨN+1n |a†q|ΨN0⟩)  describe  probabili-
+function coupled cluster methods.19,20,23 We derive work-                   ties  of  the  corresponding  transitions.   For  each  compo-
+ing equations for the EA-/IP-ADC(n) (n = 2, 3) meth-                        nent of the propagator, the Lehmann representation can
+ods  using  the  formalism  of  eﬀective  Liouvillean  theory,              be compactly written in a matrix form as:
+present their implementation, and benchmark results of
+EA-ADC(2) and EA-ADC(3) for a variety of closed- and                                         G±(ω) = ˜X±(ω− ˜Ω±)−1 ˜X†±                 (3)
+open-shell  systems,  including  atoms,  small  molecules,
+and ﬁve DNA/RNA nucleobases (Sections V A and V B).                         where  ˜Ω±   are  the  diagonal  matrices  of  vertical  at-
+We also demonstrate capabilities of our Green’s function                    tachment/ionization  energies  (ωn)  and  ˜X±  are  matri-
+ADC implementation by computing core ionization ener-                       ces of the transition amplitudes with elements   ˜X+pn  =
+gies of a zinc atom without introducing core-valence ap-                    ⟨ΨN0|ap|ΨN+1n ⟩ and  ˜X−qn =⟨ΨN0|a†q|ΨN−1n ⟩.
+proximation (Section V C). Finally, we combine our EA-                         The single-particle Green’s function in Eqs. (1) to (3)
+and IP-ADC implementations to compute band gaps of                          is  exact  if  expressed  using  the  exact  eigenstates  of  the
+the equally-spaced hydrogen chains Hn  for n up to 150                      system.    However,  computing  the  exact  propagator  is
+(Section V D) and present our conclusions (Section VI).                     computationally  very  expensive  and  many  approxima-
+                                                                            tions have been introduced to reduce the computational
+II.    THEORY                                                               cost.6–12,15–23 In the ADC theory,24–29 Eq. (3) is rewrit-
+                                                                            ten  in  a  basis  of  (N + 1)-  and  (N− 1)-electron  states
+A.    General overview of ADC                                               where the matrix representation of the HamiltonianH is
+                                                                            no  longer  diagonal  and  each  component  of  the  Green’s
+                                                                            function can be written as:
+  The   algebraic   diagrammatic   construction   (ADC)
+theory   has   a   close   connection   with   the   propagator                            G±(ω) = T±(ωS±− M±)−1T†±               (4)
+theory,48,49 where the central object of interest is a prop-
+agator  of  the  many-body  system.   The  general  expres-                 Here, M±  and T±  are  known  as  eﬀective  Hamiltonian
+sion for a propagator that describes electron attachment                    and transition moments matrices, respectively.  For gen-
+(EA) and removal (IP) processes is given by the retarded                    erality, we assume that the basis of N± 1 states is non-
+single-particle Green’s function:                                           orthogonal with the overlap matrix S±.  We note that in
+                                                                            the original ADC theory24–29 Eq. (4) is usually expressed
+         Gpq(ω) =G+pq(ω) +G−pq(ω)                                           in the basis of orthogonalized intermediate states, where
+                  =⟨ΨN0|ap(ω−H +EN0  )−1a†q|ΨN0⟩                            S± = 1.
+                                                                               The non-Dyson ADC scheme36 evaluates the propaga-
+                  +⟨ΨN0|a†q(ω +H−EN0  )−1ap|ΨN0⟩       (1)                  tors G±(ω)  by  expanding  each  matrix  in  Eq.  (4)  in  a
+                                                                            perturbative series and truncating the expansions at the
+where G+pq(ω)  and G−pq(ω)  are  the  forward  (EA)  and                    n-th order:
+backward  (IP)  components  of Gpq(ω),  H   is  the  elec-⟩ and EN0   are the ground-state
+tronic Hamiltonian,|ΨN0                                                                    M±≈ M(0)±  + M(1)±  +... + M(n)±                (5)
+N -electron  wavefunction  and  energy,  respectively.   The                                S±≈ S(0)
+frequency can be expressed asω≡ω′+iη, whereω′ is the                                                 ±  + S(1)±  +... + S(n)±                     (6)
+real part of ω and iη is an inﬁnitesimal imaginary num-                                     T±≈ T(0)±  + T(1)±  +... + T(n)±                   (7)
+ber.  The operators ap and a†p are the usual one-electron
+annihilation and creation operators, respectively.                          Plugging Eqs. (5) to (7) into Eq. (4) leads to equations of
+  The propagator in Eq. (1) can be expressed using the                      the n-th order ADC approximations for electron attach-
+                                                                            ment  and  ionization  energies  (EA-/IP-ADC(n)).    The
+                                                                                                                                                    2
+
+vertical  electron  attachment/ionization  energies  can  be                 expressed as:
+computed by solving the generalized eigenvalue problem:                                                              ∑
+                      M±Y± = S±Y±Ω±                        (8)                   H =E0 +∑fqp{a†paq} + 14                  vrspq{a†pa†qasar}    (15)
+                                                                                               pq                    pqrs
+where Ω±  is  a  diagonal  matrix  of  eigenvalues  and Y±                   whereE0 =⟨Φ|H|Φ⟩ andfqp =hqp +∑occ
+are the eigenvectors that can be used to compute spec-                       erence  energy  and  canonical  Fock  matrix,  respectively,i  vqipi are the ref-
+troscopic amplitudes                                                         and the normal ordering of the creation and annihilation
+
+
+                                         2±  Y±                          (9) operators is denoted by the curly braces{...}. For conve-
+                        X± = T±S− 1                                          nience, we will assume that the Fock matrix is diagonal,
+which  provide  information  about  transition  intensities.                 i.e. fqp =δqpϵp.
+Using Ω± and X± allows to compute the ADC propaga-                              To  deﬁne  the  ADC  perturbative  series,  we  partition
+tor and density of states                                                    the Hamiltonian into the zeroth-order part
+
+                 G±(ω) = X± (ω− Ω±)−1 X†                                                         H(0) =E0 +∑ϵp{a†pap}                  (16)
+                                                     ±               (10)                                          p
+                   A(ω) =− 1π Im [Tr G±(ω)]                  (11)            and a perturbationV  =H−H(0).  This leads to a pertur-
+A  widely  used  approach  for  deriving  the  ADC  equa-                    bative expansion for the ground-state wavefunction and
+tions is via the intermediate state representation (ISR)                     the propagator
+formalism.26–28 In the next section, we present an alter-                         |ΨN0⟩ =eT (0)−T (0)†+T (1)−T (1)†+...+T (n)−T (n)†+...|Φ⟩
+native derivation of the EA-/IP-ADC equations using the                                                                                         (17)
+formalism of the eﬀective Liouvillean theory.30,50
+                                                                               G±(ω) = G(0)±  (ω) + G(1)±  (ω) +... + G(n)±  (ω) +...   (18)
+
+B.    Non-Dyson EA- and IP-ADC from the eﬀective                             Truncating this expansion at the n-th order yields work-
+Liouvillean theory                                                           ing  equations  for  the  matrix  elements  of M±, S±,  and
+                                                                             T± in Eqs. (4) to (7).
+  To  derive  EA-/IP-ADC  equations  using  the  eﬀective                       For the forward propagator G+(ω) describing electron
+Liouvillean framework, we start by expressing the exact                      attachment  (EA-ADC),  expressions  for  the n-th-order
+ground-state wavefunction using a unitary cluster expan-                     contributions to the ADC matrices are given as:
+sion:
+                                                                                              k+l+m=n∑
+                        |ΨN0⟩ =eT−T †|Φ⟩                        (12)               M (n)+µν =            ⟨Φ|[h(k)+µ, [ ˜H(l),h(m)†+ν   ]]+|Φ⟩       (19)
+                                                                                                  klm
+where|Φ⟩ is a reference wavefunction.  In this work, we                                       k+l=n∑
+assume that|Φ⟩ is a single Slater determinant and refer                             S(n)+µν =        ⟨Φ|[h(k)+µ,h(l)†+ν ]+|Φ⟩                        (20)
+interested readers to Ref. 50 for the generalization of the                                      kl
+eﬀective  Liouvillean  theory  to  multi-determinant  wave-                                   k+l=n∑
+functions.  The operatorT  is an excitation operator that                           T (n)+pν =       ⟨Φ|[˜a(k)p ,h(l)†+ν ]+|Φ⟩                        (21)
+generates  all  possible  excitations  from  the  occupied  to                                   kl
+virtual  (external)  orbitals  labeled  using  the i,j,k,l,...
+and a,b,c,d,... indices, respectively:                                       where  [...]  and  [...]+  denote  commutator  and  anti-
+
+         N∑                                                                  commutator, respectively.  The operators  ˜H(k)  and ˜a(k)p
+  T  =      Tm,  Tm =     1           ∑    tab...ij...a†aa†                  are the k-th-order contributions to the eﬀective Hamil-
+                             (m!)2                    b...ajai   (13)        tonian   ˜H   = e−(T−T †)He(T−T †)  and  observable  ˜ap  =
+         m                           ijab...                                 e−(T−T †)ape(T−T †)  operators.   These  contributions  are
+  We now deﬁne the electronic Hamiltonian H                                  obtained  by  expanding   ˜H   and  ˜ap  using  the  Baker–
+                                       ∑                                     Campbell–Hausdorﬀ (BCH) formula and collecting terms
+            H =∑        hqpa†paq + 14       vrspqa†pa†qasar         (14)
+                    pq                 pqrs
+
+where hqp  = ⟨p|h|q⟩  and vrspq   = ⟨pq||rs⟩  are  the  one-
+electron and two-electron integrals, respectively, with the
+p,q,r,s  indices  running  over  the  entire  spin-orbital  ba-
+sis  set.   Normal-ordering  the  creation  and  annihilation
+operators  with  respect  to|Φ⟩,  the  Hamiltonian  can  be
+                                                                                                                                                  3
+
+at the k-th order:                                                          III.    IMPLEMENTATION
+˜H =H(0) +V  + [H(0),T (1)−T (1)†] + [H(0),T (2)−T (2)†]                       We implemented the EA- and IP-ADC(n) (n = 2, 3)
+   +  1                                                                     methods  in  the  development  version  of  Pyscf.51  Our
+      2![V  + (V  + [H(0),T (1)−T (1)†]),T (1)−T (1)†] +...(22)             program  supports  restricted  and  unrestricted  reference
+                                                                            Hartree-Fock orbitals and can be applied to closed- and
+˜ap =ap + [ap,T (1)−T (1)†] + [ap,T (2)−T (2)†]                             open-shell  molecules.    We  have  veriﬁed  that  our  IP-
+                                                                            ADC(n)  (n  =  2,  3)  program  reproduces  results  from
+   +  12![[ap,T (1)−T (1)†],T (1)−T (1)†] +...               (23)           IP-ADC(n) implemented in Q-Chem.41,52 Our EA- and
+                                                                            IP-ADC(n) implementation features two algorithms for
+The operators h(k)†                                                         computing  energies  and  density  of  states,   which  we
+                    +µ   in Eqs. (19) to (21) are electron at-              brieﬂy outline below.
+tachment  operators  that  are  used  to  construct  a  set  of
+basis states|Ψ(k)+µ⟩ =h(k)†+µ |Φ⟩ necessary for representing
+the eigenstates of the (N + 1)-electron system in Eq. (8).                  A.    Conventional algorithm
+Up to ﬁrst order in perturbation theory, these operators
+have the form h(0)†+µ  =a†a and h(1)†+µ  =a†ba†aai.                            In the conventional algorithm, electron attachment or
+  For  electron  ionization  (IP-ADC)  described  by  the                   ionization energies are computed by solving the EA-/IP-
+backward  propagator G−(ω),  the n-th-order  ADC  ma-                       ADC  eigenvalue  problem  (8)  using  iterative  diagonal-
+trices are expressed in a similar form:                                     ization  techniques.    In  our  implementation,  we  use  a
+
+                k+l+m=n∑                                                    multi-root  Davidson  algorithm53,54  that  computes  sev-
+     M (n)                 ⟨Φ|[h(k)†                                        eral  lowest  eigenvalues  by  starting  with  a  set  of  guess
+        −µν =                     −µ , [ ˜H(l),h(m)−ν ]]+|Φ⟩       (24)     (trial) eigenvectors Y± and optimizing these vectors un-
+                    klm                                                     til  convergence  by  forming  the  matrix-vector  products
+                k+l=n∑
+      S(n)              ⟨Φ|[h(k)†                                           σ±= M±Y±.  To lower the computational cost of form-
+        −µν =                 −µ ,h(l)−ν]+|Φ⟩                       (25)    ing  the  σ±  vectors,  matrix  elements  of  the  eﬀective
+                   kl                                                       Hamiltonian  (Eqs.  (19)  and  (24))  with  respect  to  the
+                k+l=n∑
+      T (n)             ⟨Φ|[˜a(k)p ,h(l)                                    zeroth-order operators h(0)†±µ   (i.e., 1p-1p or 1h-1h block)
+        −pν =                       −ν]+|Φ⟩                        (26)     are precomputed in the beginning of the Davidson pro-
+                   kl                                                       cedure, stored in memory, and reused at every iteration.
+Here, the ionization operatorsh(k)†                                         A  similar  approach  has  been  recently  taken  by  Demp-
+                                        −µ  form the basis states           wolﬀ and co-workers41 in the eﬃcient implementation of
+|Ψ(k)−µ⟩  = h(k)†−µ |Φ⟩  to  represent  electronic  states  of  the         IP-ADC(3).  Once the Davidson diagonalization is com-
+(N− 1)-electron system.  The low-order components of                        plete, the eigenvalues and eigenvectors are used to com-
+these operators are given byh(0)†−µ  =ai andh(1)†−µ  =a†aajai               pute the spectroscopic amplitudes X± (Eq. (9)) and den-
+  Determining the matrix elements of M±, S±, and T±                         sity of statesA(ω) (Eq. (11)) to obtain information about
+also requires solving for thek-th-order amplitudes of the                   transition intensities and simulate photoelectron spectra.
+excitation  operators T (k).   For  the  low-order  EA-  and
+IP-ADC(n)  approximations  (n≤  3),  equations  for  the
+transition  energies  and  intensities  depend  on  up  to  the             B.    Green’s function algorithm
+n-th-order  single-  (ta(n)i     )  and  (n− 1)-th-order  double-
+excitation (tab(n−1)ij         ) amplitudes.  At each order k, these           In the second approach that we term the “Green’s func-
+amplitudes  are  computed  by  solving  a  system  of  pro-                 tion” algorithm (GF-ADC), the propagator and density
+jected amplitude equations:                                                 of states are computed directly for a speciﬁc frequencyω
+                                                                            bypassing the diagonalization of M±, in a way similar to
+                          ⟨Φ|a†aai ˜H(k)|Φ⟩ = 0                   (27)      that of Green’s function coupled cluster methods.19,20,23
+                    ⟨Φ|a†aa†                                                Starting with Eq. (4), expression for the ADC propagator
+                             bajai ˜H(k)|Φ⟩ = 0                   (28)      can be written as:
+  We present working equations for all matrix elements                                             G±(ω) = Z±(ω)T†
+and amplitudes in Eqs. (19) to (21) and (24) to (28) of                                                                    ±                       (29)
+EA- and IP-ADC(n) (n≤ 3) in the Supporting Informa-                         where the frequency-dependent Z±(ω) matrix is deﬁned
+tion.                                                                       as
+
+                                                                                              Z±(ω) = T±(ωS±− M±)−1                (30)
+                                                                                                                                               4
+
+Rearranging Eq. (30), we obtain a system of linear equa-                  ergies from IP-ADC(n) with core-valence separation ap-
+tions                                                                     proximation [CVS-IP-ADC(n)]. For the hydrogen chains,
+                                                                          we use EA- and IP-ADC(n) (n = 2, 3) to compute band
+                T†±− (ωS±− M±)Z†±(ω) = 0              (31)                gaps, as a diﬀerence between EA and IP. Throughout the
+that determines Z±(ω).  Solving Eq. (31) for Z±(ω) al-                    manuscript, positive electron aﬃnity implies exothermic
+lows to compute the propagator G±(ω) (Eq. (29)) and                       electron  attachment  (i.e.,  EA  = EN − EN+1),  while  a
+density  of  states A(ω)  (Eq.  (11))  at  any  frequency ω               positive ionization energy corresponds to an endothermic
+without explicitly diagonalizing M±.  The GF-ADC al-                      process (IP = EN−1− EN).
+gorithm is particularly well suited for computing densi-                     The ADC results were compared to results from cou-
+ties of states at high excitation energies (e.g., ionization              pled  cluster  theory  with  single,   double,   and  pertur-
+in core orbitals) or for simulating dense spectral regions                bative  triple  excitations  [CCSD(T)]  and  equation-of-
+with many electronic states in a narrow frequency region,                 motion CCSD (EOM-CCSD).13–17  For atoms and small
+which are expensive to compute using the conventional                     molecules, all methods used the aug-cc-pVQZ basis set,56
+algorithm with traditional iterative techniques.                          while  the  aug-cc-pVDZ  basis  was  used  for  the  nucle-
+  In our GF-ADC algorithm, we solve the linear equation                   obases  (Section  V B).  Computations  for  the  zinc  atom
+using  the  conjugate  gradient  method,55  which  requires               were  performed  using  the  cc-pwCVTZ  basis  set57  com-
+forming the matrix-vector products σ±(ω) = M±Z†                           bined with the spin-free one-electron variant of the X2C
+                                                              ±(ω).       Hamiltonian.58–60  For  the  hydrogen  chains,  the  STO-
+For  the  frequency ω  = ω′ +iη  with  a  non-zero  broad-                6G basis set was used.61  Geometries of small molecules
+ening  parameter η,  the  elements  of Z±(ω)  and σ±(ω)                   were optimized using CCSD(T)/aug-cc-pVQZ, while for
+are complex-valued.  Aside from this, computing σ±(ω)                     molecules in Section V B the equilibrium structures were
+is  very  similar  to  forming σ±= M±Y±  in  the  conven-                 computed using CCSD/aug-cc-pVDZ. The EOM-CCSD
+tional algorithm,  and both operations are implemented                    and  CCSD(T)  computations  were  performed  using  Q-
+using  the  same  general  subroutine  in  our  implementa-               Chem,52 Cfour,62 and Psi4.63 The CVS-IP-ADC(n) (n
+tion.  Eq. (31) can be solved sequentially for a range of                 = 2, 3) methods were implemented by restricting the op-
+increasing or decreasing frequencies, reusing the solution                eratorsh(k)†
+Z±(ω)  from  the  previous  frequency  as  a  guess  for  the                        −µ  used to compute the M− matrix (Eq. (24))
+next  frequency  computation,  which  signiﬁcantly  speeds                to aI  and a†aaiaI, where I  denotes the index of the core
+up convergence of the conjugate gradient method.  Alter-                  orbital in the K-, L-, or M-shell.38–40
+natively,  Eq. (31) can be solved independently for each                     The GF-ADC computations for the zinc atom used the
+frequency, in a highly parallel fashion.  Once computed,                  frequency interval (∆ω) and broadening (η) of 0.005 Eh
+solutions Z±(ω) are used to evaluate the density of states                and  0.01 Eh,  respectively.   For  computations  using  the
+A(ω)  for  a  frequency  region  of  interest.   Interpolating            conventional algorithm, intensities of EA and IP transi-
+A(ω) between the frequency points, positions of the max-                  tions were characterized by computing spectroscopic fac-
+ima are used to compute the corresponding electron at-                    tors
+tachment (or ionization) energies.                                                                P±µ =∑       |X±pµ|2                       (32)
+
+                                                                                                            p
+IV.    COMPUTATIONAL DETAILS                                              whereX±pµ are elements of the spectroscopic amplitude
+                                                                          matrix X± deﬁned in Eq. (9).
+  We benchmarked the accuracy of EA- and IP-ADC(n)
+(n = 2, 3) for a variety of systems, including atoms (He
+–  Kr),  small  molecules  (Section  V A),  ﬁve  DNA/RNA                  V.    RESULTS
+nucleobases (Section V B), zinc atom (Section V C), and
+equally-spaced hydrogen chains (Hn up to n = 150, Sec-                    A.    Electron aﬃnities of atoms and small molecules
+tion  V D).  Since  the  accuracy  of  IP-ADC(n)  (n  =  2,
+3)  has  been  thoroughly  tested  before,37,41,50  for  atoms,              We   begin   by   benchmarking   the   accuracy   of   EA-
+small  molecules,  and  ﬁve  nucleobases  we  only  report                ADC(2), EA-ADC(2)-X, and EA-ADC(3) for computing
+the  EA-ADC(n)  (n  =  2,  3)  results.   In  addition  to  the           vertical electron attachment energies (EA’s) of atoms (He
+strict  EA-ADC(n)  (n  =  2,  3)  approximations,  we  also               – Kr) and 16 small molecules.  Tables I and II present re-
+present  results  for  the  extended  EA-ADC(2)  method                   sults of these methods for closed- and open-shell atoms,
+(EA-ADC(2)-X)  with  partial  treatment  of  third-order                  while  EA’s  of  closed-  and  open-shell  molecules  are  re-
+correlation eﬀects, where the eﬀective Hamiltonian  ˜H in                 ported in Tables III and IV, respectively.  We compare
+Eq. (19) is expanded up to the ﬁrst order in perturbation                 the ADC results with the electron aﬃnities computed us-
+theory with respect to the h(1)†+µ  =a†ba†aai operators.  For             ing EA-EOM-CCSD and reference data from CCSD(T).
+the zinc atom,  we use our GF-IP-ADC(n) implementa-                       For all open-shell molecules, computed spin contamina-
+tion to compute core-levelK-,L-, andM-shell ionization                    tion of the unrestricted Hartree-Fock reference wavefunc-
+energies  and  compare  these  results  with  ionization  en-             tion does not exceed 0.05.
+                                                                                                                                                                               5
+
+
+TABLE I: Vertical electron attachment energies (Ω, eV) and spectroscopic factors (P ) of closed-shell atoms computed using the
+aug-cc-pVQZ basis set.  Also shown are mean absolute errors (∆MAE) and standard deviations (∆STD) of the results, relative to
+CCSD(T).
+
+                     System             EA-ADC(2)               EA-ADC(2)-X               EA-ADC(3)         EA-EOM-CCSD  CCSD(T)
+                                         Ω              P                Ω              P                Ω              P                   Ω                    Ω
+                        He    −2.64          1.00   −2.62          1.00   −2.63          1.00    −2.63    −2.63
+                        Be    −0.25          0.99   −0.14          0.94   −0.20          0.95    −0.27    −0.27
+                        Ne    −5.38          0.99   −5.31          0.99   −5.30          0.99    −5.34    −5.29
+                       Mg    −0.21          0.98   −0.13          0.95   −0.17          0.95    −0.23    −0.22
+                        Ar    −2.74          0.98   −2.67          0.98   −2.78          0.98    −2.77    −2.82
+                        Kr    −2.09          0.98   −2.02          0.98   −2.12          0.98    −2.12    −2.15
+                     ∆MAE           0.046                            0.089                            0.033                               0.025
+                      ∆STD           0.062                            0.072                            0.030                               0.036
+
+
+TABLE II: Vertical electron attachment energies (Ω, eV) and spectroscopic factors (P ) of open-shell atoms computed using the
+aug-cc-pVQZ basis set.  Experimental values are obtained from Ref. 64.  Also shown are mean absolute errors (∆MAE) and standard
+deviations (∆STD) of the results, relative to CCSD(T), and spin contamination of the reference unrestricted Hartree-Fock wavefunction
+(⟨ ˆS2⟩− S(S + 1)).
+
+        System         State        Spin cont.     EA-ADC(2)       EA-ADC(2)-X     EA-ADC(3)      EA-EOM-CCSD     CCSD(T)    Exp.
+                                                         Ω          P            Ω          P            Ω         P                   Ω                       Ω            Ω
+            Li           2S→ 1S        0.000          0.34       0.94       0.62       0.78       0.62      0.78               0.61                   0.62         0.62
+            B           2P→ 3P        0.011          0.07       0.96       0.51       0.85       0.32      0.85               0.14                   0.25         0.28
+            C            3P→ 4S        0.010          0.98       0.95       1.61       0.85       1.24      0.86               1.10                   1.25         1.26
+            N           4S→ 3P        0.008  −0.68      0.96       0.05       0.85  −0.38     0.87    −0.34    −0.23
+            O           3P→ 2P        0.009          0.90       0.94       1.83       0.84       1.06      0.86               1.22                   1.40         1.46
+            F            2P→ 1S        0.004          3.09       0.93       4.00       0.84       2.90      0.87               3.23                   3.39         3.40
+           Na           2S→ 1S        0.000          0.33       0.95       0.56       0.79       0.56      0.79               0.54                   0.55         0.55
+            Al           2P→ 3P        0.020          0.33       0.96       0.58       0.87       0.47      0.87               0.34                   0.43         0.43
+            Si           3P→ 4S        0.015          1.32       0.95       1.63       0.88       1.42      0.88               1.29                   1.40         1.39
+            P            4S→ 3P        0.001          0.51       0.94       0.97       0.87       0.65      0.87               0.60                   0.69         0.75
+            S            3P→ 2P        0.013          1.90       0.94       2.40       0.87       1.94      0.88               1.92                   2.04         2.08
+            Cl           2P→ 1S        0.010          3.59       0.93       4.07       0.88       3.46      0.89               3.49                   3.61         3.61
+           Ga          2P→ 3P        0.013          0.28       0.96       0.51       0.88       0.47      0.88               0.27                   0.35         0.43
+           Ge          3P→ 4S        0.011          1.31       0.95       1.59       0.89       1.49      0.89               1.29                   1.38         1.23
+           As           4S→ 3P        0.001          0.55       0.95       0.95       0.87       0.77      0.88               0.64                   0.73         0.80
+            Se           3P→ 2P        0.012          1.89       0.94       2.31       0.88       2.04      0.89               1.92                   2.04         2.02
+            Br           2P→ 1S        0.010          3.44       0.94       3.83       0.88       3.46      0.90               3.37                   3.50         3.36
+         ∆MAE                                              0.189                   0.274                   0.101                          0.102
+         ∆STD                                              0.137                   0.152                   0.158                          0.045
+
+
+   For all atoms (Tables I and II), EA-ADC(3) and EA-                                      ∆MAE  and  ∆STD  in  the  range  of  0.03  -  0.06  eV.  How-
+EOM-CCSD  produce  results  in  a  very  good  agreement                                   ever, performance of the EA-ADC methods for the ﬁve
+with  CCSD(T).  In  the  case  of  closed-shell  atoms,  both                              open-shell  radicals  (Table  IV)  is  in  a  stark  contrast  to
+EA-ADC(3) and EA-EOM-CCSD show very similar ac-                                            that  for  the  open-shell  atoms.   In  this  case,  out  of  the
+curacy with mean absolute errors (∆MAE) and standard                                       four methods the best agreement with CCSD(T) is given
+deviations  (∆STD)  of∼  0.03  eV,  relative  to  CCSD(T).                                 by EA-ADC(2) with ∆MAE  and ∆STD  of 0.14 and 0.11
+For atoms with unpaired electrons, all EA-ADC and EA-                                      eV, respectively.  The EA-EOM-CCSD method shows a
+EOM-CCSD  methods  produce  higher  ∆MAE  errors  in                                       signiﬁcantly  larger  ∆MAE  =  0.25  eV,  followed  by  EA-
+vertical  EA’s  compared  to  the  closed-shell  ones.   The                               ADC(3) with ∆MAE = 0.37 eV. This deviation from pre-
+best  agreement  with  CCSD(T)  is  once  again  shown  by                                 vious trends may be explained by the combination of the
+EA-ADC(3) and EA-EOM-CCSD with a similar ∆MAE                                              poor  performance  of perturbation theory for open-shell
+of∼ 0.1 eV. The spectroscopic factors of open-shell atoms                                  systems along with a fortuitous error cancellation in the
+(P , Tables I and II) show signiﬁcant dependence on the                                    computed EA-ADC(2) values.
+order of the ADC approximation, with the EA-ADC(2)                                             Figures 1(a) and 1(b) demonstrate overall performance
+values of∼ 0.95 and the EA-ADC(3) results of∼ 0.85,                                        of the EA-ADC methods for atoms and molecules com-
+indicating importance of electron correlation eﬀects.                                      bined together.  On average, performance of EA-ADC(3)
+   Accuracy  of  the  EA-ADC  methods  for  closed-shell                                   and  EA-EOM-CCSD  is  similar  for  closed-  and  open-
+molecules (Table III) is consistent with that observed for                                 shell  systems,  although  the  former  method  is  less  reli-
+atoms with no unpaired electrons, where EA-ADC(3) and                                      able  for  systems  with  unpaired  electrons,  which  is  evi-
+EA-EOM-CCSD  yield  the  best  results  showing  similar                                   denced by its larger standard deviation.  Interestingly, we
+                                                                                                                                                                                    6
+
+
+TABLE III: Vertical electron attachment energies (Ω, eV) and spectroscopic factors (P ) of small closed-shell molecules computed using
+the aug-cc-pVQZ basis set.  Also shown are mean absolute errors (∆MAE) and standard deviations (∆STD) of the results, relative to
+CCSD(T).
+
+                   System                EA-ADC(2)               EA-ADC(2)-X               EA-ADC(3)           EA-EOM-CCSD     CCSD(T)
+                                          Ω              P                Ω              P                Ω              P                      Ω                       Ω
+                     LiH                 0.28            0.99            0.32            0.99            0.30            0.99                  0.29                   0.29
+                    SiH2                1.16            0.95            1.40            0.90            1.09            0.90                  1.00                   1.03
+                    BeO                2.30            0.97            2.37            0.96            2.05            0.96                  2.15                   2.13
+                     CO    −1.41          0.98   −1.29          0.95   −1.41          0.99     −1.46     −1.44
+                    H2O    −0.57          0.99   −0.54          0.99   −0.57          0.99     −0.57     −0.56
+                     SO2                 1.09            0.91            1.27            0.88            0.92            0.90                  0.85                   0.84
+                     HF    −0.64          1.00   −0.61          0.99   −0.63          0.99     −0.63     −0.62
+                      N2    −1.81          0.99   −1.79          0.99   −1.84          0.99     −1.83     −1.83
+                      P2                  0.74            0.90            0.89            0.87            0.56            0.88                  0.44                   0.45
+                      F2                  0.47            0.91            0.91            0.86            0.34            0.89                  0.13                   0.34
+                   H2CO    −0.51          0.99   −0.48          0.99   −0.56          0.99     −0.53     −0.55
+                   ∆MAE              0.100                            0.214                            0.038                                  0.031
+                   ∆STD              0.110                            0.204                            0.054                                  0.061
+
+
+TABLE IV: Vertical electron attachment energies (Ω, eV) and spectroscopic factors (P ) of small open-shell systems computed using the
+aug-cc-pVQZ basis set.  Also shown are mean absolute errors (∆MAE) and standard deviations (∆STD) of the results, relative to
+CCSD(T), and spin contamination of the reference unrestricted Hartree-Fock wavefunction (⟨ ˆS2⟩− S(S + 1)).
+
+             System         State        Spin cont.     EA-ADC(2)       EA-ADC(2)-X       EA-ADC(3)       EA-EOM-CCSD     CCSD(T)
+                                                              Ω          P            Ω          P            Ω          P                     Ω                       Ω
+               OH        2Π→ 1Σ+       0.007         1.70       0.92       2.39       0.83       1.23       0.87                1.61                   1.80
+               NH        3Σ−→ 2Π       0.017         0.01       0.94       0.67       0.85  −0.02      0.87                0.14                   0.29
+               O2        3Σ−g → 2Πg       0.049  −0.34      0.92       0.15       0.86  −0.35      0.89    −0.34    −0.13
+              NH2       2B1→ 1A1       0.010         0.70       0.93       1.22       0.84       0.24       0.88                0.56                   0.71
+              CH3       2A′′2→ 1A′1       0.012  −0.21      0.95       0.23       0.84  −0.37      0.86    −0.66    −0.09
+             ∆MAE                                              0.140                   0.416                   0.369                            0.252
+             ∆STD                                              0.105                   0.131                   0.145                            0.179
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                           (a)                                                         (b)
+
+FIG. 1:  Mean absolute errors (MAE, eV) and standard deviations from the mean signed error (STD, eV) for vertical attachment energies
+of (a) closed-shell and (b) open-shell atoms and molecules computed using four methods, relative to CCSD(T) (aug-cc-pVQZ basis set).
+The MAE value is represented as a height of each colored box, while the STD value is depicted as a radius of the black vertical bar.  See
+Tables I to IV for data on individual molecules.
+
+
+ﬁnd that for most systems the extended EA-ADC(2)-X                                            B.    Electron attachment in DNA/RNA nucleobases
+scheme produces larger errors compared to EA-ADC(2),
+despite incorporating description of the higher-order elec-                                       In this section, we extend our benchmark of the EA-
+tron  correlation  eﬀects.   This  observation  is  consistent                                ADC methods to ﬁve nucleic acid bases present in DNA
+with  the  performance  of  IP-ADC(2)-X  for  ionization                                      and  RNA:  uracil  (U),  thymine  (T),  cytosine  (C),  ade-
+energies,37 indicating unbalanced nature of this approxi-                                     nine (A), and guanine (G). Accurate simulation of EA’s
+mation.                                                                                       of these systems is crucial for understanding electron at-
+                                                                                                                                                    7
+
+
+TABLE V: Errors in vertical electron attachment energies (EA’s, eV), mean absolute errors (∆MAE) and standard deviations (∆STD) of
+DNA/RNA nucleobases computed using four methods with the aug-cc-pVDZ basis set, relative to EA’s from CCSD(T) shown in the
+rightmost column.
+
+               System              EA-ADC(2)           EA-ADC(2)-X           EA-ADC(3)            EA-EOM-CCSD           CCSD(T)
+                Uracil                     0.09                         0.15       −0.05                           0.02       −0.25
+               Cytosine                   0.05                         0.11       −0.05                           0.00       −0.27
+              Thymine                   0.08                         0.14       −0.06                           0.01       −0.29
+               Adenine                   0.02                         0.08       −0.04       −0.02      −0.42
+               Guanine                   0.02                         0.09       −0.04       −0.03      −0.17
+                ∆MAE                     0.05                         0.11                         0.05                            0.02
+                ∆STD                     0.03                         0.03                         0.01                            0.02
+
+
+tachment in DNA and RNA that can induce biochemical
+processes such as charge transfer along the DNA/RNA
+strand and alteration of genetic information.65–69 Experi-
+mentally, electron attachment of the isolated nucleobases
+has been studied by electron transmission spectroscopy
+(ETS)70–72  for  all  systems  except  guanine,  whose  nat-
+urally  stable  keto  isomer  becomes  unstable  in  the  gas
+phase.  The ETS measurements yield negative EA’s for
+the four remaining nucleobases that become increasingly
+negative  as  U >  T >  C >  A,71  indicating  that  for  all
+of these systems electron attachment is an endothermic
+process  in  the  gas  phase.    Theoretically,  EA’s  of  the
+DNA/RNA  nucleobases  have  been  a  subject  of  a  num-
+ber  of  investigations.73–81  We  speciﬁcally  mention  the                 FIG. 2:  Vertical electron attachment energies (in eV) of
+CCSD(T) study of (U, T, C) by Roca-Sanju´an et al.73                         DNA/RNA nucleobases computed using three diﬀerent methods
+and the EA-EOM-CCSD study of all ﬁve nucleobases by                          with the aug-cc-pVDZ basis set.
+Dutta et al.80 Although both studies were carried out us-
+ing the aug-cc-pVDZ basis set, vertical EA’s of the (U,
+T,  C)  nucleobases  computed  using  CCSD(T)  and  EA-                      somewhat larger ∆MAE = 0.05 eV, but smaller ∆STD =
+EOM-CCSD  are  signiﬁcantly  diﬀerent:   (−0.64, −0.65,                      0.01  eV,  systematically  underestimating  the  CCSD(T)
+−0.79) and (−0.23,−0.28,−0.27) eV, respectively.  An-                        values.     The  EA-ADC(2)  approximation  shows  simi-
+other CCSD(T) study by Urban and co-workers81 reports                        lar accuracy, overestimating the reference energies with
+adiabatic EA for uracil of−0.19 eV, in a close agreement                     small ∆MAE = 0.05 eV and ∆STD = 0.03 eV. The EA’s
+with the EA-EOM-CCSD vertical EA of−0.23 eV com-                             computed  using  CCSD(T),  EA-EOM-CCSD,  and  EA-
+puted by Dutta et al.80                                                      ADC(3) become increasingly negative in the order G> U
+  To  resolve  the  disagreement  between  the  CCSD(T)                      > C> T> A, which agrees with the experimental trend
+and EA-EOM-CCSD results in the literature, we recom-                         for all nucleobases but thymine and cytosine, where T >
+puted  vertical  EA’s  of  the  ﬁve  nucleobases  using  these               C.71  Given the fact that EA’s of these two nucleobases
+two methods with the aug-cc-pVDZ basis set (Table V).                        are  very  close,  their  relative  order  may  be  aﬀected  by
+For all systems, our CCSD(T) and EA-EOM-CCSD ver-                            incompleteness of the basis set and level of dynamic cor-
+tical  EA’s  are  in  a  very  close  agreement  between  each               relation treatment.  When comparing energy diﬀerences
+other  (with  the  largest  diﬀerence  of  0.03  eV)  and  with              between  EA’s  (∆EA)  of  diﬀerent  nucleobases,  the  EA-
+the EA-EOM-CCSD results reported by Dutta et al.  For                        ADC(3) method shows better agreement with CCSD(T)
+all Cs-symmetric  molecules  (U,  C,  T,  G),  we  ﬁnd  that                 than  EA-EOM-CCSD.  As  illustrated  in  Figure  2,  EA-
+the  ground  electronic  state  of  the  anion  is  2A′.   When              EOM-CCSD underestimates ∆EA for G and T by 0.04
+computing  the  CCSD(T)  vertical  electron  aﬃnity  with                    eV and overestimates ∆EA between T and A by 0.03 eV,
+respect to the lowest-energy  2A′′  state of the anion, we                   while the EA-ADC(3) shows errors of 0.01 and 0.02 eV
+obtain  EA  values  that  are  close  to  those  reported  by                for the respective transitions.
+Roca-Sanju´an et al.,73  which suggests a possible source
+for the disagreement with the results of this study.
+  Table  V  presents  errors  in  the  vertical  EA’s  com-                  C.    Core ionization energies of the zinc atom
+puted  using  EA-ADC  and  EA-EOM-CCSD,  relative  to
+CCSD(T). Consistent with our previous results for atoms                         We now demonstrate capabilities of our Green’s func-
+and  small  molecules  (Section  V A),  the  best  agreement                 tion IP-ADC implementation (GF-IP-ADC) by comput-
+with CCSD(T) is shown by EA-EOM-CCSD with ∆MAE                               ing  core-level  ionization  energies  of  the  zinc  atom  as
+and ∆STD of 0.02 eV. The EA-ADC(3) method shows a                            a  prototypical  ﬁrst-row  transition  metal  with  closed-
+                                                                                                                                                       8
+
+
+TABLE VI: Core-level ionization energies (eV) of the zinc atom computed using IP-ADC with core-valence separation approximation
+(CVS-IP-ADC) and unapproximated Green’s function IP-ADC (GF-IP-ADC) with the cc-pwCVTZ basis set.  For each method, results
+of the relativistic (X2C) and nonrelativistic (NR) computations are shown.  Experimental values are from Ref. 84.
+
+           Shell   Orbital       GF-IP-ADC(2)           CVS-IP-ADC(2)           GF-IP-ADC(3)           CVS-IP-ADC(3)      Experiment
+                               NR            X2C            NR            X2C            NR            X2C            NR            X2C
+            K        1s        9555.44      9648.48      9555.47      9648.51      9584.80      9678.12      9584.77      9678.12
+             L        2s        1164.18      1183.97      1170.50      1193.03      1185.87      1206.96      1195.04      1218.04      1196.16
+             L        2p        1021.27      1027.64      1021.62      1028.67      1044.89      1052.24      1046.30      1053.76      1033.52a
+            M        3s         138.40        141.17        142.56        146.02        148.63        152.11        151.70        155.59        139.88
+            M        3p          91.48          92.33          94.86          95.76          99.92         101.09        102.51        103.73         90.01a
+
+           a Experimental values for ionization in the 2p and 3p orbitals are obtained by averaging ionization energies for states
+             with the total angular momentum quantum number J  = 1/2 and 3/2.
+
+
+shell   neutral   ground   state.      The   IP-ADC   method                   up to∼ 4 %.
+has  been  previously  used  to  compute  core  ionization
+energies38–40  in  combination  with  core-valence  separa-
+tion  (CVS)  approximation82,83  (CVS-IP-ADC),  which                          D.    Band gaps of hydrogen chains
+neglects  coupling  between  the  core  and  valence  ionized
+states  in  the  eﬀective  Hamiltonian  matrix  M−  due  to                       Finally, we combine our EA- and IP-ADC implemen-
+their  large  energetic  separation.   In  this  study,  we  use               tations  to  study  equally-spaced  hydrogen  chains  (Hn,
+GF-IP-ADC to compute theK-,L-, andM-shell ioniza-                              n  =  10  -  150),  which  are  challenging  one-dimensional
+tion  energies  of  the  zinc  atom  without  introducing  the                 models for understanding strong electron correlation in
+CVS approximation.  We compare our results to ioniza-                          molecules and materials.85–91  An important property of
+tion energies computed using the CVS-IP-ADC methods                            hydrogen chains is their band gap that can be calculated
+and assess accuracy of the CVS approximation for ion-                          as the diﬀerence between IP and EA. In the thermody-
+ization in each electronic shell.                                              namic limit, hydrogen chains are believed to exist in two
+   Table  VI  compares  results  of  GF-IP-ADC  and  CVS-                      phases:  (i) a metallic phase with a zero band gap corre-
+IP-ADC for the K-, L-, and M-shell ionization energies                         sponding to short H–H distances (r) and (ii) an insulator
+along with experimental data for the metallic zinc.84 All                      phase with a non-zero band gap at longer distances.  Re-
+IP-ADC  computations  employed  the  cc-pwCVTZ  basis                          cently, Ronca et al.92  computed band gaps for Hn  (n =
+set and the spin-free exact two-component (X2C) Hamil-                         10,  30,  50)  with r  =  1.4,  1.8,  and  3.6 a0  using  density
+tonian  to  account  for  scalar  relativistic  eﬀects.   To  as-              matrix renormalization group (DMRG) method with the
+sess  eﬀect  of  the  relativistic  eﬀects  on  the  CVS  errors,              STO-6G basis set.  Their results demonstrated that the
+Table  VI  also  presents  results  of  the  IP-ADC  methods                   Hn band gaps decrease with increasing chain lengthn for
+without  using  the  X2C  Hamiltonian.   The K-shell  ion-                     all three geometries, but due to the high computational
+ization energies computed using GF-IP-ADC and CVS-                             cost of DMRG they were not able to determine the band
+IP-ADC are in a very close agreement,  suggesting that                         gap at the thermodynamic limit.  Here,  we test perfor-
+the CVS approximation is very accurate for ionization in                       mance of EA- and IP-ADC for simulating band gaps of
+the  1s  orbital.   However,  signiﬁcant  errors  of  the  CVS                 Hn (n = 10 - 150) at r = 1.4 a0 (“compressed”) and 1.8
+approximation are observed for ionization in the L and                         a0  (“equilibrium”)  with  the  STO-6G  basis  set  against
+M  shells, with or without accounting for relativistic ef-                     results from DMRG and EOM-CCSD.
+fects, ranging from∼ 0.35 eV for the 2p orbital up to∼                            Figure  3  shows  band  gaps  computed  using  EA-/IP-
+11 eV for the 2s orbital.  For all of these transitions, the                   ADC and EOM-CCSD for Hn withn = 10 - 150, as well
+CVS-IP-ADC  results  overestimate  the  unapproximated                         as the reference values from DMRG for n = 10 - 50.  For
+GF-IP-ADC  energies.   The  magnitude  of  the  CVS  er-                       short  chain  lengths  (n≤  50),  the  best  agreement  with
+rors  does  not  correlate  with  excitation  energy,  the  or-                DMRG is shown by EOM-CCSD, which yields errors of
+bital  angular  momentum,  or  the  order  of  perturbation                    less than 0.05 eV for r = 1.4 a0  and∼ 0.25 eV for r =
+theory in relativistic and non-relativistic computations,                      1.8 a0.  ADC(2) and ADC(3) show very similar results,
+indicating  an  uncontrolled  nature  of  the  CVS  approxi-                   signiﬁcantly underestimating the band gap for both ge-
+mation.  Incorporating relativistic eﬀects contributes to                      ometries.   For  H50,  the  errors  of  both  approximations
+increasing the CVS errors by at most∼ 30 %.  Avoiding                          are∼  0.6  and  1.4  eV  for r  =  1.4  and  1.8 a0,  respec-
+the  CVS  approximation  in  GF-IP-ADC(3)  signiﬁcantly                        tively.  As the chain length increases, the computed band
+reduces  errors  in  ionization  energies  relative  to  the  ex-              gaps gradually approach the thermodynamic limit.  For
+periment.  For example, for the 2s orbital the relativistic                    the near-equilibrium r = 1.8 a0 geometry, the H130 and
+GF-IP-ADC(3) and CVS-IP-ADC(3) errors are 11.8 and                             H150 band gaps only diﬀer by∼ 0.06 eV, indicating that
+22.9 eV, respectively.  When considering relative errors,                      they are nearly converged to the thermodynamic limit,
+the CVS approximation has the largest eﬀect on the M-                          which  we  estimate  to  be∼  4.3  and  3.1  eV  for  EOM-
+shell  ionization energies,  overestimating their  values  by                  CCSD and ADC(2), respectively.  At the compressedr =
+                                                                                                                                                9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                          (a)                                                       (b)
+
+
+FIG. 3:  Band gaps (in eV) of the equally-spaced hydrogen chains (Hn) as a function of the chain length (n = 10 - 150) and H–H bond
+distance (r = 1.4 and 1.8 a0) computed using four methods with the STO-6G basis set.  The DMRG results are from Ref. 92.
+
+
+1.4a0 geometry, convergence of the computed band gaps                      nucleobases.   For  all  systems,  our  results  demonstrate
+with the chain length is slower.  Assuming this conver-                    that the accuracy of EA-ADC(3) is comparable to that
+gence is monotonic, we estimate the r = 1.4 a0 thermo-                     of  equation-of-motion  coupled  cluster  theory  with  sin-
+dynamic  limits  for  the  EOM-CCSD  and  ADC(2)  band                     gle and double excitations (EA-EOM-CCSD), with mean
+gaps to be∼ 3.35 and 2.8 eV. Increasing the perturba-                      absolute errors of∼ 0.05 eV for closed-shell atoms and
+tion order of the ADC approximations from ADC(2) to                        molecules  and ∼  0.15  eV  for  open-shell  systems.   Al-
+ADC(3) does not reduce the errors in the computed band                     though  both  methods  have  the  sameO(N 6)  computa-
+gaps, indicating the slow convergence of the ﬁnite-order                   tional  scaling  with  the  size  of  the  basis  set N,  EA-
+ADC  perturbation  expansion.   This,  coupled  with  the                  ADC(3)  is  more  eﬃcient  due  to  the  non-iterative  and
+large  diﬀerence  between  the  EOM-CCSD  and  ADC  re-                    Hermitian  nature  of  its  equations.   EA-ADC(2)  shows
+sults, suggests that the inﬁnite-order electron correlation                somewhat larger mean absolute errors of∼ 0.1 eV and
+eﬀects are very important for predicting accurate band                     ∼ 0.2 eV for closed- and open-shell systems, respectively,
+gaps of the equally-spaced hydrogen chains.                                but has an advantage of the lowerO(N 5) computational
+                                                                           scaling.
+                                                                              To  demonstrate  capabilities  of  the  Green’s  function
+VI.    CONCLUSIONS                                                         ADC  algorithm,  we  employed  the  GF-IP-ADC  imple-
+                                                                           mentation  to  compute  core-level K-, L-,  and M-shell
+  In this work, we presented an implementation of alge-                    ionization  energies  of  a  zinc  atom  without  introducing
+braic diagrammatic construction (ADC) theory for simu-                     core-valence  separation  (CVS)  approximation,  which  is
+lating electron attachment (EA) and ionization (IP) en-                    a widely used technique for calculating energies of core
+ergies of molecules (EA-/IP-ADC). In our EA-/IP-ADC                        electrons.   By  comparing  the  ionization  energies  com-
+implementation,  energies and intensities of the EA and                    puted  using  GF-IP-ADC  and  CVS-approximated  IP-
+IP transitions are computed from poles and residues of                     ADC (CVS-IP-ADC), our results establish that the CVS
+the  one-particle  Green’s  function  that  is  approximated               approximation is very accurate for ionization of the K-
+up to the third order in single-reference perturbation the-                shell (1s) electrons, but introduces signiﬁcant errors (up
+ory (EA- and IP-ADC(n), n = 2, 3).  We presented two                       to∼ 11 eV) for theL andM electronic shells (2s, 2p, 3s,
+algorithms  for  solving  the  EA-/IP-ADC  equations:   (i)                etc).   Importantly,  the  CVS  errors  do  not  exhibit  clear
+conventional  algorithm  that  uses  iterative  diagonaliza-               correlation with ionization energy or the order of the IP-
+tion techniques to compute low-energy EA, IP, and den-                     ADC(n) method n, indicating an uncontrolled nature of
+sity of states,  and (ii) Green’s function algorithm (GF-                  the CVS approximation.
+ADC) that solves a system of linear equations to compute                      As  our  ﬁnal  test,  we  combined  our  implementations
+density of states directly for a speciﬁed spectral region,                 of  EA-  and  IP-ADC(n)  (n  =  2,  3)  to  compute  band
+providing access to EA and IP at high energies.                            gaps  of  the  equally-spaced  linear  Hn  chains  (n  =  10  -
+  To  assess  accuracy  of  the  EA-ADC(n)  (n  =  2,  3)                  150) at two internuclear distances (r  = 1.4 and 1.8 a0)
+methods, we benchmarked their performance for a set of                     and compared them with reference results from EA-/IP-
+atoms (He – Kr), small molecules, and ﬁve DNA/RNA                          EOM-CCSD  and  density  matrix  renormalization  group
+                                                                                                                                                              10
+
+(DMRG).  The  computed  band  gaps  decrease  with  in-                            18K. Kowalski, K. Bhaskaran-Nair, and W. A. Shelton, J. Chem.
+creasing  chain  length n.   At  the  near-equilibrium  bond                          Phys. 141, 094102 (2014).
+                                                                                   19K. Bhaskaran-Nair, K. Kowalski, and W. A. Shelton, J. Chem.
+length r  =  1.8 a0,  the  band  gaps  are  nearly  converged                         Phys. 144, 144101 (2016).
+to  the  thermodynamic  limit  for n  =  150,  while  for  the                     20J. D. McClain, J. Lischner, T. J. Watson Jr., D. A. Matthews,
+shorter r  =  1.4  the  convergence  with  chain  length  is                          E.  Ronca,  S.  G.  Louie,  T.  C.  Berkelbach,  and  G.  K.-L.  Chan,
+slower.  For short chains, the EOM-CCSD band gaps are                                 Phys. Rev. B 93, 235139 (2016).
+in  a  good  agreement  with  DMRG,  while  both  ADC(2)                           21J. D. McClain, Q. Sun, G. K.-L. Chan, and T. C. Berkelbach, J.
+and  ADC(3)  methods  signiﬁcantly  underestimate  band                               Chem. Theory Comput. 13, 1209 (2017).
+                                                                                   22M. F. Lange and T. C. Berkelbach, J. Chem. Theory Comput.
+gaps for alln.  The errors in the ADC band gaps increase                              14, 4224 (2018).
+with r and do not become smaller with increasing order                             23B. Peng and K. Kowalski, J. Chem. Theory Comput. 14, 4335
+of the ADC approximation, suggesting that inﬁnite-order                               (2018).
+                                                                                   24J. Schirmer, Phys. Rev. A 26, 2395 (1982).
+correlation eﬀects are important for predicting accurate                           25J. Schirmer, L. S. Cederbaum, and O. Walter, Phys. Rev. A 28,
+band gaps of hydrogen chains.                                                         1237 (1983).
+   Overall, our results demonstrate that EA- and IP-ADC                            26J. Schirmer, Phys. Rev. A 43, 4647 (1991).
+are useful methods for accurate and eﬃcient simulations                            27F. Mertins and J. Schirmer, Phys. Rev. A 53, 2140 (1996).
+of electron aﬃnities, ionization potentials, and densities                         28J.  Schirmer  and  A.  B.  Troﬁmov,  J.  Chem.  Phys.  120,  11449
+of states of weakly correlated chemical systems.  To ap-                              (2004).
+                                                                                   29A.  Dreuw  and  M.  Wormit,  WIREs  Comput.  Mol.  Sci.  5,  82
+ply  EA-  and  IP-ADC  to  larger  and  more  complex  sys-                           (2014).
+tems, an eﬃcient implementation of these methods is de-                            30D.  Mukherjee  and  W.  Kutzelnigg,  in  Many-Body  Methods  in
+sirable.  Another important direction is to improve accu-                             Quantum  Chemistry  (Springer, Berlin, Heidelberg, Berlin, Hei-
+racy of EA-/IP-ADC for systems with unpaired electrons                                delberg, 1989), pp. 257–274.
+                                                                                   31D.  Kats,  D.  Usvyat,  and  M.  Sch¨utz,  Phys.  Rev.  A 83,  062503
+and  moderate  or  strong  electron  correlation,  for  exam-                         (2011).
+ple, by developing multi-reference formulations of these                           32G. W¨alz, D. Kats, D. Usvyat, T. Korona, and M. Sch¨utz, Phys.
+methods.45,50  Work along these directions is ongoing in                              Rev. A 86, 052519 (2012).
+our group.                                                                         33J. Liu, A. Asthana, L. Cheng, and D. Mukherjee, J. Chem. Phys.
+                                                                                      148, 244110 (2018).
+                                                                                   34J. H. Starcke, M. Wormit, and A. Dreuw, J. Chem. Phys. 130,
+VII.    ACKNOWLEDGEMENTS                                                              024104 (2009).
+                                                                                   35P.  H.  P.  Harbach,  M.  Wormit,  and  A.  Dreuw,  J.  Chem.  Phys.
+                                                                                      141, 064113 (2014).
+   This work was supported by start-up funds provided                              36J. Schirmer, A. B. Troﬁmov, and G. Stelter, J. Chem. Phys. 109,
+by  the  Ohio  State  University.   Computations  were  per-                          4734 (1998).
+                                                                                   37A.  B.  Troﬁmov  and  J.  Schirmer,  J.  Chem.  Phys.  123,  144115
+formed at the Ohio Supercomputer Center under projects                                (2005).
+PAS1317 and PAS1583.93                                                             38G.  Angonoa,  O.  Walter,  and  J.  Schirmer,  J.  Chem.  Phys.  87,
+
+ 1L. S. Cederbaum, J. Phys. B: At. Mol. Phys. 8, 290 (1975).                          6789 (1987).
+                                                                                   39J. Schirmer and A. Thiel, J. Chem. Phys. 115, 10621 (2001).
+ 2W. Von Niessen, J. Schirmer, and L. S. Cederbaum, Computer                       40A. Thiel, J. Schirmer, and H. K¨oppel, J. Chem. Phys. 119, 2088
+  Physics Reports 1, 57 (1984).                                                       (2003).
+ 3J. V. Ortiz, WIREs Comput. Mol. Sci. 3, 123 (2012).                              41A. L. Dempwolﬀ, M. Schneider, M. Hodecker, and A. Dreuw, J.
+ 4S. Hirata, M. R. Hermes, J. Simons, and J. V. Ortiz, J. Chem.                       Chem. Phys. 150, 064108 (2019).
+  Theory Comput. 11, 1595 (2015).                                                  42A. Barth and J. Schirmer,  J. Phys. B: At. Mol. Phys. 18,  867
+ 5S. Hirata, A. E. Doran, P. J. Knowles, and J. V. Ortiz, J. Chem.                    (1985).
+  Phys. 147, 044108 (2017).                                                        43J.  Wenzel,  M.  Wormit,  and  A.  Dreuw,  J.  Comput.  Chem.  35,
+ 6L. Hedin, Phys. Rev. A 139, 796 (1965).
+ 7S.  V.  Faleev,  M.  van  Schilfgaarde,  and  T.  Kotani,  Phys.  Rev.              1900 (2014).
+                                                                                   44S.  Knippenberg,  D.  R.  Rehn,  M.  Wormit,  J.  H.  Starcke,  I.  L.
+  Lett. 93, 126406 (2004).                                                            Rusakova, A. B. Troﬁmov, and A. Dreuw, J. Chem. Phys. 136,
+ 8M. van Schilfgaarde, T. Kotani, and S. Faleev, Phys. Rev. Lett.
+  96, 226402 (2006).                                                               45K. Chatterjee and A. Y. Sokolov, J. Chem. Theory Comput. 15,064107 (2012).
+
+ 9J. B. Neaton, M. S. Hybertsen, and S. G. Louie, Phys. Rev. Lett.
+  97, 216405 (2006).                                                               46A. B. Troﬁmov and J. Schirmer, in Proceedings of 14th European5908 (2019).
+
+10G.  Samsonidze,  M.  Jain,  J.  Deslippe,  M.  L.  Cohen,  and  S.  G.
+  Louie, Phys. Rev. Lett. 107, 186404 (2011).                                      47M.  Schneider,  Weiterentwicklung  und  Implementierung  quan-Symposium on Gas Phase Electron Diﬀraction  (2011), p. 77.
+
+11M. J. van Setten,  F. Weigend,  and F. Evers,  J. Chem. Theory                      tenchemischer   Methoden   zur   direkten   Berechnung   von   Ion-
+  Comput. 9, 232 (2013).                                                              isationspotentialen  und  Elektroaﬃnit¨aten   (Heidelberg,   2015),
+12L. Reining, WIREs Comput. Mol. Sci. 8, e1344 (2017).                                zs.fassung in engl. und dt. Sprache.
+13T. D. Crawford and H. F. Schaefer, Rev. Comp. Chem. 14, 33                       48A. L. Fetter and J. D. Walecka, Quantum theory of many-particle
+  (2000).                                                                             systems (Dover Publications, 2003).
+14I.  Shavitt  and  R.  J.  Bartlett,  Many-Body  Methods  in  Chem-               49W.  H.  Dickhoﬀ  and  D.  Van  Neck,  Many-body  theory  exposed!:
+  istry and Physics (Cambridge University Press, Cambridge, UK,                       propagator description of quantum mechanics in many-body sys-
+  2009).                                                                              tems (World Scientiﬁc Publishing Co., 2005).
+15M. Nooijen and J. G. Snijders,  Int. J. Quantum Chem. 44,  55                    50A. Y. Sokolov, J. Chem. Phys. 149, 204113 (2018).
+  (1992).                                                                          51Q.  Sun,  T.  C.  Berkelbach,  N.  S.  Blunt,  G.  H.  Booth,  S.  Guo,
+16M. Nooijen and J. G. Snijders,  Int. J. Quantum Chem. 48,  15
+  (1993).                                                                             Z.  Li,  J.  Liu,  J.  D.  McClain,  E.  R.  Sayfutyarova,  S.  Sharma,
+17M. Nooijen and J. G. Snijders, J. Chem. Phys. 102, 1681 (1995).                     S.  Wouters,  and  G.  K.-L.  Chan,  WIREs  Comput.  Mol.  Sci.  8,
+                                                                                                                                                                      11
+
+
+  e1340 (2018).                                                                           W¨ullen. For the current version, see http://www.cfour.de.
+52Y.  Shao,  Z.  Gan,  E.  Epifanovsky,  A.  T.  B.  Gilbert,  M.  Wor-                63R. M. Parrish, L. A. Burns, D. G. A. Smith, A. C. Simmonett,
+  mit,  J.  Kussmann,  A.  W.  Lange,  A.  Behn,  J.  Deng,  X.  Feng,                    A. E. DePrinceIII, E. G. Hohenstein, U. Bozkaya, A. Y. Sokolov,
+  D. Ghosh, M. Goldey, P. R. Horn, L. D. Jacobson, I. Kaliman,                            R. Di Remigio, R. M. Richard, J. F. Gonthier, A. M. James, H. R.
+  R. Z. Khaliullin, T. Ku´s, A. Landau, J. Liu, E. I. Proynov, Y. M.                      McAlexander, A. Kumar, M. Saitow, X. Wang, B. P. Pritchard,
+  Rhee, R. M. Richard, M. A. Rohrdanz, R. P. Steele, E. J. Sund-                          P. Verma, H. F. Schaefer, K. Patkowski, R. A. King, E. F. Valeev,
+  strom, H. L. Woodcock III, P. M. Zimmerman, D. Zuev, B. Al-                             F.  A.  Evangelista,  J.  M.  Turney,  T.  D.  Crawford,  and  C.  D.
+  brecht,  E.  Alguire,  B.  Austin,  G.  J.  O.  Beran,  Y.  A.  Bernard,                Sherrill, J. Chem. Theory Comput. 13, 3185 (2017).
+  E.  Berquist,   K.  Brandhorst,   K.  B.  Bravaya,   S.  T.  Brown,                  64J. R. Rumble, CRC Handbook of Chemistry and Physics, 100th
+  D. Casanova, C.-M. Chang, Y. Chen, S. H. Chien, K. D. Closser,                          Edition (Internet Version) (CRC Press, Taylor & Francis, Boca
+  D.  L.  Crittenden,  M.  Diedenhofen,  R.  A.  Distasio  JR.,  H.  Do,                  Raton, FL, 2019).
+  A. D. Dutoi, R. G. Edgar, S. Fatehi, L. Fusti-Molnar, A. Ghy-                        65S. Steenken, Chem. Rev. 89, 503 (1989).
+  sels, A. Golubeva-Zadorozhnaya, J. Gomes, M. W. D. Hanson-                           66M. Yan, D. Becker, S. Summerﬁeld, P. Renke, and M. D. Sevilla,
+  Heine, P. H. P. Harbach, A. W. Hauser, E. G. Hohenstein, Z. C.                          J. Phys. Chem. 96, 1983 (1992).
+  Holden,  T.-C.  Jagau,  H.  Ji,  B.  Kaduk,  K.  Khistyaev,  J.  Kim,                67A.-O. Colson and M. D. Sevilla, J. Phys. Chem. 99, 3867 (1995).
+  J. Kim, R. A. King, P. Klunzinger, D. Kosenkov, T. Kowalczyk,                        68R. Wintjens, J. Li´evin, M. Rooman, and E. Buisine, J. Mol. Biol.
+  C. M. Krauter, K. U. Lao, A. D. Laurent, K. V. Lawler, S. V.                            302, 393 (2000).
+  Levchenko, C. Y. Lin, F. Liu, E. Livshits, R. C. Lochan, A. Lu-                      69M. A. Huels, I. Hahndorf, E. Illenberger, and L. Sanche, J. Chem.
+  enser,  P.  Manohar,  S.  F.  Manzer,  S.-P.  Mao,  N.  Mardirossian,                   Phys. 108, 1309 (1998).
+  A. V. Marenich, S. A. Maurer, N. J. Mayhall, E. Neuscamman,                          70K. D. Jordan and P. D. Burrow, Chem. Rev. 87, 557 (1987).
+  C. M. Oana,  R. Olivares-Amaya,  D. P. O’Neill,  J. A. Parkhill,                     71K. Aﬂatooni, G. Gallup, and P. Burrow, J. Phys. Chem. A 102,
+  T. M. Perrine, R. Peverati, A. Prociuk, D. R. Rehn, E. Rosta,                           6205 (1998).
+  N.  J.  Russ,  S.  M.  Sharada,  S.  Sharma,  D.  W.  Small,  A.  Sodt,              72V. Periquet, A. Moreau, S. Carles, J.-P. Schermann, and C. Des-
+  T. Stein, D. St¨uck, Y.-C. Su, A. J. W. Thom, T. Tsuchimochi,                           fran¸cois, J. Electron Spectrosc. 106, 141 (2000).
+  V.  Vanovschi,  L.  Vogt,  O.  Vydrov,  T.  Wang,  M.  A.  Watson,                   73D. Roca-Sanju´an, M. Merch´an, L. Serrano-Andr´es, and M. Ru-
+  J. Wenzel, A. White, C. F. Williams, J. Yang, S. Yeganeh, S. R.                         bio, J. Chem. Phys. 129, 095104 (2008).
+  Yost, Z.-Q. You, I. Y. Zhang, X. Zhang, Y. Zhao, B. R. Brooks,                       74D.  Roca-Sanju´an,  M.  Rubio,  M.  Merch´an,  and  L.  Serrano-
+  G.  K.-L.  Chan,  D.  M.  Chipman,  C.  J.  Cramer,  W.  A.  God-                       Andr´es, J. Chem. Phys. 125, 084302 (2006).
+  dard  III,  M.  S.  Gordon,  W.  J.  Hehre,  A.  Klamt,  H.  F.  Schae-              75X. Li,  Z. Cai,  and M. D. Sevilla,  J. Phys. Chem. A 106,  1596
+  fer, M. W. Schmidt, C. D. Sherrill, D. G. Truhlar, A. Warshel,                          (2002).
+  X. Xu, A. Aspuru-Guzik, R. Baer, A. T. Bell, N. A. Besley, J.-D.                     76S.  S.  Wesolowski,  M.  L.  Leininger,  P.  N.  Pentchev,  and  H.  F.
+  Chai,  A.  Dreuw,  B.  D.  Dunietz,  T.  R.  Furlani,  S.  R.  Gwalt-                   Schaefer, J. Am. Chem. Soc. 123, 4023 (2001).
+  ney, C.-P. Hsu, Y. Jung, J. Kong, D. S. Lambrecht, W. Liang,                         77M. D. Sevilla, B. Besler, and A.-O. Colson, J. Phys. Chem. 99,
+  C. Ochsenfeld, V. A. Rassolov, L. V. Slipchenko, J. E. Subotnik,                        1060 (1995).
+  T. Van Voorhis, J. M. Herbert, A. I. Krylov, P. M. W. Gill, and                      78N. A. Richardson, S. S. Wesolowski, and H. F. Schaefer, J. Am.
+  M. Head-Gordon, Mol. Phys. 113, 184 (2015).                                             Chem. Soc. 124, 10163 (2002).
+53E. R. Davidson, J. Comput. Phys. 17, 87 (1975).                                      79E. C. Chen and E. S. Chen, J. Phys. Chem. B 104, 7835 (2000).
+54B.  Liu,  The  Simultaneous  Expansion  Method  for  the  Iterative                  80A. K. Dutta, T. Sengupta, N. Vaval, and S. Pal, Int. J. Quantum
+  Solution of Several of the Lowest-Lying Eigenvalues and Corre-                          Chem. 115, 753 (2015).
+  sponding Eigenvectors of Large Real-Symmetric Matrices, Tech-                        81P. Ded´ıkov´a, L. Demoviˇc, M. Pitoˇn´ak, P. Neogr´ady, and M. Ur-
+  nical report, Berkeley, CA, USA (1978).                                                 ban, Chem. Phys. Lett. 481, 107 (2009).
+55J.  R.  Shewchuk,  An  Introduction  to  the  Conjugate  Gradient                    82L. S. Cederbaum, W. Domcke, J. Schirmer, and W. Von Niessen,
+  Method  Without  the  Agonizing  Pain,  Technical  report,  Pitts-                      Phys. Scr. 21, 481 (1980).
+  burgh, PA (1994).                                                                    83L.  S.  Cederbaum,  W.  Domcke,  and  J.  Schirmer,  Phys.  Rev.  A
+56R. A. Kendall, T. H. Dunning Jr, and R. J. Harrison 96, 6796                            22, 206 (1980).
+  (1992).                                                                              84L.  Ley,  S.  Kowalczyk,  F.  McFeely,  R.  Pollak,  and  D.  Shirley,
+57N. B. Balabanov and K. A. Peterson, J. Chem. Phys. 123, 064107                          Phys. Rev. B 8, 2392 (1973).
+  (2005).                                                                              85A.  V.  Sinitskiy,  L.  Greenman,  and  D.  A.  Mazziotti,  J.  Chem.
+58W. Liu, Mol. Phys. 108, 1679 (2010).                                                    Phys. 133, 014104 (2010).
+59T. Saue, ChemPhysChem 12, 3077 (2011).                                               86L. Stella, C. Attaccalite, S. Sorella, and A. Rubio, Phys. Rev. B
+60D. Peng and M. Reiher, Theor. Chem. Acc. 131, 1081 (2012).                              84, 245117 (2011).
+61W. J. Hehre, R. F. Stewart, and J. A. Pople, J. Chem. Phys. 51,                      87N. Lin, C. A. Marianetti, A. J. Millis, and D. R. Reichman, Phys.
+  2657 (1969).                                                                            Rev. Lett. 106, 096402 (2011).
+62J.  F.  Stanton,  J.  Gauss,  L.  Cheng,  M.  E.  Harding,  D.  A.                   88T. Tsuchimochi and G. E. Scuseria, J. Chem. Phys. 131, 121102
+  Matthews,  and  P.  G.  Szalay,  CFOUR,  Coupled-Cluster  tech-                         (2009).
+  niques  for  Computational  Chemistry,  a  quantum-chemical  pro-                    89A. A. Rusakov and D. Zgid, J. Chem. Phys. 144, 054106 (2016).
+  gram package, With contributions from A.A. Auer, R.J. Bartlett,                      90M. Motta, D. M. Ceperley, G. K.-L. Chan, J. A. Gomez, E. Gull,
+  U. Benedikt, C. Berger, D.E. Bernholdt, Y.J. Bomble, O. Chris-                          S.  Guo,  C.  A.  Jim´enez-Hoyos,  T.  N.  Lan,  J.  Li,  F.  Ma,  A.  J.
+  tiansen, F. Engel, R. Faber, M. Heckert, O. Heun, M. Hilgenberg,                        Millis, N. V. Prokof’ev, U. Ray, G. E. Scuseria, S. Sorella, E. M.
+  C.  Huber,  T.-C.  Jagau,  D.  Jonsson,  J.  Jus´elius,  T.  Kirsch,  K.                Stoudenmire, Q. Sun, I. S. Tupitsyn, S. R. White, D. Zgid, and
+  Klein, W.J. Lauderdale, F. Lipparini, T. Metzroth, L.A. M¨uck,                          S. Zhang, Phys. Rev. X 7, 031059 (2017).
+  D.P. O’Neill, D.R. Price, E. Prochnow, C. Puzzarini, K. Ruud,                        91A. A. Rusakov,  S. Iskakov,  L. N. Tran,  and D. Zgid,  J. Chem.
+  F. Schiﬀmann, W. Schwalbach, C. Simmons, S. Stopkowicz, A.                              Theory Comput. 15, 229 (2019).
+  Tajti, J. V´azquez, F. Wang, J.D. Watts and the integral pack-                       92E.  Ronca,  Z.  Li,  C.  A.  Jim´enez-Hoyos,  and  G.  K.-L.  Chan,  J.
+  ages  MOLECULE  (J.  Alml¨of  and  P.R.  Taylor),  PROPS  (P.R.                         Chem. Theory Comput. 13, 5560 (2017).
+  Taylor), ABACUS (T. Helgaker, H.J. Aa. Jensen, P. Jørgensen,                         93Ohio Supercomputer Center, Technical report (1987).
+  and  J.  Olsen),  and  ECP  routines  by  A.  V.  Mitin  and  C.  van

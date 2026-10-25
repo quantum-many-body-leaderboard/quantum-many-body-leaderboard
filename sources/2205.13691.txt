@@ -1,0 +1,561 @@
+Suppression of Peierls-like, nesting-based instabilities in solids
+
+                 Nassim  Derriche,  Ilya  Elﬁmov,  and  George  Sawatzky
+              Quantum  Matter  Institute,  University  of  British  Columbia
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                               1
+                                                   Abstract
+
+  Understanding instabilities is of vast importance in material science.  One such example is the
+
+Peierls instability of one-dimensional metals with a single band.  The question is why H and Li
+chains behave so diﬀerently in spite of their similar electronic structure.  We demonstrate that this
+
+is due to the suppression in the susceptibility for Li because of the interatomic, inter-orbital s-p
+
+mixing of the band crossing the Fermi energy.  The inﬂuence of this on the structure factor-like
+term  in  response  functions  is  critical  and  depends  on  the  wavefunction’s  details  also  in  higher
+
+dimensions.
+
+
+   The susceptibility of a system is a central theme in all of condensed matter physics since
+it  is  what  we  need  to  know  and  understand  in  order  to  describe  the  response  of  a  sys-
+tem  to  external  perturbations.   This  includes  temperature,  pressure,  magnetic  or  electric
+ﬁelds,  electron density variations due to doping and chemical substitutions as well as the
+inﬂuence of various interactions such as the electron-boson interactions (be it electron-hole
+excitations, phonons, magnons, plasmons, etc.).  In addition, the momentum and frequency
+dependence of the susceptibility provides information regarding possible phase transitions
+such as insulator-metal transitions as well as charge and spin density wave formations, mag-
+netic ordering of various kinds and superconductivity.  Presently, the approximation mostly
+used for the static charge susceptibility is the Lindhard function as derived for a free electron
+gas involving only the band structure and ground state occupation numbers.  However, the
+generalized form involves a multiplicative structure factor-like term which has a substantial
+momentum dependence if the Bloch wavefunctions involve strongly localized atomic wave-
+functions and strongly corrugated low energy scale charge densities.  We demonstrate the
+extreme importance of the detailed nature of the wavefunctions represented by the structure
+factor-like term that multiplies the purely band structure-based Lindhard susceptibility.  We
+show that, especially for atomic-based bands of opposite parity with a strong k-dependent
+mixing  because  of  interatomic  hybridization,  which  is  generally  the  case  for  materials  of
+interest, the response of a system can change dramatically from that determined using only
+the band dispersion.  This is especially important in the case of so-called topological ma-
+terials and their surfaces but also for all systems in which mixing between opposite-parity
+orbitals such as s and p, d and p, or d and f atomic orbitals is involved in the low energy
+scale wavefunctions.
+
+                                                        2
+   In  free  electron  gas  models  at  zero  temperature,  the  charge  susceptibility  diverges  in
+1D,  the  ﬁrst  derivative  diverges  in  2D  and  a  kink  occurs  in  3D  at  a  wave  vector  equal
+to 2kF .  This leads to a potential instability to an external potential at a wave vector of
+2kF ,  giving  rise  to  phase  transitions  such  as  the  predicted  Peierls  transition  for  a  half-
+ﬁlled  1D  band  [1],  charge  density  waves  prominent  in  2D  and  the  Friedel  charge  density
+oscillations about a charged impurity in a 3D metal.  In more realistic systems, we have to
+deal with a lattice of atoms and a strongly corrugated potential landscape.  Furthermore,
+the  Fermi  surfaces  in  2D  and  3D  materials  diﬀer  strongly  from  the  free  electron  circular
+or  spherical  Fermi  surfaces  and,  in  cases  where  large  parts  of  the  Fermi  surface  can  be
+connected with the same q vector (nesting), the charge susceptibility in a single band model
+in tight binding theory would diverge as in the 1D case.  For the high-Tc  superconductors
+such as the Fe pnictides [2], this nesting property has been suggested as the origin of the
+superconductivity itself.  In 2 dimensional systems such as the HTC cuprates [3] and two
+dimensional dichalcogenides (TMD’s) [4], Fermi surface nesting can lead to charge density
+waves as highlighted in recent scientiﬁc activity.  Also,  recent studies of the 3d transition
+metal perovskite structure oxides as in the rare-earth nickelates have demonstrated structural
+and phase transitions suggested to be related to nesting conditions [5].  Some of these are
+strongly related to Peierls-like transitions involving strong atomic movement eﬀectively as
+a result of electron-phonon coupling.  There is a signiﬁcant focus on charge density waves
+in higher-dimensional materials in contemporary literature [6].  To a lesser extent, ab initio
+exploration of 1D systems in order to study Peierls transitions, especially from a phononic
+perspective, is also present for 1D materials such as HF chains [7] in the literature.
+
+   Recently, several authors using density functional theory (DFT) methods have questioned
+the  theoretical  validity  of  Peierls’  original  conclusions  and  the  causes  of  charge  density
+waves in some materials [8].  Notably, Johannes and Mazin argued in 2008 against a naive
+application  of  Peierls  theory  to  real  CDW  materials.   They  analyzed  cases  where  charge
+density waves exist with wavevectors at which Fermi surface nesting is weak or non-existent.
+They also showed that, using DFT, a linear chain of equally spaced sodium atoms with one
+valence electron per atom is not susceptible to a transition to a stable 1D dimerized phase
+[9].  The phase diagram of hydrogen chains has been studied through various ab initio and
+computational methods and in all cases clearly shows a dimerized ground state.  However,
+the root cause of the absence of dimerization for sodium has not been explored [10–12].  DFT
+
+                                                        3
+FIG. 1:  a) Diagram of an undisturbed 1D conﬁguration (upper chain) and a conﬁguration
+  with a non-zero dimerization (lower chain).  b) Total DFT energy change as a function
+distance between neighboring atoms.  The energy diﬀerence between the ground state and
+                                the undisturbed state of H is 143 meV.
+
+
+calculations result in dimerization for 1D H but not for 1D Li or Na [13].  In this paper, we
+demonstrate that this results from a very basic diﬀerence in the atomic electronic structure
+and the interatomic, inter-orbital hybridization involving the mixing of even and odd parity
+atomic wavefunctions.  Such mixing is present in many systems, excluding H and 1D organic
+molecular systems in which the valence electrons are in orbitals with intermolecularπ bonds
+such that even-odd parity intermolecular hybridization is symmetry forbidden, like in carbon
+chains  [14–16].   Materials  with  s-p  mixing  like  the  alkali  metals  clearly  incorporate  such
+interactions,  but  systems  that  involve  higher  angular  momentum  orbitals  also  have  the
+potential to involve mixing with similar symmetry.
+
+   We study the changes that occur in the charge susceptibility when moving from H to the
+alkali metals.  First, we follow the calculations of Johannes and Mazin, but now for H and Li
+chains through DFT. The local density approximation was used for the exchange-correlation
+functional [17], and the basis set was atomic orbital based (FPLO) [18].  Equilibrium lattice
+parameters were determined through relaxation of one-dimensional chains of equally-spaced
+atoms separated by 40 ˚A, which totally suppresses inter-chain interactions, resulting in 1.00
+˚A for H (compared to 1.41 ˚A in a simple cubic structure [19]), and 3.00 ˚A for Li compared
+to  3.04  ˚A  for  the  experimental  nearest-neighbor  distance  in  BCC  Li  metal.   In  Figure  1,
+we show the total energy change as a function of the degree of dimerization schematized in
+Figure 1 a).  The dimerized H chains have a lower energy by about 143 meV orkBT =1659.5
+K compared to the uniform chain, while the Li chain has its lowest energy at the uniform
+conﬁguration.  This raises the question as to the origin of this dramatic diﬀerence.
+
+   While the electronic conﬁguration of these two elements is similar in the sense that they
+
+                                                       4
+both have only one valence electron in an s symmetry orbital as atoms, the key diﬀerence is
+that the principal quantum number of 1 can only house a 1s orbital, while an n=2 level can
+house s and p orbitals which are relatively closely spaced in energy (a diﬀerence of 2.3 eV in
+Li due to relativistic eﬀects).  In atoms, this diﬀerence is not really of basic importance for
+the ground state but in a solid one must deal with interatomic inter-orbital hybridization.
+The s and p bands in 1D have opposite dispersion and if their bandwidths are large enough,
+they would cross were it not for the also strong interatomic s-p hybridization which lifts the
+degeneracy at the  crossing point and opens  a substantial gap leading  to a well-separated
+single lowest energy band whose bandwidth has quite dramatically decreased from that of a
+2s only dispersion.  However, since the s-p interatomic hybridization vanishes at k = 0 and
+k =π, the character of the lowest band is purely s at k = 0 and purely p at π.
+   All  of  the  above  eﬀects  are  displayed  in  the  DFT  calculations  displayed  in  Figure  2.
+There is only one band crossing the Fermi energy for Li as for H, but the H band is purely
+of  s  character  and  separate  from  higher  energy  bands  by  17  eV  while  the  Li  band  has  a
+strongly momentum-dependent character which changes from s to p going from Γ to the zone
+boundary.  As we will demonstrate below, it is the interorbital hybridization of gerade  (2s)
+and ungerade (2p) orbitals that causes the suppression of the divergence in the susceptibility
+in a chain of Li atoms.
+   The susceptibility involves not only the scattering of electrons from occupied to unoccu-
+pied states, but also the spatial part of the wavefunctions. In the free electron approximation,
+the charge density for each k state is simply a constant independent of k.  In a solid with
+atoms, the density varies strongly within the unit cell.  This diﬀerence is often ignored [20].
+In  a  solid  with  translational  symmetry,  the  wavefunctions  are  known  to  be  Bloch  waves
+which, in the limit of large atomic spacings, can be decomposed into linear combinations of
+atomic orbitals (LCAO). The electronic states in a single band can thus be expressed as:
+
+                                 Ψ⃗k(⃗r) =    1√  ∑    ei⃗k·⃗Rlαµ(⃗k)φµ(⃗r− ⃗Rl),                                    (1)
+                                               N   µ,l
+
+where φµ(⃗r)  is  the  real  space  form  of  the  atomic  orbital µ, Rl  is  the  distance  of  the  l’th
+atom from the origin along the chain, N is the number of atoms andαµ(⃗k) is the normalized
+k-dependent coeﬃcient of the multi-atomic wave function (µ is 2s or 2p in our case).
+   The static one-dimensional, random phase approximation single band susceptibility [21–
+
+                                                        5
+ FIG. 2:  DFT orbital-projected band structures for undisturbed chains of a) hydrogen, b)
+ lithium.  The dashed black lines corresponds to tight binding, nearest neighbor purely 2s
+ and 2p dispersions.  c) Schematic of the real space 1D lithium chain model considered for
+ the tight binding Hamiltonian in Equation 4.  2s and 2pz orbitals are shown (including +
+   and - signs indicating phases) with their associated creation operators, along with the
+  hopping parameters and overlap integrals taken into account.  The hopping parameters
+                                       used are discussed in the text.
+
+
+26], can be written using a LCAO basis as:
+
+
+                        χ(q) =∑           fk−fk+q                          χ0(k,q)n(k,q)                          (2)
+
+                                    k  ϵk−ϵk+q +iηn(k,q) =∑k
+
+
+
+
+                  n(k,q) =  ∑
+                               µ,ν,l,µ′,ν′,l′ei(k+q)(Rl−Rl′ )α∗ν(k)αµ(k +q)αµ′(k +q)αν′(k)                 (3)⟨⏐⏐⏐e−i⃗q·⃗r⏐⏐⏐φµ(⃗r− ⃗Rl)⟩⟨⏐⏐⏐ei⃗q·⃗r⏐⏐⏐φν′(⃗r)⟩
+                              ×    φν(⃗r)                            φµ′(⃗r− ⃗R′l)
+
+
+where ϵk  is  the  energy  of  the  band  at  k, fk  is  the  Fermi-Dirac  distrubtion  at  k, iη  is  a
+small  imaginary  part  representing  a  ﬁnite  state  lifetime  and  the  k  sum  is  over  the  ﬁrst
+Brillouin  zone.   We  see  here  that  the  n(k,q)  factor  directly  depends  on  the  band  orbital
+character.   When  modeling  the  charge  carriers  as  plane  waves,  Equation  2  leads  to  the
+standard Lindhard function in 1D which is characterized by a divergence atq = 2kf [27, 28].
+On the other hand, taking the approximation that the atomic wave functions are real space
+delta functions centered on lattice sites conserves theα(k) coeﬃcients, but the contributions
+from the Fourier integrals in Equation 3 become trivial [29].
+
+                                                        6
+   Because the DFT codes are concentrated on the electron density and the total energy,
+they do not provide the details of the wavefunctions needed to determine n(k,q).  Therefore,
+we turn to a tight binding ﬁt to the band structure using an atomic basis set for each atom,
+which we limit to the include only the valence s and p orbitals or the orbitals that are the
+main  contributors  to  the valence  electron band  structure.  This  also  directly  includes  the
+s-p interatomic hybridization as discussed above.  We also take the non-orthogonality of the
+2s and 2p states at diﬀerent sites into account by including their nearest neighbor overlap
+integrals [30].  The Hamiltonian in a (s,p) basis in the momentum representation is:
+
+                                                                                               
+               H =∑         2(Ωssϵk−tss) cos (ka)         2i(Ωspϵk−tsp) sin (ka)               ,              (4)
+                       k    −2i(Ωspϵk−tsp) sin (ka) −2(Ωppϵk−tpp) cos (ka) + ∆
+
+where  ∆  is  the  on-site  energy  diﬀerence  between  the  p  and  s  orbitals, ϵk  is  the  energy
+dispersion (eigenvalues solved self-consistently),tss,tpp andtsp are nearest neighbor hopping
+parameters between neighboring s-s, p-p and s-p orbitals respectively and Ωss, Ωpp and Ωsp
+are the nearest neighbor overlap integrals between the orbitals denoted in the subscripts.
+All these parameters are taken to be always positive; the phase relationships are encoded in
+the signs present in the Hamiltonian above.  The imaginary oﬀ-diagonal terms encode the
+k-dependence of the s-p hybridization which, as symmetry dictates, is zero at πa  and Γ, and
+is maximal at π2a.  Although the contributions to n(k,q) from the spatially-extended atomic
+orbitals themselves are signiﬁcant, the most important contribution comes from these oﬀ-
+diagonal terms and the fact that the s and p orbitals are gerade and ungerade respectively,
+and the onsite mixing vanishes while the inter-site mixing changes sign when moving to the
+right or the left.  This is critical to our demonstration.
+   A  visualization  of  the  orbitals  and  of  the  relevant  parameters  is  provided  in  Figure  2
+c).  Diagonalization of the Hamiltonian in Equation 4 results in the energy eigenvalues ϵ(k)
+and eigenstates in momentum space, giving us a functional form for α2s(k) and α2p(k) in
+Equation 1.
+   Numerical values for the hopping parameters and the onsite energy diﬀerence were ob-
+tained by ﬁtting the energy eigenvalues to our DFT results, which lead to ∆ = 5.163 eV,
+tss = 1.185 eV,tpp = 2.743 eV andtsp = 1.558 eV. To compute the overlap integrals as well
+as  the  matrix  elements  in  Equation  3,  we  used  the  analytical  form  of  the  hydrogenic  or-
+bital wavefunctions in 3D, which were adapted for the lithium case with an eﬀective nuclear
+
+                                                       7
+charge of Z  = +1.26e [31].  The overlap integrals, using the DFT relaxed lattice constant,
+are Ωss = 0.553, Ωpp = 0.276 and Ωsp = 0.390.
+   We proceed to show that the inclusion of the n(k,q) factor exhibits the large diﬀerence
+in  the  susceptibility  between  H  and  Li  chains.   We  follow  Equation  2,  in  which  we  only
+consider terms in the inﬁnite sum appearing in Equation 3 which include on-site and nearest
+neighbour integrals (|l−l′| = 0 or 1) since they are the main numerical contributions. We set
+η = 1µeV  for both H and Li, allowing us to numerically compare the apparent strength of
+divergences by making them ﬁnite width integrated Lorentzians even at zero temperature.
+As  expected,  we  do  obtain  a  divergence  at q  =  2kF  for  H  as  shown  in  Figure  3  a).   On
+the other hand, for Li in Figure 3 b), there is a strong suppression of the peak at q = 2kF
+compared to theα2s(k) = 1 case. Note that the value atq = 0 is equal to the density of states
+at the Fermi level.  Ignoring the orbital wavefunction-dependent matrix elements causes a
+smaller suppression of the peak and the expected decrease of the overall susceptibility going
+as    1q2  is not captured.
+   The tight binding model described by Equation 4 is powerful enough to mathematically
+demonstrate  the  inﬂuence  of  the  terms  of  diﬀerent  orbital  dependence  entering  in χ(q).
+Taking the φ(⃗r) terms as delta functions centered on atomic sites in Equation 3, and thus
+considering only onsite terms (|l−l′| = 0), we can write the susceptibility as:
+
+
+                                        (
+                χ(q) =∑       χ0(k,q)    |α2s(k)|2|α2s(k +q)|2 +|α2p(k)|2|α2p(k +q)|2                (5)
+                           k                                 )
+                +2α∗2s(k)α2s(k +q)α∗2p(k +q)α2p(k)              =χss(q) +χpp(q) +χsp(q),
+
+
+   whereχ(q) is decomposed into terms depending only on the eigenstate coeﬃcients associ-
+ated with the orbitals indicated by the associated subscripts.  The analytical form of α2s(k)
+and α2p(k) obtained through diagonalization are lengthy functions of the Hamiltonian pa-
+rameters, but they can be written in such a way that α2s(k) is purely real and positive for
+all k, while α2p(k) is purely imaginary for any k but is positive for k < 0 and negative for
+k > 0 (as is shown in the Appendix).  Consequently, following Equation 5, we can see that
+χss(q) and χpp(q) have the same sign for all q, but that χsp(q) can be positive or negative;
+α2p(k +q) has the opposite sign of α2p(k) at values of q for which k+q lands on the other
+half of the Brillouin zone compared to k.  The number of terms in the k sum for which this
+
+                                                       8
+ FIG. 3:  Charge susceptibility of an undisturbed 1D chain of a) hydrogen and b) lithium
+ using DFT energy data and eigenfunctions obtained from a tight binding ﬁt to the DFT
+band structure.  The eﬀect including s-p hybridization (in red at zero temperature, and in
+ blue at T=95 K) compared to enforcing a purely 2s state (in black at T=0) is shown for
+ Li.  The insets show the peaks at q = 2kF .  c) Ratio of the peak height of the full lithium
+ charge susceptibility and of the susceptibility calculated with a very large charge transfer
+energy ∆ as a function of ∆.  d) Ratio of the charge susceptibility peak height and its value
+ at q = 0 as a function of temperature for both H and Li.  The orange lines correspond to
+                              the temperatures at which χ(2kF ) =χ(0).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   FIG. 4:  Orbital contributions to the lithium one-dimensional chain susceptibility with
+respect to q as outlined in Equation 5.  The susceptibility χ(q) (in blue) is the sum of the
+                                  three other individual plotted terms.
+
+
+
+                                                      9
+holds increases as q approaches 2kF , which results in a dimming of the susceptibility peak
+in the neighborhood of that value.  These diﬀerent contributions are shown clearly in Figure
+4.  This mathematical behavior is a direct consequence of the gerade-ungerade nature of the
+2s-2p hybridization.
+   In addition, the full susceptibility peak height is shown as a function of the energy diﬀer-
+ence between the 2s and 2p orbitals in Figure 3 c). We see that the reduction in hybridization
+with increasing ∆ reduces the χ(q) peak monotonically, approaching the pure 2s result.  To
+get an impression concerning the phase stability of the uniform phase of Li relative to that
+of H, we show in Figure 3 d) the ratio of the susceptibility at q = 2kF  and at q = 0.  The
+fully hybridized lithium system is more susceptible to long range (small q) charge density
+variations than to a doubling of the unit cell at temperatures above about 95 K (an energy
+of 8 meV when using the electronic temperature kBT ); χ(q) at that temperature is plotted
+in Figure 3 b).  However,  the q  = 2kF  peak of the H chain remains the global maximum
+even at very high temperatures.  We note that the temperature whereχ(2kF ) =χ(0) should
+not be taken as the expected, deﬁnite transition temperature since we also have to take into
+account the changes that would occur in the other degrees of freedom such as the lattice en-
+ergy represented by phonons in order to determine it.  It is however a strong indication that
+the phase transition, if it occurred at all, would be at a much lower temperature than that
+suggested from the susceptibility not including the inter-orbital hybridization and overlap
+integrals.
+   We thus conclude that a direct investigation of the Fermi surface of a material to look
+for  nesting  q-vectors  is  not  enough  even  for  qualitative  predictions  of  instabilities  in  sys-
+tems  for  which  the  wavefunctions  are  strongly  non-free  electron-like.   Although  we  have
+demonstrated this for the case of 1D and emphasized the even stronger inﬂuence of inter-
+atomic, inter-orbital mixing terms involving gerade and ungerade symmetry wavefunctions,
+this will be equally important in 2 and 3 dimensions, especially when closely spaced gerade
+and  ungerade  states are involved in the low energy states.  This will not always suppress
+the susceptibility peaks, but very likely could cause peaks to occur in other regions in mo-
+mentum  space.   The  importance  of  including  n(k,q)  could  apply  especially  to  topological
+materials, but also to transition metals and rare earth compounds in which there is strong
+interatomic hybridization of gerade  and ungerade  states, including for example the high-Tc
+superconductors and topological materials.
+
+                                                      10
+   ACKNOWLEDGMENTS
+
+
+   We thank Kateryna Foyevtsova and Oliver Dicks for fruitful discussions regarding DFT
+and susceptibility theory.  This research was undertaken thanks in part to funding from the
+Max Planck-UBC-UTokyo Center for Quantum Materials and the Canada First Research
+Excellence Fund, Quantum Materials and Future Technologies Program, as well as by the
+Natural Sciences and Engineering Research Council (NSERC) for Canada.
+
+
+
+
+
+
+   Appendix: Tight Binding Model Eigenstates
+
+
+   Diagonalizing the tight binding Hamiltonian shown in Equation 4 leads to the eigesnstates
+of our system.  The lower energy eigenstate, which represent the bonding interaction between
+the 2s and 2p Li orbitals, is shown as the band crossing the Fermi energy in Figure 2 b).  The
+form of the coeﬃcients α2s(k) and α2p(k) in Equation 1 for that eigenstate,  when setting
+the overlap integral values to zero for clarity, are as follows:
+
+
+
+
+
+                                   α2s(k) =           4tsp|sin(ak)|√        ,                                     (A.1)
+                                                 16t2sp sin2(ak) +γ2(k)
+
+
+
+
+
+
+
+                              α2p(k) =      iγ(k)|sin(ak)|√                      ,                               (A.2)
+                                          sin(ak)     16t2sp sin2(ak) +γ2(k)
+
+
+
+
+
+
+                                         √
+         γ(k) = 2(tss +tpp) + ∆−            (2(tss +tpp)cos(ak) + ∆)2 + 16t2sp sin2(ak).            (A.3)
+
+
+                                                     11
+FIG. 5:  Coeﬃcients for the lower energy eigenstate obtained from the diagonalization of the
+tight binding Hamiltonian representing the 1D inﬁnite Li chain
+
+
+   While  quantum  states  are  only  deﬁned  up  to  an  overall  phase,  the  phase  relationship
+between these two coeﬃcients is meaningful.  We can see that the way we have currently
+presented them, that over the entire Brillouin zone, α2s(k) is purely real and positive, while
+α2p(k) is purely imaginary but is positive for−πa <k< 0 and negative for 0<k< πa.  This
+is shown in Figure 5.  The importance of these characteristics is explained in the main text.
+
+
+
+
+
+ [1]R. E. Peierls and L. D. Roberts, Physics Today (1956), ISSN 0031-9228.
+
+ [2]X. Wan, H. C. Ding, S. Y. Savrasov, and C. G. Duan, Physical Review B - Condensed Matter
+     and Materials Physics 87, 1 (2013), ISSN 10980121.
+
+ [3]S. Caprara, C. Di Castro, G. Seibold, and M. Grilli, Physical Review B    95, 15 (2017), ISSN
+
+     24699969, 1604.07852.
+ [4]D. S. Inosov, V. B. Zabolotnyy, D. V. Evtushinsky, A. A. Kordyuk, B. B¨uchner, R. Follath,
+
+     H. Berger, and S. V. Borisenko, New Journal of Physics 10 (2008), ISSN 13672630, 0805.4105.
+
+ [5]S. Lee, R. Chen, and L. Balents, Physical Review B - Condensed Matter and Materials Physics
+
+                                                       12
+     84, 1 (2011), ISSN 10980121.
+
+ [6]S. Yue, B. Deng, Y. Liu, Y. Quan, R. Yang, and B. Liao, pp. 1–6 (2020), 2001.10124, URL
+
+     http://arxiv.org/abs/2001.10124.
+ [7]A. Beyer and A. Karpfen, Chemical Physics    64, 343 (1982), ISSN 03010104.
+
+ [8]J. A. Krakauer, W. Pickett, H., C. Wang, B. Klein, and S. Chubb, Physical Review Letters
+
+     62, 2016 (1989), ISSN 00280836.
+ [9]M. D. Johannes and I. I. Mazin, Physical Review B - Condensed Matter and Materials Physics
+
+     77, 1 (2008), ISSN 10980121, 0708.1744.
+
+[10]M. Motta, C. Genovese, F. Ma, Z. H. Cui, R. Sawaya, G. K. L. Chan, N. Chepiga, P. Helms,
+     C. Jim´enez-Hoyos, A. J. Millis, et al., Physical Review X 10, 1 (2020), ISSN 21603308.
+
+[11]M. Motta, D. M. Ceperley, G. K. L. Chan, J. A. Gomez, E. Gull, S. Guo, C. A. Jim´enez-Hoyos,
+
+     T. N. Lan, J. Li, F. Ma, et al., Physical Review X 7, 1 (2017), ISSN 21603308, 1705.01608.
+[12]L. Stella,  C. Attaccalite,  S. Sorella,  and A. Rubio,  Physical Review B - Condensed Matter
+
+     and Materials Physics 84, 2 (2011), ISSN 10980121, 1110.1746.
+
+[13]D. Kartoon, U. Argaman, and G. Makov, Physical Review B      94, 1 (2018), ISSN 24699969.
+[14]W. P. Su, J. R. Schrieﬀer, and A. J. Heeger, Physical Review Letters      42, 1698 (1979), ISSN
+
+     00319007.
+
+[15]V. I. Artyukhov, M. Liu, and B. I. Yakobson, Nano Letters      14, 4224 (2014), ISSN 15306992,
+     1302.7250.
+
+[16]J.  Kastner,  H.  Kuzmany,  L.  Kavan,  F.  P.  Dousek,  and  J.  K¨urti,  Macromolecules      28,  344
+
+     (1995), ISSN 15205835.
+
+[17]J.  P.  Perdew  and  Y.  Wang,  Physical  Review  B      45,  13244  (1992),  ISSN  0163-1829,  URL
+     https://link.aps.org/doi/10.1103/PhysRevB.45.13244.
+
+[18]K.  Koepernik  and  H.  Eschrig,  Physical  Review  B      59,  1743  (1999),  ISSN  0163-1829,  URL
+
+     https://link.aps.org/doi/10.1103/PhysRevB.59.1743.
+[19]The reason for this diﬀerence between the cubic and linear chain relaxed lattice interatomic
+
+     distances is because solid, monoatomic H does not exist and will tend to form a condensed
+
+     structure of H2 dimers at ambient temperatures and pressures.
+[20]C. Heil, H. Sormann, L. Boeri, M. Aichhorn, and W. von der Linden, Physical Review B      90,
+
+     115143 (2014), ISSN 1098-0121.
+
+[21]G.   Giuliani   and   G.   Vignale,         Quantum   theory   of   the   electron   liquid   (2005),   ISBN
+
+                                                         13
+      9780511619915.
+
+[22]A. Mauri and M. Polini, arXiv pp. 1–17 (2019), ISSN 23318422, 1904.10825.
+
+[23]B.  Linder,  K.  Lee,  P.  Malinowski,  and  A.  Tanner,  Chemical  Physics      52,  353  (1980),  ISSN
+      03010104, URL https://linkinghub.elsevier.com/retrieve/pii/0301010480852384.
+
+[24]L. J. Sham, Physical Review      188 (1969), ISSN 0031-899X.
+
+[25]W. Hanke and L. J. Sham, Physical Review B      12, 4501 (1975), ISSN 01631829.
+[26]W. Hanke and L. J. Sham, Physical Review B      21 (1980), ISSN 0163-1829.
+
+[27]J. G. Xuetao Zhu, Yanwei Cao, Jiandi Zhang, E. W. Plummer, PNAS (2015).
+
+[28]S.  Doniach  and  E.  H.  Sondheimer,       Green’s  Functions  for  Solid  State  Physicists  (The  Ben-
+      jamin/Cummings Publishing Company, 1974).
+
+[29]S. Graser, T. A. Maier, P. J. Hirschfeld, and D. J. Scalapino, New Journal of Physics (2009),
+
+      ISSN 13672630, 0812.0343.
+[30]T. B. Boykin, P. Sarangapani, and G. Klimeck, Journal of Applied Physics      125, 144302 (2019),
+
+      ISSN 0021-8979.
+
+[31]J. C. Slater, Physical Review      36, 57 (1930), ISSN 0031-899X.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                         14

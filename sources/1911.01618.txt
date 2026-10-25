@@ -1,0 +1,504 @@
+                                          Ground-state properties of the hydrogen chain:
+                            dimerization, insulator-to-metal transition, and magnetic phases
+
+           Mario Motta,1, 2,∗ Claudio Genovese,3,∗ Fengjie Ma,4,∗ Zhi-Hao Cui,2,∗ Randy Sawaya,5,∗ Garnet Kin-Lic
+          Chan,2 Natalia Chepiga,6 Phillip Helms,2 Carlos Jim´enez-Hoyos,7 Andrew J. Millis,8, 9 Ushnish Ray,2 Enrico
+          Ronca,10, 11 Hao Shi,8 Sandro Sorella,3, 12 Edwin M. Stoudenmire,8 Steven R. White,5 and Shiwei Zhang8, 13,†
+                                             (Simons  collaboration  on  the  many-electron  problem)
+                                             1IBM  Almaden  Research  Center,  San  Jose,  CA  95120,  USA
+               2Division of Chemistry and Chemical Engineering, California Institute of Technology, Pasadena, CA 91125, USA
+                           3SISSA – International School for Advanced Studies, Via Bonomea 265, 34136 Trieste, Italy
+                                      4The Center for Advanced Quantum Studies and Department of Physics,
+                                              Beijing  Normal  University,  Beijing,  Beijing  100875,  China
+                         5Department of Physics and Astronomy, University of California, Irvine, CA 92697-4575, USA
+                                             6Institute  for  Theoretical  Physics,  University  of  Amsterdam,
+                                      Science Park 904 Postbus 94485,  1090 GL Amsterdam,  The Netherlands
+                              7Department of Chemistry, Wesleyan University, Middletown, CT 06459, United States
+                           8Center for Computational Quantum Physics, Flatiron Institute, New York, NY 10010, USA
+                                     9Department of Physics,  Columbia University,  New York,  NY 10027,  USA
+             10Max Planck Institute for the Structure and Dynamics of Matter, Luruper Chaussee 149, 22761 Hamburg, Germany
+                       11Istituto per i Processi Chimico Fisici del CNR (IPCF-CNR), Via G. Moruzzi 1, 56124 Pisa, Italy
+               12Democritos Simulation Center CNR–IOM Istituto Ofﬁcina dei Materiali, Via Bonomea 265, 34136 Trieste, Italy
+                           13Department of Physics, College of William and Mary, Williamsburg, VA 23187-8795, USA
+
+                    Accurate and predictive computations of the quantum-mechanical behavior of many interacting electrons in
+                 realistic atomic environments are critical for the theoretical design of materials with desired properties,  and
+                 require solving the grand-challenge problem of the many-electron Schr¨odinger equation.  An inﬁnite chain of
+                 equispaced hydrogen atoms is perhaps the simplest realistic model for a bulk material, embodying several central
+                 themes of modern condensed matter physics and chemistry, while retaining a connection to the paradigmatic
+                 Hubbard model.  Here we report a combined application of cutting-edge computational methods to determine
+                 the properties of the hydrogen chain in its quantum-mechanical ground state.  Varying the separation between
+                 the nuclei leads to a rich phase diagram, including a Mott phase with quasi long-range antiferromagnetic order,
+                 electron density dimerization with power-law correlations, an insulator-to-metal transition and an intricate set
+                 of intertwined magnetic orders.
+
+
+                         I.    INTRODUCTION                                         approaches  become  less  reliable,  or  even  break  down,  in
+                                                                                    the presence of strong electronic correlation effects including
+   The  study  of  interacting  many-electron  systems  is  pro-                    magnetic,  structural,  conductive  and  superconductive  phase
+foundly   important   to   many   areas   of   science,   including                 transitions [1–7].  Alternative approaches in terms of model
+condensed-matter physics and quantum chemistry.  Materials                          systems such as the single-orbital Hubbard model have con-
+properties result from a delicate interplay of competing factors                    tributed very signiﬁcantly to our understanding of electronic
+including atomic geometry and structure, quantum mechani-                           correlation physics, but involve dramatic simpliﬁcations, in-
+cal delocalization of electrons from atoms, the entanglement                        cluding neglect of many of the terms in the physical Coulomb
+implied by quantum statistics, and electron-electron interac-                       interaction and truncation to a small ﬁxed orbital basis, whose
+tion.  Capturing such effects accurately is essential for under-                    consequences are not fully understood.  The need to establish
+standing properties, for predictive computations, and for the                       systematic approaches that are chemically realistic and funda-
+realization of materials genome or materials-by-design initia-                      mentally many-body is thus intensely investigated.
+tives, but requires a sufﬁciently accurate solution of the inter-                      A linear chain of hydrogen atoms (N  protons equispaced
+acting electron problem.                                                            along a line, withN electrons) [8–12] embodies many central
+   Over the years, many approaches to the problem of solv-                          themes of modern condensed matter physics, while retaining
+ing  the  many-electron  Schr¨odinger  equation  have  been  for-                   a  certain  degree  of  computational  tractability.   It  features  a
+mulated. Density functional theory (DFT) obtains the ground                         periodic atomic potential, incorporates realistic Coulomb in-
+state energy of the many-body system in terms of the solution                       teractions, requires the construction of accurate and compact
+of an auxiliary one electron problem plus a self-consistency                        basis sets, and yet maintains a connection with the fundamen-
+condition.   DFT  based  methods  have  had  enormous  impact                       tal Hubbard model which has been a hallmark of the theory of
+on  materials  science  and  condensed  matter  physics,  but  the                  interacting fermions.
+                                                                                       Here we deploy a combination of the most advanced and
+                                                                                    accurate many-body methods to investigate the ground-state
+∗ These authors contributed equally to this work                                    phase diagram of the H chain. Our methods have been bench-
+† szhang@ﬂatironinstitute.org
+                                                                                    marked in a previous collaborative effort to obtain the ground-
+                                                                                                                                                              2
+
+state equation of state [12].  In this work, we have introduced
+methodological  advances  to  compute  properties  beyond  the
+total energy. There have also been several previous studies of
+this system [8–11].   However,  they were restricted either to
+small basis sets or ﬁnite system sizes, which prevented a real-
+istic description of the H chain, or by their accuracy and ca-
+pabilities, which prevented reliable resolution of the delicate
+scales  and  discovery  of  all  the  phases.   The  synergistic  ap-
+plication of complementary methods distinguishes the present
+work and allows us to make robust predictions with a multi-
+messenger approach in this challenging problem.
+
+
+                            II.    METHODS                                        FIG. 1.  (color online) Insulating phase – antiferromagnetic cor-
+                                                                                  relations.   Main:   correlation  function Ci  at R  =  3.6,  2.8,  and
+                                                                                  2.0 aB  (red  circles,  blue  crosses,  and  orange  triangles)  computed
+   We consider a system ofN protons at ﬁxed, equally spaced                       with DMRG for a chain of N  =  50 with OBC. The oscillations,
+positions along a line, withN electrons:                                          with wavelength λ  =  2R, show AFM correlations.  Inset:  oscilla-
+                                                                                  tion amplitudesC2i+1−C2i versusi (log-log scale). Lines show the
+                        N∑            N∑        1                                 results of a linear ﬁt.
+          ˆH =− 1           ∇2i +
+                    2  i=1          i<j=1   |ri− rj|
+                     N∑                       N∑                         (1)
+                −               1                        1
+                          |ri− Ra| +               |Ra− Rb|,                      oped basis sets for the short-R regime, as well as a more efﬁ-
+                   i,a=1                   a<b=1                                  cient parametrization of the trial wave function ansatz. Within
+where  (r1... rN)  are  the  electron  coordinates,  and Ra  =                    DMRG, we introduced new basis set techniques building on
+aRez is the coordinate of thea-th proton.  This Hamiltonian                       the idea of Gausslets [26], and implemented the computation
+has been studied in ﬁnite basis or ﬁnite systems (or both) and                    of entanglement entropy and dimerization in electronic den-
+has generated increasing interest [8,10,11,13–16].  We use                        sity.   To  approach  the  continuum  limit  for  small  values  of
+atomic units throughout,  in which energies are measured in                       R,  we  devised  and  extensively  compared  basis  sets  includ-
+Hartrees  (me4/ℏ2)  and  lengths  in  units  of  the  Bohr  radius                ing  planewaves,  continuum  coordinate-space,  and  problem-
+aB  =  ℏ2/(me2).  In the thermodynamic limit (TDL) of in-                         speciﬁc  Gaussians  with  diffuse  and  polarized  functions,  as
+ﬁnite system size at zero temperature, which is our primary                       well  as  the  new  basis  sets  mentioned  above.   To  approach
+focus, our system is characterized by only one parameter,R.                       the  TDL  in  our  numerical  computations,  we  study  increas-
+   We access the ground-state properties using multiple ﬁrst-                     ingly long chains with open boundary conditions (OBC), or
+principles many-body methods,  including variational Monte                        supercells with periodic Born-von-Karman boundary condi-
+Carlo (VMC), standard and sliced-basis density-matrix renor-                      tions (PBC). Further descriptions of our methods and discus-
+malization  group  (DMRG,  sb-DMRG)  [17–20],  auxiliary-                         sions  of  technical  advances  and  issues  can  be  found  in  the
+ﬁeld (AFQMC) [21] and lattice-regularized diffusion Monte                         supplemental information (SI).
+Carlo (DMC) [22].  For reference, independent-electron cal-
+culations are also performed, including restricted (RHF) and
+unrestricted (UHF) Hartree-Fock [23] and DFT [24]. While it
+is not practically possible with any single method to simulta-
+neously converge all aspects of the electronic structure calcu-
+lations (such as basis set limit, many-electron correlation, and
+thermodynamic limit) across different regimes of the ground-                                                   III.    RESULTS
+state phase diagram,  we draw our conclusions based on the
+convergence of multiple approaches to a consistent physical
+picture.                                                                             In this section, we present our results as a function of R.
+   In this work, we introduce several technical advances which                    We start by describing the large-R regime, where we ﬁnd that
+enabled the calculations on the hydrogen chain presented here.                    the chain features quasi-long-range antiferromagnetic correla-
+Within AFQMC, we implemented techniques for the study of                          tions, followed by dimerization in several properties, namely
+metal-insulator transitions based on the modern theory of po-                     electronic density, kinetic energy and entanglement entropy as
+larization,  and the calculation of structure factors in chemi-                   R is reduced. We then proceed to describe the short-R regime,
+cal simulations.   A procedure was developed for generating                       distinguished  by  a  metal-insulator  transition  occurring  at  a
+basis sets for conﬁned systems (as in the planes perpendicu-                      critical bondlength RMIT, so that the chain is insulating for
+lar to the chain) from downfolded virtual Kohn-Sham orbitals                      R>RMIT and metallic forR<RMIT. We then discuss the
+[25]. Within DMC, we have implemented a scheme for com-                           physical properties of the metallic phase,  and show that the
+puting unbiased estimates of correlation functions and devel-                     MIT arises from a self-doping mechanism.
+                                                                                                                                                             3
+
+                         A.    Large-R regime
+
+                  1.    Antiferromagnetic correlations
+
+   We begin our study of the H chain phase diagram at large
+proton-proton separation.   Here to a ﬁrst approximation the
+system is a collection of isolated H atoms, each with a single
+electron in the atomic 1s orbital.  This is very similar to the
+half-ﬁlled Hubbard model in the large coupling (U/t) limit.
+However the weakly bound nature of H− and its very diffuse
+orbitals can create excitons with strong binding in the H chain.
+   At largeR, the correlations in the H chain can be charac-
+terized in terms of a spin- 12  Heisenberg chain.  The Heisen-
+berg chain is a critical system, with power-law decay of AFM
+spin-spin correlations,⟨ˆS0· ˆSi⟩.  In response to a local per-
+turbation (such as a local magnetic ﬁeld), one observes local
+ordering (such as local N´eel order) which decays as a power
+law  in  the  distance  from  the  perturbation.   To  probe  AFM
+correlations  in  the  H  chain,  in  Fig.1we  present  the  quan-
+tity Ci  =⟨ˆn0↑ˆni↓⟩−⟨ˆn0↑⟩⟨ˆni↓⟩ computed with DMRG in
+the minimal (STO-6G) basis, where ˆniσ  denotes the number
+of electrons occupying (orthogonalized) atomic orbitali with
+spin  polarization σ  along z. Ci  oscillates  with  wavelength
+λ  =  2R, corresponding to the N´eel vector of two sublattice
+antiferromagnetism;  the wavevector may also be thought of
+as twice the Fermi wave-vectorq =  2πλ  = 2k0F  of a paramag-
+netic 1D ideal Fermi gas of densityρ =  1R.
+   In Fig.1, we further observe that the oscillations in    Ci de-
+cay  with  a  power-law  envelope, Ci  = C0i−η (−1)i.   The
+decrease  of C0  with R  (see  inset)  indicates  weakening  of
+AFM  as  the  bondlength  is  reduced.   The  power-law  decay
+of  the  AFM  correlation  is  consistent  with  quasi  long-range
+order in 1D. The ﬁtted exponent of η ≃  1.11(1),  likely af-
+fected  by  ﬁnite-size  effects,  is  slightly  higher  than  the  pre-
+diction from conformal ﬁeld theory, which gives⟨Si· S0⟩∝
+(−1)i√lni/iη, withη = 1 for systems within the same uni-                          FIG.  2.   (color  online) Insulating phase – density dimerization.
+versality class as the 1D Heisenberg chain [27,28].                               (a) Top:  electronic densityn(z) for R  =  2.0 aB, with OBC. Bot-
+                                                                                  tom:  deﬁnition of the dimerization measure ∆N  for a system under
+                                                                                  OBC. The gray vertical lines indicate hown(z) is integrated along
+                            2.    Dimerization                                    thin (widthδz  = 0.1 aB) slabs perpendicular to the chain.  (b) De-
+                                                                                  pendence of dimerization measure ∆N  on the number of atoms in
+   We  observe  dimerization  as R  is  reduced  in  the  large R                 the open chain,N, from AFQMC, sb-DMRG, VMC, and DMC. ∆N
+regime.  With PBC, dimerization can be probed by density-                         decays as a power-law, ∆N ∝ N−d  with exponentd≃  0.5 from
+density correlations.  With OBC, or with a local perturbation,                    correlated methods.  Results from HF are also shown for reference.
+                                                                                  (c) Expectation valueh(z) of the kinetic energy operator (top) and
+density dimerization can be measured by the electronic den-                       von Neumann entropySvN(z) (bottom) from sb-DMRG, for a 10-
+sity, for example integrated along transverse slabs (i.e., overx                  atom chain with OBC, as a function of position z  along the chain
+andy for a ﬁniteδz),n(z). The upper portion of Fig.2a shows                       axis forR = 3.6 and 2.0 aB, respectively.
+n(z) versusz, for a segment at the center of the chain under
+OBC,  computed  with  AFQMC.  The  density  has  maxima  at
+the proton sites and minima half way between. We deﬁne the                        ﬁnd that, in the middle of the chain, dimerization decays with
+dimerization measure for anN-atom chain, ∆N , by the dif-                         chain length as ∆N ∝ N−d,  with exponents d  =  0.57(3),
+ference between the two adjacent local minima ofn(z) in the                       0.563(4), 0.58(11) and 0.90(26) from AFQMC, sb-DMRG,
+center of chain as illustrated in the lower portion of Fig.2a.                    DMC and VMC, respectively.  The subtle power-law physics
+When dimerization is present, we ﬁnd that its amplitude in-                       of  1D  correlated  systems  is  not  easy  to  capture  accurately
+creases asR is decreased.                                                         with  numerical  methods.   It  is  encouraging  that  a  quantita-
+   In Fig.2b we investigate the dimerization in the H chain at                    tive agreement is seen between our very different many-body
+R = 2.0 aB, using AFQMC, sb-DMRG, DMC, and VMC. We                                methods.  HF is qualitatively incorrect here, giving either no
+                                                                                                                                                             4
+
+order or true long-range order; DFT results are similar.                          Z≡ limN→∞|ZN| = 1, and Λ is ﬁnite; in metallic systems
+   It is illuminating to relate the dimerization order observed                   Z = 0, and Λ→∞.
+in the H chain to a kind of dimerization order which appears                         In Fig.3a,  we establish the MIT by computing    ZN  with
+in the Heisenberg model, as seen in nearest-neighbor spin cor-                    AFQMC, DMC and VMC. (Additional support for a metal in-
+relations,⟨(ˆS0· ˆS1)(ˆSi· ˆSi+1)⟩ under PBC. In the case of                      sulator transition is provided by energy gaps as included in
+OBC, the open ends act as a local perturbation which couples                      the  SI.)  For  small R,  all  methods  give ZN  equal  to  or  sta-
+to  the  dimerization,  making  odd-numbered  bonds  stronger                     tistically  compatible  with 0  across  a  wide  range  of  system
+than  even  ones,  with  an  amplitude  that  decays  as  a  power                sizes N, indicating a metallic many-body ground state.  For
+law away from the ends.  Criticality can thus be observed by                      large R, all methods yield a non-zero ZN .  The many-body
+studying  the  strength  of  the  dimerization  in  the  center  of  a            methods point to a transition point located approximately at
+chain as a function ofN, In the Heisenberg chain the dimer-                       RMIT∼ 1.70(5) aB.  While there is some uncertainty in the
+ization  proﬁle  as  a  function  of  site  index i  is  described  by            critical value, because of computational limitations, it is re-
+∆N(i)∝ [N sin(πi/N)]−d, whered = 1/2.  This is consis-                            markable that two methods working with completely different
+tent with our observations for the H chain.  In the half-ﬁlled                    basis sets and projection algorithms yield results in quantita-
+Hubbard  model,  we  observe  dimerization  in  the  correlation                  tive agreement.
+function of the nearest-neighbor hopping, i.e., the kinetic en-(ˆa†                  In  particular  the  values  of|ZN|  in  the  insulating  phase,
+ergy operator, ˆhi  = ∑                                                           which  fall  further  from  unity  at  smaller R,  are  sensitive  to
+                              σ    i,σˆai+1,σ + h.c.).   As shown in              ﬁnite-size effects. At largeN, we expect|ZN| = 1− ˜g(ξ/L)
+the  SI,  the  correlation  function Hi  = ⟨ˆh0(ˆhi− ˆhi+1)⟩  is                  in the insulating phase,  where ˜g  is a scaling function and ξ
+found to again display a power law behavior (−1)ii−η′, with                       the MIT correlation length.  The smooth decrease of|ZN| as
+η′∼ 0.57(8).                                                                      RMIT  is  approached  suggests  a  second-order  transition  (re-
+   Dimerization manifests itself not only in the electron den-                    lated to gap closure). We further discuss ﬁnite-size corrections
+sity, but also in other observables such as the kinetic energy                    and their implication onξ in the SI.
+and entanglement entropy. Results for a 10-atom H chain are                          Before exploring the origin of the MIT, we brieﬂy discuss
+shown in Fig.2c from sb-DMRG, where the kinetic energy is                         magnetic correlations in the metallic phase.  The evolution of
+measured as hopping (integrated inx andy) between slices,                         the magnetic moments within DFT is shown in Fig.3b, and
+and the entanglement entropy is measured across planes that                       the spin density atR = 0.9 aB is plotted in Fig.3c as a point
+bisect a bond.  AtR = 2.0 aB, where dimerization is consis-                       of reference.  To account for spin correlations, the DFT solu-
+tently observed in larger systems from the electronic density,                    tion breaks translational symmetry to create antiferromagnetic
+SvN(z) shows ﬁve entangled dimers (bottom of lower panel).                        domains of varying periods,  often associated with very dif-
+The entanglement exhibits a striking asymmetry on the two                         fuse orbitals as seen in Fig.3c.  Of course, DFT observations
+sides of each proton along the chain, with a strength discrep-                    are independent-electron in nature (and somewhat functional-
+ancy much larger than in the electron density.                                    dependent, see SI). In the many-body solution, in particular,
+                                                                                  translational symmetry is restored, and two-body correlation
+                          B.    Short-R regime                                    functions are needed to probe magnetic correlations.
+
+
+                   1.    Insulator-to-metal transition                                 2.    Origin of the MIT and properties of the metallic phase
+
+   Correlated electron materials often exhibit metal-insulator                       It is theoretically established that the ground state of a one-
+transitions  as  parameters  such  as  temperature,  pressure  or                 band model with commensurate ﬁlling is insulating. Our cal-
+crystal structure are varied [3,6]. From the perspective of the                   culations reveal that the MIT arises from a self-doping mecha-
+1D one-band Hubbard model which,  as we have seen,  cap-                          nism in which the one-band picture breaks down. We illustrate
+tures the universal aspects of the physics at large R — and                       the basic idea in Fig.4a, using a band-theory based cartoon
+more generally from the perspective of one-band models with                       of the electronic structure.  The isolated H atom has multiple
+second-order Umklapp processes, no MIT should occur here                          states, including the occupied 1s and excited states 2s, 2p, etc.
+[29].  With multiple methods and multiple probes, we show                         At largeR the bandwidths are small compared to the energy
+below conclusive evidence that a MIT occurs in the H chain,                       gaps, and a one-band approximation is reasonable. AsR is de-
+and provide a characterization of the physical origin and prop-                   creased, the bands broaden, band overlap occurs, and metallic
+erties of the transition.                                                         behavior results.  Quantitative calculations involve a correla-
+   The concept of macroscopic localization [11,30,31] pro-                        tion problem that requires treating interactions in a multiband
+vides  a  direct  wavefunction-based  characterization  of  sys-                  situation, effects that are entirely absent in the standard Hub-
+tem properties.   For periodic systems,  one deﬁnes the com-∑                     bard model.
+plex  polarization ZN  = ⟨ΨN|ei 2πL             i ˆzi|ΨN⟩,  where|ΨN⟩                We compute the spin structure factor,  deﬁned as S(q)  =
+is the ground state of the N  electrons in a supercell of size                     1
+                                                                                  N⟨Ψ|ˆρ†q ˆρq|Ψ⟩, where ˆρq =∑i ˆSz,ieiq·ˆri is the Fourier trans-
+L  = NR  along  the  chain  direction.    The  electron  local-√                  form  of  the  spin  density  at  q   =   (0, 0,q),  with  ˆSz,i  and
+ization length Λ  =         D                                                     ˆri  =  (ˆxi, ˆyi, ˆzi) denoting the spin-z  and position operators
+                          2πρ  is related to the complex polariza-
+tion byD =− limN→∞N log|ZN|2.  In localized systems,                              of  electron i,  respectively.   The  result  is  shown  in  Fig.4b.
+                                                                                                                                                              5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3.   (color online) Metal-insulator transition. (a) Complex polarization measure as a function ofR from multiple methods, identifying
+a MIT separating a region at smallerR with|ZN| = 0 from|ZN| > 0 at largerR.|ZN| is plotted forN  = 40.  (b) Magnetic phases from
+DFT-PBE, as indicated byMtot  =  ∫ m(r)d3r/N  andMabs  =  ∫|m(r)|d3r/N, wherem(r) is the magnetization of the simulation cell.
+(c) Spin-density computed from DFT-PBE, shown along a plane containing the chain, illustrating long-wavelength ferromagnetic domains at
+R = 0.9 aB.
+
+
+                                                                                  the larger wavevector as arising from the 2kF  process in the
+                                                                                  1s-dominated lower band.  The position q2  =  2 (1−x)k0F
+                                                                                  then gives the doping x of this band.  In a simple two-band
+                                                                                  picture,  the  lower  wave  vector  is  given  by q1  =  2xk0F/g,
+                                                                                  where g  gives the degeneracy of the “upper band” which is
+                                                                                  occupied.  AtR = 0.9 aB, the locations ofq1 andq2 satisfy
+                                                                                  gq1 +q2 = π/R in all the results, withg = 2.  This is con-
+                                                                                  sistent with a doubly degenerate upper band (e.g.  2px,y), al-
+                                                                                  though multiple bands strongly contribute to the DMRGS(q),
+                                                                                  as we discuss below.
+                                                                                      Within DFT one may characterize the metallic state by the
+                                                                                  nature of the occupied Kohn-Sham bands.  Here we use the
+                                                                                  Perdew-Burke-Ernzerhof  (PBE)  exchange-correlation  func-
+                                                                                  tional  in  DFT  calculations.   As R  decreases,  DFT-PBE  so-
+                                                                                  lutions indicate a band of mainly atomic 1s origin with a rela-
+                                                                                  tively large (but not integer) occupancy and a Fermi level near
+                                                                                  k0F ,  and bands of mostly 2px, 2py  character (i.e. π  bands)
+                                                                                  becoming occupied, with Fermi levels near 0.
+                                                                                      We probe the many-body metallic state by computing the
+                                                                                  one-body density matrix,  which we then diagonalize.   Each
+                                                                                  eigenvalue gives the occupancy of the corresponding eigen-
+FIG. 4.   (color online) Mechanism of the insulator-to-metal tran-                state (“natural orbital”,  NO). The occupancies computed by
+sition.  (a) Schematic illustration of the self-doping mechanism in-              two methods are shown in Fig.5a.  For the    N  = 24 supercell
+ducing a MIT in the H chain.   Dark green line:  large R,  no band                (red symbols), a sharp transition is seen in orbital occupancy,
+overlap. Light green lines: smallR, multiple bands crossingϵF . (b)               reminiscent  of  a  Fermi  surface.   We  label  the  characters  of
+Structure factor of the spin-spin correlation function atR = 0.9 aB               each NO which,  similar to Kohn-Sham orbitals,  can be an-
+and at R  =  2.5 aB,  computed from AFQMC, DMC and DMRG.                          alyzed via the single-particle basis or projection onto atomic
+Wave-vectorsq are along the chain.  Vertical lines, as an aid to the              orbitals. In theN = 24 system the last two eigenvalues before
+eye, mark the kinks inS(q) associated with the Fermi surfaces.
+                                                                                  the sharp drop (11th and 12th points from left, shown as ﬁlled
+                                                                                  symbols) are two-fold degenerate, consistent with the notion
+At R  =  2.5  only  one  peak  is  seen  at q  =  2k0F ,  signaling               that the metallic phase corresponds to shifting electrons from
+power-law AFM order as discussed earlier.  To probe the na-                       1s-like to 2px,y-like orbitals. However, the many-body results
+ture of the metallic phase, we focus on a representative case                     display variations in the occupancy and the nature of the or-
+of R  =  0.9 aB,  away  from  the  vicinity  of  the  MIT  transi-                bitals, as illustrated in Fig.5b and c.  We ﬁnd that the energy
+tion. S(q) is shown from two different QMC calculations, in                       differences associated with different occupancies, such as 2s
+supercells ofN  = 48 atoms averaging over 11 twist angles,                        instead of or together with 2p, are very small, on the scale of
+in addition to DMRG calculations in a supercell ofN  = 24                         sub-mHa/atom, and the precise energy ordering is affected by
+atoms.   In  a  metallic  system  we  expect  peaks  at q  =  2kF ,               boundary conditions, supercell sizes, basis sets, as well as the
+wherekF  is one of the Fermi wavevectors of the system. Two                       choice of the correlation algorithm.  This low energy scale is
+cusps are seen in each result at locations, q1  and q2, in pre-                   associated with the very diffuse nature of “upper band” NOs.
+cise agreement among the different calculations. We interpret                         The  occupation  and  nature  of  these  NOs  shed  light  onto
+                                                                                                                                                               6
+
+                                                                                   matter physics and materials science. Signiﬁcant progress has
+                                                                                   been made from several fronts, for example with the combi-
+                                                                                   nation of DFT and theGW  and Bethe-Salpeter equation for-
+                                                                                   malisms [33–35], approaches based on dynamical mean ﬁeld
+                                                                                   theory [5,36–38], as well as several of the methods included
+                                                                                   here.  In this paper we have focused on pushing state-of-the-
+                                                                                   art  many-body  ground-state  methods  towards  a  comprehen-
+                                                                                   sive theory of correlated materials. Individually, advances are
+                                                                                   made within each method to address the technical challenges
+                                                                                   for systematically accurate calculations of correlated systems
+                                                                                   in the continuum and thermodynamic limit. Collectively, with
+                                                                                   a  combination  of  multiple  methods,  we  are  able  to  achieve
+                                                                                   a high level of robustness in our characterization and predic-
+                                                                                   tions of the ground-state properties.
+                                                                                      The hydrogen chain provides a good compromise between
+                                                                                   physical/chemical realism and tractability, We studied the bal-
+                                                                                   ance and competition between band structure, electron inter-
+                                                                                   action and multi-orbital physics as a function of a single pa-
+                                                                                   rameter, the inter-proton distanceR.  At largeR, the system
+                                                                                   exhibits a Mott insulating phase with quasi long-range AFM
+FIG. 5.   (color online) Insight into the many-body metallic state.                order, and dimerization effects visible in the density, kinetic
+(a) Occupancy of NOs, obtained from the one-body density matrix of                 energy  and  entanglement  spectrum.   Upon  decreasing R,  it
+the many-body ground state atR = 0.9 aB, from AFQMC (supercell                     transitions via a self-doping mechanism into a metallic phase
+withN = 24 atoms, twist-averaged) and sb-DMRG (N = 10 atoms                        which  exhibits  magnetic  correlations.   At  short  bondlength
+with hard-wall boundary).  The orbital characteristics are indicated,              the magnetic correlation is modulated by an incommensurate
+in each dataset, by the marker type.  (b,c) Contour plots illustrating             wavevector. Near the MIT the occupancy of the “higher band”
+the characters of representative occupied NOs (ordered high to low                 is very low and the size of the magnetic domain grows, poten-
+in ni),  projected in a transverse plane slicing through an atom,  at              tially allowing the possibility to develop global polarization.
+R  =  0.9 aB  for a H10  with OBC and hard-wall boundary,  by sb-                  We ﬁnd that the higher natural orbitals (occupied in the metal-
+DMRG (b); a H24 supercell from DMRG, at twistsk = 0, 0.1 and                       lic phase and important as virtual excitations in the large R
+0.4, respectively (c1,c2,c3).                                                      insulating phase) have an extremely diffuse and occupation-
+                                                                                   dependent structure. Thus, despite its apparent simplicity, the
+magnetic correlations.  Electrons associated with the “lower                       H chain embodies a surprisingly rich set of the major themes
+band” are bound to the chain axis, with a range similar to that                    in contemporary quantum materials physics, including metal-
+of the atom.S(q) does not show a peak atq2, but only a kink,                       insulator transitions, magnetism, and intra- and inter-site elec-
+indicating short-range correlations from these electrons.  The                     tron correlation physics.
+electrons in the “upper bands” are diffuse, with NOs of trans-                        It is interesting to place our results in historical context. The
+verse size∼  5 aB  (see Fig.5b,c).   They display a tendency                       study of the MIT was pioneered by Nevill Mott. In 1949 Mott
+for magnetic ordering driven by exchange, as indicated by the                      noted [1] that many materials were insulating when band the-
+kink at q1.  Their average inter-particle separation along the                     ory considerations indicated that they should be metallic.  He
+chain, ξ ∼ π/(2q1),  is large (and becomes larger as RMIT                          argued that one should view the physics in terms of localized
+is  approached),  with  only  a  small  number  of  electrons  in  a               atomic-like orbitals rather than plane waves and observed that
+large supercell.  These features make it challenging to deter-                     in this picture conductivity required moving an electron from
+mine the precise behavior of the correlation over a sufﬁciently                    one site to another,  creating a particle-hole pair.  He argued
+long range, which is further magniﬁed by the sensitivity of the                    that this process could be blocked if the charging energy on
+nature of the upper bands discussed earlier.  This picture sug-                    a given lattice site was large enough to prevent an additional
+gests a fascinating model of a quasi-one-dimensional electron                      electron from moving onto it. This physics is famously instan-
+wire for probing both magnetic and charge correlations under                       tiated in the extensively studied Hubbard model [39], and our
+the effect of long-range Coulomb interactions [32].                                results in the large-R regime are consistent with it.  In subse-
+                                                                                   quent work [2,3] Mott noted that in the insulating phase the
+                                                                                   unscreened Coulomb interaction would bind the particle and
+              IV.    CONCLUSIONS AND OUTLOOK                                       hole to a neutral object,  which would not conduct,  whereas
+                                                                                   in a metal the self-consistent screening of the Coulomb inter-
+                                                                                   action would lead to unbound pairs, so that the MIT occurs
+   While  much  has  been  understood  about  model  systems,                      via a ﬁrst-order process.  Our results demonstrate a different
+most  notably  the  Hubbard  model,  understanding  correlated                     route  to  the  MIT:  the  H  chain  becomes  metallic  via  a  self-
+electron physics and reliably performing predictive computa-                       doping process which is (within our resolution) second-order.
+tions in real materials remain a central challenge in condensed                    The carriers in the second band are both very delocalized and
+                                                                                                                                                                    7
+
+at very differentk-points from the carriers in the dominantly                         body methods.
+occupied band,  so that excitonic effects are either absent or
+unobservably weak. Our work underscores the importance of
+the interplay of correlation physics with the real materials ef-                                              ACKNOWLEDGMENTS
+fects of band crossing and electronic structure.
+                                                                                         We thank T. Giamarchi, N. Marzari, A. Rubio, and M. van
+   Experimentally, the physics we have described could poten-                         Schilfgaarde for helpful discussions. This work was supported
+tially be realized in ultracold atoms in optical lattices, arrays                     by the Simons Foundation as part of the Simons collaboration
+of Rydberg atoms [40], or perhaps with carbon nanotubes, in                           on the many-electron problem.  The Flatiron Institute is a di-
+which carbon chains have been isolated [41].  Experimental                            vision of the Simons Foundation. Computations were carried
+realization would provide an in silico insulator-to-metal tran-                       out on facilities supported by the Scientiﬁc Computing Core at
+sition,  which  would  be  a  signiﬁcant  contribution  to  the  in-                  the Flatiron Institute (MM, HS) and by the US Department of
+tensely investigated topic of metallicity in hydrogen [42–45].                        Energy, National Energy Research Scientiﬁc Computing Cen-
+We also hope that our study will stimulate experimental re-                           ter (ZHC, PH, MM, UR), on the Pauling cluster at the Califor-
+search on the characterization of hydrogen at extreme density                         nia Institute of Technology (ZHC, PH, MM, UR) and on the
+[45–49], in connection with the theoretical description of as-                        Storm and SciClone Clusters at the College of William and
+trophysical bodies [50] and the discovery and characterization                        Mary (FM, MM). MM acknowledges the IBM Research Cog-
+of exotic magnetic phases in low-dimensional condensed mat-                           nitive Computing Cluster service for providing resources that
+ter systems [45,51].                                                                  have contributed to the research results reported within this
+                                                                                      paper. GKC acknowledges support from the National Science
+   More generally, our study establishes the H chain as an im-                        Foundation under Grant No.   OAC 1931258.   FM acknowl-
+portant model system and demonstrates the power of the syn-                           edges support from the National Natural Science Foundation
+ergistic application of independent numerical methodologies                           of China under Grant No.  11674027.  SS and CG acknowl-
+[12,52,53].  This mode of attack has the potential to address                         edge  support  from  PRIN  2017BZPKSZ  and  computational
+other challenging problems in condensed matter physics, in-                           resources  from  CINECA  PRACE  2019204934.   SW,  EMS,
+cluding the systematic investigation of real materials with im-                       RS and NC acknowledge support from DOE under Grantde-
+mediate technological applications by ﬁrst-principles many-                           sc0008696and Swiss National Science Foundation.
+
+
+
+
+
+ [1]Nevill F. Mott, “The basis of the electron theory of metals, with                 [11]Lorenzo Stella, Claudio Attaccalite, Sandro Sorella,   and An-
+      special reference to the transition metals,”Proc. Phys. Soc. Lon-                     gel Rubio, “Strong electronic correlation in the hydrogen chain:
+      don, Sect. A 62, 416 (1949).                                                          A  variational  Monte  Carlo  study,”Phys.  Rev.  B   84,  245117
+ [2]Nevill F. Mott, “The transition to the metallic state,”Phil. Mag.                       (2011).
+      6, 287–309 (1961).                                                              [12]Mario Motta, David M. Ceperley, Garnet K.-L. Chan, John A.
+ [3]Nevill  F.  Mott,  “Metal-insulator  transition,”Rev.  Mod.  Phys.                      Gomez, Emanuel Gull, Sheng Guo, Carlos A. Jim´enez-Hoyos,
+      40, 677–683 (1968).                                                                   Tran Nguyen Lan, Jia Li, Fengjie Ma, Andrew J. Millis, Niko-
+ [4]Elbio Dagotto, “Correlated electrons in high-temperature super-                         lay  V.  Prokof’ev,  Ushnish  Ray,  Gustavo  E.  Scuseria,  Sandro
+      conductors,”Rev. Mod. Phys.   66, 763–840 (1994).                                     Sorella, Edwin M. Stoudenmire, Qiming Sun, Igor S. Tupitsyn,
+ [5]Antoine   Georges,   Gabriel   Kotliar,   Werner   Krauth,      and                     Steven R. White, Dominika Zgid,  and Shiwei Zhang (Simons
+      Marcelo   J.   Rozenberg,   “Dynamical   mean-ﬁeld   theory   of                      Collaboration  on  the  Many-Electron  Problem),  “Towards  the
+      strongly correlated fermion systems and the limit of inﬁnite di-                      solution of the many-electron problem in real materials: Equa-
+      mensions,”Rev. Mod. Phys.   68, 13–125 (1996).                                        tion of state of the hydrogen chain with state-of-the-art many-
+ [6]Masatoshi  Imada,  Atsushi  Fujimori,    and  Yoshinori  Tokura,                        body methods,”Phys. Rev. X   7, 031059 (2017).
+      “Metal-insulator transitions,”Rev. Mod. Phys.   70, 1039–1263                   [13]Luning Zhao and Eric Neuscamman, “A blocked linear method
+      (1998).                                                                               for optimizing large parameter sets in variational Monte Carlo,”
+ [7]Patrick A. Lee, Naoto Nagaosa,  and Xiao-Gang Wen, “Doping                              J. Chem. Theor. Comput. 13, 2604–2611 (2017).
+      a Mott insulator:  Physics of high-temperature superconductiv-                  [14]Jing Kong, Emil Proynov, Jianguo Yu,  and Ruth Pachter, “De-
+      ity,”Rev. Mod. Phys.   78, 17–85 (2006).                                              scribing a strongly correlated model system with density func-
+ [8]Johannes   Hachmann,   Wim   Cardoen,      and   Garnet   K.-L.                         tional theory,”J. Phys. Chem. Lett.   8, 3142–3146 (2017).
+      Chan, “Multireference correlation in long molecules with the                    [15]Huihuo  Zheng,  Hitesh  J.  Changlani,  Kiel  T.  Williams,  Brian
+      quadratic  scaling  density  matrix  renormalization  group,”J.                       Busemeyer,    and  Lucas  K.  Wagner,  “From  real  materials  to
+      Chem. Phys. 125, 144101 (2006).                                                       model hamiltonians with density matrix downfolding,”Front.
+ [9]Wissam  A.  Al-Saidi,  Shiwei  Zhang,    and  Henry  Krakauer,                          Phys. 6, 43 (2018).
+      “Bond breaking with auxiliary-ﬁeld quantum Monte Carlo,”J.                      [16]Enrico  Ronca,  Zhendong  Li,  Carlos  A  Jim       ´enez-Hoyos,   and
+      Chem. Phys. 127, 144101 (2007).                                                       Garnet  K.-L.  Chan,  “Time-step  targeting  time-dependent  and
+[10]Anton  V.  Sinitskiy,  Loren  Greenman,    and  David  A.  Mazz-                        dynamical  density  matrix  renormalization  group  algorithms
+      iotti, “Strong correlation in hydrogen chains and lattices using                      with  ab  initio  hamiltonians,”J.  Chem.  Theor.  Comput.   13,
+      the variational two-electron reduced density matrix method,”J.                        5560–5571 (2017).
+      Chem. Phys. 133, 014104 (2010).
+                                                                                                                                                                              8
+
+[17]Steven   R.   White,   “Density   matrix   formulation   for   quan-                   [38]A.  Tamai,   M.  Zingl,   E.  Rozbicki,   E.  Cappelli,   S.  Ricc       `o,
+      tum renormalization groups,”Phys. Rev. Lett.   69, 2863–2866                               A.  de  la  Torre,  S.  McKeown  Walker,  F.  Y.  Bruno,  P.  D.  C.
+      (1992).                                                                                    King, W. Meevasana, M. Shi, M. Radovi´c, N. C. Plumb, A. S.
+[18]Steven  R.  White  and  Richard  L.  Martin,  “Ab  initio  quantum                           Gibbs, A. P. Mackenzie, C. Berthod, H. U. R. Strand, M. Kim,
+      Chemistry using the density matrix renormalization group,”J.                               A. Georges,  and F. Baumberger, “High-resolution photoemis-
+      Chem. Phys. 110, 4127–4130 (1999).                                                         sion on Sr2RuO4  reveals correlation-enhanced effective spin-
+[19]Sandeep Sharma and Garnet K.-L. Chan, “Spin-adapted density                                  orbit coupling and dominantly local self-energies,”Phys. Rev.
+      matrix  renormalization  group  algorithms  for  quantum  chem-                            X 9, 021048 (2019).
+      istry,”J. Chem. Phys.   136, 124121 (2012).                                          [39]J. Hubbard, “Electron correlations in narrow energy bands,”P.
+[20]E.  Miles  Stoudenmire  and  Steven  R.  White,  “Sliced  basis                              Roy. Soc. A: Math. Phy. 276, 238–257 (1963).
+      density matrix renormalization group for electronic structure,”                      [40]Manuel  Endres,  Hannes  Bernien,  Alexander  Keesling,  Harry
+      Phys. Rev. Lett. 119, 046401 (2017).                                                       Levine,  Eric  R  Anschuetz,  Alexandre  Krajenbrink,  Crystal
+[21]Shiwei  Zhang  and  Henry  Krakauer,  “Quantum  Monte  Carlo                                 Senko, Vladan Vuletic, Markus Greiner,  and Mikhail D Lukin,
+      method  using  phase-free  random  walks  with  Slater  determi-                           “Atom-by-atom assembly of defect-free one-dimensional cold
+      nants,”Phys. Rev. Lett.   90, 136401 (2003).                                               atom arrays,”Science   354, 1024–1027 (2016).
+[22]Michele  Casula,  Claudia  Filippi,    and  Sandro  Sorella,  “Dif-                    [41]Lei Shi, Philip Rohringer, Kazu Suenaga, Yoshiko Niimi, Jani
+      fusion Monte Carlo method with lattice regularization,”Phys.                               Kotakoski, Jannik C. Meyer, Herwig Peterlik, Marius Wanko,
+      Rev. Lett. 95, 100201 (2005).                                                              Seymur  Cahangirov,  Angel  Rubio,  Zachary  J.  Lapin,  Lukas
+[23]Attila Szabo and Neil S. Ostlund,            Modern Quantum Chemistry                        Novotny, Paola Ayala,   and Thomas Pichler, “Conﬁned linear
+      (McGraw-Hill, 1989).                                                                       carbon chains as a route to bulk carbyne,”Nat. Mater.   15, 634
+[24]Richard M. Martin,        Electronic Structure (Cambridge University                         EP – (2016).
+      Press, 2004).                                                                        [42]E.  Wigner  and  H.  B.  Huntington,  “On  the  possibility  of  a
+[25]Fengjie  Ma,  Wirawan  Purwanto,  Shiwei  Zhang,   and  Henry                                metallic modiﬁcation of hydrogen,”J. Chem. Phys.   3, 764–770
+      Krakauer, “Quantum  Monte Carlo calculations in  solids with                               (1935).
+      downfolded   hamiltonians,” Phys.   Rev.   Lett.    114,   226401                    [43]M. I. Eremets and I. A. Troyan, “Conductive dense hydrogen,”
+      (2015).                                                                                    Nat. Mater. 10, 927–931 (2011).
+[26]Steven R. White and E. Miles Stoudenmire, “Multisliced gaus-                           [44]Sam Azadi,  N. D. Drummond,   and W. Matthew C. Foulkes,
+      slet  basis  sets  for  electronic  structure,” Phys.  Rev.  B    99,                      “Nature of the metallization transition in solid hydrogen,”Phys.
+      081110(R) (2019).                                                                          Rev. B 95, 035142 (2017).
+[27]Ian  Afﬂeck,  “Exact  correlation  amplitude  for  the  Heisenberg                     [45]Paul Loubeyre, Florent Occelli,  and Paul Dumas, “Synchrotron
+      antiferromagnetic  chain,”J.  Phys.  A:  Math.  Gen.   31,  4573–                          infrared  spectroscopic  evidence  of  the  probable  transition  to
+      4581 (1998).                                                                               metal hydrogen,”Nature   577, 631–635 (2020).
+[28]Ian  Afﬂeck,  Doron  Gepner,  HJ  Schulz,    and  Timothy  Zi-                         [46]Ho-Kwang Mao and Russell J Hemley, “Optical studies of hy-
+      man,  “Critical  behaviour  of  spin-s  Heisenberg  antiferromag-                          drogen above 200 Gigapascals:  Evidence for metallization by
+      netic chains: analytic and numerical results,”J. Phys. A: Math.                            band overlap,”Science   244, 1462–1465 (1989).
+      Gen. 22, 511–529 (1989).                                                             [47]Paul Loubeyre, Florent Occelli,  and Rene LeToullec, “Optical
+[29]Elliott H Lieb and Fa-Yueh Wu, “Absence of Mott transition                                   studies of solid hydrogen to 320 GPa and evidence for black
+      in an exact solution of the short-range, one-band model in one                             hydrogen,”Nature   416, 613–617 (2002).
+      dimension,”Phys. Rev. Lett.   20, 1445–1448 (1968).                                  [48]Jeremy  McMinis,  Raymond  C.  Clay,  Donghwa  Lee,     and
+[30]Raffaele Resta and Sandro Sorella, “Electron localization in the                             Miguel A. Morales, “Molecular to atomic phase transition in
+      insulating state,”Phys. Rev. Lett.   82, 370–373 (1999).                                   hydrogen under high pressure,”Phys. Rev. Lett.   114, 105305
+[31]Walter Kohn, “Theory of the insulating state,”Phys. Rev.         133,                        (2015).
+      A171–A181 (1964).                                                                    [49]Guglielmo Mazzola, Seiji Yunoki,  and Sandro Sorella, “Unex-
+[32]H.  J.  Schulz,  “Wigner  crystal  in  one  dimension,”Phys.  Rev.                           pectedly high pressure for molecular dissociation in liquid hy-
+      Lett. 71, 1864–1867 (1993).                                                                drogen by electronic simulation,”Nat. Commun.  5, 1–6 (2014).
+[33]Giovanni Onida, Lucia Reining,  and Angel Rubio, “Electronic                           [50]Tristan Guillot, “The interiors of giant planets: Models and out-
+      excitations:    density-functional  versus  many-body  Green’s-                            standing questions,”Annu. Rev. Earth Planet. Sci.   33, 493–530
+      function approaches,”Rev. Mod. Phys.   74, 601–659 (2002).                                 (2005).
+[34]Steven G. Louie, “Predicting materials and properties:  Theory                         [51]Ranga P. Dias and Isaac F. Silvera, “Observation of the Wigner-
+      of the ground and excited state,”Contemp. Concepts Condens.                                Huntington transition to metallic hydrogen,”Science  355, 715–
+      Matter Sci. 2, 9–53 (2006).                                                                718 (2017).
+[35]Xavier  Blase,  Ivan  Duchemin,    and  Denis  Jacquemin,  “The                        [52]James  P.  F.  LeBlanc,  Andrey  E.  Antipov,  Federico  Becca,
+      Bethe-Salpeter equation in chemistry:  relations with TD-DFT,                              Ireneusz W. Bulik, Garnet K.-L. Chan, Chia-Min Chung, You-
+      applications and challenges,”Chem. Soc. Rev.   47, 1022–1043                               jin  Deng,  Michel  Ferrero,  Thomas  M.  Henderson,  Carlos  A.
+      (2018).                                                                                    Jim´enez-Hoyos,  E.  Kozik,  Xuan-Wen  Liu,  Andrew  J.  Millis,
+[36]G. Kotliar, S. Y. Savrasov, K. Haule, V. S. Oudovenko, O. Par-                               Nikolai V. Prokof’ev, Mingpu Qin, Gustavo E. Scuseria, Hao
+      collet,  and C. A. Marianetti, “Electronic structure calculations                          Shi,  Boris  V.  Svistunov,  Luca  F.  Tocchio,  Igor  S.  Tupitsyn,
+      with dynamical mean-ﬁeld theory,”Rev. Mod. Phys.   78, 865–                                Steven R. White, Shiwei Zhang, Bo-Xiao Zheng, Zhenyue Zhu,
+      951 (2006).                                                                                and Emanuel Gull (Simons Collaboration on the Many-Electron
+[37]E.  A.  Nowadnick,  J.  P.  Ruf,  H.  Park,  P.  D.  C.  King,  D.  G.                       Problem), “Solutions of the two-dimensional Hubbard model:
+      Schlom, K. M. Shen,  and A. J. Millis, “Quantifying electronic                             Benchmarks and results from a wide range of numerical algo-
+      correlation strength in a complex oxide:  A combined DMFT                                  rithms,”Phys. Rev. X   5, 041041 (2015).
+      and ARPES study of LaNiO3,”Phys. Rev. B  92, 245109 (2015).                          [53]Bo-Xiao  Zheng,  Chia-Min  Chung,  Philippe  Corboz,  Georg
+                                                                                                 Ehlers, Ming-Pu Qin, Reinhard M. Noack, Hao Shi, Steven R.
+                                                                                                                                                                9
+
+White, Shiwei Zhang,  and Garnet K.-L. Chan (Simons Collab-                            ence 358, 1155–1160 (2017).
+oration on the Many-Electron Problem), “Stripe order in the un-
+derdoped region of the two-dimensional Hubbard model,”Sci-

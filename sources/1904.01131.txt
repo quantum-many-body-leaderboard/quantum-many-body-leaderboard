@@ -1,0 +1,2303 @@
+          Q# and NWChem: Tools for Scalable Quantum Chemistry on Quantum Computers
+
+Guang Hao Low,1,∗ Nicholas P. Bauman,2 Christopher E. Granade,1 Bo Peng,2 Nathan Wiebe,1 Eric J. Bylaska,2 Dave
+  Wecker,1 Sriram Krishnamoorthy,2 Martin Roetteler,1 Karol Kowalski,2 Matthias Troyer,1 and Nathan A. Baker2
+                   1Microsoft Research, Quantum Architectures and Computation Group, Redmond, Washington 98052, USA
+                                        2Paciﬁc Northwest National Laboratory,  Richland,  Washington 99354,  USA
+                                                                            (Dated: April 3, 2019)
+                      Fault-tolerant quantum computation promises to solve outstanding problems in quantum chem-
+                   istry within the next decade.  Realizing this promise requires scalable tools that allow users to trans-
+                   late descriptions of electronic structure problems to optimized quantum gate sequences executed on
+                   physical hardware, without requiring specialized quantum computing knowledge.  To this end, we
+                   present a quantum chemistry library, under the open-source MIT license, that implements and enables
+                   straightforward use of state-of-art quantum simulation algorithms. The library is implemented in Q#,
+                   a language designed to express quantum algorithms at scale, and interfaces with NWChem, a lead-
+                   ing electronic structure package.  We deﬁne a standardized schema for this interface, Broombridge,
+                   that describes second-quantized Hamiltonians, along with metadata required for effective quantum
+                   simulation,  such as trial wavefunction ansatzes.   This schema is generated for arbitrary molecules
+                   by NWChem, conveniently accessible, for instance, through Docker containers and a recently devel-
+                   oped web interface EMSL Arrows.  We illustrate use of the library with various examples, including
+                   ground- and excited-state calculations for LiH, H10, and C20 with an active-space simpliﬁcation, and
+                   automatically obtain resource estimates for classically intractable examples.
+
+
+
+
+                                                                                  CONTENTS
+
+  I.  Introduction                                                                                                                                                                             2
+
+ II.  Review                                                                                                                                                                                      4
+      A.  Quantum computing and programming                                                                                                 4
+      B.  Quantum chemistry                                                                                                                                                         8
+      C.  Quantum simulation                                                                                                                                                      13
+
+III.  The Broombridge schema for representing electronic structure problems                                                     19
+      A.  Broombridge v0.1 speciﬁcations                                                                                                           19
+      B.  Generating Broombridge with NWChem                                                                                                 21
+
+IV.  Simulating quantum chemistry with the Microsoft Quantum Development Kit                                                 21
+      A.  Constructing qubit Hamiltonians from chemistry Hamiltonians                                                   21
+      B.  Synthesizing quantum simulation circuits                                                                                                         23
+      C.  Estimating eigenvalues                                                                                                                                                  24
+
+ V.  Example applications                                                                                                                                                           25
+      A.  Lithium hydride ground- and excited-state energies                                                                                         25
+      B.  Empirical Trotter error estimation of stretched H10 chains                                                                           27
+      C.  Quantum computing predictions and resource estimations for C20 isomerizations                  29
+
+VI.  Conclusions                                                                                                                                                                           32
+
+      Acknowledgments                                                                                                                                                               32
+
+      References                                                                                                                                                                              33
+
+ A.  Running examples                                                                                                                                                                36
+
+
+
+
+
+
+
+∗ guanghao.low@microsoft.com
+                                                                                                                                              2
+
+                                                          I.    INTRODUCTION
+
+  Computational  chemistry  is  one  of  the  main  consumers  of  computing  resources  today.   Computational  chem-
+istry  calculations  generally  aim  to  approximate  electronic  structure  Schrödinger  equation  solutions  to  “chemical
+accuracy” (deﬁned in Sec.II A): where predicted computed chemical properties quantitatively match experimen-
+tal observations.  There have been great successes in the ﬁeld, heralded by celebrated techniques such as density
+functional theory (DFT) [1], coupled-cluster (CC) theory [2], or density matrix renormalization group (DMRG) [3].
+However,  chemical accuracy remains beyond the reach of tractable classical computing techniques for numerous
+problems, often involving transition metals and excited states. In particular, a brute-force computational approach to
+the Schrödinger equation has exponential cost arising from the curse of dimensionality, and is generally infeasible—
+for both current and projected supercomputers—for chemical systems beyond a hundred spin orbitals.
+  Quantum computing [4] promises a solution to this fundamental challenge of accurate electronic structure calcula-
+tions. Instead of simulating the time-evolution of electrons according to the laws of quantum mechanics on classical
+Turing-machine computers, quantum computers natively realize quantum effects at a hardware level.  The inher-
+ent computational power of quantum systems provides hope of solving the hardest quantum mechanical problems
+in chemistry and material science,  such as the mechanism of biological nitrogen ﬁxation [5] or high-temperature
+superconductivity [6,7].
+  The theoretical details of quantum algorithms for electronic structure calculations have been studied extensively.
+The ﬁrst explicit algorithm for simulating generic local Hamiltonians was by Lloyd [8], which has since seen con-
+tinual improvements and generalizations [9–17]. These algorithms have been specialized to fermionic systems [18],
+especially that of chemistry [19,20],  along with numerous case studies [21–26],  and novel quantum-classical hy-
+brid schemes that trade-off quantum circuit depth for at least polynomially more rounds of classical repetition and
+post-processing [7,27,28]. A more thorough overview can be found in other publications [29].
+  However, the practical details of using quantum methods for many real-world chemistry and material science prob-
+lems pose unique challenges.  Setting aside the availability of fault-tolerant quantum hardware, and the difﬁculty
+of controlling said devices, it is non-trivial to program quantum devices to achieve a desired effect.  Paralleling the
+history of classical computing, quantum computing requires signiﬁcant software development effort before domain
+experts can apply quantum resources to their problems at scale. This need has motivated the recent development of
+a variety of quantum programming languages [30–34], each of which makes feasible and accessible various aspects
+of quantum software development.  Building on this, a number of different libraries for quantum chemistry appli-
+cations have been developed [35,36], in or for use with quantum programming frameworks, focusing primarily on
+near-term quantum chemistry tasks for Noisy Intermediate-Scale Quantum (NISQ) [37] devices.
+  In this paper, we present a software suite outlined inFigure 1that empowers quantum chemistry experts to write
+quantum simulation code that can be tested and costed using a classical computer as well as be executed as written on
+a fault-tolerant quantum computer once one becomes available.  We accordingly focus on these future applications,
+as well as developing technologies that allow us to today simulate and proﬁle resources needed for fault-tolerant
+quantum simulations.  The quantum simulation software we provide interacts with the underlying quantum error-
+correcting code and, in turn, the physical qubits through an abstraction that we call a simulator.  The simulator can
+be easily swapped with genuine hardware, guaranteeing that our code can be reused once fault-tolerant quantum
+hardware becomes available.  We have designed our quantum simulator software so that solutions are amenable to
+use by domain experts in quantum chemistry, without requiring strong domain expertise in quantum computing
+and quantum algorithms. This focus is especially critical as we transition from preliminary investigations—such as
+the use of quantum devices to study ground-state energies of relatively simple molecules [38]—to applications such
+as studying higher-energy properties and more complicated systems.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 1.    Workﬂow for simulating quantum chemistry on quantum computers using NWChem and Microsoft Quantum De-
+velopment Kit libraries. Our main contributions, Broombridge and the chemistry library, are shaded. SeeFigure 2for a detailed
+breakdown.
+                                                                                                                                           3
+
+  Making effective use of quantum computing resources past this transition puts a more signiﬁcant demand on soft-
+ware development and interoperability between different pieces in a complete workﬂow.  We address this demand
+by introducing Broombridge, a new serialization format for representing fermionic Hamiltonians. Broombridge en-
+ables interoperation between North-West Chemistry (NWChem) modelling software [39], a leadership-class suite of
+tools for modeling quantum chemistry problems, and the Microsoft Quantum Development Kit [34], a software plat-
+form for implementing quantum algorithms for both simulated execution and execution on eventual fault-tolerant
+hardware. Our reproducible workﬂow shown inFigure 1automates simulations of large families of molecules. This
+workﬂow begins with NWChem, and its recent optional web interface Environmental Molecular Science Laboratory
+(EMSL) Arrows, which serializes descriptions of electronic structure problems as Broombridge. Broombridge is then
+consumed by our quantum chemistry library in the Microsoft Quantum Development Kit, which is used in appli-
+cations invoking quantum simulation and other supporting quantum algorithms.  As seen in the ﬂowchart, many
+intermediate choices that affect performance and accuracy can be made between the initial problem speciﬁcation
+and the ﬁnal simulation on hardware.  Ultimately, the software should free users from these ﬁne details, and allow
+them to focus on the scientiﬁc endeavor.
+  We illustrate this interoperability through a series of examples, including the basic examples traditionally used to
+introduce quantum chemistry development as well as examples motivated by future quantum simulation applica-
+tions.  In particular, we highlight features in the Broombridge schema that enable us to conveniently describe the
+quantum Hamiltonian as well as the initial guesses for the eigenstate in question, which includes excited states that
+are traditionally difﬁcult to probe by variational approaches.  These features are illustrated in example simulations
+of excited states of LiH and standard problems such as obtaining correlation energies of the hydrogen chain H10,
+and energy calculations of different C20 isomer conﬁgurations calculated using small active spaces. We highlight the
+ability of the quantum chemistry library to perform gate count estimates for a challenging example, speciﬁcally a full-
+conﬁguration interaction simulation of C20 in a 100 spin-orbital active space. Such simulations are beyond the reach
+of any classical computer, but are expected to be tractable for quantum computers. These examples demonstrate the
+value of our system: in addition to simplifying quantum resources counts and electronic structure simulations, it also
+enables large-scale surveys of quantum chemistry simulations that have hitherto been too challenging to perform by
+hand.
+  The layout of the paper is as follows.   We begin inSection IIwith a review of quantum computing as well as
+quantum chemistry. In particular, we review state-of-the-art quantum simulation methods, such as qubitization and
+Trotter formulas, as well as methods for phase estimation. Important software such as Q# and NWChem are also re-
+viewed. InSection III, we introduce the Broombridge schema used to interface NWChem with Q#, and demonstrate
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                     Figure 2.  Detailed workﬂow for simulating quantum chemistry on quantum computers.
+                                                                                                                                             4
+
+how Broombridge may be produced.Section IVprovides a high-level discussion that shows how to use these tools
+together to simulate molecules within the Microsoft Quantum Development Kit chemistry simulation library.  We
+provide concrete examples of the library in action inSection Vand use our tools to study the electronic states of LiH,
+H10, and C20 using quantum algorithms simulated on classical computers, as well as provide resource estimates for
+simulations of hard molecules before concluding.  Finally, we conclude inSection VIwith our perspective of future
+directions for this line of work.
+
+
+                                                               II.    REVIEW
+
+  The exponential growth of classical computing capabilities projected by Moore’s law is coming to an end [40].
+However, many computational problems of scientiﬁc and technological interest remain out of reach. In light of this,
+quantum computing has emerged—amongst various technologies—as the leading contender for continued progress
+due to its potential for realizing further exponential speedups, at least for certain specialized problems. The central
+idea is to develop a device that can, within arbitrarily small error, implement at least a universal set of quantum
+transformation on a quantum state. This sufﬁces to capture the computation power of practical quantum computing,
+encapsulated by the complexity class BQP.
+  Of all the applications of quantum computing,  the quantum simulation of physics,  chemistry,  and materials is
+envisioned to be the most transformative; one of the earliest useful areas for quantum advantage. Since the dynamics
+of quantum systems are given by unitary transformations, we can in principle compile these dynamics, represented
+by Hamiltonians, into a sequence of discrete gates on a quantum computer.  This approach can yield exponential
+speedups over the best known classical algorithms for simulating hard quantum problems, such as those in catalysis
+or material science.
+  We review the key concepts of quantum computation based on qubits inSection II A, together with an overview
+for implementing and execution quantum algorithms in the Q# programming language.   Subsequently,  we state
+the fundamental concepts and deﬁnitions underlying quantum chemistry problems inSection II B, with a focus on
+its fermionic second-quantized representation, and the use of NWChem.  The ideas of quantum computation and
+quantum chemistry are merged inSection II C, which outlines the map from fermions to qubit, and the algorithms
+that simulate quantum Hamiltonian on a quantum computer.
+
+
+                                             A.    Quantum computing and programming
+
+  Before  describing  the  compilation  of  quantum  simulation  algorithm  for  Hamiltonian  dynamics  into  primitive
+operations on quantum computing, we need to discuss the elementary units of quantum memory, and the target
+gate set of compilation.  The fundamental unit of memory in a quantum computer is a qubit.  A qubit is much like
+a probabilistic classical bit.   It can take the values 0 or 1,  which we denote by the orthonormal two-dimensional
+column vectors|0⟩ and|1⟩. The quantum state for a qubit can be an arbitrary quantum mixture of these two states;
+the simplest example is known as a “pure” quantum state.  For a qubit, the pure quantum state takes the form of a
+complex unit vector a|0⟩ + b|1⟩ = [a  b]T. An ordinary probabilistic classical bit would have positive probabilities a
+and b that sum to 1; however, a pure quantum state has a, b∈ C and|a|2 +|b|2 = 1.
+  Just as measurement causes the prior distribution over the value of a classical stochastic bit to collapse to either
+0 or 1, measurement of a quantum bit causes a similar impact on the quantum state.  The principal difference from
+the classical case is that Pr [0] =|a|2 for the quantum example, rather than Pr [0] =  a as in the classical case.  The
+exponentially greater power of quantum computers stems largely from this subtle difference. As a, b∈ C and—more
+importantly—can be negative, the different possible conﬁgurations that a register of qubits can be in can interfere
+with each other. From this perspective, quantum computing can be viewed as the art of introducing and exploiting
+quantum interference for computational purposes.
+  The quantum state for multiple qubits can be represented by a tensor product of single qubit states.  This means
+that, while a single qubit state is described by a two-dimensional vector space C2, a two-qubit state lives on a four-
+dimensional vector space C22. In general, an n-qubit quantum state exists on a vector space C2n of dimension 2n. This
+is unsurprising as a classical probability distribution over n bits is also spanned by exponentially many bit strings.
+  Interference between the possible conﬁgurations of a quantum system is engineered using quantum gates. Perhaps
+the most important deﬁning characteristic of a quantum computer is the existence of a “universal quantum gate set”.
+This set consists of operations that can approximate, within arbitrarily small error, any transformation permitted by
+quantum mechanics on qubit states. These legal transformations are represented as unitary matrices, which preserve
+the  lengths  of  vectors,  conserve  the  value  of|a|2 +|b|2  for  qubits,  and  hence  conserve  probability.   In  principle,
+                                                                                                                                                5
+
+arbitrary single-qubit rotations and an entangling gate such as a controlled-NOT  can be used to generate any unitary
+transformation. If we take|0⟩ = [1  0]T and|1⟩ = [0  1]T, then these single qubit rotations can be easily expressed as
+exponentials of the following single-qubit Pauli operations
+                                  [1  0]               [0  1]                [0 −i]                      [1    0  ]
+                             1 =    0  1  ,         X =  1  0   ,         Y = i    0   ,  and        Z =   0 −1     .                                    (1)
+
+These Paulis can be interconverted using products of Clifford gates called the Hadamard and phase gate:
+                                                                [1    1  ]              [1  0]
+                                                 HAD =   1√2      1 −1     ,         S = 0   i  .                                                                (2)
+
+The notion of a single-qubit rotation is similarly a convenient concept in quantum computing.  The analogue of a
+rotation about the z-axis for a quantum bit for an angle θ can be expressed as
+                                                                                    [  cos (θ/2) −i sin (θ/2)]
+                         RZ(θ) = e−iZθ/2 = cos (θ/2)1− i sin (θ/2)Z =                 −i sin (θ/2)     cos (θ/2)        .                              (3)
+
+Any-single  qubit  operation  can  be  expressed  as  a  sequence  of  three  rotations:  RZ(θ)· RX(φ)· RZ(ψ)  =  RZ(θ)·
+HAD· RZ(φ)· HAD· RZ(ψ) for appropriate Euler angles θ, φ and ψ. In fault-tolerant applications, these rotations are
+typically approximated by sequences of HAD and T =√S gates.
+  The simplest two-qubit quantum gate is the controlled-NOT  gate controlled by qubit  j and applied to qubit k,
+which has the action|0⟩j|x⟩k↦→|0⟩j|x⟩k and|1⟩j|x⟩k↦→|1⟩j|x⊕ 1⟩k. The gate takes the following matrix represen-
+tation (using the above basis convention)
+                                                                       1  0  0  0
+                                                          CNOTjk =     0  1  0  0 .                                                                             (4)
+                                                                         0  0  0  1
+                                                                         0  0  1  0
+
+It  can  be  useful  to  observe  that  gates  in  the  Clifford  group{HAD, S, CNOT}  can  map  any  n-qubit  Pauli P ∈
+{1, X, Y, Z}⊗n  operator  to  any  other  n-qubit  Pauli  by  conjugation.   This  provides  one  possible,  though  not  nec-
+essarily the most efﬁcient, implementation of RP(θ)  =  e−iPθ/2  which is commonly found in quantum simulation
+algorithms.
+  Thinking about quantum simulation algorithms strictly in terms of these operations is quite taxing, just as pro-
+gramming a word processor using only assembly code would be a challenge in classical computing.  Higher-level
+quantum programming languages have been developed to address these challenges [30–32,34].  These languages
+bridge the gap between the low-level physics-inspired description of the quantum states and the higher level de-
+scriptions of algorithms that are customarily shown as pseudocode in quantum computing papers. Such bridges are
+essential not only because the act of compiling a quantum algorithm into an optimized sequence of quantum gates is
+demanding, but also because a quantum computer is not just a single monolithic device. A quantum computer is a
+rich nested stack of computing substrates that view the quantum computer at different levels of abstraction: a fault-
+tolerant quantum computer provides a user with a view of logical qubits that are made out of collections of physical
+qubits which are themselves an abstraction of the basic physical systems that lie beneath all held within an error
+correcting code wherein the quantum gates actually represent complex sequences of physical gates. Given this com-
+plexity, one quickly realizes that high-level quantum programming languages are not a luxury, but a necessity—even
+before quantum computing comes of age.
+
+
+                                                  1.    Developing quantum algorithms in Q#
+
+  Our aim is to show how simulations of quantum chemistry can be made easier by using the Microsoft Quantum
+Development Kit in conjunction with NWChem.   Here we will review the Microsoft Quantum Development Kit
+which  provides  a  new  language,  Q#,  that  is  used  to  program  the  quantum  chemistry  simulations  in  this  paper.
+The Microsoft Quantum Development Kit is distributed under the open-source MIT license as a set of installable
+packages for .NET Core, an open-source cross-platform programming environment that includes high-level classical
+languages such as C# and F#.
+  Quantum programs written in Q# use an accelerator model, similar to graphics programming or the use of ﬁeld-
+programmable gate arrays.  As illustrated inFigure 3, once a user writes Q# code, that program can be dispatched
+                                                                                                                                                                6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   Figure 3.     Execution model used by the Microsoft Quantum Development Kit to interact with target machines, each of which
+   executes Q# code on behalf of a classical program written in a .NET Core language such as C#.
+
+
+   to one of several target machines by a host program written in any .NET Core language.  The target machine then
+   runs the Q# program, including both classical logic and quantum instructions, and returns its result to the classical
+   host program.  Each target machine exposes a set of available instructions to Q# programs as operations that can be
+   called during a program’s execution.  For instance, the Hadamard gate can be applied by calling the H operation in
+   the Microsoft.Quantum.Primitive namespace.  The operations that deﬁne the interface between a Q# program and target
+   machines are collectively known as the prelude, and can be referenced in a Q# source ﬁle using an open statement.
+      InListing 1, we show a simple example of using the Microsoft Quantum Development Kit to program a quantum
+   random number generator (QRNG). AtLine 9, the user declares a new operation,          Qrng, that can interact with the
+   target machine in a variety of ways, including allocating fresh qubits, or calling primitive operations. Once deﬁned
+   in this way,  Qrng can be called from other operations, or can be invoked from a classical host program written in
+   C# or another .NET Core language.   For a complete set of samples demonstrating this process,  please seehttps:
+   //github.com/Microsoft/Quantum.
+
+   //All Q# code l i v e s  i n s i d e of  a namespace,  sowe begin by declaring t h a t  namespace here.
+   namespace   Qrng   {
+         //Wecan import  names fromother  namespaces using the openkeyword.
+         open   Microsoft . Quantum . P r i m i t i v e ;
+5
+         ///# Summary
+         ///Prepares a qubit  in the   |+⟩   s t a t e,  then measures in the Zb a s i s  to obtain a randomb i t.
+         //This  l i n e  d e c l a r e s an operation t h a t  takes no inputs and returns a Result.
+         operation   Qrng ( )    :   Result   {
+
+10                      mutable   r e s u l t   =   Zero ;
+               //The usingkeywordasks  the t a r g e t  machine f o r  a f r e s h qubit,   i n i t i a l l y in the         |0⟩   s t a t e.
+               using   ( qubit   =   Qubit ( ) )   {
+                     //Applying the Hoperation to a qubit  in the     |0⟩   s t a t e  prepares  t h a t  qubit  in the            H|0⟩ =|+⟩
+                           ↪→   s t a t e.
+                    H( qubit ) ;
+15                               //Wecan measure our  qubit  in the Z    −b a s i s  using the Moperation providedby the prelude.
+                     s e t    r e s u l t   =  M( qubit ) ;
+                     //Before returning the qubit  to the t a r g e t  machine,  we need to make sure t h a t  i t   i s  in the         |0⟩
+                           ↪→     s t a t e.  This can be done using a c l a s s i c a l l y c o n t r o l l e d Xgate,  whichwe apply using a
+                           ↪→      c l a s s i c a l  ifstatement  andthe Xoperation.
+                     i f    ( r e s u l t   ==  One)   { X( qubit ) ;    }
+               }
+
+20                      //F i n a ll y,  we return our randomb i t  to the  c l a s s i c a l  host  program.
+               return   r e s u l t ;
+         }
+   }
+
+   Listing 1. A simple quantum random number generator (QRNG) written in Q#.                              examples/qrng/qrng.qs
+      The Microsoft Quantum Development Kit also includes a set of standard libraries known as the canon that are
+   built up within Q# itself.  These libraries provide Q# programs with useful routines for performing measurements
+   and manipulating ﬂow control, as well as for higher-level quantum algorithms such as the quantum Fourier trans-
+   form (QFT), implementations of phase estimation algorithms, and routines for quantum simulation algorithms.  A
+   complete reference to the prelude and canon is available online athttps://docs.microsoft.com/qsharp/api/.  The
+   functions and operations in the canon, together with other features of the Q# language—such as the Adjoint functor
+                                                                                                                                                                           7
+
+   to automatically transform an operation into its inverse operation, make it straightforward to encapsulate and reuse
+   code in quantum applications.
+
+
+                                                                 2.    Running Q# quantum algorithms
+
+      Once a quantum program has been written using Q#, it can be run using a classical host program to allocate a
+   target machine. This host will often be written in C#, but any other .NET Core language can be used. To demonstrate,
+   we use an excerpt inListing 2from the example of quantum teleportation, which is described in detail within the
+   complete source ﬁle.
+
+         ///# Summary
+         ///Runs the Teleport  operation above by a l l o c a t i n g three qubits,
+         ///and a s s e r t i n g t h a t  the message qubit  i s  c o r r e c t l y t e l e p o r t e d.
+          operation   RunTeleport ( )    :   Unit   {
+
+5                      using   ( ( msg ,   here ,    there )   =   ( Qubit ( )  ,   Qubit ( )  ,   Qubit ( ) ) )   {
+                      //We’l l  prepare a s t a t e   |+⟩ = H|0⟩   by using
+                      //the Hoperation.
+                      H(msg) ;
+                      //After  t e l e p o r t i n g using the Teleportoperation,
+
+10                               //the t a r g e t  qubit  shouldbe in the    |+⟩   s t a t e.  Thus,
+                      //applying another Hw i l l  transformi t  back i n t o the
+                      // |0⟩   s t a t e.
+                      Teleport (msg ,   here ,    there ) ;
+                      H( there ) ;
+15                               //Whenrunona simulator,  we can a s s e r t  t h i s  f a c t
+                      //using the AssertQubit  operation.  In other  cases,   t h i s
+                      //operation i s  s a f e l y ignored s i n c e  i t  has no e f f e c t.
+                      AssertQubit ( Zero ,    there ) ;
+                }
+
+20             }
+
+   Listing 2. An example of quantum teleportation between two qubits written in Q#.         examples/teleport/Teleport.qs
+
+   In many cases, we want to run our quantum programs on a simulator that will let us check that they operate correctly
+   on noiseless qubits.  The Microsoft Quantum Development Kit provides the QuantumSimulator target machine for this
+   case, as demonstrated inListing 3. Full details on running this example can be found inSection Aof the appendix.
+      The QuantumSimulator target machine is especially useful in conjunction with unit testing frameworks such as xU-
+   nit [41], as this makes it possible to write a comprehensive set of tests for a quantum algorithm implementation.
+   Such test suites help build conﬁdence that an implementation is correct.
+      Once we are conﬁdent that a Q# program functions correctly, the next steps often involve costing out larger cases
+   that are intractable with only classical resources.  The Microsoft Quantum Development Kit offers another target
+   machine, the QCTraceSimulator class, which counts the resources required to run a quantum program. We demonstrate
+   the use of this target machine inListing 3as well.
+
+                //C# programs used as  c l a s s i c a l  hosts  f o r Q# programs
+                //can be written as  t y p i c a l  console a p p p l i c a t i o n s.
+                s t a t i c  void     Main ( s t r i n g [ ]    args )
+                {
+
+19                               //Wecan a l l o c a t e  the QuantumSimulatort a r g e t
+                      //machine by i n s t a n t i a t i n g a newi n s t a n c e.  The using
+                      //block makes sure t h a t  the newt a r g e t  machine
+                      // i s  c o r r e c t l y d e a l l o c a t e d at  the end.
+                      using   ( var   qsim   =  new  QuantumSimulator ( ) )
+
+24                                {
+                            //TheQ# compiler  exposes  operations and f u n c t i o n s
+                            //as  .NETc l a s s e s,  each of  which has a s t a t i c method
+                            //Runt h a t  accepts a t a r g e t  machine andruns the
+                            //function or  operation on t h a t  machine.
+29                                         //Since  t a r g e t  machines return t h e i r  r e s u l t s  asynchronously,
+                            //we use the Waitmethodto make sure t h a t  the
+                            //operation has completed.
+                             RunTeleport . Run( qsim ) . Wait ( ) ;
+                      }
+
+34
+                      //In the same way,  we can i n s t a n t i a t e a newQCTraceSimulator
+                                                                                                                                                         8
+
+
+                    // t a r g e t  machine to t r a c e the resources  required by the RunTeleport
+                    //operation.
+                    var   traceSim   =  new   QCTraceSimulator (
+
+39                                         //The t r a c e  simulator  takes a c o n f i g u r a t i o n o b j e c t  t h a t  d e s c r i b e s
+                         //what  c o s t s wewould l i k e  to trace,  andhowthe t r a c e  simulator
+                         //should handle measurements.  For more d e t a i l s,   see
+                         //https://docs.microsoft.com/quantum/machines/qc-trace-simulator/.
+                         new   QCTraceSimulatorConfiguration
+44                                         {
+                               usePrimitiveOperationsCounter   =   true ,
+                               throwOnUnconstraintMeasurement   =   f a l s e
+                          }
+                    ) ;
+
+49
+                    //Oncewe have our  t r a c e simulator,  we can run our  operation in the
+                    //sameway.   After  running,  we can ask about  the c o s t s  required.
+                    RunTeleport . Run( traceSim ) . Wait ( ) ;
+                    var   nCNOTs  =   traceSim . GetMetric <RunTeleport >( PrimitiveOperationsGroupsNames .CNOT) ;
+
+54                                System . Console . WriteLine ( $ " Used   {nCNOTs}  CNOT  operations . " ) ;
+
+              }
+
+  Listing 3. Classical host forListing 2.                                                                                           examples/teleport/Host.cs
+     Critically, the Q# code run in both parts ofListing 3is identical: the        RunTeleport operation cannot observe whether
+  it is is being simulated by  QuantumSimulator or  QCTraceSimulator.  That is, the choice of target machine is transparent to
+  Q# code as it is being run, allowing us to build conﬁdence by testing with small classical resources, and then reuse
+  the same code in cost estimation and—eventually—in actual hardware.
+
+
+                                                                B.    Quantum chemistry
+
+     The main focus of quantum chemistry is providing computational tools for modeling molecular structure, chem-
+  ical reactions,  dynamics,  and spectroscopic properties.   These are inextricably linked to many-body methods for
+  solving the stationary (time-independent) Schrödinger equation
+                                                                    H|Ψ⟩ = E|Ψ⟩  ,                                                                                   (5)
+  where H,|Ψ⟩, and E represent the Hamiltonian operator, wavefunction, and corresponding energy of a molecular
+  system (respectively). The energy scale of interest in these problems is typically on the order of 1 Hartree, which we
+  shall use as our units for energy and inverse-time in the following.  In general, eigenvectors and eigenvalues of the
+  Schrödinger equations (|Ψ⟩ and E, respectively) describe ground or excited electronic states.  By applying various
+  assumptions regarding the nature of the inter-electron interactions and the algebraic form of the electronic wave-
+  function, a plethora of various approximate methods have been introduced and tested over the last century.  These
+  methods ﬁnd approximate solutions to Schrödinger equations, and their underlying assumptions intrinsically de-
+  ﬁne the memory requirements and numerical overheads of simulating approximate many-body models on classical
+  machines.
+     Among the several classes of many-body methodologies, a number of approaches stand out.  These include the
+  numerous variants of Hartree–Fock (HF) and DFT methods, many-body perturbation theory (MBPT), Green’s func-
+  tion methods (GF), conﬁguration interaction (CI) and CC methods, density matrix theory, and DMRG approaches.
+  Over the years, these methods have evolved into staple working engines used in numerous simulations of chemical
+  processes. A signiﬁcant effort has also been directed towards the development of reduced scaling methods and em-
+  bedding formulations to handle correlation effects in large molecular systems. The widespread use of these methods
+  has emphasized the role played by the proper inclusion of complex electron correlation effects for a comprehen-
+  sive and accurate understanding of molecular processes.  In some cases, for example CI and CC theories, achieving
+  “chemical accuracy” of roughly
+                        Chemical accuracy = 10−3 Hartree = 0.02721 eV = 2.625 kJ/mol = 316.8 kBKelvin,                        (6)
+  requires including enormous numbers of wavefunction parameters,  which results in a steep computational com-
+  plexity scaling of these formalisms. In asymptotic limit of the Full CI (FCI) formulation, the number of wavefunction
+  parameters  scales  as  N!  with  respect  to  system  size  N.   Examples  that  appear  to  require  reaching  this  limit  in-
+  clude modeling low-spin open-shell systems, radicals, transition metal oxides, and actinides. Fortunately, quantum
+  computing, which has polynomial scaling in  N, offers means to address the exponential scaling of high-accuracy
+  wavefunction formulations on classical computing platforms.
+                                                                                                                                                       9
+
+                                                        1.    Second-quantized Hamiltonians
+
+   The language of second quantization has permeated almost the entire area of quantum chemistry and it is widely
+used to classify various many-body effects contributing to complex inter-electron correlation effects.  Second quan-
+tization has also become a foundation for diagrammatic representation of various many-body theories.  The cen-
+tral role in quantum chemistry is played by the Born–Oppenheimer approximation, where the electronic structure
+Hamiltonian H describes electrons that move within a ﬁxed nuclear frame
+                                                      η  (                           )       η
+                                              H =    ∑     −  ˆ∇2i            Zl        +   ∑       1
+                                                    i=1        2 −∑l      |ri− Rl|          i<j |ri− rj| ,                                                         (7)
+
+where  ˆ∇2 is the Laplacian, Zl and Rl are the charge and position of the l-th nucleus, and ri is the position of the i-th
+electron. In this basis, the corresponding η-electron wavefunction has components Ψ(x1, x2, . . . , xη) =⟨x1x2 . . . xη|Ψ⟩
+indexed by the spatial and spin coordinates of i-th electron, i.e., xi = (ri, si) where ri∈ R3 and si∈{↑,↓}.
+   As|Ψ⟩ describes of indistinguishable fermions (electrons), it also has to satisfy fermion statistics associated with
+its antisymmetry upon swapping the coordinates of any pair of electrons.  Second-quantization techniques and the
+occupation number representation provide a concise way of characterizing many-body effects in the Hamiltonian
+operator and electronic wavefunction while automatically assuring its anti-symmetry.  In the second-quantization,
+all operators and the many-body wavefunction are represented in terms of creation and annihilation operators a†p
+and ap indexed by p. These operators satisfy the of anti-commutation relations
+
+                                              {ap, aq} ={a†p, a†q} = 0,  and {ap, a†q} = δpq.                                                          (8)
+
+Additionally,  when acting with any annihilation operator on the physical vacuum state|0⟩ or when the creation
+operator is applied to an occupied state, the following is always satisﬁed
+
+                                                           ∀p,     ap|0⟩ = a†p|1⟩p = 0.                                                                           (9)
+
+Similarly,  if the annihilation operator is applied to an occupied state or if the creation operator is applied to the
+vacuum then particles are destroyed or created respectively:
+
+                                                    ∀p,     a†p|0⟩ =|1⟩p ,     ap|1⟩p =|0⟩p .                                                               (10)
+
+Using these operators, one can represent the Hamiltonian operator as
+
+                                                   H = ∑                   2  ∑
+                                                          pq hpqa†paq + 1     p,q,r,s hpqrsa†pa†qaras,                                                             (11)
+
+   The connection to the electronic structure Hamiltonian of(7)is completed by choosing          p = (i, s)∈{1,··· , M}×
+{↑,↓} to index one of  M carefully chosen orbitals with amplitude φi(r) =⟨r|φi⟩ in the position basis, and a spin
+state  with  amplitude χs.   In  other  words,  a†p  creates  an  electron  in  one  of  N  =  2M  single-particle  spin-orbitals
+|ψp⟩ =|φi⟩|χs⟩. The coefﬁcients of(11)are then
+                                       (                           )                  ∫              (                           )
+        hpq≡ h(i,s1)(j,s2) =⟨ψp|          −∇2                Zl       |ψq⟩ = δs1s2       dr φ∗i (r)    −∇2                Zl        φj(r),            (12)
+                                              2 −∑l      |r− RI|                      |                    2 −∑{z  l  |r− RI|            }
+
+                                                                                                               hij
+                                                                                               ∫           φ∗i (r1)φ∗j (r2)φk(r2)φl(r1)
+      hpqrs≡ h(i,s1)(j,s2)(k,s3)(l,s4) =⟨ψp|⟨ψq|       1|r1− r2||ψr⟩|ψs⟩ = δs1s4δs2s3             dr1dr2              |r1− r2|              .         (13)
+                                                                                               |                    {z                    }
+                                                                                                                   hijkl
+
+A  convenient  way  of  representing  electronic  wavefunction  vector|Ψ⟩  is  then  as  as  a  linear  combination  of  all
+symmetry-allowed Slater determinants| f⟩ created by some sequence of η creation operators
+
+                                                                  |Ψ⟩ = ∑c f| f⟩ ,                                                                                 (14)
+                                                                            f
+                                                                                                                                                             10
+
+   where the c f  are complex coefﬁcients.  The above expansion is often referred to as the full conﬁguration expansion
+   (FCI) and is considered an exact solution to the electronic Schrödinger equation for a given ﬁnite basis set. A given
+   Slater determinant| f⟩ in the occupation number representation can be expressed in terms of string of  fi  numbers
+   ( fi∈{0, 1}, i = 1, . . . , N, where N is a total number of spin-orbitals), which is usually denoted as
+                                                                | f⟩ =| fN, . . . , fi, . . . , f1⟩ ,                                                                         (15)
+   where the actions of the creation and annihilation operators on such a state are given by formulas
+
+                                           ap| fN, . . . , fi, . . . , f1⟩ = δfp,1(−1)∑p−1i=0  fi| fN, . . . , fi− 1, . . . , f1⟩ ,                                     (16)
+
+                                    and a†p| fN, . . . , fi, . . . , f1⟩ = δfp,0(−1)∑p−1i=0  fi| fN, . . . , fi + 1, . . . , f1⟩ ,                                     (17)
+   Since the cost of solving FCI problem grows exponentially with the basis set size M, classical computers can only
+   be used to solve small problems.  In contrast, quantum computers can efﬁciently create and manipulate states that
+   are a superposition of exponentially many elements. Thus problems that are intrinsically multi-conﬁgurational and
+   require FCI to achieve chemical accuracy appear to be ideal targets for quantum solutions.
+
+
+                                                   2.    Computational Quantum Chemistry in NWChem
+
+      The NWChem modeling software, found athttp://www.nwchem-sw.org, is a popular molecular chemistry simu-
+   lation tool designed from conception to operate on massively parallel supercomputers [39,42,43], and is open-source
+   under the permissive Educational Community License (ECL) 2.0 license.   Source ﬁles and binaries for NWChem
+   are located in a Github repositoryhttps://github.com/nwchemgit/nwchem.  A Docker image of NWChem is also
+   availablehttps://hub.docker.com/r/nwchemorg/nwchem-qc. While prior NWChem releases are compatible with
+   Linux distributions, this option is not currently recommended as the most recent versions of NWChem (compatible
+   with Windows) are required to generate input for the Microsoft Quantum Development Kit.
+      Today, NWChem contains an umbrella of modules that include single and multi-conﬁguration self consistent ﬁeld
+   (SCF); second-order Møller-Plesset perturbation theory;  CC; selected CI; Tensor Contraction Engine (TCE) based
+   many body methods; DFT; time-dependent DFT (TDDFT); real-time TDDFT; pseudopotential plane-wave DFT; band
+   structure; ab initio molecular dynamics; Car–Parrinello molecular dynamics; classical molecular dynamics; QM/MM;
+   AIMD/MM; GIAO NMR; COSMO, COSMO-SMD, and RISM solvation models;  free energy simulations;  reaction
+   path optimization; parallel-in-time dynamics; among other capabilities. New capabilities continue to be added with
+   each release.
+      An electronic structure problem can be input to NWChem by specifying the coordinates of its component atoms,
+   as seen in the followingListing 4for a minimal example of Lithium Hydride (LiH).
+
+   # Begins a c a l c u l a t i o n t h a t  w i l l  output  a f i l e named ‘l i h.out’ .
+   s t a r t    l i h
+
+   # Outputs a copy of  t h i s  input  deck in a f i l e named ‘l i h.nw’ .
+
+5   echo
+
+   # A l l o c a t e s  the maximummemoryused f o r  t h i s  c a l c u l a t i o n.
+   memory   1900  mb
+
+
+10   # Overall  charge of  t h i s  systemin u n i t s  of  e l e c t r i c  charge.
+   charge   0
+
+   # Geometry s p e c i f i c a t i o n input  group of  the  e l e c t r o n i c  s t r u c t u r e problem.
+   #Atomp o s i t i o n s  are defined in Cartesian coordinates  in u n i t s  of  Angstrom(10         −10m).
+15   geometry   u n i t s   angstrom
+   # Specifying the point  groupsymmetry of  the problemcan speedup c a l c u l a t i o n s.  Currently,  only the                                     C1
+         ↪→   symmetry i s  allowed in theNWChem  −QuantumDevelopment  Kit  i n t e r f a c e.
+   symmetry   c1
+   #ALithiumatomi s  placed at  coordinates                 (0, 0, 0)Å.
+   #AHydrogenatomi s  placed at  coordinates                (0, 0, 1.624)Å.
+20   Li        0.000000000000000        0.000000000000000        0.000000000000000
+  H          0.000000000000000        0.000000000000000        1.624000000000000
+   # The keyword ‘end’  marks the end of  an input  group.
+   end
+
+   Listing 4. NWChem input example for geometry of LiH electronic structure problem.                                  examples/lih.nw
+                                                                                                                                                              11
+
+      Electronic structure Hamiltonians in the second-quantized formalism employ certain representations of molecular
+   orbitals, usually corresponding to some independent particle model (IPM) based on a ﬁnite-dimensional one-particle
+   basis set. NWChem offers a broad array of IPMs including:
+
+       •Restricted Hartree–Fock formalism (RHF),
+
+       •Open-shell Restricted Hartree–Fock method (ROHF),
+
+       •Unrestricted Hartree–Fock method (UHF),
+
+       •various Density Functional Theory (DFT) formulations.
+
+   These methods can use a variety of basis sets—ranging from Gaussian to plane-wave—to express molecular orbitals
+   |φi⟩ as linear combinations of other basis set orbitals|Φµ⟩, i.e.,
+
+                                                                     |ψi⟩ = ∑
+                                                                                µ  ciµ|Φµ⟩ ,                                                                               (18)
+
+   where ciµ are variationally optimized coefﬁcients. Once the molecular orbitals are determined, one- and two-electron
+   integrals are obtained from atomic one- (hµν) and two-electron (hµνρσ) integrals through the so-called 2- and 4-index
+   transformations:
+
+                                             hij = ∑
+                                                     µν ciµciνhµν,     and    hijkl = ∑µνρσ ciµcjνckρclσhµνρσ.                                                (19)
+
+   In practical implementations, these transformations are factorized using recursive intermediate techniques with clas-
+   sical time complexityO(N3) andO(N5) respectively.
+      Of the IPMs, DFT can provide an array of trial wavefunctions depending on the functional used to describe the sys-
+   tem which bring a deﬁnite level of uncertainty and are not systematically improvable. While the single-conﬁguration
+   HF state provides a zeroth-order approximation to the ground state, its description of the trial wavefunction is often
+   qualitatively poor or incorrect and provides energy estimates that far exceed chemical accuracy, often by orders of
+   magnitude. In order to provide better target trial wavefunctions one can turn to post-HF approximations which aim
+   to recover the difference between the IPM and FCI, such as MBPT, CI formalisms, and CC methodologies.
+      Higher-level methods rely on an initial calculation based on the choice of basis set and IPM. For example, a calcu-
+   lation with RHF orbitals in the Slater-type orbital (STO)-3G basis set is made through two groups of instructions in
+   the NWChem input as seen inListing 5.  A similar input structure may be used to produce DFT orbitals in various
+   basis sets. These molecular orbitals in(18)are subsequently used in(19)to generate one- and two-electron integrals
+   deﬁned by(12)and(13).
+
+   # Basis  s e t  s p e c i f i c a t i o n input  group.
+2   basis
+   #Wechoose the STO  −3Gb a s i s  s e t  f o r  both atoms.
+  H   l i b r a r y   sto−3g
+   Li   l i b r a r y   sto−3g
+   # Endof  b a s i s  s e t  input  group.
+7   end
+
+   # S e l f −c o n s i s t e n t  f i e l d model  s p e c i f i c a t i o n input  group.
+   s c f
+   #Wechoose the  r e s t r i c t e d Hartree   −−Fock approach.
+
+12   rhf
+   #Wechoose a systemwhere a l l   e l e c t r o n s  are paired i f  p o s s i b l e.
+   s i n g l e t
+   # SCF convergence threshold f o r  molecular  o r b i t a l  v a r i a t i o n a l  optimization in (18).
+   thresh   1 . 0 e−10
+17   #Two−e l e c t r o n i n t e g r a l  screening threshold f o r  the evaluation of  the energy and r e l a t e d q u a n t i t i e s.
+   t o l 2 e    1 . 0 e−10
+   #Maximumnumber of  i t e r a t i o n s  in v a r i a t i o n a l  optimization to reach thresholds.
+   maxiter   501
+   # Endof  SCFmodel  input  group.
+22   end
+
+   Listing 5. NWChem input instructions for choice of basis set and independent particle model.                     examples/lih.nw
+                                                                                                                                                                       12
+
+      Of the post-IPM methods, CC theory provides a rapid convergence to the FCI limit and is systematically improv-
+   able along with other desirable features. The most common IPM for CC calculations is the HF wavefunction,|ΨHF⟩.
+   The ground-state CC wavefunction|Ψ0⟩ takes the following form
+
+                        |Ψ0⟩≃ eT|ΨHF⟩ ,     where    T = ∑                                          (n!)2  ∑         ti1,...,ina1,...,an a†a1. . .a†an ain. . .ai1                   (20)
+                                                                         n  Tn    and    Tn =     1         a1,...,ani1,...,in
+
+   for some real coefﬁcients t······, referred to as cluster amplitudes. Similarly, the K-th excited equation-of-motion (EOM)
+   CC trial wavefunction|ΨK⟩ is approximated by applying a linear excitation operator  RK  to the ground-state CC
+   wavefunction
+
+       |ΨK⟩≃ RK|Ψ0⟩ = RKeT|ΨHF⟩ ,     where    RK = ∑                                                           (n!)2  ∑        ri1,...,ina1,...,an(K)a†a1. . .a†an ain. . .ai1
+                                                                               n  RK,n    and    RK,n =     1           a1,...,ani1,...,in
+                                                                                                                                                                     (21)
+   for some real coefﬁcients r······(K), referred to as excitation amplitudes.  Truncating T and RK expansions at values of
+   n < η leads to the hierarchy of CC and EOMCC approximations. Currently, the CC model with singles and doubles
+   (CCSD, i.e., T =  T1 + T2) [44] and the EOMCC formalism with singles and doubles (EOMCCSD, i.e.,       T =  T1 + T2
+   and  RK  =  RK,1 + RK,2) [45–47] methods in NWChem can be used to generate an initial wavefunction.   The trial
+   wavefunction outputs are simple and reasonable approximations to(20)and(21)which takes the following forms:
+                                                                   |Ψ0⟩≃ (1 + T1 + T2)|ΨHF⟩                                                                       (22)
+
+   in the case of the ground state and
+                                                                   |ΨK⟩≃ (RK,1 + RK,2)|ΨHF⟩                                                                       (23)
+
+   for  excited  states.    Importantly,  the  cluster  and  excitation  amplitudes  in(22)and(23)are  obtained  from  full
+   CC/EOMCC calculations.   For more strongly correlated cases,  one can envision the inclusion of higher rank ex-
+   citations and products of cluster and/or excitation operators.  A typical input for generating one- and two-electron
+   integrals—as well as leading CCSD and EOMCCSD trial wavefunction amplitudes—uses the NWChem TCE module
+   and takes the form inListing 6.
+
+   # Tensor  c o n t r a c t i o n engine module.  As not  a l l   f e a t u r e s  of NWChemare c u r r e n t l y supportedby the Quantum
+         ↪→   Development  Kit  chemistry l i b r a r y,   users  are advised to use s e t t i n g s  i d e n t i c a l  to the following,
+         ↪→   except  f o r  the     nroots   parameter.
+   t c e
+   # S p e c i f i c a t i o n of  the coupled  −c l u s t e r  model  (CCSD)
+4   ccsd
+   # Molecular  o r b i t a l   t i l e  s i z e  de fines  the s i z e of  the blocks  containing subsets  of  spin      −o r b i t a l  i n d i c e s  of
+         ↪→     the same spin and s p a t i a l  symmetries.   Currently the  i n t e r f a c e betweenNWChemandthe Quantum
+         ↪→   Development  Kit  uses  s i z e 1 ,  which i s  a l s o i t s  d e f a u l t  value.
+   t i l e s i z e   1
+   # The two −  andfour −index transformations  definedby the following keywords are performed at  the  o r b i t a l
+         ↪→   l e v e l  assuming the same o r b i t a l s  f o r  both spin   −upandspin −downspin −o r b i t a l s.  This  enables one to
+         ↪→   use the  r e s t r i c t e d Hartree  −−Fock and r e s t r i c t e d open  −s h e l l  Hartree−−Fock r e f e r e n c e s.  The current
+         ↪→   version does not  o f f e r  the u n r e s t r i c t e d Hartree   −−Fock type one −  andtwo −e l e c t r o n i n t e g r a l s.
+   2 eorb
+
+9   2emet   13
+   # Number of  e x c i t e d s t a t e s  to be c a l c u l a t e d in theEOMCCmodel.   I f  the  t h i s  parameter  i s  skipped,  only the
+         ↪→     ground−s t a t e coupled−c l u s t e r  c a l c u l a t i o n s  w i l l  be performed.
+   nroots   5
+   # Convergence threshold f o r CCSDandEOMCCSDc a l c u l a t i o n s
+   thresh   1 . 0 e−6
+
+14   # Endof  tensor  c o n t r a c t i o n engine module input  group.
+   end
+
+   Listing 6. NWChem input deck for generating trial coupled-cluster wavefunctions.                                     examples/lih.nw
+
+      The trial wavefunctions(22)and(23)information along with the corresponding one- and two-electron integrals
+   are printed out after a ﬁnal speciﬁcation of parameters outlined in the followingListing 7.
+
+   # I n s t r u c t NWChemto p r i n t  one  −  andtwo −e l e c t r o n i n t e g r a l s  to the output  f i l e.  This parameter  a l s o
+         ↪→   t r i g g e r s  remaining elements  of  c a l c u l a t i o n s  needed to c h a r a c t e r i z e wavefunctions  at  the CCSD/
+         ↪→  EOMCCSDl e v e l.
+                                                                                                                                                       13
+
+
+  s e t  t c e   : p r i n t _ i n t e g r a l s   T
+3   # Define the  t o t a l  number of  c o r r e l a t e d a c t i v e  o r b i t a l s  in the c a l c u l a t i o n.
+  s e t  t c e   : qorb   6
+  # Number of  c o r r e l a t e d a c t i v e alpha (spin   −up)  e l e c t r o n s.
+  s e t  t c e   : qela   2
+  # Number of  c o r r e l a t e d a c t i v e beta (spin   −down)  e l e c t r o n s.
+8   s e t  t c e   : qelb   2
+
+  #NWChemtask d e f i n i t i o n (compute coupled   −c l u s t e r  usingTCEmodule)
+  task t c e      energy
+
+  Listing 7. NWChem input deck for additional outputs for Broombridge serialization.                                  examples/lih.nw
+
+
+
+                                                              C.    Quantum simulation
+
+     Quantum simulation is the original and perhaps most promising application of quantum computation [48]. Given
+  a Hamiltonian H describing the system of interest and an evolution time t, the goal is to output the time-evolution
+  operation e−iHt. This time-evolution operator describes quantum dynamics as it evolves a the quantum state|ψ(0)⟩
+  to the state|ψ(t)⟩ = e−iHt|ψ(t)⟩ at some future time t in accordance to the time-dependent Schrödinger equation
+
+                                                               i ddt|ψ(t)⟩ = H|ψ(t)⟩ .                                                                            (24)
+
+  Importantly, e−iHt must be expressed in terms of quantum gates that may be implemented on a universal quantum
+  computer.   As this is difﬁcult to do exactly,  a maximum simulation error ϵ is allowed and we instead output an
+  operation U such that
+
+                                                                   ‖e−iHt− U‖≤ ϵ.                                                                                (25)
+
+  This criterion sufﬁces to guarantee that the error in simulation for any initial quantum state is at most ϵ. Similarly, it
+  also guarantees that the error in eigenvalues of U are at most ϵ [49, Theorem VI.3.11] from the exact time-evolution
+  operator e−iHt, which in turn encodes the eigenvalues of H.  The spectral norm is one of the most common choices
+  for‖·‖, although other choices are possible.
+     The complexity of simulating a second-quantized Hamiltonian on a classical computer scales exponentially with
+  the number of spin-orbitals in the thermodynamic limit.  However, if we use a quantum computer, the dynamical
+  simulation problem in (25) can be solved using a polynomial number of quantum operations. This involves mapping
+  the fermionic operators of the original Hamiltonian in(11)to a Hamiltonian expressed by qubit operators, often by
+  a Jordan–Wigner transformation, followed by an explicit algorithm for synthesizing U.  At present, the two most
+  popular methods for constructing the operator U are Trotter–Suzuki methods [10] and Qubitization [14]. The former
+  requires fewer qubits and can in practice require fewer gates for certain simulation problems, whereas the latter has
+  better asymptotic scaling.  The precise number of gates needed for these simulations (as a function of the number
+  of spin-orbitals) have fallen precipitously.  Early work suggested that the number of gate operations should scale
+  like O(N11) [21], where       N is the number of spin-orbitals in the problem.  More recent work has reduced this to at
+  most O(N6) [20,22] for generic problems in chemistry or           O(N2) [16] or lower for Coulomb interactions in the more
+  structured plane-wave basis. The time-evolution operator of dynamical simulation is usually used as a primitive in
+  other algorithms. For instance, static properties of a quantum system, such as the ground-state energy of a molecule,
+  can be extracted using a phase estimation algorithm on U. This returns an eigenphase  ˜Ejt of U, up to some speciﬁed
+  number of bits of precision in the algorithm.  This eigenphase of U|Ψj⟩  =  ei ˜Ejt|Ψj⟩ is selected with a probability
+  Pr [j] =|⟨Ψj|Ψ⟩|2 that depends on the overlap between the desired eigenstate and the prepared trial wavefunction
+  |Ψ⟩. This trial wavefunction|Ψ⟩ may be prepared by various means, like using another unitary similar in structure
+  to U such as the recently developed downfolding technique based on the extension of the subsystem-embedding-
+  subalgebras to unitary coupled-cluster formalisms outlined inSection II B 2.
+
+
+                                                        1.    The Jordan–Wigner transformation
+
+     Before simulating electronic structure problems, it is necessary to map the fermionic operators into Pauli operators
+  that properly respect fermion anti-commutation relations and may be performed on a qubit quantum computer.  A
+                                                                                                                                                    14
+
+number of such mappings from second-quantization, such as Bravyi-Kitaev, are possible [50] but a careful analysis
+shows no advantage over the simplest: the Jordan–Wigner transformation [23]. The encoding of the fermionic oper-
+ators into Pauli operators works as described below. We deﬁne the state|0⟩k to be the vacuum state for spin-orbital
+k and similarly|1⟩k is the occupied state. It is then easy to see from(1)that
+
+                                              a†0→ (X0− iY0)/2,         a0→ (X0 + iY0)/2.                                                         (26)
+
+The creation operators acting on spin-orbitals with labels greater than zero need to be slightly modiﬁed to make sure
+that they properly anti-commute.  This can be achieved by noting that XZ =−ZX and YZ =−YZ; that is, Z anti-
+commutes with both Pauli operators in the Jordan–Wigner decomposition of a†0.  This means that we can construct
+creation operators acting on spin orbitals with an index greater than 0 by attaching strings of Z operators to each of
+the qubits of lower labels to generate the proper anti-commutation relationship. Speciﬁcally, we replace
+
+                                                                 p−1      (Xp− iYp) /2.                                                                        (27)
+                                                          a†p→    ∏   Zj
+                                                                  j=0
+
+The Jordan–Wigner transformation of ap can be found by taking the adjoint of (27).
+  As an example, consider the term a†j aja†k ak  =  (11− Zj + Zk + ZjZk)/4 after the Jordan–Wigner transformation.
+Time-evolution by this term may be decomposed into the sequence of quantum gates
+
+                                   e−ia†j aja†k akt = e−it/4eiZjt/4· eiZkt/4· e−iZjZkt/4
+                                                 = e−it/4eiZjt/4· eiZkt/4· CNOTj,k· e−iZkt/4· CNOTj,k.                                         (28)
+
+Note that because each term commutes in the Jordan–Wigner representation of the Hamiltonian, this expression is
+exact.  In contrast,  if  a†j ak + a†k aj  =  XjZj+1··· Zk−1Xk/4 + YjZj+1··· Zk−1Yk/4,  then time evolution by this term
+decomposes into
+
+       e−i(a†j ak+a†k aj)t = HADj· HADk· CNOTj,k··· CNOTk−1,k· e−iZkt/4· CNOTk−1,k··· CNOTj,k· HADj· HADk
+                              · HADj· HADk· S†j· S†k· CNOTj,k··· CNOTk−1,k· e−iZkt/4· CNOTk−1,k··· CNOTj,k· Sj· Sk
+                              · HADj· HADk.                                                                                                                                 (29)
+
+As before, this expression is also exact as each term in the Pauli representation commutes.
+  These  long  sequences  of  controlled-NOT   gates  are  needed  to  ensure  the  anti-commutation  rules  of  fermionic
+creation operators and are collectively known as Jordan–Wigner strings.  Speciﬁc forms for the evolution operators
+corresponding to each of the different one- and two-electron operators in the second-quantized Hamiltonian are well
+known [19] and implementations of these gates are provided within the Hamiltonian simulation library.
+
+
+                                                      2.    Trotter–Suzuki simulation methods
+
+  In essentially all cases of interest, the terms of a Hamiltonian H representing an electronic structure problem do not
+commute in either the fermion or Pauli representations. Trotter–Suzuki methods, often abbreviated to just “Trotter”,
+are a cornerstone method for simulating non-commuting Hamiltonians on quantum computers.
+  In general, it is difﬁcult to compile e−iHt into quantum gates directly; however, H is often the sum of a large number
+of individual terms Hj such that it is easy to ﬁnd circuits for each e−iHjt. In the simplest example, if H = aX + bY + cZ,
+then each of these individual terms can be simulated using RX, RY, and RZ gates (which are deﬁned inSection II A).
+In  general,  if  a  Hamiltonian  is  of  the  form  H  =  ∑Mj=1 hjPj  where  each  Pj  is  a  tensor  product  of  Pauli  operators
+Hermitian, then a Trotter–Suzuki approximation can be written as
+
+                                                    M∏
+                                        e−iHt =        e−ihjPjt +O(M2 max
+                                                   j=1                        j,k ‖[Pj, Pk]‖ max|hj|2t2).                                                (30)
+
+One can see that the approximation error is controlled by the Trotter step-size t, which should suitably small to reach
+chemical accuracy.  Quite often, the term Trotter number 1/t is also used, which is the number of Trotter–Suzuki
+                                                                                                                                               15
+
+formula applications required to achieve unit-time time-evolution.  Furthermore, elementary quantum circuits in-
+volving chains only Clifford gates and a single qubit rotation can be used to simulate each exponential of a Pauli
+operator.  Therefore, if the chemical Hamiltonian can be decomposed into a sum of a modest number of quantum
+circuit is known to simulate e−iHt, then the Trotter formula can be used to build an approximation to e−iHt assum-
+ing t is sufﬁciently small.  Using mappings such as Jordan–Wigner, fermion Hamiltonians are represented by as a
+sum of Pauli operators, and methods exist for simulating such exponentials using a polynomial number of primitive
+quantum gates.
+  One example of a non-commuting fermion Hamiltonian is a combination of the terms from the previous section.
+Let H = a†j aj + a†j ak + a†k aj = (11− Zj)/2 + XjZj+1··· Zk−1Xk/4 + YjZj+1··· Zk−1Yk/4. A simulation circuit can be
+formulated using exactly the same methodology.  However, because [Zk, Xk]⁄= 0⁄= [Zk, Yk] the error—often called
+the Trotter error—is O(t2) for such a simulation. Speciﬁcally, it can be shown using the same approach demonstrated
+above that
+  e−iHt = e−it/2e−iZjt/2· HADj· HADk· CNOTj,k··· CNOTk−1,k· e−iZkt/4· CNOTk−1,k··· CNOTj,k· HADj· HADk
+               · HADj· HADk· S†j· S†k· CNOTj,k··· CNOTk−1,k· e−iZkt/4· CNOTk−1,k··· CNOTj,k· Sj· Sk· HADj· HADk
+               + O(M2 max
+                            j,k ‖[Hj, Hk]‖t2),                                                                                                                                (31)
+  Higher-order Trotter–Suzuki decompositions [10] also exist and are available within the Hamiltonian simulation
+library. The simplest such decomposition is the symmetric (or second order) Trotter formula, which takes the form
+
+                                            M∏
+                                e−iHt =        e−iHjt/2     1∏e−iHjt/2 + O(M3 maxj,k,𝓁‖H𝓁‖‖[Hj, Hk]‖t3).                                       (32)
+                                           j=1           j=M
+Arbitrarily high-order Trotter formulas can also be constructed from the second-order formula; however, the highest-
+order formula used in practice is the fourth-order formula [25].
+  Once e−iHt has been decomposed into a product of elementary unitary operations using one of the above formulas,
+we have everything that we need to simulate quantum dynamics on a quantum computer. However, for chemistry
+simulation applications, we are usually interested in static properties like the correlation energy of a molecule.  Ob-
+servables such as eigenvalues of the Hamiltonian can then be extracted from the time-evolution operator. For exam-
+ple, if H|ψ⟩ = E|ψ⟩ then e−iHt has eigenvalue e−iEt on the state.  Thus, if we apply phase estimation on e−iHt, then
+we can learn Et directly from the phase and in turn E since t is known.  For the purpose of estimating the ground-
+state eigenvalue, the second-order Trotter formula yields the same accuracy as the ﬁrst-order Trotter formula, which
+allows a potential savings of a factor of 2 in the complexity [22]. However, most simulation results use the symmetric
+formula to simplify the error analysis.
+  In theory, this simulation approach does not compare favorably asymptotically to methods based on qubitization
+or linear combinations of unitaries; however, Trotter–Suzuki formulas require fewer qubits than any other known
+method.  Moreover, the complexity of the simulation depends strongly on the size of the commutators between the
+Hamiltonian terms. In practice, this means that Trotter–Suzuki methods can be more efﬁcient than more recent sim-
+ulation methods for some problems [25] and, therefore, will remain an important part of the landscape of quantum
+simulation algorithms for the foreseeable future.
+
+
+                                                     3.    Qubitization simulation methods
+
+  In the previous section, we described the Trotter–Suzuki algorithm that directly approximates the unitary time-
+evolution operator e−iHt.   However,  for the purposes of estimating eigenvalues of the Hamiltonian  H,  it sufﬁces
+to implement time-evolution by any monotonic function of H, say ei f (H), where  f (·) is applied to the eigenvalues
+of  H  without modifying the eigenvectors [51,52].   Qubitization [14] is a simulation technique for synthesizing a
+unitary that is exactly ei sin−1(H/h)  for some normalization constant h≥‖H‖,  up to ﬁxed phase factors and local
+isometries.  Compared to the Trotter–Suzuki algorithm, qubitization offers a different complexity tradeoff that may
+be advantageous in certain situations.
+  The starting point of qubitization is a Hamiltonian represented as a linear combination of  N  Pauli operators Pj
+with positive coefﬁcients hj, say
+
+                                                                        N∑
+                                                                 H =       hjPj.                                                                                    (33)
+                                                                       j=0
+                                                                                                                                                             16
+
+Such a decomposition can be found for the chemistry Hamiltonian by using the Jordan–Wigner decomposition given
+in(27). Information about this Hamiltonian is then encoded in two unitary operators P             REPARE and SELECT. Coefﬁ-
+cient information is encoded in a quantum state
+                                                                                √
+                                                                          N−1∑     |hj|
+                                                                  |h⟩ =              h |j⟩ ,                                                                              (34)
+                                                                           j=0
+
+where h = ∑N−1j=0 |hj| is the one-norm of coefﬁcients. Note that the number state|j⟩ encodes a binary representation
+of j, e.g.|6⟩ =|1⟩|1⟩|0⟩. This state can be prepared by the quantum circuit
+
+                                                                  PREPARE|0⟩ =|h⟩ ,                                                                              (35)
+
+implemented following Ref. [53].  Operator information is encoded in a unitary operator, implemented following
+Ref. [26],
+
+                                                                             N−1∑
+                                                              SELECT =             |j⟩⟨j|⊗ Pj,                                                                         (36)
+                                                                              j=0
+
+that applies the jth Pauli operator given the number state|j⟩.  Together, these combine to apply the Hamiltonian in
+the sense of
+
+                                                V = (PREPARE†⊗ 1)· SELECT· (PREPARE⊗ 1)                                                     (37)
+                                               H
+                                                h  = (⟨0|⊗ 1)· V· (|0⟩⊗ 1).
+
+   By combining PREPARE and SELECT, qubitization is simply the walk operator
+
+                                                            W = ((2|0⟩⟨0|− 1)⊗ 1)· V.                                                                      (38)
+
+When evaluating its action on eigenstates|E⟩ of H|E⟩ = E|E⟩ with energy E when the input in the other register is
+|0⟩, there are two cases of interest:|E| = h, and|E|⁄= h. In the former case,
+
+                                                     W|0⟩|E⟩ =  Eh|0⟩|E⟩ = sign[E]|0⟩|E⟩ .                                                             (39)
+
+Thus, the walk operator simply applies a phase 0 or π to the input.  In the latter case, using the simpliﬁed notation
+E
+h  = λ,
+                                                                                    √
+                                                    W|0⟩|E⟩ = λ|0⟩|E⟩−                 1−|λ|2|0E⊥⟩ ,                                                            (40)
+
+where|0E⊥⟩ is orthogonal to the original input. By rearranging, this new state
+
+                                                          |0E⊥⟩ =−W|0⟩|E⟩ + λ|0⟩|E⟩√1−|λ|2           .                                                                   (41)
+
+
+Thus, we may evaluate the matrix elements of W in this basis as
+                                                                 [         E/h    √1−|E/h2]
+                                                    W =⨁          −√1−|E/h2          E/h                  .                                                            (42)
+                                                             E
+
+By diagonalizing each subspace separately, we see that W applies a phase e∓i cos−1 (E/h) to the eigenstates|0⟩|E⟩±|0E⊥⟩√2        .
+Within this basis, the spectrum of the walk operator is isomorphic to
+
+                                                   W = e−iY⊗cos−1(H/h) =−ie−iY⊗sin−1(H/h).                                                           (43)
+                                                                                                                                               17
+
+                                                   4.    Circuit optimizations for qubitization
+
+  In the previous section, we described the qubitization algorithm and presented a generic implementation.  Here,
+we state some basic circuit optimizations we have implemented that reduce the overall complexity.  First, we con-
+sider state-preparation optimizations that reduce the T-gate complexity, but at the expense of introducing additional
+qubits. Second, we consider optimizations that exploit the structure of fermion Hamiltonians.
+  The default state preparation circuit PREPARE in(35)for   |α⟩ is implemented following the procedure by Shende,
+Bullock, and Markov [53].  For a quantum state of dimension       N, this requires⌈log2 N⌉ qubits andO(N) arbitrary
+Z rotations.  By synthesizing each rotation with T gates [54], the overall T gate complexity for approximating  |α⟩ to
+error ϵ isO(N log (N/ϵ)).
+  A challenge faced by this state-preparation method is that the cost of the algorithm scales multiplicatively with
+log(1/ϵ).   If an exacting estimate of the error is required,  then the number of rotation gates needed can be pro-
+hibitively large if the L1 norm of the Hamiltonian terms or the error tolerance is small.  This situation can be ame-
+liorated by including ancillary qubits, the use of which allows us to have error scaling that is additive (rather than
+multiplicative) in the desired error tolerance. Speciﬁcally, we aim to synthesize a state|h′⟩ such that
+
+                                                                     √
+                                                               N−1∑     |hj|
+                                                       |h′⟩ =            h |j⟩|garbj⟩ ,                                                                       (44)
+                                                                j=0
+
+where|garbj⟩ is some additional arbitrary “garbage state” entangled with|j⟩ and h is the L1 norm of the coefﬁcient
+vector  with  entries  hj.   One  may  verify  that,  even  with  this  garbage  state,  the  deﬁning  equation(37)for  block-
+encoding the Hamiltonian returns an identical result. This state may be synthesized using the QROM procedure [26,
+55], at cost O(n log (1/ϵ)) qubits, andO(N + log (N/ϵ)) T gates.
+  The default SELECT circuit in(36)applies an arbitrary Pauli operator conditioned on one of            N different control
+inputs, and has a T-gate cost of less than 4N [26]. In a fermionic Hamiltonian with       M spin-orbitals, there may be up
+to N =O(M4) different Pauli operators, corresponding to a spin representation of the two-body terms.  However,
+these Pauli operators in fermion Hamiltonians are highly structured. For instance, the Jordan–Wigner representation
+in(27)expresses the fermion operator            ap  as the sum of X and Y Pauli on qubit  p followed by a string of Z Paulis
+from qubits 0 to p− 1. The circuit selecting these structured Pauli operators can be synthesized usingO(M) T gates,
+following the method of [26].
+
+
+
+
+
+                                                              5.    Phase estimation
+
+  An important primitive in quantum simulation applications is obtaining an eigenvalue of some given unitary
+operator U|ψ⟩ =  eiθ|ψ⟩ with eigenstate|ψ⟩.  As the eigenvalues are always of the form eiθ  for some phase θ, the
+process  has  earned  the  moniker  “phase  estimation”.   The  origins  of  phase  estimation  actually  predate  quantum
+mechanics and the quantum algorithm by many years.  The ﬁrst such example of phase estimation is the Mach–
+Zehnder interferometer [56], wherein a phase delay is put in one of two arms of an interferometer. At the end of the
+protocol, light heading down both paths is allowed to interfere and the phase difference between the two paths that
+the light travels through becomes immediately obvious from the interference pattern.  As we will shortly ﬁnd out,
+quantum algorithms for phase estimation are conceptually similar.
+  One large family of algorithms are based on a procedure called iterative phase estimation. This procedure requires
+a qubit that stores the two paths in the analogous interferometer and a controlled quantum circuit controlled-U such
+that
+
+                    controlled-U|0⟩|ψ⟩ =|0⟩|ψ⟩ ,     and    controlled-U|1⟩|ψ⟩ =|1⟩ U|ψ⟩ = eiθ|1⟩|ψ⟩ .                      (45)
+
+In other words, the controlled unitary only applies its phase to the portion of the quantum state in the “1” branch.
+Iterative phase estimation splits the quantum state uniformly over both branches through a Hadamard gate, applies
+the controlled unitary, and then recombines the quantum state by applying a Hadamard again to the path qubit as
+                                                                                                                                              18
+
+follows.
+
+                                        |0⟩|ψ⟩↦→   1√2 (|0⟩|ψ⟩ +|1⟩|ψ⟩)
+                                                          (                        )
+                                                 ↦→   1√2   |0⟩|ψ⟩ + eiθ|1⟩|ψ⟩
+                                                       (                                           )
+                                                 ↦→  12  (1 + eiθ)|0⟩|ψ⟩ + (1− eiθ)|1⟩|ψ⟩
+
+                                                 = eiθ/2 (cos(θ/2)|0⟩|ψ⟩− i sin(θ/2)|1⟩|ψ⟩)                                                  (46)
+
+Thus  the  phase  can  be  inferred  by  measuring  the  path  qubit  many  times,  estimating  the  probability  Pr [0]  =
+cos2 (θ/2) and computing θ≈ 2 cos−1(√Pr [0]). Of course, this is terribly inefﬁcient.
+  In practice, phase estimation is almost always implemented as a multi-pass algorithm, meaning that controlled-U
+is applied multiple L times before each measurement. Furthermore, the process of inferring the feedback phase φ is
+made easier by also rotating the path qubit at each iteration; although this does not provide additional information
+about θ, using a feedback phase φ can help with the stability of numerical implementations. Combining both of these
+together yields the transformation
+
+                                 |0⟩|ψ⟩↦→ (cos(L(θ + φ)/2)|0⟩|ψ⟩ + i sin(L(θ + φ)/2)|1⟩|ψ⟩) ,                                        (47)
+
+up to an irrelevant global phase.  We may quantify the effectiveness of this procedure by the Fisher information I,
+whose inverse which lower bounds the variance of any unbiased estimator of θ. A straightforward calculation shows
+that the Fisher information I scales quadratically with the evolution time, L2 (47), whereas        I scales linearly with the
+number of times each measurement is repeated.  Informally, this is the distinction between the “Heisenberg” and
+“standard quantum” limits, respectively [57].
+  The art in phase estimation is to choose a policy for picking a sequence of experiments with varying  L and φ.
+The measurement records can be combined on a classical computer to yield a useful estimate of the phase, whose
+distribution depends on this choice.  Typically, the phase estimate is obtained by a maximum likelihood estimator.
+However, other estimators such as the posterior mean can be applied in Bayesian approaches that exploit prior infor-
+mation on the distribution of θ. Regardless, it is known that a judicious sequence of L and φ allows the uncertainty
+in the estimated θ to scale as ∆ ∝  1/Lexp, where Lexp  = ∑j Lj  is the total number of times the controlled unitary
+is applied across all experiments.  This yields a quadratic advantage relative to naïve statistical sampling, wherein
+the uncertainty scales as 1/√Lexp. The quadratic advantage provided by the phase estimation approach is optimal;
+otherwise, the Heisenberg uncertainty principle for photon number and phase could be violated.  After ﬁxing an
+eigenstate of the unitary to be queried by a phase estimation algorithm, it is known that the Cramer–Rao bound
+is tight for efﬁcient phase estimators.  Thus the number of queries required to obtain a target error ∆ in standard
+deviation in the asymptotic limit is simply
+
+                                                    Number of queries = Lexp≈  1∆ .                                                                   (48)
+
+  The analysis of phase estimation given above comes with a major caveat:  the input state|ψ⟩ is assumed to be
+an eigenstate of U, which is almost never true.  In this situation, phase estimation can be viewed as performing a
+measurement in the eigenbasis of the unitary U.  This means that if|ψ⟩ =  a|ψ0⟩ + b|ψ1⟩ for eigenstates|ψ0⟩ and
+|ψ1⟩ then the probability of measuring the eigenvalue corresponding to|ψ0⟩ is|a|2. Learning a particular eigenphase
+with high probability therefore also requires preparing an initial state that has a sufﬁciently large overlap with the
+target state. An important mitigation strategy for this phenomena is to disregard output from any phase estimation
+that yields a result that disagrees with prior estimates for the eigenvalue. This strategy is enabled within our schema,
+described next inSection III, by allowing users to specify upper and lower bounds on eigenvalue of interest.
+  Note that in this approach to phase estimation, the number of times that U is applied is always an integer. Choos-
+ing an integer number of applications means that eigenphase θ and θ + 2mπ, for any integer m, yields precisely the
+same likelihood and thus cannot be distinguished.  This effect is called “wrap-around.”  Wrap-around can be dealt
+with by using methods such as various ﬂavors of Bayesian phase estimation that use a non-integer number of queries
+to the unitary, which can be realized using fractional query techniques [58].  In practice, this issue seldom occurs in
+phase estimation of time-evolution operators as either the total phase needs to be kept small to control errors or
+the maximum phase that can be observed is π/2, depending on the simulation method of choice.  For this reason,
+and the fact that it comes with provable bounds on the uncertainty and failure probability, we focus on a form of
+phase estimation called robust phase estimation [59] that only uses an integer number of queries to controlled-     U.
+                                                                                                                                                        19
+
+  Other algorithms exist and we recommend the interested reader to look at faster phase estimation [60], Bayesian
+  phase estimation [61], and quantum phase estimation [4]. Each of these approaches has different tradeoffs between
+  experimental run time, classical processing, and the number of quantum bits used in the protocol.
+
+
+              III.    THE BROOMBRIDGE SCHEMA FOR REPRESENTING ELECTRONIC STRUCTURE PROBLEMS
+
+     The Broombridge schema1 deﬁnes a data structure for representing electronic structure problems together with
+  supporting metadata to enable effective simulation on a quantum computer. Using a human-readable serialization,
+  this provides an interface between electronic structure calculation tools, in particular NWChem, and the Microsoft
+  Quantum Development Kit chemistry library.  By standardizing this interface under the open-source MIT license,
+  we also enable potential inter-operation between any set of classical and quantum chemistry simulation software
+  packages, and enable future schema extensions to meet the requirements of state-of-the-art electronic structure algo-
+  rithms.
+     We outline inSection III Athe essential components contained in Broombridge that are relevant to the chemistry
+  library. Subsequently, we describe inSection III Bhow Broombridge may be generated by NWChem, which is used
+  later in the examples ofSection V.
+
+
+                                                         A.    Broombridge v0.1 speciﬁcations
+
+     We now present snippets from the Broombridge example of LiH that highlight its essential keys and values.  As
+  future versions of Broombridge may not be backwards-compatible, each Broombridge instance begins with a version
+  number and a link to its speciﬁcation.   Some entries of Broombridge are required and will not pass validation if
+  omitted, whereas other entries are optional metadata, as shown in the followingListing 8.
+
+
+1   # (Required)  Address to complete d e f i n i t i o n f o r  validaing Broombridge v0. 1 .
+  "$schema":https://raw.githubusercontent.com/Microsoft/Quantum/master/Chemistry/Schema/broombridge-0.1.
+         ↪→  schema.json
+
+   # (Required)  Broombridge version of  e l e c t r o n i c  s t r u c t u r e problemr e p r e s e n t a t i o n.
+  format:{version:’0.1’}
+
+6
+   # (Optional)  Bibliography f o r  problems represented in t h i s  Broombridge.
+  bibliography:
+  -  url:’https://www.nwchem-sw.org’
+
+  Listing 8. Broombridge version number formatting.                                                                               examples/lih.yaml
+     A quantitative description of the electronic structure problem is stored as an entry in the ‘integral_set’ list – mul-
+  tiple Broombridge problems may be stored in this list.  Each entry in this list contains a description of the problem.
+  Some parameters are essential for specifying a complete quantum simulation problem.  This includes the number
+  of orbitals and electrons required, the constant energy offsets equivalent to identify terms in the Hamiltonian, the
+  Hartree–Fock energy, and the one-electron and two-electron integrals over the deﬁned orbital subspace.  These are
+  outlined in the followingListing 9.
+
+
+1       # Terms in the  e l e c t r o n i c  s t r u c t u r e Hamiltonian.
+     hamiltonian:
+     # L i s t  of  one −e l e c t r o n i n t e g r a l s
+        one_electron_integrals:
+           # Onlynon −zero terms are s p e c i f i e d in a sparse format.
+6              format:sparse
+           units:hartree
+           values:
+           # Each element  [i,   j ,             hij ] ,  where    i, j∈{1,··· , n_orbitals} ,   i s  the  o r b i t a l  i n t e g r a l       (12) .
+           # As    hij = hji ,  only one of  these terms must be s p e c i f i e d.
+
+11              -  [1,  1,  -4.7225445389]
+           -  [2,  1,  0.1046509472]
+           # e t c.
+
+
+
+
+
+   1 So named after the Broom bridge in Dublin, Ireland, upon which Sir William Rowan Hamilton, the namesake of ‘Hamiltonian’, inscribed the
+     ﬁrst deﬁning equations of quarternions.
+                                                                                                                                                                 20
+
+
+
+         # L i s t  of  two −e l e c t r o n i n t e g r a l s
+16          two_electron_integrals:
+            format:sparse
+            index_convention:mulliken
+            units:hartree
+            values:
+
+21                 # Each element  [i,   l,   j ,  k,                   hijkl ] ,  where    i, j, j, k∈{1,··· , n_orbitals} ,   i s  the  o r b i t a l  i n t e g r a l       (13) .
+            # As    hijkl = hjilk = hikjl = hlkji   f o r  r e a l  o r b i t a l s,  only one of  these terms must be s p e c i f i e d.
+            -  [1,  1,  1,  1,  1.6586341297]
+            -  [2,  1,  1,  1,  -0.110636355]
+            # e t c.
+
+   Listing 9. Essential Broombridge components for specifying an electronic structure problem.                   examples/lih.yaml
+
+      Some elements of this description are optional but are highly recommended as they can be used by the chemistry
+   library.  Importantly, as shown inListing 10, this includes multi-conﬁgurational trial wavefunctions that are super-
+   positions of Slater determinants, as well as approximations to the full conﬁguration-interaction energy that can also
+   be used to determine the principle range of phase estimation, if applicable.
+
+      # Approximate upper andlower bounds on the exact  ground    −s t a t e energy.
+      fci_energy:{units:hartree,  lower:-7.981844675840114,  upper:-7.781844675840115}
+
+      # Various multi −c o n f i g u r a t i o n a l   t r i a l  wavefunctions.
+5      initial_state_suggestions:
+
+      # This  i s  a ground s t a t e  t r i a l  wavefunction.
+      -  state:
+            # Approximate energy of  t h i s  s t a t e
+
+10              energy:{units:hartree,  value:-7.881844675840115}
+
+            # Label  used to r e f e r e n c e  t h i s  s t a t e.
+            label:’|G>’
+
+
+15                   # The t r i a l  wavefunction described bya superposition where each entry i s  the amplitude followed
+             # by the corresponding S l a t e r  determininant  described by fermion operators  a c t i n g on the vacuum
+             # s t a t e.  In Polish notation,   (3a)+    ≡ a†3,↑ ,  (2b) ≡ a2,↓ ,  (2a) ≡ a2,↑   andso on.
+            superposition:
+            -  [0.993182561322233,  (1a)+,  (2a)+,  (1b)+,  (2b)+,  ’|vacuum>’]
+
+20              -  [-0.116569292206005,  (6a)+,  (6b)+,  (2b),  (2a),  (1a)+,  (2a)+,  (1b)+,  (2b)+,  ’|vacuum>’]
+
+      # This  i s  a f i r s t  e x c i t e d s t a t e  t r i a l  wavefunction.
+      -  state:
+            energy:{units:hartree,  value:-7.750219591632256}
+25              label:’|E1>’
+            superposition:
+            -  [0.664745837968804,  (3a)+,  (2a),  (1a)+,  (2a)+,  (1b)+,  (2b)+,  ’|vacuum>’]
+            -  [0.664745837968804,  (3b)+,  (2b),  (1a)+,  (2a)+,  (1b)+,  (2b)+,  ’|vacuum>’]
+            -  [-0.246552630006247,  (3a)+,  (3b)+,  (2b),  (2a),  (1a)+,  (2a)+,  (1b)+,  (2b)+,  ’|vacuum>’]
+30              -  [0.166489853209298,  (3a)+,  (6b)+,  (2b),  (2a),  (1a)+,  (2a)+,  (1b)+,  (2b)+,  ’|vacuum>’]
+
+   Listing 10. Recommended Broombridge properties that can be used by the chemistry library.                   examples/lih.yaml
+
+      Some elements of this description are optional and are not currently used by the chemistry library.  For instance,
+   this includes the molecule geometry and the basis set as outlined in the followingListing 11.   Full details of all
+   other ﬁelds are documented online athttps://docs.microsoft.com/en-us/quantum/libraries/chemistry/schema/
+   broombridge.
+
+      # Basis  s e t  used to represent  problem.
+
+2      basis_set:{name:sto-3g,  type:gaussian}
+
+      # Geometry describing the problem.
+      geometry:
+         atoms:
+7          -  {name:Li,  coords:[0.0,  0.0,  -0.406]}
+         -  {name:H,  coords:[0.0,  0.0,  1.218]}
+         coordinate_system:cartesian
+         symmetry:c1
+         units:angstrom
+                                                                                                                                            21
+
+
+
+
+12
+     #Any a d d i t i o n a l  miscellaneous metadata.  This must be included,  but maybe empty.
+     metadata:{}
+
+  Listing 11. Select optional Broombridge properties not used by the chemistry library.                               examples/lih.yaml
+
+
+
+
+                                               B.    Generating Broombridge with NWChem
+
+     One of the following methods may be used to either obtain or generate a description of an electronic structure
+  problem, serialized as Broombridge.
+
+      •The easiest way to obtain Broombridge is from the numerous existing samples at, say,https://github.com/
+         Microsoft/Quantum/tree/master/Chemistry/IntegralData/YAML.
+
+      •The next easiest way to generate Broombridge is to use the EMSL Arrows Builder for the Microsoft Quan-
+         tum Development Kit athttps://arrows.emsl.pnnl.gov/api/qsharp_chem.  This is a web-based frontend to
+         NWChem and chemical computational databases for many materials and chemical modeling problems via
+         a broad spectrum of digital communications, including posts to web API. With this framework, a molecule
+         can be input into EMSL Arrows using a variety of techniques documented athttp://www.nwchem-sw.org/
+         index.php/EMSL_Arrowssay, the simpliﬁed molecular-input line-entry system, a graphical 2D or 3D molecule
+         builder, or as a standard NWChem input deck.
+
+      •For the most ﬂexibility, PNNL also provides a Docker image that automatically compiles a virtual machine
+         containing a complete and executable version of NWChem.
+
+      •An advanced user may also download and compile NWChem from source.
+
+  Broombridge is obtained by serializing the output ﬁle dump of an NWChem computation of the format outlined
+  inSection II B 2, using the Python script provided with NWChem.  A convenient frontend to the Docker image for
+  NWChem is provided with the Quantum Development Kit as a cross-platform PowerShell script.
+
+
+
+           IV.    SIMULATING QUANTUM CHEMISTRY WITH THE MICROSOFT QUANTUM DEVELOPMENT KIT
+
+     The  Microsoft  Quantum  Development  Kit  chemistry  library  implements  the  quantum  simulation  algorithms
+  ofSection II Cin Q# with chemistry-speciﬁc optimizations, and provides an interface in C# to deﬁne fermion Hamil-
+  tonians relevant to chemistry, such as through the Broombridge schema inSection III.  Taken together, a quantum
+  simulation of any electronic structure problem generated by NWChem inSection III Bmay be executed on any the
+  target machine provided by the Microsoft Quantum Development Kit.  The two target machines relevant here are:
+  (1) the full-state simulator, which emulates a noiseless quantum computer, albeit with exponential time scaling in
+  qubit count, and (2) the trace simulator, which evaluates various resource costs of the simulation with polynomial
+  time scaling in qubit count.
+     We describe use of this library through a quantum simulation of molecular hydrogen. InSection IV A, we construct
+  the hydrogen Hamiltonian, and simulate its real-time evolution. Real-time evolution is then invoked as a subroutine
+  to obtain estimates of the ground-state energy inSection IV C. For molecules with many qubits, full-state simulation
+  on a classical machine is intractable. However, efﬁciently obtaining cost estimates of the simulation is possible simply
+  by swapping in the trace simulator.
+
+
+
+                                  A.    Constructing qubit Hamiltonians from chemistry Hamiltonians
+
+     Consider a simple representation of molecular hydrogen in the STO-3G with two orbitals. In this basis, the hydro-
+  gen Hamiltonian has the form
+
+                                H = h0I +∑       hi,j  ∑      a†i,σaj,σ + 12 ∑  hi,j,k,l   ∑     a†i,σa†j,ρak,ρal,σ,                                     (49)
+                                              i,j    σ∈{↑,↓}               i,j,k,l     σ,ρ∈{↑,↓}
+                                                                                                                                                                        22
+
+   where the only non-zero entries are
+
+                   h0 = 0.71377618,     h0,0 =−1.252477495,     h1,1 =−0.475934275,                                                                 (50)
+             h0,0,0,0 = 0.674493166,     h0,1,0,1 = 0.181287518,     h0,1,1,0 = 0.663472101,     and     h1,1,1,1 = 0.697398010.
+
+   Note that the spin and orbital indices are written explicitly and we use zero-indexing for orbitals,  which should
+   be compared to the implicit notation of(11)for the Hamiltonian,  and(12)and(13)for the coefﬁcients.   In total,
+   there are two spin-orbitals occupied by two electrons.  It is also necessary to deﬁne the initial state acted on by the
+   Hamiltonian. In general, such states can be written as
+
+                                             |Ψ⟩ =   ∑            λi1,···iη a†i1··· a†iη|0⟩ ,    ∑           |λi1,···iη|2 = 1,                                             (51)
+                                                       i1<···<iη                                  i1<···<iη
+
+   and following(14), are linear combinations of Slater determinants with a ﬁxed number of                       η electrons. The Hartree–
+   Fock state
+
+                                                                         |ΨHF⟩ = a†0,↓a†0,↑|0⟩                                                                              (52)
+
+   is the simplest example, and for Hydrogen, approximates the true ground state reasonably well.
+      We start by importing the chemistry library inListing 12.
+
+   //We w i l l  use the data model  implementedby the QuantumDevelopment  Kit  Chemistry
+   // L i b r a r i e s.  This model  de fines what a fermionic Hamiltonian is,  andhowto
+   //represent  i t.
+   using   Microsoft . Quantum . Chemistry ;
+
+   Listing 12. Importing the C# component of the chemistry library.                                            examples/hydrogen/host.cs
+
+   The Hamiltonian in(49)is speciﬁed using the chemistry library inListing 13.  The orbital integrals are represented
+   by objects of the  OrbitalIntegral  class illustrated inLine 2.   A fermion Hamiltonian is represented by objects of the
+   FermionHamiltonian class, and is constructed, as shown inLine 15, from the           OrbitalIntegral array, together with the num-
+   ber of orbitals, and the number of electrons.  Note that the identity term h0 is a constant energy offset, in this case
+   representing Coulomb repulsion, and is also added to the Hamiltonian. The input state acted on by the Hamiltonian
+   is represented by the objects of the InputState class.  When unspeciﬁed,|ψ⟩ will default to a single Slater determinant
+   by greedily minimizing the energy of diagonal one-electron terms.  For the case of Hydrogen, this state is a reason-
+   able approximation of the ground state.  The effect of this optional step is reproduced inLine 22.  If the hydrogen
+   Hamiltonian is provided in the Broombridge schema, say the ﬁle hydrogen.yaml, the FermionHamiltonian instance may be
+   more conveniently constructed as inLine 29. The schema is deﬁned to contain at least equivalent information, so no
+   other parameters have to be set.
+      As we target a qubit quantum computer, this fermion Hamiltonian must be converted into an equivalent Hamil-
+   tonian represented by qubit spin operators.  One possible representation of fermions is the Jordan–Wigner encod-
+   ingSection II C 1.  This qubit Hamiltonian is represented by objects of the           JordanWignerEncoding class, which can be
+   easily  obtained  from  FermionHamiltonian  instances,  as  shown  inLine  32.   A  ﬁnal  step  inLine  34is  converting  this
+   C# Hamiltonian object data structure into one that may be passed to Q#.
+
+   //Webegin by c r e a t i n g an array of  O r b i t a l I n t e g r a l  i n s t a n c e s.  Each element  of  the  l i s t  r e p r e s e n t s a
+         ↪→   Hamiltonian c o e f f i c i e n t  of  molecular hydrogenfrom(50).
+   var   o r b i t a l I n t e g r a l s   =  new [ ]
+   {
+         //The f i r s t  argument  s e t s  the s u b s c r i p t  of  the  c o e f f i c i e n t.
+5            //The secondargument  s e t s  the numeric value of  the  c o e f f i c i e n t.
+         new   O r b i t a l I n t e g r a l (new [ ]    {   0 ,0   } , −1.252477495) ,
+         new   O r b i t a l I n t e g r a l (new [ ]    {   1 ,1   } , −0.475934275) ,
+         new   O r b i t a l I n t e g r a l (new [ ]    {   0 , 0 , 0 , 0    } ,    0.674493166) ,
+         new   O r b i t a l I n t e g r a l (new [ ]    {   0 , 1 , 0 , 1    } ,    0.181287518) ,
+10            new   O r b i t a l I n t e g r a l (new [ ]    {   0 , 1 , 1 , 0    } ,    0.663472101) ,
+         new   O r b i t a l I n t e g r a l (new [ ]    {   1 , 1 , 1 , 1    } ,    0.697398010)
+   } ;
+
+   //Using these  c o e f f i c i e n t s,  we c r e a t e a ‘FermionHamiltonian’  instance,  which r e p r e s e n t s  the hydrogen
+         ↪→   Hamiltonian.
+15   var   hamiltonian   =  new   FermionHamiltonian ( ) ;
+   hamiltonian . NOrbitals   =   2 ;                                                //Hamiltonian has two o r b i t a l s
+   hamiltonian . NElectrons   =   2 ;                                             //Hamiltonian has two e l e c t r o n s
+                                                                                                                                                                       23
+
+
+   hamiltonian . EnergyOffset   =   0 . 7 1 3 7 7 6 1 8 ;                   // I d e n t i t y termin the Hamiltonian.
+   hamiltonian . AddFermionTerm ( o r b i t a l I n t e g r a l s ) ;  //Adda l l   o r b i t a l   i n t e g r a l s.
+20
+   //Wethen s e l e c t  the s i n g l e  S l a t e r  determinant  input  s t a t e  of  the Hamiltonian,  which i s  the d e f a u l t
+         ↪→   choice.
+   var   i n p u t S t a t e   =   hamiltonian . GreedyStatePreparation ( ) ;
+   //Input  s t a t e s  are given a l a b e l  to i d e n t i t f y then l a t e r  on.  The d e f a u l t  has the l a b e l  "Greedy" .
+   var   inputStateChoice   =   i n p u t S t a t e . Label ;
+25  //Assign t h i s  s t a t e  to the  ‘FermionHamiltonian’  i n s t a n c e.  The choice of  which s t a t e fromthe  l i s t  to
+         ↪→   prepare in the quantumalgorithmmaybe made l a t e r.
+   hamiltonian . I n p u t S t a t e s   =  new   List <FermionHamiltonian . InputState > ( )   {   i n p u t S t a t e    } ;
+
+   //A l t e r n a t v i e l y,  we can c r e a t e a l i s t  of  ‘FermionHamiltonian’  i n s t a n c e s froma s i n g l e Broombridge f i l e,
+         ↪→   whichmay contain d e s c r i p t i o n s  of  multiple Hamiltonians.
+   var   hamiltoniansFromBroombridge   =   FermionHamiltonian . LoadFromYAML( " hydrogen . yaml " ) ;
+
+30
+   //The Jordan −Wigner encoding converts  the fermion Hamiltonian,  expressed in terms of  fermionic  operators,
+         ↪→     to a qubit  Hamiltonian,  expressed in terms of  Pauli  matrices.  This  i s  an e s s e n t i a l  step f o r
+         ↪→   simulating our  constructed Hamiltonians ona qubit  quantumcomputer.
+   var   jordanWignerEncoding   =   JordanWignerEncoding . Create ( hamiltonian ) ;
+   //Converts jordanWignerEncoding i n t o format  consumable byQ# .  This  d e f a u l t s  to "Greedy"  i f  the optional
+         ↪→   argument  ‘inputStateChoice‘   i s  not  provided.
+   var   qSharpData   =   jordanWignerEncoding . QSharpData ( inputStateChoice ) ;
+
+   Listing 13. Specifying a Hydrogen Hamiltonian in the chemistry library.                                 examples/hydrogen/host.cs
+
+
+
+                                                       B.    Synthesizing quantum simulation circuits
+
+      The quantum simulation algorithms of Trotter–Suzuki and Qubitization are implemented in the Q# canon library
+   of the Microsoft Quantum Development Kit. The chemistry library provides an interface to invoke these algorithms
+   using the C# Hamiltonian data structures of the previous section.  In this section, we use the chemistry library to
+   obtain operations representing preparation of the initial quantum state, and dynamical evolution by these Hamilto-
+   nians. We start by importing the Q# component of the chemistry library as follows.
+
+         //Imports Q# components of  the chemistry l i b r a r y f o r  the Jordan     −Wigner encoding.
+         open   Microsoft . Quantum . Chemistry . JordanWigner ;
+
+         //Import  the math constant          π   andthe r e a l  modulus function.
+
+5            open   Microsoft . Quantum . Extensions . Math
+
+   Listing 14. Importing the Q# component of the chemistry library.                                    examples/hydrogen/hydrogen.qs
+      As the required number of qubits depends on the choice of quantum simulation algorithm, this information is also
+   returned by the chemistry library.  The results of these steps, illustrated inListing 15, are used to obtain eigenstate
+   energy estimates in the next section. InLine 7, we deconstruct the        qSharpData data structure, representing hydrogen,
+   from the previous section into components to be processed in Q#.
+      We consider two simulation techniques.  First, inLine 9, we use the chemistry library to synthesize an operation
+   that implements a single step of the Trotter–Suzuki integrator.  The integrator order is set inLine 11.  This circuit
+   approximates real-time evolution e−iHt, where t is the integrator step size, set inLine 13.  Second, inLine 24, we
+   instead  synthesize  an  operation  that  implements  a  quantum  walk  by  H  using  the  Qubitization  procedure.   This
+   quantum walk implements the unitary with spectrum similar to eiY⊗sin−1(H/h), which may be understood as time-
+   evolution by the Hamiltonian, but with a modiﬁed spectrum.  Note that h is the L1 norm of the Hamiltonian term
+   coefﬁcients.   An operation that synthesizes the  ‘‘ Greedy’’ input state,  speciﬁed in the previous section is obtained
+   inLine 32.
+
+         //The   Q# data s t r u c t u r e  ‘qSharpData‘  fromLine 34ofListing 13r e p r e s e n t s hydrogen.
+         //This  deconstructs  i n t o v a r i a b l e s  t h a t  w i l l  be passed to l a t e r Q# algorithms.
+         // ‘nSpinOrbitals‘   i s  the number of  spin   −o r b i t a l s.
+         // ‘data‘  d e s c r i b e s  Hamiltonian terms.
+5            // ‘statePrepData‘  d e s c r i b e s  the input  s t a t e  the simulation algorithma c t s on.
+         // ‘energyOffset‘   i s  the i d e n t i t y c o e f f i c i e n t  of  the Hamiltonian.
+         l e t    ( nSpinOrbitals  ,   data ,    statePrepData  ,    energyOffset )   =   qSharpData ! ;
+
+         //Using T r o t t e r i z a t i o n //////////////////////////////////////////////////
+                                                                                                                                                                                     24
+
+
+
+
+10            //Set  the Trotter −−Suzuki  i n t e g r a t i o n order.
+          l e t   order   =   1 ;
+          //Set  the Trotter −−Suzuki  i n t e g r a t i o n step s i z e.
+          l e t    s t e p S i z e   =   0 . 4 ;
+
+
+15            //Apply the chemistry l i b r a r y function ‘TrotterStepOracle‘  to the Q#
+          //data s t r u c t u r e  r e p r e s e n t a t i n g hydrogen.
+          // ‘nQubits‘   i s  the number of  qubits  a l l o c a t e d to the quantumc i r c u i t.
+          // ‘r e s c a l e‘   i s  ‘1.0/t r o t t e r S t e p S i z e‘ ,  and i s  the number of  T r o t t e r  steps
+          //needed to simulation evolution f o r  unit  time.
+20            // ‘t r o t t e r S t e p‘   i s  an operation implenting one Trotter    −−Suzuki  step.
+          l e t    ( nQubits ,    ( r e s c a l e  ,    t r o t t e r S t e p ) )   =
+                 T r o t t e r S t e p O r a c l e ( qSharpData ,    stepSize  ,   order ) ;
+
+          //Using Qubitization ////////////////////////////////////////////////////
+
+25            //Apply the chemistry l i b r a r y function ‘QubitizationOracle‘  to the Q#
+          //data s t r u c t u r e  r e p r e s e n t a t i n g hydrogen.
+          // ‘nQubits‘   i s  the number of  qubits  a l l o c a t e d to the quantumc i r c u i t.
+          // ‘r e s c a l e‘   i s  the           L1   normof  Hamiltonian c o e f f i c i e n t s.
+          // ‘quantumWalk‘   i s  an operation implenting one quantumwalk step.
+
+30             l e t    ( nQubits ,    ( l1Norm ,   quantumWalk ) )   =   QubitizationOracle ( qSharpData ) ;
+
+          // S t a t e  Preparation /////////////////////////////////////////////////////
+          //Apply the chemistry l i b r a r y operation ‘P r e p a r e T r i a l S t a t e‘  to
+          //synthesize a quantumc i r c u i t  t h a t  prepares  the  i n i t i a l   s t a t e  actedonby
+35            //the Hamiltonian.  Note t h a t  the  p a r t i a l  a p p l i c a t i o n of  the  l a s t  paramter,
+          //which has the  ‘Qubit[ ] ‘  type.
+          l e t    s t a t e P r e p   =     P r e p a r e T r i a l S t a t e ( statePrepData  ,   _ ) ;
+
+   Listing 15. Quantum simulation circuits by the Hamiltonian inListing 13.                            examples/hydrogen/hydrogen.qs
+
+
+
+
+                                                                          C.    Estimating eigenvalues
+
+       The  operations  we  assembled  in  the  previous  section  simulate  quantum  dynamics.   These  operations  may  be
+   combined with phase estimation—described inSection II C 5—to estimate energy levels       En  of the Hamiltonian.  If
+   the code fromListing 15is used to specify the approximation to           e−iHt and the initial state, then the application of
+   phase estimation here will provide an estimate of the ground-state energy of hydrogen with high probability because
+   of the large overlap between the ground-state of hydrogen and the Hartree–Fock trial state used therein.
+       Below inListing 16, we illustrate this procedure by combining the chemistry library with phase estimation in the
+   canon library. Speciﬁcally, we apply robust phase estimation below to estimate an eigenvalue of the Hamiltonian.
+
+          //Choose robust  phase estimation amongst  various  p o s s i b l e phase
+          //estimation algorithms  in the Q# canon.  This  i s  parameterizedby b i t s
+
+3            //of  p r e c i s i o n ‘b‘  which c o n t r o l s  the standard deviation     ≈ 2b−1   of
+          //the returned phase.
+          l e t    n B i t s   =   8 ;
+          l e t   phaseEstAlg   =   RobustPhaseEstimation ( nBits  ,   _ ,   _ ) ;
+
+
+8            //Use the Q# canon function ‘EstimateEnergy‘  t h a t  a l l o c a t e s  qubits
+          //to the quantumsimulation,   c r e a t e s  the input  s t a t e s,  performs
+          //phase estimation,  andthen returns  the estimated phase.
+          l e t   phaseEst   =   EstimateEnergy ( nQubits ,    statePrep  ,    t r o t t e r S t e p  ,   phaseEstAlg ) ;
+
+
+13            //Rescale the estimated phase to obtain the energy,  and a l s o addthe
+          // i d e n t i t y c o e f f i c i e n t  of  the Hamiltonian.
+          l e t   energyEst   =   phaseEst   *   r e s c a l e   +   energyOffset ;
+
+          //Suppose a guess of  the true energy i s  a v a i l a b l e to i d e n t i f y the p r i n c i p l e value
+18            //range.
+          l e t   energyGuess   = −1.0;
+
+          //Addthe multiples  of 2         π   to obtain the p r i n c i p l e value using
+          //the canon ‘RealMod‘  modulus function.
+
+23             l e t    principleEnergyEst   =
+               RealMod ( energyEst ,   2   *   PI ( )    *   r e s c a l e  ,   energyGuess −  PI ( )    *   r e s c a l e ) ;
+                                                                                                                                            25
+
+
+
+Listing 16. Obtaining an estimate of an eigenvalue of the Hamiltonian.                           examples/hydrogen/hydrogen.qs
+
+  This code is quite modular.  It is easy to replace the Trotter–Suzuki simulation algorithm used here with another
+unitary operation, such as those yielded by qubitization or linear combinations of unitaries.  It is also worth noting
+that, while the initial state preparation provided previously will tend to have a high-overlap with the ground state
+for this problem, such an elementary ansatz may not be appropriate in some cases. In examples of the next section,
+we will generalize this state to probe the excited states of molecules, which is often a more challenging problem than
+ﬁnding ground-state energies for classical computers.
+
+
+
+                                                     V.    EXAMPLE APPLICATIONS
+
+  In this section, we illustrate our quantum chemistry library and interoperation with NWChem by studying sev-
+eral model systems that epitomize typical challenges encountered in realistic molecular simulations.   Evaluating
+the behavior of Trotter–Suzuki simulation algorithms integrators fromSection II C 2in conjunction with phase esti-
+mation algorithms fromSection II C 5for situations characterized by high levels of electronic wavefunction quasi-
+degeneracy is of special importance in these investigations.  Such situations naturally occur in studies of ground-
+state potential energy surfaces, bond-forming and bond-breaking processes, as well as condensed matter systems
+approaching metallic regimes.  These problems usually elude standard formulations, especially in cases when one
+cannot deﬁne proper reference function or the use of multi-reference concepts and model/active spaces leads to the
+emergence of intruder state problems [62–65].
+  We  model  systems  broadly  used  in  testing  and  veriﬁcation  of  high-accuracy  methods  that  exhibit  such  quasi-
+degeneracies.  First, we study potential energy surfaces of LiH for the ground state and excited states, which are
+typically strongly varying with a large doubly excited component.   We show how to build these models for the
+Hamiltonian and states of LiH and simulate them through our reproducible workﬂow. By using elementary coupled-
+cluster ansatzes, which are conveniently represented using Broombridge, the excited states of LiH are probed for a
+range of different internuclear separations and the success probability for this is found to typically quite large. These
+results not only illustrate the utility of quantum chemistry simulation library, but suggests that understanding the
+excited states of molecules will be an important application for quantum computers.
+  Second, we rigorously evaluate the ground-state energy of stretched H10.  This system is typically used to model
+situations where almost all orbitals need to be considered as active, especially for the large H–H separations.  An
+extensive discussion of the H10  system properties can be found in Ref. [66].  Whereas the ground-state energy of
+H10 is challenging to describe even using high-order coupled-cluster methods, we show that quantum computing is
+capable of providing accurate ground-state energy estimates.  This example also performs sweeps, across different
+Trotter–Suzuki step-sizes and the precision of phase estimation to mimic how one might, on quantum hardware,
+empirically verify that chemical accuracy has been reached. Such sweeps would be difﬁcult to do by hand as dozens
+of conﬁgurations need to be probed in these studies, which shows that such software allows for qualitatively different
+types of research that would be inconvenient without it.
+  Third, we compare the ground-state energy of different C20 isomerizations by employing an active space.  Even
+more accurate results can be obtained by a larger 50-orbital active space. While these large examples are too difﬁcult
+to simulate on classical computers, we are capable of using our software to automatically estimate the number of
+gates required for a simulation. We further ﬁnd that the cost of such simulations is comparable to previous estimates
+generated for FeMoco [5], but without requiring any form of extrapolation from empirical results.  This provides
+evidence suggesting that the applied algorithm,  an optimized implementation of qubitization,  may be a favored
+method for simulating challenging problems on fault-tolerant quantum computers.
+
+
+
+                                       A.    Lithium hydride ground- and excited-state energies
+
+  Studies of excited-state potential energy surfaces rely on good-quality initial choices for the approximate excited
+states that provide a reasonable overlap with the exact excited states.   An illustration is provided by identifying
+several lowest-lying excited states of the LiH molecule with 12 spin orbitals in the STO-3G basis set as a function of
+the internuclear Li-H distance RLi-H. InTable I, we collate the leading coefﬁcients of the excited-state wavefunction
+expansion corresponding to the largest EOMCCSD amplitudes deﬁning RK,1 and RK,2 operators deﬁned in(21). As
+one can see from the table, even for close-to-equilibrium geometry RLi-H = 1.6Å, all ﬁve lowest-lying singlet excited
+states reveal multi-conﬁgurational character where several excited Slater determinants play key roles.
+                                                                                                                                                                  26
+
+  RLi−H      Excitation energy (eV)     R1                                                             R2
+  1.600      3.618                                    r23 = r¯2¯3 = 0.889                                      r2¯23¯6 = r2¯26¯3 = 0.221,  r2¯23¯3 =−0.324
+             5.039                                    r24 = r¯2¯4 = 0.707,  r25 = r¯2¯5 = 0.542         r2¯24¯6 = r2¯26¯4 = 0.204
+             5.039                                    r25 = r¯2¯5 = 0.875                                      r2¯25¯6 = r2¯26¯5 = 0.252
+             15.342                                  r26 = r¯2¯6 = 0.325                                      r2¯23¯3 =−0.595,  r2¯23¯6 = r2¯26¯3 = 0.310,  r2¯24¯4 = r2¯25¯5 = 0.397
+             17.947                                  r23 = r¯2¯3 =−0.775                                   r2¯23¯3 =−0.514,  r2¯23¯6 = r2¯26¯3 = 0.249
+  4.000      2.239                                    r23 = r¯2¯3 = 0.336,  r26 = r¯2¯6 =−0.477     r2¯26¯6 = 0.236,  r2¯23¯6 = r2¯26¯3 = 0.353 , r2¯23¯3 =−0.595
+             2.360                                    r25 = r¯2¯5 = 0.602                                      r2¯25¯6 = r2¯26¯5 =−0.148,  r2¯23¯5 = r2¯25¯3 =−0.545
+             2.360                                    r24 = r¯2¯4 =−0.602                                   r2¯24¯6 = r2¯26¯4 = 0.148,  r2¯23¯4 = r2¯24¯3 = 0.545
+             8.023                                    r23 = r¯2¯3 =−0.102                                   r2¯26¯6 =−0.219,  r2¯26¯3 = 0.341,  r2¯23¯3 = 0.605,  r2¯23¯6 =−0.675
+             8.070                                    r24 = r¯2¯4 =−0.106                                   r2¯24¯3 =−0.116,  r2¯26¯4 = 0.317,  r2¯23¯4 = 0.934
+
+Table  I.   Leading  EOMCCSD  amplitudes  of  excited  state,  as  described  in(21),  with  absolute  values  greater  than  0.2  for  two
+geometries of the LiH system in the STO-3G basis set.  We use the orbital convention for denoting excitation amplitudes.  For
+example r23 designates an excitation process of an α electron from orbital 2 to α electron in orbital 3, r¯2¯3 designates an excitation
+process of a β electron from orbital 2 to β electron in orbital 3 TCE normalization of RK vectors are used. All distances are reported
+in Angstroms.
+
+
+   These excited states provide a good illustration of the importance of double excitations.   As can be seen from
+Table I, even the ﬁrst excited state, dominated by a single excitation, has non-negligible contributions from doubly
+excited Slater determinants.  More precisely, let|ΨHF⟩ be the single-conﬁguration Hartree–Fock state.  Then the ﬁrst
+excited state|ΨE1⟩ ansatz close to the equilibrium geometry is
+                         (                                                                                                                 )
+             |ΨE1⟩ ∝       0.889(a†3,↑a2,↑ + a†3,↓a2,↓) + 0.221(a†3,↑a†6,↓ + a†6,↑a†3,↓)a2,↑a2,↓− 0.324a†3,↑a†3,↓a2,↑a2,↓                     |ΨHF⟩ .          (53)
+
+Note that the produced state is always correctly normalized, meaning⟨ΨE1|ΨE1⟩ = 1, by rescaling the input coefﬁ-
+cients if necessary.
+   The situation becomes more complicated when the Li-H distances are stretched.  For example, at RLiH  =  1.6Å,
+all states acquire mixed single and doubly excited character.  If an elementary single excitations Hartree–Fock state
+ansatz is used, then the success probability for phase estimation is unlikely to be high for excited states (especially
+as the inter-nuclear distance grows).  This illustrates the importance of having a reliable many-body framework to
+provide a plausible initial guess for excited-state simulations using phase estimation algorithms.
+
+
+
+   This example highlights the ability to represent multi-conﬁgurational wavefunctions in Broombridge, and to pre-
+pare these quantum states on a quantum computer.  By using trial wavefunctions with sufﬁcient overlap with the
+desired excited state, we may then obtain a targeted sweep over excited-state energies.  Higher excitations, such as
+triple and quadruple excitations, are needed in many situations to accurately describe excited-state potential sur-
+faces and corresponding topological events including minima, avoided crossings, and conical intersections.  These
+excitations may be similarly represented in Broombridge, though note that the cost of state preparation scales poly-
+nomially with the number of conﬁgurations.
+   InFigure 4, we plot the results of LiH eigenstate energy estimation. Each point-energy estimate is obtained through
+the following steps.
+    1.NWChem is used to generate a description of the electronic structure problem at the desired bond distance,
+        following the example ofSection II B 2.
+    2.We generate a Broombridge representation of LiH from the NWChem output followingSection III B.
+    3.Each LiH instance represented in Broombridge is imported, followingLine 29ofListing 13.
+    4.We select the initial state ansatz to be used in each LiH simulation, followingLine 34ofListing 13.
+    5.Finally, we execute robust phase estimation, followingListing 16, using a Trotter step size of                         t = 0.5, and b = 10
+        bits of precision.
+Note that with these choices of parameters, where the Trotter step-size is chosen a posteriori, the empirical error of
+robust phase estimation is t/2b−1≈ 0.00098, which is sufﬁcient for chemical accuracy of 10−3, ignoring simulation
+errors from the ﬁnite Trotter step size.  Empirically evaluating the Trotter step size will be the subject of the next
+example.
+                                                                                                                                               27
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 4.  Estimated eigenstate energies as a function of  RLi-H  bonding distance obtained using robust phase estimation with
+a Trotter step size of t  =  0.5,  b  =  10 bits of precision,  and two repetitions at each bonding distance per energy level.   Error
+bars correspond to contribution of the phase estimation procedure alone, and are exaggerated by a factor of 5 for clarity.  Exact
+FCI energies are plotted (gray) for comparison.  Different colored points correspond to initial state ansatzes targeted at different
+energy levels. Each ansatz is multi-conﬁgurational with up to the ﬁrst 12 dominant coefﬁcients included. This enables a selective
+sweep of the desired excited-state energy, though observe that at large bond distances, particularly the fourth excited state, the
+ansatz may still have a low probability of projecting onto the exact eigenstate.
+
+
+
+                                     B.    Empirical Trotter error estimation of stretched H10 chains
+
+  The H10 system epitomizes many of the correlation effects encountered in realistic strongly correlated molecular
+systems.   This system has been recently used in studies of various methods designed to deal with strong quasi-
+degeneracy effects [67] as the degree of multi-conﬁgurational character of the ground-state wavefunction can be
+varied by changing the hydrogen-hydrogen distance  R in a linear chain of the hydrogen atoms.  For example, at
+R = 1.0 a.u., the corresponding wavefunction is dominated by a single restricted Hartree–Fock determinant. How-
+ever stretching the  R  distance to 3.6 a.u. results in a multi-reference character of the wavefunction,  which poses
+a signiﬁcant challenge for single reference CC methods using RHF reference.   Among several methods tested in
+Ref.  [66],  the  auxiliary-ﬁeld  quantum  Monte  Carlo  (AFQMC),  density  matrix  embedding  theory  (DMET),  UHF-
+CC, and self-energy embedding theory (SEET) formalisms lent themselves to coping with strong correlation effects.
+Other formalisms such as self-consistent second-order Green’s function (GF2) and RHF-CC approximations suffer
+signiﬁcant deterioration in energy accuracies especially for stretched geometries.  For this reason, the H10 system is
+an ideal target for testing various elements of quantum algorithms for electronic structure problems.  We also com-
+pare and discuss the accuracies of state-selective multi-reference coupled-cluster (MRCC) methods, represented here
+by the Mukherjee’s MRCC approach (MkMRCC) [68,69], which was not studied in Ref. [66].
+  We perform quantum simulations within an STO-6G minimal basis consisting of 20 spin orbitals.  The results of
+robust phase estimation on a ﬁrst-order Trotter-Suzuki formula, similar to LiH in the previous section, are compared
+to various classical approaches.  The MkMRCC formalism has been tested using its two variants:  MkMRCC model
+with singles and doubles (MkMRCCSD) and MkMRCCSD with perturbative triples corrections (MkMRCCSD(T));
+see [70–72].  InTable II, we have also collated CCSDT [73–75] and CCSDTQ [76,77] ground-state energies, which
+also have not been studied in Ref. [66].
+  As a result of strong quasi-degeneracy effects, both CCSD and CCSDT energies start to signiﬁcantly deviate from
+their FCI counterparts for stretched geometries.  Although the non-variational collapse of the CCSDT energies is
+not as profound as in the CCSD case, we notice a sizable CCSDT energy error of 47 milliHartree at  R  =  3.6 a.u.
+The addition of quadruple excitations in the CCSDTQ method offsets the variational collapse of the CCSD method.
+However, a 4 milliHartree still persists for larger distances.
+  Although resorting to the MkMRCCSD formalism signiﬁcantly improves the quality of energies in the R = 1.0 a.u.
+                                                                                                                                                                28
+
+ R (a.u.)                              FCI (Hartree)                                      Difference from FCI (10−3 Hartree)
+                                                               CCSD     CCSDT     CCSDTQ     MkMRCCSD     MkMRCCSD(T)          RPE
+ 1.0                                      -3.82439               0.5            0.0               0.0                    0.1                          -0.1                -1.9± 0.8
+ 1.2                                      -4.76638               0.8            0.0               0.0                    0.0                          -0.2                -0.7± 0.6
+ 1.4                                      -5.20509               1.1            -0.1               0.0                    0.0                          -0.5                -0.3± 0.5
+ 1.6                                      -5.38436               1.4            -0.2               0.0                    -0.1                         -0.8                 0.0± 0.5
+ 1.8                                      -5.42439               1.8            -0.5               0.0                    -0.3                         -1.4                 1.5± 1.2
+ 2.0                                      -5.38963               2.2            -1.1               0.0                    -0.4                         -2.2                -1.7± 0.8
+ 2.4                                      -5.22794               1.1            -5.6               0.0                    0.3                          -4.0                -0.7± 0.8
+ 2.8                                      -5.05024              -17.1         -32.7              0.6                    0.6                          -8.9                -0.8± 0.5
+ 3.2                                      -4.91038             -990.0       -888.0             3.5                    -1.3                        -19.4               -0.4± 0.4
+ 3.6                                      -4.81870             -111.0        -47.3              4.5             -43.3± 1.0             -74.3± 1.0           0.7± 1.1
+
+Table II.  Comparison of energies with respect to bond distance R obtained by phase estimation through the Microsoft Quantum
+Development Kit Robust Phase Estimation (RPE) algorithm with energies obtained by various CC methodologies for the H10
+system in the STO-6G basis set. In all CC calculations, restricted Hartree–Fock molecular orbitals are used.
+
+
+to R = 3.2 a.u.  region, the MkMRCCSD approach still yields large negative errors at R = 3.6 a.u..  This situation is
+mostly a consequence of an inadequate choice of model space and the resulting intruder state problem [78].  These
+are manifestations of divergent perturbation theory expansions that occur in near-degenerate systems and are the
+culprits behind the divergent character of MkMRCCSD(T) correction.
+   Phase estimation approaches on quantum computers remove the biases introduced by the use of reference func-
+tion, model space, and level of excitation. In contrast to other results collated inTable II, phase estimation produces
+errors of small uniform size for all geometries.  This is especially important for stretched geometries, particularly
+R  =  3.6 a.u.,  where the CCSD, CCSDT, MkMRCCSD, and MkMRCCSD(T) approaches reveal singular behavior.
+Even though the failure of the CCSDTQ approach is not as pronounced as it is in the other cases, the CCSDTQ en-
+ergy error of 4.5 milliHartree for R =  3.6 a.u.  is signiﬁcantly larger than the 0.7 milliHartree error obtained with
+phase estimation.   In principle,  the error of phase estimation can be made arbitrarily small,  at a modest propor-
+tionately  higher  cost.   This  presents  a  strong  argument  in  favor  of  using  quantum  simulation  algorithms  within
+quasi-degenerate or metallic regimes.
+   In these examples, the Trotter number chosen for the Trotter–Suzuki formula, which is the inverse of the Trotter
+step-size as described after(30), in the phase estimation algorithm can be found inFigure 5. We see that, despite the
+errors in all the coupled-cluster methods considered inTable IIthat increasing with       R, the Trotter number needed to
+achieve chemical accuracy actually decreases monotonically with R, which corresponds to a more efﬁcient quantum
+simulation.  This increase is unsurprising as the Coulomb interaction between electrons, which typically dominates
+errors in the quantum simulation algorithms, weaken when the molecule stretches.
+   A major strength arising from the integration of Q# and NWChem is the ability to automate these sweeps of the
+FCI energy as a function of R. This automation means that studies of phase estimation over different spacings in H10,
+or surveys of hydrogen chains of different lengths, can be easily generated inside a single framework. Furthermore,
+all code written for these simulations will still be useful once quantum computers are built that can reliably perform
+phase estimation on H10 because of the simulator model used within Q# forbids the language from distinguishing
+between the simulator and a quantum computer.  This work provides a preview of the types of studies that auto-
+mated quantum computer simulations of chemistry will one day enable while illustrating the challenges that can be
+faced by classical methods for even simple molecules.
+
+
+
+   InFigure 5, we plot the results of H       10  eigenstate energy estimation.  Each point-energy estimate is obtained as
+follows.
+    1.NWChem is used to generate a description of the electronic structure problem at the desired bond distance,
+        followingSection II B 2.
+    2.We generate a Broombridge representation of H    10 from the NWChem output followingSection III B.
+    3.Each H    10 instance represented in Broombridge is imported, followingLine 29ofListing 13.
+    4.Select the ground-state ansatz in Broombridge, followingLine 34ofListing 13.
+    5.Execute robust phase estimation, followingListing 16, using a Trotter step size                     t∈ [tmin, tmax] uniformly sam-
+        pled on a log scale, and some b bits of precision.
+In contrast toSection V A, where the Trotter number        r =  1/t and bits of precision b were chosen a posteriori, we
+empirically determine the Trotter step-size t required to control the error contribution ∆ from the Trotter–Suzuki
+                                                                                                                                                      29
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 5.  Estimated ground-state energy E (orange) as a function of Trotter number r of the ﬁrst-order integrator ∏j e−iHj/r for
+H10 at various bond distances obtained by a least-squares ﬁt to E =   mr2 + E0 (blue), where m, E0 are ﬁt parameters.  The ground-
+state energy estimate E0, which is assumed to be normal distributed, is also plotted (yellow) with its standard deviation provided
+in round brackets. Error bars represent the standard deviation of E0 by robust phase estimation, given the prior that E0 lies in the
+plotted range. Dotted error bars (gray) are excluded from the ﬁt as they either have a large Trotter–Suzuki error, or correspond to
+excited states.  The shaded region (green) corresponds to a Trotter number that achieves at least chemical accuracy based on the
+ﬁt  mr2≤ 0.001 Hartree.
+
+
+integrator. We do so by applying the known error scaling from(30)
+                                                         ‖‖‖‖‖e−iHt−  M∏          ‖‖‖‖‖ =O(t2)                                                                      (54)
+                                                                          e−ihjPjt
+                                                                     j=1
+
+for the ﬁrst-order integrator that is used here.  Thus, in the limit of sufﬁcient small t, the estimated ground state
+energy E ought to scale as
+
+                                                       E = E0 + ∆ = E0 + mt2 +O(t3),                                                                   (55)
+
+where E0 is the exact ground-state energy and m is a constant.  Thus, performing phase estimation on E for various
+step sizes t allows us to obtain data that we ﬁt to obtain E0 and m, in the regime where the quadratic t2 scaling is ob-
+served to be dominant. Note that by repeatingO(1/∆2) times, achieving chemical accuracy is possible through the
+ﬁt, even if the sampling error from a single run of phase estimation is large. However, overall quantum gate complex-
+ity is always minimized by performing a logarithmic number of high-precision estimates which takesO(1/∆) time,
+rather than theO(1/∆2) time required by naïve sampling.  In particular, the ﬁtted energy estimates can be highly
+accurate even if all individual data points have both a Trotter–Suzuki approximation error and a phase estimation
+error larger than chemical accuracy.
+
+
+                        C.    Quantum computing predictions and resource estimations for C20 isomerizations
+
+   The relative energies of the three C20  fullerene,  bowl,  and ring isomers have been a subject of intensive theo-
+retical studies spanning nearly three decades [79–92].  Although these three isomers have been widely examined
+                                                                                                                                                30
+
+ Algorithm          MkCCSD           MkCCSD(T)      CCSD(T)            CCSD(T)            CCSD(T)            CCSD(T)            RPE
+ Energy (eV)       1.15                     2.03                     2.2                       1.7                       2.06                     1.04                     1.77
+
+
+Table  III.  The  energetic  separation  between  fullerene  and  ring  C20  conﬁgurations.    Microsoft  Quantum  Development  Kit
+Robust Phase Estimation (RPE) algorithm results were obtained with an active space composed of eight electrons distributed
+among eight molecular orbitals using cc-pVDZ basis set.  All separations are reported in electron volts.  The Mk-MRCCSD and
+Mk-MRCCSD(T) results were taken from Ref. [92].   The cc-pVDZ MP2/CCSD(T) results for SCF geometries were taken from
+Ref. [86].   The cc-pVDZ CCSD(T) results for the LDA geometries were taken from Ref. [86].   The cc-pVDZ CCSD(T) result of
+Ref. [90]. The cc-pVTZ CCSD(T) (drop core) results of Ref. [91].
+
+
+
+both experimentally and theoretically, there is still controversy regarding their relative stability.  The magnitude of
+disagreement between different electronic structure theories is particularly surprising.   Even though these differ-
+ences were mapped out in the early 1990s—and despite many subsequent calculations sometimes in dispraise of the
+original calculations—the energetic orderings and nature of the differences between the different theories are still
+unknown.
+  Several  HF  DFT-generalized  gradient  approximations  (GGA)  electronic  structure  methods  using  various  basis
+sets predict the ring isomer energy to be more than 2 eV lower than the fullerene isomer,  with the bowl isomer
+somewhere in between.   However,  DFT-local density approximation (LDA), MP2,  and CCSD(T) methods predict
+the opposite trend:  the fullerene and ring are now the lowest and highest energy isomers; the fullerene isomer is
+at least 1.7 eV lower in energy than the ring.  Adding even more uncertainty to the reliability of electronic structure
+methods for this system is the fact that calculations carried out using the diffusion Monte-Carlo (DMC) method
+predict a completely different ordering:  the bowl is lower in energy from the ring and fullerene by 1 eV and 2 eV
+respectively. These dramatic swings in relative energies of up to 4 eV between the two best methods—CCSD(T) and
+DMC—for treating electron correlation are quite shocking, but not completely surprising since attaining the correct
+energetics for molecules containing both delocalized π-bonding and carbon-carbon triple bonds is still a challenge
+for electronic structure methods.
+  The  widely  varying  results  of  earlier  simulations  clearly  indicate  that  proper  inclusion  of  electron  correlation
+effects plays a key role in establishing the proper energetic ordering of these systems.  The relative stability of the
+isomers is quite sensitive to the method and basis set choice, and quantum computing may play an important role
+in describing these systems in the future. To demonstrate this feasibility, we consider phase estimation calculations
+using active spaces that begin to capture both the extended bonding and triple bonds in the molecules.  Due to the
+limitations of current quantum computing platforms, we can only perform phase estimation simulations in relatively
+small active spaces.  For this reason, we focus our attention on fullerene and ring C20 isomers, where—in contrast
+to the bowl isomer—the small active spaces composed of eight electrons distributed among eight orbitals have the
+potential to capture essential correlations effects.
+  We performed simulations for C20 using phase estimation on a Trotter–Suzuki formula in the cc-pVDZ basis set
+and employing fullerene and ring C20 geometries utilized by [92].  For evaluating fullerene and ring C       20 energies,
+we used the ﬁrst 150 energy estimates that were not discarded for either corresponding to an excited-state energy,
+or  begin  an  outlier  based  on  a  two-sided  Grub’s  test  with  a  conﬁdence  level  of  0.05.   The  fullerene-ring  energy
+differences are shown inSection V Cin units of eV and are in qualitative agreement with earlier simulations.  For
+example, the separation of 1.77 eV as obtained with the Microsoft Quantum Development Kit is very close to the 1.7
+eV obtained with the CCSD(T) formalism in Bylaska et al. [86].  Note that the workﬂow per obtaining each energy
+estimate closely mirrors the LiH and H10 examples previously discussed.
+
+
+
+  Although, small-size active-space type simulations for C20 fullerene and ring conﬁgurations using the Microsoft
+Quantum Development Kit corroborate previous predictions of large CC calculations, one should take these results
+with caution. In the active-space Microsoft Quantum Development Kit simulations, we eliminate a large number of
+occupied orbitals. Therefore, the one- and two-electron integrals for the core Hamiltonian and Coulomb interactions
+limited to active-space molecular indices, leading to a form of the Fock matrix that is different from the active-active
+block of the full Fock matrix that includes summation over two-electron integrals involving non-active occupied
+molecular indices. This is the major reason why one obtains the opposite energy ordering in correlated CC calcula-
+tions with all but active orbital frozen, yet employing active-active block of the full Fock matrix.  For example, our
+NWChem CCSDTQ calculations correlating 8 electrons in 8 orbitals place the ring isomer energy 1.23 eV below the
+fullerene isomer energy. For consistency, we performed CCSDTQ calculations using integrals convention employed
+in  Microsoft  Quantum  Development  Kit  active-space  calculation  which  resulted  in  CCSDTQ  energies  very  close
+                                                                                                                                                         31
+
+                                          Generic Qubitization                                        Optimized Qubitization
+ Geometry    N      η        Qubits       T gates             Rz           L1 norm  Qubits       T gates       Rz      L1 norm(56)   × T gates
+ Ring             50     32    143         9278072      17931406         1539         312        18605634      18          962             1.8× 1013
+ Fullerene    50     32        145        18514478      3586938          2004         316        37078492      18         1392            5.2× 1013
+ Bowl            50     32     145        26153750     36815676         2297          316        52357100      18         1480            7.7× 1013
+ Ring             17     14     63           121574         145222            315     210          252860        18          294             7.4× 1010
+ Fullerene    17     14         65           242664         292166            448     214          495158        18          418             2.1× 1011
+ Bowl            17     14      67           357458         569110            411     218          724880        18          384             2.8× 1011
+
+Table IV. Resources required to perform a single quantum walk step created by the Qubitization procedure for different conﬁg-
+urations of C20 in the cc-pVDZ basis set, with η electrons and varying numbers of N orbitals within the active space.  Here all
+Hamiltonian terms below with norm below 10−10  Hartree are truncated and the L1  norm is the sum of the absolute values of
+the Hamiltonian terms in Jordan–Wigner representation.  Generic qubitization refers to the unoptimized procedure as described
+inSection II C 3,  whereas optimized Qubitization applies chemistry-speciﬁc optimizations described inSection II C 4.  The ex-
+pected number of T gates needed to synthesize nRz  rotations within total error at most ϵ (without the use of ancillæ) is bounded
+above by 3nRz (log2 (nRz /ϵ) +O(log log (nRz /ϵ)))  [54],  where     ∆  =  1 milliHartree for chemical accuracy.   The rightmost row
+states the total number of T gates required for an energy estimate of the ground state to chemical accuracy.
+
+
+to ones obtained in Microsoft Quantum Development Kit simulations.  This disagreement may be resolved either
+through Microsoft Quantum Development Kit simulations employing particle-hole representation of creation/anni-
+hilation operators [93] or by employing larger active spaces, as discussed next.
+
+
+                                                 1.    Resource estimation for simulating C20 isomers
+
+   Until fault-tolerant quantum computers are available, classical simulations of quantum chemistry at chemical ac-
+curacy are limited to 40− 50 spin orbitals.  Nevertheless, we may still obtain estimates of the quantum resources
+required to execute these classically intractable examples.  Resource estimates are tabulated inTable IVfor two im-
+plementations of qubitization: one unoptimized and the other optimized for chemistry as described inSection II C 4.
+Data in each row are obtained by the following procedure:
+    1.NWChem is used to generate a description of the electronic structure problem in the desired conﬁguration,
+       followingSection II B 2.
+    2.We generate a Broombridge representation of C    20 from the NWChem output followingSection III B.
+    3.The C    20 instance represented in Broombridge is imported, followingLine 29ofListing 13.
+    4.Qubitization is chosen as the simulation method, both with and without optimization, followingLine 24of
+       Listing 15.
+    5.A single step of the qubitization walk operator is run through the Trace simulator, which yields resource esti-
+       mates needed for the simulation, followingListing 3.
+   The output of the Trace simulator is tabulated inTable IV.  We see from the data included that the costs of im-
+plementing the qubitization walk operator is substantially reduced through the use of the optimizations discussed
+inLine 24.  In particular, for the case where C          20 is conﬁgured in a ring with an active space consisting of 50 orbitals
+and using 1 milliHartree as our target precision, we ﬁnd that if an ancilla-free synthesis method is used then the
+expected total number of T gates needed to perform the walk operator is roughly 1.8× 109.  The majority of this
+cost arises from synthesis of arbitrary single-qubit rotations with a fault-tolerant gate set.  If we use the optimized
+approach, then the number of gates required is reduced by nearly a factor of 100 to 1.8× 107 T gates.  The remain-
+ing cases see similar improvements, underlining the importance of problem-speciﬁc optimization of the subroutines
+used in qubitization.
+   As a ﬁnal example, let us consider the problem of computing the number of gates that would be needed to estimate
+the ground-state energy within error ϵ using qubitization. From(48), the number of applications of a unitary required
+to obtain a phase estimate with standard deviation ∆ Hartree is≈  1/∆.  Combined with the phase-doubling trick
+of [26], the number of applications of the qubitization walk operator is approximately
+
+                                                                  Lexp≈  L1 norm2∆      .                                                                                (56)
+
+As the spectrum of the quantum walk is exactly similar to arcsin[H/h]≈  H/h, the only other error contribution is
+from the ﬁnite precision of Hamiltonian coefﬁcients realized in the quantum circuit.  However, we may ignore this
+error contribution as it can be made arbitrarily small without changing the T-count, to leading order in the optimized
+qubitization scheme.
+                                                                                                                                           32
+
+  By using this formula, we obtain estimates T gate count for sampling from the Hamiltonian spectrum to chemical
+accuracy.  We ﬁnd that the number of T gates needed for the simulation (for the ring geometry) is expected to be
+less than 1.8× 1013.  The number of spin orbitals required in this case are 100, which places the scale on the same
+order  of  magnitude  as  that  estimated  for  Trotter-based  simulations  for  FeMoco  given  in  [5].   Similarly,  we  ﬁnd
+that the number of T gates is within an order of magnitude of the 1014  gates required for a qualitatively accurate
+simulation for the 108 spin-orbital example of FeMoco considered therein.  A crucial difference however is that the
+FeMoco gate estimates required a certain optimistic extrapolation of empirical Trotter step-size from small, classically
+simulable molecules. In contrast, the qubitization T gate estimate is fully rigorous, assuming the ground truth of the
+presented Hamiltonian.   This further suggests that optimized variants qubitization may be preferable to Trotter–
+Suzuki simulations for challenging problems in general.
+
+
+
+                                                          VI.    CONCLUSIONS
+
+  Today,  the  steady  progress  of  scalable  fault-tolerant  quantum  computing  from  theory  to  reality  drives  intense
+research in its use.  Many promising quantum algorithms are already known and more continue to be developed
+at  a  furious  pace.   Paralleling  the  history  of  classical  computing,  we  may  expect  that  algorithmic  advances  will
+contribute  far  more  to  the  overall  computational  capability  of  quantum  computers  than  optimistic  Moore’s-Law
+hardware scaling predictions. However, the many envisioned applications of quantum computing, particularly that
+of electronic structure problems, are highly inter-disciplinary.  The current barrier to their use by non-specialists in
+quantum computing—the intended audience—is, more often than not, insurmountable. In many cases, effective use
+of these algorithms requires knowledge of low-level details such as error-correction schemes and specialized circuit
+optimizations.
+  When the requisite quantum hardware arrives,  its use should be accessible,  reproducible,  and extensible.   The
+open-source  tools  and  workﬂow  we  present  here  are  intended  to  realize  this  vision.   Accessibility  by  the  target
+audience is achieved by using NWChem, a standard classical computational chemistry packages, as the access point,
+followed by the integration with quantum algorithms that are expressed and invoked at a high-level in our chemistry
+library.  Reproducibility through our proposed workﬂow allows for a straightforward and consistent application to
+future problems of scientiﬁc and industrial interest.  Extensibility of our work to future algorithmic improvements
+on both the classical and quantum side remains possible through our deﬁnition of standardized interfaces, such as
+Broombridge, for representing electronic structure problems.
+  The examples we provide and their results underscore the value of the workﬂow enabled by integrating Q# with
+NWChem.  By combining the two, we are capable of generating end-to-end resource estimates for simulation that
+are not only accurate but are also highly optimized and reproducible.  This illustrates that by building libraries to
+compute accurate electronic structure representations and also by building highly optimized libraries for quantum
+simulation targeted at quantum hardware, we can create tools that empower people to explore and cost quantum
+chemistry simulation algorithms without requiring that the user be an expert in both ﬁelds.
+  This work highlights the impact that scientiﬁc software development can have on reproducible research.   It is
+our hope that this work helps chemists, physicists, and computer scientists to pool their knowledge so as to enable
+quantum methods for electronic structure calculation to reach the same level of sophistication and value as classical
+computing today already achieves.  More broadly, we hope to inspire the development of new libraries, platforms,
+and even programming languages that facilitate the entry of new researchers into the interdisciplinary ﬁeld of quan-
+tum computing and eventually be constructively used to solve the intractable quantum problems of today.
+
+
+
+                                                        ACKNOWLEDGMENTS
+
+  We thank the broader Microsoft Quantum team for insightful comments and discussions.  The PNNL portion of
+this research was funded by the Quantum Algorithms, Software, and Architectures (QUASAR) Initiative, conducted
+under the Laboratory Directed Research and Development Program at PNNL. KK and EJB also acknowledge support
+from the ‘Embedding Quantum Computing into Many-body Frameworks for Strongly Correlated Molecular and
+Materials Systems’ project, which is funded by the U.S. Department of Energy (DOE), Ofﬁce of Science, Ofﬁce of Basic
+Energy Sciences, the Division of Chemical Sciences, Geosciences, and Biosciences.  The development of NWChem
+was supported from Environmental Molecular Sciences Laboratory (EMSL) operations.  Environmental Molecular
+Sciences Laboratory (EMSL) operations are supported by the DOE Ofﬁce of Biological and Environmental Research.
+The Paciﬁc Northwest National Laboratory, is operated for the U.S. DOE by Battelle under Contract Number DE-
+                                                                                                                                                              33
+
+AC05-76RL01830.
+
+
+
+
+
+
+ [1]W. Koch and M. C. Holthausen,      Journal of the American Chemical Society (Wiley-VCH Verlag GmbH, Weinheim, FRG, 2001).
+ [2]R. J. Bartlett and M. Musiał, “Coupled-cluster theory in quantum chemistry,”Reviews of Modern Physics                          79, 291 (2007).
+ [3]U. Schollwöck, “The density-matrix renormalization group,”Reviews of Modern Physics                77, 259 (2005).
+ [4]M. A. Nielsen and I. L. Chuang,      Quantum Computation and Quantum Information, 1st ed. (Cambridge University Press, 2004).
+ [5]M. Reiher, N. Wiebe, K. M. Svore, D. Wecker,   and M. Troyer, “Elucidating reaction mechanisms on quantum computers,”
+      Proceedings of the National Academy of Sciences 114, 7555 (2017),arXiv:1605.03590.
+ [6]D. Wecker, M. B. Hastings, N. Wiebe, B. K. Clark, C. Nayak,  and M. Troyer, “Solving strongly correlated electron models on
+      a quantum computer,”Physical Review A                     92, 062318 (2015).
+ [7]B. Bauer, D. Wecker, A. J. Millis, M. B. Hastings,  and M. Troyer, “Hybrid Quantum-Classical Approach to Correlated Mate-
+      rials,”Physical Review X            6, 031045 (2016).
+ [8]S. Lloyd, “Universal Quantum Simulators,”Science                            273, 1073 (1996).
+ [9]D. Aharonov and A. Ta-Shma, “Adiabatic quantum state generation and statistical zero knowledge,” in      Proceedings of the
+      thirty-ﬁfth ACM symposium on Theory of computing - STOC ’03, STOC ’03 (ACM Press, New York, New York, USA, 2003) p. 20.
+[10]D. W. Berry, G. Ahokas, R. Cleve,  and B. C. Sanders, “Efﬁcient Quantum Algorithms for Simulating Sparse Hamiltonians,”
+      Communications in Mathematical Physics 270, 359 (2007).
+[11]D. W. Berry and A. M. Childs, “Black-box Hamiltonian simulation and unitary implementation,”Quantum Information &
+      Computation 12, 29 (2012),arXiv:0910.4157.
+[12]D. W. Berry, A. M. Childs, R. Cleve, R. Kothari,   and R. D. Somma, “Simulating Hamiltonian Dynamics with a Truncated
+      Taylor Series,”Physical Review Letters              114, 090502 (2015).
+[13]G. H. Low and I. L. Chuang, “Optimal Hamiltonian Simulation by Quantum Signal Processing,”Physical Review Letters
+      118, 010501 (2017),arXiv:1606.02685.
+[14]G.  H.  Low  and  I.  L.  Chuang,  “Hamiltonian  Simulation  by  Qubitization,”arXiv  preprint  arXiv:1610.06546     (2016),
+      arXiv:1610.06546.
+[15]J.  Haah,  M.  Hastings,  R.  Kothari,   and  G.  H.  Low,  “Quantum  Algorithm  for  Simulating  Real  Time  Evolution  of  Lattice
+      Hamiltonians,” in 2018 IEEE 59th Annual Symposium on Foundations of Computer Science (FOCS), FOCS ’18 (IEEE, Washington,
+      DC, USA, 2018) pp. 350–360.
+[16]G.  H.  Low  and  N.  Wiebe,  “Hamiltonian  Simulation  in  the  Interaction  Picture,”arXiv  preprint  arXiv:1805.00675   (2018),
+      arXiv:1805.00675.
+[17]E.   Campbell,   “A   random   compiler   for   fast   Hamiltonian   simulation,”arXiv   preprint   arXiv:1811.08017      (2018),
+      arXiv:1811.08017.
+[18]D. S. Abrams and S. Lloyd, “Simulation of Many-Body Fermi Systems on a Universal Quantum Computer,”Physical Review
+      Letters 79, 2586 (1997).
+[19]J. D. Whitﬁeld, J. Biamonte,  and A. Aspuru-Guzik, “Simulation of electronic structure Hamiltonians using quantum com-
+      puters,”Molecular Physics               109, 735 (2011).
+[20]R. Babbush, D. W. Berry, I. D. Kivlichan, A. Y. Wei, P. J. Love,  and A. Aspuru-Guzik, “Exponentially more precise quantum
+      simulation of fermions in second quantization,”New Journal of Physics                          18, 033032 (2016).
+[21]D. Wecker, B. Bauer, B. K. Clark, M. B. Hastings,  and M. Troyer, “Gate-count estimates for performing quantum chemistry
+      on small quantum computers,”Physical Review A                       90, 022305 (2014).
+[22]D. Poulin, M. B. Hastings, D. Wecker, N. Wiebe, A. C. Doberty, M. Troyer, A. C. Doherty,  and M. Troyer, “The Trotter step
+      size required for accurate quantum simulation of quantum chemistry,”Quantum Information & Computation                     15, 361 (2015),
+      arXiv:1406.4920.
+[23]M. B. Hastings, D. Wecker, B. Bauer,  and M. Troyer, “Improving Quantum Algorithms for Quantum Chemistry,”Quantum
+      Information & Computation 15, 1 (2015).
+[24]R. Babbush, J. McClean, D. Wecker, A. Aspuru-Guzik,  and N. Wiebe, “Chemical basis of Trotter-Suzuki errors in quantum
+      chemistry simulation,”Physical Review A                       91, 022311 (2015).
+[25]A. M. Childs, D. Maslov, Y. Nam, N. J. Ross,   and Y. Su, “Toward the ﬁrst quantum simulation with quantum speedup,”
+      Proceedings of the National Academy of Sciences 115, 9456 (2018).
+[26]R. Babbush, C. Gidney, D. W. Berry, N. Wiebe, J. McClean, A. Paler, A. Fowler,  and H. Neven,“Encoding Electronic Spectra
+      in Quantum Circuits with Linear T Complexity,”arXiv (2018).
+[27]J. R. McClean,  J. Romero,  R. Babbush,   and A. Aspuru-Guzik, “The theory of variational hybrid quantum-classical algo-
+      rithms,”New Journal of Physics                18, 023023 (2016).
+[28]N. C. Rubin, R. Babbush,  and J. McClean, “Application of fermionic marginal constraints to hybrid quantum algorithms,”
+      New Journal of Physics 20, 053020 (2018).
+[29]Y. Cao, J. Romero, J. P. Olson, M. Degroote, P. D. Johnson, M. Kieferová, I. D. Kivlichan, T. Menke, B. Peropadre, N. P. D.
+      Sawaya, S. Sim, L. Veis,  and A. Aspuru-Guzik, “Quantum Chemistry in the Age of Quantum Computing,”arXiv preprint
+      arXiv:1812.09976  (2018),arXiv:1812.09976.
+[30]A. S. Green, P. L. Lumsdaine, N. J. Ross, P. Selinger,   and B. Valiron, “Quipper,” in        ACM SIGPLAN Notices, Vol. 48 (ACM,
+      2013) p. 333.
+                                                                                                                                                                 34
+
+[31]D. Wecker and K. M. Svore, “LIQUi  |⟩:  A Software Design Architecture and Domain-Speciﬁc Language for Quantum Com-
+      puting,”arXiv preprint arXiv:1402.4467  (2014),arXiv:1402.4467.
+[32]D. S. Steiger, T. Häner,  and M. Troyer, “ProjectQ: an open source software framework for quantum computing,”Quantum                              2,
+      49 (2018).
+[33]A.  W.  Cross,  L.  S.  Bishop,  J.  A.  Smolin,    and  J.  M.  Gambetta,  “Open  Quantum  Assembly  Language,”arXiv  preprint
+      arXiv:1707.03429  (2017),arXiv:1707.03429.
+[34]K. Svore, A. Geller, M. Troyer, J. Azariah, C. Granade, B. Heim, V. Kliuchnikov, M. Mykhailova, A. Paz,  and M. Roetteler,
+      “Q#:  Enabling scalable quantum computing and development with a high-level domain-speciﬁc language,” in Proceedings
+      of the Real World Domain Speciﬁc Languages Workshop 2018 on - RWDSL2018, RWDSL2018 (ACM Press, New York, New York,
+      USA, 2018) pp. 1–10.
+[35]J. R. McClean, T. Häner, D. S. Steiger,  and R. Babbush,        FermiLib v0. 1, Tech. Rep. (Lawrence Berkeley National Lab.(LBNL),
+      Berkeley, CA (United States), 2017).
+[36]J. R. McClean, K. J. Sung, I. D. Kivlichan, Y. Cao, C. Dai, E. S. Fried, C. Gidney, B. Gimby, P. Gokhale, T. Häner, T. Hardikar,
+      V. Havlíˇcek, O. Higgott, C. Huang, J. Izaac, Z. Jiang, X. Liu, S. McArdle, M. Neeley, T. O’Brien, B. O’Gorman, I. Ozﬁdan,
+      M. D. Radin, J. Romero, N. Rubin, N. P. D. Sawaya, K. Setia, S. Sim, D. S. Steiger, M. Steudtner, Q. Sun, W. Sun, D. Wang,
+      F.  Zhang,   and  R.  Babbush,  “OpenFermion:  The  Electronic  Structure  Package  for  Quantum  Computers,”arXiv  preprint
+      arXiv:1710.07629  (2017),arXiv:1710.07629.
+[37]J. Preskill, “Quantum Computing in the NISQ era and beyond,”Quantum                        2, 79 (2018).
+[38]A. Kandala, A. Mezzacapo, K. Temme, M. Takita, M. Brink, J. M. Chow,  and J. M. Gambetta, “Hardware-efﬁcient variational
+      quantum eigensolver for small molecules and quantum magnets,”Nature                   549, 242 (2017).
+[39]M.  Valiev,  E.  Bylaska,  N.  Govind,  K.  Kowalski,  T.  Straatsma,  H.  Van  Dam,  D.  Wang,  J.  Nieplocha,  E.  Apra,  T.  Windus,
+      and W. de Jong, “NWChem:  A comprehensive and scalable open-source solution for large scale molecular simulations,”
+      Computer Physics Communications 181, 1477 (2010).
+[40]M. M. Waldrop, “The chips are down for Moore’s law,”Nature                 530, 144 (2016).
+[41]G. Meszaros,        xUnit test patterns: Refactoring test code (Pearson Education, 2007).
+[42]D. E. Bernholdt, E. E. Aprà, H. A. Früchtl, M. F. Guest, R. J. Harrison, R. A. Kendall, R. A. Kutteh, X. Long, J. B. Nicholas,
+      J. A. Nichols, H. L. Taylor, A. T. Wong, G. I. Fann, R. J. Littleﬁeld,  and J. Nieplocha, “Parallel computational chemistry made
+      easier: The development of NWChem,”International Journal of Quantum Chemistry                      56, 475 (1995).
+[43]R. A. Kendall, E. Aprà, D. E. Bernholdt, E. J. Bylaska, M. Dupuis, G. I. Fann, R. J. Harrison, J. Ju, J. A. Nichols, J. Nieplocha,
+      T. Straatsma,  T. L. Windus,   and A. T. Wong, “High performance computational chemistry:  An overview of NWChem a
+      distributed parallel application,”Computer Physics Communications                        128, 260 (2000).
+[44]G. D. Purvis and R. J. Bartlett, “A full coupledâ        ˘A ˇRcluster singles and doubles model: The inclusion of disconnected triples,”
+      The Journal of Chemical Physics 76, 1910 (1982).
+[45]J. Geertsen, M. Rittby,   and R. J. Bartlett, “The equation-of-motion coupled-cluster method:  Excitation energies of Be and
+      CO,”Chemical Physics Letters          164, 57 (1989).
+[46]D. C. Comeau and R. J. Bartlett, “The equation-of-motion coupled-cluster method. Applications to open- and closed-shell
+      reference states,”Chemical Physics Letters              207, 414 (1993).
+[47]J. F. Stanton and R. J. Bartlett, “The equation of motion coupled-cluster method. A systematic biorthogonal approach to
+      molecular excitation energies,  transition probabilities,  and excited state properties,”The Journal of Chemical Physics                   98,
+      7029 (1993).
+[48]R. P. Feynman,        Feynman lectures on computation (CRC Press, 2018).
+[49]R. Bhatia,        Matrix Analysis, Graduate Texts in Mathematics, Vol. 169 (Springer New York, New York, NY, 1997).
+[50]J. T. Seeley, M. J. Richard,  and P. J. Love, “The Bravyi-Kitaev transformation for quantum computation of electronic struc-
+      ture,”The Journal of Chemical Physics      137, 224109 (2012).
+[51]D. Poulin, A. Kitaev, D. S. Steiger, M. B. Hastings,   and M. Troyer, “Quantum Algorithm for Spectral Measurement with a
+      Lower Gate Count,”Physical Review Letters               121, 010501 (2018).
+[52]D. W. Berry, M. Kieferová, A. Scherer, Y. R. Sanders, G. H. Low, N. Wiebe, C. Gidney,  and R. Babbush, “Improved techniques
+      for preparing eigenstates of fermionic Hamiltonians,”npj Quantum Information                            4, 22 (2018).
+[53]V. Shende, S. Bullock,  and I. Markov, “Synthesis of quantum-logic circuits,”IEEE Transactions on Computer-Aided Design
+      of Integrated Circuits and Systems 25, 1000 (2006).
+[54]N. J. Ross and P. Selinger, “Optimal Ancilla-free Clifford+T Approximation of Z-rotations,”Quantum Information & Com-
+      putation 16, 901 (2016).
+[55]G. H. Low, V. Kliuchnikov,  and L. Schaeffer, “Trading T-gates for dirty qubits in state preparation and unitary synthesis,”
+      (2018),arXiv:1812.00954.
+[56]K. P. Zetie, S. F. Adams,  and R. M. Tocknell, “How does a Mach-Zehnder interferometer work?”Physics Education                     35, 46
+      (2000).
+[57]C. Ferrie, C. E. Granade,   and D. G. Cory, “How to best sample a periodic probability distribution, or on the accuracy of
+      Hamiltonian ﬁnding strategies,”Quantum Information Processing                     12, 611 (2013).
+[58]A. Gilyén, Y. Su, G. H. Low,  and N. Wiebe, “Quantum singular value transformation and beyond: exponential improvements
+      for quantum matrix arithmetics,”arXiv preprint arXiv:1806.01838  (2018),arXiv:1806.01838.
+[59]S. Kimmel, G. H. Low,  and T. J. Yoder, “Robust calibration of a universal single-qubit gate set via robust phase estimation,”
+      Physical Review A 92, 062315 (2015).
+[60]K. M. Svore, M. B. Hastings,  and M. Freedman, “Faster Phase Estimation,”Quantum Information & Computation                              14, 306
+                                                                                                                                                                     35
+
+      (2013),arXiv:1304.0741.
+[61]N.   Wiebe   and   C.   Granade,   “Efﬁcient   Bayesian   Phase   Estimation,”Physical   Review   Letters                                117,   010503   (2016),
+      arXiv:1508.00869 [quant-ph].
+[62]T. Schucan and H. Weidenmüller, “The effective interaction in nuclei and its perturbation expansion: An algebraic approach,”
+      Annals of Physics 73, 108 (1972).
+[63]G. Hose and U. Kaldor, “A General-Model-Space Diagrammatic Perturbation Theory,”Physica Scripta                       21, 357 (1980).
+[64]S. Zarrabian and J. Paldus, “Applicability of multi-reference many-body perturbation theory to the determination of potential
+      energy surfaces: A model study,”International Journal of Quantum Chemistry              38, 761 (1990).
+[65]J. P. Finley, R. K. Chaudhuri,  and K. F. Freed, “Applications of multireference perturbation theory to potential energy surfaces
+      by optimal partitioning of H : Intruder states avoidance and convergence enhancement,”The Journal of Chemical Physics
+      103, 4990 (1995).
+[66]M. Motta, D. M. Ceperley, G. K.-L. Chan, J. A. Gomez, E. Gull, S. Guo, C. A. Jiménez-Hoyos, T. N. Lan, J. Li, F. Ma, A. J.
+      Millis, N. V. Prokof’ev, U. Ray, G. E. Scuseria, S. Sorella, E. M. Stoudenmire, Q. Sun, I. S. Tupitsyn, S. R. White, D. Zgid,  and
+      S. Zhang, “Towards the Solution of the Many-Electron Problem in Real Materials: Equation of State of the Hydrogen Chain
+      with State-of-the-Art Many-Body Methods,”Physical Review X                    7, 031059 (2017).
+[67]J. Hachmann,  W. Cardoen,   and G. K.-L. Chan, “Multireference correlation in long molecules with the quadratic scaling
+      density matrix renormalization group,”The Journal of Chemical Physics           125, 144101 (2006).
+[68]U. S. Mahapatra, B. Datta,  and D. Mukherjee, “A size-consistent state-speciﬁc multireference coupled cluster theory: Formal
+      developments and molecular applications,”The Journal of Chemical Physics                          110, 6171 (1999).
+[69]U. S. Mahapatra, B. Datta,  and D. Mukherjee, “Development of a size-consistent state-speciﬁc multireference perturbation
+      theory with relaxed model-space coefﬁcients,”Chemical Physics Letters                 299, 42 (1999).
+[70]K. Bhaskaran-Nair, O. Demel,  and J. Pittner, “Multireference state-speciﬁc Mukherjee’s coupled cluster method with nonit-
+      erative triexcitations,”The Journal of Chemical Physics                           129, 184105 (2008).
+[71]K. Bhaskaran-Nair, O. Demel, J. Šmydke,  and J. Pittner, “Multireference state-speciﬁc Mukherjee’s coupled cluster method
+      with noniterative triexcitations using uncoupled approximation,”The Journal of Chemical Physics                      134, 154106 (2011).
+[72]K. Bhaskaran-Nair, J. Brabec, E. Aprà, H. J. J. van Dam, J. Pittner,  and K. Kowalski, “Implementation of the multireference
+      Brillouin-Wigner and Mukherjee’s coupled cluster methods with non-iterative triple excitations utilizing reference-level par-
+      allelism,”The Journal of Chemical Physics                  137, 094112 (2012).
+[73]J. Noga and R. J. Bartlett, “The full CCSDT model for molecular electronic structure,”The Journal of Chemical Physics             86,
+      7041 (1987).
+[74]J. Noga and R. J. Bartlett, “Erratum:  The full CCSDT model for molecular electronic structure [J. Chem. Phys. 8 6 ,  7041
+      (1987)],”The Journal of Chemical Physics                89, 3401 (1988).
+[75]G.  E.  Scuseria  and  H.  F.  Schaefer,  “A  new  implementation  of  the  full  CCSDT  model  for  molecular  electronic  structure,”
+      Chemical Physics Letters 152, 382 (1988).
+[76]S. A. Kucharski and R. J. Bartlett, “Recursive intermediate factorization and complete computational linearization of the
+      coupled-cluster single, double, triple, and quadruple excitation equations,”Theoretica Chimica Acta                     80, 387 (1991).
+[77]N. Oliphant and L. Adamowicz, “Coupledâ        ˘A ˇRcluster method truncated at quadruples,”The Journal of Chemical Physics
+      95, 6645 (1991).
+[78]S. Evangelisti, J. P. Daudey,  and J. P. Malrieu, “Qualitative intruder-state problems in effective Hamiltonian theory and their
+      solution through intermediate Hamiltonians,”Physical Review A                            35, 4930 (1987).
+[79]J. M. Martin, J. El-Yazal,  and J.-P. François, “On the structure and vibrational frequencies of C         20,”Chemical Physics Letters
+      248, 345 (1996).
+[80]C. J. Brabec, E. B. Anderson, B. N. Davidson, S. A. Kajihara, Q.-M. Zhang, J. Bernholc,  and D. Tománek, “Precursors to C         60
+      fullerene formation,”Physical Review B                      46, 7326 (1992).
+[81]B. L. Zhang, C. Z. Wang, K. M. Ho, C. H. Xu,   and C. T. Chan, “The geometry of small fullerene cages:  C         20  to C70,”The
+      Journal of Chemical Physics 97, 5007 (1992).
+[82]K. Raghavachari,  D. Strout,  G. Odom,  G. Scuseria,  J. Pople,  B. Johnson,   and P. Gill, “Isomers of C         20. Dramatic effect of
+      gradient corrections in density functional theory,”Chemical Physics Letters                214, 357 (1993).
+[83]G. von Helden, M. T. Hsu, N. Gotts,  and M. T. Bowers, “Carbon cluster cations with up to 84 atoms:  structures, formation
+      mechanism, and reactivity,”The Journal of Physical Chemistry                   97, 8182 (1993).
+[84]J. C. Grossman, L. Mitas,  and K. Raghavachari, “Structure and Stability of Molecular Carbon: Importance of Electron Corre-
+      lation,”Physical Review Letters              75, 3870 (1995).
+[85]P. R. Taylor, E. Bylaska, J. H. Weare,  and R. Kawai, “C         20: fullerene, bowl or ring? New results from coupled-cluster calcula-
+      tions,”Chemical Physics Letters             235, 558 (1995).
+[86]E. J. Bylaska, P. R. Taylor, R. Kawai,  and J. H. Weare, “LDA Predictions of C         20 Isomerizations: Neutral and Charged Species,”
+      The Journal of Physical Chemistry 100, 6966 (1996).
+[87]G. Galli, “Tight-binding molecular dynamics for carbon systems: Fullerenes on surfaces,”Computational Materials Science
+      12, 242 (1998).
+[88]S. Sokolova,  A. Lüchow,   and J. B. Anderson, “Energetics of carbon clusters C         20  from all-electron quantum Monte Carlo
+      calculations,”Chemical Physics Letters                         323, 229 (2000).
+[89]S.  Grimme  and  C.  Mück-Lichtenfeld,  “Structural  isomers  of  C         20  revisited:   the  cage  and  bowl  are  almost  isoenergetic,”
+      ChemPhysChem 3, 207 (2002).
+[90]W. An, Y. Gao, S. Bulusu,  and X. C. Zeng, “Ab initio calculation of bowl, cage, and ring isomers of C         20 and C−20,”The Journal
+                                                                                                                                                              36
+
+         of Chemical Physics 122, 204109 (2005).
+   [91]Y. Jin, A. Perera, V. F. Lotrich,  and R. J. Bartlett, “Coupled cluster geometries and energies of C         20 carbon cluster isomers â ˘A¸S
+         A new benchmark study,”Chemical Physics Letters              629, 76 (2015).
+   [92]E. Aprà and K. Kowalski, “Implementation of High-Order Multireference Coupled-Cluster Methods on Intel Many Inte-
+         grated Core Architecture,”Journal of Chemical Theory and Computation      12, 1129 (2016).
+   [93]P. K. Barkoutsos,  J. F. Gonthier,  I. Sokolov,  N. Moll,  G. Salis,  A. Fuhrer,  M. Ganzhorn,  D. J. Egger,  M. Troyer,  A. Mezza-
+         capo, S. Filipp,  and I. Tavernelli, “Quantum algorithms for electronic structure calculations: Particle-hole Hamiltonian and
+         optimized wave-function expansions,”Physical Review A                        98, 022322 (2018).
+
+
+                                                             Appendix A: Running examples
+
+      The code examples in this paper are available in the anc/src/ directory of the supplementary material.  Additional
+   examples may be found at in samples repository of Microsoft Quantum Development Kit athttps://github.com/
+   Microsoft/Quantum.  The implementation of the Microsoft Quantum Development Kit chemistry library may be
+   found athttps://github.com/Microsoft/QuantumLibraries.
+      To run the examples on your own system, we recommend either installing the Microsoft Quantum Development
+   Kit and NWChem, or using the provided Docker ﬁle to prepare a container for use with these examples. We brieﬂy
+   describe both approaches in this appendix.
+      We also provide a conﬁguration ﬁle for Docker, a software platform for managing lightweight computing envi-
+   ronments known as containers. This Dockerﬁle can be used to automatically build and run a container that includes the
+   Microsoft Quantum Development Kit, NWChem, and the code examples in this paper. Though installing Docker is
+   beyond the scope of this paper, complete instructions can be found athttps://docs.docker.com/install/.
+      Once Docker has been installed on your machine, the docker command can be used to automatically build and run
+   the container described by  anc/src/Dockerﬁle, as shown inListing 17.  We format the procedure inListing 17for use
+   with Bash or similar shells, but similar instructions hold for PowerShell and other command-line environments.
+
+         # F i r s t ,   navigate to the src f o l d e r  of  the supplementary m a t e r i a l.
+         $   cd   anc/ s r c
+         # This commandw i l l  cause Docker to build a co nt ai ne r  c a l l e d chem-examples
+         # froma D o c k e r f i l e found in the current  working d i r e c t o r y (denoted.).
+
+5            # Note t h a t  t h i s commandneeds to download l a r g e images,  andmaytake a long
+         # time to complete.  These images are then cached,  such t h a t  subsequent  builds
+         # w i l l  complete more quickly.
+         $   docker   build −t   chem−examples   .
+         # Once t h i s  completes,   the newco nt ai ne r  can be run in an i n t e r a c t i v e mode.
+10            $   docker   run− i t   chem−examples
+         # This  w i l l  s t a r t  a PowerShell  prompt  i n s i d e the container,   appropriate f o r
+         # use withcommands such as those discussed in Section III B.
+         PS  /src >   cd   examples/ t e l e p o r t
+         PS  / s r c /examples/ t e l e p o r t >   dotnet   run
+15            Used   2  CNOT  operations .
+
+   Listing 17. Procedure to run the teleport example ofListing 2using Docker.

@@ -1,0 +1,1385 @@
+An eﬃcient adaptive variational quantum solver
+  of the Schr¨odinger equation based on reduced
+
+                                   density matrices
+
+
+                        Jie Liu,† Zhenyu Li,∗,† and Jinlong Yang∗,‡
+
+†Hefei National Laboratory for Physical Sciences at the Microscale, University of Science
+
+                    and Technology of China, Hefei, Anhui 230026, China
+
+   ‡Hefei National Laboratory for Physical Sciences at the Microscale, Department of
+
+   Chemical Physics, and Synergetic Innovation Center of Quantum Information and
+
+Quantum Physics, University of Science and Technology of China, Hefei, Anhui 230026,
+
+                                                 China
+
+
+             E-mail:  zyli@ustc.edu.cn(ZhenyuLi); jlyang@ustc.edu.cn(JinlongYang)
+
+
+                                               Abstract
+
+         Recently, an adaptive variational algorithm termed Adaptive Derivative-Assembled
+
+     Pseudo-Trotter ansatz Variational Quantum Eigensolver (ADAPT-VQE) has been pro-
+
+     posed by Grimsley et al.  (Nat.  Commun.  10, 3007) while the number of measurements
+
+     required to perform this algorithm scalesO(N 8).  In this work, we present an eﬃcient
+
+     adaptive  variational  quantum  solver  of  the  Schr¨odinger  equation  based  on  ADAPT-
+
+     VQE together with the reduced density matrix reconstruction approach, which reduces
+
+     the number of measurements fromO(N 8) toO(N 4).  This new algorithm is quite suit-
+
+     able for quantum simulations of chemical systems on near-term noisy intermediate-scale
+
+     hardware due to low circuit complexity and reduced measurement.  Numerical bench-
+
+     mark calculations for small molecules demonstrate that this new algorithm provides
+
+                                                    1
+       an accurate description of the ground-state potential energy curves.  In addition, we
+
+       generalize this new algorithm for excited states with the variational quantum deﬂation
+
+       approach and achieve the same accuracy as ground-state simulations.
+
+
+1    Introduction
+
+The electronic structure problem is one of the most appealing applications of quantum com-
+
+puting.1–10  To  simulate  electronic  structure  properties  of  molecules  and  solids,  quantum
+
+algorithms,  such  as  quantum  phase  estimation  (QPE)1,11  and  variational  quantum  eigen-
+
+solver (VQE) algorithms,3,12,13 had been proposed for solving the Schr¨odinger equation on a
+
+quantum computer.  Quantum algorithms oﬀer an exponential speedup of simulating many-
+
+electron systems over classical methods.  The QPE algorithm evolves in time a quantum state
+
+under the molecular Hamiltonian of interest, which often requires circuits with a long gate
+
+sequence even for few qubits.  By contrast, the VQE requires a much short coherence time
+
+at the cost of a large number of quantum measurements.  Therefore, the VQE is a promising
+
+algorithm  for  chemistry  simulations  on  near-term  noisy  intermediate-scale  hardware  with
+
+massive parallelization.4
+    The VQE algorithm applies the Rayleigh-Ritz variational principle to optimize the pa-
+
+rameterized  wave  function,  which  minimizes  the  energy  functional  at  convergence.   The
+
+variational optimization procedure is often referred as a hybrid quantum-classical strategy,
+
+in which the calculations of various physical properties, such as the energy and gradient, are
+
+performed on the quantum computer and the update of parameters is performed on the clas-
+
+sical computer.12–15 In the VQE framework, the state preparation and measurement should
+
+be repeated many times in order to measure the expectation value of operators.  Therefore,
+
+to establish an advanced VQE algorithm, it is critical to reduce the cost of state preparation
+
+and measurement.
+
+    The  state  preparation  is  closely  related  to  the  wave  function  ansatz.   Unitary  coupled
+cluster  (UCC)  is  one  of  the  most  widely  used  wave  function  ansatzes  in  the  VQE  algo-
+
+                                                        2
+rithm.3,13,16,17 The UCC wave function with a ﬁnite cluster expansion can be easily prepared
+
+on a quantum computer.  Recently, UCC with single and double excitations (UCCSD) has
+
+been successfully applied in experimental and theoretical chemistry simulations within the
+
+VQE framework.3,16 UCCSD is more robust than traditional counterpart due to the fact that
+
+the unitary cluster operator involves not only excitation operators but also de-excitation op-
+
+erator. Nevertheless, UCCSD also suﬀers from the well-known problem of the single reference
+
+method when treating strongly correlated systems.
+
+    Given a many-electron system described by the Hamiltonian containing up to two-body
+
+terms, it has been suggested that the ground-state wave function can be highly accurately
+
+represented by an exponential cluster expansion involving general two-body operators. 18–22
+
+Thus,  UCCGSD  that  extends  UCCSD  to  include  general  one-  and  two-body  operators 18
+has  been  introduced  in  the  experimental  demonstration  of  VQE  on  a  photonic  quantum
+
+processor.3  The classical numerical simulations reveal that the UCCGSD wave function is
+
+far more robust and accurate than the simpler UCCSD wave functions for some challeng-
+
+ing  problems,  such  as  dissociation  of N2.17  However,  one  main  drawback  of  UCCSD  and
+
+UCCGSD is the requirement of a ﬁnite-order Suzuki-Trotter decomposition of the cluster
+
+operator in order to be implemented on a quantum computer. 23,24 This leads to the so-called
+
+”Trotterization” error and the nonuniqueness of the operator ordering that has a signiﬁcant
+
+eﬀect on strongly correlated systems.  An alternative scheme recently proposed by Grimsley
+
+et  al., termed Adaptive Derivative-Assembled Pseudo-Trotter (ADAPT) ansatz, 22  aims at
+
+generating a maximally compact sequence of unitary transformations.  ADAPT is appealing
+
+due to the minimum gate depth while the number of measurements for the residual gradients
+(see Equation (11) in Section 2.1) used to determine the operator sequence scalesO(N 8),
+
+where N  is the number of spin orbitals.
+
+    In this work, we propose an eﬃcient adaptive variational quantum algorithm based on
+
+reduced density matrices (RDM). First of all, we reformulate the residual gradients with the
+
+two-electron RDM (2-RDM) and three-electron RDM (3-RDM), which explicitly reduces the
+
+
+                                                       3
+scaling of measurements in ADAPT toO(N 6).  Furthermore,  we propose an approximate
+
+ADAPT ansatz termed ADAPT-V, in which the 3-RDM is computed as a functional of the
+
+2-RDM using Valdemoro’s reconstruction.25–27  In the context of quantum computing,  the
+
+ADAPT-V ansatz has two key attractive aspects:  i) It generates a compact wave function,
+
+which promises low gate depth; ii) It requires only the 2-RDM in the variational optimization
+
+procedure,  which  means  that  the  residual gradients  are computed  without  any  additional
+
+measurements.   However,  the  ADAPT-V  ansatz  must  update  many  operators  at  a  time
+
+due  to  the  approximation  introduced  in  the  residual  gradients  in  order  to  guarantee  the
+
+accuracy of the converged wave function.  Alternatively, we propose another ansatz termed
+
+ADAPT-Vx, which ﬁrst builds an auxiliary operator pool using Valdemoro’s reconstruction
+
+of 3-RDM and then determines operators to be updated with the exact residual gradients.
+The ADAPT-Vx ansatz is able to generate a wave function as compact as the ADAPT ansatz
+
+while it requires slightly increasing measurements compared with the ADAPT-V ansatz.  In
+
+addition, the ADAPT-V and ADAPT-Vx ansatzes can be straightforwardly generalized to
+
+excited-state simulations with the variational quantum deﬂation (VQD) algorithm based on
+
+the orthogonal constraint.28,29
+
+    This paper is organized as follow.  Section 2 gives a brief description of the theoretical
+
+methodology, covering the ADAPT ansatz, the ADAPT-V and ADAPT-Vx ansatz reformu-
+
+lated with the reduced density matrices, the ADAPT-V and ADAPT-Vx VQE algorithms
+
+and their extension for excited states.  In section 3, we give a short discussion of quantum
+
+resource  requirement  for  diﬀerent  wave  function  ansatzes.   In  section  4,  we  compute  the
+
+ground-state and excited-state potential energy curve of H6 and N2 and analyze errors for
+diﬀerent wave function ansatzes.  A summary and outlook is given in Section 5.
+
+
+
+
+
+
+
+
+
+
+                                                      4
+2    Theory
+
+
+The Hamiltonian of a many-electron system is expressed in the second-quantized as
+
+                                      ˆH = ∑     hpqa†paq + 1   ∑    vpqsra†pa†qaras
+
+                                             pq               2 pqrs
+                                               ∑                                                                      (1)
+                                         = 12       Hpqsra†pa†qaras,
+                                               pqrs
+
+wherehpq are the one-electron integrals, including kinetic energy and ionic potential, and vpqrs
+
+are the two-electron integrals.  The reduced Hamiltonian matrix elements are written as
+
+
+                                       Hpqrs  =     1N− 1(hprδqs +δprhqs) +vpqrs,                                         (2)
+
+
+where N  is the number of electrons. a†p and ap are the second-quantized creation and anni-
+
+hilation operators which satisfy the anticommutation relations.  Here and after, only general
+
+spin molecular orbitals are involved in the deﬁnition of the wave function ansatz.
+
+    The ground state wave function is obtained by solving
+
+
+                                                    ˆH|Ψ⟩ =E|Ψ⟩.                                                        (3)
+
+
+The energy can be written as a functional of the 2-RDM,
+
+
+                                                E =⟨Ψ| ˆH|Ψ⟩
+
+                                                    = ∑     Hpqrs  2Dpqsr.                                                     (4)
+                                                       pqrs
+
+Here, the m-RDM is deﬁned as
+
+
+
+                                mDp1,...,pm
+                                    q1,...,qm  =   1m!⟨Ψ|a†p1···a†pmaqm···aq1|Ψ⟩.                                  (5)
+
+
+
+
+
+                                                            5
+2.1    Adaptive Derivative-Assembled Pseudo-Trotter ansatz
+
+Recently, Grimsley et al.22 suggested that the exact wave function can be represented as an
+
+arbitrarily long product of general one- and two-body exponentiated operators,
+
+
+                                                     Nk∏ Nop∏
+                                         |Ψ(⃗θ)⟩ =           eθu,kτu|Ψ0⟩,                                              (6)
+                                                      k   u
+
+where τu∈{τpq,τpqrs} deﬁnes the anti-Hermitian operator poolO
+
+
+                                         τpq  =a†paq−a†qap
+                                                                                                                 (7)
+                                         τpqrs  =a†pa†qaras−a†sa†raqap.
+
+
+Nop  is the number of operators inO  and Nk  is the number of layers of the product.  The
+
+reference state|Ψ0⟩ can be either a single-reference state, such as Hartree-Fock wave function,
+
+or a multireference state.
+
+    In  order  to  generate  a  maximally  compact  sequence  of  operators  at  convergence,  the
+
+ADAPT wave function is iteratively updated by restricting Nop to be 1 in Eq. (6), which is
+
+simply written as
+                                          |Ψ(k)⟩ =eθkτk|Ψ(k− 1)⟩                                                (8)
+
+where|Ψ(0)⟩ =|Ψ0⟩ is the reference state.  The energy functional in the k-th iteration is
+
+minimized with respect to parameters ⃗θ by
+
+
+                                      E(k) =  min
+                                                {θl}kl=1{⟨Ψ(k)| ˆH|Ψ(k)⟩}.                                           (9)
+
+The analytical gradient of the energy functional is formulated as
+
+
+                             Gl = ∂E(k)∂θl
+
+                                                  k∏             l∏                                            (10)
+                                =⟨Ψ(k)| ˆH            eθmτmτl       eθnτn|Ψ0⟩ +c.c.
+                                               m=l+1            n=1
+
+                                                         6
+    Given  a  wave  function  in  the  form  of  Eq.  (8),  its  accuracy  can  be  assessed  through
+
+gradients
+
+
+                                   Ru =Gk|θk=0,τk=τu
+                                                                                                            (11)
+                                        =⟨Ψ(k− 1)|[ ˆH,τu]|Ψ(k− 1)⟩,
+
+
+which are also referred as the residual errors of anti-Hermitian contracted Schr¨odinger equa-
+
+tion (ACSE).30,31 In order to distinguish them from gradients of Eq. (10) used in a gradient-
+
+based minimization algorithm,  we call Eq. (11) as the residual gradients.  It is natural to
+
+choose  the  operator  with  the  largest  residual  gradient  to  update  the  wave  function.   The
+
+convergence criteria can be deﬁned as
+
+                                                   √∑
+                                          |⃗R|2 =          |Ru|2 <ϵ.                                                (12)
+                                                       u
+
+As a consequence, the ADAPT ansatz also represents an exact solution of the ACSE. Com-
+
+pared with UCC, ADAPT generates a well-deﬁned and maximally compact ordering of the
+
+operators, which avoids errors from Trotterization and generates a low-depth quantum cir-
+cuit.
+
+
+2.2    Reduced density matrices
+
+In the ADAPT ansatz with general one- and two-body operators, both the number of op-
+erators in the operator pool and terms in the Hamiltonian scale asO(N 4).  Therefore, the
+
+number of terms one should measure for the explicit calculations of the residual gradients
+
+with  Eq.  (11)  scales  asO(N 8).   On  near-term  noisy  quantum  hardware  with  limited  size
+
+and number of quantum processor, it is necessary to reduce the scaling of measurements for
+
+practical simulations of chemical systems using the ADAPT ansatz.  Here,  we propose to
+
+reformulate the residual gradients with reduced density matrices in order to realise measure-
+
+ment reduction.
+
+                                                        7
+    For one-body operators, Eq. (11) can be rewritten in terms of 1- and 2-RDM’s,
+
+
+                                  ⟨Ψ|[a†p1aq1,  ˆH]|Ψ⟩
+                               =∑      hq1q21Dp1q2−∑      hp2p11Dp2q1
+                                   q2                 p2                                                          (13)
+
+                               +2 ∑         vq1p3q3q22Dp1p3q3q2− 2 ∑    vp2p3p1q32Dp2p3q1q3.
+
+                                    p3,q2,q3                    p2,p3,q3
+
+For two-body operators, Eq. (11) can be rewritten in terms of 2- and 3-RDM’s,
+
+
+                          ⟨Ψ|[a†p1a†p2aq1aq2,  ˆH]|Ψ⟩
+                        =2∑      hq2q32Dp1,p2           hq1q32Dp1,p2            vq2q1q4q32Dp1,p2
+                                         q3,q1− 2∑              q3,q2 + 2∑                q4,q3
+                             q3                      q3                    q3,q4
+                        −2∑      hq3p12Dq3,p2           hq3p22Dq3,p1            vp4p3p1p22Dp3,p4
+                                         q2,q1 + 2∑             q2,q1 + 2 ∑               q2,q1                   (14)
+                             q3                      q3                    p3,p4
+                        −6 ∑        vq2p3q4q33Dp1,p2,p3            vq1p3q4q33Dp1,p2,p3
+                                              q4,q3,q1  + 6 ∑                q4,q3,q2
+                            p3,q3,q4                       p3,q3,q4
+                        −6 ∑        vp4p3p1q33Dp3,p4,p2             vp3p4q3,p23Dp3,p4,p1
+                                              q2,q1,q3  + 6 ∑                 q2,q1,q3.
+                            p3,p4,q3                        p3,p4,q3
+
+It  is  clear  that  the  4-RDM  is  no  more  explicitly  required  to  compute  the  residual  gradi-
+
+ents.  The ADAPT ansatz using Eq. (13) and Eq. (14) is referred as ADAPT-RDM in this
+
+work.  To perform the ADAPT-RDM VQE algorithm exactly, the calculations of the resid-
+
+ual  gradients  in  terms  of  2-  and  3-RDM’s  scale  only  asO(N 6),  a  signiﬁcant  reduction  of
+
+measurements compared with the original ADAPT ansatz.  However, the ADAPT-RDM is
+still too expensive for quantum simulations of large chemical systems on near-term quantum
+
+hardware with limited resources.
+
+    In  order  to  avoid  the  explicit  requirement  of  the  3-RDM  in  ADAPT,  an  alternative
+
+approach is to reconstruct the 3-RDM from the 2-RDM by the cumulant theory 32–37
+
+
+
+                                   3Dp1p2p3q1q2q3  = 1Dp1
+                                                     q1∧ 1Dp2q2∧ 1Dp3q3
+                                                                                                                  (15)
+                                              + 3 2∆p1p2q1q2∧ 1Dp1q3 + 3∆p1p2p3q1q2q3.
+
+                                                           8
+Here
+
+                                       2∆p1p2
+                                          q1q2  = 2Dp1p2q1q2− 1Dp1q1∧ 1Dp2q2,                                         (16)
+
+and
+
+                                 1Dp1                        1Dp2            1Dp1
+                                    q1∧ 1Dp2q2 = 12(1Dp1q1       q2− 1Dp2q1     q2),                                  (17)
+
+The operator∧ denotes the antisymmetric tensor product, known as the Grassmann wedge
+product.  Neglecting the cumulant 3-RDM,
+
+
+
+                                                    3∆ijk
+                                                        qst = 0,                                                          (18)
+
+
+which yields a ﬁrst-order reconstruction of the 3-RDM from the 1- and 2-RDM’s,  termed
+
+Valdemoro’s reconstruction.25–27 Here, we refer the ADAPT-RDM ansatz using Valdemoro’s
+
+reconstruction as ADAPT-V. Hence, the calculations of the residual gradients require only
+
+1- and 2-RDM’s in the ADAPT-V.
+
+
+2.3    VQE algorithm
+
+In variational quantum algorithms, the wave function is often represented as a unitary trans-
+formation acting on a reference state,12
+
+
+                                              |Ψ(⃗θ)⟩ =U(⃗θ)|Ψ0⟩.                                                   (19)
+
+
+U(⃗θ) can be either a single unitary operator or an ﬁnite long product of a series of unitary
+
+operators.  The energy and wave function are determined through Rayleigh-Ritz variational
+
+principle,
+
+                                           E0 = min⃗θ ⟨Ψ(⃗θ)| ˆH|Ψ(⃗θ)⟩.                                              (20)
+
+    In the ADAPT VQE algorithm, one key aspect is to grow the ansatz with the operator
+
+that is expected to restore the greatest amount of the correlation energy.  In the ADAPT-
+
+
+                                                          9
+V VQE algorithm, the approximate residual gradients is also expected to identify such an
+
+operator  when  the  wave  function  is  far  away  from  the  exact  wave  function.   However,  as
+
+the  convergence  is  approaching,  the  relative  deviations  in  the  residual  gradients  becomes
+
+signiﬁcant.   Consequently,  the  ADAPT-V  VQE  algorithm  may  converge  very  slowly  due
+
+to  the  inaccurate  identiﬁcation  of  the  operator.   In  order  to  overcome  this  problem,  an
+
+alternative solution is to increase the number of operators to be updated in each iteration.
+
+Instead of Eq. (8), the wave function in the form of Eq. (6) is adopted in this work
+
+
+                                                    Nk∏  ∏
+                                        |Ψ(⃗θ)⟩ =            eθu,kτu|Ψ0⟩                                            (21)
+                                                     k  u∈M
+
+where M  contains Nu  operators  with  the  largest  residual  gradients.   The  ordering  of Nu
+
+operators may be still diﬀerent from the exact one while the inﬂuence of approximate residual
+
+gradients is suppressed as long as these ”important” operators have been included in M.
+
+    The  ADAPT-V  VQE  algorithm  is  summarized  in  Algorithm  1.   In  contrast  with  the
+
+original ADAPT VQE algorithm, the main diﬀerence of this new algorithm is presented as
+
+follows:
+
+    •  In Step 5,  we compute{⃗R} with Eq. (13) and   (14),  in which the 3-RDM is recon-
+
+       structed from the 2-RDM using Valdemoro’s reconstruction.
+
+    •  In Step 6, Nu operators with largest absolute residual gradients are appended to the
+
+       operator sequence{⃗τ}.
+
+    Given that Valdemoro’s reconstruction can give a good estimation of the residual gradi-
+
+ents, we propose an ADAPT-Vx ansatz to avoid a large Nu required in the ADAPT-V. For
+
+ADAPT-Vx, Step 6 in Algorithm 1 is modiﬁed as
+
+    • Nm operators with largest absolute residual gradients form an auxiliary operator pool
+
+       M′.
+
+    •  The residual gradients for operators in M′ are recalculated with Eq. (11).
+
+                                                        10
+    • Nu operators with largest absolute residual gradients in M′ are appended to the oper-
+
+       ator sequence{⃗τ}.
+
+The number of operators in the auxiliary operator pool M′ is often chosen to be much less
+
+thanNop in Eq. (6).  WhileNu operators reﬁned fromM′ are expected to have the maximum
+
+overlap with corresponding operators identiﬁed in the ADAPT ansatz.  Therefore, ADAPT-
+
+Vx  promises  a  more  stable  convergence  as  shown  later  at  the  cost  of  slightly  increasing
+
+measurements scaling as NmN 4.
+
+Algorithm  1  The  ADAPT-V  VQE  algorithm  for  optimizing  the  wave  function  and  the
+energy.
+Input:  Reference state|Ψ0⟩ and Hamiltonian  ˆH.
+Output:  The energy and wave function of the target state.
+ 1:  Prepare the initial wave function|Ψ⟩ =|Ψ0⟩ in qubit representation.
+ 2:  Deﬁne the operator poolO.
+ 3:  Initialize the operator sequence⃗τ ={} and parameters ⃗θ ={0}.
+ 4:  while|⃗R|2 >ϵ do
+ 5:     Compute{⃗R}  with  Eq.  (13)  and  Eq.  (14)  using  Valdemoro’s  reconstruction  for  all
+       τu∈O.
+ 6:  ⃗τ←{⃗τ,τ1,...,τNu} where{τl}|Nul=1 areNu operators with the largest absolute residual
+       gradients and ⃗θ ={⃗θ, 0}.
+ 7:     Update  the  new  wave  function  with  Eq.(21)  and  the  new  energy  functional  with
+       Eq. (20).
+ 8:     Optimize parameters ⃗θ.
+ 9:  end while
+10:  Return E(⃗θ) and|Ψ(⃗θ)⟩.
+
+
+2.4    Excited-state approach
+
+The  calculation  of  excited-state  properties  is  essential  to  explore  the  photophysical  and
+
+photochemical processes in molecules38 and solid state materials.39 Due to the recent advent
+
+in experimental and theoretical simulations of molecular ground-state properties on quantum
+
+computers,  there  is  increasing  interest  in  exploring  excited  states  within  the  framework
+
+of  VQE.  Recent  development  of  VQE  algorithms  for  excited  states  includes  the  quantum
+
+subspace expansion (QSE) algorithm inspired by the linear response approach, 14 the folded
+
+
+                                                       11
+spectrum  (FS)  algorithm  by  ﬁnding  the  expectation  of  the  squared  Hamiltonian, 3,40  the
+
+witness-assisted variational eigenspectra solver (WAVES) algorithm that minimises the von
+
+Neumann entropy,41 and the variational quantum deﬂation (VQD) algorithm based on the
+
+orthogonal constraint.28,29
+
+    In this work, we implement the VQD algorithm for excited-state simulations since VQD
+
+requires  the  same  number  of  qubits  as  VQE  and  at  most  twice  the  circuit  depth.   In  the
+
+VQD algorithm, the eﬀective Hamiltonian is deﬁned as28
+
+
+                                        ˆHVQD =  ˆH +∑        βI|ΨI⟩⟨ΨI|,                                           (22)
+
+                                                           I
+
+where|ΨI⟩ is the previously foundI-th eigenstate of  ˆH andβI is the weight ofI-th eigenstate.
+
+Alternatively, we can also deﬁne the eﬀective Hamiltonian with the projected operator
+
+
+                                             ˆP  =I−∑        |ΨI⟩⟨ΨI|                                                 (23)
+
+                                                         I
+
+and
+                                                 ˆHVQD =  ˆP† ˆH ˆP.                                                     (24)
+
+
+Eq. (22) and Eq. (24) are equal when the previously found eigenstates are truly orthogonal.
+
+
+3    Resource Estimation
+
+
+The major challenge of simulating quantum chemistry on near-term noisy intermediate-scale
+
+hardware is the limited qubit coherence time, gate ﬁdelities and quantum processors.  The
+
+VQE  algorithm  is  expected  to  be  relatively  robust  to  systematic  errors  from  noise.   At
+the same time, the VQE algorithm reduces the circuit depth at the cost a large number of
+
+measurements.  Therefore, given the circuit depth is acceptable, the number of measurements
+
+is a crucial aspect to assess viability of a quantum algorithm.
+
+
+
+                                                        12
+    Table 1 shows quantum resource requirement for UCCSD, UCCGSD, ADAPT, ADAPT-
+
+V and ADAPT-Vx.  Here, we show the gate count for preparing the wave function and the
+
+number of measurements for performing the VQE algorithm.  Note that we do not consider
+
+parallelization of implementing a quantum circuit, which depends on the architectural details
+
+of  quantum  hardware.   UCCSD  and  UCCGSD  considered  as  widely  used  wave  function
+
+ansatzes are listed for comparison.  As shown in Table 1, the cost of energy measurement as
+
+quantiﬁed by terms in the Hamiltonian for UCCSD and UCCGSD simply scales asO((N−
+
+n)2n2)  andO(N 4),  respectively,  for  a  gradient-free  optimization  algorithms  and  a  ﬁxed
+
+number  of  Trotter  steps.   Here, n  is  the  number  of  electrons.   Meanwhile,  the  gate  count
+
+for preparing both UCCSD and UCCGSD wave functions scales asO(N 4).  On near-term
+
+quantum hardware, the circuit depth for state preparation rapidly become unaﬀordable as
+the size of system increases.
+
+    The  ADAPT  generates  a  maximally  compact  wave  function  ansatz,  which  is  partic-
+
+ularly  suitable  for  quantum  hardware  with  limited  coherence  time.   However,  additional
+
+measurements for the residual gradients scale asO(N 8), which may be potentially eﬃciently
+
+computed with massively parallization in future.  By contrast, ADAPT-V and ADAPT-Vx
+
+provide a good balance between the cost of state preparation and measurement.  Analogous
+
+to UCCSD and UCCGSD, the cost of measurement for implementing the ADAPT-V and
+
+ADAPT-Vx VQE algorithm scales only asO(N 4) andO(NmN 4), respectively.  Meanwhile,
+
+their cost of state preparation scales as the size of parameters ⃗θ in the wave function, which
+
+is often much less than N 4  (and (N−n)2n2)) as the size of system increases.  Therefore,
+
+ADAPT-V and ADAPT-Vx present two promising wave function ansatzes for quantum sim-
+ulations of practical chemical systems on near-term quantum hardware.
+
+    Recently, several strategies have been proposed for measurement reduction in the frame-
+
+work of VQE.12,42–45 Especially, Bonet-Monroig et al.  has presented a scheme for sampling
+
+all  elements  of  the  fermionic  2-RDM  usingO(N 2)  circuits,  each  of  which  requires  only  a
+
+localO(N)-depth measurement circuit.43 Combining with these techniques, both the state
+
+
+                                                     13
+preparation and measurement for ADAPT-V exhibits a signiﬁcantly low circuit complexity,
+
+which improves the viability of quantum simulations of large systems.
+
+Table 1 Resource estimation for implementing the VQE algorithm with UCCSD, UCCGSD,
+ADAPT, ADAPT-RDM, ADAPT-V and ADAPT-Vx.× indicates that the residual gradients are
+necessary to be computed. N  is the number of spin orbitals and n is the number of electrons.
+Ns≈NuNk is the size of parameters ⃗θ in the wave function. Nu is the number of operators to be
+updated at a time and Nk is the number of iterations in diﬀerent ADAPT ansates. Nm is the
+number of operators in the auxiliary operator pool.  ”Hamiltonian” and ”Residual Gradients”
+indicate the number of terms required to be measured in the Hamiltonian and the residual
+gradients.
+
+                                     Gate count      Hamiltonian       Residual Gradients
+                    UCCSD            (N−n)2n2              N 4                    ×
+                   UCCGSD                 N 4              N 4                    ×
+                    ADAPT                 Ns               N 4                   N 8
+                ADAPT-RDM                 Ns               N 4                   N 6
+                  ADAPT-V                 Ns               N 4                   N 4
+                  ADAPT-Vx                Ns               N 4                 NmN 4
+
+
+
+4    Results
+
+
+All calculations are performed with the modiﬁed ADAPT-VQE code, 46  which uses Open-
+
+Fermion47  for mapping fermion operators onto qubit operators and PYSCF 48  for all one-
+
+and two-electron integrals.  The energy and wave function are optimized with the Broyden-
+
+Fletcher-Goldfarb-Shannon (BFGS) algorithm implemented in SciPy. 49 Gradients are com-
+
+puted  with the  analytical  approach  in  Eq. (10).  Full  conﬁguration  interaction results  are
+used as the reference.  The operator pool is composed of the spin-adapted operators in order
+
+to avoid the spin contamination.  In this work, it is not able to use Eq. (12) as a convergence
+
+criteria for ADAPT-V and ADAPT-Vx since the approximate residual gradients are com-
+
+puted with Eq. (13) and Eq. (14).  Here,  we adopt another convergence criteria using the
+
+covariance of the expectation of the Hamiltonian,
+
+
+                                   δH =⟨Ψ| ˆH2|Ψ⟩−⟨Ψ| ˆH|Ψ⟩2 <ϵ                                        (25)
+
+
+                                                      14
+Hereafter, for simplicity, we use ADAPT-V(Nu) to indicate an ADAPT-V ansatz of Eq. (21)
+
+whereM containsNu operators and ADAPT-Vx(Nm,Nu) to indicate an ADAPT-Vx ansatz
+
+where M′  contains Nm  operators  and M  contains Nu  operators.   ADAPT-Vx(Nu)  is  an
+
+abbreviation of ADAPT-Vx(Nu,Nu).
+
+Table 2 Errors of the energy (in mHartree), the size of parameters ⃗θ (Ns) and the number of
+iterations (Nk) in the ADAPT, ADAPT-V and ADAPT-Vx with diﬀerent Nu. Nu is the number
+of operators to be updated at a time. Nm is the number of operators in the auxiliary operator
+pool M′ ( Nm = 30 if Nu< 30, otherwise Nm =Nu ).
+
+           ADAPT-V(Nu     )          ADAPT-Vx(Nu)          ADAPT-Vx(Nm,Nu)                ADAPT
+ Nu      Energy   Ns  Nk          Energy   Ns  Nk         Energy  Ns  Nk          Energy  Ns  Nk
+  1     3.08E+01     10     10        3.08E+01     10     10        4.72E-02     74      74         5.88E-02     63     63
+  5     3.96E+00     65     13        4.04E+00     85     17        4.17E-02     80      16         4.03E-02     80     16
+ 10    3.94E+00     70      7         3.95E+00     60      6         5.41E-02     80       8          3.96E-02     80      8
+ 20     6.42E-02    120     6         7.45E-02    100     5         2.74E-02    100      5          2.49E-02    100     5
+ 30     4.55E-02    115     4         2.45E-02    115     4         2.45E-02    115      4          1.80E-02    115     4
+ 40     4.17E-02    105     3         4.95E-02    105     3         4.95E-02    105      3          2.09E-02    105     3
+ 50     1.45E-02    125     3         1.41E-02    125     3         1.41E-02    125      3          9.74E-03    125     3
+
+
+
+4.1  H6 molecule
+
+Hydrogen chain is an interesting model system to explore elemental physical phenomena in
+modern condensed matter physics, such as an antiferromagnetic Mott phase and an insulator-
+
+to-metal transition.50–53 Here, a H6 molecule with each hydrogen atom equispaced along a
+
+line is used to assess diﬀerent variational approaches.
+
+    Firstly, we test the performance of ADAPT, ADAPT-V and ADAPT-Vx with diﬀerent
+
+number of operators to be updated in each iteration.  Table 2 shows errors of the energy,
+
+the total number of parameters and iterations as the function of Nu  for H6  at R = 1.5 ˚A.
+
+The convergence threshϵ is set to be 1× 10−4.  ADAPT-V and ADAPT-Vx VQE algorithms
+
+stop if either the convergence criteria is satisﬁed or the energy change is less than 1× 10−10
+
+Hartree.
+
+    As expected, the converged energy is not signiﬁcantly aﬀected by Nu since the accurate
+
+residual  gradients  of  Eq.  (11)  are  computed  in  ADAPT.  No  matter  how  many  operators
+
+                                                         15
+are  updated  in  each  iteration,  the  ordering  of  operators  is  always  determined  according
+
+to  corresponding  magnitude  of  the  residual  gradients,  which  guarantees  that  the  greatest
+
+amount of correlation eﬀect is restored. For diﬀerentNu values, the ADAPT energy converges
+
+to a higher precision at the cost of a longer operator sequence.  For example, the number of
+
+parameters in ADAPT(50) is∼ 2 times of that in ADAPT(1) while the error of the energy
+
+slightly decreases from 5.88×10−2 to 9.74×10−3 mHartree.  In addition, asNu increases, the
+
+number of iterations signiﬁcantly decreases so that the total number of energy evaluations
+
+will be also signiﬁcantly reduced.  Therefore, it is important to choose an appropriate Nu in
+
+order to achieve a delicate balance between the gate count and measurement.
+
+    ADAPT-V(Nu)  and  ADAPT-Vx(Nu)  exhibit  very  similar  errors  of  the  energy.   For  a
+
+small Nu  value, both ADAPT-V(Nu) and ADAPT-Vx(Nu) are hard to achieve the chemi-
+cal accuracy due to approximate residual gradients.  Especially, the energy computed with
+
+ADAPT-V(1) or ADAPT-Vx(1) signiﬁcantly deviates from the exact energy with the error
+
+of  30.8  mHartree.   ADAPT-V(5)  and  ADAPT-Vx(5)  perform  much  better  but  the  corre-
+
+sponding  VQE  procedures  still  stop  after  13  and  17  iterations,  respectively,  because  the
+
+energy change is too small.  This reveals that it is not able to improve the convergence by
+
+only adjusting the ordering of the operator sequence.  As Nu increases, errors of the energy
+
+for ADAPT-V(Nu) and ADAPT-Vx(Nu) signiﬁcantly decreases.  Therefore, operators that
+
+are identiﬁed as important can be included in the operator sequence as long as the Nu value
+
+is large enough.
+
+    As shown in ADAPT-V(Nu) and ADAPT-Vx(Nu), Nu = 30 is large enough to converge
+
+the energy.  Hence, in ADAPT-Vx(Nm,Nu), the number of operators, Nm, in the auxiliary
+operator pool is set to be greater than or equal to 30.  When Nu > 30, Nm is equal to Nu.
+
+The overall performance of ADAPT-Vx(Nm,Nu) is very close to that of ADAPT. Especially,
+
+the size of the operator sequence and the number of iterations are almost the same in these
+
+two  ansatzes.   This  indicates  that  ADAPT-Vx(Nm,Nu)  is  able  to  generate  an  ansatz  as
+
+maximally  compact  as  ADAPT  while  the  number  of  measurements  required  to  compute
+
+
+                                                      16
+residual gradients is signiﬁcantly reduced.
+
+    In principle, ADAPT with a smallNu generates a low depth circuit ansatz while ADAPT-
+
+V  and  ADAPT-Vx  require  a  larger Nu  which  means  a  more  complex  circuit  to  achieve
+
+the  same  accuracy.   However,  on  noisy  quantum  hardware,  errors  for  computing  residual
+
+gradients are unavoidable due to imperfect ﬁdelity and measurement.  Therefore, a large Nu
+
+is often necessary to implement ADAPT on near-term quantum hardware.  As Nu is greater
+
+than or equal to 20, the performance of ADAPT-V(Nu) and ADAPT-Vx(Nu) is comparable
+
+to ADAPT. Considering errors for measuring the 2-RDM on quantum hardware, ADAPT-
+
+V(Nu) and ADAPT-Vx(Nu) may still require a largerNu value than ADAPT. However, the
+
+diﬀerence between ADAPT-V (or ADAPT-Vx) and ADAPT is expected to be quite small
+
+when they are implemented on noisy quantum hardware.
+    In Figure 1, we present the ground-state potential energy curve and the absolute energy
+
+error with respect to the FCI results for ADAPT-V(10), ADAPT-V(30), ADAPT-Vx(30,10)
+
+and ADAPT. Here, ϵ is set to be 1× 10−4.  In previous studies, ADAPT had been demon-
+
+strated  to  be  quite  accurate  for  small  molecules,  such  as  LiH,  BeH2  and  H6.   ADAPT  is
+
+expected to be able to reproduce the FCI result since the exact wave function can be well
+
+approximated  as  a  series  of  two-body  unitary  transformation  acting  on  a  reference  wave
+
+function.   For  the  ground  state  of H6  molecule,  the  maximum  deviation  of  ADAPT  with
+
+respect to FCI is 0.16 kcal/mol at 2.0 ˚A.
+
+    ADAPT-V(30) produces almost exactly the same potential energy curve as ADAPT. As
+
+R(H-H) increases from 0.5 to 2.0  ˚A, ADAPT-V(30) shows a random ﬂuctuation of errors
+
+in energy that are one order of magnitude less than 1 kcal/mol.  This means that for H6
+moleculeNu = 30 is large enough to suppress the inﬂuence of approximate residual gradients
+
+computed  with  the  cumulant  3-RDM.  This  conclusion  is  consistent  with  the  analysis  as
+
+discussed  above.   In  contrast,  ADAPT(10)  shows  an  overall  monotonic  increase  of  errors
+
+as the bond length of Hydrogen-Hydrogen elongates, that is, the correlation eﬀect becomes
+
+stronger.  At 1.9 ˚A, ADAPT(10) exhibits a maximum deviation of 6.33 kcal/mol in energy.
+
+
+                                                      17
+Therefore,  for  the  strongly  correlated  systems,  the  Valdemoro’s  reconstruction  of  3-RDM
+
+from the 2-RDM is not able to give an accurate description of the importance of operators.
+
+In addition, there is a sudden decreasing of the error when the bond length increases from
+
+1.8 ˚A to 1.9 ˚A. This discontinue mainly results from the small Nu  for the scanning of the
+
+potential  surface  if  some  signiﬁcant  operators  are  occasionally  included  for  one  structure
+
+while missed for another structure.
+
+    The  size  of  the  auxiliary  operator  pool M′  for  ADAPT-Vx(30,10)  is  the  same  as  the
+
+number of updated operators for ADAPT-V(30).  Therefore, a very similar performance of
+
+ADAPT-V(30) and ADAPT-Vx(30,10) on the simulation of the potential energy surface for
+
+H6  molecule  is  foreseeable.   As  shown  in  Table  3,  ADAPT-V(30)  and  ADAPT-Vx(30,10)
+
+exhibit the same NPE of 0.09 kcal/mol.  In addition, although in each iteration 10 operators
+have  been  updated  in  both  ADAPT-Vx(30,10)  and  ADAPT-V(10),  ADAPT-Vx(30,10)  is
+
+much more stable and accurate than ADAPT-V(10) as R(H-H) increases.  It is clear that
+
+10 operators reﬁned from the auxiliary operator pool M′ with exact residual gradients are
+
+much better than those 10 operators with largest gradients in M′.
+
+    Figure  1  shows  the  ﬁrst  excited-state  potential  energy  curve  and  the  absolute  energy
+
+errors with ADAPT-V(10), ADAPT-V(30), ADAPT-Vx(30,10) and ADAPT. The quality of
+
+the ground state is crucial for excited-state calculations within the VQD framework. Here, all
+
+ground state wave functions are prepared with ADAPT since it has been demonstrated to be
+
+accurate enough for ground state calculations.  In addition, because spin-adapted operators
+
+have been used in this work to avoid the spin contamination, it is necessary to perform VQD
+
+simulations  with  diﬀerent  reference  states  in  order  to  optimize  the  wave  function  to  the
+target state.  For theH6 molecule, both HOMO→LUMO and HOMO→LUMO+1 excitation
+
+conﬁgurations have been used as the reference state, respectively, and the optimized wave
+
+function with a lower excitation energy is considered as the ﬁrst excited state.
+
+    Unlike  the  ground  state  case,  all  of  four  wave  function  ansatzes  yield  quite  promising
+
+results with a large error of 0.23 kcal/mol for ADAPT-V(10).  It is worth mentioning that
+
+
+                                                       18
+Figure 1 The ground-state potential energy curve and absolute energy error with respect to the
+FCI result for H6 computed with ADAPT-V(30), ADAPT-V(10), ADAPT-Vx(30,10) and
+ADAPT.
+
+
+as  the  orthogonal  constraint  condition  is  introduced,  the  converged  excited-state  energies
+
+is possibly slightly lower than corresponding FCI energies.  For example, the ﬁrst excited-
+
+state energies computed with ADAPT(30) and FCI are -2.8221455 and -2.8221449 Hartree,
+
+respectively.   This  mainly  results  from  the  numerical  precision  of  the  ground  state  wave
+function.  Therefore, it is able to avoid this problem with the ground state obtained from
+
+ADAPT using a tighter convergence criteria.
+
+    In Table 3, we present the nonparallelity error (NPE) for the ground state and the ﬁrst
+
+excited state simulations with diﬀerent ADAPT ansatzes.  NPE is deﬁned as the diﬀerence
+
+between the maximum and minimum error, which is a useful measure of performance, since
+
+we are interested in relative energetics in most chemical applications.  In the ground state
+
+                                                       19
+and ﬁrst excited states, ADAPT-V(10) is the worst one in four wave function ansatzes in
+
+terms of the NPE.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 2 The ﬁrst excited-state potential energy curve and absolute energy error with respect to
+the FCI result for H6 computed with ADAPT-V(30), ADAPT-V(10), ADAPT-Vx(30,10) and
+ADAPT.
+
+
+Table 3 Nonparallelity error (NPE) (in kcal/mol) in the ground state (S0) and ﬁrst excited state
+(S1) of H6 for various variational approaches.
+
+                                                              S0      S1
+                                      ADAPT-V(30)            0.09    0.11
+                                      ADAPT-V(10)            6.31    0.22
+                                    ADAPT-Vx(30,10)          0.09    0.14
+                                          ADAPT              0.16    0.08
+
+
+
+
+
+
+                                                     20
+4.2  N2 molecule
+
+The dissociation ofN2 is very challenging for many traditional electronic structure methods
+
+as it involves the breaking of a triple bond.54,55 At stretched bond lengths, there are a total of
+
+6 electrons that are strongly entangled.  Therefore, UCC with single and double excitations
+
+is hard to correctly describe the dissociation potential energy surface.  It often should include
+
+triples, quadruples and higher excitations to obtain an accurate result.  The ADAPT ansatz
+
+is expected to provide a correct description of the strongly correlated eﬀect.  Here, we apply
+
+ADAPT to study the dissociation ofN2.  All calculation are performed with 1s22s2 electrons
+frozen, which result in a model system that contains 6 electrons and 6 orbital.  Here, we set
+
+ϵ = 1× 10−4 for the ground state and ϵ = 2× 10−5 for the ﬁrst excited state (S1) since the
+
+accurate description of S1 of N2 is extremely challenging.
+
+    Figure  3  shows  the  ground-state  potential  energy  curve  and  the  absolute  energy  error
+
+as  a  function  of  N-N  bond  length  for  ADAPT-V(10),  ADAPT-V(30),  ADAPT-Vx(30,10)
+
+and ADAPT. The overall errors of ADAPT-V(30), ADAPT-Vx(30,10) and ADAPT are less
+
+than 0.1 kcal/mol except for the error of ADAPT-V(30) at 1.1 ˚A, which is 0.11 kcal/mol.
+
+Unlike the ground state simulation ofH6, the ground-state dissociation curve computed with
+
+ADAPT-V(10) agrees very well with the FCI curve.  However, the NPE of ADAPT-V(10) is
+
+0.73 kcal/mol, which is much larger than other three ansatzes.
+
+    As the Nitrogen-Nitrogen bond length increases, the character of the ﬁrst excited state of
+N2 is keeping changing.  Here, four reference states including the Hartree-Fock ground state
+
+and three single excitation conﬁgurations (HOMO→LUMO, HOMO→LUMO+1,  HOMO-
+
+2→LUMO) have been used to obtain an accurate description of the ﬁrst excited state.  The
+
+overall NPEs for S1  of N2  are much larger than those for the ground state.  Analogous to
+
+the performance of ADAPT-RDM(10) for the ground state simulation of H6,  the NPE of
+
+ADAPT-RDM(10)  is  as  large  as  4.38  kcal/mol  for S1  of N2.   In  addition,  there  is  also  a
+
+sudden  increasing  of  the  error  of  the  energy  when  the  bond  length  increases  from  1.9  ˚A
+
+to 2.0 ˚A. When the N-N bond elongates, especially larger than 2.4 ˚A, all of four ansatzes
+
+
+                                                       21
+exhibit relatively large deviations of the energy because there exist a larger number of near-
+
+degenerate excited states.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 3 The ground-state potential energy curve and absolute energy error with respect to the
+FCI result for N2 computed with ADAPT-V(30), ADAPT-V(10), ADAPT-Vx(30,10) and
+ADAPT.
+
+
+Table 4 Nonparallelity error (NPE) (in kcal/mol) in the ground state (S0) and ﬁrst excited state
+(S1) of N2 for various variational approaches.
+
+                                                               S0      S1
+                                       ADAPT-V(30)            0.11    0.66
+                                       ADAPT-V(10)            0.73    4.38
+                                    ADAPT-Vx(30,10)           0.08    0.66
+                                           ADAPT              0.05    0.40
+
+
+
+
+
+
+
+                                                      22
+Figure 4 The ﬁrst excited-state potential energy curve and absolute energy error with respect to
+the FCI result for N2 computed with ADAPT-V(30), ADAPT-V(10), ADAPT-Vx(30,10) and
+ADAPT.
+
+5    Conclusion
+
+
+In this work, we present an eﬃcient adaptive variational quantum algorithm based on den-
+
+sity matrix matrices.  The original ADAPT ansatz generate a maximally compact operator
+
+sequence  at  the  cost  of  a  huge  number  of  measurements  that  scales  asO(N 8).   In  order
+
+to reduce this overhead, we ﬁrstly reformulate the residual gradients using the 2-RDM and
+
+3-RDM, which reduces the scaling of measurement toO(N 6).  Furthermore, we propose to
+
+build the 3-RDM as approximate functionals of the 2-RDM using Valdemoro’s reconstruc-
+
+tion.  We refer this ansatz as ADAPT-V, which requires only the measurement of 2-RDM on
+quantum hardware to determine the optimal operator sequence.  Therefore, the number of
+
+measurements for computing the energy and gradients in ADAPT-V scales only asO(N 4).
+
+                                                     23
+In addition, we introduce an ADAPT-Vx ansatz that reﬁnes operators to be updated with
+
+exact  residual  gradients  from  a  large  auxiliary  operator  pool.   The  ADAPT-Vx  ansatz  is
+
+more stable than the ADAPT-V ansatz with the number of update operators being small
+
+enough while at a slightly increasing measurements.
+
+    The  performance  of  ADAPT-V  and  ADAPT-Vx  has  been  assessed  by  computing  the
+
+ground-state  and  exicted  state  potential  energy  curve  of  two  strongly  correlated  systems,
+
+a  ﬁnite  Hydrogen  chain H6  and  a  triple-bond  molecule N2.   The  benchmark  calculations
+
+reveal that ADAPT-V and ADAPT-Vx with moderateNu are accurate for both ground and
+
+excited states.  Considering the reduced circuit depth and measurement, the performance of
+
+ADAPT-V and ADAPT-Vx is particularly encouraging for simulating chemical systems on
+
+near-term quantum computers.
+
+
+6    Acknowledgments
+
+
+This  work  is  supported  by  the  National  Natural  Science  Foundation  of  China  (21688102,
+21825302,  22073086,  21803065),  by  National  Key  Research  and  Development  Program  of
+
+China (2016YFA0200604), Anhui Initiative in Quantum Information Technologies (AHY090400),
+
+the Fundamental Research Funds for the Central Universities (WK2060000018).
+
+
+References
+
+ (1)A. Aspuru-Guzik, A. D. Dutoi, P. J. Love, and M. Head-Gordon,  Science     309, 1704 (2005).
+
+
+ (2)J. Du et al.,  Phys. Rev. Lett.     104, 030502 (2010).
+
+
+ (3)A. Peruzzo et al.,  Nat. Commun.     5, 4213 (2014).
+
+ (4)P. J. J. O’ Malley et al.,  Phys. Rev. X     6, 031007 (2016).
+
+
+ (5)A. Kandala et al.,  Nature     549, 242 (2017).
+
+
+ (6)C. Hempel et al.,  Phys. Rev. X     8, 031022 (2018).
+
+                                                        24
+ (7)F. Arute et al.,  Science     369, 1084 (2020).
+
+
+ (8)J. Preskill,  Quantum     2, 79 (2018).
+
+
+ (9)Y. Cao et al.,  Chem. Rev.     119, 10856 (2019).
+
+
+(10)S. McArdle, S. Endo, A. Aspuru-Guzik, S. C. Benjamin, and X. Yuan,  Rev. Mod. Phys.       92, 015003
+      (2020).
+
+
+(11)J. D. Whitﬁeld, J. Biamonte, and A. Aspuru-Guzik,  Mol. Phys.       109, 735 (2011).
+
+
+(12)J. R. McClean, J. Romero, R. Babbush, and A. Aspuru-Guzik,  New J. Phys.       18, 023023 (2016).
+
+
+(13)J. Romero et al.,  Quantum Sci. Technol.       4, 014008 (2018).
+
+(14)J. R. McClean, M. E. Kimchi-Schwartz, J. Carter, and W. A. de Jong,  Phys. Rev. A: At., Mol., Opt.
+
+      Phys. 95, 042308 (2017).
+
+
+(15)J. I. Colless et al.,  Phys. Rev. X       8, 011021 (2018).
+
+
+(16)Y. Shen et al.,  Phys. Rev. A: At., Mol., Opt. Phys.       95, 020501 (2017).
+
+
+(17)J. Lee, W. J. Huggins, M. Head-Gordon, and K. B. Whaley, J. Chem. Theory Comput.       15, 311 (2019).
+
+(18)M. Nooijen,  Phys. Rev. Lett.       84, 2108 (2000).
+
+
+(19)P. Piecuch, K. Kowalski, P.-D. Fan, and K. Jedziniak,  Phys. Rev. Lett.       90, 113001 (2003).
+
+
+(20)E. R. Davidson,  Phys. Rev. Lett.       91, 123001 (2003).
+
+
+(21)S. Ronen,  Phys. Rev. Lett.       91, 123002 (2003).
+
+(22)H. R. Grimsley, S. E. Economou, E. Barnes, and N. J. Mayhall,  Nat. Commun.       10, 3007 (2019).
+
+
+(23)D. Poulin et al.,  Quantum Info. Comput.       15, 361 (2015).
+
+
+(24)R. Babbush, J. McClean, D. Wecker, A. Aspuru-Guzik, and N. Wiebe, Phys. Rev. A       91, 022311 (2015).
+
+(25)F. Colmenero, C. P´erez del Valle, and C. Valdemoro,  Phys. Rev. A       47, 971 (1993).
+
+
+(26)F. Colmenero and C. Valdemoro,  Phys. Rev. A       47, 979 (1993).
+
+
+(27)F. Colmenero and C. Valdemoro,  Int. J. Quantum Chem.       51, 369 (1994).
+
+                                                                   25
+(28)O. Higgott, D. Wang, and S. Brierley,  Quantum       3, 156 (2019).
+
+
+(29)T. Jones, S. Endo, S. McArdle, X. Yuan, and S. C. Benjamin,  Phys. Rev. A       99, 062304 (2019).
+
+
+(30)D. A. Mazziotti,  Phys. Rev. Lett.       97, 143002 (2006).
+
+
+(31)D. A. Mazziotti,  Phys. Rev. A       75, 022505 (2007).
+
+(32)D. A. Mazziotti,  ijqc       70, 557 (1998).
+
+
+(33)D. A. Mazziotti,  Chem. Phys. Lett.       289, 419 (1998).
+
+
+(34)D. A. Mazziotti,  Chem. Phys. Lett.       326, 212 (2000).
+
+
+(35)D. A. Mazziotti,  Phys. Rev. A: At., Mol., Opt. Phys.       69, 012507 (2004).
+
+(36)W. Kutzelnigg and D. Mukherjee,  The Journal of Chemical Physics       110, 2800 (1999).
+
+
+(37)W. Kutzelnigg and D. Mukherjee,  J. Chem. Phys.       120, 7350 (2004).
+
+
+(38)A. Dreuw and M. Head-Gordon,  Chem. Rev.       105, 4009 (2005).
+
+
+(39)Y.-H. Kim and A. G¨orling,  Phys. Rev. Lett.       89, 096402:1 (2002).
+
+(40)L. Wang and A. Zunger,  J. Chem. Phys.       100, 2394 (1994).
+
+
+(41)R. Santagati et al.,  Sci. Adv.       4, eaap9646 (2018).
+
+
+(42)V. Verteletskyi, T.-C. Yen, and A. F. Izmaylov,  J. Chem. Phys.       152, 124114 (2020).
+
+
+(43)X. Bonet-Monroig, R. Babbush, and T. E. O’Brien,  Phys. Rev. X       10 (2020).
+
+(44)A. Zhao et al.,  Phys. Rev. A       101 (2020).
+
+
+(45)A. Ralli, P. Love, A. Tranter, and P. Coveney,  arXiv:quant-ph       arXiv:2012.02765 (2020).
+
+
+(46)Adapt-vqe,  https://github.com/mayhallgroup/adapt-vqe.
+
+
+(47)J. R. McClean et al.,  arXiv:quant-ph       arXiv:1710.07629 (2017).
+
+(48)Q. Sun et al.,  Wiley Interdisciplinary Reviews:  Computational Molecular Science       8, e1340 (2018).
+
+
+(49)P. Virtanen et al.,  Nature Methods       17, 261 (2020).
+
+
+                                                                   26
+(50)A. R. Welden, A. A. Rusakov, and D. Zgid,  J. Chem. Phys.       145, 204106 (2016).
+
+
+(51)A. A. Rusakov and D. Zgid,  J. Chem. Phys.       144, 054106 (2016).
+
+
+(52)M. Motta et al.,  arXiv:cond-mat.str-el       arXiv:1911.01618 (2019).
+
+
+(53)Y. Liu, T. Shen, H. Zhang, and B. Rubenstein,  J. Chem. Theory Comput.       16, 4298 (2020).
+
+(54)P. E. M. Siegbahn,  Int. J. Quantum Chem.       23, 1869 (1983).
+
+
+(55)J. Ma, S. Li, and W. Li,  J. Comput. Chem.       27, 39 (2006).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                  27

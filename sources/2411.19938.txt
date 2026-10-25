@@ -1,0 +1,506 @@
+                Probing quantum critical phase from neural network wavefunction
+
+                                                              Haoxiang Chen
+                     School  of  Physics,  Peking  University,  Beijing  100871,  People’s  Republic  of  China.  and
+                                      ByteDance  Research,  Fangheng  Fashion  Center,  No.   27,
+                            North  3rd  Ring  West  Road,  Haidian  District,  Beijing  100098,  P.R.  China
+
+                                                      Weiluo Ren and Xiang Li∗
+                                      ByteDance  Research,  Fangheng  Fashion  Center,  No.   27,
+                            North  3rd  Ring  West  Road,  Haidian  District,  Beijing  100098,  P.R.  China
+
+                                                                  Ji Chen†
+                     School  of  Physics,  Peking  University,  Beijing  100871,  People’s  Republic  of  China.  and
+                                  Interdisciplinary  Institute  of  Light-Element  Quantum  Materials,
+                                          Frontiers  Science  Center  for  Nano-Optoelectronics,
+                                   Peking  University,  Beijing  100871,  People’s  Republic  of  China
+                                                        (Dated: December 2, 2024)
+                  One-dimensional (1D) systems and models provide a versatile platform for emergent phenomena
+               inducedbystrongelectroncorrelation. Inthiswork, weextendthenewlydevelopedrealspaceneural
+               network quantum Monte Carlo methods to study the quantum phase transition of electronic and
+               magnetic properties. Hydrogen chains of different interatomic distances are explored systematically
+               with both open and periodic boundary conditions, and fully correlated ground state many-body
+               wavefunction is achieved via unsupervised training of neural networks. We demonstrate for the first
+               time that neural networks are capable of capturing the quantum critical behavior of Tomonaga-
+               Luttinger liquid (TLL), which is known to dominate 1D quantum systems. Moreover, we reveal
+               the breakdown of TLL phase and the emergence of a Fermi liquid behavior, evidenced by abrupt
+               changes in the spin structure and the momentum distribution. Such behavior is absent in commonly
+               studied 1D lattice models and is likely due to the involvement of high-energy orbitals of hydrogen
+               atoms. Our work highlights the powerfulness of neural networks for representing complex quantum
+               phases.
+
+
+                    I.  INTRODUCTION                                      ferromagnetic phase, spiral order and various antiferro-
+                                                                          magnetic orderings [3, 4]. However, the hydrogen chain
+  Understanding quantum phases emerged and phase                          is one of the emblematic examples of strongly corre-
+transitions in interacting many-electron systems have                     lated systems, where quantum fluctuation may be strong
+been an interesting yet challenging question in the trans-                enough to destroy mean field approximations.  There-
+disciplinary field of condensed matter physics and quan-                  fore, in recent years, amounts of high-level methods have
+tum chemistry.  One-dimensional (1D) interacting sys-                     been applied to solve this system [5–9].  These studies
+temsarebelievedtohavedistinctdifferencesfromhigher-                       have pushed forward theaccuracy of groundstate energy,
+dimensional systems.  A well-known phenomenon that                        leading to more reliable determination of phase transi-
+emerged in 1D is the Tomonaga-Luttinger liquid (TLL),                     tions, including dimerization, metal-insulator transition
+featuring linear gapless modes and quasi-long range cor-                  and magnetic phase transition [4, 8, 10]. At large inter-
+relation. The TLL behavior applies to a vast range of 1D                  atomic distance, these advanced calculations have now
+models, such as the Heisenberg model and the one-band                     agreed on a TLL phase with quasi-long range q = π anti-
+Hubbard model, and stands generally true.  However,                       ferromagnetic order, but different behaviors are noted at
+numerical studies have found exceptions with extended                     smaller atomic separation [4, 8]. The knowledge of quan-
+terms in model Hamiltonian, showing evidence of mag-                      tum phase transition across a wide range of interatomic
+netic ordering [1], or deviation from universality class                  distances is yet to converge.
+[2]. These exceptions bring up an important question of                      Recent years have witnessed the combination of deep
+whether TLL is universal for more realistic 1D systems.                   neural network wavefunction  ansatz  with variational
+  The hydrogen chain is a 1D system with real atoms,                      Monte Carlo (VMC) in solving complex electronic struc-
+which is a useful platform to probe quantum phases.                       ture [11–13], which is referred to as neural network quan-
+Mean-field ab initio calculations of equispaced hydrogen                  tum Monte Carlo (NNQMC). NNQMC achieves accu-
+chains have also revealed magnetic ordering, including                    racy comparable to, or even better than, other meth-
+                                                                          ods on the highest level, and provides desirable compu-
+                                                                          tational scaling to system size [11, 13, 14]. Besides the
+                                                                          ground state energy, other physical properties have been
+∗ lixiang.62770689@bytedance.com                                          acquired within the NNQMC framework, such as polar-
+† ji.chen@pku.edu.cn
+                                                                          ization[15], wavefunctionlocalization[13], andradialdis-
+                                                                                                                                            2
+
+tribution function in boson Helium bulk [16]. It is now a                takes minimum. Due to the complexity of ansatz, the in-
+legitimate question whether NNQMC can reliably probe                     tegration is carried out with Markov chain Monte Carlo
+strong quantum fluctuation and spin correlation, hence                   (MCMC). When the parameters are set, the real space
+describing emergent quantum phase and phase transi-                      wavefunction is represented by the neural network, which
+tions.                                                                   takes in electron coordinates and returns the wavefunc-
+  In this work, we extend real space NNQMC to explor-                    tion value.
+ing quantum phases in hydrogen chain from an  ab  ini-                      In this work, we use FermiNet [11] and DeepSolid [13]
+tio perspective. Calculations are performed over a wide                  architectures for open and periodic hydrogen chains, re-
+range of interatomic distances, covering electronic struc-               spectively. For a brief description, the FermiNet ansatz
+ture from weak to strong correlation. Real-space neural                  takes a Slater determinant form
+network wavefunction encodes correlation effects beyond                                      Ψnet = det[ϕi(xj; x/j)]            (2)
+low-energy bands considered in lattice models and sec-
+ond quantized ab initio approaches with small basis sets.                to enforce antisymmetry.  ϕi stands for a neural network
+To probe the quantum phases associated with electronic                   orbital, where xj is the spin and position of j-th electron
+and magnetic structures, we develop one- and two-body                    and x/j denotes all the spin and position besides the j-th
+reduced density matrices (1- and 2-RDM) sampling in                      electron. DeepSolid ansatz [13] has the form
+NNQMC. Magnetic fluctuation is also tested with the
+perturbation of an external magnetic field in NNQMC.                                     Ψnet = det[eiki·rjuki(rj; r/j)],         (3)
+InSec. II,wewilldescribethekeyframeworkofNNQMC
+and the methodological developments to probe electronic                  where uki are generalized Bloch wavefunctions, also rep-
+and magnetic structures. In Sec. III, we present and dis-                resented by neural networks. To encode the translational
+cuss the main results on spin fluctuation, TLL behavior                  symmetry, the coordinates ri are mapped with periodic
+and the transition to Fermi liquid. Our results show that                functions before going into the neural network.  It is
+neural networks are powerful architectures to represent                  worth noting that ϕi and uki can capture electron corre-
+real space wavefunction of correlated systems, even for                  lations, hence they should be seen differently from single
+capturing quantum critical phases with strong quantum                    particle orbitals used in the Hartree-Fock method and
+fluctuation, as well as quantum phase transitions.                       the Kohn-Sham scheme.
+
+
+                       II.  METHODS                                              B.  Sampling reduced density matrices
+
+  The overall workflow of this study is shown in Fig.                       With a real space neural network wavefunction, we can
+1. First, the neural network is trained with an unsuper-                 obtain RDMs via implementation of a robust sampling
+vised learning process according to the variational prin-                scheme. 1-RDM and 2-RDM are sampled with a N + 1
+ciple. After training, electronic and magnetic properties                or a N + 2-dimensional integral, where N is the number
+are extracted from the optimal many-body neural net-                     of electrons, defined as
+work wavefunction, either by direct stochastic samplings                                      Z
+or via 1- and 2-RDMs. The behaviors of different quan-                           Γ(1)ij   = X    dR dr′a  Ψ∗(R) Ψ(R′a)
+tum phases are then probed from the calculated proper-                                     a
+ties.                                                                                                 × φ∗i (ra)φj(r′a)            (4)
+
+                                                                                            Z
+      A.  Neural network quantum Monte Carlo                                  Γ(2)ijkl = X     dR dr′a dr′b Ψ∗(R) Ψ(R′′ab)
+                                                                                        a̸=b
+  Neural network quantum Monte Carlo used in this                                                    × φ∗i (ra)φ∗j(rb)φk(r′a)φl(r′b),  (5)
+work is a variant of real space variational Monte Carlo                  where  R  = {r1, r2,··· , rN} contains all electron coor-
+(VMC). In VMC, the solution to the Schrödinger equa-                     dinates,  R′a  = {r1,··· , ra−1, r′a, ra+1,···}, and  R′′ab  =
+tion is approximated by trial wavefunction  ΨT (r; α),                   {r1,··· , r′a,··· , r′b,···}. To accelerate the convergence,
+known as ansatz, which is controlled by a set of parame-                 importance sampling is used and the integrals become,
+ters α. In NNQMC, neural networks are used as ansatz                                             h Ψ(R′                i
+to enhance the expressivity. The unsupervised training                                  E|Ψ|2,f        a) φ∗i (ra)φj(r′a)
+of neural network in NNQMC proceeds toward obtaining                       Γ(1)                    Ψ(R)      f(r′a)
+optimized network parameters so that the energy expec-                       ij   = X                NiNj                      (6)
+                                                                                     a            h Ψ(R′′                            i
+tation                                                                                                     φ∗i (ra)φ∗j (rb)φk(r′a)φl(r′b)
+                                                                                         E|Ψ|2,f        ab)
+                                                                                                     Ψ(R)          f(r′a)f(r′b)
+                       Ev = ⟨ΨT|H|ΨT⟩                                      Γ(2)ijkl = X                  NiNjNkNl              (7)
+                                ⟨ΨT|ΨT⟩                (1)                           a̸=b
+                                                                                                                                                 3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1.  Workflow of neural network quantum Monte Carlo on hydrogen chain. The neural network ansatz takes in
+all electron position, and evaluates the wavefunction value. The parameters of the neural network ansatz are optimized to lower
+the total energy, and the wavefunction is variational. With the optimal neural network many-body wavefunction, properties can
+be sampled with Monte Carlo, such as the one- and two-particle reduced density matrices ρ(r, r′), ρ(r1, r2; r′1, r′2), and the spin
+structure factors Sq, from which the magnetic order can be probed. For an ordered magnetic phase, the magnetism survives
+to the thermal dynamic limit. Tomonaga-Luttinger liquid (TLL) is critical, where the magnetism is quasi-long ranged. Fermi
+liquid is disordered, and magnetic perturbation induces only local response.
+
+
+where E|Ψ|2,f stands for the average according to sam-                      eigenvector of the position operator in the space of the
+pling of  R and  r′a, r′b according to  |Ψ|2 and  f(r′)  =                  N (the number of electrons) most occupied NOs.
+P
+   i |φi(r′)|2, respectively.   Ni  = Ef |φi(r′a)|2/f(r′a)1/2
+is defined to normalize φi.                                                     C.  Sampling structure factor and momentum
+  For periodic systems, while wavefunction Ψ is periodic,                                              distribution
+localized orbitals φi are not. Hence, RDMs for periodic
+systems are sampled in a slightly different way, for exam-                     The charge and spin structure factors are calculated
+ple 1-RDM is evaluated as                                                   by real space MCMC sampling. By performing Fourier
+                   Z                                                        transformation of rj, rk separately, the charge structure
+     Γ(1)ij   = X                                                           factor is,
+               a    cell dRdr′aΨ∗(R) Ψ(R′a)
+                  ∞X                      ∞X                                              Sρ(q) = ⟨(nq↑ + nq↓)(n∗q↑ + n∗q↓)⟩c,      (10)
+            ×          φ∗i (ra + aT)           φj(r′a + aT) ,  (8)          and the spin structure factor is,
+               T=−∞                    T=−∞
+where a is lattice constant, and the summation over  T                                    Sσ(q) = ⟨(nq↑ − nq↓)(n∗q↑ − n∗q↓)⟩c,      (11)
+
+counts for periodicity of Ψ and is shifted to a single prim-                where the subscript  c denotes the connect part, and
+itive cell. The evaluation of orbital i should in principle                 nq↑  = R dr eiqrn↑(r). For each q point,  nq↑ can be ef-
+contain all the periodic images, and we take a real space                   ficiently sampled by nq↑ = Ei∈spin−up[eiqri], where ri is
+cutoff to include images up to the next nearest.                            the position of all spin-up electrons in each MCMC step.
+  From RDMs, the spin order parameter and spin-spin                            The momentum distribution function is defined as
+correlation function can be calculated. ⟨Szi ⟩ is calculated                n(k) ≡ ⟨c†kck⟩. ByFouriertransformationintorealspace,
+with the diagonal elements of 1-RDM.                                                              Z
+                                                                                       n(k) = ⟨      drdr′eikrc†(r)e−ikr′c(r′)⟩      (12)
+⟨Szi Szj ⟩ = Γ(1)↑ii    + Γ(1)↓ii    + Γ(2)↑↑ijij   + Γ(2)↓↓ijij  − Γ(2)↑↓ijij  − Γ(2)↑↓jiji  ,  Z
+                                                                   (9)                        =     dr′eikr′ Z   dr⟨c†(r + r′)c(r)⟩     (13)
+where Γ(µ)ij   = ⟨c†iµcjµ⟩, Γ(2)µνijkl   = ⟨c†iµc†jνclνckµ⟩. The elec-
+tron occupation on a certain basis set is calculated as                     where ⟨c†(r + r′)c(r)⟩ can be sampled from real space. A
+n  =  Tr(Γ(1)S), where  S is the overlap matrices, and                      set of electron positions is sampled with importance,
+Γ(1) = Γ(1)↑ + Γ(1)↓. Natural orbital (NO) is the eigen-                       Z                                    Ψ(r1 + r′, r2, ...)
+vector of 1-RDM, and the corresponding eigenvalue gives                           dr⟨c†(r + r′)c(r)⟩ = E|Ψ|2                                  (14)
+the NO occupation. Wannier orbitals are acquired by the                                                                Ψ(r1, r2, ...)
+                                                                                                                                            4
+
+where r1,··· , rN are generated from MCMC with weight
+|Ψ|2.   r′  =  ma,  m ∈ {0, 1,··· , N − 1} and a is lattice
+constant.
+  For small periodic systems, we use the twisted bound-
+ary condition, reading c†(r + L) = eiθc†(r). The equa-
+tions remain unchanged, except the k-points are shifted
+to k = (2mπ + θ)/N, where N is the number of atoms in
+the supercell, and m is also an integer less than N.
+
+
+          III.  RESULTS AND DISCUSSION
+
+   A.  Validation of neural network wavefunctions
+
+  First of all, to demonstrate the accuracy of NNQMC,
+we compare the energy of few-atom equispaced hydrogen
+chains under the open boundary condition (OBC) with
+the other state-of-the-art methods (Fig. 2). In our cal-
+culations, the equilibrium bond length is around 1.8 aB,
+and the energy minimum is 0.56561(5) Eh, as shown in
+Fig. 2(a). The inset shows a comparison of the energy of
+a 10-atom chain with other high-level theories reported
+in the literature. One can see that for these short chains,
+NNQMC and other high-level theories can reach satisfac-
+tory consistency, within 1 mEh for energy calculation. In
+theseothercalculations, alimitedbasissetis usedandan
+extrapolation to the complete basis set limit is necessary
+to achieve good energy evaluation [17]. In our NNQMC
+calculations, real space wavefunction is achieved, which
+automaticallycorrespondstothecompletebasissetlimit.
+  Overall, the energy agreement indicates a reliable
+ground state wavefunction obtained by NNQMC, and
+it provides confidence to further analyze wavefunction
+to extract physical properties and to extend to larger                   FIG. 2. Validation of neural network wavefunctions.
+systems.  Here, we first revisit the well-known Peiers                   (a)Potentialenergycurveforhydrogenchainwith N=16sites
+instability of hydrogen chains, where electrons tend to                  at different interatomic distances. The inset shows a compar-
+form pairs at neighboring sites to lower the total energy                ison of a N=10 chain with other high-level theories reported
+[18, 19]. The electron density distribution plotted in Fig.              in ref. [17], including auxiliary field quantum Monte Carlo
+2(b) shows a typical dimerization feature. The minima                    (AFQMC), and benchmarked by multi-reference configura-
+of charge density appear at the middle points between                    tion interaction with quadruples (MRCI+Q), where results
+two proton sites, and the minima show a periodicity of                   were extrapolated to the complete basis set limit. The gray
+two sites.                                                               shade indicates the chemical accuracy of  1  mEh.  Statistic
+  It is also a common insight that chains with large                     errors in NNQMC are negligible, less than 10−4 Eh for total
+interatomic distances have stronger correlation effects.                 energy. (b) The electron density distribution plotted on the
+The strong correlation nature can be shown by natu-                      plane passing through the chain (OBC, N = 16, R = 2.0 aB),
+                                                                         showing a case of dimerization. (c) Natural orbital (NO) oc-
+ral orbitals, in which the 1-RDM is diagonal. At small                   cupation. Each horizontal line represents the electron num-
+interatomic distances, electrons can easily hop between                  ber on a NO, obtained from the diagonalization of 1-RDMs.
+neighbor atoms, making the kinetic energy more impor-                    Coulomb correlation drives the NO occupation away from 0
+tant, hence the NOs are either doubly occupied or empty.                 or 2 at large interatomic distance.
+As the interatomic distance grows, NOs occupations are
+driven towards 1, as electrons tend to localize around
+nuclei.  Coulomb repulsion dominates, and it prevents                                  B.  Tomonaga-Luttinger liquid
+two electrons from occupying the same orbital.  Fig.
+2 (c) presents the electron occupation number on each
+NO, obtained with 1-RDM re-sampled from real space                          Having verified the reliability of NNQMC calculations,
+neural network wavefunctions.  It indeed displays the                    we further investigate the spin degree of freedom.  We
+expected strong correlation nature of hydrogen chains,                   first focus on large-distance chains, in which Coulomb
+which would be underestimated by mean-field theories.                    energy is much greater than kinetic energy, and electrons
+                                                                                                                                              5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3. Tomonaga-Luttinger liquid behavior of hydrogen chain. (a) Spin-spin correlation functions calculated with
+chains of N  = 18 under OBC. (b) Critical exponent fitted from the spin-spin correlation functions in panel (a). (c-f) Results
+calculated with N  = 24 under PBC. (c) Spin-spin correlation function. (d) Spin structure factor. (e) Structure factor. (f)
+Momentum distribution.
+
+
+are strongly correlated. These systems are expected to                    effect[20]. Weexpectthatthehydrogenchaininastrong
+behave similarly to the one-band Hubbard model, and                       correlation regime belongs to this universality class. Fig.
+should host antiferromagnetic fluctuation. Spin fluctu-                   3(b) shows a fit to the decay of the correlation function
+ation is depicted by spin-spin correlation  Gzss(i − j) ≡                 to determine the critical exponent. For the 2.8 aB chain,
+⟨Szi Szj ⟩.  In analog to sites in the second quantization                the critical exponent is found to be 1.16(5), close to η =
+scheme, here sites are defined with localized atomic or-                  1.11(1) reported in [4].  The critical exponent  η stays
+bitals.  RDMs are sampled with localized orbitals, as                     unchanged for medium to large distances, indicating the
+shown in IIB, based on which the spin-spin correlation                    absence of phase transitions to other AFM orders in this
+function is calculated.                                                   range.  The deviation of  η from exact 1 is a result of
+  Fig.  3(a) shows the open chain results for spin-spin                   finite size effect. It is worth noting that the correlation
+correlation between the left-most and the i-th site, which                amplitude is smaller for the even site than the odd site,
+goes to zero at long separation as a result of quantum                    which was also observed in previous DMRG calculations
+fluctuation. The correlation function alters signs for even               [4]. Nevertheless, the even-odd difference does not affect
+and odd sites, indicating that AFM fluctuation plays a                    thecriticalexponent. Whenfittingwithevenoroddsites
+major role. A similar result is also shown in Fig. 3(c),                  separately,theresultsare1.2(1)and1.18(8),respectively.
+where the periodic boundary condition (PBC) is em-
+ployed. ThechoiceofOBC[10]orPBC[8]affectsconver-                             For PBC chains, the quasi-long range spin-spin corre-
+gence to system size, but both calculations can capture                   lation is shown with spin structure factor, in Fig. 3(d).
+spinfluctuation. Besidesthecorrelationfunction, wealso                    The spin structure factor is defined by eq.  11, which
+implement a direct magnetic perturbation to probe the                     is the Fourier series of spin-spin correlation. For chains
+spin fluctuation, as described in SI Sec. II, which con-                  with bond lengths larger than 1.6 aB, spin structure fac-
+firms the AFM fluctuation.                                                tor shows a single peak at q = π, showing AFM correla-
+  Moreover, AFM order of one-dimensional system is ex-                    tion dominates. At the limit of q → 0, the spin structure
+pected to be quasi-long-range, i.e. the correlation is ex-                factordisperses linearly, whichis asignatureof TLL.The
+pected to decay algebraically with respect to the site sep-               slope of the spin structure factor is related to the central
+aration for large enough separation. The conformal field                  charge Kσ by limq→0 Sσ(q)/q  = Kσ/π, which is essen-
+theory suggests for one-dimensional Heisenberg model,                     tial to gapless spin excitation [21]. Here, for the 2.8 aB
+spin-spin correlation decays as                                           chain, Kσ is determined to be 1.067, which is very close
+                                                                          to the theoretical value Kσ = 1. For chains with distance
+                     Gzss(i) ∝ (−)i i−η ln i,            (15)             larger than 1.6 aB (warm colors in Fig. 3(d)), Kσ takes
+                                                                          similar values. These evidences confirm the existence of
+where η is the critical exponent and is predicted to be                   the gapless linear spin excitation mode in the hydrogen
+η = 1, andthelogarithmcorrectioncomesfromfinitesize                       chain.
+                                                                                                                                            6
+
+  Excitations in TLL are collective modes, but the spin                    To demonstrate the self-doping mechanism explicitly,
+andchargearecarriedbyseparatemodes. Whilethespin                         we further check the electron occupation number on a
+channel is gapless, the charge excitation is gapped. The                 set of atomic orbitals. In Fig. 4(c), we first project the
+charge structure factors are shown in Fig. 3(e). One can                 real-space neural network wavefunction onto the 6-31G**
+notice that a quadratic behavior occurs at small wave                    basis set. From medium to strong correlation regime, all
+vector  q for large distance chains, indicating a gap in                 the electrons dwell on the 1s and 2s-like orbitals of this
+the charge mode. The momentum distribution  n(k) in                      basis set. Meanwhile, for separation less than 1.0 aB, a
+Fig. 3(f) also shows also a sign of TLL for large-distance               non-negligible amount of electrons occupy orbitals other
+chains, i.e. the momentum distribution changes continu-                  than the lowest 1s, 2s and 2p-like orbitals. To exclude
+ously at k = π/2. In SI Sec. I C we verify that this is not              the effect of the choice of basis set, we also combine basis
+an artifact of finite size. To sum up, we demonstrate that               functions into localized orbitals using the meta-Löwdin
+the neural network wavefunctions are powerful enough to                  scheme and then calculate the occupation of the first
+capture the TLL quantum critical phase, even without                     localized orbital from RDMs. As shown by the orange
+specific designs of the neural network structure.                        curve in Fig. 4, nearly all electrons distribute on the first
+                                                                         localized orbitals for medium to large atomic distance.
+                                                                         However, when interatomic distance decreases, the occu-
+              C.  Transition to Fermi liquid                             pation of the first localized orbitals decreases very fast.
+                                                                         For atomic distances smaller than 1.0 aB, only less than
+  For chains with interatomic distances less than 1.6 aB,                90% electron distributes on the first localized orbitals.
+shown by cold colors in Fig. 3(d-f), very different behav-                 From the above analyses, it is now clear why the
+iors are observed, indicating a transition to a different                ground state physics of large-distance hydrogen chains
+quantum phase. Hereby, we further examine the nature                     are similar to the one-band models.  This is because
+of this transition.                                                      electrons tend to localize at each site when hydrogen
+  For the spin structure factor in Fig.  3(d), the ma-                   atoms are separated with a large distance, and hence
+jor peak shifts away from q  = π, and another kink ap-                   the ground state can be properly described by a mini-
+pears at a small wave length.  With decreasing inter-                    mal basis set [9, 10]. Consequently, the one-band Hub-
+atomic distance, the major peak further shifts away from                 bard model [22] is valid, alternatively Heisenberg model
+π. Similarly, a kink also rises at the same q in the charge              [20, 23] can be applied to the strong correlation limit.
+structure factor shown in Fig. 3(e). For the momentum                    With both models, the TLL behavior is predicted. The
+distribution (Fig. 3(d)), the transition near k = π/2 is                 complexity rises with more realistic interactions in the
+much sharper when the interatomic distance is reduced,                   hydrogen chain.  When hydrogen atoms are close, self-
+indicating a non-zero quasi-particle weight. In addition,                doping occurs, necessitating multi-band models for un-
+for chains with bond lengths smaller than 1.6 aB, a sharp                derstanding the low-energy physics. At the same time,
+peak develops near k = 0, and n(k) is even greater than                  as the orbitals become diffusive, the interaction naturally
+one.  These features in momentum distribution differs                    extends beyond the nearest sites, leading to the break-
+from TLL strongly and hence indicates a transition to                    down of TLL. With NNQMC, we can now solve hydrogen
+the Fermi liquid at small interatomic distances.                         chains in real space, breaking through the limitation of
+  The physical insight behind the transition is that as                  small basis sets and shedding light on which higher or-
+the interatomic distance becomes comparable to the size                  bitals and farther atomic sites are involved in the quan-
+of the hydrogen atom, electrons become diffusive in real                 tum phases. In other theoretical works, it was also pre-
+space. In these scenarios, the "self-doping" mechanism                   dicted that TLL can survive with multiple Fermi points
+[4] kicks in. The conventional understanding of the hy-                  [24, 25] but interaction extending beyond nearest sites
+drogenchainisbasedontheone-bandmodels,whereonly                          may lead to the breakdown of TLL [2].
+the hydrogen 1s orbital is considered [20, 22, 23]. The
+one-band models can well capture the physics of large-                                       IV.  CONCLUSION
+distancechainsasdiscussedintheprevioussection. How-
+ever, astheelectronsbecomemorediffusive, theystartto
+occupy bands formed by orbitals higher than 1s. In the                     To conclude, real space NNQMC is a powerful method
+band theory view of the self-doping mechanism, Fermi                     to study quantum critical phases and phase transitions
+surface cuts through multiple bands, and electrons are                   in ab initio systems. In this work, we focus on the hydro-
+self-doped from the  1s band to higher ones.  The self-                  gen chain, where the interatomic distance can be tuned
+doping mechanism is responsible for the Fermi liquid be-                 togenerateasequenceof1Dsystemsfromweaktostrong
+havior observed in Fig. 3. At the same time, one can                     correlation regime. The charge and spin structures are
+expect a transition from the Mott insulator to the band                  computed with the implementation of reduced density
+conductor to occur when reducing the interatomic dis-                    matrices under both open and periodic boundary con-
+tance [4, 8].  In Fig.  4(a-b), we present the Wannier                   ditions. The trained neural network wavefunctions not
+orbitals acquired neural network wavefunctions, which                    only capture the correct TLL behavior at large-distance
+further support the transition.                                          regime but also predicts a transition to the Fermi liq-
+                                                                                                                                             7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 4. Transition due to self-doping mechanism. (a-b) Wannier orbitals for (a) a band conductor chain with interatomic
+distance 1.0 aB and (b) a Mott insulator chain with interatomic distance 2.4 aB. The blue (red) shape shows the regions where
+the Wannier orbital is positive (negative). (c) The comparison of Wannier orbital value for chains in (a) and (b) along the
+chain axis. (d) Electron occupation number on atomic orbitals. The shades show accumulated electron number on 1s, 2s and
+2p orbitals, as percentage of the total electron number. The orange line shows the number on the lowest localized orbitals,
+which are linear combinations of atomic orbitals.
+
+
+uid phase when the interatomic distance between hydro-                   the spectrum density [28]. Besides, the same methodol-
+gen is smaller than 1.6 aB. The self-doping mechanism                    ogy is compatible with transition RDMs, which can be
+of the transition is captured by the real-space wavefunc-                related to photoemission. Last but not least, all these
+tions, which automatically encodes the correlation effects               can be achieved within real space, and the basis set in-
+of high-energy orbitals.                                                 completeness error is hence circumvented. Therefore, we
+  Moreover, it is worth emphasizing that NNQMC has                       canenvisionabroadrangeofapplicationsofourmethods
+been rising as one of the most powerful  ab  initio ap-                  to study quantum phase transitions and chemical transi-
+proaches in solving real molecules and materials [26, 27].               tions.
+In particular, real space NNQMC can achieve better                                         ACKNOWLEDGMENTS
+accuracy and efficiency than state-of-the-art quantum
+chemistry methods for energy calculations. The method-
+ological developments of this work, mainly the combining
+of the real space wavefunction with the second quantiza-                    This work was supported by the National Key R&D
+tion representation through RDM samplings, can further                   Program of China under Grant No.  2021YFA1400500,
+extend the application of NNQMC. This combination al-                    the Strategic Priority Research Program of the Chinese
+lowsustogaininsightsintotheelectronicstructureofthe                      Academy of Sciences under Grant No.  XDB33000000,
+systems and related effective models. Also, it provides a                and National Science Foundation of China under Grant
+general route to obtain physical quantities such as the                  No.  12334003.  We are grateful for computational re-
+structure factors and momentum distribution reported                     sources provided by the High Performance Computing
+in this work, and potentially other observables such as                  Platform of Peking University.
+
+
+
+
+
+ [1]Ling-FangLin, YangZhang, GonzaloAlvarez, MichaelA.                     [2]A.K.ZhuravlevandM.I.Katsnelson. BreakdownofLut-
+     McGuire, Andrew F. May, Adriana Moreo, and Elbio                          tinger liquid state in a one-dimensional frustrated spin-
+     Dagotto.  Stability of the interorbital-hopping mecha-                    less fermion model.   Physical  Review  B, 61(23):15534–
+     nism for ferromagnetism in multi-orbital Hubbard mod-                     15537, June 2000.
+     els.  Communications Physics, 6(1):1–9, August 2023.                  [3]T. B. Prayitno and R. Fahdiran.  Phase transition in
+                                                                                                                                                    8
+
+     one-dimensional hydrogen chain: A dependence on basis                         tion from a many-body neural network ansatz.   Phys.
+     orbitals, cut off radius, and doping.  Journal of Physics:                    Rev. Lett., 132:176401, Apr 2024.
+     Conference Series, 1402(4):044080, December 2019.                       [16]Gabriel Pescia, Jiequn Han, Alessandro Lovato, Jian-
+ [4]Simons Collaboration on the Many-Electron Problem,                             feng Lu, and Giuseppe Carleo. Neural-network quantum
+     Mario Motta, Claudio Genovese, Fengjie Ma, Zhi-Hao                            states for periodic systems in continuous space.   Phys.
+     Cui,RandySawaya,GarnetKin-LicChan,NataliaChep-                                Rev. Res., 4:023138, May 2022.
+     iga,PhillipHelms,CarlosJiménez-Hoyos,AndrewJ.Mil-                       [17]Mario Motta, David M. Ceperley, Garnet Kin-Lic Chan,
+     lis, Ushnish Ray, Enrico Ronca, Hao Shi, Sandro Sorella,                      John A. Gomez, Emanuel Gull, Sheng Guo, Carlos A.
+     Edwin M. Stoudenmire, Steven R. White, and Shiwei                             Jiménez-Hoyos, Tran Nguyen Lan, Jia Li, Fengjie Ma,
+     Zhang. Ground-State Properties of the Hydrogen Chain:                         Andrew J. Millis, Nikolay V. Prokof’ev, Ushnish Ray,
+     Dimerization, Insulator-to-Metal Transition, and Mag-                         Gustavo E. Scuseria, Sandro Sorella, Edwin M. Stouden-
+     netic Phases.  Physical Review X, 10(3):031058, Septem-                       mire, Qiming Sun, Igor S. Tupitsyn, Steven R. White,
+     ber 2020.                                                                     Dominika Zgid, and Shiwei Zhang. Towards the solution
+ [5]Johannes Hachmann, Wim Cardoen, and Garnet K.                                  of the many-electron problem in real materials: Equa-
+     Chan. Multireference correlation in long molecules with                       tion of state of the hydrogen chain with state-of-the-art
+     the quadratic scaling density matrix renormalization                          many-body methods.  Phys. Rev. X, 7:031059, Sep 2017.
+     group. The Journal of chemical physics, 125(14):144101–                 [18]Andrzej P. Kądzielawa, Andrzej Biborski, and Józef
+     144101–12, 2006.                                                              Spałek. Discontinuous transition of molecular-hydrogen
+ [6]W. A. Al-Saidi, Shiwei Zhang, and Henry Krakauer.                              chain to the quasiatomic state:  Combined exact di-
+     Bond  breaking  with  auxiliary-field  quantum  Monte                         agonalization and ab initio approach.    Phys.  Rev.  B,
+     Carlo. The Journal of Chemical Physics, 127(14):144101,                       92:161101, Oct 2015.
+     10 2007.                                                                [19]Andrzej Biborski, Andrzej P. Kądzielawa, and Józef
+ [7]Luning Zhao and Eric Neuscamman. A Blocked Linear                              Spałek.  Atomization of correlated molecular-hydrogen
+     Method for Optimizing Large Parameter Sets in Vari-                           chain: A fully microscopic variational monte carlo solu-
+     ational Monte Carlo.   Journal  of  Chemical  Theory  and                     tion.  Phys. Rev. B, 98:085112, Aug 2018.
+     Computation, 13(6):2604–2611, June 2017.                                [20]I.Affleck, D.Gepner, H.J.Schulz, andT.Ziman. Critical
+ [8]Lorenzo Stella, Claudio Attaccalite, Sandro Sorella, and                       behaviour of spin-s Heisenberg antiferromagnetic chains:
+     Angel Rubio. Strong electronic correlation in the hydro-                      Analytic and numerical results.   Journal  of  Physics  A:
+     gen chain: A variational Monte Carlo study.   Physical                        Mathematical and General, 22(5):511, March 1989.
+     Review B, 84(24):245117, December 2011.                                 [21]Anders  W.  Sandvik,  Leon  Balents,  and  David  K.
+ [9]Anton V. Sinitskiy, Loren Greenman, and David A.                               Campbell.  Ground state phases of the half-filled one-
+     Mazziotti.  Strong correlation in hydrogen chains and                         dimensional extended hubbard model.  Phys. Rev. Lett.,
+     lattices using the variational two-electron reduced den-                      92:236401, Jun 2004.
+     sity matrix method.  The  Journal  of  Chemical  Physics,               [22]Holger Frahm and V. E. Korepin. Critical exponents for
+     133(1):014104, July 2010.                                                     the one-dimensional Hubbard model. Physical Review B,
+[10]Emmanuel  Giner,  Gian  Luigi  Bendazzoli,  Stefano                            42(16):10553–10565, December 1990.
+     Evangelisti, and Antonio Monari.  Full-configuration-                   [23]Ian Affleck. Exact correlation amplitude for the Heisen-
+     interaction study of the metal-insulator transition in                        berg antiferromagnetic chain.    Journal  of  Physics  A:
+     model systems:  Peierls dimerization in Hn rings and                          Mathematical and General, 31(20):4573, May 1998.
+     chains. The Journal of Chemical Physics, 138(7):074315,                 [24]S. Daul and R. M. Noack. Ferromagnetic transition and
+     February 2013.                                                                phase diagram of the one-dimensional hubbard model
+[11]David Pfau, James S. Spencer, Alexander G. D. G.                               with next-nearest-neighbor hopping.     Phys.  Rev.  B,
+     Matthews, and W. M. C. Foulkes. Ab initio solution of                         58:2635–2650, Aug 1998.
+     the many-electron Schrödinger equation with deep neu-                   [25]Michele Fabrizio. Superconductivity from doping a spin-
+     ral networks.    Physical  Review  Research, 2(3):033429,                     liquid insulator:  A simple one-dimensional example.
+     September 2020.                                                               Physical Review B, 54(14):10054–10060, October 1996.
+[12]David Pfau, Simon Axelrod, Halvard Sutterud, Ingrid                      [26]Jan Hermann, James Spencer, Kenny Choo, Antonio
+     von Glehn, and James S. Spencer. Accurate computation                         Mezzacapo, W. M. C. Foulkes, David Pfau, Giuseppe
+     of quantum excited states with neural networks. Science,                      Carleo, and Frank Noé.   Ab initio quantum chem-
+     385(6711):eadn0137, 2024.                                                     istry with neural-network wavefunctions. Nature Reviews
+[13]Xiang Li, Zhe Li, and Ji Chen. Ab initio calculation of                        Chemistry, 7(10):692–709, October 2023.
+     real solids via neural network ansatz.  Nature Communi-                 [27]Yubing Qian, Xiang Li, Zhe Li, Weiluo Ren, and Ji Chen.
+     cations, 13(1):7895, December 2022.                                           Deep learning quantum Monte Carlo for solids.  arXiv e-
+[14]Gino Cassella, Halvard Sutterud, Sam Azadi, N. D.                              prints, page arXiv:2407.00707, June 2024.
+     Drummond,DavidPfau,JamesS.Spencer,andW.M.C.                             [28]Stefano Di Sabatino, J. A. Berger, Lucia Reining, and
+     Foulkes.  Discovering quantum phase transitions with                          Pina Romaniello.  Photoemission spectra from reduced
+     fermionic neural networks.  Phys. Rev. Lett., 130:036401,                     density matrices: The band gap in strongly correlated
+     Jan 2023.                                                                     systems.  Phys. Rev. B, 94:155141, Oct 2016.
+[15]Xiang Li, Yubing Qian, and Ji Chen. Electric polariza-

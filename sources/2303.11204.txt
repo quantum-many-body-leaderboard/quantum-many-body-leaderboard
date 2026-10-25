@@ -1,0 +1,1540 @@
+             Ground state preparation with shallow variational warm-start
+
+                Youle Wang,1, ∗  Chenghong Zhu,1, †  Mingrui Jing,1, ‡  and Xin Wang1, §
+                 1Institute  for  Quantum  Computing,  Baidu  Research,  Beijing  100193,  China
+                                                 (Dated:  March 21, 2023)
+            Preparing  the  ground  states  of  a  many-body  system  is  essential  for  evaluating  physi-
+         cal quantities and determining the properties of materials.  This work provides a quantum
+         ground state preparation scheme with shallow variational warm-start to tackle the bottle-
+         necks of current algorithms, i.e., demand for prior ground state energy information and lack
+         of demonstration of eﬃcient initial state preparation.  Particularly, our methods would not
+         experience  the  instability  for  small  spectral  gap  ∆  during  pre-encoding  the  phase  factors
+         since our methods involve only ~O(1) factors while ~O(∆−1) is requested by the near-optimal
+         methods.  We demonstrate the eﬀectiveness of our methods via extensive numerical simula-
+         tions on spin-1/2 Heisenberg models.  We also show that the shallow warm-start procedure
+         can process chemical molecules by conducting numerical simulations on the hydrogen chain
+         model.  Moreover, we extend research on the Hubbard model, demonstrating superior per-
+         formance compared to the prevalent variational quantum algorithms.
+
+
+
+
+                                                I.    INTRODUCTION
+
+    The ground state is one crucial quantum state appearing in condensed matter physics, quantum
+chemistry, and combinatorial optimisation.  Physical reality tends to force a quantum system to
+its ground state at low temperature, which can exist with stability [1].  Therefore, preparing the
+exact  form  of  the  ground  state  becomes  signiﬁcant  for  evaluating  the  expectations  of  physical
+quantities and determining the properties of materials [2].  Classical methods have raised success
+in predicting  matter behaviours.  Based on quantum  mechanics,  traditional methods,  including,
+Hartree-Fock  (HF)  method  [3],  full  conﬁguration  interaction  [4],  density  functional  method  [5],
+and Monte Carlo simulations [6] have boosted developments of quantum chemistry by providing
+accurate  eigenstate  evaluations.   However,  the  exponential  growth  of  Hilbert  space  and  multi-
+determinant  interactions  [7–9]  demand  an  explosive  amount  of  memories  leading  to  a  restricted
+eﬃciency  regime  and  forcing  the  problem  into  an  NP-complete  complexity  [10].   The  fermionic
+statistics also raise the sign problem,  which pulls down the convergence speed of approximation
+methods [11–14].
+    Quantum computer, originally proposed by Feynman [15], is naturally embedded in the quan-
+tum Hilbert space,  indicating promising and competitive near-term applications,  including solv-
+ing  ground  states  of  diﬀerent  physical  models  and  molecules  [16, 17].   The  typical  results  from
+variational quantum eigensolver (VQE) [16] demonstrated an excellent perspective for solving the
+ground state energies of small molecules [18]. Advanced variational ansatzes have been designed and
+achieved better performance predicting the physical properties and electronic behaviours [8,17],
+such  as  charge  and  spin  densities,  metal-insulator  transitions,  and  dynamics  of  distinct  models,
+which  could  further  energise  the  industrial  development  [19]  covering  new  material  design  [20]
+and studies on high-temperature superconductivity [7,21].  Another category, namely, adiabatic
+quantum algorithms has practically solved the ground state of the Ising model, demonstrating the
+potential of handling the combinatorial optimisation problems [22].
+
+
+∗ youle.wang92@gmail.com
+† zhuchenghong06@gmail.com
+‡ mingruij0031@gmail.com
+§ wangxin73@baidu.com
+                                                                                                                             2
+
+
+     One of the most promising technical routes to prepare the ground state is to utilise phase esti-
+ mation.  Under a reasonable assumption that the initial state ρ has a non-zero overlapγ regarding
+ the exact ground state and the ground state energy (within the required precision) is known, one
+ can directly apply phase estimation [23] together with amplitude ampliﬁcation [24] can project out
+ the ground state from ρ with a probability proportional to γ2.  However, phase estimation usually
+ demands an extensive ancilla system, making the realisation of preparing high-ﬁdelity states chal-
+ lenging.  Recently, Ge et al. [25] proposed a method to exponentially and polynomially improve the
+ run-time on the allowed errorε and the spectral gap ∆ and the initial state overlapγ dependencies,
+ respectively, where ∆ is the diﬀerence between the ground and the ﬁrst excited state energies.  The
+ same authors also discussed that polylogarithmic scaling inε−1 could be attained using the method
+ proposed by Poulin and Wocjan [26] requiring more ancilla qubits.
+     Quantum singular value transformation (QSVT) [27] is another promising route for realising
+ the ground state preparation.  Notably,  Lin and Tong [28] have shown a method using constant
+ number of ancilla qubits to achieve a quantum complexityO(∆−1γ−1 log(ε−1))1.  Their algorithms
+ use  the  block  encoding  input  model  of  the  Hamiltonian  [29]  rather  than  the  evolution  operator
+ used  in  phase  estimation.   They  also  provide  lower  bounds  of  quantum  complexity  to  show  the
+ algorithms’  dependence  optimality  on  the  spectral  gap  and  initial  overlap.   Subsequently,  Dong
+ et  al. [30] proposed a technique called “quantum eigenvalue transformation of unitary matrices”
+ (QET-U), which is closely related to quantum signal processing [31] and QSVT [27].  With QET-U
+ and controlled Hamiltonian evolution, they further reduce the ancilla qubits to two while reaching
+ the same asymptotic scaling in ε, ∆, γ  as [28].  Remarkably, both [28] and [30] assume an upper
+ bound µ  of  ground  state  energy  at  priority.   If  no  such µ  is  known,  it  can  be  obtained  by  ﬁrst
+ employing ground state energy estimation [25,26,28,30,32–42] with precision        O(∆), which would
+ increase the cost of state preparation.
+     To solve ground-state problems in physics and chemistry, we notice the demand for overcoming
+ limitations set by the current algorithms, such as the prior information of the ground-state energy
+ and an eﬃcient initial state preparation.  This paper addresses these issues using shallow-depth
+ VQE and the recent advances in quantum phase estimation [43].  Intuitively, one would expect to
+ prepare the ground state with very high ﬁdelity when estimating the ground state energy.  However,
+ it cannot be realised using the conventional phase estimation due to the imperfect residual states,
+ as  discussed  in  [25, 26].   Fortunately,  this  expectation  can  be  fulﬁlled  by  the  algorithm  of  [43],
+ which  uses  only  one  ancilla  qubit  and  can  apply  to  block  encoding  and  Hamiltonian  evolution
+ input models.  We show that measuring the ancilla qubit can estimate the ground state energy up
+ to the desired precision with a probability≈γ2.  Setting the precision asO(∆), the ground state
+ can be prepared up to exponentially high precision at a cost ~O(γ−2∆−1)2.  As a notable property,
+ the prior ground state energy information is no longer necessary.
+     In our algorithms, we apply a sequence of single-qubit rotations on the ancilla qubit and inter-
+ leave the power of the input models.  The structures of QSVT and QET-U are similar to ours but
+ use block encoding and Hamiltonian evolution, respectively.  Rotation angles, usually referred to
+ as the phase factors, are chosen so that the circuit can simulate a speciﬁc function, such as sign
+ function [28,43] and shifted sign function [30].  The number of phase factors is crucial for preparing
+ a high-ﬁdelity ground state.  In [28,30], the number scales as   O(∆−1 log(ε−1)), given the spectral
+ gap ∆ and an approximation errorε.  However, classically computing the factors would suﬀer from
+ numerical instability, especially when ∆ is small.  A convex-optimisation-based method is proposed
+ in [30] to generate a near-optimal approximation.  In contrast, our algorithms advantageously re-
+ quire ~O(1) number of factors, endowing better applicability in practice than [28,30].  In particular,
+ our numerical experiments have used circuits with ﬁxed phase factors to prepare ground states of
+
+1The normalisation factor α in the block encoding is omitted.
+
+2Notation  ~O hides the logarithmic factors.
+                                                                                                                        3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig 1:  The outline of our ground state preparation with shallow variational warm-start involving
+(left) the three applicable physical models of Heisenberg spin-1/2 chain model, chemical
+molecular model and Fermi-Hubbard model could be eﬃciently solved via our scheme; (middle)
+the two main components of our scheme of (a) shallow-depth VQE as the warm-start and (b) the
+ground state preparation algorithms provided the warm-start initial state; (right) our
+demonstrations from testing (top) warm-start with a massive number of models and (bottom) the
+principle of the ground state preparation.  The sign function F (x) is simulated via the ground
+state preparation circuit.
+
+
+more than 200 random Hamiltonian instances.  To better understand our algorithms, we provide a
+schematic diagram in Fig.1and summarize the comparisons to [25,28,30] in TableI.
+   Although algorithms of [28,30] have better scaling in     γ, the scheme relies on amplitude am-
+pliﬁcation  incurring  more  ancilla  qubits  and  deeper  circuits.   The  quantum  complexity  can  be
+compensated  by  preparing  an  initial  state  with  an  overlap  larger  than  0.1  since  the  quadratic
+scaling in overlap would make no big diﬀerence.  To this end, we have conducted extensive zero-
+noise numerical simulations to apply a depth-three VQE to warm-start ground-state preparation
+of many-body systems and ﬁnd that a shallow-depth VQE could play a good overlap initialiser.
+Firstly, we randomly test 10000 two-body interactions, spin-1/2 Heisenberg-type models for every
+case≤ 10 qubits, 200 and 100 models for the cases of 12 and 14 qubits, respectively.  We observe
+that the optimised overlaps highly cluster between 0.4 and 1, and ground states with the ﬁdelity of
+almost one are prepared via our algorithms.  Secondly, we investigate the shallow-depth warm-start
+on molecular ground state preparation oﬀering satisfactory performances for small bond distances.
+Thirdly, we apply our methods to solve the Hubbard model which the 2D case is recognised as a
+classical challenge [7,13,14,45] and quantumly demonstrated only by VQE-based methods [7,17].
+Our scheme derives extremely accurate charge-spin densities and the chemical potentials of a spe-
+ciﬁc 1D model, reaching an absolute error around 10−5 beyond the chemical accuracy with respect
+to the full conﬁguration interaction (FCI) method.
+   Organisation.  In Sec.II, we give technical details of algorithms for ground state preparation
+                                                                                                                        4
+
+
+
+      Methods           Input    #Phase        Query               #Ancilla Qubits            Need prior    Need amp.
+
+                        Model    Factors    Complexity                                        GSE info.?     amplif.?
+
+                          HE                 ~O(∆−1γ−2)                    1
+      This work                    ~O(1)                                                          No            No
+                          BE                ~O(α∆−1γ−2)                    2
+
+                                             ~O(∆−1γ−2)                    1                                    No
+   Dong et al. [30]       HE     ~O(∆−1)                                                          Yes
+                                             ~O(∆−1γ−1)                    2                                    Yes
+
+
+ Lin and Tong [28]        BE     ~O(∆−1)    ~O(α∆−1γ−1)                  O(1)                     Yes           Yes
+
+
+
+    Ge et al. [25]        HE        —        ~O(∆−1γ−1)     O(log(∆−1) + log log(ε−1))            Yes           Yes
+
+
+TABLE I: Comparison to the current quantum ground-state preparation algorithms.  ∆ is a lower
+bound of the spectral gap of the Hamiltonian.  Here, we use γ =√tr(ρΠ) to represent the overlap
+between the initial and ground states, where Π denotes a projection onto the subspace generated
+by ground states.  “GSE” represents the ground state energy, and “amp.  amplif.” is the
+abbreviation of amplitude ampliﬁcation.  “HE” means Hamiltonian evolution U =eiH, and “BE”], where α is the normalisation factor.  If UH  is
+stands for block encoding UH =[H/α·· ·
+constructed by the linear-combination-of-unitaries technique [44], the ancillas of our method can
+be further reduced to 1.  The number of ancillas of [28] is at least three, which are used to
+block-encode the projector by QSVT. The ancillas for implementing amplitude ampliﬁcation need
+to be counted as well.
+
+
+and provide a method to analyse the success probability.  In Sec.III, we show extensive numerical
+results that demonstrate the eﬃcacy of a constant-depth VQE in processing Heisenberg models up
+to 14 qubits.  We also show correctness by applying the algorithms to the optimised states of VQE.
+In  Sec.IV,  we  numerically  examine  the  constant-depth  warm-start  on  a  hydrogen  chain  model.
+In Sec.V, we use our algorithms to study the Fermi-Hubbard models and accurately evaluate the
+model’s physical properties.  Finally, we summarize our results and discuss potential applications
+in Sec.VI.
+
+
+                                  II.    GROUND STATE PREPARATION
+
+   In this section, we present ground-state preparation algorithms.  The core of our approaches has
+two steps:  ﬁrstly, prepare an initial state with a considerable overlap, such as states generated by
+shallow-depth VQE, Gibbs-VQE [46], or Hartree-Fock states (which will be discussed in numerical
+experiments); secondly, use a quantum algorithm to project out the ground state from the initial
+state with high probability.  The projection can be realised using the quantum algorithmic tool,
+namely the quantum phase search algorithm (QPS) [43], which can classify the eigenvectors of a
+unitary operator.  Using QPS, the probability of sampling the ground state is highly approximate
+to the initial overlap.  Therefore, by repeating these two steps suﬃcient times, one can obtain the
+desired state with arbitrarily high precision.
+   Motivated by the previous works [25,28,30], we establish the algorithms for the ground state
+                                                                                                                            5
+
+
+    preparation with two diﬀerent Hamiltonian input modes: one is the real-time Hamiltonian evolution
+    U  = eiH,  and the other uses the block encoding operator [47],  which is a unitary matrix   UH  =
+    [H/α·· ·] with a scaled Hamiltonian in the upper-left corner.  Since the size ofUH is larger than that
+
+    of H,  it  would  require  an  ancilla  system  to  implement UH  on  quantum  computers.   A  common
+    strategy  to  block-encode  the  Hamiltonian  of  a  many-body  system  is  the  linear-combination-of-
+    unitaries (LCU) technique [44].  We, therefore, could regard the LCU-type block encoding as the
+    input of our algorithms.  To better describe our algorithms, we ﬁrst make some assumptions:  the
+    ancilla  system  for  implementing UH  is  composed  of m  qubits,  the  spectrum  of  the matrix H  is
+    restricted in the region (−π,π), the spectral gap ofH is larger than ∆> 0, and‖H‖≤α regarding
+    the spectral norm.  With these, the results of the algorithms are summarized in Theorem1.
+
+    Theorem 1 (Ground state preparation)  Suppose a Hamiltonian of the formH =∑2n−1j=0 λj|ψj⟩⟨ψj|,
+    where−π≤λ0≤λ1≤...≤λ2n−1≤π.  Let ∆> 0 be a lower bound of the spectral gap.  Assume
+    access to a quantum stateρ that has a non-zero overlapγ =√tr(ρΠ), where Π denotes a projection
+    operator onto the ground state subspace.  Then there exists a quantum algorithm that prepares the
+    ground state with a precision of at least 1−ε.
+
+         •  If the Hamiltonian is accessed through a Hamiltonian evolution operator U  =eiH, then the
+            total  queries  to  controlled U  and U†  isO(γ−2∆−1 log(ε−1 log(∆−1))).  The  number  of  used
+            ancilla qubits is 1 and used copies of ρ isO(γ−2).
+         •  If the Hamiltonian is accessed through a block encoding operator UH =[H/α·· ·                  ] that satisﬁes
+
+            ⟨0m|UH|0m⟩ =H/α, then the total queries to controlledUH andU†H isO(αγ−2∆−1 log(ε−1 log(α∆−1))).
+            The number of used ancilla qubits is 2 and used copies of ρ isO(γ−2).
+
+    The  trace  distance  of  quantum  states  characterises  the  precision,  and  the  notation|0m⟩  really
+    indicates|0m⟩⊗I, where we have omitted the identity operator on the main system.
+        Next, we concretely discuss the algorithm using Hamiltonian evolution in Sec.II A. We provide
+    the detailed procedure of ﬁnding the ground state via QPS and the analysis of the output proba-
+    bility.  The algorithm using block encoding is further discussed in Sec.II B. Since the analysis of
+    the algorithm’s correctness is similar from the previous literature, we mainly discuss the diﬀerences
+    from using the Hamiltonian evolution.
+
+
+                             A.    Algorithm using real-time Hamiltonian evolution
+
+        Given access to the controlled versions of the unitary U  = eiH  and U†  = e−iH, we construct
+    the quantum circuit of QPS as shown in Fig.2.  There is an ancilla system consisting of only one
+
+
+|0⟩  Rz(φL)    Ry(θL)     •   Rz(φL−1)     Ry(θL−1)          Rz(φL−2)    Ry(θL−2)    ···       Rz(φ0)    Ry(θ0)    Rz(ω)
+
+ ρ   /n                  U                             U†                            ··· U†
+
+
+    Fig 2:  Quantum circuit for quantum phase search.  The unitary U  would be adaptively changed
+    with its power.  Parameters φ, θ, and ω are chosen such that the circuit can implement a
+    trigonometric polynomial transformation to each phase of the unitary operator.  The integer L is
+    the order of the polynomial.
+
+    qubit,  which is applied with a sequence of single-qubit rotations.  Meanwhile,  several controlled
+                                                                                                                          6
+
+
+unitaries are interleaved between rotations.  The phase factors φ, θ, and ω  are chosen such that
+the  circuit  implements  a  trigonometric  polynomial  transformation  to  each  phase  of  the  unitary,
+i.e.,f :λ↦→∑Lj=−Lcjeijλ, where eachcj∈ C and satisﬁes∑j|cj|≤ 1.  For a certain trigonometric
+polynomial, the corresponding factors can be classically computed beforehand [43,48].  The action
+of running the circuit to an eigenvector of the unitary U  is presented in the lemma below.
+
+Lemma 2 (Quantum phase evolution [43])        Given a unitary operatorU =∑2n−1j=0 eiλj|ψj⟩⟨ψj|,
+for  any  trigonometric  polynomial f(x)  = ∑Lj=−Lcjeijx  with ∑j|cj|≤  1,  there  exist  parameters
+ω∈ R  and  θ, φ∈ RL+1  such  that  the  circuit  in  Fig.2transforms  the  initial  state   |0,ψ⟩  into
+(√                                               )
+    (1 +f(λ))/2|0⟩ +√(1−f(λ))/2|1⟩                 |ψ⟩,  where|ψ⟩  denotes  an  eigenvector  of U  with  a  phase
+λ∈ (−π,π).
+   For  QPS,  the  trigonometric  polynomial f(x)  = ∑Lj=−Lcjeijx  is  chosen  to  approximate  the
+sign  function.   Technically,  supposing  a  constant κ∈  (0, 1/2),  we  could  ﬁnd  a f(x)  with  order
+L∈O(κ−1 log(ε−1))  such  that|f(x)− 1|≤ ε  for  all x∈  (κ,π−κ)  and|f(x) + 1|≤ ε  for  all
+x∈ (−π +κ,−κ) [43,49].  Particularly, given the relation between the order    L and precisionε, we
+could choose ε to be exponentially small at the expense of a modest increase in the circuit depth.
+Therefore, eigenvectors fall in the region (−π +κ,−κ)∪ (κ,π−κ) are labelled by states 0 or 1,
+and the collapsed state from the measured ancilla qubit could indicate the label.  For instance, for
+any state|ψ⟩ =∑jαj|ψj⟩, the circuit of QPS transforms the initial state|0,ψ⟩ into the following
+form.
+                                       √                                  √
+                           |0⟩∑αj         1 +f(λj)                     αj    1−f(λj)
+                                 j             2  |ψj⟩ +|1⟩∑j                      2  |ψj⟩.                              (1)
+
+We  readily  know  that|0⟩  is  associated  with  eigenvectors  in  the  region  (−κ,π +κ),  and|1⟩  is
+associated with eigenvectors in the region (−π−κ,κ).  The only possible source of error comes from
+the intrinsic sign function approximating error from the searching procedures discussed previously,
+which raises negligible eﬀect.  This property enables one to eﬃciently locate the region where the
+ground state energy falls through a binary search.
+
+
+                                          Rough ground state energy search
+
+   By  executing  the  binary  search,  the  region  containing  the  ground  state  energy  would  shrink
+gradually, and the probability of outputting the ground state is analyzed later.  After each iteration,
+the underlying region is cut into two halves, and one of them is chosen, where the post-measurement
+state falls in,  for the next iteration.  Since the region’s size decreases by nearly half,  the search
+could halt in a logarithmic time, producing an exponentially-small region.  When the ﬁnal region of
+the ground state is attained, any point in the ﬁnal region could be taken as an estimate of ground
+state energy.  In particular, if the estimation accuracy is smaller than half of the spectral gap, the
+ground state would eventually fall into a region whose size is smaller than the spectral gap, and
+excited  states  would  be  ﬁltered  out.   At  that  time,  the  post-measurement  state  on  the  primary
+system is the desired ground state.
+   To better understand the algorithm,  we sketch the search procedure below.  For remark,  the
+ﬁnal post-measurement state is not the desired ground state.  We defer the discussion of improving
+the estimation accuracy.
+
+    1.Input:  unitary  U  = eiH,  constant κ (irrelevant to H),  error tolerance ε,  and state ρ that
+       non-trivially overlaps with the ground state.
+                                                                                                                           7
+
+
+     2.Compute parameters    φ, θ, and ω according to parameters κ and ε.
+
+     3.Choose the initial region ( x0,x1), where x0 =−π and x1 =π.
+
+     4.Calculate the middle point of the region ( x0,x1), which is xmid = x0+x12    .
+
+     5.Set the circuit of QPS using controlled     ˜U =e−ixmidU  and  ˜U† and the calculated parameters
+         from the step 2.
+
+     6.Input the initial state |0⟩⟨0|⊗ρ and run the circuit.
+
+     7.Measure the ancilla qubit of the circuit and update the region according to the measurement
+         outcome:  when x1−x0> 2π− 2κ, execute the update
+                                  {(x0,x1)← (xmid−κ,x1 +κ),  if the outcome is 0;
+
+                                    (x0,x1)← (x0−κ,xmid +κ),  if the outcome is 1.                           (2)
+
+         When x1−x0≤ 2π− 2κ, execute the update
+                                    {(x0,x1)← (xmid−κ,x1),  if the outcome is 0;
+
+                                       (x0,x1)← (x0,xmid +κ),  if the outcome is 1.                              (3)
+
+     8.Go to step 4 and repeat till the region converges.
+
+     9.Output:  ﬁnal region ( x0,x1).
+
+     After executing the rough search procedure, the size of the region would converge to 2κ.  Specif-
+ ically, after the ﬁrst iteration, the size of the region isκ+π/2.  Since then, the region is updated as
+ (θ−κ,x1) or (x0,θ +κ), and the size of the new region isκ + (x1−x0)/2.  Then we can inductively
+ ﬁnd the size of the ﬁnal region.  Let (x(t)0 ,x(t)1  ) denote the region in the t-iteration and Q denote
+ the total number of iterations, then we have
+                                                               [                            ]
+     |x(Q)1 −x(Q)0 | =κ +|x(Q−1)1  −x(Q−1)0  |                   κ +|x(Q−2)1  −x(Q−2)0  |      =··· = 2κ + π
+                                        2              =κ + 12                  2                               2Q.     (4)
+
+
+                                               Improving search accuracy
+
+     Suppose  the  ground  state  energy  falls  in  the  region  (x(Q)0 ,x(Q)1   ),  then  the  above  procedure
+ would return a rough estimate of the ground state energy up to precision κ +π/2Q+1.  However,
+ the estimation precision is not guaranteed to be smaller than ∆/2.  Thus more processes are needed
+ to improve the precision.  It is realised by applying the power of the unitary operator that ampliﬁes
+ the  phases  of  the  post-measurement  state.   By  repeatedly  running  the  circuit  with  the  unitary
+ power, the ground state energy is eﬃciently constrained to a smaller region.  To be speciﬁc, ﬁrstly,
+ run the rough search procedure once with unitary U (0) =U, attaining a region of size 2κ +π/2Q.
+ For clarity,  denote this region by (ζ(1)0 ,ζ(1)1   ) and  ¯κ = κ +π/2Q+1,  where|ζ(1)1 −ζ(1)0 | = 2¯κ.  Let
+ λ(1) = (ζ(1)0   +ζ(1)1   )/2 denote the middle point of the region.  Secondly, consider a modiﬁed unitary
+ U (1)  =  (e−iλ(1)U (0))⌊1/¯κ⌋3.   For U (1),  phases  of  eigenvectors  in  the  post-measurement  state  are
+
+
+
+3The notation ⌊x⌋ denotes the ﬂoor function that gives as output the greatest integer less than or equal to x.
+                                                                                                                                                               8
+
+
+                                    rescaled to (−1, 1).  Now, running the rough search procedure with the new unitary operator would
+                                    give a new region (ζ(2)0 ,ζ(2)1   ).
+                                        Executing the above two steps would exponentially fast improve the estimation accuracy com-
+                                    pared with the rough searching scheme.  For state|ψ0⟩, let λ0 denote its original phase in U.  Its
+                                    phase in unitaryU (1) is (λ0−λ(1))⌊1/¯κ⌋ and falls in the region (ζ(2)0 ,ζ(2)1   ).  Letλ(2) = (ζ(2)0   +ζ(2)1   )/2
+                                    denote  the  middle  point  of  the  second  region  (ζ(2)0 ,ζ(2)1   ).   Then  we  readily  give  an  inequality
+                                    that characterises the estimation error ⏐⏐λ(2)− (λ0−λ(1))⌊1/¯κ⌋⏐⏐≤  ¯κ.  Rewrite this inequality as
+                                    ⏐⏐λ0−(λ(1) +λ(2)/⌊1/¯κ⌋)⏐⏐≤ ¯κ/⌊1/¯κ⌋≤⌊1/¯κ⌋−2.  From this equation, we can see that the ﬁrst two
+
+                                    steps of the scheme give an estimate of the phase with an error of⌊1/¯κ⌋−2.  So, inductively repeat-
+                                    ing the above procedure leads to a sequence (λ(1),λ(2),...) that could be taken as an estimate of
+                                    the ground state energy.  Assuming repeats j times, the estimate is given by
+                                                   ⏐⏐⏐⏐⏐λ0−(                                                    )⏐⏐⏐⏐⏐≤       ¯κ
+                                                             λ(1) + λ(2)⌊1/¯κ⌋ + λ(3)⌊1/¯κ⌋2 +··· +  λ(j)⌊1/¯κ⌋j−1     ⌊1/¯κ⌋j−1≤⌊1/¯κ⌋−j.              (5)
+
+
+                                    Clearly, reaching the halt condition only requires repeating at mostO(log(1/∆)/ log(⌊1/¯κ⌋)) times.
+
+
+                                                                                   Output probability analysis
+
+                                        Due to many intermediate measurements in QPS, the search procedure is conducted randomly.
+                                    The  event  that  the  ground  state  is  output  would  occur  with  a  probability.   However,  how  the
+                                    analysis of this probability is missing in [43].  We use an example to explain how to analyse the
+                                    output probability, which can be used in more general cases.
+                                        Example.   If  we  collect  all  measurement  outcomes  together  to  represent  a  trajectory  that
+                                    the ground state moves along, the search process of QPS can be depicted using a binary tree as
+                                    shown in Fig.3.  The root node represents the initial state    ρ, and other nodes represent the post-
+                                    measurement state with a non-zero overlap concerning the ground state.  Each leaf node in the
+                                    tree represents a possible searched ground state from the program.  Each trajectory consists of four
+                                    nodes, meaning that QPS ﬁnds the ground state after three iterations.  In addition, the line goes
+                                    left, meaning that the measurement outcome is 0, and goes right, meaning that the measurement
+                                    outcome is 1.
+
+
+
+
+
+
+
+
+
+
+
+                                    Fig 3:  An example of a binary tree diagram for sketching phase search.  The node with notation
+                                    ρl,k represents the kth post-measurement state at l iteration.
+
+
+                                        By the law of total probability,  the probability of ﬁnding the ground state is the sum of the
+                                    probability  of  following  each  trajectory.   We  take  the  most  left  trajectory  that  reaches  the  leaf
+                                    nodeρ3,1 as an example to explain how to compute the probability of a trajectory.  Let Pr[ρi,j|ρp,l]
+                                    denote the conditional probability of reaching node ρi,j  from node ρp,l.  Clearly,  the probability
+
+
+
+
+                ρ
+
+     ρ1,1               ρ1,2
+
+ρ2,1       ρ2,2         ρ2,3
+
+ρ3,1       ρ3,2     ρ3,3    ρ3,4
+                                                                                                                            9
+
+
+that ρp,l  transits to ρi,j  only depends on the state ρp,l.  Then the probability of reaching the leaf
+node ρ3,1 from the root node can be given by
+
+                               Pr[ρ3,1] = Pr[ρ3,1|ρ2,1]× Pr[ρ2,1|ρ1,1]× Pr[ρ1,1|ρ].                                  (6)
+
+    To  represent  probability  Pr[ρ1,1|ρ],  we  deﬁne  linear  maps M(0)(1,1)  that  transform  the  input
+density  matrix ρ  to  an  un-normalised  post-measurement  state,  where k ∈ {0, 1}  indicates  the
+measurement outcome.  Recalling Theorem 6 of [43],  the measurement probabilities are Pr[0] =
+1
+2(1 +∑j⟨ψj|ρ|ψj⟩f(λj))  and  Pr[1]  =   12(1−∑j⟨ψj|ρ|ψj⟩f(λj)).   Then  the  action  ofM(k)(1,1)  is
+described as follows.
+                                               ⏐⏐⏐~φ(0)⟩⟨~φ(0)⏐⏐⏐,    where |~φ(0)           √1 +f(λj)
+  M(0)(1,1) :ρ =∑      pl|φl⟩⟨φl|↦→∑        pl    l       l                     l ⟩ =∑                2  ⟨ψj|φl⟩|ψj⟩.
+                    l                    l                                                j
+                                                                                             √                            (7)
+                                               ⏐⏐⏐~φ(1)⟩⟨~φ(1)⏐⏐⏐,    where |~φ(1)              1−f(λj)
+  M(1)(1,1) :ρ =∑      pl|φl⟩⟨φl|↦→∑        pl    l       l                     l ⟩ =∑                2  ⟨ψj|φl⟩|ψj⟩.
+                    l                    l                                                j
+                                                                                                                          (8)
+
+Note that|~φ(0)l ⟩ and|~φ(1)l ⟩ are not quantum states but represent column vectors.  For other proba-
+bilities, the maps are deﬁned similarly.  That is, the map that transforms ρi,j  to ρp,l is denoted by
+M(0)(i,j)→(p,l).  With these notations, the probabilities are re-expressed below.
+                            (             )
+          Pr[ρ1,1|ρ] = tr     M(0)(1,1)(ρ)                                                                                (9)
+                                                             (                               )
+                            (                       )     tr   M(0)(1,1)→(2,1)◦M(0)(1,1)(ρ)
+       Pr[ρ2,1|ρ1,1] = tr     M(0)(1,1)→(2,1)(ρ1,1)    =              (             )                                          (10)
+                                                                   tr   M(0)(1,1)(ρ)
+                                                             (                                                 )
+                            (                       )     tr   M(0)(2,1)→(3,1)◦M(0)(1,1)→(2,1)◦M(0)(1,1)(ρ)
+       Pr[ρ3,1|ρ2,1] = tr     M(0)(2,1)→(3,1)(ρ2,1)    =              (                               )                    (11)
+                                                                   tr   M(0)(1,1)→(2,1)◦M(0)(1,1)(ρ)
+
+Eventually, the probability Pr[ρ3,1] can be written as
+                                            (                                                 )
+                            Pr[ρ3,1] = tr     M(0)(2,1)→(3,1)◦M(0)(1,1)→(2,1)◦M(0)(1,1)(ρ)       .                            (12)
+
+    As  shown  in  Eq.  (7),  the  circuit  of  QPS  allocates  weight  to  each  eigenvector  conditional  on
+the  state  of  the  ancilla  qubit.    Speciﬁcally,  each  eigenvector |ψj⟩  is  allocated  with  a  weight
+√(1 +f(λj))/2  if  the  ancilla  qubit  is|0⟩;  otherwise,  the  weight  is √(1−f(λj))/2.   Since f(x)
+
+is  an  approximation  of  the  sign  function  in  the  sense  that |f(x)− sign(x)| ≤ ε  for  all x ∈
+(−π +κ,−κ)∪ (κ,π−κ),  and  the  approximation  error ε  could  be  exponentially  small,  we  can
+see that some eigenvectors are ﬁltered from the un-normalised post-measurement state.
+                                  √                                                        √
+  |~φ(0)                             1+f(λj)                                                  1−f(λj)
+     l ⟩ =∑j:λj⁄∈(−π+κ,−κ)               2 ⟨ψj|φl⟩|ψj⟩, |~φ(1)l ⟩ =∑j:λj⁄∈(κ,π−κ)                 2 ⟨ψj|φl⟩|ψj⟩.   (13)
+
+Hence, after the operation ofM(0)(2,1)→(3,1)◦M(0)(1,1)→(2,1)◦M(0)(1,1), the initial state ρ is ﬁltered, and
+only the ground state remains.  Using the linearity of the mapM and trace, we can see that
+                                               (                                                          )
+     Pr[ρ3,1] =∑       pl⟨ψj|φl⟩⟨φl|ψk⟩ tr      M(0)(2,1)→(3,1)◦M(0)(1,1)→(2,1)◦M(0)(1,1)(|ψj⟩⟨ψk|)                      (14)
+                   ljk
+                                                                                                                                 10
+
+                                                            (                                                          )
+                      =  ∑           pl⟨ψj|φl⟩⟨φl|ψk⟩ tr      M(0)(2,1)→(3,1)◦M(0)(1,1)→(2,1)◦M(0)(1,1)(|ψj⟩⟨ψk|)             (15)
+
+                         l,j:Π|ψj⟩⁄=0,
+                          k:Π|ψk⟩⁄=0
+                           (                                                      )
+                      = tr   M(0)(2,1)→(3,1)◦M(0)(1,1)→(2,1)◦M(0)(1,1)(ΠρΠ)         .                                                   (16)
+
+      where Π denotes the projection operator onto the subspace of the ground state. The second equality
+      holds since excited eigenvectors would be assigned zero weight.  Conducting the same process would
+      give expressions for the rest probabilities Pr[ρ3,2], Pr[ρ3,3], and Pr[ρ3,4].  Finally, simple calculations
+      would immediately give the probability of ﬁnding the ground state.
+
+                                      Pr[ρ3,1] + Pr[ρ3,2] + Pr[ρ3,3] + Pr[ρ3,4] = tr(ρΠ).                                 (17)
+
+          To consider the error of approximating the sign function, the above discussion can be reduced to
+      the case where the initial state is an eigenvector.  Then the output probability is highly approximate
+      to tr(ρΠ).  We refer the interested readers to [43] for more complexity analysis.
+          For a general case, we can sketch the search process as a binary tree and calculate the probability
+      of ﬁnding the ground state in the same manner.  Hence, we conclude that the probability is highly
+      approximate to the initial state overlap under the assumption that the Hamiltonian evolution is
+      simulated very accurately.
+
+
+                                            B.    Algorithm using block encoding
+          When  the  input  mode  is  a  block  encoding  operator UH  = [H/α·· ·               ]  of  the  Hamiltonian,  QPS
+
+      is similarly employed to prepare the target ground state.  The discussion on probability and cor-
+      rectness is similar to the previous section.  In contrast, there are several diﬀerences in using the
+      Hamiltonian  evolution.   Firstly,  implementing UH  requires  an  ancilla  system;  thus,  making  the
+      circuit wider.  Secondly, QPS outputs the eigenvalue and eigenvector of the block encoding rather
+      than the Hamiltonian; hence further processing is demanded.  Speciﬁcally, when the QPS ﬁnishes,
+      computing the cosine function of the output gives an estimation of the eigenvalue of the Hamil-
+      tonian.  Measure the ancilla system of the ﬁnal output state to achieve the ground state once the
+      post-measurement  state  has  the  outcomes  all  zeros;  otherwise,  one  has  to  restart  the  QPS  pro-
+      cedure with the initial state or the post-measurement state and halt until all-zero outcomes are
+      observed.  Thirdly, the estimation accuracy is set smaller than ∆/2α.  The corresponding circuit is
+      shown in Fig.4.  More discussions on implementing block encoding in QPS can be found in [43].
+
+
+  |0⟩  Rz(φL)     Ry(θL)      •     Rz(φL−1)     Ry(θL−1)            Rz(φL−2)      Ry(θL−2)    ···         Rz(φ0)    Ry(θ0)    Rz(ω)
+
+|0m⟩   /m                                                                                      ···
+   ρ   /n                    UH                                U†H                             ···  U†H
+
+
+      Fig 4:  Block-encoding based QPS circuit. UH  is a block encoding of the Hamiltonian.  The second
+      line represents the block-encoding’s ancilla system of size m.  The third line stands for the main
+      system with n qubits.
+
+          A  general  block  encoding  cannot  be  directly  employed  to  prepare  the  ground  state  unless  it
+      satisﬁes  an  invariant  property.   When  the  invariant  property  is  satisﬁed,  eigenvalues  of UH  and
+      H  can be connected via a cosine function.  Speciﬁcally,  the action of the block encoding can be
+                                                                                                                       11
+
+
+described  as UH|0m,ψj⟩  = λj/α|0m,ψj⟩ +√1− (λj/α)2|⊥j⟩,  where|⊥j⟩  denotes  a  normalised
+column vector satisfying (|0m⟩⟨0m|⊗I)|⊥j⟩ = 0.  LetHj  denote a two-dimensional plane spanned
+by vectors{|0m,ψj⟩,|⊥j⟩}. IfUH is invariant inHj, i.e.,UH :Hj→Hj is a rotation, we could easily
+ﬁnd the relation betweenλj and the corresponding phase±τj ofUH, which isλj/α = cos(±τj).  If
+UH does not satisfy the invariant property, this issue can be addressed by using the “qubitization”
+technique [47].  The core of qubitization is constructing a new block encoding operator using one
+more ancilla qubit and querying the controlled-UH and its inverse operator once.  Furthermore, the
+LCU-type block encoding satisﬁes the aforementioned invariant property; hence, qubitization is no
+longer needed in this case.
+   To output an eigenvector ofUH corresponding to the ground state, the estimation accuracy is set
+smaller than ∆/2α.  Note that the cosine function is monotonically increasing and decreasing in the
+region (−π, 0) and (0,π), respectively.  We can know that the phase gap of the unitary is larger than
+the scaled spectral gap ∆/α.  Thus setting accuracy as ∆/2α suﬃces to isolate the ground state.
+Suppose we have attained an eigenvector, e.g., (|0m,ψ0⟩±i|⊥0⟩)/√2.  Directly measuring on the
+ancilla system of the block encoding, the post-measurement state is the ground state if the outcomes
+are all zeros. The probability of this happening is exactly 1/2. If all-zero outcomes are not observed,
+one can restart the whole procedure.  Or one can send the post-measurement state into QPS again.
+Afterwards, the state will collapse to either (|0m,ψ0⟩ +i|⊥0⟩)/√2 or (|0m,ψ0⟩−i|⊥0⟩)/√2.  This
+process is repeated until the outcomes are all zeros.  Particularly, the failure probability will fast
+decay as (1/2)r, where r means the number of repeats.
+
+
+                    III.    APPLICATION TO HEISENBERG HAMILTONIANS
+
+   The general Heisenberg-typed model is arguably one of the most commonly used models in the
+research of quantum magnetism and quantum many-body physics that researching in the model’s
+ground state indicates the characteristics of spin liquid and inspires crystal topology design [50].
+The Hamiltonian can be expressed as
+
+                             H =∑(JxSxiSxj  +JySyiSyj  +JzSziSzj ) +∑                hzSzi,                               (18)
+                                    ⟨i,j⟩                                         i
+with⟨i,j⟩ depends on the speciﬁc lattice structure, Jx,Jy,Jz  describe the spin coupling strength
+respectively  in  the x,y,z  directions  and hz  is  the  magnetic  ﬁeld  applied  along  the z  direction.
+Classical approaches involving Bethe ansatz and thermal limitations [51–53] have been developed
+and the model can be exactly solved.  Besides, variational methods, in particular, VQE provides
+an alternative practical approach.
+   For no-noise numerical experiments,  we evaluate the performance of constant-depth VQE on
+randomly generated Hamiltonians with shuﬄed spin coupling strengths.  Speciﬁcally, we consider
+the  1D  model  with  adjacent  interactions  and  randomly  assign Jxyz  coeﬃcients  in  the  interval
+[−1, 1]  while  ignoring  magnetic  ﬁelds  involving  periodic  boundary  conditions.   Furthermore,  we
+utilise two commonly used parameterised quantum circuits or ansatzes namely hardware eﬃcient
+ansatz  (HEA)  [18]  and  alternating  layered  ansatz  (ALT)  [54],  as  illustrated  in  Fig.5.   And  for
+all simulations, we randomly initialise circuit parameters and perform 200 optimisation iterations
+using Adam optimiser with 0.1 learning rate.
+
+
+                                 Algorithm eﬀectiveness via 1D Heisenberg model
+
+   First, we investigate the performance of initial state preparation as the circuit depth increases.
+In our simulation, we randomly sample 200 8-qubit Heisenberg Hamiltonians to demonstrate the
+                                                                                                                       12
+
+
+
+        Ry     Rz     •             Ry     Rz                 Ry      •    Ry
+
+               Ry     Rz          •        Ry     Rz                        Ry      •    Ry    •   Ry
+ n = 4   Ry     Rz              •    Ry     Rz          n = 4   Ry      •    Ry    •   Ry
+
+               Ry     Rz                   Ry     Rz                        Ry      •    Ry
+                                                        ×p                                             ×p
+Fig 5:  Four-qubit templates for the experimental ansatz (with p repeated circuit block) diagrams
+of the left:  Hardward Eﬃcient ansatz (HEA) and the right:  Alternating Layered ansatz (ALT).
+
+
+initial state preparation by using ALT ansatz with circuit depth d∈{1, 3, 5, 7, 9}.  As shown in
+Fig.6, we categorise the trained overlaps into ranges (0  −0.4), (0.4−1.0), (0.6−1.0), and (0.8−1.0)
+and designate them with purple, blue, brown and orange lines, respectively.  We observe that as the
+circuit depth increases, the probability of (0.6− 1.0) interval rises from 26% to 98% and (0.8− 1.0)
+overlap interval rises from 0 to 58.5%, while (0− 0.4) interval drops from 12.5% to 1%.  We also
+ﬁnd that VQE with circuit depth can generate the initial state within (0.4−1.0) overlap range with
+at least 97% conﬁdence.  This ﬁnding indicates that depth-3 ansatz can reliably prepare the initial
+state  for  the  ground  state  preparation  of  the  1D  Heisenberg  model  and  a  deeper-depth  circuit
+may  further  boost  the  overlap.   As  depth-3  ansatz  is  already  capable  of  achieving  satisfactory
+performance, we choose it for additional investigations.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig 6:  The left ﬁgure shows the overlap range prepared with ALT ansatz depth [1, 3, 4, 5, 7] for
+200 8-qubit Heisenberg Hamiltonians.  The purple, blue, brown and orange lines indicate the
+intervals (0.0− 0.4), (0.4− 1.0), (0.6− 1.0) and (0.8− 1.0) in which the sampled probability of
+overlaps that prepared shallow-depth VQE may fall.  The right ﬁgure shows the overlap prepared
+by depth-3 VQE with HEA ansatz and our algorithm.  The blue zone represents overlap generated
+by shallow-depth VQE, while the red portion represents overlap produced by our method.
+
+   We then demonstrate the validity of our ground state preparation algorithms by applying the
+depth-3 VQE for preparing the initial state.  The experimental results are shown in Fig.6.  There
+are 200 8-qubit Heisenberg Hamiltonians being sampled, and HEA ansatz with circuit depth 3 is
+used.  The blue region depicts the overlap generated by a randomly initialised depth-3 VQE, while
+                                                                                                                     13
+
+
+the red line represents the overlap boosted by our algorithm given the initial states prepared before.
+We can see that the shallow-depth VQE provides an initial state with a minimum overlap of 0.5
+with the ground state.  Then, by inputting the optimised state into our program, we can eﬀectively
+prepare the ground state with a ﬁdelity error of less than 10−4  regarding the true ground state.
+For remark, we use the Hamiltonian evolution operator U  =eiH  and set the estimation accuracy
+as 1/3 of the spectral gap.
+   Previous two experiments demonstrate the depth-3 VQE has satisfactory performance in the
+8-qubit Heisenberg model.  To further understand the scalability of shallow-depth VQE in other
+system sizes, we conduct extensive noiseless numerical simulations for system sizes up to 14.  Specif-
+ically, we sample 10000 randomly generated Heisenberg Hamiltonians for each qubit size between
+4 to 10, and sample 200 and 100 random Hamiltonians for qubit sizes 12 and 14.  As a comparison,
+ALT and HEA ansatz are both used.  The experimental results are depicted in Fig.7.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig 7:  The frequency of overlap prepared by using depth-3 VQE ansatz of ALT (up) and HEA
+(down) for varied system sizes.  The x-axis labels the overlap regarding the randomly generated
+Heisenberg Hamiltonians’ ground states.  For every system with a size less than or equal to 10
+qubits, 10000 random Hamiltonians are sampled, and for qubit sizes 12 and 14, 200 and 100
+random Hamiltonians are sampled, respectively.  The result shows the eﬃcacy of depth-3 VQE of
+two ansatz templates in preparing initial states with an overlap greater than 0.4 for the
+intermediate-scaled Heisenberg models.
+
+   According to the numerical results, the shallow-depth VQE is shown to be eﬀective for Heisen-
+                                                                                                                       14
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig 8:  The molecular geometry of the hydrogen chain H4 with 4 atoms with equal spacing R.
+The right shows the qubit representation of the spin orbitals, and the subscripts label the qubit
+indices in the quantum circuit.  The four spin-up orbitals are in the|1⟩ state while no spin-down
+orbitals are occupied, representing the HF initial state of H4.
+
+
+berg Hamiltonians.  The majority of the results indicate that the prepared state can have a greater
+overlap with the ground state than 0.4,  making it an acceptable initial state for our algorithm.
+Also, as the system size of Heisenberg Hamiltonian increases, the prepared states have a trend that
+approximately converged to an overlap between 0.5 and 0.75 and the full width at half maximum of
+the sampled probability distribution expands, implying that, with a randomly initialised shallow-
+depth parameterised quantum circuit, the optimised state can be prepared with substantial overlap
+to the ground state with high probability.  Particularly, our results show that the technical concern
+from [25,28,30] can be fulﬁlled by a shallow-depth VQE, indicating the foreseeable possibility of
+realising the warm-start applications on large systems.
+   Exceptionally,  the  experiments  show  that  the  overlap  is  less  than  0.1  for  a  small  number  of
+Hamiltonians.  We alternatively utilise the Gibbs-VQE [46] method.  In comparison to the shallow-
+depth VQE, Gibbs-VQE is less prone to prepare state with small overlap and has a more steady
+performance.  More discussions can be found in Appendix.A. Furthermore, due to the computa-
+tional limitations, we are limited to observe the phenomenon up to the 14-qubit Heisenberg model.
+To further study the eﬀectiveness of shallow-depth VQE, the Ising model is considered with system
+sizes greater than 20.  A detailed discussion can be found in Appendix.B. Finally, barren plateaus
+[55] is a signiﬁcant obstacle to the eﬃcient use of VQE. It refers to the gradient of the cost function
+vanishing exponentially with the number of qubits for a randomly initialised PQC with suﬃcient
+depth.  We show that shallow-depth VQE will not be aﬀected by barren plateaus and is scalable
+to large-scale models, which can be referred to Appendix.C.
+
+
+                         IV.    APPLICATION TO CHEMICAL MOLECULES
+
+   Previous results have demonstrated the eﬀectiveness of our algorithms for solving the Heisenberg
+model under intermediate-size situations and have the potential for large-size applications.  Never-
+theless, the systematic analysis of the ground state preparation performances with shallow-depth
+warm-start stays ambiguous for other physical models.  In this section, we aim to extend the usage
+of our algorithm into the quantum chemical regime by numerically demonstrating the warm-start
+performance  on  handling  the  small  molecular  model  while  taking  the  well-known  Hartree-Fock
+(HF) state as a standard.
+   To our best knowledge,  both VQE and HF state methods own abilities to prepare the high-
+accurate ground states [17,28,48] that can be used in quantum chemistry calculations for deter-
+                                                                                                                          15
+
+
+mining molecular geometries, and ground energies [16,18,56].  In the HF approximation, electrons
+are  treated  independently  and  indistinguishably  [57]  that  interact  with  nuclei  potential  and  an
+electronic mean ﬁeld [58].  Quantum chemistry assumes discrete molecular orbitals determining the
+wave function of each electron appearing in the molecule.  General molecular Hamiltonian fermionic
+conﬁguration can be represented in a second quantisation form,
+                                      H =∑       hpqc†pcq + 1   ∑    hpqrsc†pc†qcrcs,                                         (19)
+
+                                             pq               2 pqrs
+
+wherec†p,cp are the creation and annihilation operators, respectively.  The coeﬃcientshpq andhpqrs
+denote the one- and two-electron Coulomb integrals [59].  In the quantum computing regime, the
+molecular electronic wave function can be represented in the occupation number basis that each
+qubit deﬁnes a spin-orbital.  By adding one fermion (electron) into the system, each orbital can be
+in an occupied state|1⟩ or a non-occupied state|0⟩ represented in the computational basis.  The
+single Slater-determinant state of N  orbitals can be deﬁned as,
+                                                                                     
+                                                                        N∑
+                                    |ψθ⟩ =Uθ|η⟩,  Uθ = exp                  θjkc†jck                                      (20)
+
+                                                                       j,k=1
+
+where|η⟩ =c†η···c†1|0⟩ in the core orbital basis.  The Hartree-Fock state is the Slater-determinant
+having the lowest energy.  Preparing the HF state classically requires a large amount of computa-
+tional resource [60].  Even with quantum technologies [61,62], one have to resolve the ansatz design
+for ﬁnding a basis to achieve relatively low circuit complexity [63].  Besides, the extreme number
+of  terms  in  the  molecular  Hamiltonian,  writing  in  molecular  orbital  basis,  could  raise  scalable
+challenging to simulate and measure which requires factorisation strategies [60,64].
+    We speciﬁcally consider the 1D hydrogen chain of 4 atoms at ﬁxed equal spacing R containing
+4  electrons.   Each  hydrogen  atom  has  one  molecular  orbital  involving  two  spin  orbitals  that,  in
+total, demands 8 qubits for VQE. We choose hydrogen chainH4 as the objective since its simplicity
+matches our current computational resource and its historical meaning as a benchmark for quantum
+chemistry [65].  We use      openfermion built-in Psi4 kernel to compute the fermionic Hamiltonian
+components  (19)  of   hpq  and hpqrs  via  self-consistent  ﬁeld  method  using  the  STO-3G  basis.   We
+perform the simulations withR = 0.5 and 3.0 a.u. corresponding to the strong and weak interaction
+regimes, respectively.  Before running the VQE, we need to map the fermionic Hamiltonian into
+the qubit representation via the Jordan-Wigner transformation [66].  During all simulations, the
+VQE ansatz is chosen to be the HEA optimised in 200 iterations of 0.1 ﬁxed learning rate by the
+Adam optimiser.
+
+
+                             Comparing VQE and HF initial state on hydrogen chain
+
+    Results have been illustrated in Fig.9.  The top two diagrams illustrate the energy curves while
+the bottom shows the corresponding output states’ overlap regarding the exact ground states.  The
+decreasing energy curves’ observation in the left plot matches the growth in the optimised overlap
+for all the cases of shallow-depth VQE (blue) and HF state (red) in (a) bottom.  As the energy
+converges to around−1.65 Ha in (a) top,  both the two schemes reach an overlap of almost one
+(0.995)  in  (a)  bottom.   Intuitively,  bond  distance R  =  0.5  a.u.   creates  strong  electron-electron
+interaction  making  the  mean  ﬁeld  a  reasonable  approximation  so  that  the  HF  state  obtained  a
+nearly perfect ﬁdelity.  This also explains the reduced overlap from the HF results reaching about
+0.54 when R = 3.0 a.u.  in (b) bottom since the approximation deviates.  Counterintuitively, the
+                                                                                                                      16
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                (a) H4 Bond distance 0.5                                    (b) H4 Bond distance 3.0
+
+Fig 9:  Figures showing the ground state energy estimation and ground state preparation via
+shallow-depth (depth-3) VQE (blue), deep-depth (depth-50) VQE (green) and Gibbs-VQE
+(depth-3) (orange) on H4 chain with bond distance R equals to 0.5 (a) and 3.0 (b).  The above
+diagrams illustrate the energy variations through the optimisation iterations, while the red lines
+represent the exact values.  The bottom shows the corresponding prepared state overlaps, while
+the red shows the HF states’ overlaps.
+
+
+
+VQE results, in blue, experience a distinct decline in the overlap though the corresponding energy
+values almost reach the ground of−1.868 Ha of error 10−3 compared to the exact diagonalisation
+results.  However, increasing the depth to 50 for VQE ansatz (green) could gradually improve the
+overlap to 0.46 within 200 optimisation steps.  We also include the Gibbs-VQE (yellow) stated in
+the previous sections as a reference scheme that showed similar behaviours from the shallow-depth
+VQE.
+   We conclude that the shallow-depth VQE may be a scalable and preferable warm-starting strat-
+egy for molecular ground state preparation, showing great performance of generating high-overlap
+initial states for short bond distances.  Interestingly, for larger bond distances, both methods imply
+reduced initial overlap values.  As the mean ﬁeld decoupled, the accuracy of the HF state decreases.
+Besides, the energy gaps between eigenstates shrunk traps the VQE into the local minimum [67]
+since the close energy values carrying by the excited states could disturb the minimisation processes
+leading to a zero overlap by the orthogonality.  Deeper VQE circuit could mitigate the eﬀect but
+with a slow growth of the overlap.  Therefore, the ground energy estimation still performs well for
+governed by the variational principle, however, might be insuﬃcient for the eﬃcient initial state
+preparation.   The  fundamental  pictures  of  the  eﬀect  and  the  coping  strategies  remain  open  for
+extending the usage of our method on molecular models.
+                                                                                                                       17
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig 10:  Qubit layout for implementing our 1× 5 Hubbard instances.  The lower illustrate the
+model’s physical site conﬁguration where each site is associated with an index 1≤i≤ 5 labelling
+from left to right.  Every site can hold a pair of spin-up and -down electrons which requires two
+qubits to encode all possible spin orbitals.  Each qubit has perfect connections with the other
+qubits.
+
+
+                       V.    APPLICATION TO FERMI-HUBBARD MODELS
+
+   Researching the Fermi-Hubbard model is one of the fundamental priorities in condensed mat-
+ter  physics  covering  metal-insulator  transitions  and  high-temperature  superconductivity  [7, 8].
+However, the model involves a wide range of correlated electrons requiring multi-determinant cal-
+culations and numerous computational resources, hence impeding the classical exploration in the
+area.  Therefore, designing the quantum method for the model stays as a compelling application
+for quantum computing.  The potential of solving the 1D Hubbard model has been proposed by
+Dong et al. [30] while only the VQE-typed algorithms have been examined via both numerical sim-
+ulations and real devices [17,28,68], as far as we know.  In this section, we aim to provide a ﬁrst
+numerical demonstration for the quantum ground state preparation scheme on the performance of
+predicting and estimating the physical properties of a classically challenging Fermi-Hubbard model
+other than commonly utilised VQE [60,69].
+   For annx×ny square lattice physical system, for example, a metallic crystal, each lattice point,
+called a site, is assigned with an index.  The Hubbard model Hamiltonian has a fermionic, second
+quantisation form,
+
+                           H =−J ∑          (a†iσajσ +a†jσaiσ) +U∑          ni↑ni↓ +Hlocal,                            (21)
+                                      ⟨i,j⟩,σ                            i
+
+where a†iσ,aiσ  are  fermionic  creation  and  annihilation  operators; niσ  = a†iσ,aiσ,  are  the  number
+operators; the notation⟨i,j⟩ associates adjacent sites in thenx×ny rectangular lattice; σ∈{↑,↓}
+labels the spin orbital.  The ﬁrst term in Eq. (21) is the hopping term with   J  being the tunnelling
+amplitude, and U  in the second term is the on-site Coulomb repulsion.  The last term deﬁnes the
+local potential from nuclear-electron interaction.  The local interaction term is determined by the
+Gaussian form [17],
+                                            ∑
+                            Hlocal =∑             ϵj,νnj,ν;  ϵj,ν =−λνe− 12 (j−mν)2/σ2ν.                             (22)
+                                       j=1 ν=↑,↓
+We consider an 1× 5 lattice model with J = 2,U = 3 and λ↑,↓ = 3, 0.1, m↑,↓ = 3, 3.  The standard
+                                                                                                                        18
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig 11:  The (a) charge ρ+ and (b) spin ρ− densities evaluated from diﬀerent produced ground
+states of our stated Hubbard model (5 sites) by direct diagonalisation (green dashed),
+shallow-depth VQE (blue solid), deep-depth VQE (orange solid) and our algorithm (red star)
+methods.  The shallow- and deep-depth VQE access HEA circuit with depth 3 and 50,
+respectively.  In both cases, the learning rate is set to 0.1, and the total number of iterations is set
+to 200.  The Adam optimiser powers all the training procedures.
+
+
+deviation for both spin-up and -down potential is set to 1.  Such a setup guarantees a charge-spin
+symmetry around the centre site (i = 3) of the entire system.
+   As before, representing the Hubbard Hamiltonian on a quantum computer in the qubit repre-
+sentation requires fermionic encoding via eﬃcient JW transformation.  For a 1D Hubbard model
+with N  sites, based on the Pauli exclusion principle [70], each site can contain at most a pair of
+spin-up and -down, two electrons.  In total, there are 2N  possible electronic orbitals represented
+by the same number of qubits which covers all possible orbitals for the system.  The qubit layout
+of our ﬁve-qubit model has been shown in Fig.10where all pairs of qubits are connected perfectly
+during  simulations.   We  study  the  medium-scaled  model  having  non-degenerate  ground  space.
+The fermionic Hamiltonian and qubitic transformations could be derived using  openfermion and
+paddle  quantum python libraries.  The VQE uses an HEA circuit of depth 3 and 50 approaching
+realistic applications, and we choose the Adam optimiser (ﬁxed learning rate 0.1) as before training
+the circuit within 200 iterations.
+
+
+                                  Evaluating physical quantities of Hubbard model
+
+   The ﬁrst discussion is about predicting the charge-spin behaviours of the given solid system.  We
+study the global ground state of the Hubbard model allowing the accessibility of every orbital with
+a suﬃcient number of electrons in the qubit representation.  After deriving the ground state of the
+Hubbard Hamiltonian, we could compute the expectation value of diﬀerent physical observables,
+for example, charge and spin densities deﬁned as,
+
+                                                 ρ±j  =⟨nj↑⟩±⟨nj↓⟩,                                                        (23)
+
+where j  is  the  target  site  index.   The  densities  could  indicate  the  model’s  electronic  and  mag-
+netic structures which further relate to the metal-metal bonds of given materials [71] and can be
+experimentally demonstrated via electron paramagnetic resonance experiments [72], respectively.
+                                                                                                                        19
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig 12:  Chemical potential µ calculations of Hubbard ground states from diﬀerent occupation
+numbers Nocc.  The green dashed and blue solid lines illustrate the exact and shallow-depth
+VQE-prepared ground states, respectively.  The stars label our algorithm’s results by initialising
+the shallow-depth states.  The subplot at the left corner indicates the corresponding potential
+values’ absolute error ε(µ) (log-scale), where the green shaded area marks the points satisfying
+chemical accuracy regarding the FCI results.
+
+
+The density diagrams illustrate charge-spin distributions which could be used in designing solid
+structures of materials.
+   We compare the evaluated ground state densities from diﬀerent preparation schemes shown in
+Fig.11.  As we could see both the densities show a centralized feature that matches our model
+conﬁguration.  The initial state of our algorithm is prepared via shallow-depth VQE deriving the
+corresponding  density  values  (red  stars)  in  the  ﬁgure.   A  dramatic  observation  here  shows  our
+scheme outperforms the traditional VQE methods, in which the derived densities match the exact
+results  while  deep-depth  VQE  produces  a  visible  gap  regarding  the  true  values  (green  dashed).
+Notice that a deeper circuit increases the VQE accuracy of both evaluated densities due to the
+better expressibility.  However, such a circuit approximates 2-design which signiﬁcantly drops the
+convergence speed of VQE. As a result,  with the deep-depth circuit,  VQE could only prepare a
+defective ground state and predict approximate densities (orange) within 200 iterations.
+   Besides, our algorithm only requires a non-zero-overlap initial state coming from the shallow-
+depth  VQE  experiencing  no  trainability  predicament.   The  searched  state  should  theoretically
+be the exact ground state and predict exact density results.  We show our method could derive
+high-precision charge-spin densities which can be used to verify the theoretical developments on
+Luttinger liquid and predict separation dynamics [73].
+   Apart from that, chemical potential is another physical quantity determining the energy vari-
+ations during chemical and electronic interactions [69].  In the second quantisation, the potential
+ﬁelds are considered with discrete orbital states.  Chemical potential describes the energy require-
+ment by adding or subtracting an electron from the system.  Such an electron would occupy an
+orbital  state  or  leave  a  state  empty,  respectively.   The  value  can  be  computed  via  subtracting
+the ground state energies of diﬀerent occupation numbers (number of orbitals that are ﬁlled with
+particles), having the following expression,
+
+                                        µ(Nocc) =E(Nocc)−E(Nocc− 1).                                            (24)
+
+In  the  simulations,  we  derive  the  Hubbard  Hamiltonian  with  diﬀerent  occupation  numbers  by
+                                                                                                                      20
+
+
+classically applying fermionic projection maps to the previous global model by  ˜H =PNoccHPNocc.
+The  resulting   ˜H  could  have  image  space  spanning  by  the  standard  basis  elements  with  a  ﬁxed
+number of|1⟩’s, and hence restrict the number of electrons in the system.  Such a projection can
+also be realised by so-called the number-preserving ansatz introduced in [74].  Previous literature
+works on the deep HVA-based ansatzes (30 layers) and directly prepare the Hubbard ground states
+using VQE [69].  We instead,  run the shallow-depth VQE on each       ˜H  to prepare an initial state
+followed by our searching algorithm to locate the ground states of each occupation number with
+constant scaled phase factor.  The corresponding energies can be simultaneously estimated from
+our algorithm.
+   As from Fig.12, the algorithm could successfully extract the ground state from initial shallow-
+depth VQE’s states.  By zooming into the subplot illustrating the absolute error of the chemical
+potentials at each Nocc.  Our estimated values obtain an absolute error of almost 10−5 which have
+all reached the chemical precision with respect to the FCI calculations via noiseless simulations
+in the green-shaded area.  The observation signiﬁcantly proves the eﬀectiveness of our method on
+other high-accurate condensed matter calculations which inspires that our scheme could promote a
+variety of physical research and provide a new paradigm for studying and predicting hard-to-solve
+model behaviours from both classical and quantum horizons.
+
+
+
+                                  VI.    CONCLUSION AND OUTLOOK
+
+   In this paper, we provide quantum algorithms to prepare ground states and demonstrate the
+correctness and eﬀectiveness through extensive numerical simulations on Heisenberg models and
+chemical molecules.  We also apply our algorithms to estimate physical quantities of interest, such
+as charge and spin densities and chemical potential of Fermi-Hubbard models having no generally
+eﬃcient classical methods, to our best knowledge. Only VQE and its variants have been applied and
+demonstrated with numerical and practical experiments from recent literature.  A notable property
+of our algorithms is that the ground state can be prepared simultaneously with the ground state
+energy estimation,  thus requiring no prior information on the ground state energy.  In contrast,
+existing ground state preparation algorithms involving quantum phase estimation have to estimate
+a proper ground state energy beforehand [25], leading to indeﬁnite practicability.  For other works
+[28,30] based on QSVT and QET-U algorithms, a reasonable upper bound estimate of the ground
+state energy is pre-requested.  Since such information is usually not known as priorities, one has
+to expensively estimate the ground state energy before preparing the state.  Another worth-noting
+point is that our algorithms only require to compute phase factors with a scaling ~O(1) while QSVT
+and  QET-U  based  algorithms  require ~O(∆−1),  which  means  our  algorithms  have  advantages  in
+avoiding challenging phase factor evaluations when ∆ is small.
+   Besides algorithmic improvements, we also contribute to showing that shallow-depth VQE can
+be a favourable method for warm-starting the ground state preparation of the intermediate-scaled
+many-body  systems.   In  contrast,  the  previous  works  [25, 28, 30]  all  assume  the  state  with  a
+considerable overlap is available and can be reused.  Our scheme provides a potential paradigm for
+using shallow-depth VQE to solve challenging physical models.  By conducting simulations to a
+10-qubit Hubbard model, our method outperforms the VQE-based evaluations of the charge and
+spin densities and the chemical potentials.  Meanwhile, we eﬃciently and qualitatively predict the
+ground state density behaviours of the potential centralised model and derive extremely accurate
+chemical  potentials  of  distinct  occupations  up  to  an  absolute  error  of  10−5.   Such  evaluations
+have reached the chemical accuracy of the FCI results, which is foreseeable to own advantages to
+exploring high-temperature superconductivity and quantum chemistry problems.  Our simulations
+have demonstrated the potential of our algorithm on solving the 1D Hubbard model and prepared
+                                                                                                                             21
+
+
+for further research on the classical challenging 2D models [68].
+    Ground state preparation is signiﬁcant to the fundamental research in physics and chemistry.
+To establish a synthetic quantum solution for this task, there are still some remaining problems to
+resolve in future.  Since our works can not oﬀer suggestions on the depth of the warm-start ansatz,
+a  theoretical  guarantee  of  reaching  the  large  initial  state  overlap  using  suﬃcient-depth  ansatzes
+stays required.  Recall that the algorithms are based on the prior information on the spectral gap,
+especially, when the spectral gap is small, it would be better to amplify it economically.  Hence, an
+eﬃcient and eﬀective method to compute the spectral gap and even amplify the gap is necessary for
+applying quantum computers in solving ground-state problems.  In addition to addressing many-
+body systems, we believe our techniques can also be used for combinatorial optimization problems
+e.g.  the travelling salesperson problem.  Based on the results in this paper, we believe that shallow
+variational warm-start would ﬁnd more applications in physics, chemistry, and quantum machine
+learning, which is worth further studying in theory and experiments.
+
+
+
+                                              ACKNOWLEDGEMENT
+
+    Y. W.,  C. Z.,  and M. J. contributed equally to this work.  Part of this work was done when
+Y. W.,  C. Z.,  and M. J. were research interns at Baidu Research.  Y. W. acknowledges support
+from  the  Baidu-UTS  AI  Meets  Quantum  project.   The  authors  would  like  to  thank  Lloyd  C.L.
+Hollenberg and Haokai Zhang for the valuable comments and Lei Zhang for the helpful discussion.
+
+
+
+
+ [1]R. P. Feynman and Michael Cohen, “Energy spectrum of the excitations in liquid helium,”Phys. Rev.
+     102, 1189–1204 (1956).
+ [2]J.  J.  Sakurai  and  Eugene  D.  Commins,  “Modern  quantum  mechanics,  revised  edition,”American
+     Journal of Physics 63, 93–95 (1995),https://doi.org/10.1119/1.17781.
+ [3]C. David Sherrill, “An introduction to hartree-fock molecular orbital theory,”  (2009).
+ [4]Peter J. Knowles and Nicholas C. Handy, “A determinant based full conﬁguration interaction program,”
+     Computer Physics Communications 54, 75–83 (1989).
+ [5]Robert G Parr, “Density functional theory of atoms and molecules,” in     Horizons of Quantum Chemistry:
+     Proceedings of the Third International Congress of Quantum Chemistry Held at Kyoto, Japan, October
+     29-November 3, 1979  (Springer, 1980) pp. 5–15.
+ [6]Richard  Blankenbecler,  DJ  Scalapino,   and  RL  Sugar,  “Monte  carlo  calculations  of  coupled  boson-
+     fermion systems. i,” Physical Review D 24, 2278 (1981).
+ [7]Chris Cade,  Lana Mineh,  Ashley Montanaro,   and Stasja Stanisic, “Strategies for solving the fermi-
+     hubbard  model  on  near-term  quantum  computers,”Physical  Review  B                  102  (2020),  10.1103/phys-
+     revb.102.235122.
+ [8]Elbio Dagotto, “Correlated electrons in high-temperature superconductors,”Rev. Mod. Phys.                         66, 763–
+     840 (1994).
+ [9]James Nelson, Rajarshi Tiwari,  and Stefano Sanvito, “Machine learning density functional theory for
+     the hubbard model,”Physical Review B        99 (2019), 10.1103/physrevb.99.075132.
+[10]Francisco Barahona, “On the computational complexity of ising spin glass models,” Journal of Physics
+     A: Mathematical and General 15, 3241 (1982).
+[11]W. R. Gilks,  N. G. Best,   and K. K. C. Tan, “Adaptive rejection metropolis sampling within gibbs
+     sampling,”Journal of the Royal Statistical Society:  Series C (Applied Statistics)                44, 455–472 (1995),
+     https://rss.onlinelibrary.wiley.com/doi/pdf/10.2307/2986138.
+[12]Pierre Del Moral, Arnaud Doucet,  and Ajay Jasra, “Sequential monte carlo samplers,”Journal of the
+     Royal Statistical Society:  Series B (Statistical Methodology) 68, 411–436 (2006).
+[13]Douglas J. Scalapino, “Numerical studies of the 2d hubbard model,”arXiv:  Strongly Correlated Elec-
+     trons , 495–526 (2006).
+                                                                                                                                 22
+
+
+[14]J. P. F. LeBlanc, Andrey E. Antipov, Federico Becca, Ireneusz W. Bulik, Garnet Kin-Lic Chan, Chia-
+      Min Chung, Youjin Deng, Michel Ferrero, Thomas M. Henderson, Carlos A. Jim´enez-Hoyos, E. Kozik,
+      Xuan-Wen Liu, Andrew J. Millis, N. V. Prokof’ev, Mingpu Qin, Gustavo E. Scuseria, Hao Shi, B. V.
+      Svistunov, Luca F. Tocchio, I. S. Tupitsyn, Steven R. White, Shiwei Zhang, Bo-Xiao Zheng, Zhenyue
+      Zhu,   and  Emanuel  Gull  (Simons  Collaboration  on  the  Many-Electron  Problem),  “Solutions  of  the
+      two-dimensional hubbard model:  Benchmarks and results from a wide range of numerical algorithms,”
+      Phys. Rev. X 5, 041041 (2015).
+[15]Richard P. Feynman, “Simulating physics with computers,”International Journal of Theoretical Physics
+      21, 467–488 (1982).
+[16]Alberto  Peruzzo,  Jarrod  McClean,  Peter  Shadbolt,  Man-Hong  Yung,  Xiao-Qi  Zhou,  Peter  J.  Love,
+      Al´an Aspuru-Guzik,  and Jeremy L. O’Brien, “A variational eigenvalue solver on a photonic quantum
+      processor,”Nature Communications            5 (2014), 10.1038/ncomms5213.
+[17]Dave Wecker, Matthew B. Hastings,  and Matthias Troyer, “Progress towards practical quantum vari-
+      ational algorithms,”Physical Review A                  92 (2015), 10.1103/physreva.92.042303.
+[18]Abhinav Kandala, Antonio Mezzacapo, Kristan Temme, Maika Takita, Markus Brink, Jerry M. Chow,
+      and  Jay  M.  Gambetta,  “Hardware-eﬃcient  variational  quantum  eigensolver  for  small  molecules  and
+      quantum magnets,”Nature    549, 242–246 (2017).
+[19]Mariia D. Sapova and Aleksey K. Fedorov, “Variational quantum eigensolver techniques for simulating
+      carbon monoxide oxidation,”Communications Physics               5, 199 (2022).
+[20]Mateusz Ostaszewski, Lea M. Trenkwalder, Wojciech Masarczyk, Eleanor Scerri,  and Vedran Dunjko,
+      “Reinforcement learning for optimization of variational quantum circuit architectures,” in Advances in
+      Neural Information Processing Systems, Vol. 34, edited by M. Ranzato, A. Beygelzimer, Y. Dauphin,
+      P.S. Liang,  and J. Wortman Vaughan (Curran Associates, Inc., 2021) pp. 18182–18194.
+[21]Pierre-Luc Dallaire-Demers, Jonathan Romero, Libor Veis, Sukin Sim,  and Al´an Aspuru-Guzik, “Low-
+      depth  circuit  ansatz  for  preparing  correlated  fermionic  states  on  a  quantum  computer,”Quantum
+      Science and Technology 4, 045005 (2019).
+[22]M.  W.  Johnson,  M.  H.  S.  Amin,  S.  Gildert,  T.  Lanting,  F.  Hamze,  N.  Dickson,  R.  Harris,  A.  J.
+      Berkley, J. Johansson, P. Bunyk, E. M. Chapple, C. Enderud, J. P. Hilton, K. Karimi, E. Ladizinsky,
+      N. Ladizinsky, T. Oh, I. Perminov, C. Rich, M. C. Thom, E. Tolkacheva, C. J. S. Truncik, S. Uchaikin,
+      J. Wang, B. Wilson,  and G. Rose, “Quantum annealing with manufactured spins,”Nature      473, 194–198
+      (2011).
+[23]A. Yu. Kitaev,“Quantum measurements and the abelian stabilizer problem,”(1995).
+[24]Gilles Brassard, Peter Hoyer, Michele Mosca,  and Alain Tapp, “Quantum amplitude ampliﬁcation and
+      estimation,”Contemporary Mathematics                  305, 53–74 (2002).
+[25]Yimin Ge, Jordi Tura,  and J Ignacio Cirac, “Faster ground state preparation and high-precision ground
+      energy estimation with fewer qubits,”Journal of Mathematical Physics   60, 022202 (2019).
+[26]David Poulin and Pawel Wocjan, “Preparing ground states of quantum many-body systems on a quan-
+      tum computer,”Physical Review Letters                 102 (2009), 10.1103/physrevlett.102.130503.
+[27]Andr´as Gily´en, Yuan Su, Guang Hao Low,  and Nathan Wiebe, “Quantum singular value transformation
+      and beyond:  exponential improvements for quantum matrix arithmetics,” in  Proceedings  of  the  51st
+      Annual ACM SIGACT Symposium on Theory of Computing  (ACM, 2019).
+[28]Lin Lin and Yu Tong, “Near-optimal ground state preparation,”Quantum        4, 372 (2020).
+[29]Dominic  W.  Berry,  Andrew  M.  Childs,    and  Robin  Kothari,  “Hamiltonian  simulation  with  nearly
+      optimal  dependence  on  all  parameters,”  in  2015  IEEE  56th  Annual  Symposium  on  Foundations  of
+      Computer Science (IEEE, 2015).
+[30]Yulong  Dong,  Lin  Lin,    and  Yu  Tong,  “Ground-state  preparation  and  energy  estimation  on  early
+      fault-tolerant quantum computers via quantum eigenvalue transformation of unitary matrices,”PRX
+      Quantum 3 (2022), 10.1103/prxquantum.3.040305.
+[31]Guang Hao Low and Isaac L. Chuang, “Optimal hamiltonian simulation by quantum signal processing,”
+      Physical Review Letters 118 (2017), 10.1103/physrevlett.118.010501.
+[32]Daniel S. Abrams and Seth Lloyd, “Quantum algorithm providing exponential speed increase for ﬁnding
+      eigenvalues and eigenvectors,”Physical Review Letters            83, 5162–5165 (1999).
+[33]B.  L.  Higgins,  D.  W.  Berry,  S.  D.  Bartlett,  H.  M.  Wiseman,   and  G.  J.  Pryde,  “Entanglement-free
+      heisenberg-limited phase estimation,”Nature                  450, 393–396 (2007).
+                                                                                                                                    23
+
+
+[34]D.  W.  Berry,  B.  L.  Higgins,  S.  D.  Bartlett,  M.  W.  Mitchell,  G.  J.  Pryde,    and  H.  M.  Wiseman,
+      “How  to  perform  the  most  accurate  possible  phase  measurements,”Physical  Review  A       80  (2009),
+      10.1103/physreva.80.052114.
+[35]Emanuel Knill, Gerardo Ortiz,   and Rolando D. Somma, “Optimal quantum measurements of expec-
+      tation values of observables,”Phys. Rev. A           75, 012328 (2007).
+[36]Lin Lin and Yu Tong, “Heisenberg-limited ground-state energy estimation for early fault-tolerant quan-
+      tum computers,”PRX Quantum                  3 (2022), 10.1103/prxquantum.3.010318.
+[37]Zhiyan Ding and Lin Lin,“Even shorter quantum circuit for phase estimation on early fault-tolerant
+      quantum computers with applications to ground-state energy estimation,”(2022).
+[38]Thomas E O’Brien, Brian Tarasinski,  and Barbara M Terhal, “Quantum phase estimation of multiple
+      eigenvalues for small-scale (noisy) experiments,”New Journal of Physics      21, 023022 (2019).
+[39]Daochen Wang, Oscar Higgott,  and Stephen Brierley, “Accelerated variational quantum eigensolver,”
+      Phys. Rev. Lett. 122, 140504 (2019).
+[40]Rolando D Somma, “Quantum eigenvalue estimation via time series analysis,”New Journal of Physics
+      21, 123025 (2019).
+[41]Kianna  Wan,  Mario  Berta,   and  Earl  T.  Campbell,  “Randomized  quantum  algorithm  for  statistical
+      phase estimation,”Physical Review Letters                  129 (2022), 10.1103/physrevlett.129.030503.
+[42]Guoming  Wang,  Daniel  Stilck-Franca,  Ruizhe  Zhang,  Shuchen  Zhu,   and  Peter  D  Johnson,  “Quan-
+      tum  algorithm  for  ground  state  energy  estimation  using  circuit  depth  with  exponentially  improved
+      dependence on precision,”arXiv preprint arXiv:2209.06811  (2022).
+[43]Xin Wang, Youle Wang, Zhan Yu,  and Lei Zhang, “Quantum phase processing:  Transform and extract
+      eigen-information of quantum systems,”arXiv preprint arXiv:2209.14278  (2022).
+[44]Andrew  M  Childs,  Dmitri  Maslov,  Yunseong  Nam,  Neil  J  Ross,    and  Yuan  Su,  “Toward  the  ﬁrst
+      quantum simulation with quantum speedup,”Proceedings of the National Academy of Sciences            115,
+      9456–9461 (2018).
+[45]“The hubbard model at half a century,”Nature Physics , 523 (2013).
+[46]Youle Wang, Guangxi Li,   and Xin Wang, “Variational quantum gibbs state preparation with a trun-
+      cated taylor series,”Physical Review Applied           16 (2021), 10.1103/physrevapplied.16.054035.
+[47]Guang  Hao  Low  and  Isaac  L.  Chuang,  “Hamiltonian  simulation  by  qubitization,”Quantum                          3,  163
+      (2019).
+[48]Yulong  Dong,  Xiang  Meng,  K.  Birgitta  Whaley,   and  Lin  Lin,  “Eﬃcient  phase-factor  evaluation  in
+      quantum signal processing,”Physical Review A            103 (2021), 10.1103/physreva.103.042419.
+[49]Guang  Hao  Low  and  Isaac  L  Chuang,  “Hamiltonian  simulation  by  uniform  spectral  ampliﬁcation,”
+      arXiv preprint arXiv:1707.05391  (2017).
+[50]Simeng Yan, David A. Huse,  and Steven R. White, “Spin-liquid ground state of the  ⟨s⟩ = 1/2 kagome
+      heisenberg antiferromagnet,”Science                 332, 1173–1176 (2011).
+[51]F Bonechi, E Celeghini, R Giachetti, E Sorace,  and M Tarlini, “Heisenberg XXZ model and quantum
+      galilei group,”Journal of Physics A: Mathematical and General            25, L939–L943 (1992).
+[52]LD Faddeev, “How algebraic bethe ansatz works for integrable model,”arXiv preprint hep-th/9605187
+      (1996).
+[53]Onofre  Rojas,  S.  M.  de  Souza,  E.  V.  Corrˆea  Silva,   and  M.  T.  Thomaz,  “Thermodynamics  of  the
+      Limiting Cases of the XXZ Model Without Bethe Ansatz,”Brazilian Journal of Physics             31, 577–582
+      (2001).
+[54]M.  Cerezo,  Akira  Sone,  Tyler  Volkoﬀ,  Lukasz  Cincio,   and  Patrick  J.  Coles,  “Cost  function  depen-
+      dent barren plateaus in shallow parametrized quantum circuits,”Nature Communications              12 (2021),
+      10.1038/s41467-021-21728-w.
+[55]Jarrod  R.  McClean,  Sergio  Boixo,  Vadim  N.  Smelyanskiy,  Ryan  Babbush,    and  Hartmut  Neven,
+      “Barren plateaus in quantum neural network training landscapes,”Nature Communications      9 (2018),
+      10.1038/s41467-018-07090-4.
+[56]Rodney  J  Bartlett  and  John  F  Stanton,  “Applications  of  post-hartree—fock  methods:  A  tutorial,”
+      Reviews in computational chemistry , 65–169 (1994).
+[57]Yasser  Omar,  “Indistinguishable  particles  in  quantum  mechanics:   an  introduction,”Contemporary
+      Physics 46, 437–448 (2005).
+[58]Rolf   Seeger   and   John   A.   Pople,   “Self-consistent   molecular   orbital   methods.   xviii.   constraints
+      and  stability  in  hartree–fock  theory,”The  Journal  of  Chemical  Physics     66,  3045–3050  (1977),
+                                                                                                                                 24
+
+
+      https://doi.org/10.1063/1.434318.
+[59]Justin T. Fermann and Edward F. Valeev,“Fundamentals of molecular integrals evaluation,”(2020).
+[60]Google AI Quantum, Collaborators*       †, Frank Arute, Kunal Arya, Ryan Babbush, Dave Bacon, Joseph C
+      Bardin,  Rami Barends,  Sergio Boixo,  Michael Broughton,  Bob B Buckley,  et  al., “Hartree-fock on a
+      superconducting qubit quantum computer,”Science                 369, 1084–1089 (2020).
+[61]Norm Tubman, Carlos Mejuto Zaera, Jeﬀrey Epstein, Diptarka Hait, Daniel Levine, William Huggins,
+      Zhang  Jiang,  Jarrod  McClean,  Ryan  Babbush,  Martin  Head-Gordon,   and  Birgitta  Whaley,  “Post-
+      poning the orthogonality catastrophe:  eﬃcient state preparation for electronic structure simulations
+      on quantum devices,” in APS  March  Meeting  Abstracts, APS Meeting Abstracts, Vol. 2019 (2019) p.
+      E42.004.
+[62]Ian  D.  Kivlichan,  Jarrod  McClean,  Nathan  Wiebe,  Craig  Gidney,  Al´an  Aspuru-Guzik,  Garnet  Kin-
+      Lic  Chan,   and  Ryan  Babbush,  “Quantum  simulation  of  electronic  structure  with  linear  depth  and
+      connectivity,”Phys. Rev. Lett.    120, 110501 (2018).
+[63]Ryan Babbush, Nathan Wiebe, Jarrod McClean, James McClain, Hartmut Neven,  and Garnet Kin-Lic
+      Chan, “Low-depth quantum simulation of materials,”Phys. Rev. X                8, 011044 (2018).
+[64]Dominic W. Berry, Craig Gidney, Mario Motta, Jarrod R. McClean,  and Ryan Babbush, “Qubitization
+      of Arbitrary Basis Quantum Chemistry Leveraging Sparsity and Low Rank Factorization,”Quantum
+      3, 208 (2019).
+[65]Mario Motta, David M. Ceperley, Garnet Kin-Lic Chan, John A. Gomez, Emanuel Gull, Sheng Guo,
+      Carlos A. Jim´enez-Hoyos, Tran Nguyen Lan, Jia Li, Fengjie Ma, Andrew J. Millis, Nikolay V. Prokof’ev,
+      Ushnish Ray, Gustavo E. Scuseria, Sandro Sorella, Edwin M. Stoudenmire, Qiming Sun, Igor S. Tupit-
+      syn, Steven R. White, Dominika Zgid,  and Shiwei Zhang (Simons Collaboration on the Many-Electron
+      Problem), “Towards the solution of the many-electron problem in real materials:  Equation of state of
+      the hydrogen chain with state-of-the-art many-body methods,”Phys. Rev. X       7, 031059 (2017).
+[66]Jacob T. Seeley, Martin J. Richard,   and Peter J. Love, “The bravyi-kitaev transformation for quan-
+      tum  computation  of  electronic  structure,”The  Journal  of  Chemical  Physics                 137,  224109  (2012),
+      https://doi.org/10.1063/1.4768229.
+[67]David  Wierichs,  Christian  Gogolin,    and  Michael  Kastoryano,  “Avoiding  local  minima  in  varia-
+      tional quantum eigensolvers with the natural gradient optimizer,”Physical Review Research                 2 (2020),
+      10.1103/physrevresearch.2.043246.
+[68]Lawrence  W  Cheuk,  Matthew  A  Nichols,  Katherine  R  Lawrence,  Melih  Okan,  Hao  Zhang,  Ehsan
+      Khatami,  Nandini Trivedi,  Thereza Paiva,  Marcos Rigol,   and Martin W Zwierlein, “Observation of
+      spatial charge and spin correlations in the 2d fermi-hubbard model,”Science        353, 1260–1264 (2016).
+[69]Stasja Stanisic, Jan Lukas Bosse, Filippo Maria Gambetta, Raul A. Santos, Wojciech Mruczkiewicz,
+      Thomas E. O’Brien,  Eric Ostby,   and Ashley Montanaro, “Observing ground-state properties of the
+      Fermi-Hubbard model using a scalable algorithm on a quantum computer,”Nature Commun.                 13, 5743
+      (2022),arXiv:2112.02025 [quant-ph].
+[70]Martin Deutsch, “Introductory nuclear physics.”Science               113, 443–443 (1951).
+[71]Razi Epsztein, Evyatar Shaulsky, Nadir Dizge, David M. Warsinger,  and Menachem Elimelech, “Role of
+      ionic charge density in donnan exclusion of monovalent anions by nanoﬁltration,”Environmental Science
+      & Technology 52, 4108–4116 (2018), pMID: 29510032,https://doi.org/10.1021/acs.est.7b06400.
+[72]Christoph R. Jacob and Markus Reiher, “Spin in density-functional theory,”International Journal of
+      Quantum Chemistry 112, 3661–3684 (2012).
+[73]Frank  Arute,  Kunal  Arya,  Ryan  Babbush,  Dave  Bacon,  Joseph  C  Bardin,  Rami  Barends,  Andreas
+      Bengtsson, Sergio Boixo, Michael Broughton, Bob B Buckley, et al., “Observation of separated dynamics
+      of charge and spin in the fermi-hubbard model,”arXiv preprint arXiv:2010.07965  (2020).
+[74]Gian-Luca R Anselmetti, David Wierichs, Christian Gogolin,  and Robert M Parrish, “Local, expressive,
+      quantum-number-preserving vqe ans¨atze for fermionic systems,”New Journal of Physics               23, 113010
+      (2021).
+[75]Daniel J. Egger, Jakub Mareˇc ek,  and Stefan Woerner, “Warm-starting quantum optimization,”Quan-
+      tum 5, 479 (2021).
+[76]Kouhei  Nakaji  and  Naoki  Yamamoto,  “Expressibility  of  the  alternating  layered  ansatz  for  quantum
+      computation,”Quantum                     5, 434 (2021).
+                                                                                                                    25
+
+                                       Supplementary Material for
+             Ground state preparation with shallow variational warm-start
+
+
+                       Appendix A: Initial State Preparation with Gibbs-VQE
+
+   The experiments in Fig.7show that it is unsuccessful for a small number of Hamiltonians.  This
+may be caused by the local minima problem, which we re-initialise all the circuit parameters and
+re-run the circuit again may signiﬁcantly amplify the overlap.  To mitigate this issue, we consider
+applying variational Gibbs-state preparation[46] (Gibbs-VQE) alternatively.
+   We begin by brieﬂy reviewing the background of the Gibbs state and the protocol Gibbs-VQE.
+For  a  Hamiltonian  with  an n-qubit  system,  the  Gibbs  state ρG  at  temperature T  is  deﬁned  as
+follows:
+
+                                                  ρG =  e−βHtr(e−βH),                                                        (A.1)
+
+where−βH  is  the  matrix  exponential  of  matrix−βH. β  =    1kT  is  the  inverse  temperature  of
+the system and k is the Boltzmann’s constant.  To prepare a Gibbs state we use the protocol as
+introduced in [46].  The main idea is to consider the variational principle of the system’s free energy,
+where parameterised quantum circuits are used to minimize the free energy.  Speciﬁcally, we set
+the loss function as L =L1 +L2 +L3, where
+
+                        L1 = trHρB,  L2 = 2β−1 trρ2B,  L3 =−β−1(trρ2B + 3)2     .                        (A.2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig S1:  The optimised overlap using shallow-depth VQE and shallow-depth Gibbs-VQE. For each
+sampled Hamiltonian, 10 optimisations are performed to determine the overlap between the
+optimised and ground states.  The blue circle indicates the overlap prepared with shallow-depth
+VQE and the red diamond represents the case with the Gibbs-VQE.
+
+   To compare the performance of Gibbs-VQE and shallow-depth VQE, 200 random Hamiltonians
+are sampled and 10 random initialisations of circuit parameters are performed for each Hamiltonian.
+For both simulations of two methods,  we employ depth-3 HEA ansatz and 200 Adam optimiser
+                                                                                                                     26
+
+
+optimisation iterations.  The experiment results are shown in Fig.S1.  The blue circle indicates
+the overlap prepared by shallow-depth VQE, and the red diamond indicates the overlap prepared
+by  shallow-depth  Gibbs-VQE.  Simulation  results  indicate  that  Gibbs-VQE  has  a  more  steady
+performance than shallow-depth VQE and is less prone to become stuck in local minima.  It can
+be seen that∼ 11% number of shallow-VQE prepare the overlap less than 0.4, whereas, for Gibbs-
+VQE, the ratio reduces to∼ 2%.  Thus, Gibbs-VQE is superior for solving physical and chemical
+problems because it generates initial states with reliable overlap.
+
+
+                Appendix B: Initial State Preparation with Tensor Product Ansatz
+
+   The process that initialises an approximating state for a quantum algorithm via classical meth-
+ods is usually called a warm-start quantum method.  By inheriting the initial state, quantum algo-
+rithm could require fewer resources for solving the problem. Famous result, for example, warm-start
+QAOA [75] combining Goemans-Williamson (GW) randomized rounding algorithm, guarantees the
+performance of solving the max-cut problem withO(n) qubits and low-depth quantum circuits.
+   From the previous sectionIII, we observe the eﬃciency of initial state preparation on Heisenberg
+Hamiltonians through shallow-depth VQE. Due to the computational limitations, we are limited
+to observe the phenomenon on Hamiltonians up to 14-qubit.  To further investigate the eﬃcacy of
+shallow-depth VQE, we use the tensor product ansatz to examine the max-cut problem. Speciﬁcally,
+the  max-cut  problem  can  be  naturally  mapped  to  the  QUBO  Hamiltonian.   A  general  QUBO
+Hamiltonian has an expression,
+                                         HQUBO = 1      ∑    ZpZq− n
+                                                      2  p⁄=q          2I⊗n.                                             (B.1)
+
+This is closely related to the continuous relaxation of the max-cut problem which can be approxi-
+mately solved using semideﬁnite programming and GW rounding.  Such a technique generates the
+initial state for the problem Hamiltonian, which can be eﬃciently prepared by applying a single
+layer of RY  rotations.  This indicates the possibility of the approximating ground state of speciﬁc
+Hamiltonian models via shallow-depth quantum circuits.  Taking the max-cut problem as a starting
+point, we could have the following observation.
+
+Lemma S1  For a product state ansatz composed with only one layer of single-qubit Ry  rotation,
+s.t.,|ψ(θ)⟩ =⨂Ry(θp)|0⟩, we have
+  ⟨ψ(θ)|H|ψ(θ)⟩ = 1      ∑⟨ψ(θ)|ZpZq|ψ(θ)⟩− n                                    ∑cos (θp) cos (θq)− n
+                       2  p⁄=q                        2⟨ψ(θ)|I⊗n|ψ(θ)⟩ = 12       p⁄=q                      2.   (B.2)
+
+As  from  above,  we  could  work  out  the  analytic  gradient  for  any  k-local  Hamiltonian  with  the
+product state ansatz|ψ(θ)⟩.  For QUBO case, setting cost C(θ) =⟨ψ(θ)|HQUBO|ψ(θ)⟩, we could
+easily derive,
+
+                                          ∂αC =− sin (θα)∑          cos (θp)
+                                                               p⁄=α
+
+   We then use QUBO Hamiltonian and the result in LemmaS1to further investigate the per-
+formance of shallow-depth VQE. With powerful classical machine learning techniques,  we could
+classically derive the optimal rotation angles via minimizing the cost (B.2).  The preparation of the
+approximating initial state is then implemented by applying the corresponding rotations on|0⟩.  In
+                                                                                                                       27
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig S2:  The highest overlap between the optimised state and one of the ground states of diﬀerent
+given QUBO Hamiltonian models (each model probably has degenerate ground state space) vs.
+the system sizes.  For the number of qubits between 15 to 19 and 20 to 22, we sample 500 and 100
+random max-cut graphs’ qubo Hamiltonians respectively.  The true ground states of each model
+were ﬁrst determined using brute force algorithm and stored in classical memory.  Each model
+will then be processed in VQE with the tensor product ansatz and the optimisation was done
+w.r.t the analytic form Eq. (B.2) to produce an optimised state.
+
+
+this experiment, we investigate QUBO Hamiltonians with a size of 15 to 22 qubits and calculate
+the overlap using a brute-force technique.  The experiment results are shown in Fig.S2.
+   As we seen from the diagram, the x-axis represents the size of QUBO Hamiltonian and y-axis
+is the overlap between the initial state prepared by analytic form according to E.q.B.2and the
+ground states.  The probability of getting high overlap states regarding one of the ground states is
+slightly higher than trapping into the excited states (local minima).  The experiment trend suggests
+that shallow-depth VQE may continue to perform well on large-scale Hamiltonians.
+
+
+         Appendix C: Numerical Simulations on the Gradient of Shallow-Depth Circuit
+
+   The scalability is a signiﬁcant obstacle to the eﬃcient use of variational quantum eigensolver.
+Numerous studies have demonstrated that the gradient of the cost function vanishes exponentially
+with the number of qubits for a randomly initialised PQC with suﬃcient depth [55].  This phe-
+nomenon is termed the barren plateaus (BP). It has been shown that hardware eﬃcient ansatz with
+deep depth leads to exponentially vanishing gradients [55].  While Alternating Layered Ansatz, a
+speciﬁc structure of the HEA ansatz [54], has been demonstrated that when circuit depth is shal-
+low, it does not exhibit the gradient vanishing problem [76].  As we explore using the HEA and
+ALT  ansatz  as  an  overlap  initialiser,  it  is  crucial  to  determine  if  these  two  ansatz  with  shallow
+depth suﬀer from the gradient vanishing issue.
+   As shallow-depth ALT ansatz is BP-free, we choose to use the depth-3 HEA ansatz as an illus-
+tration and conduct numerical experiments to sample the variance of the gradient.  The experiment
+results are shown in Fig.S3.  Similar to the experimental setting described in [55], we analyse the
+PauliZZ operator acting on the ﬁrst and second qubits such thatH =Z1Z2.  The gradient is then
+sampled on the ﬁrst parameter θ1,1 by taking 1000 samples and the system size is evaluated up to
+18 qubits.
+   As  shown  in  the  ﬁgure,  the  orange  line  indicates  the  sample  variance  of  the  gradient  of  the
+                                                                                                                      28
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig S3:  Semi-log plot displaying the sample variance of the gradient of a two-local Pauli term as
+a function of the number of qubits.  The blue line represents exponential decay as a function of
+the number of qubits, the dark blue line represents the logarithmic decay and the orange line
+indicates that the shallow-depth VQE do not exhibit exponential decay.
+
+
+shallow-depth VQE while the blue and dark blue lines depict exponential and logarithmic decay,
+respectively.  Additionally, we identify the blue area below the exponential decay line as the BP
+area and the purple area above the logarithmic decay as BP-free.  It is evident that the depth-3
+HEA ansatz does not suﬀer from the gradient vanishing problem.  Therefore, it is scalable to use
+shallow-depth VQE for initial state preparation.

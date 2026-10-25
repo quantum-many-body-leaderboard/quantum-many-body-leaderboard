@@ -1,0 +1,1138 @@
+                                        Generalizing Neural Wave Functions
+
+
+
+
+                                                 Nicholas Gao 1   Stephan G¨unnemann 1
+
+                             Abstract                                        well-scaling approximation solutions in O(N 4) with the
+      Recent neural network-based wave functions have                        number of electrons N  (Hermann et al., 2022).  Despite
+      achieved state-of-the-art accuracies in modeling                       their theoretical scaling, this time complexity comes with a
+      ab-initio  ground-state  potential energy surface.                     large prefactor leading to exploding computational require-
+      However,  these  networks  can  only  solve  dif-                      ments if one screens many different molecules. To address
+      ferent  spatial  arrangements  of  the  same  set  of                  this limitation, Gao & G¨unnemann (2022) proposed the Po-
+      atoms.  To overcome this limitation, we present                        tential Energy Surface Network (PESNet), a neural network
+      Graph-learned  Orbital  Embeddings  (Globe),  a                        wave function that generalizes across different structures.
+      neural network-based reparametrization method                          While reducing computational costs, PESNet is limited to
+      that  can  adapt  neural  wave  functions  to  differ-                 different spatial arrangements of the same set of atoms.
+      ent molecules.  Globe learns representations of                        A key challenge in the generalization to arbitrary molecules
+      local electronic structures that generalize across                     is  the  variable  number  of  molecular  orbitals.     To  re-
+      molecules via spatial message passing by con-                          solve this, we introduce Graph-learned Orbital Embeddings
+      necting molecular orbitals to covalent bonds. Fur-                     (Globe), a generalization of PESNet that can solve arbitrary
+      ther, we propose a size-consistent wave function                       Schr¨odinger equations jointly. Like previous work, Globe
+      Ansatz, the Molecular Orbital Network (Moon),                          uses a two-level approach where one network represents the
+      tailored to jointly solve Schr¨odinger equations                       electronic wave function and the other reparametrizes the
+      of different molecules.  In our experiments, we                        wave function depending on the molecule. We resolve the
+      find Moon converging in 4.5 times fewer steps to                       issue of the dynamical numbers of molecular orbitals by
+      similar accuracy as previous methods or to lower                       embedding orbitals in 3D space.  This enables us to learn
+      energies given the same time. Further, our anal-                       local electronic structures via spatial message passing in
+      ysis shows that Moon’s energy estimate scales                          graph neural networks (GNNs). For the wave function, we
+      additively with increased system sizes, unlike pre-                    present the Molecular Orbital Network (Moon), the first size-
+      vious work where we observe divergence. In both                        consistent neural wave function. We accomplish size con-
+      computational chemistry and machine learning,                          sistency in two key steps, firstly, by using spatial message
+      we are the first to demonstrate that a single wave                     passing Moon focuses on local interactions, and, secondly,
+      function can solve the Schr¨odinger equation of                        by using the nuclei as anchor points for message passing.
+      molecules with different atoms jointly.                                While the first step is strictly required for size consistency,
+                                                                             the latter enables efficient reparametrization via Globe.
+1. Introduction                                                              In our experiments, we find Moon accelerating convergence
+In silico design of molecules requires accessing their quan-                 in joint training by up to 4.5 times and performing similarly
+tum mechanical properties. This requires solving the asso-                   to the attention-based PsiFormer on larger systems (von
+ciated Schr¨odinger equation. However, exact solutions are                   Glehn et al., 2023).  Further, we observe that transfers of
+often intractable and approximations can become compu-                       neural wave functions to larger structures do not require
+tationally expensive for larger and more complex systems.                    additional self-consistent field (SCF) calculations. In sum-
+In recent years, neural network-based wave functions have                    mary, our main contributions are:1
+
+emerged as a promising alternative, providing accurate and                       •  Globe, a reparametrization method for adapting neural
+
+   1Department of Computer Science & Munich Data Science                           wave functions to arbitrary molecules based on local-
+Institute, Technical University of Munich, Germany. Correspon-                     ized molecular orbital embeddings.
+dence to: Nicholas gao <n.gao@tum.de>.                                           •  Moon, a size-consistent neural wave function enabling
+                                                                                   generalization to larger structures, faster convergence,
+Proceedings of the 40 th  International Conference on Machine                      and accurate energies.
+Learning, Honolulu, Hawaii, USA. PMLR 202, 2023. Copyright
+2023 by the author(s).                                                           1Source code: https://www.cs.cit.tum.de/daml/globe/
+
+                                                                          1
+                                                     Generalizing Neural Wave Functions
+2. Background                                                                energy of a system can be decomposed into a mean-field
+Notation. We use the term molecule for a point cloud in R3                   energy and correlation energy,  where the mean-field en-
+with charges assigned to each node.  The term ‘geometry’                     ergy accounts for ≈ 99.5% of the total energy.  To reach
+refers to different spatial arrangements associated with the                 chemical accuracy (typically defined as 1 kcal mol−1), one
+same set of charges.  We use N  to denote the number of                      has to accurately estimate > 99% of the correlation energy,
+electrons  and M  for  the  number  of  nuclei.  r  ∈  RN×3                  > 99.999% of the total energy.
+denotes a complete electron configuration whereas r ∈ R3                     Most  commonly,  the  wave  function  is  represented  by  a
+denotes a single electron’s position.   For nuclei,  we use                  determinant of molecular orbital functions (Slater, 1929):
+R ∈ RM×3  and R ∈ R3, respectively.  Zm  denotes the                                      ψ(r) = det Φ,              Φij = ϕj(ri)            (4)
+charge of the mth nucleus. We use [  ] for the concatenation
+of vectors, ◦ for the Hadamard product, ∥x∥ for the L2-                      where the determinant ensures the antisymmetry w.r.t. per-
+norm, bold capital letters A for matrices, bold lower case                   mutations. The Hartree-Fock (HF) method provides a sim-
+letters a for vectors, and normal face letters a for scalars.                ple  mean-field  approximate  solution  to  the  Schr¨odinger
+Bracketed superscripts(l) index sequences, e.g., layers in a                 equation where the molecular orbital functions ϕHFi   : R3 →
+neural network.                                                              R  are  constructed  with  Linear  Combinations  of  Atomic
+                                                                             Orbitals (LCAO) φj  : R3  → R (Lennard-Jones, 1929),POm
+2.1. Quantum chemistry                                                       ϕHFi  (x)  = PMm=1          n=1 ωi,m,nφm,n(x)  with Om  being
+At the heart of quantum chemistry is the Schr¨odinger equa-                  the number of atomic orbitals and φm,n being the nth atomic
+tion. Its time-independent form is                                           orbital function of the mth atom, respectively.  In matrix
+                                                                             notation, Equation (4) can be written as
+                             Hψ = Eψ                                  (1)           ψ(r) = det Φ = det(ΦΩT )        Φ, Ω ∈ RN×η     (5)
+
+where ψ : RN×3 → R is the electronic wave function, E                        with η = PMm=1 Om, Φ being a matrix of all atomic orbital
+the energy and the Hamiltonian operator is                                   functions evaluated at every electron position, and Ω being
+                                                                             an optimized weight matrix.
+                   3NX
+     H = − 12           ∇2n + V (r),                                       (2)2.2. Variational Monte Carlo
+                  n=1
+                NX                       NX   MX                             In Variational Monte Carlo (VMC), one approximates a
+  V (r) =                   1                           Zm                   solution to Equation (1) by picking a trial wave function ψθ
+            n>m=1     ∥rn − rm∥ −       n=1m=1     ∥rn − Rm∥                 parametrized by θ and iteratively minimizing the energy via
+                   MX                                                (3)     gradient descent on θ.  Since the eigenfunctions of H are
+             +               ZmZn                                            a complete basis, this variational optimization is an upper
+
+                m>n=1    ∥Rm − Rn∥,                                          bound to the true ground-state energy.  By reformulating
+                                                                             Equation (1), one getsR ψθ(r)Hψθ(r)dr
+within the Born-Oppenheimer approximation, i.e., we ap-
+proximate nuclei as particles with fixed positions. In linear                    E =         R ψ2θ(r)dr                                                     (6)
+algebra, Equation (1) is an eigenvalue problem where one                                        ψθ(r)−1Hψθ(r) = Er∼ψ2θ [Eθ(r)] .    (7)
+wants to find the eigenfunction ψ0 associated with the lowest                       = Er∼ψ2θ
+eigenvalue E0. These are commonly called the ground-state                    In  contrast  to  Equation  (1),  we  here  assumed  an  unnor-
+wave function and energy, respectively.                                      malized wave function ψθ, thus, the normalization factor.
+The electronic wave function ψ describes the behavior of                     Further, we reformulate the integral in the second line using
+electrons. Note that electrons are not only specified by their               importance sampling. Eθ is the so-called local energy:
+spatial location r ∈ R3 but also by their spin α ∈ {↑,↓}.                      Eθ(r) =ψθ(r)−1Hψθ(r)                                              (8)
+Though, since the spins do not occur in the Hamiltonian,                                              "
+they can be fixed a priori (Foulkes et al., 2001). For a func-                                   3NX    ∂2 log |ψθ(r)|                        2#
+tion to be a valid wave function, it must satisfy two criteria.                         = − 12                ∂r2i         + ∂ log |ψθ(r)|∂ri     (9)
+First, ψ must obey the Fermi-Dirac statistics, i.e., it must be                                  i=1
+antisymmetric ψ(r) = sign(π)ψ(π(r)) w.r.t. permutations                                    + V (r).
+of same-spin electrons π. Second, the integral of its square                 Finally, one optimize ψθ via gradient descent with
+must be one R ψ(r)2dr = 1.                                                                       hh                               i                 i
+The challenge in computational chemistry is accurately ap-                    ∇θE = Er∼ψ2θ          Eθ(r) − Er∼ψ2θ [Eθ(r)]         ∇θ log ψθ(r)
+proximating the ground-state energy. For instance, the total                                                                                     (10)
+
+                                                                          2
+                                                     Generalizing Neural Wave Functions
+
+where we estimate all expectations with Monte Carlo esti-                           energy estimates.  To achieve this, the wave function
+mates using Metropolis-Hastings (Ceperley et al., 1977).                            must be equivariant to Euclidean transformations and
+Due  to  the  few  constraints  imposed  on  wave  functions,                       nuclei permutation (Gao & G¨unnemann, 2022).
+recent works used neural networks to model them (Pfau                           2.  Size consistency: As most quantum mechanical inter-
+et  al.,  2020;  Hermann  et  al.,  2020).   In  the  neural  net-                  actions happen within a short distance, a molecule’s
+work  setting,  learnable  many-electron  orbital  functions                        energy is an extensive quantity and scales additively
+ϕi : R3 × RN×3 → R implemented by permutation equiv-                                with its size.   For wave functions,  this implies that
+ariant neural networks replace the single-electron molecular                        the wave function decomposes into a product of the
+orbital functions ϕHFi    in Equation (4).                                          individual wave functions for distant molecules.
+                                                                             To incorporate Euclidean symmetries,  we follow Gao &
+3. Related Work                                                              G¨unnemann (2022) by defining a PCA-based equivariant
+                                                                             coordinate  frame.   Thus,  in  the  following  all  references
+Traditional methods for modeling electronic wave functions                   to the electron r and nuclei R positions are measured in
+have relied on Linear Combinations of Atomic Orbitals                        the equivariant frame. To accomplish size consistency, the
+(LCAO) (Lennard-Jones, 1929) arranged in a Slater determi-                   wave function must decompose into a product of two wave
+nant (Slater, 1929). However, they cannot capture electron-                  functions if two systems are sufficiently separated. In Ap-
+electron interactions beyond a mean-field approximation.                     pendix A, we show that decaying the value of molecular
+To address this issue, backflow transformations (Feynman                     orbital functions ϕi to 0 far from the involved atoms is suffi-
+& Cohen, 1956) and Jastrow factors (Jastrow, 1955) have                      cient to implement this. We achieve this by relying on local
+been introduced.  Later, Carleo & Troyer (2017) were the                     interactions between pairs of particles (electrons/atoms) that
+first to demonstrate the use of neural networks to model                     exponentially decay with distance.
+to quantum systems, though only for discrete spin systems.                   Like  previous  work,  we  adopt  a  two-network  approach.
+This approach has since been improved upon by using deep                     While Moon represents the electronic wave function ψθ,
+neural networks for real-space electronic systems (Han et al.,               Globe acts solely on the nuclei and adapts the former’s
+2019; Pfau et al., 2020; Hermann et al., 2020). In subsequent                parameters to the molecule.
+works, such neural networks have further refined (Gerard
+et al., 2022; von Glehn et al., 2023) and adopted to different               4.1. Graph-learned Orbital Embeddings (Globe)
+settings like pseudopotentials (Li et al., 2022a), periodic
+systems (Wilson et al., 2022; Li et al., 2022b; Cassella et al.,             Globe’s task is to reparametrize the wave function depend-
+2023) or diffusion Monte Carlo (DMC) (Wilson et al., 2021;                   ing  on  the  molecular  structure,  i.e.,  it  only  acts  on  the
+Ren et al., 2022).                                                           atoms and does not consider electrons. To perform such a
+Despite their high accuracy,  neural network-based wave                      reparametrization, it must extract local electronic structure
+function  models  are  still  inherently  expensive  for  multi-             information from the atomic point cloud. Further, we must
+ple systems. Two recent concurrent approaches addressed                      parametrize N  molecular orbital functions ϕi, see Equa-
+this challenge: DeepErwin, a weight-sharing method across                    tion (4), which poses a challenge as their number depends
+geometries (Scherbela et al., 2022), and PESNet (Gao &                       on the number of electrons rather than atoms. As illustrated
+G¨unnemann, 2022; 2023), a two-network approach that al-                     in Figure 1, we achieve both in a three-step procedure. First,
+lows for joint training of several geometries, eliminating the               we learn about atomic neighborhoods via message pass-
+need for retraining. But, while the former needs retraining                  ing.  Next, we localize orbitals and, finally, learn orbital
+for each structure, the latter is limited to different spatial               embeddings via unidirectional message passing.
+arrangements of the same set of atoms.                                       Message-passing network. Our message-passing network
+                                                                             relies on the use of continuous filter convolutions (Sch¨utt
+4. Generalizing Neural Wave Functions                                        et al., 2018). We initialize the node embeddings by a charge
+Compared to different geometries,  generalization across                     embedding hatom(0)i         = F atomZi    and iteratively update them
+different molecules comes with additional difficulties as the                through message-passing as
+
+number of atoms, electrons, and orbitals change. To address                    h(l+1)i       = f (l)(h(l)i  ,m(l)i  ),                                           (11)
+these challenges, we identify two key desiderata that such a                                      MX
+system should fulfill:                                                           m(l)                 g(l)(h(l)
+                                                                                    i   =   1νRRi             i  ,h(l)j  ) ◦ Γ (l)(Ri − Rj),  (12)
+                                                                                                 j=1
+  1.  Invariance:  A molecule’s energy is invariant to Eu-
+      clidean  transformations  and  permutations.   Thus,  a                      νNx  = 1 + X       exp     −∥x − y∥2σ2norm                    (13)
+      generalizing wave function should result in invariant                                      y∈N
+
+                                                                          3
+                                                      Generalizing Neural Wave Functions
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 1.  Globe steps. 1) Atom embeddings are obtained by message passing between atoms. 2) Orbital locations and embeddings are
+determined by core orbitals and molecular bonds. 3) Orbital embeddings are updated via a unidirectional message passing. For clarity, we
+omitted messages from each atom to each of the three core orbitals.
+
+where f (l) and g(l) are implemented by MLPs, Γ  are spa-                      of the actual electrons. One could generate the orbitals by
+tial filters and ν is a spatial normalization with σnorm being                 a global graph embedding, e.g., via an RNN, but such a
+a learnable parameter.  By multiplying elementwise with                        construction does not preserve locality and behaves unpre-
+spatial filters rather than concatenating with them, as done                   dictably to changes in the nuclei.
+in Gao & G¨unnemann (2022), we decay long-range inter-                         We  avoid  such  global  constructions,  by  assigning  each
+actions between atoms and strengthen local interactions.                       molecular orbital a location Li ∈ R3 and learning the pa-
+Further, instead of averaging over all atoms, we normalize                     rameters of the associated orbital function ϕi via message
+the message by a learnable normalization factor to account                     passing.  To localize the orbitals, we distinguish between
+for the size of its neighborhood.                                              core and valence orbitals as core orbitals tend to interact
+Spatial filters. To model arbitrary wave functions, we must                    little with other atoms (Foulkes et al., 2001). For each atom
+break euclidean symmetries in our reparametrization (Gao                       type, we define its valency by the number of bonds it can
+& G¨unnemann, 2022).  Previous work used positional en-                        form, e.g., for hydrogen one, for carbon four, for oxygen
+codings relative to the center of mass to achieve this. But,                   two, etc. The number of core orbitals for the ith atom is then
+as the center of mass is an inherently global property, we                     Zi−Vi
+                                                                                  2     with Vi being the valency of the ith atom. These core
+instead break the symmetries in our spatial filters enforc-                    orbitals are located at the same location as the nuclei.  To
+ing locality.  Instead of being radial, our filters operate on                 determine the valence orbitals, we identify covalent bonds
+the full three-dimensional space by constructing them as a                     and locate the orbital in the center of that bond. We do this
+Hadamard product of a Gaussian envelope and an MLP on                          by iteratively picking the pairs of atoms closest to each other
+the three-dimensional input:                                                   where each atom has at least one unpaired electron left. An
+    Γ (l)(x) =W (l)β(x),                                                (14)   example of our localized orbitals is depicted in Figure 1. In
+                        "             ∥x∥ 2!#D                                 Appendix B, we provide a full definition of the algorithm.
+       β(x) =W env        exp     −                                            While obtaining the orbital locations Li, we also define their
+                                         ςi          i=1                       types Ti.  Where the order and the charge of the nucleus
+                                                                               define the core orbital types, the bond’s cardinality defines
+                 ◦   σ    xW (1) + b(1)       W (2) + b(2)      (15)           the valence orbital types. This categorial distinction avoids
+with D being the number of envelope ranges ςi, and σ being                     identical embeddings for two orbitals at the same location.
+an activation function.  While a combination of spherical                      Orbital embedding. We initialize the orbital embeddings
+harmonics and radial basis functions achieves similar sym-                     via their types ho(0)i     = F oTi and iteratively update them with
+metry breaking (Gasteiger et al., 2021; Zitnick et al., 2022),                 an architecturally identical GNN as used for the atoms but
+we found such freely learnable filters to perform better.                      with unidirectional message passing from the atoms to the
+Orbital localization. A key challenge in adapting a wave                       orbitals. Here, we avoid bidirectional message passing as
+function to arbitrary molecules is the molecular orbital func-                 the orbital structure is wholly inferred from the nuclei and,
+tions ϕi as their number is not fully specified by the number                  thus, carries no additional geometric information.
+of atoms but by the number of electrons. While generating                      Parameter estimation. Changes in a molecule’s structure
+one molecular orbital function per electron seems like an                      manifest in wave function parameters that depend either
+intuitive solution, this would cause two rows and columns in                   on atoms, orbitals, or a combination of both. Thus, Globe
+Equation (4) to permute if two electrons permute, resulting                    updates these parameters via their respective embeddings
+in a permutation symmetric rather than an antisymmetric                        (ha,ho,ha-o).   Before generating parameters via individ-
+function. Thus, the orbital functions must be independent
+
+                                                                           4
+                                                      Generalizing Neural Wave Functions
+
+ual MLPs, we pass them through shared MLPs and Layer-                          electron-nuclei interaction embeddings by combining elec-
+Norms (Ba et al., 2016). To ensure that the wave function                      tron embeddings he(0)i    , nuclei embeddings  ¯zm, and their
+converges to a product for distant systems (Desiderata 2),                     distance ge-nim via
+we define atom-orbital embeddings as
+                h               i                                                          he-n(0)im    = σ he(0)i     + ¯zm + ge-nim ¯Wm  .         (19)
+     ha-oi,m =   ha(L)m   ,ho(L)i W ◦ Γ a-o(Rm − Li).       (16)               As the second step in Figure 2, these embeddings are then
+
+where the spatial filters vanish the contribution of the mth                   aggregated towards electrons and nuclei via spatial message
+atom to the ith orbital with increasing distances.                             passing while keeping separate embeddings for each spin
+                                                                               state α ∈ {↑,↓} per nuclei:
+4.2. Molecular Orbital Network (Moon)                                                       hnα(1)m     = X
+Moon represents the electronic wave function ψθ, but, un-                                               i∈Aα he-ni,m ◦  ¯Γ nm(ri − Rm),           (20)
+like previous work, Moon encourages local interactions via                                                MX
+spatial message passing and avoids strong global interac-                                     he(1)i     =    he-ni,m ◦  ¯Γ em(ri − Rm)            (21)
+tions (Pfau et al., 2020; von Glehn et al., 2023).   While                                              m=1
+PauliNet already represents a GNN-based wave function, it                      where Aα  is  the  index  set  of  electrons  with  spin α  and
+relies heavily on HF calculations and does not reach similar                   ¯Γ  being the spatial filters from Equation (14) with atom-
+accuracy (Hermann et al., 2020; Gerard et al., 2022).                          parameters,  see Appendix C. By using message passing
+To avoid many expensive message-passing steps between                          instead  of  concatenation  as  commonly  done  in  single-
+electrons and nuclei, we simplify the message-passing struc-                   molecule works (von Glehn et al., 2023), we achieve invari-
+ture.  Figure 2 provides a conceptual overview of Moon.                        ance to nuclei permutations, see Desiderata 1 in Section 4.
+First, we encode the local electronic neighborhood for each                    Update. We iteratively update the nuclei embeddings
+electron. Next, nuclei aggregate electronic structure infor-                     hnα(l+1)
+mation. The nuclei embeddings are then iteratively updated                         m        = hnα(l)m     + σ([hnα(l)m    ,hnˆα(l)m    ]W (l) + b(l))  (22)
+and, lastly, diffused to the electrons. The basic functional                   where  ˆα denotes the opposing spin of α.  For efficiency
+form of Moon follows a Slater-Jastrow wave function                            reasons, we do not perform message passing between nuclei
+                                         KX                                    here as we found it to have no significant impact.
+              ψθ(r) = exp(J(r))              wk det Φk,            (17)        Diffusion.  After L-many update steps, a single message-
+                                       k=1                                     passing step diffuses the nuclei embeddings to the electrons
+i.e., a product of a permutation invariant Jastrow factor and                         he(L)
+a weighted sum of Slater determinants.   As Jastrow fac-                                i     = σ(he(0)i   W + mi),                                  (23)
+tor, we additively combine the Jastrow factors from Gao                                           MX    h                      i
+& G¨unnemann (2023) and von Glehn et al. (2023). In the                                 mi =              hnαi(L)m      ,hnˆαi(L)mW + b            (24)
+following, we use bars ¯a for atom parameters, tildes ˜a for or-                                 m=1
+bital parameters, and both ˜¯a for atom-orbital interaction pa-                                 ◦  ¯Γ diffm  (ri − Rm)
+rameters. These are the parameters that are updated through                    with αi denoting the spin of the ith electron.  The spatial
+Globe. For clarity, we omit the Jastrow factor, residual con-                  filters in this step enable the network to learn different direc-
+nections, and normalization coefficient definitions here and                   tional messages which are important in modeling directional
+refer the reader to Appendix C for detailed descriptions.                      wave functions, e.g., the excited states of the hydrogen atom.
+Embedding.  As initial features, we use the pairwise dis-                      Orbital construction.   After diffusion,  we construct re-
+tances between electrons and nuclei ge-nij  = [ri − Rj,∥ri −                   stricted orbitals like Gao & G¨unnemann (2023) with adap-
+Rj∥], and electron and electrons ge-eij  = [ri−rj,∥ri−Rj∥].                    tive orbital and envelope parameters:
+As illustrated in Figure 2, we initialize the electron embed-
+dings by a single electron-electron message-passing step                           ϕki (rj) =     ( ˜wkδαjαii     )The(L)j     + ˜bkδαjαij
+
+              NX                                                                                 MX                                                (25)
+  he(0)i     =    σ   ge-eij W δαjαi  ◦ Γ δαjαi (∥ri − rj)∥W    (18)                                  ˜¯πkδαjαi
+             j=1                                                                                        im   exp(−˜¯σkδαjαiim  ∥rj − Rm∥).
+                                                                                                m=1
+where  functions  and  matrices  superscripted  by  the  Kro-                  Here, the exponential envelope from Spencer et al. (2020)
+necker delta δαjαi  indicate different weights. Here, we again                 guarantees that our wave function will have a finite integral.
+use the spatial filters to decay interactions from far-apart                   In Appendix C, we describe how we restrict the envelope
+particles.  Like Gao & G¨unnemann (2022), we construct                         parameters σ such that we fulfill size consistency desiderata.
+
+                                                                           5
+                                                     Generalizing Neural Wave Functions
+
+
+
+
+
+
+
+
+
+
+Figure 2.  Illustration of Moon. 1) We initialize electron embeddings by aggregating their local neighborhood of electrons. 2) Nuclei
+aggregate electron embeddings via message passing. 3) Nuclei embeddings are iteratively updated. 4) Nuclei embeddings are structurally
+diffused towards the electrons via message passing. For clarity, we omitted most messages in 1), 2), and 4).
+
+4.3. Optimization                                                             in the wave function, similar discontinuities may happen
+We train the whole network end-to-end in a two-step proce-                    to our orbital localization as discussed in Appendix B. The
+dure. We first pretrain the orbitals ϕi on HF solutions and,                  coordinate frame also breaks the size-consistency of Moon
+next, perform variational optimization (Pfau et al., 2020).                   as the frames of the two molecules do not necessarily align
+                                                                              anymore.  These are general issues introduced by natural
+Pretraining.  Pretraining is important to ensure a stable                     symmetries that one must break to model arbitrary wave
+variational optimization (Pfau et al., 2020; von Glehn et al.,                functions. Secondly, while we found our gradient rescaling
+2023). Traditionally, one would match the neural network’s                    based on the energy’s standard deviation easing optimiza-
+orbitals ϕi  with those of an HF solution ϕHFi   .  But, with                 tion, we found it to be insufficient if the discrepancy between
+our localized orbitals this may cause a mismatch between                      molecules is large. For instance, if one trains a hydrogen-
+nuclei involved in the ith neural orbital function and HF                     based system jointly with heavier atoms like nitrogen we
+orbital function as the HF solution is typically sorted by                    found the optimization resulting in worse results than one
+energy state rather than locality.  We resolve this issue by                  obtains from training solely on the hydrogen-based system.
+noticing that the HF wave function does not change if one                     Lastly, in its current state, the number of electrons is equal
+multiplies the orbital matrix Φ = ΦΩT  by a matrix A with                     to the sum of atomic charges, and the number of spin-up
+unit determinant, i.e., ψ(r) = det(ΦΩT ) = det(ΦΩTA).                         and down electrons may differ by at most 1, prohibiting
+With this in mind, we can find a matrix A such that the                       modeling ionic systems.
+new coefficient matrix ˆΩT  = ΩTA enforces locality.  We
+describe this optimization procedure in Appendix D. After                     5. Experiments
+finding ˆΩT , we perform traditional pretraining by matching
+the neural network orbitals to the localized HF orbitals. To                  Here, we analyze Globe and Moon across a variety of dif-
+avoid overfitting, we add a regularization loss on the outputs                ferent experimental settings. Firstly, we investigate the be-
+of the reparametrization network detailed in Appendix E.                      havior of Globe when training on similar geometries where
+Variational optimization. Like Gao & G¨unnemann (2022),                       one would expect significant information overlap between
+we train both the wave function and the reparametrization                     molecular orbitals. Next, we take a look at its extrapolation
+network end-to-end and precondition the VMC gradients                         behavior on such similar structures. Thirdly, we train Globe
+with  natural  gradient  descent.   But,  since  we  deal  with               on molecules that share no common structure. Fourthly, we
+molecules of varying sizes unlike previous work, the gra-                     investigate the transferability of a trained Globe to similar
+dients obtained from the different molecules may vary by                      and larger molecules. Lastly, we compare Moon with recent
+orders of magnitude (like their energy).  To avoid larger                     neural wave functions on the larger benzene molecule.
+molecules from dominating the gradients, we rescale the gra-                  As the true ground-state energies for any molecular sys-
+dients based on the standard deviation of the local energies                  tem are rarely known, we either compare them to highly
+associated with the molecule. We discuss this rescaling in                    accurate reference calculations or report variational ener-
+Appendix F and the full VMC optimization in Appendix G.                       gies or their standard deviation. As discussed in Section 2,
+                                                                              VMC energies are upper bounds to the true energy and, thus,
+4.4. Limitations                                                              lower is better. Further, as the wave function approaches the
+While Globe can learn a generalized wave function across                      ground state, the standard deviation of the local energy ap-
+different  geometries  of  molecules,  there  are  limitations.               proaches zero providing a proxy for the convergence to the
+Firstly, despite having a rotation equivariant wave function,                 ground state. Appendix H details the setup and Appendix I
+Globe is not smooth under arbitrary geometric perturbations.                  lists the geometries we used in the following. Timings and
+For instance, changes that cause the equivariant frame from                   model sizes can be found in Appendix J and Appendix K.
+Gao & G¨unnemann (2022) to flip result in discrete changes                    Appendix L provides a model size ablation.
+
+
+
+                                                                          6
+                                                      Generalizing Neural Wave Functions
+
+
+                                                                               Table 1.  Comparison  between  Moon  and  FermiNet  in  solving
+                                                                               separated hydrogen chains. H10 indicates the energy of a single
+                                                                               hydrogen chain, H10 + H10 for two hydrogen chains 100 a0 apart,
+                                                                               and ∆ indicates the difference in energy between twice the energy
+                                                                               of single chain compared to solving both systems jointly.   All
+                                                                               values are in Hartree.
+                                                                                                    H10        H10 + H10     2 × H10         ∆
+                                                                                 FermiNet     -5.6631      -10.7564      -11.3262     -0.5698
+                                                                                 Moon           -5.6632      -11.3264      -11.3264     0.0000
+
+                                                                               Learning on similar systems. Training on similar systems
+Figure 3.  Convergence plots of Globe with Moon and FermiNet.                  jointly may be useful in several settings, e.g., in binding
+Numbers in brackets show the number of geometries per molecule.                energy computations (Trogolo et al., 2019) or in labeling
+In joint training, Moon converges 4.5 times faster and to lower                a diverse dataset (Hoja et al., 2021).  Two key aspects are
+energies.                                                                      of interest here. Firstly, we investigate the loss in accuracy
+                                                                               when  training  on  different  molecules  and,  secondly,  we
+                                                                               compare Moon to the existing FermiNet (Pfau et al., 2020)
+                                                                               to identify potential benefits in convergence and accuracy.
+                                                                               For FermiNet, we include all improvements from Gao &
+                                                                               G¨unnemann (2023) and the Jastrow factor from von Glehn
+                                                                               et al. (2023). As systems, we choose the hydrogen rectangle
+                                                                               H4, the 6-element hydrogen chain H6, and the 10-element
+                                                                               hydrogen chain H10.  Note that each of these systems is
+                                                                               a collection of different geometries.  We train each wave
+                                                                               function model with our reparametrization network on four
+                                                                               different settings, one for each molecule and one where we
+                                                                               train on all of them jointly. Due to the variational principle,
+                                                                               lower energies are better.
+                                                                               Figure 3 shows the average energy during training for both
+                                                                               FermiNet and Moon in their two training settings (joint op-
+                                                                               timization, single molecule only). One can see that Moon
+                                                                               converges strictly faster than a similar-sized FermiNet. For
+                                                                               small systems, we observe that joint training even accel-
+                                                                               erates convergence in terms of steps.  For FermiNet, we
+Figure 4.  Globe trained on different structures jointly. FermiNet is          observe a significant gap between single and joint training
+optimized per molecule, numbers are taken from Pfau et al. (2020).             for the larger hydrogen chain while Moon converges to the
+Globe reaches chemical accuracy everywhere except N2 where the                 same energy in both regimes. Importantly, we observe that
+specially optimized FermiNet also fails.                                       Moon behaves significantly more stable in joint optimization
+                                                                               compared to FermiNet. We compare the standard deviation
+                                                                               of the energy during training in Appendix M.
+                                                                               Size consistency. As discussed in Desiderata 2 in Section 4,
+                                                                               for distant molecules the joint wave function is equal to
+                                                                               the product of the individual wave functions. In contrast to
+                                                                               previous neural wave functions like FermiNet, Globe and
+                                                                               Moon adhere to this limit case.  We demonstrate this by
+                                                                               training Globe with FermiNet and Moon on the hydrogen
+                                                                               chain H10 and transfer the wave function to two separated
+                                                                               hydrogen chains 100 a0  apart.  As an optimal result, one
+Figure 5.  Relative error to Le Roy et al. (2006) on the N2 poten-             expects the energy of the distant hydrogen chains to be
+tial energy surface.  For Globe, the brackets show the additional              equal to twice the energy of a single chain.
+molecule that the network has trained on. The hydrogen chain H10               In Table 1 we list the difference between these settings.
+and ethene result in 0.96 mEh and 2.71 mEh higher energies.                    While FermiNet leads to a significant error of 570 mEh,
+
+
+                                                                            7
+                                                     Generalizing Neural Wave Functions
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 6.  Average energy difference to reference data by training epochs for Globe and DeepErwin across three molecules with different
+pretraining techniques. Bracketed numbers show the number of geometries. For cyclobutadiene, we neither have DeepErwin reference
+numbers nor did we run the transferability experiment from similar structures.  On ethene and cyclobutadiene, models without any
+pretraining are not visible due to their high error, see Appendix O.
+
+Moon’s result is in perfect agreement with the desiderata.                    portant hyperparameter for the nitrogen dimer. Though, one
+In closer regimes, we analyze the extensivity of FermiNet                     can see that adding unrelated molecules to the optimization
+and Moon in Appendix N.                                                       worsens the final results depending on the system sizes. For
+Learning on dissimilar systems. While optimizing similar                      instance, adding the relatively low-energy hydrogen chain
+molecules has a small impact on the performance of Globe,                     worsens the results by 0.96 mEh, and the larger ethene struc-
+we now analyze how unrelated molecules affect final ener-                     tures lead to 2.71 mEh worse energies on average. Note that
+gies. We test this by solving for the ground-state energies of                the models trained with dissimilar structures also have seen
+various small systems jointly. We pick Li, LiH, Be, B, Li2,                   fewer nitrogen samples during training as we evenly divide
+F, Ne, and N2 from Pfau et al. (2020) as the dataset.                         the total batch size of 4096 across all molecules.
+In Figure 4, one sees the energy for each system during                       Transferibility.   Here,  we analyze the transferability of
+training.  While, for small systems, Globe with Moon ac-                      Globe  across  different  molecules.   Like  Scherbela  et  al.
+complishes lower energies than FermiNet despite training                      (2022), we train Globe on several molecules and transfer
+jointly, we observe that this does not carry over to larger                   the wave function either to different geometries, or larger
+systems  where  the  gap  between  both  increases.   For  all                molecules.  Specifically, we use the 10-element hydrogen
+molecules, except for N2 where FermiNet also fails to reach                   chain (H10), ethene (C2H4), and cyclobutadiene (C4H4). As
+chemical accuracy, Globe’s energies are within the chemical                   smaller molecules, we use the 6-element hydrogen chain
+accuracy of the true energy. To close the gap to FermiNet,                    (H6), methane (CH4), and ethene, respectively.  We com-
+we found that increasing the size of the wave function Moon                   pare  our  results  to  DeepErwin  (Scherbela  et  al.,  2022).
+has a significant impact on the final energy. We investigate                  Though,  there are key distinctions in our setups.   While
+this in Appendix L and argue that this is due to the increased                Globe optimizes all molecules at once,  DeepErwin opti-
+capacity  requirement  in  capturing  many  wave  functions                   mizes each molecule independently with weight-sharing ap-
+within a single model.                                                        plied between the wave functions. Further, DeepErwin per-
+                                                                              forms new CASSCF calculations for each molecule while
+Learning dissimilar energy surfaces. While the previous                       we apply Globe without any SCF calculations to the new
+paragraph analyzed the absolute energies in training on dif-                  molecule. An epoch for DeepErwin is one optimization step
+ferent molecules, here we look at the consistency of energy                   per molecule with a batch size of 2048 per molecule. Since
+surfaces when training on different energy surfaces jointly.                  we optimize all geometries jointly, an epoch is a single step
+To test this,  we train three Globe on the nitrogen dimer                     for us with a batch size of 4096 shared for all molecules in
+(N2), once solely on nitrogen, once with the hydrogen chain                   the batch. Thus, we trained Globe with approximately 10
+(H10) as a smaller molecule, and once with ethane (C2H4)                      times fewer samples and 20 times fewer steps.
+as a larger molecule.  We chose the nitrogen dimer due to                     The convergence plots in Figure 6 show that Globe gener-
+its challenging nature (Pfau et al., 2020). Further, we com-                  ally converges quickly to within chemical accuracy in the
+pare Globe to recent neural network-based solutions (Gerard                   hydrogen chain and ethene for the standard setting, i.e., pre-
+et al., 2022; Gao & G¨unnemann, 2022).                                        training from HF. For cyclobutadiene, we suspect the gap
+The potential energy surface in Figure 5 shows that Globe                     to Gao & G¨unnemann (2023) is due to our smaller wave
+comes close to the performance of current state-of-the-art                    function, i.e., we use an embedding dim of 256 and 16 deter-
+neural wave functions while being able to model different                     minants instead of 512 and 32, respectively. Consistent with
+molecules jointly. We suspect the gap to Gerard et al. (2022)                 the results from Scherbela et al. (2022), we find starting
+is due to the lower number of determinants, as we use 16                      from smaller molecules generally worsens convergence for
+instead of 32 since Pfau et al. (2020) found these to be an im-               larger systems. Still, pretraining on smaller molecules leads
+
+                                                                           8
+                                                    Generalizing Neural Wave Functions
+                                                                             6. Conclusion
+                                                                             Solving many Schr¨odingers jointly with a single system
+                                                                             holds the promise of learning generalizing wave functions.
+                                                                             Like recent deep learning-based density functional theory
+                                                                             (DFT) functionals (Snyder et al., 2012; Kirkpatrick et al.,
+                                                                             2021), learning a general neural network solution for quan-
+                                                                             tum mechanical calculations may accelerate material discov-
+                                                                             ery while increasing accuracy. In this work, we introduced
+                                                                             Globe, the first systematic approach to performing such a
+                                                                             generalization.  By embedding orbitals as points in space
+                                                                             and using message passing, we can learn dynamic numbers
+                                                                             of molecular orbital functions for different molecules. Fur-
+                                                                             ther, we presented a novel locality-driven wave function,
+                                                                             Moon, that shows significant improvements in convergence
+Figure 7.  Energy during optimization on benzene (C6H6) by iter-             and extensivity than previous methods when trained on di-
+ations and GPU hours.  Reference data is taken from von Glehn                verse molecules. With Globe and Moon, we are the first to
+et al. (2023); Gerard et al. (2022); Ren et al. (2022). Energies are         demonstrate the solving of Schr¨odinger equations of differ-
+averaged over 4000 iterations. Moon shows similar convergence                ent molecules within a single wave function.
+behavior to the attention-based PsiFormer.
+                                                                             Acknowledgements.  We greatly thank Chendi Qian for
+                                                                             his valuable early work on designing wave functions and
+                                                                             Michael Scherbela for swiftly sharing their data and results
+to similar results given sufficient training steps and outper-               with us. Further, we would like to thank Tom Wollschl¨ager
+forms the models without pretraining. For a view of the full                 and Marten Lienen for their discussion on the localization
+convergence diagram, see Appendix O. Notably, we observe                     algorithm, and Jan Schuchardt and Yan Scholten for their
+convergence without performing a single HF calculation on                    invaluable feedback on the paper.
+the larger structures, which was essential for previous meth-                Funded by the Federal Ministry of Education and Research
+ods (Pfau et al., 2020; Scherbela et al., 2022). Compared to                 (BMBF) and the Free State of Bavaria under the Excellence
+DeepErwin, Globe results in 0.6 mEh and 6.3 mEh lower                        Strategy of the Federal Government and the L¨ander.
+energies for the hydrogen chain and ethene, respectively.
+Larger systems. As neural-network solutions are interest-                    References
+ing thanks to their theoretical scaling, we investigate how                  Ba, J. L., Kiros, J. R., and Hinton, G. E. Layer Normaliza-
+Moon scales to larger systems compared to FermiNet (Pfau                        tion, July 2016.
+et al., 2020), recent improvements to FermiNet (Gerard et al.,
+2022),  diffusion  Monte  Carlo  (DMC)  calculations  (Ren                   Bradbury, J., Frostig, R., Hawkins, P., Johnson, M. J., Leary,
+et al., 2022), and the recently proposed attention-based Psi-                   C., Maclaurin, D., Necula, G., Paszke, A., VanderPlas, J.,
+Former (von Glehn et al., 2023).  As system, we use the                         Wanderman-Milne, S., and Zhang, Q. JAX: Composable
+benzene molecule (C6H6), as recent work found a large gap                       transformations of Python+NumPy programs, 2018.
+between VMC and the true ground-state energy (Ren et al.,
+2022; von Glehn et al., 2023).                                               Carleo, G. and Troyer, M.   Solving the Quantum Many-
+Figure 7 plots the energy of the system throughout train-                       Body Problem with Artificial Neural Networks. Science,
+ing  by  iterations  and  GPU  hours.   Note  that  FermiNet,                   355(6325):602–606, February 2017.  ISSN 0036-8075,
+PsiFormer, and Gerard et al. (2022) were optimized with                         1095-9203. doi: 10.1126/science.aag2302.
+KFAC (Martens & Grosse, 2015) while Moon uses CG-                            Cassella, G., Sutterud, H., Azadi, S., Drummond, N. D.,
+based natural gradient descent.  While CG-based natural                         Pfau, D., Spencer, J. S., and Foulkes, W. M. C. Discov-
+gradient descent leads to faster early convergence, KFAC                        ering Quantum Phase Transitions with Fermionic Neural
+results in similar update steps later in training while being                   Networks. Physical Review Letters, 130(3):036401, Jan-
+two to three times faster per iteration.  In energy, we find                    uary 2023. doi: 10.1103/PhysRevLett.130.036401.
+Moon to behave similarly to PsiFormer in that it approaches
+lower than DMC energy levels. Compared to the best Fer-                      Ceperley, D., Chester, G. V., and Kalos, M. H. Monte Carlo
+miNet results, we find Moon to reach similar energies in 3                      simulation of a many-fermion study. Physical Review B,
+times fewer GPU hours and converge in an identical time to                      16(7):3081–3099, October 1977. doi: 10.1103/PhysRevB.
+13.5 mEh lower energies.                                                        16.3081.
+
+                                                                         9
+                                                    Generalizing Neural Wave Functions
+
+Chakravorty,  S.  J.,  Gwaltney,  S.  R.,  Davidson,  E.  R.,               Jastrow, R. Many-body problem with strong forces. Physi-
+   Parpia,  F.  A.,  and  p  Fischer,  C.  F.   Ground-state  cor-             cal Review, 98(5):1479, 1955.
+   relation energies for atomic ions with 3 to 18 electrons.                Kirkpatrick, J., McMorrow, B., Turban, D. H. P., Gaunt,
+  Physical Review A, 47(5):3649–3670, May 1993.  doi:                         A. L., Spencer, J. S., Matthews, A. G. D. G., Obika, A.,
+  10.1103/PhysRevA.47.3649.                                                   Thiry,  L.,  Fortunato,  M.,  Pfau,  D.,  Castellanos,  L. R.,
+
+Feynman, R. P. and Cohen, M.  Energy Spectrum of the                           Petersen, S., Nelson, A. W. R., Kohli, P., Mori-S´anchez,
+   Excitations in Liquid Helium. Physical Review, 102(5):                      P., Hassabis, D., and Cohen, A. J. Pushing the frontiers of
+  1189–1204, June 1956. ISSN 0031-899X. doi: 10.1103/                          density functionals by solving the fractional electron prob-
+   PhysRev.102.1189.                                                           lem.  Science, 374(6573):1385–1389, December 2021.
+Foulkes, W. M. C., Mitas, L., Needs, R. J., and Rajagopal,                     doi: 10.1126/science.abj6511.
+   G. Quantum Monte Carlo simulations of solids. Reviews                    Kuhn, H. W.  The Hungarian method for the assignment
+   of  Modern  Physics,  73(1):33–83,  January  2001.   doi:                   problem. Naval research logistics quarterly, 2(1-2):83–
+  10.1103/RevModPhys.73.33.                                                    97, 1955.
+
+Gao, N. and G¨unnemann, S.  Ab-Initio Potential Energy                      Le Roy, R. J., Huang, Y., and Jary, C.  An accurate ana-
+   Surfaces by Pairing GNNs with Neural Wave Functions.                        lytic potential function for ground-state N2 from a direct-
+   In International Conference on Learning Representations,                    potential-fit analysis of spectroscopic data. The Journal of
+  April 2022.                                                                 Chemical Physics, 125(16):164310, October 2006. ISSN
+Gao, N. and G¨unnemann, S.  Sampling-free Inference for                        0021-9606, 1089-7690. doi: 10.1063/1.2354502.
+  Ab-Initio Potential Energy Surface Networks.   In The                     LeCun,  Y. A.,  Bottou,  L.,  Orr,  G. B.,  and M¨uller,  K.-R.
+  Eleventh International Conference on Learning Repre-                         Efficient backprop.  In Neural Networks:  Tricks of the
+   sentations, February 2023.                                                 Trade, pp. 9–48. Springer, 2012.
+
+Gasteiger, J., Becker, F., and G¨unnemann, S. GemNet: Uni-                  Lennard-Jones, J. E.  The electronic structure of some di-
+  versal Directional Graph Neural Networks for Molecules.                      atomic molecules. Transactions of the Faraday Society,
+   In Advances in Neural Information Processing Systems,                       25(0):668–686, January 1929.   ISSN 0014-7672.   doi:
+   May 2021.                                                                  10.1039/TF9292500668.
+Gerard, L., Scherbela, M., Marquetand, P., and Grohs, P.                    Li, X., Fan, C., Ren, W., and Chen, J.  Fermionic neural
+   Gold-standard solutions to the Schr¨odinger equation us-                    network with effective core potential.  Physical Review
+   ing deep learning: How much physics do we need?  Ad-                       Research, 4(1):013021, January 2022a. ISSN 2643-1564.
+   vances in Neural Information Processing Systems, May                        doi: 10.1103/PhysRevResearch.4.013021.
+   2022.                                                                    Li, X., Li, Z., and Chen, J.  Ab initio calculation of real
+Han,  J.,  Zhang,  L.,  and  E,  W.    Solving  many-electron                  solids via neural network ansatz, March 2022b.
+   Schr¨odinger equation using deep neural networks. Jour-                  Lyakh,  D.  I.,  Musiał,  M.,  Lotrich,  V.  F.,  and  Bartlett,
+   nal of Computational Physics, 399:108929, December                          R. J. Multireference Nature of Chemistry: The Coupled-
+   2019. ISSN 0021-9991. doi: 10.1016/j.jcp.2019.108929.                       Cluster View. Chemical Reviews, 112(1):182–243, Jan-
+
+Hermann, J., Sch¨atzle, Z., and No´e, F. Deep-neural-network                   uary 2012. ISSN 0009-2665, 1520-6890. doi: 10.1021/
+   solution of the electronic Schr¨odinger equation. Nature                    cr2001417.
+  Chemistry, 12(10):891–897, October 2020. ISSN 1755-                       Martens, J. and Grosse, R.   Optimizing neural networks
+  4330, 1755-4349. doi: 10.1038/s41557-020-0544-y.                            with Kronecker-factored approximate curvature. In Pro-
+Hermann, J., Spencer, J., Choo, K., Mezzacapo, A., Foulkes,                    ceedings of the 32nd International Conference on Inter-
+  W. M. C., Pfau, D., Carleo, G., and No´e, F.  Ab-initio                      national Conference on Machine Learning-Volume 37,
+   quantum chemistry with neural-network wavefunctions,                        pp. 2408–2417, 2015.
+  August 2022.                                                              Motta, M., Ceperley, D. M., Chan, G. K.-L., Gomez, J. A.,
+
+Hoja,  J.,  Medrano Sandonas,  L.,  Ernst,  B. G.,  Vazquez-                   Gull,  E.,  Guo,  S.,  Jim´enez-Hoyos,  C. A.,  Lan,  T. N.,
+   Mayagoitia, A., DiStasio Jr., R. A., and Tkatchenko, A.                     Li, J., Ma, F., Millis, A. J., Prokof’ev, N. V., Ray, U.,
+   QM7-X, a comprehensive dataset of quantum-mechanical                        Scuseria, G. E., Sorella, S., Stoudenmire, E. M., Sun, Q.,
+   properties spanning the chemical space of small organic                    Tupitsyn, I. S., White, S. R., Zgid, D., Zhang, S., and
+   molecules.  Scientific Data, 8:43, February 2021.  ISSN                     Simons Collaboration on the Many-Electron Problem.
+   2052-4463. doi: 10.1038/s41597-021-00812-2.                                Towards the Solution of the Many-Electron Problem in
+
+                                                                       10
+                                                   Generalizing Neural Wave Functions
+
+  Real Materials: Equation of State of the Hydrogen Chain                  Sun, Q., Berkelbach, T. C., Blunt, N. S., Booth, G. H., Guo,
+  with  State-of-the-Art  Many-Body  Methods.   Physical                      S., Li, Z., Liu, J., McClain, J. D., Sayfutyarova, E. R.,
+  Review X, 7(3):031059, September 2017.   ISSN 2160-                         Sharma, S., Wouters, S., and Chan, G. K.-L.   PySCF:
+  3308. doi: 10.1103/PhysRevX.7.031059.                                       The Python-based simulations of chemistry framework.
+                                                                              WIREs Computational Molecular Science, 8(1):e1340,
+Neuscamman, E., Umrigar, C. J., and Chan, G. K.-L. Opti-                      2018. ISSN 1759-0884. doi: 10.1002/wcms.1340.
+  mizing large parameter sets in variational quantum Monte
+  Carlo. Physical Review B, 85(4):045103, January 2012.                    Trogolo, D., Arey, J. S., and Tentscher, P. R.  Gas-Phase
+  ISSN 1098-0121, 1550-235X. doi: 10.1103/PhysRevB.                           Ozone  Reactions  with  a  Structurally  Diverse  Set  of
+  85.045103.                                                                  Molecules: Barrier Heights and Reaction Energies Evalu-
+                                                                              ated by Coupled Cluster and Density Functional Theory
+Nocedal, J. and Wright, S. J. Numerical Optimization 2nd                      Calculations. The Journal of Physical Chemistry A, 123
+  Edition. Springer, 2006.                                                    (2):517–536, January 2019. ISSN 1089-5639, 1520-5215.
+                                                                              doi: 10.1021/acs.jpca.8b10323.
+Pascanu, R., Mikolov, T., and Bengio, Y. On the difficulty of
+  training recurrent neural networks. In International Con-                von Glehn, I., Spencer, J. S., and Pfau, D. A Self-Attention
+  ference on Machine Learning, pp. 1310–1318. PMLR,                           Ansatz for Ab-initio Quantum Chemistry. In The Eleventh
+  2013.                                                                       International Conference on Learning Representations,
+                                                                              February 2023.
+Pfau,  D.,  Spencer,  J.  S.,  Matthews,  A.  G.  D.  G.,  and             Wilson, M., Gao, N., Wudarski, F., Rieffel, E., and Tubman,
+  Foulkes, W. M. C. Ab initio solution of the many-electron                   N. M. Simulations of state-of-the-art fermionic neural net-
+  Schr¨odinger equation with deep neural networks. Physi-                     work wave functions with diffusion Monte Carlo, March
+  cal Review Research, 2(3):033429, September 2020. doi:                      2021.
+  10.1103/PhysRevResearch.2.033429.
+Ren, W., Fu, W., and Chen, J. Towards the ground state of                  Wilson, M., Moroni, S., Holzmann, M., Gao, N., Wudarski,
+  molecules via diffusion Monte Carlo on neural networks,                     F., Vegge, T., and Bhowmik, A.  Wave function Ansatz
+  April 2022.                                                                 (but Periodic) Networks and the Homogeneous Electron
+                                                                              Gas, February 2022.
+Scherbela, M., Reisenhofer, R., Gerard, L., Marquetand,                    You, Y., Li, J., Reddi, S., Hseu, J., Kumar, S., Bhojanapalli,
+  P.,  and  Grohs,  P.   Solving  the  electronic  Schr¨odinger               S., Song, X., Demmel, J., Keutzer, K., and Hsieh, C.-J.
+  equation for multiple nuclear geometries with weight-                       Large Batch Optimization for Deep Learning: Training
+  sharing deep neural networks.   Nature Computational                        BERT in 76 minutes. In Eighth International Conference
+  Science, 2(5):331–341, May 2022. ISSN 2662-8457. doi:                       on Learning Representations, April 2020.
+  10.1038/s43588-022-00228-x.
+                                                                           Zitnick, C. L., Das, A., Kolluru, A., Lan, J., Shuaibi, M.,
+Sch¨utt,   K.   T.,   Sauceda,   H.   E.,   Kindermans,   P.-J.,              Sriram, A., Ulissi, Z. W., and Wood, B. M.  Spherical
+  Tkatchenko,  A.,  and M¨uller,  K.-R.   SchNet – A deep                     Channels for Modeling Atomic Interactions. In Advances
+  learning architecture for molecules and materials.  The                     in Neural Information Processing Systems, October 2022.
+  Journal of Chemical Physics, 148(24):241722, June 2018.
+  ISSN 0021-9606, 1089-7690. doi: 10.1063/1.5019779.
+
+Slater, J. C.   The Theory of Complex Spectra.   Physical
+  Review, 34(10):1293–1322, November 1929.   doi:  10.
+  1103/PhysRev.34.1293.
+
+Snyder, J. C., Rupp, M., Hansen, K., M¨uller, K.-R., and
+  Burke, K.  Finding Density Functionals with Machine
+  Learning.    Physical  Review  Letters,  108(25):253002,
+  June 2012. ISSN 0031-9007, 1079-7114. doi: 10.1103/
+  PhysRevLett.108.253002.
+
+Spencer, J. S., Pfau, D., Botev, A., and Foulkes, W. M. C.
+  Better, Faster Fermionic Neural Networks. 3rd NeurIPS
+  Workshop on Machine Learning and Physical Science,
+  November 2020.
+
+                                                                       11
+                                                    Generalizing Neural Wave Functions
+A. Size consistency in quantum chemistry                                    tions ψ1 and ψ2 of H1 and H2, respectively:
+If one is given two distant molecules, one can show that                                   H(ψ1ψ2) = (H1 + H2)(ψ1ψ2)               (29)
+the Hamiltonian H from Equation 1 decomposes into two                                                   = H1ψ1ψ2 + H2ψ2ψ1             (30)
+Hamiltonians H1,H2 for each of the respective systems.                                                  = E1ψ1ψ2 + E2ψ2ψ1               (31)
+W.l.o.g., let the electrons be sorted such that r = [r1, r2] ∈                                          = (E1 + E2)ψ1ψ2.                   (32)
+RN, r1  ∈  RN1, r2  ∈  RN2.   First,  one  rewrites  the  full
+Hamiltonian                                                                 Thus, the ground state wave function of the combined Hamil-
+                                                                            tonian H is the product of the individual ground state wave
+               3NX                                                          functions ψ1 and ψ2.
+ H = − 12          ∇2n                                                      To obtain the decomposition ψ = ψ1ψ2, it remains to show
+              n=1
+               NX                       NX   MX                             that the molecular orbital functions ϕ must only act on close-
+        +                  1                           Zm         (26)      by electrons, i.e.,
+
+           n>m=1     ∥rn − rm∥ −      n=1m=1      ∥rn − Rm∥                                       
+               MX                                                                                    ϕn(rm|rB1)    if n, m ∈ B1,
+        +                ZmZn                                                     ϕn(rm|r) =         ϕn(rm|rB2)    if n, m ∈ B2,        .        (33)
+           m>n=1     ∥Rm − Rn∥,                                                                   
+                                                                                                     0                     else.
+
+in  terms  of  the  Hamiltonians  of  the  individual  systems              where  we  introduced  the  shorthand  notation  rBi    =
+H1,H2                                                                       {rn}n∈Bi.  For simplicity, we assume a single Slater de-
+                                        X                                   terminant as wave function ψ:
+          H =H1 + H2 + X                            1                                              ϕ1(r1|r)    . . .    ϕN(r1|r)    
+
+                                 n∈B1  m∈B2   ∥rn − rm∥                                                ...            ...            ... .       (34)
+                           X           Zm                                         ψ(r) = det
+                 − X              ∥rn − Rm∥                                                        ϕ1(rN|r)   . . .   ϕN(rN|r)
+                    n∈B1  m∈A2
+                           X           Zm                         (27)      If we plug in the definition from Equation 33, the matrix
+                 − X              ∥rn − Rm∥                                 factorizes into a block diagonal which then in turn factorizes
+                    n∈B2  m∈A1                                              into the product of wave functions as desired:
+                 + X        X        ZmZn                                                                                              
+                                  ∥rn − Rm∥.                                                     ϕ1(r1|rB1)   . . .            0
+                    n∈A1   m∈A2                                                 ψ(r) = det            ...             ...              ...     (35)
+
+where A1,A2 and B1,B2 are the index sets for the nuclei                                                0          . . .   ϕN(rN|rB2)
+and electrons for both systems, respectively.  For distant                             = det Φ1(rB1) det Φ2(rB2)                              (36)
+systems,         1∥rn−rm∥ ≈          1∥rn−Rm∥ ≈          1∥Rn−Rm∥:                     =ψ1(rB1)ψ2(rB2).                                           (37)
+
+      H =H1 + H2 + c(X X                 X                                  B. Orbital localization algorithm
+                            1 − X              Zm                           In an ideal setting, we would pick the orbital locations such
+               n∈B1   m∈B2        n∈B1  m∈A2                                that a) the local environment defines them, b) they are deter-
+            |                  {z                 }               (28)
+                       X      =0            X                               ministic and c) they change smoothly with arbitrary changes
+            − X              Zm + X               ZmZn).                    to the atoms.  Except for a few edge cases, which we dis-
+               n∈B2   m∈A1           n∈A1  m∈A2                             cuss in the next paragraph, we satisfy all three criteria with
+            |                     {z                     }                  Algorithm 1.  As explained in Section 4.1, we distinguish
+                                  =0
+                                                                            between core and valence orbitals. Where core orbitals are
+where c =          1                                                        located at their corresponding nucleus, valence orbitals are
+              ∥Rn−Rm∥, n ∈ A1, m ∈ A2.  One may notice                      located at the center of covalent bonds. To favor the forma-
+that for non-ionic systems |Bi| = Pm∈Ai Zm.  Thus, the                      tion of diverse spatially different bonds, higher bond types
+first two and the last two sums cancel out and one is left                  (e.g., double and triple bonds) are slightly punished such
+with the sum of the individual Hamiltonians.                                that one favors similar distanced single bonds.  Since the
+Given the decomposition of the Hamiltonian, one can show                    distance of an atom to itself is always 0, we replace the
+that the lowest eigenvalue of H is E1 + E2 where E1 and                     self-distances by a cutoff radius cself after which one prefers
+E2 are the lowest eigenvalues associated with the eigenfunc-                self-bonds.
+
+                                                                        12
+                                                      Generalizing Neural Wave Functions
+
+Algorithm 1 Orbital localization                                               always surely converge to the center of mass rather than any
+   Input: nuclei positions Ri ∈ R3, charges Zi ∈ N+                            local bond structure. The examples given above are in ex-
+   Orbital locations Locs = [  ]                                               treme situations in symmetric molecules, e.g., the transition
+   Orbital types Types = [  ]                                                  state of cyclobutadiene. In our experience, even established
+   # Define core orbitals                                                      classical approximative methods such as the Hartree-Fock
+   for i = 1; i ≤ M do                                                         method struggle in such situations. One may see localizing
+      Valence orbitals Vi := Valency(Zi)                                       orbitals as an instantiation of the greater problem of how one
+      Core orbitals Ci := ⌈ Zi−Vi2   ⌉                                         should break symmetries in neural wave functions such that
+      for j = 1; j ≤ Cm do                                                     one can model the ground state accurately while keeping
+         Locs.append(Ri)                                                       sufficient inductive bias to generalize to new structures.
+         Types.append((Zi, j))                                                As a final point of discussion, one should ask whether these
+      end for                                                                  discontinuities are harmful in practice. As for equilibrium
+   end for                  (                                                  structures, the cases we listed will generally not happen as
+   Distances Dm,n :=          ∥Rm − Rn∥    , if n ̸= m                         every atom will be closely surrounded by as many atoms
+                              cself                  , else                    as its valency with longer distances to other atoms.  Con-
+   # Define valence orbitals                                                   sidering these aspects, we believe our orbital localization
+   Bond type Tm,n := 0                                                         algorithm to be sufficient for the current state of neural wave
+   for i = 1; i ≤ ⌈PMm Vm/2⌉ do                                                functions while we encourage future work to approach the
+      Scores Sm,n :=                              1  [Vm>0∧Vn>0]Dm,n+Tm,n/2    problem of discontinuities.
+      Indices m, n := arg maxm,n S (w.l.o.g. m ≤ n)
+      Vm := Vm − 1; Vn := Vn − 1                                               C. Molecular Orbital Network details
+      Tm,n := Tn,m := Tm,n + 1                                                As Section 4.2 focuses on novel aspects of the wave function,
+      Locs.append( Rm+Rn2      )                                              we want to provide some implementation and minor details
+      Types.append(Tm,n)                                                       here.
+   end for
+   return Locs, Types                                                          Rescaling. To limit the input magnitude for distanced par-
+                                                                               ticles, we adopt the logarithmic rescaling from von Glehn
+                                                                               et al. (2023), i.e.,
+
+Edge cases. While the orbital localization fulfills our free                                                             ij  )
+desiderata: locality, determinism, and smoothness most of                                           gij = log (1 + g(4)g(4)   gij.                     (38)
+the time, there are edge cases we would like to highlight here                                                      ij
+in which we cannot guarantee smoothness. First, discrete
+changes occur when the nearest neighbors between atoms                         Normalization. Like the reparametrization network, we use
+change. Second, if multiple pairs have identical distances,                    learnable normalization factors within the wave functions
+the algorithm would not be deterministic.  In such cases,                      for the four message-passing steps Equation (18), (21), (20)
+we rely on a series of ‘tie-breakers’, i.e., further criteria.                 and (24).  Specifically, we normalize the electron embed-
+In particular, we prefer edges furthest from the center of                     dings after the electron-electron message passing in Equa-
+mass. If a tie remains, we start comparing the polar angle                     tion (18) by the expected number of close electrons via
+and, lastly, the azimuthal angle to break ties.  While this
+formulation allows us to localize orbitals deterministically it                      ˆhe(0)
+also breaks the smoothness, e.g., if the order in any of the tie-                      i     =    1µ(ri)he(0),                                               (39)
+breakers changes. Further, it relies on a smoothly changing                                           MX   Zm
+equivariant coordinate frame which cannot exist (Gao &                               µ(r) = 1 +              2   exp    −∥r − Rm∥2σ2norm           (40)
+G¨unnemann, 2022).                                                                                   m=1
+Considering these discrete jumps in our orbital localization,                 where ˆhe(0)
+one may ask why we decided on this particular algorithm.                       layers. Note that this formulation is similar to Equation (13)i     are the electron embeddings passed to further
+To answer this, one first has to consider why these discrete                   but here we multiply by half of the charge of the nucleus to
+changes happen within Algorithm 1.  The arg max func-                          account for the expected number of electrons per spin close
+tion introduces these discrete changes.   While replacing                      to the nucleus.   For the electron-nuclei message-passing
+the arg max by a smooth approximation, e.g., via a softmax                     steps in Equation (21), (20) and (24), we use   1
+would resolve all discrete jumps, it would greatly deteriorate                                                                         νRri ,    1νRRi , and
+the locality. For instance, in larger systems, the softmax will                 1
+                                                                               νRri , respectively.
+
+                                                                          13
+                                                      Generalizing Neural Wave Functions
+
+Reparametrized filters.  In the message-passing steps in
+Equation (21), (20) and (24), we use reparametrized version
+of the spatial filters from Equation (14). Concretely, these
+reparametrized versions take the form
+    ¯Γ (l)m (x) =W (l) ¯βm(x),                                              (41)
+                        "            ∥x∥      2!#D
+    ¯βm(x) =W env         exp    −      ¯ςmi
+                                                     i=1            (42)
+
+                 ◦   σ   x ¯W (1)m   + ¯b(1)m W (2) + b(2) .
+
+Here, we replaced the envelope ranges ςi and the first linear
+layer in the MLP by atom-parameterized versions.   The                         Figure 8.  Illustration of our orbital canonicalization.   The bot-
+remaining parameters are shared across all m.                                  tom row illustrates the hydrogen chain with our localized orbitals.
+                                                                               Rows 1 to 5 illustrate the contribution of each atom to each of the
+Residual connections.  We add residual connections be-                         five orbitals for the Hartree-Fock solution obtained via PySCF (Sun
+tween each update layer and renormalize the embeddings,                        et al., 2018) and our transformed solution.  We plot the sum of
+i.e.,                                                                          absolute values of Ω belonging to atom i as the height of the ith
+                                                                               bar.  Our transformed solution (blue) localizes the contribution
+              ˆhn(L+1)m        =   1√hn(L)m    + hn(L+1)m           (43)       close to the nuclei closest to its location.
+                                2
+where ˆhn(L+1)                                                                 atom and the orbital increases, this parametrization gives the
+           m         are the nuclei embeddings used in subse-                  desired effect. While one could also drop any transformation
+quent layers.  For the electron embeddings, we add a skip                      on ˜¯π to accomplish the decaying effect, Gao & G¨unnemann
+connection after the diffusion step                                            (2022) found a softplus on π to help in convergence which
+                 ˆhe(L)                                                        we confirmed in early experiments. Thus, we define ˜¯π as a
+                   i     =   1√     he(L)i     + he(0)i.                (44)   product where the tanh accounts for the decay and sign, and
+                               2                                               the softplus for the granularity.  In Appendix A, we show
+
+Jastrow factor. As Jastrow factor we additively combine                        that this parametrization results in the desired product of
+the Jastrow factors from Gao & G¨unnemann (2023) and von                       wave functions for distant systems.
+Glehn et al. (2023)
+                NX                                                             D. Canonicalizing Hartree-Fock solutions
+     J(r) =         MLP(he(L)i    )                                            As discussed in Section 4.3, the solution obtained from a
+               i=1                                                             Hartree-Fock calculation may not align with our assump-
+                          X                     α2par                          tions about the locality of orbitals.  Since learning global
+               + βpar              −14  αpar + ∥ri − rj∥            (45)       orbital functions based on our localized orbital embeddings
+                       i,j;αi=αj                                               presents a difficult challenge, we seek to canonicalize our
+               + βanti     X       −1           α2anti                         Hartree-Fock solutions such that they align with our local-
+
+                        i,j;αi̸=αj    2 αanti + ∥ri − rj∥.                     ized orbitals.  As explained in Section 2, in Hartree-Fock
+                                                                               one optimizes coefficients of linear combinations of atomic
+where αpar, αanti, βpar, βanti are learnable parameters.                       orbital functions to construct molecular orbital functions.
+Parameter domain.   While most of  the reparametrized                          Figure 8 shows these coefficients ΩT . Each Hartree-Fock
+parameters are weight matrices without clear restrictions,                     molecular orbital, 1 to 5, exhibits a non-local structure. In
+some are used in numerically critical situations, e.g., as a                   the following, we will describe how we transform obtained
+divisor. In such cases, we apply a softplus function f(x) =                    Hartree-Fock solutions such that they obey a local structure
+log(1 + exp(x)) to avoid division by zero. Concretely, we                      and canonicalize their coefficients to avoid disagreements
+use this domain restriction for the envelope ranges ˜¯ςm and                   between similar molecules.
+envelope parameters ˜¯σ. To obtain local orbitals, ˜¯π decay to                If one considers the HF electronic wave function ψ(r) =
+zero if the distance between an atom and an orbital increases.                 det Φ = det ΦΩT , one can see that the wave function does
+We accomplish this by defining ˜¯π = tanh(˜¯π1)f(˜¯π1) where                   not change if one multiplies the coefficient matrix ΩT  with
+˜¯π1 and ˜¯π2 are two different outputs of the reparametrization               a matrix with unit determinant A ∈ RN×N on the right, i.e.,
+network and f is the softplus function. As any direct atom-                    ψ(r) = det ΦΩTA. As the sign of the wave function is arbi-
+orbital parameter decays to 0 if the distance between the                      trary, A may also have a determinant of −1. Since we know
+
+                                                                           14
+                                                     Generalizing Neural Wave Functions
+
+Algorithm 2 Mask construction                                                 of an atom should match the ith atomic orbital. For valence
+   Input:  Atom  pairs (ni, mi),  Orbital  types Ti  ∈  N+,                   orbitals,  we enforce the same for bonds of higher order
+   Atomic orbitals Om                                                         (double bonds, triple bonds, ...)  where we match the first
+   # P is a dictionary of dictionaries of lists where the first               valence orbital of that bond to the lowest free orbitals of
+   level is an atom, the second level are orbital types, and                  both atoms and the second bond to the second lowest free
+   the list keeps track of the orbitals.                                      orbitals of both, etc.  If an atom has bonds to k different
+   Priority P := {}                                                           atoms, we cannot easily define an order between bonds and,
+   for i = 1; i ≤ Norb do                                                     thus, distribute the k free orbitals of both atoms equally to
+      P[ni][Ti].append(i)                                                     the k different bonds.
+      if ni ̸= mi then                                                        We illustrate this in an example of H2O. Hydrogen has 1
+         P[mi][Ti].append(i)                                                  atomic orbital and oxygen 5 (the number of atomic orbitals
+      end if                                                                  is determined by the period of the element), i.e., η  =  6.
+   end for                                                                                                                  PM
+   Offsets oi := Pi−1                                                         The number of molecular orbitals is ⌈            m=1 Zm2     ⌉ = 5. Now,
+                      PMm=1 Om                                                assuming an equilibrium structure, our molecular orbitals
+   Result M := 0         m=1 ×N                                               are distributed as follows: three core orbitals associated with
+   # Iterate through all atoms.                                               oxygen and one valence orbital for each of the O-H bonds.
+   for n,Tn ∈ P do                                                            Given our mask construction, we get the following mask
+      # Offset that indicates the lowest free orbital.                                                                                  
+      Offset o := on                                                                                     1   0   0   0   0       0   0
+      # Iterate through all orbitals types of atom n.                                                 0   1   0   0   0     0   0            (48)
+      for T,m ∈ Tn do                                                                     MH2O =         0   0   1   0   0       0   0
+         # Iterate through the cardinality orbital type T .                                              0   0   0   1   1       1   0
+         for i = 1; i ≤ dim(m) do                                                                        0   0   0   1   1       0   1
+            Mo+i,mi := 1                                                      where  the  first  three  rows  are  core-orbitals  and  the  last
+         end for                                                              two rows are valence-orbitals. The vertical lines group the
+         # Since dim(m) many orbitals have been assigned,                     atomic orbitals by the associated atom, the first five columns
+         we must increase the offset.                                         belong to the oxygen atom while the last two belong to each
+         o := o + dim(m)                                                      of the hydrogen atoms.  A formal definition of our mask
+      end for                                                                 construction is given in Algorithm 2.
+   end for
+   return M                                                                   Finally,  we  solve  Equation  (46)  with  an  alternating  op-
+                                                                              timization  algorithm.   In  the  first  step,  we  optimize A
+the atoms involved in the localization of the ith molecular                   with the Broyden-Fletcher-Goldfarb-Shannon (BFGS) algo-
+orbital, we can formulate an optimization problem as                          rithm (Nocedal & Wright, 2006) where we parametrize  ˆA
+                                                                              with real numbers but normalize it with A =          1N√| detA|  ˆA
+
+                                     NX                                       before computing the loss. Because this restriction cannot
+ minA ∥ΩTA ◦ (1 − M)∥22 +               (1 − ∥(ΩTA ◦ M)i∥2)2                  change the sign of the determinant A and permutation rep-
+                                    i=1                                       resent local minima, we use the Hungarian algorithm (Kuhn,
+                                                                   (46)       1955) to optimize over all permutations given a fixed A.
+  s.t.| detA| = 1                                                           (47)We compute the cost matrix for the Hungarian algorithm
+                                                                              by evaluating the Equation (46) for all possible pairwise
+where M ∈ {0, 1}N×η, η = PMm=1 Om is a binary mask                            permutations. After finding the optimal permutation matrix
+indicating our desired relation between atomic and molec-                     P (t), we merge it into A(t+1) = A(t)P (t). We either stop
+ular orbitals. Note, that the first term in Equation (46) en-                 after a fixed number of iterations or after the loss does not
+courages zero interaction with non-involved atoms, and the                    change. Typically, this method converges within 2 iterations.
+second term aids in keeping the wave function normalized.                     Since we have to do this only once as preprocessing before
+In our matching mask M, we want to preserve the order                         pretraining, one can neglect the computational cost, which
+of energy levels.  Atomic orbitals are typically sorted by                    is in the order of a second per molecule.
+energy level, i.e., the ith orbital has lower energies than the               As the sign of the wave function is arbitrary, we should
+jth atomic orbital iff i < j.  To get a canonical ordering,                   decide on a canonical sign for each molecular orbital to
+we translate these energy levels to our localized orbitals.                   avoid mismatches between different Hartree-Fock solutions
+Specifically, we want our localized core orbitals to match                    of similar structures. We implement this by multiplying M
+the atomic orbitals in the same order, i.e., our ith core orbital             with a diagonal matrix D where the diagonal elements are
+
+                                                                         15
+                                                      Generalizing Neural Wave Functions
+
+defined as                                                                     G. VMC optimization
+               (                                                               A VMC step consists of three substeps:  1) sampling the
+      Dii =       −1     if Pηj=1(ΩT A ◦ M)ij < 0,
+                  1       else.                                                (49)square of the wave function ψ2θ, 2) Computing the local
+                                                                               energy Eθ(r) and gradients ∇θE and 3) preconditioning
+                                                                               the gradient with natural gradient descent F −1∇θE.  To
+E. Pretraining regularization                                                  sample the electronic wave function ψθ, we use Metropolis-
+Since  we  found  the  output  of  the  reparametrization  net-                Hastings, i.e., in multiple iterations we perturb the electron
+work  to  be  unstable  during  pretraining,  we  add  a  small                positions from the last step with gaussian noise and perform
+regularization to its output. Specifically, we define for each                 rejection sampling based on the square of the wave function
+parameter  matrix  it  outputs  a  target  normal  distribution,               ψθ. Next, we compute the local energies for each electron
+i.e.,  a mean and variance.   For instance,  for weight ma-                    configuration as in Equation (9) and use these samples to
+trices   ¯W  ∈ Rdin×dout, such the ones in Equation (42) or                    approximate the gradients with Equation (10). Finally, we
+Equation (19), we follow the standard initialization and de-                   precondition the gradient with the inverse of the Fisher infor-
+fine the mean to be zero and the standard deviation to be                      mation matrix (FIM). As the FIM scales quadratically with
+√1                                                                             the number of parameters, realizing it and computing its
+  din  (LeCun et al., 2012).  In our regularization loss, we                   inverse is infeasible. Instead, we use the conjugate-gradient
+then enforce that the outputted distribution follows our tar-                  (CG) method to approximate its inverse (Neuscamman et al.,
+get normal distribution by matching the first pmax moments                     2012).  For efficiency reasons, we compute the output of
+of the output distribution with the moments of the target                      the reparametrization network once for the first two steps as
+distribution.  Concretely, for the ith outputted parameters                    it’s constant throughout sampling and energy calculations.
+we add the following loss                                                      Before applying the update, we clip the norm of the gradient
+                                 |ˆθi|X              2                     to 1 (Pascanu et al., 2013) such that different system sizes
+                     pmaxX                                                     do not require different choices of learning rates (Gao &
+      Lpre(θi) =           1            ˆθpij − mp       ,         (50)    G¨unnemann, 2022).
+                    p=1      |ˆθi|   j=1
+
+              ˆθi =(θi − µi)si      ,                                             (51)H. Experimental setup
+                    (                                                          We implemented all experiments and methods in JAX (Brad-
+            mp =       0                if p is odd,                           bury et al., 2018). As we cannot rely on fixed tensor shapes
+                       (p − 1)!!    if p is even                      (52)     like in previous work where only the spatial arrangements
+where θi is ith outputted parameter, µi is its target mean, si                 varied  within  a  batch,  we  implemented  everything  with
+its target standard deviation, !! the double factorial and mp                  masking operations. We generally parallelize all operations
+is the pth central moment of a standard normal distribution.                   where possible over all molecules within a batch.  Excep-
+                                                                               tions are determinant calculations and the computation of
+F. Rescaling gradients                                                         the local energy. While one can parallelize the determinant
+                                                                               operation if one pads smaller matrices, we found this par-
+In the following, we discuss a gradient rescaling technique                    allelization to be slower than performing the determinant
+on  a  per-molecule  basis  to  obtain  a  stable  optimization                calculations sequentially. For computing the local energy,
+if one optimizes molecules of different sizes jointly.  As                     one needs to compute the Laplacian, i.e., the trace of the
+the norm of gradients in Equation (10) is proportional to                      Hessian, of the log wave function. This is a computationally
+the  expected  deviation  from  the  mean,  the  standard  de-                 demanding task where higher memory efficiency can be
+viation  of  the  energy  functions  as  a  proxy  for  the  gra-              achieved by serializing across molecules and electrons.
+dient’s  norm.    We  rescale  the  gradients  based  on  this                 For pretraining, we use the LAMB optimizer (You et al.,
+proxy  rather  than  the  actual  gradient  norm  as  acquiring                2020) while for VMC we use gradient descent with a maxi-
+the  latter  is  inherently  expensive  as  it  requires  one  to              mal gradient norm of 1. During VMC, we apply the gradient
+compute  the  full  Jacobian  of  the  network  rather  than  a                clipping from von Glehn et al. (2023), i.e., we clip all devia-
+Jacobian  vector  product.   Given  the  standard  deviationsrhi2 where θi in- tions from the median larger than 5 times the mean absolute
+si =      Ex∼ψ2θi    Eθi(x) − Ex∼ψ2θi [Eθi(x)]                                 deviation before computing the mean of the local energies.
+dicates the parameters outputted by the reparametrization                      All experiments ran on 1 to 4 Nvidia A100 GPUs depending
+network for the ith molecule. We rescale the gradients of the                  on the system size.  If not otherwise specified, we use the
+ith molecule with min          1,  1   .  This way small gradients             hyperparameters from Table 2.
+                                  si
+are not scaled up but large gradients are scaled down.
+
+                                                                          16
+                                                                           Generalizing Neural Wave Functions
+
+
+                                                                                                      Table 3. Forward pass timings of FermiNet, Moon, and Globe.
+                                                                                                         (# nuclei / #electrons)     FermiNet       Moon      Globe
+                                                                                                                    1 / 10                     1.8 µs      1.6 µs    1.1 ms
+                                                                                                                    1 / 40                   10.1 µs      8.2 µs    1.2 ms
+                                                                                                                    1 / 80                   32.0 µs    25.5 µs    1.4 ms
+                                                                                                                   10 / 10                    2.2 µs      4.5 µs    2.3 ms
+                                                                                                                   10 / 40                  12.1 µs    14.7 µs    2.5 ms
+                                                                                                                   10 / 80                  36.7 µs    39.0 µs    2.6 ms
+                                                                                                                   20 / 40                  15.2 µs    21.7 µs    3.1 ms
+                                                                                                                   20 / 80                  44.3 µs    55.6 µs    3.1 ms
+
+
+                                   Table 2. Default hyperparameters.                                  I. Molecular structures
+                                                                                                      Here,  we list for each of our experiments the molecular
+                                                                                                      structures and reference calculations.
+                                                                                                      For testing training on similar structures, we use the hydro-
+                                                                                                      gen rectangle from Pfau et al. (2020). For the six-element
+                                                                                                      hydrogen chain, we use the pretraining geometries from
+                                                                                                      Scherbela et al. (2022), and for the ten-element hydrogen
+                                                                                                      chain, we use the geometries from Motta et al. (2017).
+                                                                                                      The extended hydrogen chains for the extensivity experi-
+                                                                                                      ment are generated by having a n-element chain of hydrogen
+                                                                                                      atoms with interatomic distances of 1.8 a0.
+                                                                                                      For testing dissimilar structures, we use the same distances
+                                                                                                      for nitrogen as in Pfau et al. (2020). As reference energy, we
+                                                                                                      use twice the atomic energy of nitrogen from Chakravorty
+                                                                                                      et al. (1993) plus the experimental dissociation energy from
+                                                                                                      Le Roy et al. (2006). For the additional hydrogen chain, we
+                                                                                                      reuse the geometries from Motta et al. (2017). For ethene,
+                                                                                                      we use the evaluation structures from Scherbela et al. (2022).
+                                                                                                      In our transferability experiment, we take the six-element
+                                                                                                      and ten-element hydrogen chain as well as the methane, and
+                                                                                                      ethene structures and energies from Scherbela et al. (2022).
+                                                                                                      The cyclobutadiene structures are from Lyakh et al. (2012)
+                                                                                                      with the final VMC energies of Gao & G¨unnemann (2023)
+                                                                                                      as reference.
+                                                                                                      For benzene, we reuse the same geometry from Ren et al.
+                                                                                                      (2022) as previous works.
+
+                                                                                                      J. Timings
+                                                                                                      Table 3 lists the timings for the forward pass of FermiNet,
+                                                                                                      Moon, and Globe.  For systems with few nuclei, we find
+                           Hyperparameter                  Value                                      Moon to perform faster than FermiNet while reaching higher
+Pretraining                 Steps                                     1e4                             accuracies. Though, this advantage reverses with an increas-
+                           Basis                                 STO-6G                               ing number of nuclei due to the focus on electron-nuclei
+                           Method                                 RHF                                 interactions.
+Optimization             Steps                                     6e4                                While  Globe’s  forward  pass  is  significantly  slower  than
+                           Learning rate                             0.11+  t                         FermiNet’s or Moon’s it must only be executed once per
+                                                                   100
+                           Batch size                            4096                                 step, i.e., sampling and energy computations do not require
+                           Damping                         1e-4 σ[EL]
+                           Local energy clipping             5                                   17
+                           Max grad norm                       1
+                           CG max steps                       100
+MCMC                      Target pmove                         0.5
+                           # Steps                                   40
+Moon                         Hidden dim                           256
+                           E-E int dim                            32
+                           Layers                                     4
+                           Activation                            SiLU
+                           Determinants                         16
+                           Jastrow layers                         3
+                           Filter hidden dims              [16, 8]
+Reparametrization     Embedding dim                    128
+                           MLP layers                             4
+                           Message dim                          64
+                           Layers                                     3
+                           Activation                            SiLU
+                           Filter hidden dims             [64, 16]
+                                                     Generalizing Neural Wave Functions
+
+
+Table 4. Parameter counts for FermiNet, PsiFormer, Moon, and
+Globe.
+          FermiNet     PsiFormer     Moon     Globe
+             0.7M            1.6M           1M        13M
+
+
+
+
+
+
+
+
+
+                                                                              Figure 10.  Convergence plots of Globe with Moon and FermiNet.
+                                                                              Numbers in brackets show the number of geometries per molecule.
+                                                                              In joint training, Moon converges 8 times faster and closes the gap
+                                                                              to individual training by a factor of at least 2.
+
+
+
+
+
+Figure 9. Abalation of Moon where the hidden dimension has been
+increased to 512 and the number of determinants to 32. In agree-              Glehn et al., 2023).  As learning diverse molecular wave
+ment with previous work, we find that increasing the size of the              functions within a single neural network may require more
+wave function improves variational results accordingly (Spencer               parameters than learning a single wave function, we already
+et al., 2020; von Glehn et al., 2023).                                        see such improvements in small molecules.
+
+
+the reparametrization network but just the wave function.                     M. Standard deviation on hydrogen systems
+
+                                                                              While the energy of a system is a good indicator of conver-
+K. Parameters                                                                 gence, any ground-state wave function will have no standard
+In  Table  4,  we  list  the  number  of  parameters  for  Fer-               deviation in its local energy.  Thus, we can take a look at
+miNet  (Pfau  et  al.,  2020),  PsiFormer  (von  Glehn  et  al.,              the standard deviation of the local energy as a proxy for the
+2023), Moon, and Globe. With its 300k more parameters,                        convergence of a wave function. In Figure 10, we plot the
+we found Moon to outperform FermiNet significantly in var-                    standard deviation during the training on similar hydrogen
+ious benchmarks. Compared to PsiFormer, we find Moon                          systems.  We observe that Moon converges 8 times faster
+to perform similarly with 600k fewer parameters.                              in joint training while also closing the gap to the individual
+                                                                              trainings by a factor of at least 2.
+Globe’s large number of parameters is mostly due to the
+lage output space, e.g., 10M are concentrated in a dense                      N. Extensivity
+layer to predict the 8192-dimensional output space for the
+32  ˜wkδi   ∈ R256 orbital embeddings, see Equation 25.                       We analyze the behavior of Globe with Moon and FermiNet
+                                                                              on increasing lengthy hydrogen chains. We first train Globe
+L. Moon size ablation                                                         on the same hydrogen structures as in the previous exper-
+                                                                              iment, i.e., H4, H6, and H10.  After training, we evaluate
+While jointly training on diverse molecules seems to de-                      Globe on smaller and larger n-element hydrogen chains.
+crease the accuracy of neural wave functions, here we want                    Figure 12 depicts the scaling behavior of Moon and Fer-
+to investigate the effect of the size of the network on training.             miNet depending on the system size.  As both are upper
+We perform the common augmentation of increasing the                          bounds to the true energy, lower energies are better. Consid-
+hidden dimension to 512 and the number of determinants                        ering that no finetuning is done, neither FermiNet nor Moon
+to 32 (Spencer et al., 2020; von Glehn et al., 2023) and                      diverges far from the trained energies per atom.  Interest-
+compare the average energy on the diverse small molecule                      ingly, Moon performs better to smaller substructures like the
+dataset from Section 5.                                                       hydrogen dimer H2 but results in higher energies for mod-
+The energy during training in Figure 9 agrees with previous                   erately larger chains. Thanks to its locality, Moon’s energy
+results on neural network wave functions that increasing the                  per atom is lower than FermiNet’s with further increasing
+network size increases accuracy (Spencer et al., 2020; von                    system sizes.
+
+                                                                          18
+                                                      Generalizing Neural Wave Functions
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    Figure 11.   Extended view of Figure 6 without a limit on the y-axis. Convergence of Globe suffers
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 12.  Evaluation of Globe with Moon and FermiNet, trained
+on small hydrogen clusters, on n-elment hydrogen chains. Thanks
+to Globe’s localized orbitals, the energy per atom converges to a
+constant value for longer chains.
+O. Extended view on transferibility
+As  Figure  6  in  Section  5  does  not  include  the  training
+curves for ethene and cyclobutadiene without pretraining,
+we present an extended version in Figure 11. One can see
+that dropping pretraining impedes convergences.   Mean-
+while, thanks to its graph-learned approach to molecular
+orbitals, Globe, with pretraining on smaller molecules, is
+the first method to reach convergence on larger structures
+without performing a SCF calculation first.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                           19

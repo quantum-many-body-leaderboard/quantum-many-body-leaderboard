@@ -1,0 +1,1022 @@
+A basis-set error correction based on density-functional theory for strongly
+correlated molecular systems
+           Emmanuel Giner,1, a) Anthony Scemama,2 Pierre-François Loos,2, b) and Julien Toulouse1, 3, c)
+           1)Laboratoire de Chimie Théorique (UMR 7616), Sorbonne Université, CNRS, Paris, France
+           2)Laboratoire de Chimie et Physique Quantiques (UMR 5626), Université de Toulouse, CNRS, UPS, France
+           3)Institut Universitaire de France, Paris, France
+
+           (Dated: April 7, 2020)
+           We extend to strongly correlated molecular systems the recently introduced basis-set incompleteness correction based on
+           density-functional theory (DFT) [E. Giner et al.,J. Chem. Phys.  149, 194301 (2018)]. This basis-set correction relies
+           on a mapping between wave-function calculations in a ﬁnite basis set and range-separated DFT (RSDFT) through the
+           deﬁnition of an eﬀective non-divergent interaction corresponding to the electron-electron Coulomb interaction projected
+           in the ﬁnite basis set. This enables the use of RSDFT-type complementary density functionals to recover the dominant
+           part of the short-range correlation eﬀects missing in this ﬁnite basis set.  To study both weak and strong correlation
+           regimes we consider the potential energy curves of the H10, N2, O2, and F2 molecules up to the dissociation limit, and we
+           explore various approximations of complementary functionals fulﬁlling two key properties: spin-multiplet degeneracy
+           (i.e., independence of the energy with respect to the spin projection S z) and size consistency. Speciﬁcally, we investigate
+           the dependence of the functional on diﬀerent types of on-top pair densities and spin polarizations. The key result of this
+           study is that the explicit dependence on the on-top pair density allows one to completely remove the dependence on any
+           form of spin polarization without any signiﬁcant loss of accuracy. Quantitatively, we show that the basis-set correction
+           reaches chemical accuracy on atomization energies with triple-ζ quality basis sets for most of the systems studied here.
+           Also, the present basis-set incompleteness correction provides smooth potential energy curves along the whole range of
+           internuclear distances.
+
+
+I.    INTRODUCTION                                                               near their equilibrium geometry, are typically dominated by
+                                                                                 correlation eﬀects which do not aﬀect the qualitative mean-
+   The general goal of quantum chemistry is to provide reliable                  ﬁeld picture of the system. These weak-correlation eﬀects can
+theoretical tools to explore the rich area of chemistry.  More                   be either short range (near the electron-electron coalescence
+speciﬁcally, developments in quantum chemistry primarily aim                     points)4 or long range (London dispersion interactions).5 The
+at accurately computing the electronic structure of molecular                    theoretical description of weakly correlated systems is one of
+systems. Despite intense developments, no deﬁnitive solution                     the most concrete achievement of quantum chemistry, and the
+to this problem has been found. The theoretical challenge to                     main remaining challenge for these systems is to push the limit
+tackle belongs to the quantum many-body problem, due to                          of the chemical system size that can be treated.  The case of
+the intrinsic quantum nature of the electrons and the Coulomb                    the so-called strongly correlated systems, which are ubiqui-
+repulsion between them. This so-called electronic correlation                    tous in chemistry, is more problematic as they exhibit a much
+problem corresponds to ﬁnding a solution to the Schrödinger                      more complex electronic structure.  For example, transition
+equation for a N-electron system, and two main roads have                        metal complexes, low-spin open-shell systems, covalent bond
+emerged to approximate this solution: wave-function theory                       breaking situations have all in common that they cannot be
+(WFT)1 and density-functional theory (DFT).2 Although both                       even qualitatively described by a single electronic conﬁgura-
+WFT and DFT spring from the same Schrödinger equation,                           tion. It is now clear that the usual semilocal density-functional
+they rely on very diﬀerent formalisms, as the former deals                       approximations of KS DFT fail to accurately describe these
+with the complicated N-electron wave function whereas the                        situations6,7    and WFT is king for the treatment of strongly
+latter focuses on the much simpler one-electron density.  In                     correlated systems.
+its Kohn-Sham (KS) formulation,3 the computational cost of                          In practice, WFT uses a ﬁnite one-electron basis set.  The
+DFT is very appealing since it is a simple mean-ﬁeld proce-                      exact solution of the Schrödinger equation within this basis set
+dure. Therefore, although continued eﬀorts have been made to                     is then provided by full conﬁguration interaction (FCI) which
+reduce the computational cost of WFT, DFT still remains the                      consists in a linear-algebra eigenvalue problem with a dimen-
+workhorse of quantum computational chemistry.                                    sion scaling exponentially with the system size.  Due to this
+   The diﬃculty of obtaining a reliable theoretical description                  exponential growth of the FCI computational cost, introducing
+of a given chemical system can be roughly categorized by the                     approximations is necessary, with at least two diﬃculties for
+strength of the electronic correlation.  The so-called weakly                    strongly correlated systems: i) the qualitative description of the
+correlated systems,  such as closed-shell organic molecules                     wave function is determined by a primary set of electronic con-
+                                                                                 ﬁgurations (whose size can scale exponentially in many cases)
+                                                                                 among which near degeneracies and/or strong interactions ap-
+a)Electronic mail:emmanuel.giner@lct.jussieu.fr                                  pear in the Hamiltonian matrix; ii) the quantitative description
+b)Electronic mail:loos@irsamc.ups-tlse.fr                                        of the system requires also to account for weak correlation ef-
+c)Electronic mail:toulouse@lct.jussieu.fr
+                                                                                 fects which involve many other electronic conﬁgurations with
+                                                                                                                                                             2
+
+typically much smaller weights in the wave function. Address-                     non-divergent interaction, and consequently the wave function
+ing simultaneously these two issues is a rather complicated                       has no electron-electron cusp33 and the basis-set convergence
+task for a given approximate WFT method, especially if one                        is much faster.34 A number of approximate RSDFT schemes
+adds the requirement of satisfying formal properties, such as                     have been developed involving single-reference35–42      and multi-
+spin-multiplet degeneracy (i.e., independence of the energy                       reference43–48     WFT methods. Nevertheless, there are still some
+with respect to the spin projection S z) and size consistency.                    open issues in RSDFT, such as remaining fractional-charge and
+   Beside the diﬃculties of accurately describing the molec-                      fractional-spin errors in the short-range density functionals49
+ular electronic  structure within  a given  basis set,  a  crucial                or the dependence of the quality of the results on the value of
+limitation of WFT methods is the slow convergence of the                          the range-separation parameterµ.
+energy  (and  related  properties)  with  respect  to  the  size  of                 Building on the development of RSDFT, a possible solu-
+the one-electron basis set.   As initially shown by the semi-                     tion to the basis-set convergence problem has been recently
+nal work of Hylleraas8 and further developed by Kutzelnigg                        proposed by some of the present authors50 in which RSDFT
+and coworkers,9–11    the main convergence problem originates                     functionals are used to recover only the correlation eﬀects
+from the divergence of the electron-electron Coulomb interac-                     outside a given basis set.   The key point here is to realize
+tion at the coalescence point, which induces a discontinuity                      that a wave function developed in an incomplete basis set is
+in the ﬁrst derivative of the exact wave function (the so-called                  cuspless and could also originate from a Hamiltonian with a
+electron-electron cusp). Describing such a discontinuity with                     non-divergent long-range electron-electron interaction. There-
+an incomplete one-electron basis set is impossible and, as a                      fore, a mapping with RSDFT can be performed through the
+consequence, the convergence of the computed energies and                         introduction of an eﬀective non-divergent interaction represent-
+properties are strongly aﬀected. To alleviate this problem, ex-                   ing the usual electron-electron Coulomb interaction projected
+trapolation techniques have been developed, either based on                       in an incomplete basis set. First applications to weakly corre-
+a partial-wave expansion analysis,12,13     or more recently based                lated molecular systems have been successfully carried out,51
+on perturbative arguments.14,15     A more rigorous approach to                   together with extensions of this approach to the calculations
+tackle the basis-set convergence problem is provided by the so-                   of excitation energies52 and ionization potentials.53 The goal
+called explicitly correlated F12 (or R12) methods4,16–20        which             of the present work is to further develop this approach for the
+introduce a geminal function depending explicitly on the in-                      description of strongly correlated systems.
+terelectronic distance.  This ensures a correct representation                       The paper is organized as follows. In Sec.II, we recall the
+of the Coulomb correlation hole around the electron-electron                      mathematical framework of the basis-set correction and we
+coalescence point, and leads to a much faster convergence of                      present its extension for strongly correlated systems.  In par-
+the energy than usual WFT methods. For instance, using the                        ticular, our focus is primarily set on imposing two key formal
+explicitly correlated version of coupled cluster with singles,                    properties which are highly desirable in the context of strong
+doubles, and perturbative triples [CCSD(T)] in a triple-ζ ba-                     correlation:  spin-multiplet degeneracy and size consistency.
+sis set is equivalent to using a quintuple-ζ basis set with the                   To do this,  we introduce i) new functionals using diﬀerent
+usual CCSD(T) method,21 although a computational overhead                         ﬂavors of spin polarizations and on-top pair densities,  and
+is introduced by the auxiliary basis set needed to compute the                    ii) an eﬀective electron-electron interaction based on a multi-
+three-electron integrals involved in F12 theory.22 In addition to                 conﬁgurational wave function.  This generalizes the method
+the computational cost, a possible drawback of F12 theory is its                  used in previous works on weakly correlated systems50,51     for
+rather complex formalism which requires non-trivial develop-                      which it was suﬃcient to use an eﬀective interaction based on
+ments for adapting it to a new method. For strongly correlated                    a single-determinant wave function and a functional depending
+systems, several multi-reference methods have been extended                       only on the usual density, reduced density gradient and spin
+to explicit correlation (see, for example, Refs. 23–27), includ-                  polarization. Then, in Sec.III, we apply the method to the cal-
+ing approaches based on the so-called universal F12 theory                        culation of the potential energy curves of the H10, N2, O2, and
+which are potentially applicable to any electronic-structure                      F2 molecules up to the dissociation limit. Finally, we conclude
+computational methods.28–31                                                       in Sec.IV.
+   An  alternative  way  to  improve  the  convergence  towards
+the complete-basis-set (CBS) limit is to treat the short-range                    II.    THEORY
+correlation eﬀects within DFT and to use WFT methods to
+deal  only  with  the  long-range  and/or  strong  correlation  ef-
+fects.   A  rigorous  approach  achieving  this  mixing  of  DFT                     As the theory behind the present basis-set correction has
+and WFT is range-separated DFT (RSDFT) (see Ref. 32 and                           been exposed in details in Ref. 50, we only brieﬂy recall the
+references therein) which relies on a decomposition of the                        main equations and concepts needed for this study in Secs.II A,
+electron-electron Coulomb interaction in terms of the inter-                      II B, andII C. More speciﬁcally, in Sec.II A, we recall the basic
+electronic  distance  thanks  to  a  range-separation  parameter                  mathematical framework of the present theory by introducing
+µ.   The  advantage  of  this  approach  is  at  least  two-fold:  i)             the complementary functional to a basis set. SectionII Bintro-
+the DFT part deals primarily with the short-range part of the                     duces the eﬀective non-divergent interaction in the basis set,
+Coulomb interaction, and consequently the usual semilocal                         which leads us to the deﬁnition of the eﬀective local range-
+density-functional approximations are more accurate than for                      separation function in Sec.II C. Then, Sec.II Dexposes the
+standard KS DFT; ii) the WFT part deals only with a smooth                        new approximate RSDFT-based complementary correlation
+                                                                                                                                                                3
+
+functionals. The generic form of such functionals is exposed                        where the minimization is only over wave functions ΨB  re-
+in Sec.II D 1, their properties in the context of the basis-set                     stricted  to  the  basis  setB  and  nΨB(r)  refers  to  the  density
+correction are discussed in Sec.II D 2,  and the speciﬁc re-                        generated from ΨB.   Therefore,  thanks to Eq. (5)   ,  one can
+quirements for strong correlation are discussed in Sec.II E.                        properly combine a WFT calculation in a ﬁnite basis set with
+Finally, the actual functionals used in this work are introduced                    a density functional (hereafter referred to as complementary
+in Sec.II F.                                                                        functional) accounting for the correlation eﬀects that are not
+                                                                                    included in the basis set.
+                                                                                       As a simple non-self-consistent version of this approach, we
+A.    Basic theory                                                                  can approximate the minimizing wave function ΨB0  in Eq. (5)
+                                                                                    by the ground-state FCI wave function ΨBFCI withinB, and we
+   The exact ground-state energy E0 of a N-electron system                          then obtain the following approximation for the exact ground-
+can, in principle, be obtained in DFT by a minimization over                        state energy [see Eqs. (12)–(15) of Ref.50]
+N-representable one-electron densities n(r)
+                             {          ∫                  }                                             E0≈ EB0 ≈ EBFCI +  ¯EB[nBFCI],                      (6)
+                E0 = minn     F[n] +        drvne(r)n(r)     ,                (1)   where EB
+                                                                                              FCI and nBFCI are the ground-state FCI energy and den-
+where vne(r) is the nuclei-electron potential, and F[n] is the                      sity, respectively. As it was originally shown in Ref. 50 and fur-
+universal Levy-Lieb density functional written with the con-                        ther emphasized in Refs. 51 and 52, the main role of  ¯EB[nBFCI]
+strained search formalism as54,55                                                   is to correct for the basis-set incompleteness error, a large part
+                                                                                    of which originating from the lack of electron-electron cusp in
+                     F[n] = min                                                     the wave function expanded in an incomplete basis set.  The
+                               Ψ→n⟨Ψ| ˆT +  ˆWee|Ψ⟩,                      (2)       whole purpose of this work is to determine approximations
+where  ˆT and  ˆWee are the kinetic and electron-electron Coulomb                   for  ¯EB[nBFCI] which are suitable for strongly correlated molec-
+operators, and the notation Ψ→ n means that the wave func-                          ular systems.  Two key requirements for this purpose are i)
+tion Ψ yields the density n.   The minimizing density n0  in                        spin-multiplet degeneracy, and ii) size consistency.
+Eq.  (1)     is  the  exact  ground-state  density.   Nevertheless,  in
+practical calculations, the accessible densities are necessarily
+restricted to the set of densities “representable in a basis setB”,                 B.    Effective interaction in a ﬁnite basis
+i.e., densities coming from wave functions expandable in the N-
+electron Hilbert space generated by the one-electron basis setB.                       As originally shown by Kato,56 the electron-electron cusp
+In the following, we always consider only such representable-                       of the exact wave function originates from the divergence of
+in-B densities. With this restriction, Eq. (1)    then gives an upper               the Coulomb interaction at the coalescence point. Therefore,
+bound EB0  of the exact ground-state energy. Since the density                      a cuspless wave function ΨB could also be obtained from a
+has a faster convergence with the size of the basis set than the                    Hamiltonian with a non-divergent electron-electron interaction.
+wave function, this restriction is a rather weak one and we can                     In other words, the impact of the basis set incompleteness can
+consider that EB0  is an acceptable approximation to the exact                      be understood as the removal of the divergence of the usual
+ground-state energy, i.e., EB0 ≈ E0.                                                electron-electron Coulomb interaction.
+   In the present context, it is important to notice that the wave                     As  originally  derived  in  Ref.  50  (see  Sec.  II  D  and  Ap-
+functions Ψ deﬁned in Eq. (2)    are not restricted to a ﬁnite basis                pendices), one can obtain an eﬀective non-divergent electron-
+set, i.e., they should be expanded in a complete basis set.  In                     electron interaction,  here referred to as  WΨB(r1, r2),  which
+Ref. 50,  it was then proposed to decompose  F[n] as,  for a                        reproduces  the  expectation  value  of  the  electron-electron
+representable-in-B density n,                                                       Coulomb interaction operator over a given wave function ΨB.
+             F[n] =  min                                                            As we are interested in the behavior at the coalescence point,
+                       ΨB→n⟨ΨB| ˆT +  ˆWee|ΨB⟩ +  ¯EB[n],            (3)            we focus on the opposite-spin part of the electron-electron
+                                                                                    interaction. More speciﬁcally, the eﬀective electron-electron
+where ΨB are wave functions expandable in the N-electron                            interaction associated to a given wave function ΨB is deﬁned
+Hilbert space generated byB, and                                                    as
+    ¯EB[n] = min                                                                                      
+              Ψ→n⟨Ψ| ˆT +  ˆWee|Ψ⟩−  minΨB→n⟨ΨB| ˆT +  ˆWee|ΨB⟩   (4)               WΨB(r1, r2) =       fΨB(r1, r2)/n2,ΨB(r1, r2),    if n2,ΨB(r1, r2) , 0,
+                                                                                                        ∞,                                      otherwise,
+is the complementary density functional to the basis setB.                                                                                                    (7)
+Introducing the decomposition in Eq. (3)     back into Eq. (1)                      where
+yields                                                                                                          ∑
+                {                                                                          n2,ΨB(r1, r2) =            φp(r1)φq(r2)Γrspqφr(r1)φs(r2),     (8)
+   EB0  = min     ⟨ΨB| ˆT +  ˆWee|ΨB⟩ +  ¯EB[nΨB]                                                              pqrs∈B
+            ΨB                                ∫
+                                                                     }              is the opposite-spin pair density associated with ΨB, and Γrspq =
+                                           +      drvne(r)nΨB(r)      ,    (5)      2⟨ΨB|ˆa†r↓ ˆa†s↑ ˆaq↑ ˆap↓|ΨB⟩ its associated tensor in a basis of spatial
+                                                                                                                                                                 4
+
+orthonormal orbitals{φp(r)},                                                        2.    Frozen-core approximation
+                       ∑                                                               As all WFT calculations in this work are performed within
+    fΨB(r1, r2) =             φp(r1)φq(r2)VrspqΓtursφt(r1)φu(r2),     (9)
+                     pqrstu∈B                                                       the frozen-core approximation, we use a “valence-only” (or
+                                                                                    no-core) version of the various quantities needed for the com-
+and Vrspq  =⟨pq|rs⟩ are the usual two-electron Coulomb inte-                        plementary functional introduced in Ref. 51. We partition the
+grals.  With such a deﬁnition, one can show that WΨB(r1, r2)                        basis set asB =C⋃V, whereC andV are the sets of core
+satisﬁes                                                                            and “valence” (i.e., non-core) orbitals, respectively, and deﬁne
+      "                                                                             the valence-only local range-separation function as
+   1        dr1dr2WΨB(r1, r2)n2,ΨB(r1, r2) =                                                                             √π
+   2                                  "                                                                     µvalΨB(r) =   2  WvalΨB(r, r),                        (16)
+                                    1       dr1dr2 n2,ΨB(r1, r2)                    where
+                                    2                   |r1− r2| .    (10)                            
+As shown in Ref. 50, the eﬀective interaction WΨB(r1, r2) is                        Wval                f valΨB (r1, r2)/nval2,ΨB(r1, r2),    if nval2,ΨB(r1, r2) , 0,
+                                                                                      ΨB(r1, r2) =      ∞,                                      otherwise,
+necessarily ﬁnite at coalescence for an incomplete basis set,                                                                                                (17)
+and tends to the usual Coulomb interaction in the CBS limit                         is the valence-only eﬀective interaction and
+for any choice of wave function ΨB, i.e.,                                                                ∑      ∑
+                                                                                        f valΨB (r1, r2) =            φp(r1)φq(r2)VrspqΓtursφt(r1)φu(r2),
+                limB→CBS WΨB(r1, r2) =       1|r1− r2|, ∀ ΨB.           (11)                             pq∈B  rstu∈V
+                                                                                                             ∑                                               (18)
+The condition in Eq. (11)      is fundamental as it guarantees the                       nval2,ΨB(r1, r2) =         φp(r1)φq(r2)Γrspqφr(r1)φs(r2).      (19)
+correct behavior of the theory in the CBS limit.                                                            pqrs∈V
+                                                                                    One would note the restrictions of the sums to the setV in
+                                                                                    Eqs. (18)      and (19)     . It is also noteworthy that, with the present
+C.    Local range-separation function                                               deﬁnition, Wval
+                                                                                                    ΨB(r1, r2) still tends to the usual Coulomb interac-
+                                                                                    tion asB→ CBS. For simplicity, we will drop the indication
+1.    General deﬁnition                                                            “val” in the notation for the rest of the paper.
+
+   The eﬀective interaction within a ﬁnite basis, WΨB(r1, r2),                      D.    General form of the complementary functional
+is bounded and resembles the long-range interaction used in
+RSDFT
+                                                                                    1.    Generic approximate form
+                        wlree(µ; r12) =  erf(µ r12)r12  ,                        (12)  As originally proposed and motivated in Ref. 50, we ap-
+                                                                                    proximate the complementary functional  ¯EB[n] by using the
+whereµ is the range-separation parameter. As originally pro-                        so-called correlation energy functional with multideterminant
+posed in Ref. 50, we make the correspondence between these                          reference (ECMD) introduced by Toulouse et al.57,58     Follow-
+two interactions by using the local range-separation function                       ing  the  recent  work  in  Ref.  51,  we  propose  to  consider  a
+                                     √                                              Perdew-Burke-Ernzerhof (PBE)-like functional which  uses
+                        µΨB(r) =       π                                            the  one-electron  density  n(r),  the  spin  polarization ζ(r)  =
+                                      2  WΨB(r, r),                       (13)      [n↑(r)− n↓(r)]/n(r) (where n↑(r) and n↓(r) are the spin-up
+                                                                                    and spin-down densities), the reduced density gradient s(r) =
+such that the two interactions coincide at the electron-electron                    ∇n(r)/n(r)4/3, and the on-top pair density n2(r)≡ n2(r, r). In
+coalescence point for each r                                                        the present work, all these quantities are computed with the
+                                                                                    same wave function ΨB used to deﬁneµ(r)≡µΨB(r). There-
+                 wlree(µΨB(r); 0) = WΨB(r, r), ∀ r.               (14)              fore,  ¯EB[n] has the following generic form
+
+Because  of  the  very  deﬁnition  of  WΨB(r1, r2),  one  has  the                      ¯EB[n,ζ, n2,µ] =
+following property in the CBS limit [see Eq. (11)]                                               ∫
+                                                                                                     dr n(r)¯εsr,PBEc,md   (n(r),ζ(r), s(r), n2(r),µ(r)),    (20)
+                       limB→CBSµΨB(r) =∞, ∀ ΨB,                    (15)
+                                                                                    where
+which is again fundamental to guarantee the correct behavior                                     ¯εsr,PBE                          c    (n,ζ, s)
+of the theory in the CBS limit.                                                                   c,md   (n,ζ, s, n2,µ) =   εPBE1 +β(n,ζ, s, n2)µ3          (21)
+                                                                                                                                                                  5
+
+is the correlation energy per particle, with                                            Second,  ¯EB[n,ζ, n2,µ] correctly vanishes for systems with
+                                                                                     uniformly vanishing on-top pair density, such as one-electron
+            β(n,ζ, s, n2) =            3          εPBEc    (n,ζ, s)                  systems and for the stretched H2 molecule,
+                                2√π(1−√2)              n2/n   ,         (22)                                  lim
+                                                                                                              n2→0  ¯EB[n,ζ, n2,µ] = 0.                       (28)
+where εPBEc    (n,ζ, s) is the usual PBE correlation energy per                      This property is doubly guaranteed by i) the choice of set-
+particle.59 Before introducing the diﬀerent ﬂavors of approxi-                       ting  WΨB(r1, r2)   = ∞  for  a  vanishing  pair  density  [see
+mate functionals that we will use here (see Sec.II F), we would                      Eq.  (7)   ],  which  leads  to µ(r) → ∞  and  thus  a  vanish-
+like to give some motivations for this choice of functional form.                    ing  ¯εsr,PBE
+   The form of  ¯εsr,PBEc,md  (n,ζ, s, n2,µ) in Eq. (21)      has been orig-                c,md  (n,ζ, s, n2,µ)  [see  Eq.  (26)     ],  and  ii)  the  fact  that
+inally proposed in Ref. 48 in the context of RSDFT. In the                           ¯εsr,PBEc,md   (n,ζ, s, n2,µ) vanishes anyway when the on-top pair den-
+µ→ 0 limit, it reduces to the usual PBE correlation functional,                      sity vanishes [see Eq. (25)].
+i.e.,
+               limµ→0 ¯εsr,PBE                    c    (n,ζ, s),           (23)      E.    Requirements on the complementary functional for
+                     c,md   (n,ζ, s, n2,µ) =εPBE                                     strong correlation
+
+which is relevant in the weak-correlation (or high-density) limit.                      An  important  requirement  for  any  electronic-structure
+In the large-µ limit, it behaves as                                                  method is size consistency, i.e., the additivity of the energies
+                                            2√π(1−√2)          n2                    of non-interacting fragments,  which is mandatory to avoid
+            ¯εsr,PBEc,md   (n,ζ, s, n2,µ) ∼µ→∞     3µ3         n ,        (24)       any ambiguity in computing interaction energies. When two
+                                                                                     subsystems A and B dissociate in closed-shell systems, as in
+which is the exact large-µ behavior of the exact ECMD corre-                         the case of weak intermolecular interactions for instance, spin-
+lation energy.48,60     Of course, for a speciﬁc system, the large-µ                 restricted Hartree-Fock (RHF) is size-consistent.  When the
+behavior will be exact only if one uses for n2 the exact on-top                      two subsystems dissociate in open-shell systems, such as in co-
+pair density of this system.  This large-µ limit in Eq. (24)      is                 valent bond breaking, it is well known that the RHF approach
+relevant in the strong-correlation (or low-density) limit.  In                       fails and an alternative is to use a complete-active-space self-
+the context of RSDFT, some of the present authors have il-                           consistent-ﬁeld (CASSCF) wave function which, provided that
+lustrated in Ref. 48 that the on-top pair density involved in                        the active space has been properly chosen, leads to additive
+Eq. (21)      plays indeed a crucial role when reaching the strong-                  energies.
+correlation regime.  The importance of the on-top pair den-                             Another important requirement is spin-multiplet degeneracy,
+sity in the strong-correlation regime have been also recently                        i.e.,  the independence of the energy with respect to the S z
+acknowledged by Gagliardi and coworkers61 and Pernal and                             component of a given spin state, which is also a property of
+coworkers.62                                                                         any exact wave function. Such a property is also important in
+   Note also that  ¯εsr,PBE                                                          the context of covalent bond breaking where the ground state
+                        c,md  (n,ζ, s, n2,µ) vanishes when n2  van-                  of the supersystem A + B is generally of lower spin than the
+ishes, i.e.,                                                                         corresponding ground states of the fragments (A and B) which
+                      lim                                                            can have multiple S z components.
+                     n2→0 ¯εsr,PBEc,md   (n,ζ, s, n2,µ) = 0,                   (25)
+
+which is expected for systems with a vanishing on-top pair den-                      1.    Spin-multiplet degeneracy
+sity.  Finally, the function  ¯εsr,PBEc,md  (n,ζ, s, n2,µ) vanishes when
+µ→∞ like all RSDFT short-range functionals, i.e.,                                       A suﬃcient condition to achieve spin-multiplet degeneracy
+                      limµ→∞ ¯εsr,PBE                                                is to eliminate all dependencies on S z. In the case of the func-
+                            c,md   (n,ζ, s, n2,µ) = 0.                   (26)        tion ¯εsr,PBEc,md   (n,ζ, s, n2,µ), this means removing the dependence
+                                                                                     on the spin polarizationζ(r) originating from the PBE correla-
+                                                                                     tion functionalεPBEc    (n,ζ, s) [see Eq. (21)].
+2.    Two limits where the complementary functional vanishes                            To do so, it has been proposed to replace the dependence
+                                                                                     on the spin polarization by the dependence on the on-top pair
+   Within the deﬁnitions of Eqs. (13)       and (20)     , any approx-               density. Most often, it is done by introducing an eﬀective spin
+imate complementary functional  ¯EB[n,ζ, n2,µ] satisﬁes two                          polarization7,63–75       (see, also, Refs.76and77)
+important properties.                                                                                        ˜ζ(n, n2) = √1− 2 n2/n2                       (29)
+   First,   thanks  to  the  properties  in  Eqs.  (15)       and  (26)     ,
+¯EB[n,ζ, n2,µ]  vanishes  in  the  CBS  limit,  independently  of                    expressed as a function of the density n and the on-top pair
+the type of wave function ΨB used to deﬁne the local range-                          density n2 calculated from a given wave function. The advan-
+separation functionµ(r) in a given basis setB,                                       tage of this approach is that this eﬀective spin polarization
+                   limB→CBS  ¯EB[n,ζ, n2,µ] = 0, ∀ ΨB.               (27)            ˜ζ is independent from S z since the on-top pair density is S z-
+                                                                                     independent.  Nevertheless, the use of  ˜ζ in Eq. (29)      presents
+                                                                                                                                                                6
+
+some disadvantages since this expression was derived for a                          case of covalent bond breaking. Therefore, the wave functions
+single-determinant wave function. Hence, it does not appear                         ΨB used throughout this paper are CASSCF wave functions
+justiﬁed to use it for a multideterminant wave function. More                       in order to ensure size consistency of all local quantities. The
+particularly, it may happen, in the multideterminant case, that                     diﬀerence between the diﬀerent ﬂavors of functionals are only
+1− 2 n2/n2 < 0 which results in a complex-valued eﬀective                           due to the types of spin polarization and on-top pair density
+spin polarization.64 Therefore, following other authors,67,72,73                    used.
+we use the following deﬁnition                                                         Regarding the spin polarization that enters into the function
+                          √                                                  εPBEc    (n,ζ, s), two diﬀerent types of S z-independent formula-
+             ˜ζ(n, n2) =       1− 2 n2/n2,    if n2≥ 2n2,                           tions are considered: i) the eﬀective spin polarization ˜ζ deﬁned
+                            0,                        otherwise.             (30)   in Eq. (30)      and calculated from the CASSCF wave function,
+   An alternative way to eliminate the S z dependence is to sim-                    and ii) a zero spin polarization. In the latter case, the functional
+ply setζ = 0, i.e., to resort to the spin-unpolarized functional.                   is referred as to “SU” which stands for “spin unpolarized”.
+This lowers the accuracy for open-shell systems atµ = 0, i.e.,                         Regarding the on-top pair density entering in Eq. (22)     , we
+for the usual PBE correlation functional εPBE                                       use two diﬀerent approximations. The ﬁrst one is based on the
+                                                        c    (n,ζ, s).  Nev-        uniform electron gas (UEG) and reads
+ertheless,  we  argue  that,  for  suﬃciently  large µ,  it  is  a  vi-
+able option.  Indeed, the purpose of introducing the spin po-                                           nUEG2     (n,ζ)≈ n2(1−ζ2)g0(n),                   (31)
+larization in semilocal density-functional approximations is                       where the pair-distribution function g0(n) is taken from Eq. (46)
+to mimic the exact on-top pair density,76 but our functional                        of Ref. 33. As the spin polarization appears in Eq. (31)     , we use
+¯εsr,PBEc,md  (n,ζ, s, n2,µ) already explicitly depends on the on-top               the eﬀective spin polarization ˜ζ of Eq. (30)      in order to ensure
+pair density [see Eqs. (21)       and (22)     ].  The dependencies on              S z independence.  Thus, nUEG
+ζ and n2 can thus be expected to be largely redundant.  Con-                                                          2      will depend indirectly on the
+sequently, we propose here to test the use of  ¯εsr,PBE                             on-top pair density of the CASSCF wave function through ˜ζ.
+                                                              c,md    with a       When using nUEG2    (r)≡  nUEG2    (n(r), ˜ζ(r)) in a functional, we
+zero spin polarization. This ensures its S z independence and,                     will refer to it as “UEG”.
+as will be numerically demonstrated, very weakly aﬀects the                            The second approach to approximate the exact on-top pair
+complementary functional accuracy.                                                  density consists in using directly the on-top pair density of the
+                                                                                    CASSCF wave function. Following the work of some of the
+2.    Size consistency                                                              present authors,48,52     we introduce the extrapolated on-top pair
+                                                                                    density
+   Since  ¯EB[n,ζ, n2,µ] is computed via a single integral over                                                        (            )−1
+R3 [see Eq. (20)     ] which involves only local quantities [n(r),                                       ˚n2(n2,µ) =    1 +    2√πµ      n2,                    (32)
+ζ(r),  s(r),  n2(r),  and µ(r)],  in the case of non-overlapping                   which directly follows from the large-µ extrapolation of the
+fragments A + B, it can be written as the sum of two local                          exact on-top pair density derived by Gori-Giorgi and Savin33
+contributions: one coming from the integration over the region                      in the context of RSDFT. Thus, the extrapolated on-top pair
+of subsystem A and the other one from the region of subsystem                       density  ˚n2 depends on the local range-separation functionµ.
+B. Therefore, a suﬃcient condition for size consistency is that                    When using  ˚n2(r)≡  ˚n2(n2(r),µ(r)) in a functional, we will
+these quantities locally coincide in the isolated fragments and                     simply refer it as “OT”, which stands for "on-top".
+in the supersystem A + B.  Since these local quantities are                            We then deﬁne three complementary functionals:
+calculated from the wave function ΨB, a suﬃcient condition is
+that the wave function is multiplicatively separable in the limit                       i)PBE-UEG   which combines the eﬀective spin polariza-
+of non-interacting fragments, i.e.,|ΨBA+B⟩ =|ΨBA⟩⊗|ΨBB⟩. We                                tion of Eq. (30)      and the UEG on-top pair density deﬁned
+refer the interested reader to AppendixAfor a detailed proof                               in Eq. (31):
+and discussion of the latter statement.  In the case where the                          ¯EB
+two subsystems A and B dissociate in closed-shell systems,                               PBE-UEG∫
+a simple RHF wave function ensures this property, but when                                =      dr n(r)¯εsr,PBE
+one or several covalent bonds are broken, a properly chosen                                                c,md   (n(r), ˜ζ(r), s(r), nUEG2     (r),µ(r)),    (33)
+CASSCF wave function can be used to recover this property.                             ii)PBE-OT     which combines the eﬀective spin polarization
+The underlying active space must however be chosen in such                                 of Eq. (30) and the on-top pair density of Eq. (32):
+a way that it leads to size-consistent energies in the limit of                                      ∫
+dissociated fragments.                                                                  ¯EB              dr n(r)¯εsr,PBE
+                                                                                          PBE-OT =                 c,md   (n(r), ˜ζ(r), s(r), ˚n2(r),µ(r)),
+F.    Actual approximations used for the complementary                                                                                                      (34)
+functional                                                                            iii)SU-PBE-OT      which combines a zero spin polarization
+                                                                                           and the on-top pair density of Eq. (32):∫
+   As  the  present  work  focuses  on  the  strong-correlation                         ¯EB                  dr n(r)¯εsr,PBE
+regime, we propose here to investigate only approximate func-                             SU-PBE-OT =                  c,md   (n(r), 0, s(r), ˚n2(r),µ(r)).
+tionals which are S z  independent and size-consistent in the                                                                                               (35)
+                                                                                                                                                            7
+
+The performance of each of these functionals is tested in the                    separation functionµ(r) are calculated with this full-valence
+following.   Note that we did not deﬁne a spin-unpolarized                       CASSCF wave function.  The CASSCF calculations are per-
+version of the PBE-UEG functional because it would have                          formed with the following active spaces:  (10e,10o) for H10,
+been signiﬁcantly inferior (in terms of performance) compared                    (10e,8o) for N2, (12e,8o) for O2, and (14e,8o) for F2. We note
+to the three other functionals. Indeed, because to the lack of                   that, instead of using CASSCF wave functions for ΨB, one
+knowledge on the spin polarization or on the accurate on-top                     could of course use the same selected-CI wave functions used
+pair density, such a functional would be inaccurate in particular                for calculating the energy but the calculations of n2(r) andµ(r)
+for open-shell systems. This assumption has been numerically                     would then be more costly.
+conﬁrmed by calculations.                                                           Also, as the frozen-core approximation is used in all our
+                                                                                 selected-CI calculations, we use the corresponding valence-
+                                                                                 only complementary functionals (see Subsec.II C 2).  There-
+III.    RESULTS                                                                  fore, all density-related quantities exclude any contribution
+                                                                                 from the 1s core orbitals, and the range-separation function
+A.    Computational details                                                      follows the deﬁnition given in Eq. (16).
+                                                                                    It should be stressed that the computational cost of the basis-
+   We present potential energy curves of small molecules up                      set correction (see AppendixB) is negligible compared to the
+to the dissociation limit to investigate the performance of the                  cost the selected-CI calculations.
+basis-set correction in regimes of both weak and strong corre-
+lation. The considered systems are the H10 linear chain with
+equally-spaced atoms, and the N2, O2, and F2 diatomics.                          B.    H10 chain
+   The computation of the ground-state energy in Eq. (6)    in
+a given basis set requires approximations to the FCI energy                         The H10 chain with equally-spaced atoms is a prototype of
+EBFCI and to the basis-set correction  ¯EB[nBFCI].  For diatomics                strongly correlated systems as it consists in the simultaneous
+with the aug-cc-pVDZ and aug-cc-pVTZ basis sets,78 energies                      breaking of 10 interacting covalentσ bonds. As it is a relatively
+are obtained using frozen-core selected-CI calculations (using                   small system, benchmark calculations at near-CBS values are
+the CIPSI algorithm) followed by the extrapolation scheme                        available (see Ref.88for a detailed study of this system).
+proposed by Holmes et al. (see Refs. 79–84 for more detail).                        We report in Fig.1the potential energy curves computed
+All these calculations are performed with the latest version                     using the cc-pVXZ (X = D, T, and Q) basis sets for diﬀerent
+of Quantum Package,84 and will be labeled as exFCI in the                        levels of approximation, and the corresponding atomization
+following. In the case of F2, we also use the correlation energy                 energies are reported in TableI. As a general trend, the addi-
+extrapolated by intrinsic scaling (CEEIS)85 as an estimate of                    tion of the basis-set correction globally improves the quality
+the FCI correlation energy with the cc-pVXZ (X = D, T, and Q)                    of the potential energy curves, independently of the approxi-
+basis sets.86 The estimated exact potential energy curves are ob-                mation level of  ¯EB[n]. Also, no erratic behavior is found when
+tained from experimental data87 for the N2 and O2 molecules,                     stretching the bonds, which shows that the present procedure
+and from CEEIS calculations in the case of F2.  For all ge-                      (i.e., the determination of the range-separation function and the
+ometries and basis sets, the error with respect to the exact FCI                 deﬁnition of the functionals) is robust when reaching the strong-
+energies are estimated to be of the order of 0.5 mHa. For the                    correlation regime.  In other words, smooth potential energy
+three diatomics, we performed an additional exFCI calculation                    curves are obtained with the present basis-set correction. More
+with the aug-cc-pVQZ basis set at the equilibrium geometry to                    quantitatively, the values of the atomization energies are within
+obtain reliable estimates of the FCI/CBS dissociation energy.                    chemical accuracy (i.e.,  an error below 1.4 mHa) with the
+In the case of the H10 chain, the approximation to the FCI ener-                 cc-pVTZ basis set when using the PBE-OT and SU-PBE-OT
+gies together with the estimated exact potential energy curves                   functionals, whereas such an accuracy is not yet reached at the
+are obtained from the data of Ref. 88 where the authors per-                     standard MRCI+Q/cc-pVQZ level of theory.
+formed MRCI+Q calculations with a minimal valence active                            Analyzing  more  carefully  the  performance  of  the  diﬀer-
+space as reference (see below for the description of the active                  ent types of approximate functionals,  the results show that
+space).                                                                          PBE-OT and SU-PBE-OT are very similar (the maximal dif-
+   We  note  that,  even  though  we  use  near-FCI  energies  in                ference on the atomization energy being 0.3 mHa), and that
+this work, the DFT-based basis-set correction could also be                      they give slightly more accurate results than PBE-UEG. These
+applied to any approximation to FCI such as multireference                       ﬁndings provide two important clues on the role of the dif-
+perturbation theory, similarly to what was done for weakly cor-                  ferent physical ingredients included in these functionals:  i)
+related systems for which the basis-set correction was applied                   the explicit use of the on-top pair density originating from the
+to CCSD(T) calculations.51                                                       CASSCF wave function [see Eq. (32)     ] is preferable over the
+   Regarding the complementary functional, we ﬁrst perform                       use of the UEG on-top pair density [see Eq. (31)     ] which is
+full-valence CASSCF calculations with the GAMESS-US soft-                        somewhat understandable, and ii) removing the dependence on
+ware89  to obtain the wave function ΨB.   Then,  all density-                    any kind of spin polarization does not lead to a signiﬁcant loss
+related quantities involved in the functional [density n(r), ef-                 of accuracy providing that one employs a qualitatively correct
+fective spin polarization  ˜ζ(r), reduced density gradient s(r),                 on-top pair density.  The latter point is crucial as it conﬁrms
+and on-top pair density n2(r)] together with the local range-                    that the spin polarization in density-functional approximations
+                                                                                                                                                                        8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                              (a)  cc-pVDZ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                              (b)  cc-pVTZ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                              (c)  cc-pVQZ
+
+FIG. 1.   Potential energy curves of the H10 chain with equally-spaced atoms calculated with MRCI+Q and basis-set corrected MRCI+Q using
+the cc-pVDZ (top), cc-pVTZ (center), and cc-pVQZ (bottom) basis sets. The MRCI+Q energies and the estimated exact energies have been
+extracted from Ref.88.
+                                                                                                                                                                                      9
+
+
+TABLE I. Atomization energies (in mHa) and associated errors (in square brackets) with respect to the estimated exact values computed at
+diﬀerent levels of theory with various basis sets.
+System              Basis set                   MRCI+Qa               (MRCI+Q)+PBE-UEG          (MRCI+Q)+PBE-OT          (MRCI+Q)+SU-PBE-OT
+H10                        cc-pVDZ                 622.1[43.3]                       642.6[22.8]                            649.2[16.2]                              649.5[15.9]
+                         cc-pVTZ                 655.2[10.2]                       661.9[3.5]                              666.0[−0.6]                             666.0[−0.6]
+                        cc-pVQZ                 661.2[4.2]                         664.1[1.3]                              666.4[−1.0]                             666.5[−1.1]
+                                                                                                   Estimated exact:a 665.4
+                                                   exFCI                      exFCI+PBE-UEG                   exFCI+PBE-OT                   exFCI+SU-PBE-OT
+N2                  aug-cc-pVDZ                 321.9[40.8]                       356.2[6.5]                              355.5[7.2]                                354.6[8.1]
+                   aug-cc-pVTZ                 348.5[14.2]                       361.5[1.2]                              363.5[−0.5]                             363.2[−0.3]
+                  aug-cc-pVQZ                 356.6[6.1]                         362.8[−0.1]                           364.2[−1.5]                             364.3[−1.6]
+                                                                                                   Estimated exact:b 362.7
+                                                   exFCI                      exFCI+PBE-UEG                   exFCI+PBE-OT                   exFCI+SU-PBE-OT
+O2                  aug-cc-pVDZ                 171.4[20.5]                       187.6[4.3]                              187.6[4.3]                                187.1[4.8]
+                   aug-cc-pVTZ                 184.5[7.4]                         190.3[1.6]                              191.2[0.7]                                191.0[0.9]
+                  aug-cc-pVQZ                 188.3[3.6]                         190.3[1.6]                              191.0[0.9]                                190.9[1.0]
+                                                                                                   Estimated exact:b 191.9
+                                                   exFCI                      exFCI+PBE-UEG                   exFCI+PBE-OT                   exFCI+SU-PBE-OT
+F2                   aug-cc-pVDZ                   49.6[12.6]                         54.8[7.4]                                54.9[7.3]                                  54.8[7.4]
+                   aug-cc-pVTZ                   59.3[2.9]                           61.2[1.0]                                61.5[0.7]                                  61.5[0.7]
+                  aug-cc-pVQZ                   60.1[2.1]                           61.0[1.2]                                61.3[0.9]                                  61.3[0.9]
+                                                  CEEISc                    CEEISc+PBE-UEG                CEEISc+PBE-OT                CEEISc+SU-PBE-OT
+                        cc-pVDZ                   43.7[18.5]                         51.0[11.2]                              51.0[11.2]                                50.7[11.5]
+                         cc-pVTZ                   56.3[5.9]                           59.2[3.0]                                59.6[2.6]                                  59.5[2.7]
+                        cc-pVQZ                   59.9[2.3]                           61.3[0.9]                                61.6[0.6]                                  61.6[0.6]
+                                                                                                   Estimated exact:b 62.2
+
+ a From Ref.88.
+ b From the CEEIS valence-only non-relativistic calculations of Ref.90.
+ c From the CEEIS valence-only non-relativistic calculations of Ref.85.
+
+
+essentially plays the same role as the on-top pair density. This                                   We report in Figs.2,3, and4the potential energy curves
+could have signiﬁcant implications for the construction of more                                of N2, O2, and F2 computed at various approximation levels
+robust families of density-functional approximations within                                    using  the  aug-cc-pVDZ  and  aug-cc-pVTZ  basis  sets.   The
+DFT.                                                                                           atomization energies for each level of theory with diﬀerent
+                                                                                               basis sets are reported in TableI.
+                                                                                                   Just as in H10, the accuracy of the atomization energies is
+C.    Dissociation of diatomics                                                                globally improved by adding the basis-set correction and it
+                                                                                               is remarkable that PBE-OT and SU-PBE-OT provide again
+   The N2, O2 and F2 molecules are complementary to the H10                                    very similar results.  The latter observation conﬁrms that the
+system for the present study.  The level of strong correlation                                 dependence on the on-top pair density allows one to remove the
+in these diatomics also increases while stretching the bonds,                                  dependence of any kind of spin polarization for a quite wide
+similarly to the case of H10, but in addition these molecules                                  range of covalent bonds and also for an open-shell system like
+exhibit more important and versatile types of weak correlations                                O2. More quantitatively, an error below 1.0 mHa compared to
+due to the larger number of electrons. Indeed, the short-range                                 the estimated exact valence-only atomization energy is found
+correlation eﬀects are known to play a strong diﬀerential eﬀect                                for N2, O2, and F2 with the aug-cc-pVTZ basis set using the
+on the computation of the atomization energy at equilibrium,                                   SU-PBE-OT functional, whereas such a feat is far from being
+while the shape of the curve far from the equilibrium geometry                                 reached within the same basis set at the near-FCI level. In the
+is governed by dispersion interactions which are medium to                                     case of F2 it is clear that the addition of diﬀuse functions in the
+long-range weak-correlation eﬀects.5 The dispersion interac-                                   double- and triple-ζ basis sets strongly improves the accuracy
+tions in H10 play a minor role on the potential energy curve                                   of the results, which could have been anticipated due to the
+due to the much smaller number of near-neighbor electron                                       strong breathing-orbital eﬀect induced by the ionic valence-
+pairs compared to N2, O2 or F2. Also, O2 has a triplet ground                                  bond forms in this molecule.91 It should be also noticed that
+state and is therefore a good candidate for checking the spin-                                 when reaching the aug-cc-pVQZ basis set for N2, the accuracy
+polarization dependence of the various functionals proposed                                    of the atomization energy slightly deteriorates for the PBE-OT
+here.                                                                                          and SU-PBE-OT functionals, but it remains nevertheless more
+                                                                                                                                                                 10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                         (a)  aug-cc-pVDZ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                         (b)  aug-cc-pVTZ
+
+FIG. 2.   Potential energy curves of the N2 molecule calculated with exFCI and basis-set corrected exFCI using the aug-cc-pVDZ (top) and
+aug-cc-pVTZ (bottom) basis sets. The estimated exact energies are based on a ﬁt of experimental data and obtained from Ref.87.
+
+
+accurate than the estimated FCI atomization energy and very                          Eq. (32)     ] andµCASSCF(r) is the local range-separation function
+close to chemical accuracy.                                                          calculated with the CASSCF wave function, and similarly the
+   The overestimation of the basis-set-corrected atomization                         system-averaged CIPSI on-top pair density and extrapolated
+energy observed for N2 in large basis sets reveals an unbalanced                     on-top pair density                  ∫
+treatment between the molecule and the atom in favor of the
+molecular  system.   Since  the  integral  over r  of  the  on-top                                        ⟨n2,CIPSI⟩ =        dr n2,CIPSI(r),                  (37a)
+pair density n2(r) is proportional to the short-range correlation                                                         ∫
+energy in the large-µ limit48,60     [see Eq. (24)     ], the accuracy of                                 ⟨˚n2,CIPSI⟩ =       dr ˚n2,CIPSI(r),                  (37b)
+a given approximation of the exact on-top pair density will
+have a direct inﬂuence on the accuracy of the related basis-                         where ˚n2,CISPI(r) = ˚n2(n2,CIPSI(r),µCIPSI(r)) andµCIPSI(r) is the
+set correction energy  ¯EB. To quantify the quality of diﬀerent                      local range-separation function calculated with the CIPSI wave
+ﬂavors of on-top pair densities for a given system and a given                       function. We also deﬁne the system-averaged range-separation
+basis setB, we deﬁne the system-averaged CASSCF on-top                               parameters
+pair density and extrapolated on-top pair density                                                                ∫
+                                    ∫                                                       ⟨µCASSCF⟩ =  1           dr nCASSCF(r) µCASSCF(r),         (38a)
+                  ⟨n2,CASSCF⟩ =         dr n2,CASSCF(r),               (36a)                                 N   ∫
+                                    ∫                                                          ⟨µCIPSI⟩ =  1         dr nCIPSI(r) µCIPSI(r),                (38b)
+                  ⟨˚n2,CASSCF⟩ =        dr ˚n2,CASSCF(r),              (36b)                                 N
+                                                                                     where nCASSCF(r) and nCIPSI(r) are the CASSCF and CIPSI
+where   ˚n2,CASSCF(r)    =     ˚n2(n2,CASSCF(r),µCASSCF(r))   [see                   densities,  respectively.   All the CIPSI quantities have been
+                                                                                                                                                                11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                        (a)  aug-cc-pVDZ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                        (b)  aug-cc-pVTZ
+
+FIG. 3.   Potential energy curves of the O2 molecule calculated with exFCI and basis-set corrected exFCI using the aug-cc-pVDZ (top) and
+aug-cc-pVTZ (bottom) basis sets. The estimated exact energies are based on a ﬁt of experimental data and obtained from Ref.87.
+
+
+calculated with the largest variational wave function computed                      tice that they are substantially lower than their non-extrapolated
+in the CIPSI calculation with a given basis, which contains                         counterparts,⟨n2,CASSCF⟩ and⟨n2,CIPSI⟩.  Nevertheless, the be-
+here at least 107 Slater determinants.  In particular, µCIPSI(r)                    haviors  of⟨˚n2,CASSCF⟩  and⟨˚n2,CIPSI⟩  are  qualitatively  diﬀer-
+has been calculated from Eqs. (16)     –(19)      with the opposite-spin            ent:⟨˚n2,CASSCF⟩ clearly increases when enlarging the basis set
+two-body density matrix Γrspq of the largest variational CIPSI                      whereas⟨˚n2,CIPSI⟩ remains almost constant.  More precisely,
+wave function for a given basis. All quantities in Eqs. (36a)       –               in the case of N2, the value of⟨˚n2,CASSCF⟩ increases by about
+(38a)        were computed excluding all contributions from the 1s                  30% from the aug-cc-pVDZ to the aug-cc-pVQZ basis sets,
+orbitals, i.e., they are “valence-only” quantities.                                 whereas the value of⟨˚n2,CIPSI⟩ only ﬂuctuates within 5% for the
+   We report in TableIIthese quantities for          N2 and N for var-              same basis sets. The behavior of⟨˚n2,CASSCF⟩ can be understood
+ious basis sets. One notices that the system-averaged on-top                        by noticing that i) the value ofµCASSCF(r) globally increases
+pair density at the CIPSI level⟨n2,CIPSI⟩ is systematically lower                   when enlarging the basis set (as evidenced by⟨µCASSCF⟩), and
+than its CASSCF analogue⟨n2,CASSCF⟩, which is expected since                        ii) limµ→∞ ˚n2(n2,µ) = n2 [see Eq. (32)     ]. Therefore, in the CBS
+short-range correlation, i.e., digging the correlation hole in                      limit,µCASSCF(r)→∞ and one obtains
+a given basis set at near FCI level, is missing from the va-                                         limB→CBS⟨˚n2,CASSCF⟩ =   limB→CBS⟨n2,CASSCF⟩,            (39)
+lence CASSCF wave function. Also,⟨n2,CIPSI⟩ decreases in a
+monotonous way as the size of the basis set increases, leading                      i.e.,⟨˚n2,CASSCF⟩ must increase with the size of the basis setB
+to roughly a 20% decrease from the aug-cc-pVDZ to the aug-                          to eventually converge to limB→CBS⟨n2,CASSCF⟩, the latter limit
+cc-pVQZ basis sets, whereas⟨n2,CASSCF⟩ is almost constant                           being essentially reached with the present basis sets. On the
+with respect to the basis set. Regarding the extrapolated on-top                    other hand, the stability of⟨˚n2,CIPSI⟩ with respect to the basis
+pair densities,⟨˚n2,CASSCF⟩ and⟨˚n2,CIPSI⟩, it is interesting to no-                set is quite remarkable and must come from the fact that i)
+                                                                                                                                                                                 12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                (a)  aug-cc-pVDZ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                (b)  aug-cc-pVTZ
+
+FIG. 4.   Potential energy curves of the F2 molecule calculated with exFCI and basis-set corrected exFCI using the aug-cc-pVDZ (top) and
+aug-cc-pVTZ (bottom) basis sets. The estimated exact energies are based on a ﬁt of experimental data and obtained from Ref.87.
+
+
+TABLE II. System-averaged on-top pair density⟨n2⟩, extrapolated on-top pair density⟨˚n2⟩, and range-separation parameter⟨µ⟩ (all in atomic
+units) calculated with full-valence CASSCF and CIPSI wave functions (see text for details) for N2 and N in the aug-cc-pVXZ basis sets (X = D,
+T, and Q). All quantities were computed within the frozen-core approximation, i.e., excluding all contributions from the 1s orbitals.
+System                 Basis set    ⟨n2,CASSCF⟩   ⟨˚n2,CASSCF⟩   ⟨n2,CIPSI⟩   ⟨˚n2,CIPSI⟩   ⟨µCASSCF⟩   ⟨µCIPSI⟩
+N2                     aug-cc-pVDZ               1.17542                 0.65966               1.02792              0.58228                0.946                  0.962
+                    aug-cc-pVTZ               1.18324                 0.77012               0.92276              0.61074                1.328                  1.364
+                    aug-cc-pVQZ               1.18484                 0.84012               0.83866              0.59982                1.706                  1.746
+N                      aug-cc-pVDZ               0.34464                 0.19622               0.25484              0.14686                0.910                  0.922
+                    aug-cc-pVTZ               0.34604                 0.22630               0.22344              0.14828                1.263                  1.299
+                    aug-cc-pVQZ               0.34614                 0.24666               0.21224              0.15164                1.601                  1.653
+
+
+⟨n2,CIPSI⟩ is a good approximation to the corresponding FCI                                      For the present work, it is important to keep in mind that
+value within the considered basis sets, and ii) the extrapolation                            ⟨˚n2,CASSCF⟩ directly determines the basis-set correction in the
+formula in Eq. (32)      together with the choice ofµCIPSI(r) are                            large-µ limit.  More precisely, the correlation energy contri-
+quantitatively correct.  Therefore,  we expect the calculated                                bution  associated  with  the  basis-set  correction  is  (in  abso-
+values of⟨˚n2,CIPSI⟩ to be nearly converged with respect to the                              lute value) an increasing function of⟨˚n2,CASSCF⟩.  Therefore,
+basis set, and we will take the value of⟨˚n2,CIPSI⟩ in the aug-cc-                           the error on⟨˚n2,CASSCF⟩ with respect to the estimated exact
+pVQZ basis set as an estimate of the exact system-averaged                                   system-averaged on-top pair density provides an indication
+on-top pair density.                                                                         of the error made by the basis-set correction for a given sys-
+                                                                                                                                                           13
+
+tem and basis set. With the aug-cc-pVQZ basis set, we have                           The development of new S z-independent and size-consistent
+⟨˚n2,CASSCF⟩−⟨˚n2,CIPSI⟩  =  0.240 for the N2  molecule, while                    functionals has lead us to investigate the role of two related
+2(⟨˚n2,CASSCF⟩−⟨˚n2,CIPSI⟩) = 0.190 for two isolated N atoms.                     quantities:  the spin polarization and the on-top pair density.
+We can then conclude that the overestimation of the system-                       One important result of the present study is that by using func-
+averaged on-top pair density, and therefore of the basis-set                      tionals explicitly depending on the on-top pair density, one can
+correction, is more important for the N2 molecule at equilib-                     eschew its spin-polarization dependence without loss of accu-
+rium distance than for the isolated N atoms.  This probably                       racy. This avoids the commonly used eﬀective spin polarization
+explains the observed overestimation of the atomization en-                       originally proposed in Ref. 64 which has the disadvantage of
+ergy.  To conﬁrm this statement, we computed the basis-set                        possibly becoming complex-valued in the multideterminant
+correction for both the N2 molecule at equilibrium distance                       case. From a more fundamental aspect, this conﬁrms that, in
+and the isolated atoms usingµCIPSI(r) and ˚n2,CIPSI(r) with the                   a DFT framework, the spin polarization mimics the role of
+aug-cc-pVTZ and aug-cc-pVQZ basis sets. We obtained the                           the on-top pair density.  Consequently, we believe that one
+following values for the atomization energies:  362.12 mH                         could potentially develop new families of density-functional
+with aug-cc-pVTZ and 362.15 mH with aug-cc-pVQZ, which                            approximations where the spin polarization is abandoned and
+are indeed more accurate values than those obtained using                         replaced by the on-top pair density.
+µCASSCF(r) and ˚n2,CASSCF(r).                                                        Regarding the results of the present approach, the basis-set
+   Finally, regarding now the performance of the basis-set cor-                   correction systematically improves the near-FCI calculations
+rection along the whole potential energy curves reported in                       in a given basis set. More quantitatively, it is shown that with
+Figs.2,3, and4, it is interesting to notice that it fails to provide              only triple-ζ quality basis sets chemically accurate atomization
+a noticeable improvement far from the equilibrium geome-                          energies are obtained for all systems whereas the uncorrected
+try. Acknowledging that the weak-correlation eﬀects in these                      near-FCI results are far from this accuracy within the same
+regions are dominated by dispersion interactions which are                        basis set.
+long-range eﬀects, the failure of the present approximations                         Also, it is shown that the basis-set correction gives substan-
+for the complementary functional can be understood easily. In-                    tial diﬀerential contribution to potential energy curves close to
+deed, the whole scheme designed here is based on the physics                      the equilibrium geometries, but at long internuclear distances
+of correlation near the electron-electron coalescence point: the                  it cannot recover the dispersion interaction energy missing
+local range-separation functionµ(r) is based on the value of                      because of the basis-set incompleteness. This behavior is ac-
+the eﬀective electron-electron interaction at coalescence and                     tually expected as dispersion interactions are of long-range
+the ECMD functionals are suited for short-range correlation ef-                   nature and the present approach is designed to recover only
+fects. Therefore, the failure of the present basis-set correction                 short-range correlation eﬀects.
+to describe dispersion interactions is theoretically expected.
+We hope to report further on this in the near future.
+                                                                                  Appendix A: Size consistency of the basis-set correction
+
+IV.    CONCLUSION                                                                 1.    Sufﬁcient condition for size consistency
+
+   In  the  present  paper  we  have  extended  the  recently  pro-                  The basis-set correction is expressed as an integral in real
+posed DFT-based basis-set correction to strongly correlated                       space
+systems. We have applied the method to the H10, N2, O2, and
+F2 molecules up to the dissociation limit at near-FCI level in                       ¯EB[n,ζ, n2,µ] =
+increasingly large basis sets, and investigated how the basis-set                             ∫
+correction aﬀects the convergence toward the CBS limit of the                                     dr n(r)¯εsr,PBEc,md   (n(r),ζ(r), s(r), n2(r),µ(r)),    (A1)
+potential energy curves of these molecular systems.
+   The density-based basis-set correction relies on three as-                    where  all  the  local  quantities  n(r),ζ(r), s(r), n2(r),µ(r)  are
+pects: i) the deﬁnition of an eﬀective non-divergent electron-                    obtained from the same wave function Ψ. In the limit of two
+electron interaction obtained from the expectation value over                     non-overlapping  and  non-interacting  dissociated  fragments
+a wave function ΨB of the Coulomb electron-electron inter-                       A + B, this integral can be rewritten as the sum of the integral
+action projected into an incomplete basis setB; ii) the ﬁt of                     over the region ΩA and the integral over the region ΩB
+this eﬀective interaction with the long-range interaction used
+in RSDFT; and iii) the use of a short-range, complementary                           ¯EB
+functional borrowed from RSDFT. In the present paper, we                               A+B[n,ζ, n2,µ] =∫
+investigated i) and iii) in the context of strong correlation and                                           c,md   (n(r),ζ(r), s(r), n2(r),µ(r))
+focused on potential energy curves and atomization energies.                                ∫ΩA dr n(r)¯εsr,PBE
+More precisely, we proposed a new scheme to design function-                              +
+als fulﬁlling spin-multiplet degeneracy and size consistency.                                 ΩB dr n(r)¯εsr,PBEc,md   (n(r),ζ(r), s(r), n2(r),µ(r)).    (A2)
+To fulﬁll such requirements we proposed to use CASSCF wave
+functions leading to size-consistent energies, and we developed                  Therefore,  a suﬃcient condition to obtain size consistency
+functionals using only S z-independent density-like quantities.                   is that all the local quantities n(r),ζ(r), s(r), n2(r),µ(r) are
+                                                                                                                                                                14
+
+intensive, i.e., they locally coincide in the supersystem A + B                     see that the on-top pair density of the supersystem A + B is
+and in each isolated fragment X = A or B.  Hence, we must                           additively separable
+have, for r∈ ΩX,
+                                                                                                         n2,A+B(r) = n2,A(r) + n2,B(r),                  (A6)
+                            nA+B(r) = nX(r),                          (A3a)
+                            ζA+B(r) =ζX(r),                          (A3b)          where n2,X(r) is the on-top pair density of the fragment X
+                            sA+B(r) = sX(r),                           (A3c)                                   ∑
+                          n2,A+B(r) = n2,X(r),                        (A3d)                      n2,X(r) =            φp(r)φq(r)Γrspqφr(r)φs(r),        (A7)
+                                                                                                             pqrs∈BX
+                            µA+B(r) =µX(r),                          (A3e)
+where the left-hand-side quantities are for the supersystem                         in which the elements Γrspq  with orbital indices restricted to
+and the right-hand-side quantities for an isolated fragment.                        the  fragment  X  are  Γrspq   =   2⟨ΨA+B|ˆa†r↓ ˆa†s↑ ˆaq↑ ˆap↓|ΨA+B⟩   =
+Such conditions can be diﬃcult to fulﬁll in the presence of                         2⟨ΨX|ˆa†r↓ ˆa†s↑ ˆaq↑ ˆap↓|ΨX⟩, owing to the multiplicative structure
+degeneracies since the system X can be in a diﬀerent mixed                          of the wave function [see Eq. (A4)      ]. This shows that the on-top
+state (i.e.,  ensemble) in the supersystem  A + B and in the                        pair density is a local intensive quantity.
+isolated fragment.92 Here, we will consider the simple case                            The local range-separation function is deﬁned as, for n2(r) ,
+where the wave function of the supersystem is multiplicatively                      0,
+separable, i.e.,                                                                                                         √
+                                                                                                               µ(r) =       π f (r, r)
+                        |ΨA+B⟩ =|ΨA⟩⊗|ΨB⟩,                      (A4)                                                      2    n2(r) ,                          (A8)
+
+where⊗ is the antisymmetric tensor product. In this case, it is                     where
+easy to shown that Eqs. (A3a)-(A3c) are valid, as well known,                                             ∑
+and it remains to show that Eqs. (A3d) and (A3e) are also                                   f (r, r) =           φp(r)φq(r)VrspqΓtursφt(r)φu(r).         (A9)
+valid. Before showing this, we note that even though we do not                                          pqrstu∈B
+explicitly consider the case of degeneracies, the lack of size
+consistency which could arise from spin-multiplet degenera-                         Again,  f (r, r) is invariant to orbital rotations and can be ex-
+cies can be avoided by the same strategy used for imposing                          pressed in terms of orbitals localized on the fragments A and
+the energy independence on S z, i.e., by using the eﬀective spin                    B. In the limit of inﬁnitely separated fragments, the Coulomb
+polarization ˜ζ(n(r), n2(r)) or a zero spin polarizationζ(r) = 0.                   interaction vanishes between A and B and therefore any two-
+Moreover, for the systems treated in this work, the lack of                         electron integral Vrspq involving orbitals on both A and B van-
+size consistency which could arise from spatial degeneracies                        ishes. We thus see that the quantity  f (r, r) of the supersystem
+(coming from atomic p states) can also be avoided by selecting                      A + B is additively separable
+the same state in the supersystem and in the isolated fragment.
+For example, for the F2 molecule, the CASSCF wave func-                                                 fA+B(r, r) =  fA(r, r) + fB(r, r),               (A10)
+tion dissociates into the atomic conﬁguration p2xp2yp1z for each
+fragment, and we thus choose the same conﬁguration for the                          with
+calculation of the isolated atom. The same argument applies                                               ∑
+to the N2 and O2 molecules. For other systems, it may not be                              fX(r, r) =              φp(r)φq(r)VrspqΓtursφt(r)φu(r).       (A11)
+always possible to do so.                                                                              pqrstu∈BX
+
+                                                                                    So,  f (r, r) is a local intensive quantity. As a consequence, the
+2.    Intensivity of the on-top pair density and the local                          local range-separation function of the supersystem A + B is
+range-separation function                                                                                            √
+                                                                                                      µA+B(r) =        π  fA(r, r) + fB(r, r)
+   The on-top pair density can be written in an orthonormal                                                          2    n2,A(r) + n2,B(r) ,            (A12)
+spatial orbital basis set{φp(r)} as
+                          ∑                                                         which implies
+              n2(r) =           φp(r)φq(r)Γrspqφr(r)φs(r),          (A5)
+                         pqrs∈B                                                                          µA+B(r) =µX(r)  if  r∈ ΩX,                 (A13)
+
+with Γrspq = 2⟨Ψ|ˆa†r↓ ˆa†s↑ ˆaq↑ ˆap↓|Ψ⟩. As the summations run over               where µX(r)  =   (√π/2) fX(r, r)/n2,X(r).    The  local  range-
+all orbitals in the basis setB, n2(r) is invariant to orbital rota-                 separation function is thus a local intensive quantity.
+tions and can thus be expressed in terms of localized orbitals.                        We can therefore conclude that, if the wave function of the
+For two non-overlapping fragments A + B, the basis set can                          supersystem A + B is multiplicative separable, all local quan-
+then be partitioned into orbitals localized on the fragment A                       tities used in the basis-set correction functional are intensive
+and orbitals localized on B, i.e.,B =BA∪BB. Therefore, we                           and therefore the basis-set correction is size consistent.
+                                                                                                                                                                               15
+
+
+Appendix B: Computational cost of the basis-set correction                                      In the case of a CASSCF wave function, Γpqrs  vanishes if one
+for a CASSCF wave function                                                                  index p, q, r, s does not belong to the set of inactive or active
+                                                                                            occupied orbitalsI∪A. Therefore, at a given grid point, the
+   The computational cost of the basis-set correction is deter-                             number of non-zero elements Γrs(r) is only at most (NI +NA)2,
+mined by the calculation of the on-top pair density n2(r) and                               which is usually much smaller than N2B. As a consequence, one
+the local range-separation functionµ(r) on the real-space grid.                             can also restrict the sum in the calculation of
+For a general multideterminant wave function, the computa-                                                                        ∑
+tional cost is of order O(NgridN4B) where Ngrid is the number of                                                   f (r, r) =            Vrs(r) Γrs(r).                  (B5)
+grid points and NB is the number of basis functions.51 For a                                                                    rs∈I∪A
+CASSCF wave function, a signiﬁcant reduction of the scaling                                 The overall computational cost is dominated by that of Vrs(r),
+of the computational cost can be achieved.                                                  which scales as O(Ngrid(NI + NA)2N2
+                                                                                                                                               B), which is much smaller
+                                                                                            than O(NgridN4B).
+1.    Computation of the on-top pair density                                                 1J. A. Pople,Rev. Mod. Phys.          71, 1267 (1999).
+
+                                                                                             2W. Kohn,Rev. Mod. Phys.       71, 1253 (1999).
+   For a CASSCF wave function Ψ, the occupied orbitals can                                   3W. Kohn and L. J. Sham,Phys. Rev.          140, A1133 (1965).
+be partitioned into a set of active orbitalsA and a set of inactive                          4C. Hattig, W. Klopper, A. Kohn,  and D. P. Tew,Chem. Rev.  112, 4 (2012).
+                                                                                             5J. Ángyán, J. Dobson, G. Jansen,  and T. Gould, London Dispersion Forces in
+(doubly occupied) orbitalsI. The CASSCF on-top pair density                                   Molecules, Solids and Nano-structures: An Introduction to Physical Models
+can then be written as                                                                        and Computational Methods, Theoretical and Computational Chemistry
+                                                                                              Series (Royal Society of Chemistry, 2020).
+                                                                                             6P. Gori-Giorgi, M. Seidl,  and A. Savin,Phys. Chem. Chem. Phys.      10, 3440
+               n2(r) = n2,A(r) + nA(r)nI(r) + nI(r)22  ,          (B1)                        (2008).
+                                                                                             7L. Gagliardi, D. G. Truhlar, G. Li Manni, R. K. Carlson, C. E. Hoyer, and J.
+where                                                                                         Lucas Bao,Acc. Chem. Res.       50, 66 (2017).
+                                                                                             8E. A. Hylleraas,Z. Phys.               54, 347 (1929).
+                    ∑                                                                        9W. Kutzelnigg,Theor. Chim. Acta               68, 445 (1985).
+     n2,A(r) =             φp(r)φq(r)Γrspqφr(r)φs(r),                  (B2a)                10W. Kutzelnigg and W. Klopper,J. Chem. Phys.  94, 1985 (1991).
+                   pqrs∈A                                                                   11J. Noga and W. Kutzelnigg,J. Chem. Phys.               101, 7738 (1994).
+                   ∑                                                                        12T. Helgaker, W. Klopper, H. Koch,  and J. Noga,J. Chem. Phys.   106, 9639
+      nA(r) =            φp(r)φq(r)⟨Ψ|ˆa†p↑ ˆaq↑ + ˆa†p↓ ˆaq↓|Ψ⟩,      (B2b)                  (1997).
+                   pq∈A                                                                     13A. Halkier, T. Helgaker, P. Jørgensen, W. Klopper, H. Koch, J. Olsen,  and
+                     ∑                                                                        A. K. Wilson,Chem. Phys. Lett.         286, 243 (1998).
+       nI(r) = 2          φp(r)2                                                 (B2c)      14A. Irmler, F. Hummel,  and A. Grüneis,Phys. Rev. Lett.             123, 156401 (2019).
+                     p∈I                                                                    15A. Irmler and A. Gruneis,J. Chem. Phys.             151, 104107 (2019).
+                                                                                            16S. Ten-no,Theor. Chem. Acc.          131, 1070 (2012).
+are the purely active part of the on-top pair density, the ac-                              17S. Ten-no and J. Noga,WIREs Comput. Mol. Sci.   2, 114 (2012).
+tive part of the density, and the inactive part of the density,                             18L. Kong, F. A. Bischo,  and E. F. Valeev,Chem. Rev.  112, 75 (2012).
+respectively. The leading computational cost is the evaluation                              19A. Grüneis, S. Hirata, Y.-Y. Ohnishi,  and S. Ten-no,J. Chem. Phys.          146,
+of n2,A(r) on the grid which, according to Eq. (B2a)        , scales as                       080901 (2017).
+                                                                                            20Q. Ma and H.-J. Werner,WIREs Comput. Mol. Sci.  8, e1371 (2018).
+O(NgridN4A) where NA is the number of active orbitals which                                 21D. P. Tew, W. Klopper, C. Neiss,  and C. Hattig,Phys. Chem. Chem. Phys.
+is much smaller than the number of basis functions NB.                                        9, 1921 (2007).
+                                                                                            22G.  M.  Barca  and  P.-F.  Loos,J.  Chem.  Phys.          147,  024103  (2017),
+                                                                                              https://doi.org/10.1063/1.4991733.
+                                                                                            23S. Ten-no,Chem. Phys. Lett.          447, 175  (2007).
+2.    Computation of the local range-separation function                                    24T. Shiozaki and H.-J. Werner,J. Chem. Phys.  133, 141103 (2010).
+
+                                                                                            25T. Shiozaki, G. Knizia,   and H.-J. Werner,J. Chem. Phys.  134, 034113
+   In addition to the on-top pair density, the computation of                                 (2011).
+µ(r) needs the computation of  f (r, r) [see Eq. (A9)      ] at each                        26O. Demel, S. Kedžuch, M. Švaˇna, S. Ten-no, J. Pittner,  and J. Noga,Phys.
+grid point. It can be factorized as                                                           Chem. Chem. Phys. 14, 4753 (2012).
+                                                                                            27Y. Guo, K. Sivalingam, E. F. Valeev,   and F. Neese,J. Chem. Phys.           147,
+                                      ∑                                                       064110 (2017).
+                        f (r, r) =         Vrs(r) Γrs(r),                    (B3)           28M. Torheyden and E. F. Valeev,J. Chem. Phys.  131, 171103 (2009).
+                                     rs∈B                                                   29L. Kong and E. F. Valeev,J. Chem. Phys.  135, 214105 (2011).
+                                                                                            30R. Haunschild, S. Mao, D. Mukherjee,  and W. Klopper,Chem. Phys. Lett.
+where                                                                                         531, 247  (2012).
+                                                                                            31G. H. Booth, D. Cleland, A. Alavi,   and D. P. Tew,J. Chem. Phys.  137,
+                                    ∑                                                         164112 (2012).
+                       Vrs(r) =           Vrspqφp(r)φq(r),                 (B4a)            32J. Toulouse, F. Colonna,  and A. Savin,Phys. Rev. A      70, 062505 (2004).
+                                    pq∈B                                                    33P. Gori-Giorgi and A. Savin,Phys. Rev. A      73, 032506 (2006).
+                                    ∑                                                       34O. Franck, B. Mussard, E. Luppi,   and J. Toulouse,J. Chem. Phys.             142,
+                       Γrs(r) =           Γpqrsφp(r)φq(r).                 (B4b)              074107 (2015).
+                                    pq∈B                                                    35J. G. Ángyán, I. C. Gerber, A. Savin,  and J. Toulouse,Phys. Rev. A             72,
+                                                                                              012510 (2005).
+For a general multideterminant wave function, the computa-                                  36E. Goll, H.-J. Werner,   and H. Stoll,Phys. Chem. Chem. Phys.         7, 3917
+tional cost of  f (r, r) thus scales as O(NgridN4B).                                          (2005).
+                                                                                                                                                                                                16
+
+
+37J. Toulouse, I. C. Gerber, G. Jansen, A. Savin,  and J. G. Ángyán,Phys. Rev.                       67B. Miehlich, H. Stoll,  and A. Savin,Mol. Phys.      91, 527 (1997).
+  Lett. 102, 096404 (2009).                                                                          68R. Takeda, S. Yamanaka,  and K. Yamaguchi,Chem. Phys. Lett.                366, 321
+38B. G. Janesko, T. M. Henderson,  and G. E. Scuseria,J. Chem. Phys.              130,                  (2002).
+  081105 (2009).                                                                                     69R. Takeda, S. Yamanaka,  and K. Yamaguchi,Int. J. Quantum Chem.                96,
+39J. Toulouse, W. Zhu, A. Savin, G. Jansen,  and J. G. Ángyán,J. Chem. Phys.                            463 (2004).
+  135, 084119 (2011).                                                                                70J. Gräfenstein and D. Cremer,Mol. Phys.  103, 279 (2005).
+40B. Mussard, P. Reinhardt, J. G. Ángyán,  and J. Toulouse,J. Chem. Phys.                            71T. Tsuchimochi, G. E. Scuseria,  and A. Savin,J. Chem. Phys.      132, 024111
+  142, 154123 (2015), erratum: J. Chem. Phys.          142, 219901 (2015).                              (2010).
+41C. Kalai and J. Toulouse,J. Chem. Phys.             148, 164105 (2018).                            72G. Li Manni, R. K. Carlson, S. Luo, D. Ma, J. Olsen, D. G. Truhlar, and L.
+42C. Kalai, B. Mussard,  and J. Toulouse,J. Chem. Phys.             151, 074102 (2019).                 Gagliardi,J. Chem. Theory Comput.               10, 3669 (2014).
+43T. Leininger, H. Stoll, H.-J. Werner,  and A. Savin,Chem. Phys. Lett.      275,                    73A. J. Garza, I. W. Bulik, T. M. Henderson,  and G. E. Scuseria,J. Chem.
+  151 (1997).                                                                                           Phys. 142, 044109 (2015).
+44E. Fromager, J. Toulouse,  and H. J. A. Jensen,J. Chem. Phys.           126, 074111                74A. J. Garza, I. W. Bulik, T. M. Henderson,  and G. E. Scuseria,Phys. Chem.
+  (2007).                                                                                               Chem. Phys. 17, 22412 (2015).
+45E. Fromager, R. Cimiraglia,  and H. J. A. Jensen,Phys. Rev. A           81, 024502                 75R. K. Carlson, D. G. Truhlar,  and L. Gagliardi,J. Chem. Theory Comput.
+  (2010).                                                                                               11, 4077 (2015).
+46E. D. Hedegård, S. Knecht, J. S. Kielberg, H. J. A. Jensen,  and M. Reiher,J.                      76J. P. Perdew, A. Savin,  and K. Burke,Phys. Rev. A   51, 4531 (1995).
+  Chem. Phys. 142, 224108 (2015).                                                                    77V. N. Staroverov and E. R. Davidson,Chem. Phys. Lett.           340, 142 (2001).
+47E. D. Hedegård, J. Toulouse,   and H. J. A. Jensen,J. Chem. Phys.            148,                  78R. A. Kendall, T. H. Dunning,  and R. J. Harrison,J. Chem. Phys.              96, 6796
+  214103 (2018).                                                                                        (1992).
+48A. Ferté, E. Giner,  and J. Toulouse,J. Chem. Phys.             150, 084103 (2019).                79A. A. Holmes, C. J. Umrigar,  and S. Sharma,J. Chem. Phys.             147, 164111
+49B. Mussard and J. Toulouse,Mol. Phys.             115, 161 (2017).                                    (2017).
+50E. Giner, B. Pradines, A. Ferté, R. Assaraf, A. Savin,  and J. Toulouse,J.                         80A. Scemama, Y. Garniron, M. Caﬀarel,  and P. F. Loos,J. Chem. Theory
+  Chem. Phys. 149, 194301 (2018).                                                                       Comput. 14, 1395 (2018).
+51P.-F. Loos, B. Pradines, A. Scemama, J. Toulouse,  and E. Giner,J. Phys.                           81P.-F.  Loos,  A.  Scemama,  A.  Blondel,  Y.  Garniron,  M.  Caﬀarel,    and
+  Chem. Lett. 10, 2931 (2019).                                                                          D. Jacquemin,J. Chem. Theory Comput.                 14, 4360 (2018).
+52E. Giner, A. Scemama, J. Toulouse,  and P.-F. Loos,J. Chem. Phys.         151,                     82A. Scemama, A. Benali, D. Jacquemin, M. Caﬀarel,  and P.-F. Loos,J. Chem.
+  144118 (2019).                                                                                        Phys. 149, 034108 (2018).
+53P.-F. Loos, B. Pradines, A. Scemama, E. Giner,  and J. Toulouse, J. Chem.                          83P. F. Loos, M. Boggio-Pasqua, A. Scemama, M. Caﬀarel,  and D. Jacquemin,
+  Theory Comput. , in press (2020).                                                                     J. Chem. Theory Comput. 15, in press (2019).
+54M. Levy,Proc. Natl. Acad. Sci. U.S.A.  76, 6062 (1979).                                            84Y. Garniron, K. Gasperich, T. Applencourt, A. Benali, A. Ferté, J. Paquier,
+55E. H. Lieb,Int. J. Quantum Chem.        24, 24 (1983).                                                B. Pradines, R. Assaraf, P. Reinhardt, J. Toulouse, P. Barbaresco, N. Renon,
+56T. Kato,Comm. Pure Appl. Math.         10, 151 (1957).                                                G. David, J. P. Malrieu, M. Véril, M. Caﬀarel, P. F. Loos, E. Giner,  and
+57J. Toulouse, P. Gori-Giorgi,   and A. Savin,Theor. Chem. Acc.       114, 305                          A. Scemama,J. Chem. Theory Comput.               15, 3591 (2019).
+  (2005).                                                                                            85L. Bytautas, T. Nagata, M. S. Gordon,  and K. Ruedenberg,J. Chem. Phys.
+58J. Toulouse,Ph.D. thesis, Université Pierre et Marie Curie (Paris 6) (2005),                          127, 164317 (2007).
+  tel.archives-ouvertes.fr/tel-00550772.                                                             86T. H. Dunning,J. Chem. Phys.              90, 1007 (1989).
+59J. P. Perdew, K. Burke,  and M. Ernzerhof,Phys. Rev. Lett.                77, 3865 (1996).         87G. C. Lie and E. Clementi,J. Chem. Phys.               60, 1275 (1974).
+60S. Paziani, S. Moroni, P. Gori-Giorgi,  and G. B. Bachelet,Phys. Rev. B              73,           88M. Motta, D. M. Ceperley, G. K.-L. Chan, J. A. Gomez, E. Gull, S. Guo, C. A.
+  155111 (2006).                                                                                        Jiménez-Hoyos, T. N. Lan, J. Li, F. Ma, A. J. Millis, N. V. Prokof’ev, U. Ray,
+61R. K. Carlson, D. G. Truhlar,  and L. Gagliardi,J. Phys. Chem. A               121, 5540              G. E. Scuseria, S. Sorella, E. M. Stoudenmire, Q. Sun, I. S. Tupitsyn, S. R.
+  (2017).                                                                                               White, D. Zgid,  and S. Zhang (Simons Collaboration on the Many-Electron
+62O. V. Gritsenko, R. van Meer,   and K. Pernal,Phys. Rev. A           98, 062510                       Problem),Phys. Rev. X               7, 031059 (2017).
+  (2018).                                                                                            89M. S. Gordon and M. W. Schmidt, “Advances in electronic structure theory:
+63F. Moscardó and E. San-Fabián,Phys. Rev. A         44, 1549 (1991).                                   GAMESS a decade later,” in Theory and Applications of Computational
+64A. D. Becke, A. Savin,  and H. Stoll,Theoret. Chim. Acta        91, 147 (1995).                       Chemistry: the ﬁrst forty years, edited by C. E. Dykstra, G. Frenking, K. S.
+65A. Savin, in Recent Advances in Density Functional Theory, edited by D. P.                            Kim,  and G. E. Scuseria (Elsevier, Amsterdam, 2005) pp. 1167–1189.
+  Chong (World Scientiﬁc, 1995) pp. 129–153.                                                         90L. Bytautas and K. Ruedenberg,J. Chem. Phys.    122, 154110 (2005).
+66A. Savin, in Recent Developments of Modern Density Functional Theory,                              91P. C. Hiberty S. Humbel, C. P. Byrman and J. H. van Lenthe,J. Chem. Phys.
+  edited by J. M. Seminario (Elsevier, Amsterdam, 1996) pp. 327–357.                                    101, 5969 (1994).
+                                                                                                     92A. Savin,Chem. Phys.      356, 91 (2009).
