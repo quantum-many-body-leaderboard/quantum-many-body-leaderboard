@@ -811,6 +811,16 @@ printed the number. [RULES.md §8](RULES.md#8-provenance) says which paper is pr
 datasets and private communications are cited; [§8.1](RULES.md#81-venue-type) gives the venue
 types.
 
+`venue_type` (optional) says what kind of venue printed the number where it is not a journal
+or an arXiv preprint. It has two values:
+- `proceedings`: conference or workshop proceedings, refereed or not.
+- `book_chapter`: a chapter of an edited book or lecture-notes volume (Lect. Notes Phys. 645).
+
+The validator rejects any other value. A row without it was printed in a journal or on arXiv.
+The site badges a row that is not peer reviewed "proceedings" or "book chapter" by this field,
+and "preprint" where the field is absent. QMBL's own runs and checks (`computed_by`, or a
+reference to `checks/`) get no venue badge. A pass row sets the field (SWEEP.md).
+
 [`scripts/validate.mjs`](scripts/validate.mjs) runs in every build. It checks:
 - `dof` and `einf` against the instance definition;
 - the V-score against the row's own inputs;

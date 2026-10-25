@@ -30,7 +30,8 @@ const REF = {
   "cond-mat/0009149": { pr: true, ref: "Sorella, Generalized Lanczos algorithm for variational quantum Monte Carlo, Phys. Rev. B 64, 024512 (2001), doi:10.1103/PhysRevB.64.024512, arXiv:cond-mat/0009149" },
   // A chapter of workshop proceedings, whose front matter and preface state no refereeing: not
   // peer reviewed (RULES.md 8.1; ruled 2026-10-24).
-  "cond-mat/0006353": { pr: false, ref: "Becca, Capriotti & Sorella, Stability of d-wave superconductivity in the t-J model, in Open Problems in Strongly Correlated Electron Systems, Proceedings of the NATO Advanced Research Workshop (Bled, 2000), NATO Science Series II vol. 15, pp. 173-185 (Springer, 2001), doi:10.1007/978-94-010-0771-9_18, arXiv:cond-mat/0006353" },
+  // A NATO Advanced Research Workshop volume: proceedings (DATA.md `venue_type`, ruled 2026-10-25).
+  "cond-mat/0006353": { pr: false, venue: "proceedings", ref: "Becca, Capriotti & Sorella, Stability of d-wave superconductivity in the t-J model, in Open Problems in Strongly Correlated Electron Systems, Proceedings of the NATO Advanced Research Workshop (Bled, 2000), NATO Science Series II vol. 15, pp. 173-185 (Springer, 2001), doi:10.1007/978-94-010-0771-9_18, arXiv:cond-mat/0006353" },
   "cond-mat/0110460": { pr: true, ref: "Sorella, Martins, Becca, Gazza, Capriotti, Parola & Dagotto, Superconductivity in the two-dimensional t-J model, Phys. Rev. Lett. 88, 117002 (2002), doi:10.1103/PhysRevLett.88.117002, arXiv:cond-mat/0110460" },
   "cond-mat/0104067": { pr: true, ref: "Shih, Chen & Lee, Revisit phase separation of the two-dimensional t-J model by the power-Lanczos method, J. Phys. Chem. Solids 62, 1797 (2001), doi:10.1016/S0022-3697(01)00112-3, arXiv:cond-mat/0104067" },
   "cond-mat/0010072": { pr: true, ref: "Chiappa, Capponi & Poilblanc, Truncated Lanczos method: Application to hole-doped spin ladders, Phys. Rev. B 63, 115120 (2001), doi:10.1103/PhysRevB.63.115120, arXiv:cond-mat/0010072" },
@@ -289,7 +290,7 @@ for (const [key, a, line, printed, norm, method, bound, sampled, where, extra = 
     instance_id: id, eps: +(p.v / div).toPrecision(15), tol: +(0.5 * 10 ** -p.dec / div).toPrecision(3),
     sigma_per_site: p.sigma == null ? null : +(p.sigma / div).toPrecision(6),
     var_per_site: extra.var == null ? null : +(+extra.var / n_sites).toPrecision(12),
-    arxiv: a, peer_reviewed: REF[a].pr, origin: extra.quoted ? "quoted" : "own", bound_type: bound, method,
+    arxiv: a, peer_reviewed: REF[a].pr, ...(REF[a].venue ? { venue_type: REF[a].venue } : {}), origin: extra.quoted ? "quoted" : "own", bound_type: bound, method,
     ...(extra.bound_type_reason ? { bound_type_reason: extra.bound_type_reason } : {}),
     reference: extra.ref ?? (extra.quoted ? PRIVATE[a] : REF[a].ref),
     evidence: [`${where} (line ${at})`, extra.var != null && VAR_NOTE(extra.var), extra.note, extra.version ?? VERSION(a)].filter(Boolean).join("; "),

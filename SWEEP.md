@@ -145,6 +145,7 @@ A `sweep-rows` file is a JSON array with one object per row:
 | `compute`, `defect` | an optional `compute` block and defect flag |
 | `same_value_distinct_method` | optional, `true` on a second method of the same paper that printed the same value; without it that row counts as one the instance already carries |
 | `independent_exact` | optional, `true` on an `own` exact row whose source diagonalized the cluster itself and printed an exact energy the instance already carries ([RULES.md §6](RULES.md#6-best-values-and-ties)); without it that row counts as one the instance already carries |
+| `venue_type` | optional, `proceedings` or `book_chapter` where the number was printed in neither a journal nor an arXiv preprint ([DATA.md](DATA.md#provenance-and-defects)); copied to the row |
 | `precision_per_site` | optional: one unit in the last printed digit of an exact energy without an error bar, per site; stored as the row's `precision` |
 | `bound_type_reason` | optional: why the row has its `bound_type`, where the source says so (the isoTNS rows of arXiv:2112.08394); without it the loader writes the generic reason |
 | `scale`, `source_couplings` | optional: the source's Hamiltonian is the instance's times `scale` (couplings normalised, [RULES.md §2.1](RULES.md#21-instance-names)); `eps`, `sigma_per_site`, `var_per_site`, `precision_per_site` and `tol` are as printed, and the loader divides them by `scale` and keeps the factor and the source's couplings on the row as `normalised` |
