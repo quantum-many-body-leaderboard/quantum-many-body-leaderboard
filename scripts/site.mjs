@@ -16,7 +16,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
-import { perSiteDivisor, perSiteLabel, boundLabel, stochasticExact, publishedMethod, methodLabel, methodDetail, BEST_CLASSES } from "./units.mjs";
+import { perSiteDivisor, perSiteLabel, boundLabel, stochasticExact, publishedMethod, methodLabel, methodDetail, BEST_CLASSES, H_MODELS } from "./units.mjs";
 import { collect, classBest, shownBest, bestTagOf, lowestOf, noRecordKey, summarize, rowId, sameExactRows } from "./summary.mjs";
 import { THEMES, W } from "./chart.mjs";
 import { citeRef, codeRef, libraryRef, paperYear } from "./cite.mjs";
@@ -381,6 +381,12 @@ function hamiltonian(inst) {
       const d = inst.model === "HEG3D" ? 3 : 2;
       return { formula: `H = &minus;&frac12; ${sum("i")} &nabla;<sub>i</sub><sup>2</sup> + ${sum("i&lt;j")} v<sub>E</sub>(r<sub>i</sub> &minus; r<sub>j</sub>) + N&xi;/2`,
         note: `Homogeneous electron gas in ${d}D: N<sub>&uarr;</sub> = ${p.N_up}, N<sub>&darr;</sub> = ${p.N_dn} in a periodic ${esc(inst.lattice)} cell at r<sub>s</sub> = ${p.rs} bohr, ${p.twist && p.twist !== "Gamma" ? `twist ${esc(String(p.twist))}` : "&Gamma; point"}. v<sub>E</sub> is the Ewald-summed Coulomb interaction with a uniform neutralizing background, &xi; the Madelung term. Hartree atomic units; the energy per electron is E/N.` };
+    }
+    case "Hchain": case "Hsheet": {
+      // Track 3 (RULES.md 13.2): fixed protons, all Coulomb terms, the nuclear repulsion kept.
+      const where = inst.model === "Hchain" ? `${inst.n_sites} protons equally spaced on a line` : `${inst.n_sites} protons on a ${Math.sqrt(inst.n_sites)} &times; ${Math.sqrt(inst.n_sites)} square grid`;
+      return { formula: `H = &minus;&frac12; ${sum("i")} &nabla;<sub>i</sub><sup>2</sup> &minus; ${sum("i,I")} 1/|r<sub>i</sub> &minus; R<sub>I</sub>| + ${sum("i&lt;j")} 1/|r<sub>i</sub> &minus; r<sub>j</sub>| + ${sum("I&lt;J")} 1/|R<sub>I</sub> &minus; R<sub>J</sub>|`,
+        note: `Hydrogen ${inst.model === "Hchain" ? "chain" : "sheet"}: ${where}, spacing R = ${p.R} bohr, ${inst.boundary === "O" ? "open (a finite molecule)" : `periodic, ${p.twist && p.twist !== "Gamma" ? `twist ${esc(String(p.twist))}` : "&Gamma; point"}`}; N<sub>&uarr;</sub> = ${p.N_up}, N<sub>&darr;</sub> = ${p.N_dn}. ${p.basis === "none" ? "Basis-free: the continuum Born&ndash;Oppenheimer Hamiltonian with point protons." : `Projected onto the ${esc(p.basis)} basis set; full CI in it is this instance's exact energy.`} Hartree atomic units, nuclear repulsion included; the energy per atom is E/N.` };
     }
     case "tV":
       return { formula: `H = &minus;t ${sum(nn)} (c<sup>&dagger;</sup><sub>i</sub>c<sub>j</sub> + h.c.) + V ${sum(nn)} n<sub>i</sub>n<sub>j</sub>`,
@@ -850,6 +856,8 @@ const MODEL_WORDS = {
   Impurity: "anderson dmft bath",
   HEG3D: "jellium electron-gas heg continuum 3d",
   HEG2D: "jellium electron-gas heg continuum 2d",
+  Hchain: "hydrogen h-chain molecule quantum-chemistry 1d",
+  Hsheet: "hydrogen h-sheet molecule quantum-chemistry 2d",
 };
 const SHAPE_WORDS = { chain: "1d one-dimensional", square: "2d", rectangular: "2d rectangle", triangular: "2d triangle",
   kagome: "2d", shuriken: "2d", pyrochlore: "3d", honeycomb: "2d hexagonal", ladder: "ladder quasi-1d" };
@@ -908,6 +916,7 @@ function searchIndex(inst, name) {
   if (p.h != null) add(`h=${p.h} h/j=${p.h} γ=${p.h} gamma=${p.h}`);
   if (p.U != null) add(`u=${p.U} u/t=${p.U} ${p.U < 0 ? "attractive" : p.U > 0 ? "repulsive" : ""}`);
   if (p.V != null) add(`v=${p.V} v/t=${p.V}`);
+  if (H_MODELS.has(inst.model)) add(`h${n} r=${p.R} ${p.basis === "none" ? "basis-free continuum cbs" : `${p.basis} ${p.basis.toLowerCase().replace(/[^a-z0-9]/g, "")}`}`);
   if (inst.model === "tJ") {
     const holes = n - p.N_up - p.N_dn;
     add(`j=${+Number(p.J).toPrecision(6)} j/t=${+Number(p.J).toPrecision(6)} holes=${holes} ${holes}-hole doping=${Number((holes / n).toFixed(4))}`);
@@ -1242,8 +1251,8 @@ ${bestBox}
   ${variant ? `<p>${variant}</p>` : ""}
   ${relabel ? `<p>${relabel}</p>` : ""}
   <dl class="facts">
-    <div><dt>${/^HEG/.test(inst.model) ? "cell" : "lattice"}</dt><dd>${esc(inst.lattice)}</dd></div>
-    <div><dt>${/^HEG/.test(inst.model) ? "electrons" : "sites"}</dt><dd class="num">${inst.n_sites}</dd></div>
+    <div><dt>${/^HEG/.test(inst.model) ? "cell" : H_MODELS.has(inst.model) ? "geometry" : "lattice"}</dt><dd>${esc(inst.lattice)}</dd></div>
+    <div><dt>${/^HEG/.test(inst.model) ? "electrons" : H_MODELS.has(inst.model) ? "atoms" : "sites"}</dt><dd class="num">${inst.n_sites}</dd></div>
     <div><dt>boundary</dt><dd>${inst.boundary ? esc(BOUNDARY[inst.boundary] ?? "periodic") : "&mdash;"}</dd></div>
     ${params}
     <div><dt>energies</dt><dd class="num">${inst.rows.length}</dd></div>
@@ -1251,6 +1260,9 @@ ${bestBox}
   <p class="muted">${/^HEG/.test(inst.model)
     ? `Stored as a total energy in Hartree (<a href="${RULES}#12-track-2-the-homogeneous-electron-gas">rules &sect;12</a>); quoted here as
     <code>${perSiteLabel(inst)}</code>, the energy per electron`
+    : H_MODELS.has(inst.model)
+    ? `Stored as a total energy in Hartree, nuclear repulsion included (<a href="${RULES}#13-track-3-hydrogen-chains-and-sheets">rules &sect;13</a>); quoted here as
+    <code>${perSiteLabel(inst)}</code>, the energy per atom`
     : `Stored as a total energy; quoted here as
     <code>${perSiteLabel(inst)}</code>, which is what the papers report`}
     (<a href="${DATA}#units-and-conventions">how the conversion works</a>).</p>

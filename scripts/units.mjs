@@ -9,6 +9,9 @@
 export const SPIN_MODELS = new Set(["Heisenberg", "J1J2", "TFIsing", "Kitaev", "ShastrySutherland"]);
 // Track 2 (RULES.md 12): the homogeneous electron gas, stored as totals in Hartree; n_sites holds N.
 export const HEG_MODELS = new Set(["HEG2D", "HEG3D"]);
+// Track 3 (RULES.md 13): hydrogen chains and square sheets, stored as totals in Hartree with the
+// nuclear repulsion; n_sites holds the number of atoms N, and E/N is the energy per atom.
+export const H_MODELS = new Set(["Hchain", "Hsheet"]);
 
 // Is the reported energy a Monte-Carlo estimate, or a deterministic contraction?
 // Only a sampled energy has an error bar to report: DMRG at a stated bond dimension, exact
@@ -158,7 +161,7 @@ export const approximateEligible = r => r.bound_type === "approximate" && !r.def
 // limit -4/pi = -1.2732, as it must for PBC at criticality. scripts/validate.mjs asserts the
 // identity on every build.
 export function perSiteDivisor(inst) {
-  if (inst.model === "TFIsing" || HEG_MODELS.has(inst.model)) return inst.n_sites;
+  if (inst.model === "TFIsing" || HEG_MODELS.has(inst.model) || H_MODELS.has(inst.model)) return inst.n_sites;
   if (SPIN_MODELS.has(inst.model)) return 4 * inst.n_sites;
   // tJ (RULES.md 5, 2026-10-22): totals in units of t, papers quote per site.
   if (inst.model === "Hubbard" || inst.model === "tV" || inst.model === "tJ") return inst.n_sites;
@@ -167,7 +170,7 @@ export function perSiteDivisor(inst) {
 
 export function perSiteLabel(inst) {
   if (inst.model === "TFIsing") return "E/N (Pauli)";
-  if (HEG_MODELS.has(inst.model)) return "E/N (Ha)";
+  if (HEG_MODELS.has(inst.model) || H_MODELS.has(inst.model)) return "E/N (Ha)";
   if (SPIN_MODELS.has(inst.model)) return "E/N (S.S)";
   return perSiteDivisor(inst) == null ? "E (total)" : "E/site";
 }
@@ -175,7 +178,7 @@ export function perSiteLabel(inst) {
 // Degrees of freedom: spins for spin models, N_up + N_dn for fermions.
 // VarBench filenames carry Nf = N_up = N_dn.
 export function expectedDof(inst) {
-  if (SPIN_MODELS.has(inst.model) || HEG_MODELS.has(inst.model)) return inst.n_sites;
+  if (SPIN_MODELS.has(inst.model) || HEG_MODELS.has(inst.model) || H_MODELS.has(inst.model)) return inst.n_sites;
   // t-V is spinless, so Nf is already the total particle number.
   if (inst.model === "tV") return inst.params?.Nf ?? null;
   // tJ carries N_up and N_dn (the hole count fixes N_up + N_dn; RULES.md 2.1).

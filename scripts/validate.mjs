@@ -75,7 +75,13 @@ for (const m of fs.readdirSync("data")) {
           // combined error bar without violating anything. Only flag past 3 sigma.
           const gap = r.energy - o.energy;
           const sigma = o.sigma != null || refSigma != null ? Math.hypot(o.sigma ?? 0, refSigma ?? 0) : null;
-          const realViolation = sigma != null ? gap > 3 * sigma : rel > 1e-8;
+          // Where neither states an error bar, a row is below the exact energy only if the whole
+          // interval its printed digits allow lies below it (RULES.md 9.4): half a unit in the last
+          // stored digit of a value stored to at most 8 decimals (a printed, rounded number), and the
+          // exact row's own `precision` (one unit in its last printed digit, DATA.md).
+          const decimals = x => (String(x).split(".")[1] || "").length;
+          const printed = (decimals(o.energy) <= 8 ? 0.5 * 10 ** -decimals(o.energy) : 0) + (r.precision ?? 0) / 2;
+          const realViolation = sigma != null ? gap > 3 * sigma : rel > 1e-8 && gap > printed * (1 + 1e-9);
           // A row whose flag was lifted (a `defect` correction to null, RULES.md 10) has had this
           // relation checked, e.g. a printed interval that holds the exact energy (RULES.md 9.4):
           // it is counted with the tolerated ones and is not an issue. So is a row that carries
@@ -315,5 +321,5 @@ for (const f of fs.readdirSync(path.join("data", "TFIsing"))) {
 console.log(`rows=${rows}  dof_checked=${checkedD}  einf_checked=${checkedE}  vscore_checked=${checkedV}  tfising_exact_checked=${checkedT}`);
 console.log(`compute_blocks=${checkedC}  coverage_entries=${checkedCov}  spectrum_entries=${checkedS}`);
 console.log(`automatic below-exact flags (RULES.md 6.2; listed, not issues): ${belowExact.length}${belowExact.length ? "\n  " + belowExact.join("\n  ") : ""}`);
-console.log(`tolerated bound violations (within 3 sigma, or rel < 1e-8 where neither states one, or ruled: flagged below-exact, or a flag was lifted; ignored): ${rounding.length}`);
+console.log(`tolerated bound violations (within 3 sigma, or rel < 1e-8 or within the printed digits where neither states one, or ruled: flagged below-exact, or a flag was lifted; ignored): ${rounding.length}`);
 console.log(issues.length ? `\n${issues.length} ISSUES:\n` + issues.slice(0, 25).join("\n") : "\nall checks pass");

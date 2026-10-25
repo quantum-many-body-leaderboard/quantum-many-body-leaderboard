@@ -340,6 +340,81 @@ The family was opened on a branch and ported onto `main` on 2026-10-24.
 - **Journal versions** were not reached (the publishers returned 403 to this session); every row
   says it was read from the arXiv text. arXiv:2602.21206 was published under a different title.
 
+### Track 3: hydrogen chains and sheets
+
+Track 3 ([RULES.md §13](RULES.md#13-track-3-hydrogen-chains-and-sheets)) opened on 2026-10-25 (§1). Its
+passes sit in `passes/track3/`; `scripts/add_track3_rows.mjs` loads the rows file in every build (totals in Hartree,
+nuclear repulsion included; `dof` = N; no `einf` or V-score), with the corrections, notes, verifications and code
+links the generator has written on each row. The generators are in `scripts/track3/`; `sh scripts/track3/build.sh`, run from the repo root, rewrites the three pass files below byte for
+byte, in this order (every path relative to the repo root, intermediate outputs in `scripts/track3/.out/`, not
+committed):
+
+1. `motta2017.mjs`: Motta et al. 2017 Tables II-IV (`sources/1705.01608.txt`) and the data repository
+   (`sources/1705.01608-data-b99a183.tsv`).
+2. `hachmann.mjs`: Hachmann, Cardoen & Chan 2006 Table VI (`sources/cond-mat-0606115.txt`).
+3. `motta2020si.mjs`: Motta et al. 2020 SI Table III (`sources/1911.01618-anc-si.txt`); reads step 1 to drop duplicates.
+4. `g1904.mjs`: arXiv:1904.01131 Table II as FCI + difference; citation from `passes/track3/refs-hydrogen.json`.
+5. `readers.mjs`: the reader results of the citing papers (`passes/track3/read/result-*.json`), each value found again
+   on its line of `sources/<id>.txt`; reads steps 1-4 to resolve quoted values.
+6. `assemble.mjs`: merges steps 1-5, applies `passes/track3/verify-2026-10-24-hydrogen.json`, writes the rows and
+   held files.
+7. `codelinks.mjs`: code links into the rows and `passes/track3/code-links-2026-10-22-hydrogen.json`.
+
+`refs.mjs` (arXiv API and Crossref, network) wrote `passes/track3/refs-hydrogen.json` and is not part of the run.
+`common.mjs` holds the instance naming and the default paths.
+
+| file | what was read |
+|---|---|
+| `passes/track3/sweep-rows-2026-10-20-hydrogen.json` | hydrogen chains: Motta et al., PRX 7, 031059 (2017), Tables II-IV and its data repository (`sources/1705.01608-data-b99a183.tsv`); Motta et al., PRX 10, 031058 (2020), SI Table III (journal and arXiv versions read); Hachmann, Cardoen & Chan, JCP 125, 144101 (2006), Table VI (H50, STO-6G), the primary of quoted values; the papers citing both seeds that print finite-N energies, including arXiv:1904.01131 Table II filed as FCI + difference (difference = method − FCI, read from the text, 2026-10-21) |
+| `passes/track3/held-2026-10-20-hydrogen.json` | values read and not filed, each with its reason: periodic cells without a stated twist, sliced-basis and F12 energies, table-dataset disagreements, quoted values whose primary was not read; and the 32 rows the verify pass of 2026-10-24 removed as duplicates, each with the row that stands |
+
+`passes/track3/code-links-2026-10-22-hydrogen.json` holds the code-link reading of every paper that is the own
+source of rows (rule of 2026-10-22, [DATA.md](DATA.md)): linked, ambiguous or not found, with the statement
+quoted. The pass's rows carry `artifacts` where the entry is linked, in the shape `add_code_links.mjs` writes
+(`code`, `read_from` with the quote, location, date and pass).
+
+`passes/track3/verify-2026-10-24-hydrogen.json` applies the verify pass of 2026-10-23/24 (44 groups, every row read
+again, a skeptic on every correction and defect; rulings of 2026-10-24). The generator's assemble step reads it,
+keyed by instance + method + method detail + printed value, and fails on a key that matches no row or several.
+Changed values keep the printed value in `reported_as` and the old value in `corrections` (RULES.md §11); pass
+fields are `eps` (per atom) and `sigma_per_site`, which the loader converts to totals.
+
+- Rows: 1742 before, 1710 after (1712 with the two exact rows below). Removed as duplicates (listed in the held file with the row that stands): 10 DMET
+  rows with a 5-atom fragment in STO-6G that repeat the paper's FCI digits, and 22 rows of the 2017 data repository
+  for H50 in STO-6G (RHF at all ten R; RCCSD and RCCSD(T) at R = 1.0 to 2.0) equal in every printed digit to
+  Hachmann, Cardoen & Chan 2006, which stays primary.
+- Corrections (463 on 394 rows, plus 14 records where a note was appended to an existing one): citations and
+  `peer_reviewed` for six papers found published or arXiv-only; the STO-6G FCI rows carry QMBL's recomputed
+  digits; where Tables II-IV truncate, the repository's digits (143 rows); the printed complete-basis fit
+  uncertainty as sigma on approximate CBS rows, and the Table III UHF error bars, which the generator had divided
+  by N twice (both fixed in `scripts/track3/motta2017.mjs`); no sigma on the two arXiv:1904.01131 MkMRCC rows whose printed ±
+  is not explained; the arXiv:2604.02054 seed spread as sigma; UGF2 relabelled; the DMET solver, the AFQMC
+  multi-determinant trial on two CBS rows, the near-linear-dependence threshold on H50 RHF/UHF rows and the CASCI
+  active space as method details; arXiv:2005.11349 FCI label; arXiv:1905.06971 LRDMC; arXiv:2006.14956 FCIQMC
+  `projected`; DUCC-QFlow `approximate`; the Motta 2017 DMRG rows variational with medium confidence; the R = 1.0
+  MRCI+Q and MRCI-F12+Q complete-basis values relabelled as the AFQMC-based estimate of the Table III caption
+  (the F12 one by the second ruling of 2026-10-24: the repository builds it the same way).
+- Notes (111 rows): MRCI and MRCI+Q in STO-6G (the active space is the whole orbital space), density-fitted and
+  ITHC integrals, the LMO estimator, complete-basis Hartree-Fock above cc-pV5Z, the DMRG reading, and H50
+  RHF/cc-pV5Z at R = 1.2, about 36 mEh below its basis-set trend (noted, no recompute, ruled 2026-10-24).
+- Verified: 1437 rows carry a `verified` block (checked 2026-10-24, scope, the version read).
+- Not applied: no defect flags for values below variational or exact references, or for superseded values (rule of
+  2026-10-24); three method-detail corrections the skeptic left unsettled (not applied, ruled 2026-10-24); two
+  defect findings without a ruling (H30 UCCSD/cc-pVTZ at R = 1.0 inconsistent with its UHF reference, the two
+  arXiv:2006.14956 FCIQMC values that differ from the thesis they cite). All are listed in the file's `not_applied`.
+
+In track 3, CCSD(T) and other perturbative corrections to coupled cluster are `approximate`
+([RULES.md §13.4](RULES.md#134-bound_type)). This is provisional (2026-10-21): the record rule
+for all tracks is being rethought, and §4 keeps its wording until then.
+
+Exact rows under RULES.md 6 (every published diagonalization of an exact energy is a row, 2026-10-24; applied
+when the track opened): the generator had held 12 FCI values in STO-6G as values already carried by Motta et
+al. 2017. arXiv:2305.12776's FCI of H10 at 1.8 and 3.6 bohr are its own (it compares its selected
+configurations with the FCI wave functions, Fig. 7c, d), so the two carry `independent_exact` and are rows
+(`readers.mjs`, `INDEPENDENT_EXACT`). The ten FCI values of arXiv:1904.01131 Table II stay held: the column is
+Motta et al.'s to the printed digits and the paper does not say it computed it. arXiv:2604.02054's FCI
+benchmark (H10, 1.6 bohr) stays held for its second reading: the paper does not say where it comes from.
+
 ## Rejected papers
 
 Every energy in these papers is a thermodynamic-limit value or a lower bound, so no value
