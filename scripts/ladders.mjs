@@ -69,7 +69,7 @@ function couplingLabel(inst, { boundary, lattice, shape, omit, t12 }) {
   if (lattice) parts.push(inst.lattice);
   if (boundary) parts.push(BOUNDARY[inst.boundary] ?? "periodic");
   if (shape) parts.push(shape.label);
-  for (const k of COUPLINGS) if (k !== omit && inst.params?.[k] != null) parts.push(`${k} = ${inst.params[k]}`);
+  for (const k of COUPLINGS) if (k !== omit && inst.params?.[k] != null) parts.push(k === "basis" && inst.params[k] === "none" ? "basis-free" : `${k} = ${inst.params[k]}`);
   if (omit !== "n" && fillingOf(inst) != null) parts.push(fillingLabel(inst));
   return [...parts, ...variantsOf(inst).filter(v => !(t12 && v === "t12"))].join(", ");
 }
@@ -96,6 +96,12 @@ function rectangleShapes(instances) {
 const t12Of = inst => variantsOf(inst).includes("t12");
 const latticeLabel = (inst, oneBoundary) => [latticeOf(inst) + (t12Of(inst) ? ", t12" : ""), oneBoundary && BOUNDARY[inst.boundary]].filter(Boolean).join(", ");
 
+// A model name that already ends in the lattice ("Hydrogen chain", lattice "chain") does not repeat it.
+const figureTitle = (inst, oneBoundary) => {
+  const name = modelName(inst.model), lat = latticeLabel(inst, oneBoundary), head = lat.split(",")[0];
+  return name.endsWith(` ${head}`) ? `${name}${lat.slice(head.length)}` : `${name} ${lat}`;
+};
+
 // Every figure, in model order and then by energies, most first; each with its ladders
 // ordered by their couplings. Ladders are not filtered here: which of them have enough to
 // draw is the figure script's call, and the site reads which figures exist off figures/size/.
@@ -116,7 +122,7 @@ export function ladderFigures(instances) {
       name: `size/${key.replace(/[^\w.-]/g, "_")}`,
       model: members[0].model,
       label: latticeLabel(members[0], oneBoundary),
-      title: `${modelName(members[0].model)} ${latticeLabel(members[0], oneBoundary)}`,
+      title: figureTitle(members[0], oneBoundary),
       energies: energies(members),
       base: baseEnergies.get(baseKey(members[0])) ?? energies(members), t12: t12Of(members[0]),
       flags: { boundary: !oneBoundary, lattice: !oneLattice, t12: t12Of(members[0]) },
