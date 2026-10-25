@@ -8,8 +8,9 @@ release. Each accept or reject of a row cites a clause of this file.
 Track 1 covers ground-state energies of lattice Hamiltonians computed by any method.
 Track 2 covers ground-state energies of the homogeneous electron gas in a periodic cell, in
 two and three dimensions (§12). Track 3 covers ground-state energies of hydrogen chains and
-square hydrogen sheets, in a stated basis set or basis-free (§13). A row is a claim about one
-(Hamiltonian instance, method) pair.
+square hydrogen sheets, in a stated basis set or basis-free (§13). Track 4 covers ground-state
+energies per site of the lattice Hamiltonians of track 1 in the thermodynamic limit (§14). A row
+is a claim about one (Hamiltonian instance, method) pair.
 
 Out of scope for now: real-time dynamics, finite temperature, molecules other than the
 hydrogen chains and sheets of track 3, atoms, quantum dots and other continuum systems with
@@ -813,3 +814,65 @@ Section 4 applies unchanged. The recurring cases:
 
 Track 3 has its own section and tables. Its figures plot energy per atom against R at fixed
 N, boundary and basis, and against N at fixed R, each result a dot.
+
+## 14. Track 4: the thermodynamic limit
+
+Sections 2 to 11 apply to track 4 as to track 1. This section states what differs. Track 4
+opened on 2026-10-25. It adds no new physics to track 1, only instances without a site count.
+
+### 14.1 Instance
+
+An instance is a lattice Hamiltonian of track 1 (model, lattice and every coupling, §2) on the
+infinite lattice. It has no site count, boundary or cluster.
+
+- Couplings are as the source prints them. Two printed values are two instances, however
+  close: at the critical transverse field a change of 1e-4 in h moves the energy per site by
+  about 4e-5, more than an iPEPS energy's precision. Case: h = 3.04438 (Rader & Läuchli, PRX 8,
+  031030) and h = 3.044 are two instances.
+- A filling is the density per site as printed (`n`), not a particle number.
+- Id: `<Model>/<lattice>_inf[_<couplings>]`, the couplings in the order of track 1
+  (`J1J2/square_inf_0.5`, `TFIsing/square_inf_3.04438`; Hubbard: filling, then U, then t').
+
+### 14.2 Units and storage
+
+Energies are per site. They are stored in track 1's stored convention for one site: 4 × the
+S·S energy per site for Heisenberg and J1-J2, the Pauli energy per site for the transverse-field
+Ising model, units of t for Hubbard and t-V. Tables and the site show the per-site energy in the
+convention of track 1 (S·S for spin models). A source that writes the energy per bond or per
+unit cell is converted by the loader, and the row says how. No V-score is computed: `einf` and
+N are not defined. The instances are in `tdl/`, not in `data/`.
+
+### 14.3 What is a row
+
+An energy per site that the source states for the infinite system. Every row says how the limit
+was reached (`how_tdl`):
+
+- `closed form`: an exact solution (Bethe ansatz, free fermions);
+- `infinite system`: a state of the infinite lattice at a fixed ansatz size (iPEPS, iPESS,
+  iDMRG, VUMPS at a bond dimension D);
+- `extrapolation in the ansatz`: in D, the truncation error, 1/ξ or the variance;
+- `finite-size extrapolation`: of finite clusters, cylinders or tori to N → ∞ (QMC, DMRG, ED),
+  with the sizes it used where the source states them;
+- `series or approximate theory`: series expansions, spin-wave theory, coupled-cluster methods.
+
+A finite-cluster energy is not a row here; it is a row of track 1. Of a series in D every value
+the source prints is a row, as in track 1.
+
+### 14.4 `bound_type`
+
+- `closed form`: `exact`. The validator evaluates the closed form itself and stops the build if
+  the row disagrees beyond its printed digits; an exact row whose closed form QMBL does not
+  evaluate is not admitted.
+- `infinite system` at a fixed D: `variational`. The energy per site of a state of the infinite
+  lattice bounds the ground-state energy per site from above where the contraction (CTMRG,
+  boundary MPS) is converged; the row states the environment dimension where the source does.
+- `extrapolation in the ansatz` and `finite-size extrapolation`: `extrapolated`. A sign-free QMC
+  energy extrapolated to N → ∞ is `extrapolated`, not `exact (stochastic)`: the extrapolation
+  form is a choice.
+- `series or approximate theory`: `approximate`.
+- Projector methods on the infinite lattice: `projected`, as in §4.
+
+### 14.5 Site
+
+Track 4 has its own page, `/tdl/`, a section per model with the exact energy and the best value
+of each bound type per instance (§6), and its own API files under `/api/tdl/`.

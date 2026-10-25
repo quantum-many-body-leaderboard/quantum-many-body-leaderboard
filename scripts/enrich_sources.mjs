@@ -12,6 +12,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { collect } from "./summary.mjs";
+import { collectTDL } from "./tdl.mjs";
 
 // Kept outside data/, which emit.mjs wipes on every build. The cache is committed.
 const CACHE = "sources/openalex.json";
@@ -195,7 +196,8 @@ async function main() {
 
   const wanted = new Map();
   let noId = 0;
-  for (const inst of collect())
+  // Track 4's instances (tdl/, RULES.md 14) cite papers too.
+  for (const inst of [...collect(), ...collectTDL()])
     for (const r of inst.rows) {
       const id = identify(r.reference);
       if (id) wanted.set(id.key, id); else noId++;

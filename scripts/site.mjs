@@ -17,6 +17,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
 import { perSiteDivisor, perSiteLabel, boundLabel, stochasticExact, publishedMethod, methodLabel, methodDetail, BEST_CLASSES, H_MODELS } from "./units.mjs";
+import { collectTDL, tdlLabel } from "./tdl.mjs";
 import { collect, classBest, shownBest, bestTagOf, lowestOf, noRecordKey, summarize, rowId, sameExactRows } from "./summary.mjs";
 import { THEMES, W } from "./chart.mjs";
 import { citeRef, codeRef, libraryRef, paperYear } from "./cite.mjs";
@@ -49,6 +50,8 @@ const CITATION = `${CITE_HEAD}, ${CITE_TITLE}, arXiv:${ARXIV} (2026). https://ar
 
 const cache = sources();
 const instances = collect();
+// Track 4 (RULES.md 14), its own page and API files; views with n_sites = 1 (tdl.mjs).
+const tdlInstances = collectTDL();
 const summary = summarize(instances);
 
 // ------------------------------------------------------------------------------ html
@@ -67,6 +70,7 @@ const OPEN_PROBLEMS = await loadOpenProblems(instances);
 const NAV = [
   ["/", "Leaderboard"],
   ["/instances/", "Table"],
+  ["/tdl/", "Thermodynamic limit"],
 ];
 // Open Problems is a button at the very right of the menu, after Cite.
 const opButton = url => (OPEN_PROBLEMS
@@ -169,7 +173,7 @@ function redirectPage(target, title) {
 
 // ------------------------------------------------------------------------------- data
 const instUrl = inst => `/i/${inst.instance_id}/`;
-const jsonUrl = inst => `/api/i/${inst.instance_id}.json`;
+const jsonUrl = inst => `/api/${inst.tdl ? "tdl" : "i"}/${inst.instance_id}.json`;
 const yearOf = r => paperYear(r, cache);
 // The year column: a paper's year, or for QMBL's own runs the year the run finished.
 const yearCell = r => (r.computed_by === "qmbl" || r.provenance === "unpublished" ? +(r.verified?.checked_on || "").slice(0, 4) || null : yearOf(r));
@@ -304,7 +308,7 @@ function rowIssueUrl(r, inst) {
     `bound type: ${boundLabel(r)}`,
     `method: ${methodLabel(r)} (as published: ${publishedMethod(r)})`,
     `source: ${c.text}${c.url ? ` ${c.url}` : ""}`,
-    `on qmbl.org: https://qmbl.org/instances/#${id}`,
+    `on qmbl.org: https://qmbl.org/${inst.tdl ? "tdl" : "instances"}/#${id}`,
   ].join("\n");
   const q = new URLSearchParams({ template: "row-feedback.yml", title: `[row] ${rowTitle(r, inst)}: `, row: id, instance: inst.instance_id, shown });
   return `${REPO}/issues/new?${q}`;
@@ -1158,6 +1162,50 @@ reveal();
     description: `Every Hamiltonian instance in QMBL: ${summary.instances} instances across ${MODELS.filter(([m]) => instances.some(i => i.model === m)).length} models, with the exact energy and the best of each bound type for each.` });
 }
 
+// ---------------------------------------------------------------------- thermodynamic limit
+// Track 4 (RULES.md 14): one section per model, a line per value an instance shows, its rows
+// when opened, as on the Table. No size filter: every instance is infinite.
+function tdlPage() {
+  const sections = MODELS.map(([model, name]) => {
+    const group = tdlInstances.filter(i => i.model === model).sort((a, b) => a.lattice.localeCompare(b.lattice) || a.instance_id.localeCompare(b.instance_id, "en", { numeric: true }));
+    if (!group.length) return "";
+    const rows = group.map(inst => {
+      const lines = tableLines(inst);
+      const id = `x-${inst.instance_id.replace(/[^\w-]/g, "_")}`;
+      const span = lines.length > 1 ? ` rowspan="${lines.length}"` : "";
+      const tr = lines.map(([tag, r], k) => `<tr class="line${k === lines.length - 1 ? " last" : ""}">${k ? "" : `
+        <th scope="row" class="span"${span}><button type="button" aria-expanded="false" aria-controls="${id}">${esc(tdlLabel(inst))}</button></th>`}
+        <td class="kind">${tag}</td><td class="record">${energyCell(r, inst)}</td><td>${methodCell(r)}</td><td>${citeHtml(r)}</td><td class="code">${codeHtml(r)}</td>${k ? "" : `<td class="num span"${span}>${inst.rows.length}</td>`}</tr>`).join("");
+      return `<tbody class="inst">${tr}
+      <tr class="more" id="${id}" hidden><td colspan="7">${allRows(inst)}</td></tr></tbody>`;
+    });
+    return `<section data-model="${model}">
+      <h2 id="${model.toLowerCase()}">${esc(name)}<a class="anchor" href="#${model.toLowerCase()}" aria-label="Link to this section">#</a></h2>
+      <p class="muted">${group.length} instance${group.length === 1 ? "" : "s"}, energies per site as <code>${perSiteLabel(group[0])}</code></p>
+      <div class="scroll"><table class="leaderboard">
+        <thead><tr><th>instance</th><th>value</th><th>energy</th><th>method</th><th>source</th><th>code</th><th>energies</th></tr></thead>
+        ${rows.join("")}</table></div>
+    </section>`;
+  }).join("\n");
+  const body = `
+<h1>Thermodynamic limit</h1>
+<p>Ground-state energies per site of infinite lattices: closed-form solutions, states of the
+infinite system (iPEPS, iDMRG, VUMPS) at a fixed bond dimension, and extrapolations in the
+bond dimension, the correlation length or the system size. Couplings are as the source prints
+them. <a href="${RULES}#14-track-4-the-thermodynamic-limit">Rules &sect;14</a>.</p>
+${tdlInstances.length ? sections : '<p class="muted">No energies yet.</p>'}
+<script>
+for (const b of document.querySelectorAll("button[aria-controls]")) b.addEventListener("click", () => {
+  const row = document.getElementById(b.getAttribute("aria-controls"));
+  const open = b.getAttribute("aria-expanded") !== "true";
+  b.setAttribute("aria-expanded", String(open));
+  row.hidden = !open;
+});
+</script>`;
+  return page({ url: "/tdl/", title: "Thermodynamic limit", body, wide: true,
+    description: `Ground-state energies per site of infinite lattices in QMBL: ${tdlInstances.length} instances, ${tdlInstances.reduce((s, i) => s + i.rows.length, 0)} energies.` });
+}
+
 // ---------------------------------------------------------------------- instance page
 function rowTable(rows, inst) {
   const head = `<thead><tr><th>${perSiteLabel(inst)}</th><th>distance to class best</th><th>&sigma;</th><th>Var(E)</th><th>V-score</th>
@@ -1773,6 +1821,9 @@ fs.rmSync(OUT, { recursive: true, force: true });
 
 write("index.html", homePage());
 write("instances/index.html", instancesPage());
+write("tdl/index.html", tdlPage());
+for (const inst of tdlInstances)
+  write(`api/tdl/${inst.instance_id}.json`, JSON.stringify({ ...apiInstance(inst), n_sites: "inf", tdl: undefined, url: `https://qmbl.org/tdl/#x-${inst.instance_id.replace(/[^\w-]/g, "_")}` }, null, 2) + "\n");
 write("rules/index.html", redirectPage(RULES, "Rules"));
 write("data/index.html", redirectPage(DATA, "Data"));
 write("contribute/index.html", contributePage());
@@ -1842,7 +1893,7 @@ write("api/qmbl.json", JSON.stringify({
   summary: apiSummary, instances: instances.map(apiInstance),
 }, null, 2) + "\n");
 
-const urls = ["/", "/instances/", "/contribute/", ...(OPEN_PROBLEMS ? [OPEN_PROBLEMS_URL, OPEN_PROBLEMS_TABLE_URL] : []), ...instances.map(instUrl)];
+const urls = ["/", "/instances/", "/tdl/", "/contribute/", ...(OPEN_PROBLEMS ? [OPEN_PROBLEMS_URL, OPEN_PROBLEMS_TABLE_URL] : []), ...instances.map(instUrl)];
 write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(u => `  <url><loc>https://qmbl.org${u}</loc><lastmod>${BUILT}</lastmod></url>`).join("\n")}

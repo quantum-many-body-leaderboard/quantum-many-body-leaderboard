@@ -1,0 +1,200 @@
+{
+  "model": "Hubbard",
+  "lattice": "square",
+  "n_sites": "inf",
+  "boundary": "TDL",
+  "params": {
+    "U": 6,
+    "n": 0.875
+  },
+  "instance_id": "Hubbard/square_inf_0.875_6",
+  "rows": [
+    {
+      "energy": -0.863,
+      "sigma": 0.013,
+      "method": "DMET",
+      "method_as_published": "DMET",
+      "bound_type": "approximate",
+      "bound_type_reason": "series expansion, spin-wave theory or another fixed approximation; error of unknown sign (RULES.md 14.4)",
+      "how_tdl": "series or approximate theory",
+      "reference": "LeBlanc et al., Solutions of the Two Dimensional Hubbard Model: Benchmarks and Results from a Wide Range of Numerical Algorithms, Phys. Rev. X 5, 041041 (2015), arXiv:1505.02290",
+      "peer_reviewed": true,
+      "source": "tdl-2026-10-25",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-25",
+        "method": "arXiv:1505.02290: journal version: Phys. Rev. X 5, 041041 (2015), open-access PDF from journals.aps.org (journal/leblanc-prx.pdf), pypdf layout and plain, value found; arXiv text compared (arXiv text (pypdf layout and plain, read locally; version: 1505.02290v2)); single reading, journal check, second reading 2026-10-25",
+        "reported_as": "-0.863 0.013  [table gives value and uncertainty in separate columns]",
+        "note": "Table V, row DMET, column U = 6; line 2792 of sources/leblanc.plain.txt (sources/leblanc.plain.txt) | per site (E/t; text: 'we systematically compute the energy per site'); units t; Eq. (1): H = -sum_{i,j,sigma} t_ij (c^dag_{i sigma} c_{j sigma} + H.c.) + U sum_i n_{i up} n_{i down}; t_ij = t nearest neighbour, t' second neighbour; t sets the energy scale; repulsive U > 0 (Sec. II, lines before Table I). Sum convention over (i,j) not spelled out beyond 'sum_{i,j,sigma}'. No chemical-potential term; energies at fixed density n. | Value and uncertainty are separate columns in the table (second number = one-sigma-type uncertainty 'best available within each algorithm', no systematic error: Sec. IX).",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -0.854,
+      "sigma": 0.002,
+      "method": "FN-DMC",
+      "method_as_published": "FN (fixed-node diffusion Monte Carlo with VMC nodes)",
+      "bound_type": "extrapolated",
+      "bound_type_reason": "extrapolation to an infinite ansatz or to infinite size; not an upper bound (RULES.md 14.4)",
+      "how_tdl": "finite-size extrapolation",
+      "reference": "LeBlanc et al., Solutions of the Two Dimensional Hubbard Model: Benchmarks and Results from a Wide Range of Numerical Algorithms, Phys. Rev. X 5, 041041 (2015), arXiv:1505.02290",
+      "peer_reviewed": true,
+      "source": "tdl-2026-10-25",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-25",
+        "method": "arXiv:1505.02290: journal version: Phys. Rev. X 5, 041041 (2015), open-access PDF from journals.aps.org (journal/leblanc-prx.pdf), pypdf layout and plain, value found; arXiv text compared (arXiv text (pypdf layout and plain, read locally; version: 1505.02290v2)); single reading, journal check, second reading 2026-10-25",
+        "reported_as": "-0.854 0.002  [table gives value and uncertainty in separate columns]",
+        "note": "Table V, row FN, column U = 6; line 2794 of sources/leblanc.plain.txt (sources/leblanc.plain.txt) | per site (E/t; text: 'we systematically compute the energy per site'); units t; Eq. (1): H = -sum_{i,j,sigma} t_ij (c^dag_{i sigma} c_{j sigma} + H.c.) + U sum_i n_{i up} n_{i down}; t_ij = t nearest neighbour, t' second neighbour; t sets the energy scale; repulsive U > 0 (Sec. II, lines before Table I). Sum convention over (i,j) not spelled out beyond 'sum_{i,j,sigma}'. No chemical-potential term; energies at fixed density n. | Value and uncertainty are separate columns in the table (second number = one-sigma-type uncertainty 'best available within each algorithm', no systematic error: Sec. IX).",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -0.8679,
+      "sigma": 0.0007,
+      "method": "DMET",
+      "method_detail": "2 × 2",
+      "method_as_published": "DMET, size 2 × 2, stripe wavelength d-wave",
+      "bound_type": "approximate",
+      "bound_type_reason": "series expansion, spin-wave theory or another fixed approximation; error of unknown sign (RULES.md 14.4)",
+      "how_tdl": "series or approximate theory",
+      "reference": "Zheng et al., Stripe order in the underdoped region of the two-dimensional Hubbard model, Science 358, 1155-1160 (2017), arXiv:1701.00054",
+      "peer_reviewed": true,
+      "source": "tdl-2026-10-25",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-25",
+        "method": "arXiv:1701.00054: arXiv text and the journal's Supplementary Materials (pypdf layout and plain, read locally; version: 1701.00054v3 (main text); Supplementary Materials = Science SM file aan7127_Zheng_SM.pdf from CaltechAUTHORS record 73807 (the arXiv v3 PDF does not contain the SM; arXiv v1/v2 contain an older SM with Tables 1-7, different from Science Tables S1-S10)); journal version not read (publisher returned 403 to scripted access); single reading",
+        "reported_as": "−0.8679 (error 0.0007); table columns 'Energy (t)' and 'Error (t)'",
+        "note": "Table S3 (U/t = 6), row 'DMET 2 × 2'; line 192 of sources/zheng_science_SM.plain.txt (layout txt has the same digits) (sources/zheng_science_SM.plain.txt) | per site; units t; Main text Eq. (1) (sources/zheng.plain.txt, p. 2): H = -sum_{<ij>, sigma in {up,down}} t a^dag_{i sigma} a_{j sigma} + U sum_i n_{i up} n_{i down}; t, U are 'the kinetic and repulsion energies'; the Hermitian-conjugate term is not printed, bond counting not stated | The minus sign of the Science SM energies is extracted as a NUL byte (not as a minus character); it is present in the rendered PDF page (checked visually on pages 6-9: all energies are negative) and in the arXiv v2 SM text for rows that exist there. Value digits as in extracted text. Doping 1/8 is from main text (Fig. 6 caption: 'at 1/8 doping for weaker and stronger couplings'); the SM table caption does not state the doping.",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -0.85867,
+      "sigma": 0.00004,
+      "method": "DMET",
+      "method_detail": "3 × 2",
+      "method_as_published": "DMET, size 3 × 2, stripe wavelength 3",
+      "bound_type": "approximate",
+      "bound_type_reason": "series expansion, spin-wave theory or another fixed approximation; error of unknown sign (RULES.md 14.4)",
+      "how_tdl": "series or approximate theory",
+      "reference": "Zheng et al., Stripe order in the underdoped region of the two-dimensional Hubbard model, Science 358, 1155-1160 (2017), arXiv:1701.00054",
+      "peer_reviewed": true,
+      "source": "tdl-2026-10-25",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-25",
+        "method": "arXiv:1701.00054: arXiv text and the journal's Supplementary Materials (pypdf layout and plain, read locally; version: 1701.00054v3 (main text); Supplementary Materials = Science SM file aan7127_Zheng_SM.pdf from CaltechAUTHORS record 73807 (the arXiv v3 PDF does not contain the SM; arXiv v1/v2 contain an older SM with Tables 1-7, different from Science Tables S1-S10)); journal version not read (publisher returned 403 to scripted access); single reading",
+        "reported_as": "−0.85867 (error 0.00004); table columns 'Energy (t)' and 'Error (t)'",
+        "note": "Table S3 (U/t = 6), row 'DMET 3 × 2'; line 193 of sources/zheng_science_SM.plain.txt (layout txt has the same digits) (sources/zheng_science_SM.plain.txt) | per site; units t; Main text Eq. (1) (sources/zheng.plain.txt, p. 2): H = -sum_{<ij>, sigma in {up,down}} t a^dag_{i sigma} a_{j sigma} + U sum_i n_{i up} n_{i down}; t, U are 'the kinetic and repulsion energies'; the Hermitian-conjugate term is not printed, bond counting not stated | The minus sign of the Science SM energies is extracted as a NUL byte (not as a minus character); it is present in the rendered PDF page (checked visually on pages 6-9: all energies are negative) and in the arXiv v2 SM text for rows that exist there. Value digits as in extracted text. Doping 1/8 is from main text (Fig. 6 caption: 'at 1/8 doping for weaker and stronger couplings'); the SM table caption does not state the doping.",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -0.8589,
+      "sigma": 0.00004,
+      "method": "DMET",
+      "method_detail": "4 × 2",
+      "method_as_published": "DMET, size 4 × 2, stripe wavelength 4",
+      "bound_type": "approximate",
+      "bound_type_reason": "series expansion, spin-wave theory or another fixed approximation; error of unknown sign (RULES.md 14.4)",
+      "how_tdl": "series or approximate theory",
+      "reference": "Zheng et al., Stripe order in the underdoped region of the two-dimensional Hubbard model, Science 358, 1155-1160 (2017), arXiv:1701.00054",
+      "peer_reviewed": true,
+      "source": "tdl-2026-10-25",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-25",
+        "method": "arXiv:1701.00054: arXiv text and the journal's Supplementary Materials (pypdf layout and plain, read locally; version: 1701.00054v3 (main text); Supplementary Materials = Science SM file aan7127_Zheng_SM.pdf from CaltechAUTHORS record 73807 (the arXiv v3 PDF does not contain the SM; arXiv v1/v2 contain an older SM with Tables 1-7, different from Science Tables S1-S10)); journal version not read (publisher returned 403 to scripted access); single reading",
+        "reported_as": "−0.85890 (error 0.00004); table columns 'Energy (t)' and 'Error (t)'",
+        "note": "Table S3 (U/t = 6), row 'DMET 4 × 2'; line 194 of sources/zheng_science_SM.plain.txt (layout txt has the same digits) (sources/zheng_science_SM.plain.txt) | per site; units t; Main text Eq. (1) (sources/zheng.plain.txt, p. 2): H = -sum_{<ij>, sigma in {up,down}} t a^dag_{i sigma} a_{j sigma} + U sum_i n_{i up} n_{i down}; t, U are 'the kinetic and repulsion energies'; the Hermitian-conjugate term is not printed, bond counting not stated | The minus sign of the Science SM energies is extracted as a NUL byte (not as a minus character); it is present in the rendered PDF page (checked visually on pages 6-9: all energies are negative) and in the arXiv v2 SM text for rows that exist there. Value digits as in extracted text. Doping 1/8 is from main text (Fig. 6 caption: 'at 1/8 doping for weaker and stronger couplings'); the SM table caption does not state the doping.",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -0.86836,
+      "sigma": 0.00001,
+      "method": "DMET",
+      "method_detail": "5 × 2",
+      "method_as_published": "DMET, size 5 × 2, stripe wavelength 5",
+      "bound_type": "approximate",
+      "bound_type_reason": "series expansion, spin-wave theory or another fixed approximation; error of unknown sign (RULES.md 14.4)",
+      "how_tdl": "series or approximate theory",
+      "reference": "Zheng et al., Stripe order in the underdoped region of the two-dimensional Hubbard model, Science 358, 1155-1160 (2017), arXiv:1701.00054",
+      "peer_reviewed": true,
+      "source": "tdl-2026-10-25",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-25",
+        "method": "arXiv:1701.00054: arXiv text and the journal's Supplementary Materials (pypdf layout and plain, read locally; version: 1701.00054v3 (main text); Supplementary Materials = Science SM file aan7127_Zheng_SM.pdf from CaltechAUTHORS record 73807 (the arXiv v3 PDF does not contain the SM; arXiv v1/v2 contain an older SM with Tables 1-7, different from Science Tables S1-S10)); journal version not read (publisher returned 403 to scripted access); single reading",
+        "reported_as": "−0.86836 (error 0.00001); table columns 'Energy (t)' and 'Error (t)'",
+        "note": "Table S3 (U/t = 6), row 'DMET 5 × 2'; line 195 of sources/zheng_science_SM.plain.txt (layout txt has the same digits) (sources/zheng_science_SM.plain.txt) | per site; units t; Main text Eq. (1) (sources/zheng.plain.txt, p. 2): H = -sum_{<ij>, sigma in {up,down}} t a^dag_{i sigma} a_{j sigma} + U sum_i n_{i up} n_{i down}; t, U are 'the kinetic and repulsion energies'; the Hermitian-conjugate term is not printed, bond counting not stated | The minus sign of the Science SM energies is extracted as a NUL byte (not as a minus character); it is present in the rendered PDF page (checked visually on pages 6-9: all energies are negative) and in the arXiv v2 SM text for rows that exist there. Value digits as in extracted text. Doping 1/8 is from main text (Fig. 6 caption: 'at 1/8 doping for weaker and stronger couplings'); the SM table caption does not state the doping.",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -0.87247,
+      "sigma": 0.00001,
+      "method": "DMET",
+      "method_detail": "6 × 2 (SF)",
+      "method_as_published": "DMET, size 6 × 2 (SF), stripe wavelength 6",
+      "bound_type": "approximate",
+      "bound_type_reason": "series expansion, spin-wave theory or another fixed approximation; error of unknown sign (RULES.md 14.4)",
+      "how_tdl": "series or approximate theory",
+      "reference": "Zheng et al., Stripe order in the underdoped region of the two-dimensional Hubbard model, Science 358, 1155-1160 (2017), arXiv:1701.00054",
+      "peer_reviewed": true,
+      "source": "tdl-2026-10-25",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-25",
+        "method": "arXiv:1701.00054: arXiv text and the journal's Supplementary Materials (pypdf layout and plain, read locally; version: 1701.00054v3 (main text); Supplementary Materials = Science SM file aan7127_Zheng_SM.pdf from CaltechAUTHORS record 73807 (the arXiv v3 PDF does not contain the SM; arXiv v1/v2 contain an older SM with Tables 1-7, different from Science Tables S1-S10)); journal version not read (publisher returned 403 to scripted access); single reading",
+        "reported_as": "−0.87247 (error 0.00001); table columns 'Energy (t)' and 'Error (t)'",
+        "note": "Table S3 (U/t = 6), row 'DMET 6 × 2 (SF)'; line 196 of sources/zheng_science_SM.plain.txt (layout txt has the same digits) (sources/zheng_science_SM.plain.txt) | per site; units t; Main text Eq. (1) (sources/zheng.plain.txt, p. 2): H = -sum_{<ij>, sigma in {up,down}} t a^dag_{i sigma} a_{j sigma} + U sum_i n_{i up} n_{i down}; t, U are 'the kinetic and repulsion energies'; the Hermitian-conjugate term is not printed, bond counting not stated | The minus sign of the Science SM energies is extracted as a NUL byte (not as a minus character); it is present in the rendered PDF page (checked visually on pages 6-9: all energies are negative) and in the arXiv v2 SM text for rows that exist there. Value digits as in extracted text. Doping 1/8 is from main text (Fig. 6 caption: 'at 1/8 doping for weaker and stronger couplings'); the SM table caption does not state the doping.",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -0.87363,
+      "sigma": 0.00002,
+      "method": "DMET",
+      "method_detail": "7 × 2",
+      "method_as_published": "DMET, size 7 × 2, stripe wavelength 7",
+      "bound_type": "approximate",
+      "bound_type_reason": "series expansion, spin-wave theory or another fixed approximation; error of unknown sign (RULES.md 14.4)",
+      "how_tdl": "series or approximate theory",
+      "reference": "Zheng et al., Stripe order in the underdoped region of the two-dimensional Hubbard model, Science 358, 1155-1160 (2017), arXiv:1701.00054",
+      "peer_reviewed": true,
+      "source": "tdl-2026-10-25",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-25",
+        "method": "arXiv:1701.00054: arXiv text and the journal's Supplementary Materials (pypdf layout and plain, read locally; version: 1701.00054v3 (main text); Supplementary Materials = Science SM file aan7127_Zheng_SM.pdf from CaltechAUTHORS record 73807 (the arXiv v3 PDF does not contain the SM; arXiv v1/v2 contain an older SM with Tables 1-7, different from Science Tables S1-S10)); journal version not read (publisher returned 403 to scripted access); single reading",
+        "reported_as": "−0.87363 (error 0.00002); table columns 'Energy (t)' and 'Error (t)'",
+        "note": "Table S3 (U/t = 6), row 'DMET 7 × 2'; line 197 of sources/zheng_science_SM.plain.txt (layout txt has the same digits) (sources/zheng_science_SM.plain.txt) | per site; units t; Main text Eq. (1) (sources/zheng.plain.txt, p. 2): H = -sum_{<ij>, sigma in {up,down}} t a^dag_{i sigma} a_{j sigma} + U sum_i n_{i up} n_{i down}; t, U are 'the kinetic and repulsion energies'; the Hermitian-conjugate term is not printed, bond counting not stated | The minus sign of the Science SM energies is extracted as a NUL byte (not as a minus character); it is present in the rendered PDF page (checked visually on pages 6-9: all energies are negative) and in the arXiv v2 SM text for rows that exist there. Value digits as in extracted text. Doping 1/8 is from main text (Fig. 6 caption: 'at 1/8 doping for weaker and stronger couplings'); the SM table caption does not state the doping.",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -0.87667,
+      "sigma": 0.0007,
+      "method": "DMET",
+      "method_detail": "8 × 2 (SF)",
+      "method_as_published": "DMET, size 8 × 2 (SF), stripe wavelength 8",
+      "bound_type": "approximate",
+      "bound_type_reason": "series expansion, spin-wave theory or another fixed approximation; error of unknown sign (RULES.md 14.4)",
+      "how_tdl": "series or approximate theory",
+      "reference": "Zheng et al., Stripe order in the underdoped region of the two-dimensional Hubbard model, Science 358, 1155-1160 (2017), arXiv:1701.00054",
+      "peer_reviewed": true,
+      "source": "tdl-2026-10-25",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-25",
+        "method": "arXiv:1701.00054: arXiv text and the journal's Supplementary Materials (pypdf layout and plain, read locally; version: 1701.00054v3 (main text); Supplementary Materials = Science SM file aan7127_Zheng_SM.pdf from CaltechAUTHORS record 73807 (the arXiv v3 PDF does not contain the SM; arXiv v1/v2 contain an older SM with Tables 1-7, different from Science Tables S1-S10)); journal version not read (publisher returned 403 to scripted access); single reading",
+        "reported_as": "−0.87667 (error 0.0007); table columns 'Energy (t)' and 'Error (t)'",
+        "note": "Table S3 (U/t = 6), row 'DMET 8 × 2 (SF)'; line 198 of sources/zheng_science_SM.plain.txt (layout txt has the same digits) (sources/zheng_science_SM.plain.txt) | per site; units t; Main text Eq. (1) (sources/zheng.plain.txt, p. 2): H = -sum_{<ij>, sigma in {up,down}} t a^dag_{i sigma} a_{j sigma} + U sum_i n_{i up} n_{i down}; t, U are 'the kinetic and repulsion energies'; the Hermitian-conjugate term is not printed, bond counting not stated | The minus sign of the Science SM energies is extracted as a NUL byte (not as a minus character); it is present in the rendered PDF page (checked visually on pages 6-9: all energies are negative) and in the arXiv v2 SM text for rows that exist there. Value digits as in extracted text. Doping 1/8 is from main text (Fig. 6 caption: 'at 1/8 doping for weaker and stronger couplings'); the SM table caption does not state the doping.",
+        "secondary_of": null
+      }
+    }
+  ]
+}

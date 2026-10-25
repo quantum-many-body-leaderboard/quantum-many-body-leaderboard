@@ -6,6 +6,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { perSiteDivisor, perSiteLabel, isSampled, noErrorMetrics, methodLabel, stochasticExact } from "./units.mjs";
 import { collect, shownBest, classBest, summarize, noRecordKey } from "./summary.mjs";
+import { collectTDL, tdlLabel } from "./tdl.mjs";
 import { citeCell, codeCell } from "./cite.mjs";
 import { sources } from "./enrich_sources.mjs";
 
@@ -204,6 +205,20 @@ function main() {
     lines.push("<details>");
     lines.push(`<summary><b>${name}</b>: ${group.length} instances, energies as <code>${perSiteLabel(group[0])}</code></summary>`);
     lines.push("", ...HEADER, ...group.flatMap(i => instanceLines(i, instanceLabel(i), cache)), "", "</details>", "");
+  }
+
+  // Track 4 (RULES.md 14): the thermodynamic limit, one block for all models, after the finite
+  // instances.
+  const tdl = collectTDL();
+  if (tdl.length) {
+    lines.push(`### Thermodynamic limit: ${tdl.length} infinite-lattice instances`, "");
+    for (const [model, name] of MODELS) {
+      const group = tdl.filter(i => i.model === model);
+      if (!group.length) continue;
+      lines.push("<details>");
+      lines.push(`<summary><b>${name}</b>, infinite lattice: ${group.length} instance${group.length === 1 ? "" : "s"}, energies per site as <code>${perSiteLabel(group[0])}</code></summary>`);
+      lines.push("", ...HEADER, ...group.flatMap(i => instanceLines(i, tdlLabel(i), cache)), "", "</details>", "");
+    }
   }
 
   // The legend (bound_type, bold, circle, dagger) is in the hand-written "## Details" section

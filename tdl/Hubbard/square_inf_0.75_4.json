@@ -1,0 +1,34 @@
+{
+  "model": "Hubbard",
+  "lattice": "square",
+  "n_sites": "inf",
+  "boundary": "TDL",
+  "params": {
+    "U": 4,
+    "n": 0.75
+  },
+  "instance_id": "Hubbard/square_inf_0.75_4",
+  "rows": [
+    {
+      "energy": -1.1491,
+      "sigma": 0.0002,
+      "method": "CP-AFQMC",
+      "method_detail": "Table III",
+      "method_as_published": "constrained-path AFQMC (CPMC), twist-averaged boundary conditions, single-determinant trial wave functions (free-electron at low and intermediate densities, Sec. V), fit of Eq. (15)",
+      "bound_type": "extrapolated",
+      "bound_type_reason": "extrapolation to an infinite ansatz or to infinite size; not an upper bound (RULES.md 14.4)",
+      "how_tdl": "finite-size extrapolation",
+      "reference": "Qin et al., Benchmark study of the two-dimensional Hubbard model with auxiliary-field quantum Monte Carlo method, Phys. Rev. B 94, 085103 (2016), arXiv:1605.09421",
+      "peer_reviewed": true,
+      "source": "tdl-2026-10-25",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-25",
+        "method": "arXiv:1605.09421: arXiv text (pypdf layout and plain, read locally; version: 1605.09421v2 (the task listed 1605.08794, which is a different (math.PR) paper)); journal version not read (publisher returned 403 to scripted access); single reading",
+        "reported_as": "−1.1491(2)",
+        "note": "Table III (column n = 0.75, row e0, U = 4); line; line 877 of qin.plain.txt (sources/qin.plain.txt) | per site; units t; Eq. (1): H = K + V = -sum_{i,j,s} t_ij (c^dag_{i,s} c_{j,s} + H.c.) + U sum_i n_{i up} n_{i down}; only nearest-neighbour uniform hopping t_ij = t (t' = 0), t is the energy unit (Sec. II.A, lines after Eq. 1) | Table III caption: 'Ground state energy and kinetic energy per site ... for low to intermediate densities at U = 4 and U = 8'. Away from half filling the constrained-path approximation is not exact.",
+        "secondary_of": null
+      }
+    }
+  ]
+}

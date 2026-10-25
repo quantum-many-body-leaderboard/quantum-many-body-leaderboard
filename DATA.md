@@ -695,6 +695,23 @@ as `spectrum_entries`. The validator requires each entry to be exact and to name
 and no entry to lie below the ground state. An instance with no ground-state row keeps its
 sector rows as rows, and the validator reports them.
 
+## The thermodynamic limit: `tdl/`
+
+Track 4 ([RULES.md §14](RULES.md#14-track-4-the-thermodynamic-limit)) is stored apart from
+`data/`, in `tdl/<Model>/<lattice>_inf[_<couplings>].json`, one file per instance, rebuilt by
+`scripts/add_tdl_rows.mjs` from `passes/tdl-rows/tdl-rows-YYYY-MM-DD[-label].json` on every build.
+An instance has `n_sites: "inf"`, `boundary: "TDL"` and `params` as printed (`n`, the filling
+per site, for fermions). A row has the fields of a track 1 row, with three differences:
+
+- `energy` and `sigma` are per site, in track 1's stored convention for one site (4 × S·S for
+  Heisenberg and J1-J2, Pauli for the transverse-field Ising model, t for Hubbard and t-V);
+- `how_tdl` says how the limit was reached: `closed form`, `infinite system`, `extrapolation in
+  the ansatz`, `finite-size extrapolation` or `series or approximate theory` (RULES.md §14.3);
+- `dof`, `einf` and `v_score` are absent.
+
+`data/_summary.json` counts track 4 under `thermodynamic_limit`. The site serves
+`/api/tdl/<id>.json`.
+
 ## Units and conventions
 
 Stored conventions follow VarBench and are asserted per instance, not per row. The
