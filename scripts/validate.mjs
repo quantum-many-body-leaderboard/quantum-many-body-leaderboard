@@ -154,6 +154,9 @@ for (const m of fs.readdirSync("data")) {
         const leak = leaksIn(JSON.stringify(r));
         if (leak.length) issues.push(`RUN ${at}: names the cluster (${leak.join(", ")}); public text names the hardware only`);
       }
+      // `venue_type` (optional, RULES.md 8.1) is one of two values.
+      if (r.venue_type != null && !["proceedings", "book_chapter"].includes(r.venue_type))
+        issues.push(`VENUE ${at}: venue_type ${r.venue_type}`);
       // `provenance` is one of four values; an unpublished row (RULES.md 8.3) names its
       // artifacts, carries QMBL's re-evaluation and the measured cost, and came through a
       // submission (DATA.md, unpublished rows).

@@ -145,6 +145,7 @@ A `sweep-rows` file is a JSON array with one object per row:
 | `compute`, `defect` | an optional `compute` block and defect flag |
 | `same_value_distinct_method` | optional, `true` on a second method of the same paper that printed the same value; without it that row counts as one the instance already carries |
 | `independent_exact` | optional, `true` on an `own` exact row whose source diagonalized the cluster itself and printed an exact energy the instance already carries ([RULES.md §6](RULES.md#6-best-values-and-ties)); without it that row counts as one the instance already carries |
+| `venue_type` | optional, `proceedings` or `book_chapter` where the number was printed in neither a journal nor an arXiv preprint ([DATA.md](DATA.md#provenance-and-defects)); copied to the row |
 | `precision_per_site` | optional: one unit in the last printed digit of an exact energy without an error bar, per site; stored as the row's `precision` |
 
 `add_allresults_rows.mjs` converts `eps` and `sigma_per_site` into the instance's stored

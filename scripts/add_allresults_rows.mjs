@@ -80,6 +80,7 @@ for (const [id, rows] of Object.entries(byInst)) {
       v_score: varTot == null ? null : vScore(varTot, dof, energy, einf),
       method: r.method, bound_type: r.bound_type, bound_type_reason: reasonFor(r, inst),
       reference: r.reference, peer_reviewed: r.peer_reviewed,
+      ...(r.venue_type != null ? { venue_type: r.venue_type } : {}),
       source: `sweep-allresults-${CHECKED}`, provenance: r.origin === "own" ? "primary" : "secondary",
       verified: {
         checked_on: CHECKED,
