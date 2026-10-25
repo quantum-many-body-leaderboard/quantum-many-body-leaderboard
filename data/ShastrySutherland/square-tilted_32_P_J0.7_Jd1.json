@@ -44,7 +44,22 @@
           "note": "Lowest state orthogonal to the dimer-singlet product state: E1 = -49.5002695831 after 153 Lanczos steps (last 10 steps moved it by about 1e-10; Ritz values are upper bounds). The dimer state is an exact eigenstate at E = -48. Printed value x 128 = -49.50026958313. Cluster: tilted torus (4,4),(4,-4), orthogonal dimers. E1 < -48, so E0 = E1. Agrees with the printed value to 8e-12 (within the recompute's convergence, 1e-10). Also read by famP2-10-1142-s0129183106009709#10 (arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11; Table I (square N = 32, left half), row J2/J1 = 0.7; -0.386720856118170 (E0/N, per site, units of J1 = Jd, S.S form)): Value, x = J2/J1 = J/Jd, N, periodic boundaries, bound_type exact and method agree. Hamiltonian Eq. (1) in spin-1/2 S operators, J1 on the diagonal dimer bonds (E0/N = -0.375 = -3/8 J1 below xc fixes the dimer bond as the unit; the Fig. 1 caption swaps the labels). Cluster: the 32-site square cluster of Fig. 6 (second N = 32 row, diamond drawing); its Table III sector dimension 75,164,451 equals exactly the Burnside count for the (4,4),(4,-4) torus with the translations (2,2),(2,-2), Sz = 0 and spin inversion, so QMBL's tilted instance is consistent. Sector: the caption calls it 'the subspace containing the ground state' (Sz = 0, momentum, spin inversion). journal version (Int. J. Mod. Phys. C 17, 1085 (2006)) not reached: worldscientific.com /doi/pdf, /doi/epdf and /doi/abs all returned HTTP 403 with a Cloudflare JavaScript challenge on 2026-10-24; arXiv:cond-mat/0605464v1 (the only arXiv version, comment 'to appear in IJMPC 17') read alone. Duplicate check (data/ShastrySutherland/square-tilted_32_P_J0.7_Jd1.json, read-only): no other row on the instance carries this number.",
           "source_entry": "famE-exact-recompute#17, famP2-10-1142-s0129183106009709#10 (qmbl-verify 2026-10-23)"
         }
-      }
+      },
+      "corrections": [
+        {
+          "field": "sampled",
+          "to": false,
+          "reported_as": "-0.386720856118170",
+          "location": "arXiv:cond-mat/0605464 Table I (square N = 32), x = 0.7",
+          "version_read": "the row's published method string (arXiv text, sources/cond-mat-0605464.txt)",
+          "conversion": "none",
+          "checked_on": "2026-10-25",
+          "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"exact diagonalisation (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar; set as on the t-J Lanczos rows (ruled 2026-10-25).",
+          "source_entry": "ruling of 2026-10-25 on the families port: sampled false on the cond-mat/0605464 exact rows",
+          "from": true
+        }
+      ],
+      "sampled": false
     }
   ]
 }
