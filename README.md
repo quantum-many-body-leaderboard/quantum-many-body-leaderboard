@@ -396,16 +396,16 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | instance | value | energy | method | code |
 |---|---|---|---|---|
 | square 4x4, J = 0.7, Jd = 1 | exact | -0.3968907 | ED [10.1143/JPSJ.73.340,](https://doi.org/10.1143/JPSJ.73.340,) |  |
-| square 6x6, J = 0.5, Jd = 1 | exact | -0.375 &dagger; | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
-| square 6x6, J = 0.66697792, Jd = 1 | exact | -0.375 &dagger; | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
-| square 6x6, J = 0.67441, Jd = 1 | exact | -0.375004 &dagger; | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
-| square 6x6, J = 0.675, Jd = 1 | exact | -0.3752862 &dagger; | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
-| square 6x6, J = 0.68, Jd = 1 | exact | -0.3777047 &dagger; | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
-| square 6x6, J = 0.7, Jd = 1 | exact | -0.3885784 &dagger; | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
-| square 6x6, J = 0.8, Jd = 1 | exact | -0.4517531 &dagger; | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
+| square 6x6, J = 0.5, Jd = 1 | exact | -0.375 | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
+| square 6x6, J = 0.66697792, Jd = 1 | exact | -0.375 | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
+| square 6x6, J = 0.67441, Jd = 1 | exact | -0.375004 | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
+| square 6x6, J = 0.675, Jd = 1 | exact | -0.3752862 | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
+| square 6x6, J = 0.68, Jd = 1 | exact | -0.3777047 | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
+| square 6x6, J = 0.7, Jd = 1 | exact | -0.3885784 | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
+| square 6x6, J = 0.8, Jd = 1 | exact | -0.4517531 | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
 |  | best variational | -0.451717(6) (+3.6e-5) | VMC (ConvNeXt) [10.1103/ybgv-35jm,](https://doi.org/10.1103/ybgv-35jm,) | [NeuralQXLab/convnextnnqs](https://github.com/NeuralQXLab/convnextnnqs) |
 |  | best extrapolated | -0.45175 &#9675; (+3.1e-6) | VMC (Transformer) [10.1103/PhysRevB.111.134411,](https://doi.org/10.1103/PhysRevB.111.134411,) |  |
-| square 6x6, J = 0.85, Jd = 1 | exact | -0.4843341 &dagger; | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
+| square 6x6, J = 0.85, Jd = 1 | exact | -0.4843341 | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
 | square 8x8, J = 0.8, Jd = 1 | best variational | -0.449829 &#9675; | VMC (Transformer) [10.1103/PhysRevB.111.134411,](https://doi.org/10.1103/PhysRevB.111.134411,) |  |
 |  | best extrapolated | -0.44995 &#9675; | VMC (Transformer) [10.1103/PhysRevB.111.134411,](https://doi.org/10.1103/PhysRevB.111.134411,) |  |
 | square 10x10, J = 0.8, Jd = 1 | best variational | -0.449342(4) | VMC (ConvNeXt) [10.1103/ybgv-35jm,](https://doi.org/10.1103/ybgv-35jm,) | [NeuralQXLab/convnextnnqs](https://github.com/NeuralQXLab/convnextnnqs) |
@@ -419,17 +419,17 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square 16x16, J = 0.8, Jd = 1 | best variational | -0.448881 &#9675; | VMC (Transformer) [10.1103/PhysRevB.111.134411,](https://doi.org/10.1103/PhysRevB.111.134411,) |  |
 | square 18x18, J = 0.8, Jd = 1 | best variational | -0.448859 &#9675; | VMC (Transformer) [10.1103/PhysRevB.111.134411,](https://doi.org/10.1103/PhysRevB.111.134411,) |  |
 | square 20x20, open, J = 0.8, Jd = 1 | best variational | -0.442928(3) | PEPS [10.1103/PhysRevLett.133.026502,](https://doi.org/10.1103/PhysRevLett.133.026502,) |  |
-| square-tilted, 32 sites, J = 0.677, Jd = 1 | exact | -0.375 &dagger; | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
-| square-tilted, 32 sites, J = 0.6772, Jd = 1 | exact | -0.375 &dagger; | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
-| square-tilted, 32 sites, J = 0.67724, Jd = 1 | exact | -0.375 &dagger; | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
-| square-tilted, 32 sites, J = 0.677244, Jd = 1 | exact | -0.375 &dagger; | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
-| square-tilted, 32 sites, J = 0.677246, Jd = 1 | exact | -0.375 &dagger; | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
-| square-tilted, 32 sites, J = 0.677248, Jd = 1 | exact | -0.375 &dagger; | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
-| square-tilted, 32 sites, J = 0.6773, Jd = 1 | exact | -0.3750238 &dagger; | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
-| square-tilted, 32 sites, J = 0.6775, Jd = 1 | exact | -0.3751152 &dagger; | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
-| square-tilted, 32 sites, J = 0.6778, Jd = 1 | exact | -0.3752526 &dagger; | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
-| square-tilted, 32 sites, J = 0.68, Jd = 1 | exact | -0.3762717 &dagger; | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
-| square-tilted, 32 sites, J = 0.7, Jd = 1 | exact | -0.3867209 &dagger; | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
+| square-tilted, 32 sites, J = 0.677, Jd = 1 | exact | -0.375 | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
+| square-tilted, 32 sites, J = 0.6772, Jd = 1 | exact | -0.375 | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
+| square-tilted, 32 sites, J = 0.67724, Jd = 1 | exact | -0.375 | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
+| square-tilted, 32 sites, J = 0.677244, Jd = 1 | exact | -0.375 | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
+| square-tilted, 32 sites, J = 0.677246, Jd = 1 | exact | -0.375 | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
+| square-tilted, 32 sites, J = 0.677248, Jd = 1 | exact | -0.375 | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
+| square-tilted, 32 sites, J = 0.6773, Jd = 1 | exact | -0.3750238 | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
+| square-tilted, 32 sites, J = 0.6775, Jd = 1 | exact | -0.3751152 | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
+| square-tilted, 32 sites, J = 0.6778, Jd = 1 | exact | -0.3752526 | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
+| square-tilted, 32 sites, J = 0.68, Jd = 1 | exact | -0.3762717 | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
+| square-tilted, 32 sites, J = 0.7, Jd = 1 | exact | -0.3867209 | ED [10.1142/S0129183106009709,](https://doi.org/10.1142/S0129183106009709,) |  |
 
 </details>
 

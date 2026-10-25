@@ -23841,4 +23841,310 @@ export const CORRECTIONS = [
     "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"Exact (D. Poilblanc, unpublished)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar (the README marked it); ruled 2026-10-24.",
     "source_entry": "tjE-exact-recompute#19 (qmbl-verify 2026-10-23); ruled 2026-10-24 (exact rows whose label reads as sampled)"
   },
+  // sampled: false on the exact diagonalization rows of arXiv:cond-mat/0605464, whose label carries no
+  // deterministic marker (ruled 2026-10-25).
+  {
+    "match": {
+      "instance": "ShastrySutherland/square-tilted_32_P_J0.677_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -47.9999999999
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.374999999998987",
+    "location": "arXiv:cond-mat/0605464 Table I (square N = 32), x = 0.677",
+    "version_read": "the row's published method string (arXiv text, sources/cond-mat-0605464.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-25",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"exact diagonalisation (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar; set as on the t-J Lanczos rows (ruled 2026-10-25).",
+    "source_entry": "ruling of 2026-10-25 on the families port: sampled false on the cond-mat/0605464 exact rows"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square-tilted_32_P_J0.6772_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -48
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.374999999999945",
+    "location": "arXiv:cond-mat/0605464 Table I (square N = 32), x = 0.6772",
+    "version_read": "the row's published method string (arXiv text, sources/cond-mat-0605464.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-25",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"exact diagonalisation (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar; set as on the t-J Lanczos rows (ruled 2026-10-25).",
+    "source_entry": "ruling of 2026-10-25 on the families port: sampled false on the cond-mat/0605464 exact rows"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square-tilted_32_P_J0.67724_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -47.9999999996
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.374999999997117",
+    "location": "arXiv:cond-mat/0605464 Table I (square N = 32), x = 0.67724",
+    "version_read": "the row's published method string (arXiv text, sources/cond-mat-0605464.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-25",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"exact diagonalisation (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar; set as on the t-J Lanczos rows (ruled 2026-10-25).",
+    "source_entry": "ruling of 2026-10-25 on the families port: sampled false on the cond-mat/0605464 exact rows"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square-tilted_32_P_J0.677244_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -47.9999999996
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.374999999997006",
+    "location": "arXiv:cond-mat/0605464 Table I (square N = 32), x = 0.677244",
+    "version_read": "the row's published method string (arXiv text, sources/cond-mat-0605464.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-25",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"exact diagonalisation (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar; set as on the t-J Lanczos rows (ruled 2026-10-25).",
+    "source_entry": "ruling of 2026-10-25 on the families port: sampled false on the cond-mat/0605464 exact rows"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square-tilted_32_P_J0.677246_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -47.9999999996
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.374999999997179",
+    "location": "arXiv:cond-mat/0605464 Table I (square N = 32), x = 0.677246",
+    "version_read": "the row's published method string (arXiv text, sources/cond-mat-0605464.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-25",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"exact diagonalisation (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar; set as on the t-J Lanczos rows (ruled 2026-10-25).",
+    "source_entry": "ruling of 2026-10-25 on the families port: sampled false on the cond-mat/0605464 exact rows"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square-tilted_32_P_J0.677248_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -48.0000020238
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.375000015810957",
+    "location": "arXiv:cond-mat/0605464 Table I (square N = 32), x = 0.677248",
+    "version_read": "the row's published method string (arXiv text, sources/cond-mat-0605464.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-25",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"exact diagonalisation (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar; set as on the t-J Lanczos rows (ruled 2026-10-25).",
+    "source_entry": "ruling of 2026-10-25 on the families port: sampled false on the cond-mat/0605464 exact rows"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square-tilted_32_P_J0.6773_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -48.0030412715
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.375023759933420",
+    "location": "arXiv:cond-mat/0605464 Table I (square N = 32), x = 0.6773",
+    "version_read": "the row's published method string (arXiv text, sources/cond-mat-0605464.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-25",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"exact diagonalisation (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar; set as on the t-J Lanczos rows (ruled 2026-10-25).",
+    "source_entry": "ruling of 2026-10-25 on the families port: sampled false on the cond-mat/0605464 exact rows"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square-tilted_32_P_J0.6775_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -48.0147430425
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.375115180019318",
+    "location": "arXiv:cond-mat/0605464 Table I (square N = 32), x = 0.6775",
+    "version_read": "the row's published method string (arXiv text, sources/cond-mat-0605464.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-25",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"exact diagonalisation (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar; set as on the t-J Lanczos rows (ruled 2026-10-25).",
+    "source_entry": "ruling of 2026-10-25 on the families port: sampled false on the cond-mat/0605464 exact rows"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square-tilted_32_P_J0.6778_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -48.0323336684
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.375252606784488",
+    "location": "arXiv:cond-mat/0605464 Table I (square N = 32), x = 0.6778",
+    "version_read": "the row's published method string (arXiv text, sources/cond-mat-0605464.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-25",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"exact diagonalisation (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar; set as on the t-J Lanczos rows (ruled 2026-10-25).",
+    "source_entry": "ruling of 2026-10-25 on the families port: sampled false on the cond-mat/0605464 exact rows"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square-tilted_32_P_J0.68_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -48.1627761552
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.376271688712272",
+    "location": "arXiv:cond-mat/0605464 Table I (square N = 32), x = 0.68",
+    "version_read": "the row's published method string (arXiv text, sources/cond-mat-0605464.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-25",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"exact diagonalisation (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar; set as on the t-J Lanczos rows (ruled 2026-10-25).",
+    "source_entry": "ruling of 2026-10-25 on the families port: sampled false on the cond-mat/0605464 exact rows"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square-tilted_32_P_J0.7_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -49.5002695831
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.386720856118170",
+    "location": "arXiv:cond-mat/0605464 Table I (square N = 32), x = 0.7",
+    "version_read": "the row's published method string (arXiv text, sources/cond-mat-0605464.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-25",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"exact diagonalisation (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar; set as on the t-J Lanczos rows (ruled 2026-10-25).",
+    "source_entry": "ruling of 2026-10-25 on the families port: sampled false on the cond-mat/0605464 exact rows"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.5_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -53.9999999999
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.374999999999425",
+    "location": "arXiv:cond-mat/0605464 Table II (6 x 6), x = 0.5",
+    "version_read": "the row's published method string (arXiv text, sources/cond-mat-0605464.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-25",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"exact diagonalisation (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar; set as on the t-J Lanczos rows (ruled 2026-10-25).",
+    "source_entry": "ruling of 2026-10-25 on the families port: sampled false on the cond-mat/0605464 exact rows"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.66697792_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -53.9999999994
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.374999999995975",
+    "location": "arXiv:cond-mat/0605464 Table II (6 x 6), x = 0.66697792",
+    "version_read": "the row's published method string (arXiv text, sources/cond-mat-0605464.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-25",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"exact diagonalisation (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar; set as on the t-J Lanczos rows (ruled 2026-10-25).",
+    "source_entry": "ruling of 2026-10-25 on the families port: sampled false on the cond-mat/0605464 exact rows"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.67441_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -54.0005711209
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.375003966117052",
+    "location": "arXiv:cond-mat/0605464 Table II (6 x 6), x = 0.67441",
+    "version_read": "the row's published method string (arXiv text, sources/cond-mat-0605464.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-25",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"exact diagonalisation (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar; set as on the t-J Lanczos rows (ruled 2026-10-25).",
+    "source_entry": "ruling of 2026-10-25 on the families port: sampled false on the cond-mat/0605464 exact rows"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.675_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -54.0412095917
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.375286177720292",
+    "location": "arXiv:cond-mat/0605464 Table II (6 x 6), x = 0.675",
+    "version_read": "the row's published method string (arXiv text, sources/cond-mat-0605464.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-25",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"exact diagonalisation (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar; set as on the t-J Lanczos rows (ruled 2026-10-25).",
+    "source_entry": "ruling of 2026-10-25 on the families port: sampled false on the cond-mat/0605464 exact rows"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.68_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -54.3894826212
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.377704740424690",
+    "location": "arXiv:cond-mat/0605464 Table II (6 x 6), x = 0.68",
+    "version_read": "the row's published method string (arXiv text, sources/cond-mat-0605464.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-25",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"exact diagonalisation (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar; set as on the t-J Lanczos rows (ruled 2026-10-25).",
+    "source_entry": "ruling of 2026-10-25 on the families port: sampled false on the cond-mat/0605464 exact rows"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.7_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -55.9552967142
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.388578449404367",
+    "location": "arXiv:cond-mat/0605464 Table II (6 x 6), x = 0.7",
+    "version_read": "the row's published method string (arXiv text, sources/cond-mat-0605464.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-25",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"exact diagonalisation (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar; set as on the t-J Lanczos rows (ruled 2026-10-25).",
+    "source_entry": "ruling of 2026-10-25 on the families port: sampled false on the cond-mat/0605464 exact rows"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.8_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -65.0524471206
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.451753105004501",
+    "location": "arXiv:cond-mat/0605464 Table II (6 x 6), x = 0.8",
+    "version_read": "the row's published method string (arXiv text, sources/cond-mat-0605464.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-25",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"exact diagonalisation (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar; set as on the t-J Lanczos rows (ruled 2026-10-25).",
+    "source_entry": "ruling of 2026-10-25 on the families port: sampled false on the cond-mat/0605464 exact rows"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.85_Jd1",
+      "method": "exact diagonalisation (Lanczos)",
+      "energy": -69.7441170157
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "-0.484334145942023",
+    "location": "arXiv:cond-mat/0605464 Table II (6 x 6), x = 0.85",
+    "version_read": "the row's published method string (arXiv text, sources/cond-mat-0605464.txt)",
+    "conversion": "none",
+    "checked_on": "2026-10-25",
+    "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"exact diagonalisation (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar; set as on the t-J Lanczos rows (ruled 2026-10-25).",
+    "source_entry": "ruling of 2026-10-25 on the families port: sampled false on the cond-mat/0605464 exact rows"
+  },
 ];
