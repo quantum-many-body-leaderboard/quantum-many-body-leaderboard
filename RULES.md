@@ -271,6 +271,8 @@ disagree.
 in a refereed paper is peer reviewed (Ferrari & Becca's VMC energies in Choo, Neupert & Carleo,
 PRB 100, 125124; Nomura's numbers in PRB 108, 054410). So is a number in refereed
 machine-learning proceedings (SIAM SDM). The reference tells the two kinds of venue apart.
+A number printed in proceedings or in a book chapter, rather than a journal or an arXiv
+preprint, carries `venue_type` (DATA.md).
 
 Case: arXiv:2607.00398 (conference proceedings) claims -0.49782(3) on 10x10 J1-J2. Its
 abstract calls this "statistically consistent with the variational state of the art". The
