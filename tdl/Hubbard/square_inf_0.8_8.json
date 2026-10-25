@@ -1,0 +1,53 @@
+{
+  "model": "Hubbard",
+  "lattice": "square",
+  "n_sites": "inf",
+  "boundary": "TDL",
+  "params": {
+    "U": 8,
+    "n": 0.8
+  },
+  "instance_id": "Hubbard/square_inf_0.8_8",
+  "rows": [
+    {
+      "energy": -0.88,
+      "sigma": 0.03,
+      "method": "DMET",
+      "method_as_published": "DMET",
+      "bound_type": "approximate",
+      "bound_type_reason": "series expansion, spin-wave theory or another fixed approximation; error of unknown sign (RULES.md 14.4)",
+      "how_tdl": "series or approximate theory",
+      "reference": "LeBlanc et al., Solutions of the Two Dimensional Hubbard Model: Benchmarks and Results from a Wide Range of Numerical Algorithms, Phys. Rev. X 5, 041041 (2015), arXiv:1505.02290",
+      "peer_reviewed": true,
+      "source": "tdl-2026-10-25",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-25",
+        "method": "arXiv:1505.02290: journal version: Phys. Rev. X 5, 041041 (2015), open-access PDF from journals.aps.org (journal/leblanc-prx.pdf), pypdf layout and plain, value found; arXiv text compared (arXiv text (pypdf layout and plain, read locally; version: 1505.02290v2)); single reading, journal check, second reading 2026-10-25",
+        "reported_as": "-0.88 0.03  [table gives value and uncertainty in separate columns]",
+        "note": "Table IV, row DMET, column U = 8; line 2780 of sources/leblanc.plain.txt (sources/leblanc.plain.txt) | per site (E/t; text: 'we systematically compute the energy per site'); units t; Eq. (1): H = -sum_{i,j,sigma} t_ij (c^dag_{i sigma} c_{j sigma} + H.c.) + U sum_i n_{i up} n_{i down}; t_ij = t nearest neighbour, t' second neighbour; t sets the energy scale; repulsive U > 0 (Sec. II, lines before Table I). Sum convention over (i,j) not spelled out beyond 'sum_{i,j,sigma}'. No chemical-potential term; energies at fixed density n. | Value and uncertainty are separate columns in the table (second number = one-sigma-type uncertainty 'best available within each algorithm', no systematic error: Sec. IX).",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -0.877,
+      "sigma": 0.001,
+      "method": "FN-DMC",
+      "method_as_published": "FN (fixed-node diffusion Monte Carlo with VMC nodes)",
+      "bound_type": "extrapolated",
+      "bound_type_reason": "extrapolation to an infinite ansatz or to infinite size; not an upper bound (RULES.md 14.4)",
+      "how_tdl": "finite-size extrapolation",
+      "reference": "LeBlanc et al., Solutions of the Two Dimensional Hubbard Model: Benchmarks and Results from a Wide Range of Numerical Algorithms, Phys. Rev. X 5, 041041 (2015), arXiv:1505.02290",
+      "peer_reviewed": true,
+      "source": "tdl-2026-10-25",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-25",
+        "method": "arXiv:1505.02290: journal version: Phys. Rev. X 5, 041041 (2015), open-access PDF from journals.aps.org (journal/leblanc-prx.pdf), pypdf layout and plain, value found; arXiv text compared (arXiv text (pypdf layout and plain, read locally; version: 1505.02290v2)); single reading, journal check, second reading 2026-10-25",
+        "reported_as": "-0.877 0.001  [table gives value and uncertainty in separate columns]",
+        "note": "Table IV, row FN, column U = 8; line 2782 of sources/leblanc.plain.txt (sources/leblanc.plain.txt) | per site (E/t; text: 'we systematically compute the energy per site'); units t; Eq. (1): H = -sum_{i,j,sigma} t_ij (c^dag_{i sigma} c_{j sigma} + H.c.) + U sum_i n_{i up} n_{i down}; t_ij = t nearest neighbour, t' second neighbour; t sets the energy scale; repulsive U > 0 (Sec. II, lines before Table I). Sum convention over (i,j) not spelled out beyond 'sum_{i,j,sigma}'. No chemical-potential term; energies at fixed density n. | Value and uncertainty are separate columns in the table (second number = one-sigma-type uncertainty 'best available within each algorithm', no systematic error: Sec. IX).",
+        "secondary_of": null
+      }
+    }
+  ]
+}

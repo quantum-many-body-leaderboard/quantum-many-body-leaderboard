@@ -6,6 +6,7 @@ import path from "node:path";
 import { createHash } from "node:crypto";
 import { recordEligible, approximateEligible, exactEligible, classEligible, belowExact, tiedAt2Sigma, BEST_CLASSES, isSampled, noErrorMetrics, publishedMethod, methodLabel } from "./units.mjs";
 import { paperYear } from "./cite.mjs";
+import { collectTDL } from "./tdl.mjs";
 
 export function collect() {
   const instances = [];
@@ -181,6 +182,9 @@ export function noRecordKey(inst) {
 // from here, and an import must not rewrite data/_summary.json.
 if (process.argv[1] && import.meta.url === `file://${path.resolve(process.argv[1])}`) {
   const summary = summarize(collect());
+  // Track 4 (RULES.md 14) is counted apart: its instances have no site count and are not in data/.
+  const tdl = summarize(collectTDL());
+  summary.thermodynamic_limit = { instances: tdl.instances, rows: tdl.rows, best: tdl.best };
   fs.writeFileSync("data/_summary.json", JSON.stringify(summary, null, 2) + "\n");
   console.log(JSON.stringify(summary, null, 2));
 }

@@ -1,0 +1,73 @@
+{
+  "model": "Heisenberg",
+  "lattice": "kagome",
+  "n_sites": "inf",
+  "boundary": "TDL",
+  "params": {},
+  "instance_id": "Heisenberg/kagome_inf",
+  "rows": [
+    {
+      "energy": -1.7516,
+      "sigma": 0.0012,
+      "method": "DMRG",
+      "method_detail": "DMRG on cylinders up to YC12 / XC12 (Table I) and an open strip with 576 sites",
+      "method_as_published": "DMRG ground-state energies of infinitely long cylinders (circumference up to 12), combined with non-rigorous upper and lower bounds -0.4376 and -0.4382",
+      "bound_type": "extrapolated",
+      "bound_type_reason": "extrapolation to an infinite ansatz or to infinite size; not an upper bound (RULES.md 14.4)",
+      "how_tdl": "finite-size extrapolation",
+      "reference": "Yan et al., Spin-Liquid Ground State of the S = 1/2 Kagome Heisenberg Antiferromagnet, Science 332, 1173-1176 (2011), arXiv:1011.6114",
+      "peer_reviewed": true,
+      "source": "tdl-2026-10-25",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-25",
+        "method": "arXiv:1011.6114: arXiv text (pypdf layout and plain, read locally; version: 1011.6114v1 (only version)); journal version not read (publisher returned 403 to scripted access); single reading",
+        "reported_as": "E(2D)0 = −0.4379(3)",
+        "note": "Sec. IV, line 461 of sources/yan.plain.txt (sources/yan.plain.txt) | per site (E/N); units J; No explicit Hamiltonian formula in the arXiv text; described as 'The Heisenberg S = 1/2 kagome lattice model (HKLM)' with 'only nearest-neighbor exchange interactions' (Introduction, lines 44-50), J = 1 | Called 'our current estimate of the 2D energy per site'. Science title differs from arXiv v1 title: Crossref gives 'Spin-Liquid Ground State of the S = 1/2 Kagome Heisenberg Antiferromagnet'. Published numbers not checked (Science paywall / Cloudflare).",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -1.7544,
+      "sigma": 0.002,
+      "method": "DMRG",
+      "method_detail": "circumference c up to 17.3 (XC20), up to 16000 SU(2) states",
+      "method_as_published": "SU(2) DMRG on cylinders with circumference up to 17 lattice spacings (up to 16000 states), extrapolated; 'we place' the TL energy at this value",
+      "bound_type": "extrapolated",
+      "bound_type_reason": "extrapolation to an infinite ansatz or to infinite size; not an upper bound (RULES.md 14.4)",
+      "how_tdl": "finite-size extrapolation",
+      "reference": "Depenbrock et al., Nature of the Spin Liquid Ground State of the S = 1/2 Heisenberg Model on the Kagome Lattice, Phys. Rev. Lett. 109, 067201 (2012), arXiv:1205.4858",
+      "peer_reviewed": true,
+      "source": "tdl-2026-10-25",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-25",
+        "method": "arXiv:1205.4858: arXiv text (pypdf layout and plain, read locally; version: 1205.4858v2); journal version not read (publisher returned 403 to scripted access); single reading",
+        "reported_as": "−0.4386(5)",
+        "note": "Abstract line 15; main text line 169, both of sources/depenbrock.plain.txt (Fig. 1 shows the extrapolation) (sources/depenbrock.plain.txt) | per site; units J; Eq. (1): H = sum_<i,j> S_i · S_j, S = 1/2, <i,j> nearest neighbours (each bond once, coupling 1) | Table I (infinite-length cylinders, E/N for YC4...XC20) is not TDL and is excluded; arXiv v2 compared with published PRL not checked (publisher blocks scripted access).",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -1.75008,
+      "sigma": 0.00024,
+      "method": "iPESS",
+      "method_detail": "D up to 25 (3-PESS simple update), D = 13 (full update), 9-PESS D = 15",
+      "method_as_published": "3-PESS (projected entangled simplex states) with simple/full update, power-law fit E0(D) = e0 + a D^(-alpha) (Fig. 1b); D up to 25 (reliability claimed for D ≤ 25)",
+      "bound_type": "extrapolated",
+      "bound_type_reason": "extrapolation to an infinite ansatz or to infinite size; not an upper bound (RULES.md 14.4)",
+      "how_tdl": "extrapolation in the ansatz",
+      "reference": "Liao et al., Gapless spin-liquid ground state in the S = 1/2 kagome antiferromagnet, Phys. Rev. Lett. 118, 137202 (2017), arXiv:1610.04727",
+      "peer_reviewed": true,
+      "source": "tdl-2026-10-25",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-25",
+        "method": "arXiv:1610.04727: arXiv text (pypdf layout and plain, read locally; version: 1610.04727v3 (revised version accepted for publication in PRL)); journal version not read (publisher returned 403 to scripted access); single reading",
+        "reported_as": "e0 = −0.43752(6)J",
+        "note": "p. 2 text, line 118 of sources/liao.plain.txt (layout line 114) (sources/liao.plain.txt) | per site (E0 'ground-state energy'; per-site normalisation not spelled out in the sentence); units J; No Hamiltonian formula in text; abstract: 'nearest-neighbor S = 1/2 antiferromagnetic Heisenberg model on the kagome lattice'; SM extends to J1-J2 with J2 second-neighbour | The finite-D energies E0(D) are shown only in Fig. 1(a)-(c); no table or numbers in main text or in the SM contained in the arXiv v3 PDF (Sec. SI-SIII have no energy numbers), so no finite-D candidates. The authors say the result is below those of all known techniques other than DMRG of specific clusters.",
+        "secondary_of": null
+      }
+    }
+  ]
+}

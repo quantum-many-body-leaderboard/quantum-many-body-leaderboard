@@ -29,6 +29,9 @@ node scripts/add_libraries.mjs
 # Instance-level, after the names are final: the exact row a QMBL ED run reproduced is matched by its published string.
 node scripts/add_ed_cost.mjs
 node scripts/validate.mjs
+# Track 4, the thermodynamic limit (RULES.md 14): tdl/ is rebuilt from its pass files and checked.
+node scripts/add_tdl_rows.mjs
+node scripts/validate_tdl.mjs
 # Last, and in this order: the summary counts the final tree, and the README table is
 # generated from it. Neither is ever hand-edited.
 node scripts/summary.mjs > /dev/null
