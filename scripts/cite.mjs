@@ -93,12 +93,19 @@ export const paperYear = (row, cache = sources()) =>
 // as HTML; building the text here keeps the citation under a number identical in both.
 // A row QMBL computed cites the code that produced it, at the commit that ran, so it can be rerun.
 const REPO = "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard";
-const QMBL_PAPER = { text: "Zerweck & Carrasquilla (2026)", url: "https://arxiv.org/abs/2610.22387" };
+// QMBL's own rows name no person: a cost-to-reproduce run cites its checks/cost/ folder, an exact
+// check its checks/ folder (2026-10-26).
+const qmblRef = row => {
+  const dir = (row.reference || "").match(/^QMBL, (checks\/[^\s/]+)\//)?.[1];
+  if (row.computed_by === "qmbl" || dir === "checks/cost")
+    return { text: "QMBL cost-to-reproduce run, checks/cost/", url: `${REPO}/tree/main/checks/cost` };
+  return { text: `QMBL check, ${dir}/`, url: `${REPO}/tree/main/${dir}` };
+};
 
 export function citeRef(row, cache = sources()) {
-  // A number QMBL computed (a cost run or an exact check) cites the QMBL paper (CITATION.cff,
-  // preferred-citation); the code column links the code and how to rerun it.
-  if (row.computed_by === "qmbl" || /^QMBL, checks\//.test(row.reference || "")) return QMBL_PAPER;
+  // A number QMBL computed (a cost run or an exact check) cites its checks/ folder (qmblRef);
+  // the code column links the code and how to rerun it.
+  if (row.computed_by === "qmbl" || /^QMBL, checks\//.test(row.reference || "")) return qmblRef(row);
   const s = sourceOf(row, cache);
   if (s) return { text: citeText(s), url: citeUrl(s) };
   const ref = row.reference || "";

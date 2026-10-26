@@ -16,7 +16,7 @@
 // its lines, as a slider and not a figure of results (ruled 2026-10-23). The directory is
 // emptied first, as figures/cost/ is, so the site never inlines a figure whose panels are gone.
 import fs from "node:fs";
-import { classEligible, perSiteDivisor, perSiteLabel } from "./units.mjs";
+import { classEligible, perSiteDivisor, perSiteLabel, H_MODELS } from "./units.mjs";
 import { collect, lowestOf, classBest, rowId } from "./summary.mjs";
 import { energyFigures, drawnRows, STRIP } from "./ladders.mjs";
 import { W, PAD, n, text, hline, dot, slashed, legend, header, doc, textWidth, wrap, niceStep, writer, logScale, rowHref } from "./chart.mjs";
@@ -114,7 +114,8 @@ function stopFigure(f, facet, s) {
     const h = header(t, title, "");
     const lg = legend(t, LEGEND(t), h.bottom + 34);
     const parts = [h.svg, lg.svg, text(W - PAD, lg.bottom + 30, perSiteLabel(L.members[0]), { size: 11, fill: t.muted, anchor: "end" })];
-    const end = grid(t, parts, [{ title: "", log: true, xLabel: "sites", slots }], lg.bottom + 50, 1, 250);
+    // Track 3 counts atoms (RULES.md 13.1), every other track sites.
+    const end = grid(t, parts, [{ title: "", log: true, xLabel: H_MODELS.has(L.members[0].model) ? "atoms" : "sites", slots }], lg.bottom + 50, 1, 250);
     return doc(t, end + 50, title, slots.map(x => x.label).join(", "), parts);
   });
 }

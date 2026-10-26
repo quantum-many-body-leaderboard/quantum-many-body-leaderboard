@@ -18,7 +18,7 @@
 // No figure here shows a V-score, a variance or a gap for the record itself: QMBL does not rank
 // records by how beatable they are.
 import fs from "node:fs";
-import { recordEligible, exactEligible } from "./units.mjs";
+import { recordEligible, exactEligible, H_MODELS } from "./units.mjs";
 import { collect, lowestOf, exactRecordOf } from "./summary.mjs";
 import { FAMILIES } from "./views.mjs";
 import { ladderFigures } from "./ladders.mjs";
@@ -261,7 +261,7 @@ for (const f of FIGS) write(f.name, t => {
   const parts = [h.svg, lg.svg];
   const end = grid(f.panels.length, lg.bottom + 90, { plotH: f.panels.length === 1 ? 240 : 200, gap: 120,
     draw: (k, box) => ladderPanel(t, parts, f.panels[k], box) });
-  const fn = footnote(t, "Sizes are numbers of sites. A family's line joins its best energy at each size, whichever paper set it, so one line can join " +
+  const fn = footnote(t, `Sizes are numbers of ${H_MODELS.has(f.model) ? "atoms" : "sites"}. ` + "A family's line joins its best energy at each size, whichever paper set it, so one line can join " +
     "several calculations. Where the reference is the record, the heights show how far the other rows are from it, and nothing about the record itself.", end + 44);
   parts.push(fn.svg);
   return doc(t, fn.bottom + 24, title, f.panels.map(L => `${L.title}, sizes ${L.sizes.join(", ")}`).join("; "), parts);
