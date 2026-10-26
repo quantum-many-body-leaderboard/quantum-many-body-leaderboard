@@ -1,0 +1,75 @@
+{
+  "model": "Heisenberg",
+  "lattice": "ruby-crossed",
+  "n_sites": "inf",
+  "boundary": "TDL",
+  "params": {
+    "S": 1
+  },
+  "instance_id": "Heisenberg/ruby-crossed_inf_S1",
+  "rows": [
+    {
+      "energy": -5.956,
+      "sigma": 0.02,
+      "method": "NLCE",
+      "method_detail": "numerical linked-cluster expansion at T = 0 built on the hexagons (squares on the checkerboard), second order",
+      "method_as_published": "NLCE2: second-order NLCE; error = difference between the second and the third order (S II)",
+      "bound_type": "approximate",
+      "bound_type_reason": "series expansion, spin-wave theory or another fixed approximation; error of unknown sign (RULES.md 14.4)",
+      "how_tdl": "series or approximate theory",
+      "reference": "Schäfer et al., Abundance of Hard-Hexagon Crystals in the Quantum Pyrochlore Antiferromagnet, Phys. Rev. Lett. 131, 096702 (2023), arXiv:2210.07235",
+      "peer_reviewed": true,
+      "source": "tdl-2026-10-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-26",
+        "method": "arXiv:2210.07235: arXiv text (pypdf plain, read locally; version: 2210.07235v3 of 1 Sep 2023, with the Supplemental Material); Fig. 1 read from the rendered page; journal version not read (APS blocks scripted access); single reading",
+        "reported_as": "NLCE2 −1.489(5)",
+        "note": "Table I, Ruby, S = 1 (line 151 of sources/2210.07235.txt) | per site; units J, Table I caption 'Ground-state energies in units of J'; the paper's 'ruby lattice with additional frustrated couplings' (Fig. 1(b)): the ruby lattice with both diagonals added in every square, all bonds J, so neighbouring hexagons are joined by V = (S1+S2).(S3+S4); definition read from the figure, the text gives no formula; spin S = 1; the printed error is a truncation estimate",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -5.9056,
+      "sigma": 0.002,
+      "method": "DMRG",
+      "method_detail": "snake-path DMRG (ITensor) on periodic clusters N = 54, 96, 150 (L = 3, 4, 5; Table S3), extrapolated linearly in 1/chi, then to N -> infinity with a quadratic fit (Fig. S4)",
+      "method_as_published": "DMRG (Table I); 'We first extrapolate to infinite bond dimension and then to the thermodynamic limit' (S III B)",
+      "bound_type": "extrapolated",
+      "bound_type_reason": "extrapolation to an infinite ansatz or to infinite size; not an upper bound (RULES.md 14.4)",
+      "how_tdl": "finite-size extrapolation",
+      "reference": "Schäfer et al., Abundance of Hard-Hexagon Crystals in the Quantum Pyrochlore Antiferromagnet, Phys. Rev. Lett. 131, 096702 (2023), arXiv:2210.07235",
+      "peer_reviewed": true,
+      "source": "tdl-2026-10-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-26",
+        "method": "arXiv:2210.07235: arXiv text (pypdf plain, read locally; version: 2210.07235v3 of 1 Sep 2023, with the Supplemental Material); Fig. 1 read from the rendered page; journal version not read (APS blocks scripted access); single reading",
+        "reported_as": "DMRG −1.4764(5)",
+        "note": "Table I, Ruby, S = 1 (line 151 of sources/2210.07235.txt) | per site; units J, Table I caption 'Ground-state energies in units of J'; the paper's 'ruby lattice with additional frustrated couplings' (Fig. 1(b)): the ruby lattice with both diagonals added in every square, all bonds J, so neighbouring hexagons are joined by V = (S1+S2).(S3+S4); definition read from the figure, the text gives no formula; spin S = 1; error from the difference between the largest cluster and the extrapolated value (S III B)",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -5.96,
+      "sigma": 0.004,
+      "method": "variational wave function",
+      "method_detail": "dressed hard-hexagon valence-bond crystal exp(-alpha0 V)|Psi0>, one parameter alpha0 (Table S1), energy of the infinite lattice evaluated by a linked-cluster expansion in the edge terms V (order not stated, S I C)",
+      "method_as_published": "E_alpha0: variational wave function Eq. (2) with optimization of the parameter alpha; 'a strict upper bound on the ground-state energy of Eq. (1) in the thermodynamic limit'",
+      "bound_type": "variational",
+      "bound_type_reason": "variational state of the infinite system at a fixed ansatz size; energy per site is an upper bound up to the stated contraction (RULES.md 14.4)",
+      "how_tdl": "infinite system",
+      "reference": "Schäfer et al., Abundance of Hard-Hexagon Crystals in the Quantum Pyrochlore Antiferromagnet, Phys. Rev. Lett. 131, 096702 (2023), arXiv:2210.07235",
+      "peer_reviewed": true,
+      "source": "tdl-2026-10-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-26",
+        "method": "arXiv:2210.07235: arXiv text (pypdf plain, read locally; version: 2210.07235v3 of 1 Sep 2023, with the Supplemental Material); Fig. 1 read from the rendered page; journal version not read (APS blocks scripted access); single reading",
+        "reported_as": "E_alpha0 −1.490(1)",
+        "note": "Table I, Ruby, S = 1 (line 151 of sources/2210.07235.txt) | per site; units J, Table I caption 'Ground-state energies in units of J'; the paper's 'ruby lattice with additional frustrated couplings' (Fig. 1(b)): the ruby lattice with both diagonals added in every square, all bonds J, so neighbouring hexagons are joined by V = (S1+S2).(S3+S4); definition read from the figure, the text gives no formula; spin S = 1; error = difference between the largest and second-largest expansion order at alpha0 (S I C); some top-order coefficients are approximate (Table S2 asterisks)",
+        "secondary_of": null
+      }
+    }
+  ]
+}

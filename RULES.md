@@ -830,6 +830,9 @@ infinite lattice. It has no site count, boundary or cluster.
   about 4e-5, more than an iPEPS energy's precision. Case: h = 3.04438 (Rader & Läuchli, PRX 8,
   031030) and h = 3.044 are two instances.
 - A filling is the density per site as printed (`n`), not a particle number.
+- Spins are S = 1/2, as in track 1, unless the instance carries a spin length `S` (Heisenberg
+  at S = 1 on the pyrochlore, checkerboard and crossed ruby lattices, Schäfer et al., PRL 131,
+  096702). Its id ends in `_S<S>` (`Heisenberg/pyrochlore_inf_S1`).
 - Id: `<Model>/<lattice>_inf[_<couplings>]`, the couplings in the order of track 1
   (`J1J2/square_inf_0.5`, `TFIsing/square_inf_3.04438`; Hubbard: filling, then U, then t').
 

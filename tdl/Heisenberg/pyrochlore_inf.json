@@ -1,0 +1,94 @@
+{
+  "model": "Heisenberg",
+  "lattice": "pyrochlore",
+  "n_sites": "inf",
+  "boundary": "TDL",
+  "params": {},
+  "instance_id": "Heisenberg/pyrochlore_inf",
+  "rows": [
+    {
+      "energy": -1.9668,
+      "sigma": 0.002,
+      "method": "NLCE",
+      "method_detail": "numerical linked-cluster expansion at T = 0 built on the hexagons (squares on the checkerboard), second order",
+      "method_as_published": "NLCE2: second-order NLCE; error = difference between the second and the third order (S II)",
+      "bound_type": "approximate",
+      "bound_type_reason": "series expansion, spin-wave theory or another fixed approximation; error of unknown sign (RULES.md 14.4)",
+      "how_tdl": "series or approximate theory",
+      "reference": "Schäfer et al., Abundance of Hard-Hexagon Crystals in the Quantum Pyrochlore Antiferromagnet, Phys. Rev. Lett. 131, 096702 (2023), arXiv:2210.07235",
+      "peer_reviewed": true,
+      "source": "tdl-2026-10-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-26",
+        "method": "arXiv:2210.07235: arXiv text (pypdf plain, read locally; version: 2210.07235v3 of 1 Sep 2023, with the Supplemental Material); Fig. 1 read from the rendered page; journal version not read (APS blocks scripted access); single reading",
+        "reported_as": "NLCE2 −0.4917(5)",
+        "note": "Table I, Pyrochlore, S = 1/2 (line 145 of sources/2210.07235.txt) | per site; units J, Table I caption 'Ground-state energies in units of J'; nearest-neighbour Heisenberg model on the pyrochlore lattice, H = J sum S_i.S_j, Eq. (1); spin S = 1/2; the printed error is a truncation estimate",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -1.957888,
+      "sigma": 0.000032,
+      "method": "variational wave function",
+      "method_detail": "dressed hard-hexagon valence-bond crystal exp(-alpha0 V)|Psi0>, one parameter alpha0 (Table S1), energy of the infinite lattice evaluated by a linked-cluster expansion in the edge terms V (order six, S I C)",
+      "method_as_published": "E_alpha0: variational wave function Eq. (2) with optimization of the parameter alpha; 'a strict upper bound on the ground-state energy of Eq. (1) in the thermodynamic limit'",
+      "bound_type": "variational",
+      "bound_type_reason": "variational state of the infinite system at a fixed ansatz size; energy per site is an upper bound up to the stated contraction (RULES.md 14.4)",
+      "how_tdl": "infinite system",
+      "reference": "Schäfer et al., Abundance of Hard-Hexagon Crystals in the Quantum Pyrochlore Antiferromagnet, Phys. Rev. Lett. 131, 096702 (2023), arXiv:2210.07235",
+      "peer_reviewed": true,
+      "source": "tdl-2026-10-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-26",
+        "method": "arXiv:2210.07235: arXiv text (pypdf plain, read locally; version: 2210.07235v3 of 1 Sep 2023, with the Supplemental Material); Fig. 1 read from the rendered page; journal version not read (APS blocks scripted access); single reading",
+        "reported_as": "E_alpha0 −0.489472(8)",
+        "note": "Table I, Pyrochlore, S = 1/2 (line 145 of sources/2210.07235.txt) | per site; units J, Table I caption 'Ground-state energies in units of J'; nearest-neighbour Heisenberg model on the pyrochlore lattice, H = J sum S_i.S_j, Eq. (1); spin S = 1/2; error = difference between the largest and second-largest expansion order at alpha0 (S I C); some top-order coefficients are approximate (Table S2 asterisks)",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -1.9676,
+      "sigma": null,
+      "method": "NLCE",
+      "method_detail": "numerical linked-cluster expansion at T = 0 built on the hexagons, sixth order (283 clusters at order six)",
+      "method_as_published": "NLCE6 = -0.4919J (S II)",
+      "bound_type": "approximate",
+      "bound_type_reason": "series expansion, spin-wave theory or another fixed approximation; error of unknown sign (RULES.md 14.4)",
+      "how_tdl": "series or approximate theory",
+      "reference": "Schäfer et al., Abundance of Hard-Hexagon Crystals in the Quantum Pyrochlore Antiferromagnet, Phys. Rev. Lett. 131, 096702 (2023), arXiv:2210.07235",
+      "peer_reviewed": true,
+      "source": "tdl-2026-10-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-26",
+        "method": "arXiv:2210.07235: arXiv text (pypdf plain, read locally; version: 2210.07235v3 of 1 Sep 2023, with the Supplemental Material); Fig. 1 read from the rendered page; journal version not read (APS blocks scripted access); single reading",
+        "reported_as": "NLCE6 = −0.4919J",
+        "note": "S II, line 1054 of sources/2210.07235.txt | per site; units J; nearest-neighbour Heisenberg model on the pyrochlore lattice, H = J sum S_i.S_j, Eq. (1); spin S = 1/2; no error printed",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -1.96,
+      "sigma": 0.024,
+      "method": "DMRG",
+      "method_detail": "SU(2) DMRG on periodic clusters N = 32, 48d, 64, 108, 128, each extrapolated linearly in the two-site variance (truncation error for 108), then a quadratic fit in 1/N with Gaussian resampling",
+      "method_as_published": "E0/Nsites = −0.490(6), 'our best estimate for the ground-state energy' from the quadratic fit of the cluster energies in inverse cluster size",
+      "bound_type": "extrapolated",
+      "bound_type_reason": "extrapolation to an infinite ansatz or to infinite size; not an upper bound (RULES.md 14.4)",
+      "how_tdl": "finite-size extrapolation",
+      "reference": "Hagymási et al., Possible inversion symmetry breaking in the S = 1/2 pyrochlore Heisenberg magnet, Phys. Rev. Lett. 126, 117204 (2021), arXiv:2010.03563",
+      "peer_reviewed": true,
+      "source": "tdl-2026-10-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-26",
+        "method": "arXiv:2010.03563: arXiv text (pypdf layout, read locally; dated March 22, 2021); journal version not read (APS blocks scripted access); single reading",
+        "reported_as": "E0/Nsites = −0.490(6)",
+        "note": "Ground-state energy paragraph, line 114 of sources/2010.03563.txt; also the abstract, line 15. Quoted as the DMRG column of PRL 131, 096702, Table I | per site; units J (J = 1, Fig. 1 caption); H = J sum S_i.S_j on the pyrochlore lattice, S = 1/2, Eq. (1); the abstract says the value combines DMRG and NLCE extrapolations, the text derives it from the DMRG cluster fit",
+        "secondary_of": null
+      }
+    }
+  ]
+}

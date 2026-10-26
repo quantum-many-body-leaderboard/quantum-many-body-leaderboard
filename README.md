@@ -1855,6 +1855,89 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 
 </details>
 
+### Thermodynamic limit: 31 infinite-lattice instances
+
+<details>
+<summary><b>Heisenberg</b>, infinite lattice: 8 instances, energies per site as <code>E/N (S.S)</code></summary>
+
+| instance | value | energy | method | code |
+|---|---|---|---|---|
+| checkerboard | best variational | -0.513442(1) | variational wave function [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
+|  | best extrapolated | -0.5132(2) | DMRG [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
+|  | best approximate | -0.5138(2) | NLCE [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
+| checkerboard, S = 1 | best variational | -1.5339(5) | variational wave function [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
+|  | best extrapolated | -1.532(1) | DMRG [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
+|  | best approximate | -1.533(2) | NLCE [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
+| kagome | best extrapolated | -0.4386(5) | DMRG [Depenbrock et al. (2012)](https://doi.org/10.48550/arxiv.1205.4858) |  |
+| pyrochlore | best variational | -0.489472(8) | variational wave function [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
+|  | best extrapolated | -0.490(6) | DMRG [Hagymási et al. (2020)](https://doi.org/10.48550/arxiv.2010.03563) |  |
+|  | best approximate | -0.4919 &#9675; | NLCE [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
+| pyrochlore, S = 1 | best variational | -1.490(1) | variational wave function [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
+|  | best approximate | -1.489(5) | NLCE [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
+| ruby-crossed | best variational | -0.48946(5) | variational wave function [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
+|  | best extrapolated | -0.4865(7) | DMRG [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
+|  | best approximate | -0.492(1) | NLCE [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
+| ruby-crossed, S = 1 | best variational | -1.490(1) | variational wave function [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
+|  | best extrapolated | -1.4764(5) | DMRG [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
+|  | best approximate | -1.489(5) | NLCE [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
+| square | best variational | -0.6693781 &#9675; | iPEPS [Rader & Läuchli (2018)](https://doi.org/10.1103/physrevx.8.031030) |  |
+|  | best extrapolated | -0.669441878(9) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
+
+</details>
+
+<details>
+<summary><b>Hubbard</b>, infinite lattice: 22 instances, energies per site as <code>E/site</code></summary>
+
+| instance | value | energy | method | code |
+|---|---|---|---|---|
+| square, U = 4, n = 0.3 | best extrapolated | -0.8793(2) | CP-AFQMC [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) |  |
+| square, U = 8, n = 0.3 | best extrapolated | -0.8534(1) | CP-AFQMC [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) |  |
+| square, U = 4, n = 0.5 | best extrapolated | -1.141(2) | CP-AFQMC [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) |  |
+| square, U = 8, n = 0.5 | best extrapolated | -1.066(2) | CP-AFQMC [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) |  |
+| square, U = 4, n = 0.6 | best extrapolated | -1.1845(5) | CP-AFQMC [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) |  |
+| square, U = 8, n = 0.6 | best extrapolated | -1.0729(1) | CP-AFQMC [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) |  |
+| square, U = 4, n = 0.75 | best extrapolated | -1.1491(2) | CP-AFQMC [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) |  |
+| square, U = 8, n = 0.75 | best extrapolated | -0.9666(4) | CP-AFQMC [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) |  |
+| square, U = 2, n = 0.8 | best extrapolated | -1.306(2) | CP-AFQMC [LeBlanc et al. (2015)](https://doi.org/10.1103/physrevx.5.041041) |  |
+|  | best approximate | -1.3062(4) | DMET [LeBlanc et al. (2015)](https://doi.org/10.1103/physrevx.5.041041) |  |
+| square, U = 4, n = 0.8 | best extrapolated | -1.110(3) | CP-AFQMC [LeBlanc et al. (2015)](https://doi.org/10.1103/physrevx.5.041041) |  |
+|  | best approximate | -1.108(2) | DMET [LeBlanc et al. (2015)](https://doi.org/10.1103/physrevx.5.041041) |  |
+| square, U = 6, n = 0.8 | best extrapolated | -0.967(1) | FN-DMC [LeBlanc et al. (2015)](https://doi.org/10.1103/physrevx.5.041041) |  |
+|  | best approximate | -0.977(4) | DMET [LeBlanc et al. (2015)](https://doi.org/10.1103/physrevx.5.041041) |  |
+| square, U = 8, n = 0.8 | best extrapolated | -0.877(1) | FN-DMC [LeBlanc et al. (2015)](https://doi.org/10.1103/physrevx.5.041041) |  |
+|  | best approximate | -0.88(3) | DMET [LeBlanc et al. (2015)](https://doi.org/10.1103/physrevx.5.041041) |  |
+| square, U = 12, n = 0.875 | best approximate | -0.6531(1) | DMET [Zheng et al. (2017)](https://doi.org/10.1126/science.aam7127) |  |
+| square, U = 2, n = 0.875 | best extrapolated | -1.270(2) | FN-DMC [LeBlanc et al. (2015)](https://doi.org/10.1103/physrevx.5.041041) |  |
+|  | best approximate | -1.2721(6) | DMET [LeBlanc et al. (2015)](https://doi.org/10.1103/physrevx.5.041041) |  |
+| square, U = 4, n = 0.875 | best extrapolated | -1.032(1) | CP-AFQMC [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) |  |
+|  | best approximate | -1.031(3) | DMET [LeBlanc et al. (2015)](https://doi.org/10.1103/physrevx.5.041041) |  |
+| square, U = 6, n = 0.875 | best extrapolated | -0.854(2) | FN-DMC [LeBlanc et al. (2015)](https://doi.org/10.1103/physrevx.5.041041) |  |
+|  | best approximate | -0.8767(7) | DMET [Zheng et al. (2017)](https://doi.org/10.1126/science.aam7127) |  |
+| square, U = 8, n = 0.875 | best extrapolated | -0.773(1) | CP-AFQMC [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) |  |
+|  | best approximate | -0.77063(1) | DMET [Zheng et al. (2017)](https://doi.org/10.1126/science.aam7127) |  |
+| square, U = 12, n = 1 | best extrapolated | -0.3693(2) | AFQMC [LeBlanc et al. (2015)](https://doi.org/10.1103/physrevx.5.041041) |  |
+|  | best approximate | -0.3696 &#9675; | UCCSDTQ* [LeBlanc et al. (2015)](https://doi.org/10.1103/physrevx.5.041041) |  |
+| square, U = 2, n = 1 | best extrapolated | -1.1763(2) | AFQMC [LeBlanc et al. (2015)](https://doi.org/10.1103/physrevx.5.041041) |  |
+|  | best approximate | -1.1764(3) | DMET [LeBlanc et al. (2015)](https://doi.org/10.1103/physrevx.5.041041) |  |
+| square, U = 4, n = 1 | best extrapolated | -0.8605(5) | DMRG [LeBlanc et al. (2015)](https://doi.org/10.1103/physrevx.5.041041) |  |
+|  | best approximate | -0.861 &#9675; | UCCSDTQ* [LeBlanc et al. (2015)](https://doi.org/10.1103/physrevx.5.041041) |  |
+| square, U = 6, n = 1 | best extrapolated | -0.6568(3) | AFQMC [LeBlanc et al. (2015)](https://doi.org/10.1103/physrevx.5.041041) |  |
+|  | best approximate | -0.6582 &#9675; | UCCSDTQ* [LeBlanc et al. (2015)](https://doi.org/10.1103/physrevx.5.041041) |  |
+| square, U = 8, n = 1 | best extrapolated | -0.5247(2) | AFQMC [LeBlanc et al. (2015)](https://doi.org/10.1103/physrevx.5.041041) |  |
+|  | best approximate | -0.5255 &#9675; | UCCSDTQ* [LeBlanc et al. (2015)](https://doi.org/10.1103/physrevx.5.041041) |  |
+
+</details>
+
+<details>
+<summary><b>Transverse-field Ising</b>, infinite lattice: 1 instance, energies per site as <code>E/N (Pauli)</code></summary>
+
+| instance | value | energy | method | code |
+|---|---|---|---|---|
+| square, h = 3.04438 | best variational | -3.2342607 &#9675; | iPEPS [Rader & Läuchli (2018)](https://doi.org/10.1103/physrevx.8.031030) |  |
+|  | best extrapolated | -3.2342623 &#9675; | iPEPS [Rader & Läuchli (2018)](https://doi.org/10.1103/physrevx.8.031030) |  |
+
+</details>
+
 <!-- END LEADERBOARD -->
 
 ## Details
