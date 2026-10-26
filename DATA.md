@@ -701,7 +701,8 @@ Track 4 ([RULES.md §14](RULES.md#14-track-4-the-thermodynamic-limit)) is stored
 `data/`, in `tdl/<Model>/<lattice>_inf[_<couplings>].json`, one file per instance, rebuilt by
 `scripts/add_tdl_rows.mjs` from `passes/tdl-rows/tdl-rows-YYYY-MM-DD[-label].json` on every build.
 An instance has `n_sites: "inf"`, `boundary: "TDL"` and `params` as printed (`n`, the filling
-per site, for fermions). A row has the fields of a track 1 row, with three differences:
+per site, for fermions; `S`, the spin length, for spin models other than S = 1/2). A row has
+the fields of a track 1 row, with three differences:
 
 - `energy` and `sigma` are per site, in track 1's stored convention for one site (4 × S·S for
   Heisenberg and J1-J2, Pauli for the transverse-field Ising model, t for Hubbard and t-V);

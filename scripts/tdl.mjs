@@ -25,7 +25,7 @@ export function collectTDL() {
 
 // The couplings of an instance as a reader writes them, in the order of its id.
 const COUPLINGS = {
-  Heisenberg: () => [],
+  Heisenberg: p => (p.S != null ? [`S = ${p.S}`] : []),
   J1J2: p => [`J2 = ${p.J2}`],
   TFIsing: p => [`h = ${p.h}`],
   Hubbard: p => [`U = ${p.U}`, `n = ${p.n}`, ...(p.t2 != null ? [`t' = ${p.t2}`] : [])],
@@ -35,8 +35,10 @@ export const tdlCouplings = inst => (COUPLINGS[inst.model]?.(inst.params ?? {}) 
 export const tdlLabel = inst => [inst.lattice, ...tdlCouplings(inst)].join(", ");
 
 // The id: <Model>/<lattice>_inf, then the coupling values in the order of COUPLINGS.
+// Spin models are S = 1/2 unless params.S says otherwise (RULES.md 14.1).
 export function tdlId(model, lattice, params = {}) {
-  const order = { J1J2: ["J2"], TFIsing: ["h"], Hubbard: ["n", "U", "t2"], tV: ["n", "V"] }[model] ?? Object.keys(params).sort();
-  const vals = order.filter(k => params[k] != null).map(k => String(params[k]));
+  const order = { Heisenberg: ["S"], J1J2: ["J2"], TFIsing: ["h"], Hubbard: ["n", "U", "t2"], tV: ["n", "V"] }[model] ?? Object.keys(params).sort();
+  // The spin length is written with its letter (`_S1`); S = 1/2 carries no parameter.
+  const vals = order.filter(k => params[k] != null).map(k => (k === "S" ? `S${params[k]}` : String(params[k])));
   return `${model}/${[lattice, "inf", ...vals].join("_")}`;
 }
