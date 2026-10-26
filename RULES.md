@@ -317,7 +317,10 @@ Reason: a number that is wrong downward looks like a best value. Example: the th
 On a solved instance, a `projected`, `extrapolated` or `approximate` row more than 2 sigma
 below the exact energy cannot be the best of its class. Sigma is the row's own, combined in
 quadrature with the exact row's where that row is stochastic. Where neither states one, the
-row is caught when its energy lies below the exact energy at all. These classes are not
+row is caught only if the whole interval its printed digits allow lies below the exact energy,
+the exact row's own printed precision included (2026-10-26, as in §9.4). Case: on
+`Hchain/chain_10_O_R1.8_sto6g` the MRCI+Q energy −0.5424385 per atom equals the full-CI energy
+to its printed digits and is not caught. These classes are not
 bounds, so such a row breaks no rule and carries no `defect`: the build sets the flag, and
 nothing is written on the row. The row stays listed with a marker, and the next row of its
 class that is not flagged is the best. A `variational` row below the exact energy violates the

@@ -45,7 +45,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best extrapolated | -0.4383(2) (+4.0e-4) | DMRG [Depenbrock et al. (2012)](https://doi.org/10.48550/arxiv.1205.4858) |  |
 | kagome 6x6 (108 sites) | best extrapolated | -0.4383(3) | DMRG [Depenbrock et al. (2012)](https://doi.org/10.48550/arxiv.1205.4858) |  |
 | kagome 8x8 (192 sites) | best variational | -0.42987(1) | VMC (Gutzwiller) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/kagome-8x8_192_P/vmc_gutzwiller.sh) |
-| pyrochlore 2x2x2 (32 sites) | exact | -0.5168588 | ED [Zerweck & Carrasquilla (2026)](https://arxiv.org/abs/2610.22387) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/93fea80/checks/pyrochlore-32-ed) |
+| pyrochlore 2x2x2 (32 sites) | exact | -0.5168588 | ED [QMBL check, checks/pyrochlore-32-ed/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/pyrochlore-32-ed) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/93fea80/checks/pyrochlore-32-ed) |
 |  | best variational | -0.5162(1) (+6.6e-4) | VMC (PP) [Astrakhantsev et al. (2021)](https://doi.org/10.1103/physrevx.11.041021) | *uses [mVMC](https://github.com/issp-center-dev/mVMC)* |
 |  | best extrapolated | -0.5168 &#9675; (+5.9e-5) | DMRG [Hagymási et al. (2020)](https://doi.org/10.48550/arxiv.2010.03563) |  |
 | pyrochlore 2x2x2 (128 sites) | best variational | -0.49229(7) | VMC (PP + RBM) [Pohle et al. (2023)](https://doi.org/10.48550/arxiv.2311.11561) | *uses [mVMC](https://github.com/issp-center-dev/mVMC)* |
@@ -232,7 +232,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square 6x6, J2 = 0.4 | exact | -0.529745 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.4/ed_lattice_symmetries.sh) |
 |  | best variational | -0.529744 &#9675; (+1.0e-6) | DMRG [Gong et al. (2013)](https://doi.org/10.48550/arxiv.1311.5962) |  |
 |  | best extrapolated | -0.529747(1) (−2.0e-6) | DMRG [Gong et al. (2013)](https://doi.org/10.48550/arxiv.1311.5962) |  |
-| square 6x6, J2 = 0.45 | exact | -0.5156574 | ED [Zerweck & Carrasquilla (2026)](https://arxiv.org/abs/2610.22387) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/d9feb2d/checks/exact-recompute-2026-09) |
+| square 6x6, J2 = 0.45 | exact | -0.5156574 | ED [QMBL check, checks/exact-recompute-2026-09/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/exact-recompute-2026-09) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/d9feb2d/checks/exact-recompute-2026-09) |
 |  | best variational | -0.515655 &#9675; (+2.4e-6) | DMRG [Gong et al. (2013)](https://doi.org/10.48550/arxiv.1311.5962) |  |
 |  | best extrapolated | -0.51566(1) (−2.6e-6) | VMC (Gutzwiller) [Hu et al. (2013)](https://doi.org/10.48550/arxiv.1304.2630) |  |
 | square 6x6, J2 = 0.5 | exact | -0.5038097 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.5/ed_lattice_symmetries.sh) |
@@ -262,7 +262,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square, 40 sites, J2 = 0.4 | exact | -0.5272092 | ED [Richter & Schulenburg (2009)](https://doi.org/10.48550/arxiv.0909.3723) |  |
 | square, 40 sites, J2 = 0.5 | exact | -0.4990762 | ED [Richter & Schulenburg (2009)](https://doi.org/10.48550/arxiv.0909.3723) |  |
 | square, 40 sites, J2 = 0.55 | exact | -0.4879479 | ED [Richter & Schulenburg (2009)](https://doi.org/10.48550/arxiv.0909.3723) |  |
-| square, 40 sites, J2 = 0.6 | exact | -0.4796232 | ED [Zerweck & Carrasquilla (2026)](https://arxiv.org/abs/2610.22387) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/a4239fb/checks/j1j2-40-sector-ed) |
+| square, 40 sites, J2 = 0.6 | exact | -0.4796232 | ED [QMBL check, checks/j1j2-40-sector-ed/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/j1j2-40-sector-ed) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/a4239fb/checks/j1j2-40-sector-ed) |
 | square, 40 sites, J2 = 0.65 | exact | -0.5011508 | ED [Richter & Schulenburg (2009)](https://doi.org/10.48550/arxiv.0909.3723) |  |
 | square, 40 sites, J2 = 0.7 | exact | -0.5263826 | ED [Richter & Schulenburg (2009)](https://doi.org/10.48550/arxiv.0909.3723) |  |
 | square, 40 sites, J2 = 0.8 | exact | -0.5835051 | ED [Richter & Schulenburg (2009)](https://doi.org/10.48550/arxiv.0909.3723) |  |
@@ -450,7 +450,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best variational | -0.8300032 (+<1e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/chain_14_P_4_2.7825594.jl) |
 | chain, 14 sites, U = 3.59381366, n &asymp; 0.5714 | exact | -0.804323 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/Hubbard/chain_14_P_4_3.59381366/ed_netket.sh) |
 |  | best variational | -0.804323 (+<1e-6) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/chain_14_P_4_3.59381366.jl) |
-| chain, 14 sites, U = 4.64158882, n &asymp; 0.5714 | exact | -0.7783541 | ED [Zerweck & Carrasquilla (2026)](https://arxiv.org/abs/2610.22387) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/3b4cf67/checks/hubbard-u-labels) |
+| chain, 14 sites, U = 4.64158882, n &asymp; 0.5714 | exact | -0.7783541 | ED [QMBL check, checks/hubbard-u-labels/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/hubbard-u-labels) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/3b4cf67/checks/hubbard-u-labels) |
 |  | best variational | -0.7783541 (+<1e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/chain_14_P_4_4.64158882.jl) |
 | chain, 14 sites, U = 4.64158883, n &asymp; 0.5714 | exact | -0.7783541 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/Hubbard/chain_14_P_4_4.64158882/ed_netket.sh) |
 | chain, 14 sites, U = 7.74263683, n &asymp; 0.5714 | exact | -0.7304717 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/Hubbard/chain_14_P_4_7.74263683/ed_netket.sh) |
@@ -537,7 +537,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best variational | -1.148627(3) (+1.7e-3) | VMC (HFDS) [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) | *uses [NetKet](https://www.netket.org/)* |
 | square 4x4, U = 3.59381366, n = 0.5 | exact | -1.1061269 | ED [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |  |
 |  | best variational | -1.105848(3) (+2.8e-4) | VMC (HFDS) [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) | *uses [NetKet](https://www.netket.org/)* |
-| square 4x4, U = 3.5981, n = 0.5 | exact | -1.1060147 | ED [Zerweck & Carrasquilla (2026)](https://arxiv.org/abs/2610.22387) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/3b4cf67/checks/hubbard-u-labels) |
+| square 4x4, U = 3.5981, n = 0.5 | exact | -1.1060147 | ED [QMBL check, checks/hubbard-u-labels/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/hubbard-u-labels) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/3b4cf67/checks/hubbard-u-labels) |
 |  | best variational | -1.1060144 (+3.2e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_4_3.5981.jl) |
 | square 4x4, U = 4, n = 0.5 | exact | -1.0959311 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_16_P_4_4/ed_lattice_symmetries.sh) |
 |  | best variational | -1.095931 (+<1e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_4_4.jl) |
@@ -545,7 +545,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best variational | -1.0562454 (+<1e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_4_6.jl) |
 | square 4x4, U = 7.74263683, n = 0.5 | exact | -1.0318222 | ED [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |  |
 |  | best variational | -1.031562(6) (+2.6e-4) | VMC (HFDS) [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) | *uses [NetKet](https://www.netket.org/)* |
-| square 4x4, U = 7.74264, n = 0.5 | exact | -1.0318221 | ED [Zerweck & Carrasquilla (2026)](https://arxiv.org/abs/2610.22387) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/3b4cf67/checks/hubbard-u-labels) |
+| square 4x4, U = 7.74264, n = 0.5 | exact | -1.0318221 | ED [QMBL check, checks/hubbard-u-labels/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/hubbard-u-labels) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/3b4cf67/checks/hubbard-u-labels) |
 |  | best variational | -1.0318221 (+<1e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_4_7.74264.jl) |
 | square 4x4, U = 8, n = 0.5 | exact | -1.0287892 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_16_P_4_8/ed_lattice_symmetries.sh) |
 |  | best variational | -1.0287892 (+<1e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_4_8.jl) |
@@ -553,13 +553,13 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best variational | -1.0089505 (+<1e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_4_10.jl) |
 | square 4x4, U = 2, n = 0.625 | exact | -1.3360594 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_16_P_5_2/ed_lattice_symmetries.sh) |
 |  | best variational | -1.3360594 (+<1e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_5_2.jl) |
-| square 4x4, U = 2.1544, n = 0.625 | exact | -1.325767 | ED [Zerweck & Carrasquilla (2026)](https://arxiv.org/abs/2610.22387) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/3b4cf67/checks/hubbard-u-labels) |
+| square 4x4, U = 2.1544, n = 0.625 | exact | -1.325767 | ED [QMBL check, checks/hubbard-u-labels/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/hubbard-u-labels) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/3b4cf67/checks/hubbard-u-labels) |
 |  | best variational | -1.325767 (+<1e-6) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_5_2.1544.jl) |
 | square 4x4, U = 2.15443469, n = 0.625 | exact | -1.3257647 | ED [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |  |
 |  | best variational | -1.3257435(1) (+2.1e-5) | VMC (HFDS) [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) | *uses [NetKet](https://www.netket.org/)* |
 | square 4x4, U = 3.59381366, n = 0.625 | exact | -1.2432273 | ED [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |  |
 |  | best variational | -1.2431527(4) (+7.5e-5) | VMC (HFDS) [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) | *uses [NetKet](https://www.netket.org/)* |
-| square 4x4, U = 3.5981, n = 0.625 | exact | -1.2430143 | ED [Zerweck & Carrasquilla (2026)](https://arxiv.org/abs/2610.22387) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/3b4cf67/checks/hubbard-u-labels) |
+| square 4x4, U = 3.5981, n = 0.625 | exact | -1.2430143 | ED [QMBL check, checks/hubbard-u-labels/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/hubbard-u-labels) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/3b4cf67/checks/hubbard-u-labels) |
 |  | best variational | -1.2430143 (+<1e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_5_3.5981.jl) |
 | square 4x4, U = 4, n = 0.625 | exact | -1.2238086 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_16_P_5_4/ed_lattice_symmetries.sh) |
 |  | best variational | -1.2238086 (+<1e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_5_4.jl) |
@@ -567,7 +567,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best variational | -1.1473978 &#9675; (+<1e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_5_6.jl) |
 | square 4x4, U = 7.74263683, n = 0.625 | exact | -1.1002332 | ED [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) |  |
 |  | best variational | -1.1001250(6) (+1.1e-4) | VMC (HFDS) [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) | *uses [NetKet](https://www.netket.org/)* |
-| square 4x4, U = 7.74264, n = 0.625 | exact | -1.1002331 | ED [Zerweck & Carrasquilla (2026)](https://arxiv.org/abs/2610.22387) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/3b4cf67/checks/hubbard-u-labels) |
+| square 4x4, U = 7.74264, n = 0.625 | exact | -1.1002331 | ED [QMBL check, checks/hubbard-u-labels/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/hubbard-u-labels) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/3b4cf67/checks/hubbard-u-labels) |
 |  | best variational | -1.1002331 (+<1e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_5_7.74264.jl) |
 | square 4x4, U = 8, n = 0.625 | exact | -1.0943979 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_16_P_5_8/ed_lattice_symmetries.sh) |
 |  | best variational | -1.0943979 (+<1e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_5_8.jl) |
@@ -576,11 +576,11 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square 4x4, U = 8, n = 0.875 | best variational | -0.74177(5) | VMC (HFPS) [Chen et al. (2026)](https://doi.org/10.1073/pnas.2535288123) | *uses [Quantax](https://github.com/ChenAo-Phys/quantax)* |
 | square 4x4, U = 2, n = 1 | exact (stochastic) | -1.1265(4) | AFQMC [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) |  |
 |  | best variational | -1.1248 &#9675; (+1.7e-3) | VMC (HB) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |  |
-| square 4x4, U = 4, n = 1 | exact | -0.8513659 | ED [Zerweck & Carrasquilla (2026)](https://arxiv.org/abs/2610.22387) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/0dfebd7/checks/hubbard-4x4-half-filling-ed) |
+| square 4x4, U = 4, n = 1 | exact | -0.8513659 | ED [QMBL check, checks/hubbard-4x4-half-filling-ed/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/hubbard-4x4-half-filling-ed) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/0dfebd7/checks/hubbard-4x4-half-filling-ed) |
 |  | best variational | -0.8511(1) (+2.3e-4) | VMC (TQS) [Yamazaki et al. (2026)](https://doi.org/10.1103/bjxb-8tsk) |  |
 | square 4x4, U = 6, n = 1 | exact (stochastic) | -0.6588(3) | AFQMC [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) |  |
 |  | best variational | -0.6577 &#9675; (+1.1e-3) | VMC (HB) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |  |
-| square 4x4, U = 8, n = 1 | exact | -0.5293047 | ED [Zerweck & Carrasquilla (2026)](https://arxiv.org/abs/2610.22387) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/0dfebd7/checks/hubbard-4x4-half-filling-ed) |
+| square 4x4, U = 8, n = 1 | exact | -0.5293047 | ED [QMBL check, checks/hubbard-4x4-half-filling-ed/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/hubbard-4x4-half-filling-ed) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/0dfebd7/checks/hubbard-4x4-half-filling-ed) |
 |  | best variational | -0.5292(3) (+1.1e-4) | VMC (PITQS) [Yamazaki et al. (2026)](https://doi.org/10.1103/bjxb-8tsk) | [Zenodo 18334851](https://doi.org/10.5281/zenodo.18334851) |
 | square 4x4, periodic/antiperiodic, U = 2, n = 1 | exact (stochastic) | -1.2571(1) | AFQMC [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) |  |
 |  | best variational | -1.25693(1) (+1.9e-4) | VMC (HFDS) [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) | *uses [NetKet](https://www.netket.org/)* |
@@ -1286,7 +1286,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best approximate | -0.5444567 &#9675; (+<1e-7) | CCSD(T) [10.1021/acs.jctc.3c00831](https://doi.org/10.1021/acs.jctc.3c00831) |  |
 | H6 chain, open, R = 2, STO-3G | exact | -0.5362833 | ED [10.1103/PhysRevLett.131.200601](https://doi.org/10.1103/PhysRevLett.131.200601) |  |
 |  | best variational | -0.5362167 &#9675; (+6.7e-5) | QFlow [10.1103/PhysRevLett.131.200601](https://doi.org/10.1103/PhysRevLett.131.200601) |  |
-|  | best projected | -0.5362833 &#9675; (+<1e-7) | CCSDTQ [10.1103/PhysRevLett.131.200601](https://doi.org/10.1103/PhysRevLett.131.200601) |  |
+|  | best projected | -0.5363333 &#9675; (−5.0e-5) | CCSDT [10.1103/PhysRevLett.131.200601](https://doi.org/10.1103/PhysRevLett.131.200601) |  |
 | H6 chain, open, R = 2.83459, STO-6G | exact | -0.5033663 | FCI [10.1021/acs.jctc.9b01125](https://doi.org/10.1021/acs.jctc.9b01125) |  |
 | H6 chain, open, R = 3, cc-pVDZ | exact | -0.5265167 | ED [10.1103/PhysRevLett.131.200601](https://doi.org/10.1103/PhysRevLett.131.200601) |  |
 |  | best projected | -0.5265167 &#9675; (+<1e-7) | CCSDTQ [10.1103/PhysRevLett.131.200601](https://doi.org/10.1103/PhysRevLett.131.200601) |  |
@@ -1351,7 +1351,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best approximate | -0.5149(2) | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
 | H10 chain, open, R = 1.2, STO-6G | exact | -0.4766378 | FCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
 |  | best variational | -0.4766378 &#9675; (−<1e-7) | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.4766378 &#9675; (+<1e-7) | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
+|  | best projected | -0.476638 &#9675; (−2.3e-7) | CCSDT [arXiv:1904.01131](https://arxiv.org/abs/1904.01131) |  |
 |  | best approximate | -0.4766261 &#9675; (+1.2e-5) | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
 | H10 chain, open, R = 1.4, cc-pV5Z | best variational | -0.5228716 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
 |  | best projected | -0.54871(9) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
@@ -1410,7 +1410,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best approximate | -0.56638(4) | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
 | H10 chain, open, R = 1.8, STO-6G | exact | -0.5424385 | FCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
 |  | best variational | -0.5424385 &#9675; (−<1e-7) | MRCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5422549 &#9675; (+1.8e-4) | RCCSD [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
+|  | best projected | -0.542439 &#9675; (−4.6e-7) | CCSDTQ [arXiv:1904.01131](https://arxiv.org/abs/1904.01131) |  |
 |  | best approximate | -0.542419 &#9675; (+2.0e-5) | CCSD(T) [10.1021/acs.jctc.3c00831](https://doi.org/10.1021/acs.jctc.3c00831) |  |
 | H10 chain, open, R = 1.88973, STO-6G | exact | -0.5415393 | FCI [10.1063/5.0014928](https://doi.org/10.1063/5.0014928) |  |
 | H10 chain, open, R = 2, cc-pV5Z | best variational | -0.538217 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
@@ -1430,7 +1430,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best approximate | -0.56391(1) | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
 | H10 chain, open, R = 2, STO-6G | exact | -0.5389626 | FCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
 |  | best variational | -0.5389626 &#9675; (−<1e-7) | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5389626 &#9675; (+<1e-7) | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
+|  | best projected | -0.538963 &#9675; (−4.1e-7) | CCSDTQ [arXiv:1904.01131](https://arxiv.org/abs/1904.01131) |  |
 |  | best approximate | -0.5380497 &#9675; (+9.1e-4) | UCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
 | H10 chain, open, R = 2.4, cc-pV5Z | best variational | -0.5281156 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
 |  | best projected | -0.5516514 &#9675; | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
@@ -1449,7 +1449,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best approximate | -0.55167(3) | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
 | H10 chain, open, R = 2.4, STO-6G | exact | -0.5227936 | FCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
 |  | best variational | -0.5227936 &#9675; (+<1e-7) | MRCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5227936 &#9675; (+<1e-7) | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
+|  | best projected | -0.522794 &#9675; (−3.5e-7) | CCSDTQ [arXiv:1904.01131](https://arxiv.org/abs/1904.01131) |  |
 |  | best approximate | -0.5207534 &#9675; (+2.0e-3) | UCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
 | H10 chain, open, R = 2.8, cc-pV5Z | best variational | -0.5174129 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
 |  | best projected | -0.53749(7) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
@@ -1488,7 +1488,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best approximate | -0.5257(1) | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
 | H10 chain, open, R = 3.2, STO-6G | exact | -0.4910383 | FCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
 |  | best variational | -0.4910383 &#9675; (−<1e-7) | MRCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.4908866 &#9675; (+1.5e-4) | SEET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
+|  | best projected | -0.4910383 &#9675; (−<1e-7) | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
 |  | best approximate | -0.4895218 &#9675; (+1.5e-3) | UCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
 | H10 chain, open, R = 3.6, cc-pV5Z | best variational | -0.5050291 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
 |  | best projected | -0.51584(8) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |

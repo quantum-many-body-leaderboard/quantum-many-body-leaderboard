@@ -121,14 +121,23 @@ export function sigmaAgainstExact(r, exact) {
 }
 
 // The automatic flag (RULES.md 6.2, 2026-10-22): an unflagged projected, extrapolated or
-// approximate row more than 2 sigma below the instance's exact energy, or below it at all
-// where no sigma is stated. Such a row cannot be its class's best; it stays listed with a
+// approximate row more than 2 sigma below the instance's exact energy, or, where no sigma is
+// stated, below it by more than its printed digits allow (printedTolerance). Such a row cannot be its class's best; it stays listed with a
 // marker. It is not a `defect` and writes nothing into data/.
 export function belowExact(r, exact) {
   if (!exact || r.defect || !NOT_BOUNDS.has(r.bound_type)) return false;
   const gap = exact.energy - r.energy, s = sigmaAgainstExact(r, exact);
-  return s != null ? gap > 2 * s : gap > 0;
+  return s != null ? gap > 2 * s : gap > printedTolerance(r, exact) * (1 + 1e-9);
 }
+
+// Where neither row states an error bar, a row lies below the exact energy only if the whole
+// interval its printed digits allow does (RULES.md 6.2, 9.4; 2026-10-26): half a unit in the last
+// stored digit of a value stored to at most 8 decimals (a printed, rounded number), plus half the
+// exact row's own `precision` (one unit in its last printed digit, DATA.md). Used by the automatic
+// flag above and by validate.mjs. A value with more stored digits is not taken as rounded.
+const decimals = x => (String(x).split(".")[1] || "").length;
+export const printedTolerance = (r, exact) =>
+  (decimals(r.energy) <= 8 ? 0.5 * 10 ** -decimals(r.energy) : 0) + (exact?.precision ?? 0) / 2;
 
 // Ties (RULES.md 6): two rows whose 2-sigma error bars overlap share the rank; a row without
 // sigma is compared by its energy alone.

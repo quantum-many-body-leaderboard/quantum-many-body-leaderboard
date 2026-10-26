@@ -549,7 +549,13 @@ const SLIDERS = ENERGY_FIGS.flatMap(([group, figs], j) => (group === "other" ? [
 // it, as the old dense style did. Label widths use the font's advance widths (semibold, in em).
 const BADGE_TIERS = [{ key: "w", strip: 920, font: 12.8 }, { key: "d", strip: 830, font: 12.8 }, { key: "t", strip: 570, font: 11.52 }, { key: "p", strip: 328, font: 11.2 }];
 const labelEm = s => [...String(s)].reduce((a, c) => a + (/\d/.test(c) ? 0.57 : c === "." ? 0.27 : c === "-" || c === "\u2212" ? 0.35 : 0.6), 0);
+// Rows a tier's badges need, unclamped. Past four rows at any width (the 70 R stops of the
+// hydrogen chains, 2026-10-26) the badges leave the strip: they wrap below it, one line per
+// facet (dense; slider below).
+const badgeRowsNeeded = (f, t) => Math.max(1, Math.ceil((Math.max(...f.stops.map(s => labelEm(s.label))) * t.font + 2) / (t.strip * f.pitch / W - 4.8)));
+const isDense = f => BADGE_TIERS.some(t => badgeRowsNeeded(f, t) > 4);
 function badgeClasses(f) {
+  if (isDense(f)) return "dense";
   const widest = Math.max(...f.stops.map(s => labelEm(s.label)));
   return BADGE_TIERS.map(t => {
     const room = t.strip * f.pitch / W - 4.8, text = widest * t.font + 2; // + the 1 px border each side
@@ -570,7 +576,18 @@ function slider({ id, f }) {
   if (!f.strip) return `<div class="stack">${f.facets.flatMap(x => x.stops.map(s =>
     (f.facets.length > 1 && x.label ? `<p class="facet">${esc(x.label)}</p>` : "") + figure(stopEntry(f, x, s)))).join("\n")}</div>`;
   const pct = x => (100 * x / W).toFixed(2);
-  return `<div class="slider ${badgeClasses(f)}" style="--pitch:${pct(f.pitch)}%">${f.stops.map((s, k) => `<input type="radio" name="${id}" id="${id}-${k}"${k === f.start ? " checked" : ""}>`).join("")}
+  const inputs = f.stops.map((s, k) => `<input type="radio" name="${id}" id="${id}-${k}"${k === f.start ? " checked" : ""}>`).join("");
+  if (isDense(f)) {
+    // Too many stops to label under the strip: the badges wrap below it, one group per facet,
+    // each led by what its stops share and the axis they step along.
+    let k = 0;
+    return `<div class="slider dense">${inputs}
+<div class="track">${figure(stripEntry(f), "strip")}</div>
+<div class="picks">${f.facets.map(x => `<div class="grp"><span class="axis">${esc([x.label, f.axis].filter(Boolean).join(", "))}</span>${x.stops.map(s => `<label for="${id}-${k++}">${esc(s.label)}</label>`).join("")}</div>`).join("")}</div>
+<div class="panels">${f.facets.flatMap(x => x.stops.map(s => figure(stopEntry(f, x, s)))).join("\n")}</div>
+</div>`;
+  }
+  return `<div class="slider ${badgeClasses(f)}" style="--pitch:${pct(f.pitch)}%">${inputs}
 <div class="track">${figure(stripEntry(f), "strip")}
 ${f.facets.map(x => `<span class="axis" style="left:${pct(x.stops[0].x - f.pitch / 2)}%">${esc(f.axis)} =</span>`).join("")}${f.stops.map((s, k) => `<label for="${id}-${k}" style="left:${pct(s.x)}%">${esc(s.label)}</label>`).join("")}</div>
 <div class="panels">${f.facets.flatMap(x => x.stops.map(s => figure(stopEntry(f, x, s)))).join("\n")}</div>
@@ -579,8 +596,8 @@ ${f.facets.map(x => `<span class="axis" style="left:${pct(x.stops[0].x - f.pitch
 const sliderRules = ({ id, f }) => (f.strip ? f.stops.map((s, k) =>
   `#${id}-${k}:checked ~ .panels > :nth-child(${k + 1}) { display: block; }
 #${id}-${k}:checked ~ .track .cur-${k} { display: inline; }
-#${id}-${k}:checked ~ .track label[for="${id}-${k}"] { color: var(--bg); background: var(--accent); border-color: var(--accent); }
-#${id}-${k}:focus-visible ~ .track label[for="${id}-${k}"] { outline: 2px solid var(--accent); outline-offset: 2px; }`).join("\n") : "");
+#${id}-${k}:checked ~ .track label[for="${id}-${k}"], #${id}-${k}:checked ~ .picks label[for="${id}-${k}"] { color: var(--bg); background: var(--accent); border-color: var(--accent); }
+#${id}-${k}:focus-visible ~ .track label[for="${id}-${k}"], #${id}-${k}:focus-visible ~ .picks label[for="${id}-${k}"] { outline: 2px solid var(--accent); outline-offset: 2px; }`).join("\n") : "");
 
 function energySwitcher(groups = ENERGY_FIGS, sliders = SLIDERS, prefix = "") {
   if (!groups.length) return "";
@@ -1697,6 +1714,15 @@ p.facet { margin: 1.4rem 0 0.2rem; font-size: 0.85rem; font-weight: 600; color: 
 .slider .track label:hover { border-color: var(--accent); color: var(--accent); }
 .slider .track .axis { transform: translateX(-100%); padding-right: 0.35rem; font-weight: 400; color: var(--muted); }
 .slider .panels > * { display: none; }
+.slider.dense .track { padding-bottom: 0; }
+.slider .picks { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.7rem; }
+.slider .picks .grp { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem; }
+.slider .picks .axis { font-size: 0.8rem; color: var(--muted); margin-right: 0.2rem; }
+.slider .picks label {
+  box-sizing: border-box; padding: 0.15rem 0.5rem; white-space: nowrap; line-height: 1.2; font-size: 0.8rem; font-weight: 600; cursor: pointer;
+  color: var(--ink2); background: var(--surface); border: 1px solid var(--grid); border-radius: 999px;
+}
+.slider .picks label:hover { border-color: var(--accent); color: var(--accent); }
 /* The strip's hover state (size_energy.mjs): over a group its size lines move apart; a
    stop's column is a hit area. */
 figure.strip .ex { transition: transform 0.3s ease; }

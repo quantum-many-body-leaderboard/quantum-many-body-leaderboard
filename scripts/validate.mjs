@@ -1,6 +1,6 @@
 import fs from "node:fs"; import path from "node:path";
 import { leaksIn } from "../checks/cost/scrub.mjs";
-import { expectedDof, expectedEinf, vScore, perSiteDivisor, groundStateExact, stochasticExact, exactEligible, classEligible, BEST_CLASSES } from "./units.mjs";
+import { expectedDof, expectedEinf, vScore, perSiteDivisor, groundStateExact, stochasticExact, exactEligible, classEligible, BEST_CLASSES, printedTolerance } from "./units.mjs";
 import { classBest } from "./summary.mjs";
 import { FAMILIES } from "./views.mjs";
 import { detailIssue } from "./method_names.mjs";
@@ -76,12 +76,8 @@ for (const m of fs.readdirSync("data")) {
           const gap = r.energy - o.energy;
           const sigma = o.sigma != null || refSigma != null ? Math.hypot(o.sigma ?? 0, refSigma ?? 0) : null;
           // Where neither states an error bar, a row is below the exact energy only if the whole
-          // interval its printed digits allow lies below it (RULES.md 9.4): half a unit in the last
-          // stored digit of a value stored to at most 8 decimals (a printed, rounded number), and the
-          // exact row's own `precision` (one unit in its last printed digit, DATA.md).
-          const decimals = x => (String(x).split(".")[1] || "").length;
-          const printed = (decimals(o.energy) <= 8 ? 0.5 * 10 ** -decimals(o.energy) : 0) + (r.precision ?? 0) / 2;
-          const realViolation = sigma != null ? gap > 3 * sigma : rel > 1e-8 && gap > printed * (1 + 1e-9);
+          // interval its printed digits allow lies below it (RULES.md 9.4; units.mjs, printedTolerance).
+          const realViolation = sigma != null ? gap > 3 * sigma : rel > 1e-8 && gap > printedTolerance(o, r) * (1 + 1e-9);
           // A row whose flag was lifted (a `defect` correction to null, RULES.md 10) has had this
           // relation checked, e.g. a printed interval that holds the exact energy (RULES.md 9.4):
           // it is counted with the tolerated ones and is not an issue. So is a row that carries
