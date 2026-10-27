@@ -193,32 +193,21 @@ function main() {
   const cache = sources();
 
   const lines = [];
-  lines.push(`### All ${s.instances} Hamiltonian instances (click a model to expand)`);
+  const tdl = collectTDL();
+  lines.push(`### All ${s.instances + tdl.length} Hamiltonian instances, ${tdl.length} of them infinite lattices (click a model to expand)`);
   lines.push("");
   const known = new Set(MODELS.map(([m]) => m));
   for (const inst of instances)
     if (!known.has(inst.model)) throw new Error(`${inst.instance_id}: model ${inst.model} has no MODELS entry`);
   for (const [model, name] of MODELS) {
-    const group = instances.filter(i => i.model === model).sort(byGeometry);
+    // The infinite lattices (RULES.md 14) after the largest cluster of the same lattice.
+    const group = [...instances, ...tdl].filter(i => i.model === model)
+      .sort((a, b) => (a.lattice === b.lattice ? (a.tdl ? 1 : 0) - (b.tdl ? 1 : 0) : 0) || byGeometry(a, b));
     if (!group.length) continue;
     // GitHub only renders a table inside <details> when a blank line follows <summary>.
     lines.push("<details>");
     lines.push(`<summary><b>${name}</b>: ${group.length} instances, energies as <code>${perSiteLabel(group[0])}</code></summary>`);
-    lines.push("", ...HEADER, ...group.flatMap(i => instanceLines(i, instanceLabel(i), cache)), "", "</details>", "");
-  }
-
-  // Track 4 (RULES.md 14): the thermodynamic limit, one block for all models, after the finite
-  // instances.
-  const tdl = collectTDL();
-  if (tdl.length) {
-    lines.push(`### Thermodynamic limit: ${tdl.length} infinite-lattice instances`, "");
-    for (const [model, name] of MODELS) {
-      const group = tdl.filter(i => i.model === model);
-      if (!group.length) continue;
-      lines.push("<details>");
-      lines.push(`<summary><b>${name}</b>, infinite lattice: ${group.length} instance${group.length === 1 ? "" : "s"}, energies per site as <code>${perSiteLabel(group[0])}</code></summary>`);
-      lines.push("", ...HEADER, ...group.flatMap(i => instanceLines(i, tdlLabel(i), cache)), "", "</details>", "");
-    }
+    lines.push("", ...HEADER, ...group.flatMap(i => instanceLines(i, i.tdl ? tdlLabel(i) : instanceLabel(i), cache)), "", "</details>", "");
   }
 
   // The legend (bound_type, bold, circle, dagger) is in the hand-written "## Details" section

@@ -5,12 +5,12 @@ release. Each accept or reject of a row cites a clause of this file.
 
 ## 1. Scope
 
-Track 1 covers ground-state energies of lattice Hamiltonians computed by any method.
+Track 1 covers ground-state energies of lattice Hamiltonians computed by any method, on finite
+clusters and on the infinite lattice (the thermodynamic limit, §14).
 Track 2 covers ground-state energies of the homogeneous electron gas in a periodic cell, in
 two and three dimensions (§12). Track 3 covers ground-state energies of hydrogen chains and
-square hydrogen sheets, in a stated basis set or basis-free (§13). Track 4 covers ground-state
-energies per site of the lattice Hamiltonians of track 1 in the thermodynamic limit (§14). A row
-is a claim about one (Hamiltonian instance, method) pair.
+square hydrogen sheets, in a stated basis set or basis-free (§13). A row is a claim about one
+(Hamiltonian instance, method) pair.
 
 Out of scope for now: real-time dynamics, finite temperature, molecules other than the
 hydrogen chains and sheets of track 3, atoms, quantum dots and other continuum systems with
@@ -815,10 +815,11 @@ Section 4 applies unchanged. The recurring cases:
 Track 3 has its own section and tables. Its figures plot energy per atom against R at fixed
 N, boundary and basis, and against N at fixed R, each result a dot.
 
-## 14. Track 4: the thermodynamic limit
+## 14. The thermodynamic limit
 
-Sections 2 to 11 apply to track 4 as to track 1. This section states what differs. Track 4
-opened on 2026-10-25. It adds no new physics to track 1, only instances without a site count.
+Track 1 also carries its Hamiltonians on the infinite lattice. Sections 2 to 11 apply to these
+instances as to the finite ones; this section states what differs. They were added on 2026-10-25
+(as a track 4 of their own until 2026-10-27).
 
 ### 14.1 Instance
 
@@ -877,5 +878,7 @@ the source prints is a row, as in track 1.
 
 ### 14.5 Site
 
-Track 4 has its own page, `/tdl/`, a section per model with the exact energy and the best value
-of each bound type per instance (§6), and its own API files under `/api/tdl/`.
+The Table lists an infinite-lattice instance in its model's section after the largest cluster of
+the same lattice, with its exact energy and the best value of each bound type (§6); the size
+filter "infinite" selects them. Its API file is under `/api/tdl/`. The figures, which plot
+against the site count, leave them out.

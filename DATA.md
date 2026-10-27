@@ -697,7 +697,7 @@ sector rows as rows, and the validator reports them.
 
 ## The thermodynamic limit: `tdl/`
 
-Track 4 ([RULES.md §14](RULES.md#14-track-4-the-thermodynamic-limit)) is stored apart from
+The infinite-lattice instances ([RULES.md §14](RULES.md#14-the-thermodynamic-limit)) are stored apart from
 `data/`, in `tdl/<Model>/<lattice>_inf[_<couplings>].json`, one file per instance, rebuilt by
 `scripts/add_tdl_rows.mjs` from `passes/tdl-rows/tdl-rows-YYYY-MM-DD[-label].json` on every build.
 An instance has `n_sites: "inf"`, `boundary: "TDL"` and `params` as printed (`n`, the filling
@@ -710,7 +710,7 @@ the fields of a track 1 row, with three differences:
   the ansatz`, `finite-size extrapolation` or `series or approximate theory` (RULES.md §14.3);
 - `dof`, `einf` and `v_score` are absent.
 
-`data/_summary.json` counts track 4 under `thermodynamic_limit`. The site serves
+`data/_summary.json` counts them under `thermodynamic_limit`. The site serves
 `/api/tdl/<id>.json`.
 
 ## Units and conventions

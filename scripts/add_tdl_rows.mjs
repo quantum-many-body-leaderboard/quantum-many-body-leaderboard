@@ -1,4 +1,4 @@
-// Track 4 (RULES.md 14): builds tdl/ from passes/tdl-rows/tdl-rows-YYYY-MM-DD[-label].json, in
+// The thermodynamic limit (RULES.md 14): builds tdl/ from passes/tdl-rows/tdl-rows-YYYY-MM-DD[-label].json, in
 // file-name order. tdl/ is wiped first, so the folder is a function of the pass files and the
 // build stays byte-idempotent. Each pass row is a per-site reading in the instance's per-site
 // convention (units.mjs perSiteLabel: S.S for spin models, Pauli for TFIsing, t for fermions);

@@ -1,4 +1,4 @@
-// Track 4 (RULES.md 14): ground-state energies of lattice Hamiltonians in the thermodynamic
+// The thermodynamic limit (RULES.md 14): ground-state energies of lattice Hamiltonians in the thermodynamic
 // limit. Instances live in tdl/<Model>/<name>.json, apart from data/, because they have no site
 // count: `n_sites` is "inf" and every energy is stored per site, in the stored convention of
 // track 1 for one site (spin models: Pauli, 4 x the S.S energy; TFIsing: Pauli; Hubbard and
@@ -32,7 +32,7 @@ const COUPLINGS = {
   tV: p => [`V = ${p.V}`, `n = ${p.n}`],
 };
 export const tdlCouplings = inst => (COUPLINGS[inst.model]?.(inst.params ?? {}) ?? Object.entries(inst.params ?? {}).map(([k, v]) => `${k} = ${v}`));
-export const tdlLabel = inst => [inst.lattice, ...tdlCouplings(inst)].join(", ");
+export const tdlLabel = inst => [inst.lattice, "infinite lattice", ...tdlCouplings(inst)].join(", ");
 
 // The id: <Model>/<lattice>_inf, then the coupling values in the order of COUPLINGS.
 // Spin models are S = 1/2 unless params.S says otherwise (RULES.md 14.1).

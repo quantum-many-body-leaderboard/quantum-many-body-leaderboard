@@ -1,4 +1,4 @@
-// Checks of track 4 (RULES.md 14): every row complete, every exact row of a closed form equal to
+// Checks of the infinite-lattice instances (RULES.md 14): every row complete, every exact row of a closed form equal to
 // QMBL's own evaluation of it, and no variational energy below the exact one. Stops the build on
 // an issue, like validate.mjs.
 import { collectTDL } from "./tdl.mjs";

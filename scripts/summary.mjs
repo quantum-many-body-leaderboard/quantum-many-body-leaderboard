@@ -182,7 +182,7 @@ export function noRecordKey(inst) {
 // from here, and an import must not rewrite data/_summary.json.
 if (process.argv[1] && import.meta.url === `file://${path.resolve(process.argv[1])}`) {
   const summary = summarize(collect());
-  // Track 4 (RULES.md 14) is counted apart: its instances have no site count and are not in data/.
+  // The infinite lattices (RULES.md 14) are counted apart: its instances have no site count and are not in data/.
   const tdl = summarize(collectTDL());
   summary.thermodynamic_limit = { instances: tdl.instances, rows: tdl.rows, best: tdl.best };
   fs.writeFileSync("data/_summary.json", JSON.stringify(summary, null, 2) + "\n");
