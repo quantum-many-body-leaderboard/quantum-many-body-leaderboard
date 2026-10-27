@@ -1881,7 +1881,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best extrapolated | -1.4764(5) | DMRG [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
 |  | best approximate | -1.489(5) | NLCE [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
 | square | best variational | -0.6693781 &#9675; | iPEPS [Rader & Läuchli (2018)](https://doi.org/10.1103/physrevx.8.031030) |  |
-|  | best extrapolated | -0.669441878(9) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
+|  | best extrapolated | -0.6694585(2) | SSE QMC [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) |  |
 
 </details>
 
