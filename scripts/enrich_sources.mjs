@@ -1,5 +1,5 @@
-// Resolve every paper identifier in the table to authors, institutions and countries,
-// and cache the result in sources/openalex.json.
+// Resolve every paper identifier in the table (the rows' own papers and the works quoted rows
+// were read in) to authors, institutions and countries, and cache the result in sources/openalex.json.
 //
 // Run by hand, outside build.sh: it is the only script that uses the network, and the build
 // stays offline and byte-idempotent. The cache is committed. Only identifiers missing from
@@ -184,6 +184,15 @@ export function paperOf(row) {
   return id && !(row.verified?.secondary_of || "").includes(id.arxiv ?? id.doi) ? id : null;
 }
 
+// The text that names where a quoted row's number was read (RULES.md 8), or null: what
+// verified.secondary_of names, else, for a secondary row without it, the work after "printed in" /
+// "quoted in" / "cited in" in its reference. cite.mjs names that work in the source cell, so main()
+// caches its identifier too.
+export function quotingText(row) {
+  return row.verified?.secondary_of || (row.provenance === "secondary"
+    ? (row.reference || "").match(/\b(?:printed|quoted|cited) in\s+(.+)$/i)?.[1] ?? null : null);
+}
+
 // The metadata for a row's paper, or null when the reference names none we can resolve.
 export function sourceOf(row, cache = sources()) {
   const id = paperOf(row);
@@ -201,6 +210,9 @@ async function main() {
     for (const r of inst.rows) {
       const id = identify(r.reference);
       if (id) wanted.set(id.key, id); else noId++;
+      // The work a quoted row was read in is cited by name in its source cell (cite.mjs).
+      const q = identify(quotingText(r));
+      if (q) wanted.set(q.key, q);
     }
 
   const todo = [...wanted.values()].filter(id => !cache[id.key]);

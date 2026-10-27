@@ -36,7 +36,7 @@
         "method": "source text of arXiv:cond-mat/0009149 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-10-22)",
         "reported_as": "-0.64262",
         "note": "Table I, N = 22, L = 26, J/t = 0.3, column Exact; the acknowledgements (lines 829-831) credit D. Poilblanc's unpublished 26-site data (line 1050); version read: arXiv text (sources/cond-mat-0009149.txt); the journal version was not reached from this session (the publisher returned 403), to be read on the verification pass (RULES.md 8) | Table I: 'Energy per site in the t-J model', N electrons on L sites, t = 1. The Hamiltonian is not printed; its exact column on L = 26 (-0.64262, -0.78812, -1.17493) is the Lanczos column of Lugas, Spanu, Becca & Sorella, Phys. Rev. B 74, 165122, Table II, whose Eq. (1) includes -n_i n_j / 4 and periodic boundaries, so the 26-site rows share that instance.",
-        "secondary_of": "arXiv:cond-mat/0009149",
+        "secondary_of": "Sorella, Phys. Rev. B 64, 024512 (2001), doi:10.1103/PhysRevB.64.024512, arXiv:cond-mat/0009149 (the version read)",
         "second_read": {
           "checked_on": "2026-10-24",
           "scope": "value",
@@ -72,6 +72,18 @@
           "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"Exact (D. Poilblanc, unpublished)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar (the README marked it); ruled 2026-10-24.",
           "source_entry": "tjE-exact-recompute#14 (qmbl-verify 2026-10-23); ruled 2026-10-24 (exact rows whose label reads as sampled)",
           "from": true
+        },
+        {
+          "field": "verified.secondary_of",
+          "from": "arXiv:cond-mat/0009149",
+          "to": "Sorella, Phys. Rev. B 64, 024512 (2001), doi:10.1103/PhysRevB.64.024512, arXiv:cond-mat/0009149 (the version read)",
+          "reported_as": "22 26 0.3 ... -0.64262 (column Exact)",
+          "location": "Sorella, Phys. Rev. B 64, 024512 (2001), Table I, row N = 22, L = 26, J/t = 0.3, column Exact; acknowledgements: 'I am also particularly grateful to D. Poilblanc and P. W. Leung who kindly sent me unpublished data on the 26 and 32 site t-J model, respectively.'",
+          "version_read": "arXiv:cond-mat/0009149v1 text (sources/cond-mat-0009149.txt, Table I line 1050, acknowledgements lines 829-831), read 2026-10-27; journal version not read (see verified)",
+          "conversion": "none",
+          "checked_on": "2026-10-27",
+          "reason": "The number is D. Poilblanc's unpublished exact diagonalization, printed in Table I of Sorella, Phys. Rev. B 64, 024512 (2001), and read there; that paper is the quoting work, as before. secondary_of named it by its old-style arXiv id, which identify() does not read, while the reference names it by its DOI, so the citation code took Sorella's paper for the row's own: the source cell read 'Sorella (2001)' with no quote, as if Sorella had produced the number. secondary_of now names the paper by the DOI the reference carries, so the cell reads like the other private-communication rows (RULES.md 8, the Nomura case): 'Poilblanc (2001), quoted in Sorella (2001)'. Lugas, Spanu, Becca & Sorella, Phys. Rev. B 74, 165122 (2006), Table II prints the same digits in its Lanczos column without naming a source; the row was not read there and does not cite it. Reference, provenance and energy unchanged.",
+          "source_entry": "quoted-in follow-up of 2026-10-27 to the source-cell change ea7c8dd5 (every quoted row says where its number was read)"
         }
       ],
       "sampled": false
