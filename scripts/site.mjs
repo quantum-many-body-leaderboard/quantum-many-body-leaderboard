@@ -20,7 +20,7 @@ import { perSiteDivisor, perSiteLabel, boundLabel, stochasticExact, publishedMet
 import { collectTDL, tdlLabel } from "./tdl.mjs";
 import { collect, classBest, shownBest, bestTagOf, lowestOf, noRecordKey, summarize, rowId, sameExactRows } from "./summary.mjs";
 import { THEMES, W } from "./chart.mjs";
-import { citeRef, codeRef, libraryRef, paperYear } from "./cite.mjs";
+import { citeRef, noteParts, codeRef, libraryRef, paperYear } from "./cite.mjs";
 import { sources } from "./enrich_sources.mjs";
 import { quote, shorten, MODELS, BOUNDARY, instanceLabel, byGeometry, noRecordReason, gapAbove } from "./readme_table.mjs";
 import { logoSvg, faviconSvg, LOGO_CSS } from "./logo.mjs";
@@ -275,7 +275,8 @@ function citeHtml(row) {
   }
   const r = citeRef(row, cache);
   const link = (r.url ? `<a href="${esc(r.url)}">${esc(r.text)}</a>` : esc(r.text)) + (r.also ? `, <a href="${esc(r.also.url)}">${esc(r.also.text)}</a>` : "");
-  return r.note ? `${link}<span class="muted">, ${esc(r.note)}</span>` : link;
+  const [plain, nl] = noteParts(r);
+  return r.note ? `${link}<span class="muted">, ${esc(plain)}${nl ? `<a href="${esc(nl.url)}">${esc(nl.text)}</a>` : ""}</span>` : link;
 }
 
 // The method cell. A row QMBL computed names the hardware it ran on, since the same
@@ -309,7 +310,7 @@ function rowIssueUrl(r, inst) {
     `${perSiteLabel(inst)}: ${quoteRow(r, inst).text} (stored: ${r.energy}${r.sigma == null ? "" : ` ± ${r.sigma}`})`,
     `bound type: ${boundLabel(r)}`,
     `method: ${methodLabel(r)} (as published: ${publishedMethod(r)})`,
-    `source: ${c.text}${c.url ? ` ${c.url}` : ""}`,
+    `source: ${c.text}${c.url ? ` ${c.url}` : ""}${c.noteLink ? `, ${c.note} ${c.noteLink.url}` : ""}`,
     `on qmbl.org: https://qmbl.org/instances/#${id}`,
   ].join("\n");
   const q = new URLSearchParams({ template: "row-feedback.yml", title: `[row] ${rowTitle(r, inst)}: `, row: id, instance: inst.instance_id, shown });

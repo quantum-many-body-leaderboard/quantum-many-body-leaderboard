@@ -125,6 +125,16 @@ export function citeRef(row, cache = sources()) {
   if (row.computed_by === "qmbl" || /^QMBL, checks\//.test(row.reference || "")) return qmblRef(row);
   const s = sourceOf(row, cache);
   const note = quotedIn(row, cache, s);
+  // A person's unpublished number printed in a paper (RULES.md 8), a reference that opens
+  // "D. Poilblanc, unpublished ...": the person, marked unpublished and with no link, then the
+  // paper that printed it, linked (`noteLink`, the end of `note`). Only where that paper is resolved.
+  const unpub = row.provenance === "secondary" && (row.reference || "").match(/^([^,]+), unpublished\b/)?.[1];
+  const printed = unpub && !s && identify(quotingText(row) || "");
+  const ps = printed && cache[printed.key];
+  if (ps) {
+    const link = { text: citeText(ps), url: citeUrl(ps) };
+    return { text: `${unpub} (unpublished)`, url: null, note: `quoted in ${link.text}`, noteLink: link };
+  }
   if (s) return note ? { text: citeText(s), url: citeUrl(s), note } : { text: citeText(s), url: citeUrl(s) };
   const ref = row.reference || "";
   const code = ref.match(/\[code\]\((https?:\/\/[^\s)]+)\)/);
@@ -192,5 +202,12 @@ export function codeCell(row) {
 export function citeCell(row, cache = sources()) {
   const r = citeRef(row, cache);
   const link = (r.url ? `[${r.text}](${r.url})` : r.text) + (r.also ? `, [${r.also.text}](${r.also.url})` : "");
-  return r.note ? `${link}, ${r.note}` : link;
+  const [plain, nl] = noteParts(r);
+  return r.note ? `${link}, ${plain}${nl ? `[${nl.text}](${nl.url})` : ""}` : link;
+}
+
+// A citeRef note split into its plain text and the citation linked at its end (noteLink), if any.
+export function noteParts(r) {
+  const nl = r.noteLink && r.note?.endsWith(r.noteLink.text) ? r.noteLink : null;
+  return [nl ? r.note.slice(0, -nl.text.length) : r.note ?? "", nl];
 }
