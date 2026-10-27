@@ -3,7 +3,7 @@
 // "Nomura & Imada (2021)" says whose result holds the record, and the link goes to the DOI,
 // which outlives a publisher URL. Rows whose reference names no paper (VarBench cited run
 // scripts for a large part of its table) keep the code link and are marked as such.
-import { sourceOf, sources, paperOf, identify } from "./enrich_sources.mjs";
+import { sourceOf, sources, paperOf, identify, quotingText } from "./enrich_sources.mjs";
 
 // Last name for the citation. Both registries are inconsistent about ordering: most
 // records read "Yuntian Gu", some read "Gu, Yuntian". The comma form is unambiguous
@@ -110,8 +110,7 @@ const qmblRef = row => {
 // (the same title).
 function quotedIn(row, cache, own) {
   const so = row.verified?.secondary_of;
-  const text = so || (row.provenance === "secondary"
-    ? (row.reference || "").match(/\b(?:printed|quoted|cited) in\s+(.+)$/i)?.[1] : null);
+  const text = quotingText(row);
   if (!text) return undefined;
   const via = identify(text), s = via && cache[via.key];
   if (s && own?.title && s.title?.toLowerCase() === own.title.toLowerCase()) return undefined;

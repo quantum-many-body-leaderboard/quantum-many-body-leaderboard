@@ -24164,4 +24164,89 @@ export const CORRECTIONS = [
     "reason": "Deterministic: an exact (Lanczos) diagonalization carries no statistical error, but the label \"exact diagonalisation (Lanczos)\" matches none of isSampled's deterministic markers, so the row read as a sampled energy without an error bar; set as on the t-J Lanczos rows (ruled 2026-10-25).",
     "source_entry": "ruling of 2026-10-25 on the families port: sampled false on the cond-mat/0605464 exact rows"
   },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "Transformer backflow",
+      "energy": -193.6128
+    },
+    "field": "verified.secondary_of",
+    "from": "ACE Table 1 row 'Transformer [13]' = arXiv:2507.02644",
+    "to": "arXiv:2604.25775",
+    "reported_as": "Transformer [21] -0.7275 -0.7563",
+    "location": "Gu, Han, Li et al., arXiv:2604.25775, Table I ('Comparison of ground state energy for the 16×16 Hubbard model'), row 'Transformer [21]', column 't′ = 0, PBC'",
+    "version_read": "arXiv:2604.25775v1 PDF text (sources/2604.25775.txt, Table I, lines 472-478), read 2026-10-27; the first reading (verified.note, 2026-09-10) took the value from the Table I HTML of the same paper",
+    "conversion": "none",
+    "checked_on": "2026-10-27",
+    "reason": "verified.secondary_of names the work a quoted number was read in, and the source cell names it (cite.mjs). This one held a table-row label, \"ACE Table 1 row 'Transformer [13]' = arXiv:2507.02644\", which names no quoting paper (only the row's own paper), so the cell showed no quote. The reading of 2026-09-10 (verified.note) took the value from Table I of arXiv:2604.25775, which prints it in row 'Transformer [21]', column 't′ = 0, PBC'; secondary_of now names that paper. The row has cited its producing paper since 2026-09-29 (reference correction above), and reference, provenance and energy are unchanged.",
+    "source_entry": "quoted-in follow-up of 2026-10-27 to the source-cell change ea7c8dd5 (every quoted row says where its number was read)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "HFPS + symmetry projection",
+      "energy": -192.384
+    },
+    "field": "verified.secondary_of",
+    "from": "ACE Table 1 row 'HFPS+sym [31]'",
+    "to": "arXiv:2604.25775",
+    "reported_as": "HFPS+sym [24] -0.7515(1) -0.7360(1)",
+    "location": "Gu, Han, Li et al., arXiv:2604.25775, Table I ('Comparison of ground state energy for the 16×16 Hubbard model'), row 'HFPS+sym [24]', column 't′ = 0, PBC'",
+    "version_read": "arXiv:2604.25775v1 PDF text (sources/2604.25775.txt, Table I, lines 472-478), read 2026-10-27; the first reading (verified.note, 2026-09-10) took the value from the Table I HTML of the same paper",
+    "conversion": "none",
+    "checked_on": "2026-10-27",
+    "reason": "verified.secondary_of names the work a quoted number was read in, and the source cell names it (cite.mjs). This one held a table-row label, \"ACE Table 1 row 'HFPS+sym [31]'\", which names no quoting paper, so the cell showed no quote. The reading of 2026-09-10 (verified.note) took the value from Table I of arXiv:2604.25775, which prints it in row 'HFPS+sym [24]', column 't′ = 0, PBC'; secondary_of now names that paper. The row has cited its producing paper since 2026-09-29 (reference correction above), and reference, provenance and energy are unchanged.",
+    "source_entry": "quoted-in follow-up of 2026-10-27 to the source-cell change ea7c8dd5 (every quoted row says where its number was read)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.3",
+      "method": "Exact (D. Poilblanc, unpublished)",
+      "energy": -16.70812
+    },
+    "field": "verified.secondary_of",
+    "from": "arXiv:cond-mat/0009149",
+    "to": "Sorella, Phys. Rev. B 64, 024512 (2001), doi:10.1103/PhysRevB.64.024512, arXiv:cond-mat/0009149 (the version read)",
+    "reported_as": "22 26 0.3 ... -0.64262 (column Exact)",
+    "location": "Sorella, Phys. Rev. B 64, 024512 (2001), Table I, row N = 22, L = 26, J/t = 0.3, column Exact; acknowledgements: 'I am also particularly grateful to D. Poilblanc and P. W. Leung who kindly sent me unpublished data on the 26 and 32 site t-J model, respectively.'",
+    "version_read": "arXiv:cond-mat/0009149v1 text (sources/cond-mat-0009149.txt, Table I line 1050, acknowledgements lines 829-831), read 2026-10-27; journal version not read (see verified)",
+    "conversion": "none",
+    "checked_on": "2026-10-27",
+    "reason": "The number is D. Poilblanc's unpublished exact diagonalization, printed in Table I of Sorella, Phys. Rev. B 64, 024512 (2001), and read there; that paper is the quoting work, as before. secondary_of named it by its old-style arXiv id, which identify() does not read, while the reference names it by its DOI, so the citation code took Sorella's paper for the row's own: the source cell read 'Sorella (2001)' with no quote, as if Sorella had produced the number. secondary_of now names the paper by the DOI the reference carries, so the cell reads like the other private-communication rows (RULES.md 8, the Nomura case): 'Poilblanc (2001), quoted in Sorella (2001)'. Lugas, Spanu, Becca & Sorella, Phys. Rev. B 74, 165122 (2006), Table II prints the same digits in its Lanczos column without naming a source; the row was not read there and does not cite it. Reference, provenance and energy unchanged.",
+    "source_entry": "quoted-in follow-up of 2026-10-27 to the source-cell change ea7c8dd5 (every quoted row says where its number was read)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J0.5",
+      "method": "Exact (D. Poilblanc, unpublished)",
+      "energy": -20.49112
+    },
+    "field": "verified.secondary_of",
+    "from": "arXiv:cond-mat/0009149",
+    "to": "Sorella, Phys. Rev. B 64, 024512 (2001), doi:10.1103/PhysRevB.64.024512, arXiv:cond-mat/0009149 (the version read)",
+    "reported_as": "22 26 0.5 ... -0.78812 (column Exact)",
+    "location": "Sorella, Phys. Rev. B 64, 024512 (2001), Table I, row N = 22, L = 26, J/t = 0.5, column Exact; acknowledgements: 'I am also particularly grateful to D. Poilblanc and P. W. Leung who kindly sent me unpublished data on the 26 and 32 site t-J model, respectively.'",
+    "version_read": "arXiv:cond-mat/0009149v1 text (sources/cond-mat-0009149.txt, Table I line 1051, acknowledgements lines 829-831), read 2026-10-27; journal version not read (see verified)",
+    "conversion": "none",
+    "checked_on": "2026-10-27",
+    "reason": "The number is D. Poilblanc's unpublished exact diagonalization, printed in Table I of Sorella, Phys. Rev. B 64, 024512 (2001), and read there; that paper is the quoting work, as before. secondary_of named it by its old-style arXiv id, which identify() does not read, while the reference names it by its DOI, so the citation code took Sorella's paper for the row's own: the source cell read 'Sorella (2001)' with no quote, as if Sorella had produced the number. secondary_of now names the paper by the DOI the reference carries, so the cell reads like the other private-communication rows (RULES.md 8, the Nomura case): 'Poilblanc (2001), quoted in Sorella (2001)'. Lugas, Spanu, Becca & Sorella, Phys. Rev. B 74, 165122 (2006), Table II prints the same digits in its Lanczos column without naming a source; the row was not read there and does not cite it. Reference, provenance and energy unchanged.",
+    "source_entry": "quoted-in follow-up of 2026-10-27 to the source-cell change ea7c8dd5 (every quoted row says where its number was read)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_26_P_h4_J1",
+      "method": "Exact (D. Poilblanc, unpublished)",
+      "energy": -30.54818
+    },
+    "field": "verified.secondary_of",
+    "from": "arXiv:cond-mat/0009149",
+    "to": "Sorella, Phys. Rev. B 64, 024512 (2001), doi:10.1103/PhysRevB.64.024512, arXiv:cond-mat/0009149 (the version read)",
+    "reported_as": "22 26 1.0 ... -1.17493 (column Exact)",
+    "location": "Sorella, Phys. Rev. B 64, 024512 (2001), Table I, row N = 22, L = 26, J/t = 1.0, column Exact; acknowledgements: 'I am also particularly grateful to D. Poilblanc and P. W. Leung who kindly sent me unpublished data on the 26 and 32 site t-J model, respectively.'",
+    "version_read": "arXiv:cond-mat/0009149v1 text (sources/cond-mat-0009149.txt, Table I line 1052, acknowledgements lines 829-831), read 2026-10-27; journal version not read (see verified)",
+    "conversion": "none",
+    "checked_on": "2026-10-27",
+    "reason": "The number is D. Poilblanc's unpublished exact diagonalization, printed in Table I of Sorella, Phys. Rev. B 64, 024512 (2001), and read there; that paper is the quoting work, as before. secondary_of named it by its old-style arXiv id, which identify() does not read, while the reference names it by its DOI, so the citation code took Sorella's paper for the row's own: the source cell read 'Sorella (2001)' with no quote, as if Sorella had produced the number. secondary_of now names the paper by the DOI the reference carries, so the cell reads like the other private-communication rows (RULES.md 8, the Nomura case): 'Poilblanc (2001), quoted in Sorella (2001)'. Lugas, Spanu, Becca & Sorella, Phys. Rev. B 74, 165122 (2006), Table II prints the same digits in its Lanczos column without naming a source; the row was not read there and does not cite it. Reference, provenance and energy unchanged.",
+    "source_entry": "quoted-in follow-up of 2026-10-27 to the source-cell change ea7c8dd5 (every quoted row says where its number was read)"
+  },
 ];
