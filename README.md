@@ -917,278 +917,278 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 
 | instance | value | energy | method | code |
 |---|---|---|---|---|
-| bcc cell, N = 27, rs = 0.2, polarized | best variational | 44.18067(2) | VMC (FermiNet) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
-|  | best projected | 44.18224(1) | FN-DMC (SJB) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 27, rs = 0.5, polarized | best variational | 6.318704(2) | VMC (FermiNet) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
-|  | best projected | 6.319754(7) | FN-DMC (SJB) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 27, rs = 1, polarized | best variational | 1.261547(1) | VMC (FermiNet) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
-|  | best projected | 1.261975(2) | FN-DMC (SJB) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 27, rs = 10, polarized | best variational | -0.050320(5) | VMC (FermiNet) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
-|  | best projected | -0.0503349(8) | FN-DMC (SJB) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 27, rs = 2, polarized | best variational | 0.152086(1) | VMC (FermiNet) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
-|  | best projected | 0.152077(4) | FN-DMC (SJB) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 27, rs = 3, polarized | best variational | -0.006961(2) | VMC (FermiNet) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
-|  | best projected | -0.006966(2) | FN-DMC (SJB) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 27, rs = 30, polarized | best variational | -0.022541(5) | VMC (FermiNet) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
-|  | best projected | -0.0225620(2) | FN-DMC (SJB) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 27, rs = 5, polarized | best variational | -0.057691(4) | VMC (FermiNet) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
-|  | best projected | -0.057702(1) | FN-DMC (SJB) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 27, rs = 50, polarized | best variational | -0.014478(4) | VMC (FermiNet) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
-|  | best projected | -0.0144918(1) | FN-DMC (SJB) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 27, rs = 70, polarized | best variational | -0.010693(3) | VMC (FermiNet) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
-|  | best projected | -0.0107118(1) | FN-DMC (SJB) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 27, rs = 90, polarized | best variational | -0.008496(1) | VMC (FermiNet) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
-|  | best projected | -0.0085137(2) | FN-DMC (SJB) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 64, rs = 100, unpolarized | best variational | -0.00767129(8) | VMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.0076974(1) | FN-DMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 64, rs = 125, unpolarized | best variational | -0.0062378(1) | VMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.0062597(1) | FN-DMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 64, rs = 80, unpolarized | best variational | -0.0093993(3) | VMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.0094484(2) | FN-DMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 64, rs = 90, unpolarized | best variational | -0.00844873(6) | VMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.0084813(1) | FN-DMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 64, rs = 100, polarized | best variational | -0.0076803(2) | VMC (SJB) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.00769619(9) | FN-DMC [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 64, rs = 125, polarized | best variational | -0.00624309(3) | VMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.0062592(1) | FN-DMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 64, rs = 80, polarized | best variational | -0.0094086(1) | VMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.00944340(6) | FN-DMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 64, rs = 90, polarized | best variational | -0.00845026(5) | VMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.00847899(9) | FN-DMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 216, rs = 100, unpolarized | best variational | -0.00765917(9) | VMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.0076828(1) | FN-DMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 216, rs = 125, unpolarized | best variational | -0.00623503(4) | VMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.00624956(9) | FN-DMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 216, rs = 80, unpolarized | best variational | -0.0093763(1) | VMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.0094299(3) | FN-DMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 216, rs = 90, unpolarized | best variational | -0.00843572(7) | VMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.0084658(1) | FN-DMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 216, rs = 100, polarized | best variational | -0.0076584(2) | VMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.0076816(4) | FN-DMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 216, rs = 125, polarized | best variational | -0.00623504(4) | VMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.00624968(7) | FN-DMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 216, rs = 80, polarized | best variational | -0.00939055(8) | VMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.0094277(1) | FN-DMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 216, rs = 90, polarized | best variational | -0.00843484(6) | VMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.0084646(1) | FN-DMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 512, rs = 100, unpolarized | best variational | -0.00765566(9) | VMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.0076790(1) | FN-DMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 512, rs = 125, unpolarized | best variational | -0.00623185(4) | VMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.00624652(5) | FN-DMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 512, rs = 80, unpolarized | best variational | -0.0093843(1) | VMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.0094232(2) | FN-DMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 512, rs = 90, unpolarized | best variational | -0.00843112(8) | VMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.0084611(1) | FN-DMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 512, rs = 100, polarized | best variational | -0.0076578(4) | VMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.0076795(1) | FN-DMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 512, rs = 125, polarized | best variational | -0.00623263(4) | VMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.00624666(6) | FN-DMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 512, rs = 80, polarized | best variational | -0.00938865(8) | VMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.00942260(9) | FN-DMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| bcc cell, N = 512, rs = 90, polarized | best variational | -0.00843318(7) | VMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.0084605(1) | FN-DMC (SJ) [10.1103/PhysRevB.105.245135](https://doi.org/10.1103/PhysRevB.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| fcc cell, N = 54, rs = 2, unpolarized | best projected | 0.00426(2) | FN-DMC [10.1088/0953-8984/22/6/065501](https://doi.org/10.1088/0953-8984/22/6/065501) | *uses [CASINO 2.1.400](https://vallico.net/casinoqmc/)* |
-| fcc cell, N = 102, rs = 2, unpolarized | best projected | 0.00081(2) | FN-DMC [10.1088/0953-8984/22/6/065501](https://doi.org/10.1088/0953-8984/22/6/065501) | *uses [CASINO 2.1.400](https://vallico.net/casinoqmc/)* |
-| fcc cell, N = 178, rs = 2, unpolarized | best projected | 0.00892(2) | FN-DMC [10.1088/0953-8984/22/6/065501](https://doi.org/10.1088/0953-8984/22/6/065501) | *uses [CASINO 2.1.400](https://vallico.net/casinoqmc/)* |
-| fcc cell, N = 226, rs = 2, unpolarized | best projected | 0.00202(2) | FN-DMC [10.1088/0953-8984/22/6/065501](https://doi.org/10.1088/0953-8984/22/6/065501) | *uses [CASINO 2.1.400](https://vallico.net/casinoqmc/)* |
-| rect-3x3x2 cell, N = 36, rs = 10, unpolarized | best variational | -0.0537396(1) | VMC (MP-NQS) [arXiv:2604.15888](https://arxiv.org/abs/2604.15888) |  |
-| rect-3x3x2 cell, N = 36, rs = 100, unpolarized | best variational | -0.00769287(1) | VMC (MP-NQS) [arXiv:2604.15888](https://arxiv.org/abs/2604.15888) |  |
-| rect-3x3x2 cell, N = 36, rs = 30, unpolarized | best variational | -0.02272554(2) | VMC (MP-NQS) [arXiv:2604.15888](https://arxiv.org/abs/2604.15888) |  |
-| rect-3x3x2 cell, N = 36, rs = 5, unpolarized | best variational | -0.0756267(6) | VMC (MP-NQS) [arXiv:2604.15888](https://arxiv.org/abs/2604.15888) |  |
-| rect-3x3x2 cell, N = 36, rs = 50, unpolarized | best variational | -0.01449795(2) | VMC (MP-NQS) [arXiv:2604.15888](https://arxiv.org/abs/2604.15888) |  |
-| rect-3x3x2 cell, N = 36, rs = 80, unpolarized | best variational | -0.00945620(2) | VMC (MP-NQS) [arXiv:2604.15888](https://arxiv.org/abs/2604.15888) |  |
-| rect-3x3x2 cell, N = 36, rs = 86.6, unpolarized | best variational | -0.00879026(2) | VMC (MP-NQS) [arXiv:2604.15888](https://arxiv.org/abs/2604.15888) |  |
-| rect-3x3x2 cell, N = 36, rs = 86.7, unpolarized | best variational | -0.00878092(1) | VMC (MP-NQS) [arXiv:2604.15888](https://arxiv.org/abs/2604.15888) |  |
-| rect-3x3x2 cell, N = 36, rs = 86.8, unpolarized | best variational | -0.00877159(1) | VMC (MP-NQS) [arXiv:2604.15888](https://arxiv.org/abs/2604.15888) |  |
-| rect-3x3x2 cell, N = 36, rs = 86.9, unpolarized | best variational | -0.00876228(1) | VMC (MP-NQS) [arXiv:2604.15888](https://arxiv.org/abs/2604.15888) |  |
-| rect-3x3x2 cell, N = 36, rs = 87, unpolarized | best variational | -0.008753017(8) | VMC (MP-NQS) [arXiv:2604.15888](https://arxiv.org/abs/2604.15888) |  |
-| rect-3x3x2 cell, N = 36, rs = 87.1, unpolarized | best variational | -0.008743822(8) | VMC (MP-NQS) [arXiv:2604.15888](https://arxiv.org/abs/2604.15888) |  |
-| sc cell, N = 7, rs = 1, polarized | best variational | 1.120358(3) | VMC (WAP-net) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-|  | best projected | 1.120400(5) | FN-DMC (iterative BF) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-| sc cell, N = 7, rs = 10, polarized | best variational | -0.0531436(2) | VMC (WAP-net) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-|  | best projected | -0.0531380(5) | FN-DMC (iterative BF) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-| sc cell, N = 7, rs = 100, polarized | best variational | -0.00774654(1) | VMC (WAP-net) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-|  | best projected | -0.00774625(5) | FN-DMC (iterative BF) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-| sc cell, N = 7, rs = 2, polarized | best variational | 0.110850(1) | VMC (WAP-net) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-|  | best projected | 0.110879(2) | FN-DMC (iterative BF) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-| sc cell, N = 7, rs = 20, polarized | best variational | -0.0322689(1) | VMC (WAP-net) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-|  | best projected | -0.032266(2) | FN-DMC (iterative BF) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-| sc cell, N = 7, rs = 5, polarized | best variational | -0.0664225(5) | VMC (WAP-net) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-|  | best projected | -0.0664055(5) | FN-DMC (iterative BF) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-| sc cell, N = 7, rs = 50, polarized | best variational | -0.01466089(1) | VMC (WAP-net) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-|  | best projected | -0.0146604(1) | FN-DMC (iterative BF) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-| sc cell, N = 14, rs = 0.1, unpolarized | best projected | 106.90015 &#9675; | CCD [10.1063/5.0222773](https://doi.org/10.1063/5.0222773) | [butler-julie/HEG-SRE](https://github.com/butler-julie/HEG-SRE) |
-|  | best extrapolated | 106.89994(1) | CCSDT [10.1063/1.4942173](https://doi.org/10.1063/1.4942173) |  |
-|  | best approximate | 106.87643 &#9675; | dRPA [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 0.2, unpolarized | best extrapolated | 25.4050004 &#9675; | CCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-|  | best approximate | 25.3821433 &#9675; | dRPA [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 0.3, unpolarized | best extrapolated | 10.6954209 &#9675; | CCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-|  | best approximate | 10.6732066 &#9675; | dRPA [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 0.4, unpolarized | best extrapolated | 5.6765448 &#9675; | CCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-|  | best approximate | 5.6547591 &#9675; | dRPA [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 0.5, unpolarized | best variational | 3.412684(4) | VMC (FermiNet) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
-|  | best projected | 3.41253(4) | ph-AFQMC (RHF) [10.1063/1.5109572](https://doi.org/10.1063/1.5109572) | *uses [PAUXY](https://github.com/pauxy-qmc/pauxy)* |
-|  | best extrapolated | 3.41226(2) | FCIQMC [10.1063/1.4720076](https://doi.org/10.1063/1.4720076) |  |
-|  | best approximate | 3.3916087 &#9675; | dRPA [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 0.6, unpolarized | best extrapolated | 2.2154921 &#9675; | CCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-|  | best approximate | 2.1945636 &#9675; | dRPA [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 0.7, unpolarized | best extrapolated | 1.5130365 &#9675; | CCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-|  | best approximate | 1.4923937 &#9675; | dRPA [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 0.8, unpolarized | best extrapolated | 1.0698103 &#9675; | CCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-|  | best approximate | 1.0493818 &#9675; | dRPA [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 0.9, unpolarized | best extrapolated | 0.7746685 &#9675; | CCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-|  | best approximate | 0.7534542 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 1, unpolarized | best variational | 0.568851(1) | VMC (FermiNet) [arXiv:2604.15888](https://arxiv.org/abs/2604.15888) |  |
-|  | best projected | 0.56869(6) | ph-AFQMC (RHF) [10.1063/1.5109572](https://doi.org/10.1063/1.5109572) | *uses [QMCPACK](https://qmcpack.org/)* |
-|  | best extrapolated | 0.56850(3) | FCIQMC [10.1063/1.4720076](https://doi.org/10.1063/1.4720076) |  |
-|  | best approximate | 0.5464629 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 10, unpolarized | best variational | -0.0552126(6) | VMC (MP-NQS) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
-|  | best projected | -0.0552180(5) | FN-DMC (iterative BF) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-|  | best extrapolated | -0.05289 &#9675; | DCD [10.1103/PhysRevResearch.3.033072](https://doi.org/10.1103/PhysRevResearch.3.033072) |  |
-|  | best approximate | -0.0791573 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 100, unpolarized | best variational | -0.00773024(1) | VMC (WAP-net) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-|  | best projected | -0.00773430(2) | FN-DMC (iterative BF) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-|  | best extrapolated | -0.0064603 &#9675; | CCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-|  | best approximate | -0.0104603 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 15, unpolarized | best variational | -0.0408619(1) | VMC (FermiNet) [arXiv:2604.15888](https://arxiv.org/abs/2604.15888) |  |
-|  | best approximate | -0.0580244 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 2, unpolarized | best variational | -0.0084275(7) | VMC (FermiNet) [10.1103/PhysRevLett.130.036401](https://doi.org/10.1103/PhysRevLett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
-|  | best projected | -0.00853(6) | ph-AFQMC (RHF) [10.1063/1.5109572](https://doi.org/10.1063/1.5109572) | *uses [QMCPACK](https://qmcpack.org/)* |
-|  | best extrapolated | -0.00873(3) | FCIQMC [10.1063/1.4720076](https://doi.org/10.1063/1.4720076) |  |
-|  | best approximate | -0.0478896 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 20, unpolarized | best variational | -0.0324553(2) | VMC (MP-NQS) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
-|  | best projected | -0.0324578(2) | FN-DMC (iterative BF) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-|  | best extrapolated | -0.03035 &#9675; | DCD [10.1103/PhysRevResearch.3.033072](https://doi.org/10.1103/PhysRevResearch.3.033072) |  |
-|  | best approximate | -0.0457024 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 3, unpolarized | best projected | -0.07352(4) | ph-AFQMC (RHF) [10.1063/1.5109572](https://doi.org/10.1063/1.5109572) | *uses [QMCPACK](https://qmcpack.org/)* |
-|  | best extrapolated | -0.07432(2) | CCSDTQ5 [10.1063/1.5003794](https://doi.org/10.1063/1.5003794) | *uses [HANDE-QMC](https://github.com/hande-qmc/hande)* |
-|  | best approximate | -0.1179136 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 30, unpolarized | best extrapolated | -0.0203291 &#9675; | CCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-|  | best approximate | -0.0321148 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 4, unpolarized | best extrapolated | -0.0792519 &#9675; | CCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-|  | best approximate | -0.1240376 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 40, unpolarized | best extrapolated | -0.0155875 &#9675; | CCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-|  | best approximate | -0.0247303 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 5, unpolarized | best variational | -0.0798630(2) | VMC (FermiNet) [arXiv:2604.15888](https://arxiv.org/abs/2604.15888) |  |
-|  | best projected | -0.079842(1) | FN-DMC (iterative BF) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-|  | best extrapolated | -0.07997(7) | FCIQMC [10.1063/1.4720076](https://doi.org/10.1063/1.4720076) |  |
-|  | best approximate | -0.1175392 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 50, unpolarized | best variational | -0.01462631(6) | VMC (MP-NQS) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
-|  | best projected | -0.0146287(1) | FN-DMC (iterative BF) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-|  | best extrapolated | -0.01323 &#9675; | DCD [10.1103/PhysRevResearch.3.033072](https://doi.org/10.1103/PhysRevResearch.3.033072) |  |
-|  | best approximate | -0.0201249 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 6, unpolarized | best extrapolated | -0.0706647 &#9675; | CCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-|  | best approximate | -0.1085933 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 60, unpolarized | best extrapolated | -0.0106188 &#9675; | CCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-|  | best approximate | -0.0169759 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 7, unpolarized | best extrapolated | -0.0651069 &#9675; | CCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-|  | best approximate | -0.099964 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 70, unpolarized | best extrapolated | -0.0091195 &#9675; | CCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-|  | best approximate | -0.0146909 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 8, unpolarized | best extrapolated | -0.0599259 &#9675; | CCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-|  | best approximate | -0.0920688 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 80, unpolarized | best extrapolated | -0.0080403 &#9675; | CCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-|  | best approximate | -0.0129689 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 9, unpolarized | best extrapolated | -0.0553862 &#9675; | CCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-|  | best approximate | -0.0851719 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 90, unpolarized | best extrapolated | -0.0071484 &#9675; | CCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-|  | best approximate | -0.0115769 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 19, rs = 1, polarized | best variational | 1.046242(3) | VMC (WAP-net) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-|  | best projected | 1.0462250(5) | FN-DMC (iterative BF) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-| sc cell, N = 19, rs = 10, polarized | best variational | -0.0528624(2) | VMC (MP-NQS) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
-|  | best projected | -0.0528652(3) | FN-DMC (iterative BF) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-| sc cell, N = 19, rs = 100, polarized | best variational | -0.00771899(1) | VMC (iterative BF) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-|  | best projected | -0.00772142(1) | FN-DMC (iterative BF) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-| sc cell, N = 19, rs = 2, polarized | best variational | 0.096303(1) | VMC (WAP-net) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-|  | best projected | 0.096302(2) | FN-DMC (iterative BF) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-| sc cell, N = 19, rs = 20, polarized | best variational | -0.03201095(5) | VMC (WAP-net) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-|  | best projected | -0.0320167(1) | FN-DMC (iterative BF) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-| sc cell, N = 19, rs = 5, polarized | best variational | -0.0672510(2) | VMC (WAP-net) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-|  | best projected | -0.0672540(5) | FN-DMC (iterative BF) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-| sc cell, N = 19, rs = 50, polarized | best variational | -0.01456685(3) | VMC (MP-NQS) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
-|  | best projected | -0.01456920(4) | FN-DMC (iterative BF) [10.1103/PhysRevB.107.235139](https://doi.org/10.1103/PhysRevB.107.235139) |  |
-| sc cell, N = 27, rs = 1, polarized | best variational | 1.051771(4) | VMC (MP-NQS) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
-|  | best projected | 1.05200(3) | FN-DMC (SJ) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) |  |
-| sc cell, N = 27, rs = 10, polarized | best variational | -0.0526015(2) | VMC (MP-NQS) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
-|  | best projected | -0.052540(6) | FN-DMC (SJ) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) |  |
-| sc cell, N = 27, rs = 2, polarized | best variational | 0.098460(2) | VMC (MP-NQS) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
-|  | best projected | 0.09866(2) | FN-DMC (SJ) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) |  |
-| sc cell, N = 27, rs = 30, polarized | best variational | -0.0228184(1) | VMC (MP-NQS) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
-|  | best projected | -0.0228080(8) | FN-DMC (SJ) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) |  |
-| sc cell, N = 27, rs = 5, polarized | best variational | -0.0665523(6) | VMC (MP-NQS) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
-|  | best projected | -0.066429(4) | FN-DMC (SJ) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) |  |
-| sc cell, N = 27, rs = 50, polarized | best variational | -0.01457976(5) | VMC (MP-NQS) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
-|  | best projected | -0.0145752(6) | FN-DMC (SJ) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) |  |
-| sc cell, N = 27, rs = 70, polarized | best variational | -0.01074986(3) | VMC (MP-NQS) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
-|  | best projected | -0.010749(2) | FN-DMC (SJ) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) |  |
-| sc cell, N = 27, rs = 90, polarized | best variational | -0.00853156(2) | VMC (MP-NQS) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
-|  | best projected | -0.0085314(5) | FN-DMC (SJ) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) |  |
-| sc cell, N = 38, rs = 0.5, unpolarized | best projected | 3.2080745 &#9675; | CCD [10.1063/5.0222773](https://doi.org/10.1063/5.0222773) | [butler-julie/HEG-SRE](https://github.com/butler-julie/HEG-SRE) |
-|  | best extrapolated | 3.20691(3) | FCIQMC [10.1063/1.4720076](https://doi.org/10.1063/1.4720076) |  |
-| sc cell, N = 38, rs = 1, unpolarized | best extrapolated | 0.52478(3) | FCIQMC [10.1063/1.4720076](https://doi.org/10.1063/1.4720076) |  |
-| sc cell, N = 38, rs = 2, unpolarized | best extrapolated | -0.01422(5) | FCIQMC [10.1063/1.4720076](https://doi.org/10.1063/1.4720076) |  |
-| sc cell, N = 54, rs = 0.5, unpolarized | best variational | 3.221226(2) | VMC (DeepSolid) [10.1038/s41467-022-35627-1](https://doi.org/10.1038/s41467-022-35627-1) | [bytedance/DeepSolid](https://github.com/bytedance/DeepSolid) |
-|  | best projected | 3.22087(2) | ph-AFQMC (RHF) [10.1063/1.5109572](https://doi.org/10.1063/1.5109572) | *uses [QMCPACK](https://qmcpack.org/)* |
-|  | best extrapolated | 3.2202(2) | FCIQMC [10.1103/PhysRevB.85.081103](https://doi.org/10.1103/PhysRevB.85.081103) |  |
-|  | best approximate | 3.2119035 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 54, rs = 1, unpolarized | best variational | 0.52973(1) | VMC (MP-NQS) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
-|  | best projected | 0.52967(2) | ph-AFQMC (RHF) [10.1063/1.5109572](https://doi.org/10.1063/1.5109572) | *uses [QMCPACK](https://qmcpack.org/)* |
-|  | best extrapolated | 0.52991(6) | FCIQMC [10.1063/1.4720076](https://doi.org/10.1063/1.4720076) |  |
-|  | best approximate | 0.5147818 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 54, rs = 10, unpolarized | best variational | -0.054448(1) | VMC (MP-NQS) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
-|  | best projected | -0.054443(2) | FN-DMC (SJB) [10.1103/PhysRevE.74.066701](https://doi.org/10.1103/PhysRevE.74.066701) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best extrapolated | -0.05157 &#9675; | DCD [10.1103/PhysRevResearch.3.033072](https://doi.org/10.1103/PhysRevResearch.3.033072) |  |
-|  | best approximate | -0.0728389 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 54, rs = 100, unpolarized | best variational | -0.00769203(5) | VMC (MP-NQS) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
-|  | best projected | -0.007674(3) | FN-DMC (SJ) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) |  |
-| sc cell, N = 54, rs = 15, unpolarized | best extrapolated | -0.0363669 &#9675; | CCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-|  | best approximate | -0.0359224 &#9675; | mCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 54, rs = 2, unpolarized | best variational | -0.014046(8) | VMC (MP-NQS) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
-|  | best projected | -0.01429(3) | ph-AFQMC (RHF) [10.1063/1.5109572](https://doi.org/10.1063/1.5109572) | *uses [QMCPACK](https://qmcpack.org/)* |
-|  | best extrapolated | -0.01286 &#9675; | DCD [10.1103/PhysRevResearch.3.033072](https://doi.org/10.1103/PhysRevResearch.3.033072) |  |
-|  | best approximate | -0.0363623 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 54, rs = 20, unpolarized | best variational | -0.0320524(5) | VMC (MP-NQS) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
-|  | best projected | -0.032047(2) | FN-DMC (SJB) [10.1103/PhysRevE.74.066701](https://doi.org/10.1103/PhysRevE.74.066701) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best extrapolated | -0.02925 &#9675; | DCD [10.1103/PhysRevResearch.3.033072](https://doi.org/10.1103/PhysRevResearch.3.033072) |  |
-|  | best approximate | -0.0429947 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 54, rs = 3, unpolarized | best approximate | -0.0706229 &#9675; | mCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 54, rs = 4, unpolarized | best approximate | -0.0774134 &#9675; | mCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 54, rs = 5, unpolarized | best variational | -0.079090(2) | VMC (MP-NQS) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
-|  | best projected | -0.079036(3) | FN-DMC (SJB) [10.1103/PhysRevE.74.066701](https://doi.org/10.1103/PhysRevE.74.066701) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best extrapolated | -0.07655 &#9675; | DCD [10.1103/PhysRevResearch.3.033072](https://doi.org/10.1103/PhysRevResearch.3.033072) |  |
-|  | best approximate | -0.104002 &#9675; | rxmCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 54, rs = 50, unpolarized | best variational | -0.0145015(1) | VMC (MP-NQS) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
-|  | best projected | -0.01387(2) | FN-DMC (SJ) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) |  |
-|  | best extrapolated | -0.01267 &#9675; | DCD [10.1103/PhysRevResearch.3.033072](https://doi.org/10.1103/PhysRevResearch.3.033072) |  |
-|  | best approximate | -0.01281 &#9675; | TC-DCD [10.1103/PhysRevResearch.3.033072](https://doi.org/10.1103/PhysRevResearch.3.033072) |  |
-| sc cell, N = 54, rs = 7.5, unpolarized | best approximate | -0.0602626 &#9675; | mCCD [10.1063/1.4867783](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 66, rs = 1, unpolarized | best variational | 0.5748(3) | VMC (SJ) [10.1103/PhysRevB.58.6800](https://doi.org/10.1103/PhysRevB.58.6800) |  |
-|  | best projected | 0.57290(3) | FN-DMC [10.1140/epjb/e2013-40204-3](https://doi.org/10.1140/epjb/e2013-40204-3) |  |
-| sc cell, N = 66, rs = 10, unpolarized | best variational | -0.05318(1) | VMC (SJ) [10.1103/PhysRevB.58.6800](https://doi.org/10.1103/PhysRevB.58.6800) |  |
-|  | best projected | -0.053728(3) | FN-DMC [10.1140/epjb/e2013-40204-3](https://doi.org/10.1140/epjb/e2013-40204-3) |  |
-| sc cell, N = 66, rs = 2, unpolarized | best projected | -0.00208(4) | FN-DMC [10.1140/epjb/e2013-40204-3](https://doi.org/10.1140/epjb/e2013-40204-3) |  |
-| sc cell, N = 66, rs = 20, unpolarized | best variational | -0.031515(5) | VMC (SJ) [10.1103/PhysRevB.58.6800](https://doi.org/10.1103/PhysRevB.58.6800) |  |
-| sc cell, N = 66, rs = 5, unpolarized | best variational | -0.07583(2) | VMC (SJ) [10.1103/PhysRevB.58.6800](https://doi.org/10.1103/PhysRevB.58.6800) |  |
-|  | best projected | -0.076676(2) | FN-DMC [10.1140/epjb/e2013-40204-3](https://doi.org/10.1140/epjb/e2013-40204-3) |  |
-| sc cell, N = 114, rs = 0.5, unpolarized | best projected | 3.48453(8) | ph-AFQMC (RHF) [10.1063/1.5109572](https://doi.org/10.1063/1.5109572) | *uses [QMCPACK](https://qmcpack.org/)* |
-| sc cell, N = 114, rs = 1, unpolarized | best variational | 0.6039(3) | VMC (SJ) [10.1103/PhysRevB.58.6800](https://doi.org/10.1103/PhysRevB.58.6800) |  |
-|  | best projected | 0.59877(6) | ph-AFQMC (RHF) [10.1063/1.5109572](https://doi.org/10.1063/1.5109572) | *uses [QMCPACK](https://qmcpack.org/)* |
-| sc cell, N = 114, rs = 10, unpolarized | best variational | -0.05276(1) | VMC (SJ) [10.1103/PhysRevB.58.6800](https://doi.org/10.1103/PhysRevB.58.6800) |  |
-| sc cell, N = 114, rs = 2, unpolarized | best projected | 0.00487(6) | ph-AFQMC (RHF) [10.1063/1.5109572](https://doi.org/10.1063/1.5109572) | *uses [QMCPACK](https://qmcpack.org/)* |
-| sc cell, N = 114, rs = 20, unpolarized | best variational | -0.031390(5) | VMC (SJ) [10.1103/PhysRevB.58.6800](https://doi.org/10.1103/PhysRevB.58.6800) |  |
-| sc cell, N = 114, rs = 5, unpolarized | best variational | -0.07433(1) | VMC (SJ) [10.1103/PhysRevB.58.6800](https://doi.org/10.1103/PhysRevB.58.6800) |  |
-| sc cell, N = 128, rs = 110, unpolarized | best variational | -0.0071121(2) | VMC (MP-NQS) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
-|  | best projected | -0.007009518(1) | FN-DMC (SJ) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) |  |
-| sc cell, N = 128, rs = 200, unpolarized | best variational | -0.0040615(1) | VMC (MP-NQS) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
-|  | best projected | -0.0039923(7) | FN-DMC (SJ) [10.1103/PhysRevB.110.035108](https://doi.org/10.1103/PhysRevB.110.035108) |  |
-| sc cell, N = 162, rs = 1, unpolarized | best variational | 0.5581(2) | VMC (SJ) [10.1103/PhysRevB.58.6800](https://doi.org/10.1103/PhysRevB.58.6800) |  |
-| sc cell, N = 162, rs = 10, unpolarized | best variational | -0.053210(5) | VMC (SJ) [10.1103/PhysRevB.58.6800](https://doi.org/10.1103/PhysRevB.58.6800) |  |
-| sc cell, N = 162, rs = 20, unpolarized | best variational | -0.031350(5) | VMC (SJ) [10.1103/PhysRevB.58.6800](https://doi.org/10.1103/PhysRevB.58.6800) |  |
-| sc cell, N = 162, rs = 5, unpolarized | best variational | -0.07619(1) | VMC (SJ) [10.1103/PhysRevB.58.6800](https://doi.org/10.1103/PhysRevB.58.6800) |  |
-| sc cell, N = 246, rs = 1, unpolarized | best variational | 0.5969(2) | VMC (SJ) [10.1103/PhysRevB.58.6800](https://doi.org/10.1103/PhysRevB.58.6800) |  |
-| sc cell, N = 246, rs = 10, unpolarized | best variational | -0.052740(5) | VMC (SJ) [10.1103/PhysRevB.58.6800](https://doi.org/10.1103/PhysRevB.58.6800) |  |
-| sc cell, N = 246, rs = 20, unpolarized | best variational | -0.031375(5) | VMC (SJ) [10.1103/PhysRevB.58.6800](https://doi.org/10.1103/PhysRevB.58.6800) |  |
-| sc cell, N = 246, rs = 5, unpolarized | best variational | -0.07443(2) | VMC (SJ) [10.1103/PhysRevB.58.6800](https://doi.org/10.1103/PhysRevB.58.6800) |  |
+| bcc cell, N = 27, rs = 0.2, polarized | best variational | 44.18067(2) | VMC (FermiNet) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
+|  | best projected | 44.18224(1) | FN-DMC (SJB) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 27, rs = 0.5, polarized | best variational | 6.318704(2) | VMC (FermiNet) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
+|  | best projected | 6.319754(7) | FN-DMC (SJB) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 27, rs = 1, polarized | best variational | 1.261547(1) | VMC (FermiNet) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
+|  | best projected | 1.261975(2) | FN-DMC (SJB) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 27, rs = 10, polarized | best variational | -0.050320(5) | VMC (FermiNet) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
+|  | best projected | -0.0503349(8) | FN-DMC (SJB) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 27, rs = 2, polarized | best variational | 0.152086(1) | VMC (FermiNet) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
+|  | best projected | 0.152077(4) | FN-DMC (SJB) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 27, rs = 3, polarized | best variational | -0.006961(2) | VMC (FermiNet) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
+|  | best projected | -0.006966(2) | FN-DMC (SJB) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 27, rs = 30, polarized | best variational | -0.022541(5) | VMC (FermiNet) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
+|  | best projected | -0.0225620(2) | FN-DMC (SJB) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 27, rs = 5, polarized | best variational | -0.057691(4) | VMC (FermiNet) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
+|  | best projected | -0.057702(1) | FN-DMC (SJB) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 27, rs = 50, polarized | best variational | -0.014478(4) | VMC (FermiNet) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
+|  | best projected | -0.0144918(1) | FN-DMC (SJB) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 27, rs = 70, polarized | best variational | -0.010693(3) | VMC (FermiNet) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
+|  | best projected | -0.0107118(1) | FN-DMC (SJB) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 27, rs = 90, polarized | best variational | -0.008496(1) | VMC (FermiNet) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
+|  | best projected | -0.0085137(2) | FN-DMC (SJB) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 64, rs = 100, unpolarized | best variational | -0.00767129(8) | VMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.0076974(1) | FN-DMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 64, rs = 125, unpolarized | best variational | -0.0062378(1) | VMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.0062597(1) | FN-DMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 64, rs = 80, unpolarized | best variational | -0.0093993(3) | VMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.0094484(2) | FN-DMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 64, rs = 90, unpolarized | best variational | -0.00844873(6) | VMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.0084813(1) | FN-DMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 64, rs = 100, polarized | best variational | -0.0076803(2) | VMC (SJB) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.00769619(9) | FN-DMC [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 64, rs = 125, polarized | best variational | -0.00624309(3) | VMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.0062592(1) | FN-DMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 64, rs = 80, polarized | best variational | -0.0094086(1) | VMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.00944340(6) | FN-DMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 64, rs = 90, polarized | best variational | -0.00845026(5) | VMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.00847899(9) | FN-DMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 216, rs = 100, unpolarized | best variational | -0.00765917(9) | VMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.0076828(1) | FN-DMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 216, rs = 125, unpolarized | best variational | -0.00623503(4) | VMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.00624956(9) | FN-DMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 216, rs = 80, unpolarized | best variational | -0.0093763(1) | VMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.0094299(3) | FN-DMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 216, rs = 90, unpolarized | best variational | -0.00843572(7) | VMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.0084658(1) | FN-DMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 216, rs = 100, polarized | best variational | -0.0076584(2) | VMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.0076816(4) | FN-DMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 216, rs = 125, polarized | best variational | -0.00623504(4) | VMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.00624968(7) | FN-DMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 216, rs = 80, polarized | best variational | -0.00939055(8) | VMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.0094277(1) | FN-DMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 216, rs = 90, polarized | best variational | -0.00843484(6) | VMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.0084646(1) | FN-DMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 512, rs = 100, unpolarized | best variational | -0.00765566(9) | VMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.0076790(1) | FN-DMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 512, rs = 125, unpolarized | best variational | -0.00623185(4) | VMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.00624652(5) | FN-DMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 512, rs = 80, unpolarized | best variational | -0.0093843(1) | VMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.0094232(2) | FN-DMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 512, rs = 90, unpolarized | best variational | -0.00843112(8) | VMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.0084611(1) | FN-DMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 512, rs = 100, polarized | best variational | -0.0076578(4) | VMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.0076795(1) | FN-DMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 512, rs = 125, polarized | best variational | -0.00623263(4) | VMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.00624666(6) | FN-DMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 512, rs = 80, polarized | best variational | -0.00938865(8) | VMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.00942260(9) | FN-DMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| bcc cell, N = 512, rs = 90, polarized | best variational | -0.00843318(7) | VMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.0084605(1) | FN-DMC (SJ) [Azadi & Drummond (2022)](https://doi.org/10.1103/physrevb.105.245135) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| fcc cell, N = 54, rs = 2, unpolarized | best projected | 0.00426(2) | FN-DMC [Gurtubay et al. (2010)](https://doi.org/10.1088/0953-8984/22/6/065501) | *uses [CASINO 2.1.400](https://vallico.net/casinoqmc/)* |
+| fcc cell, N = 102, rs = 2, unpolarized | best projected | 0.00081(2) | FN-DMC [Gurtubay et al. (2010)](https://doi.org/10.1088/0953-8984/22/6/065501) | *uses [CASINO 2.1.400](https://vallico.net/casinoqmc/)* |
+| fcc cell, N = 178, rs = 2, unpolarized | best projected | 0.00892(2) | FN-DMC [Gurtubay et al. (2010)](https://doi.org/10.1088/0953-8984/22/6/065501) | *uses [CASINO 2.1.400](https://vallico.net/casinoqmc/)* |
+| fcc cell, N = 226, rs = 2, unpolarized | best projected | 0.00202(2) | FN-DMC [Gurtubay et al. (2010)](https://doi.org/10.1088/0953-8984/22/6/065501) | *uses [CASINO 2.1.400](https://vallico.net/casinoqmc/)* |
+| rect-3x3x2 cell, N = 36, rs = 10, unpolarized | best variational | -0.0537396(1) | VMC (MP-NQS) [Liu et al. (2026)](https://doi.org/10.48550/arxiv.2604.15888) |  |
+| rect-3x3x2 cell, N = 36, rs = 100, unpolarized | best variational | -0.00769287(1) | VMC (MP-NQS) [Liu et al. (2026)](https://doi.org/10.48550/arxiv.2604.15888) |  |
+| rect-3x3x2 cell, N = 36, rs = 30, unpolarized | best variational | -0.02272554(2) | VMC (MP-NQS) [Liu et al. (2026)](https://doi.org/10.48550/arxiv.2604.15888) |  |
+| rect-3x3x2 cell, N = 36, rs = 5, unpolarized | best variational | -0.0756267(6) | VMC (MP-NQS) [Liu et al. (2026)](https://doi.org/10.48550/arxiv.2604.15888) |  |
+| rect-3x3x2 cell, N = 36, rs = 50, unpolarized | best variational | -0.01449795(2) | VMC (MP-NQS) [Liu et al. (2026)](https://doi.org/10.48550/arxiv.2604.15888) |  |
+| rect-3x3x2 cell, N = 36, rs = 80, unpolarized | best variational | -0.00945620(2) | VMC (MP-NQS) [Liu et al. (2026)](https://doi.org/10.48550/arxiv.2604.15888) |  |
+| rect-3x3x2 cell, N = 36, rs = 86.6, unpolarized | best variational | -0.00879026(2) | VMC (MP-NQS) [Liu et al. (2026)](https://doi.org/10.48550/arxiv.2604.15888) |  |
+| rect-3x3x2 cell, N = 36, rs = 86.7, unpolarized | best variational | -0.00878092(1) | VMC (MP-NQS) [Liu et al. (2026)](https://doi.org/10.48550/arxiv.2604.15888) |  |
+| rect-3x3x2 cell, N = 36, rs = 86.8, unpolarized | best variational | -0.00877159(1) | VMC (MP-NQS) [Liu et al. (2026)](https://doi.org/10.48550/arxiv.2604.15888) |  |
+| rect-3x3x2 cell, N = 36, rs = 86.9, unpolarized | best variational | -0.00876228(1) | VMC (MP-NQS) [Liu et al. (2026)](https://doi.org/10.48550/arxiv.2604.15888) |  |
+| rect-3x3x2 cell, N = 36, rs = 87, unpolarized | best variational | -0.008753017(8) | VMC (MP-NQS) [Liu et al. (2026)](https://doi.org/10.48550/arxiv.2604.15888) |  |
+| rect-3x3x2 cell, N = 36, rs = 87.1, unpolarized | best variational | -0.008743822(8) | VMC (MP-NQS) [Liu et al. (2026)](https://doi.org/10.48550/arxiv.2604.15888) |  |
+| sc cell, N = 7, rs = 1, polarized | best variational | 1.120358(3) | VMC (WAP-net) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+|  | best projected | 1.120400(5) | FN-DMC (iterative BF) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+| sc cell, N = 7, rs = 10, polarized | best variational | -0.0531436(2) | VMC (WAP-net) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+|  | best projected | -0.0531380(5) | FN-DMC (iterative BF) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+| sc cell, N = 7, rs = 100, polarized | best variational | -0.00774654(1) | VMC (WAP-net) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+|  | best projected | -0.00774625(5) | FN-DMC (iterative BF) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+| sc cell, N = 7, rs = 2, polarized | best variational | 0.110850(1) | VMC (WAP-net) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+|  | best projected | 0.110879(2) | FN-DMC (iterative BF) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+| sc cell, N = 7, rs = 20, polarized | best variational | -0.0322689(1) | VMC (WAP-net) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+|  | best projected | -0.032266(2) | FN-DMC (iterative BF) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+| sc cell, N = 7, rs = 5, polarized | best variational | -0.0664225(5) | VMC (WAP-net) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+|  | best projected | -0.0664055(5) | FN-DMC (iterative BF) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+| sc cell, N = 7, rs = 50, polarized | best variational | -0.01466089(1) | VMC (WAP-net) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+|  | best projected | -0.0146604(1) | FN-DMC (iterative BF) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+| sc cell, N = 14, rs = 0.1, unpolarized | best projected | 106.90015 &#9675; | CCD [Butler et al. (2024)](https://doi.org/10.1063/5.0222773) | [butler-julie/HEG-SRE](https://github.com/butler-julie/HEG-SRE) |
+|  | best extrapolated | 106.89994(1) | CCSDT [Spencer & Thom (2016)](https://doi.org/10.1063/1.4942173) |  |
+|  | best approximate | 106.87643 &#9675; | dRPA [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 0.2, unpolarized | best extrapolated | 25.4050004 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+|  | best approximate | 25.3821433 &#9675; | dRPA [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 0.3, unpolarized | best extrapolated | 10.6954209 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+|  | best approximate | 10.6732066 &#9675; | dRPA [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 0.4, unpolarized | best extrapolated | 5.6765448 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+|  | best approximate | 5.6547591 &#9675; | dRPA [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 0.5, unpolarized | best variational | 3.412684(4) | VMC (FermiNet) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
+|  | best projected | 3.41253(4) | ph-AFQMC (RHF) [Lee et al. (2019)](https://doi.org/10.1063/1.5109572) | *uses [PAUXY](https://github.com/pauxy-qmc/pauxy)* |
+|  | best extrapolated | 3.41226(2) | FCIQMC [Shepherd et al. (2012)](https://doi.org/10.1063/1.4720076) |  |
+|  | best approximate | 3.3916087 &#9675; | dRPA [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 0.6, unpolarized | best extrapolated | 2.2154921 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+|  | best approximate | 2.1945636 &#9675; | dRPA [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 0.7, unpolarized | best extrapolated | 1.5130365 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+|  | best approximate | 1.4923937 &#9675; | dRPA [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 0.8, unpolarized | best extrapolated | 1.0698103 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+|  | best approximate | 1.0493818 &#9675; | dRPA [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 0.9, unpolarized | best extrapolated | 0.7746685 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+|  | best approximate | 0.7534542 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 1, unpolarized | best variational | 0.568851(1) | VMC (FermiNet) [Liu et al. (2026)](https://doi.org/10.48550/arxiv.2604.15888) |  |
+|  | best projected | 0.56869(6) | ph-AFQMC (RHF) [Lee et al. (2019)](https://doi.org/10.1063/1.5109572) | *uses [QMCPACK](https://qmcpack.org/)* |
+|  | best extrapolated | 0.56850(3) | FCIQMC [Shepherd et al. (2012)](https://doi.org/10.1063/1.4720076) |  |
+|  | best approximate | 0.5464629 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 10, unpolarized | best variational | -0.0552126(6) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
+|  | best projected | -0.0552180(5) | FN-DMC (iterative BF) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+|  | best extrapolated | -0.05289 &#9675; | DCD [Liao et al. (2021)](https://doi.org/10.1103/physrevresearch.3.033072) |  |
+|  | best approximate | -0.0791573 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 100, unpolarized | best variational | -0.00773024(1) | VMC (WAP-net) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+|  | best projected | -0.00773430(2) | FN-DMC (iterative BF) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+|  | best extrapolated | -0.0064603 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+|  | best approximate | -0.0104603 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 15, unpolarized | best variational | -0.0408619(1) | VMC (FermiNet) [Liu et al. (2026)](https://doi.org/10.48550/arxiv.2604.15888) |  |
+|  | best approximate | -0.0580244 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 2, unpolarized | best variational | -0.0084275(7) | VMC (FermiNet) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
+|  | best projected | -0.00853(6) | ph-AFQMC (RHF) [Lee et al. (2019)](https://doi.org/10.1063/1.5109572) | *uses [QMCPACK](https://qmcpack.org/)* |
+|  | best extrapolated | -0.00873(3) | FCIQMC [Shepherd et al. (2012)](https://doi.org/10.1063/1.4720076) |  |
+|  | best approximate | -0.0478896 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 20, unpolarized | best variational | -0.0324553(2) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
+|  | best projected | -0.0324578(2) | FN-DMC (iterative BF) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+|  | best extrapolated | -0.03035 &#9675; | DCD [Liao et al. (2021)](https://doi.org/10.1103/physrevresearch.3.033072) |  |
+|  | best approximate | -0.0457024 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 3, unpolarized | best projected | -0.07352(4) | ph-AFQMC (RHF) [Lee et al. (2019)](https://doi.org/10.1063/1.5109572) | *uses [QMCPACK](https://qmcpack.org/)* |
+|  | best extrapolated | -0.07432(2) | CCSDTQ5 [Neufeld & Thom (2017)](https://doi.org/10.1063/1.5003794) | *uses [HANDE-QMC](https://github.com/hande-qmc/hande)* |
+|  | best approximate | -0.1179136 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 30, unpolarized | best extrapolated | -0.0203291 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+|  | best approximate | -0.0321148 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 4, unpolarized | best extrapolated | -0.0792519 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+|  | best approximate | -0.1240376 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 40, unpolarized | best extrapolated | -0.0155875 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+|  | best approximate | -0.0247303 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 5, unpolarized | best variational | -0.0798630(2) | VMC (FermiNet) [Liu et al. (2026)](https://doi.org/10.48550/arxiv.2604.15888) |  |
+|  | best projected | -0.079842(1) | FN-DMC (iterative BF) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+|  | best extrapolated | -0.07997(7) | FCIQMC [Shepherd et al. (2012)](https://doi.org/10.1063/1.4720076) |  |
+|  | best approximate | -0.1175392 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 50, unpolarized | best variational | -0.01462631(6) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
+|  | best projected | -0.0146287(1) | FN-DMC (iterative BF) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+|  | best extrapolated | -0.01323 &#9675; | DCD [Liao et al. (2021)](https://doi.org/10.1103/physrevresearch.3.033072) |  |
+|  | best approximate | -0.0201249 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 6, unpolarized | best extrapolated | -0.0706647 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+|  | best approximate | -0.1085933 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 60, unpolarized | best extrapolated | -0.0106188 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+|  | best approximate | -0.0169759 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 7, unpolarized | best extrapolated | -0.0651069 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+|  | best approximate | -0.099964 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 70, unpolarized | best extrapolated | -0.0091195 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+|  | best approximate | -0.0146909 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 8, unpolarized | best extrapolated | -0.0599259 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+|  | best approximate | -0.0920688 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 80, unpolarized | best extrapolated | -0.0080403 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+|  | best approximate | -0.0129689 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 9, unpolarized | best extrapolated | -0.0553862 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+|  | best approximate | -0.0851719 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 14, rs = 90, unpolarized | best extrapolated | -0.0071484 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+|  | best approximate | -0.0115769 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 19, rs = 1, polarized | best variational | 1.046242(3) | VMC (WAP-net) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+|  | best projected | 1.0462250(5) | FN-DMC (iterative BF) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+| sc cell, N = 19, rs = 10, polarized | best variational | -0.0528624(2) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
+|  | best projected | -0.0528652(3) | FN-DMC (iterative BF) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+| sc cell, N = 19, rs = 100, polarized | best variational | -0.00771899(1) | VMC (iterative BF) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+|  | best projected | -0.00772142(1) | FN-DMC (iterative BF) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+| sc cell, N = 19, rs = 2, polarized | best variational | 0.096303(1) | VMC (WAP-net) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+|  | best projected | 0.096302(2) | FN-DMC (iterative BF) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+| sc cell, N = 19, rs = 20, polarized | best variational | -0.03201095(5) | VMC (WAP-net) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+|  | best projected | -0.0320167(1) | FN-DMC (iterative BF) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+| sc cell, N = 19, rs = 5, polarized | best variational | -0.0672510(2) | VMC (WAP-net) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+|  | best projected | -0.0672540(5) | FN-DMC (iterative BF) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+| sc cell, N = 19, rs = 50, polarized | best variational | -0.01456685(3) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
+|  | best projected | -0.01456920(4) | FN-DMC (iterative BF) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
+| sc cell, N = 27, rs = 1, polarized | best variational | 1.051771(4) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
+|  | best projected | 1.05200(3) | FN-DMC (SJ) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) |  |
+| sc cell, N = 27, rs = 10, polarized | best variational | -0.0526015(2) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
+|  | best projected | -0.052540(6) | FN-DMC (SJ) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) |  |
+| sc cell, N = 27, rs = 2, polarized | best variational | 0.098460(2) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
+|  | best projected | 0.09866(2) | FN-DMC (SJ) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) |  |
+| sc cell, N = 27, rs = 30, polarized | best variational | -0.0228184(1) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
+|  | best projected | -0.0228080(8) | FN-DMC (SJ) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) |  |
+| sc cell, N = 27, rs = 5, polarized | best variational | -0.0665523(6) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
+|  | best projected | -0.066429(4) | FN-DMC (SJ) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) |  |
+| sc cell, N = 27, rs = 50, polarized | best variational | -0.01457976(5) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
+|  | best projected | -0.0145752(6) | FN-DMC (SJ) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) |  |
+| sc cell, N = 27, rs = 70, polarized | best variational | -0.01074986(3) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
+|  | best projected | -0.010749(2) | FN-DMC (SJ) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) |  |
+| sc cell, N = 27, rs = 90, polarized | best variational | -0.00853156(2) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
+|  | best projected | -0.0085314(5) | FN-DMC (SJ) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) |  |
+| sc cell, N = 38, rs = 0.5, unpolarized | best projected | 3.2080745 &#9675; | CCD [Butler et al. (2024)](https://doi.org/10.1063/5.0222773) | [butler-julie/HEG-SRE](https://github.com/butler-julie/HEG-SRE) |
+|  | best extrapolated | 3.20691(3) | FCIQMC [Shepherd et al. (2012)](https://doi.org/10.1063/1.4720076) |  |
+| sc cell, N = 38, rs = 1, unpolarized | best extrapolated | 0.52478(3) | FCIQMC [Shepherd et al. (2012)](https://doi.org/10.1063/1.4720076) |  |
+| sc cell, N = 38, rs = 2, unpolarized | best extrapolated | -0.01422(5) | FCIQMC [Shepherd et al. (2012)](https://doi.org/10.1063/1.4720076) |  |
+| sc cell, N = 54, rs = 0.5, unpolarized | best variational | 3.221226(2) | VMC (DeepSolid) [Li et al. (2022)](https://doi.org/10.1038/s41467-022-35627-1) | [bytedance/DeepSolid](https://github.com/bytedance/DeepSolid) |
+|  | best projected | 3.22087(2) | ph-AFQMC (RHF) [Lee et al. (2019)](https://doi.org/10.1063/1.5109572) | *uses [QMCPACK](https://qmcpack.org/)* |
+|  | best extrapolated | 3.2202(2) | FCIQMC [Shepherd et al. (2012)](https://doi.org/10.1103/physrevb.85.081103) |  |
+|  | best approximate | 3.2119035 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 54, rs = 1, unpolarized | best variational | 0.52973(1) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
+|  | best projected | 0.52967(2) | ph-AFQMC (RHF) [Lee et al. (2019)](https://doi.org/10.1063/1.5109572) | *uses [QMCPACK](https://qmcpack.org/)* |
+|  | best extrapolated | 0.52991(6) | FCIQMC [Shepherd et al. (2012)](https://doi.org/10.1063/1.4720076) |  |
+|  | best approximate | 0.5147818 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 54, rs = 10, unpolarized | best variational | -0.054448(1) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
+|  | best projected | -0.054443(2) | FN-DMC (SJB) [López Ríos et al. (2006)](https://doi.org/10.1103/physreve.74.066701) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best extrapolated | -0.05157 &#9675; | DCD [Liao et al. (2021)](https://doi.org/10.1103/physrevresearch.3.033072) |  |
+|  | best approximate | -0.0728389 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 54, rs = 100, unpolarized | best variational | -0.00769203(5) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
+|  | best projected | -0.007674(3) | FN-DMC (SJ) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) |  |
+| sc cell, N = 54, rs = 15, unpolarized | best extrapolated | -0.0363669 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+|  | best approximate | -0.0359224 &#9675; | mCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 54, rs = 2, unpolarized | best variational | -0.014046(8) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
+|  | best projected | -0.01429(3) | ph-AFQMC (RHF) [Lee et al. (2019)](https://doi.org/10.1063/1.5109572) | *uses [QMCPACK](https://qmcpack.org/)* |
+|  | best extrapolated | -0.01286 &#9675; | DCD [Liao et al. (2021)](https://doi.org/10.1103/physrevresearch.3.033072) |  |
+|  | best approximate | -0.0363623 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 54, rs = 20, unpolarized | best variational | -0.0320524(5) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
+|  | best projected | -0.032047(2) | FN-DMC (SJB) [López Ríos et al. (2006)](https://doi.org/10.1103/physreve.74.066701) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best extrapolated | -0.02925 &#9675; | DCD [Liao et al. (2021)](https://doi.org/10.1103/physrevresearch.3.033072) |  |
+|  | best approximate | -0.0429947 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 54, rs = 3, unpolarized | best approximate | -0.0706229 &#9675; | mCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 54, rs = 4, unpolarized | best approximate | -0.0774134 &#9675; | mCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 54, rs = 5, unpolarized | best variational | -0.079090(2) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
+|  | best projected | -0.079036(3) | FN-DMC (SJB) [López Ríos et al. (2006)](https://doi.org/10.1103/physreve.74.066701) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best extrapolated | -0.07655 &#9675; | DCD [Liao et al. (2021)](https://doi.org/10.1103/physrevresearch.3.033072) |  |
+|  | best approximate | -0.104002 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 54, rs = 50, unpolarized | best variational | -0.0145015(1) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
+|  | best projected | -0.01387(2) | FN-DMC (SJ) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) |  |
+|  | best extrapolated | -0.01267 &#9675; | DCD [Liao et al. (2021)](https://doi.org/10.1103/physrevresearch.3.033072) |  |
+|  | best approximate | -0.01281 &#9675; | TC-DCD [Liao et al. (2021)](https://doi.org/10.1103/physrevresearch.3.033072) |  |
+| sc cell, N = 54, rs = 7.5, unpolarized | best approximate | -0.0602626 &#9675; | mCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+| sc cell, N = 66, rs = 1, unpolarized | best variational | 0.5748(3) | VMC (SJ) [Kwon et al. (1998)](https://doi.org/10.1103/physrevb.58.6800) |  |
+|  | best projected | 0.57290(3) | FN-DMC [Fantoni (2013)](https://doi.org/10.1140/epjb/e2013-40204-3) |  |
+| sc cell, N = 66, rs = 10, unpolarized | best variational | -0.05318(1) | VMC (SJ) [Kwon et al. (1998)](https://doi.org/10.1103/physrevb.58.6800) |  |
+|  | best projected | -0.053728(3) | FN-DMC [Fantoni (2013)](https://doi.org/10.1140/epjb/e2013-40204-3) |  |
+| sc cell, N = 66, rs = 2, unpolarized | best projected | -0.00208(4) | FN-DMC [Fantoni (2013)](https://doi.org/10.1140/epjb/e2013-40204-3) |  |
+| sc cell, N = 66, rs = 20, unpolarized | best variational | -0.031515(5) | VMC (SJ) [Kwon et al. (1998)](https://doi.org/10.1103/physrevb.58.6800) |  |
+| sc cell, N = 66, rs = 5, unpolarized | best variational | -0.07583(2) | VMC (SJ) [Kwon et al. (1998)](https://doi.org/10.1103/physrevb.58.6800) |  |
+|  | best projected | -0.076676(2) | FN-DMC [Fantoni (2013)](https://doi.org/10.1140/epjb/e2013-40204-3) |  |
+| sc cell, N = 114, rs = 0.5, unpolarized | best projected | 3.48453(8) | ph-AFQMC (RHF) [Lee et al. (2019)](https://doi.org/10.1063/1.5109572) | *uses [QMCPACK](https://qmcpack.org/)* |
+| sc cell, N = 114, rs = 1, unpolarized | best variational | 0.6039(3) | VMC (SJ) [Kwon et al. (1998)](https://doi.org/10.1103/physrevb.58.6800) |  |
+|  | best projected | 0.59877(6) | ph-AFQMC (RHF) [Lee et al. (2019)](https://doi.org/10.1063/1.5109572) | *uses [QMCPACK](https://qmcpack.org/)* |
+| sc cell, N = 114, rs = 10, unpolarized | best variational | -0.05276(1) | VMC (SJ) [Kwon et al. (1998)](https://doi.org/10.1103/physrevb.58.6800) |  |
+| sc cell, N = 114, rs = 2, unpolarized | best projected | 0.00487(6) | ph-AFQMC (RHF) [Lee et al. (2019)](https://doi.org/10.1063/1.5109572) | *uses [QMCPACK](https://qmcpack.org/)* |
+| sc cell, N = 114, rs = 20, unpolarized | best variational | -0.031390(5) | VMC (SJ) [Kwon et al. (1998)](https://doi.org/10.1103/physrevb.58.6800) |  |
+| sc cell, N = 114, rs = 5, unpolarized | best variational | -0.07433(1) | VMC (SJ) [Kwon et al. (1998)](https://doi.org/10.1103/physrevb.58.6800) |  |
+| sc cell, N = 128, rs = 110, unpolarized | best variational | -0.0071121(2) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
+|  | best projected | -0.007009518(1) | FN-DMC (SJ) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) |  |
+| sc cell, N = 128, rs = 200, unpolarized | best variational | -0.0040615(1) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
+|  | best projected | -0.0039923(7) | FN-DMC (SJ) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) |  |
+| sc cell, N = 162, rs = 1, unpolarized | best variational | 0.5581(2) | VMC (SJ) [Kwon et al. (1998)](https://doi.org/10.1103/physrevb.58.6800) |  |
+| sc cell, N = 162, rs = 10, unpolarized | best variational | -0.053210(5) | VMC (SJ) [Kwon et al. (1998)](https://doi.org/10.1103/physrevb.58.6800) |  |
+| sc cell, N = 162, rs = 20, unpolarized | best variational | -0.031350(5) | VMC (SJ) [Kwon et al. (1998)](https://doi.org/10.1103/physrevb.58.6800) |  |
+| sc cell, N = 162, rs = 5, unpolarized | best variational | -0.07619(1) | VMC (SJ) [Kwon et al. (1998)](https://doi.org/10.1103/physrevb.58.6800) |  |
+| sc cell, N = 246, rs = 1, unpolarized | best variational | 0.5969(2) | VMC (SJ) [Kwon et al. (1998)](https://doi.org/10.1103/physrevb.58.6800) |  |
+| sc cell, N = 246, rs = 10, unpolarized | best variational | -0.052740(5) | VMC (SJ) [Kwon et al. (1998)](https://doi.org/10.1103/physrevb.58.6800) |  |
+| sc cell, N = 246, rs = 20, unpolarized | best variational | -0.031375(5) | VMC (SJ) [Kwon et al. (1998)](https://doi.org/10.1103/physrevb.58.6800) |  |
+| sc cell, N = 246, rs = 5, unpolarized | best variational | -0.07443(2) | VMC (SJ) [Kwon et al. (1998)](https://doi.org/10.1103/physrevb.58.6800) |  |
 
 </details>
 
@@ -1197,88 +1197,88 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 
 | instance | value | energy | method | code |
 |---|---|---|---|---|
-| square cell, N = 21, rs = 10, polarized | best variational | -0.08492(4) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 21, rs = 20, polarized | best variational | -0.04634(2) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 21, rs = 30, polarized | best variational | -0.031965(5) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 21, rs = 40, polarized | best variational | -0.024434(5) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 21, rs = 5, polarized | best variational | -0.1451(1) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 21, rs = 75, polarized | best variational | -0.013457(1) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 26, rs = 1, unpolarized | best variational | -0.1850(5) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 26, rs = 10, unpolarized | best variational | -0.08433(2) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 26, rs = 20, unpolarized | best variational | -0.04587(1) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 26, rs = 30, unpolarized | best variational | -0.03166(1) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 26, rs = 5, unpolarized | best variational | -0.14685(5) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 26, rs = 50, unpolarized | best variational | -0.019659(4) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 37, rs = 10, polarized | best variational | -0.08440(4) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 37, rs = 20, polarized | best variational | -0.04614(1) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 37, rs = 30, polarized | best variational | -0.0318870(5) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 37, rs = 40, polarized | best variational | -0.024379(4) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 37, rs = 5, polarized | best variational | -0.14373(4) | VMC (NCT) [10.21468/SciPostPhys.14.6.154](https://doi.org/10.21468/SciPostPhys.14.6.154) | [fermiflow/CoulombGas](https://github.com/fermiflow/CoulombGas) |
-| square cell, N = 37, rs = 75, polarized | best variational | -0.0134380(5) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 42, rs = 1, unpolarized | best variational | -0.2225(3) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 42, rs = 10, unpolarized | best variational | -0.08450(2) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 42, rs = 20, unpolarized | best variational | -0.04588(1) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 42, rs = 30, unpolarized | best variational | -0.031675(5) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 42, rs = 5, unpolarized | best variational | -0.14800(5) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 42, rs = 50, unpolarized | best variational | -0.019654(3) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 57, rs = 10, polarized | best variational | -0.08390(5) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-|  | best projected | -0.08427(3) | FN-GFMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 57, rs = 20, polarized | best variational | -0.04607(3) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-|  | best projected | -0.04618(1) | FN-GFMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 57, rs = 30, polarized | best variational | -0.031825(5) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-|  | best projected | -0.031913(4) | FN-GFMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 57, rs = 40, polarized | best variational | -0.024360(5) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-|  | best projected | -0.024420(1) | FN-GFMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 57, rs = 5, polarized | best variational | -0.14225(5) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-|  | best projected | -0.14291(5) | FN-GFMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 57, rs = 75, polarized | best variational | -0.0134275(5) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-|  | best projected | -0.013473(2) | FN-GFMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 58, rs = 1, unpolarized | best variational | -0.1953(1) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-|  | best projected | -0.2046(3) | FN-GFMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 58, rs = 10, unpolarized | best variational | -0.08426(2) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-|  | best projected | -0.08552(4) | FN-GFMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 58, rs = 20, unpolarized | best variational | -0.04582(2) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-|  | best projected | -0.04636(1) | FN-GFMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 58, rs = 30, unpolarized | best variational | -0.031655(3) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-|  | best projected | -0.031967(3) | FN-GFMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 58, rs = 5, unpolarized | best variational | -0.1470(1) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-|  | best projected | -0.14990(5) | FN-GFMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 58, rs = 50, unpolarized | best variational | -0.019651(3) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-|  | best projected | -0.019763(3) | FN-GFMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 69, rs = 10, polarized | best variational | -0.08412(3) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 69, rs = 20, polarized | best variational | -0.046085(5) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 69, rs = 30, polarized | best variational | -0.031852(4) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 69, rs = 40, polarized | best variational | -0.024375(2) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 69, rs = 5, polarized | best variational | -0.14310(5) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 69, rs = 75, polarized | best variational | -0.0134305(5) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 74, rs = 1, unpolarized | best variational | -0.2078(4) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 74, rs = 10, unpolarized | best variational | -0.08429(2) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 74, rs = 20, unpolarized | best variational | -0.045845(5) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 74, rs = 30, unpolarized | best variational | -0.031662(4) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 74, rs = 5, unpolarized | best variational | -0.14735(5) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 74, rs = 50, unpolarized | best variational | -0.019651(2) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 90, rs = 30, unpolarized | best variational | -0.0317373(2) | VMC (SJ) [10.1103/PhysRevB.110.245145](https://doi.org/10.1103/PhysRevB.110.245145) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-|  | best projected | -0.031919(1) | FN-DMC [10.1103/PhysRevB.110.245145](https://doi.org/10.1103/PhysRevB.110.245145) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
-| square cell, N = 113, rs = 10, polarized | best variational | -0.08396(2) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 113, rs = 20, polarized | best variational | -0.046030(5) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 113, rs = 30, polarized | best variational | -0.031821(3) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 113, rs = 40, polarized | best variational | -0.024356(2) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 113, rs = 5, polarized | best variational | -0.14215(5) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 113, rs = 75, polarized | best variational | -0.0134245(5) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 114, rs = 1, unpolarized | best variational | -0.1983(4) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 114, rs = 10, unpolarized | best variational | -0.08423(1) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 114, rs = 20, unpolarized | best variational | -0.045825(5) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 114, rs = 30, unpolarized | best variational | -0.031647(4) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 114, rs = 5, unpolarized | best variational | -0.14685(5) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| square cell, N = 114, rs = 50, unpolarized | best variational | -0.019648(2) | VMC (SJ) [10.1103/PhysRevB.39.5005](https://doi.org/10.1103/PhysRevB.39.5005) |  |
-| triangular cell, N = 16, rs = 30, polarized | best variational | -0.031990687(3) | VMC (Fermi Sets) [arXiv:2607.25872](https://arxiv.org/abs/2607.25872) |  |
-|  | best projected | -0.03199636(7) | FP-DMC (Fermi Sets) [arXiv:2607.25872](https://arxiv.org/abs/2607.25872) |  |
-| triangular cell, N = 91, rs = 30, polarized | best variational | -0.03193763(3) | VMC (self-attention) [arXiv:2607.08616](https://arxiv.org/abs/2607.08616) |  |
-|  | best projected | -0.0319370(1) | FN-DMC (SJB) [arXiv:2607.08616](https://arxiv.org/abs/2607.08616) |  |
-| triangular cell, N = 91, rs = 40, polarized | best variational | -0.02443814(2) | VMC (self-attention) [arXiv:2607.08616](https://arxiv.org/abs/2607.08616) |  |
-|  | best projected | -0.0244377(2) | FN-DMC (SJB) [arXiv:2607.08616](https://arxiv.org/abs/2607.08616) |  |
-| triangular cell, N = 169, rs = 30, polarized | best variational | -0.03192077(3) | VMC (self-attention) [arXiv:2607.08616](https://arxiv.org/abs/2607.08616) |  |
-|  | best projected | -0.0319197(1) | FN-DMC (SJB) [arXiv:2607.08616](https://arxiv.org/abs/2607.08616) |  |
+| square cell, N = 21, rs = 10, polarized | best variational | -0.08492(4) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 21, rs = 20, polarized | best variational | -0.04634(2) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 21, rs = 30, polarized | best variational | -0.031965(5) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 21, rs = 40, polarized | best variational | -0.024434(5) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 21, rs = 5, polarized | best variational | -0.1451(1) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 21, rs = 75, polarized | best variational | -0.013457(1) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 26, rs = 1, unpolarized | best variational | -0.1850(5) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 26, rs = 10, unpolarized | best variational | -0.08433(2) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 26, rs = 20, unpolarized | best variational | -0.04587(1) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 26, rs = 30, unpolarized | best variational | -0.03166(1) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 26, rs = 5, unpolarized | best variational | -0.14685(5) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 26, rs = 50, unpolarized | best variational | -0.019659(4) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 37, rs = 10, polarized | best variational | -0.08440(4) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 37, rs = 20, polarized | best variational | -0.04614(1) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 37, rs = 30, polarized | best variational | -0.0318870(5) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 37, rs = 40, polarized | best variational | -0.024379(4) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 37, rs = 5, polarized | best variational | -0.14373(4) | VMC (NCT) [Xie et al. (2023)](https://doi.org/10.21468/scipostphys.14.6.154) | [fermiflow/CoulombGas](https://github.com/fermiflow/CoulombGas) |
+| square cell, N = 37, rs = 75, polarized | best variational | -0.0134380(5) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 42, rs = 1, unpolarized | best variational | -0.2225(3) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 42, rs = 10, unpolarized | best variational | -0.08450(2) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 42, rs = 20, unpolarized | best variational | -0.04588(1) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 42, rs = 30, unpolarized | best variational | -0.031675(5) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 42, rs = 5, unpolarized | best variational | -0.14800(5) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 42, rs = 50, unpolarized | best variational | -0.019654(3) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 57, rs = 10, polarized | best variational | -0.08390(5) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+|  | best projected | -0.08427(3) | FN-GFMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 57, rs = 20, polarized | best variational | -0.04607(3) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+|  | best projected | -0.04618(1) | FN-GFMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 57, rs = 30, polarized | best variational | -0.031825(5) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+|  | best projected | -0.031913(4) | FN-GFMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 57, rs = 40, polarized | best variational | -0.024360(5) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+|  | best projected | -0.024420(1) | FN-GFMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 57, rs = 5, polarized | best variational | -0.14225(5) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+|  | best projected | -0.14291(5) | FN-GFMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 57, rs = 75, polarized | best variational | -0.0134275(5) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+|  | best projected | -0.013473(2) | FN-GFMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 58, rs = 1, unpolarized | best variational | -0.1953(1) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+|  | best projected | -0.2046(3) | FN-GFMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 58, rs = 10, unpolarized | best variational | -0.08426(2) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+|  | best projected | -0.08552(4) | FN-GFMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 58, rs = 20, unpolarized | best variational | -0.04582(2) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+|  | best projected | -0.04636(1) | FN-GFMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 58, rs = 30, unpolarized | best variational | -0.031655(3) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+|  | best projected | -0.031967(3) | FN-GFMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 58, rs = 5, unpolarized | best variational | -0.1470(1) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+|  | best projected | -0.14990(5) | FN-GFMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 58, rs = 50, unpolarized | best variational | -0.019651(3) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+|  | best projected | -0.019763(3) | FN-GFMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 69, rs = 10, polarized | best variational | -0.08412(3) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 69, rs = 20, polarized | best variational | -0.046085(5) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 69, rs = 30, polarized | best variational | -0.031852(4) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 69, rs = 40, polarized | best variational | -0.024375(2) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 69, rs = 5, polarized | best variational | -0.14310(5) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 69, rs = 75, polarized | best variational | -0.0134305(5) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 74, rs = 1, unpolarized | best variational | -0.2078(4) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 74, rs = 10, unpolarized | best variational | -0.08429(2) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 74, rs = 20, unpolarized | best variational | -0.045845(5) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 74, rs = 30, unpolarized | best variational | -0.031662(4) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 74, rs = 5, unpolarized | best variational | -0.14735(5) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 74, rs = 50, unpolarized | best variational | -0.019651(2) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 90, rs = 30, unpolarized | best variational | -0.0317373(2) | VMC (SJ) [Azadi et al. (2024)](https://doi.org/10.1103/physrevb.110.245145) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+|  | best projected | -0.031919(1) | FN-DMC [Azadi et al. (2024)](https://doi.org/10.1103/physrevb.110.245145) | *uses [CASINO](https://vallico.net/casinoqmc/)* |
+| square cell, N = 113, rs = 10, polarized | best variational | -0.08396(2) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 113, rs = 20, polarized | best variational | -0.046030(5) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 113, rs = 30, polarized | best variational | -0.031821(3) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 113, rs = 40, polarized | best variational | -0.024356(2) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 113, rs = 5, polarized | best variational | -0.14215(5) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 113, rs = 75, polarized | best variational | -0.0134245(5) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 114, rs = 1, unpolarized | best variational | -0.1983(4) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 114, rs = 10, unpolarized | best variational | -0.08423(1) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 114, rs = 20, unpolarized | best variational | -0.045825(5) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 114, rs = 30, unpolarized | best variational | -0.031647(4) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 114, rs = 5, unpolarized | best variational | -0.14685(5) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| square cell, N = 114, rs = 50, unpolarized | best variational | -0.019648(2) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
+| triangular cell, N = 16, rs = 30, polarized | best variational | -0.031990687(3) | VMC (Fermi Sets) [Li et al. (2026)](https://doi.org/10.48550/arxiv.2607.25872) |  |
+|  | best projected | -0.03199636(7) | FP-DMC (Fermi Sets) [Li et al. (2026)](https://doi.org/10.48550/arxiv.2607.25872) |  |
+| triangular cell, N = 91, rs = 30, polarized | best variational | -0.03193763(3) | VMC (self-attention) [Gaggioli et al. (2026)](https://doi.org/10.48550/arxiv.2607.08616) |  |
+|  | best projected | -0.0319370(1) | FN-DMC (SJB) [Gaggioli et al. (2026)](https://doi.org/10.48550/arxiv.2607.08616) |  |
+| triangular cell, N = 91, rs = 40, polarized | best variational | -0.02443814(2) | VMC (self-attention) [Gaggioli et al. (2026)](https://doi.org/10.48550/arxiv.2607.08616) |  |
+|  | best projected | -0.0244377(2) | FN-DMC (SJB) [Gaggioli et al. (2026)](https://doi.org/10.48550/arxiv.2607.08616) |  |
+| triangular cell, N = 169, rs = 30, polarized | best variational | -0.03192077(3) | VMC (self-attention) [Gaggioli et al. (2026)](https://doi.org/10.48550/arxiv.2607.08616) |  |
+|  | best projected | -0.0319197(1) | FN-DMC (SJB) [Gaggioli et al. (2026)](https://doi.org/10.48550/arxiv.2607.08616) |  |
 
 </details>
 
@@ -1287,561 +1287,561 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 
 | instance | value | energy | method | code |
 |---|---|---|---|---|
-| H4 chain, open, R = 1.51178, STO-3G | best variational | -0.5418875 &#9675; | VQE [10.1021/acs.jctc.3c00319](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
-| H4 chain, open, R = 1.8, STO-6G | exact | -0.547595 | FCI [10.1021/acs.jctc.3c00831](https://doi.org/10.1021/acs.jctc.3c00831) |  |
-|  | best variational | -0.547595 &#9675; (+<1e-6) | VMC (RBM) [10.1021/acs.jctc.3c00831](https://doi.org/10.1021/acs.jctc.3c00831) |  |
-| H4 chain, open, R = 3.6, STO-6G | exact | -0.481645 | FCI [10.1021/acs.jctc.3c00831](https://doi.org/10.1021/acs.jctc.3c00831) |  |
-|  | best variational | -0.481645 &#9675; (+<1e-6) | VMC (RBM) [10.1021/acs.jctc.3c00831](https://doi.org/10.1021/acs.jctc.3c00831) |  |
-| H6 chain, open, R = 1.51178, STO-3G | best variational | -0.5340233 &#9675; | VQE [10.1021/acs.jctc.3c00319](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
-| H6 chain, open, R = 1.8, STO-6G | exact | -0.5444567 | FCI [10.1021/acs.jctc.3c00831](https://doi.org/10.1021/acs.jctc.3c00831) |  |
-|  | best variational | -0.5444567 &#9675; (+<1e-7) | VMC (RBM) [10.1021/acs.jctc.3c00831](https://doi.org/10.1021/acs.jctc.3c00831) |  |
-|  | best approximate | -0.5444567 &#9675; (+<1e-7) | CCSD(T) [10.1021/acs.jctc.3c00831](https://doi.org/10.1021/acs.jctc.3c00831) |  |
-| H6 chain, open, R = 2, STO-3G | exact | -0.5362833 | ED [10.1103/PhysRevLett.131.200601](https://doi.org/10.1103/PhysRevLett.131.200601) |  |
-|  | best variational | -0.5362167 &#9675; (+6.7e-5) | QFlow [10.1103/PhysRevLett.131.200601](https://doi.org/10.1103/PhysRevLett.131.200601) |  |
-|  | best projected | -0.5363333 &#9675; (−5.0e-5) | CCSDT [10.1103/PhysRevLett.131.200601](https://doi.org/10.1103/PhysRevLett.131.200601) |  |
-| H6 chain, open, R = 2.83459, STO-6G | exact | -0.5033663 | FCI [10.1021/acs.jctc.9b01125](https://doi.org/10.1021/acs.jctc.9b01125) |  |
-| H6 chain, open, R = 3, cc-pVDZ | exact | -0.5265167 | ED [10.1103/PhysRevLett.131.200601](https://doi.org/10.1103/PhysRevLett.131.200601) |  |
-|  | best projected | -0.5265167 &#9675; (+<1e-7) | CCSDTQ [10.1103/PhysRevLett.131.200601](https://doi.org/10.1103/PhysRevLett.131.200601) |  |
-|  | best approximate | -0.5264833 &#9675; (+3.3e-5) | DUCC-QFlow [10.1103/PhysRevLett.131.200601](https://doi.org/10.1103/PhysRevLett.131.200601) |  |
-| H6 chain, open, R = 3, STO-3G | exact | -0.4929333 | ED [10.1103/PhysRevLett.131.200601](https://doi.org/10.1103/PhysRevLett.131.200601) |  |
-|  | best variational | -0.4920167 &#9675; (+9.2e-4) | QFlow [10.1103/PhysRevLett.131.200601](https://doi.org/10.1103/PhysRevLett.131.200601) |  |
-|  | best projected | -0.4929 &#9675; (+3.3e-5) | CCSDTQ [10.1103/PhysRevLett.131.200601](https://doi.org/10.1103/PhysRevLett.131.200601) |  |
-| H6 chain, open, R = 3.6, STO-6G | exact | -0.4817533 | FCI [10.1021/acs.jctc.3c00831](https://doi.org/10.1021/acs.jctc.3c00831) |  |
-|  | best variational | -0.4817517 &#9675; (+1.7e-6) | VMC (RBM) [10.1021/acs.jctc.3c00831](https://doi.org/10.1021/acs.jctc.3c00831) |  |
-| H8 chain, open, R = 1.51178, STO-3G | best variational | -0.530315 &#9675; | VQE [10.1021/acs.jctc.3c00319](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
-| H8 chain, open, R = 1.8, STO-6G | exact | -0.543135 | FCI [10.1021/acs.jctc.3c00831](https://doi.org/10.1021/acs.jctc.3c00831) |  |
-|  | best variational | -0.5431337 &#9675; (+1.3e-6) | VMC (RBM) [10.1021/acs.jctc.3c00831](https://doi.org/10.1021/acs.jctc.3c00831) |  |
-|  | best approximate | -0.543125 &#9675; (+1.0e-5) | CCSD(T) [10.1021/acs.jctc.3c00831](https://doi.org/10.1021/acs.jctc.3c00831) |  |
-| H8 chain, open, R = 2, STO-3G | exact | -0.53575 | ED [10.1103/PhysRevLett.131.200601](https://doi.org/10.1103/PhysRevLett.131.200601) |  |
-|  | best variational | -0.5355875 &#9675; (+1.6e-4) | QFlow [10.1103/PhysRevLett.131.200601](https://doi.org/10.1103/PhysRevLett.131.200601) |  |
-|  | best projected | -0.53575 &#9675; (+<1e-5) | CCSDTQ [10.1103/PhysRevLett.131.200601](https://doi.org/10.1103/PhysRevLett.131.200601) |  |
-| H8 chain, open, R = 2.83459, STO-6G | exact | -0.503519 | FCI [10.1021/acs.jctc.9b01125](https://doi.org/10.1021/acs.jctc.9b01125) |  |
-| H8 chain, open, R = 3, STO-3G | exact | -0.4930875 | ED [10.1103/PhysRevLett.131.200601](https://doi.org/10.1103/PhysRevLett.131.200601) |  |
-|  | best variational | -0.491525 &#9675; (+1.6e-3) | QFlow [10.1103/PhysRevLett.131.200601](https://doi.org/10.1103/PhysRevLett.131.200601) |  |
-|  | best projected | -0.4929875 &#9675; (+1.0e-4) | CCSDTQ [10.1103/PhysRevLett.131.200601](https://doi.org/10.1103/PhysRevLett.131.200601) |  |
-| H8 chain, open, R = 3.6, STO-6G | exact | -0.4818225 | FCI [10.1021/acs.jctc.3c00831](https://doi.org/10.1021/acs.jctc.3c00831) |  |
-|  | best variational | -0.4818188 &#9675; (+3.7e-6) | VMC (RBM) [10.1021/acs.jctc.3c00831](https://doi.org/10.1021/acs.jctc.3c00831) |  |
-| H10 chain, open, R = 1, aug-cc-pVQZ | best variational | -0.41566 &#9675; | HF [10.1103/PhysRevX.10.031058](https://doi.org/10.1103/PhysRevX.10.031058) |  |
-|  | best approximate | -0.43918 &#9675; | MP2 [10.1103/PhysRevX.10.031058](https://doi.org/10.1103/PhysRevX.10.031058) |  |
-| H10 chain, open, R = 1, aug-cc-pVTZ | best variational | -0.41495 &#9675; | HF [10.1103/PhysRevX.10.031058](https://doi.org/10.1103/PhysRevX.10.031058) |  |
-|  | best projected | -0.44012 &#9675; | CCSD [10.1103/PhysRevX.10.031058](https://doi.org/10.1103/PhysRevX.10.031058) |  |
-|  | best approximate | -0.43752 &#9675; | MP2 [10.1103/PhysRevX.10.031058](https://doi.org/10.1103/PhysRevX.10.031058) |  |
-| H10 chain, open, R = 1, cc-pV5Z | best variational | -0.4155 &#9675; | HF [10.1103/PhysRevX.10.031058](https://doi.org/10.1103/PhysRevX.10.031058) |  |
-|  | best projected | -0.44236(8) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.43927 &#9675; | MP2 [10.1103/PhysRevX.10.031058](https://doi.org/10.1103/PhysRevX.10.031058) |  |
-| H10 chain, open, R = 1, cc-pVDZ | best variational | -0.42186 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.4220847 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.4217751 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1, cc-pVQZ | best variational | -0.41505 &#9675; | HF [10.1103/PhysRevX.10.031058](https://doi.org/10.1103/PhysRevX.10.031058) |  |
-|  | best projected | -0.44160(8) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.4413939 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1, cc-pVTZ | best variational | -0.4395 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.43969(6) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.4394551 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1, basis-free | best variational | -0.441499(9) | VMC (JAGP) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.442430(7) | LR-DMC (AGP) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best extrapolated | -0.4432(3) | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.4427(2) | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1, STO-6G | exact | -0.3824389 | FCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best variational | -0.3824389 &#9675; (−<1e-7) | MRCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.38248(3) (−4.1e-5) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.382432 &#9675; (+6.9e-6) | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.2, cc-pV5Z | best variational | -0.4884091 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.51451(6) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.2, cc-pVDZ | best variational | -0.50271 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5029843 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.506634 &#9675; | GW [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.2, cc-pVQZ | best variational | -0.4882713 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.51419(8) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5140214 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.2, cc-pVTZ | best variational | -0.51302 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.51315(9) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5129509 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.2, basis-free | best variational | -0.513646(9) | VMC (JAGP) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.514432(6) | LR-DMC (AGP) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best extrapolated | -0.5153(2) | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5149(2) | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.2, STO-6G | exact | -0.4766378 | FCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best variational | -0.4766378 &#9675; (−<1e-7) | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.476638 &#9675; (−2.3e-7) | CCSDT [arXiv:1904.01131](https://arxiv.org/abs/1904.01131) |  |
-|  | best approximate | -0.4766261 &#9675; (+1.2e-5) | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.4, cc-pV5Z | best variational | -0.5228716 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.54871(9) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.4, cc-pVDZ | best variational | -0.54087 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5411661 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.54465 &#9675; | GW [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.4, cc-pVQZ | best variational | -0.547832 &#9675; | MRCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.54855(5) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5483736 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.4, cc-pVTZ | best variational | -0.54769 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5477564 &#9675; | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.547569 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.4, basis-free | best variational | -0.548046(7) | VMC (JAGP) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.548748(7) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best extrapolated | -0.5493(2) | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5491(1) | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.4, STO-6G | exact | -0.5205094 | FCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best variational | -0.5205094 &#9675; (−<1e-7) | MRCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.52051(5) (−5.9e-7) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.520492 &#9675; (+1.7e-5) | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.41729, STO-6G | exact | -0.522856 | FCI [10.1063/5.0014928](https://doi.org/10.1063/5.0014928) |  |
-| H10 chain, open, R = 1.51178, STO-3G | best variational | -0.528221 &#9675; | VQE [10.1021/acs.jctc.3c00319](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
-| H10 chain, open, R = 1.6, cc-pV5Z | best variational | -0.5368359 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5629322 &#9675; | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.6, cc-pVDZ | best variational | -0.55702 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5573602 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.56045 &#9675; | GW [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.6, cc-pVQZ | best variational | -0.5620252 &#9675; | MRCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5627104 &#9675; | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.562514 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.6, cc-pVTZ | best variational | -0.56191 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5620(1) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5617783 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.6, basis-free | best variational | -0.562237(5) | VMC (JAGP) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.562900(7) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best extrapolated | -0.56325(8) | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.56311(9) | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.6, STO-6G | exact | -0.5384361 | FCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best variational | -0.5384361 &#9675; (+<1e-7) | MRCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5384361 &#9675; (+<1e-7) | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5384141 &#9675; (+2.2e-5) | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.8, cc-pV5Z | best variational | -0.5401556 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.566277 &#9675; | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.8, cc-pVDZ | best variational | -0.56141 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5618118 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.564291 &#9675; | GW [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.8, cc-pVQZ | best variational | -0.5654171 &#9675; | MRCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5660681 &#9675; | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5658519 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.8, cc-pVTZ | best variational | -0.56523 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5653303 &#9675; | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5651061 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.8, basis-free | best variational | -0.565634(5) | VMC (JAGP) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.566255(7) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best extrapolated | -0.5667(1) | SBDMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.56638(4) | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 1.8, STO-6G | exact | -0.5424385 | FCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best variational | -0.5424385 &#9675; (−<1e-7) | MRCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.542439 &#9675; (−4.6e-7) | CCSDTQ [arXiv:1904.01131](https://arxiv.org/abs/1904.01131) |  |
-|  | best approximate | -0.542419 &#9675; (+2.0e-5) | CCSD(T) [10.1021/acs.jctc.3c00831](https://doi.org/10.1021/acs.jctc.3c00831) |  |
-| H10 chain, open, R = 1.88973, STO-6G | exact | -0.5415393 | FCI [10.1063/5.0014928](https://doi.org/10.1063/5.0014928) |  |
-| H10 chain, open, R = 2, cc-pV5Z | best variational | -0.538217 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5638526 &#9675; | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 2, cc-pVDZ | best variational | -0.55949 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5599357 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.561647 &#9675; | GW [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 2, cc-pVQZ | best variational | -0.563033 &#9675; | MRCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5636456 &#9675; | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5634155 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 2, cc-pVTZ | best variational | -0.56282 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5628926 &#9675; | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.562658 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 2, basis-free | best variational | -0.563249(4) | VMC (JAGP) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.563852(7) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best extrapolated | -0.5643(1) | SBDMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.56391(1) | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 2, STO-6G | exact | -0.5389626 | FCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best variational | -0.5389626 &#9675; (−<1e-7) | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.538963 &#9675; (−4.1e-7) | CCSDTQ [arXiv:1904.01131](https://arxiv.org/abs/1904.01131) |  |
-|  | best approximate | -0.5380497 &#9675; (+9.1e-4) | UCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 2.4, cc-pV5Z | best variational | -0.5281156 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5516514 &#9675; | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 2.4, cc-pVDZ | best variational | -0.54761 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5480704 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.547728 &#9675; | GW [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 2.4, cc-pVQZ | best variational | -0.5509118 &#9675; | MRCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5514268 &#9675; | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5512171 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 2.4, cc-pVTZ | best variational | -0.55059 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5506631 &#9675; | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.550459 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 2.4, basis-free | best variational | -0.551106(4) | VMC (JAGP) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.551699(8) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best extrapolated | -0.5520(1) | SBDMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.55167(3) | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 2.4, STO-6G | exact | -0.5227936 | FCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best variational | -0.5227936 &#9675; (+<1e-7) | MRCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.522794 &#9675; (−3.5e-7) | CCSDTQ [arXiv:1904.01131](https://arxiv.org/abs/1904.01131) |  |
-|  | best approximate | -0.5207534 &#9675; (+2.0e-3) | UCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 2.8, cc-pV5Z | best variational | -0.5174129 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.53749(7) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 2.8, cc-pVDZ | best variational | -0.53344 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5347972 &#9675; | SEET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5336142 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 2.8, cc-pVQZ | best variational | -0.5367131 &#9675; | MRCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5370991 &#9675; | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5370925 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 2.8, cc-pVTZ | best variational | -0.53626 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.53633(5) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5363253 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 2.8, basis-free | best variational | -0.536832(3) | VMC (JAGP) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.537424(9) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best extrapolated | -0.5377(1) | SBDMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.53749(6) | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 2.8, STO-6G | exact | -0.5050245 | FCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best variational | -0.5050245 &#9675; (−<1e-7) | MRCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.50507(5) (−4.6e-5) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5029597 &#9675; (+2.1e-3) | UCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 2.83459, STO-6G | exact | -0.5036293 | FCI [10.1063/5.0014928](https://doi.org/10.1063/5.0014928) |  |
-| H10 chain, open, R = 3.2, cc-pV5Z | best variational | -0.5096605 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.52525(5) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 3.2, cc-pVDZ | best variational | -0.52125 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5234726 &#9675; | SEET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5228438 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 3.2, cc-pVQZ | best variational | -0.5243413 &#9675; | MRCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.52488(5) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5254869 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 3.2, cc-pVTZ | best variational | -0.52382 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.52417(5) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5248344 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 3.2, basis-free | best variational | -0.524373(4) | VMC (JAGP) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.524987(7) | LR-DMC (AGP) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best extrapolated | -0.52512(6) | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5257(1) | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 3.2, STO-6G | exact | -0.4910383 | FCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best variational | -0.4910383 &#9675; (−<1e-7) | MRCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.4910383 &#9675; (−<1e-7) | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.4895218 &#9675; (+1.5e-3) | UCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 3.6, cc-pV5Z | best variational | -0.5050291 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.51584(8) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 3.6, cc-pVDZ | best variational | -0.51238 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.51287(3) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5119131 &#9675; | PC-NEVPT2 [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 3.6, cc-pVQZ | best variational | -0.5150225 &#9675; | MRCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.51580(5) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.514026 &#9675; | UCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 3.6, cc-pVTZ | best variational | -0.51448 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.51507(3) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.513382 &#9675; | PC-NEVPT2 [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 3.6, basis-free | best variational | -0.514968(3) | VMC (JAGP) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.51558(1) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best extrapolated | -0.51612(9) | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5143(1) | UCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 3.6, STO-6G | exact | -0.4818701 | FCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best variational | -0.4818701 &#9675; (+<1e-7) | MRCI [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.4818701 &#9675; (+<1e-7) | MRCI+Q [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.4809595 &#9675; (+9.1e-4) | UCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H10 chain, open, R = 3.77945, STO-6G | exact | -0.4790989 | FCI [10.1063/5.0014928](https://doi.org/10.1063/5.0014928) |  |
-| H12 chain, open, R = 1.51178, STO-3G | best variational | -0.5268575 &#9675; | VQE [10.1021/acs.jctc.3c00319](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
-| H12 chain, open, R = 1.8, STO-6G | exact | -0.5420192 | FCI [10.1021/acs.jctc.3c00831](https://doi.org/10.1021/acs.jctc.3c00831) |  |
-|  | best variational | -0.5420125 &#9675; (+6.7e-6) | VMC (RBM) [10.1021/acs.jctc.3c00831](https://doi.org/10.1021/acs.jctc.3c00831) |  |
-|  | best approximate | -0.5419892 &#9675; (+3.0e-5) | CCSD(T) [10.1021/acs.jctc.3c00831](https://doi.org/10.1021/acs.jctc.3c00831) |  |
-| H12 chain, open, R = 1.88973, STO-3G | exact | -0.5377347 | ED [10.1088/0256-307X/43/4/040708](https://doi.org/10.1088/0256-307X/43/4/040708) |  |
-| H12 chain, open, R = 3.6, STO-6G | exact | -0.4819042 | FCI [10.1021/acs.jctc.3c00831](https://doi.org/10.1021/acs.jctc.3c00831) |  |
-|  | best variational | -0.4819025 &#9675; (+1.7e-6) | VMC (RBM) [10.1021/acs.jctc.3c00831](https://doi.org/10.1021/acs.jctc.3c00831) |  |
-| H14 chain, open, R = 1.51178, STO-3G | best variational | -0.525915 &#9675; | VQE [10.1021/acs.jctc.3c00319](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
-| H16 chain, open, R = 1.51178, STO-3G | best variational | -0.5252269 &#9675; | VQE [10.1021/acs.jctc.3c00319](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
-| H20 chain, open, R = 3.6, STO-6G | best projected | -0.481978(1) | FCIQMC [10.1063/5.0005754](https://doi.org/10.1063/5.0005754) | [ghb24/NECI_STABLE](https://github.com/ghb24/NECI_STABLE) |
-| H22 chain, open, R = 1, STO-6G | best projected | -0.357541(9) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H22 chain, open, R = 1.4, STO-6G | best projected | -0.51444(1) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H22 chain, open, R = 1.8, STO-6G | best projected | -0.54115(2) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H22 chain, open, R = 2.8, STO-6G | best projected | -0.50541(2) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1, cc-pV5Z | best variational | -0.3969058 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1, cc-pVDZ | best variational | -0.3937633 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.39379(3) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.3936663 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1, cc-pVQZ | best variational | -0.3948131 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.42184(7) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.421883 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1, cc-pVTZ | best variational | -0.3898388 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.41760(3) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.41743 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1, basis-free | best variational | -0.42157(2) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.42510(3) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1, STO-6G | best variational | -0.3518877 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.3528238 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.35206 &#9675; | GW [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.2, cc-pV5Z | best variational | -0.4739482 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.2, cc-pVDZ | best variational | -0.4891083 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.48927(3) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.489002 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.2, cc-pVQZ | best variational | -0.4736828 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.50143(5) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5011587 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.2, cc-pVTZ | best variational | -0.4731441 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.50030(3) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.4999623 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.2, basis-free | best variational | -0.50020(1) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.50177(2) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.2, STO-6G | best variational | -0.461805 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.4627503 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.4617621 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.4, cc-pV5Z | best variational | -0.5155844 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.4, cc-pVDZ | best variational | -0.5344613 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5354635 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5343077 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.4, cc-pVQZ | best variational | -0.5154895 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.54253(5) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.542323 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.4, cc-pVTZ | best variational | -0.5152041 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.54186(3) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5414947 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.4, basis-free | best variational | -0.54142(1) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.54276(1) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.4, STO-6G | best variational | -0.5132063 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5140977 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5131409 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.6, cc-pV5Z | best variational | -0.5337486 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.6, cc-pVDZ | best variational | -0.5542583 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.55440(3) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5540527 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.6, cc-pVQZ | best variational | -0.5336765 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.55999(7) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5599073 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.6, cc-pVTZ | best variational | -0.5334553 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.55942(3) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.559162 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.6, basis-free | best variational | -0.559065(9) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.56038(1) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.6, STO-6G | best variational | -0.534978 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5357627 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.534889 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.8, cc-pV5Z | best variational | -0.5394784 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.8, cc-pVDZ | best variational | -0.560521 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5616303 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.560279 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.8, cc-pVQZ | best variational | -0.5394138 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.56530(5) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.564994 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.8, cc-pVTZ | best variational | -0.5392194 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.56451(3) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.564239 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.8, basis-free | best variational | -0.564180(9) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.56550(1) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 1.8, STO-6G | best variational | -0.5409897 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5416268 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5408894 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 2, cc-pV5Z | best variational | -0.5386818 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 2, cc-pVDZ | best variational | -0.5595467 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.55961(2) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.55928 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 2, cc-pVQZ | best variational | -0.5386235 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.56379(4) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5634263 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 2, cc-pVTZ | best variational | -0.5384493 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.56295(3) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5626683 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 2, basis-free | best variational | -0.562636(9) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.56403(1) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 2, STO-6G | best variational | -0.5385523 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5390239 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5384874 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 2.4, cc-pV5Z | best variational | -0.5292216 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 2.4, cc-pVDZ | best variational | -0.5482932 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5493137 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5480643 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 2.4, cc-pVQZ | best variational | -0.5291749 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.55215(4) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5517193 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 2.4, cc-pVTZ | best variational | -0.529024 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.55142(2) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5509443 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 2.4, basis-free | best variational | -0.550876(9) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.55248(2) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 2.4, STO-6G | best variational | -0.5231183 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.523325 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5239338 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 2.8, cc-pV5Z | best variational | -0.5183556 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 2.8, cc-pVDZ | best variational | -0.5340762 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5347214 &#9675; | SEET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5327924 &#9675; | UCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 2.8, cc-pVQZ | best variational | -0.5183116 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.53788(4) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 2.8, cc-pVTZ | best variational | -0.5181643 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.53718(3) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 2.8, basis-free | best variational | -0.536326(9) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.53821(2) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 2.8, STO-6G | best variational | -0.5054037 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5055314 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5037865 &#9675; | UCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 3.2, cc-pV5Z | best variational | -0.5102735 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 3.2, cc-pVDZ | best variational | -0.5216948 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5240882 &#9675; | SEET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5205262 &#9675; | UCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 3.2, cc-pVQZ | best variational | -0.5102287 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.52512(7) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 3.2, cc-pVTZ | best variational | -0.5100848 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.52443(4) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 3.2, basis-free | best variational | -0.523410(9) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.52555(2) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 3.2, STO-6G | best variational | -0.4913033 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.4914582 &#9675; | SEET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.4900449 &#9675; | UCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 3.6, cc-pV5Z | best variational | -0.5053753 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 3.6, cc-pVDZ | best variational | -0.512651 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5128862 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.511785 &#9675; | UCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 3.6, cc-pVQZ | best variational | -0.5053287 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5162413 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 3.6, cc-pVTZ | best variational | -0.5051879 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5154642 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 3.6, basis-free | best variational | -0.513577(9) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.51601(3) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H30 chain, open, R = 3.6, STO-6G | best variational | -0.4820203 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.4828246 &#9675; | SEET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.4812442 &#9675; | UCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1, cc-pV5Z | best variational | -0.3930718 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1, cc-pVDZ | best variational | -0.388254 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.38822(2) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.3882394 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1, cc-pVQZ | best variational | -0.3909264 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.4169616 &#9675; | RCCSD [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.418261 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1, cc-pVTZ | best variational | -0.3867182 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.41352(4) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.4133358 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1, basis-free | best variational | -0.41856(3) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.42197(3) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1, STO-6G | best variational | -0.3456814 &#9675; | LDMRG [10.1063/1.2345196](https://doi.org/10.1063/1.2345196) |  |
-|  | best projected | -0.3466732 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.345728 &#9675; | GW [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1.2, cc-pV5Z | best variational | -0.4724546 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1.2, cc-pVDZ | best variational | -0.486182 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.48637(1) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.4860532 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1.2, cc-pVQZ | best variational | -0.471144 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.49888(3) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.4983418 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1.2, cc-pVTZ | best variational | -0.4700515 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.49746(4) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.4971284 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1.2, basis-free | best variational | -0.49748(1) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.49913(4) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1.2, STO-6G | best variational | -0.458953 &#9675; | LDMRG [10.1063/1.2345196](https://doi.org/10.1063/1.2345196) |  |
-|  | best projected | -0.4599375 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.4588914 &#9675; | CCSD(T) [10.1063/1.2345196](https://doi.org/10.1063/1.2345196) |  |
-| H50 chain, open, R = 1.4, cc-pV5Z | best variational | -0.5142633 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1.4, cc-pVDZ | best variational | -0.5331854 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5342916 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5330286 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1.4, cc-pVQZ | best variational | -0.5141705 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5401476 &#9675; | RCCSD [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5411192 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1.4, cc-pVTZ | best variational | -0.5138868 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.54063(3) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.540299 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1.4, basis-free | best variational | -0.53996(2) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.54153(2) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1.4, STO-6G | best variational | -0.5118756 &#9675; | LDMRG [10.1063/1.2345196](https://doi.org/10.1063/1.2345196) |  |
-|  | best projected | -0.5127902 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5117824 &#9675; | CCSD(T) [10.1063/1.2345196](https://doi.org/10.1063/1.2345196) |  |
-| H50 chain, open, R = 1.6, cc-pV5Z | best variational | -0.5332496 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1.6, cc-pVDZ | best variational | -0.5307409 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5548843 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5535398 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1.6, cc-pVQZ | best variational | -0.5331783 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.558395 &#9675; | RCCSD [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5594386 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1.6, cc-pVTZ | best variational | -0.5329572 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.55895(3) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5587018 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1.6, basis-free | best variational | -0.55836(1) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.55992(2) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1.6, STO-6G | best variational | -0.5343888 &#9675; | LDMRG [10.1063/1.2345196](https://doi.org/10.1063/1.2345196) |  |
-|  | best projected | -0.5351831 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5342628 &#9675; | CCSD(T) [10.1063/1.2345196](https://doi.org/10.1063/1.2345196) |  |
-| H50 chain, open, R = 1.8, cc-pV5Z | best variational | -0.5393799 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1.8, cc-pVDZ | best variational | -0.560418 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5615634 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5601304 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1.8, cc-pVQZ | best variational | -0.5393155 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.56515(3) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.564877 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1.8, cc-pVTZ | best variational | -0.5391208 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.56451(4) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5641164 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1.8, basis-free | best variational | -0.56381(1) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.56543(2) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 1.8, STO-6G | best variational | -0.540773 &#9675; | LDMRG [10.1063/1.2345196](https://doi.org/10.1063/1.2345196) |  |
-|  | best projected | -0.5414071 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.540629 &#9675; | CCSD(T) [10.1063/1.2345196](https://doi.org/10.1063/1.2345196) |  |
-| H50 chain, open, R = 2, cc-pV5Z | best variational | -0.5387831 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 2, cc-pVDZ | best variational | -0.5376519 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.560789 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5593002 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 2, cc-pVQZ | best variational | -0.5387247 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.56380(3) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5634712 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 2, cc-pVTZ | best variational | -0.5385504 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.56316(5) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5626926 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 2, basis-free | best variational | -0.56242(1) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.56409(2) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 2, STO-6G | best variational | -0.5385218 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5389803 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.538418 &#9675; | CCSD(T) [10.1063/1.2345196](https://doi.org/10.1063/1.2345196) |  |
-| H50 chain, open, R = 2.4, cc-pV5Z | best variational | -0.5294429 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 2.4, cc-pVDZ | best variational | -0.5484576 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.549566 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5481804 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 2.4, cc-pVQZ | best variational | -0.5293962 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5505126 &#9675; | RCCSD [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5518596 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 2.4, cc-pVTZ | best variational | -0.5292454 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.55145(4) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5510824 &#9675; | RCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 2.4, basis-free | best variational | -0.55049(1) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.55262(3) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 2.4, STO-6G | best variational | -0.5232114 &#9675; | LDMRG [10.1063/1.2345196](https://doi.org/10.1063/1.2345196) |  |
-|  | best projected | -0.5234051 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.521806 &#9675; | UCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 2.8, cc-pV5Z | best variational | -0.518544 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 2.8, cc-pVDZ | best variational | -0.51777 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5352079 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5329892 &#9675; | UCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 2.8, cc-pVQZ | best variational | -0.5185002 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.53798(3) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 2.8, cc-pVTZ | best variational | -0.5183529 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.53742(2) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 2.8, basis-free | best variational | -0.53563(1) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.53834(3) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 2.8, STO-6G | best variational | -0.505496 &#9675; | LDMRG [10.1063/1.2345196](https://doi.org/10.1063/1.2345196) |  |
-|  | best projected | -0.5056322 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.503953 &#9675; | UCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 3.2, cc-pV5Z | best variational | -0.5103961 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 3.2, cc-pVDZ | best variational | -0.5217914 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5226823 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5206612 &#9675; | UCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 3.2, cc-pVQZ | best variational | -0.5103515 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 3.2, cc-pVTZ | best variational | -0.5102075 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.52450(4) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 3.2, basis-free | best variational | -0.52221(2) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.52570(4) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 3.2, STO-6G | best variational | -0.4913656 &#9675; | DMRG [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.4916637 &#9675; | SEET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.4901495 &#9675; | UCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 3.6, cc-pV5Z | best variational | -0.5054446 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 3.6, cc-pVDZ | best variational | -0.5046794 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5134833 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.5118654 &#9675; | UCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 3.6, cc-pVQZ | best variational | -0.5053981 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 3.6, cc-pVTZ | best variational | -0.5052571 &#9675; | HF [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.5156009 &#9675; | DMET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 3.6, basis-free | best variational | -0.51192(1) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.51616(7) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 3.6, STO-6G | best variational | -0.4820554 &#9675; | LDMRG [10.1063/1.2345196](https://doi.org/10.1063/1.2345196) |  |
-|  | best projected | -0.4831221 &#9675; | SEET [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best approximate | -0.4813012 &#9675; | UCCSD(T) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H50 chain, open, R = 4.2, STO-6G | best variational | -0.4749942 &#9675; | LDMRG [10.1063/1.2345196](https://doi.org/10.1063/1.2345196) |  |
-|  | best approximate | -0.4302988 &#9675; | MP2 [10.1063/1.2345196](https://doi.org/10.1063/1.2345196) |  |
-| H70 chain, open, R = 1, STO-6G | best projected | -0.34303(1) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H70 chain, open, R = 1.4, STO-6G | best projected | -0.511254(9) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H70 chain, open, R = 1.8, STO-6G | best projected | -0.54073(1) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H70 chain, open, R = 2.8, STO-6G | best projected | -0.50560(1) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H82 chain, open, R = 1, basis-free | best variational | -0.41649(2) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.42018(3) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H82 chain, open, R = 1.2, basis-free | best variational | -0.49544(1) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.49896(7) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H102 chain, open, R = 1, basis-free | best variational | -0.41616(2) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.41967(4) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H102 chain, open, R = 1, STO-6G | best projected | -0.34087(1) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H102 chain, open, R = 1.2, basis-free | best variational | -0.49576(1) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.49844(4) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H102 chain, open, R = 1.4, STO-6G | best projected | -0.51125(1) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H102 chain, open, R = 1.8, basis-free | best variational | -0.563316(7) | VMC (SJ) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-|  | best projected | -0.56538(1) | LR-DMC (LDA determinant) [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H102 chain, open, R = 1.8, STO-6G | best projected | -0.54069(2) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
-| H102 chain, open, R = 2.8, STO-6G | best projected | -0.50565(2) | ph-AFQMC [10.1103/PhysRevX.7.031059](https://doi.org/10.1103/PhysRevX.7.031059) |  |
+| H4 chain, open, R = 1.51178, STO-3G | best variational | -0.5418875 &#9675; | VQE [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
+| H4 chain, open, R = 1.8, STO-6G | exact | -0.547595 | FCI [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
+|  | best variational | -0.547595 &#9675; (+<1e-6) | VMC (RBM) [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
+| H4 chain, open, R = 3.6, STO-6G | exact | -0.481645 | FCI [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
+|  | best variational | -0.481645 &#9675; (+<1e-6) | VMC (RBM) [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
+| H6 chain, open, R = 1.51178, STO-3G | best variational | -0.5340233 &#9675; | VQE [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
+| H6 chain, open, R = 1.8, STO-6G | exact | -0.5444567 | FCI [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
+|  | best variational | -0.5444567 &#9675; (+<1e-7) | VMC (RBM) [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
+|  | best approximate | -0.5444567 &#9675; (+<1e-7) | CCSD(T) [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
+| H6 chain, open, R = 2, STO-3G | exact | -0.5362833 | ED [Kowalski & Bauman (2023)](https://doi.org/10.1103/physrevlett.131.200601) |  |
+|  | best variational | -0.5362167 &#9675; (+6.7e-5) | QFlow [Kowalski & Bauman (2023)](https://doi.org/10.1103/physrevlett.131.200601) |  |
+|  | best projected | -0.5363333 &#9675; (−5.0e-5) | CCSDT [Kowalski & Bauman (2023)](https://doi.org/10.1103/physrevlett.131.200601) |  |
+| H6 chain, open, R = 2.83459, STO-6G | exact | -0.5033663 | FCI [Stair et al. (2020)](https://doi.org/10.1021/acs.jctc.9b01125) |  |
+| H6 chain, open, R = 3, cc-pVDZ | exact | -0.5265167 | ED [Kowalski & Bauman (2023)](https://doi.org/10.1103/physrevlett.131.200601) |  |
+|  | best projected | -0.5265167 &#9675; (+<1e-7) | CCSDTQ [Kowalski & Bauman (2023)](https://doi.org/10.1103/physrevlett.131.200601) |  |
+|  | best approximate | -0.5264833 &#9675; (+3.3e-5) | DUCC-QFlow [Kowalski & Bauman (2023)](https://doi.org/10.1103/physrevlett.131.200601) |  |
+| H6 chain, open, R = 3, STO-3G | exact | -0.4929333 | ED [Kowalski & Bauman (2023)](https://doi.org/10.1103/physrevlett.131.200601) |  |
+|  | best variational | -0.4920167 &#9675; (+9.2e-4) | QFlow [Kowalski & Bauman (2023)](https://doi.org/10.1103/physrevlett.131.200601) |  |
+|  | best projected | -0.4929 &#9675; (+3.3e-5) | CCSDTQ [Kowalski & Bauman (2023)](https://doi.org/10.1103/physrevlett.131.200601) |  |
+| H6 chain, open, R = 3.6, STO-6G | exact | -0.4817533 | FCI [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
+|  | best variational | -0.4817517 &#9675; (+1.7e-6) | VMC (RBM) [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
+| H8 chain, open, R = 1.51178, STO-3G | best variational | -0.530315 &#9675; | VQE [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
+| H8 chain, open, R = 1.8, STO-6G | exact | -0.543135 | FCI [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
+|  | best variational | -0.5431337 &#9675; (+1.3e-6) | VMC (RBM) [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
+|  | best approximate | -0.543125 &#9675; (+1.0e-5) | CCSD(T) [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
+| H8 chain, open, R = 2, STO-3G | exact | -0.53575 | ED [Kowalski & Bauman (2023)](https://doi.org/10.1103/physrevlett.131.200601) |  |
+|  | best variational | -0.5355875 &#9675; (+1.6e-4) | QFlow [Kowalski & Bauman (2023)](https://doi.org/10.1103/physrevlett.131.200601) |  |
+|  | best projected | -0.53575 &#9675; (+<1e-5) | CCSDTQ [Kowalski & Bauman (2023)](https://doi.org/10.1103/physrevlett.131.200601) |  |
+| H8 chain, open, R = 2.83459, STO-6G | exact | -0.503519 | FCI [Stair et al. (2020)](https://doi.org/10.1021/acs.jctc.9b01125) |  |
+| H8 chain, open, R = 3, STO-3G | exact | -0.4930875 | ED [Kowalski & Bauman (2023)](https://doi.org/10.1103/physrevlett.131.200601) |  |
+|  | best variational | -0.491525 &#9675; (+1.6e-3) | QFlow [Kowalski & Bauman (2023)](https://doi.org/10.1103/physrevlett.131.200601) |  |
+|  | best projected | -0.4929875 &#9675; (+1.0e-4) | CCSDTQ [Kowalski & Bauman (2023)](https://doi.org/10.1103/physrevlett.131.200601) |  |
+| H8 chain, open, R = 3.6, STO-6G | exact | -0.4818225 | FCI [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
+|  | best variational | -0.4818188 &#9675; (+3.7e-6) | VMC (RBM) [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
+| H10 chain, open, R = 1, aug-cc-pVQZ | best variational | -0.41566 &#9675; | HF [Motta et al. (2020)](https://doi.org/10.1103/physrevx.10.031058) |  |
+|  | best approximate | -0.43918 &#9675; | MP2 [Motta et al. (2020)](https://doi.org/10.1103/physrevx.10.031058) |  |
+| H10 chain, open, R = 1, aug-cc-pVTZ | best variational | -0.41495 &#9675; | HF [Motta et al. (2020)](https://doi.org/10.1103/physrevx.10.031058) |  |
+|  | best projected | -0.44012 &#9675; | CCSD [Motta et al. (2020)](https://doi.org/10.1103/physrevx.10.031058) |  |
+|  | best approximate | -0.43752 &#9675; | MP2 [Motta et al. (2020)](https://doi.org/10.1103/physrevx.10.031058) |  |
+| H10 chain, open, R = 1, cc-pV5Z | best variational | -0.4155 &#9675; | HF [Motta et al. (2020)](https://doi.org/10.1103/physrevx.10.031058) |  |
+|  | best projected | -0.44236(8) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.43927 &#9675; | MP2 [Motta et al. (2020)](https://doi.org/10.1103/physrevx.10.031058) |  |
+| H10 chain, open, R = 1, cc-pVDZ | best variational | -0.42186 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.4220847 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.4217751 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1, cc-pVQZ | best variational | -0.41505 &#9675; | HF [Motta et al. (2020)](https://doi.org/10.1103/physrevx.10.031058) |  |
+|  | best projected | -0.44160(8) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.4413939 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1, cc-pVTZ | best variational | -0.4395 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.43969(6) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.4394551 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1, basis-free | best variational | -0.441499(9) | VMC (JAGP) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.442430(7) | LR-DMC (AGP) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best extrapolated | -0.4432(3) | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.4427(2) | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1, STO-6G | exact | -0.3824389 | FCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best variational | -0.3824389 &#9675; (−<1e-7) | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.38248(3) (−4.1e-5) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.382432 &#9675; (+6.9e-6) | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.2, cc-pV5Z | best variational | -0.4884091 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.51451(6) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.2, cc-pVDZ | best variational | -0.50271 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5029843 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.506634 &#9675; | GW [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.2, cc-pVQZ | best variational | -0.4882713 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.51419(8) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5140214 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.2, cc-pVTZ | best variational | -0.51302 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.51315(9) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5129509 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.2, basis-free | best variational | -0.513646(9) | VMC (JAGP) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.514432(6) | LR-DMC (AGP) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best extrapolated | -0.5153(2) | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5149(2) | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.2, STO-6G | exact | -0.4766378 | FCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best variational | -0.4766378 &#9675; (−<1e-7) | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.476638 &#9675; (−2.3e-7) | CCSDT [Low et al. (2019)](https://doi.org/10.48550/arxiv.1904.01131) |  |
+|  | best approximate | -0.4766261 &#9675; (+1.2e-5) | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.4, cc-pV5Z | best variational | -0.5228716 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.54871(9) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.4, cc-pVDZ | best variational | -0.54087 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5411661 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.54465 &#9675; | GW [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.4, cc-pVQZ | best variational | -0.547832 &#9675; | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.54855(5) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5483736 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.4, cc-pVTZ | best variational | -0.54769 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5477564 &#9675; | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.547569 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.4, basis-free | best variational | -0.548046(7) | VMC (JAGP) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.548748(7) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best extrapolated | -0.5493(2) | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5491(1) | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.4, STO-6G | exact | -0.5205094 | FCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best variational | -0.5205094 &#9675; (−<1e-7) | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.52051(5) (−5.9e-7) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.520492 &#9675; (+1.7e-5) | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.41729, STO-6G | exact | -0.522856 | FCI [Stair & Evangelista (2020)](https://doi.org/10.1063/5.0014928) |  |
+| H10 chain, open, R = 1.51178, STO-3G | best variational | -0.528221 &#9675; | VQE [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
+| H10 chain, open, R = 1.6, cc-pV5Z | best variational | -0.5368359 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5629322 &#9675; | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.6, cc-pVDZ | best variational | -0.55702 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5573602 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.56045 &#9675; | GW [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.6, cc-pVQZ | best variational | -0.5620252 &#9675; | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5627104 &#9675; | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.562514 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.6, cc-pVTZ | best variational | -0.56191 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5620(1) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5617783 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.6, basis-free | best variational | -0.562237(5) | VMC (JAGP) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.562900(7) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best extrapolated | -0.56325(8) | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.56311(9) | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.6, STO-6G | exact | -0.5384361 | FCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best variational | -0.5384361 &#9675; (+<1e-7) | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5384361 &#9675; (+<1e-7) | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5384141 &#9675; (+2.2e-5) | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.8, cc-pV5Z | best variational | -0.5401556 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.566277 &#9675; | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.8, cc-pVDZ | best variational | -0.56141 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5618118 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.564291 &#9675; | GW [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.8, cc-pVQZ | best variational | -0.5654171 &#9675; | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5660681 &#9675; | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5658519 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.8, cc-pVTZ | best variational | -0.56523 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5653303 &#9675; | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5651061 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.8, basis-free | best variational | -0.565634(5) | VMC (JAGP) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.566255(7) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best extrapolated | -0.5667(1) | SBDMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.56638(4) | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 1.8, STO-6G | exact | -0.5424385 | FCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best variational | -0.5424385 &#9675; (−<1e-7) | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.542439 &#9675; (−4.6e-7) | CCSDTQ [Low et al. (2019)](https://doi.org/10.48550/arxiv.1904.01131) |  |
+|  | best approximate | -0.542419 &#9675; (+2.0e-5) | CCSD(T) [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
+| H10 chain, open, R = 1.88973, STO-6G | exact | -0.5415393 | FCI [Stair & Evangelista (2020)](https://doi.org/10.1063/5.0014928) |  |
+| H10 chain, open, R = 2, cc-pV5Z | best variational | -0.538217 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5638526 &#9675; | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 2, cc-pVDZ | best variational | -0.55949 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5599357 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.561647 &#9675; | GW [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 2, cc-pVQZ | best variational | -0.563033 &#9675; | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5636456 &#9675; | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5634155 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 2, cc-pVTZ | best variational | -0.56282 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5628926 &#9675; | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.562658 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 2, basis-free | best variational | -0.563249(4) | VMC (JAGP) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.563852(7) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best extrapolated | -0.5643(1) | SBDMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.56391(1) | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 2, STO-6G | exact | -0.5389626 | FCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best variational | -0.5389626 &#9675; (−<1e-7) | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.538963 &#9675; (−4.1e-7) | CCSDTQ [Low et al. (2019)](https://doi.org/10.48550/arxiv.1904.01131) |  |
+|  | best approximate | -0.5380497 &#9675; (+9.1e-4) | UCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 2.4, cc-pV5Z | best variational | -0.5281156 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5516514 &#9675; | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 2.4, cc-pVDZ | best variational | -0.54761 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5480704 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.547728 &#9675; | GW [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 2.4, cc-pVQZ | best variational | -0.5509118 &#9675; | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5514268 &#9675; | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5512171 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 2.4, cc-pVTZ | best variational | -0.55059 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5506631 &#9675; | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.550459 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 2.4, basis-free | best variational | -0.551106(4) | VMC (JAGP) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.551699(8) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best extrapolated | -0.5520(1) | SBDMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.55167(3) | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 2.4, STO-6G | exact | -0.5227936 | FCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best variational | -0.5227936 &#9675; (+<1e-7) | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.522794 &#9675; (−3.5e-7) | CCSDTQ [Low et al. (2019)](https://doi.org/10.48550/arxiv.1904.01131) |  |
+|  | best approximate | -0.5207534 &#9675; (+2.0e-3) | UCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 2.8, cc-pV5Z | best variational | -0.5174129 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.53749(7) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 2.8, cc-pVDZ | best variational | -0.53344 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5347972 &#9675; | SEET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5336142 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 2.8, cc-pVQZ | best variational | -0.5367131 &#9675; | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5370991 &#9675; | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5370925 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 2.8, cc-pVTZ | best variational | -0.53626 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.53633(5) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5363253 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 2.8, basis-free | best variational | -0.536832(3) | VMC (JAGP) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.537424(9) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best extrapolated | -0.5377(1) | SBDMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.53749(6) | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 2.8, STO-6G | exact | -0.5050245 | FCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best variational | -0.5050245 &#9675; (−<1e-7) | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.50507(5) (−4.6e-5) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5029597 &#9675; (+2.1e-3) | UCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 2.83459, STO-6G | exact | -0.5036293 | FCI [Stair & Evangelista (2020)](https://doi.org/10.1063/5.0014928) |  |
+| H10 chain, open, R = 3.2, cc-pV5Z | best variational | -0.5096605 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.52525(5) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 3.2, cc-pVDZ | best variational | -0.52125 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5234726 &#9675; | SEET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5228438 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 3.2, cc-pVQZ | best variational | -0.5243413 &#9675; | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.52488(5) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5254869 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 3.2, cc-pVTZ | best variational | -0.52382 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.52417(5) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5248344 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 3.2, basis-free | best variational | -0.524373(4) | VMC (JAGP) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.524987(7) | LR-DMC (AGP) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best extrapolated | -0.52512(6) | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5257(1) | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 3.2, STO-6G | exact | -0.4910383 | FCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best variational | -0.4910383 &#9675; (−<1e-7) | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.4910383 &#9675; (−<1e-7) | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.4895218 &#9675; (+1.5e-3) | UCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 3.6, cc-pV5Z | best variational | -0.5050291 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.51584(8) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 3.6, cc-pVDZ | best variational | -0.51238 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.51287(3) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5119131 &#9675; | PC-NEVPT2 [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 3.6, cc-pVQZ | best variational | -0.5150225 &#9675; | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.51580(5) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.514026 &#9675; | UCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 3.6, cc-pVTZ | best variational | -0.51448 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.51507(3) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.513382 &#9675; | PC-NEVPT2 [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 3.6, basis-free | best variational | -0.514968(3) | VMC (JAGP) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.51558(1) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best extrapolated | -0.51612(9) | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5143(1) | UCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 3.6, STO-6G | exact | -0.4818701 | FCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best variational | -0.4818701 &#9675; (+<1e-7) | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.4818701 &#9675; (+<1e-7) | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.4809595 &#9675; (+9.1e-4) | UCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H10 chain, open, R = 3.77945, STO-6G | exact | -0.4790989 | FCI [Stair & Evangelista (2020)](https://doi.org/10.1063/5.0014928) |  |
+| H12 chain, open, R = 1.51178, STO-3G | best variational | -0.5268575 &#9675; | VQE [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
+| H12 chain, open, R = 1.8, STO-6G | exact | -0.5420192 | FCI [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
+|  | best variational | -0.5420125 &#9675; (+6.7e-6) | VMC (RBM) [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
+|  | best approximate | -0.5419892 &#9675; (+3.0e-5) | CCSD(T) [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
+| H12 chain, open, R = 1.88973, STO-3G | exact | -0.5377347 | ED [Huang et al. (2026)](https://doi.org/10.1088/0256-307x/43/4/040708) |  |
+| H12 chain, open, R = 3.6, STO-6G | exact | -0.4819042 | FCI [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
+|  | best variational | -0.4819025 &#9675; (+1.7e-6) | VMC (RBM) [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
+| H14 chain, open, R = 1.51178, STO-3G | best variational | -0.525915 &#9675; | VQE [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
+| H16 chain, open, R = 1.51178, STO-3G | best variational | -0.5252269 &#9675; | VQE [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
+| H20 chain, open, R = 3.6, STO-6G | best projected | -0.481978(1) | FCIQMC [Guther et al. (2020)](https://doi.org/10.1063/5.0005754) | [ghb24/NECI_STABLE](https://github.com/ghb24/NECI_STABLE) |
+| H22 chain, open, R = 1, STO-6G | best projected | -0.357541(9) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H22 chain, open, R = 1.4, STO-6G | best projected | -0.51444(1) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H22 chain, open, R = 1.8, STO-6G | best projected | -0.54115(2) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H22 chain, open, R = 2.8, STO-6G | best projected | -0.50541(2) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1, cc-pV5Z | best variational | -0.3969058 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1, cc-pVDZ | best variational | -0.3937633 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.39379(3) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.3936663 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1, cc-pVQZ | best variational | -0.3948131 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.42184(7) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.421883 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1, cc-pVTZ | best variational | -0.3898388 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.41760(3) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.41743 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1, basis-free | best variational | -0.42157(2) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.42510(3) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1, STO-6G | best variational | -0.3518877 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.3528238 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.35206 &#9675; | GW [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.2, cc-pV5Z | best variational | -0.4739482 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.2, cc-pVDZ | best variational | -0.4891083 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.48927(3) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.489002 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.2, cc-pVQZ | best variational | -0.4736828 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.50143(5) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5011587 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.2, cc-pVTZ | best variational | -0.4731441 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.50030(3) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.4999623 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.2, basis-free | best variational | -0.50020(1) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.50177(2) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.2, STO-6G | best variational | -0.461805 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.4627503 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.4617621 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.4, cc-pV5Z | best variational | -0.5155844 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.4, cc-pVDZ | best variational | -0.5344613 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5354635 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5343077 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.4, cc-pVQZ | best variational | -0.5154895 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.54253(5) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.542323 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.4, cc-pVTZ | best variational | -0.5152041 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.54186(3) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5414947 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.4, basis-free | best variational | -0.54142(1) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.54276(1) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.4, STO-6G | best variational | -0.5132063 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5140977 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5131409 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.6, cc-pV5Z | best variational | -0.5337486 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.6, cc-pVDZ | best variational | -0.5542583 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.55440(3) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5540527 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.6, cc-pVQZ | best variational | -0.5336765 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.55999(7) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5599073 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.6, cc-pVTZ | best variational | -0.5334553 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.55942(3) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.559162 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.6, basis-free | best variational | -0.559065(9) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.56038(1) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.6, STO-6G | best variational | -0.534978 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5357627 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.534889 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.8, cc-pV5Z | best variational | -0.5394784 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.8, cc-pVDZ | best variational | -0.560521 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5616303 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.560279 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.8, cc-pVQZ | best variational | -0.5394138 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.56530(5) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.564994 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.8, cc-pVTZ | best variational | -0.5392194 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.56451(3) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.564239 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.8, basis-free | best variational | -0.564180(9) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.56550(1) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 1.8, STO-6G | best variational | -0.5409897 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5416268 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5408894 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 2, cc-pV5Z | best variational | -0.5386818 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 2, cc-pVDZ | best variational | -0.5595467 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.55961(2) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.55928 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 2, cc-pVQZ | best variational | -0.5386235 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.56379(4) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5634263 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 2, cc-pVTZ | best variational | -0.5384493 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.56295(3) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5626683 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 2, basis-free | best variational | -0.562636(9) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.56403(1) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 2, STO-6G | best variational | -0.5385523 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5390239 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5384874 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 2.4, cc-pV5Z | best variational | -0.5292216 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 2.4, cc-pVDZ | best variational | -0.5482932 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5493137 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5480643 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 2.4, cc-pVQZ | best variational | -0.5291749 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.55215(4) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5517193 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 2.4, cc-pVTZ | best variational | -0.529024 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.55142(2) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5509443 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 2.4, basis-free | best variational | -0.550876(9) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.55248(2) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 2.4, STO-6G | best variational | -0.5231183 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.523325 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5239338 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 2.8, cc-pV5Z | best variational | -0.5183556 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 2.8, cc-pVDZ | best variational | -0.5340762 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5347214 &#9675; | SEET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5327924 &#9675; | UCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 2.8, cc-pVQZ | best variational | -0.5183116 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.53788(4) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 2.8, cc-pVTZ | best variational | -0.5181643 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.53718(3) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 2.8, basis-free | best variational | -0.536326(9) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.53821(2) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 2.8, STO-6G | best variational | -0.5054037 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5055314 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5037865 &#9675; | UCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 3.2, cc-pV5Z | best variational | -0.5102735 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 3.2, cc-pVDZ | best variational | -0.5216948 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5240882 &#9675; | SEET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5205262 &#9675; | UCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 3.2, cc-pVQZ | best variational | -0.5102287 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.52512(7) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 3.2, cc-pVTZ | best variational | -0.5100848 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.52443(4) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 3.2, basis-free | best variational | -0.523410(9) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.52555(2) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 3.2, STO-6G | best variational | -0.4913033 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.4914582 &#9675; | SEET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.4900449 &#9675; | UCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 3.6, cc-pV5Z | best variational | -0.5053753 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 3.6, cc-pVDZ | best variational | -0.512651 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5128862 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.511785 &#9675; | UCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 3.6, cc-pVQZ | best variational | -0.5053287 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5162413 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 3.6, cc-pVTZ | best variational | -0.5051879 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5154642 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 3.6, basis-free | best variational | -0.513577(9) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.51601(3) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H30 chain, open, R = 3.6, STO-6G | best variational | -0.4820203 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.4828246 &#9675; | SEET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.4812442 &#9675; | UCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1, cc-pV5Z | best variational | -0.3930718 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1, cc-pVDZ | best variational | -0.388254 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.38822(2) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.3882394 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1, cc-pVQZ | best variational | -0.3909264 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.4169616 &#9675; | RCCSD [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.418261 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1, cc-pVTZ | best variational | -0.3867182 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.41352(4) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.4133358 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1, basis-free | best variational | -0.41856(3) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.42197(3) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1, STO-6G | best variational | -0.3456814 &#9675; | LDMRG [Hachmann et al. (2006)](https://doi.org/10.1063/1.2345196) |  |
+|  | best projected | -0.3466732 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.345728 &#9675; | GW [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1.2, cc-pV5Z | best variational | -0.4724546 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1.2, cc-pVDZ | best variational | -0.486182 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.48637(1) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.4860532 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1.2, cc-pVQZ | best variational | -0.471144 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.49888(3) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.4983418 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1.2, cc-pVTZ | best variational | -0.4700515 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.49746(4) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.4971284 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1.2, basis-free | best variational | -0.49748(1) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.49913(4) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1.2, STO-6G | best variational | -0.458953 &#9675; | LDMRG [Hachmann et al. (2006)](https://doi.org/10.1063/1.2345196) |  |
+|  | best projected | -0.4599375 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.4588914 &#9675; | CCSD(T) [Hachmann et al. (2006)](https://doi.org/10.1063/1.2345196) |  |
+| H50 chain, open, R = 1.4, cc-pV5Z | best variational | -0.5142633 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1.4, cc-pVDZ | best variational | -0.5331854 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5342916 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5330286 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1.4, cc-pVQZ | best variational | -0.5141705 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5401476 &#9675; | RCCSD [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5411192 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1.4, cc-pVTZ | best variational | -0.5138868 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.54063(3) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.540299 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1.4, basis-free | best variational | -0.53996(2) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.54153(2) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1.4, STO-6G | best variational | -0.5118756 &#9675; | LDMRG [Hachmann et al. (2006)](https://doi.org/10.1063/1.2345196) |  |
+|  | best projected | -0.5127902 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5117824 &#9675; | CCSD(T) [Hachmann et al. (2006)](https://doi.org/10.1063/1.2345196) |  |
+| H50 chain, open, R = 1.6, cc-pV5Z | best variational | -0.5332496 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1.6, cc-pVDZ | best variational | -0.5307409 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5548843 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5535398 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1.6, cc-pVQZ | best variational | -0.5331783 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.558395 &#9675; | RCCSD [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5594386 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1.6, cc-pVTZ | best variational | -0.5329572 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.55895(3) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5587018 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1.6, basis-free | best variational | -0.55836(1) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.55992(2) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1.6, STO-6G | best variational | -0.5343888 &#9675; | LDMRG [Hachmann et al. (2006)](https://doi.org/10.1063/1.2345196) |  |
+|  | best projected | -0.5351831 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5342628 &#9675; | CCSD(T) [Hachmann et al. (2006)](https://doi.org/10.1063/1.2345196) |  |
+| H50 chain, open, R = 1.8, cc-pV5Z | best variational | -0.5393799 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1.8, cc-pVDZ | best variational | -0.560418 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5615634 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5601304 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1.8, cc-pVQZ | best variational | -0.5393155 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.56515(3) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.564877 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1.8, cc-pVTZ | best variational | -0.5391208 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.56451(4) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5641164 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1.8, basis-free | best variational | -0.56381(1) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.56543(2) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 1.8, STO-6G | best variational | -0.540773 &#9675; | LDMRG [Hachmann et al. (2006)](https://doi.org/10.1063/1.2345196) |  |
+|  | best projected | -0.5414071 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.540629 &#9675; | CCSD(T) [Hachmann et al. (2006)](https://doi.org/10.1063/1.2345196) |  |
+| H50 chain, open, R = 2, cc-pV5Z | best variational | -0.5387831 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 2, cc-pVDZ | best variational | -0.5376519 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.560789 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5593002 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 2, cc-pVQZ | best variational | -0.5387247 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.56380(3) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5634712 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 2, cc-pVTZ | best variational | -0.5385504 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.56316(5) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5626926 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 2, basis-free | best variational | -0.56242(1) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.56409(2) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 2, STO-6G | best variational | -0.5385218 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5389803 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.538418 &#9675; | CCSD(T) [Hachmann et al. (2006)](https://doi.org/10.1063/1.2345196) |  |
+| H50 chain, open, R = 2.4, cc-pV5Z | best variational | -0.5294429 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 2.4, cc-pVDZ | best variational | -0.5484576 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.549566 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5481804 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 2.4, cc-pVQZ | best variational | -0.5293962 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5505126 &#9675; | RCCSD [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5518596 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 2.4, cc-pVTZ | best variational | -0.5292454 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.55145(4) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5510824 &#9675; | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 2.4, basis-free | best variational | -0.55049(1) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.55262(3) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 2.4, STO-6G | best variational | -0.5232114 &#9675; | LDMRG [Hachmann et al. (2006)](https://doi.org/10.1063/1.2345196) |  |
+|  | best projected | -0.5234051 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.521806 &#9675; | UCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 2.8, cc-pV5Z | best variational | -0.518544 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 2.8, cc-pVDZ | best variational | -0.51777 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5352079 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5329892 &#9675; | UCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 2.8, cc-pVQZ | best variational | -0.5185002 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.53798(3) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 2.8, cc-pVTZ | best variational | -0.5183529 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.53742(2) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 2.8, basis-free | best variational | -0.53563(1) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.53834(3) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 2.8, STO-6G | best variational | -0.505496 &#9675; | LDMRG [Hachmann et al. (2006)](https://doi.org/10.1063/1.2345196) |  |
+|  | best projected | -0.5056322 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.503953 &#9675; | UCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 3.2, cc-pV5Z | best variational | -0.5103961 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 3.2, cc-pVDZ | best variational | -0.5217914 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5226823 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5206612 &#9675; | UCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 3.2, cc-pVQZ | best variational | -0.5103515 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 3.2, cc-pVTZ | best variational | -0.5102075 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.52450(4) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 3.2, basis-free | best variational | -0.52221(2) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.52570(4) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 3.2, STO-6G | best variational | -0.4913656 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.4916637 &#9675; | SEET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.4901495 &#9675; | UCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 3.6, cc-pV5Z | best variational | -0.5054446 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 3.6, cc-pVDZ | best variational | -0.5046794 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5134833 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.5118654 &#9675; | UCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 3.6, cc-pVQZ | best variational | -0.5053981 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 3.6, cc-pVTZ | best variational | -0.5052571 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.5156009 &#9675; | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 3.6, basis-free | best variational | -0.51192(1) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.51616(7) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 3.6, STO-6G | best variational | -0.4820554 &#9675; | LDMRG [Hachmann et al. (2006)](https://doi.org/10.1063/1.2345196) |  |
+|  | best projected | -0.4831221 &#9675; | SEET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best approximate | -0.4813012 &#9675; | UCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H50 chain, open, R = 4.2, STO-6G | best variational | -0.4749942 &#9675; | LDMRG [Hachmann et al. (2006)](https://doi.org/10.1063/1.2345196) |  |
+|  | best approximate | -0.4302988 &#9675; | MP2 [Hachmann et al. (2006)](https://doi.org/10.1063/1.2345196) |  |
+| H70 chain, open, R = 1, STO-6G | best projected | -0.34303(1) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H70 chain, open, R = 1.4, STO-6G | best projected | -0.511254(9) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H70 chain, open, R = 1.8, STO-6G | best projected | -0.54073(1) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H70 chain, open, R = 2.8, STO-6G | best projected | -0.50560(1) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H82 chain, open, R = 1, basis-free | best variational | -0.41649(2) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.42018(3) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H82 chain, open, R = 1.2, basis-free | best variational | -0.49544(1) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.49896(7) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H102 chain, open, R = 1, basis-free | best variational | -0.41616(2) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.41967(4) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H102 chain, open, R = 1, STO-6G | best projected | -0.34087(1) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H102 chain, open, R = 1.2, basis-free | best variational | -0.49576(1) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.49844(4) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H102 chain, open, R = 1.4, STO-6G | best projected | -0.51125(1) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H102 chain, open, R = 1.8, basis-free | best variational | -0.563316(7) | VMC (SJ) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.56538(1) | LR-DMC (LDA determinant) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H102 chain, open, R = 1.8, STO-6G | best projected | -0.54069(2) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+| H102 chain, open, R = 2.8, STO-6G | best projected | -0.50565(2) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 
 </details>
 
@@ -1850,8 +1850,8 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 
 | instance | value | energy | method | code |
 |---|---|---|---|---|
-| H4 sheet (2x2), open, R = 2.4, basis-free | best variational | -0.52710(7) | VMC (JAGP) [10.1063/1.5081933](https://doi.org/10.1063/1.5081933) |  |
-|  | best projected | -0.52812(5) | LR-DMC (JAGP) [10.1063/1.5081933](https://doi.org/10.1063/1.5081933) |  |
+| H4 sheet (2x2), open, R = 2.4, basis-free | best variational | -0.52710(7) | VMC (JAGP) [Genovese et al. (2019)](https://doi.org/10.1063/1.5081933) |  |
+|  | best projected | -0.52812(5) | LR-DMC (JAGP) [Genovese et al. (2019)](https://doi.org/10.1063/1.5081933) |  |
 
 </details>
 
