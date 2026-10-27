@@ -196,7 +196,7 @@ async function main() {
 
   const wanted = new Map();
   let noId = 0;
-  // Track 4's instances (tdl/, RULES.md 14) cite papers too.
+  // The infinite-lattice instances (tdl/, RULES.md 14) cite papers too.
   for (const inst of [...collect(), ...collectTDL()])
     for (const r of inst.rows) {
       const id = identify(r.reference);

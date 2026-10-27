@@ -50,8 +50,11 @@ const CITATION = `${CITE_HEAD}, ${CITE_TITLE}, arXiv:${ARXIV} (2026). https://ar
 
 const cache = sources();
 const instances = collect();
-// Track 4 (RULES.md 14), its own page and API files; views with n_sites = 1 (tdl.mjs).
+// The thermodynamic limit (RULES.md 14): views with n_sites = 1 (tdl.mjs), listed on the Table
+// with the finite instances of their model, after the largest cluster of the same lattice.
 const tdlInstances = collectTDL();
+const tableLabel = inst => inst.tdl ? tdlLabel(inst) : instanceLabel(inst);
+const tableOrder = (a, b) => (a.lattice === b.lattice ? (a.tdl ? 1 : 0) - (b.tdl ? 1 : 0) : 0) || byGeometry(a, b);
 const summary = summarize(instances);
 
 // ------------------------------------------------------------------------------ html
@@ -70,7 +73,6 @@ const OPEN_PROBLEMS = await loadOpenProblems(instances);
 const NAV = [
   ["/", "Leaderboard"],
   ["/instances/", "Table"],
-  ["/tdl/", "Thermodynamic limit"],
 ];
 // Open Problems is a button at the very right of the menu, after Cite.
 const opButton = url => (OPEN_PROBLEMS
@@ -308,7 +310,7 @@ function rowIssueUrl(r, inst) {
     `bound type: ${boundLabel(r)}`,
     `method: ${methodLabel(r)} (as published: ${publishedMethod(r)})`,
     `source: ${c.text}${c.url ? ` ${c.url}` : ""}`,
-    `on qmbl.org: https://qmbl.org/${inst.tdl ? "tdl" : "instances"}/#${id}`,
+    `on qmbl.org: https://qmbl.org/instances/#${id}`,
   ].join("\n");
   const q = new URLSearchParams({ template: "row-feedback.yml", title: `[row] ${rowTitle(r, inst)}: `, row: id, instance: inst.instance_id, shown });
   return `${REPO}/issues/new?${q}`;
@@ -819,8 +821,9 @@ const SIZE_BANDS = [
   ["s2", n => n > 36 && n <= 100, "37&ndash;100"],
   ["s3", n => n > 100 && n <= 400, "101&ndash;400"],
   ["s4", n => n > 400, "&gt; 400"],
+  ["s5", () => false, "infinite"],
 ];
-const sizeBand = inst => SIZE_BANDS.find(([, test]) => test(inst.n_sites))[0];
+const sizeBand = inst => inst.tdl ? "s5" : SIZE_BANDS.find(([, test]) => test(inst.n_sites))[0];
 
 // The Table's text box matches words, in any order, against what an instance is and against
 // the methods of one of its rows: "hubbard 16x16 U=8 afqmc". A word with a digit matches
@@ -914,6 +917,24 @@ const METHOD_WORDS = [
   [NEURAL, "nqs neural-network"],
 ];
 
+// An infinite instance's words: "infinite", "thermodynamic limit", its couplings and filling,
+// then the method lists as for a finite one (methodWords).
+function tdlSearchIndex(inst, own, add) {
+  const p = inst.params ?? {};
+  add("infinite lattice thermodynamic limit tdl n=∞ ∞");
+  if (p.J2 != null) add(`j2=${p.J2} j2/j1=${p.J2}`);
+  if (p.h != null) add(`h=${p.h} h/j=${p.h}`);
+  if (p.U != null) add(`u=${p.U} u/t=${p.U}`);
+  if (p.V != null) add(`v=${p.V} v/t=${p.V}`);
+  if (p.S != null) add(`s=${p.S} spin-${p.S}`);
+  if (p.n != null) {
+    add(`n=${p.n}`);
+    if (inst.model === "Hubbard" && p.n === 1) add("half-filling half-filled");
+    else if (inst.model === "Hubbard") add(`doped doping=${Number((1 - p.n).toFixed(4))}`);
+  }
+  return methodWords(inst, own);
+}
+
 // The index of one instance: its own words, and one word list per distinct row method, each
 // holding only words that start with a letter so a method's "bond dimension = 100" is not a
 // size of 100. "16 sites" is the word n=16, so it does not find a 16x32 cylinder.
@@ -921,10 +942,11 @@ function searchIndex(inst, name) {
   const own = new Set();
   const add = text => { for (const [w, parts] of searchWords(text)) for (const x of [w, ...parts]) own.add(x); };
   const whole = word => own.add(word.toLowerCase());
-  add(`${name} ${MODEL_WORDS[inst.model] ?? ""} ${instanceLabel(inst)} ${inst.lattice} ${latticeOf(inst)} ${SHAPE_WORDS[latticeOf(inst)] ?? ""}`);
+  add(`${name} ${MODEL_WORDS[inst.model] ?? ""} ${tableLabel(inst)} ${inst.lattice} ${latticeOf(inst)} ${SHAPE_WORDS[latticeOf(inst)] ?? ""}`);
   whole(inst.instance_id);
   if (inst.boundary) add(BOUNDARY_WORDS[inst.boundary] ?? "");
   if (inst.boundary === "P" && /2d/.test(SHAPE_WORDS[latticeOf(inst)] ?? "")) add("torus");
+  if (inst.tdl) return tdlSearchIndex(inst, own, add);
   const n = inst.n_sites, side = Math.sqrt(n);
   add(`${n} n=${n} sites`);
   const dims = inst.lattice.match(/^[a-z]+-(\d+(?:x\d+)+)$/)?.[1].split("x")
@@ -954,6 +976,11 @@ function searchIndex(inst, name) {
     }
   }
   if (inst.model === "Impurity") for (const [re, words] of IMPURITY_WORDS) if (re.test(inst.lattice)) add(words);
+  return methodWords(inst, own);
+}
+
+function methodWords(inst, own) {
+  const add = text => { for (const [w, parts] of searchWords(text)) for (const x of [w, ...parts]) own.add(x); };
   if (!shownBest(inst).length) add("no best value");
   const methods = new Set(inst.rows.map(r => {
     // The method, ansatz and detail, and the string as published, so a search for a paper's
@@ -1036,12 +1063,12 @@ function tableLines(inst) {
 
 function instancesPage() {
   const sections = MODELS.map(([model, name]) => {
-    const group = instances.filter(i => i.model === model).sort(byGeometry);
+    const group = [...instances, ...tdlInstances].filter(i => i.model === model).sort(tableOrder);
     if (!group.length) return "";
     // One tbody per instance: a line per value it shows, the name and the count spanning
     // them, and the opened rows last.
     const rows = group.map(inst => {
-      const label = instanceLabel(inst);
+      const label = tableLabel(inst);
       const search = searchIndex(inst, name);
       const lines = tableLines(inst);
       const id = `x-${inst.instance_id.replace(/[^\w-]/g, "_")}`;
@@ -1072,7 +1099,7 @@ function instancesPage() {
 <h1>Table</h1>
 <p class="search"><input id="filter" type="search" placeholder="Filter by Hamiltonian, lattice, size, coupling or method…" autocomplete="off" spellcheck="false">
 <span id="filter-count" class="muted"></span></p>
-<div class="quick models"><span class="muted">Hamiltonian</span>${MODELS.filter(([m]) => instances.some(i => i.model === m))
+<div class="quick models"><span class="muted">Hamiltonian</span>${MODELS.filter(([m]) => [...instances, ...tdlInstances].some(i => i.model === m))
     .map(([m, n]) => `<button type="button" data-model="${m}">${esc(n)}</button>`).join("")}</div>
 ${sections}
 <script>
@@ -1160,50 +1187,6 @@ reveal();
 </script>`;
   return page({ url: "/instances/", title: "Table", body, wide: true,
     description: `Every Hamiltonian instance in QMBL: ${summary.instances} instances across ${MODELS.filter(([m]) => instances.some(i => i.model === m)).length} models, with the exact energy and the best of each bound type for each.` });
-}
-
-// ---------------------------------------------------------------------- thermodynamic limit
-// Track 4 (RULES.md 14): one section per model, a line per value an instance shows, its rows
-// when opened, as on the Table. No size filter: every instance is infinite.
-function tdlPage() {
-  const sections = MODELS.map(([model, name]) => {
-    const group = tdlInstances.filter(i => i.model === model).sort((a, b) => a.lattice.localeCompare(b.lattice) || a.instance_id.localeCompare(b.instance_id, "en", { numeric: true }));
-    if (!group.length) return "";
-    const rows = group.map(inst => {
-      const lines = tableLines(inst);
-      const id = `x-${inst.instance_id.replace(/[^\w-]/g, "_")}`;
-      const span = lines.length > 1 ? ` rowspan="${lines.length}"` : "";
-      const tr = lines.map(([tag, r], k) => `<tr class="line${k === lines.length - 1 ? " last" : ""}">${k ? "" : `
-        <th scope="row" class="span"${span}><button type="button" aria-expanded="false" aria-controls="${id}">${esc(tdlLabel(inst))}</button></th>`}
-        <td class="kind">${tag}</td><td class="record">${energyCell(r, inst)}</td><td>${methodCell(r)}</td><td>${citeHtml(r)}</td><td class="code">${codeHtml(r)}</td>${k ? "" : `<td class="num span"${span}>${inst.rows.length}</td>`}</tr>`).join("");
-      return `<tbody class="inst">${tr}
-      <tr class="more" id="${id}" hidden><td colspan="7">${allRows(inst)}</td></tr></tbody>`;
-    });
-    return `<section data-model="${model}">
-      <h2 id="${model.toLowerCase()}">${esc(name)}<a class="anchor" href="#${model.toLowerCase()}" aria-label="Link to this section">#</a></h2>
-      <p class="muted">${group.length} instance${group.length === 1 ? "" : "s"}, energies per site as <code>${perSiteLabel(group[0])}</code></p>
-      <div class="scroll"><table class="leaderboard">
-        <thead><tr><th>instance</th><th>value</th><th>energy</th><th>method</th><th>source</th><th>code</th><th>energies</th></tr></thead>
-        ${rows.join("")}</table></div>
-    </section>`;
-  }).join("\n");
-  const body = `
-<h1>Thermodynamic limit</h1>
-<p>Ground-state energies per site of infinite lattices: closed-form solutions, states of the
-infinite system (iPEPS, iDMRG, VUMPS) at a fixed bond dimension, and extrapolations in the
-bond dimension, the correlation length or the system size. Couplings are as the source prints
-them. <a href="${RULES}#14-track-4-the-thermodynamic-limit">Rules &sect;14</a>.</p>
-${tdlInstances.length ? sections : '<p class="muted">No energies yet.</p>'}
-<script>
-for (const b of document.querySelectorAll("button[aria-controls]")) b.addEventListener("click", () => {
-  const row = document.getElementById(b.getAttribute("aria-controls"));
-  const open = b.getAttribute("aria-expanded") !== "true";
-  b.setAttribute("aria-expanded", String(open));
-  row.hidden = !open;
-});
-</script>`;
-  return page({ url: "/tdl/", title: "Thermodynamic limit", body, wide: true,
-    description: `Ground-state energies per site of infinite lattices in QMBL: ${tdlInstances.length} instances, ${tdlInstances.reduce((s, i) => s + i.rows.length, 0)} energies.` });
 }
 
 // ---------------------------------------------------------------------- instance page
@@ -1821,9 +1804,20 @@ fs.rmSync(OUT, { recursive: true, force: true });
 
 write("index.html", homePage());
 write("instances/index.html", instancesPage());
-write("tdl/index.html", tdlPage());
+// /tdl/ was the infinite lattices' own page until 2026-10-27; it forwards to the Table.
+write("tdl/index.html", `<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta http-equiv="refresh" content="0; url=/instances/">
+<link rel="canonical" href="https://qmbl.org/instances/">
+<title>Table &middot; QMBL</title>
+<script>location.replace("/instances/" + location.hash);</script>
+<p>The infinite lattices are on the <a href="/instances/">Table</a>.</p>
+</html>
+`);
 for (const inst of tdlInstances)
-  write(`api/tdl/${inst.instance_id}.json`, JSON.stringify({ ...apiInstance(inst), n_sites: "inf", tdl: undefined, url: `https://qmbl.org/tdl/#x-${inst.instance_id.replace(/[^\w-]/g, "_")}` }, null, 2) + "\n");
+  write(`api/tdl/${inst.instance_id}.json`, JSON.stringify({ ...apiInstance(inst), n_sites: "inf", tdl: undefined, url: `https://qmbl.org/instances/#x-${inst.instance_id.replace(/[^\w-]/g, "_")}` }, null, 2) + "\n");
 write("rules/index.html", redirectPage(RULES, "Rules"));
 write("data/index.html", redirectPage(DATA, "Data"));
 write("contribute/index.html", contributePage());
@@ -1893,7 +1887,7 @@ write("api/qmbl.json", JSON.stringify({
   summary: apiSummary, instances: instances.map(apiInstance),
 }, null, 2) + "\n");
 
-const urls = ["/", "/instances/", "/tdl/", "/contribute/", ...(OPEN_PROBLEMS ? [OPEN_PROBLEMS_URL, OPEN_PROBLEMS_TABLE_URL] : []), ...instances.map(instUrl)];
+const urls = ["/", "/instances/", "/contribute/", ...(OPEN_PROBLEMS ? [OPEN_PROBLEMS_URL, OPEN_PROBLEMS_TABLE_URL] : []), ...instances.map(instUrl)];
 write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(u => `  <url><loc>https://qmbl.org${u}</loc><lastmod>${BUILT}</lastmod></url>`).join("\n")}

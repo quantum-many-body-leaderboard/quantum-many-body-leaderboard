@@ -120,7 +120,7 @@ applied by the build in date order:
 | `passes/rows/sweep-rows-YYYY-MM-DD[-label].json` | `scripts/add_allresults_rows.mjs` | rows, read per site |
 | `passes/stored-rows/<date>-<label>.json` | `scripts/add_stored_rows.mjs` | rows already in the stored convention |
 | `passes/coverage/sweep-coverage-YYYY-MM-DD[-cites].json` | `scripts/add_coverage.mjs` | [`coverage`](DATA.md#when-the-literature-was-last-checked-coverage) entries |
-| `passes/tdl-rows/tdl-rows-YYYY-MM-DD[-label].json` | `scripts/add_tdl_rows.mjs` | track 4 rows, read per site ([DATA.md](DATA.md#the-thermodynamic-limit-tdl)): `model`, `lattice`, `params` name the instance; `how_tdl`; otherwise the fields of a `sweep-rows` file |
+| `passes/tdl-rows/tdl-rows-YYYY-MM-DD[-label].json` | `scripts/add_tdl_rows.mjs` | infinite-lattice rows, read per site ([DATA.md](DATA.md#the-thermodynamic-limit-tdl)): `model`, `lattice`, `params` name the instance; `how_tdl`; otherwise the fields of a `sweep-rows` file |
 | `passes/compute/compute-rows-YYYY-MM-DD.json` | `scripts/add_compute.mjs` | [`compute`](DATA.md#what-a-number-cost-the-compute-block) blocks |
 | `passes/error-metrics/error-metrics-YYYY-MM-DD.json` | `scripts/add_error_metrics.mjs` | [`error_metrics`](DATA.md#where-an-added-error-bar-or-variance-came-from-the-error_metrics-block) blocks |
 
