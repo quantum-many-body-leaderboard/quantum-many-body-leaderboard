@@ -26,8 +26,10 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best variational | -0.4341237 (+<1e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_heisenberg/chain_20_O.jl) |
 | chain, 20 sites | exact | -0.4452193 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/chain_20_P/ed_netket.sh) |
 |  | best variational | -0.4452193 (+<1e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_heisenberg/chain_20_P.jl) |
-| chain, 200 sites, open | best variational | -0.4422078 | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_heisenberg/chain_200_O.jl) |
-| chain, 200 sites | best variational | -0.4431678 | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_heisenberg/chain_200_P.jl) |
+| chain, 200 sites, open | exact | -0.4422078 | Exact solution [QMBL check, checks/bethe-heisenberg-chain/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/bethe-heisenberg-chain) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/1ca5cbf4/checks/bethe-heisenberg-chain) |
+|  | best variational | -0.4422078 (+<1e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_heisenberg/chain_200_O.jl) |
+| chain, 200 sites | exact | -0.4431678 | Exact solution [QMBL check, checks/bethe-heisenberg-chain/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/bethe-heisenberg-chain) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/1ca5cbf4/checks/bethe-heisenberg-chain) |
+|  | best variational | -0.4431678 (+<1e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_heisenberg/chain_200_P.jl) |
 | checkerboard, infinite lattice | best variational | -0.513442(1) | variational wave function [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
 |  | best extrapolated | -0.5132(2) | DMRG [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
 |  | best approximate | -0.5138(2) | NLCE [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
@@ -1942,7 +1944,7 @@ Rules: [RULES.md](RULES.md). Units, conventions, error metrics, provenance and d
 
 To cite the data itself, use the Zenodo concept DOI, which resolves to the latest release: [10.5281/zenodo.22753734](https://doi.org/10.5281/zenodo.22753734).
 
-530 of QMBL’s 4640 rows (11 %) are imported from VarBench, the dataset published with the V-score paper. If you use an imported energy, cite that paper too:
+530 of QMBL’s 4642 rows (11 %) are imported from VarBench, the dataset published with the V-score paper. If you use an imported energy, cite that paper too:
 
 > D. Wu *et al.*, *Variational benchmarks for quantum many-body problems*,
 > Science **386**, 296 (2024). [10.1126/science.adg9774](https://doi.org/10.1126/science.adg9774)

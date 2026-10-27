@@ -238,6 +238,43 @@
           "pass": "passes/code/code-links-2026-10-22.json"
         }
       }
+    },
+    {
+      "energy": -353.7662222780036,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 200,
+      "einf": 0,
+      "v_score": null,
+      "method": "Exact solution",
+      "ansatz": null,
+      "method_detail": "Bethe ansatz",
+      "method_as_published": "Bethe ansatz",
+      "family": "other",
+      "bound_type": "exact",
+      "bound_type_reason": "Bethe-ansatz solution of the open chain, computed by QMBL; deterministic",
+      "reference": "QMBL, checks/bethe-heisenberg-chain/ (Bethe ansatz, open chain)",
+      "peer_reviewed": false,
+      "source": "qmbl-verify-2026-10-27",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-27",
+        "method": "bethe_xxx.py: Bethe equations in logarithmic form for the M = 100 real roots of the singlet ground state, Newton's method in double precision, then mpmath at 70 and 90 digits; open chain in the form of Alcaraz et al., J. Phys. A 20, 6397 (1987)",
+        "reported_as": "-88.441555569500912890931952160508125031187157763513 (S.S units, 50 digits; results.txt)",
+        "note": "Pauli total = 4 x -88.441555569500912890931952160508125031187157763513 = -353.76622227800365156372780864203250012474863105405. The same code reproduces the 20-site open chain's ED row to all its 16 digits. Agrees to a relative 1e-49 with the value of the bethe library (https://github.com/Uni20-dev/bethe, arbitrary-precision reals), sent to QMBL on 2026-10-27. The DMRG row, -353.766222278, lies 3.7e-12 above it.",
+        "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/1ca5cbf4/checks/bethe-heisenberg-chain",
+        "commit": "1ca5cbf4",
+        "script": "checks/bethe-heisenberg-chain/",
+        "read_from": {
+          "quote": "QMBL, checks/bethe-heisenberg-chain/ (Bethe ansatz, open chain)",
+          "location": "the row's reference (QMBL check directory)",
+          "checked_on": "2026-10-27",
+          "pass": "passes/code/code-links-2026-10-27.json"
+        }
+      }
     }
   ]
 }
