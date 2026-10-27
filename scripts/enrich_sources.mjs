@@ -23,11 +23,29 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 // A reference may carry an arXiv id, a journal DOI, both, or only a link to a run
 // script. VarBench cites code for a large part of its table, so null ("no identifier") is a
 // common, valid result.
+//
+// A DOI runs to the next space or to a markdown link's "](", and then loses the punctuation
+// of the sentence around it: "doi:10.1103/PhysRevB.92.035122, arXiv:..." is
+// 10.1103/PhysRevB.92.035122, and "[paper](https://doi.org/10.1126/science.adg9774)" is
+// 10.1126/science.adg9774. A closing bracket stays when it closes one opened inside the DOI,
+// so 10.1016/S0022-3697(01)00112-3 is kept whole and "(doi:10.1016/0003-4916(70)90270-8)"
+// loses only the outer one.
+const DOI = /10\.\d{4,9}\/(?:(?!\]\()\S)+/;
+const PAIRS = { ")": "(", "]": "[" };
+function trimDoi(d) {
+  const count = c => d.split(c).length - 1;
+  for (;;) {
+    const last = d.at(-1);
+    if (/[.,;:'"!?>]/.test(last) || (PAIRS[last] && count(last) > count(PAIRS[last]))) d = d.slice(0, -1);
+    else return d;
+  }
+}
 export function identify(ref) {
   ref = ref || "";
   const arxiv = ref.match(/arxiv\.org\/abs\/(\d{4}\.\d{4,5})|arXiv:\s?(\d{4}\.\d{4,5})/i);
-  const doi = ref.match(/10\.\d{4,9}\/[^\s)\]]+/);
-  if (doi) return { key: `doi:${doi[0]}`, doi: doi[0] };
+  const m = ref.match(DOI);
+  const doi = m && trimDoi(m[0]);
+  if (doi) return { key: `doi:${doi}`, doi };
   if (arxiv) { const id = arxiv[1] || arxiv[2]; return { key: `arxiv:${id}`, arxiv: id }; }
   return null;
 }
