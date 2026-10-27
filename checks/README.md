@@ -491,3 +491,34 @@ their electron number. The open 4 x 4 value -0.56436 per site is the recomputed
 RULES.md §11 the exact rows carry these digits, the printed value kept in their `corrections`
 (`scripts/corrections.mjs`, ruled 2026-10-24). Not recomputed: the 32-site cluster with 4 carriers
 (about 5.6e9 states in its zero-momentum sector without spin inversion), whose row stays as printed.
+
+## `bethe-heisenberg-chain/`: the exact ground state of the 200-site Heisenberg chains
+
+**Question.** `Heisenberg/chain_200_O` and `chain_200_P` had no exact row, only DMRG. The
+spin-1/2 Heisenberg chain is solved by the Bethe ansatz, so their exact energies can be computed
+to any number of digits.
+
+**Design.** `bethe_xxx.py` solves the Bethe equations in logarithmic form for the M = N/2 real
+roots of the singlet ground state: the periodic chain with quantum numbers -(M-1)/2 ... (M-1)/2,
+the open chain (N - 1 bonds) in the form of Alcaraz et al., J. Phys. A 20, 6397 (1987), with
+quantum numbers 1 ... M. Newton's method in double precision gives the roots; mpmath then refines
+them at 70 and 90 digits. The energy is N_bonds/4 - sum_j 1/(2 (l_j^2 + 1/4)) in S.S units; QMBL
+stores four times this (Pauli units).
+
+**Result.** (`results.txt`, Pauli units, 20 significant digits)
+
+| instance | Bethe ansatz | best row before |
+|---|---|---|
+| `Heisenberg/chain_20_P` | -35.617546119505769398 | ED -35.61754611950579 |
+| `Heisenberg/chain_20_O` | -34.729893337595862403 | ED -34.72989333759587 |
+| `Heisenberg/chain_200_P` | -354.53421300896648104 | DMRG -354.534213002 |
+| `Heisenberg/chain_200_O` | -353.76622227800365156 | DMRG -353.766222278 |
+
+At N = 20 the solver reproduces the stored ED rows to all their 16 digits, which checks the
+equations, the quantum numbers and the units. The runs at 70 and 90 digits agree in all 50 digits the first one prints.
+The values agree to a relative 1e-49 with those of the `bethe` library
+(https://github.com/Uni20-dev/bethe, built with arbitrary-precision reals), sent to QMBL on
+2026-10-27. Both DMRG rows lie above the exact energy, by 7.0e-9 (periodic) and 3.7e-12 (open).
+
+**Reproduce.** `python3 checks/bethe-heisenberg-chain/bethe_xxx.py 200 O 70` (numpy, mpmath;
+under a minute).
