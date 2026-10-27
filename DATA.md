@@ -844,6 +844,22 @@ The site badges a row that is not peer reviewed "proceedings" or "book chapter" 
 and "preprint" where the field is absent. QMBL's own runs and checks (`computed_by`, or a
 reference to `checks/`) get no venue badge. A pass row sets the field (SWEEP.md).
 
+A quoted row's source cell names the paper that produced the number. The note that says where
+the number was read ("quoted in" the paper that `verified.secondary_of` names or, for a
+`secondary` row without it, the paper after "printed in", "quoted in" or "cited in" in
+`reference`) is shown on the site on hover of the citation, and behind a quote mark after it
+that keyboard and touch reach. The README table does not print it. The note stays visible in the cell, on the site and in the README, where
+the number exists only in the quoting paper:
+- derived, with no field: the row cites people, not a paper of theirs that QMBL has resolved, and
+  its `reference` marks the number as their unpublished data, a private communication, or values
+  they provided to the paper that printed them ("unpublished", "private communication", "provided
+  to and printed by" or "in", in [`scripts/cite.mjs`](scripts/cite.mjs), `quoteInCell`);
+- set: `quote_shown: "cell"` (optional, its one value), written by an entry in
+  [`scripts/corrections.mjs`](scripts/corrections.mjs) that gives the reason. The validator
+  rejects another value, and the field on a row that is not quoted. Case: Kaneko, Morita & Imada,
+  J. Phys. Soc. Jpn. 83, 093707 on the 6 x 6 triangular torus, whose number is first printed in
+  Iqbal et al., Phys. Rev. B 93, 144411, the paper an author of the primary asked to be cited.
+
 [`scripts/validate.mjs`](scripts/validate.mjs) runs in every build. It checks:
 - `dof` and `einf` against the instance definition;
 - the V-score against the row's own inputs;

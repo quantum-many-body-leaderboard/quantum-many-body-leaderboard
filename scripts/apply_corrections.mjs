@@ -9,7 +9,7 @@ import { CORRECTIONS } from "./corrections.mjs";
 import { VERIFICATIONS } from "./verifications.mjs";
 import { vScore, publishedMethod, isSampled } from "./units.mjs";
 
-const FIELDS = new Set(["energy", "sigma", "energy_variance", "dof", "einf", "method", "bound_type", "reference", "peer_reviewed", "provenance", "baseline", "sampled", "defect"]);
+const FIELDS = new Set(["energy", "sigma", "energy_variance", "dof", "einf", "method", "bound_type", "reference", "peer_reviewed", "provenance", "baseline", "sampled", "defect", "quote_shown"]);
 // Fields inside a block another script writes: a compute pass's statement (add_compute.mjs) and a
 // verification's note. A pass that is read again rewrites its block, so an entry here states what it
 // replaces, `from`, or for text the one passage it rewrites, `edit: [old, new]`. The build stops
@@ -51,6 +51,9 @@ for (const e of entries) {
   // `sampled` states whether the energy is a Monte Carlo estimate (RULES.md 6): yes or no.
   if (e.kind === "correction" && e.field === "sampled" && typeof e.to !== "boolean")
     throw new Error(`sampled may only be corrected to true or false (${e.match.instance})`);
+  // `quote_shown` keeps a quoted row's note in the source cell (DATA.md): its one value is "cell".
+  if (e.kind === "correction" && e.field === "quote_shown" && e.to !== "cell")
+    throw new Error(`quote_shown may only be set to "cell" (${e.match.instance})`);
   if (!byInstance.has(e.match.instance)) byInstance.set(e.match.instance, []);
   byInstance.get(e.match.instance).push(e);
 }

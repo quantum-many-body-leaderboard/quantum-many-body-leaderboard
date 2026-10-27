@@ -104,8 +104,8 @@ const qmblRef = row => {
 
 // Where a quoted row's number was read (RULES.md 8): the work verified.secondary_of names, or,
 // for a secondary row without it, the work after "printed in" / "quoted in" in its reference.
-// Shown on every quoted row, whether its own paper is resolved or not. A quoting work QMBL has
-// not resolved is named by author-year read off the reference text where it comes from there,
+// Named on every quoted row, whether its own paper is resolved or not: in the cell or on hover
+// (quoteInCell, below). A quoting work QMBL has not resolved is named by author-year read off the reference text where it comes from there,
 // else by its identifier. Nothing is shown when what secondary_of names is the row's own paper
 // (the same title).
 function quotedIn(row, cache, own) {
@@ -119,12 +119,24 @@ function quotedIn(row, cache, own) {
   return who ? `quoted in ${who}` : undefined;
 }
 
+// Where a quoted row's note is shown (RULES.md 8, DATA.md `quote_shown`). The source cell names the
+// paper that produced the number; the note saying where it was read is shown on hover and focus
+// of the citation (`quoted`), except where the number exists only in the work that quotes it,
+// and the note then stays in the cell (`note`): a row that cites people, not a paper of theirs
+// QMBL has resolved, and whose reference marks the number as their unpublished data, a private
+// communication, or values they provided to the paper that printed them; or a row that carries
+// `quote_shown: "cell"` (set in corrections.mjs, with the reason).
+const ONLY_QUOTED = /\b(?:unpublished|private communication|provided to and printed (?:by|in))\b/i;
+export const quoteInCell = (row, own) => row.quote_shown === "cell" || (!own && ONLY_QUOTED.test(row.reference || ""));
+
 export function citeRef(row, cache = sources()) {
   // A number QMBL computed (a cost run or an exact check) cites its checks/ folder (qmblRef);
   // the code column links the code and how to rerun it.
   if (row.computed_by === "qmbl" || /^QMBL, checks\//.test(row.reference || "")) return qmblRef(row);
   const s = sourceOf(row, cache);
-  const note = quotedIn(row, cache, s);
+  const q = quotedIn(row, cache, s);
+  // `qn` spreads the quoted-in note into the result, as `note` (in the cell) or `quoted` (on hover).
+  const qn = !q ? {} : quoteInCell(row, s) ? { note: q } : { quoted: q };
   // A person's unpublished number printed in a paper (RULES.md 8), a reference that opens
   // "D. Poilblanc, unpublished ...": the person, marked unpublished and with no link, then the
   // paper that printed it, linked (`noteLink`, the end of `note`). Only where that paper is resolved.
@@ -135,7 +147,7 @@ export function citeRef(row, cache = sources()) {
     const link = { text: citeText(ps), url: citeUrl(ps) };
     return { text: `${unpub} (unpublished)`, url: null, note: `quoted in ${link.text}`, noteLink: link };
   }
-  if (s) return note ? { text: citeText(s), url: citeUrl(s), note } : { text: citeText(s), url: citeUrl(s) };
+  if (s) return { text: citeText(s), url: citeUrl(s), ...qn };
   const ref = row.reference || "";
   const code = ref.match(/\[code\]\((https?:\/\/[^\s)]+)\)/);
   if (code) {
@@ -146,19 +158,19 @@ export function citeRef(row, cache = sources()) {
       : { text: "run script", url: code[1], note: "no paper cited" };
   }
   const link = ref.match(/\((https?:\/\/[^\s)]+)\)/);
-  if (link) return note ? { text: "source", url: link[1], note } : { text: "source", url: link[1] };
+  if (link) return { text: "source", url: link[1], ...qn };
   const id = paperOf(row);
   if (id) return id.arxiv
-    ? { text: `arXiv:${id.arxiv}`, url: `https://arxiv.org/abs/${id.arxiv}`, note }
-    : { text: id.doi, url: `https://doi.org/${id.doi}`, note };
+    ? { text: `arXiv:${id.arxiv}`, url: `https://arxiv.org/abs/${id.arxiv}`, ...qn }
+    : { text: id.doi, url: `https://doi.org/${id.doi}`, ...qn };
   // identify() reads only new-style arXiv ids; a pre-2007 id ("cond-mat/9402061") still gives a link.
   const old = ref.match(/arXiv:\s?([a-z-]+(?:\.[A-Z]{2})?\/\d{7})/i)?.[1];
   const url = old ? `https://arxiv.org/abs/${old}` : null;
   const ay = authorYear(ref);
-  if (ay) return { text: ay.text, url, note };
+  if (ay) return { text: ay.text, url, ...qn };
   const plain = ref.replace(QUOTING, "").trim();
   const cut = plain.length <= 40 ? plain : plain.slice(0, 40).replace(/[\s,;:.]+\S*$/, "") + "…";
-  return { text: cut || "n/a", url, note };
+  return { text: cut || "n/a", url, ...qn };
 }
 
 // The code behind a row (DATA.md, "The code behind a row") as a short label + url, or null.
@@ -198,7 +210,8 @@ export function codeCell(row) {
   return l ? `*uses ${l.shown.map(x => `[${x.text}](${x.url})`).join(", ")}${l.more ? ` +${l.more}` : ""}*` : "";
 }
 
-// Markdown for the source cell.
+// Markdown for the source cell. Markdown has no hover, so a quoted-in note shown on hover on the
+// site (`quoted`) is not printed here; one kept in the cell (`note`) is.
 export function citeCell(row, cache = sources()) {
   const r = citeRef(row, cache);
   const link = (r.url ? `[${r.text}](${r.url})` : r.text) + (r.also ? `, [${r.also.text}](${r.also.url})` : "");

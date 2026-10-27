@@ -12,10 +12,12 @@
 // match: instance as it stands after relabels.mjs, the published method string, and the
 //        energy within 1e-9, all against the values before any correction applies.
 // field: energy | sigma | energy_variance | dof | einf | method | bound_type | reference |
-//        peer_reviewed | provenance | baseline | sampled | defect (defect only to null)
+//        peer_reviewed | provenance | baseline | sampled | defect (defect only to null) | quote_shown
 //        `method` is the published string (the short name and detail follow in method_names.mjs);
 //        `sampled` (true or false) states whether the energy is a Monte Carlo estimate, read from the
 //        source (RULES.md 6), and its `from` is the verdict the method string gave the row.
+//        `quote_shown` ("cell" only) keeps a quoted row's "quoted in" note in the source cell, where
+//        the site otherwise shows it on hover (DATA.md, RULES.md 8); it corrects no value and says why.
 //        compute.<field> (a compute pass's statement: parameters, samples, ..., scope, confidence,
 //        reported_as, source, note), verified.note and verified.secondary_of are fields inside a
 //        block another script writes, and that script may write it again: such an entry states
@@ -24248,5 +24250,18 @@ export const CORRECTIONS = [
     "checked_on": "2026-10-27",
     "reason": "The number is D. Poilblanc's unpublished exact diagonalization, printed in Table I of Sorella, Phys. Rev. B 64, 024512 (2001), and read there; that paper is the quoting work, as before. secondary_of named it by its old-style arXiv id, which identify() does not read, while the reference names it by its DOI, so the citation code took Sorella's paper for the row's own: the source cell read 'Sorella (2001)' with no quote, as if Sorella had produced the number. secondary_of now names the paper by the DOI the reference carries, and cite.mjs cites a person's unpublished number printed in a paper as that person, unpublished, quoted in the paper, linked to the paper (ruling 2026-10-27): the cell reads 'D. Poilblanc (unpublished), quoted in Sorella (2001)'. Lugas, Spanu, Becca & Sorella, Phys. Rev. B 74, 165122 (2006), Table II prints the same digits in its Lanczos column without naming a source; the row was not read there and does not cite it. Reference, provenance and energy unchanged.",
     "source_entry": "quoted-in follow-up of 2026-10-27 to the source-cell change ea7c8dd5 (every quoted row says where its number was read)"
+  },
+  // The quoted-in note moves to hover on the site (2026-10-28); this row keeps it in the cell.
+  {
+    "match": {
+      "instance": "Heisenberg/triangular_36_P",
+      "method": "VMC",
+      "energy": -79.94736
+    },
+    "field": "quote_shown",
+    "to": "cell",
+    "checked_on": "2026-10-28",
+    "reason": "J. Phys. Soc. Jpn. 83, 093707 prints no 6 x 6 energy: the number and its error bar are first printed in Table I of Iqbal, Hu, Thomale, Poilblanc & Becca, Phys. Rev. B 93, 144411 (2016), and an author of the primary paper asked that this paper be cited with the number. The source cell therefore keeps 'quoted in Iqbal et al. (2016)' visible, where other quoted rows show the note on hover. Reference, provenance, energy and sigma unchanged.",
+    "source_entry": "author correspondence on the row, 2026-10-27; display change of 2026-10-28 (quoted-in note on hover)"
   },
 ];

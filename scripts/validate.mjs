@@ -159,6 +159,9 @@ for (const m of fs.readdirSync("data")) {
       // `venue_type` (optional, RULES.md 8.1) is one of two values.
       if (r.venue_type != null && !["proceedings", "book_chapter"].includes(r.venue_type))
         issues.push(`VENUE ${at}: venue_type ${r.venue_type}`);
+      // `quote_shown` (optional, DATA.md) is "cell", and only on a row quoted from another paper.
+      if (r.quote_shown != null && (r.quote_shown !== "cell" || !(r.verified?.secondary_of || r.provenance === "secondary")))
+        issues.push(`QUOTE ${at}: quote_shown ${r.quote_shown} (the one value is "cell", on a quoted row)`);
       // `provenance` is one of four values; an unpublished row (RULES.md 8.3) names its
       // artifacts, carries QMBL's re-evaluation and the measured cost, and came through a
       // submission (DATA.md, unpublished rows).
