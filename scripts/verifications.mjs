@@ -36366,4 +36366,290 @@ export const VERIFICATIONS = [
     "source_entry": "tjP7-tj#9 (qmbl-verify 2026-10-23)",
     "journal": true
   },
+  // qmbl-verify 2026-10-27: arXiv:2605.13807 Table VI, the 19 rows of sweep-allresults-2026-10-27
+  {
+    "match": {
+      "instance": "Heisenberg/square_484_O",
+      "method": "2D minGRU, 3 layers, c4v symmetry, iterative retraining (PSR-NQS)",
+      "energy": -1258.889808
+    },
+    "checked_on": "2026-10-27",
+    "scope": "value",
+    "method": "arXiv:2605.13807v1 (only version; arXiv abs page lists [v1] only, no journal-ref, no Crossref journal record on 2026-10-27; journal version does not exist yet), PDF downloaded fresh and extracted with pypdf layout mode, cross-checked against Table 6 (id A3.T6) of the arXiv HTML parsed with node; code release github.com/ParallelScan-RNNs/PSR-NQS @ f32468c read for C1 and C7",
+    "location": "Table VI (Appendix C), row N = 22^2, column '2D minGRU'",
+    "reported_as": "-0.650253(5) energy per site, S.S units (H = sum_<ij> S_i.S_j, S = sigma/2), J = 1, OBC",
+    "conversion": "-0.650253 * 4 * 484 = -1258.889808 (Pauli total); sigma 0.000005 * 4 * 484 = 0.009680",
+    "note": "Same Table VI row prints QMC -0.6504689(4) and rel. err. 3.3 x 1e-4, which equals the stored SSE row on this instance (Sandvik arXiv:2601.20189) and fixes the cluster as open 22 x 22; recomputed rel. err. 3.32 x 1e-4 confirms the column alignment; the minGRU value lies above the SSE value (variational bound respected). Method string matches the caption (3 layers, c4v, iterative retraining; Table V: d_h = 256, patch (2,2), final evaluation c4v with 100000 samples). bound_type variational (final VMC estimate of a normalised autoregressive state, no extrapolation). Error bar: Table VI caption does not define (n); Tables I and II define it as one standard error, and run_iterative.py computes err = sqrt(var/n_total) over the final 100000 samples. Own computation, arXiv preprint, peer_reviewed false correct. compute block (steps, time per step, cumulative time, A100 80GB, ~800,000 parameters) agrees with the row. No other row on the instance carries this number (no duplicate).",
+    "source_entry": "SP1-arxiv-2605-13807#0"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_676_O",
+      "method": "2D minGRU, 3 layers, c4v symmetry, iterative retraining (PSR-NQS)",
+      "energy": -1766.060816
+    },
+    "checked_on": "2026-10-27",
+    "scope": "value",
+    "method": "arXiv:2605.13807v1 (only version; arXiv abs page lists [v1] only, no journal-ref, no Crossref journal record on 2026-10-27; journal version does not exist yet), PDF downloaded fresh and extracted with pypdf layout mode, cross-checked against Table 6 (id A3.T6) of the arXiv HTML parsed with node; code release github.com/ParallelScan-RNNs/PSR-NQS @ f32468c read for C1 and C7",
+    "location": "Table VI (Appendix C), row N = 26^2, column '2D minGRU'",
+    "reported_as": "-0.653129(5) energy per site, S.S units (H = sum_<ij> S_i.S_j, S = sigma/2), J = 1, OBC",
+    "conversion": "-0.653129 * 4 * 676 = -1766.060816 (Pauli total); sigma 0.000005 * 4 * 676 = 0.013520",
+    "note": "Same Table VI row prints QMC -0.6533456(4) and rel. err. 3.3 x 1e-4, which equals the stored SSE row on this instance (Sandvik arXiv:2601.20189) and fixes the cluster as open 26 x 26; recomputed rel. err. 3.32 x 1e-4 confirms the column alignment; the minGRU value lies above the SSE value (variational bound respected). Method string matches the caption (3 layers, c4v, iterative retraining; Table V: d_h = 256, patch (2,2), final evaluation c4v with 100000 samples). bound_type variational (final VMC estimate of a normalised autoregressive state, no extrapolation). Error bar: Table VI caption does not define (n); Tables I and II define it as one standard error, and run_iterative.py computes err = sqrt(var/n_total) over the final 100000 samples. Own computation, arXiv preprint, peer_reviewed false correct. compute block (steps, time per step, cumulative time, A100 80GB, ~800,000 parameters) agrees with the row. No other row on the instance carries this number (no duplicate).",
+    "source_entry": "SP1-arxiv-2605-13807#1"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_784_O",
+      "method": "2D minGRU, 3 layers, c4v symmetry, iterative retraining (PSR-NQS)",
+      "energy": -2051.762496
+    },
+    "checked_on": "2026-10-27",
+    "scope": "value",
+    "method": "arXiv:2605.13807v1 (only version; arXiv abs page lists [v1] only, no journal-ref, no Crossref journal record on 2026-10-27; journal version does not exist yet), PDF downloaded fresh and extracted with pypdf layout mode, cross-checked against Table 6 (id A3.T6) of the arXiv HTML parsed with node; code release github.com/ParallelScan-RNNs/PSR-NQS @ f32468c read for C1 and C7",
+    "location": "Table VI (Appendix C), row N = 28^2, column '2D minGRU'",
+    "reported_as": "-0.654261(4) energy per site, S.S units (H = sum_<ij> S_i.S_j, S = sigma/2), J = 1, OBC",
+    "conversion": "-0.654261 * 4 * 784 = -2051.762496 (Pauli total); sigma 0.000004 * 4 * 784 = 0.012544",
+    "note": "Same Table VI row prints QMC -0.6544806(4) and rel. err. 3.4 x 1e-4, which equals the stored SSE row on this instance (Sandvik arXiv:2601.20189) and fixes the cluster as open 28 x 28; recomputed rel. err. 3.36 x 1e-4 confirms the column alignment; the minGRU value lies above the SSE value (variational bound respected). Method string matches the caption (3 layers, c4v, iterative retraining; Table V: d_h = 256, patch (2,2), final evaluation c4v with 100000 samples). bound_type variational (final VMC estimate of a normalised autoregressive state, no extrapolation). Error bar: Table VI caption does not define (n); Tables I and II define it as one standard error, and run_iterative.py computes err = sqrt(var/n_total) over the final 100000 samples. Own computation, arXiv preprint, peer_reviewed false correct. compute block (steps, time per step, cumulative time, A100 80GB, ~800,000 parameters) agrees with the row. No other row on the instance carries this number (no duplicate).",
+    "source_entry": "SP1-arxiv-2605-13807#2"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_900_O",
+      "method": "2D minGRU, 3 layers, c4v symmetry, iterative retraining (PSR-NQS)",
+      "energy": -2358.8676
+    },
+    "checked_on": "2026-10-27",
+    "scope": "value",
+    "method": "arXiv:2605.13807v1 (only version; arXiv abs page lists [v1] only, no journal-ref, no Crossref journal record on 2026-10-27; journal version does not exist yet), PDF downloaded fresh and extracted with pypdf layout mode, cross-checked against Table 6 (id A3.T6) of the arXiv HTML parsed with node; code release github.com/ParallelScan-RNNs/PSR-NQS @ f32468c read for C1 and C7",
+    "location": "Table VI (Appendix C), row N = 30^2, column '2D minGRU'",
+    "reported_as": "-0.655241(4) energy per site, S.S units (H = sum_<ij> S_i.S_j, S = sigma/2), J = 1, OBC",
+    "conversion": "-0.655241 * 4 * 900 = -2358.867600 (Pauli total); sigma 0.000004 * 4 * 900 = 0.014400",
+    "note": "Table VI prints no QMC value at L = 30 ('-'); Sandvik arXiv:2601.20189 Table II (open L x L) has no L = 30 entry either, so the instance has no exact reference. The value lies above the SSE energy per site of the next larger printed open size (L = 32: -0.6563289), so it does not undercut the per-site trend. Method string matches the caption (3 layers, c4v, iterative retraining; Table V: d_h = 256, patch (2,2), final evaluation c4v with 100000 samples). bound_type variational (final VMC estimate of a normalised autoregressive state, no extrapolation). Error bar: Table VI caption does not define (n); Tables I and II define it as one standard error, and run_iterative.py computes err = sqrt(var/n_total) over the final 100000 samples. Own computation, arXiv preprint, peer_reviewed false correct. compute block (steps, time per step, cumulative time, A100 80GB, ~800,000 parameters) agrees with the row. No other row on the instance carries this number (no duplicate).",
+    "source_entry": "SP1-arxiv-2605-13807#3"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_1024_O",
+      "method": "2D minGRU, 3 layers, c4v symmetry, iterative retraining (PSR-NQS)",
+      "energy": -2687.340544
+    },
+    "checked_on": "2026-10-27",
+    "scope": "value",
+    "method": "arXiv:2605.13807v1 (only version; arXiv abs page lists [v1] only, no journal-ref, no Crossref journal record on 2026-10-27; journal version does not exist yet), PDF downloaded fresh and extracted with pypdf layout mode, cross-checked against Table 6 (id A3.T6) of the arXiv HTML parsed with node; code release github.com/ParallelScan-RNNs/PSR-NQS @ f32468c read for C1 and C7",
+    "location": "Table VI (Appendix C), row N = 32^2, column '2D minGRU'",
+    "reported_as": "-0.656089(4) energy per site, S.S units (H = sum_<ij> S_i.S_j, S = sigma/2), J = 1, OBC",
+    "conversion": "-0.656089 * 4 * 1024 = -2687.340544 (Pauli total); sigma 0.000004 * 4 * 1024 = 0.016384",
+    "note": "Same Table VI row prints QMC -0.6563289(4) and rel. err. 3.7 x 1e-4, which equals the stored SSE row on this instance (Sandvik arXiv:2601.20189) and fixes the cluster as open 32 x 32; recomputed rel. err. 3.66 x 1e-4 confirms the column alignment; the minGRU value lies above the SSE value (variational bound respected). Method string matches the caption (3 layers, c4v, iterative retraining; Table V: d_h = 256, patch (2,2), final evaluation c4v with 100000 samples). bound_type variational (final VMC estimate of a normalised autoregressive state, no extrapolation). Error bar: Table VI caption does not define (n); Tables I and II define it as one standard error, and run_iterative.py computes err = sqrt(var/n_total) over the final 100000 samples. Own computation, arXiv preprint, peer_reviewed false correct. compute block (steps, time per step, cumulative time, A100 80GB, ~800,000 parameters) agrees with the row. No other row on the instance carries this number (no duplicate).",
+    "source_entry": "SP1-arxiv-2605-13807#4"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_1296_O",
+      "method": "2D minGRU, 3 layers, c4v symmetry, iterative retraining (PSR-NQS)",
+      "energy": -3408.599232
+    },
+    "checked_on": "2026-10-27",
+    "scope": "value",
+    "method": "arXiv:2605.13807v1 (only version; arXiv abs page lists [v1] only, no journal-ref, no Crossref journal record on 2026-10-27; journal version does not exist yet), PDF downloaded fresh and extracted with pypdf layout mode, cross-checked against Table 6 (id A3.T6) of the arXiv HTML parsed with node; code release github.com/ParallelScan-RNNs/PSR-NQS @ f32468c read for C1 and C7",
+    "location": "Table VI (Appendix C), row N = 36^2, column '2D minGRU'",
+    "reported_as": "-0.657523(4) energy per site, S.S units (H = sum_<ij> S_i.S_j, S = sigma/2), J = 1, OBC",
+    "conversion": "-0.657523 * 4 * 1296 = -3408.599232 (Pauli total); sigma 0.000004 * 4 * 1296 = 0.020736",
+    "note": "Table VI prints no QMC value at L = 36 ('-'); Sandvik arXiv:2601.20189 Table II (open L x L) has no L = 36 entry either, so the instance has no exact reference. The value lies above the SSE energy per site of the next larger printed open size (L = 48: -0.6606690), so it does not undercut the per-site trend. Method string matches the caption (3 layers, c4v, iterative retraining; Table V: d_h = 256, patch (2,2), final evaluation c4v with 100000 samples). bound_type variational (final VMC estimate of a normalised autoregressive state, no extrapolation). Error bar: Table VI caption does not define (n); Tables I and II define it as one standard error, and run_iterative.py computes err = sqrt(var/n_total) over the final 100000 samples. Own computation, arXiv preprint, peer_reviewed false correct. compute block (steps, time per step, cumulative time, A100 80GB, ~800,000 parameters) agrees with the row. No other row on the instance carries this number (no duplicate).",
+    "source_entry": "SP1-arxiv-2605-13807#5"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_1600_O",
+      "method": "2D minGRU, 3 layers, c4v symmetry, iterative retraining (PSR-NQS)",
+      "energy": -4215.4048
+    },
+    "checked_on": "2026-10-27",
+    "scope": "value",
+    "method": "arXiv:2605.13807v1 (only version; arXiv abs page lists [v1] only, no journal-ref, no Crossref journal record on 2026-10-27; journal version does not exist yet), PDF downloaded fresh and extracted with pypdf layout mode, cross-checked against Table 6 (id A3.T6) of the arXiv HTML parsed with node; code release github.com/ParallelScan-RNNs/PSR-NQS @ f32468c read for C1 and C7",
+    "location": "Table VI (Appendix C), row N = 40^2, column '2D minGRU'",
+    "reported_as": "-0.658657(4) energy per site, S.S units (H = sum_<ij> S_i.S_j, S = sigma/2), J = 1, OBC",
+    "conversion": "-0.658657 * 4 * 1600 = -4215.404800 (Pauli total); sigma 0.000004 * 4 * 1600 = 0.025600",
+    "note": "Table VI prints no QMC value at L = 40 ('-'); Sandvik arXiv:2601.20189 Table II (open L x L) has no L = 40 entry either, so the instance has no exact reference. The value lies above the SSE energy per site of the next larger printed open size (L = 48: -0.6606690), so it does not undercut the per-site trend. Method string matches the caption (3 layers, c4v, iterative retraining; Table V: d_h = 256, patch (2,2), final evaluation c4v with 100000 samples). bound_type variational (final VMC estimate of a normalised autoregressive state, no extrapolation). Error bar: Table VI caption does not define (n); Tables I and II define it as one standard error, and run_iterative.py computes err = sqrt(var/n_total) over the final 100000 samples. Own computation, arXiv preprint, peer_reviewed false correct. compute block (steps, time per step, cumulative time, A100 80GB, ~800,000 parameters) agrees with the row. No other row on the instance carries this number (no duplicate).",
+    "source_entry": "SP1-arxiv-2605-13807#6"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_1936_O",
+      "method": "2D minGRU, 3 layers, c4v symmetry, iterative retraining (PSR-NQS)",
+      "energy": -5107.67136
+    },
+    "checked_on": "2026-10-27",
+    "scope": "value",
+    "method": "arXiv:2605.13807v1 (only version; arXiv abs page lists [v1] only, no journal-ref, no Crossref journal record on 2026-10-27; journal version does not exist yet), PDF downloaded fresh and extracted with pypdf layout mode, cross-checked against Table 6 (id A3.T6) of the arXiv HTML parsed with node; code release github.com/ParallelScan-RNNs/PSR-NQS @ f32468c read for C1 and C7",
+    "location": "Table VI (Appendix C), row N = 44^2, column '2D minGRU'",
+    "reported_as": "-0.659565(4) energy per site, S.S units (H = sum_<ij> S_i.S_j, S = sigma/2), J = 1, OBC",
+    "conversion": "-0.659565 * 4 * 1936 = -5107.671360 (Pauli total); sigma 0.000004 * 4 * 1936 = 0.030976",
+    "note": "Table VI prints no QMC value at L = 44 ('-'); Sandvik arXiv:2601.20189 Table II (open L x L) has no L = 44 entry either, so the instance has no exact reference. The value lies above the SSE energy per site of the next larger printed open size (L = 48: -0.6606690), so it does not undercut the per-site trend. Method string matches the caption (3 layers, c4v, iterative retraining; Table V: d_h = 256, patch (2,2), final evaluation c4v with 100000 samples). bound_type variational (final VMC estimate of a normalised autoregressive state, no extrapolation). Error bar: Table VI caption does not define (n); Tables I and II define it as one standard error, and run_iterative.py computes err = sqrt(var/n_total) over the final 100000 samples. Own computation, arXiv preprint, peer_reviewed false correct. compute block (steps, time per step, cumulative time, A100 80GB, ~800,000 parameters) agrees with the row. No other row on the instance carries this number (no duplicate).",
+    "source_entry": "SP1-arxiv-2605-13807#7"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_2116_O",
+      "method": "2D minGRU, 3 layers, c4v symmetry, iterative retraining (PSR-NQS)",
+      "energy": -5585.740624
+    },
+    "checked_on": "2026-10-27",
+    "scope": "value",
+    "method": "arXiv:2605.13807v1 (only version; arXiv abs page lists [v1] only, no journal-ref, no Crossref journal record on 2026-10-27; journal version does not exist yet), PDF downloaded fresh and extracted with pypdf layout mode, cross-checked against Table 6 (id A3.T6) of the arXiv HTML parsed with node; code release github.com/ParallelScan-RNNs/PSR-NQS @ f32468c read for C1 and C7",
+    "location": "Table VI (Appendix C), row N = 46^2, column '2D minGRU'",
+    "reported_as": "-0.659941(4) energy per site, S.S units (H = sum_<ij> S_i.S_j, S = sigma/2), J = 1, OBC",
+    "conversion": "-0.659941 * 4 * 2116 = -5585.740624 (Pauli total); sigma 0.000004 * 4 * 2116 = 0.033856",
+    "note": "Table VI prints no QMC value at L = 46 ('-'); Sandvik arXiv:2601.20189 Table II (open L x L) has no L = 46 entry either, so the instance has no exact reference. The value lies above the SSE energy per site of the next larger printed open size (L = 48: -0.6606690), so it does not undercut the per-site trend. Method string matches the caption (3 layers, c4v, iterative retraining; Table V: d_h = 256, patch (2,2), final evaluation c4v with 100000 samples). bound_type variational (final VMC estimate of a normalised autoregressive state, no extrapolation). Error bar: Table VI caption does not define (n); Tables I and II define it as one standard error, and run_iterative.py computes err = sqrt(var/n_total) over the final 100000 samples. Own computation, arXiv preprint, peer_reviewed false correct. compute block (steps, time per step, cumulative time, A100 80GB, ~800,000 parameters) agrees with the row. No other row on the instance carries this number (no duplicate).",
+    "source_entry": "SP1-arxiv-2605-13807#8"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_2304_O",
+      "method": "2D minGRU, 3 layers, c4v symmetry, iterative retraining (PSR-NQS)",
+      "energy": -6085.536768
+    },
+    "checked_on": "2026-10-27",
+    "scope": "value",
+    "method": "arXiv:2605.13807v1 (only version; arXiv abs page lists [v1] only, no journal-ref, no Crossref journal record on 2026-10-27; journal version does not exist yet), PDF downloaded fresh and extracted with pypdf layout mode, cross-checked against Table 6 (id A3.T6) of the arXiv HTML parsed with node; code release github.com/ParallelScan-RNNs/PSR-NQS @ f32468c read for C1 and C7",
+    "location": "Table VI (Appendix C), row N = 48^2, column '2D minGRU'",
+    "reported_as": "-0.660323(4) energy per site, S.S units (H = sum_<ij> S_i.S_j, S = sigma/2), J = 1, OBC",
+    "conversion": "-0.660323 * 4 * 2304 = -6085.536768 (Pauli total); sigma 0.000004 * 4 * 2304 = 0.036864",
+    "note": "Same Table VI row prints QMC -0.6606690(4) and rel. err. 5.2 x 1e-4, which equals the stored SSE row on this instance (Sandvik arXiv:2601.20189) and fixes the cluster as open 48 x 48; recomputed rel. err. 5.24 x 1e-4 confirms the column alignment; the minGRU value lies above the SSE value (variational bound respected). Method string matches the caption (3 layers, c4v, iterative retraining; Table V: d_h = 256, patch (2,2), final evaluation c4v with 100000 samples). bound_type variational (final VMC estimate of a normalised autoregressive state, no extrapolation). Error bar: Table VI caption does not define (n); Tables I and II define it as one standard error, and run_iterative.py computes err = sqrt(var/n_total) over the final 100000 samples. Own computation, arXiv preprint, peer_reviewed false correct. compute block (steps, time per step, cumulative time, A100 80GB, ~800,000 parameters) agrees with the row. No other row on the instance carries this number (no duplicate).",
+    "source_entry": "SP1-arxiv-2605-13807#9"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_2500_O",
+      "method": "2D minGRU, 3 layers, c4v symmetry, iterative retraining (PSR-NQS)",
+      "energy": -6606.49
+    },
+    "checked_on": "2026-10-27",
+    "scope": "value",
+    "method": "arXiv:2605.13807v1 (only version; arXiv abs page lists [v1] only, no journal-ref, no Crossref journal record on 2026-10-27; journal version does not exist yet), PDF downloaded fresh and extracted with pypdf layout mode, cross-checked against Table 6 (id A3.T6) of the arXiv HTML parsed with node; code release github.com/ParallelScan-RNNs/PSR-NQS @ f32468c read for C1 and C7",
+    "location": "Table VI (Appendix C), row N = 50^2, column '2D minGRU'",
+    "reported_as": "-0.660649(3) energy per site, S.S units (H = sum_<ij> S_i.S_j, S = sigma/2), J = 1, OBC",
+    "conversion": "-0.660649 * 4 * 2500 = -6606.490000 (Pauli total); sigma 0.000003 * 4 * 2500 = 0.030000",
+    "note": "Table VI prints no QMC value at L = 50 ('-'); Sandvik arXiv:2601.20189 Table II (open L x L) has no L = 50 entry either, so the instance has no exact reference. The value lies above the SSE energy per site of the next larger printed open size (L = 64: -0.662852 from E0/Nb = 0.3366865), so it does not undercut the per-site trend. Method string matches the caption (3 layers, c4v, iterative retraining; Table V: d_h = 256, patch (2,2), final evaluation c4v with 100000 samples). bound_type variational (final VMC estimate of a normalised autoregressive state, no extrapolation). Error bar: Table VI caption does not define (n); Tables I and II define it as one standard error, and run_iterative.py computes err = sqrt(var/n_total) over the final 100000 samples. Own computation, arXiv preprint, peer_reviewed false correct. compute block (steps, time per step, cumulative time, A100 80GB, ~800,000 parameters) agrees with the row. No other row on the instance carries this number (no duplicate).",
+    "source_entry": "SP1-arxiv-2605-13807#10"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_2704_O",
+      "method": "2D minGRU, 3 layers, c4v symmetry, iterative retraining (PSR-NQS)",
+      "energy": -7149.019072
+    },
+    "checked_on": "2026-10-27",
+    "scope": "value",
+    "method": "arXiv:2605.13807v1 (only version; arXiv abs page lists [v1] only, no journal-ref, no Crossref journal record on 2026-10-27; journal version does not exist yet), PDF downloaded fresh and extracted with pypdf layout mode, cross-checked against Table 6 (id A3.T6) of the arXiv HTML parsed with node; code release github.com/ParallelScan-RNNs/PSR-NQS @ f32468c read for C1 and C7",
+    "location": "Table VI (Appendix C), row N = 52^2, column '2D minGRU'",
+    "reported_as": "-0.660967(4) energy per site, S.S units (H = sum_<ij> S_i.S_j, S = sigma/2), J = 1, OBC",
+    "conversion": "-0.660967 * 4 * 2704 = -7149.019072 (Pauli total); sigma 0.000004 * 4 * 2704 = 0.043264",
+    "note": "Table VI prints no QMC value at L = 52 ('-'); Sandvik arXiv:2601.20189 Table II (open L x L) has no L = 52 entry either, so the instance has no exact reference. The value lies above the SSE energy per site of the next larger printed open size (L = 64: -0.662852 from E0/Nb = 0.3366865), so it does not undercut the per-site trend. Method string matches the caption (3 layers, c4v, iterative retraining; Table V: d_h = 256, patch (2,2), final evaluation c4v with 100000 samples). bound_type variational (final VMC estimate of a normalised autoregressive state, no extrapolation). Error bar: Table VI caption does not define (n); Tables I and II define it as one standard error, and run_iterative.py computes err = sqrt(var/n_total) over the final 100000 samples. Own computation, arXiv preprint, peer_reviewed false correct. compute block (steps, time per step, cumulative time, A100 80GB, ~800,000 parameters) agrees with the row. No other row on the instance carries this number (no duplicate).",
+    "source_entry": "SP1-arxiv-2605-13807#11"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_36_O",
+      "method": "2D minGRU, 3 layers, c4v symmetry, iterative retraining (PSR-NQS)",
+      "energy": -86.906736
+    },
+    "checked_on": "2026-10-27",
+    "scope": "value",
+    "method": "arXiv:2605.13807v1 (only version; arXiv abs page lists [v1] only, no journal-ref, no Crossref journal record on 2026-10-27; journal version does not exist yet), PDF downloaded fresh and extracted with pypdf layout mode, cross-checked against Table 6 (id A3.T6) of the arXiv HTML parsed with node; code release github.com/ParallelScan-RNNs/PSR-NQS @ f32468c read for C1 and C7",
+    "location": "Table VI (Appendix C), row N = 6^2, column '2D minGRU'",
+    "reported_as": "-0.603519(2) energy per site, S.S units (H = sum_<ij> S_i.S_j, S = sigma/2), J = 1, OBC",
+    "conversion": "-0.603519 * 4 * 36 = -86.906736 (Pauli total); sigma 0.000002 * 4 * 36 = 0.000288",
+    "note": "Same Table VI row prints QMC -0.6035222(2) and rel. err. 0.1 x 1e-4, which equals the stored SSE row on this instance (Sandvik arXiv:2601.20189) and fixes the cluster as open 6 x 6; recomputed rel. err. 0.05 x 1e-4 confirms the column alignment; the minGRU value lies above the SSE value (variational bound respected). Method string matches the caption (3 layers, c4v, iterative retraining; Table V: d_h = 256, patch (2,2), final evaluation c4v with 100000 samples). bound_type variational (final VMC estimate of a normalised autoregressive state, no extrapolation). Error bar: Table VI caption does not define (n); Tables I and II define it as one standard error, and run_iterative.py computes err = sqrt(var/n_total) over the final 100000 samples. Own computation, arXiv preprint, peer_reviewed false correct. compute block (steps, time per step, cumulative time, A100 80GB, ~800,000 parameters) agrees with the row. No other row on the instance carries this number (no duplicate). At L = 6 the row is the cold-start stage 1-3 result (378000 = 201000 + 76000 + 101000 steps) that seeds the iterative chain; it sits 2.8e-6 per site (1.4 sigma) above the ED -0.6035218.",
+    "source_entry": "SP1-arxiv-2605-13807#12"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_64_O",
+      "method": "2D minGRU, 3 layers, c4v symmetry, iterative retraining (PSR-NQS)",
+      "energy": -158.4704
+    },
+    "checked_on": "2026-10-27",
+    "scope": "value",
+    "method": "arXiv:2605.13807v1 (only version; arXiv abs page lists [v1] only, no journal-ref, no Crossref journal record on 2026-10-27; journal version does not exist yet), PDF downloaded fresh and extracted with pypdf layout mode, cross-checked against Table 6 (id A3.T6) of the arXiv HTML parsed with node; code release github.com/ParallelScan-RNNs/PSR-NQS @ f32468c read for C1 and C7",
+    "location": "Table VI (Appendix C), row N = 8^2, column '2D minGRU'",
+    "reported_as": "-0.619025(5) energy per site, S.S units (H = sum_<ij> S_i.S_j, S = sigma/2), J = 1, OBC",
+    "conversion": "-0.619025 * 4 * 64 = -158.470400 (Pauli total); sigma 0.000005 * 4 * 64 = 0.001280",
+    "note": "Same Table VI row prints QMC -0.6190371(2) and rel. err. 0.2 x 1e-4, which equals the stored SSE row on this instance (Sandvik arXiv:2601.20189) and fixes the cluster as open 8 x 8; recomputed rel. err. 0.20 x 1e-4 confirms the column alignment; the minGRU value lies above the SSE value (variational bound respected). Method string matches the caption (3 layers, c4v, iterative retraining; Table V: d_h = 256, patch (2,2), final evaluation c4v with 100000 samples). bound_type variational (final VMC estimate of a normalised autoregressive state, no extrapolation). Error bar: Table VI caption does not define (n); Tables I and II define it as one standard error, and run_iterative.py computes err = sqrt(var/n_total) over the final 100000 samples. Own computation, arXiv preprint, peer_reviewed false correct. compute block (steps, time per step, cumulative time, A100 80GB, ~800,000 parameters) agrees with the row. No other row on the instance carries this number (no duplicate).",
+    "source_entry": "SP1-arxiv-2605-13807#13"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_144_O",
+      "method": "2D minGRU, 3 layers, c4v symmetry, iterative retraining (PSR-NQS)",
+      "energy": -365.833152
+    },
+    "checked_on": "2026-10-27",
+    "scope": "value",
+    "method": "arXiv:2605.13807v1 (only version; arXiv abs page lists [v1] only, no journal-ref, no Crossref journal record on 2026-10-27; journal version does not exist yet), PDF downloaded fresh and extracted with pypdf layout mode, cross-checked against Table 6 (id A3.T6) of the arXiv HTML parsed with node; code release github.com/ParallelScan-RNNs/PSR-NQS @ f32468c read for C1 and C7",
+    "location": "Table VI (Appendix C), row N = 12^2, column '2D minGRU'",
+    "reported_as": "-0.635127(7) energy per site, S.S units (H = sum_<ij> S_i.S_j, S = sigma/2), J = 1, OBC",
+    "conversion": "-0.635127 * 4 * 144 = -365.833152 (Pauli total); sigma 0.000007 * 4 * 144 = 0.004032",
+    "note": "Same Table VI row prints QMC -0.6352007(2) and rel. err. 1.2 x 1e-4, which equals the stored SSE row on this instance (Sandvik arXiv:2601.20189) and fixes the cluster as open 12 x 12; recomputed rel. err. 1.16 x 1e-4 confirms the column alignment; the minGRU value lies above the SSE value (variational bound respected). Method string matches the caption (3 layers, c4v, iterative retraining; Table V: d_h = 256, patch (2,2), final evaluation c4v with 100000 samples). bound_type variational (final VMC estimate of a normalised autoregressive state, no extrapolation). Error bar: Table VI caption does not define (n); Tables I and II define it as one standard error, and run_iterative.py computes err = sqrt(var/n_total) over the final 100000 samples. Own computation, arXiv preprint, peer_reviewed false correct. compute block (steps, time per step, cumulative time, A100 80GB, ~800,000 parameters) agrees with the row. No other row on the instance carries this number (no duplicate).",
+    "source_entry": "SP1-arxiv-2605-13807#14"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_196_O",
+      "method": "2D minGRU, 3 layers, c4v symmetry, iterative retraining (PSR-NQS)",
+      "energy": -501.636128
+    },
+    "checked_on": "2026-10-27",
+    "scope": "value",
+    "method": "arXiv:2605.13807v1 (only version; arXiv abs page lists [v1] only, no journal-ref, no Crossref journal record on 2026-10-27; journal version does not exist yet), PDF downloaded fresh and extracted with pypdf layout mode, cross-checked against Table 6 (id A3.T6) of the arXiv HTML parsed with node; code release github.com/ParallelScan-RNNs/PSR-NQS @ f32468c read for C1 and C7",
+    "location": "Table VI (Appendix C), row N = 14^2, column '2D minGRU'",
+    "reported_as": "-0.639842(6) energy per site, S.S units (H = sum_<ij> S_i.S_j, S = sigma/2), J = 1, OBC",
+    "conversion": "-0.639842 * 4 * 196 = -501.636128 (Pauli total); sigma 0.000006 * 4 * 196 = 0.004704",
+    "note": "Same Table VI row prints QMC -0.6399410(2) and rel. err. 1.5 x 1e-4, which equals the stored SSE row on this instance (Sandvik arXiv:2601.20189) and fixes the cluster as open 14 x 14; recomputed rel. err. 1.55 x 1e-4 confirms the column alignment; the minGRU value lies above the SSE value (variational bound respected). Method string matches the caption (3 layers, c4v, iterative retraining; Table V: d_h = 256, patch (2,2), final evaluation c4v with 100000 samples). bound_type variational (final VMC estimate of a normalised autoregressive state, no extrapolation). Error bar: Table VI caption does not define (n); Tables I and II define it as one standard error, and run_iterative.py computes err = sqrt(var/n_total) over the final 100000 samples. Own computation, arXiv preprint, peer_reviewed false correct. compute block (steps, time per step, cumulative time, A100 80GB, ~800,000 parameters) agrees with the row. No other row on the instance carries this number (no duplicate).",
+    "source_entry": "SP1-arxiv-2605-13807#15"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_324_O",
+      "method": "2D minGRU, 3 layers, c4v symmetry, iterative retraining (PSR-NQS)",
+      "energy": -837.457056
+    },
+    "checked_on": "2026-10-27",
+    "scope": "value",
+    "method": "arXiv:2605.13807v1 (only version; arXiv abs page lists [v1] only, no journal-ref, no Crossref journal record on 2026-10-27; journal version does not exist yet), PDF downloaded fresh and extracted with pypdf layout mode, cross-checked against Table 6 (id A3.T6) of the arXiv HTML parsed with node; code release github.com/ParallelScan-RNNs/PSR-NQS @ f32468c read for C1 and C7",
+    "location": "Table VI (Appendix C), row N = 18^2, column '2D minGRU'",
+    "reported_as": "-0.646186(6) energy per site, S.S units (H = sum_<ij> S_i.S_j, S = sigma/2), J = 1, OBC",
+    "conversion": "-0.646186 * 4 * 324 = -837.457056 (Pauli total); sigma 0.000006 * 4 * 324 = 0.007776",
+    "note": "Same Table VI row prints QMC -0.6463451(4) and rel. err. 2.5 x 1e-4, which equals the stored SSE row on this instance (Sandvik arXiv:2601.20189) and fixes the cluster as open 18 x 18; recomputed rel. err. 2.46 x 1e-4 confirms the column alignment; the minGRU value lies above the SSE value (variational bound respected). Method string matches the caption (3 layers, c4v, iterative retraining; Table V: d_h = 256, patch (2,2), final evaluation c4v with 100000 samples). bound_type variational (final VMC estimate of a normalised autoregressive state, no extrapolation). Error bar: Table VI caption does not define (n); Tables I and II define it as one standard error, and run_iterative.py computes err = sqrt(var/n_total) over the final 100000 samples. Own computation, arXiv preprint, peer_reviewed false correct. compute block (steps, time per step, cumulative time, A100 80GB, ~800,000 parameters) agrees with the row. No other row on the instance carries this number (no duplicate).",
+    "source_entry": "SP1-arxiv-2605-13807#16"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_400_O",
+      "method": "2D minGRU, 3 layers, c4v symmetry, iterative retraining (PSR-NQS)",
+      "energy": -1037.4416
+    },
+    "checked_on": "2026-10-27",
+    "scope": "value",
+    "method": "arXiv:2605.13807v1 (only version; arXiv abs page lists [v1] only, no journal-ref, no Crossref journal record on 2026-10-27; journal version does not exist yet), PDF downloaded fresh and extracted with pypdf layout mode, cross-checked against Table 6 (id A3.T6) of the arXiv HTML parsed with node; code release github.com/ParallelScan-RNNs/PSR-NQS @ f32468c read for C1 and C7",
+    "location": "Table VI (Appendix C), row N = 20^2, column '2D minGRU'",
+    "reported_as": "-0.648401(5) energy per site, S.S units (H = sum_<ij> S_i.S_j, S = sigma/2), J = 1, OBC",
+    "conversion": "-0.648401 * 4 * 400 = -1037.441600 (Pauli total); sigma 0.000005 * 4 * 400 = 0.008000",
+    "note": "Same Table VI row prints QMC -0.6486091(4) and rel. err. 3.2 x 1e-4, which equals the stored SSE row on this instance (Sandvik arXiv:2601.20189) and fixes the cluster as open 20 x 20; recomputed rel. err. 3.21 x 1e-4 confirms the column alignment; the minGRU value lies above the SSE value (variational bound respected). Method string matches the caption (3 layers, c4v, iterative retraining; Table V: d_h = 256, patch (2,2), final evaluation c4v with 100000 samples). bound_type variational (final VMC estimate of a normalised autoregressive state, no extrapolation). Error bar: Table VI caption does not define (n); Tables I and II define it as one standard error, and run_iterative.py computes err = sqrt(var/n_total) over the final 100000 samples. Own computation, arXiv preprint, peer_reviewed false correct. compute block (steps, time per step, cumulative time, A100 80GB, ~800,000 parameters) agrees with the row. No other row on the instance carries this number (no duplicate).",
+    "source_entry": "SP1-arxiv-2605-13807#17"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_576_O",
+      "method": "2D minGRU, 3 layers, c4v symmetry, iterative retraining (PSR-NQS)",
+      "energy": -1501.774848
+    },
+    "checked_on": "2026-10-27",
+    "scope": "value",
+    "method": "arXiv:2605.13807v1 (only version; arXiv abs page lists [v1] only, no journal-ref, no Crossref journal record on 2026-10-27; journal version does not exist yet), PDF downloaded fresh and extracted with pypdf layout mode, cross-checked against Table 6 (id A3.T6) of the arXiv HTML parsed with node; code release github.com/ParallelScan-RNNs/PSR-NQS @ f32468c read for C1 and C7",
+    "location": "Table VI (Appendix C), row N = 24^2, column '2D minGRU'",
+    "reported_as": "-0.651812(5) energy per site, S.S units (H = sum_<ij> S_i.S_j, S = sigma/2), J = 1, OBC",
+    "conversion": "-0.651812 * 4 * 576 = -1501.774848 (Pauli total); sigma 0.000005 * 4 * 576 = 0.011520",
+    "note": "Same Table VI row prints QMC -0.6520251(4) and rel. err. 3.3 x 1e-4, which equals the stored SSE row on this instance (Sandvik arXiv:2601.20189) and fixes the cluster as open 24 x 24; recomputed rel. err. 3.27 x 1e-4 confirms the column alignment; the minGRU value lies above the SSE value (variational bound respected). Method string matches the caption (3 layers, c4v, iterative retraining; Table V: d_h = 256, patch (2,2), final evaluation c4v with 100000 samples). bound_type variational (final VMC estimate of a normalised autoregressive state, no extrapolation). Error bar: Table VI caption does not define (n); Tables I and II define it as one standard error, and run_iterative.py computes err = sqrt(var/n_total) over the final 100000 samples. Own computation, arXiv preprint, peer_reviewed false correct. compute block (steps, time per step, cumulative time, A100 80GB, ~800,000 parameters) agrees with the row. No other row on the instance carries this number (no duplicate).",
+    "source_entry": "SP1-arxiv-2605-13807#18"
+  },
 ];

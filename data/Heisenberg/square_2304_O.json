@@ -81,7 +81,17 @@
         "method": "arXiv:2605.13807: arXiv:2605.13807v1 (only version; no journal reference on 2026-10-27): pypdf layout text sources/2605.13807.txt read locally, checked against Table 6 of the arXiv HTML sources/2605.13807.html; no LLM transcription; single reading",
         "reported_as": "-0.660323(4)",
         "note": "TABLE VI, row N = 48^2 (line 700 of sources/2605.13807.txt) | energy per site in S.S units, J = 1, open boundaries; the same table row prints the QMC value equal to the instance's stored SSE row",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-10-27",
+          "scope": "value",
+          "method": "arXiv:2605.13807v1 (only version; arXiv abs page lists [v1] only, no journal-ref, no Crossref journal record on 2026-10-27; journal version does not exist yet), PDF downloaded fresh and extracted with pypdf layout mode, cross-checked against Table 6 (id A3.T6) of the arXiv HTML parsed with node; code release github.com/ParallelScan-RNNs/PSR-NQS @ f32468c read for C1 and C7",
+          "location": "Table VI (Appendix C), row N = 48^2, column '2D minGRU'",
+          "reported_as": "-0.660323(4) energy per site, S.S units (H = sum_<ij> S_i.S_j, S = sigma/2), J = 1, OBC",
+          "conversion": "-0.660323 * 4 * 2304 = -6085.536768 (Pauli total); sigma 0.000004 * 4 * 2304 = 0.036864",
+          "note": "Same Table VI row prints QMC -0.6606690(4) and rel. err. 5.2 x 1e-4, which equals the stored SSE row on this instance (Sandvik arXiv:2601.20189) and fixes the cluster as open 48 x 48; recomputed rel. err. 5.24 x 1e-4 confirms the column alignment; the minGRU value lies above the SSE value (variational bound respected). Method string matches the caption (3 layers, c4v, iterative retraining; Table V: d_h = 256, patch (2,2), final evaluation c4v with 100000 samples). bound_type variational (final VMC estimate of a normalised autoregressive state, no extrapolation). Error bar: Table VI caption does not define (n); Tables I and II define it as one standard error, and run_iterative.py computes err = sqrt(var/n_total) over the final 100000 samples. Own computation, arXiv preprint, peer_reviewed false correct. compute block (steps, time per step, cumulative time, A100 80GB, ~800,000 parameters) agrees with the row. No other row on the instance carries this number (no duplicate).",
+          "source_entry": "SP1-arxiv-2605-13807#9"
+        }
       },
       "compute": {
         "parameters": 800000,
@@ -108,6 +118,15 @@
         "scope": "row",
         "confidence": "high",
         "note": "iterations = this size's training steps; wall_clock is cumulative over all sizes from 6x6 (iterative retraining), not this size alone. samples = 200 training samples per step (Table V); final energies use 100000 samples. The paper-wide 1400 GPU-hour budget (Sec. V) is not attributed to this row. evaluation as on the 10x10 and 16x16 rows of the same table (single c4v stage at L > 6, run_iterative.py @ f32468c)."
+      },
+      "artifacts": {
+        "code": "https://github.com/ParallelScan-RNNs/PSR-NQS",
+        "read_from": {
+          "quote": "Our implementation of the presented methods and all scripts needed to reproduce our results in this manuscript are openly available on GitHub https://github.com/ParallelScan-RNNs/PSR-NQS .",
+          "location": "arXiv:2605.13807 (sources/2605.13807.html), Code Availability",
+          "checked_on": "2026-10-27",
+          "pass": "passes/code/code-links-2026-10-27.json"
+        }
       }
     }
   ]
