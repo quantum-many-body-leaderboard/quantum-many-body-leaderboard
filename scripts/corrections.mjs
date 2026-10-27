@@ -20329,6 +20329,23 @@ export const CORRECTIONS = [
   },
   {
     "match": {
+      "instance": "Heisenberg/triangular_36_P",
+      "method": "VMC",
+      "energy": -79.94736
+    },
+    "field": "verified.secondary_of",
+    "from": "arXiv:2104.05085",
+    "to": "arXiv:1601.06018",
+    "reported_as": "VMC (Kaneko et al.) (Ref. [48]) -0.55519(4) -0.5449(2)",
+    "location": "Iqbal et al., Phys. Rev. B 93, 144411 (2016), Table I, column '6 x 6 torus'",
+    "version_read": "published PDF Phys. Rev. B 93, 144411 (2016), sources/journal/prb93-144411.pdf, sha256 3c0f8916 (as read 2026-10-15, entry above)",
+    "conversion": "none",
+    "checked_on": "2026-10-27",
+    "reason": "J. Phys. Soc. Jpn. 83, 093707 prints no 6 x 6 energy; the value and its error bar are first printed in Table I of Phys. Rev. B 93, 144411 (arXiv:1601.06018), the refereed quote the row's sigma and reference already rest on. arXiv:2104.05085 is a later quote without the bar. The source cell names the earliest printed quote, so a reader can check the number there.",
+    "source_entry": "author correspondence on the row, 2026-10-27"
+  },
+  {
+    "match": {
       "instance": "Heisenberg/square_36_O",
       "method": "RNN",
       "energy": -86.906304
