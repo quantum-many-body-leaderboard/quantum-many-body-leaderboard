@@ -102,12 +102,31 @@ const qmblRef = row => {
   return { text: `QMBL check, ${dir}/`, url: `${REPO}/tree/main/${dir}` };
 };
 
+// Where a quoted row's number was read (RULES.md 8): the work verified.secondary_of names, or,
+// for a secondary row without it, the work after "printed in" / "quoted in" in its reference.
+// Shown on every quoted row, whether its own paper is resolved or not. A quoting work QMBL has
+// not resolved is named by author-year read off the reference text where it comes from there,
+// else by its identifier. Nothing is shown when what secondary_of names is the row's own paper
+// (the same title).
+function quotedIn(row, cache, own) {
+  const so = row.verified?.secondary_of;
+  const text = so || (row.provenance === "secondary"
+    ? (row.reference || "").match(/\b(?:printed|quoted|cited) in\s+(.+)$/i)?.[1] : null);
+  if (!text) return undefined;
+  const via = identify(text), s = via && cache[via.key];
+  if (s && own?.title && s.title?.toLowerCase() === own.title.toLowerCase()) return undefined;
+  const who = s ? citeText(s)
+    : (!so && authorYear(text)?.text) || (via ? (via.arxiv ? `arXiv:${via.arxiv}` : via.doi) : null);
+  return who ? `quoted in ${who}` : undefined;
+}
+
 export function citeRef(row, cache = sources()) {
   // A number QMBL computed (a cost run or an exact check) cites its checks/ folder (qmblRef);
   // the code column links the code and how to rerun it.
   if (row.computed_by === "qmbl" || /^QMBL, checks\//.test(row.reference || "")) return qmblRef(row);
   const s = sourceOf(row, cache);
-  if (s) return { text: citeText(s), url: citeUrl(s) };
+  const note = quotedIn(row, cache, s);
+  if (s) return note ? { text: citeText(s), url: citeUrl(s), note } : { text: citeText(s), url: citeUrl(s) };
   const ref = row.reference || "";
   const code = ref.match(/\[code\]\((https?:\/\/[^\s)]+)\)/);
   if (code) {
@@ -118,9 +137,7 @@ export function citeRef(row, cache = sources()) {
       : { text: "run script", url: code[1], note: "no paper cited" };
   }
   const link = ref.match(/\((https?:\/\/[^\s)]+)\)/);
-  if (link) return { text: "source", url: link[1] };
-  const via = row.verified?.secondary_of && identify(row.verified.secondary_of);
-  const note = via && cache[via.key] ? `quoted in ${citeText(cache[via.key])}` : undefined;
+  if (link) return note ? { text: "source", url: link[1], note } : { text: "source", url: link[1] };
   const id = paperOf(row);
   if (id) return id.arxiv
     ? { text: `arXiv:${id.arxiv}`, url: `https://arxiv.org/abs/${id.arxiv}`, note }
