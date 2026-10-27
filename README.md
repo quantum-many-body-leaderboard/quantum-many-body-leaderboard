@@ -1871,7 +1871,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | kagome | best extrapolated | -0.4386(5) | DMRG [Depenbrock et al. (2012)](https://doi.org/10.48550/arxiv.1205.4858) |  |
 | pyrochlore | best variational | -0.489472(8) | variational wave function [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
 |  | best extrapolated | -0.490(6) | DMRG [Hagymási et al. (2020)](https://doi.org/10.48550/arxiv.2010.03563) |  |
-|  | best approximate | -0.4919 &#9675; | NLCE [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
+|  | best approximate | -0.49(1) | NLCE [Hagymási et al. (2020)](https://doi.org/10.48550/arxiv.2010.03563) |  |
 | pyrochlore, S = 1 | best variational | -1.490(1) | variational wave function [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
 |  | best approximate | -1.489(5) | NLCE [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
 | ruby-crossed | best variational | -0.48946(5) | variational wave function [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
