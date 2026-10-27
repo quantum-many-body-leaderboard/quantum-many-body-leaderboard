@@ -121,38 +121,38 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square 20x20 | exact (stochastic) | -0.66971967(2) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
 |  | best variational | -0.66959(1) (+1.3e-4) | VMC (2D RNN) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) | [mschuylermoss/HeisenbergRNN](https://github.com/mschuylermoss/HeisenbergRNN) |
 | square 22x22, open | exact (stochastic) | -0.6504689(4) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
-|  | best variational | -0.650253(5) (+2.2e-4) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) |  |
+|  | best variational | -0.650253(5) (+2.2e-4) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) | [ParallelScan-RNNs/PSR-NQS](https://github.com/ParallelScan-RNNs/PSR-NQS) |
 | square 22x22 | exact (stochastic) | -0.66965176(2) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
 | square 24x24, open | exact (stochastic) | -0.6520251(4) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
 |  | best variational | -0.651982(7) (+4.3e-5) | VMC (2D RNN) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) | [mschuylermoss/HeisenbergRNN](https://github.com/mschuylermoss/HeisenbergRNN) |
 | square 24x24 | exact (stochastic) | -0.66960434(2) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
 |  | best variational | -0.66944(2) (+1.7e-4) | VMC (2D RNN) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) | [mschuylermoss/HeisenbergRNN](https://github.com/mschuylermoss/HeisenbergRNN) |
 | square 26x26, open | exact (stochastic) | -0.6533456(4) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
-|  | best variational | -0.653129(5) (+2.2e-4) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) |  |
+|  | best variational | -0.653129(5) (+2.2e-4) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) | [ParallelScan-RNNs/PSR-NQS](https://github.com/ParallelScan-RNNs/PSR-NQS) |
 | square 26x26 | exact (stochastic) | -0.66957017(3) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
 | square 28x28, open | exact (stochastic) | -0.6544806(4) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
-|  | best variational | -0.654261(4) (+2.2e-4) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) |  |
+|  | best variational | -0.654261(4) (+2.2e-4) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) | [ParallelScan-RNNs/PSR-NQS](https://github.com/ParallelScan-RNNs/PSR-NQS) |
 | square 28x28 | exact (stochastic) | -0.66954496(3) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
 |  | best variational | -0.66937(1) (+1.7e-4) | VMC (2D RNN) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) | [mschuylermoss/HeisenbergRNN](https://github.com/mschuylermoss/HeisenbergRNN) |
-| square 30x30, open | best variational | -0.655241(4) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) |  |
+| square 30x30, open | best variational | -0.655241(4) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) | [ParallelScan-RNNs/PSR-NQS](https://github.com/ParallelScan-RNNs/PSR-NQS) |
 | square 30x30 | exact (stochastic) | -0.66952595(3) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
 | square 32x32, open | exact (stochastic) | -0.6563289(4) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
-|  | best variational | -0.656089(4) (+2.4e-4) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) |  |
+|  | best variational | -0.656089(4) (+2.4e-4) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) | [ParallelScan-RNNs/PSR-NQS](https://github.com/ParallelScan-RNNs/PSR-NQS) |
 | square 32x32 | exact (stochastic) | -0.66951133(3) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
 |  | best variational | -0.66930(1) (+2.2e-4) | VMC (2D RNN) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) | [mschuylermoss/HeisenbergRNN](https://github.com/mschuylermoss/HeisenbergRNN) |
 |  | best extrapolated | -0.6694877(4) (+2.4e-5) | VMC (2D RNN) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) | [mschuylermoss/HeisenbergRNN](https://github.com/mschuylermoss/HeisenbergRNN) |
-| square 36x36, open | best variational | -0.657523(4) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) |  |
+| square 36x36, open | best variational | -0.657523(4) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) | [ParallelScan-RNNs/PSR-NQS](https://github.com/ParallelScan-RNNs/PSR-NQS) |
 | square 36x36 | exact (stochastic) | -0.66949091(3) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
-| square 40x40, open | best variational | -0.658657(4) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) |  |
+| square 40x40, open | best variational | -0.658657(4) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) | [ParallelScan-RNNs/PSR-NQS](https://github.com/ParallelScan-RNNs/PSR-NQS) |
 | square 40x40 | exact (stochastic) | -0.66947776(3) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
-| square 44x44, open | best variational | -0.659565(4) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) |  |
+| square 44x44, open | best variational | -0.659565(4) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) | [ParallelScan-RNNs/PSR-NQS](https://github.com/ParallelScan-RNNs/PSR-NQS) |
 | square 44x44 | exact (stochastic) | -0.66946889(3) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
-| square 46x46, open | best variational | -0.659941(4) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) |  |
+| square 46x46, open | best variational | -0.659941(4) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) | [ParallelScan-RNNs/PSR-NQS](https://github.com/ParallelScan-RNNs/PSR-NQS) |
 | square 48x48, open | exact (stochastic) | -0.6606690(4) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
-|  | best variational | -0.660323(4) (+3.5e-4) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) |  |
+|  | best variational | -0.660323(4) (+3.5e-4) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) | [ParallelScan-RNNs/PSR-NQS](https://github.com/ParallelScan-RNNs/PSR-NQS) |
 | square 48x48 | exact (stochastic) | -0.66946274(3) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
-| square 50x50, open | best variational | -0.660649(3) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) |  |
-| square 52x52, open | best variational | -0.660967(4) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) |  |
+| square 50x50, open | best variational | -0.660649(3) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) | [ParallelScan-RNNs/PSR-NQS](https://github.com/ParallelScan-RNNs/PSR-NQS) |
+| square 52x52, open | best variational | -0.660967(4) | VMC (minGRU) [Merali et al. (2026)](https://doi.org/10.48550/arxiv.2605.13807) | [ParallelScan-RNNs/PSR-NQS](https://github.com/ParallelScan-RNNs/PSR-NQS) |
 | square 52x52 | exact (stochastic) | -0.66945833(3) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
 | square 56x56 | exact (stochastic) | -0.66945502(3) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
 | square 60x60 | exact (stochastic) | -0.66945260(3) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
