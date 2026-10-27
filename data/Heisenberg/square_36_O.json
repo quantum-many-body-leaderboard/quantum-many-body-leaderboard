@@ -1351,6 +1351,48 @@
           "pass": "passes/code/code-links-2026-10-22.json"
         }
       }
+    },
+    {
+      "energy": -86.906736,
+      "sigma": 0.000288,
+      "energy_variance": null,
+      "dof": 36,
+      "einf": 0,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "minGRU",
+      "method_detail": "3 layers, d_h = 256, b = 2, iterative retraining; symmetric: C4v",
+      "method_as_published": "2D minGRU, 3 layers, c4v symmetry, iterative retraining (PSR-NQS)",
+      "family": "RNN",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Parallel Scan Recurrent Neural Quantum States for Scalable Variational Monte Carlo, arXiv:2605.13807",
+      "peer_reviewed": false,
+      "source": "sweep-allresults-2026-10-27",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-27",
+        "method": "arXiv:2605.13807: arXiv:2605.13807v1 (only version; no journal reference on 2026-10-27): pypdf layout text sources/2605.13807.txt read locally, checked against Table 6 of the arXiv HTML sources/2605.13807.html; no LLM transcription; single reading",
+        "reported_as": "-0.603519(2)",
+        "note": "TABLE VI, row N = 6^2 (line 682 of sources/2605.13807.txt) | energy per site in S.S units, J = 1, open boundaries; the same table row prints the QMC value equal to the instance's stored SSE row",
+        "secondary_of": null
+      },
+      "compute": {
+        "parameters": 800000,
+        "gpu_hours": null,
+        "device": "NVIDIA A100 80GB",
+        "n_devices": 1,
+        "samples": 200,
+        "wall_clock": "10:30:00 cumulative training time (hh:mm:ss) from 6x6 up to and including 6x6; 0.1 s per training step at 6x6",
+        "cpu_core_hours": null,
+        "bond_dimension": null,
+        "iterations": 378000,
+        "reported_as": "TABLE VI caption: '...We also report our runtimes for training the 2D minGRU using a single A100 80GB GPU. For reference, this PSR-NQS model has around 800,000 variational parameters.' || TABLE VI row N = 6^2: Time per training step (s) 0.1; Training steps 378000; Cumulative training time 10:30:00 || TABLE V: Number of samples (train) 200",
+        "source": "Table VI (row and caption) and Table V, arXiv:2605.13807",
+        "scope": "row",
+        "confidence": "high",
+        "note": "iterations = this size's training steps; wall_clock is cumulative over all sizes from 6x6 (iterative retraining), not this size alone. samples = 200 training samples per step (Table V); final energies use 100000 samples. The paper-wide 1400 GPU-hour budget (Sec. V) is not attributed to this row. 6x6 is the cold start (stages 1-3, 378000 steps); evaluation left out, its stages differ."
+      }
     }
   ],
   "coverage": [
