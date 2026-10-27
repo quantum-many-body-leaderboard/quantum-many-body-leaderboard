@@ -350,7 +350,10 @@ present and is never ranked on.
   admissible but not fully verified, and it is read again once the journal version appears.
 - Preprint-only sources older than 12 months are flagged `stale-preprint`.
 - A row whose number is quoted from a different paper than the one that produced it is
-  marked `secondary` and names both.
+  marked `secondary` and names both. The site cites the producing paper in the source cell and
+  shows "quoted in" the other on hover, except where the number exists only in the quoting paper
+  (unpublished data, a private communication) or the row carries `quote_shown: "cell"`
+  ([DATA.md](DATA.md#provenance-and-defects)): there the note stays in the cell.
 - A number first printed in a dataset is cited to the dataset. The author's paper stays the
   method reference, and the upload is named (who, when, commit). This is not the inadmissible
   case below: the number is printed, in the dataset. The rule also holds for an author's

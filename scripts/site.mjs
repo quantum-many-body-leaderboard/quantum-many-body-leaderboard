@@ -95,6 +95,14 @@ for (const b of document.querySelectorAll("button.cite-btn")) b.addEventListener
     navigator.clipboard.writeText(b.dataset.cite).then(done, fallback);
   else fallback();
 });
+// The quote mark after a citation (quotedHtml): keyboard focus shows its note (CSS), a tap or
+// Enter shows it until the next tap, and Escape or focus leaving the mark hides it.
+const qnShut = except => { for (const o of document.querySelectorAll("button.qn.open")) if (o !== except) o.classList.remove("open"); };
+document.addEventListener("click", e => { const b = e.target.closest && e.target.closest("button.qn"); qnShut(b);
+  if (b) { b.classList.remove("shut"); b.classList.toggle("open"); } });
+document.addEventListener("keydown", e => { if (e.key !== "Escape") return; qnShut(null);
+  const a = document.activeElement; if (a && a.matches("button.qn")) a.classList.add("shut"); });
+document.addEventListener("focusout", e => { if (e.target.matches && e.target.matches("button.qn")) e.target.classList.remove("open", "shut"); });
 </script>`;
 
 // schema.org Dataset for Google Dataset Search, on the front page only (one dataset, not one per instance).
@@ -276,7 +284,17 @@ function citeHtml(row) {
   const r = citeRef(row, cache);
   const link = (r.url ? `<a href="${esc(r.url)}">${esc(r.text)}</a>` : esc(r.text)) + (r.also ? `, <a href="${esc(r.also.url)}">${esc(r.also.text)}</a>` : "");
   const [plain, nl] = noteParts(r);
-  return r.note ? `${link}<span class="muted">, ${esc(plain)}${nl ? `<a href="${esc(nl.url)}">${esc(nl.text)}</a>` : ""}</span>` : link;
+  if (r.note) return `${link}<span class="muted">, ${esc(plain)}${nl ? `<a href="${esc(nl.url)}">${esc(nl.text)}</a>` : ""}</span>`;
+  return r.quoted ? quotedHtml(link, r.quoted) : link;
+}
+
+// A quoted row's "quoted in" note, where the cell does not print it (cite.mjs quoteInCell): shown
+// on hover of the citation as its title, like a method's detail, and behind a small quote mark
+// after it, a button that keyboard and touch reach. Focusing or tapping the mark shows the note
+// beside it (QUOTE_SCRIPT); a screen reader reads it as the mark's label.
+function quotedHtml(link, quoted) {
+  const note = quoted.charAt(0).toUpperCase() + quoted.slice(1);
+  return `<span class="q" title="${esc(note)}">${link}<button type="button" class="qn" aria-label="${esc(note)}">&#10078;</button></span>`;
 }
 
 // The method cell. A row QMBL computed names the hardware it ran on, since the same
@@ -682,7 +700,7 @@ function rowCard(r, inst) {
 <span class="e">${energyCell(r, inst)} <span class="muted">${perSiteLabel(inst)} &middot; ${boundLabel(r)}</span>${r.defect ? ` ${flagBadge(r)}` : ""}${isBelow(inst, r) ? ` ${belowBadge()}` : ""}${bestTag(inst, r)}</span>
 <span class="muted">${cardSource(r)}</span>`;
 }
-const cardSource = r => { const c = citeRef(r, cache); return esc([c.text, c.also?.text, c.note].filter(Boolean).join(", ")); };
+const cardSource = r => { const c = citeRef(r, cache); return esc([c.text, c.also?.text, c.note ?? c.quoted].filter(Boolean).join(", ")); };
 
 // One card per row a figure links to, in a <template>; the script below shows a card in a
 // floating box while its mark is hovered. A mark for several rows (`data-rows`, best first)
@@ -1784,6 +1802,19 @@ ${FIG_DARK}
 }
 /* A method label with a detail behind it (units.mjs methodDetail), shown on hover. */
 span.m[title]:not([title=""]) { text-decoration: underline dotted; text-underline-offset: 3px; cursor: help; }
+/* A citation whose "quoted in" note is on hover (quotedHtml): the note is the title, and the quote
+   mark after the citation shows it on focus or tap, in a box below the mark. */
+span.q { position: relative; }
+button.qn { font: inherit; font-size: 0.8em; line-height: 1; color: var(--muted); background: none; border: 0;
+  padding: 0 0.15em; margin-left: 0.1em; cursor: help; vertical-align: 0.15em; }
+button.qn:hover, button.qn.open { color: var(--accent); }
+button.qn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-radius: 2px; }
+button.qn.open::after, button.qn:focus-visible:not(.shut)::after {
+  content: attr(aria-label); position: absolute; left: 0; top: calc(100% + 0.25rem); z-index: 5;
+  width: max-content; max-width: 16rem; white-space: normal; text-align: left;
+  font-family: var(--sans); font-size: 0.8rem; line-height: 1.35; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--grid); border-radius: 4px;
+  padding: 0.3rem 0.5rem; box-shadow: 0 2px 8px rgb(0 0 0 / 0.12); }
 ` + LOGO_CSS + (OPEN_PROBLEMS ? OPEN_PROBLEMS_NAV_CSS : "");
 // /open-problems/'s own rules and those of its figure switches, in open-problems.css, which only
 // that page links: every page carries the menu button, but not that page's figures.
