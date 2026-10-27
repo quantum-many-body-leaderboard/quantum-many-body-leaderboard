@@ -28,6 +28,8 @@ node scripts/add_code_links.mjs
 node scripts/add_libraries.mjs
 # Instance-level, after the names are final: the exact row a QMBL ED run reproduced is matched by its published string.
 node scripts/add_ed_cost.mjs
+# Instance-level: the cluster of instances no family script creates.
+node scripts/add_clusters.mjs
 node scripts/validate.mjs
 # Track 4, the thermodynamic limit (RULES.md 14): tdl/ is rebuilt from its pass files and checked.
 node scripts/add_tdl_rows.mjs

@@ -68,6 +68,7 @@ export const NAMES = {
   "ED": ["ED", ""],
   "ED (this work)": ["ED", ""],
   "Exact Solution": ["Exact solution", ""],
+  "Bethe ansatz": ["Exact solution", "Bethe ansatz"],
   "QMC": ["QMC", "loop algorithm, ALPS, T = 1e-4, converged in T"],
   "QMC (stochastic series expansion)": ["SSE QMC", ""],
   "SSE QMC (stochastic series expansion), T -> 0 converged at beta/L = 32 and 64": ["SSE QMC", ""],
