@@ -34,6 +34,12 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | checkerboard, infinite lattice, S = 1 | best variational | -1.5339(5) | variational wave function [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
 |  | best extrapolated | -1.532(1) | DMRG [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
 |  | best approximate | -1.533(2) | NLCE [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
+| crossedruby, infinite lattice | best variational | -0.48946(5) | variational wave function [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
+|  | best extrapolated | -0.4865(7) | DMRG [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
+|  | best approximate | -0.492(1) | NLCE [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
+| crossedruby, infinite lattice, S = 1 | best variational | -1.490(1) | variational wave function [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
+|  | best extrapolated | -1.4764(5) | DMRG [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
+|  | best approximate | -1.489(5) | NLCE [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
 | honeycomb 7x7 (98 sites) | best variational | -0.5421(4) | VMC (LCN) [Fu et al. (2022)](https://doi.org/10.48550/arxiv.2206.07370) |  |
 | kagome, infinite lattice | best extrapolated | -0.4386(5) | DMRG [Depenbrock et al. (2012)](https://doi.org/10.48550/arxiv.1205.4858) |  |
 | kagome-24, 24 sites | exact | -0.4412486 | ED [Läuchli et al. (2011)](https://doi.org/10.48550/arxiv.1103.1159) |  |
@@ -86,12 +92,6 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | rectangular 6x12, periodic/open | exact (stochastic) | -0.6570101(4) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
 | rectangular 6x8 | exact | -0.6759867 | ED [Wietek & Läuchli (2018)](https://doi.org/10.1103/physreve.98.033309) |  |
 | rectangular 8x16, periodic/open | exact (stochastic) | -0.6583592(4) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
-| ruby-crossed, infinite lattice | best variational | -0.48946(5) | variational wave function [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
-|  | best extrapolated | -0.4865(7) | DMRG [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
-|  | best approximate | -0.492(1) | NLCE [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
-| ruby-crossed, infinite lattice, S = 1 | best variational | -1.490(1) | variational wave function [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
-|  | best extrapolated | -1.4764(5) | DMRG [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
-|  | best approximate | -1.489(5) | NLCE [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
 | shuriken, 24 sites | exact | -0.4483291 | ED [Astrakhantsev et al. (2021)](https://doi.org/10.1103/physrevb.104.l220408) |  |
 | shuriken, 96 sites | best variational | -0.43826(1) | VMC (PP) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | *uses [mVMC](https://github.com/issp-center-dev/mVMC)* |
 | shuriken, 216 sites | best variational | -0.4376(1) | VMC (PP) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | *uses [mVMC](https://github.com/issp-center-dev/mVMC)* |
