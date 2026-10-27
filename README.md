@@ -305,7 +305,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square 10x10, J2 = 0.3 | best variational | -0.556912 &dagger; | VMC (ViT) [Golubev et al. (2026)](https://doi.org/10.48550/arxiv.2606.04558) | *uses [NetKet](https://www.netket.org/)* |
 | square 10x10, J2 = 0.4 | best variational | -0.524361 &dagger; | VMC (ViT) [Golubev et al. (2026)](https://doi.org/10.48550/arxiv.2606.04558) | *uses [NetKet](https://www.netket.org/)* |
 |  | best extrapolated | -0.5253 &#9675; | DMRG [Gong et al. (2013)](https://doi.org/10.48550/arxiv.1311.5962) |  |
-| square 10x10, J2 = 0.44 | best variational | -0.51273 &#9675; | VMC (CNN) [10.1109/TPDS.2022.3145163](https://doi.org/10.1109/TPDS.2022.3145163) |  |
+| square 10x10, J2 = 0.44 | best variational | -0.51273 &#9675; | VMC (CNN) [Li et al. (2022)](https://doi.org/10.1109/tpds.2022.3145163) |  |
 | square 10x10, J2 = 0.45 | best variational | -0.51001(1) | VMC (Gutzwiller) [Hu et al. (2013)](https://doi.org/10.48550/arxiv.1304.2630) |  |
 |  | best extrapolated | -0.511 &#9675; | DMRG [Gong et al. (2013)](https://doi.org/10.48550/arxiv.1311.5962) |  |
 | square 10x10, J2 = 0.46 | best variational | -0.50744 &#9675; | VMC (CNN) [Liang et al. (2023)](https://doi.org/10.1088/2632-2153/acc56a) |  |
@@ -322,7 +322,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square 10x10, J2 = 0.8 | best variational | -0.57413 &dagger; | VMC (ViT) [Golubev et al. (2026)](https://doi.org/10.48550/arxiv.2606.04558) | *uses [NetKet](https://www.netket.org/)* |
 | square 10x10, J2 = 0.9 | best variational | -0.63417 &dagger; | VMC (ViT) [Golubev et al. (2026)](https://doi.org/10.48550/arxiv.2606.04558) | *uses [NetKet](https://www.netket.org/)* |
 | square 10x10, J2 = 1 | best variational | -0.69670(2) | VMC (RBM) [Chen et al. (2022)](https://doi.org/10.48550/arxiv.2206.14307) |  |
-| square 12x12, J2 = 0.44 | best variational | -0.51225 &#9675; | VMC (CNN) [10.1109/TPDS.2022.3145163](https://doi.org/10.1109/TPDS.2022.3145163) |  |
+| square 12x12, J2 = 0.44 | best variational | -0.51225 &#9675; | VMC (CNN) [Li et al. (2022)](https://doi.org/10.1109/tpds.2022.3145163) |  |
 | square 12x12, J2 = 0.45 | best extrapolated | -0.5088(1) | TPS [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
 | square 12x12, J2 = 0.46 | best variational | -0.50697 &#9675; | VMC (CNN) [Liang et al. (2023)](https://doi.org/10.1088/2632-2153/acc56a) |  |
 | square 12x12, J2 = 0.48 | best variational | -0.50183 &#9675; | VMC (CNN) [Liang et al. (2023)](https://doi.org/10.1088/2632-2153/acc56a) |  |
@@ -336,7 +336,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best extrapolated | -0.4784(3) | TPS [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
 | square 14x14, J2 = 0.4 | best variational | -0.52287(1) | VMC (Gutzwiller) [Hu et al. (2013)](https://doi.org/10.48550/arxiv.1304.2630) |  |
 |  | best extrapolated | -0.52351(2) | VMC (Gutzwiller) [Hu et al. (2013)](https://doi.org/10.48550/arxiv.1304.2630) |  |
-| square 14x14, J2 = 0.44 | best variational | -0.512 &#9675; | VMC (CNN) [10.1109/TPDS.2022.3145163](https://doi.org/10.1109/TPDS.2022.3145163) |  |
+| square 14x14, J2 = 0.44 | best variational | -0.512 &#9675; | VMC (CNN) [Li et al. (2022)](https://doi.org/10.1109/tpds.2022.3145163) |  |
 | square 14x14, J2 = 0.45 | best variational | -0.50899(1) | VMC (Gutzwiller) [Hu et al. (2013)](https://doi.org/10.48550/arxiv.1304.2630) |  |
 |  | best extrapolated | -0.50953(1) | VMC (Gutzwiller) [Hu et al. (2013)](https://doi.org/10.48550/arxiv.1304.2630) |  |
 | square 14x14, J2 = 0.46 | best variational | -0.50675 &#9675; | VMC (CNN) [Liang et al. (2023)](https://doi.org/10.1088/2632-2153/acc56a) |  |
@@ -346,7 +346,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square 14x14, J2 = 0.55 | best variational | -0.48581 &#9675; | VMC (CNN) [Liang et al. (2023)](https://doi.org/10.1088/2632-2153/acc56a) |  |
 |  | best extrapolated | -0.48696(5) | VMC (Gutzwiller) [Hu et al. (2013)](https://doi.org/10.48550/arxiv.1304.2630) |  |
 | square 14x14, J2 = 0.6 | best variational | -0.47678 &#9675; | VMC (CNN) [Liang et al. (2023)](https://doi.org/10.1088/2632-2153/acc56a) |  |
-| square 16x16, J2 = 0.44 | best variational | -0.51188 &#9675; | VMC (CNN) [10.1109/TPDS.2022.3145163](https://doi.org/10.1109/TPDS.2022.3145163) |  |
+| square 16x16, J2 = 0.44 | best variational | -0.51188 &#9675; | VMC (CNN) [Li et al. (2022)](https://doi.org/10.1109/tpds.2022.3145163) |  |
 | square 16x16, J2 = 0.45 | best extrapolated | -0.5087(1) | TPS [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
 | square 16x16, J2 = 0.46 | best variational | -0.50662 &#9675; | VMC (CNN) [Liang et al. (2023)](https://doi.org/10.1088/2632-2153/acc56a) |  |
 | square 16x16, J2 = 0.48 | best variational | -0.50147 &#9675; | VMC (CNN) [Liang et al. (2023)](https://doi.org/10.1088/2632-2153/acc56a) |  |
@@ -360,7 +360,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best extrapolated | -0.4777(3) | TPS [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
 | square 18x18, J2 = 0.4 | best variational | -0.52259(1) | VMC (Gutzwiller) [Hu et al. (2013)](https://doi.org/10.48550/arxiv.1304.2630) |  |
 |  | best extrapolated | -0.52333(1) | VMC (Gutzwiller) [Hu et al. (2013)](https://doi.org/10.48550/arxiv.1304.2630) |  |
-| square 18x18, J2 = 0.44 | best variational | -0.51179 &#9675; | VMC (CNN) [10.1109/TPDS.2022.3145163](https://doi.org/10.1109/TPDS.2022.3145163) |  |
+| square 18x18, J2 = 0.44 | best variational | -0.51179 &#9675; | VMC (CNN) [Li et al. (2022)](https://doi.org/10.1109/tpds.2022.3145163) |  |
 | square 18x18, J2 = 0.45 | best variational | -0.50874(1) | VMC (Gutzwiller) [Hu et al. (2013)](https://doi.org/10.48550/arxiv.1304.2630) |  |
 |  | best extrapolated | -0.50940(1) | VMC (Gutzwiller) [Hu et al. (2013)](https://doi.org/10.48550/arxiv.1304.2630) |  |
 | square 18x18, J2 = 0.46 | best variational | -0.50651 &#9675; | VMC (CNN) [Liang et al. (2023)](https://doi.org/10.1088/2632-2153/acc56a) |  |
@@ -383,22 +383,22 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 
 | instance | value | energy | method | code |
 |---|---|---|---|---|
-| honeycomb 11x11 (242 sites), open, K = -1, J = 0, Gamma = 0 | exact | -0.1882584 | Exact solution [10.1103/PhysRevB.106.245102](https://doi.org/10.1103/PhysRevB.106.245102) |  |
-|  | best variational | -0.1820213 &#9675; (+6.2e-3) | DMRG [10.1103/PhysRevB.106.245102](https://doi.org/10.1103/PhysRevB.106.245102) |  |
-|  | best projected | -0.1867058 &#9675; (+1.6e-3) | isoTNS [10.1103/PhysRevB.106.245102](https://doi.org/10.1103/PhysRevB.106.245102) |  |
-| honeycomb 3x4 (24 sites), K = -1, J = 0, Gamma = 0 | exact | -0.1988727 | ED [10.1103/PhysRevB.92.035122](https://doi.org/10.1103/PhysRevB.92.035122) |  |
-|  | best variational | -0.19887(2) (−2.3e-6) | VMC (PP) [10.1103/PhysRevB.92.035122](https://doi.org/10.1103/PhysRevB.92.035122) |  |
-| honeycomb 4x4 (32 sites), K = -1, J = 0, Gamma = 0 | exact | -0.1963139 | ED [10.1103/PhysRevB.92.035122](https://doi.org/10.1103/PhysRevB.92.035122) |  |
-|  | best variational | -0.19617(8) (+1.4e-4) | VMC (PP) [10.1103/PhysRevB.92.035122](https://doi.org/10.1103/PhysRevB.92.035122) |  |
-| honeycomb 5x5 (50 sites), open, K = -1, J = 0, Gamma = 0 | exact | -0.178506 | Exact solution [10.1103/PhysRevB.106.245102](https://doi.org/10.1103/PhysRevB.106.245102) |  |
-|  | best variational | -0.1785027 &#9675; (+3.3e-6) | DMRG [10.1103/PhysRevB.106.245102](https://doi.org/10.1103/PhysRevB.106.245102) |  |
-|  | best projected | -0.1767248 &#9675; (+1.8e-3) | isoTNS [10.1103/PhysRevB.106.245102](https://doi.org/10.1103/PhysRevB.106.245102) |  |
-| honeycomb 6x6 (72 sites), periodic/open, K = 1, J = 0, Gamma = 0 | exact | -0.1891314 | Exact solution [10.1103/PhysRevB.104.L020409](https://doi.org/10.1103/PhysRevB.104.L020409) |  |
-| honeycomb 7x7 (98 sites), open, K = -1, J = 0, Gamma = 0 | exact | -0.1835418 | Exact solution [10.1103/PhysRevB.106.245102](https://doi.org/10.1103/PhysRevB.106.245102) |  |
-|  | best variational | -0.1826 &#9675; (+9.4e-4) | DMRG [10.1103/PhysRevB.106.245102](https://doi.org/10.1103/PhysRevB.106.245102) |  |
-|  | best projected | -0.1824684 &#9675; (+1.1e-3) | isoTNS [10.1103/PhysRevB.106.245102](https://doi.org/10.1103/PhysRevB.106.245102) |  |
-| honeycomb-hex24, 24 sites, K = -1, J = 0, Gamma = 0 | exact | -0.1985125 | ED [10.1103/PhysRevB.92.035122](https://doi.org/10.1103/PhysRevB.92.035122) |  |
-|  | best variational | -0.198510(6) (+2.1e-6) | VMC (PP) [10.1103/PhysRevB.92.035122](https://doi.org/10.1103/PhysRevB.92.035122) |  |
+| honeycomb 11x11 (242 sites), open, K = -1, J = 0, Gamma = 0 | exact | -0.1882584 | Exact solution [Lin et al. (2022)](https://doi.org/10.1103/physrevb.106.245102) |  |
+|  | best variational | -0.1820213 &#9675; (+6.2e-3) | DMRG [Lin et al. (2022)](https://doi.org/10.1103/physrevb.106.245102) |  |
+|  | best projected | -0.1867058 &#9675; (+1.6e-3) | isoTNS [Lin et al. (2022)](https://doi.org/10.1103/physrevb.106.245102) |  |
+| honeycomb 3x4 (24 sites), K = -1, J = 0, Gamma = 0 | exact | -0.1988727 | ED [Kurita et al. (2015)](https://doi.org/10.1103/physrevb.92.035122) |  |
+|  | best variational | -0.19887(2) (−2.3e-6) | VMC (PP) [Kurita et al. (2015)](https://doi.org/10.1103/physrevb.92.035122) |  |
+| honeycomb 4x4 (32 sites), K = -1, J = 0, Gamma = 0 | exact | -0.1963139 | ED [Kurita et al. (2015)](https://doi.org/10.1103/physrevb.92.035122) |  |
+|  | best variational | -0.19617(8) (+1.4e-4) | VMC (PP) [Kurita et al. (2015)](https://doi.org/10.1103/physrevb.92.035122) |  |
+| honeycomb 5x5 (50 sites), open, K = -1, J = 0, Gamma = 0 | exact | -0.178506 | Exact solution [Lin et al. (2022)](https://doi.org/10.1103/physrevb.106.245102) |  |
+|  | best variational | -0.1785027 &#9675; (+3.3e-6) | DMRG [Lin et al. (2022)](https://doi.org/10.1103/physrevb.106.245102) |  |
+|  | best projected | -0.1767248 &#9675; (+1.8e-3) | isoTNS [Lin et al. (2022)](https://doi.org/10.1103/physrevb.106.245102) |  |
+| honeycomb 6x6 (72 sites), periodic/open, K = 1, J = 0, Gamma = 0 | exact | -0.1891314 | Exact solution [Jin et al. (2021)](https://doi.org/10.1103/physrevb.104.l020409) |  |
+| honeycomb 7x7 (98 sites), open, K = -1, J = 0, Gamma = 0 | exact | -0.1835418 | Exact solution [Lin et al. (2022)](https://doi.org/10.1103/physrevb.106.245102) |  |
+|  | best variational | -0.1826 &#9675; (+9.4e-4) | DMRG [Lin et al. (2022)](https://doi.org/10.1103/physrevb.106.245102) |  |
+|  | best projected | -0.1824684 &#9675; (+1.1e-3) | isoTNS [Lin et al. (2022)](https://doi.org/10.1103/physrevb.106.245102) |  |
+| honeycomb-hex24, 24 sites, K = -1, J = 0, Gamma = 0 | exact | -0.1985125 | ED [Kurita et al. (2015)](https://doi.org/10.1103/physrevb.92.035122) |  |
+|  | best variational | -0.198510(6) (+2.1e-6) | VMC (PP) [Kurita et al. (2015)](https://doi.org/10.1103/physrevb.92.035122) |  |
 
 </details>
 
@@ -407,41 +407,41 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 
 | instance | value | energy | method | code |
 |---|---|---|---|---|
-| square 4x4, J = 0.7, Jd = 1 | exact | -0.3968907 | ED [10.1143/JPSJ.73.340](https://doi.org/10.1143/JPSJ.73.340) |  |
-| square 6x6, J = 0.5, Jd = 1 | exact | -0.375 | ED [10.1142/S0129183106009709](https://doi.org/10.1142/S0129183106009709) |  |
-| square 6x6, J = 0.66697792, Jd = 1 | exact | -0.375 | ED [10.1142/S0129183106009709](https://doi.org/10.1142/S0129183106009709) |  |
-| square 6x6, J = 0.67441, Jd = 1 | exact | -0.375004 | ED [10.1142/S0129183106009709](https://doi.org/10.1142/S0129183106009709) |  |
-| square 6x6, J = 0.675, Jd = 1 | exact | -0.3752862 | ED [10.1142/S0129183106009709](https://doi.org/10.1142/S0129183106009709) |  |
-| square 6x6, J = 0.68, Jd = 1 | exact | -0.3777047 | ED [10.1142/S0129183106009709](https://doi.org/10.1142/S0129183106009709) |  |
-| square 6x6, J = 0.7, Jd = 1 | exact | -0.3885784 | ED [10.1142/S0129183106009709](https://doi.org/10.1142/S0129183106009709) |  |
-| square 6x6, J = 0.8, Jd = 1 | exact | -0.4517531 | ED [10.1142/S0129183106009709](https://doi.org/10.1142/S0129183106009709) |  |
-|  | best variational | -0.451717(6) (+3.6e-5) | VMC (ConvNeXt) [10.1103/ybgv-35jm](https://doi.org/10.1103/ybgv-35jm) | [NeuralQXLab/convnextnnqs](https://github.com/NeuralQXLab/convnextnnqs) |
-|  | best extrapolated | -0.45175 &#9675; (+3.1e-6) | VMC (Transformer) [10.1103/PhysRevB.111.134411](https://doi.org/10.1103/PhysRevB.111.134411) |  |
-| square 6x6, J = 0.85, Jd = 1 | exact | -0.4843341 | ED [10.1142/S0129183106009709](https://doi.org/10.1142/S0129183106009709) |  |
-| square 8x8, J = 0.8, Jd = 1 | best variational | -0.449829 &#9675; | VMC (Transformer) [10.1103/PhysRevB.111.134411](https://doi.org/10.1103/PhysRevB.111.134411) |  |
-|  | best extrapolated | -0.44995 &#9675; | VMC (Transformer) [10.1103/PhysRevB.111.134411](https://doi.org/10.1103/PhysRevB.111.134411) |  |
-| square 10x10, J = 0.8, Jd = 1 | best variational | -0.449342(4) | VMC (ConvNeXt) [10.1103/ybgv-35jm](https://doi.org/10.1103/ybgv-35jm) | [NeuralQXLab/convnextnnqs](https://github.com/NeuralQXLab/convnextnnqs) |
-|  | best extrapolated | -0.44947 &#9675; | VMC (Transformer) [10.1103/PhysRevB.111.134411](https://doi.org/10.1103/PhysRevB.111.134411) |  |
-| square 12x12, J = 0.7, Jd = 1 | best variational | -0.37627 &#9675; | VMC (Gutzwiller) [10.1103/hvlq-d179](https://doi.org/10.1103/hvlq-d179) |  |
-| square 12x12, J = 0.8, Jd = 1 | best variational | -0.449078 &#9675; | VMC (Transformer) [10.1103/PhysRevB.111.134411](https://doi.org/10.1103/PhysRevB.111.134411) |  |
-|  | best extrapolated | -0.44931 &#9675; | VMC (Transformer) [10.1103/PhysRevB.111.134411](https://doi.org/10.1103/PhysRevB.111.134411) |  |
-| square 14x14, J = 0.8, Jd = 1 | best variational | -0.448929 &#9675; | VMC (Transformer) [10.1103/PhysRevB.111.134411](https://doi.org/10.1103/PhysRevB.111.134411) |  |
-|  | best extrapolated | -0.4492 &#9675; | VMC (Transformer) [10.1103/PhysRevB.111.134411](https://doi.org/10.1103/PhysRevB.111.134411) |  |
-| square 16x16, J = 0.7, Jd = 1 | best variational | -0.37642 &#9675; | VMC (Gutzwiller) [10.1103/hvlq-d179](https://doi.org/10.1103/hvlq-d179) |  |
-| square 16x16, J = 0.8, Jd = 1 | best variational | -0.448881 &#9675; | VMC (Transformer) [10.1103/PhysRevB.111.134411](https://doi.org/10.1103/PhysRevB.111.134411) |  |
-| square 18x18, J = 0.8, Jd = 1 | best variational | -0.448859 &#9675; | VMC (Transformer) [10.1103/PhysRevB.111.134411](https://doi.org/10.1103/PhysRevB.111.134411) |  |
-| square 20x20, open, J = 0.8, Jd = 1 | best variational | -0.442928(3) | PEPS [10.1103/PhysRevLett.133.026502](https://doi.org/10.1103/PhysRevLett.133.026502) |  |
-| square-tilted, 32 sites, J = 0.677, Jd = 1 | exact | -0.375 | ED [10.1142/S0129183106009709](https://doi.org/10.1142/S0129183106009709) |  |
-| square-tilted, 32 sites, J = 0.6772, Jd = 1 | exact | -0.375 | ED [10.1142/S0129183106009709](https://doi.org/10.1142/S0129183106009709) |  |
-| square-tilted, 32 sites, J = 0.67724, Jd = 1 | exact | -0.375 | ED [10.1142/S0129183106009709](https://doi.org/10.1142/S0129183106009709) |  |
-| square-tilted, 32 sites, J = 0.677244, Jd = 1 | exact | -0.375 | ED [10.1142/S0129183106009709](https://doi.org/10.1142/S0129183106009709) |  |
-| square-tilted, 32 sites, J = 0.677246, Jd = 1 | exact | -0.375 | ED [10.1142/S0129183106009709](https://doi.org/10.1142/S0129183106009709) |  |
-| square-tilted, 32 sites, J = 0.677248, Jd = 1 | exact | -0.375 | ED [10.1142/S0129183106009709](https://doi.org/10.1142/S0129183106009709) |  |
-| square-tilted, 32 sites, J = 0.6773, Jd = 1 | exact | -0.3750238 | ED [10.1142/S0129183106009709](https://doi.org/10.1142/S0129183106009709) |  |
-| square-tilted, 32 sites, J = 0.6775, Jd = 1 | exact | -0.3751152 | ED [10.1142/S0129183106009709](https://doi.org/10.1142/S0129183106009709) |  |
-| square-tilted, 32 sites, J = 0.6778, Jd = 1 | exact | -0.3752526 | ED [10.1142/S0129183106009709](https://doi.org/10.1142/S0129183106009709) |  |
-| square-tilted, 32 sites, J = 0.68, Jd = 1 | exact | -0.3762717 | ED [10.1142/S0129183106009709](https://doi.org/10.1142/S0129183106009709) |  |
-| square-tilted, 32 sites, J = 0.7, Jd = 1 | exact | -0.3867209 | ED [10.1142/S0129183106009709](https://doi.org/10.1142/S0129183106009709) |  |
+| square 4x4, J = 0.7, Jd = 1 | exact | -0.3968907 | ED [Munehisa & Munehisa (2004)](https://doi.org/10.1143/jpsj.73.340) |  |
+| square 6x6, J = 0.5, Jd = 1 | exact | -0.375 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
+| square 6x6, J = 0.66697792, Jd = 1 | exact | -0.375 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
+| square 6x6, J = 0.67441, Jd = 1 | exact | -0.375004 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
+| square 6x6, J = 0.675, Jd = 1 | exact | -0.3752862 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
+| square 6x6, J = 0.68, Jd = 1 | exact | -0.3777047 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
+| square 6x6, J = 0.7, Jd = 1 | exact | -0.3885784 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
+| square 6x6, J = 0.8, Jd = 1 | exact | -0.4517531 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
+|  | best variational | -0.451717(6) (+3.6e-5) | VMC (ConvNeXt) [Nutakki et al. (2025)](https://doi.org/10.1103/ybgv-35jm) | [NeuralQXLab/convnextnnqs](https://github.com/NeuralQXLab/convnextnnqs) |
+|  | best extrapolated | -0.45175 &#9675; (+3.1e-6) | VMC (Transformer) [Viteritti et al. (2025)](https://doi.org/10.1103/physrevb.111.134411) |  |
+| square 6x6, J = 0.85, Jd = 1 | exact | -0.4843341 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
+| square 8x8, J = 0.8, Jd = 1 | best variational | -0.449829 &#9675; | VMC (Transformer) [Viteritti et al. (2025)](https://doi.org/10.1103/physrevb.111.134411) |  |
+|  | best extrapolated | -0.44995 &#9675; | VMC (Transformer) [Viteritti et al. (2025)](https://doi.org/10.1103/physrevb.111.134411) |  |
+| square 10x10, J = 0.8, Jd = 1 | best variational | -0.449342(4) | VMC (ConvNeXt) [Nutakki et al. (2025)](https://doi.org/10.1103/ybgv-35jm) | [NeuralQXLab/convnextnnqs](https://github.com/NeuralQXLab/convnextnnqs) |
+|  | best extrapolated | -0.44947 &#9675; | VMC (Transformer) [Viteritti et al. (2025)](https://doi.org/10.1103/physrevb.111.134411) |  |
+| square 12x12, J = 0.7, Jd = 1 | best variational | -0.37627 &#9675; | VMC (Gutzwiller) [Chen & Liu (2026)](https://doi.org/10.1103/hvlq-d179) |  |
+| square 12x12, J = 0.8, Jd = 1 | best variational | -0.449078 &#9675; | VMC (Transformer) [Viteritti et al. (2025)](https://doi.org/10.1103/physrevb.111.134411) |  |
+|  | best extrapolated | -0.44931 &#9675; | VMC (Transformer) [Viteritti et al. (2025)](https://doi.org/10.1103/physrevb.111.134411) |  |
+| square 14x14, J = 0.8, Jd = 1 | best variational | -0.448929 &#9675; | VMC (Transformer) [Viteritti et al. (2025)](https://doi.org/10.1103/physrevb.111.134411) |  |
+|  | best extrapolated | -0.4492 &#9675; | VMC (Transformer) [Viteritti et al. (2025)](https://doi.org/10.1103/physrevb.111.134411) |  |
+| square 16x16, J = 0.7, Jd = 1 | best variational | -0.37642 &#9675; | VMC (Gutzwiller) [Chen & Liu (2026)](https://doi.org/10.1103/hvlq-d179) |  |
+| square 16x16, J = 0.8, Jd = 1 | best variational | -0.448881 &#9675; | VMC (Transformer) [Viteritti et al. (2025)](https://doi.org/10.1103/physrevb.111.134411) |  |
+| square 18x18, J = 0.8, Jd = 1 | best variational | -0.448859 &#9675; | VMC (Transformer) [Viteritti et al. (2025)](https://doi.org/10.1103/physrevb.111.134411) |  |
+| square 20x20, open, J = 0.8, Jd = 1 | best variational | -0.442928(3) | PEPS [Liu et al. (2024)](https://doi.org/10.1103/physrevlett.133.026502) |  |
+| square-tilted, 32 sites, J = 0.677, Jd = 1 | exact | -0.375 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
+| square-tilted, 32 sites, J = 0.6772, Jd = 1 | exact | -0.375 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
+| square-tilted, 32 sites, J = 0.67724, Jd = 1 | exact | -0.375 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
+| square-tilted, 32 sites, J = 0.677244, Jd = 1 | exact | -0.375 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
+| square-tilted, 32 sites, J = 0.677246, Jd = 1 | exact | -0.375 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
+| square-tilted, 32 sites, J = 0.677248, Jd = 1 | exact | -0.375 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
+| square-tilted, 32 sites, J = 0.6773, Jd = 1 | exact | -0.3750238 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
+| square-tilted, 32 sites, J = 0.6775, Jd = 1 | exact | -0.3751152 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
+| square-tilted, 32 sites, J = 0.6778, Jd = 1 | exact | -0.3752526 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
+| square-tilted, 32 sites, J = 0.68, Jd = 1 | exact | -0.3762717 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
+| square-tilted, 32 sites, J = 0.7, Jd = 1 | exact | -0.3867209 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
 
 </details>
 
@@ -802,65 +802,65 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 
 | instance | value | energy | method | code |
 |---|---|---|---|---|
-| honeycomb-flake24, 24 sites, open, J = 0.333333, 1 hole | exact | -0.3441916 | ED [10.1103/PhysRevB.110.155111](https://doi.org/10.1103/PhysRevB.110.155111) |  |
-|  | best variational | -0.3366806 &#9675; (+7.5e-3) | VMC (phase string) [10.1103/PhysRevB.110.155111](https://doi.org/10.1103/PhysRevB.110.155111) |  |
-| honeycomb-flake24, 24 sites, open, J = 0.333333, 2 holes | exact | -0.4143583 | ED [10.1103/PhysRevB.110.155111](https://doi.org/10.1103/PhysRevB.110.155111) |  |
-|  | best variational | -0.398 &#9675; (+1.6e-2) | VMC (phase string) [10.1103/PhysRevB.110.155111](https://doi.org/10.1103/PhysRevB.110.155111) |  |
-| ladder 2x11, J = 0.5, 2 holes | exact | -0.5908993 | ED [10.1103/PhysRevB.63.115120](https://doi.org/10.1103/PhysRevB.63.115120) |  |
-| ladder 2x13, J = 0.5, 2 holes | exact | -0.5733713 | ED [10.1103/PhysRevB.63.115120](https://doi.org/10.1103/PhysRevB.63.115120) |  |
-| ladder 3x6, antiperiodic legs, J = 0.5, 1 hole | exact | -0.5781986 | ED [10.1103/PhysRevB.56.14655](https://doi.org/10.1103/PhysRevB.56.14655) |  |
-| ladder 3x6, antiperiodic legs, J = 0.5, 2 holes | exact | -0.6559335 | ED [10.1103/PhysRevB.56.14655](https://doi.org/10.1103/PhysRevB.56.14655) |  |
-| rectangular 6x16, periodic/open, J = 0.35, 8 holes | best variational | -0.5470833 &#9675; | DMRG [10.1080/13642810110051782](https://doi.org/10.1080/13642810110051782) |  |
-|  | best extrapolated | -0.5484(5) | DMRG [10.1080/13642810110051782](https://doi.org/10.1080/13642810110051782) |  |
-| square 4x4, open, J = 0.4, 2 holes | exact | -0.5643668 | ED [10.1038/s41535-020-0226-4](https://doi.org/10.1038/s41535-020-0226-4) |  |
-|  | best variational | -0.56428(2) (+8.7e-5) | fPEPS [10.1038/s41535-020-0226-4](https://doi.org/10.1038/s41535-020-0226-4) |  |
-| square, 18 sites, J = 0.4, 2 holes | exact | -0.6590431 | ED [10.1007/978-94-010-0771-9_18](https://doi.org/10.1007/978-94-010-0771-9_18) |  |
-|  | best variational | -0.65904 (+3.1e-6) | VMC (Gutzwiller) [10.1007/978-94-010-0771-9_18](https://doi.org/10.1007/978-94-010-0771-9_18) |  |
-| square, 26 sites, J = 0.3, 2 holes | exact | -0.5009718 | ED [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-|  | best variational | -0.48476(1) (+1.6e-2) | VMC (Pfaffian) [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-|  | best projected | -0.49445(2) (+6.5e-3) | FN-GFMC (Pfaffian) [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-| square, 26 sites, J = 0.4, 2 holes | exact | -0.5945167 | ED [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-|  | best variational | -0.57978(1) (+1.5e-2) | VMC (Pfaffian) [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-|  | best projected | -0.58881(2) (+5.7e-3) | FN-GFMC (Pfaffian) [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-| square, 26 sites, J = 0.5, 2 holes | exact | -0.6894488 | ED [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-|  | best variational | -0.67568(1) (+1.4e-2) | VMC (Pfaffian) [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-|  | best projected | -0.68434(3) (+5.1e-3) | FN-GFMC (Pfaffian) [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-| square, 26 sites, J = 0.6, 2 holes | exact | -0.7853745 | ED [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-|  | best variational | -0.77228(1) (+1.3e-2) | VMC (Pfaffian) [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-|  | best projected | -0.78062(3) (+4.8e-3) | FN-GFMC (Pfaffian) [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-| square, 26 sites, J = 0.8, 2 holes | exact | -0.9793539 | ED [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-|  | best variational | -0.96706(1) (+1.2e-2) | VMC (Pfaffian) [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-|  | best projected | -0.97505(3) (+4.3e-3) | FN-GFMC (Pfaffian) [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-| square, 26 sites, J = 1, 2 holes | exact | -1.1753789 | ED [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-|  | best variational | -1.16352(1) (+1.2e-2) | VMC (Pfaffian) [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-|  | best projected | -1.17136(2) (+4.0e-3) | FN-GFMC (Pfaffian) [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-| square, 26 sites, J = 0.3, 4 holes | exact | -0.6426164 | ED [10.1103/PhysRevB.64.024512](https://doi.org/10.1103/PhysRevB.64.024512) |  |
-|  | best variational | -0.6387(1) (+3.9e-3) | VMC (Gutzwiller) [10.1103/PhysRevB.64.024512](https://doi.org/10.1103/PhysRevB.64.024512) |  |
-|  | best projected | -0.6371(1) (+5.5e-3) | FN-GFMC (Gutzwiller) [10.1103/PhysRevB.64.024512](https://doi.org/10.1103/PhysRevB.64.024512) |  |
-| square, 26 sites, J = 0.4, 4 holes | exact | -0.7143669 | ED [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-|  | best variational | -0.68946(1) (+2.5e-2) | VMC (Pfaffian) [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-|  | best projected | -0.70292(2) (+1.1e-2) | FN-GFMC (Pfaffian) [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-| square, 26 sites, J = 0.5, 4 holes | exact | -0.7881242 | ED [10.1103/PhysRevB.64.024512](https://doi.org/10.1103/PhysRevB.64.024512) |  |
-|  | best variational | -0.7855(1) (+2.6e-3) | VMC (Gutzwiller) [10.1103/PhysRevB.64.024512](https://doi.org/10.1103/PhysRevB.64.024512) |  |
-|  | best projected | -0.7841(1) (+4.0e-3) | FN-GFMC (Gutzwiller) [10.1103/PhysRevB.64.024512](https://doi.org/10.1103/PhysRevB.64.024512) |  |
-| square, 26 sites, J = 0.6, 4 holes | exact | -0.8633713 | ED [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-|  | best variational | -0.84170(1) (+2.2e-2) | VMC (Pfaffian) [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-|  | best projected | -0.85348(3) (+9.9e-3) | FN-GFMC (Pfaffian) [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-| square, 26 sites, J = 0.8, 4 holes | exact | -1.0173302 | ED [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-|  | best variational | -0.99709(1) (+2.0e-2) | VMC (Pfaffian) [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-|  | best projected | -1.00806(2) (+9.3e-3) | FN-GFMC (Pfaffian) [10.1103/PhysRevB.74.165122](https://doi.org/10.1103/PhysRevB.74.165122) |  |
-| square, 26 sites, J = 1, 4 holes | exact | -1.1749259 | ED [10.1103/PhysRevB.64.024512](https://doi.org/10.1103/PhysRevB.64.024512) |  |
-|  | best variational | -1.1724(1) (+2.5e-3) | VMC (Gutzwiller) [10.1103/PhysRevB.64.024512](https://doi.org/10.1103/PhysRevB.64.024512) |  |
-|  | best projected | -1.1706(1) (+4.3e-3) | FN-GFMC (Gutzwiller) [10.1103/PhysRevB.64.024512](https://doi.org/10.1103/PhysRevB.64.024512) |  |
-| square, 32 sites, J = 0.3, t&prime; = 0.3, t&Prime; = -0.2, 1 hole | exact | -0.4348005 | ED [10.1103/PhysRevB.73.075104](https://doi.org/10.1103/PhysRevB.73.075104) |  |
-| square, 32 sites, J = 0.3, t&prime; = 0.3, t&Prime; = -0.2, 2 holes | exact | -0.5188028 | ED [10.1103/PhysRevB.73.075104](https://doi.org/10.1103/PhysRevB.73.075104) |  |
-| square, 32 sites, J = 0.3, t&prime; = 0.3, t&Prime; = -0.2, 4 holes | exact | -0.6394265 | ED [10.1103/PhysRevB.73.075104](https://doi.org/10.1103/PhysRevB.73.075104) |  |
-| square 8x8, open, J = 0.333333, 1 hole | best variational | -0.380099 &#9675; | DMRG [10.1103/c75n-7j8f](https://doi.org/10.1103/c75n-7j8f) |  |
-| square 8x8, J = 0.2, 14 holes | best variational | -0.685(1) | Power-Lanczos [10.1016/S0022-3697(01)00112-3](https://doi.org/10.1016/S0022-3697(01)00112-3) |  |
-|  | best extrapolated | -0.690(5) | Power-Lanczos [10.1016/S0022-3697(01)00112-3](https://doi.org/10.1016/S0022-3697(01)00112-3) |  |
-| square 8x8, J = 0.4, 8 holes | best variational | -0.64266(8) | VMC (Gutzwiller) [10.1103/PhysRevLett.88.117002](https://doi.org/10.1103/PhysRevLett.88.117002) |  |
-|  | best projected | -0.66672(6) | FN-GFMC (Gutzwiller) [10.1103/PhysRevLett.88.117002](https://doi.org/10.1103/PhysRevLett.88.117002) |  |
-|  | best extrapolated | -0.671(1) | VMC (Gutzwiller) [10.1103/PhysRevLett.88.117002](https://doi.org/10.1103/PhysRevLett.88.117002) |  |
+| honeycomb-flake24, 24 sites, open, J = 0.333333, 1 hole | exact | -0.3441916 | ED [Cui et al. (2024)](https://doi.org/10.1103/physrevb.110.155111) |  |
+|  | best variational | -0.3366806 &#9675; (+7.5e-3) | VMC (phase string) [Cui et al. (2024)](https://doi.org/10.1103/physrevb.110.155111) |  |
+| honeycomb-flake24, 24 sites, open, J = 0.333333, 2 holes | exact | -0.4143583 | ED [Cui et al. (2024)](https://doi.org/10.1103/physrevb.110.155111) |  |
+|  | best variational | -0.398 &#9675; (+1.6e-2) | VMC (phase string) [Cui et al. (2024)](https://doi.org/10.1103/physrevb.110.155111) |  |
+| ladder 2x11, J = 0.5, 2 holes | exact | -0.5908993 | ED [Chiappa et al. (2001)](https://doi.org/10.1103/physrevb.63.115120) |  |
+| ladder 2x13, J = 0.5, 2 holes | exact | -0.5733713 | ED [Chiappa et al. (2001)](https://doi.org/10.1103/physrevb.63.115120) |  |
+| ladder 3x6, antiperiodic legs, J = 0.5, 1 hole | exact | -0.5781986 | ED [Rice et al. (1997)](https://doi.org/10.1103/physrevb.56.14655) |  |
+| ladder 3x6, antiperiodic legs, J = 0.5, 2 holes | exact | -0.6559335 | ED [Rice et al. (1997)](https://doi.org/10.1103/physrevb.56.14655) |  |
+| rectangular 6x16, periodic/open, J = 0.35, 8 holes | best variational | -0.5470833 &#9675; | DMRG [McCulloch et al. (2001)](https://doi.org/10.1080/13642810108208574) |  |
+|  | best extrapolated | -0.5484(5) | DMRG [McCulloch et al. (2001)](https://doi.org/10.1080/13642810108208574) |  |
+| square 4x4, open, J = 0.4, 2 holes | exact | -0.5643668 | ED [Dong et al. (2020)](https://doi.org/10.1038/s41535-020-0226-4) |  |
+|  | best variational | -0.56428(2) (+8.7e-5) | fPEPS [Dong et al. (2020)](https://doi.org/10.1038/s41535-020-0226-4) |  |
+| square, 18 sites, J = 0.4, 2 holes | exact | -0.6590431 | ED [Becca et al. (2001)](https://doi.org/10.1007/978-94-010-0771-9_18) |  |
+|  | best variational | -0.65904 (+3.1e-6) | VMC (Gutzwiller) [Becca et al. (2001)](https://doi.org/10.1007/978-94-010-0771-9_18) |  |
+| square, 26 sites, J = 0.3, 2 holes | exact | -0.5009718 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+|  | best variational | -0.48476(1) (+1.6e-2) | VMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+|  | best projected | -0.49445(2) (+6.5e-3) | FN-GFMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+| square, 26 sites, J = 0.4, 2 holes | exact | -0.5945167 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+|  | best variational | -0.57978(1) (+1.5e-2) | VMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+|  | best projected | -0.58881(2) (+5.7e-3) | FN-GFMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+| square, 26 sites, J = 0.5, 2 holes | exact | -0.6894488 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+|  | best variational | -0.67568(1) (+1.4e-2) | VMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+|  | best projected | -0.68434(3) (+5.1e-3) | FN-GFMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+| square, 26 sites, J = 0.6, 2 holes | exact | -0.7853745 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+|  | best variational | -0.77228(1) (+1.3e-2) | VMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+|  | best projected | -0.78062(3) (+4.8e-3) | FN-GFMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+| square, 26 sites, J = 0.8, 2 holes | exact | -0.9793539 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+|  | best variational | -0.96706(1) (+1.2e-2) | VMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+|  | best projected | -0.97505(3) (+4.3e-3) | FN-GFMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+| square, 26 sites, J = 1, 2 holes | exact | -1.1753789 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+|  | best variational | -1.16352(1) (+1.2e-2) | VMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+|  | best projected | -1.17136(2) (+4.0e-3) | FN-GFMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+| square, 26 sites, J = 0.3, 4 holes | exact | -0.6426164 | ED [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
+|  | best variational | -0.6387(1) (+3.9e-3) | VMC (Gutzwiller) [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
+|  | best projected | -0.6371(1) (+5.5e-3) | FN-GFMC (Gutzwiller) [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
+| square, 26 sites, J = 0.4, 4 holes | exact | -0.7143669 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+|  | best variational | -0.68946(1) (+2.5e-2) | VMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+|  | best projected | -0.70292(2) (+1.1e-2) | FN-GFMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+| square, 26 sites, J = 0.5, 4 holes | exact | -0.7881242 | ED [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
+|  | best variational | -0.7855(1) (+2.6e-3) | VMC (Gutzwiller) [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
+|  | best projected | -0.7841(1) (+4.0e-3) | FN-GFMC (Gutzwiller) [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
+| square, 26 sites, J = 0.6, 4 holes | exact | -0.8633713 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+|  | best variational | -0.84170(1) (+2.2e-2) | VMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+|  | best projected | -0.85348(3) (+9.9e-3) | FN-GFMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+| square, 26 sites, J = 0.8, 4 holes | exact | -1.0173302 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+|  | best variational | -0.99709(1) (+2.0e-2) | VMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+|  | best projected | -1.00806(2) (+9.3e-3) | FN-GFMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+| square, 26 sites, J = 1, 4 holes | exact | -1.1749259 | ED [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
+|  | best variational | -1.1724(1) (+2.5e-3) | VMC (Gutzwiller) [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
+|  | best projected | -1.1706(1) (+4.3e-3) | FN-GFMC (Gutzwiller) [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
+| square, 32 sites, J = 0.3, t&prime; = 0.3, t&Prime; = -0.2, 1 hole | exact | -0.4348005 | ED [Leung (2006)](https://doi.org/10.1103/physrevb.73.075104) |  |
+| square, 32 sites, J = 0.3, t&prime; = 0.3, t&Prime; = -0.2, 2 holes | exact | -0.5188028 | ED [Leung (2006)](https://doi.org/10.1103/physrevb.73.075104) |  |
+| square, 32 sites, J = 0.3, t&prime; = 0.3, t&Prime; = -0.2, 4 holes | exact | -0.6394265 | ED [Leung (2006)](https://doi.org/10.1103/physrevb.73.075104) |  |
+| square 8x8, open, J = 0.333333, 1 hole | best variational | -0.380099 &#9675; | DMRG [Cui et al. (2026)](https://doi.org/10.1103/c75n-7j8f) |  |
+| square 8x8, J = 0.2, 14 holes | best variational | -0.685(1) | Power-Lanczos [Shih et al. (2001)](https://doi.org/10.1016/s0022-3697(01)00112-3) |  |
+|  | best extrapolated | -0.690(5) | Power-Lanczos [Shih et al. (2001)](https://doi.org/10.1016/s0022-3697(01)00112-3) |  |
+| square 8x8, J = 0.4, 8 holes | best variational | -0.64266(8) | VMC (Gutzwiller) [Sorella et al. (2002)](https://doi.org/10.1103/physrevlett.88.117002) |  |
+|  | best projected | -0.66672(6) | FN-GFMC (Gutzwiller) [Sorella et al. (2002)](https://doi.org/10.1103/physrevlett.88.117002) |  |
+|  | best extrapolated | -0.671(1) | VMC (Gutzwiller) [Sorella et al. (2002)](https://doi.org/10.1103/physrevlett.88.117002) |  |
 
 </details>
 
