@@ -22,7 +22,7 @@ import { collect, classBest, shownBest, bestTagOf, lowestOf, noRecordKey, summar
 import { THEMES, W } from "./chart.mjs";
 import { citeRef, noteParts, codeRef, libraryRef, paperYear } from "./cite.mjs";
 import { sources } from "./enrich_sources.mjs";
-import { quote, shorten, MODELS, BOUNDARY, instanceLabel, byGeometry, noRecordReason, gapAbove } from "./readme_table.mjs";
+import { quote, storedDigits, shorten, MODELS, BOUNDARY, instanceLabel, byGeometry, noRecordReason, gapAbove } from "./readme_table.mjs";
 import { logoSvg, faviconSvg, LOGO_CSS } from "./logo.mjs";
 import { hoursOrEdOf, costFigureName, flopsFigureName, paramsFigureName } from "./cost.mjs";
 import { FRONTIER } from "./views.mjs";
@@ -215,14 +215,17 @@ function perSite(row, inst) {
 }
 
 // One significant digit of uncertainty, the energy truncated to match. readme_table.mjs
-// owns that convention; this only feeds it the converted numbers.
-const quoteRow = (row, inst) => quote(perSite(row, inst).energy, perSite(row, inst).sigma);
+// owns that convention; this only feeds it the converted numbers. An exact row without a sigma
+// is quoted to every digit its stored value carries, up to 16 (storedDigits).
+const exactDigits = row => row.bound_type === "exact" && row.sigma == null ? storedDigits(row.energy) : null;
+const quoteRow = (row, inst) => quote(perSite(row, inst).energy, perSite(row, inst).sigma, exactDigits(row));
 
 // `decimals` forces a row to be quoted at the precision of its class's best, so the two are
-// readable against each other.
+// readable against each other; an exact row never past its own digits.
 function energyCell(row, inst, decimals) {
   const { energy, sigma } = perSite(row, inst);
-  const q = decimals == null ? quote(energy, sigma) : { text: energy.toFixed(decimals) };
+  if (decimals != null && exactDigits(row) != null) decimals = Math.min(decimals, quoteRow(row, inst).decimals);
+  const q = decimals == null ? quoteRow(row, inst) : { text: energy.toFixed(decimals) };
   return `<span class="num">${q.text}</span>`;
 }
 
@@ -1793,6 +1796,9 @@ ${badgeRows("t")}
 @media (max-width: 640px) {
 .slider .track label { font-size: 0.7rem; }
 .slider .track .axis { display: none; }
+/* An exact energy to 16 digits leaves no room for the method beside it: the method goes below. */
+.best-box table.best tr { display: grid; grid-template-columns: auto 1fr; align-items: baseline; padding-bottom: 0.5rem; }
+.best-box table.best td:last-child { grid-column: 1 / -1; }
 ${badgeRows("p")}
 }
 ${TAB_CSS}

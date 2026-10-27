@@ -20,20 +20,34 @@ const VB_COUNT = /\d+ of QMBL’s \d+ rows \(\d+ %\)/;
 // Physics convention: one significant digit of uncertainty in parentheses, and the
 // energy quoted to exactly that decimal place, so the table shows no digits past the
 // error bar.
-export function quote(energy, sigma) {
+export function quote(energy, sigma, digits = null) {
   // A stated sigma of exactly 0 is how the upstream tables write "deterministic" on an
   // exact diagonalization. There is no last digit for it to qualify, and taking its
   // logarithm asks for infinitely many decimals, so it is quoted like a row with none.
   // Without a sigma the energy is quoted to at most 7 decimals with the padding zeros
-  // dropped, so a printed -0.4988 is not shown as -0.4988000.
+  // dropped, so a printed -0.4988 is not shown as -0.4988000. `digits`, the significant
+  // digits the stored value carries (storedDigits), lets an exact row show more decimals
+  // than 7, up to those digits.
   if (sigma == null || !(sigma > 0)) {
-    const text = energy.toFixed(7).replace(/\.?0+$/, "");
+    const own = digits == null || energy === 0 ? 0 : digits - 1 - Math.floor(Math.log10(Math.abs(energy)));
+    const text = energy.toFixed(Math.max(7, own)).replace(/\.?0+$/, "");
     return { text, decimals: text.split(".")[1]?.length ?? 0 };
   }
   const rounded = Number(sigma.toPrecision(1));
   const decimals = Math.max(0, -Math.floor(Math.log10(rounded)));
   const digit = Math.round(rounded * 10 ** decimals);
   return { text: `${energy.toFixed(decimals)}(${digit})`, decimals };
+}
+
+// The significant digits a stored energy carries, at most 16: the fewest whose rounding is within
+// one unit in the last place of the stored double, so a conversion's -84.23114880000001 counts 9
+// and a diagonalization's full -34.72989333759587 counts 16 (Bethe ansatz, 2026-10-27: exact
+// energies are shown to every digit double precision holds).
+export function storedDigits(x) {
+  if (!x) return 1;
+  const ulp = 2 ** (Math.floor(Math.log2(Math.abs(x))) - 52);
+  for (let s = 1; s < 16; s++) if (Math.abs(Number(x.toPrecision(s)) - x) <= ulp) return s;
+  return 16;
 }
 
 // Method strings run to 60+ characters; they are cut at a space or comma, as a cut
