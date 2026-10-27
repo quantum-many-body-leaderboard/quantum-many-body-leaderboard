@@ -891,13 +891,13 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square, 26 sites, J = 1, 2 holes | exact | -1.1753789 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
 |  | best variational | -1.16352(1) (+1.2e-2) | VMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
 |  | best projected | -1.17136(2) (+4.0e-3) | FN-GFMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
-| square, 26 sites, J = 0.3, 4 holes | exact | -0.6426164 | ED [Poilblanc (2001)](https://arxiv.org/abs/cond-mat/0009149), quoted in Sorella (2001) |  |
+| square, 26 sites, J = 0.3, 4 holes | exact | -0.6426164 | ED D. Poilblanc (unpublished), quoted in [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
 |  | best variational | -0.6387(1) (+3.9e-3) | VMC (Gutzwiller) [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
 |  | best projected | -0.6371(1) (+5.5e-3) | FN-GFMC (Gutzwiller) [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
 | square, 26 sites, J = 0.4, 4 holes | exact | -0.7143669 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
 |  | best variational | -0.68946(1) (+2.5e-2) | VMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
 |  | best projected | -0.70292(2) (+1.1e-2) | FN-GFMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
-| square, 26 sites, J = 0.5, 4 holes | exact | -0.7881242 | ED [Poilblanc (2001)](https://arxiv.org/abs/cond-mat/0009149), quoted in Sorella (2001) |  |
+| square, 26 sites, J = 0.5, 4 holes | exact | -0.7881242 | ED D. Poilblanc (unpublished), quoted in [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
 |  | best variational | -0.7855(1) (+2.6e-3) | VMC (Gutzwiller) [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
 |  | best projected | -0.7841(1) (+4.0e-3) | FN-GFMC (Gutzwiller) [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
 | square, 26 sites, J = 0.6, 4 holes | exact | -0.8633713 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
@@ -906,7 +906,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square, 26 sites, J = 0.8, 4 holes | exact | -1.0173302 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
 |  | best variational | -0.99709(1) (+2.0e-2) | VMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
 |  | best projected | -1.00806(2) (+9.3e-3) | FN-GFMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
-| square, 26 sites, J = 1, 4 holes | exact | -1.1749259 | ED [Poilblanc (2001)](https://arxiv.org/abs/cond-mat/0009149), quoted in Sorella (2001) |  |
+| square, 26 sites, J = 1, 4 holes | exact | -1.1749259 | ED D. Poilblanc (unpublished), quoted in [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
 |  | best variational | -1.1724(1) (+2.5e-3) | VMC (Gutzwiller) [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
 |  | best projected | -1.1706(1) (+4.3e-3) | FN-GFMC (Gutzwiller) [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
 | square, 32 sites, J = 0.3, t&prime; = 0.3, t&Prime; = -0.2, 1 hole | exact | -0.4348005 | ED [Leung (2006)](https://doi.org/10.1103/physrevb.73.075104) |  |
