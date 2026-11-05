@@ -48,13 +48,15 @@ An example row (J1-J2, square 10×10, J2 = 0.5), long text fields cut:
 
 A method is stored four ways (since 2026-10-23):
 - `method` is the algorithm: `VMC`, `FN-DMC`, `FN-GFMC`, `FP-DMC`, `CP-AFQMC`, `ph-AFQMC`,
-  `DMRG`, `ED`, `SSE QMC`, `CCSD`, `HF` and so on.
+  `DMRG`, `ED`, `SSE QMC`, `CCSD`, `HF` and so on. It never names a wave function: a
+  PEPS-type network is the ansatz, and the method is the algorithm that optimised it (`VMC`
+  for gradient optimisation with Monte Carlo sampling, `simple update`, `cluster update`,
+  `AD optimisation`, `DMRG²` on an isometric network).
 - `ansatz` is the wave function the algorithm evaluates or projects from, by a short name:
   `ViT`, `RBM + PP`, `SJ` (Slater-Jastrow), `SJB` (Slater-Jastrow-backflow), `Gutzwiller`.
   A projector's trial state is its ansatz (`FN-GFMC` with `PEPS`). It is `null` where the
   method has none: exact methods, coupled cluster, perturbation theory, RPA, FCIQMC, a
-  projector whose source names no trial state, and the tensor networks, whose name is their
-  ansatz (`DMRG`, `PEPS`, `TPS`). Every `VMC` row has one.
+  projector whose source names no trial state, and DMRG. Every `VMC` row has one.
 - `method_detail` holds what tells the row apart from other rows of that method and ansatz:
   architecture size, projection, Lanczos steps, what an extrapolation sends to zero, what a
   trial state is beyond its name. It never repeats the kind, the instance or the source.

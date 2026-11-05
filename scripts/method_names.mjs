@@ -889,7 +889,7 @@ Object.assign(NAMES, {
   "E_ED": ["ED", ""],
   "exact diagonalization": ["ED", ""],
   // Dc as the journal version states it (arXiv v1: Dc = 48).
-  "E_fPEPS (D = 12, Dc = 56)": ["fPEPS", "gradient optimisation with Monte Carlo sampling, contraction dimension Dc = 56", { bond_dimension: 12, family: "tensor network" }],
+  "E_fPEPS (D = 12, Dc = 56)": ["fPEPS", "gradient optimisation, contraction dimension Dc = 56", { bond_dimension: 12, family: "tensor network" }],
   "SU(2) DMRG, m = 500": ["DMRG", "symmetric: SU(2)", { bond_dimension: 500 }],
   "SU(2) DMRG, m = 800": ["DMRG", "symmetric: SU(2)", { bond_dimension: 800 }],
   "SU(2) DMRG, m = 1200": ["DMRG", "symmetric: SU(2)", { bond_dimension: 1200 }],
@@ -1007,16 +1007,15 @@ function track3Lookup(published) {
 // and show the detail on hover. On a projector row the trial state is the ansatz: its name
 // leaves the detail, and what the detail said beside the name stays there.
 
-// Names that are an algorithm of their own and carry no ansatz. A tensor network's name is its
-// ansatz (DMRG optimises an MPS), so it stays the method; a network on top of one (CNN-MPS, T-MPS,
-// PEPS + CNN) is optimised by VMC and is a VMC ansatz.
-const NO_ANSATZ = new Set(["DMRG", "ED", "SSE QMC", "QMC", "CT-QMC", "Exact solution", "AFQMC", "VAFQMC", "TPS", "PEPS",
+// Names that are an algorithm of their own and carry no ansatz. DMRG names its algorithm, so it
+// stays the method; a network on top of a tensor network (CNN-MPS, T-MPS, PEPS + CNN) is
+// optimised by VMC and is a VMC ansatz.
+const NO_ANSATZ = new Set(["DMRG", "ED", "SSE QMC", "QMC", "CT-QMC", "Exact solution", "AFQMC", "VAFQMC",
   "VQE", "CCD", "CCSD", "CCSDT", "CCSDTQ", "CCSDTQ5", "DCD", "TC-CCD", "TC-DCD", "lmCCD", "lmrCCD", "mCCD", "rmCCD",
   "rxmCCD", "MP2", "dRPA", "dRPA + SOSEX", "FCIQMC", "Transcorrelated FCIQMC", "CP-AFQMC", "ph-AFQMC",
-  // An isometric tensor network optimised by its own sweeps (arXiv:2112.08394), not by VMC; a
-  // fermionic PEPS (arXiv:1908.10000), named as a tensor network like PEPS; the power-Lanczos
-  // projection of arXiv:cond-mat/0104067, which names its RVB start state in the detail.
-  "isoTNS", "fPEPS", "Power-Lanczos",
+  // The power-Lanczos projection of arXiv:cond-mat/0104067, which names its RVB start state in
+  // the detail.
+  "Power-Lanczos",
   // Track 3 (RULES.md 13): basis-set quantum chemistry, embedding and Green's-function methods,
   // DMRG variants and the quantum-flow algorithms carry no ansatz.
   "FCI", "CASCI", "CCSD(T)", "RCCSD", "RCCSD(T)", "UCCSD", "UCCSD(T)", "MkMRCCSD", "MkMRCCSD(T)", "MRCI", "MRCI+Q",
@@ -1038,10 +1037,30 @@ const fromDetail = (detail, reference) => /backflow/.test(detail) ? "Jastrow + B
 // family their name gave them (FAMILY above, else views.mjs).
 export const ANSATZ_FAMILY = { "SJ": "classic VMC", "SJ + RBM": "RBM", "SJB + RBM": "RBM", "SJB": "backflow / Pfaffian", "HFDS": "backflow / Pfaffian",
   "HFDS-ViT": "transformer / ViT", "JBf-ViT": "transformer / ViT", "Gutzwiller": "classic VMC", "RVB": "classic VMC",
-  "PP": "classic VMC", "Jastrow + BF": "backflow / Pfaffian" };
+  "PP": "classic VMC", "Jastrow + BF": "backflow / Pfaffian", "PEPS": "tensor network", "fPEPS": "tensor network" };
+
+// A PEPS-type network is the ansatz; the method is the algorithm that optimised it, read from
+// each source (2026-11-05). Gradient optimisation with Monte Carlo sampling is VMC
+// (arXiv:1611.09467, 2309.10955, 1908.10000). Liu et al.'s other D = 10 row is simple-update
+// imaginary-time evolution. Wang, Gu, Verstraete & Wen (arXiv:1112.3331) evolve the TPS by
+// cluster update and sample its energy by VMC. Lin et al.'s PEPS-GFMC trial states
+// (arXiv:2406.12207) are iPEPS tensors minimised in energy by automatic differentiation. The
+// isoTNS energies of arXiv:2112.08394 come from its isoTNS DMRG (DMRG²).
+const TN_ANSATZ = new Set(["PEPS", "TPS", "fPEPS", "isoTNS"]);
+function tnAlgorithm(name, detail) {
+  if (name === "isoTNS") return ["DMRG²", detail];
+  if (name === "TPS") return ["cluster update", ["energy sampled by VMC", detail].filter(Boolean).join("; ")];
+  // Gradient optimisation first: "gradient optimization after simple update" is VMC from a
+  // simple-update start.
+  if (/gradient optimi[sz]ation|^finite$/.test(detail)) return ["VMC", detail];
+  if (/simple update$/.test(detail)) return ["simple update", detail.replace(/,? ?simple update$/, "")];
+  if (/^trial state of PEPS-GFMC/.test(detail)) return ["AD optimisation", detail];
+  throw new Error(`tensor network ${name} "${detail}": no algorithm known; read the source`);
+}
 
 // [method, ansatz, detail] for a named row.
 export function splitName(name, detail, { bound_type, reference = "" } = {}) {
+  if (TN_ANSATZ.has(name)) { const [method, d] = tnAlgorithm(name, detail || ""); return [method, name, d]; }
   const parts = (detail || "").split("; ").filter(Boolean);
   if (name === "Hartree-Fock") return ["HF", null, detail];
   if (PROJECTOR[name] || (/AFQMC/.test(name) && bound_type === "projected")) {

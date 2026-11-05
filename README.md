@@ -234,13 +234,13 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best variational | -0.5511135 (+3.4e-5) | VQE [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_16_P_0.4/vqe_noisy.sh) |
 | square 4x4, J2 = 0.45 | exact | -0.5382998 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_16_P_0.45/ed_netket.sh) |
 |  | best variational | -0.5382766 (+2.3e-5) | VQE [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_16_P_0.45/vqe.sh) |
-|  | best extrapolated | -0.5370(4) (+1.3e-3) | TPS [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
+|  | best extrapolated | -0.5370(4) (+1.3e-3) | cluster update (TPS) [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
 | square 4x4, J2 = 0.5 | exact | -0.5286202 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_16_P_0.5/ed_netket.sh) |
 |  | best variational | -0.5286202 (−<1e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_16_P_0.5/dmrg.sh) |
-|  | best extrapolated | -0.5268(4) (+1.8e-3) | TPS [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
+|  | best extrapolated | -0.5268(4) (+1.8e-3) | cluster update (TPS) [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
 | square 4x4, J2 = 0.6 | exact | -0.5258958 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_16_P_0.6/ed_netket.sh) |
 |  | best variational | -0.5258158 (+8.0e-5) | VQE [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_16_P_0.6/vqe.sh) |
-|  | best extrapolated | -0.518(2) (+8.2e-3) | TPS [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
+|  | best extrapolated | -0.518(2) (+8.2e-3) | cluster update (TPS) [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
 | square 4x4, J2 = 0.65 | exact | -0.5393825 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_16_P_0.65/ed_netket.sh) |
 |  | best variational | -0.5393444 (+3.8e-5) | VQE [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_16_P_0.65/vqe.sh) |
 | square 4x4, J2 = 0.7 | exact | -0.5638581 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_16_P_0.7/ed_netket.sh) |
@@ -279,7 +279,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best extrapolated | -0.49521(7) (−3.2e-5) | VMC (Gutzwiller) [Hu et al. (2013)](https://doi.org/10.48550/arxiv.1304.2630) |  |
 | square 6x6, J2 = 0.6 | exact | -0.4932386 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.6/ed_lattice_symmetries.sh) |
 |  | best variational | -0.49318(5) (+5.9e-5) | VMC (RBM) [Chen et al. (2022)](https://doi.org/10.48550/arxiv.2206.14307) |  |
-|  | best extrapolated | -0.488(1) (+5.3e-3) | TPS [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
+|  | best extrapolated | -0.488(1) (+5.3e-3) | cluster update (TPS) [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
 | square 6x6, J2 = 0.65 | exact | -0.5065879 | ED [Schulz et al. (1996)](https://arxiv.org/abs/cond-mat/9402061) |  |
 |  | best variational | -0.506299 &#9675; (+2.9e-4) | VMC (ViT) [Golubev et al. (2026)](https://doi.org/10.48550/arxiv.2606.04558) | *uses [NetKet](https://www.netket.org/)* |
 | square 6x6, J2 = 0.7 | exact | -0.5300012 | ED [Schulz et al. (1996)](https://doi.org/10.1051/jp1:1996236) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.7/ed_lattice_symmetries.sh) |
@@ -309,14 +309,14 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best extrapolated | -0.5262(1) | DMRG [Gong et al. (2013)](https://doi.org/10.48550/arxiv.1311.5962) |  |
 | square 8x8, J2 = 0.45 | best variational | -0.511331(1) | VMC (RBM + PP) [Nomura & Imada (2021)](https://doi.org/10.1103/physrevx.11.031034) | *uses [mVMC](https://github.com/issp-center-dev/mVMC)* |
 |  | best extrapolated | -0.5116(1) | DMRG [Gong et al. (2013)](https://doi.org/10.48550/arxiv.1311.5962) |  |
-| square 8x8, J2 = 0.48 | best extrapolated | -0.5034(4) | TPS [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
+| square 8x8, J2 = 0.48 | best extrapolated | -0.5034(4) | cluster update (TPS) [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
 | square 8x8, J2 = 0.5 | best variational | -0.498963(2) | VMC (RBM + PP) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | *uses [mVMC](https://github.com/issp-center-dev/mVMC)* |
 |  | best extrapolated | -0.4992(1) | DMRG [Gong et al. (2013)](https://doi.org/10.48550/arxiv.1311.5962) |  |
-| square 8x8, J2 = 0.52 | best extrapolated | -0.4941(1) | TPS [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
+| square 8x8, J2 = 0.52 | best extrapolated | -0.4941(1) | cluster update (TPS) [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
 | square 8x8, J2 = 0.55 | best variational | -0.488820(2) | VMC (RBM + PP) [Nomura & Imada (2021)](https://doi.org/10.1103/physrevx.11.031034) | *uses [mVMC](https://github.com/issp-center-dev/mVMC)* |
 |  | best extrapolated | -0.4891(1) | DMRG [Gong et al. (2013)](https://doi.org/10.48550/arxiv.1311.5962) |  |
 | square 8x8, J2 = 0.6 | best variational | -0.481606 &#9675; | VMC (ViT) [Golubev et al. (2026)](https://doi.org/10.48550/arxiv.2606.04558) | *uses [NetKet](https://www.netket.org/)* |
-|  | best extrapolated | -0.4808(9) | TPS [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
+|  | best extrapolated | -0.4808(9) | cluster update (TPS) [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
 | square 8x8, J2 = 0.65 | best variational | -0.498312 &#9675; | VMC (ViT) [Golubev et al. (2026)](https://doi.org/10.48550/arxiv.2606.04558) | *uses [NetKet](https://www.netket.org/)* |
 | square 8x8, J2 = 0.7 | best variational | -0.522091 &#9675; | VMC (ViT) [Golubev et al. (2026)](https://doi.org/10.48550/arxiv.2606.04558) | *uses [NetKet](https://www.netket.org/)* |
 | square 8x8, J2 = 0.8 | best variational | -0.57731 &#9675; | VMC (ViT) [Golubev et al. (2026)](https://doi.org/10.48550/arxiv.2606.04558) | *uses [NetKet](https://www.netket.org/)* |
@@ -345,17 +345,17 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square 10x10, J2 = 0.9 | best variational | -0.63417 &dagger; | VMC (ViT) [Golubev et al. (2026)](https://doi.org/10.48550/arxiv.2606.04558) | *uses [NetKet](https://www.netket.org/)* |
 | square 10x10, J2 = 1 | best variational | -0.69670(2) | VMC (RBM) [Chen et al. (2022)](https://doi.org/10.48550/arxiv.2206.14307) |  |
 | square 12x12, J2 = 0.44 | best variational | -0.51225 &#9675; | VMC (CNN) [Li et al. (2022)](https://doi.org/10.1109/tpds.2022.3145163) |  |
-| square 12x12, J2 = 0.45 | best extrapolated | -0.5088(1) | TPS [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
+| square 12x12, J2 = 0.45 | best extrapolated | -0.5088(1) | cluster update (TPS) [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
 | square 12x12, J2 = 0.46 | best variational | -0.50697 &#9675; | VMC (CNN) [Liang et al. (2023)](https://doi.org/10.1088/2632-2153/acc56a) |  |
 | square 12x12, J2 = 0.48 | best variational | -0.50183 &#9675; | VMC (CNN) [Liang et al. (2023)](https://doi.org/10.1088/2632-2153/acc56a) |  |
-|  | best extrapolated | -0.5008(1) | TPS [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
+|  | best extrapolated | -0.5008(1) | cluster update (TPS) [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
 | square 12x12, J2 = 0.5 | best variational | -0.496989 &#9675; | VMC (CNN) [Liang et al. (2023)](https://doi.org/10.1088/2632-2153/acc56a) |  |
-|  | best extrapolated | -0.4963(2) | TPS [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
-| square 12x12, J2 = 0.52 | best extrapolated | -0.4920(1) | TPS [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
+|  | best extrapolated | -0.4963(2) | cluster update (TPS) [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
+| square 12x12, J2 = 0.52 | best extrapolated | -0.4920(1) | cluster update (TPS) [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
 | square 12x12, J2 = 0.55 | best variational | -0.48607(1) | VMC (GCNN) [Roth et al. (2022)](https://doi.org/10.48550/arxiv.2211.07749) | *uses [NetKet](https://www.netket.org/)* |
-|  | best extrapolated | -0.4862(2) | TPS [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
+|  | best extrapolated | -0.4862(2) | cluster update (TPS) [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
 | square 12x12, J2 = 0.6 | best variational | -0.47715 &#9675; | VMC (CNN) [Liang et al. (2023)](https://doi.org/10.1088/2632-2153/acc56a) |  |
-|  | best extrapolated | -0.4784(3) | TPS [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
+|  | best extrapolated | -0.4784(3) | cluster update (TPS) [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
 | square 14x14, J2 = 0.4 | best variational | -0.52287(1) | VMC (Gutzwiller) [Hu et al. (2013)](https://doi.org/10.48550/arxiv.1304.2630) |  |
 |  | best extrapolated | -0.52351(2) | VMC (Gutzwiller) [Hu et al. (2013)](https://doi.org/10.48550/arxiv.1304.2630) |  |
 | square 14x14, J2 = 0.44 | best variational | -0.512 &#9675; | VMC (CNN) [Li et al. (2022)](https://doi.org/10.1109/tpds.2022.3145163) |  |
@@ -369,17 +369,17 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best extrapolated | -0.48696(5) | VMC (Gutzwiller) [Hu et al. (2013)](https://doi.org/10.48550/arxiv.1304.2630) |  |
 | square 14x14, J2 = 0.6 | best variational | -0.47678 &#9675; | VMC (CNN) [Liang et al. (2023)](https://doi.org/10.1088/2632-2153/acc56a) |  |
 | square 16x16, J2 = 0.44 | best variational | -0.51188 &#9675; | VMC (CNN) [Li et al. (2022)](https://doi.org/10.1109/tpds.2022.3145163) |  |
-| square 16x16, J2 = 0.45 | best extrapolated | -0.5087(1) | TPS [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
+| square 16x16, J2 = 0.45 | best extrapolated | -0.5087(1) | cluster update (TPS) [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
 | square 16x16, J2 = 0.46 | best variational | -0.50662 &#9675; | VMC (CNN) [Liang et al. (2023)](https://doi.org/10.1088/2632-2153/acc56a) |  |
 | square 16x16, J2 = 0.48 | best variational | -0.50147 &#9675; | VMC (CNN) [Liang et al. (2023)](https://doi.org/10.1088/2632-2153/acc56a) |  |
-|  | best extrapolated | -0.5008(2) | TPS [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
+|  | best extrapolated | -0.5008(2) | cluster update (TPS) [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
 | square 16x16, J2 = 0.5 | best variational | -0.4969140(5) | VMC (CNN-MPS) [Fan et al. (2026)](https://doi.org/10.48550/arxiv.2603.14425) |  |
-|  | best extrapolated | -0.4966(3) | TPS [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
-| square 16x16, J2 = 0.52 | best extrapolated | -0.4920(1) | TPS [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
+|  | best extrapolated | -0.4966(3) | cluster update (TPS) [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
+| square 16x16, J2 = 0.52 | best extrapolated | -0.4920(1) | cluster update (TPS) [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
 | square 16x16, J2 = 0.55 | best variational | -0.48565 &#9675; | VMC (CNN) [Liang et al. (2023)](https://doi.org/10.1088/2632-2153/acc56a) |  |
-|  | best extrapolated | -0.4859(4) | TPS [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
+|  | best extrapolated | -0.4859(4) | cluster update (TPS) [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
 | square 16x16, J2 = 0.6 | best variational | -0.47656 &#9675; | VMC (CNN) [Liang et al. (2023)](https://doi.org/10.1088/2632-2153/acc56a) |  |
-|  | best extrapolated | -0.4777(3) | TPS [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
+|  | best extrapolated | -0.4777(3) | cluster update (TPS) [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
 | square 18x18, J2 = 0.4 | best variational | -0.52259(1) | VMC (Gutzwiller) [Hu et al. (2013)](https://doi.org/10.48550/arxiv.1304.2630) |  |
 |  | best extrapolated | -0.52333(1) | VMC (Gutzwiller) [Hu et al. (2013)](https://doi.org/10.48550/arxiv.1304.2630) |  |
 | square 18x18, J2 = 0.44 | best variational | -0.51179 &#9675; | VMC (CNN) [Li et al. (2022)](https://doi.org/10.1109/tpds.2022.3145163) |  |
@@ -407,18 +407,18 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |---|---|---|---|---|
 | honeycomb 11x11 (242 sites), open, K = -1, J = 0, Gamma = 0 | exact | -0.1882584 | Exact solution [Lin et al. (2022)](https://doi.org/10.1103/physrevb.106.245102) |  |
 |  | best variational | -0.1820213 &#9675; (+6.2e-3) | DMRG [Lin et al. (2022)](https://doi.org/10.1103/physrevb.106.245102) |  |
-|  | best projected | -0.1867058 &#9675; (+1.6e-3) | isoTNS [Lin et al. (2022)](https://doi.org/10.1103/physrevb.106.245102) |  |
+|  | best projected | -0.1867058 &#9675; (+1.6e-3) | DMRG² (isoTNS) [Lin et al. (2022)](https://doi.org/10.1103/physrevb.106.245102) |  |
 | honeycomb 3x4 (24 sites), K = -1, J = 0, Gamma = 0 | exact | -0.1988727 | ED [Kurita et al. (2015)](https://doi.org/10.1103/physrevb.92.035122) |  |
 |  | best variational | -0.19887(2) (−2.3e-6) | VMC (PP) [Kurita et al. (2015)](https://doi.org/10.1103/physrevb.92.035122) |  |
 | honeycomb 4x4 (32 sites), K = -1, J = 0, Gamma = 0 | exact | -0.1963139 | ED [Kurita et al. (2015)](https://doi.org/10.1103/physrevb.92.035122) |  |
 |  | best variational | -0.19617(8) (+1.4e-4) | VMC (PP) [Kurita et al. (2015)](https://doi.org/10.1103/physrevb.92.035122) |  |
 | honeycomb 5x5 (50 sites), open, K = -1, J = 0, Gamma = 0 | exact | -0.178506 | Exact solution [Lin et al. (2022)](https://doi.org/10.1103/physrevb.106.245102) |  |
 |  | best variational | -0.1785027 &#9675; (+3.3e-6) | DMRG [Lin et al. (2022)](https://doi.org/10.1103/physrevb.106.245102) |  |
-|  | best projected | -0.1767248 &#9675; (+1.8e-3) | isoTNS [Lin et al. (2022)](https://doi.org/10.1103/physrevb.106.245102) |  |
+|  | best projected | -0.1767248 &#9675; (+1.8e-3) | DMRG² (isoTNS) [Lin et al. (2022)](https://doi.org/10.1103/physrevb.106.245102) |  |
 | honeycomb 6x6 (72 sites), periodic/open, K = 1, J = 0, Gamma = 0 | exact | -0.1891314 | Exact solution [Jin et al. (2021)](https://doi.org/10.1103/physrevb.104.l020409) |  |
 | honeycomb 7x7 (98 sites), open, K = -1, J = 0, Gamma = 0 | exact | -0.1835418 | Exact solution [Lin et al. (2022)](https://doi.org/10.1103/physrevb.106.245102) |  |
 |  | best variational | -0.1826 &#9675; (+9.4e-4) | DMRG [Lin et al. (2022)](https://doi.org/10.1103/physrevb.106.245102) |  |
-|  | best projected | -0.1824684 &#9675; (+1.1e-3) | isoTNS [Lin et al. (2022)](https://doi.org/10.1103/physrevb.106.245102) |  |
+|  | best projected | -0.1824684 &#9675; (+1.1e-3) | DMRG² (isoTNS) [Lin et al. (2022)](https://doi.org/10.1103/physrevb.106.245102) |  |
 | honeycomb-hex24, 24 sites, K = -1, J = 0, Gamma = 0 | exact | -0.1985125 | ED [Kurita et al. (2015)](https://doi.org/10.1103/physrevb.92.035122) |  |
 |  | best variational | -0.198510(6) (+2.1e-6) | VMC (PP) [Kurita et al. (2015)](https://doi.org/10.1103/physrevb.92.035122) |  |
 
@@ -452,7 +452,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square 16x16, J = 0.7, Jd = 1 | best variational | -0.37642 &#9675; | VMC (Gutzwiller) [Chen & Liu (2026)](https://doi.org/10.1103/hvlq-d179) |  |
 | square 16x16, J = 0.8, Jd = 1 | best variational | -0.448881 &#9675; | VMC (Transformer) [Viteritti et al. (2025)](https://doi.org/10.1103/physrevb.111.134411) |  |
 | square 18x18, J = 0.8, Jd = 1 | best variational | -0.448859 &#9675; | VMC (Transformer) [Viteritti et al. (2025)](https://doi.org/10.1103/physrevb.111.134411) |  |
-| square 20x20, open, J = 0.8, Jd = 1 | best variational | -0.442928(3) | PEPS [Liu et al. (2024)](https://doi.org/10.1103/physrevlett.133.026502) |  |
+| square 20x20, open, J = 0.8, Jd = 1 | best variational | -0.442928(3) | VMC (PEPS) [Liu et al. (2024)](https://doi.org/10.1103/physrevlett.133.026502) |  |
 | square-tilted, 32 sites, J = 0.677, Jd = 1 | exact | -0.375 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
 | square-tilted, 32 sites, J = 0.6772, Jd = 1 | exact | -0.375 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
 | square-tilted, 32 sites, J = 0.67724, Jd = 1 | exact | -0.375 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
@@ -870,7 +870,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | rectangular 6x16, periodic/open, J = 0.35, 8 holes | best variational | -0.5470833 &#9675; | DMRG [McCulloch et al. (2001)](https://doi.org/10.1080/13642810108208574) |  |
 |  | best extrapolated | -0.5484(5) | DMRG [McCulloch et al. (2001)](https://doi.org/10.1080/13642810108208574) |  |
 | square 4x4, open, J = 0.4, 2 holes | exact | -0.5643668 | ED [Dong et al. (2020)](https://doi.org/10.1038/s41535-020-0226-4) |  |
-|  | best variational | -0.56428(2) (+8.7e-5) | fPEPS [Dong et al. (2020)](https://doi.org/10.1038/s41535-020-0226-4) |  |
+|  | best variational | -0.56428(2) (+8.7e-5) | VMC (fPEPS) [Dong et al. (2020)](https://doi.org/10.1038/s41535-020-0226-4) |  |
 | square, 18 sites, J = 0.4, 2 holes | exact | -0.6590431 | ED [Becca et al. (2001)](https://doi.org/10.1007/978-94-010-0771-9_18) |  |
 |  | best variational | -0.65904 (+3.1e-6) | VMC (Gutzwiller) [Becca et al. (2001)](https://doi.org/10.1007/978-94-010-0771-9_18) |  |
 | square, 26 sites, J = 0.3, 2 holes | exact | -0.5009718 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
