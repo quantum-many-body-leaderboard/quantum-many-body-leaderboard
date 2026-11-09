@@ -740,7 +740,9 @@ loader, never by hand.
 | Hchain, Hsheet (track 3) | total energy, Hartree, nuclear repulsion included; periodic cells Ewald-summed (RULES.md 13.2) | per atom: divide by N (`n_sites` holds N) |
 
 An instance on a cluster that its source defines (the honeycomb, Shastry-Sutherland and t-J
-families) carries a `cluster` field: the shape in words and where the source defines it. A t-J
+families, and the 4 × 4 and 6 × 6 kagome tori, `scripts/add_clusters.mjs`) carries a `cluster`
+field: the shape in words and where the source defines it. Where a source gives no shape and QMBL
+infers it, the field says "inferred, not printed" and gives the evidence. A t-J
 instance carries `params` { t: 1, J, t2 (t′) and t3 (t″) where present, N_up, N_dn, nn_term: true }.
 A row read from a source whose Hamiltonian is the instance's times a factor (normalised couplings,
 or a t-J source in units of J) carries `normalised`: `{ factor, source_couplings, note }`. The
