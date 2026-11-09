@@ -379,4 +379,40 @@ for (const [bc, name, prog, method, sent, pauli, ours, dmrg, gap] of [
           agreement: `QMBL's own Bethe solver (mpmath, 70 and 90 digits), an independent solution of the same equations: ${ours}, relative difference below 1e-49; it reproduces the 20-site ${name} chain's ED row to all 16 digits` },
     } });
 
+// ---------------------------------------------------------------------------------------
+// Batch E: full CI QMBL ran itself where no published exact energy is carried (2026-10-09 rule of
+// batch B3). The open STO-3G hydrogen chains H4 ... H16 at R = 0.8 Å = 1.51178 bohr carry only
+// TenCirChem's UCCSD energies (arXiv:2303.10825, Table 1), which the paper measures against full CI
+// without printing it. checks/hchain-fci/fci_all.py (PySCF 2.14, 2026-10-21): protons on the z axis
+// at z_i = i x 0.8 Å, STO-3G (PySCF's default spherical form; s-only for hydrogen), RHF (conv_tol
+// 1e-12), then full CI in the RHF orbitals (conv_tol 1e-10); totals in hartree with the nuclear
+// repulsion. The same script reproduces all 31 published exact energies of the track-3 pass to their
+// printed digits, among them Motta et al.'s H10 STO-6G and the H12 STO-3G value at 1 Å of
+// arXiv:2505.08635 (checks/hchain-fci/comparison.md). Carried to 10 decimals, the convergence
+// tolerance. TenCirChem's energy minus its printed error agrees with these within the rounding of the
+// two columns (0.01 mHa) except at H10, where it is 0.03 mHa lower; the rows here are not changed by it.
+const HCHAIN_FCI = "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/d1019579/checks/hchain-fci";
+for (const [N, full, enuc, s2, uccsd, err] of [
+  [4, "-2.1675605441340533", "2.86637655915", "1.3e-31", "-2,167.55", "0.01"],
+  [6, "-3.2044118794841108", "5.754802168754997", "1.0e-30", "-3,204.14", "0.27"],
+  [8, "-4.243391012646839", "9.090508516161425", "5.9e-14", "-4,242.52", "0.88"],
+  [10, "-5.28355245181676", "12.75957550735178", "3.1e-13", "-5,282.21", "1.37"],
+  [12, "-6.3244185696268325", "16.694567410090322", "5.2e-13", "-6,322.29", "2.13"],
+  [14, "-7.365732865247676", "20.850820763198968", "1.3e-13", "-7,362.81", "2.92"],
+  [16, "-8.407347465980042", "25.196550571865973", "1.5e-13", "-8,403.63", "3.72"],
+]) {
+  const energy = +(+full).toFixed(10);
+  const vqe = +uccsd.replace(",", "") / 1000, implied = (+uccsd.replace(",", "") - +err).toFixed(2);
+  put(`Hchain/chain_${N}_O_R1.51178_sto3g`,
+    { model: "Hchain", lattice: "chain", n_sites: N, boundary: "O", params: { N_up: N / 2, N_dn: N / 2, R: 1.51178, basis: "STO-3G" }, dof: N, einf: null },
+    { energy, sigma: null,
+      src: { ref: `QMBL, checks/hchain-fci/ (full CI of the open H${N} chain in STO-3G at R = 0.8 Å, PySCF)`, pr: false },
+      method: "FCI", why: "full configuration interaction in the instance's basis, computed by QMBL; deterministic (RULES.md 13.4)",
+      read: `checks/hchain-fci/fci_all.py (PySCF 2.14: RHF with conv_tol 1e-12, then pyscf.fci.FCI in the RHF orbitals with conv_tol 1e-10), 16 CPU threads, 2026-10-21; results in checks/hchain-fci/results.jsonl`,
+      reported: `${full} (results.jsonl, field E; unit Angstrom, R 0.8, basis sto-3g)`,
+      note: `Total in hartree, nuclear repulsion included (${enuc}); E/N = ${(+full / N).toFixed(9)}. Geometry: ${N} protons on a line, spacing 0.8 Å = 1.51178 bohr (PySCF's bohr 0.52917721092 Å), open chain; STO-3G as PySCF ships it; S_z = 0, <S^2> = ${s2} (singlet). Carried to 10 decimals, the full CI convergence tolerance. The UCCSD row (TenCirChem, arXiv:2303.10825, Table 1, ${uccsd} mHa) lies ${((vqe - energy) * 1000).toFixed(2)} mHa above it; that table's energy minus its printed error vs FCI (${err} mHa) is ${implied} mHa.`,
+      source: "qmbl-verify-2026-10-21", checked: "2026-10-21" });
+}
+console.log("batch E: 7 exact rows computed by QMBL where none was published (STO-3G hydrogen chains H4-H16, R = 0.8 Å)");
+
 console.log(`added ${added} exact rows (${created} new instances)`);

@@ -1346,12 +1346,14 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 
 | instance | value | energy | method | code |
 |---|---|---|---|---|
-| H4 chain, open, R = 1.51178, STO-3G | best variational | -0.5418875 &#9675; | VQE [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
+| H4 chain, open, R = 1.51178, STO-3G | exact | -0.5418901 | FCI [QMBL check, checks/hchain-fci/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/hchain-fci) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/d1019579/checks/hchain-fci) |
+|  | best variational | -0.5418875 &#9675; (+2.6e-6) | VQE [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
 | H4 chain, open, R = 1.8, STO-6G | exact | -0.547595 | FCI [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
 |  | best variational | -0.547595 &#9675; (+<1e-6) | VMC (RBM) [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
 | H4 chain, open, R = 3.6, STO-6G | exact | -0.481645 | FCI [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
 |  | best variational | -0.481645 &#9675; (+<1e-6) | VMC (RBM) [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
-| H6 chain, open, R = 1.51178, STO-3G | best variational | -0.5340233 &#9675; | VQE [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
+| H6 chain, open, R = 1.51178, STO-3G | exact | -0.5340686 | FCI [QMBL check, checks/hchain-fci/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/hchain-fci) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/d1019579/checks/hchain-fci) |
+|  | best variational | -0.5340233 &#9675; (+4.5e-5) | VQE [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
 | H6 chain, open, R = 1.8, STO-6G | exact | -0.5444567 | FCI [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
 |  | best variational | -0.5444567 &#9675; (+<1e-7) | VMC (RBM) [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
 |  | best approximate | -0.5444567 &#9675; (+<1e-7) | CCSD(T) [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
@@ -1367,7 +1369,8 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best projected | -0.4929 &#9675; (+3.3e-5) | CCSDTQ [Kowalski & Bauman (2023)](https://doi.org/10.1103/physrevlett.131.200601) |  |
 | H6 chain, open, R = 3.6, STO-6G | exact | -0.4817533 | FCI [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
 |  | best variational | -0.4817517 &#9675; (+1.7e-6) | VMC (RBM) [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
-| H8 chain, open, R = 1.51178, STO-3G | best variational | -0.530315 &#9675; | VQE [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
+| H8 chain, open, R = 1.51178, STO-3G | exact | -0.5304239 | FCI [QMBL check, checks/hchain-fci/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/hchain-fci) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/d1019579/checks/hchain-fci) |
+|  | best variational | -0.530315 &#9675; (+1.1e-4) | VQE [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
 | H8 chain, open, R = 1.8, STO-6G | exact | -0.543135 | FCI [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
 |  | best variational | -0.5431337 &#9675; (+1.3e-6) | VMC (RBM) [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
 |  | best approximate | -0.543125 &#9675; (+1.0e-5) | CCSD(T) [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
@@ -1444,7 +1447,8 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best projected | -0.52051(5) (−5.9e-7) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 |  | best approximate | -0.520492 &#9675; (+1.7e-5) | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 | H10 chain, open, R = 1.41729, STO-6G | exact | -0.522856 | FCI [Stair & Evangelista (2020)](https://doi.org/10.1063/5.0014928) |  |
-| H10 chain, open, R = 1.51178, STO-3G | best variational | -0.528221 &#9675; | VQE [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
+| H10 chain, open, R = 1.51178, STO-3G | exact | -0.5283552 | FCI [QMBL check, checks/hchain-fci/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/hchain-fci) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/d1019579/checks/hchain-fci) |
+|  | best variational | -0.528221 &#9675; (+1.3e-4) | VQE [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
 | H10 chain, open, R = 1.6, cc-pV5Z | best variational | -0.5368359 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 |  | best projected | -0.5629322 &#9675; | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 | H10 chain, open, R = 1.6, cc-pVDZ | best variational | -0.55702 &#9675; | DMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
@@ -1581,15 +1585,18 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best projected | -0.4818701 &#9675; (+<1e-7) | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 |  | best approximate | -0.4809595 &#9675; (+9.1e-4) | UCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 | H10 chain, open, R = 3.77945, STO-6G | exact | -0.4790989 | FCI [Stair & Evangelista (2020)](https://doi.org/10.1063/5.0014928) |  |
-| H12 chain, open, R = 1.51178, STO-3G | best variational | -0.5268575 &#9675; | VQE [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
+| H12 chain, open, R = 1.51178, STO-3G | exact | -0.5270349 | FCI [QMBL check, checks/hchain-fci/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/hchain-fci) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/d1019579/checks/hchain-fci) |
+|  | best variational | -0.5268575 &#9675; (+1.8e-4) | VQE [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
 | H12 chain, open, R = 1.8, STO-6G | exact | -0.5420192 | FCI [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
 |  | best variational | -0.5420125 &#9675; (+6.7e-6) | VMC (RBM) [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
 |  | best approximate | -0.5419892 &#9675; (+3.0e-5) | CCSD(T) [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
 | H12 chain, open, R = 1.88973, STO-3G | exact | -0.5377347 | ED [Huang et al. (2026)](https://doi.org/10.1088/0256-307x/43/4/040708) |  |
 | H12 chain, open, R = 3.6, STO-6G | exact | -0.4819042 | FCI [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
 |  | best variational | -0.4819025 &#9675; (+1.7e-6) | VMC (RBM) [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
-| H14 chain, open, R = 1.51178, STO-3G | best variational | -0.525915 &#9675; | VQE [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
-| H16 chain, open, R = 1.51178, STO-3G | best variational | -0.5252269 &#9675; | VQE [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
+| H14 chain, open, R = 1.51178, STO-3G | exact | -0.5261238 | FCI [QMBL check, checks/hchain-fci/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/hchain-fci) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/d1019579/checks/hchain-fci) |
+|  | best variational | -0.525915 &#9675; (+2.1e-4) | VQE [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
+| H16 chain, open, R = 1.51178, STO-3G | exact | -0.5254592 | FCI [QMBL check, checks/hchain-fci/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/hchain-fci) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/d1019579/checks/hchain-fci) |
+|  | best variational | -0.5252269 &#9675; (+2.3e-4) | VQE [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00319) | [tencent-quantum-lab/TenCirChem](https://github.com/tencent-quantum-lab/TenCirChem) |
 | H20 chain, open, R = 3.6, STO-6G | best projected | -0.481978(1) | FCIQMC [Guther et al. (2020)](https://doi.org/10.1063/5.0005754) | [ghb24/NECI_STABLE](https://github.com/ghb24/NECI_STABLE) |
 | H22 chain, open, R = 1, STO-6G | best projected | -0.357541(9) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 | H22 chain, open, R = 1.4, STO-6G | best projected | -0.51444(1) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
@@ -1944,7 +1951,7 @@ Rules: [RULES.md](RULES.md). Units, conventions, error metrics, provenance and d
 
 To cite the data itself, use the Zenodo concept DOI, which resolves to the latest release: [10.5281/zenodo.22753734](https://doi.org/10.5281/zenodo.22753734).
 
-530 of QMBL’s 4642 rows (11 %) are imported from VarBench, the dataset published with the V-score paper. If you use an imported energy, cite that paper too:
+530 of QMBL’s 4649 rows (11 %) are imported from VarBench, the dataset published with the V-score paper. If you use an imported energy, cite that paper too:
 
 > D. Wu *et al.*, *Variational benchmarks for quantum many-body problems*,
 > Science **386**, 296 (2024). [10.1126/science.adg9774](https://doi.org/10.1126/science.adg9774)
