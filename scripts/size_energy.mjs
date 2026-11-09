@@ -161,7 +161,15 @@ function stripFigure(f) {
     // The facets as groups along the axis: each labelled over its stops, a hairline between
     // neighbours.
     f.facets.forEach((x, g) => {
-      parts.push(text((x.stops[0].x + x.stops.at(-1).x) / 2, labelY, x.label, { size: 10.5, fill: t.ink2, anchor: "middle", weight: 600 }));
+      // A label wider than its facet's columns wraps at its commas onto up to four lines, so that
+      // neighbouring facets' labels never run into each other (about 6.2 px a character at 10.5 px).
+      const room = x.stops.at(-1).x - x.stops[0].x + f.pitch - 8, fits = str => str.length * 6.2 <= room;
+      const lines = [];
+      for (const part of fits(x.label) ? [x.label] : x.label.split(", ")) {
+        if (lines.length && fits(`${lines.at(-1)}, ${part}`)) lines[lines.length - 1] += `, ${part}`;
+        else lines.push(part);
+      }
+      lines.slice(0, 4).forEach((l, i) => parts.push(text((x.stops[0].x + x.stops.at(-1).x) / 2, labelY + 12 * i, l, { size: 10.5, fill: t.ink2, anchor: "middle", weight: 600 })));
       if (g) parts.push(`<path d="M${n((f.facets[g - 1].stops.at(-1).x + x.stops[0].x) / 2)} ${labelY + 8}V${bottom}" stroke="${t.grid}" stroke-width="1" stroke-dasharray="3 3"/>`);
     });
     let k = 0;
