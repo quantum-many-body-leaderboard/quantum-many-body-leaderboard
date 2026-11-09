@@ -352,17 +352,20 @@ console.log(`batch C: ${added - beforeC[0]} exact rows (${created - beforeC[1]} 
 // QMBL on 2026-10-27 (50 digits, S.S units); an unpublished exact solution (RULES.md 8.3,
 // 2026-11-09). QMBL's own Bethe solver (checks/bethe-heisenberg-chain/) re-evaluates them: the two
 // agree to a relative 1e-49, and the same solver reproduces the 20-site ED rows to all 16 digits.
-// Pauli totals, 4 x the S.S energy.
-const BETHE = { code: "https://github.com/Uni20-dev/bethe", commit: "76b33884" };
+// Pauli totals, 4 x the S.S energy. The commit is the library's main branch when the values were
+// sent. The method papers are the ones the library's CITATIONS.md names for each program: Karbach,
+// Hu & Muller, Computers in Physics 12, 565 (1998), arXiv:cond-mat/9809163, Eqs. (6)-(9) (periodic);
+// Mei & Bolech, Phys. Rev. E 95, 032127 (2017), arXiv:1609.08045, Eqs. (11)-(12) (open).
+const BETHE = { code: "https://github.com/Uni20-dev/bethe", commit: "5909c21" };
 const BETHE_CHECK = "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/1ca5cbf4/checks/bethe-heisenberg-chain";
-for (const [bc, name, prog, sent, pauli, ours, dmrg, gap] of [
-  ["O", "open", "bethe-xxx-obc", "-88.44155556950091289093195216050812503118715776351299", "-353.76622227800365156372780864203250012474863105405196", "-353.76622227800365156372780864203250012474863105405", "-353.766222278", "3.7e-12"],
-  ["P", "periodic", "bethe-xxx-pbc", "-88.6335532522416202610829833054283564902576889217038", "-354.5342130089664810443319332217134259610307556868152", "-354.53421300896648104433193322171342596103075568681", "-354.534213002", "7.0e-9"],
+for (const [bc, name, prog, method, sent, pauli, ours, dmrg, gap] of [
+  ["O", "open", "bethe-xxx-obc", "Bethe ansatz (Mei & Bolech 2017)", "-88.44155556950091289093195216050812503118715776351299", "-353.76622227800365156372780864203250012474863105405196", "-353.76622227800365156372780864203250012474863105405", "-353.766222278", "3.7e-12"],
+  ["P", "periodic", "bethe-xxx-pbc", "Bethe ansatz (Karbach, Hu & Muller 1998)", "-88.6335532522416202610829833054283564902576889217038", "-354.5342130089664810443319332217134259610307556868152", "-354.53421300896648104433193322171342596103075568681", "-354.534213002", "7.0e-9"],
 ]) put(`Heisenberg/chain_200_${bc}`,
   { model: "Heisenberg", lattice: "chain", n_sites: 200, boundary: bc, params: {}, dof: 200, einf: 0 },
   { energy: +pauli, sigma: null,
     src: { ref: `I. P. McCulloch, ${BETHE.code} @ ${BETHE.commit} (Bethe ansatz, ${name} chain; unpublished, sent to QMBL on 2026-10-27)`, pr: false },
-    method: "Bethe ansatz", why: `Bethe-ansatz solution of the ${name} chain; deterministic (RULES.md 8.3, exact solution)`,
+    method, why: `Bethe-ansatz solution of the ${name} chain; deterministic (RULES.md 8.3, exact solution)`,
     read: "values sent by mail with the build and run commands, re-evaluated by QMBL (RULES.md 8.3)",
     reported: `${sent} (S.S units, total, 50 digits, as sent)`,
     note: `Pauli total = 4 x ${sent} = ${pauli}. The DMRG row, ${dmrg}, lies ${gap} above it.`,
