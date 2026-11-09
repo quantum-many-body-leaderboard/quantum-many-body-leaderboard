@@ -376,7 +376,8 @@ function drawPanel(t, parts, inst, pts, { px, left, right, top, bottom, xLabel, 
   // else by class, else counted, so a narrow panel of the overview keeps one short line.
   if (undrawn.length) {
     const tagOf = ([tag, r]) => tag === "exact" ? boundLabel(r) : tag;
-    const full = `${undrawn.map(x => `${tagOf(x)}: ${(x[1].energy / perSiteDivisor(inst)).toFixed(6).replace("-", "−")} (${markName(x[1])})`).join("; ")}, no cost stated, not drawn`;
+    // Inside the note's brackets a label's own bracket becomes a comma: "(ED, QMBL)", not "(ED (QMBL))".
+    const full = `${undrawn.map(x => `${tagOf(x)}: ${(x[1].energy / perSiteDivisor(inst)).toFixed(6).replace("-", "−")} (${markName(x[1]).replace(/ \(([^()]*)\)$/, ", $1")})`).join("; ")}, no cost stated, not drawn`;
     const short = `no cost stated, not drawn: ${undrawn.map(tagOf).join(", ")}`;
     const line = undrawn.length === 1 || textWidth(full, 9.5) <= right - left ? full
       : textWidth(short, 9.5) <= right - left ? short : `${undrawn.length} best values state no cost and are not drawn`;

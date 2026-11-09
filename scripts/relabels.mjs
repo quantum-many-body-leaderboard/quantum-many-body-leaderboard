@@ -39,6 +39,7 @@ export const RELABELS = [
     keep: [{ method: "DMRG (MaxBondDim ~3200)", energy: -17.69623,
       why: "its run script sets U = 3.5981. It sits 5.05e-6 above the ground state at that U (variance per unit energy error 0.41), and 1.80e-3 above the one at 3.59381366." }],
     exact: [-17.69623505010233, -17.696235050104434],
+    computed_by: "qmbl",
   },
   {
     from: "Hubbard/square_16_P_5_3.5981", to: "Hubbard/square_16_P_5_3.59381366", params: { U: 3.59381366 },
@@ -46,6 +47,7 @@ export const RELABELS = [
     keep: [{ method: "DMRG (MaxBondDim = 7000)", energy: -19.88822918,
       why: "its run script sets U = 3.5981. It sits 1.45e-8 above the ground state at that U (variance per unit energy error 20), and 3.41e-3 above the one at 3.59381366." }],
     exact: [-19.88822919448899, -19.88822919445522],
+    computed_by: "qmbl",
   },
   {
     from: "Hubbard/square_16_P_5_2.1544", to: "Hubbard/square_16_P_5_2.15443469", params: { U: 2.15443469 },
@@ -53,6 +55,7 @@ export const RELABELS = [
     keep: [{ method: "DMRG (MaxBondDim 7000)", energy: -21.2122722,
       why: "its run script sets U = 2.1544. It sits 3.21e-8 above the ground state at that U (variance per unit energy error 0.81), and 3.64e-5 below the one at 2.15443469, which no variational energy can." }],
     exact: [-21.212272232092317, -21.212272232074348],
+    computed_by: "qmbl",
   },
   {
     from: "Hubbard/square_16_P_5_7.74264", to: "Hubbard/square_16_P_5_7.74263683", params: { U: 7.74263683 },
@@ -60,6 +63,7 @@ export const RELABELS = [
     keep: [{ method: "DMRG (MaxBondDim = 7000)", energy: -17.6037303,
       why: "its run script sets U = 7.74264. It sits 8.0e-8 above the ground state at that U (variance per unit energy error 45), and 1.26e-6 above the one at 7.74263683." }],
     exact: [-17.603730380085874, -17.603730380008766],
+    computed_by: "qmbl",
   },
   {
     // The DMRG run script here is a copy of the U = 10 file, so the script does not say at which U the
@@ -71,6 +75,7 @@ export const RELABELS = [
     keep: [{ method: "DMRG (MaxBondDim ~3200)", energy: -16.5091541,
       why: "its run script is a copy of the U = 10 file, but the sibling 5 + 5 script sets U = 7.74264, and the variance-to-error ratio of the 4 + 4 DMRG series (0.35, 0.92, 1.08, 1.4, 1.8 at U = 2, 4, 6, 8, 10) predicts about 1.3 here, which the row meets at U = 7.74264 (1.16) and misses at 7.74263683 (0.18). It sits 1.1e-7 above the ground state at 7.74264 and 7.3e-7 above the one at 7.74263683." }],
     exact: [-16.509154214876222, -16.50915421487304],
+    computed_by: "qmbl",
   },
   {
     // Ground states at the two couplings differ by 3.0e-9. The DMRG row, run at 4.64158882, resolves
