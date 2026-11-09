@@ -143,15 +143,21 @@ for (const m of fs.readdirSync("data")) {
             if (/normali[sz]ed|equivalent|h100_eq/i.test(k)) issues.push(`COMPUTE ${at}: normalised field ${k}; DATA.md forbids normalisation`);
         }
       }
-      // A row QMBL computed itself (DATA.md, `computed_by`) must name its run and carry the
-      // measured cost; any other row that carries the field is an issue.
+      // A row QMBL computed itself (DATA.md, `computed_by`) must name its run: a cost run its
+      // checks/cost/ run and the measured cost, an exact row its checks/ folder and the code at a
+      // commit; any other row that carries the field is an issue.
       if (r.computed_by != null) {
         if (r.computed_by !== "qmbl") issues.push(`RUN ${at}: computed_by ${r.computed_by}`);
-        if (!/checks\/cost\//.test(r.reference || "")) issues.push(`RUN ${at}: reference does not name checks/cost/`);
         if (r.baseline) issues.push(`RUN ${at}: both computed_by and baseline`);
-        const c = r.compute;
-        if (!c || (c.gpu_hours == null && c.cpu_core_hours == null) || !c.device || c.scope !== "row" || !/checks\/cost\/results\//.test(c.source || ""))
-          issues.push(`RUN ${at}: QMBL run without a measured compute block (hours, device, scope row, results file)`);
+        if (r.bound_type === "exact" && !/checks\/cost\//.test(r.reference || "")) {
+          if (!/^QMBL, checks\/[^\s/]+\//.test(r.reference || "")) issues.push(`RUN ${at}: exact row does not name its QMBL checks/ folder`);
+          if (!r.artifacts?.code || !/^[0-9a-f]{7,40}$/.test(r.artifacts?.commit || "")) issues.push(`RUN ${at}: exact row without its code at a commit`);
+        } else {
+          if (!/checks\/cost\//.test(r.reference || "")) issues.push(`RUN ${at}: reference does not name checks/cost/`);
+          const c = r.compute;
+          if (!c || (c.gpu_hours == null && c.cpu_core_hours == null) || !c.device || c.scope !== "row" || !/checks\/cost\/results\//.test(c.source || ""))
+            issues.push(`RUN ${at}: QMBL run without a measured compute block (hours, device, scope row, results file)`);
+        }
         if (!r.verified?.reported_as) issues.push(`RUN ${at}: QMBL run without verified.reported_as`);
         const leak = leaksIn(JSON.stringify(r));
         if (leak.length) issues.push(`RUN ${at}: names the cluster (${leak.join(", ")}); public text names the hardware only`);

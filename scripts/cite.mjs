@@ -97,7 +97,7 @@ const REPO = "https://github.com/quantum-many-body-leaderboard/quantum-many-body
 // check its checks/ folder (2026-10-26).
 const qmblRef = row => {
   const dir = (row.reference || "").match(/^QMBL, (checks\/[^\s/]+)\//)?.[1];
-  if (row.computed_by === "qmbl" || dir === "checks/cost")
+  if (dir === "checks/cost" || (row.computed_by === "qmbl" && !dir))
     return { text: "QMBL cost-to-reproduce run, checks/cost/", url: `${REPO}/tree/main/checks/cost` };
   return { text: `QMBL check, ${dir}/`, url: `${REPO}/tree/main/${dir}` };
 };
@@ -188,7 +188,7 @@ export function codeRef(row) {
   const a = row.artifacts;
   if (!a?.code) return null;
   const url = a.code;
-  if (row.computed_by === "qmbl") return { text: "rerun (QMBL code)", url: `${REPO}/blob/main/checks/cost/README.md#rerun-a-row` };
+  if (row.computed_by === "qmbl" && /checks\/cost\//.test(row.reference || "")) return { text: "rerun (QMBL code)", url: `${REPO}/blob/main/checks/cost/README.md#rerun-a-row` };
   if (row.provenance === "unpublished" && a.commit && !a.checkpoint) {
     const gh = url.match(/^https:\/\/github\.com\/([^/]+)\/([^/#?]+)/);
     return { text: gh ? `${gh[1]}/${gh[2]}` : new URL(url).hostname, url: `${url}/tree/${a.commit}` };

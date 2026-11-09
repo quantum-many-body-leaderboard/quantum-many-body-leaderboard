@@ -411,7 +411,7 @@ for (const [N, full, enuc, s2, uccsd, err] of [
       read: `checks/hchain-fci/fci_all.py (PySCF 2.14: RHF with conv_tol 1e-12, then pyscf.fci.FCI in the RHF orbitals with conv_tol 1e-10), 16 CPU threads, 2026-10-21; results in checks/hchain-fci/results.jsonl`,
       reported: `${full} (results.jsonl, field E; unit Angstrom, R 0.8, basis sto-3g)`,
       note: `Total in hartree, nuclear repulsion included (${enuc}); E/N = ${(+full / N).toFixed(9)}. Geometry: ${N} protons on a line, spacing 0.8 Å = 1.51178 bohr (PySCF's bohr 0.52917721092 Å), open chain; STO-3G as PySCF ships it; S_z = 0, <S^2> = ${s2} (singlet). Carried to 10 decimals, the full CI convergence tolerance. The UCCSD row (TenCirChem, arXiv:2303.10825, Table 1, ${uccsd} mHa) lies ${((vqe - energy) * 1000).toFixed(2)} mHa above it; that table's energy minus its printed error vs FCI (${err} mHa) is ${implied} mHa.`,
-      source: "qmbl-verify-2026-10-21", checked: "2026-10-21" });
+      source: "qmbl-verify-2026-10-21", checked: "2026-10-21", fields: { computed_by: "qmbl" } });
 }
 console.log("batch E: 7 exact rows computed by QMBL where none was published (STO-3G hydrogen chains H4-H16, R = 0.8 Å)");
 

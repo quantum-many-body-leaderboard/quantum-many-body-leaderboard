@@ -431,7 +431,9 @@ reference calculations of the common ansätze on one machine under one protocol
 ([`checks/cost/`](checks/cost/README.md)), so the cost axes have points that are comparable
 across methods. The same reading and the same eligibility apply: the row ranks, can be the
 best of its class, and is cited to its run script, job and commit. A QMBL best value means no
-published energy of that class on that instance is lower.
+published energy of that class on that instance is lower. An exact energy QMBL computed where none is
+published (full CI, exact diagonalization) carries the field too, and is cited to its `checks/`
+folder and commit.
 
 ### 8.3 Unpublished results
 
