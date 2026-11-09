@@ -136,8 +136,11 @@ export function citeRef(row, cache = sources()) {
   // An unpublished exact solution (RULES.md 8.3): the person who computed it, then the code at the commit.
   const sol = row.provenance === "unpublished" && !row.artifacts?.checkpoint && row.artifacts?.code;
   if (sol) {
-    const a = row.artifacts, who = (row.reference || "").split(", https://")[0];
-    return { text: `${who} (unpublished)`, url: null, also: { text: `${a.code.replace(/^https:\/\/github\.com\//, "")} @ ${a.commit}`, url: `${a.code}/tree/${a.commit}` } };
+    // Short like a paper's "Author (year)": the surname and the year sent, linked to the code at the
+    // commit; the row's badge says unpublished, the code column links the code and QMBL's check.
+    const a = row.artifacts, who = (row.reference || "").split(", https://")[0].split(" ").at(-1);
+    const year = (row.source || "").match(/(\d{4})-\d{2}-\d{2}$/)?.[1] ?? (row.verified?.checked_on || "").slice(0, 4);
+    return { text: `${who} (${year})`, url: `${a.code}/tree/${a.commit}` };
   }
   const s = sourceOf(row, cache);
   const q = quotedIn(row, cache, s);
