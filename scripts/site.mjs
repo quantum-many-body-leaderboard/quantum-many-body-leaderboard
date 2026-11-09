@@ -20,7 +20,7 @@ import { perSiteDivisor, perSiteLabel, boundLabel, stochasticExact, publishedMet
 import { collectTDL, tdlLabel } from "./tdl.mjs";
 import { collect, classBest, shownBest, bestTagOf, lowestOf, noRecordKey, summarize, rowId, sameExactRows } from "./summary.mjs";
 import { THEMES, W } from "./chart.mjs";
-import { citeRef, noteParts, codeRef, libraryRef, paperYear } from "./cite.mjs";
+import { citeRef, noteParts, codeRef, checkRef, libraryRef, paperYear } from "./cite.mjs";
 import { sources } from "./enrich_sources.mjs";
 import { quote, storedDigits, shorten, MODELS, BOUNDARY, instanceLabel, byGeometry, noRecordReason, gapAbove } from "./readme_table.mjs";
 import { logoSvg, faviconSvg, LOGO_CSS } from "./logo.mjs";
@@ -280,7 +280,7 @@ const flagBadge = r => {
 
 function citeHtml(row) {
   // An unpublished row (RULES.md 8.3) cites its code at the commit and its checkpoint.
-  if (row.provenance === "unpublished" && row.artifacts) {
+  if (row.provenance === "unpublished" && row.artifacts?.checkpoint) {
     const a = row.artifacts, repo = a.code.replace(/^https:\/\/github\.com\//, "");
     return `<a href="${esc(`${a.code}/tree/${a.commit}`)}">${esc(`${repo} @ ${a.commit}`)}</a>, <a href="${esc(a.checkpoint)}">checkpoint</a>`;
   }
@@ -313,8 +313,8 @@ function methodCell(r) {
 // The code column: the code behind the row where its source names one (DATA.md), else, in
 // muted text, the libraries its source says the authors used, else empty.
 function codeHtml(row) {
-  const c = codeRef(row);
-  if (c) return `<a href="${esc(c.url)}">${esc(c.text)}</a>`;
+  const c = codeRef(row), check = checkRef(row);
+  if (c) return `<a href="${esc(c.url)}">${esc(c.text)}</a>${check ? `, <a href="${esc(check.url)}">${esc(check.text)}</a>` : ""}`;
   const l = libraryRef(row);
   if (!l) return "";
   const links = l.shown.map(x => `<a href="${esc(x.url)}">${esc(x.text)}</a>`).join(", ");

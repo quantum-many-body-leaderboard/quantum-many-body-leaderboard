@@ -149,6 +149,13 @@ A row admitted under [RULES.md §8.3](RULES.md#83-unpublished-results) has
 The validator requires all of these, and checks the three-error-bar agreement where both
 error bars exist.
 
+A deterministic exact solution (RULES.md §8.3, `bound_type: "exact"` and no `sigma`) needs only
+`artifacts.code`, `artifacts.commit` and `artifacts.evaluation` (the command), and
+`verified.reevaluated` with `energy`, `command`, `agreement` and `code`, the link to QMBL's
+re-evaluation. It has no checkpoint, log, seed or `compute` block, and it may have come by mail,
+without `submitted_by`. Its `reference` opens with the person who computed it. The source cell
+shows the person and the code at the commit; the code column links the code and QMBL's check.
+
 ### Who submitted a row: `submitted_by`
 
 A row that came through an issue or a pull request names it:

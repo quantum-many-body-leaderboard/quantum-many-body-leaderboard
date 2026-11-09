@@ -252,28 +252,28 @@
       "method_as_published": "Bethe ansatz",
       "family": "other",
       "bound_type": "exact",
-      "bound_type_reason": "Bethe-ansatz solution of the open chain, computed by QMBL; deterministic",
-      "reference": "QMBL, checks/bethe-heisenberg-chain/ (Bethe ansatz, open chain)",
+      "bound_type_reason": "Bethe-ansatz solution of the open chain; deterministic (RULES.md 8.3, exact solution)",
+      "reference": "I. P. McCulloch, https://github.com/Uni20-dev/bethe @ 76b33884 (Bethe ansatz, open chain; unpublished, sent to QMBL on 2026-10-27)",
       "peer_reviewed": false,
-      "source": "qmbl-verify-2026-10-27",
-      "provenance": "primary",
+      "source": "mcculloch-2026-10-27",
+      "provenance": "unpublished",
       "verified": {
-        "checked_on": "2026-10-27",
-        "method": "bethe_xxx.py: Bethe equations in logarithmic form for the M = 100 real roots of the singlet ground state, Newton's method in double precision, then mpmath at 70 and 90 digits; open chain in the form of Alcaraz et al., J. Phys. A 20, 6397 (1987)",
-        "reported_as": "-88.441555569500912890931952160508125031187157763513 (S.S units, 50 digits; results.txt)",
-        "note": "Pauli total = 4 x -88.441555569500912890931952160508125031187157763513 = -353.76622227800365156372780864203250012474863105405. The same code reproduces the 20-site open chain's ED row to all its 16 digits. Agrees to a relative 1e-49 with the value of the bethe library (https://github.com/Uni20-dev/bethe, arbitrary-precision reals), sent to QMBL on 2026-10-27. The DMRG row, -353.766222278, lies 3.7e-12 above it.",
-        "secondary_of": null
+        "checked_on": "2026-11-09",
+        "method": "values sent by mail with the build and run commands, re-evaluated by QMBL (RULES.md 8.3)",
+        "reported_as": "-88.44155556950091289093195216050812503118715776351299 (S.S units, total, 50 digits, as sent)",
+        "note": "Pauli total = 4 x -88.44155556950091289093195216050812503118715776351299 = -353.76622227800365156372780864203250012474863105405196. The DMRG row, -353.766222278, lies 3.7e-12 above it.",
+        "secondary_of": null,
+        "reevaluated": {
+          "energy": -353.7662222780036,
+          "command": "python3 checks/bethe-heisenberg-chain/bethe_xxx.py 200 O 70",
+          "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/1ca5cbf4/checks/bethe-heisenberg-chain",
+          "agreement": "QMBL's own Bethe solver (mpmath, 70 and 90 digits), an independent solution of the same equations: -353.76622227800365156372780864203250012474863105405, relative difference below 1e-49; it reproduces the 20-site open chain's ED row to all 16 digits"
+        }
       },
       "artifacts": {
-        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/1ca5cbf4/checks/bethe-heisenberg-chain",
-        "commit": "1ca5cbf4",
-        "script": "checks/bethe-heisenberg-chain/",
-        "read_from": {
-          "quote": "QMBL, checks/bethe-heisenberg-chain/ (Bethe ansatz, open chain)",
-          "location": "the row's reference (QMBL check directory)",
-          "checked_on": "2026-10-27",
-          "pass": "passes/code/code-links-2026-10-27.json"
-        }
+        "code": "https://github.com/Uni20-dev/bethe",
+        "commit": "76b33884",
+        "evaluation": "cmake -S bethe -B . -DUNI20_ENABLE_MPREAL=ON && make && ./bethe-xxx-obc --precision digits-50 200"
       }
     }
   ]

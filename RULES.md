@@ -462,6 +462,14 @@ checkable if the download disappears. The journal-version and `stale-preprint` r
 do not apply. Once a paper prints the number, the row is cited to the paper and read from it
 like any other row.
 
+A deterministic exact solution (the Bethe ansatz, free fermions) has no trained state and no
+sampling run (2026-11-09). Its submission gives the code at a fixed commit of a public
+repository and the command that produced the energy; it needs no checkpoint, log or `compute`
+block. QMBL re-evaluates it by running that code or an independent solution of the same
+equations, and accepts it when the two agree to the precision the energy is given to. The row
+credits the person who computed the energy and the code; QMBL's re-evaluation is its
+verification, not a second row.
+
 ### 8.4 Review of an unpublished submission
 
 A maintainer reviews the submission before QMBL runs anything from it, and approves the run.

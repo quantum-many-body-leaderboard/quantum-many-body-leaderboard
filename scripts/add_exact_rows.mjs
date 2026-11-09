@@ -31,9 +31,11 @@ function put(id, create, row) {
     method: row.method, bound_type: "exact", bound_type_reason: row.why,
     reference: row.src.ref, peer_reviewed: row.src.pr,
     source: row.source ?? "exact-2026-09-15", provenance: "primary",
-    verified: { checked_on: row.checked ?? CHECKED, method: row.read, reported_as: row.reported, note: row.note, secondary_of: null },
+    verified: { checked_on: row.checked ?? CHECKED, method: row.read, reported_as: row.reported, note: row.note, secondary_of: null, ...(row.verifiedExtra ?? {}) },
     // a value this script published before and has since corrected stays on the row (RULES.md 11)
     ...(row.corrections ? { corrections: row.corrections } : {}),
+    // fields a batch sets beyond the common ones (an unpublished exact solution, RULES.md 8.3)
+    ...(row.fields ?? {}),
   });
   added++;
   fs.mkdirSync(`data/${id.split("/")[0]}`, { recursive: true });
@@ -345,21 +347,33 @@ for (const [label, N, a, b, printed] of LSS_TABLE_I) {
 console.log(`batch C: ${added - beforeC[0]} exact rows (${created - beforeC[1]} new instances)`);
 
 // ---------------------------------------------------------------------------------------
-// Batch D: the 200-site Heisenberg chains, open and periodic, solved by the Bethe ansatz
-// (checks/bethe-heisenberg-chain/, 2026-10-27). M = 100 real roots, Newton's method in double
-// precision, refined in mpmath at 70 and 90 digits; the same code reproduces the 20-site ED rows
-// to all their 16 digits. Pauli totals, 4 x the S.S energy.
-for (const [bc, name, ss, pauli, dmrg, gap, form] of [
-  ["O", "open", "-88.441555569500912890931952160508125031187157763513", "-353.76622227800365156372780864203250012474863105405", "-353.766222278", "3.7e-12", "; open chain in the form of Alcaraz et al., J. Phys. A 20, 6397 (1987)"],
-  ["P", "periodic", "-88.633553252241620261082983305428356490257688921703", "-354.53421300896648104433193322171342596103075568681", "-354.534213002", "7.0e-9", ""],
+// Batch D: the 200-site Heisenberg chains, open and periodic, solved by the Bethe ansatz. The
+// energies are I. P. McCulloch's, from his bethe library with arbitrary-precision reals, sent to
+// QMBL on 2026-10-27 (50 digits, S.S units); an unpublished exact solution (RULES.md 8.3,
+// 2026-11-09). QMBL's own Bethe solver (checks/bethe-heisenberg-chain/) re-evaluates them: the two
+// agree to a relative 1e-49, and the same solver reproduces the 20-site ED rows to all 16 digits.
+// Pauli totals, 4 x the S.S energy.
+const BETHE = { code: "https://github.com/Uni20-dev/bethe", commit: "76b33884" };
+const BETHE_CHECK = "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/1ca5cbf4/checks/bethe-heisenberg-chain";
+for (const [bc, name, prog, sent, pauli, ours, dmrg, gap] of [
+  ["O", "open", "bethe-xxx-obc", "-88.44155556950091289093195216050812503118715776351299", "-353.76622227800365156372780864203250012474863105405196", "-353.76622227800365156372780864203250012474863105405", "-353.766222278", "3.7e-12"],
+  ["P", "periodic", "bethe-xxx-pbc", "-88.6335532522416202610829833054283564902576889217038", "-354.5342130089664810443319332217134259610307556868152", "-354.53421300896648104433193322171342596103075568681", "-354.534213002", "7.0e-9"],
 ]) put(`Heisenberg/chain_200_${bc}`,
   { model: "Heisenberg", lattice: "chain", n_sites: 200, boundary: bc, params: {}, dof: 200, einf: 0 },
   { energy: +pauli, sigma: null,
-    src: { ref: `QMBL, checks/bethe-heisenberg-chain/ (Bethe ansatz, ${name} chain)`, pr: false },
-    method: "Bethe ansatz", why: `Bethe-ansatz solution of the ${name} chain, computed by QMBL; deterministic`,
-    read: `bethe_xxx.py: Bethe equations in logarithmic form for the M = 100 real roots of the singlet ground state, Newton's method in double precision, then mpmath at 70 and 90 digits${form}`,
-    reported: `${ss} (S.S units, 50 digits; results.txt)`,
-    note: `Pauli total = 4 x ${ss} = ${pauli}. The same code reproduces the 20-site ${name} chain's ED row to all its 16 digits. Agrees to a relative 1e-49 with the value of the bethe library (https://github.com/Uni20-dev/bethe, arbitrary-precision reals), sent to QMBL on 2026-10-27. The DMRG row, ${dmrg}, lies ${gap} above it.`,
-    source: "qmbl-verify-2026-10-27", checked: "2026-10-27" });
+    src: { ref: `I. P. McCulloch, ${BETHE.code} @ ${BETHE.commit} (Bethe ansatz, ${name} chain; unpublished, sent to QMBL on 2026-10-27)`, pr: false },
+    method: "Bethe ansatz", why: `Bethe-ansatz solution of the ${name} chain; deterministic (RULES.md 8.3, exact solution)`,
+    read: "values sent by mail with the build and run commands, re-evaluated by QMBL (RULES.md 8.3)",
+    reported: `${sent} (S.S units, total, 50 digits, as sent)`,
+    note: `Pauli total = 4 x ${sent} = ${pauli}. The DMRG row, ${dmrg}, lies ${gap} above it.`,
+    source: "mcculloch-2026-10-27", checked: "2026-11-09",
+    fields: {
+      provenance: "unpublished",
+      artifacts: { ...BETHE, evaluation: `cmake -S bethe -B . -DUNI20_ENABLE_MPREAL=ON && make && ./${prog} --precision digits-50 200` },
+    },
+    verifiedExtra: {
+        reevaluated: { energy: +ours, command: `python3 checks/bethe-heisenberg-chain/bethe_xxx.py 200 ${bc} 70`, code: BETHE_CHECK,
+          agreement: `QMBL's own Bethe solver (mpmath, 70 and 90 digits), an independent solution of the same equations: ${ours}, relative difference below 1e-49; it reproduces the 20-site ${name} chain's ED row to all 16 digits` },
+    } });
 
 console.log(`added ${added} exact rows (${created} new instances)`);

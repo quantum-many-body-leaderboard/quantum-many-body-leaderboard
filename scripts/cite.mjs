@@ -133,6 +133,12 @@ export function citeRef(row, cache = sources()) {
   // A number QMBL computed (a cost run or an exact check) cites its checks/ folder (qmblRef);
   // the code column links the code and how to rerun it.
   if (row.computed_by === "qmbl" || /^QMBL, checks\//.test(row.reference || "")) return qmblRef(row);
+  // An unpublished exact solution (RULES.md 8.3): the person who computed it, then the code at the commit.
+  const sol = row.provenance === "unpublished" && !row.artifacts?.checkpoint && row.artifacts?.code;
+  if (sol) {
+    const a = row.artifacts, who = (row.reference || "").split(", https://")[0];
+    return { text: `${who} (unpublished)`, url: null, also: { text: `${a.code.replace(/^https:\/\/github\.com\//, "")} @ ${a.commit}`, url: `${a.code}/tree/${a.commit}` } };
+  }
   const s = sourceOf(row, cache);
   const q = quotedIn(row, cache, s);
   // `qn` spreads the quoted-in note into the result, as `note` (in the cell) or `quoted` (on hover).
@@ -181,6 +187,10 @@ export function codeRef(row) {
   if (!a?.code) return null;
   const url = a.code;
   if (row.computed_by === "qmbl") return { text: "rerun (QMBL code)", url: `${REPO}/blob/main/checks/cost/README.md#rerun-a-row` };
+  if (row.provenance === "unpublished" && a.commit && !a.checkpoint) {
+    const gh = url.match(/^https:\/\/github\.com\/([^/]+)\/([^/#?]+)/);
+    return { text: gh ? `${gh[1]}/${gh[2]}` : new URL(url).hostname, url: `${url}/tree/${a.commit}` };
+  }
   if (url.startsWith(REPO)) return { text: "QMBL code", url };
   if (a.scope === "model") return { text: "model code", url };
   if (a.script) return { text: a.script.endsWith("/") ? "run scripts" : "run script", url };
@@ -189,6 +199,12 @@ export function codeRef(row) {
   const zen = url.match(/zenodo[./](?:org\/records\/)?(\d+)$/);
   if (zen) return { text: `Zenodo ${zen[1]}`, url };
   return { text: new URL(url).hostname.replace(/^www\./, ""), url };
+}
+
+// QMBL's re-evaluation of an unpublished row, where it links its own code (RULES.md 8.3), or null.
+export function checkRef(row) {
+  const u = row.provenance === "unpublished" && row.verified?.reevaluated?.code;
+  return u ? { text: "QMBL check", url: u } : null;
 }
 
 // The libraries a row's source says its authors used, for a row with no code of its own
@@ -204,8 +220,8 @@ export function libraryRef(row) {
 
 // Markdown for the code cell: the label linked, else "uses" and the libraries, else empty.
 export function codeCell(row) {
-  const c = codeRef(row);
-  if (c) return `[${c.text}](${c.url})`;
+  const c = codeRef(row), check = checkRef(row);
+  if (c) return `[${c.text}](${c.url})${check ? `, [${check.text}](${check.url})` : ""}`;
   const l = libraryRef(row);
   return l ? `*uses ${l.shown.map(x => `[${x.text}](${x.url})`).join(", ")}${l.more ? ` +${l.more}` : ""}*` : "";
 }

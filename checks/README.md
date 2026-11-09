@@ -519,6 +519,8 @@ equations, the quantum numbers and the units. The runs at 70 and 90 digits agree
 The values agree to a relative 1e-49 with those of the `bethe` library
 (https://github.com/Uni20-dev/bethe, built with arbitrary-precision reals), sent to QMBL on
 2026-10-27. Both DMRG rows lie above the exact energy, by 7.0e-9 (periodic) and 3.7e-12 (open).
+Since 2026-11-09 the exact rows on the 200-site chains are I. P. McCulloch's values from the
+`bethe` library, an unpublished exact solution (RULES.md §8.3); this check is their re-evaluation.
 
 **Reproduce.** `python3 checks/bethe-heisenberg-chain/bethe_xxx.py 200 O 70` (numpy, mpmath;
 under a minute).
