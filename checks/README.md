@@ -524,3 +524,49 @@ Since 2026-11-09 the exact rows on the 200-site chains are I. P. McCulloch's val
 
 **Reproduce.** `python3 checks/bethe-heisenberg-chain/bethe_xxx.py 200 O 70` (numpy, mpmath;
 under a minute).
+
+## `hchain-fci/`: full CI of the open hydrogen chains in minimal bases
+
+**Question.** Do QMBL's track-3 conventions (total energy with the nuclear repulsion, R in
+bohr, open chain, the basis as the source names it) reproduce the published exact energies of
+the hydrogen chains? And what is the exact energy of the STO-3G chains at R = 0.8 Å
+(`Hchain/chain_{4..16}_O_R1.51178_sto3g`), where the only rows are VQE energies and no full CI
+energy is printed?
+
+**Design.** `fci_all.py` runs PySCF (2.14): N protons on the z axis at z_i = i R
+(i = 0 ... N - 1), R in the unit the job states (`jobs.json`), the named basis (PySCF's
+default spherical form; the hydrogen basis sets here are s-only at STO-nG), neutral, S_z = 0
+for even N. RHF (conv_tol 1e-12), then full CI in the RHF orbitals (`pyscf.fci.FCI`,
+conv_tol 1e-10). It prints the total energy with the nuclear repulsion, the nuclear repulsion,
+the RHF energy and <S^2>. 36 jobs on 16 CPU threads, 2026-10-21; the largest, H16 in STO-3G
+(16 orbitals, 165,636,900 determinants), took 560 s. `compare.mjs` sets each energy against
+the exact rows of the track-3 pass.
+
+**Result.** (`results.jsonl`, `comparison.md`) Every published exact energy is reproduced to
+its printed digits (31 energies from six papers): Motta et al.'s H10 STO-6G full CI
+(arXiv:1705.01608) at all ten R, and in STO-3G the H6 and H8 values of arXiv:2305.05168 and
+the H12 value at 1 Å of arXiv:2505.08635 (-6.452816 against -6.45281586 here). Every ground state is a
+singlet (<S^2> below 1e-12).
+
+The STO-3G chains at R = 0.8 Å = 1.51178 bohr, total energies in hartree:
+
+| instance | full CI | per atom |
+|---|---|---|
+| `Hchain/chain_4_O_R1.51178_sto3g` | -2.1675605441 | -0.541890136 |
+| `Hchain/chain_6_O_R1.51178_sto3g` | -3.2044118795 | -0.534068647 |
+| `Hchain/chain_8_O_R1.51178_sto3g` | -4.2433910126 | -0.530423877 |
+| `Hchain/chain_10_O_R1.51178_sto3g` | -5.2835524518 | -0.528355245 |
+| `Hchain/chain_12_O_R1.51178_sto3g` | -6.3244185696 | -0.527034881 |
+| `Hchain/chain_14_O_R1.51178_sto3g` | -7.3657328652 | -0.526123776 |
+| `Hchain/chain_16_O_R1.51178_sto3g` | -8.4073474660 | -0.525459217 |
+
+These are the exact rows of the seven instances, carried to 10 decimals, the full CI
+convergence tolerance. The UCCSD rows on them (TenCirChem, arXiv:2303.10825, Table 1) lie
+0.01 to 3.72 mHa above. That table also prints each UCCSD energy's error against full CI;
+energy minus error agrees with these values within the rounding of the two printed columns
+(0.01 mHa) for every chain but H10, where it gives -5283.58 mHa against -5283.55 mHa here
+(a printed error of 1.37 mHa against 1.34 mHa from these values).
+
+**Reproduce.** `python checks/hchain-fci/fci_all.py checks/hchain-fci/jobs.json > results.jsonl`
+(PySCF; about 10 minutes, nearly all of it H16), then
+`node checks/hchain-fci/compare.mjs results.jsonl passes/track3/sweep-rows-2026-10-20-hydrogen.json`.
