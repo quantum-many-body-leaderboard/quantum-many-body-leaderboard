@@ -213,7 +213,7 @@ put("Heisenberg/pyrochlore-2x2x2_32_P",
     read: "ed_full.py (numba matrix-free Lanczos, S^z = 0, no spatial symmetry, 601,080,390 states, residual 6.9e-10) and ed_perm.py (fully symmetric sector of the 384-element space group x spin inversion, 789,438 states, residual 6.3e-10), an AMD EPYC 9654 server, 2026-09-16",
     reported: "-66.15792523719963 (ed_full.py) | -66.15792523721132 (ed_perm.py)",
     note: "Pauli total; E/N = -0.51685879 in S.S units. The ground state is the unique fully symmetric singlet; the lowest S^z = 1 level -63.40912320391 gives the triplet gap (E1 - E0)/4 = 0.68720, the 0.6872 printed for this cluster in arXiv:2010.03563 Table I and arXiv:2101.08787 Table II, whose E/N = -0.5168 is this energy truncated. Replaces VarBench's exact row -66.1514 (-0.5168078 per site), 6.5e-3 above it (RULES.md 11, removals.mjs).",
-    source: "qmbl-verify-2026-09-16", checked: "2026-09-16" });
+    source: "qmbl-verify-2026-09-16", checked: "2026-09-16", fields: { computed_by: "qmbl" } });
 //
 // Hubbard/square_16_P_8_4 and square_16_P_8_8, 4x4 torus at half filling (N_up = N_dn = 8), U = 4
 // and 8: the table carried Anderson et al.'s ED (Comput. Theor. Chem. 1003, 22 (2013)) as a later
@@ -238,7 +238,7 @@ for (const [U, energy, a, b, perSite, quoted, producer, fate] of [
     read: "ed_full2.py (code B: plain Lanczos, Hubbard kernel with fixed N_up = N_dn = 8, 165,636,900 states, true residual 5.2e-11 at U = 4 and 3.7e-11 at U = 8) and hub_fact.py (code A: the factorised matvec T x 1 + 1 x T + U D of checks/hubbard-u-labels/ed_check.py with ARPACK, residual 9.8e-12 and 5.7e-12), an AMD EPYC 9654 server, 2026-09-29",
     reported: `${b} (ed_full2.py) | ${a} (hub_fact.py)`,
     note: `Total energy, t = 1, H = -t sum (c+c + h.c.) + U sum n_up n_dn on the periodic 4x4 lattice (32 bonds); E/N = ${perSite}. Replaces the quoted exact row ${quoted}, which lay below this ground state: ${fate}; the producer prints ${producer} (arXiv:1207.4847 Table IV), this energy to its printed digits. Carried to 10 decimals, the agreement of the two codes.`,
-    source: "qmbl-verify-2026-09-29", checked: "2026-09-29" });
+    source: "qmbl-verify-2026-09-29", checked: "2026-09-29", fields: { computed_by: "qmbl" } });
 //
 // J1J2/square_40_P_0.6, the tilted 40-site cluster of Richter & Schulenburg (batch C1 below): their
 // E_GS(S = 0) = -19.18368038 is the lowest level of the one sector they diagonalised (q = 0, C4 character
@@ -255,7 +255,7 @@ put("J1J2/square_40_P_0.6",
     read: "ed40b.py (hashed symmetric-sector Lanczos) in the C4 sector B+ (430,909,268 states, true residual 4.0e-10) and in the C2 subgroup's even sector A+ + B+ (861,818,918 states, residual 5.1e-10), an AMD EPYC 9654 server, 2026-10-03",
     reported: "-76.73971980260544 (C4, B+) | -76.7397198026056 (C2 even, A+ + B+)",
     note: "Pauli total; E/N = -0.479623249 in S.S units (S.S total -19.1849299507). The lowest level of every q = 0, spin-flip-even sector of the C4-symmetric cluster L1 = (6, 2), L2 = (-2, 6): A+ -19.1836803841 (the paper's sector, reproduced), B+ (this level), E pair -18.1248351936. Replaces Richter & Schulenburg's -76.73472152 (Table 1, -19.18368038), the lowest A+ level, 5.0e-3 above it (RULES.md 11, removals.mjs). Carried to 11 decimals, the agreement of the two bases; momenta q != 0 not diagonalised.",
-    source: "qmbl-verify-2026-09-29", checked: "2026-10-03" });
+    source: "qmbl-verify-2026-09-29", checked: "2026-10-03", fields: { computed_by: "qmbl" } });
 console.log("batch B2: 4 exact rows computed by QMBL (pyrochlore-2x2x2_32_P; Hubbard 4x4 at half filling, U = 4 and 8; J1-J2 40-site, J2 = 0.6)");
 
 // Batch B3: exact diagonalizations QMBL ran itself where no published exact energy is carried
@@ -275,7 +275,7 @@ put("J1J2/square_36_P_0.45",
     read: "ed_sym.py (numba matrix-free Lanczos in the sectors of the torus translations, a point group and spin inversion; tol 1e-9 with a second pass) at k = (0,0) and (pi,pi), every C4v irrep, even spin inversion, 2026-09-28, and in the C2v axes group's even sector at k = (0,0) (A1 + B1), 2026-10-09, an AMD EPYC 9654 server; results in checks/exact-recompute-2026-09/results/",
     reported: "-74.2546644341862 (C4v, k = (0,0), A1; 15,804,956 states; residual 6.0e-10) | -74.25466443418684 (C2v axes, k = (0,0), A1 + B1; 31,601,346 states; residual 4.0e-10)",
     note: "Pauli total; E/N = -0.515657392 in S.S units. Lowest of the eight C4v sectors computed; the next is -71.9586017 (k = (0,0), B1). The two bases agree to 6.4e-13. The same code reproduces the exact rows at J2 = 0.5 to 12 digits and the printed 36-site values of Schulz, Ziman & Poilblanc at 0.2, 0.55 and 0.65 (checks/README.md, exact-recompute-2026-09). Chen et al. quote -0.51565739 at this coupling, which matches to 1e-8, citing Schulz et al., who have no J2 = 0.45 row; Golubev et al. (arXiv:2606.04558, Table I) print an ED value 6.1e-7 below it (SWEEP.md). No published exact row is carried, so QMBL's stands (2026-10-09).",
-    source: "qmbl-verify-2026-09-28", checked: "2026-09-28" });
+    source: "qmbl-verify-2026-09-28", checked: "2026-09-28", fields: { computed_by: "qmbl" } });
 console.log("batch B3: 1 exact row computed by QMBL where none was published (J1-J2 6x6, J2 = 0.45)");
 
 // ---------------------------------------------------------------------------------------

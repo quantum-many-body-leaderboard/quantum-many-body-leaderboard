@@ -81,6 +81,8 @@ export const RELABELS = [
     keep: [{ method: "DMRG (MaxBondDim ~1500)", energy: -10.896957987,
       why: "its run script sets U = 4.64158882. Its value is the ground state at that U truncated at the ninth decimal (8.6e-10 above it), and its variance, 8.2e-12, places the state within 7e-11 of that ground state (Temple's bound, next level -10.77209441); it sits 2.2e-9 below the ground state at 4.64158883, which no variational energy can." }],
     exact: [-10.896957987861226, -10.896957987860604],
+    // The exact row left at the old coupling is marked as a row QMBL computed (DATA.md, computed_by).
+    computed_by: "qmbl",
   },
   {
     // Nothing was computed at nine bath sites, so both rows move and nothing stays behind.

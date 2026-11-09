@@ -41,7 +41,7 @@ for (const L of RELABELS) {
     method: "Exact diagonalization", bound_type: "exact",
     bound_type_reason: "full-space Lanczos exact diagonalization at the instance's U, computed by QMBL",
     reference: "QMBL, checks/hubbard-u-labels/ (exact diagonalization at the coupling the rows here were run at)",
-    peer_reviewed: false, source: `qmbl-verify-${L.checked_on}`, provenance: "primary",
+    peer_reviewed: false, source: `qmbl-verify-${L.checked_on}`, provenance: "primary", ...(L.computed_by ? { computed_by: L.computed_by } : {}),
     verified: { checked_on: L.checked_on, method: L.codes,
       reported_as: `${E0} (ed_check.py) | ${E0b} (ed_lib.mjs)`,
       note: `Two independent codes agree to ${Math.abs(E0 - E0b).toExponential(1)}. ${L.keep.map(k => `The ${k.method} row: ${k.why}`).join(" ")}`,
