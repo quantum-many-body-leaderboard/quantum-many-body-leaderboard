@@ -50,9 +50,9 @@ export const noErrorMetrics = r =>
 
 // Sign-problem-free QMC is `exact` within its statistical error bar, not to the printed
 // digits (RULES.md 4): such a row must state sigma, and every surface prints its class as
-// "exact (stochastic)". The method name (AFQMC, SSE QMC, QMC) tells it
+// "exact (stochastic)". The method name (AFQMC, DQMC, SSE QMC, QMC) tells it
 // apart from exact diagonalization and exact solutions.
-const STOCHASTIC = /\bqmc\b|\bafqmc\b|monte carlo|stochastic series/i;
+const STOCHASTIC = /\bqmc\b|\bafqmc\b|\bdqmc\b|monte carlo|stochastic series/i;
 export const stochasticExact = r => r.bound_type === "exact" && STOCHASTIC.test(r.method || "");
 
 // A row's bound_type as the site, the figures and records.mjs print it.
