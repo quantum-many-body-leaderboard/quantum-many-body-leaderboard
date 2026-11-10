@@ -831,7 +831,7 @@ ${FIG_SCRIPT}
 
 // ------------------------------------------------------------------------ browse page
 // An instance is its exact energy and the best of each bound type, one line each; clicking it
-// opens every energy published for it below, by class. The instance page keeps its stable URL for search engines, llms.txt
+// opens every energy published for it below, by class. The instance page keeps its stable URL for search engines, the sitemap
 // and the API and is not linked from here; the JSON is.
 
 // The badge families: the lattice name without its cell spec (kagome-36a -> kagome), and
@@ -1454,11 +1454,17 @@ function apiInstance(inst) {
   };
 }
 
+// llms.txt is the agent's entry point: what the data means and how to query it, no data. The
+// instance list is in api/instances.json and the instance pages in sitemap.xml.
+const MCP_RAW = `https://raw.githubusercontent.com/${REPO.replace("https://github.com/", "")}/main/mcp/server.mjs`;
 function llmsTxt() {
+  const models = [...new Set(instances.map(i => i.model))];
   const lines = [
     "# QMBL: the Quantum Many-Body Leaderboard",
     "",
-    `> The best published ground-state energies for ${summary.instances} Hamiltonian instances (${summary.rows} energies, ${summary.best.exact} of the instances solved exactly). Read-only, generated from the repository's data/ directory, Apache-2.0.`,
+    `> The best published ground-state energies for ${summary.instances} Hamiltonian instances: lattice models, hydrogen chains and the electron gas (${summary.rows} energies, ${summary.best.exact} of the instances solved exactly). Read-only, generated from the repository's data/ directory, Apache-2.0.`,
+    "",
+    "## What a row means",
     "",
     "Every row is one published claim about one Hamiltonian instance and carries the energy, its",
     "error bar, the method, the primary reference, and a `bound_type`: strict variational bound,",
@@ -1466,37 +1472,46 @@ function llmsTxt() {
     "method, or numerically exact. Sign-problem-free QMC is labelled exact (stochastic): it is exact",
     "within its stated error bar. Each instance shows its exact energy where one exists, then one",
     "best value per bound type (best variational, projected, extrapolated, approximate): the lowest",
-    "unflagged energy of that class, with or without an error bar. A projected, extrapolated or",
-    "approximate energy more than 2 sigma below the exact energy is not a best (RULES.md section 6).",
-    "Energies are stored as totals and quoted per site; the conversion is in DATA.md. Individual",
-    "energies should be cited to the primary paper named on the row, not to this site. An energy",
-    "that no paper prints is admitted only after QMBL has re-evaluated the released state behind it",
-    "(RULES.md section 8.3); such rows are marked unpublished.",
+    "unflagged energy of that class, with or without an error bar. There is no single record. A",
+    "projected, extrapolated or approximate energy more than 2 sigma below the exact energy is not a",
+    "best (RULES.md section 6). Energies are stored as totals and quoted per site in the model's",
+    "convention (DATA.md, Units and conventions). An energy that no paper prints is admitted only",
+    "after QMBL has re-evaluated the released state behind it (RULES.md section 8.3); such rows are",
+    "marked unpublished.",
+    "",
+    "## How to answer a question",
+    "",
+    `1. https://qmbl.org/api/models.json: the ${models.length} models (${models.join(", ")}), each with its lattices, boundaries, size range and parameter names.`,
+    "2. https://qmbl.org/api/m/<model>.json: every instance of one model, one line each: id, size, boundary, parameters, `has_exact`, the exact energy per site and the best energy per site of each bound type with its method. Filter here by size, boundary or parameter. https://qmbl.org/api/open.json holds the same lines for the instances with no exact energy.",
+    "3. https://qmbl.org/api/i/<instance_id>.json: one instance with every published energy (sigma, method, bound type, reference, defects, cost where known) and its `best` block. Example: https://qmbl.org/api/i/J1J2/square_100_P_0.5.json.",
+    "",
+    "`has_exact`, not `exact_energy_per_site`, says whether an exact energy exists: Impurity instances have no per-site energy. The per-model files are up to about 300 KB; a fetch tool that summarizes or truncates pages should download them raw, or use the per-instance files, which are small.",
+    "",
+    "Other files: https://qmbl.org/api/instances.json (every instance line, about 1.3 MB), https://qmbl.org/api/qmbl.json (every instance and row, about 30 MB), https://qmbl.org/api/summary.json (the headline counts), https://qmbl.org/api/tdl/<instance_id>.json (infinite lattices).",
+    "",
+    "## MCP server",
+    "",
+    `A local MCP server (stdio, one Node file, no dependencies) with the tools \`list_models\`, \`search_instances\`, \`best_values\` and \`get_instance\`. To install it, download ${MCP_RAW} and register it as a local stdio MCP server named "qmbl" that runs \`node <path to server.mjs>\`. Details: ${REPO}/tree/main/mcp.`,
     "",
     "## Pages",
+    "",
     ...(OPEN_PROBLEMS ? openProblemsLlms(OPEN_PROBLEMS) : []),
     "- [Leaderboard](https://qmbl.org/): the accuracy, energy and cost figures, and how to cite.",
     `- [Table](https://qmbl.org/instances/): every one of the ${summary.instances} instances, with its exact energy, its best values and every energy.`,
     `- [Rules](${RULES}): which values are shown, ties, provenance, objections.`,
-    `- [Data](${DATA}): row format, units and conventions, error metrics, defects.`,
+    `- [Data](${DATA}): row format, units and conventions, error metrics, defects, the API files.`,
     "- [Contribute](https://qmbl.org/contribute/): corrections, missing results, missing error bars.",
-    `- [CONTRIBUTING.md](${REPO}/blob/main/CONTRIBUTING.md): how people and AI systems submit, including through the GitHub API.`,
-    "",
-    "## Data",
-    "- [Full dump](https://qmbl.org/api/qmbl.json): every instance and row in one JSON file.",
-    "- [Instance index](https://qmbl.org/api/instances.json): id, label, URL, exact energy and best values per instance; `has_exact` says whether an exact energy exists (Impurity instances have no per-site energy).",
-    "- [Summary](https://qmbl.org/api/summary.json): the counts behind the headline numbers.",
-    "- [Models](https://qmbl.org/api/models.json): per model, the instance counts, lattices, boundaries, size range, parameter names and the URL of its slice.",
-    "- One model: https://qmbl.org/api/m/<model>.json, the instance index lines of that model only (for example [Hubbard](https://qmbl.org/api/m/Hubbard.json)).",
-    "- [Open instances](https://qmbl.org/api/open.json): the instance index lines of the instances with no exact energy.",
-    `- MCP server: [mcp/](${REPO}/tree/main/mcp) in the repository, one Node file with no dependencies; it reads these files.`,
-    `- ${DEPRECATED}`,
+    `- [CONTRIBUTING.md](${REPO}/blob/main/CONTRIBUTING.md): how people and AI systems submit corrections and results, including through the GitHub API.`,
     `- [Repository](${REPO}): source data, build scripts, rules.`,
-    `- Citation: https://arxiv.org/abs/${ARXIV} (the paper).`,
-    `- Data citation: https://doi.org/${DOI} (concept DOI, always the latest release).`,
     "",
-    "## Instances",
-    ...instances.map(i => `- [${instanceLabel(i)}](https://qmbl.org${instUrl(i)}): ${i.instance_id}, ${i.rows.length} energies, JSON at https://qmbl.org${jsonUrl(i)}.`),
+    "## Citing",
+    "",
+    "- Cite each energy to the primary paper named on its row, not to QMBL.",
+    `- QMBL itself: https://arxiv.org/abs/${ARXIV}. The data: https://doi.org/${DOI} (concept DOI, always the latest release).`,
+    "",
+    "## Deprecated fields",
+    "",
+    DEPRECATED,
     "",
   ];
   return lines.join("\n");
