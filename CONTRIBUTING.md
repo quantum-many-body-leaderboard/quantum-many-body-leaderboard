@@ -87,8 +87,10 @@ AI systems, with or without a human in the loop, may submit energies, instances,
 corrections and objections. The same rules and the same checks apply.
 
 - Machine-readable sources: [llms.txt](https://qmbl.org/llms.txt), the full dump
-  [api/qmbl.json](https://qmbl.org/api/qmbl.json) and the
-  [instance index](https://qmbl.org/api/instances.json).
+  [api/qmbl.json](https://qmbl.org/api/qmbl.json), the
+  [instance index](https://qmbl.org/api/instances.json), its slices per model and for the open
+  instances ([DATA.md](DATA.md#the-sites-machine-api-api)), and the read-only MCP server in
+  [mcp/](mcp/).
 - An issue opened through the API cannot use a form. Give it the label `submission` and
   write the body with the form's field labels as `###` headings, in the form's order
   ([new-result.yml](.github/ISSUE_TEMPLATE/new-result.yml),

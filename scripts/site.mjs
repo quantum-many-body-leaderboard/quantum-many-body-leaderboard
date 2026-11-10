@@ -1486,6 +1486,10 @@ function llmsTxt() {
     "- [Full dump](https://qmbl.org/api/qmbl.json): every instance and row in one JSON file.",
     "- [Instance index](https://qmbl.org/api/instances.json): id, label, URL, exact energy and best values per instance.",
     "- [Summary](https://qmbl.org/api/summary.json): the counts behind the headline numbers.",
+    "- [Models](https://qmbl.org/api/models.json): per model, the instance counts, lattices, boundaries, size range, parameter names and the URL of its slice.",
+    "- One model: https://qmbl.org/api/m/<model>.json, the instance index lines of that model only (for example [Hubbard](https://qmbl.org/api/m/Hubbard.json)).",
+    "- [Open instances](https://qmbl.org/api/open.json): the instance index lines of the instances with no exact energy.",
+    `- MCP server: [mcp/](${REPO}/tree/main/mcp) in the repository, one Node file with no dependencies; it reads these files.`,
     `- ${DEPRECATED}`,
     `- [Repository](${REPO}): source data, build scripts, rules.`,
     `- Citation: https://arxiv.org/abs/${ARXIV} (the paper).`,
@@ -1901,7 +1905,9 @@ function deprecatedRecords() {
 }
 const apiSummary = { ...summary, records: deprecatedRecords() };
 write("api/summary.json", JSON.stringify(apiSummary, null, 2) + "\n");
-write("api/instances.json", JSON.stringify(instances.map(i => {
+// One line per instance: api/instances.json, and without the deprecated fields the query files
+// below (api/models.json, api/m/<model>.json, api/open.json).
+function indexEntry(i, { deprecated = true } = {}) {
   const b = classBest(i);
   const f = perSiteDivisor(i);
   const perSiteOf = r => r && f != null ? r.energy / f : null;
@@ -1909,14 +1915,40 @@ write("api/instances.json", JSON.stringify(instances.map(i => {
     instance_id: i.instance_id, label: instanceLabel(i), model: i.model, lattice: i.lattice,
     n_sites: i.n_sites, boundary: i.boundary ?? null, params: i.params ?? {}, rows: i.rows.length,
     url: `https://qmbl.org${instUrl(i)}`, json: `https://qmbl.org${jsonUrl(i)}`,
+    // has_exact, not exact_energy_per_site, says whether an exact energy exists: Impurity has no per-site energy.
+    has_exact: b.exact != null,
     exact_energy_per_site: perSiteOf(b.exact), exact_method: b.exact?.method ?? null, exact_ansatz: b.exact?.ansatz ?? null,
     ...Object.fromEntries(BEST_CLASSES.flatMap(c => [[`best_${c}_energy_per_site`, perSiteOf(b[c])], [`best_${c}_method`, b[c]?.method ?? null], [`best_${c}_ansatz`, b[c]?.ansatz ?? null]])),
     // Deprecated (DEPRECATED above).
-    record_energy_per_site: perSiteOf(lowestOf(i)),
-    record_method: lowestOf(i)?.method ?? null, record_ansatz: lowestOf(i)?.ansatz ?? null, record_method_detail: lowestOf(i)?.method_detail ?? null,
-    record_bound_type: lowestOf(i)?.bound_type ?? null,
+    ...(deprecated ? {
+      record_energy_per_site: perSiteOf(lowestOf(i)),
+      record_method: lowestOf(i)?.method ?? null, record_ansatz: lowestOf(i)?.ansatz ?? null, record_method_detail: lowestOf(i)?.method_detail ?? null,
+      record_bound_type: lowestOf(i)?.bound_type ?? null,
+    } : {}),
   };
-}), null, 2) + "\n");
+}
+write("api/instances.json", JSON.stringify(instances.map(i => indexEntry(i)), null, 2) + "\n");
+
+// The query files: static slices of api/instances.json, so a reader fetches one model or the
+// open instances instead of the whole index. Same instances (finite lattices; the infinite
+// ones stay in api/tdl/), same values, no deprecated fields.
+const queryMeta = { built: BUILT, note: "Individual energies should be cited to the primary paper named on the row." };
+const byModel = Map.groupBy(instances, i => i.model);
+write("api/models.json", JSON.stringify({ ...queryMeta, models: [...byModel].map(([model, list]) => {
+  const sizes = list.map(i => i.n_sites).filter(n => typeof n === "number");
+  return {
+    model, instances: list.length, rows: list.reduce((n, i) => n + i.rows.length, 0),
+    exact: list.filter(i => classBest(i).exact).length, open: list.filter(i => !classBest(i).exact).length,
+    lattices: [...new Set(list.map(i => i.lattice))].sort(), boundaries: [...new Set(list.map(i => i.boundary ?? null))],
+    n_sites_min: sizes.length ? Math.min(...sizes) : null, n_sites_max: sizes.length ? Math.max(...sizes) : null,
+    params: [...new Set(list.flatMap(i => Object.keys(i.params ?? {})))].sort(),
+    json: `https://qmbl.org/api/m/${model}.json`,
+  };
+}) }, null, 2) + "\n");
+for (const [model, list] of byModel)
+  write(`api/m/${model}.json`, JSON.stringify({ ...queryMeta, model, instances: list.map(i => indexEntry(i, { deprecated: false })) }, null, 2) + "\n");
+write("api/open.json", JSON.stringify({ ...queryMeta, note: `${queryMeta.note} Open: no exact energy (RULES.md section 6).`,
+  instances: instances.filter(i => !classBest(i).exact).map(i => indexEntry(i, { deprecated: false })) }, null, 2) + "\n");
 write("api/qmbl.json", JSON.stringify({
   name: "QMBL: the Quantum Many-Body Leaderboard",
   url: "https://qmbl.org/", repository: REPO, license: "Apache-2.0", doi: DOI,

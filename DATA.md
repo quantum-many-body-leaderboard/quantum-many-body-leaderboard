@@ -724,6 +724,26 @@ the fields of a track 1 row, with three differences:
 `data/_summary.json` counts them under `thermodynamic_limit`. The site serves
 `/api/tdl/<id>.json`.
 
+## The site's machine API: `/api/`
+
+`scripts/site.mjs` writes read-only JSON next to the site on every build. Nothing in it is
+hand-edited, and every value is the one the site shows.
+
+| file | content |
+|---|---|
+| `/api/qmbl.json` | every instance and every row, one file |
+| `/api/instances.json` | one line per instance: id, label, model, lattice, `n_sites`, boundary, `params`, `has_exact`, the exact energy per site and the best energy per site of each bound type, with method and ansatz |
+| `/api/models.json` | per model: instance, row, exact and open counts, lattices, boundaries, size range, parameter names, the URL of its slice |
+| `/api/m/<model>.json` | the `instances.json` lines of one model |
+| `/api/open.json` | the `instances.json` lines of the instances with no exact energy |
+| `/api/i/<id>.json`, `/api/tdl/<id>.json` | one instance with all its rows and its `best` block |
+| `/api/summary.json` | the counts behind the headline numbers |
+
+The query files (`models.json`, `m/`, `open.json`) cover the finite instances, as
+`instances.json` does, and carry no deprecated `record_*` field. `has_exact`, not
+`exact_energy_per_site`, says whether an instance has an exact energy: Impurity instances have
+no per-site energy. [`mcp/`](mcp/) serves these files to AI systems as MCP tools.
+
 ## Units and conventions
 
 Stored conventions follow VarBench and are asserted per instance, not per row. The
