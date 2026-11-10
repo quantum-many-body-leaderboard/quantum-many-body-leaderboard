@@ -571,6 +571,47 @@
           "pass": "passes/code/libraries-2026-10-22.json"
         }
       }
+    },
+    {
+      "energy": -0.22929831,
+      "sigma": 0.00000162,
+      "energy_variance": null,
+      "dof": 27,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "SJB",
+      "method_detail": "Wigner-crystal Slater determinant of Gaussian orbitals (C = 0.000148 a.u.), SJB optimised with g=7; truncation parameter g=25 keeps 91 terms",
+      "method_as_published": "SJB-VMC [Wigner-crystal Slater determinant of Gaussian orbitals (C = 0.000148 a.u.), SJB optimised with g=7; truncation parameter g=25 keeps 91 terms] (arXiv:2201.08743)",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Sam Azadi and N. D. Drummond, Low-density Phase Diagram of the Three-Dimensional Electron Gas, Phys. Rev. B 105, 245135, arXiv:2201.08743, doi:10.1103/PhysRevB.105.245135",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-19",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-19",
+        "method": "source text of arXiv:2201.08743 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "−0.00849253(6)",
+        "note": "Table I, g=25; sources/2201.08743.txt line 210; printed in Ha per electron; version read: arXiv text in sources/; journal copy not read | The text names the Ewald interaction ('the interaction ... is of Ewald form', txt line ~287, 'the use of the Ewald interaction rather than 1/r', line ~173) but never the Madelung term. The paper prints no Hartree-Fock energy, so no HF check is possible. Fig. 15 caption (txt line 711): 'The Madelung energy of the bcc lattice has been subtracted off' from the DMC energies, i.e. the energies as printed contain the Madelung term. Indirect check: ferromagnetic bcc crystal at rs=90, N=27 has E = -0.0084925 Ha/el. (Table I), close to the bcc Madelung lattice energy -0.89593/rs = -0.009955 plus the ze",
+        "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "CASINO",
+            "version": null,
+            "url": "https://vallico.net/casinoqmc/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "The casino package was used for all our QMC calculations [35].",
+          "location": "arXiv:2201.08743 (sources/2201.08743.txt), Sec. II (methods)",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
     }
   ]
 }
