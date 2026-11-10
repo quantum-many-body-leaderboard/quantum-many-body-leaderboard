@@ -242,6 +242,33 @@ python ed_full2.py --model hubbard --lattice square --L 4 --nup 8 --ndn 8 --U 4 
 python hub_fact.py --lattice square --L 4 --n 8 --U 4 --threads 4 --k 1 --ncv 12 --instance Hubbard/square_16_P_8_4 --out Hubbard__square_16_P_8_4__A.json
 ```
 
+## `hubbard-4x4-n78-ed/`: the exact ground state of the 4x4 Hubbard torus at n = 7/8, U = 8
+
+**Question.** `Hubbard/square_16_P_7_8` (N_up = N_dn = 7, U = 8, periodic) carried two VMC rows and no
+exact energy. Its fixed-(7, 7) space has 130,873,600 states, the size the half-filling check above
+already diagonalised without spatial symmetry.
+
+**Design.** The two codes of `hubbard-4x4-half-filling-ed/`, unchanged (`ed_full2.py` md5 6604ee7e,
+`hub_fact.py` c3f50162), with N_up = N_dn = 7 and U = 8, on the AMD EPYC 9654 server, 2026-11-10:
+code B (plain Lanczos, tol 1e-10, 32 threads) and code A (factorised matvec with ARPACK, k = 1,
+ncv = 12, 4 threads). The (7, 7) space holds the S^z = 0 member of every spin multiplet at 14
+electrons, so its lowest level is the ground state at this filling whatever its total spin.
+
+**Result.** -11.868835569563833 (code B, true residual 6.3e-11, 285 iterations, 15 min, 3.9 GB) and
+-11.868835569563995 (code A, residual 9.8e-12, 614 matvecs, 95 min, 20.6 GB), 1.6e-13 apart;
+E/N = -0.741802223. The two VMC rows lie above it: -11.86832(80) (Chen et al., neural-network-augmented
+Pfaffian) by 5.2e-4, 0.6 sigma, and -11.8544(16) (Robledo Moreno et al., hidden fermions) by 1.44e-2.
+
+**Conclusion.** An exact row computed by QMBL (`scripts/add_exact_rows.mjs` batch B3).
+
+**Reproduce.** Code B in about 15 min and 4 GB on 32 threads, code A in about 1.5 h and 21 GB on 4
+threads (both on a loaded host), with numpy, scipy and numba, from `hubbard-4x4-half-filling-ed/`:
+
+```bash
+python ed_full2.py --model hubbard --lattice square --L 4 --nup 7 --ndn 7 --U 8 --instance Hubbard/square_16_P_7_8 --out Hubbard__square_16_P_7_8__B.json --tol 1e-10
+python hub_fact.py --lattice square --L 4 --n 7 --U 8 --threads 4 --k 1 --ncv 12 --instance Hubbard/square_16_P_7_8 --out Hubbard__square_16_P_7_8__A.json
+```
+
 ## `exact-recompute-2026-09/`: which printed exact energies are QMBL's value rounded?
 
 **Question.** Several exact rows carry an energy printed to 6 or 9 digits. Where the printed value
