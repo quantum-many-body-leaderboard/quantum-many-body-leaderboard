@@ -885,6 +885,11 @@ Object.assign(NAMES, {
   "DMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)": ["Fixed-node DMC", "trial state: Slater-Jastrow, ferromagnetic bcc crystal; extrapolated: Δτ → 0", { family: "DMC" }],
   "VMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)": ["Slater-Jastrow", "antiferromagnetic bcc crystal"],
   "DMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)": ["Fixed-node DMC", "trial state: Slater-Jastrow, antiferromagnetic bcc crystal; extrapolated: Δτ → 0", { family: "DMC" }],
+  // Their fluid tables I-VIII: plane-wave determinant at Gamma, DMC not extrapolated in the time step (captions).
+  "VMC (Slater-Jastrow, fluid, Supplemental Material)": ["Slater-Jastrow", "plane-wave determinant"],
+  "DMC (Slater-Jastrow, fluid, Supplemental Material)": ["Fixed-node DMC", "trial state: Slater-Jastrow, plane-wave determinant; finite time step", { family: "DMC" }],
+  "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)": ["Slater-Jastrow-backflow", "plane-wave determinant"],
+  "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)": ["Fixed-node DMC", "trial state: Slater-Jastrow-backflow, plane-wave determinant; finite time step", { family: "DMC" }],
 });
 
 // Rows of sweep-rows-2026-10-20-families.json (SWEEP.md): the labels scripts/families_2026_10_20.mjs writes.
