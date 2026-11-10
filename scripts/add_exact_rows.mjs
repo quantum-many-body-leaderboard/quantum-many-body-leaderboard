@@ -276,7 +276,21 @@ put("J1J2/square_36_P_0.45",
     reported: "-74.2546644341862 (C4v, k = (0,0), A1; 15,804,956 states; residual 6.0e-10) | -74.25466443418684 (C2v axes, k = (0,0), A1 + B1; 31,601,346 states; residual 4.0e-10)",
     note: "Pauli total; E/N = -0.515657392 in S.S units. Lowest of the eight C4v sectors computed; the next is -71.9586017 (k = (0,0), B1). The two bases agree to 6.4e-13. The same code reproduces the exact rows at J2 = 0.5 to 12 digits and the printed 36-site values of Schulz, Ziman & Poilblanc at 0.2, 0.55 and 0.65 (checks/README.md, exact-recompute-2026-09). Chen et al. quote -0.51565739 at this coupling, which matches to 1e-8, citing Schulz et al., who have no J2 = 0.45 row; Golubev et al. (arXiv:2606.04558, Table I) print an ED value 6.1e-7 below it (SWEEP.md). No published exact row is carried, so QMBL's stands (2026-10-09).",
     source: "qmbl-verify-2026-09-28", checked: "2026-09-28", fields: { computed_by: "qmbl" } });
-console.log("batch B3: 1 exact row computed by QMBL where none was published (J1-J2 6x6, J2 = 0.45)");
+//
+// Hubbard/square_16_P_7_8, the 4x4 torus at n = 7/8 (N_up = N_dn = 7), U = 8: the two codes of
+// checks/hubbard-4x4-half-filling-ed/, unchanged, over the whole fixed-(7, 7) space (130,873,600
+// states, no spatial symmetry) on an AMD EPYC 9654 server, 2026-11-10 (checks/hubbard-4x4-n78-ed/); they
+// agree to 1.6e-13. The (7, 7) space holds the S^z = 0 member of every multiplet at 14 electrons.
+put("Hubbard/square_16_P_7_8",
+  { model: "Hubbard", lattice: "square", n_sites: 16, boundary: "P", params: { Nf: 7, U: 8 }, dof: 14, einf: (8 * 7 * 7) / 16 },
+  { energy: -11.8688355696, sigma: null,
+    src: { ref: "QMBL, checks/hubbard-4x4-n78-ed/ (exact diagonalization of the 4x4 torus at N_up = N_dn = 7, two codes)", pr: false },
+    method: "Exact diagonalization", why: "Lanczos exact diagonalization of the full (N_up, N_dn) = (7, 7) space, computed by QMBL; deterministic",
+    read: "ed_full2.py (code B: plain Lanczos, Hubbard kernel with fixed N_up = N_dn = 7, 130,873,600 states, true residual 6.3e-11) and hub_fact.py (code A: the factorised matvec T x 1 + 1 x T + U D of checks/hubbard-u-labels/ed_check.py with ARPACK, residual 9.8e-12), an AMD EPYC 9654 server, 2026-11-10",
+    reported: "-11.868835569563833 (ed_full2.py) | -11.868835569563995 (hub_fact.py)",
+    note: "Total energy, t = 1, H = -t sum (c+c + h.c.) + U sum n_up n_dn on the periodic 4x4 lattice (32 bonds), N_up = N_dn = 7; E/N = -0.741802223. No published exact energy is carried for this instance; the two codes agree to 1.6e-13.",
+    source: "qmbl-verify-2026-11-10", checked: "2026-11-10", fields: { computed_by: "qmbl" } });
+console.log("batch B3: 2 exact rows computed by QMBL where none was published (J1-J2 6x6, J2 = 0.45; Hubbard 4x4 at n = 7/8, U = 8)");
 
 // ---------------------------------------------------------------------------------------
 // Batch C: exact diagonalization of frustrated clusters. Deterministic, so no sigma; the

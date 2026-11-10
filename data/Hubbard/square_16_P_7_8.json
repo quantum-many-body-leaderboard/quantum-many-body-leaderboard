@@ -10,6 +10,44 @@
   "instance_id": "Hubbard/square_16_P_7_8",
   "rows": [
     {
+      "energy": -11.8688355696,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 14,
+      "einf": 24.5,
+      "v_score": null,
+      "method": "ED",
+      "ansatz": null,
+      "method_detail": "",
+      "method_as_published": "Exact diagonalization",
+      "family": "other",
+      "bound_type": "exact",
+      "bound_type_reason": "Lanczos exact diagonalization of the full (N_up, N_dn) = (7, 7) space, computed by QMBL; deterministic",
+      "reference": "QMBL, checks/hubbard-4x4-n78-ed/ (exact diagonalization of the 4x4 torus at N_up = N_dn = 7, two codes)",
+      "peer_reviewed": false,
+      "source": "qmbl-verify-2026-11-10",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-10",
+        "method": "ed_full2.py (code B: plain Lanczos, Hubbard kernel with fixed N_up = N_dn = 7, 130,873,600 states, true residual 6.3e-11) and hub_fact.py (code A: the factorised matvec T x 1 + 1 x T + U D of checks/hubbard-u-labels/ed_check.py with ARPACK, residual 9.8e-12), an AMD EPYC 9654 server, 2026-11-10",
+        "reported_as": "-11.868835569563833 (ed_full2.py) | -11.868835569563995 (hub_fact.py)",
+        "note": "Total energy, t = 1, H = -t sum (c+c + h.c.) + U sum n_up n_dn on the periodic 4x4 lattice (32 bonds), N_up = N_dn = 7; E/N = -0.741802223. No published exact energy is carried for this instance; the two codes agree to 1.6e-13.",
+        "secondary_of": null
+      },
+      "computed_by": "qmbl",
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/8cafd479/checks/hubbard-4x4-n78-ed",
+        "commit": "8cafd479",
+        "script": "checks/hubbard-4x4-n78-ed/",
+        "read_from": {
+          "quote": "QMBL, checks/hubbard-4x4-n78-ed/ (exact diagonalization of the 4x4 torus at N_up = N_dn = 7, two codes)",
+          "location": "the row's reference (QMBL check directory)",
+          "checked_on": "2026-11-10",
+          "pass": "passes/code/code-links-2026-11-10.json"
+        }
+      }
+    },
+    {
       "energy": -11.8544,
       "sigma": 0.0016,
       "energy_variance": null,

@@ -619,7 +619,8 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best variational | -1.0943979 (+<1e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_5_8.jl) |
 | square 4x4, U = 10, n = 0.625 | exact | -1.0564725 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_16_P_5_10/ed_lattice_symmetries.sh) |
 |  | best variational | -1.0564725 (+<1e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_5_10.jl) |
-| square 4x4, U = 8, n = 0.875 | best variational | -0.74177(5) | VMC (HFPS) [Chen et al. (2026)](https://doi.org/10.1073/pnas.2535288123) | *uses [Quantax](https://github.com/ChenAo-Phys/quantax)* |
+| square 4x4, U = 8, n = 0.875 | exact | -0.7418022 | ED [QMBL check, checks/hubbard-4x4-n78-ed/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/hubbard-4x4-n78-ed) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/8cafd479/checks/hubbard-4x4-n78-ed) |
+|  | best variational | -0.74177(5) (+3.2e-5) | VMC (HFPS) [Chen et al. (2026)](https://doi.org/10.1073/pnas.2535288123) | *uses [Quantax](https://github.com/ChenAo-Phys/quantax)* |
 | square 4x4, U = 2, n = 1 | exact (stochastic) | -1.1265(4) | AFQMC [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) |  |
 |  | best variational | -1.1248 &#9675; (+1.7e-3) | VMC (HB) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |  |
 | square 4x4, U = 4, n = 1 | exact | -0.8513659 | ED [QMBL check, checks/hubbard-4x4-half-filling-ed/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/hubbard-4x4-half-filling-ed) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/0dfebd7/checks/hubbard-4x4-half-filling-ed) |
@@ -2193,7 +2194,7 @@ Rules: [RULES.md](RULES.md). Units, conventions, error metrics, provenance and d
 
 To cite the data itself, use the Zenodo concept DOI, which resolves to the latest release: [10.5281/zenodo.22753734](https://doi.org/10.5281/zenodo.22753734).
 
-530 of QMBL’s 5228 rows (10 %) are imported from VarBench, the dataset published with the V-score paper. If you use an imported energy, cite that paper too:
+530 of QMBL’s 5229 rows (10 %) are imported from VarBench, the dataset published with the V-score paper. If you use an imported energy, cite that paper too:
 
 > D. Wu *et al.*, *Variational benchmarks for quantum many-body problems*,
 > Science **386**, 296 (2024). [10.1126/science.adg9774](https://doi.org/10.1126/science.adg9774)
