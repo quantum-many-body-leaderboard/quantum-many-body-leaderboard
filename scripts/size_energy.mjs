@@ -1,4 +1,4 @@
-// Generate figures/energy/*.svg, the front page's view of every Hamiltonian: the published
+// Generate figures/energy/*.svg, QMBL: Open Problems' view of every Hamiltonian (the front page draws its own, hero.mjs): the published
 // energies themselves, with no reference energy. The shape is ladders.mjs's, which the site
 // reads the same way: per model and lattice, stops along an axis (J2, U, the filling) grouped
 // in facets, each stop a figure of one panel, energy against sites. A figure with two stops or

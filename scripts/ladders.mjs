@@ -254,3 +254,27 @@ export function energyFigures(instances) {
   if (new Set(names).size !== names.length) throw new Error("ladders.mjs: two energy figures share a file name");
   return [...figs, ...others];
 }
+
+// The front page's picker (hero.mjs): every instance with a drawn row, with the badges a reader
+// picks it by, split as ladderFigures splits it: the lattice tab first (a t12 variant its own
+// tab), then boundary, rectangle shape, the impurity problem, each coupling, the filling and any
+// other variant. Each badge is [name, label, order]. One source with the figures, so the picker
+// names a Hamiltonian as the figures and the table do.
+export function pickerFacets(instances) {
+  const shapes = rectangleShapes(instances);
+  return instances.filter(i => drawnRows(i).length).map(i => {
+    const dims = [["boundary", BOUNDARY[i.boundary] ?? "periodic", Math.max(0, Object.keys(BOUNDARY).indexOf(i.boundary) + 1)]];
+    const shape = shapes.get(i);
+    if (shape) dims.push(["shape", shape.label, sidesOf(i)?.[0] ?? 0]);
+    if (i.model === "Impurity") dims.push(["problem", i.lattice, i.lattice]);
+    for (const k of COUPLINGS) {
+      const v = i.params?.[k];
+      if (v != null) dims.push([k === "R" ? "R (bohr)" : k, k === "basis" && v === "none" ? "basis-free" : String(v), v]);
+    }
+    const f = fillingOf(i);
+    if (f != null) dims.push([zetaOf(i) != null ? "ζ" : "filling n", String(f), f]);
+    const v = variantsOf(i).filter(x => x !== "t12");
+    if (v.length) dims.push(["variant", v.join(", "), v.join(", ")]);
+    return { inst: i, tab: latticeLabel(i, false), dims };
+  });
+}

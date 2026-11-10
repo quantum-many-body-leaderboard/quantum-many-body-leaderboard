@@ -4,8 +4,9 @@
 // every conversion, summary.mjs for which values an instance shows, readme_table.mjs for how an
 // instance is named and how a number is quoted, so the site and the README show the same numbers.
 //
-// The figures on the front page are the committed figures/*.svg, drawn by size_accuracy.mjs
-// and pareto.mjs from the same data/; this script inlines them, so that a mark standing for
+// The front page is the picker (hero.mjs): a ring of the Hamiltonians, each opening a chart drawn
+// in the browser from _site/picker/<model>.json. Below it, behind three links, are the committed
+// figures/*.svg, drawn by size_accuracy.mjs and pareto.mjs from the same data/; this script inlines them, so that a mark standing for
 // a row can link to that row in the table and show a card for it on hover. A figure carries
 // its own title and subtitle, so the page puts nothing above it; the title and caption
 // listed here are its accessible label.
@@ -16,7 +17,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
-import { perSiteDivisor, perSiteLabel, boundLabel, stochasticExact, publishedMethod, methodLabel, methodDetail, BEST_CLASSES, H_MODELS } from "./units.mjs";
+import { perSiteDivisor, perSiteLabel, boundLabel, stochasticExact, publishedMethod, methodLabel, methodDetail, BEST_CLASSES, H_MODELS, classEligible } from "./units.mjs";
 import { collectTDL, tdlLabel } from "./tdl.mjs";
 import { collect, classBest, shownBest, bestTagOf, lowestOf, noRecordKey, summarize, rowId, sameExactRows } from "./summary.mjs";
 import { THEMES, W } from "./chart.mjs";
@@ -26,7 +27,8 @@ import { quote, storedDigits, shorten, MODELS, BOUNDARY, instanceLabel, byGeomet
 import { logoSvg, faviconSvg, LOGO_CSS } from "./logo.mjs";
 import { hoursOrEdOf, costFigureName, flopsFigureName, paramsFigureName } from "./cost.mjs";
 import { FRONTIER } from "./views.mjs";
-import { energyFigures } from "./ladders.mjs";
+import { energyFigures, pickerFacets, drawnRows } from "./ladders.mjs";
+import { SUB_RING, pickerSlug, formula, about, modelGlyph, latticeGlyph, heroHtml, HERO_CSS } from "./hero.mjs";
 import { loadOpenProblems, openProblemsPages, openProblemsLlms, OPEN_PROBLEMS_URL, OPEN_PROBLEMS_TABLE_URL, OPEN_PROBLEMS_NAV_CSS, OPEN_PROBLEMS_PAGE_CSS } from "./open_problems.mjs";
 
 const OUT = "_site";
@@ -69,9 +71,8 @@ const esc = s => String(s)
 // are this build's instances with no exact energy (the checkout's scripts/targets.mjs).
 const OPEN_PROBLEMS = await loadOpenProblems(instances);
 
-// The front page is the leaderboard (the figures), /instances/ the table.
+// The front page is the picker (hero.mjs); the wordmark leads there, so the menu starts at the Table.
 const NAV = [
-  ["/", "Leaderboard"],
   ["/instances/", "Table"],
 ];
 // Open Problems is a button at the very right of the menu, after Cite.
@@ -466,7 +467,7 @@ function relabelNote(inst) {
 }
 
 // -------------------------------------------------------------------------- home page
-// The front page is the figures. Each is drawn into figures/ by the build (size_accuracy.mjs,
+// The figures behind the front page's links. Each is drawn into figures/ by the build (size_accuracy.mjs,
 // pareto.mjs) and committed, in a light and a dark variant for GitHub; the page inlines the
 // light one and the stylesheet recolours it in dark mode (FIG_DARK). One entry per figure.
 const FIGURES = [
@@ -793,25 +794,63 @@ const FIG_SCRIPT = `<script>
 </script>`;
 
 // The per-family panels sit folded under the overview figure, behind a link-styled summary.
+// The picker's data (hero.mjs, scripts/assets/hero.js): per Hamiltonian its lattice tabs, the
+// badges of each instance (pickerFacets, the figures' own split) and every drawn row as
+// [energy per site, method, kind, can be best, flagged, row id], with the row's card; written
+// to picker/<model>.json and fetched when the reader opens that Hamiltonian.
+const KIND = { variational: 0, projected: 1, extrapolated: 2, approximate: 2, exact: 3 };
+const PICKS = Map.groupBy(pickerFacets(instances), p => p.inst.model);
+// Built on first use: rowCard needs helpers defined further down.
+let pickerCache = null;
+const picker = () => pickerCache ??= MODELS.filter(([m]) => PICKS.has(m)).map(([model, name]) => {
+  const picks = PICKS.get(model);
+  const drawn = picks.reduce((a, p) => a + drawnRows(p.inst).length, 0);
+  const tabs = [...Map.groupBy(picks, p => p.tab)].map(([label, ps]) => ({ label, count: ps.reduce((a, p) => a + drawnRows(p.inst).length, 0) }))
+    .sort((a, b) => b.count - a.count);
+  const dims = [...new Set(picks.flatMap(p => p.dims.map(d => d[0])))];
+  const cards = {};
+  const inst = picks.map(({ inst: i, tab, dims: d }) => {
+    const div = perSiteDivisor(i) ?? 1, b = classBest(i);
+    return {
+      t: tabs.findIndex(x => x.label === tab), N: i.n_sites, d: Object.fromEntries(d.map(([k, l, o]) => [k, [l, o]])),
+      r: drawnRows(i).map(r => {
+        const id = rowId(i, r), flagged = !!r.defect || b.below.includes(r);
+        cards[id] = rowCard(r, i);
+        return [Number((r.energy / div).toPrecision(10)), methodLabel(r), KIND[r.bound_type], +(!flagged && (r.bound_type === "exact" || classEligible(r))), +flagged, id];
+      }),
+    };
+  });
+  const slug = pickerSlug(model);
+  return {
+    file: { model, name, unit: perSiteLabel(picks[0].inst), tabs: tabs.map(x => ({ ...x, glyph: latticeGlyph(model, x.label) })), dims, inst, cards },
+    info: { model, slug, name, about: about(model), formula: formula(model), formulaBlock: formula(model, true), glyph: modelGlyph(model), glyphBig: modelGlyph(model, "pk-glyph pk-big"),
+      energies: picks.reduce((a, p) => a + p.inst.rows.length, 0), drawn, tabs: tabs.map(x => ({ ...x, glyph: latticeGlyph(model, x.label) })) },
+  };
+});
+const HERO_SCRIPT = fs.readFileSync("scripts/assets/hero.js", "utf8");
+
 function homePage() {
   const [overview, byFamily] = FIGURES;
-  const figures = [figure(overview), `<details class="fig-more">
-  <summary>Best published energies by method family</summary>
-${figure(byFamily)}
-</details>`, energySwitcher(), computeSwitcher()].join("\n");
+  const panels = [["size", "All published energies sorted by system size", figure(overview)],
+    ["family", "Best energies by method family", figure(byFamily)],
+    ["cost", "Best published energies by cost", computeSwitcher()]];
+  const figures = panels.map(([, , html]) => html).join("\n");
   const linked = new Set([...[...figures.matchAll(/href="\/instances\/#(r-[\w-]+)"/g)].map(m => m[1]),
     ...[...figures.matchAll(/data-rows="([\w -]+)"/g)].flatMap(m => m[1].split(" "))]);
   const cards = instances.flatMap(inst => inst.rows.filter(r => linked.has(rowId(inst, r)))
     .map(r => `<div data-row="${rowId(inst, r)}">${rowCard(r, inst)}</div>`));
   if (cards.length !== linked.size) throw new Error(`figures link ${linked.size} rows, ${cards.length} found in data/: a figure is older than the data`);
+  const models = picker().map(p => p.info);
+  const data = { sub: [...SUB_RING], models };
   const body = `
-<h1>Best published ground-state energies</h1>
-<p class="lead">QMBL is a live record book of the state of the art in quantum many-body simulation. Browse
-through the leaderboard figures below interactively or look at the pure data in the
-<a href="/instances/">table</a>. Scientists and AI systems should use the shared results to build on
-each other's work more efficiently and advance frontier science.</p>
-
-${figures}
+${heroHtml({ models, energies: instances.reduce((a, i) => a + i.rows.length, 0) })}
+<script type="application/json" id="pk-data">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>
+<div class="pk-tip-host"><div id="pk-tip" role="tooltip" hidden></div></div>
+<div class="pk-more-wrap" id="pk-more-wrap">
+<nav class="pk-more" aria-label="More views">
+${panels.map(([id, label]) => `  <button class="pk-more-l" type="button" aria-expanded="false" aria-controls="pk-p-${id}">${label}</button>`).join("\n")}
+</nav>
+${panels.map(([id, , html]) => `<div class="pk-panel" id="pk-p-${id}" hidden>\n${html}\n</div>`).join("\n")}
 <template id="fig-cards">${cards.join("\n")}</template>
 ${FIG_SCRIPT}
 
@@ -822,7 +861,9 @@ ${FIG_SCRIPT}
   <p>To cite the data itself, use the concept DOI, which always resolves to the latest release:
   <a href="https://doi.org/${DOI}">${DOI}</a>.</p>
   <p>Individual energies should be cited to the primary paper named on the row, not to this site.</p>
-</section>`;
+</section>
+</div>
+<script>${HERO_SCRIPT}</script>`;
   return page({
     url: "/", title: null, body, wide: true, jsonld: datasetLd(),
     description: `Published ground-state energies for ${summary.instances} Hamiltonian instances, with the exact energy and the best of each bound type on each, every row citing its primary paper.`,
@@ -1840,7 +1881,7 @@ button.qn.open::after, button.qn:focus-visible:not(.shut)::after {
   font-family: var(--sans); font-size: 0.8rem; line-height: 1.35; color: var(--ink);
   background: var(--surface); border: 1px solid var(--grid); border-radius: 4px;
   padding: 0.3rem 0.5rem; box-shadow: 0 2px 8px rgb(0 0 0 / 0.12); }
-` + LOGO_CSS + (OPEN_PROBLEMS ? OPEN_PROBLEMS_NAV_CSS : "");
+` + LOGO_CSS + HERO_CSS + (OPEN_PROBLEMS ? OPEN_PROBLEMS_NAV_CSS : "");
 // /open-problems/'s own rules and those of its figure switches, in open-problems.css, which only
 // that page links: every page carries the menu button, but not that page's figures.
 const OP_CSS = OPEN_PROBLEMS ? OPEN_PROBLEMS_PAGE_CSS + OP_TAB_CSS + "\n" : "";
@@ -1860,6 +1901,7 @@ function write(rel, content) {
 fs.rmSync(OUT, { recursive: true, force: true });
 
 write("index.html", homePage());
+for (const p of picker()) write(`picker/${pickerSlug(p.file.model)}.json`, JSON.stringify(p.file));
 write("instances/index.html", instancesPage());
 // /tdl/ was the infinite lattices' own page until 2026-10-27; it forwards to the Table.
 write("tdl/index.html", `<!doctype html>
