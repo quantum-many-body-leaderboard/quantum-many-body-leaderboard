@@ -100,7 +100,7 @@ const LAST_OTHER = Math.max(...all.filter(p => !["Heisenberg", "Hubbard"].includ
 write("size-vs-accuracy", t => {
   const h = header(t, "The best published energies, by system size",
     "Results are placed by their relative gap to the exact ground-state energy so that different Hamiltonians share one axis. A better energy is lower. " +
-    `Above size ${LAST_OTHER} there are only Heisenberg and Hubbard model results, because they have an exact ground-state energy as reference. For other Hamiltonians at larger system sizes, see below.`);
+    `Above size ${LAST_OTHER} there are only Heisenberg and Hubbard model results, because they have an exact ground-state energy as reference. For other Hamiltonians at larger system sizes, pick one above.`);
   const lg = legend(t, [
     { kind: "dot", color: t.series[0], label: "Variational bound" },
     { kind: "dot", color: t.series[1], label: "Projected" },
