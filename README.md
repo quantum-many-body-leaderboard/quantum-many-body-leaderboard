@@ -678,8 +678,9 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best variational | -4.0169(1) (+1.0e-4) | VMC (transformer BF) [Viteritti et al. (2026)](https://doi.org/10.48550/arxiv.2604.21978) |  |
 |  | best projected | -4.0168 &#9675; (+2.0e-4) | FN-GFMC (ACE) [Gu et al. (2026)](https://doi.org/10.1103/2kq2-5g5q) |  |
 | square 8x8, U = -4, n = 0.875 | exact (stochastic) | -2.60123(8) | AFQMC [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run scripts](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_64_P_28_-4/AFQMC/) |
-| square 8x8, U = -2, n = 0.875 | best variational | -2.0338 &#9675; | VMC (ACE) [Gu et al. (2026)](https://doi.org/10.1103/2kq2-5g5q) | *uses [LaQX](https://github.com/bytedance/laqx)* |
-|  | best projected | -2.0339 &#9675; | FN-GFMC (ACE) [Gu et al. (2026)](https://doi.org/10.1103/2kq2-5g5q) |  |
+| square 8x8, U = -2, n = 0.875 | exact (stochastic) | -2.03430(7) | DQMC [Gu et al. (2026)](https://doi.org/10.1103/2kq2-5g5q) |  |
+|  | best variational | -2.0338 &#9675; (+5.0e-4) | VMC (ACE) [Gu et al. (2026)](https://doi.org/10.1103/2kq2-5g5q) | *uses [LaQX](https://github.com/bytedance/laqx)* |
+|  | best projected | -2.0339 &#9675; (+4.0e-4) | FN-GFMC (ACE) [Gu et al. (2026)](https://doi.org/10.1103/2kq2-5g5q) |  |
 | square 8x8, U = 4, n = 0.875 | best variational | -1.01391(8) | VAFQMC [Levy et al. (2023)](https://doi.org/10.48550/arxiv.2308.08594) |  |
 |  | best projected | -1.01923(6) | CP-AFQMC [Levy et al. (2023)](https://doi.org/10.48550/arxiv.2308.08594) |  |
 | square 8x8, U = 8, n = 0.875 | best variational | -0.7532 &#9675; | VMC (transformer BF) [Gu et al. (2026)](https://doi.org/10.1038/s41467-026-74028-6) | [bytedance/laqx](https://github.com/bytedance/laqx) |
@@ -733,8 +734,9 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square 12x12, U = 15, n &asymp; 0.8333 | best variational | -0.66690(5) | VMC (HFPS) [Roth et al. (2025)](https://doi.org/10.48550/arxiv.2511.07566) | *uses [Quantax](https://github.com/ChenAo-Phys/quantax)* |
 | square 12x12, U = -8, n = 0.875 | best variational | -4.0159 &#9675; | VMC (ACE) [Gu et al. (2026)](https://doi.org/10.1103/2kq2-5g5q) | *uses [LaQX](https://github.com/bytedance/laqx)* |
 |  | best projected | -4.0161 &#9675; | FN-GFMC (ACE) [Gu et al. (2026)](https://doi.org/10.1103/2kq2-5g5q) |  |
-| square 12x12, U = -2, n = 0.875 | best variational | -2.0405 &#9675; | VMC (ACE) [Gu et al. (2026)](https://doi.org/10.1103/2kq2-5g5q) | *uses [LaQX](https://github.com/bytedance/laqx)* |
-|  | best projected | -2.0407 &#9675; | FN-GFMC (ACE) [Gu et al. (2026)](https://doi.org/10.1103/2kq2-5g5q) |  |
+| square 12x12, U = -2, n = 0.875 | exact (stochastic) | -2.04160(5) | DQMC [Gu et al. (2026)](https://doi.org/10.1103/2kq2-5g5q) |  |
+|  | best variational | -2.0405 &#9675; (+1.1e-3) | VMC (ACE) [Gu et al. (2026)](https://doi.org/10.1103/2kq2-5g5q) | *uses [LaQX](https://github.com/bytedance/laqx)* |
+|  | best projected | -2.0407 &#9675; (+9.0e-4) | FN-GFMC (ACE) [Gu et al. (2026)](https://doi.org/10.1103/2kq2-5g5q) |  |
 | square 12x12, U = 8, n = 0.875 | best variational | -0.7567 &#9675; | VMC (transformer BF) [Gu et al. (2026)](https://doi.org/10.1038/s41467-026-74028-6) | [bytedance/laqx](https://github.com/bytedance/laqx) |
 | square 12x12, U = 8, n = 0.875, t12 (t2 = -0.2) | best variational | -0.74425(1) | VMC (SBP) [Rende et al. (2026)](https://doi.org/10.48550/arxiv.2608.12465) |  |
 | square 12x12, U = 2, n = 1 | exact (stochastic) | -1.17187(5) | AFQMC [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) |  |
@@ -2195,7 +2197,7 @@ Rules: [RULES.md](RULES.md). Units, conventions, error metrics, provenance and d
 
 To cite the data itself, use the Zenodo concept DOI, which resolves to the latest release: [10.5281/zenodo.22753734](https://doi.org/10.5281/zenodo.22753734).
 
-530 of QMBL’s 5234 rows (10 %) are imported from VarBench, the dataset published with the V-score paper. If you use an imported energy, cite that paper too:
+530 of QMBL’s 5236 rows (10 %) are imported from VarBench, the dataset published with the V-score paper. If you use an imported energy, cite that paper too:
 
 > D. Wu *et al.*, *Variational benchmarks for quantum many-body problems*,
 > Science **386**, 296 (2024). [10.1126/science.adg9774](https://doi.org/10.1126/science.adg9774)
