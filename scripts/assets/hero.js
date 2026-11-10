@@ -94,8 +94,9 @@
       if (!counts.size) continue;
       if (!counts.has(sel[dim])) sel[dim] = [...counts].sort((a, b) => b[1] - a[1])[0][0];
       const vals = [...counts.keys()].sort((a, b) => { const x = order.get(a), y = order.get(b); return typeof x === "number" && typeof y === "number" ? x - y : String(x).localeCompare(String(y), "en", { numeric: true }); });
-      // Couplings print to four digits (7.74263683 -> 7.743), in full where two would then read alike.
-      const short = new Map(vals.map(v => { const o = order.get(v); return [v, typeof o === "number" ? String(Number(o.toPrecision(4))) : v]; }));
+      // Couplings print to four digits (7.74263683 -> 7.743), in full where two would then read alike;
+      // a badge whose order is a number but whose label is a word (boundary, shape) keeps its label.
+      const short = new Map(vals.map(v => { const o = order.get(v); return [v, typeof o === "number" && String(o) === v ? String(Number(o.toPrecision(4))) : v]; }));
       const seen = [...short.values()];
       for (const [v, s] of short) if (seen.filter(x => x === s).length > 1) short.set(v, v);
       rows.push([dim, vals, counts, short]);
