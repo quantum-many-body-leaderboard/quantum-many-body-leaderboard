@@ -747,7 +747,7 @@
     },
     {
       "energy": 47.7738215042,
-      "sigma": 0.000196,
+      "sigma": 0.0002,
       "energy_variance": null,
       "dof": 14,
       "einf": null,
@@ -1261,7 +1261,17 @@
         "method": "source text of arXiv:2403.04645 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "E_c = -0.58784187561384282",
         "note": "sources/2403.04645-repo-raw_data-rs_0_5-N_14.csv line 32: largest basis of the file, 70 shells = 3071 plane waves (6142 spin orbitals), 2 occupied shells = 7 electrons per spin; CCD correlation energy -0.58784187561384282 Ha (total); E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs) | Simple cubic cell, plane waves k = 2 pi n / L at Gamma, closed shells; the CCD values agree with arXiv:1310.6806's full CCD to 0.2 mHa at N = 14 (rs = 0.1 and 0.5).",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-10",
+          "scope": "value",
+          "method": "github.com/butler-julie/HEG-SRE raw_data/<rs>/<N>.csv fetched 2026-11-10 (sources/rp2-dl/butler-*.csv), byte-identical to qmbl sources/2403.04645-repo-raw_data-*.csv; arXiv:2403.04645v3 text (sources/2403.04645.txt) for the Hamiltonian; J. Chem. Phys. 161, 134108 not reachable (pubs.aip.org HTTP 403, Cloudflare); E_HF recomputed independently (own Python plane-wave HF + Ewald Madelung, sc cell, Gamma; Madelung constant -2.8372974795/L)",
+          "location": "raw_data/rs_0_5/N_14.csv, last line (num states = 2 70), column cc",
+          "reported_as": "E_c = -0.58784187561384282 (Hartree, total)",
+          "conversion": "14 x 3.4548943931569 + (-0.58784187561384282) = 47.780679629; stored 47.7806796286 (diff -1.7e-11)",
+          "note": "Eq. (5) of the paper: H = -1/2 sum nabla^2 + 1/2 sum v_ab + 1/2 N v_M (Madelung included), plane waves, periodic, closed shells (magic numbers); CSV columns 'num states cc mbpt': num = occupied shells per spin, states = shells in the basis, cc = Delta E_CCD total (paper Fig. 2 plots Delta E_CCD,6142/N). 70 shells = 3071 plane waves = 6142 spin orbitals (own enumeration of |n|^2 <= 81), the largest basis in every file and the paper's M = 6,142. bound_type projected (finite-basis CC, RULES 12.4) and largest basis per method (RULES 12.3) hold. No other row on the instance repeats this number.",
+          "source_entry": "RP2-heg3d-hubbard-tv-heisenberg#2 (qmbl-verify 2026-11-10b)"
+        }
       },
       "artifacts": {
         "code": "https://github.com/butler-julie/HEG-SRE",

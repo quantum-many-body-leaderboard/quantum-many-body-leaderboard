@@ -14,7 +14,7 @@
     {
       "energy": -1.069628,
       "sigma": 0.000028,
-      "energy_variance": null,
+      "energy_variance": 0.000012,
       "dof": 140,
       "einf": null,
       "v_score": null,
@@ -33,8 +33,18 @@
         "checked_on": "2026-11-10",
         "method": "source text of arXiv:2201.08743 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.0076402(2)",
-        "note": "SM Table VII, N = 140, row E_VMC, column rs = 100; SupplMat.pdf (PRB 105, 245135), pypdf layout text line 232; printed in Ha per electron | fcc simulation cell (main text), Ewald interaction, N_up and N_dn from N and ζ (caption). Twist Gamma: the captions say only \"Non-TA\"; S. Azadi (mail to QMBL, 2026-11-10): \"If it wasn't explicitly mentioned, then it's Gamma point calculations.\" | variance reported as 0.0000120(1), not stored: convention not verified",
-        "secondary_of": null
+        "note": "SM Table VII, N = 140, row E_VMC, column rs = 100; SupplMat.pdf (PRB 105, 245135), pypdf layout text line 232; printed in Ha per electron | fcc simulation cell (main text), Ewald interaction, N_up and N_dn from N and ζ (caption). Twist Gamma: the captions say only \"Non-TA\"; S. Azadi (mail to QMBL, 2026-11-10): \"If it wasn't explicitly mentioned, then it's Gamma point calculations.\" sigma_v^2 is printed in Ha^2 (caption); at fixed rs it grows about in proportion to N, so it is the variance of the total local energy of the cell, not of the energy per electron (inferred, the text does not say; ruled 2026-11-10); stored as Var(H), var_per_site = sigma_v^2 / N.",
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-10",
+          "scope": "value",
+          "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+          "location": "SM Table VII (zeta = 0.5, SJB), block N = 140, row E_VMC, column rs = 100; layout text line 232",
+          "reported_as": "−0.0076402(2) Ha/el.",
+          "conversion": "-0.0076402 * 140 = -1.069628 Ha (stored -1.069628); sigma 2e-7 * 140 = 0.000028 (stored 0.000028)",
+          "note": "N = 140 (N_up/N_dn = 105/35, zeta = 0.5 per caption), rs = 100; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_140_P_105_35_100.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+          "source_entry": "RP1c-azadi-fcc-VI-VIII#30, RP1c-azadi-fcc-VI-VIII#31 (ambiguous) (qmbl-verify 2026-11-10b)"
+        }
       }
     },
     {
@@ -60,7 +70,17 @@
         "method": "source text of arXiv:2201.08743 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.00767946(6)",
         "note": "SM Table VII, N = 140, row E_DMC, column rs = 100; SupplMat.pdf (PRB 105, 245135), pypdf layout text line 234; printed in Ha per electron; DMC not extrapolated to zero time step (caption) | fcc simulation cell (main text), Ewald interaction, N_up and N_dn from N and ζ (caption). Twist Gamma: the captions say only \"Non-TA\"; S. Azadi (mail to QMBL, 2026-11-10): \"If it wasn't explicitly mentioned, then it's Gamma point calculations.\"",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-10",
+          "scope": "value",
+          "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+          "location": "SM Table VII (zeta = 0.5, SJB), block N = 140, row E_DMC, column rs = 100; layout text line 234",
+          "reported_as": "−0.00767946(6) Ha/el.",
+          "conversion": "-0.00767946 * 140 = -1.0751244 Ha (stored -1.0751244); sigma 6e-8 * 140 = 0.0000084 (stored 0.0000084)",
+          "note": "N = 140 (N_up/N_dn = 105/35, zeta = 0.5 per caption), rs = 100; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_140_P_105_35_100.json: the other rows are the SJ Tables I/III/V values).",
+          "source_entry": "RP1c-azadi-fcc-VI-VIII#32 (qmbl-verify 2026-11-10b)"
+        }
       }
     }
   ]

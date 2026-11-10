@@ -14,7 +14,7 @@
     {
       "energy": -2.1687824,
       "sigma": 0.0000696,
-      "energy_variance": null,
+      "energy_variance": 0.000064099999,
       "dof": 232,
       "einf": null,
       "v_score": null,
@@ -33,8 +33,18 @@
         "checked_on": "2026-11-10",
         "method": "source text of arXiv:2201.08743 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.0093482(3)",
-        "note": "SM Table II, N = 232, row E_VMC, column rs = 80; SupplMat.pdf (PRB 105, 245135), pypdf layout text line 94; printed in Ha per electron | fcc simulation cell (main text), Ewald interaction, N_up and N_dn from N and ζ (caption). Twist Gamma: the captions say only \"Non-TA\"; S. Azadi (mail to QMBL, 2026-11-10): \"If it wasn't explicitly mentioned, then it's Gamma point calculations.\" | variance reported as 0.0000641(8), not stored: convention not verified",
-        "secondary_of": null
+        "note": "SM Table II, N = 232, row E_VMC, column rs = 80; SupplMat.pdf (PRB 105, 245135), pypdf layout text line 94; printed in Ha per electron | fcc simulation cell (main text), Ewald interaction, N_up and N_dn from N and ζ (caption). Twist Gamma: the captions say only \"Non-TA\"; S. Azadi (mail to QMBL, 2026-11-10): \"If it wasn't explicitly mentioned, then it's Gamma point calculations.\" sigma_v^2 is printed in Ha^2 (caption); at fixed rs it grows about in proportion to N, so it is the variance of the total local energy of the cell, not of the energy per electron (inferred, the text does not say; ruled 2026-11-10); stored as Var(H), var_per_site = sigma_v^2 / N.",
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-10",
+          "scope": "value",
+          "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+          "location": "SM Table II, N = 232, row E_VMC, column rs = 80 (layout text line 94)",
+          "reported_as": "−0.0093482(3) Ha/el.",
+          "conversion": "-0.0093482 x 232 = -2.1687824; sigma 3E-7 x 232 = 0.0000696",
+          "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.0000641(8) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+          "source_entry": "RP1a-azadi-bcc-fcc-I-II#116 (qmbl-verify 2026-11-10b)"
+        }
       }
     },
     {
@@ -60,7 +70,17 @@
         "method": "source text of arXiv:2201.08743 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.00941375(1)",
         "note": "SM Table II, N = 232, row E_DMC, column rs = 80; SupplMat.pdf (PRB 105, 245135), pypdf layout text line 96; printed in Ha per electron; DMC not extrapolated to zero time step (caption) | fcc simulation cell (main text), Ewald interaction, N_up and N_dn from N and ζ (caption). Twist Gamma: the captions say only \"Non-TA\"; S. Azadi (mail to QMBL, 2026-11-10): \"If it wasn't explicitly mentioned, then it's Gamma point calculations.\"",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-10",
+          "scope": "value",
+          "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+          "location": "SM Table II, N = 232, row E_DMC, column rs = 80 (layout text line 96)",
+          "reported_as": "−0.00941375(1) Ha/el.",
+          "conversion": "-0.00941375 x 232 = -2.18399000; sigma 1E-8 x 232 = 0.00000232",
+          "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10) The printed error bar (1) in the 8th decimal is about 10x below every neighbouring cell; transcription correct, kept as printed (ruled 2026-11-10).",
+          "source_entry": "RP1a-azadi-bcc-fcc-I-II#117, RP1a-azadi-bcc-fcc-I-II#133 (ambiguous) (qmbl-verify 2026-11-10b)"
+        }
       }
     }
   ]

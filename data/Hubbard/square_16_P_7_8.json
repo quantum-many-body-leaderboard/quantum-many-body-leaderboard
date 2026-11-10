@@ -32,7 +32,17 @@
         "method": "ed_full2.py (code B: plain Lanczos, Hubbard kernel with fixed N_up = N_dn = 7, 130,873,600 states, true residual 6.3e-11) and hub_fact.py (code A: the factorised matvec T x 1 + 1 x T + U D of checks/hubbard-u-labels/ed_check.py with ARPACK, residual 9.8e-12), an AMD EPYC 9654 server, 2026-11-10",
         "reported_as": "-11.868835569563833 (ed_full2.py) | -11.868835569563995 (hub_fact.py)",
         "note": "Total energy, t = 1, H = -t sum (c+c + h.c.) + U sum n_up n_dn on the periodic 4x4 lattice (32 bonds), N_up = N_dn = 7; E/N = -0.741802223. No published exact energy is carried for this instance; the two codes agree to 1.6e-13.",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-10",
+          "scope": "config",
+          "method": "qmbl checks/hubbard-4x4-n78-ed/Hubbard__square_16_P_7_8__A.json and __B.json read; scripts/add_exact_rows.mjs lines 278-292; not recomputed (run instructions)",
+          "location": "checks/hubbard-4x4-n78-ed/ (code A hub_fact.py E0 -11.868835569563995, residual 9.8e-12; code B ed_full2.py E -11.868835569563833, residual 6.3e-11)",
+          "reported_as": "-11.868835569563833 | -11.868835569563995",
+          "conversion": "stored -11.8688355696 = both results rounded to 10 decimals; E/N = -0.7418022",
+          "note": "Both files state H = -t sum_<ij>,s (c+c + h.c.) + U sum n_up n_dn, t = 1, U = 8, square L = 4 PBC (32 bonds), N_up = N_dn = 7 fixed, full 130,873,600-state space, no symmetry: matches the instance. Published cross-check: Gu et al. Nat. Commun. SI Table 4 prints 'Exact Energy -0.7418' for the 4 x 4 lattice at doping 1/8 (columns [1] Luo & Clark and [5] Robledo Moreno et al.), -0.7418022 rounds to it; the two VMC rows on the instance (-11.8544, -11.86832) sit above. No duplicate.",
+          "source_entry": "RP2-heg3d-hubbard-tv-heisenberg#22 (qmbl-verify 2026-11-10b)"
+        }
       },
       "computed_by": "qmbl",
       "artifacts": {

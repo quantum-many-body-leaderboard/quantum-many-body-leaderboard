@@ -695,10 +695,6 @@ Object.assign(NAMES, {
   "DMC, BF3 nodes": ["Fixed-node DMC", "trial state: Slater-Jastrow-backflow + three-electron Jastrow; extrapolated: Δτ → 0", { family: "DMC" }],
   "VMC SJ": ["Slater-Jastrow", ""],
   // Tanatar & Ceperley 1989 (PRB 39, 5005): Slater-Jastrow with Gaskell's RPA pseudopotential, and fixed-node GFMC on it
-  // Pass 2026-11-10-held: arXiv:2604.25775 Table IV DQMC row; arXiv:2609.22618 Sec. III.B (the 12 x 12 state of PRB 113, 155121)
-  "DQMC, sign-problem-free (spin-balanced attractive Hubbard model)": ["DQMC", "sign-problem-free (spin-balanced attractive U); data of Y.-Y. He and H. Du"],
-  "Tensor backflow (p = 0, U_UHF = 4, state of PRB 113, 155121)": ["Tensor backflow", "UHF orbitals at U = 4; the state of PRB 113, 155121, measured again with an error bar"],
-  "Tensor backflow (p = 1, U_UHF = 4, state of PRB 113, 155121)": ["Tensor backflow", "UHF orbitals at U = 4; the state of PRB 113, 155121, measured again with an error bar, 1 Lanczos step"],
   // Pass 2026-10-22-instances: arXiv:2511.07566 Tables II, III, VII, VIII and arXiv:2609.22618 Sec. III.C (OBC)
   "Tensor backflow (p = 0, OBC, from the PF3 PBC state, 1324 steps)": ["Tensor backflow", "wave function of the PBC run with pinning field PF3, re-optimised 1324 steps with open boundaries"],
   "Tensor backflow (p = 1, OBC, from the PF3 PBC state, 1324 steps)": ["Tensor backflow", "wave function of the PBC run with pinning field PF3, re-optimised 1324 steps with open boundaries, 1 Lanczos step"],

@@ -14,7 +14,7 @@
     {
       "energy": -3.1907072,
       "sigma": 0.00002048,
-      "energy_variance": null,
+      "energy_variance": 0.0000133,
       "dof": 512,
       "einf": null,
       "v_score": null,
@@ -33,8 +33,18 @@
         "checked_on": "2026-10-20",
         "method": "source text of arXiv:2201.08743 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.00623185(4)",
-        "note": "SM Table X, N = 512, row E_VMC, column rs = 125; SupplMat.pdf (PRB 105, 245135), pypdf layout text line 326; printed in Ha per electron | bcc simulation cell of N = n^3 electrons holding a bcc Wigner crystal; crystal energies are not twist-averaged and the twist has no observable effect (main text); the same convention as the main-text crystal rows (Tables I and II), which QMBL carries. | variance reported as 0.0000133(1), not stored: convention not verified",
-        "secondary_of": null
+        "note": "SM Table X, N = 512, row E_VMC, column rs = 125; SupplMat.pdf (PRB 105, 245135), pypdf layout text line 326; printed in Ha per electron | bcc simulation cell of N = n^3 electrons holding a bcc Wigner crystal; crystal energies are not twist-averaged and the twist has no observable effect (main text); the same convention as the main-text crystal rows (Tables I and II), which QMBL carries. sigma_v^2 is printed in Ha^2 (caption); at fixed rs it grows about in proportion to N, so it is the variance of the total local energy of the cell, not of the energy per electron (inferred, the text does not say; ruled 2026-11-10); stored as Var(H), var_per_site = sigma_v^2 / N.",
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-10",
+          "scope": "value",
+          "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+          "location": "SM Table X, N = 512, row E_VMC, column rs = 125 (layout text line 326)",
+          "reported_as": "−0.00623185(4) Ha/el.",
+          "conversion": "-0.00623185 x 512 = -3.19070720; sigma 4E-8 x 512 = 0.00002048",
+          "note": "antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.0000133(1) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+          "source_entry": "RP1a-azadi-bcc-fcc-I-II#18 (qmbl-verify 2026-11-10b)"
+        }
       },
       "artifacts": {
         "libraries": [
@@ -75,7 +85,17 @@
         "method": "source text of arXiv:2201.08743 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.00624652(5)",
         "note": "SM Table X, N = 512, row E_DMC, column rs = 125; SupplMat.pdf (PRB 105, 245135), pypdf layout text line 328; printed in Ha per electron | bcc simulation cell of N = n^3 electrons holding a bcc Wigner crystal; crystal energies are not twist-averaged and the twist has no observable effect (main text); the same convention as the main-text crystal rows (Tables I and II), which QMBL carries.",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-10",
+          "scope": "value",
+          "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+          "location": "SM Table X, N = 512, row E_DMC, column rs = 125 (layout text line 328)",
+          "reported_as": "−0.00624652(5) Ha/el.",
+          "conversion": "-0.00624652 x 512 = -3.19821824; sigma 5E-8 x 512 = 0.00002560",
+          "note": "record row; antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+          "source_entry": "RP1a-azadi-bcc-fcc-I-II#19 (qmbl-verify 2026-11-10b)"
+        }
       },
       "artifacts": {
         "libraries": [

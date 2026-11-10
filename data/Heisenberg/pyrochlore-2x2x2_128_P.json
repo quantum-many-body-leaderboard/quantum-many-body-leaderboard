@@ -225,7 +225,17 @@
         "method": "source text of arXiv:2311.11561 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.4943(1)",
         "note": "Main text: '...while E0/Ns=−0.4943(1) for the random initial state for Ns=128.' | Paper writes H=J∑S_i·S_j with J=1 (S=1/2 operators, S·S convention, not Pauli); the paper's own isolated-tetrahedron limit value -0.37475(1) matches the exact S·S single-tetrahedron result -3/8=-0.375 per site, confirming no Pauli conversion; magnitude matches catalog's pyrochlore best_per_site scale (~-0.49) directly since the paper already reports E/Ns.",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-10",
+          "scope": "value",
+          "method": "arXiv:2311.11561v1 (only version; qmbl sources/2311.11561.txt, main text + SM); no journal version found (Crossref and OpenAlex searches 2026-11-10)",
+          "location": "Main text p. 13 (txt line 1375) 'E0/Ns = -0.4943(1) for the random initial state for Ns = 128' and SM Table SI, last row 'E0 = lim_{sigma->0} E', column psi+ (random)",
+          "reported_as": "-0.4943(1) per site, S.S units",
+          "conversion": "-0.4943 x 4 x 128 = -253.0816; sigma 0.0001 x 512 = 0.0512",
+          "note": "H = J sum S_i.S_j, J = 1, S = 1/2 operators: Pauli total = 4 N E/N. Variance extrapolation (linear in sigma^2 -> 0 over mVMC, mVMC-RBM and their one-Lanczos-step energies): extrapolated, not a bound. L = 2 cubic supercell of the 16-site cell, 128 sites, PBC. Own computation. No duplicate: the max.-flip. extrapolation -0.49434(5) is a separate row.",
+          "source_entry": "RP2-heg3d-hubbard-tv-heisenberg#20 (qmbl-verify 2026-11-10b)"
+        }
       }
     },
     {

@@ -36652,4 +36652,5318 @@ export const VERIFICATIONS = [
     "note": "Same Table VI row prints QMC -0.6520251(4) and rel. err. 3.3 x 1e-4, which equals the stored SSE row on this instance (Sandvik arXiv:2601.20189) and fixes the cluster as open 24 x 24; recomputed rel. err. 3.27 x 1e-4 confirms the column alignment; the minGRU value lies above the SSE value (variational bound respected). Method string matches the caption (3 layers, c4v, iterative retraining; Table V: d_h = 256, patch (2,2), final evaluation c4v with 100000 samples). bound_type variational (final VMC estimate of a normalised autoregressive state, no extrapolation). Error bar: Table VI caption does not define (n); Tables I and II define it as one standard error, and run_iterative.py computes err = sqrt(var/n_total) over the final 100000 samples. Own computation, arXiv preprint, peer_reviewed false correct. compute block (steps, time per step, cumulative time, A100 80GB, ~800,000 parameters) agrees with the row. No other row on the instance carries this number (no duplicate).",
     "source_entry": "SP1-arxiv-2605-13807#18"
   },
+  // ---------------------------------------------------------------------------------------
+  // qmbl-verify 2026-11-10b (rows added 2026-11-10 and the 2026-10-20 Butler and Azadi bcc rows), applied
+  // 2026-11-10: second readings that found nothing wrong, one entry per row; the DQMC and
+  // arXiv:2609.22618 rows left the table in the same step.
+  {
+    "match": {
+      "instance": "HEG3D/bcc_216_P_108_108_100",
+      "method": "VMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -1.65438072
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 216, row E_VMC, column rs = 100 (layout text line 320)",
+    "reported_as": "−0.00765917(9) Ha/el.",
+    "conversion": "-0.00765917 x 216 = -1.65438072; sigma 9E-8 x 216 = 0.00001944",
+    "note": "antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.0000129(1) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#0 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_216_P_108_108_100",
+      "method": "DMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -1.6594848
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 216, row E_DMC, column rs = 100 (layout text line 322)",
+    "reported_as": "−0.0076828(1) Ha/el.",
+    "conversion": "-0.0076828 x 216 = -1.6594848; sigma 1E-7 x 216 = 0.0000216",
+    "note": "record row; antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#1 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_216_P_108_108_125",
+      "method": "VMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -1.34676648
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 216, row E_VMC, column rs = 125 (layout text line 320)",
+    "reported_as": "−0.00623503(4) Ha/el.",
+    "conversion": "-0.00623503 x 216 = -1.34676648; sigma 4E-8 x 216 = 0.00000864",
+    "note": "antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.00000527(3) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#2 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_216_P_108_108_125",
+      "method": "DMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -1.34990496
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 216, row E_DMC, column rs = 125 (layout text line 322)",
+    "reported_as": "−0.00624956(9) Ha/el.",
+    "conversion": "-0.00624956 x 216 = -1.34990496; sigma 9E-8 x 216 = 0.00001944",
+    "note": "record row; antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#3 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_216_P_108_108_80",
+      "method": "VMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -2.0252808
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 216, row E_VMC, column rs = 80 (layout text line 320)",
+    "reported_as": "−0.0093763(1) Ha/el.",
+    "conversion": "-0.0093763 x 216 = -2.0252808; sigma 1E-7 x 216 = 0.0000216",
+    "note": "antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.0000429(2) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#4 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_216_P_108_108_80",
+      "method": "DMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -2.0368584
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 216, row E_DMC, column rs = 80 (layout text line 322)",
+    "reported_as": "−0.0094299(3) Ha/el.",
+    "conversion": "-0.0094299 x 216 = -2.0368584; sigma 3E-7 x 216 = 0.0000648",
+    "note": "record row; antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#5 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_216_P_108_108_90",
+      "method": "VMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -1.82211552
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 216, row E_VMC, column rs = 90 (layout text line 320)",
+    "reported_as": "−0.00843572(7) Ha/el.",
+    "conversion": "-0.00843572 x 216 = -1.82211552; sigma 7E-8 x 216 = 0.00001512",
+    "note": "antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.0000181(1) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#6 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_216_P_108_108_90",
+      "method": "DMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -1.8286128
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 216, row E_DMC, column rs = 90 (layout text line 322)",
+    "reported_as": "−0.0084658(1) Ha/el.",
+    "conversion": "-0.0084658 x 216 = -1.8286128; sigma 1E-7 x 216 = 0.0000216",
+    "note": "record row; antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#7 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_216_P_216_0_100",
+      "method": "VMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -1.6542144
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table IX, N = 216, row E_VMC, column rs = 100 (layout text line 297)",
+    "reported_as": "−0.0076584(2) Ha/el.",
+    "conversion": "-0.0076584 x 216 = -1.6542144; sigma 2E-7 x 216 = 0.0000432",
+    "note": "ferromagnetic (zeta = 1) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.0000125(2) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#8 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_216_P_216_0_100",
+      "method": "DMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -1.6592256
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table IX, N = 216, row E_DMC, column rs = 100 (layout text line 299)",
+    "reported_as": "−0.0076816(4) Ha/el.",
+    "conversion": "-0.0076816 x 216 = -1.6592256; sigma 4E-7 x 216 = 0.0000864",
+    "note": "record row; ferromagnetic (zeta = 1) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#9 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_216_P_216_0_125",
+      "method": "VMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -1.34676864
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table IX, N = 216, row E_VMC, column rs = 125 (layout text line 297)",
+    "reported_as": "−0.00623504(4) Ha/el.",
+    "conversion": "-0.00623504 x 216 = -1.34676864; sigma 4E-8 x 216 = 0.00000864",
+    "note": "ferromagnetic (zeta = 1) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.00000505(3) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#10 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_216_P_216_0_125",
+      "method": "DMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -1.34993088
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table IX, N = 216, row E_DMC, column rs = 125 (layout text line 299)",
+    "reported_as": "−0.00624968(7) Ha/el.",
+    "conversion": "-0.00624968 x 216 = -1.34993088; sigma 7E-8 x 216 = 0.00001512",
+    "note": "record row; ferromagnetic (zeta = 1) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#11 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_216_P_216_0_80",
+      "method": "VMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -2.0283588
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table IX, N = 216, row E_VMC, column rs = 80 (layout text line 297)",
+    "reported_as": "−0.00939055(8) Ha/el.",
+    "conversion": "-0.00939055 x 216 = -2.02835880; sigma 8E-8 x 216 = 0.00001728",
+    "note": "ferromagnetic (zeta = 1) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.0000274(1) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#12 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_216_P_216_0_80",
+      "method": "DMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -2.0363832
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table IX, N = 216, row E_DMC, column rs = 80 (layout text line 299)",
+    "reported_as": "−0.0094277(1) Ha/el.",
+    "conversion": "-0.0094277 x 216 = -2.0363832; sigma 1E-7 x 216 = 0.0000216",
+    "note": "record row; ferromagnetic (zeta = 1) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#13 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_216_P_216_0_90",
+      "method": "VMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -1.82192544
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table IX, N = 216, row E_VMC, column rs = 90 (layout text line 297)",
+    "reported_as": "−0.00843484(6) Ha/el.",
+    "conversion": "-0.00843484 x 216 = -1.82192544; sigma 6E-8 x 216 = 0.00001296",
+    "note": "ferromagnetic (zeta = 1) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.00001779(8) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#14 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_216_P_216_0_90",
+      "method": "DMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -1.8283536
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table IX, N = 216, row E_DMC, column rs = 90 (layout text line 299)",
+    "reported_as": "−0.0084646(1) Ha/el.",
+    "conversion": "-0.0084646 x 216 = -1.8283536; sigma 1E-7 x 216 = 0.0000216",
+    "note": "record row; ferromagnetic (zeta = 1) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#15 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_512_P_256_256_100",
+      "method": "VMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -3.91969792
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 512, row E_VMC, column rs = 100 (layout text line 326)",
+    "reported_as": "−0.00765566(9) Ha/el.",
+    "conversion": "-0.00765566 x 512 = -3.91969792; sigma 9E-8 x 512 = 0.00004608",
+    "note": "antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.0000289(3) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#16 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_512_P_256_256_100",
+      "method": "DMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -3.931648
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 512, row E_DMC, column rs = 100 (layout text line 328)",
+    "reported_as": "−0.0076790(1) Ha/el.",
+    "conversion": "-0.0076790 x 512 = -3.9316480; sigma 1E-7 x 512 = 0.0000512",
+    "note": "record row; antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#17 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_512_P_256_256_125",
+      "method": "VMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -3.1907072
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 512, row E_VMC, column rs = 125 (layout text line 326)",
+    "reported_as": "−0.00623185(4) Ha/el.",
+    "conversion": "-0.00623185 x 512 = -3.19070720; sigma 4E-8 x 512 = 0.00002048",
+    "note": "antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.0000133(1) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#18 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_512_P_256_256_125",
+      "method": "DMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -3.19821824
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 512, row E_DMC, column rs = 125 (layout text line 328)",
+    "reported_as": "−0.00624652(5) Ha/el.",
+    "conversion": "-0.00624652 x 512 = -3.19821824; sigma 5E-8 x 512 = 0.00002560",
+    "note": "record row; antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#19 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_512_P_256_256_80",
+      "method": "VMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -4.8047616
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 512, row E_VMC, column rs = 80 (layout text line 326)",
+    "reported_as": "−0.0093843(1) Ha/el.",
+    "conversion": "-0.0093843 x 512 = -4.8047616; sigma 1E-7 x 512 = 0.0000512",
+    "note": "antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.0000669(6) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#20 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_512_P_256_256_80",
+      "method": "DMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -4.8246784
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 512, row E_DMC, column rs = 80 (layout text line 328)",
+    "reported_as": "−0.0094232(2) Ha/el.",
+    "conversion": "-0.0094232 x 512 = -4.8246784; sigma 2E-7 x 512 = 0.0001024",
+    "note": "record row; antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#21 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_512_P_256_256_90",
+      "method": "VMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -4.31673344
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 512, row E_VMC, column rs = 90 (layout text line 326)",
+    "reported_as": "−0.00843112(8) Ha/el.",
+    "conversion": "-0.00843112 x 512 = -4.31673344; sigma 8E-8 x 512 = 0.00004096",
+    "note": "antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.0000427(4) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#22 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_512_P_256_256_90",
+      "method": "DMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -4.3320832
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 512, row E_DMC, column rs = 90 (layout text line 328)",
+    "reported_as": "−0.0084611(1) Ha/el.",
+    "conversion": "-0.0084611 x 512 = -4.3320832; sigma 1E-7 x 512 = 0.0000512",
+    "note": "record row; antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#23 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_512_P_512_0_100",
+      "method": "VMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -3.9207936
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table IX, N = 512, row E_VMC, column rs = 100 (layout text line 303)",
+    "reported_as": "−0.0076578(4) Ha/el.",
+    "conversion": "-0.0076578 x 512 = -3.9207936; sigma 4E-7 x 512 = 0.0002048",
+    "note": "ferromagnetic (zeta = 1) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.000026(1) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#24 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_512_P_512_0_100",
+      "method": "DMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -3.931904
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table IX, N = 512, row E_DMC, column rs = 100 (layout text line 305)",
+    "reported_as": "−0.0076795(1) Ha/el.",
+    "conversion": "-0.0076795 x 512 = -3.9319040; sigma 1E-7 x 512 = 0.0000512",
+    "note": "record row; ferromagnetic (zeta = 1) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#25 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_512_P_512_0_125",
+      "method": "VMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -3.19110656
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table IX, N = 512, row E_VMC, column rs = 125 (layout text line 303)",
+    "reported_as": "−0.00623263(4) Ha/el.",
+    "conversion": "-0.00623263 x 512 = -3.19110656; sigma 4E-8 x 512 = 0.00002048",
+    "note": "ferromagnetic (zeta = 1) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.0000121(1) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#26 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_512_P_512_0_125",
+      "method": "DMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -3.19828992
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table IX, N = 512, row E_DMC, column rs = 125 (layout text line 305)",
+    "reported_as": "−0.00624666(6) Ha/el.",
+    "conversion": "-0.00624666 x 512 = -3.19828992; sigma 6E-8 x 512 = 0.00003072",
+    "note": "record row; ferromagnetic (zeta = 1) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#27 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_512_P_512_0_80",
+      "method": "VMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -4.8069888
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table IX, N = 512, row E_VMC, column rs = 80 (layout text line 303)",
+    "reported_as": "−0.00938865(8) Ha/el.",
+    "conversion": "-0.00938865 x 512 = -4.80698880; sigma 8E-8 x 512 = 0.00004096",
+    "note": "ferromagnetic (zeta = 1) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.0000574(5) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#28 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_512_P_512_0_80",
+      "method": "DMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -4.8243712
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table IX, N = 512, row E_DMC, column rs = 80 (layout text line 305)",
+    "reported_as": "−0.00942260(9) Ha/el.",
+    "conversion": "-0.00942260 x 512 = -4.82437120; sigma 9E-8 x 512 = 0.00004608",
+    "note": "record row; ferromagnetic (zeta = 1) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#29 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_512_P_512_0_90",
+      "method": "VMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -4.31778816
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table IX, N = 512, row E_VMC, column rs = 90 (layout text line 303)",
+    "reported_as": "−0.00843318(7) Ha/el.",
+    "conversion": "-0.00843318 x 512 = -4.31778816; sigma 7E-8 x 512 = 0.00003584",
+    "note": "ferromagnetic (zeta = 1) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.0000380(3) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#30 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_512_P_512_0_90",
+      "method": "DMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -4.331776
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table IX, N = 512, row E_DMC, column rs = 90 (layout text line 305)",
+    "reported_as": "−0.0084605(1) Ha/el.",
+    "conversion": "-0.0084605 x 512 = -4.3317760; sigma 1E-7 x 512 = 0.0000512",
+    "note": "record row; ferromagnetic (zeta = 1) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#31 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_64_P_32_32_100",
+      "method": "VMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -0.49096256
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 64, row E_VMC, column rs = 100 (layout text line 314)",
+    "reported_as": "−0.00767129(8) Ha/el.",
+    "conversion": "-0.00767129 x 64 = -0.49096256; sigma 8E-8 x 64 = 0.00000512",
+    "note": "antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.00000384(1) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#32 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_64_P_32_32_100",
+      "method": "DMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -0.4926336
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 64, row E_DMC, column rs = 100 (layout text line 316)",
+    "reported_as": "−0.0076974(1) Ha/el.",
+    "conversion": "-0.0076974 x 64 = -0.4926336; sigma 1E-7 x 64 = 0.0000064",
+    "note": "record row; antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#33 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_64_P_32_32_125",
+      "method": "VMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -0.3992192
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 64, row E_VMC, column rs = 125 (layout text line 314)",
+    "reported_as": "−0.0062378(1) Ha/el.",
+    "conversion": "-0.0062378 x 64 = -0.3992192; sigma 1E-7 x 64 = 0.0000064",
+    "note": "antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.00000205(1) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#34 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_64_P_32_32_125",
+      "method": "DMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -0.4006208
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 64, row E_DMC, column rs = 125 (layout text line 316)",
+    "reported_as": "−0.0062597(1) Ha/el.",
+    "conversion": "-0.0062597 x 64 = -0.4006208; sigma 1E-7 x 64 = 0.0000064",
+    "note": "record row; antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#35 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_64_P_32_32_80",
+      "method": "VMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -0.6015552
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 64, row E_VMC, column rs = 80 (layout text line 314)",
+    "reported_as": "−0.0093993(3) Ha/el.",
+    "conversion": "-0.0093993 x 64 = -0.6015552; sigma 3E-7 x 64 = 0.0000192",
+    "note": "antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.00001080(9) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#36 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_64_P_32_32_80",
+      "method": "DMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -0.6046976
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 64, row E_DMC, column rs = 80 (layout text line 316)",
+    "reported_as": "−0.0094484(2) Ha/el.",
+    "conversion": "-0.0094484 x 64 = -0.6046976; sigma 2E-7 x 64 = 0.0000128",
+    "note": "record row; antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#37 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_64_P_32_32_90",
+      "method": "VMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -0.54071872
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 64, row E_VMC, column rs = 90 (layout text line 314)",
+    "reported_as": "−0.00844873(6) Ha/el.",
+    "conversion": "-0.00844873 x 64 = -0.54071872; sigma 6E-8 x 64 = 0.00000384",
+    "note": "antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.00000565(1) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#38 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_64_P_32_32_90",
+      "method": "DMC (Slater-Jastrow, antiferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -0.5428032
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table X, N = 64, row E_DMC, column rs = 90 (layout text line 316)",
+    "reported_as": "−0.0084813(1) Ha/el.",
+    "conversion": "-0.0084813 x 64 = -0.5428032; sigma 1E-7 x 64 = 0.0000064",
+    "note": "record row; antiferromagnetic (N_up = N_dn) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#39 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_64_P_64_0_100",
+      "method": "VMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -0.490976
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table IX, N = 64, row E_VMC, column rs = 100 (layout text line 291)",
+    "reported_as": "−0.0076715(2) Ha/el.",
+    "conversion": "-0.0076715 x 64 = -0.4909760; sigma 2E-7 x 64 = 0.0000128",
+    "note": "ferromagnetic (zeta = 1) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.00000332(4) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); same instance carries main-text Table II SJ [Eq. (7)] VMC -0.0076719(3), a different printed number for what is likely the same trial state (DMC -0.00769616(8) is identical in both tables, so the SM DMC cell was rightly not loaded twice); not a duplicate row; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#40 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_64_P_64_0_125",
+      "method": "VMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -0.39955776
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table IX, N = 64, row E_VMC, column rs = 125 (layout text line 291)",
+    "reported_as": "−0.00624309(3) Ha/el.",
+    "conversion": "-0.00624309 x 64 = -0.39955776; sigma 3E-8 x 64 = 0.00000192",
+    "note": "ferromagnetic (zeta = 1) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.000001575(4) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#41 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_64_P_64_0_125",
+      "method": "DMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -0.4005888
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table IX, N = 64, row E_DMC, column rs = 125 (layout text line 293)",
+    "reported_as": "−0.0062592(1) Ha/el.",
+    "conversion": "-0.0062592 x 64 = -0.4005888; sigma 1E-7 x 64 = 0.0000064",
+    "note": "record row; ferromagnetic (zeta = 1) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#42 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_64_P_64_0_80",
+      "method": "VMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -0.6021504
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table IX, N = 64, row E_VMC, column rs = 80 (layout text line 291)",
+    "reported_as": "−0.0094086(1) Ha/el.",
+    "conversion": "-0.0094086 x 64 = -0.6021504; sigma 1E-7 x 64 = 0.0000064",
+    "note": "ferromagnetic (zeta = 1) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.00000698(3) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#43 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_64_P_64_0_80",
+      "method": "DMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -0.6043776
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table IX, N = 64, row E_DMC, column rs = 80 (layout text line 293)",
+    "reported_as": "−0.00944340(6) Ha/el.",
+    "conversion": "-0.00944340 x 64 = -0.60437760; sigma 6E-8 x 64 = 0.00000384",
+    "note": "record row; ferromagnetic (zeta = 1) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#44 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_64_P_64_0_90",
+      "method": "VMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -0.54081664
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table IX, N = 64, row E_VMC, column rs = 90 (layout text line 291)",
+    "reported_as": "−0.00845026(5) Ha/el.",
+    "conversion": "-0.00845026 x 64 = -0.54081664; sigma 5E-8 x 64 = 0.00000320",
+    "note": "ferromagnetic (zeta = 1) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); VMC: variational; printed sigma_v^2 = 0.00000472(1) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#45 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_64_P_64_0_90",
+      "method": "DMC (Slater-Jastrow, ferromagnetic bcc crystal, Supplemental Material)",
+      "energy": -0.54265536
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table IX, N = 64, row E_DMC, column rs = 90 (layout text line 293)",
+    "reported_as": "−0.00847899(9) Ha/el.",
+    "conversion": "-0.00847899 x 64 = -0.54265536; sigma 9E-8 x 64 = 0.00000576",
+    "note": "record row; ferromagnetic (zeta = 1) bcc Wigner crystal, SJ trial with Gaussian orbitals on bcc sites, bcc simulation cell (main text: \"5.086 in a bcc simulation cell (for crystal phases)\"; N = 64, 216, 512 = n^3), crystal energies not twist averaged (\"Hence we do not twist average our crystal energies\"); DMC: SM caption silent on time step; main text says \"Our DMC energies were extrapolated linearly or quadratically to zero time step\" and Fig. 6 caption says the crystal SJ-DMC energies were; class projected either way (RULES 12.4); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#46 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_130_P_65_65_30",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.924701
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 130, row E_VMC, column rs = 30 (layout text line 22)",
+    "reported_as": "−0.0224977(7) Ha/el.",
+    "conversion": "-0.0224977 x 130 = -2.9247010; sigma 7E-7 x 130 = 0.0000910",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000363(4) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#47 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_130_P_65_65_30",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.935738
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 130, row E_DMC, column rs = 30 (layout text line 24)",
+    "reported_as": "−0.0225826(4) Ha/el.",
+    "conversion": "-0.0225826 x 130 = -2.9357380; sigma 4E-7 x 130 = 0.0000520",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#48 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_130_P_65_65_40",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.27604
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 130, row E_VMC, column rs = 40 (layout text line 22)",
+    "reported_as": "−0.017508(1) Ha/el.",
+    "conversion": "-0.017508 x 130 = -2.276040; sigma 0.000001 x 130 = 0.000130",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000177(4) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#49 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_130_P_65_65_40",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.286024
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 130, row E_DMC, column rs = 40 (layout text line 24)",
+    "reported_as": "−0.0175848(2) Ha/el.",
+    "conversion": "-0.0175848 x 130 = -2.2860240; sigma 2E-7 x 130 = 0.0000260",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#50 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_130_P_65_65_50",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.866423
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 130, row E_VMC, column rs = 50 (layout text line 22)",
+    "reported_as": "−0.0143571(4) Ha/el.",
+    "conversion": "-0.0143571 x 130 = -1.8664230; sigma 4E-7 x 130 = 0.0000520",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.0000935(9) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#51 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_130_P_65_65_50",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.875289
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 130, row E_DMC, column rs = 50 (layout text line 24)",
+    "reported_as": "−0.0144253(2) Ha/el.",
+    "conversion": "-0.0144253 x 130 = -1.8752890; sigma 2E-7 x 130 = 0.0000260",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#52 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_130_P_65_65_60",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.591616
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 130, row E_DMC, column rs = 60 (layout text line 24)",
+    "reported_as": "−0.0122432(1) Ha/el.",
+    "conversion": "-0.0122432 x 130 = -1.5916160; sigma 1E-7 x 130 = 0.0000130",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#53 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_130_P_65_65_70",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.376544
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 130, row E_VMC, column rs = 70 (layout text line 22)",
+    "reported_as": "−0.0105888(4) Ha/el.",
+    "conversion": "-0.0105888 x 130 = -1.3765440; sigma 4E-7 x 130 = 0.0000520",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.0000377(5) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#54 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_130_P_65_65_70",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.383681
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 130, row E_DMC, column rs = 70 (layout text line 24)",
+    "reported_as": "−0.0106437(1) Ha/el.",
+    "conversion": "-0.0106437 x 130 = -1.3836810; sigma 1E-7 x 130 = 0.0000130",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#55 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_130_P_65_65_80",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.217723
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 130, row E_VMC, column rs = 80 (layout text line 22)",
+    "reported_as": "−0.0093671(3) Ha/el.",
+    "conversion": "-0.0093671 x 130 = -1.2177230; sigma 3E-7 x 130 = 0.0000390",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.0000313(9) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#56 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_130_P_65_65_80",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.224561
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 130, row E_DMC, column rs = 80 (layout text line 24)",
+    "reported_as": "−0.0094197(1) Ha/el.",
+    "conversion": "-0.0094197 x 130 = -1.2245610; sigma 1E-7 x 130 = 0.0000130",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#57 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_136_P_85_51_30",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.051704
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 136, row E_VMC, column rs = 30 (layout text line 82)",
+    "reported_as": "−0.0224390(7) Ha/el.",
+    "conversion": "-0.0224390 x 136 = -3.0517040; sigma 7E-7 x 136 = 0.0000952",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000375(3) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#58 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_136_P_85_51_30",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.0702272
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 136, row E_DMC, column rs = 30 (layout text line 84)",
+    "reported_as": "−0.0225752(2) Ha/el.",
+    "conversion": "-0.0225752 x 136 = -3.0702272; sigma 2E-7 x 136 = 0.0000272",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#59 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_136_P_85_51_40",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.3769536
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 136, row E_VMC, column rs = 40 (layout text line 82)",
+    "reported_as": "−0.0174776(5) Ha/el.",
+    "conversion": "-0.0174776 x 136 = -2.3769536; sigma 5E-7 x 136 = 0.0000680",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000177(2) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#60 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_136_P_85_51_40",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.391152
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 136, row E_DMC, column rs = 40 (layout text line 84)",
+    "reported_as": "−0.0175820(1) Ha/el.",
+    "conversion": "-0.0175820 x 136 = -2.3911520; sigma 1E-7 x 136 = 0.0000136",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#61 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_136_P_85_51_50",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.9496416
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 136, row E_VMC, column rs = 50 (layout text line 82)",
+    "reported_as": "−0.0143356(4) Ha/el.",
+    "conversion": "-0.0143356 x 136 = -1.9496416; sigma 4E-7 x 136 = 0.0000544",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000104(2) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#62 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_136_P_85_51_50",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.9616504
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 136, row E_DMC, column rs = 50 (layout text line 84)",
+    "reported_as": "−0.0144239(1) Ha/el.",
+    "conversion": "-0.0144239 x 136 = -1.9616504; sigma 1E-7 x 136 = 0.0000136",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#63 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_136_P_85_51_60",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.6550248
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 136, row E_VMC, column rs = 60 (layout text line 82)",
+    "reported_as": "−0.0121693(5) Ha/el.",
+    "conversion": "-0.0121693 x 136 = -1.6550248; sigma 5E-7 x 136 = 0.0000680",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.0000601(7) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#64 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_136_P_85_51_60",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.66502216
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 136, row E_DMC, column rs = 60 (layout text line 84)",
+    "reported_as": "−0.01224281(8) Ha/el.",
+    "conversion": "-0.01224281 x 136 = -1.66502216; sigma 8E-8 x 136 = 0.00001088",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#65 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_136_P_85_51_70",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.4386624
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 136, row E_VMC, column rs = 70 (layout text line 82)",
+    "reported_as": "−0.0105784(4) Ha/el.",
+    "conversion": "-0.0105784 x 136 = -1.4386624; sigma 4E-7 x 136 = 0.0000544",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.0000415(5) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#66 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_136_P_85_51_70",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.44752552
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 136, row E_DMC, column rs = 70 (layout text line 84)",
+    "reported_as": "−0.01064357(8) Ha/el.",
+    "conversion": "-0.01064357 x 136 = -1.44752552; sigma 8E-8 x 136 = 0.00001088",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#67 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_136_P_85_51_80",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.2727288
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 136, row E_VMC, column rs = 80 (layout text line 82)",
+    "reported_as": "−0.0093583(4) Ha/el.",
+    "conversion": "-0.0093583 x 136 = -1.2727288; sigma 4E-7 x 136 = 0.0000544",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.0000321(4) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#68 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_136_P_85_51_80",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.28109008
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 136, row E_DMC, column rs = 80 (layout text line 84)",
+    "reported_as": "−0.00941978(8) Ha/el.",
+    "conversion": "-0.00941978 x 136 = -1.28109008; sigma 8E-8 x 136 = 0.00001088",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#69 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_178_P_89_89_30",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.9925756
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 178, row E_VMC, column rs = 30 (layout text line 28)",
+    "reported_as": "−0.0224302(4) Ha/el.",
+    "conversion": "-0.0224302 x 178 = -3.9925756; sigma 4E-7 x 178 = 0.0000712",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000534(4) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#70 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_178_P_89_89_30",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -4.017282
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 178, row E_DMC, column rs = 30 (layout text line 30)",
+    "reported_as": "−0.0225690(3) Ha/el.",
+    "conversion": "-0.0225690 x 178 = -4.0172820; sigma 3E-7 x 178 = 0.0000534",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#71 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_178_P_89_89_40",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.1097134
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 178, row E_VMC, column rs = 40 (layout text line 28)",
+    "reported_as": "−0.0174703(7) Ha/el.",
+    "conversion": "-0.0174703 x 178 = -3.1097134; sigma 7E-7 x 178 = 0.0001246",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000246(3) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#72 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_178_P_89_89_40",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.1285102
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 178, row E_DMC, column rs = 40 (layout text line 30)",
+    "reported_as": "−0.0175759(2) Ha/el.",
+    "conversion": "-0.0175759 x 178 = -3.1285102; sigma 2E-7 x 178 = 0.0000356",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#73 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_178_P_89_89_50",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.5510426
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 178, row E_VMC, column rs = 50 (layout text line 28)",
+    "reported_as": "−0.0143317(4) Ha/el.",
+    "conversion": "-0.0143317 x 178 = -2.5510426; sigma 4E-7 x 178 = 0.0000712",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000135(1) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#74 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_178_P_89_89_50",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.5664752
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 178, row E_DMC, column rs = 50 (layout text line 30)",
+    "reported_as": "−0.0144184(1) Ha/el.",
+    "conversion": "-0.0144184 x 178 = -2.5664752; sigma 1E-7 x 178 = 0.0000178",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#75 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_178_P_89_89_60",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.1653344
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 178, row E_VMC, column rs = 60 (layout text line 28)",
+    "reported_as": "−0.0121648(3) Ha/el.",
+    "conversion": "-0.0121648 x 178 = -2.1653344; sigma 3E-7 x 178 = 0.0000534",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.0000828(8) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#76 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_178_P_89_89_60",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.1783106
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 178, row E_DMC, column rs = 60 (layout text line 30)",
+    "reported_as": "−0.0122377(1) Ha/el.",
+    "conversion": "-0.0122377 x 178 = -2.1783106; sigma 1E-7 x 178 = 0.0000178",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#77 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_178_P_89_89_70",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.8823322
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 178, row E_VMC, column rs = 70 (layout text line 28)",
+    "reported_as": "−0.0105749(3) Ha/el.",
+    "conversion": "-0.0105749 x 178 = -1.8823322; sigma 3E-7 x 178 = 0.0000534",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.0000557(8) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#78 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_178_P_89_89_70",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.8937598
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 178, row E_DMC, column rs = 70 (layout text line 30)",
+    "reported_as": "−0.0106391(1) Ha/el.",
+    "conversion": "-0.0106391 x 178 = -1.8937598; sigma 1E-7 x 178 = 0.0000178",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#79 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_178_P_89_89_80",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.6650476
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 178, row E_VMC, column rs = 80 (layout text line 28)",
+    "reported_as": "−0.0093542(3) Ha/el.",
+    "conversion": "-0.0093542 x 178 = -1.6650476; sigma 3E-7 x 178 = 0.0000534",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.0000439(6) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#80 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_178_P_89_89_80",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.6760658
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 178, row E_DMC, column rs = 80 (layout text line 30)",
+    "reported_as": "−0.0094161(1) Ha/el.",
+    "conversion": "-0.0094161 x 178 = -1.6760658; sigma 1E-7 x 178 = 0.0000178",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#81 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_115_69_30",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -4.1322168
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 184, row E_VMC, column rs = 30 (layout text line 88)",
+    "reported_as": "−0.0224577(6) Ha/el.",
+    "conversion": "-0.0224577 x 184 = -4.1322168; sigma 6E-7 x 184 = 0.0001104",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000456(4) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#82 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_115_69_30",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -4.1519784
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 184, row E_DMC, column rs = 30 (layout text line 90)",
+    "reported_as": "−0.0225651(1) Ha/el.",
+    "conversion": "-0.0225651 x 184 = -4.1519784; sigma 1E-7 x 184 = 0.0000184",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#83 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_115_69_40",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.2166512
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 184, row E_VMC, column rs = 40 (layout text line 88)",
+    "reported_as": "−0.0174818(5) Ha/el.",
+    "conversion": "-0.0174818 x 184 = -3.2166512; sigma 5E-7 x 184 = 0.0000920",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000233(2) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#84 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_115_69_40",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.2337816
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 184, row E_DMC, column rs = 40 (layout text line 90)",
+    "reported_as": "−0.0175749(1) Ha/el.",
+    "conversion": "-0.0175749 x 184 = -3.2337816; sigma 1E-7 x 184 = 0.0000184",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#85 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_115_69_50",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.6377136
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 184, row E_VMC, column rs = 50 (layout text line 88)",
+    "reported_as": "−0.0143354(4) Ha/el.",
+    "conversion": "-0.0143354 x 184 = -2.6377136; sigma 4E-7 x 184 = 0.0000736",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000141(1) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#86 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_115_69_50",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.6530224
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 184, row E_DMC, column rs = 50 (layout text line 90)",
+    "reported_as": "−0.0144186(1) Ha/el.",
+    "conversion": "-0.0144186 x 184 = -2.6530224; sigma 1E-7 x 184 = 0.0000184",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#87 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_115_69_60",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.2385992
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 184, row E_VMC, column rs = 60 (layout text line 88)",
+    "reported_as": "−0.0121663(3) Ha/el.",
+    "conversion": "-0.0121663 x 184 = -2.2385992; sigma 3E-7 x 184 = 0.0000552",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.0000840(7) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#88 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_115_69_60",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.2517736
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 184, row E_DMC, column rs = 60 (layout text line 90)",
+    "reported_as": "−0.0122379(1) Ha/el.",
+    "conversion": "-0.0122379 x 184 = -2.2517736; sigma 1E-7 x 184 = 0.0000184",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#89 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_115_69_70",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.9455976
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 184, row E_VMC, column rs = 70 (layout text line 88)",
+    "reported_as": "−0.0105739(4) Ha/el.",
+    "conversion": "-0.0105739 x 184 = -1.9455976; sigma 4E-7 x 184 = 0.0000736",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.0000611(8) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#90 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_115_69_70",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.95778576
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 184, row E_DMC, column rs = 70 (layout text line 90)",
+    "reported_as": "−0.01064014(1) Ha/el.",
+    "conversion": "-0.01064014 x 184 = -1.95778576; sigma 1E-8 x 184 = 0.00000184",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10) The printed error bar (1) in the 8th decimal is about 10x below every neighbouring cell; transcription correct, kept as printed (ruled 2026-11-10).",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#91, RP1a-azadi-bcc-fcc-I-II#130 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_115_69_80",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.7213016
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 184, row E_VMC, column rs = 80 (layout text line 88)",
+    "reported_as": "−0.0093549(3) Ha/el.",
+    "conversion": "-0.0093549 x 184 = -1.7213016; sigma 3E-7 x 184 = 0.0000552",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.0000460(6) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#92 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_115_69_80",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.73263416
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 184, row E_DMC, column rs = 80 (layout text line 90)",
+    "reported_as": "−0.00941649(1) Ha/el.",
+    "conversion": "-0.00941649 x 184 = -1.73263416; sigma 1E-8 x 184 = 0.00000184",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10) The printed error bar (1) in the 8th decimal is about 10x below every neighbouring cell; transcription correct, kept as printed (ruled 2026-11-10).",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#93, RP1a-azadi-bcc-fcc-I-II#131 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_226_P_113_113_30",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -5.0752368
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 226, row E_VMC, column rs = 30 (layout text line 34)",
+    "reported_as": "−0.0224568(4) Ha/el.",
+    "conversion": "-0.0224568 x 226 = -5.0752368; sigma 4E-7 x 226 = 0.0000904",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000651(5) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#94 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_226_P_113_113_30",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -5.0990346
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 226, row E_DMC, column rs = 30 (layout text line 36)",
+    "reported_as": "−0.0225621(3) Ha/el.",
+    "conversion": "-0.0225621 x 226 = -5.0990346; sigma 3E-7 x 226 = 0.0000678",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#95 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_226_P_113_113_40",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.9511128
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 226, row E_VMC, column rs = 40 (layout text line 34)",
+    "reported_as": "−0.0174828(6) Ha/el.",
+    "conversion": "-0.0174828 x 226 = -3.9511128; sigma 6E-7 x 226 = 0.0001356",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000283(4) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#96 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_226_P_113_113_40",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.9710912
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 226, row E_DMC, column rs = 40 (layout text line 36)",
+    "reported_as": "−0.0175712(2) Ha/el.",
+    "conversion": "-0.0175712 x 226 = -3.9710912; sigma 2E-7 x 226 = 0.0000452",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#97 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_226_P_113_113_50",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.2409078
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 226, row E_VMC, column rs = 50 (layout text line 34)",
+    "reported_as": "−0.0143403(4) Ha/el.",
+    "conversion": "-0.0143403 x 226 = -3.2409078; sigma 4E-7 x 226 = 0.0000904",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000161(2) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#98 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_226_P_113_113_50",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.2578126
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 226, row E_DMC, column rs = 50 (layout text line 36)",
+    "reported_as": "−0.0144151(2) Ha/el.",
+    "conversion": "-0.0144151 x 226 = -3.2578126; sigma 2E-7 x 226 = 0.0000452",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#99 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_226_P_113_113_60",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.7491092
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 226, row E_VMC, column rs = 60 (layout text line 34)",
+    "reported_as": "−0.0121642(3) Ha/el.",
+    "conversion": "-0.0121642 x 226 = -2.7491092; sigma 3E-7 x 226 = 0.0000678",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000106(1) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#100 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_226_P_113_113_60",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.7650874
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 226, row E_DMC, column rs = 60 (layout text line 36)",
+    "reported_as": "−0.0122349(1) Ha/el.",
+    "conversion": "-0.0122349 x 226 = -2.7650874; sigma 1E-7 x 226 = 0.0000226",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#101 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_226_P_113_113_70",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.3906958
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 226, row E_VMC, column rs = 70 (layout text line 34)",
+    "reported_as": "−0.0105783(3) Ha/el.",
+    "conversion": "-0.0105783 x 226 = -2.3906958; sigma 3E-7 x 226 = 0.0000678",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000073(1) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#102 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_226_P_113_113_70",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.4039846
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 226, row E_DMC, column rs = 70 (layout text line 36)",
+    "reported_as": "−0.0106371(1) Ha/el.",
+    "conversion": "-0.0106371 x 226 = -2.4039846; sigma 1E-7 x 226 = 0.0000226",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#103 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_226_P_113_113_80",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.1153826
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 226, row E_VMC, column rs = 80 (layout text line 34)",
+    "reported_as": "−0.0093601(2) Ha/el.",
+    "conversion": "-0.0093601 x 226 = -2.1153826; sigma 2E-7 x 226 = 0.0000452",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.0000430(6) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#104 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_226_P_113_113_80",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.1275414
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 226, row E_DMC, column rs = 80 (layout text line 36)",
+    "reported_as": "−0.0094139(1) Ha/el.",
+    "conversion": "-0.0094139 x 226 = -2.1275414; sigma 1E-7 x 226 = 0.0000226",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#105 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_232_P_145_87_30",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -5.204688
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 232, row E_VMC, column rs = 30 (layout text line 94)",
+    "reported_as": "−0.0224340(6) Ha/el.",
+    "conversion": "-0.0224340 x 232 = -5.2046880; sigma 6E-7 x 232 = 0.0001392",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000633(5) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#106 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_232_P_145_87_30",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -5.2333864
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 232, row E_DMC, column rs = 30 (layout text line 96)",
+    "reported_as": "−0.0225577(2) Ha/el.",
+    "conversion": "-0.0225577 x 232 = -5.2333864; sigma 2E-7 x 232 = 0.0000464",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#107 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_232_P_145_87_40",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -4.0479128
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 232, row E_VMC, column rs = 40 (layout text line 94)",
+    "reported_as": "−0.0174479(4) Ha/el.",
+    "conversion": "-0.0174479 x 232 = -4.0479128; sigma 4E-7 x 232 = 0.0000928",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000305(3) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#108 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_232_P_145_87_40",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -4.0756368
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 232, row E_DMC, column rs = 40 (layout text line 96)",
+    "reported_as": "−0.0175674(2) Ha/el.",
+    "conversion": "-0.0175674 x 232 = -4.0756368; sigma 2E-7 x 232 = 0.0000464",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#109 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_232_P_145_87_50",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.3265784
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 232, row E_VMC, column rs = 50 (layout text line 94)",
+    "reported_as": "−0.0143387(4) Ha/el.",
+    "conversion": "-0.0143387 x 232 = -3.3265784; sigma 4E-7 x 232 = 0.0000928",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000144(2) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#110 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_232_P_145_87_50",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.3443728
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 232, row E_DMC, column rs = 50 (layout text line 96)",
+    "reported_as": "−0.0144154(1) Ha/el.",
+    "conversion": "-0.0144154 x 232 = -3.3443728; sigma 1E-7 x 232 = 0.0000232",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#111 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_232_P_145_87_60",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.8204472
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 232, row E_VMC, column rs = 60 (layout text line 94)",
+    "reported_as": "−0.0121571(4) Ha/el.",
+    "conversion": "-0.0121571 x 232 = -2.8204472; sigma 4E-7 x 232 = 0.0000928",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000110(1) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#112 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_232_P_145_87_60",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.8384968
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 232, row E_DMC, column rs = 60 (layout text line 96)",
+    "reported_as": "−0.0122349(1) Ha/el.",
+    "conversion": "-0.0122349 x 232 = -2.8384968; sigma 1E-7 x 232 = 0.0000232",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#113 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_232_P_145_87_70",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.4526344
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 232, row E_VMC, column rs = 70 (layout text line 94)",
+    "reported_as": "−0.0105717(3) Ha/el.",
+    "conversion": "-0.0105717 x 232 = -2.4526344; sigma 3E-7 x 232 = 0.0000696",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.0000711(9) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#114 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_232_P_145_87_70",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.46783504
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 232, row E_DMC, column rs = 70 (layout text line 96)",
+    "reported_as": "−0.01063722(1) Ha/el.",
+    "conversion": "-0.01063722 x 232 = -2.46783504; sigma 1E-8 x 232 = 0.00000232",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10) The printed error bar (1) in the 8th decimal is about 10x below every neighbouring cell; transcription correct, kept as printed (ruled 2026-11-10).",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#115, RP1a-azadi-bcc-fcc-I-II#132 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_232_P_145_87_80",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.1687824
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 232, row E_VMC, column rs = 80 (layout text line 94)",
+    "reported_as": "−0.0093482(3) Ha/el.",
+    "conversion": "-0.0093482 x 232 = -2.1687824; sigma 3E-7 x 232 = 0.0000696",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.0000641(8) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#116 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_232_P_145_87_80",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.18399
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table II, N = 232, row E_DMC, column rs = 80 (layout text line 96)",
+    "reported_as": "−0.00941375(1) Ha/el.",
+    "conversion": "-0.00941375 x 232 = -2.18399000; sigma 1E-8 x 232 = 0.00000232",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.25 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10) The printed error bar (1) in the 8th decimal is about 10x below every neighbouring cell; transcription correct, kept as printed (ruled 2026-11-10).",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#117, RP1a-azadi-bcc-fcc-I-II#133 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_274_P_137_137_30",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -6.1521494
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 274, row E_VMC, column rs = 30 (layout text line 40)",
+    "reported_as": "−0.0224531(3) Ha/el.",
+    "conversion": "-0.0224531 x 274 = -6.1521494; sigma 3E-7 x 274 = 0.0000822",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000802(4) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#118 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_274_P_137_137_30",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -6.1805084
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 274, row E_DMC, column rs = 30 (layout text line 42)",
+    "reported_as": "−0.0225566(3) Ha/el.",
+    "conversion": "-0.0225566 x 274 = -6.1805084; sigma 3E-7 x 274 = 0.0000822",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#119 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_274_P_137_137_40",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -4.7901776
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 274, row E_VMC, column rs = 40 (layout text line 40)",
+    "reported_as": "−0.0174824(6) Ha/el.",
+    "conversion": "-0.0174824 x 274 = -4.7901776; sigma 6E-7 x 274 = 0.0001644",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000358(5) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#120 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_274_P_137_137_40",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -4.8134676
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 274, row E_DMC, column rs = 40 (layout text line 42)",
+    "reported_as": "−0.0175674(1) Ha/el.",
+    "conversion": "-0.0175674 x 274 = -4.8134676; sigma 1E-7 x 274 = 0.0000274",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#121 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_274_P_137_137_50",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.9277352
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 274, row E_VMC, column rs = 50 (layout text line 40)",
+    "reported_as": "−0.0143348(3) Ha/el.",
+    "conversion": "-0.0143348 x 274 = -3.9277352; sigma 3E-7 x 274 = 0.0000822",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000214(3) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#122 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_274_P_137_137_50",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.9489154
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 274, row E_DMC, column rs = 50 (layout text line 42)",
+    "reported_as": "−0.0144121(1) Ha/el.",
+    "conversion": "-0.0144121 x 274 = -3.9489154; sigma 1E-7 x 274 = 0.0000274",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#123 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_274_P_137_137_60",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.3319222
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 274, row E_VMC, column rs = 60 (layout text line 40)",
+    "reported_as": "−0.0121603(4) Ha/el.",
+    "conversion": "-0.0121603 x 274 = -3.3319222; sigma 4E-7 x 274 = 0.0001096",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000144(1) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#124 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_274_P_137_137_60",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.3517872
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 274, row E_DMC, column rs = 60 (layout text line 42)",
+    "reported_as": "−0.0122328(1) Ha/el.",
+    "conversion": "-0.0122328 x 274 = -3.3517872; sigma 1E-7 x 274 = 0.0000274",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#125 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_274_P_137_137_70",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.896865
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 274, row E_VMC, column rs = 70 (layout text line 40)",
+    "reported_as": "−0.0105725(4) Ha/el.",
+    "conversion": "-0.0105725 x 274 = -2.8968650; sigma 4E-7 x 274 = 0.0001096",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.000097(2) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#126 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_274_P_137_137_70",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.9140448
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 274, row E_DMC, column rs = 70 (layout text line 42)",
+    "reported_as": "−0.0106352(2) Ha/el.",
+    "conversion": "-0.0106352 x 274 = -2.9140448; sigma 2E-7 x 274 = 0.0000548",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#127 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_274_P_137_137_80",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.5600094
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 274, row E_VMC, column rs = 80 (layout text line 40)",
+    "reported_as": "−0.0093431(2) Ha/el.",
+    "conversion": "-0.0093431 x 274 = -2.5600094; sigma 2E-7 x 274 = 0.0000548",
+    "note": "fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; VMC: variational; printed sigma_v^2 = 0.0000764(8) Ha^2 (grows about linearly with N across the table, so it reads as Var of the total local energy; not stored, see report); own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#128 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_274_P_137_137_80",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.5786962
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file 2201.08743-PRB105-245135-SupplMat.pdf, sha256 c18e2172..., \"Dated: May 25, 2022\"), re-extracted with pypdf layout mode (identical to the cached .txt); main text arXiv:2201.08743v3 (pypdf text, journal main text not reachable: APS Cloudflare)",
+    "location": "SM Table I, N = 274, row E_DMC, column rs = 80 (layout text line 42)",
+    "reported_as": "−0.0094113(1) Ha/el.",
+    "conversion": "-0.0094113 x 274 = -2.5786962; sigma 1E-7 x 274 = 0.0000274",
+    "note": "record row; fluid, SJ trial, fcc simulation cell (main text: \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"; Sec. on Zong et al.: \"Our results were obtained using a face-centered cubic simulation cell\"), zeta = 0.0 (caption) gives N_up/N_dn as stored; Non-TA, Gamma per author mail 2026-11-10; DMC not extrapolated to zero time step (caption): fixed-node, projected; own computation (CASINO), primary, peer reviewed; no duplicate on the instance (data/ read 2026-11-10)",
+    "source_entry": "RP1a-azadi-bcc-fcc-I-II#129 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_137_P_137_0_30",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.0737183
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 137, row E_VMC, column rs = 30; pypdf plain-mode text line 104 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0224359(8) Ha/el.",
+    "conversion": "-0.0224359 * 137 = -3.0737183; sigma 8e-7 * 137 = 0.0001096",
+    "note": "N = 137, zeta = 1.0 gives N_up = 137, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 30; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.000201(3) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#0 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_137_P_137_0_30",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.0804861
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 137, row E_DMC, column rs = 30; pypdf plain-mode text line 106 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0224853(5) Ha/el.",
+    "conversion": "-0.0224853 * 137 = -3.0804861; sigma 5e-7 * 137 = 0.0000685",
+    "note": "N = 137, zeta = 1.0 gives N_up = 137, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 30; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#1 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_137_P_137_0_40",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.3982398
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 137, row E_VMC, column rs = 40; pypdf plain-mode text line 104 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0175054(5) Ha/el.",
+    "conversion": "-0.0175054 * 137 = -2.3982398; sigma 5e-7 * 137 = 0.0000685",
+    "note": "N = 137, zeta = 1.0 gives N_up = 137, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 40; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.000113(1) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#2 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_137_P_137_0_40",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.4050761
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 137, row E_DMC, column rs = 40; pypdf plain-mode text line 106 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0175553(3) Ha/el.",
+    "conversion": "-0.0175553 * 137 = -2.4050761; sigma 3e-7 * 137 = 0.0000411",
+    "note": "N = 137, zeta = 1.0 gives N_up = 137, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 40; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#3 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_137_P_137_0_50",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.9694298
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 137, row E_VMC, column rs = 50; pypdf plain-mode text line 104 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0143754(4) Ha/el.",
+    "conversion": "-0.0143754 * 137 = -1.9694298; sigma 4e-7 * 137 = 0.0000548",
+    "note": "N = 137, zeta = 1.0 gives N_up = 137, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 50; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.0000628(8) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#4 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_137_P_137_0_50",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.9753208
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 137, row E_DMC, column rs = 50; pypdf plain-mode text line 106 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0144184(3) Ha/el.",
+    "conversion": "-0.0144184 * 137 = -1.9753208; sigma 3e-7 * 137 = 0.0000411",
+    "note": "N = 137, zeta = 1.0 gives N_up = 137, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 50; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#5 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_137_P_137_0_60",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.6721398
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 137, row E_VMC, column rs = 60; pypdf plain-mode text line 104 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0122054(4) Ha/el.",
+    "conversion": "-0.0122054 * 137 = -1.6721398; sigma 4e-7 * 137 = 0.0000548",
+    "note": "N = 137, zeta = 1.0 gives N_up = 137, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 60; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.0000387(5) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#6 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_137_P_137_0_60",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.6775376
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 137, row E_DMC, column rs = 60; pypdf plain-mode text line 106 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0122448(2) Ha/el.",
+    "conversion": "-0.0122448 * 137 = -1.6775376; sigma 2e-7 * 137 = 0.0000274",
+    "note": "N = 137, zeta = 1.0 gives N_up = 137, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 60; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#7 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_137_P_137_0_70",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.4538303
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 137, row E_VMC, column rs = 70; pypdf plain-mode text line 104 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0106119(3) Ha/el.",
+    "conversion": "-0.0106119 * 137 = -1.4538303; sigma 3e-7 * 137 = 0.0000411",
+    "note": "N = 137, zeta = 1.0 gives N_up = 137, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 70; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.0000265(4) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#8 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_137_P_137_0_70",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.4588993
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 137, row E_DMC, column rs = 70; pypdf plain-mode text line 106 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0106489(1) Ha/el.",
+    "conversion": "-0.0106489 * 137 = -1.4588993; sigma 1e-7 * 137 = 0.0000137",
+    "note": "N = 137, zeta = 1.0 gives N_up = 137, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 70; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#9 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_137_P_137_0_80",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.2866218
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 137, row E_VMC, column rs = 80; pypdf plain-mode text line 104 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0093914(3) Ha/el.",
+    "conversion": "-0.0093914 * 137 = -1.2866218; sigma 3e-7 * 137 = 0.0000411",
+    "note": "N = 137, zeta = 1.0 gives N_up = 137, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 80; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.0000193(3) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#10 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_137_P_137_0_80",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.2914305
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 137, row E_DMC, column rs = 80; pypdf plain-mode text line 106 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0094265(1) Ha/el.",
+    "conversion": "-0.0094265 * 137 = -1.2914305; sigma 1e-7 * 137 = 0.0000137",
+    "note": "N = 137, zeta = 1.0 gives N_up = 137, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 80; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#11 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_140_P_105_35_30",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.140676
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 140, row E_VMC, column rs = 30; pypdf plain-mode text line 63 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0224334(6) Ha/el.",
+    "conversion": "-0.0224334 * 140 = -3.140676; sigma 6e-7 * 140 = 0.000084",
+    "note": "N = 140, zeta = 0.5 gives N_up = 105, N_dn = 35; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 30; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 105 and 35 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.000321(3) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#12 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_140_P_105_35_30",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.159016
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 140, row E_DMC, column rs = 30; pypdf plain-mode text line 65 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0225644(5) Ha/el.",
+    "conversion": "-0.0225644 * 140 = -3.159016; sigma 5e-7 * 140 = 0.00007",
+    "note": "N = 140, zeta = 0.5 gives N_up = 105, N_dn = 35; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 30; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 105 and 35 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#13 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_140_P_105_35_40",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.447186
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 140, row E_VMC, column rs = 40; pypdf plain-mode text line 63 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0174799(5) Ha/el.",
+    "conversion": "-0.0174799 * 140 = -2.447186; sigma 5e-7 * 140 = 0.00007",
+    "note": "N = 140, zeta = 0.5 gives N_up = 105, N_dn = 35; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 40; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 105 and 35 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.000158(1) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#14 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_140_P_105_35_40",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.461368
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 140, row E_DMC, column rs = 40; pypdf plain-mode text line 65 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0175812(3) Ha/el.",
+    "conversion": "-0.0175812 * 140 = -2.461368; sigma 3e-7 * 140 = 0.000042",
+    "note": "N = 140, zeta = 0.5 gives N_up = 105, N_dn = 35; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 40; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 105 and 35 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#15 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_140_P_105_35_50",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.00781
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 140, row E_VMC, column rs = 50; pypdf plain-mode text line 63 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0143415(4) Ha/el.",
+    "conversion": "-0.0143415 * 140 = -2.00781; sigma 4e-7 * 140 = 0.000056",
+    "note": "N = 140, zeta = 0.5 gives N_up = 105, N_dn = 35; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 50; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 105 and 35 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.0000962(8) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#16 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_140_P_105_35_50",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.019626
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 140, row E_DMC, column rs = 50; pypdf plain-mode text line 65 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0144259(2) Ha/el.",
+    "conversion": "-0.0144259 * 140 = -2.019626; sigma 2e-7 * 140 = 0.000028",
+    "note": "N = 140, zeta = 0.5 gives N_up = 105, N_dn = 35; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 50; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 105 and 35 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#17 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_140_P_105_35_60",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.704206
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 140, row E_VMC, column rs = 60; pypdf plain-mode text line 63 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0121729(3) Ha/el.",
+    "conversion": "-0.0121729 * 140 = -1.704206; sigma 3e-7 * 140 = 0.000042",
+    "note": "N = 140, zeta = 0.5 gives N_up = 105, N_dn = 35; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 60; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 105 and 35 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.0000581(5) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#18 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_140_P_105_35_60",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.714342
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 140, row E_DMC, column rs = 60; pypdf plain-mode text line 65 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0122453(2) Ha/el.",
+    "conversion": "-0.0122453 * 140 = -1.714342; sigma 2e-7 * 140 = 0.000028",
+    "note": "N = 140, zeta = 0.5 gives N_up = 105, N_dn = 35; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 60; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 105 and 35 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#19 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_140_P_105_35_70",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.481508
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 140, row E_VMC, column rs = 70; pypdf plain-mode text line 63 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0105822(3) Ha/el.",
+    "conversion": "-0.0105822 * 140 = -1.481508; sigma 3e-7 * 140 = 0.000042",
+    "note": "N = 140, zeta = 0.5 gives N_up = 105, N_dn = 35; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 70; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 105 and 35 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.0000392(3) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#20 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_140_P_105_35_70",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.490496
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 140, row E_DMC, column rs = 70; pypdf plain-mode text line 65 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0106464(1) Ha/el.",
+    "conversion": "-0.0106464 * 140 = -1.490496; sigma 1e-7 * 140 = 0.000014",
+    "note": "N = 140, zeta = 0.5 gives N_up = 105, N_dn = 35; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 70; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 105 and 35 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#21 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_140_P_105_35_80",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.310946
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 140, row E_VMC, column rs = 80; pypdf plain-mode text line 63 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0093639(2) Ha/el.",
+    "conversion": "-0.0093639 * 140 = -1.310946; sigma 2e-7 * 140 = 0.000028",
+    "note": "N = 140, zeta = 0.5 gives N_up = 105, N_dn = 35; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 80; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 105 and 35 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.0000301(3) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#22 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_140_P_105_35_80",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.31915
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 140, row E_DMC, column rs = 80; pypdf plain-mode text line 65 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0094225(1) Ha/el.",
+    "conversion": "-0.0094225 * 140 = -1.31915; sigma 1e-7 * 140 = 0.000014",
+    "note": "N = 140, zeta = 0.5 gives N_up = 105, N_dn = 35; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 80; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 105 and 35 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#23 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_152_P_133_19_30",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.4130536
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 152, row E_VMC, column rs = 30; pypdf plain-mode text line 84 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0224543(6) Ha/el.",
+    "conversion": "-0.0224543 * 152 = -3.4130536; sigma 6e-7 * 152 = 0.0000912",
+    "note": "N = 152, zeta = 0.75 gives N_up = 133, N_dn = 19; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 30; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 133 and 19 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.000290(2) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#24 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_152_P_133_19_30",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.4255176
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 152, row E_DMC, column rs = 30; pypdf plain-mode text line 86 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0225363(3) Ha/el.",
+    "conversion": "-0.0225363 * 152 = -3.4255176; sigma 3e-7 * 152 = 0.0000456",
+    "note": "N = 152, zeta = 0.75 gives N_up = 133, N_dn = 19; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 30; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 133 and 19 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#25 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_152_P_133_19_40",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.6602432
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 152, row E_VMC, column rs = 40; pypdf plain-mode text line 84 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0175016(4) Ha/el.",
+    "conversion": "-0.0175016 * 152 = -2.6602432; sigma 4e-7 * 152 = 0.0000608",
+    "note": "N = 152, zeta = 0.75 gives N_up = 133, N_dn = 19; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 40; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 133 and 19 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.000150(1) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#26 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_152_P_133_19_40",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.6711112
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 152, row E_DMC, column rs = 40; pypdf plain-mode text line 86 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0175731(1) Ha/el.",
+    "conversion": "-0.0175731 * 152 = -2.6711112; sigma 1e-7 * 152 = 0.0000152",
+    "note": "N = 152, zeta = 0.75 gives N_up = 133, N_dn = 19; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 40; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 133 and 19 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#27 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_152_P_133_19_50",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.1829784
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 152, row E_VMC, column rs = 50; pypdf plain-mode text line 84 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0143617(3) Ha/el.",
+    "conversion": "-0.0143617 * 152 = -2.1829784; sigma 3e-7 * 152 = 0.0000456",
+    "note": "N = 152, zeta = 0.75 gives N_up = 133, N_dn = 19; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 50; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 133 and 19 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.0000840(7) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#28 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_152_P_133_19_50",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.1924936
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 152, row E_DMC, column rs = 50; pypdf plain-mode text line 86 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0144243(1) Ha/el.",
+    "conversion": "-0.0144243 * 152 = -2.1924936; sigma 1e-7 * 152 = 0.0000152",
+    "note": "N = 152, zeta = 0.75 gives N_up = 133, N_dn = 19; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 50; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 133 and 19 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#29 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_152_P_133_19_60",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.8526976
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 152, row E_VMC, column rs = 60; pypdf plain-mode text line 84 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0121888(3) Ha/el.",
+    "conversion": "-0.0121888 * 152 = -1.8526976; sigma 3e-7 * 152 = 0.0000456",
+    "note": "N = 152, zeta = 0.75 gives N_up = 133, N_dn = 19; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 60; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 133 and 19 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.0000548(5) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#30 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_152_P_133_19_60",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.861392
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 152, row E_DMC, column rs = 60; pypdf plain-mode text line 86 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0122460(1) Ha/el.",
+    "conversion": "-0.0122460 * 152 = -1.861392; sigma 1e-7 * 152 = 0.0000152",
+    "note": "N = 152, zeta = 0.75 gives N_up = 133, N_dn = 19; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 60; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 133 and 19 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#31 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_152_P_133_19_70",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.610592
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 152, row E_VMC, column rs = 70; pypdf plain-mode text line 84 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0105960(2) Ha/el.",
+    "conversion": "-0.0105960 * 152 = -1.610592; sigma 2e-7 * 152 = 0.0000304",
+    "note": "N = 152, zeta = 0.75 gives N_up = 133, N_dn = 19; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 70; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 133 and 19 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.0000396(3) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#32 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_152_P_133_19_70",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.6184808
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 152, row E_DMC, column rs = 70; pypdf plain-mode text line 86 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0106479(1) Ha/el.",
+    "conversion": "-0.0106479 * 152 = -1.6184808; sigma 1e-7 * 152 = 0.0000152",
+    "note": "N = 152, zeta = 0.75 gives N_up = 133, N_dn = 19; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 70; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 133 and 19 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#33 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_152_P_133_19_80",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.4252888
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 152, row E_VMC, column rs = 80; pypdf plain-mode text line 84 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0093769(3) Ha/el.",
+    "conversion": "-0.0093769 * 152 = -1.4252888; sigma 3e-7 * 152 = 0.0000456",
+    "note": "N = 152, zeta = 0.75 gives N_up = 133, N_dn = 19; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 80; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 133 and 19 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.0000280(4) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#34 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_152_P_133_19_80",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.432524
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 152, row E_DMC, column rs = 80; pypdf plain-mode text line 86 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0094245(1) Ha/el.",
+    "conversion": "-0.0094245 * 152 = -1.432524; sigma 1e-7 * 152 = 0.0000152",
+    "note": "N = 152, zeta = 0.75 gives N_up = 133, N_dn = 19; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 80; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 133 and 19 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#35 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_169_P_169_0_30",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.7945063
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 169, row E_VMC, column rs = 30; pypdf plain-mode text line 110 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0224527(6) Ha/el.",
+    "conversion": "-0.0224527 * 169 = -3.7945063; sigma 6e-7 * 169 = 0.0001014",
+    "note": "N = 169, zeta = 1.0 gives N_up = 169, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 30; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.000269(4) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#36 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_169_P_169_0_30",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.7990355
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 169, row E_DMC, column rs = 30; pypdf plain-mode text line 112 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0224795(5) Ha/el.",
+    "conversion": "-0.0224795 * 169 = -3.7990355; sigma 5e-7 * 169 = 0.0000845",
+    "note": "N = 169, zeta = 1.0 gives N_up = 169, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 30; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#37 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_169_P_169_0_40",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.9608124
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 169, row E_VMC, column rs = 40; pypdf plain-mode text line 110 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0175196(5) Ha/el.",
+    "conversion": "-0.0175196 * 169 = -2.9608124; sigma 5e-7 * 169 = 0.0000845",
+    "note": "N = 169, zeta = 1.0 gives N_up = 169, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 40; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.000128(1) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#38 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_169_P_169_0_40",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.9662035
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 169, row E_DMC, column rs = 40; pypdf plain-mode text line 112 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0175515(3) Ha/el.",
+    "conversion": "-0.0175515 * 169 = -2.9662035; sigma 3e-7 * 169 = 0.0000507",
+    "note": "N = 169, zeta = 1.0 gives N_up = 169, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 40; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#39 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_169_P_169_0_50",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.4301017
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 169, row E_VMC, column rs = 50; pypdf plain-mode text line 110 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0143793(4) Ha/el.",
+    "conversion": "-0.0143793 * 169 = -2.4301017; sigma 4e-7 * 169 = 0.0000676",
+    "note": "N = 169, zeta = 1.0 gives N_up = 169, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 50; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.000080(1) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#40 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_169_P_169_0_50",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.4362026
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 169, row E_DMC, column rs = 50; pypdf plain-mode text line 112 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0144154(2) Ha/el.",
+    "conversion": "-0.0144154 * 169 = -2.4362026; sigma 2e-7 * 169 = 0.0000338",
+    "note": "N = 169, zeta = 1.0 gives N_up = 169, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 50; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#41 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_169_P_169_0_60",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.063152
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 169, row E_VMC, column rs = 60; pypdf plain-mode text line 110 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0122080(3) Ha/el.",
+    "conversion": "-0.0122080 * 169 = -2.063152; sigma 3e-7 * 169 = 0.0000507",
+    "note": "N = 169, zeta = 1.0 gives N_up = 169, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 60; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.0000511(7) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#42 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_169_P_169_0_60",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.0689825
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 169, row E_DMC, column rs = 60; pypdf plain-mode text line 112 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0122425(1) Ha/el.",
+    "conversion": "-0.0122425 * 169 = -2.0689825; sigma 1e-7 * 169 = 0.0000169",
+    "note": "N = 169, zeta = 1.0 gives N_up = 169, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 60; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#43 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_169_P_169_0_70",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.7940702
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 169, row E_VMC, column rs = 70; pypdf plain-mode text line 110 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0106158(3) Ha/el.",
+    "conversion": "-0.0106158 * 169 = -1.7940702; sigma 3e-7 * 169 = 0.0000507",
+    "note": "N = 169, zeta = 1.0 gives N_up = 169, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 70; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.0000318(4) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#44 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_169_P_169_0_70",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.799343
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 169, row E_DMC, column rs = 70; pypdf plain-mode text line 112 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0106470(1) Ha/el.",
+    "conversion": "-0.0106470 * 169 = -1.799343; sigma 1e-7 * 169 = 0.0000169",
+    "note": "N = 169, zeta = 1.0 gives N_up = 169, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 70; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#45 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_169_P_169_0_80",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.5874677
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 169, row E_VMC, column rs = 80; pypdf plain-mode text line 110 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0093933(3) Ha/el.",
+    "conversion": "-0.0093933 * 169 = -1.5874677; sigma 3e-7 * 169 = 0.0000507",
+    "note": "N = 169, zeta = 1.0 gives N_up = 169, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 80; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.0000242(4) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#46 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_169_P_169_0_80",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.5927912
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 169, row E_DMC, column rs = 80; pypdf plain-mode text line 112 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0094248(1) Ha/el.",
+    "conversion": "-0.0094248 * 169 = -1.5927912; sigma 1e-7 * 169 = 0.0000169",
+    "note": "N = 169, zeta = 1.0 gives N_up = 169, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 80; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#47 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_181_P_181_0_30",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -4.059468
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 181, row E_VMC, column rs = 30; pypdf plain-mode text line 116 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0224280(4) Ha/el.",
+    "conversion": "-0.0224280 * 181 = -4.059468; sigma 4e-7 * 181 = 0.0000724",
+    "note": "N = 181, zeta = 1.0 gives N_up = 181, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 30; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.000272(2) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#48 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_181_P_181_0_30",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -4.0681198
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 181, row E_DMC, column rs = 30; pypdf plain-mode text line 118 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0224758(2) Ha/el.",
+    "conversion": "-0.0224758 * 181 = -4.0681198; sigma 2e-7 * 181 = 0.0000362",
+    "note": "N = 181, zeta = 1.0 gives N_up = 181, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 30; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#49 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_181_P_181_0_40",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.1679525
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 181, row E_VMC, column rs = 40; pypdf plain-mode text line 116 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0175025(4) Ha/el.",
+    "conversion": "-0.0175025 * 181 = -3.1679525; sigma 4e-7 * 181 = 0.0000724",
+    "note": "N = 181, zeta = 1.0 gives N_up = 181, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 40; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.000137(2) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#50 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_181_P_181_0_40",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.1764233
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 181, row E_DMC, column rs = 40; pypdf plain-mode text line 118 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0175493(1) Ha/el.",
+    "conversion": "-0.0175493 * 181 = -3.1764233; sigma 1e-7 * 181 = 0.0000181",
+    "note": "N = 181, zeta = 1.0 gives N_up = 181, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 40; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#51 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_181_P_181_0_50",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.6011872
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 181, row E_VMC, column rs = 50; pypdf plain-mode text line 116 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0143712(4) Ha/el.",
+    "conversion": "-0.0143712 * 181 = -2.6011872; sigma 4e-7 * 181 = 0.0000724",
+    "note": "N = 181, zeta = 1.0 gives N_up = 181, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 50; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.000082(1) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#52 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_181_P_181_0_50",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.6089159
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 181, row E_DMC, column rs = 50; pypdf plain-mode text line 118 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0144139(1) Ha/el.",
+    "conversion": "-0.0144139 * 181 = -2.6089159; sigma 1e-7 * 181 = 0.0000181",
+    "note": "N = 181, zeta = 1.0 gives N_up = 181, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 50; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#53 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_181_P_181_0_60",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.2080914
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 181, row E_VMC, column rs = 60; pypdf plain-mode text line 116 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0121994(4) Ha/el.",
+    "conversion": "-0.0121994 * 181 = -2.2080914; sigma 4e-7 * 181 = 0.0000724",
+    "note": "N = 181, zeta = 1.0 gives N_up = 181, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 60; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.0000561(8) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#54 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_181_P_181_0_60",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.21568073
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 181, row E_DMC, column rs = 60; pypdf plain-mode text line 118 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.01224133(6) Ha/el.",
+    "conversion": "-0.01224133 * 181 = -2.21568073; sigma 6e-8 * 181 = 0.00001086",
+    "note": "N = 181, zeta = 1.0 gives N_up = 181, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 60; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#55 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_181_P_181_0_70",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.9203557
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 181, row E_VMC, column rs = 70; pypdf plain-mode text line 116 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0106097(3) Ha/el.",
+    "conversion": "-0.0106097 * 181 = -1.9203557; sigma 3e-7 * 181 = 0.0000543",
+    "note": "N = 181, zeta = 1.0 gives N_up = 181, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 70; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.0000349(5) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#56 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_181_P_181_0_70",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.9269441
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 181, row E_DMC, column rs = 70; pypdf plain-mode text line 118 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0106461(1) Ha/el.",
+    "conversion": "-0.0106461 * 181 = -1.9269441; sigma 1e-7 * 181 = 0.0000181",
+    "note": "N = 181, zeta = 1.0 gives N_up = 181, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 70; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#57 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_181_P_181_0_80",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.6994271
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 181, row E_VMC, column rs = 80; pypdf plain-mode text line 116 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0093891(3) Ha/el.",
+    "conversion": "-0.0093891 * 181 = -1.6994271; sigma 3e-7 * 181 = 0.0000543",
+    "note": "N = 181, zeta = 1.0 gives N_up = 181, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 80; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.0000236(4) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#58 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_181_P_181_0_80",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.70574219
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 181, row E_DMC, column rs = 80; pypdf plain-mode text line 118 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.00942399(7) Ha/el.",
+    "conversion": "-0.00942399 * 181 = -1.70574219; sigma 7e-8 * 181 = 0.00001267",
+    "note": "N = 181, zeta = 1.0 gives N_up = 181, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 80; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#59 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_161_23_30",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -4.1327872
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 184, row E_VMC, column rs = 30; pypdf plain-mode text line 90 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0224608(5) Ha/el.",
+    "conversion": "-0.0224608 * 184 = -4.1327872; sigma 5e-7 * 184 = 0.000092",
+    "note": "N = 184, zeta = 0.75 gives N_up = 161, N_dn = 23; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 30; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 161 and 23 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.000339(3) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#60 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_161_23_30",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -4.1458696
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 184, row E_DMC, column rs = 30; pypdf plain-mode text line 92 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0225319(3) Ha/el.",
+    "conversion": "-0.0225319 * 184 = -4.1458696; sigma 3e-7 * 184 = 0.0000552",
+    "note": "N = 184, zeta = 0.75 gives N_up = 161, N_dn = 23; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 30; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 161 and 23 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#61 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_161_23_40",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.2204968
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 184, row E_VMC, column rs = 40; pypdf plain-mode text line 90 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0175027(4) Ha/el.",
+    "conversion": "-0.0175027 * 184 = -3.2204968; sigma 4e-7 * 184 = 0.0000736",
+    "note": "N = 184, zeta = 0.75 gives N_up = 161, N_dn = 23; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 40; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 161 and 23 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.000179(1) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#62 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_161_23_40",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.2328984
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 184, row E_DMC, column rs = 40; pypdf plain-mode text line 92 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0175701(2) Ha/el.",
+    "conversion": "-0.0175701 * 184 = -3.2328984; sigma 2e-7 * 184 = 0.0000368",
+    "note": "N = 184, zeta = 0.75 gives N_up = 161, N_dn = 23; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 40; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 161 and 23 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#63 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_161_23_50",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.6425344
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 184, row E_VMC, column rs = 50; pypdf plain-mode text line 90 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0143616(3) Ha/el.",
+    "conversion": "-0.0143616 * 184 = -2.6425344; sigma 3e-7 * 184 = 0.0000552",
+    "note": "N = 184, zeta = 0.75 gives N_up = 161, N_dn = 23; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 50; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 161 and 23 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.0001020(8) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#64 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_161_23_50",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.653648
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 184, row E_DMC, column rs = 50; pypdf plain-mode text line 92 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0144220(1) Ha/el.",
+    "conversion": "-0.0144220 * 184 = -2.653648; sigma 1e-7 * 184 = 0.0000184",
+    "note": "N = 184, zeta = 0.75 gives N_up = 161, N_dn = 23; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 50; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 161 and 23 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#65 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_161_23_60",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.2425368
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 184, row E_VMC, column rs = 60; pypdf plain-mode text line 90 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0121877(3) Ha/el.",
+    "conversion": "-0.0121877 * 184 = -2.2425368; sigma 3e-7 * 184 = 0.0000552",
+    "note": "N = 184, zeta = 0.75 gives N_up = 161, N_dn = 23; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 60; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 161 and 23 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.0000682(6) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#66 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_161_23_60",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.252896
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 184, row E_DMC, column rs = 60; pypdf plain-mode text line 92 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0122440(1) Ha/el.",
+    "conversion": "-0.0122440 * 184 = -2.252896; sigma 1e-7 * 184 = 0.0000184",
+    "note": "N = 184, zeta = 0.75 gives N_up = 161, N_dn = 23; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 60; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 161 and 23 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#67 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_161_23_70",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.9493328
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 184, row E_VMC, column rs = 70; pypdf plain-mode text line 90 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0105942(2) Ha/el.",
+    "conversion": "-0.0105942 * 184 = -1.9493328; sigma 2e-7 * 184 = 0.0000368",
+    "note": "N = 184, zeta = 0.75 gives N_up = 161, N_dn = 23; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 70; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 161 and 23 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.0000475(5) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#68 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_161_23_70",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.9589192
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 184, row E_DMC, column rs = 70; pypdf plain-mode text line 92 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0106463(1) Ha/el.",
+    "conversion": "-0.0106463 * 184 = -1.9589192; sigma 1e-7 * 184 = 0.0000184",
+    "note": "N = 184, zeta = 0.75 gives N_up = 161, N_dn = 23; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 70; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 161 and 23 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#69 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_161_23_80",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.7247056
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 184, row E_VMC, column rs = 80; pypdf plain-mode text line 90 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0093734(3) Ha/el.",
+    "conversion": "-0.0093734 * 184 = -1.7247056; sigma 3e-7 * 184 = 0.0000552",
+    "note": "N = 184, zeta = 0.75 gives N_up = 161, N_dn = 23; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 80; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 161 and 23 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.0000355(4) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#70 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_184_P_161_23_80",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.7338136
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 184, row E_DMC, column rs = 80; pypdf plain-mode text line 92 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0094229(1) Ha/el.",
+    "conversion": "-0.0094229 * 184 = -1.7338136; sigma 1e-7 * 184 = 0.0000184",
+    "note": "N = 184, zeta = 0.75 gives N_up = 161, N_dn = 23; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 80; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 161 and 23 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#71 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_188_P_141_47_30",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -4.2207128
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 188, row E_VMC, column rs = 30; pypdf plain-mode text line 69 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0224506(6) Ha/el.",
+    "conversion": "-0.0224506 * 188 = -4.2207128; sigma 6e-7 * 188 = 0.0001128",
+    "note": "N = 188, zeta = 0.5 gives N_up = 141, N_dn = 47; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 30; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 141 and 47 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.000444(3) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#72 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_188_P_141_47_30",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -4.240246
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 188, row E_DMC, column rs = 30; pypdf plain-mode text line 71 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0225545(3) Ha/el.",
+    "conversion": "-0.0225545 * 188 = -4.240246; sigma 3e-7 * 188 = 0.0000564",
+    "note": "N = 188, zeta = 0.5 gives N_up = 141, N_dn = 47; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 30; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 141 and 47 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#73 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_188_P_141_47_40",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.2886464
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 188, row E_VMC, column rs = 40; pypdf plain-mode text line 69 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0174928(4) Ha/el.",
+    "conversion": "-0.0174928 * 188 = -3.2886464; sigma 4e-7 * 188 = 0.0000752",
+    "note": "N = 188, zeta = 0.5 gives N_up = 141, N_dn = 47; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 40; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 141 and 47 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.000198(2) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#74 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_188_P_141_47_40",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.304006
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 188, row E_DMC, column rs = 40; pypdf plain-mode text line 71 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0175745(2) Ha/el.",
+    "conversion": "-0.0175745 * 188 = -3.304006; sigma 2e-7 * 188 = 0.0000376",
+    "note": "N = 188, zeta = 0.5 gives N_up = 141, N_dn = 47; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 40; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 141 and 47 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#75 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_188_P_141_47_50",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.6961832
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 188, row E_VMC, column rs = 50; pypdf plain-mode text line 69 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0143414(3) Ha/el.",
+    "conversion": "-0.0143414 * 188 = -2.6961832; sigma 3e-7 * 188 = 0.0000564",
+    "note": "N = 188, zeta = 0.5 gives N_up = 141, N_dn = 47; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 50; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 141 and 47 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.000137(1) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#76 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_188_P_141_47_50",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.7110164
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 188, row E_DMC, column rs = 50; pypdf plain-mode text line 71 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0144203(1) Ha/el.",
+    "conversion": "-0.0144203 * 188 = -2.7110164; sigma 1e-7 * 188 = 0.0000188",
+    "note": "N = 188, zeta = 0.5 gives N_up = 141, N_dn = 47; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 50; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 141 and 47 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#77 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_188_P_141_47_60",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.2884112
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 188, row E_VMC, column rs = 60; pypdf plain-mode text line 69 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0121724(3) Ha/el.",
+    "conversion": "-0.0121724 * 188 = -2.2884112; sigma 3e-7 * 188 = 0.0000564",
+    "note": "N = 188, zeta = 0.5 gives N_up = 141, N_dn = 47; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 60; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 141 and 47 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.0000859(7) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#78 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_188_P_141_47_60",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.301308
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 188, row E_DMC, column rs = 60; pypdf plain-mode text line 71 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0122410(1) Ha/el.",
+    "conversion": "-0.0122410 * 188 = -2.301308; sigma 1e-7 * 188 = 0.0000188",
+    "note": "N = 188, zeta = 0.5 gives N_up = 141, N_dn = 47; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 60; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 141 and 47 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#79 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_188_P_141_47_70",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.9887204
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 188, row E_VMC, column rs = 70; pypdf plain-mode text line 69 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0105783(3) Ha/el.",
+    "conversion": "-0.0105783 * 188 = -1.9887204; sigma 3e-7 * 188 = 0.0000564",
+    "note": "N = 188, zeta = 0.5 gives N_up = 141, N_dn = 47; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 70; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 141 and 47 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.0000588(5) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#80 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_188_P_141_47_70",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.0007524
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 188, row E_DMC, column rs = 70; pypdf plain-mode text line 71 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0106423(1) Ha/el.",
+    "conversion": "-0.0106423 * 188 = -2.0007524; sigma 1e-7 * 188 = 0.0000188",
+    "note": "N = 188, zeta = 0.5 gives N_up = 141, N_dn = 47; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 70; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 141 and 47 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#81 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_188_P_141_47_80",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.759774
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 188, row E_VMC, column rs = 80; pypdf plain-mode text line 69 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0093605(2) Ha/el.",
+    "conversion": "-0.0093605 * 188 = -1.759774; sigma 2e-7 * 188 = 0.0000376",
+    "note": "N = 188, zeta = 0.5 gives N_up = 141, N_dn = 47; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 80; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 141 and 47 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.0000439(4) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#82 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_188_P_141_47_80",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -1.7707908
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 188, row E_DMC, column rs = 80; pypdf plain-mode text line 71 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0094191(1) Ha/el.",
+    "conversion": "-0.0094191 * 188 = -1.7707908; sigma 1e-7 * 188 = 0.0000188",
+    "note": "N = 188, zeta = 0.5 gives N_up = 141, N_dn = 47; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 80; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 141 and 47 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#83 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_216_P_189_27_30",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -4.8452904
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 216, row E_VMC, column rs = 30; pypdf plain-mode text line 96 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0224319(5) Ha/el.",
+    "conversion": "-0.0224319 * 216 = -4.8452904; sigma 5e-7 * 216 = 0.000108",
+    "note": "N = 216, zeta = 0.75 gives N_up = 189, N_dn = 27; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 30; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 189 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.000424(3) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#84 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_216_P_189_27_30",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -4.8655944
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 216, row E_DMC, column rs = 30; pypdf plain-mode text line 98 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0225259(1) Ha/el.",
+    "conversion": "-0.0225259 * 216 = -4.8655944; sigma 1e-7 * 216 = 0.0000216",
+    "note": "N = 216, zeta = 0.75 gives N_up = 189, N_dn = 27; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 30; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 189 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#85 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_216_P_189_27_40",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.7771488
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 216, row E_VMC, column rs = 40; pypdf plain-mode text line 96 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0174868(4) Ha/el.",
+    "conversion": "-0.0174868 * 216 = -3.7771488; sigma 4e-7 * 216 = 0.0000864",
+    "note": "N = 216, zeta = 0.75 gives N_up = 189, N_dn = 27; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 40; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 189 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.000211(2) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#86 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_216_P_189_27_40",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.7942992
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 216, row E_DMC, column rs = 40; pypdf plain-mode text line 98 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0175662(1) Ha/el.",
+    "conversion": "-0.0175662 * 216 = -3.7942992; sigma 1e-7 * 216 = 0.0000216",
+    "note": "N = 216, zeta = 0.75 gives N_up = 189, N_dn = 27; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 40; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 189 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#87 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_216_P_189_27_50",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.100356
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 216, row E_VMC, column rs = 50; pypdf plain-mode text line 96 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0143535(3) Ha/el.",
+    "conversion": "-0.0143535 * 216 = -3.100356; sigma 3e-7 * 216 = 0.0000648",
+    "note": "N = 216, zeta = 0.75 gives N_up = 189, N_dn = 27; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 50; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 189 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.000115(1) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#88 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_216_P_189_27_50",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.1145472
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 216, row E_DMC, column rs = 50; pypdf plain-mode text line 98 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0144192(1) Ha/el.",
+    "conversion": "-0.0144192 * 216 = -3.1145472; sigma 1e-7 * 216 = 0.0000216",
+    "note": "N = 216, zeta = 0.75 gives N_up = 189, N_dn = 27; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 50; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 189 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#89 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_216_P_189_27_60",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.6315928
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 216, row E_VMC, column rs = 60; pypdf plain-mode text line 96 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0121833(3) Ha/el.",
+    "conversion": "-0.0121833 * 216 = -2.6315928; sigma 3e-7 * 216 = 0.0000648",
+    "note": "N = 216, zeta = 0.75 gives N_up = 189, N_dn = 27; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 60; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 189 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.0000748(9) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#90 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_216_P_189_27_60",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.6442072
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 216, row E_DMC, column rs = 60; pypdf plain-mode text line 98 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0122417(1) Ha/el.",
+    "conversion": "-0.0122417 * 216 = -2.6442072; sigma 1e-7 * 216 = 0.0000216",
+    "note": "N = 216, zeta = 0.75 gives N_up = 189, N_dn = 27; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 60; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 189 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#91 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_216_P_189_27_70",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.286576
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 216, row E_VMC, column rs = 70; pypdf plain-mode text line 96 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0105860(2) Ha/el.",
+    "conversion": "-0.0105860 * 216 = -2.286576; sigma 2e-7 * 216 = 0.0000432",
+    "note": "N = 216, zeta = 0.75 gives N_up = 189, N_dn = 27; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 70; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 189 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.0000594(5) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#92 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_216_P_189_27_70",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.2990176
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 216, row E_DMC, column rs = 70; pypdf plain-mode text line 98 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0106436(1) Ha/el.",
+    "conversion": "-0.0106436 * 216 = -2.2990176; sigma 1e-7 * 216 = 0.0000216",
+    "note": "N = 216, zeta = 0.75 gives N_up = 189, N_dn = 27; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 70; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 189 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#93 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_216_P_189_27_80",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.0241792
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 216, row E_VMC, column rs = 80; pypdf plain-mode text line 96 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0093712(2) Ha/el.",
+    "conversion": "-0.0093712 * 216 = -2.0241792; sigma 2e-7 * 216 = 0.0000432",
+    "note": "N = 216, zeta = 0.75 gives N_up = 189, N_dn = 27; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 80; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 189 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.0000389(3) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#94 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_216_P_189_27_80",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.0349576
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table IV (zeta = 0.75, SJ), block N = 216, row E_DMC, column rs = 80; pypdf plain-mode text line 98 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0094211(1) Ha/el.",
+    "conversion": "-0.0094211 * 216 = -2.0349576; sigma 1e-7 * 216 = 0.0000216",
+    "note": "N = 216, zeta = 0.75 gives N_up = 189, N_dn = 27; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 80; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 189 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#95 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_229_P_229_0_30",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -5.1216766
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 229, row E_VMC, column rs = 30; pypdf plain-mode text line 122 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0223654(4) Ha/el.",
+    "conversion": "-0.0223654 * 229 = -5.1216766; sigma 4e-7 * 229 = 0.0000916",
+    "note": "N = 229, zeta = 1.0 gives N_up = 229, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 30; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.000382(4) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#96 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_229_P_229_0_30",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -5.1455842
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 229, row E_DMC, column rs = 30; pypdf plain-mode text line 124 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0224698(8) Ha/el.",
+    "conversion": "-0.0224698 * 229 = -5.1455842; sigma 8e-7 * 229 = 0.0001832",
+    "note": "N = 229, zeta = 1.0 gives N_up = 229, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 30; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#97 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_229_P_229_0_40",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.9994392
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 229, row E_VMC, column rs = 40; pypdf plain-mode text line 122 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0174648(4) Ha/el.",
+    "conversion": "-0.0174648 * 229 = -3.9994392; sigma 4e-7 * 229 = 0.0000916",
+    "note": "N = 229, zeta = 1.0 gives N_up = 229, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 40; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.000190(2) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#98 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_229_P_229_0_40",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -4.0178508
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 229, row E_DMC, column rs = 40; pypdf plain-mode text line 124 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0175452(2) Ha/el.",
+    "conversion": "-0.0175452 * 229 = -4.0178508; sigma 2e-7 * 229 = 0.0000458",
+    "note": "N = 229, zeta = 1.0 gives N_up = 229, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 40; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#99 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_229_P_229_0_50",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.2853027
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 229, row E_VMC, column rs = 50; pypdf plain-mode text line 122 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0143463(4) Ha/el.",
+    "conversion": "-0.0143463 * 229 = -3.2853027; sigma 4e-7 * 229 = 0.0000916",
+    "note": "N = 229, zeta = 1.0 gives N_up = 229, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 50; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.000107(1) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#100 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_229_P_229_0_50",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.3000961
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 229, row E_DMC, column rs = 50; pypdf plain-mode text line 124 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0144109(2) Ha/el.",
+    "conversion": "-0.0144109 * 229 = -3.3000961; sigma 2e-7 * 229 = 0.0000458",
+    "note": "N = 229, zeta = 1.0 gives N_up = 229, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 50; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#101 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_229_P_229_0_60",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.789449
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 229, row E_VMC, column rs = 60; pypdf plain-mode text line 122 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0121810(3) Ha/el.",
+    "conversion": "-0.0121810 * 229 = -2.789449; sigma 3e-7 * 229 = 0.0000687",
+    "note": "N = 229, zeta = 1.0 gives N_up = 229, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 60; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.0000706(9) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#102 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_229_P_229_0_60",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.8027539
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 229, row E_DMC, column rs = 60; pypdf plain-mode text line 124 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0122391(1) Ha/el.",
+    "conversion": "-0.0122391 * 229 = -2.8027539; sigma 1e-7 * 229 = 0.0000229",
+    "note": "N = 229, zeta = 1.0 gives N_up = 229, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 60; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#103 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_229_P_229_0_70",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.4262779
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 229, row E_VMC, column rs = 70; pypdf plain-mode text line 122 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0105951(3) Ha/el.",
+    "conversion": "-0.0105951 * 229 = -2.4262779; sigma 3e-7 * 229 = 0.0000687",
+    "note": "N = 229, zeta = 1.0 gives N_up = 229, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 70; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.0000478(6) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#104 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_229_P_229_0_70",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.4375447
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 229, row E_DMC, column rs = 70; pypdf plain-mode text line 124 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0106443(1) Ha/el.",
+    "conversion": "-0.0106443 * 229 = -2.4375447; sigma 1e-7 * 229 = 0.0000229",
+    "note": "N = 229, zeta = 1.0 gives N_up = 229, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 70; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#105 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_229_P_229_0_80",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.1472872
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 229, row E_VMC, column rs = 80; pypdf plain-mode text line 122 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0093768(2) Ha/el.",
+    "conversion": "-0.0093768 * 229 = -2.1472872; sigma 2e-7 * 229 = 0.0000458",
+    "note": "N = 229, zeta = 1.0 gives N_up = 229, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 80; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); sigma_v^2 printed 0.0000331(5) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#106 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_229_P_229_0_80",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.1577067
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table V (zeta = 1.0, SJ), block N = 229, row E_DMC, column rs = 80; pypdf plain-mode text line 124 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0094223(1) Ha/el.",
+    "conversion": "-0.0094223 * 229 = -2.1577067; sigma 1e-7 * 229 = 0.0000229",
+    "note": "N = 229, zeta = 1.0 gives N_up = 229, N_dn = 0; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 80; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10)",
+    "source_entry": "RP1b-azadi-fcc-III-V#107 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_244_P_183_61_30",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -5.478288
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 244, row E_VMC, column rs = 30; pypdf plain-mode text line 75 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0224520(5) Ha/el.",
+    "conversion": "-0.0224520 * 244 = -5.478288; sigma 5e-7 * 244 = 0.000122",
+    "note": "N = 244, zeta = 0.5 gives N_up = 183, N_dn = 61; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 30; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 183 and 61 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.000584(5) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#108 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_244_P_183_61_30",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -5.5014192
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 244, row E_DMC, column rs = 30; pypdf plain-mode text line 77 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0225468(1) Ha/el.",
+    "conversion": "-0.0225468 * 244 = -5.5014192; sigma 1e-7 * 244 = 0.0000244",
+    "note": "N = 244, zeta = 0.5 gives N_up = 183, N_dn = 61; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 30; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 183 and 61 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#109 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_244_P_183_61_40",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -4.2645832
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 244, row E_VMC, column rs = 40; pypdf plain-mode text line 75 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0174778(4) Ha/el.",
+    "conversion": "-0.0174778 * 244 = -4.2645832; sigma 4e-7 * 244 = 0.0000976",
+    "note": "N = 244, zeta = 0.5 gives N_up = 183, N_dn = 61; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 40; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 183 and 61 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.000328(3) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#110 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_244_P_183_61_40",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -4.2867872
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 244, row E_DMC, column rs = 40; pypdf plain-mode text line 77 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0175688(1) Ha/el.",
+    "conversion": "-0.0175688 * 244 = -4.2867872; sigma 1e-7 * 244 = 0.0000244",
+    "note": "N = 244, zeta = 0.5 gives N_up = 183, N_dn = 61; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 40; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 183 and 61 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#111 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_244_P_183_61_50",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.4988136
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 244, row E_VMC, column rs = 50; pypdf plain-mode text line 75 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0143394(3) Ha/el.",
+    "conversion": "-0.0143394 * 244 = -3.4988136; sigma 3e-7 * 244 = 0.0000732",
+    "note": "N = 244, zeta = 0.5 gives N_up = 183, N_dn = 61; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 50; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 183 and 61 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.000180(2) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#112 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_244_P_183_61_50",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -3.5176992
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 244, row E_DMC, column rs = 50; pypdf plain-mode text line 77 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0144168(1) Ha/el.",
+    "conversion": "-0.0144168 * 244 = -3.5176992; sigma 1e-7 * 244 = 0.0000244",
+    "note": "N = 244, zeta = 0.5 gives N_up = 183, N_dn = 61; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 50; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 183 and 61 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#113 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_244_P_183_61_60",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.96948
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 244, row E_VMC, column rs = 60; pypdf plain-mode text line 75 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0121700(3) Ha/el.",
+    "conversion": "-0.0121700 * 244 = -2.96948; sigma 3e-7 * 244 = 0.0000732",
+    "note": "N = 244, zeta = 0.5 gives N_up = 183, N_dn = 61; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 60; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 183 and 61 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.000115(1) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#114 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_244_P_183_61_60",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.98611836
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 244, row E_DMC, column rs = 60; pypdf plain-mode text line 77 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.01223819(8) Ha/el.",
+    "conversion": "-0.01223819 * 244 = -2.98611836; sigma 8e-8 * 244 = 0.00001952",
+    "note": "N = 244, zeta = 0.5 gives N_up = 183, N_dn = 61; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 60; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 183 and 61 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#115 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_244_P_183_61_70",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.5799096
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 244, row E_VMC, column rs = 70; pypdf plain-mode text line 75 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0105734(3) Ha/el.",
+    "conversion": "-0.0105734 * 244 = -2.5799096; sigma 3e-7 * 244 = 0.0000732",
+    "note": "N = 244, zeta = 0.5 gives N_up = 183, N_dn = 61; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 70; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 183 and 61 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.0000884(8) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#116 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_244_P_183_61_70",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.5961356
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 244, row E_DMC, column rs = 70; pypdf plain-mode text line 77 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0106399(1) Ha/el.",
+    "conversion": "-0.0106399 * 244 = -2.5961356; sigma 1e-7 * 244 = 0.0000244",
+    "note": "N = 244, zeta = 0.5 gives N_up = 183, N_dn = 61; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 70; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 183 and 61 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#117 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_244_P_183_61_80",
+      "method": "VMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.283596
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 244, row E_VMC, column rs = 80; pypdf plain-mode text line 75 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0093590(2) Ha/el.",
+    "conversion": "-0.0093590 * 244 = -2.283596; sigma 2e-7 * 244 = 0.0000488",
+    "note": "N = 244, zeta = 0.5 gives N_up = 183, N_dn = 61; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 80; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); SJ VMC: variational is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 183 and 61 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound; sigma_v^2 printed 0.0000584(5) Ha^2 (same column), not stored; it grows about linearly with N, which fits Var of the total local energy, but the paper does not define it",
+    "source_entry": "RP1b-azadi-fcc-III-V#118 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_244_P_183_61_80",
+      "method": "DMC (Slater-Jastrow, fluid, Supplemental Material)",
+      "energy": -2.2978212
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, PDF sha1 d7bb5bc7), pypdf 7.0.1 layout and plain mode, re-extracted by this reader; numbers parsed by node from local text",
+    "location": "SM Table III (zeta = 0.5, SJ), block N = 244, row E_DMC, column rs = 80; pypdf plain-mode text line 77 (layout mode, the earlier reader's file, gives the same cell)",
+    "reported_as": "−0.0094173(1) Ha/el.",
+    "conversion": "-0.0094173 * 244 = -2.2978212; sigma 1e-7 * 244 = 0.0000244",
+    "note": "N = 244, zeta = 0.5 gives N_up = 183, N_dn = 61; fcc simulation cell for fluid phases (main text, Eq. 10 paragraph); rs = 80; twist Gamma per the author's mail of 2026-11-10 (captions say only \"Non-TA\"); fixed-node DMC at finite time step (caption: not extrapolated to zero time step): projected is right; plain and layout pypdf extraction agree cell for cell; no other batch has a row on this instance (data file read 2026-11-10); at Gamma the last shell of 183 and 61 electrons is partly filled (fcc-cell shell closures 1,9,15,27,51,59,65,89,113,137,169,181,229): the occupied plane waves are not stated; this does not change the instance or the bound",
+    "source_entry": "RP1b-azadi-fcc-III-V#119 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_130_P_65_65_100",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -0.993642
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 130, row E_VMC, column rs = 100; layout text line 196",
+    "reported_as": "−0.0076434(2) Ha/el.",
+    "conversion": "-0.0076434 * 130 = -0.993642 Ha (stored -0.993642); sigma 2e-7 * 130 = 0.000026 (stored 0.000026)",
+    "note": "N = 130 (N_up/N_dn = 65/65, zeta = 0 per caption), rs = 100; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_130_P_65_65_100.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#0, RP1c-azadi-fcc-VI-VIII#1 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_130_P_65_65_100",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -0.9982882
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 130, row E_DMC, column rs = 100; layout text line 198",
+    "reported_as": "−0.00767914(4) Ha/el.",
+    "conversion": "-0.00767914 * 130 = -0.9982882 Ha (stored -0.9982882); sigma 4e-8 * 130 = 0.0000052 (stored 0.0000052)",
+    "note": "N = 130 (N_up/N_dn = 65/65, zeta = 0 per caption), rs = 100; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_130_P_65_65_100.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#2 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_130_P_65_65_30",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.937987
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 130, row E_VMC, column rs = 30; layout text line 196",
+    "reported_as": "−0.0225999(8) Ha/el.",
+    "conversion": "-0.0225999 * 130 = -2.937987 Ha (stored -2.937987); sigma 8e-7 * 130 = 0.000104 (stored 0.000104)",
+    "note": "N = 130 (N_up/N_dn = 65/65, zeta = 0 per caption), rs = 30; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_130_P_65_65_30.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#3, RP1c-azadi-fcc-VI-VIII#4 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_130_P_65_65_30",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.945033
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 130, row E_DMC, column rs = 30; layout text line 198",
+    "reported_as": "−0.0226541(1) Ha/el.",
+    "conversion": "-0.0226541 * 130 = -2.945033 Ha (stored -2.945033); sigma 1e-7 * 130 = 0.000013 (stored 0.000013)",
+    "note": "N = 130 (N_up/N_dn = 65/65, zeta = 0 per caption), rs = 30; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_130_P_65_65_30.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#5 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_130_P_65_65_40",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.284958
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 130, row E_VMC, column rs = 40; layout text line 196",
+    "reported_as": "−0.0175766(8) Ha/el.",
+    "conversion": "-0.0175766 * 130 = -2.284958 Ha (stored -2.284958); sigma 8e-7 * 130 = 0.000104 (stored 0.000104)",
+    "note": "N = 130 (N_up/N_dn = 65/65, zeta = 0 per caption), rs = 40; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_130_P_65_65_40.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#6, RP1c-azadi-fcc-VI-VIII#7 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_130_P_65_65_40",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.2918194
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 130, row E_DMC, column rs = 40; layout text line 198",
+    "reported_as": "−0.01762938(7) Ha/el.",
+    "conversion": "-0.01762938 * 130 = -2.2918194 Ha (stored -2.2918194); sigma 7e-8 * 130 = 0.0000091 (stored 0.0000091)",
+    "note": "N = 130 (N_up/N_dn = 65/65, zeta = 0 per caption), rs = 40; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_130_P_65_65_40.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#8 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_130_P_65_65_60",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.588457
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 130, row E_VMC, column rs = 60; layout text line 196",
+    "reported_as": "−0.0122189(4) Ha/el.",
+    "conversion": "-0.0122189 * 130 = -1.588457 Ha (stored -1.588457); sigma 4e-7 * 130 = 0.000052 (stored 0.000052)",
+    "note": "N = 130 (N_up/N_dn = 65/65, zeta = 0 per caption), rs = 60; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_130_P_65_65_60.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#9, RP1c-azadi-fcc-VI-VIII#10 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_130_P_65_65_60",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.5947893
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 130, row E_DMC, column rs = 60; layout text line 198",
+    "reported_as": "−0.01226761(6) Ha/el.",
+    "conversion": "-0.01226761 * 130 = -1.5947893 Ha (stored -1.5947893); sigma 6e-8 * 130 = 0.0000078 (stored 0.0000078)",
+    "note": "N = 130 (N_up/N_dn = 65/65, zeta = 0 per caption), rs = 60; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_130_P_65_65_60.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#11 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_130_P_65_65_80",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.221025
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 130, row E_VMC, column rs = 80; layout text line 196",
+    "reported_as": "−0.0093925(4) Ha/el.",
+    "conversion": "-0.0093925 * 130 = -1.221025 Ha (stored -1.221025); sigma 4e-7 * 130 = 0.000052 (stored 0.000052)",
+    "note": "N = 130 (N_up/N_dn = 65/65, zeta = 0 per caption), rs = 80; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_130_P_65_65_80.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#12, RP1c-azadi-fcc-VI-VIII#13 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_130_P_65_65_80",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.2265942
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 130, row E_DMC, column rs = 80; layout text line 198",
+    "reported_as": "−0.00943534(6) Ha/el.",
+    "conversion": "-0.00943534 * 130 = -1.2265942 Ha (stored -1.2265942); sigma 6e-8 * 130 = 0.0000078 (stored 0.0000078)",
+    "note": "N = 130 (N_up/N_dn = 65/65, zeta = 0 per caption), rs = 80; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_130_P_65_65_80.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#14 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_137_P_137_0_100",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.048461
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 137, row E_VMC, column rs = 100; layout text line 255",
+    "reported_as": "−0.0076530(2) Ha/el.",
+    "conversion": "-0.0076530 * 137 = -1.048461 Ha (stored -1.048461); sigma 2e-7 * 137 = 0.0000274 (stored 0.0000274)",
+    "note": "N = 137 (N_up/N_dn = 137/0, zeta = 1 per caption), rs = 100; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_137_P_137_0_100.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#15, RP1c-azadi-fcc-VI-VIII#16 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_137_P_137_0_100",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.05208191
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 137, row E_DMC, column rs = 100; layout text line 257",
+    "reported_as": "−0.00767943(5) Ha/el.",
+    "conversion": "-0.00767943 * 137 = -1.05208191 Ha (stored -1.05208191); sigma 5e-8 * 137 = 0.00000685 (stored 0.00000685)",
+    "note": "N = 137 (N_up/N_dn = 137/0, zeta = 1 per caption), rs = 100; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_137_P_137_0_100.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#17 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_137_P_137_0_30",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -3.0798011
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 137, row E_VMC, column rs = 30; layout text line 255",
+    "reported_as": "−0.0224803(7) Ha/el.",
+    "conversion": "-0.0224803 * 137 = -3.0798011 Ha (stored -3.0798011); sigma 7e-7 * 137 = 0.0000959 (stored 0.0000959)",
+    "note": "N = 137 (N_up/N_dn = 137/0, zeta = 1 per caption), rs = 30; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_137_P_137_0_30.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#18, RP1c-azadi-fcc-VI-VIII#19 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_137_P_137_0_30",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -3.08451116
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 137, row E_DMC, column rs = 30; layout text line 257",
+    "reported_as": "−0.02251468(9) Ha/el.",
+    "conversion": "-0.02251468 * 137 = -3.08451116 Ha (stored -3.08451116); sigma 9e-8 * 137 = 0.00001233 (stored 0.00001233)",
+    "note": "N = 137 (N_up/N_dn = 137/0, zeta = 1 per caption), rs = 30; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_137_P_137_0_30.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#20 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_137_P_137_0_40",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.4025416
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 137, row E_VMC, column rs = 40; layout text line 255",
+    "reported_as": "−0.0175368(5) Ha/el.",
+    "conversion": "-0.0175368 * 137 = -2.4025416 Ha (stored -2.4025416); sigma 5e-7 * 137 = 0.0000685 (stored 0.0000685)",
+    "note": "N = 137 (N_up/N_dn = 137/0, zeta = 1 per caption), rs = 40; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_137_P_137_0_40.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#21, RP1c-azadi-fcc-VI-VIII#22 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_137_P_137_0_40",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.40767088
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 137, row E_DMC, column rs = 40; layout text line 257",
+    "reported_as": "−0.01757424(6) Ha/el.",
+    "conversion": "-0.01757424 * 137 = -2.40767088 Ha (stored -2.40767088); sigma 6e-8 * 137 = 0.00000822 (stored 0.00000822)",
+    "note": "N = 137 (N_up/N_dn = 137/0, zeta = 1 per caption), rs = 40; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_137_P_137_0_40.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#23 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_137_P_137_0_60",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.6745921
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 137, row E_VMC, column rs = 60; layout text line 255",
+    "reported_as": "−0.0122233(3) Ha/el.",
+    "conversion": "-0.0122233 * 137 = -1.6745921 Ha (stored -1.6745921); sigma 3e-7 * 137 = 0.0000411 (stored 0.0000411)",
+    "note": "N = 137 (N_up/N_dn = 137/0, zeta = 1 per caption), rs = 60; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_137_P_137_0_60.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#24, RP1c-azadi-fcc-VI-VIII#25 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_137_P_137_0_60",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.67911858
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 137, row E_DMC, column rs = 60; layout text line 257",
+    "reported_as": "−0.01225634(5) Ha/el.",
+    "conversion": "-0.01225634 * 137 = -1.67911858 Ha (stored -1.67911858); sigma 5e-8 * 137 = 0.00000685 (stored 0.00000685)",
+    "note": "N = 137 (N_up/N_dn = 137/0, zeta = 1 per caption), rs = 60; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_137_P_137_0_60.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#26 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_137_P_137_0_80",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.2883891
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 137, row E_VMC, column rs = 80; layout text line 255",
+    "reported_as": "−0.0094043(2) Ha/el.",
+    "conversion": "-0.0094043 * 137 = -1.2883891 Ha (stored -1.2883891); sigma 2e-7 * 137 = 0.0000274 (stored 0.0000274)",
+    "note": "N = 137 (N_up/N_dn = 137/0, zeta = 1 per caption), rs = 80; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_137_P_137_0_80.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#27, RP1c-azadi-fcc-VI-VIII#28 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_137_P_137_0_80",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.29233881
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 137, row E_DMC, column rs = 80; layout text line 257",
+    "reported_as": "−0.00943313(4) Ha/el.",
+    "conversion": "-0.00943313 * 137 = -1.29233881 Ha (stored -1.29233881); sigma 4e-8 * 137 = 0.00000548 (stored 0.00000548)",
+    "note": "N = 137 (N_up/N_dn = 137/0, zeta = 1 per caption), rs = 80; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_137_P_137_0_80.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#29 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_140_P_105_35_100",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.069628
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 140, row E_VMC, column rs = 100; layout text line 232",
+    "reported_as": "−0.0076402(2) Ha/el.",
+    "conversion": "-0.0076402 * 140 = -1.069628 Ha (stored -1.069628); sigma 2e-7 * 140 = 0.000028 (stored 0.000028)",
+    "note": "N = 140 (N_up/N_dn = 105/35, zeta = 0.5 per caption), rs = 100; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_140_P_105_35_100.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#30, RP1c-azadi-fcc-VI-VIII#31 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_140_P_105_35_100",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.0751244
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 140, row E_DMC, column rs = 100; layout text line 234",
+    "reported_as": "−0.00767946(6) Ha/el.",
+    "conversion": "-0.00767946 * 140 = -1.0751244 Ha (stored -1.0751244); sigma 6e-8 * 140 = 0.0000084 (stored 0.0000084)",
+    "note": "N = 140 (N_up/N_dn = 105/35, zeta = 0.5 per caption), rs = 100; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_140_P_105_35_100.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#32 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_140_P_105_35_30",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -3.153094
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 140, row E_VMC, column rs = 30; layout text line 232",
+    "reported_as": "−0.0225221(6) Ha/el.",
+    "conversion": "-0.0225221 * 140 = -3.153094 Ha (stored -3.153094); sigma 6e-7 * 140 = 0.000084 (stored 0.000084)",
+    "note": "N = 140 (N_up/N_dn = 105/35, zeta = 0.5 per caption), rs = 30; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_140_P_105_35_30.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#33, RP1c-azadi-fcc-VI-VIII#34 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_140_P_105_35_30",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -3.1672858
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 140, row E_DMC, column rs = 30; layout text line 234",
+    "reported_as": "−0.02262347(5) Ha/el.",
+    "conversion": "-0.02262347 * 140 = -3.1672858 Ha (stored -3.1672858); sigma 5e-8 * 140 = 0.000007 (stored 0.000007)",
+    "note": "N = 140 (N_up/N_dn = 105/35, zeta = 0.5 per caption), rs = 30; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_140_P_105_35_30.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#35 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_140_P_105_35_40",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.455348
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 140, row E_VMC, column rs = 40; layout text line 232",
+    "reported_as": "−0.0175382(4) Ha/el.",
+    "conversion": "-0.0175382 * 140 = -2.455348 Ha (stored -2.455348); sigma 4e-7 * 140 = 0.000056 (stored 0.000056)",
+    "note": "N = 140 (N_up/N_dn = 105/35, zeta = 0.5 per caption), rs = 40; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_140_P_105_35_40.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#36, RP1c-azadi-fcc-VI-VIII#37 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_140_P_105_35_40",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.466695
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 140, row E_DMC, column rs = 40; layout text line 234",
+    "reported_as": "−0.01761925(4) Ha/el.",
+    "conversion": "-0.01761925 * 140 = -2.466695 Ha (stored -2.466695); sigma 4e-8 * 140 = 0.0000056 (stored 0.0000056)",
+    "note": "N = 140 (N_up/N_dn = 105/35, zeta = 0.5 per caption), rs = 40; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_140_P_105_35_40.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#38 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_140_P_105_35_60",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.708882
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 140, row E_VMC, column rs = 60; layout text line 232",
+    "reported_as": "−0.0122063(3) Ha/el.",
+    "conversion": "-0.0122063 * 140 = -1.708882 Ha (stored -1.708882); sigma 3e-7 * 140 = 0.000042 (stored 0.000042)",
+    "note": "N = 140 (N_up/N_dn = 105/35, zeta = 0.5 per caption), rs = 60; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_140_P_105_35_60.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#39, RP1c-azadi-fcc-VI-VIII#40 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_140_P_105_35_60",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.7171924
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 140, row E_DMC, column rs = 60; layout text line 234",
+    "reported_as": "−0.01226566(4) Ha/el.",
+    "conversion": "-0.01226566 * 140 = -1.7171924 Ha (stored -1.7171924); sigma 4e-8 * 140 = 0.0000056 (stored 0.0000056)",
+    "note": "N = 140 (N_up/N_dn = 105/35, zeta = 0.5 per caption), rs = 60; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_140_P_105_35_60.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#41 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_140_P_105_35_80",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.314096
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 140, row E_VMC, column rs = 80; layout text line 232",
+    "reported_as": "−0.0093864(3) Ha/el.",
+    "conversion": "-0.0093864 * 140 = -1.314096 Ha (stored -1.314096); sigma 3e-7 * 140 = 0.000042 (stored 0.000042)",
+    "note": "N = 140 (N_up/N_dn = 105/35, zeta = 0.5 per caption), rs = 80; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_140_P_105_35_80.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#42, RP1c-azadi-fcc-VI-VIII#43 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_140_P_105_35_80",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.3209364
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 140, row E_DMC, column rs = 80; layout text line 234",
+    "reported_as": "−0.00943526(5) Ha/el.",
+    "conversion": "-0.00943526 * 140 = -1.3209364 Ha (stored -1.3209364); sigma 5e-8 * 140 = 0.000007 (stored 0.000007)",
+    "note": "N = 140 (N_up/N_dn = 105/35, zeta = 0.5 per caption), rs = 80; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_140_P_105_35_80.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#44 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_178_P_89_89_100",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.3591368
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 178, row E_VMC, column rs = 100; layout text line 202",
+    "reported_as": "−0.0076356(2) Ha/el.",
+    "conversion": "-0.0076356 * 178 = -1.3591368 Ha (stored -1.3591368); sigma 2e-7 * 178 = 0.0000356 (stored 0.0000356)",
+    "note": "N = 178 (N_up/N_dn = 89/89, zeta = 0 per caption), rs = 100; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_178_P_89_89_100.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#45, RP1c-azadi-fcc-VI-VIII#46 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_178_P_89_89_100",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.36643658
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 178, row E_DMC, column rs = 100; layout text line 204",
+    "reported_as": "−0.00767661(9) Ha/el.",
+    "conversion": "-0.00767661 * 178 = -1.36643658 Ha (stored -1.36643658); sigma 9e-8 * 178 = 0.00001602 (stored 0.00001602)",
+    "note": "N = 178 (N_up/N_dn = 89/89, zeta = 0 per caption), rs = 100; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_178_P_89_89_100.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#47 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_178_P_89_89_30",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -4.0121912
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 178, row E_VMC, column rs = 30; layout text line 202",
+    "reported_as": "−0.0225404(4) Ha/el.",
+    "conversion": "-0.0225404 * 178 = -4.0121912 Ha (stored -4.0121912); sigma 4e-7 * 178 = 0.0000712 (stored 0.0000712)",
+    "note": "N = 178 (N_up/N_dn = 89/89, zeta = 0 per caption), rs = 30; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_178_P_89_89_30.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#48, RP1c-azadi-fcc-VI-VIII#49 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_178_P_89_89_30",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -4.0310058
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 178, row E_DMC, column rs = 30; layout text line 204",
+    "reported_as": "−0.0226461(1) Ha/el.",
+    "conversion": "-0.0226461 * 178 = -4.0310058 Ha (stored -4.0310058); sigma 1e-7 * 178 = 0.0000178 (stored 0.0000178)",
+    "note": "N = 178 (N_up/N_dn = 89/89, zeta = 0 per caption), rs = 30; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_178_P_89_89_30.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#50 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_178_P_89_89_40",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -3.122921
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 178, row E_VMC, column rs = 40; layout text line 202",
+    "reported_as": "−0.0175445(6) Ha/el.",
+    "conversion": "-0.0175445 * 178 = -3.122921 Ha (stored -3.122921); sigma 6e-7 * 178 = 0.0001068 (stored 0.0001068)",
+    "note": "N = 178 (N_up/N_dn = 89/89, zeta = 0 per caption), rs = 40; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_178_P_89_89_40.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#51, RP1c-azadi-fcc-VI-VIII#52 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_178_P_89_89_40",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -3.13740842
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 178, row E_DMC, column rs = 40; layout text line 204",
+    "reported_as": "−0.01762589(7) Ha/el.",
+    "conversion": "-0.01762589 * 178 = -3.13740842 Ha (stored -3.13740842); sigma 7e-8 * 178 = 0.00001246 (stored 0.00001246)",
+    "note": "N = 178 (N_up/N_dn = 89/89, zeta = 0 per caption), rs = 40; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_178_P_89_89_40.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#53 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_178_P_89_89_60",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.1727214
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 178, row E_VMC, column rs = 60; layout text line 202",
+    "reported_as": "−0.0122063(5) Ha/el.",
+    "conversion": "-0.0122063 * 178 = -2.1727214 Ha (stored -2.1727214); sigma 5e-7 * 178 = 0.000089 (stored 0.000089)",
+    "note": "N = 178 (N_up/N_dn = 89/89, zeta = 0 per caption), rs = 60; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_178_P_89_89_60.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#54, RP1c-azadi-fcc-VI-VIII#55 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_178_P_89_89_60",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.18313262
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 178, row E_DMC, column rs = 60; layout text line 204",
+    "reported_as": "−0.01226479(7) Ha/el.",
+    "conversion": "-0.01226479 * 178 = -2.18313262 Ha (stored -2.18313262); sigma 7e-8 * 178 = 0.00001246 (stored 0.00001246)",
+    "note": "N = 178 (N_up/N_dn = 89/89, zeta = 0 per caption), rs = 60; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_178_P_89_89_60.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#56 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_178_P_89_89_80",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.6700316
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 178, row E_VMC, column rs = 80; layout text line 202",
+    "reported_as": "−0.0093822(3) Ha/el.",
+    "conversion": "-0.0093822 * 178 = -1.6700316 Ha (stored -1.6700316); sigma 3e-7 * 178 = 0.0000534 (stored 0.0000534)",
+    "note": "N = 178 (N_up/N_dn = 89/89, zeta = 0 per caption), rs = 80; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_178_P_89_89_80.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#57, RP1c-azadi-fcc-VI-VIII#58 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_178_P_89_89_80",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.67905086
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 178, row E_DMC, column rs = 80; layout text line 204",
+    "reported_as": "−0.00943287(9) Ha/el.",
+    "conversion": "-0.00943287 * 178 = -1.67905086 Ha (stored -1.67905086); sigma 9e-8 * 178 = 0.00001602 (stored 0.00001602)",
+    "note": "N = 178 (N_up/N_dn = 89/89, zeta = 0 per caption), rs = 80; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_178_P_89_89_80.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#59 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_181_P_181_0_100",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.3848672
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 181, row E_VMC, column rs = 100; layout text line 261",
+    "reported_as": "−0.0076512(2) Ha/el.",
+    "conversion": "-0.0076512 * 181 = -1.3848672 Ha (stored -1.3848672); sigma 2e-7 * 181 = 0.0000362 (stored 0.0000362)",
+    "note": "N = 181 (N_up/N_dn = 181/0, zeta = 1 per caption), rs = 100; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_181_P_181_0_100.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#60, RP1c-azadi-fcc-VI-VIII#61 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_181_P_181_0_100",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.389718
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 181, row E_DMC, column rs = 100; layout text line 263",
+    "reported_as": "−0.0076780(1) Ha/el.",
+    "conversion": "-0.0076780 * 181 = -1.389718 Ha (stored -1.389718); sigma 1e-7 * 181 = 0.0000181 (stored 0.0000181)",
+    "note": "N = 181 (N_up/N_dn = 181/0, zeta = 1 per caption), rs = 100; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_181_P_181_0_100.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#62 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_181_P_181_0_30",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -4.0677216
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 181, row E_VMC, column rs = 30; layout text line 261",
+    "reported_as": "−0.0224736(4) Ha/el.",
+    "conversion": "-0.0224736 * 181 = -4.0677216 Ha (stored -4.0677216); sigma 4e-7 * 181 = 0.0000724 (stored 0.0000724)",
+    "note": "N = 181 (N_up/N_dn = 181/0, zeta = 1 per caption), rs = 30; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_181_P_181_0_30.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#63, RP1c-azadi-fcc-VI-VIII#64 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_181_P_181_0_30",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -4.0736946
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 181, row E_DMC, column rs = 30; layout text line 263",
+    "reported_as": "−0.0225066(1) Ha/el.",
+    "conversion": "-0.0225066 * 181 = -4.0736946 Ha (stored -4.0736946); sigma 1e-7 * 181 = 0.0000181 (stored 0.0000181)",
+    "note": "N = 181 (N_up/N_dn = 181/0, zeta = 1 per caption), rs = 30; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_181_P_181_0_30.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#65 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_181_P_181_0_40",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -3.1739074
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 181, row E_VMC, column rs = 40; layout text line 261",
+    "reported_as": "−0.0175354(4) Ha/el.",
+    "conversion": "-0.0175354 * 181 = -3.1739074 Ha (stored -3.1739074); sigma 4e-7 * 181 = 0.0000724 (stored 0.0000724)",
+    "note": "N = 181 (N_up/N_dn = 181/0, zeta = 1 per caption), rs = 40; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_181_P_181_0_40.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#66, RP1c-azadi-fcc-VI-VIII#67 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_181_P_181_0_40",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -3.18013923
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 181, row E_DMC, column rs = 40; layout text line 263",
+    "reported_as": "−0.01756983(5) Ha/el.",
+    "conversion": "-0.01756983 * 181 = -3.18013923 Ha (stored -3.18013923); sigma 5e-8 * 181 = 0.00000905 (stored 0.00000905)",
+    "note": "N = 181 (N_up/N_dn = 181/0, zeta = 1 per caption), rs = 40; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_181_P_181_0_40.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#68 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_181_P_181_0_60",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.211458
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 181, row E_VMC, column rs = 60; layout text line 261",
+    "reported_as": "−0.0122180(3) Ha/el.",
+    "conversion": "-0.0122180 * 181 = -2.211458 Ha (stored -2.211458); sigma 3e-7 * 181 = 0.0000543 (stored 0.0000543)",
+    "note": "N = 181 (N_up/N_dn = 181/0, zeta = 1 per caption), rs = 60; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_181_P_181_0_60.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#69, RP1c-azadi-fcc-VI-VIII#70 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_181_P_181_0_60",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.21763372
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 181, row E_DMC, column rs = 60; layout text line 263",
+    "reported_as": "−0.01225212(6) Ha/el.",
+    "conversion": "-0.01225212 * 181 = -2.21763372 Ha (stored -2.21763372); sigma 6e-8 * 181 = 0.00001086 (stored 0.00001086)",
+    "note": "N = 181 (N_up/N_dn = 181/0, zeta = 1 per caption), rs = 60; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_181_P_181_0_60.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#71 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_181_P_181_0_80",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.7016172
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 181, row E_VMC, column rs = 80; layout text line 261",
+    "reported_as": "−0.0094012(2) Ha/el.",
+    "conversion": "-0.0094012 * 181 = -1.7016172 Ha (stored -1.7016172); sigma 2e-7 * 181 = 0.0000362 (stored 0.0000362)",
+    "note": "N = 181 (N_up/N_dn = 181/0, zeta = 1 per caption), rs = 80; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_181_P_181_0_80.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#72, RP1c-azadi-fcc-VI-VIII#73 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_181_P_181_0_80",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.70701281
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 181, row E_DMC, column rs = 80; layout text line 263",
+    "reported_as": "−0.00943101(6) Ha/el.",
+    "conversion": "-0.00943101 * 181 = -1.70701281 Ha (stored -1.70701281); sigma 6e-8 * 181 = 0.00001086 (stored 0.00001086)",
+    "note": "N = 181 (N_up/N_dn = 181/0, zeta = 1 per caption), rs = 80; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_181_P_181_0_80.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#74 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_188_P_141_47_100",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.436508
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 188, row E_VMC, column rs = 100; layout text line 238",
+    "reported_as": "−0.0076410(1) Ha/el.",
+    "conversion": "-0.0076410 * 188 = -1.436508 Ha (stored -1.436508); sigma 1e-7 * 188 = 0.0000188 (stored 0.0000188)",
+    "note": "N = 188 (N_up/N_dn = 141/47, zeta = 0.5 per caption), rs = 100; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_188_P_141_47_100.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#75, RP1c-azadi-fcc-VI-VIII#76 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_188_P_141_47_100",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.44328352
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 188, row E_DMC, column rs = 100; layout text line 240",
+    "reported_as": "−0.00767704(8) Ha/el.",
+    "conversion": "-0.00767704 * 188 = -1.44328352 Ha (stored -1.44328352); sigma 8e-8 * 188 = 0.00001504 (stored 0.00001504)",
+    "note": "N = 188 (N_up/N_dn = 141/47, zeta = 0.5 per caption), rs = 100; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_188_P_141_47_100.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#77 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_188_P_141_47_30",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -4.2371628
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 188, row E_VMC, column rs = 30; layout text line 238",
+    "reported_as": "−0.0225381(5) Ha/el.",
+    "conversion": "-0.0225381 * 188 = -4.2371628 Ha (stored -4.2371628); sigma 5e-7 * 188 = 0.000094 (stored 0.000094)",
+    "note": "N = 188 (N_up/N_dn = 141/47, zeta = 0.5 per caption), rs = 30; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_188_P_141_47_30.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#78, RP1c-azadi-fcc-VI-VIII#79 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_188_P_141_47_30",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -4.2513944
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 188, row E_DMC, column rs = 30; layout text line 240",
+    "reported_as": "−0.0226138(1) Ha/el.",
+    "conversion": "-0.0226138 * 188 = -4.2513944 Ha (stored -4.2513944); sigma 1e-7 * 188 = 0.0000188 (stored 0.0000188)",
+    "note": "N = 188 (N_up/N_dn = 141/47, zeta = 0.5 per caption), rs = 30; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_188_P_141_47_30.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#80 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_188_P_141_47_40",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -3.2997384
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 188, row E_VMC, column rs = 40; layout text line 238",
+    "reported_as": "−0.0175518(5) Ha/el.",
+    "conversion": "-0.0175518 * 188 = -3.2997384 Ha (stored -3.2997384); sigma 5e-7 * 188 = 0.000094 (stored 0.000094)",
+    "note": "N = 188 (N_up/N_dn = 141/47, zeta = 0.5 per caption), rs = 40; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_188_P_141_47_40.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#81, RP1c-azadi-fcc-VI-VIII#82 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_188_P_141_47_40",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -3.31140568
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 188, row E_DMC, column rs = 40; layout text line 240",
+    "reported_as": "−0.01761386(6) Ha/el.",
+    "conversion": "-0.01761386 * 188 = -3.31140568 Ha (stored -3.31140568); sigma 6e-8 * 188 = 0.00001128 (stored 0.00001128)",
+    "note": "N = 188 (N_up/N_dn = 141/47, zeta = 0.5 per caption), rs = 40; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_188_P_141_47_40.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#83 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_188_P_141_47_60",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.2946152
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 188, row E_VMC, column rs = 60; layout text line 238",
+    "reported_as": "−0.0122054(2) Ha/el.",
+    "conversion": "-0.0122054 * 188 = -2.2946152 Ha (stored -2.2946152); sigma 2e-7 * 188 = 0.0000376 (stored 0.0000376)",
+    "note": "N = 188 (N_up/N_dn = 141/47, zeta = 0.5 per caption), rs = 60; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_188_P_141_47_60.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#84, RP1c-azadi-fcc-VI-VIII#85 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_188_P_141_47_60",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.30516952
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 188, row E_DMC, column rs = 60; layout text line 240",
+    "reported_as": "−0.01226154(7) Ha/el.",
+    "conversion": "-0.01226154 * 188 = -2.30516952 Ha (stored -2.30516952); sigma 7e-8 * 188 = 0.00001316 (stored 0.00001316)",
+    "note": "N = 188 (N_up/N_dn = 141/47, zeta = 0.5 per caption), rs = 60; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_188_P_141_47_60.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#86 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_188_P_141_47_80",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.7639852
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 188, row E_VMC, column rs = 80; layout text line 238",
+    "reported_as": "−0.0093829(2) Ha/el.",
+    "conversion": "-0.0093829 * 188 = -1.7639852 Ha (stored -1.7639852); sigma 2e-7 * 188 = 0.0000376 (stored 0.0000376)",
+    "note": "N = 188 (N_up/N_dn = 141/47, zeta = 0.5 per caption), rs = 80; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_188_P_141_47_80.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#87, RP1c-azadi-fcc-VI-VIII#88 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_188_P_141_47_80",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.77310508
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 188, row E_DMC, column rs = 80; layout text line 240",
+    "reported_as": "−0.00943141(9) Ha/el.",
+    "conversion": "-0.00943141 * 188 = -1.77310508 Ha (stored -1.77310508); sigma 9e-8 * 188 = 0.00001692 (stored 0.00001692)",
+    "note": "N = 188 (N_up/N_dn = 141/47, zeta = 0.5 per caption), rs = 80; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_188_P_141_47_80.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#89 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_226_P_113_113_100",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.726075
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 226, row E_VMC, column rs = 100; layout text line 208",
+    "reported_as": "−0.0076375(1) Ha/el.",
+    "conversion": "-0.0076375 * 226 = -1.726075 Ha (stored -1.726075); sigma 1e-7 * 226 = 0.0000226 (stored 0.0000226)",
+    "note": "N = 226 (N_up/N_dn = 113/113, zeta = 0 per caption), rs = 100; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_226_P_113_113_100.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#90, RP1c-azadi-fcc-VI-VIII#91 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_226_P_113_113_100",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.734663
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 226, row E_DMC, column rs = 100; layout text line 210",
+    "reported_as": "−0.0076755(1) Ha/el.",
+    "conversion": "-0.0076755 * 226 = -1.734663 Ha (stored -1.734663); sigma 1e-7 * 226 = 0.0000226 (stored 0.0000226)",
+    "note": "N = 226 (N_up/N_dn = 113/113, zeta = 0 per caption), rs = 100; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_226_P_113_113_100.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#92 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_226_P_113_113_30",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -5.0970006
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 226, row E_VMC, column rs = 30; layout text line 208",
+    "reported_as": "−0.0225531(4) Ha/el.",
+    "conversion": "-0.0225531 * 226 = -5.0970006 Ha (stored -5.0970006); sigma 4e-7 * 226 = 0.0000904 (stored 0.0000904)",
+    "note": "N = 226 (N_up/N_dn = 113/113, zeta = 0 per caption), rs = 30; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_226_P_113_113_30.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#93, RP1c-azadi-fcc-VI-VIII#94 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_226_P_113_113_30",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -5.1156908
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 226, row E_DMC, column rs = 30; layout text line 210",
+    "reported_as": "−0.0226358(1) Ha/el.",
+    "conversion": "-0.0226358 * 226 = -5.1156908 Ha (stored -5.1156908); sigma 1e-7 * 226 = 0.0000226 (stored 0.0000226)",
+    "note": "N = 226 (N_up/N_dn = 113/113, zeta = 0 per caption), rs = 30; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_226_P_113_113_30.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#95 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_226_P_113_113_40",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -3.9673848
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 226, row E_VMC, column rs = 40; layout text line 208",
+    "reported_as": "−0.0175548(6) Ha/el.",
+    "conversion": "-0.0175548 * 226 = -3.9673848 Ha (stored -3.9673848); sigma 6e-7 * 226 = 0.0001356 (stored 0.0001356)",
+    "note": "N = 226 (N_up/N_dn = 113/113, zeta = 0 per caption), rs = 40; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_226_P_113_113_40.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#96, RP1c-azadi-fcc-VI-VIII#97 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_226_P_113_113_40",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -3.98231888
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 226, row E_DMC, column rs = 40; layout text line 210",
+    "reported_as": "−0.01762088(9) Ha/el.",
+    "conversion": "-0.01762088 * 226 = -3.98231888 Ha (stored -3.98231888); sigma 9e-8 * 226 = 0.00002034 (stored 0.00002034)",
+    "note": "N = 226 (N_up/N_dn = 113/113, zeta = 0 per caption), rs = 40; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_226_P_113_113_40.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#98 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_226_P_113_113_60",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.7584656
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 226, row E_VMC, column rs = 60; layout text line 208",
+    "reported_as": "−0.0122056(4) Ha/el.",
+    "conversion": "-0.0122056 * 226 = -2.7584656 Ha (stored -2.7584656); sigma 4e-7 * 226 = 0.0000904 (stored 0.0000904)",
+    "note": "N = 226 (N_up/N_dn = 113/113, zeta = 0 per caption), rs = 60; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_226_P_113_113_60.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#99, RP1c-azadi-fcc-VI-VIII#100 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_226_P_113_113_60",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.7709408
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 226, row E_DMC, column rs = 60; layout text line 210",
+    "reported_as": "−0.0122608(1) Ha/el.",
+    "conversion": "-0.0122608 * 226 = -2.7709408 Ha (stored -2.7709408); sigma 1e-7 * 226 = 0.0000226 (stored 0.0000226)",
+    "note": "N = 226 (N_up/N_dn = 113/113, zeta = 0 per caption), rs = 60; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_226_P_113_113_60.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#101 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_226_P_113_113_80",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.1212812
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 226, row E_VMC, column rs = 80; layout text line 208",
+    "reported_as": "−0.0093862(2) Ha/el.",
+    "conversion": "-0.0093862 * 226 = -2.1212812 Ha (stored -2.1212812); sigma 2e-7 * 226 = 0.0000452 (stored 0.0000452)",
+    "note": "N = 226 (N_up/N_dn = 113/113, zeta = 0 per caption), rs = 80; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_226_P_113_113_80.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#102, RP1c-azadi-fcc-VI-VIII#103 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_226_P_113_113_80",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.1313382
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VI (zeta = 0.0, SJB), block N = 226, row E_DMC, column rs = 80; layout text line 210",
+    "reported_as": "−0.0094307(1) Ha/el.",
+    "conversion": "-0.0094307 * 226 = -2.1313382 Ha (stored -2.1313382); sigma 1e-7 * 226 = 0.0000226 (stored 0.0000226)",
+    "note": "N = 226 (N_up/N_dn = 113/113, zeta = 0 per caption), rs = 80; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_226_P_113_113_80.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#104 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_229_P_229_0_100",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.7502012
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 229, row E_VMC, column rs = 100; layout text line 267",
+    "reported_as": "−0.0076428(2) Ha/el.",
+    "conversion": "-0.0076428 * 229 = -1.7502012 Ha (stored -1.7502012); sigma 2e-7 * 229 = 0.0000458 (stored 0.0000458)",
+    "note": "N = 229 (N_up/N_dn = 229/0, zeta = 1 per caption), rs = 100; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_229_P_229_0_100.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#105, RP1c-azadi-fcc-VI-VIII#106 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_229_P_229_0_100",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.7578498
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 229, row E_DMC, column rs = 100; layout text line 269",
+    "reported_as": "−0.0076762(1) Ha/el.",
+    "conversion": "-0.0076762 * 229 = -1.7578498 Ha (stored -1.7578498); sigma 1e-7 * 229 = 0.0000229 (stored 0.0000229)",
+    "note": "N = 229 (N_up/N_dn = 229/0, zeta = 1 per caption), rs = 100; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_229_P_229_0_100.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#107 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_229_P_229_0_30",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -5.1335846
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 229, row E_VMC, column rs = 30; layout text line 267",
+    "reported_as": "−0.0224174(4) Ha/el.",
+    "conversion": "-0.0224174 * 229 = -5.1335846 Ha (stored -5.1335846); sigma 4e-7 * 229 = 0.0000916 (stored 0.0000916)",
+    "note": "N = 229 (N_up/N_dn = 229/0, zeta = 1 per caption), rs = 30; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_229_P_229_0_30.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#108, RP1c-azadi-fcc-VI-VIII#109 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_229_P_229_0_30",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -5.15269694
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 229, row E_DMC, column rs = 30; layout text line 269",
+    "reported_as": "−0.02250086(8) Ha/el.",
+    "conversion": "-0.02250086 * 229 = -5.15269694 Ha (stored -5.15269694); sigma 8e-8 * 229 = 0.00001832 (stored 0.00001832)",
+    "note": "N = 229 (N_up/N_dn = 229/0, zeta = 1 per caption), rs = 30; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_229_P_229_0_30.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#110 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_229_P_229_0_40",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -4.0076832
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 229, row E_VMC, column rs = 40; layout text line 267",
+    "reported_as": "−0.0175008(3) Ha/el.",
+    "conversion": "-0.0175008 * 229 = -4.0076832 Ha (stored -4.0076832); sigma 3e-7 * 229 = 0.0000687 (stored 0.0000687)",
+    "note": "N = 229 (N_up/N_dn = 229/0, zeta = 1 per caption), rs = 40; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_229_P_229_0_40.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#111, RP1c-azadi-fcc-VI-VIII#112 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_229_P_229_0_40",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -4.0225682
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 229, row E_DMC, column rs = 40; layout text line 269",
+    "reported_as": "−0.01756580(1) Ha/el.",
+    "conversion": "-0.01756580 * 229 = -4.0225682 Ha (stored -4.0225682); sigma 1e-8 * 229 = 0.00000229 (stored 0.00000229)",
+    "note": "N = 229 (N_up/N_dn = 229/0, zeta = 1 per caption), rs = 40; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_229_P_229_0_40.json: the other rows are the SJ Tables I/III/V values). The printed bar (1) at the 8th decimal (1e-8 Ha/el.) is 8-20x smaller than its neighbours in the same row of Table VIII ((8)e-8, (1)e-7, (1)e-7, (1)e-7) and may be a print slip for -0.0175658(1); transcribed as printed (ruling 2026-10-20: implausible but correctly transcribed values stay with a note).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#113 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_229_P_229_0_60",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.794029
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 229, row E_VMC, column rs = 60; layout text line 267",
+    "reported_as": "−0.0122010(3) Ha/el.",
+    "conversion": "-0.0122010 * 229 = -2.794029 Ha (stored -2.794029); sigma 3e-7 * 229 = 0.0000687 (stored 0.0000687)",
+    "note": "N = 229 (N_up/N_dn = 229/0, zeta = 1 per caption), rs = 60; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_229_P_229_0_60.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#114, RP1c-azadi-fcc-VI-VIII#115 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_229_P_229_0_60",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.8052271
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 229, row E_DMC, column rs = 60; layout text line 269",
+    "reported_as": "−0.0122499(1) Ha/el.",
+    "conversion": "-0.0122499 * 229 = -2.8052271 Ha (stored -2.8052271); sigma 1e-7 * 229 = 0.0000229 (stored 0.0000229)",
+    "note": "N = 229 (N_up/N_dn = 229/0, zeta = 1 per caption), rs = 60; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_229_P_229_0_60.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#116 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_229_P_229_0_80",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.1502871
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 229, row E_VMC, column rs = 80; layout text line 267",
+    "reported_as": "−0.0093899(1) Ha/el.",
+    "conversion": "-0.0093899 * 229 = -2.1502871 Ha (stored -2.1502871); sigma 1e-7 * 229 = 0.0000229 (stored 0.0000229)",
+    "note": "N = 229 (N_up/N_dn = 229/0, zeta = 1 per caption), rs = 80; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_229_P_229_0_80.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#117, RP1c-azadi-fcc-VI-VIII#118 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_229_P_229_0_80",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.1593326
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VIII (zeta = 1.0, SJB), block N = 229, row E_DMC, column rs = 80; layout text line 269",
+    "reported_as": "−0.0094294(1) Ha/el.",
+    "conversion": "-0.0094294 * 229 = -2.1593326 Ha (stored -2.1593326); sigma 1e-7 * 229 = 0.0000229 (stored 0.0000229)",
+    "note": "N = 229 (N_up/N_dn = 229/0, zeta = 1 per caption), rs = 80; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_229_P_229_0_80.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#119 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_244_P_183_61_100",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.86416
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 244, row E_VMC, column rs = 100; layout text line 244",
+    "reported_as": "−0.0076400(1) Ha/el.",
+    "conversion": "-0.0076400 * 244 = -1.86416 Ha (stored -1.86416); sigma 1e-7 * 244 = 0.0000244 (stored 0.0000244)",
+    "note": "N = 244 (N_up/N_dn = 183/61, zeta = 0.5 per caption), rs = 100; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_244_P_183_61_100.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#120, RP1c-azadi-fcc-VI-VIII#121 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_244_P_183_61_100",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -1.8727976
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 244, row E_DMC, column rs = 100; layout text line 246",
+    "reported_as": "−0.0076754(1) Ha/el.",
+    "conversion": "-0.0076754 * 244 = -1.8727976 Ha (stored -1.8727976); sigma 1e-7 * 244 = 0.0000244 (stored 0.0000244)",
+    "note": "N = 244 (N_up/N_dn = 183/61, zeta = 0.5 per caption), rs = 100; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_244_P_183_61_100.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#122 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_244_P_183_61_30",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -5.4990036
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 244, row E_VMC, column rs = 30; layout text line 244",
+    "reported_as": "−0.0225369(5) Ha/el.",
+    "conversion": "-0.0225369 * 244 = -5.4990036 Ha (stored -5.4990036); sigma 5e-7 * 244 = 0.000122 (stored 0.000122)",
+    "note": "N = 244 (N_up/N_dn = 183/61, zeta = 0.5 per caption), rs = 30; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_244_P_183_61_30.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#123, RP1c-azadi-fcc-VI-VIII#124 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_244_P_183_61_30",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -5.5162788
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 244, row E_DMC, column rs = 30; layout text line 246",
+    "reported_as": "−0.0226077(1) Ha/el.",
+    "conversion": "-0.0226077 * 244 = -5.5162788 Ha (stored -5.5162788); sigma 1e-7 * 244 = 0.0000244 (stored 0.0000244)",
+    "note": "N = 244 (N_up/N_dn = 183/61, zeta = 0.5 per caption), rs = 30; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_244_P_183_61_30.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#125 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_244_P_183_61_40",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -4.2789304
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 244, row E_VMC, column rs = 40; layout text line 244",
+    "reported_as": "−0.0175366(6) Ha/el.",
+    "conversion": "-0.0175366 * 244 = -4.2789304 Ha (stored -4.2789304); sigma 6e-7 * 244 = 0.0001464 (stored 0.0001464)",
+    "note": "N = 244 (N_up/N_dn = 183/61, zeta = 0.5 per caption), rs = 40; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_244_P_183_61_40.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#126, RP1c-azadi-fcc-VI-VIII#127 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_244_P_183_61_40",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -4.2965472
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 244, row E_DMC, column rs = 40; layout text line 246",
+    "reported_as": "−0.0176088(1) Ha/el.",
+    "conversion": "-0.0176088 * 244 = -4.2965472 Ha (stored -4.2965472); sigma 1e-7 * 244 = 0.0000244 (stored 0.0000244)",
+    "note": "N = 244 (N_up/N_dn = 183/61, zeta = 0.5 per caption), rs = 40; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_244_P_183_61_40.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#128 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_244_P_183_61_60",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.977288
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 244, row E_VMC, column rs = 60; layout text line 244",
+    "reported_as": "−0.0122020(4) Ha/el.",
+    "conversion": "-0.0122020 * 244 = -2.977288 Ha (stored -2.977288); sigma 4e-7 * 244 = 0.0000976 (stored 0.0000976)",
+    "note": "N = 244 (N_up/N_dn = 183/61, zeta = 0.5 per caption), rs = 60; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_244_P_183_61_60.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#129, RP1c-azadi-fcc-VI-VIII#130 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_244_P_183_61_60",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.991074
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 244, row E_DMC, column rs = 60; layout text line 246",
+    "reported_as": "−0.0122585(1) Ha/el.",
+    "conversion": "-0.0122585 * 244 = -2.991074 Ha (stored -2.991074); sigma 1e-7 * 244 = 0.0000244 (stored 0.0000244)",
+    "note": "N = 244 (N_up/N_dn = 183/61, zeta = 0.5 per caption), rs = 60; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_244_P_183_61_60.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#131 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_244_P_183_61_80",
+      "method": "VMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.2890372
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 244, row E_VMC, column rs = 80; layout text line 244",
+    "reported_as": "−0.0093813(3) Ha/el.",
+    "conversion": "-0.0093813 * 244 = -2.2890372 Ha (stored -2.2890372); sigma 3e-7 * 244 = 0.0000732 (stored 0.0000732)",
+    "note": "N = 244 (N_up/N_dn = 183/61, zeta = 0.5 per caption), rs = 80; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type variational agrees (SJB-VMC, an upper bound); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_244_P_183_61_80.json: the other rows are the SJ Tables I/III/V values). Variance: the printed sigma_v^2 is stored as the total Var(H) (ruled 2026-11-10).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#132, RP1c-azadi-fcc-VI-VIII#133 (ambiguous) (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/fcc_244_P_183_61_80",
+      "method": "DMC (Slater-Jastrow-backflow, fluid, Supplemental Material)",
+      "energy": -2.3008712
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "PRB 105, 245135 Supplemental Material (publisher file, pdfTeX, dated May 25, 2022; 6 pages), copy at qmbl-verify-2026-11-10b/sources/azadi-sm-rp1c/SupplMat.pdf; read in pypdf layout mode (SupplMat.layout.txt) and plain mode (SupplMat.plain.txt), both agree on every cell; main text arXiv:2201.08743v3 (qmbl/sources/2201.08743.pdf, 15 pages, 16 Jun 2022) for the cell and method",
+    "location": "SM Table VII (zeta = 0.5, SJB), block N = 244, row E_DMC, column rs = 80; layout text line 246",
+    "reported_as": "−0.0094298(1) Ha/el.",
+    "conversion": "-0.0094298 * 244 = -2.3008712 Ha (stored -2.3008712); sigma 1e-7 * 244 = 0.0000244 (stored 0.0000244)",
+    "note": "N = 244 (N_up/N_dn = 183/61, zeta = 0.5 per caption), rs = 80; fcc simulation cell for fluids (main text v3 Appendix D bullet list, txt lines 780-782: \"We used face centered cubic (fcc) simulation cells for our fluid calculations\"; Eq. (10): \"C3D = 5.083 in a face-centered cubic simulation cell (for fluid phases)\"); Gamma twist per caption \"Non-TA\" plus the author's mail of 2026-11-10 (not read by this reader; taken from the task statement); Ewald interaction; own computation (CASINO SJB); bound_type projected agrees (fixed-node DMC with SJB trial state; caption: \"The DMC energies were not extrapolated to zero time step\", so a finite-time-step projection, not an extrapolation); peer reviewed (PRB SM). No other row on the instance carries this number (checked data/HEG3D/fcc_244_P_183_61_80.json: the other rows are the SJ Tables I/III/V values).",
+    "source_entry": "RP1c-azadi-fcc-VI-VIII#134 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_114_P_57_57_0.5",
+      "method": "CCD (3071 plane waves, data release of arXiv:2403.04645)",
+      "energy": 397.397593992
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "github.com/butler-julie/HEG-SRE raw_data/<rs>/<N>.csv fetched 2026-11-10 (sources/rp2-dl/butler-*.csv), byte-identical to qmbl sources/2403.04645-repo-raw_data-*.csv; arXiv:2403.04645v3 text (sources/2403.04645.txt) for the Hamiltonian; J. Chem. Phys. 161, 134108 not reachable (pubs.aip.org HTTP 403, Cloudflare); E_HF recomputed independently (own Python plane-wave HF + Ewald Madelung, sc cell, Gamma; Madelung constant -2.8372974795/L)",
+    "location": "raw_data/rs_0_5/N_114.csv, last line (num states = 6 70), column cc",
+    "reported_as": "E_c = -7.211653882636627 (Hartree, total)",
+    "conversion": "114 x 3.5492039287236 + (-7.211653882636627) = 397.397593992; stored 397.397593992 (diff -1.5e-10)",
+    "note": "Eq. (5) of the paper: H = -1/2 sum nabla^2 + 1/2 sum v_ab + 1/2 N v_M (Madelung included), plane waves, periodic, closed shells (magic numbers); CSV columns 'num states cc mbpt': num = occupied shells per spin, states = shells in the basis, cc = Delta E_CCD total (paper Fig. 2 plots Delta E_CCD,6142/N). 70 shells = 3071 plane waves = 6142 spin orbitals (own enumeration of |n|^2 <= 81), the largest basis in every file and the paper's M = 6,142. bound_type projected (finite-basis CC, RULES 12.4) and largest basis per method (RULES 12.3) hold. No other row on the instance repeats this number.",
+    "source_entry": "RP2-heg3d-hubbard-tv-heisenberg#0 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.1",
+      "method": "CCD (3071 plane waves, data release of arXiv:2403.04645)",
+      "energy": 1496.60210067
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "github.com/butler-julie/HEG-SRE raw_data/<rs>/<N>.csv fetched 2026-11-10 (sources/rp2-dl/butler-*.csv), byte-identical to qmbl sources/2403.04645-repo-raw_data-*.csv; arXiv:2403.04645v3 text (sources/2403.04645.txt) for the Hamiltonian; J. Chem. Phys. 161, 134108 not reachable (pubs.aip.org HTTP 403, Cloudflare); E_HF recomputed independently (own Python plane-wave HF + Ewald Madelung, sc cell, Gamma; Madelung constant -2.8372974795/L)",
+    "location": "raw_data/rs_0_1/N_14.csv, last line (num states = 2 70), column cc",
+    "reported_as": "E_c = -0.66291872974793176 (Hartree, total)",
+    "conversion": "14 x 106.9475013861323 + (-0.66291872974793176) = 1496.602100676; stored 1496.60210067 (diff 6.1e-09)",
+    "note": "Eq. (5) of the paper: H = -1/2 sum nabla^2 + 1/2 sum v_ab + 1/2 N v_M (Madelung included), plane waves, periodic, closed shells (magic numbers); CSV columns 'num states cc mbpt': num = occupied shells per spin, states = shells in the basis, cc = Delta E_CCD total (paper Fig. 2 plots Delta E_CCD,6142/N). 70 shells = 3071 plane waves = 6142 spin orbitals (own enumeration of |n|^2 <= 81), the largest basis in every file and the paper's M = 6,142. bound_type projected (finite-basis CC, RULES 12.4) and largest basis per method (RULES 12.3) hold. No other row on the instance repeats this number.",
+    "source_entry": "RP2-heg3d-hubbard-tv-heisenberg#1 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "CCD (3071 plane waves, data release of arXiv:2403.04645)",
+      "energy": 47.7806796286
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "github.com/butler-julie/HEG-SRE raw_data/<rs>/<N>.csv fetched 2026-11-10 (sources/rp2-dl/butler-*.csv), byte-identical to qmbl sources/2403.04645-repo-raw_data-*.csv; arXiv:2403.04645v3 text (sources/2403.04645.txt) for the Hamiltonian; J. Chem. Phys. 161, 134108 not reachable (pubs.aip.org HTTP 403, Cloudflare); E_HF recomputed independently (own Python plane-wave HF + Ewald Madelung, sc cell, Gamma; Madelung constant -2.8372974795/L)",
+    "location": "raw_data/rs_0_5/N_14.csv, last line (num states = 2 70), column cc",
+    "reported_as": "E_c = -0.58784187561384282 (Hartree, total)",
+    "conversion": "14 x 3.4548943931569 + (-0.58784187561384282) = 47.780679629; stored 47.7806796286 (diff -1.7e-11)",
+    "note": "Eq. (5) of the paper: H = -1/2 sum nabla^2 + 1/2 sum v_ab + 1/2 N v_M (Madelung included), plane waves, periodic, closed shells (magic numbers); CSV columns 'num states cc mbpt': num = occupied shells per spin, states = shells in the basis, cc = Delta E_CCD total (paper Fig. 2 plots Delta E_CCD,6142/N). 70 shells = 3071 plane waves = 6142 spin orbitals (own enumeration of |n|^2 <= 81), the largest basis in every file and the paper's M = 6,142. bound_type projected (finite-basis CC, RULES 12.4) and largest basis per method (RULES 12.3) hold. No other row on the instance repeats this number.",
+    "source_entry": "RP2-heg3d-hubbard-tv-heisenberg#2 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_38_P_19_19_0.5",
+      "method": "CCD (3071 plane waves, data release of arXiv:2403.04645)",
+      "energy": 121.906829933
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "github.com/butler-julie/HEG-SRE raw_data/<rs>/<N>.csv fetched 2026-11-10 (sources/rp2-dl/butler-*.csv), byte-identical to qmbl sources/2403.04645-repo-raw_data-*.csv; arXiv:2403.04645v3 text (sources/2403.04645.txt) for the Hamiltonian; J. Chem. Phys. 161, 134108 not reachable (pubs.aip.org HTTP 403, Cloudflare); E_HF recomputed independently (own Python plane-wave HF + Ewald Madelung, sc cell, Gamma; Madelung constant -2.8372974795/L)",
+    "location": "raw_data/rs_0_5/N_38.csv, last line (num states = 3 70), column cc",
+    "reported_as": "E_c = -1.8049097010386239 (Hartree, total)",
+    "conversion": "38 x 3.2555720956436 + (-1.8049097010386239) = 121.906829933; stored 121.906829933 (diff 4.2e-10)",
+    "note": "Eq. (5) of the paper: H = -1/2 sum nabla^2 + 1/2 sum v_ab + 1/2 N v_M (Madelung included), plane waves, periodic, closed shells (magic numbers); CSV columns 'num states cc mbpt': num = occupied shells per spin, states = shells in the basis, cc = Delta E_CCD total (paper Fig. 2 plots Delta E_CCD,6142/N). 70 shells = 3071 plane waves = 6142 spin orbitals (own enumeration of |n|^2 <= 81), the largest basis in every file and the paper's M = 6,142. bound_type projected (finite-basis CC, RULES 12.4) and largest basis per method (RULES 12.3) hold. No other row on the instance repeats this number.",
+    "source_entry": "RP2-heg3d-hubbard-tv-heisenberg#3 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_0.5",
+      "method": "CCD (3071 plane waves, data release of arXiv:2403.04645)",
+      "energy": 173.943193898
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "github.com/butler-julie/HEG-SRE raw_data/<rs>/<N>.csv fetched 2026-11-10 (sources/rp2-dl/butler-*.csv), byte-identical to qmbl sources/2403.04645-repo-raw_data-*.csv; arXiv:2403.04645v3 text (sources/2403.04645.txt) for the Hamiltonian; J. Chem. Phys. 161, 134108 not reachable (pubs.aip.org HTTP 403, Cloudflare); E_HF recomputed independently (own Python plane-wave HF + Ewald Madelung, sc cell, Gamma; Madelung constant -2.8372974795/L)",
+    "location": "raw_data/rs_0_5/N_54.csv, last line (num states = 4 70), column cc",
+    "reported_as": "E_c = -2.3845968851109252 (Hartree, total)",
+    "conversion": "54 x 3.2653294589462 + (-2.3845968851109252) = 173.943193898; stored 173.943193898 (diff -1.5e-11)",
+    "note": "Eq. (5) of the paper: H = -1/2 sum nabla^2 + 1/2 sum v_ab + 1/2 N v_M (Madelung included), plane waves, periodic, closed shells (magic numbers); CSV columns 'num states cc mbpt': num = occupied shells per spin, states = shells in the basis, cc = Delta E_CCD total (paper Fig. 2 plots Delta E_CCD,6142/N). 70 shells = 3071 plane waves = 6142 spin orbitals (own enumeration of |n|^2 <= 81), the largest basis in every file and the paper's M = 6,142. bound_type projected (finite-basis CC, RULES 12.4) and largest basis per method (RULES 12.3) hold. No other row on the instance repeats this number.",
+    "source_entry": "RP2-heg3d-hubbard-tv-heisenberg#4 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-12x16_192_O_84_8",
+      "method": "Transformer backflow + MARCH optimizer",
+      "energy": -138.64704
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "Nat. Commun. 17, 7838 Supplementary Information (journal file, qmbl-runs/qmbl-worklist/2026-10-22-quoted-primaries/dl/gu-si.txt (Nat. Commun. 17, 7838 Supplementary Information, journal file)) and arXiv:2507.02644v2 (qmbl sources/2507.02644.txt line 1131, Table S2: identical digits); main text from the journal HTML (gu-natcommun.txt); Author Correction Nat. Commun. 17, 11000 read: it changes only the code-availability statement and a symbol in Eq. (14), no energy",
+    "location": "Supplementary Table 2 (p. 3), row NQS, column 16 x 12; gu-si.txt line 120",
+    "reported_as": "-0.72212",
+    "conversion": "-0.72212 x 192 = -138.64704; N_up = N_dn = 192 x 7/8 / 2 = 84",
+    "note": "H = -t sum_<ij> + ... + U sum n_up n_dn, t = 1, U = 8, t' = 0 ('pure'); 'Both open boundary conditions (OBC) and periodic boundary conditions (PBC) are adopted'; doping stated in the main text: 'In this work, we focus on the lightly doped regime with hole concentration of delta = 1/8' and 'We then benchmark the new NQS method on the doped pure Hubbard model under OBC' (so the 1/8 filling does not rest only on the match with Liu et al.'s cells). Lx x Ly printed, QMBL lists the short side first. Variational energy, own computation; no error bar printed anywhere ('Statistical uncertainties from Monte Carlo sampling are smaller than the marker size', Fig. 2 caption). No other row on the instance carries this number. RECORD ROW: lowest of the instance (Liu et al.'s best fPEPS row -0.72024 is above; Gu's table quotes PEPS -0.7202(2) for 16 x 12).",
+    "source_entry": "RP2-heg3d-hubbard-tv-heisenberg#5 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_O_28_8",
+      "method": "Transformer backflow + MARCH optimizer",
+      "energy": -43.728
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "Nat. Commun. 17, 7838 Supplementary Information (journal file, qmbl-runs/qmbl-worklist/2026-10-22-quoted-primaries/dl/gu-si.txt (Nat. Commun. 17, 7838 Supplementary Information, journal file)) and arXiv:2507.02644v2 (qmbl sources/2507.02644.txt line 1131, Table S2: identical digits); main text from the journal HTML (gu-natcommun.txt); Author Correction Nat. Commun. 17, 11000 read: it changes only the code-availability statement and a symbol in Eq. (14), no energy",
+    "location": "Supplementary Table 2 (p. 3), row NQS, column 16 x 4; gu-si.txt line 120",
+    "reported_as": "-0.68325",
+    "conversion": "-0.68325 x 64 = -43.72800; N_up = N_dn = 64 x 7/8 / 2 = 28",
+    "note": "H = -t sum_<ij> + ... + U sum n_up n_dn, t = 1, U = 8, t' = 0 ('pure'); 'Both open boundary conditions (OBC) and periodic boundary conditions (PBC) are adopted'; doping stated in the main text: 'In this work, we focus on the lightly doped regime with hole concentration of delta = 1/8' and 'We then benchmark the new NQS method on the doped pure Hubbard model under OBC' (so the 1/8 filling does not rest only on the match with Liu et al.'s cells). Lx x Ly printed, QMBL lists the short side first. Variational energy, own computation; no error bar printed anywhere ('Statistical uncertainties from Monte Carlo sampling are smaller than the marker size', Fig. 2 caption). No other row on the instance carries this number.",
+    "source_entry": "RP2-heg3d-hubbard-tv-heisenberg#6 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-6x16_96_O_42_8",
+      "method": "Transformer backflow + MARCH optimizer",
+      "energy": -67.49472
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "Nat. Commun. 17, 7838 Supplementary Information (journal file, qmbl-runs/qmbl-worklist/2026-10-22-quoted-primaries/dl/gu-si.txt (Nat. Commun. 17, 7838 Supplementary Information, journal file)) and arXiv:2507.02644v2 (qmbl sources/2507.02644.txt line 1131, Table S2: identical digits); main text from the journal HTML (gu-natcommun.txt); Author Correction Nat. Commun. 17, 11000 read: it changes only the code-availability statement and a symbol in Eq. (14), no energy",
+    "location": "Supplementary Table 2 (p. 3), row NQS, column 16 x 6; gu-si.txt line 120",
+    "reported_as": "-0.70307",
+    "conversion": "-0.70307 x 96 = -67.49472; N_up = N_dn = 96 x 7/8 / 2 = 42",
+    "note": "H = -t sum_<ij> + ... + U sum n_up n_dn, t = 1, U = 8, t' = 0 ('pure'); 'Both open boundary conditions (OBC) and periodic boundary conditions (PBC) are adopted'; doping stated in the main text: 'In this work, we focus on the lightly doped regime with hole concentration of delta = 1/8' and 'We then benchmark the new NQS method on the doped pure Hubbard model under OBC' (so the 1/8 filling does not rest only on the match with Liu et al.'s cells). Lx x Ly printed, QMBL lists the short side first. Variational energy, own computation; no error bar printed anywhere ('Statistical uncertainties from Monte Carlo sampling are smaller than the marker size', Fig. 2 caption). No other row on the instance carries this number. RECORD ROW: holds the best variational value only because no other source is on this new instance; the same table prints DMRG -0.70550 and PEPS -0.7008(2) for 16 x 6, quoted from Liu et al. (PRL 134, 256502; Fig. 4(b) only, not in its SM tables or data release), and DMRG -0.70550 is lower than this NQS value. The NQS row itself is right; the record will move if Liu et al.'s 6 x 16 values are mined.",
+    "source_entry": "RP2-heg3d-hubbard-tv-heisenberg#7 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-8x16_128_O_56_8",
+      "method": "Transformer backflow + MARCH optimizer",
+      "energy": -91.27552
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "Nat. Commun. 17, 7838 Supplementary Information (journal file, qmbl-runs/qmbl-worklist/2026-10-22-quoted-primaries/dl/gu-si.txt (Nat. Commun. 17, 7838 Supplementary Information, journal file)) and arXiv:2507.02644v2 (qmbl sources/2507.02644.txt line 1131, Table S2: identical digits); main text from the journal HTML (gu-natcommun.txt); Author Correction Nat. Commun. 17, 11000 read: it changes only the code-availability statement and a symbol in Eq. (14), no energy",
+    "location": "Supplementary Table 2 (p. 3), row NQS, column 16 x 8; gu-si.txt line 120",
+    "reported_as": "-0.71309",
+    "conversion": "-0.71309 x 128 = -91.27552; N_up = N_dn = 128 x 7/8 / 2 = 56",
+    "note": "H = -t sum_<ij> + ... + U sum n_up n_dn, t = 1, U = 8, t' = 0 ('pure'); 'Both open boundary conditions (OBC) and periodic boundary conditions (PBC) are adopted'; doping stated in the main text: 'In this work, we focus on the lightly doped regime with hole concentration of delta = 1/8' and 'We then benchmark the new NQS method on the doped pure Hubbard model under OBC' (so the 1/8 filling does not rest only on the match with Liu et al.'s cells). Lx x Ly printed, QMBL lists the short side first. Variational energy, own computation; no error bar printed anywhere ('Statistical uncertainties from Monte Carlo sampling are smaller than the marker size', Fig. 2 caption). No other row on the instance carries this number.",
+    "source_entry": "RP2-heg3d-hubbard-tv-heisenberg#8 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_O_28_8",
+      "method": "Transformer backflow + MARCH optimizer",
+      "energy": -44.76928
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "Nat. Commun. 17, 7838 Supplementary Information (journal file, qmbl-runs/qmbl-worklist/2026-10-22-quoted-primaries/dl/gu-si.txt (Nat. Commun. 17, 7838 Supplementary Information, journal file)) and arXiv:2507.02644v2 (qmbl sources/2507.02644.txt line 1131, Table S2: identical digits); main text from the journal HTML (gu-natcommun.txt); Author Correction Nat. Commun. 17, 11000 read: it changes only the code-availability statement and a symbol in Eq. (14), no energy",
+    "location": "Supplementary Table 2 (p. 3), row NQS, column 8 x 8; gu-si.txt line 120",
+    "reported_as": "-0.69952",
+    "conversion": "-0.69952 x 64 = -44.76928; N_up = N_dn = 64 x 7/8 / 2 = 28",
+    "note": "H = -t sum_<ij> + ... + U sum n_up n_dn, t = 1, U = 8, t' = 0 ('pure'); 'Both open boundary conditions (OBC) and periodic boundary conditions (PBC) are adopted'; doping stated in the main text: 'In this work, we focus on the lightly doped regime with hole concentration of delta = 1/8' and 'We then benchmark the new NQS method on the doped pure Hubbard model under OBC' (so the 1/8 filling does not rest only on the match with Liu et al.'s cells). Lx x Ly printed, QMBL lists the short side first. Variational energy, own computation; no error bar printed anywhere ('Statistical uncertainties from Monte Carlo sampling are smaller than the marker size', Fig. 2 caption). No other row on the instance carries this number.",
+    "source_entry": "RP2-heg3d-hubbard-tv-heisenberg#9 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_16_P_5_0.01",
+      "method": "arSJVMC (this work)",
+      "energy": -11.97996
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "arXiv:2210.05871v4 (2023-03-14, latest; qmbl sources/2210.05871.txt); SciPost Phys. 14, 171 (2023) journal PDF not reached (scipost.org returned an HTML page without a PDF link to a plain fetch)",
+    "location": "Table 2 (System L = 4, Np = 5), row 'arSJVMC (this work)', column V/t = 0.01; txt line 1734",
+    "reported_as": "-11.97996(5)",
+    "conversion": "total energy, units of t, stored as printed; sigma 5e-5",
+    "note": "Eq. (5) H = H_int({n}) - 1/2 sum t_sr (c+c + h.c.); the paper's own 'Lanczos ED (QuSpin)' cell -11.980026 equals QMBL's ED row -11.980026283 on this instance, which fixes the convention (Np total = Nf = 5, PBC, no constant shift). Variational, own computation, peer reviewed. No duplicate on the instance.",
+    "source_entry": "RP2-heg3d-hubbard-tv-heisenberg#18 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_0.1",
+      "method": "arSJVMC (this work)",
+      "energy": -27.33199992
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "arXiv:2210.05871v4 (2023-03-14, latest; qmbl sources/2210.05871.txt); SciPost Phys. 14, 171 (2023) journal PDF not reached (scipost.org returned an HTML page without a PDF link to a plain fetch)",
+    "location": "Table 3 (System L = 6, Np = 13), row 'arSJVMC (this work)', column V/t = 0.1; txt line 1751",
+    "reported_as": "-27.332(1)",
+    "conversion": "total, stored -27.33199992 = printed -27.332 with 8e-8 float noise from the loader's per-site round trip (loader issue, prior ruling: not a row correction)",
+    "note": "Paper's 'Lancos ED (QuSpin)' -27.34054415 equals QMBL's ED row -27.3405441595 on the instance, so convention (Np = Nf = 13, PBC) matches. Variational, own computation. No duplicate on the instance.",
+    "source_entry": "RP2-heg3d-hubbard-tv-heisenberg#19 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/pyrochlore-2x2x2_128_P",
+      "method": "mVMC variance extrapolation (random initial state)",
+      "energy": -253.0816
+    },
+    "checked_on": "2026-11-10",
+    "scope": "value",
+    "method": "arXiv:2311.11561v1 (only version; qmbl sources/2311.11561.txt, main text + SM); no journal version found (Crossref and OpenAlex searches 2026-11-10)",
+    "location": "Main text p. 13 (txt line 1375) 'E0/Ns = -0.4943(1) for the random initial state for Ns = 128' and SM Table SI, last row 'E0 = lim_{sigma->0} E', column psi+ (random)",
+    "reported_as": "-0.4943(1) per site, S.S units",
+    "conversion": "-0.4943 x 4 x 128 = -253.0816; sigma 0.0001 x 512 = 0.0512",
+    "note": "H = J sum S_i.S_j, J = 1, S = 1/2 operators: Pauli total = 4 N E/N. Variance extrapolation (linear in sigma^2 -> 0 over mVMC, mVMC-RBM and their one-Lanczos-step energies): extrapolated, not a bound. L = 2 cubic supercell of the 16-site cell, 128 sites, PBC. Own computation. No duplicate: the max.-flip. extrapolation -0.49434(5) is a separate row.",
+    "source_entry": "RP2-heg3d-hubbard-tv-heisenberg#20 (qmbl-verify 2026-11-10b)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_7_8",
+      "method": "Exact diagonalization",
+      "energy": -11.8688355696
+    },
+    "checked_on": "2026-11-10",
+    "scope": "config",
+    "method": "qmbl checks/hubbard-4x4-n78-ed/Hubbard__square_16_P_7_8__A.json and __B.json read; scripts/add_exact_rows.mjs lines 278-292; not recomputed (run instructions)",
+    "location": "checks/hubbard-4x4-n78-ed/ (code A hub_fact.py E0 -11.868835569563995, residual 9.8e-12; code B ed_full2.py E -11.868835569563833, residual 6.3e-11)",
+    "reported_as": "-11.868835569563833 | -11.868835569563995",
+    "conversion": "stored -11.8688355696 = both results rounded to 10 decimals; E/N = -0.7418022",
+    "note": "Both files state H = -t sum_<ij>,s (c+c + h.c.) + U sum n_up n_dn, t = 1, U = 8, square L = 4 PBC (32 bonds), N_up = N_dn = 7 fixed, full 130,873,600-state space, no symmetry: matches the instance. Published cross-check: Gu et al. Nat. Commun. SI Table 4 prints 'Exact Energy -0.7418' for the 4 x 4 lattice at doping 1/8 (columns [1] Luo & Clark and [5] Robledo Moreno et al.), -0.7418022 rounds to it; the two VMC rows on the instance (-11.8544, -11.86832) sit above. No duplicate.",
+    "source_entry": "RP2-heg3d-hubbard-tv-heisenberg#22 (qmbl-verify 2026-11-10b)"
+  },
 ];
