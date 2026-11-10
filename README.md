@@ -5,7 +5,6 @@
 <!-- All badges via shields.io: Zenodo's own DOI badge returns 403. -->
 [![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22753734-1682D4)](https://doi.org/10.5281/zenodo.22753734)
 [![License: Apache 2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
-[![energies](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fquantum-many-body-leaderboard%2Fquantum-many-body-leaderboard%2Fmain%2Fdata%2F_summary.json&query=%24.rows&label=energies&color=success)](data/_summary.json)
 [![agents: API · MCP](https://img.shields.io/badge/agents-API%20%C2%B7%20MCP-8A2BE2)](#use-qmbl-with-your-agent)
 
 **A live record of SOTA published ground-state energies for lattice Hamiltonians.**
@@ -2213,11 +2212,6 @@ Rules: [RULES.md](RULES.md). Units, conventions, error metrics, provenance and d
 > [arXiv:2610.22387](https://arxiv.org/abs/2610.22387) (2026).
 
 To cite the data itself, use the Zenodo concept DOI, which resolves to the latest release: [10.5281/zenodo.22753734](https://doi.org/10.5281/zenodo.22753734).
-
-530 of QMBL’s 5236 rows (10 %) are imported from VarBench, the dataset published with the V-score paper. If you use an imported energy, cite that paper too:
-
-> D. Wu *et al.*, *Variational benchmarks for quantum many-body problems*,
-> Science **386**, 296 (2024). [10.1126/science.adg9774](https://doi.org/10.1126/science.adg9774)
 
 ## Contributing
 
