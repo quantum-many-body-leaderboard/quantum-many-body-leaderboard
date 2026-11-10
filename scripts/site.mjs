@@ -1484,7 +1484,7 @@ function llmsTxt() {
     "",
     "## Data",
     "- [Full dump](https://qmbl.org/api/qmbl.json): every instance and row in one JSON file.",
-    "- [Instance index](https://qmbl.org/api/instances.json): id, label, URL, exact energy and best values per instance.",
+    "- [Instance index](https://qmbl.org/api/instances.json): id, label, URL, exact energy and best values per instance; `has_exact` says whether an exact energy exists (Impurity instances have no per-site energy).",
     "- [Summary](https://qmbl.org/api/summary.json): the counts behind the headline numbers.",
     "- [Models](https://qmbl.org/api/models.json): per model, the instance counts, lattices, boundaries, size range, parameter names and the URL of its slice.",
     "- One model: https://qmbl.org/api/m/<model>.json, the instance index lines of that model only (for example [Hubbard](https://qmbl.org/api/m/Hubbard.json)).",
