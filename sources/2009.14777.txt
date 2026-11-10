@@ -1,0 +1,561 @@
+Helping restricted Boltzmann machines with
+quantum-state representation by restoring
+symmetry
+
+
+                      Yusuke Nomura
+                      RIKEN Center for Emergent Matter Science, 2-1 Hirosawa, Wako, Saitama
+                      351-0198, Japan
+                      E-mail:  yusuke.nomura@riken.jp
+
+                      September 2020
+
+
+                      Abstract.    The  variational  wave  functions  based  on  neural  networks  have
+                      recently  started  to  be  recognized  as  a  powerful  ansatz  to  represent  quantum
+                      many-body  states  accurately.   In  order  to  show  the  usefulness  of  the  method
+                      among  all  available  numerical  methods,   it  is  imperative  to  investigate  the
+                      performance  in  challenging  many-body  problems  for  which  the  exact  solutions
+                      are not available.  Here, we construct a variational wave function with one of the
+                      simplest neural networks, the restricted Boltzmann machine (RBM), and apply it
+                      to a fundamental but unsolved quantum spin Hamiltonian, the two-dimensional
+                      J1-J2  Heisenberg  model  on  the  square  lattice.   We  supplement  the  RBM  wave
+                      function with quantum-number projections, which restores the symmetry of the
+                      wave function and makes it possible to calculate excited states.  Then, we perform
+                      a systematic investigation of the performance of the RBM. We show that, with the
+                      help of the symmetry, the RBM wave function achieves state-of-the-art accuracy
+                      both in ground-state and excited-state calculations.  The study shows a practical
+                      guideline on how we achieve accuracy in a controlled manner.
+Helping restricted Boltzmann machines with quantum-state representation by restoring symmetry                     2
+
+1.  Introduction                                                        ﬁnite-temperature  calculations  [39],   open  quantum
+                                                                        states [40–43], and quantum states with nonabelian or
+Quantum many-body systems are a source of various                       anyonic symmetries [38].
+fascinating phenomena.  For example, interacting spin                         In  the  present  study,  as  one  of  the  intriguing
+systems show magnetism, and such magnetic materials                     targets of the RBM method, we focus on the frustrated
+are indispensable in our daily life.  It is a longstanding              spin  systems,   in  which  spin  conﬁgurations  cannot
+challenge  in  physics  to  understand  the  property  of               simultaneously satisfy the energy gain of the competing
+quantum many-body systems.                                              magnetic   interactions.       The   application   to   the
+     One of the most powerful numerical methods is the                  frustrated  spin  systems  is  interesting  and  important
+quantum Monte Carlo (QMC) method [1]. In the QMC                        because  the  QMC  method  giving  numerically  exact
+method, the multi-dimensional integrals, which appear                   results cannot be applied because of the sign problem.
+in many-body problems, are evaluated using the Monte                    So   far,   other   types   of   neural   networks   than   the
+Carlo method.  With the QMC method, one can obtain                      RBM [15–17,19,20], and the combination of the RBM
+numerically exact results for various physical quantities               and  Gutzwiller-projected  fermion  wave  functions  [18,
+such  as  the  total  energy  and  correlation  functions.              21] have been investigated to check the accuracy of the
+However, the QMC method is not applicable when the                      variational  ansatz.   However,  there  is  no  systematic
+negative-sign problem becomes severe.                                   study  on  the  wave  functions  composed  only  of  the
+     Another  useful  method  is  based  on  variational                RBM. It is a fundamental problem whether one of the
+wave functions, in which the exact wave functions are                   simplest neural networks, the RBM, can achieve high
+approximated by some wave function form determined                      accuracy.
+by  variational  parameters.     This  approach  can  be                      Here,  we  study  a  representative  frustrated  spin
+applied to, for example, fermion systems for which the                  model,  the  two-dimensional  (2D) J1-J2  Heisenberg
+QMC method suﬀers from the sign problem.  A main                        Hamiltonian  (J1:   nearest-neighbor  magnetic  interac-
+diﬃculty in the variational wave function approach is                   tion, J2:  next-nearest-neighbor magnetic interaction)
+how  to prepare a powerful variational  wave  function.                 because  almost  all  the  previous  studies  based  on  the
+So  far,  various  wave  function  methods  such  as  the               neural-network variational wave functions [16–21] have
+variational  Monte  Carlo  (VMC)  method  [2–5],  the                   focused on the 2D J1-J2  Heisenberg model.  The best
+density  matrix  renormalization  group  (DMRG)  [6,                    accuracy  of  the  ground-state  representation  achieved
+7],   and  tensor  network  methods  [8, 9],   have  been               so far by the neural-network-only wave functions is on
+developed.                                                              the order of 10−3  in terms of the relative error of the
+     Recently,  Carleo  and  Troyer  [10]  have  proposed               energy for the 6× 6 lattice (largest system size where
+a  diﬀerent  type  of  variational  wave  function  based               the exact result is available) aroundJ2/J1 = 0.5 (frus-
+on  the  restricted  Boltzmann  machine  (RBM)  [11].                   trated regime).
+The   RBM   is   a   neural   network   composed   of   two                   By performing systematic benchmark calculations
+layers  (Fig.  1),  and  it  approximates  the  probability             using the RBM wave functions,  we demonstrate that
+distribution  function  over  visible-unit  conﬁgurations.              the RBM wave function can outperform the previously
+By  identifying  the  states  of  the  physical  degrees  of            studied neural-network wave functions if it is combined
+freedom  with  those  of  visible  units  and  interpreting             with  quantum-number  projections.     The  quantum-
+the wave function amplitude as generalized probability                  number  projections,  which  restore  the  symmetry  of
+extended  to  complex  numbers,  the  many-body  wave                   the wave function,  help the RBM learn the quantum
+functions   can   be   expressed   by   the   RBM.   Then,              states, resulting in a drastic improvement of accuracy.
+the   RBM   wave   function   can   be   considered   as   a            The RBM wave function combined with the quantum-
+particular  form  of  the  variational  wave  function  in              number  projections  achieves  the  accuracy  of∼  10−4
+the   VMC   method,   where   the   parameters   in   the               in the relative error of the ground-state energy for the
+RBM  network  play  a  role  as  variational  parameters.               6× 6 lattice around J2/J1 = 0.5, which is indeed one-
+The  RBM  allows  ﬂexible  representation  of  various                  order-of-magnitude  more  accurate  than  the  existing
+quantum states [12], including states with volume-law                   neural-network results.  The accuracy is comparable to
+entanglement entropy [13,14].                                           that obtained by other state-of-the-art wave function
+     The   neural-network   wave   functions,   including               methods.     Furthermore,   with  the  combined  wave
+the   RBM   wave   function,    were   ﬁrst   introduced                functions, we can also calculate the excited states with
+in  the  quantum  spin  systems  without  geometrical                   high accuracy.  The study shows a practical guideline
+frustration  [10].    Later,  the  applicability  has  been             for applying the RBM wave function to the frustrated
+extended  to  frustrated  spin  models  [15–21],  itinerant             spin systems.
+boson   systems   [22, 23],   fermion   systems   [15, 24–                    The  paper  is  organized  as  follows.    In  Sec.  2,
+29],  fermion-boson  coupled  systems  [30],  topological               we  introduce  the  2D J1-J2  Heisenberg  Hamiltonian
+states   [13,  31–36],    excited   states   [21,  30,  37,  38],
+Helping restricted Boltzmann machines with quantum-state representation by restoring symmetry                     3
+
+and  present  how  we  prepare  the  RBM  variational
+wave functions.  We also discuss the way of restoring
+symmetry  in  the  wave  function.   In  Sec.  3,  we  show
+the benchmark results of the RBM wave functions for
+the J1-J2  Heisenberg  model.   Both  the  ground  state
+and excited states are investigated.  Finally,  Sec. 4 is
+devoted to the summary and discussion.
+
+2.  Model and Methods
+
+2.1.  Model
+In   this   paper,   we   apply   the   method   to   the   2D          Figure 1.    Structure of restricted Boltzmann machine (RBM)
+J1-J2  Heisenberg  Hamiltonian  on  the  square  lattice                withN visible unitsσi =±1 (i = 1,...,N) andM hidden units
+(we  consider L× L  lattices  with  periodic  boundary                  hk  =±1 (k = 1,...,M).  The solid lines show the interaction
+condition), which reads                                                 between visible and hidden units.
+ˆH =J1   ∑    Si· Sj +J2      ∑     Si· Sj.                         (1)
+
+
+         ⟨i,j⟩               ⟨⟨i,j⟩⟩                                    Hamiltonians  with  the Nsite  spins,  the  most  natural
+Here, Si  is  the  spin-1/2  operator  at  site i,  and⟨i,j⟩            mapping is to prepare Nsite  visible units and to take
+and ⟨⟨i,j⟩⟩  denote  the  pair  of  nearest-neighbor  and               σi  = 2Szi .  Then, the RBM wave function is given by
+next-nearest-neighbor sites,  respectively.  For the site               (we do not show the normalization factor)                       
+speciﬁed  by  the  coordinate  (rx, ry),   the  nearest-
+neighbor sites are located at (rx±1,ry) and (rx,ry±1),                  Ψ(σ) = ∑        exp  ∑     aiσi +∑      Wikσihk +∑         bkhk
+and  the  next-nearest-neighbor  sites  are  at  (rx± 1,                                         i           i,k                k
+ry± 1).  We take J1  as the energy unit (J1  = 1) and                             {hk}(∑           )                 (                   )
+consider positive J2 (antiferromagnetic coupling).                             =  exp         aiσi    ×∏     2 cosh    bk +∑      Wikσi     ,
+     The   nearest-neighbor   coupling J1   favors   the
+N´eel-type  antiferromagnetic  order,  whereas  the  next-                                 i              k                    i
+nearest-neighbor couplingJ2 favors stripe-type antifer-                                                                                   (2)
+romagnetic order.  Therefore, J1 and J2 compete with                    whereσ is the spin conﬁgurationσ = (σ1, σ2,..., σNsite),
+each other, and in the classical Heisenberg model case,                 and hk =±1 (k = 1,...,M) indicates the state of the
+there is a phase transition from the N´eel state to the                 hidden units. ai  and bk  are the magnetic ﬁeld (called
+stripe state at J2  = 0.5.  If we consider the quantum                  bias in the machine learning community) on the visible
+ﬂuctuation,  there  might  emerge  a  quantum  spin  liq-               and hidden units, respectively, andWik is the classical
+uid phase aroundJ2 = 0.5.  Although the ground-state                    interaction between the visible and hidden units.  We
+phase diagram has been studied using various numer-                     set the complex bias term for the visible units ai to be
+ical wave-function methods (the QMC method cannot                       ai =iπ2 when the sitei belongs to one of the sublattices
+be applied because of the sign problem) [21,44–53], the                 (“sublattice B”) of the square lattice (ai  = 0 for the
+ground-state  phase  diagram  around J2  =  0.5  is  still              sublattice A). With this complex bias term ai = iπ/2
+highly controversial.                                                   for  the  sublattice  B,|↑⟩  (|↓⟩)  state  at  the ith  site
+     As  is  mentioned  in  Sec.  1,  for  this  challenging            acquires  a  phase  as  follows |↑⟩ → eiπ2|↑⟩  = i|↑⟩
+problem,    various   machine-learning-based   methods                  (|↓⟩ → e−iπ2|↓⟩  = −i|↓⟩).   Physically,  this  corre-
+have   been   applied   to   compare   the   performance.               sponds to the gauge transformation in which the spin-
+However,  there  is  no  systematic  investigation  of  the             quantization x and y axes are rotated by 180 degrees
+accuracy of the RBM wave function.  Here, we perform                    around the z axis for the sublattice B [54].  Therefore,
+such  a  systematic  investigation  on  the  RBM  wave                  applying the RBM wave function in Eq.  (2) with the
+function combined with quantum-number projections.                      above-mentioned ai  values to the Hamiltonian in Eq.
+                                                                        (1) is equivalent to applying the RBM wave function
+2.2.  Methods                                                           with ai = 0 for all the sites(            )
+
+2.2.1.  RBM wave function    When we apply the RBM                      Ψ(σ) =∏       2 cosh    bk +∑Wikσi                              (3)
+wave function to quantum-many body systems, we ﬁrst                                k                    i
+need to deﬁne a one-to-one correspondence between the
+states  of  the  visible  units σi  =±1  and  those  of  the
+physical  degrees  of  freedom.   In  the  case  of  spin-1/2
+Helping restricted Boltzmann machines with quantum-state representation by restoring symmetry                     4
+
+Table 1.  Character table of the C4v  point group consisting of                projection to the RBM wave function as
+the rotations and reﬂections of the square.                                      ΨK(σ) =∑         e−iK·RΨ(TRσ)                         (5)
+
+                                                                                               R
+                      E      2C4   C2      2σv      2σd                        whereTR is a translation operator shifting all the
+
+             A1        1          1          1         1          1            particles  by  the  amount  R.   The  wave  function
+             A2        1          1          1  −1  −1                         on  the  right-hand  side  Ψ(σ)  is  the  RBM  wave
+             B1        1  −1         1         1  −1                           function in Eq.  (3).  Note that the wave function
+             B2        1  −1         1  −1          1
+              E        2          0  −2         0          0                   on the left-hand side satisﬁes the symmetry, even
+                                                                               when  the  wave  function  on  the  right-hand  side
+                                                                               Ψ(σ) does not preserve the symmetry.
+to the following Hamiltonian with the gauge transfor-                    (iii)Ψ   S±K  (σ)  labelled  by  the  total  momentum K  and
+mation being applied:                                                          spin-parity (S+ or S−):
+ˆH =J1   ∑(−SxiSxj−Sy                                 ∑     Si· Sj.              ΨS±K  (σ) =∑e−iK·R [Ψ(TRσ)± Ψ(−TRσ)](6)
+                              iSyj  +SziSzj ) +J2                                               R
+         ⟨i,j⟩                                       ⟨⟨i,j⟩⟩
+                                                                 (4)           (double  sign  in  the  same  order).   Here, S+  (S−)
+                                                                               indicates that the wave function on the left-hand
+Hereafter, we consider the RBM wave function in Eq.                            side  is  symmetric  (anti-symmetric)  with  respect
+(3) and apply it to the Hamiltonian in Eq.  (4).  The                          to the global spin-ﬂip, which means that the state
+gauge transformation is helpful for mitigating the sign                        resides in the even (odd) S sector.
+change  in  the  wave  function,  and  thus  facilitating                (iv)Ψ   I,S±
+the  RBM  optimization.   Indeed,  when J2  =  0,  the                         parity (S+ or S−), and irreducible representationK    (σ) labelled by the total momentumK, spin-
+ground-state  wave  function  for  the  Hamiltonian  in                        I of the C4v point group (Table 1):
+Eq.  (4) becomes positive-deﬁnite, which allowed using
+real  variational  parameters {bk, Wik}  in  Ref.  [10],                       ΨI,S±K    (σ)=∑    e−iK·RχIR [Ψ(TRRσ)±Ψ(−TRRσ)]
+which  introduced  the  RBM  wave  function.   Around                                        R,R
+the  frustrated  regime J2   =   0.5,   there  exist  sign                                                                                 (7)
+changes in the wave function.  Therefore,  we need to                          (double  sign  in  the  same  order).   Here, R  is  a
+introduce complex bk  and Wik  variational parameters                          symmetry operation of the C4v  point group, and
+to represent the sign changes.                                                 χIR is the character of theI representation for the
+
+2.2.2.  Projections  to  enforce  symmetries   The eigen-                      symmetry operation R.
+states of the Hamiltonian of ﬁnite-size systems can be                   By  using  the  combination  of  the  quantum-number
+classiﬁed  by  their  symmetry.   Because  the  RBM  has                 projections,  one  can  expect  that  the  accuracy  of  the
+a  property  of  universal  approximation,  in  the  limit               wave function systematically improves [56].
+of  a  large  number  of  hidden  units,  the  RBM  wave
+function  can  represent  any  eigenstates  of  the  Hamil-              2.2.3.  Calculation of physical quantities and optimiza-
+tonian  [33, 36].   However,  we  need  to  work  with  a  ﬁ-            tion  of  RBM  wave  function   The  form  of  the  RBM
+nite number of hidden units, and the optimization of                     wave function Ψ(σ) in Eq.  (3) depends on the varia-
+variational parameters is performed numerically.  The                    tional parameters{bk,Wik}.  Therefore, the problem of
+numerically  optimized  RBM  wave  function  does  not                   approximating eigenstate wave functions of the Hamil-
+perfectly satisfy the proper symmetry.                                   tonian  can  be  recast  as  the  optimization  of  the  vari-
+     We   can   restore   the   symmetry   of   the   RBM                ational  parameters{bk,Wik}.   Because  we  are  inter-
+wave functions using quantum-number projections [55].                    ested  in  the  ground  state  or  low-lying  excited  states
+Here,  we  use  the  combination  of  total-momentum,                    (see Sec. 2.2.4 for the calculation of excited states), we
+spin-parity,  and  lattice-symmetry  projections.   Then,                optimize the RBM wave function to minimize the en-
+we  prepare  four  diﬀerent  types  of  wave  functions                  ergy expectation value.  The total energy E  =⟨ ˆH⟩ =
+as   follows   (throughout   the   section,   we   omit   the             ⟨Ψ| ˆH|Ψ⟩
+normalization factor of the wave functions).                               ⟨Ψ|Ψ⟩   can be computed by the Monte Carlo sampling
+                                                                         with weight p(σ)∝|Ψ(σ)|2 as∑
+ (i)Ψ(  σ) in Eq.  (3),  for which we do not apply any
+     projections.  We do not impose symmetry in the                      ⟨ ˆH⟩ =     σp(σ)Eloc(σ)∑
+     variational parameters either.                                                       σp(σ)   ,                                            (8)
+(ii)Ψ     K(σ)   labelled   by   the   total   momentum   K.             where the local energy Eloc(σ) is given by Eloc(σ) =
+     ΨK(σ) is given by applying the total-momentum                       ∑
+                                                                            σ′⟨σ| ˆH|σ′⟩ Ψ(σ′)Ψ(σ) .   The  energy  expectation  value  for
+Helping restricted Boltzmann machines with quantum-state representation by restoring symmetry                     5
+
+the  variational  wave  functions  in  Eqs.   (5),  (6),  and
+(7) can be computed in the very same way.  Note also
+that the expectation value for the operator  ˆO  can be
+calculated by replacing  ˆH in Eq.  (8) with  ˆO.
+     The total energy E is a highly nonlinear function
+with  respect  to  the  variational  parameters{bk,Wik}.
+Therefore,  the  total  energy  can  be  interpreted  as  a
+loss  function  in  the  machine-learning  language  [57].
+For optimizing the variational parameters to minimize
+the   total   energy E,    we   employ   the   stochastic
+reconﬁguration (SR) method [58].  The SR method can
+stabilize  the  optimization  because  it  is  equivalent  to
+the imaginary-time Hamiltonian evolution within the
+Hilbert space spanned by the variational wave function.
+We refer to Ref. [24] for further technical details of the
+optimization of the RBM wave function.
+                                                                         Figure 2.   The relative error of the ground-state energy of the
+2.2.4.        Calculations   of   excited   states With   the            optimized RBM wave functions Ψ(σ), ΨK=0(σ), ΨS+K=0(σ), and
+above-described quantum-number projections, we can                       ΨA1,S+K=0   (σ) with M  = 72 (M:  number of hidden units) for the
+calculate  the  excited  states  as  well  as  the  ground               6× 6 J1-J2  Heisenberg model around J2  = 0.5.  See Eqs.  (3),
+                                                                         (5), (6), and (7) for the diﬀerence among the four wave functions.
+state.   The  ground  state  is  labelled  by  the  zero  total          The exact energy is taken from Ref. [59] forJ2 = 0.40, 0.50, and
+momentum (K = 0), zero total spin (hence even spin                       0.55.  For J2  = 0.45,  the exact energy EED  is computed using
+parity S+),  and A1  irreducible  representation.    For                 the open-source packageHΦ [60].
+example, if we apply all the projections, the variational
+ground-state wave function reads
+ ΨA1,S+                 [Ψ(TRRσ) + Ψ(−TRRσ)].          (9)                     The computational time scales asO(MNprojNsite),
+    K=0  (σ) =∑                                                          where Nproj is the number of summation to apply the
+                   R,R                                                   quantum  projections  in  Eqs.   (5),  (6),  and  (7).   The
+The   excited   states   are   given   by   optimizing   the             Nproj  value  takes Nsite,  2Nsite,  16Nsite  for  Eqs.   (5),
+variational   wave   functions   for   diﬀerent   quantum-               (6), and (7), respectively [in the case of Eq.  (3), we do
+number sectors [30,37].                                                  not employ the projection, hence Nproj = 1].  For the
+                                                                         6× 6 lattice, when M  = 36 =Nsite and Nproj =Nsite
+2.2.5.  Calculation conditions    In the present study, we               [Eq.   (5)],  using  80  MPI  (Message  Passing  Interface)
+apply  the  four  types  of  variational  wave  functions  in            parallelization  on  Intel  Xeon  6148  CPUs,  one  RBM
+Eqs.  (3), (5), (6), and (7) to the 2D J1-J2 Heisenberg                  optimization iteration with 64,000 Monte Carlo mea-
+model in Eq.  (4).  We takeL×L square lattice (Nsite =                   surements takes about 4 seconds. We typically perform
+L2) withL being an even number, and impose periodic                      iterations on the order of 1,000 to optimize the RBM
+boundary condition. Within this geometry, 6×6 lattice                    wave functions.
+is  the  maximum  size  for  which  the  exact  solution  is
+available.  Therefore, we mainly focus on 6× 6 lattice                   3.  Results
+to  take  a  systematic  benchmark  on  the  RBM  wave
+functions.  A control parameter for the accuracy of the                  3.1.  Ground state
+wave functions is the number of hidden units M.  By                      We  ﬁrst  investigate  how  the  RBM  wave  function
+increasing M, we can expect that accuracy improves.                      is  improved  by  imposing  symmetry.    We  apply  the
+     As  for  the  variational  parameters {bk,Wik},  to                 four  diﬀerent  RBM  wave  functions  Ψ(σ),  ΨK=0(σ),
+make  it  possible  to  express  the  sign  change  of  the
+wave  function,  we  take  them  complex  numbers  for                   ΨS+K=0(σ),  and ΨA1,S+K=0  (σ) [see Eqs.  (3),  (5),  (6),  and
+1 ≤ k ≤ M/2,  and  the  rest  of  the bk  and Wik                        (7)]  for  the  6× 6 J1-J2  Heisenberg  model  around
+parameters  (M/2 + 1 ≤ k ≤ M)  are  taken  to  be                        J2  =  0.5.   As  we  have  already  mentioned,  the  QMC
+real  (see  Appendix  for  parameterization  dependence                  method suﬀers from the negative sign problem around
+of  the  RBM  wave  function).    By  counting  the  real                J2  =  0.5,  hence  developing  a  good  variational  wave-
+and  imaginary  part  of bk   and Wik   parameters  as                   function  ansatz  is  critically  important  to  investigate
+independent variational parameters, the total number                     the physics of the J1-J2 model.
+of the variational parameters amounts to 3M(Nsite +                            Figure  2  shows  the  relative  error  of  the  ground-
+1)/2.  As for the initial variational parameters, we put                 state  energy  of  the  optimized  RBM  wave  functions
+small random numbers from the interval [−0.05, 0.05].                    Ψ(σ), ΨK=0(σ), ΨS+K=0(σ), and ΨA1,S+K=0  (σ) with M  =
+Helping restricted Boltzmann machines with quantum-state representation by restoring symmetry                     6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                           Figure  4.        Spin  structure  factor S(q)  =       1    ∑
+                                                                                                                                  Nsite    i,j⟨Si·
+                                                                           Sj⟩eiq·(ri−rj)  for  6× 6 J1-J2  Heisenberg  model  at J2  =  0.5
+Figure  3.    M   (number  of  hidden  units)  dependence  of              computed with the optimized ΨA1,S+K=0   (σ) [Eq.(9)] withM = 144
+the ground-state energy and the dimensionless energy variance              (M/Nsite = 4).
+∆var  =  (⟨ ˆH2⟩−⟨ ˆH⟩2)/⟨ ˆH⟩2  of  the  optimized  ΨA1,S+K=0   (σ)  [Eq.
+(9)]  for  the  6× 6  (red  dots)  and  8× 8  (blue  squares) J1-J2
+Heisenberg model at J2  = 0.5.  The data points from right to              Table 2.  M  (number of hidden units) dependence of S(π,π)
+left correspond to M = 18, 36, 72, 144 (M/Nsite = 0.5, 1, 2, 4)            for  6× 6 J1-J2  Heisenberg  model  at J2  =  0.5  calculated  with
+for the 6×6 lattice, andM = 32, 64, 96, 128, 192 (M/Nsite = 0.5,           the  optimized  ΨA1,S+
+1, 1.5, 2, 3) for the 8× 8 lattice.  By increasing M, both E and           is  3.50856,  which  is  obtained  using  the  open-source  packageK=0   (σ)  [Eq.(9)].    The  exact S(π,π)  value
+∆var  decrease.  The solid lines indicate the linear extrapolation         HΦ [60].
+of the total energy to the zero variance limit.  The extrapolation
+is performed using the data which satisfy ∆var < 0.0005.  The
+red dashed line indicates the exact ground-state energy for the                 M = 18   M = 36   M = 72   M = 144       Exact
+6× 6 lattice [59].                                                              3.645(2)      3.539(2)      3.521(2)       3.505(2)       3.50856
+
+
+72.    As  one  can  see  from  the  ﬁgure,  by  employing
+quantum-number   projections,   the   accuracy   of   the                  the optimized RBM wave function ΨA1,S+K=0  (σ) for the
+RBM  wave  function  systematically  improves.     We                      6× 6  and  8× 8  lattice  at J2  =  0.5.    In  the  case
+would like to emphasize that imposing symmetry does                        of  the  6× 6  (8× 8)  lattice, M   =  18,  36,  72,  144
+not correspond to preparing biased wave function such                      (M = 32, 64, 96, 128, 192) are employed. By increasing
+as an antiferromagnetic state,  but it limits the range                    M,  we  see  that  the  accuracy  improves.    The  exact
+of high-dimensional optimization space.  Because high-                     ground-state  energy  can  be  estimated  by  performing
+dimensional optimization is a diﬃcult task,  imposing                      the linear extrapolation of the total energy to the zero
+symmetry  helps  the  RBM  to  learn  the  ground  state,                  variance limit (∆var = (⟨ ˆH2⟩−⟨ ˆH⟩2)/⟨ ˆH⟩2 = 0) [61,62].
+leading  to  the  improvement  of  the  accuracy.    The                   In  the  case  of  the  6× 6  lattice  case,  extrapolated
+accuracy  improvement  can  also  be  ascribed  to  the                    energy  agrees  quite  well  with  the  exact  ground-state
+fact that the wave functions ΨK=0(σ), ΨS+K=0(σ), and                       energy.  For the 8× 8 lattice,  the extrapolation gives
+ΨA1,S+K=0  (σ)  can  be  considered  as  “multi-RBM  wave                  E/Nsite  =−0.49904(1).   As  a  reference,  we  refer  to
+functions”,  namely  a  linear  combination  of  multiple                  the  variance  extrapolation  using  the  data  obtained
+RBM wave functions.  Then,  the Hamiltonian matrix                         by  the  VMC  method  combined  with  Lanczos  steps,
+elements  have  oﬀ-diagonal  components  between  two                      which  gives E/Nsite   = −0.49906(1)    [45],  and  the
+diﬀerent RBMs, contributing to energy improvement.                         extrapolation with the DMRG truncation error, which
+      In particular,  the optimized RBM wave function                      gives E/Nsite   = −0.4992(1)  [46].    Our  estimate  is
+ΨA1,S+K=0  (σ) achieves the accuracy of the relative error of              consistent with these two references.
+the energy on the order of 10−4 (0.01 %). The accuracy                            With the optimized wave functions, we can obtain
+level  is  quite  high,  and  we  ﬁnd  that  the  RBM  wave                not  only  the  total  energy  but  also  other  physical
+function marks state-of-the-art accuracy compared to                       quantities such as the correlation function.  Here,  we
+other neural-network-based wave functions [17, 18, 21]                     compute  the  spin-spin  correlation ⟨Si· Sj⟩  with  the
+and other wave function methods [45–47].                                   optimized  ΨA1,S+K=0  (σ)  and  obtain  the  spin  structure∑
+      So  far,  we  have  seen  that  symmetry  helps  to                  factorS(q) =     1Nsite      i,j⟨Si· Sj⟩eiq·(ri−rj) for the 6× 6
+improve accuracy.  The accuracy can also be improved                       lattice  at J2  =  0.5.   At J2  =  0.5,  the  spin  structure
+by increasing the number of hidden units M.  Figure 3                      factor S(q) has a peak at q = (π,π) (Fig. 4).  Table 2
+shows M  dependence  of  the  ground-state  energy  of                     shows the peak value of the structure factorS(π,π) for
+Helping restricted Boltzmann machines with quantum-state representation by restoring symmetry                     7
+
+
+Table 3.  Character table of the C2v  point group.
+
+                          E   C2  σv(xz)  σv(yz)
+
+                A1        1         1         1            1
+                A2        1         1  −1   −1
+                B1        1  −1         1   −1
+                B2        1  −1  −1            1
+
+
+
+the four diﬀerent M  cases.  By increasing the number
+of hidden unitsM, not only the accuracy of the energy
+but  also  that  of  the  correlation  function  improves.
+WhenM = 144, we see a very good agreement between                           Figure  5.    M   (number  of  hidden  units)  dependence  of
+the RBM and exact results for all the q points.                             the excited-state energy and the dimensionless energy variance
+
+                                                                            ∆var = (⟨ ˆH2⟩−⟨ ˆH⟩2)/⟨ ˆH⟩2 of the optimized ΨA1,S−K=(π,π)(σ) [S = 1
+3.2.  Excited States                                                        excited state with K = (π,π), red dots] and ΨB1,S+
+                                                                                                                               K=(π,0)(σ) [S = 0
+As  described  in  Sec.  2.2.4,  the  excited  states  can  be              excited state with K = (π, 0), blue squares] for the 6× 6 J1-J2
+calculated  by  optimizing  the  RBM  wave  function  in                    Heisenberg model atJ2 = 0.5.  The data points from right to left
+quantum  number  sectors  diﬀerent  from  that  of  the                     correspond toM = 18, 36, 72, 144. By increasingM, bothE and
+                                                                            ∆var  decrease.  The solid lines indicate the linear extrapolation
+ground  state.    The  information  of  excited  states  is                 of the total energy to the zero variance limit.  The extrapolation
+essential in understanding the nature of the phases.  In                    is performed using the data which satisfy ∆var < 0.0005.  The
+particular,  if there is a  phase  transition,  the  excited-               dashed lines indicate the exact excited-state energies calculated
+                                                                            usingHΦ [60].
+state  character  will  change.    Hence,  the  change  in
+excited-state  character  can  be  a  signature  for  the
+phase  transition.    Indeed,  for  example,  in  the  case                 group.   In  the  case  of S  =  0, K  =  (π, 0)  sector,  we
+of   the J1-J2   Heisenberg   chain,   the   level   crossing               need to refer to the character table of C2v point group
+of  singlet  and  triplet  excited  states  at  ﬁnite  size                 (Table 3), and the lowest energy state has a property
+systems and extrapolation to the thermodynamic limit                        of the B1 representation.
+give  an  elegant  estimate  for  the  ﬂuid-dimer  phase                          Figure 5 shows the M  dependence of the excited-
+transition [63].  Recently,  a similar level spectroscopy                   state  energy  of  the  optimized  RBM  wave  functions
+has  also  been  performed  in  the  2D J1-J2  Heisenberg                   ΨA1,S−
+model  [21, 49, 52].   There,  the  level  crossing  between                  K=(π,π)(σ)  [S  =  1  excited  state  with  K  =  (π,π),
+the singlet S = 0 excited state with total momentum                         red  dots]  and  ΨB1,S+K=(π,0)(σ)  [S  =  0  excited  state  with
+K  =  (π, 0)  and  the  triplet S  =  1  excited  state  with               K  =  (π, 0),  blue  squares]  for  the  6× 6  lattice  at
+total momentum K = (π,π) is highlighted as a possible                       J2 = 0.5.  By increasingM asM = 18, 36, 72, 144, the
+hallmark  for  the  phase  transition  between  quantum                     energy  improves.   As  in  the  case  of  the  ground  state
+spin liquid and valence bond solid phases [21].                             (Fig. 3), the variance extrapolation gives an excellent
+      Here,  we  focus  on  the  same  level  crossing.   To                estimate of the exact excited-state energies.
+compute  the  triplet S  =  1  excited  state  with  total                        Finally, Figure 6 shows the J2 dependence of the
+momentum K  =  (π,π)  [singlet S  =  0  excited  state                      excited energies of singlet excited state with K = (π, 0)
+with  total  momentum  K  =  (π, 0)],  we  optimize  the                    (squares)  and  triplet  excited  state  with  K  =  (π,π)
+RBM  wave  function  in  the  odd  total-spin  (S−)  and                    (triangles) for the 6× 6 lattice.  The excited energies
+K = (π,π) sector [even total-spin (S+) and K = (π, 0)                       computed   by   the   optimized   RBM   wave   functions
+sector].  Because the S  = 1 and S  = 0 excited states                      [ΨA1,S−                                         K=0  (σ)]  show  a
+are the lowest energy state in odd (S−) and even (S+)                       very good agreement with the exact results.  AroundK=(π,π)(σ),  ΨB1,S+K=(π,0)(σ),  and  ΨA1,S+
+total-spin sector, respectively, the optimizations in odd                   J2   =   0.5,  the  excited  energies  of  the  singlet  and
+(S−)  and  even  (S+)  total-spin  sector  result  in  the                  triplet  excitations  show  the  level  crossing.   We  leave
+S = 1 and S = 0 excited states, respectively.  We have                      the  investigation  of  the  size  dependence  of  the  level
+conﬁrmed  that  we  indeed  obtain S  =  1  and S  =  0                     crossing as an interesting future problem.
+excited  states  by  directly  computing  the  expectation
+value   of   the   total   spin   with   the   optimized   wave
+functions. We also use the point-group projection. The
+lowest  energy  state  in S  =  1,  K  =  (π,π)  sector  is
+characterized by theA1 representation of theC4v point
+Helping restricted Boltzmann machines with quantum-state representation by restoring symmetry                     8
+
+                                                                         Nsite,Nvar on the order of 100,000 might be required to
+                                                                         achieve the accuracy.  In general, a larger Nvar  makes
+                                                                         optimization  more  diﬃcult;  therefore,  it  is  helpful  to
+                                                                         reduceNvar value if we want to investigate large system
+                                                                         sizes.  One possible way to reduce Nvar  is to combine
+                                                                         the  RBM  with  other  powerful  wave  functions.   The
+                                                                         combination of the RBM and the Gutzwiller-projected
+                                                                         fermion wave function is one of the examples of such
+                                                                         attempts  [18, 21].   It  is  an  important  future  issue  to
+                                                                         investigate  the  eﬃciency  of  the  optimization  of  the
+                                                                         RBM wave functions in large system sizes and compare
+                                                                         it with other methods.
+
+
+Figure  6.  J2  dependence  of  the  excited  energies  of S  =  0       Acknowledgments
+excited  state  with  total  momentum K  =  (π, 0)  (squares)  and
+S = 1 excited state with total momentum K = (π,π) (triangles)            We   would   like   to   thank   Masatoshi   Imada   for
+for the 6×6 lattice.  The RBM data are calculated by the energy          fruitful  discussions.     We  acknowledge  the  ﬁnancial
+diﬀerence between the optimized ΨA1,S−K=(π,π)(σ) and ΨA1,S+K=0   (σ),    support by Grant-in-Aids for Scientiﬁc Research (JSPS
+and ΨB1,S+K=(π,0)(σ) and ΨA1,S+K=0   (σ), respectively.  The number of   KAKENHI)  (Grants  No.   16H06345,  No.   17K14336,
+hidden  units M  is  144.   The  exact  excited-state  energies  are     No.    18H01158,  and  No.    20K14423).    This  work
+obtained byHΦ [60].                                                      was supported by MEXT as “Program for Promoting
+                                                                         Researches  on  the  Supercomputer  Fugaku”  (Basic
+                                                                         Science for Emergence and Functionality in Quantum
+4.  Summary and Discussion                                               Matter).    A  part  of  the  calculations  was  performed
+                                                                         at  Supercomputer  Center,  Institute  for  Solid  State
+We   have   applied   the   RBM   wave   functions   with                Physics, University of Tokyo.
+diﬀerent   symmetrization   levels   to   the   2D J1-J2
+Heisenberg  model.    We  have  seen  that  by  applying                 Appendix
+the  quantum-number  projections  to  the  RBM  wave
+function  and  controlling  the  number  of  hidden  units,              As we described in Sec. 2.2.5, in the present study, the
+we  can  achieve  state-of-the-art  accuracy  not  only  in              half  of  variational  parameters{bk,Wik}  are  taken  to
+the  ground-state  calculation  but  also  in  the  excited-             be complex, and the rest of thebk andWik parameters
+state  calculations.    It  is  remarkable  that  the  RBM,              are taken to be real.  This choice was rather empirically
+which  is  one  of  the  simplest  neural  networks  with                introduced.     The  real  RBM  can  only  control  the
+only  one  hidden  layer,  can  outperform  other  (deep)                amplitude  of  the  wave  function,  while  the  complex
+neural networks employed, e.g., in Ref. [17], with the                   RBM can also represent the phase of the wave function.
+help of symmetry.  We emphasize again that restoring                     Our na¨ıve guess was that, by combining the real RBM
+symmetry  does  not  correspond  to  preparing  biased                   and the complex RBM, the former is more sensitive to
+wave  function,  but  it  makes  the  optimization  space                the amplitude part and the latter to the phase part.
+smaller  and  facilitates  the  optimization.   We  believe                    To  see  the  eﬀect  of  diﬀerent  choices  of  real-
+that  the  symmetry  consideration  will  also  be  helpful              and  complex-RBM  combination,  we  have  performed
+when  we  apply  the  RBM  wave  function  to  other                     benchmark  calculations  for  the  6× 6  lattice  at J2  =
+frustrated spin systems.                                                 0.5.    We  prepare  the  RBM  wave  function  without
+     The  number  of  variational  parameters Nvar  (=                   projections  Ψ(σ)  with  the  setting  employed  in  the
+3M(Nsite + 1)/2, see Sec. 2.2.5) in the wave function                    paper (the half of hidden units have real parameters,
+ΨA1,S+K=0  (σ) with M  = 72 for the 6× 6 lattice used in                 and  the  rest  have  complex  parameters)  and  compare
+Fig. 2 is 3996.  This number is still tractable and small,               it   with   that   with   all   parameters   being   complex
+but the Nvar value to achieve the same accuracy level                    (Fig. 7).  When the number of variational parameters
+will  grow  at  least  as Nvar ∼ N2site  when  we  increase              is small, the all-complex RBM wave function shows a
+the system size.  This is because, from the comparison                   better performance, but, by increasing the variational
+between  6× 6  and  8× 8  results  in  Fig.  3,  it  can                 parameters,  the RBM employed in the present paper
+be  inferred  that  the  number  of  hidden  units M  to                 shows  better  accuracy.    Finally,  when  the  number
+achieve  the  same  accuracy  level  for  diﬀerent  system               of  variational  parameters  becomes  large,  both  wave
+sizes scales at least linearly with respect toNsite. Then,               functions show similar accuracy.
+for example,  for 12× 12 lattice with four times large                         Although  the  complex  RBM  wave  function  has
+Helping restricted Boltzmann machines with quantum-state representation by restoring symmetry                     9
+
+                                                                                 [10]Carleo  G  and  Troyer  M  2017       Science  355  602–606  ISSN
+                                                                                          0036-8075
+                                                                                 [11]Smolensky P 1986       Parallel Distributed Processing:  Explo-
+                                                                                          rations in the Microstructure of Cognition:  Foundations
+                                                                                          (Cambridge:  MIT Press)
+                                                                                 [12]Carleo G, Cirac I, Cranmer K, Daudet L, Schuld M, Tishby
+                                                                                          N,  Vogt-Maranto  L  and  Zdeborov´a  L  2019  Rev.  Mod.
+                                                                                          Phys. 91(4) 045002
+                                                                                 [13]Deng D L, Li X and Das Sarma S 2017       Phys. Rev. X  7(2)
+                                                                                          021021
+                                                                                 [14]Chen J, Cheng S, Xie H, Wang L and Xiang T 2018       Phys.
+                                                                                          Rev. B 97(8) 085104
+                                                                                 [15]Cai Z and Liu J 2018       Phys. Rev. B 97(3) 035116
+                                                                                 [16]Liang X, Liu W Y, Lin P Z, Guo G C, Zhang Y S and He
+                                                                                          L 2018 Phys. Rev. B 98(10) 104426
+                                                                                 [17]Choo  K,  Neupert  T  and  Carleo  G  2019        Phys.  Rev.  B
+                                                                                          100(12) 125124
+                                                                                 [18]Ferrari F, Becca F and Carrasquilla J 2019       Phys.  Rev.  B
+Figure 7.   The comparison of the ground-state energy between                             100(12) 125131
+the  all-complex  RBM  (blue  squares)  and  half-real  and  half-               [19]Westerhout T, Astrakhantsev N, Tikhonov K S, Katsnelson
+complex  RBM  wave  function  (red  dots)  for  the  6× 6  lattice                        M I and Bagrov A A 2020 Nat. Commun. 11 1593
+atJ2 = 0.5.  We do not utilize the quantum-number projections.                   [20]Szab´o A and Castelnovo C 2020       Phys. Rev. Research 2(3)
+The values in the parentheses show the number of hidden units                             033075
+having complex parameters (left) and that with real parameters                   [21]Nomura Y and Imada M 2020 Dirac-type nodal spin liquid
+(right). Nvar is the number of variational parameters.                                    revealed by machine learning (Preprint  2005.14142)
+                                                                                 [22]Saito H 2017       Journal of the Physical Society of Japan 86
+                                                                                          093001
+                                                                                 [23]Saito H and Kato M 2018       Journal of the Physical Society
+a property of universal approximation, which ensures                                      of Japan 87 014001
+that the RBM can exactly represent the eigenstates of                            [24]Nomura Y, Darmawan A S, Yamaji Y and Imada M 2017
+                                                                                          Phys. Rev. B 96(20) 205152
+the many-body systems, the RBM with a ﬁnite number                               [25]Luo D and Clark B K 2019       Phys. Rev. Lett. 122(22) 226401
+of  parameters  has  a  limit  in  representability.    The                      [26]Han J, Zhang L and E W 2019       Journal of Computational
+result indicates that, when the number of parameters                                      Physics 399 108929
+is  small,   the  representability  depends  on  how  we                         [27]Choo   K,   Mezzacapo   A   and   Carleo   G   2020         Nature
+                                                                                          Communications 11 2368
+design  the  architecture  of  the  RBM  network  (we  do                        [28]Pfau  D,  Spencer  J  S,  Matthews  A  G  D  G  and  Foulkes
+not  know  the  best  architecture  of  the  RBM  and                                     W M C 2020 Phys. Rev. Research 2(3) 033429
+ﬁnding  the  best  choice  is  beyond  the  scope  of  the                       [29]Hermann J, Sch¨atzle Z and No´e F 2020       Nature Chemistry
+                                                                                 [30]Nomura Y 2020       J. Phys. Soc. Jpn. 89 054706
+present  study).    However,  at  the  same  time,  when                         [31]Deng D L, Li X and Das Sarma S 2017       Phys. Rev. B 96(19)
+the number of parameters becomes large, the diﬀerent                                      195145
+parameterization of the RBM wave function does not                               [32]Glasser I, Pancotti N, August M, Rodriguez I D and Cirac
+aﬀect  the  result,   and  the  diﬀerent  RBMs  can  be                                   J I 2018 Phys. Rev. X  8(1) 011006
+                                                                                 [33]Clark  S  R  2018       Journal  of  Physics  A:  Mathematical  and
+systematically  improved  similarly.   Indeed,  as  we  see                               Theoretical 51 135301
+in Figs. 3 and 5, the accuracy of the half-real and half-                        [34]Lu  S,  Gao  X  and  Duan  L  M  2019       Phys.  Rev.  B  99(15)
+complex RBM wave function systematically improves                                         155136
+toward  the  exact  solutions  both  for  the  ground  and                       [35]Kaubruegger R, Pastori L and Budich J C 2018       Phys. Rev.
+                                                                                          B 97(19) 195136
+excited states.                                                                  [36]Huang  Y  and  Moore  J  E  2017  Neural  network  repre-
+                                                                                          sentation  of  tensor  network  and  chiral  states  (Preprint
+References                                                                                1701.06246)
+                                                                                 [37]Choo K, Carleo G, Regnault N and Neupert T 2018       Phys.
+                                                                                          Rev. Lett. 121(16) 167204
+ [1]See, for example, Ref. [64] for the introduction to the QMC                  [38]Vieijra  T,  Casert  C,  Nys  J,  De  Neve  W,  Haegeman  J,
+         method.                                                                          Ryckebusch  J  and  Verstraete  F  2020  Phys.  Rev.  Lett.
+ [2]McMillan W L 1965     Phys. Rev. 138(2A) A442–A451                                    124(9) 097201
+ [3]Ceperley D, Chester G V and Kalos M H 1977     Phys. Rev.                    [39]Irikura  N  and  Saito  H  2020        Phys.  Rev.  Research  2(1)
+         B 16(7) 3081–3099                                                                013284
+ [4]Yokoyama H and Shiba H 1987     J. Phys. Soc. Jpn. 56 1490–                  [40]Nagy A and Savona V 2019      Phys. Rev. Lett. 122(25) 250501
+         1506                                                                    [41]Hartmann M J and Carleo G 2019       Phys. Rev. Lett. 122(25)
+ [5]Yokoyama H and Shiba H 1987     J. Phys. Soc. Jpn. 56 3582–                           250502
+         3592                                                                    [42]Vicentini F, Biella A, Regnault N and Ciuti C 2019       Phys.
+ [6]White S R 1992     Phys. Rev. Lett. 69(19) 2863–2866                                  Rev. Lett. 122(25) 250503
+ [7]White S R 1993     Phys. Rev. B 48(14) 10345–10356                           [43]Yoshioka  N  and  Hamazaki  R  2019       Phys.  Rev.  B  99(21)
+ [8]Verstraete F, Murg V and Cirac J 2008     Advances in Physics                         214306
+         57 143–224                                                              [44]Jiang  H  C,  Yao  H  and  Balents  L  2012       Phys.  Rev.  B  86
+ [9]Or´us R 2014     Annals of Physics 349 117 – 158                                      024424
+                                                                                 [45]Hu W J, Becca F, Parola A and Sorella S 2013       Phys. Rev.
+Helping restricted Boltzmann machines with quantum-state representation by restoring symmetry                    10
+
+         B 88 060402(R)
+[46]Gong S S, Zhu W, Sheng D N, Motrunich O I and Fisher
+         M P A 2014 Phys. Rev. Lett. 113(2) 027201
+[47]Morita S, Kaneko R and Imada M 2015       J. Phys. Soc. Jpn.
+         84 024720
+[48]Wang L, Gu Z C, Verstraete F and Wen X G 2016       Phys.
+         Rev. B 94(7) 075143
+[49]Wang L and Sandvik A W 2018       Phys. Rev. Lett. 121 107202
+[50]Liu W Y, Dong S, Wang C, Han Y, An H, Guo G C and
+         He L 2018 Phys. Rev. B 98(24) 241109
+[51]Haghshenas R and Sheng D N 2018       Phys.  Rev.  B  97(17)
+         174408
+[52]Ferrari F and Becca F 2020       Phys. Rev. B 102(1) 014417
+[53]Liu W Y, Gong S S, Li Y B, Poilblanc D, Chen W Q and Gu
+         Z C 2020 Gapless quantum spin liquid and global phase
+         diagram of the spin-1/2 J1-J2  square antiferromagnetic
+         Heisenberg model (Preprint  2009.01821)
+[54]Carleo G, Nomura Y and Imada M 2018       Nat. Commun. 9
+         5322
+[55]Mizusaki T and Imada M 2004       Phys. Rev. B 69 125110
+[56]Tahara D and Imada M 2008       J. Phys. Soc. Jpn. 77 114701
+[57]Melko  R  G,  Carleo  G,  Carrasquilla  J  and  Cirac  J  I  2019
+         Nature Physics 15 887–892
+[58]Sorella S 2001       Phys. Rev. B 64(2) 024512
+[59]Schulz H J, Ziman T A L and Poilblanc D 1996       J. Phys. I
+         France 6 675–703
+[60]Kawamura M, Yoshimi K, Misawa T, Yamaji Y, Todo S and
+         Kawashima N 2017 Computer Physics Communications
+         217 180 – 192 ISSN 0010-4655
+[61]Kwon Y, Ceperley D M and Martin R M 1998       Phys. Rev.
+         B 58(11) 6800–6806
+[62]Kashima T and Imada M 2001       J. Phys. Soc. Jpn. 70 2287–
+         2299
+[63]Okamoto K and Nomura K 1992       Physics Letters A 169 433
+         – 437
+[64]Becca  F  and  Sorella  S  2017       Quantum  Monte  Carlo  Ap-
+         proaches for Correlated Systems  (Cambridge University
+         Press)
