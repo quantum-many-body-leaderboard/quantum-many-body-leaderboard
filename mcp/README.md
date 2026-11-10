@@ -11,6 +11,7 @@ dependencies; it needs Node 22 or later. It reads the files the site publishes u
 | `search_instances` | instances filtered by model, lattice, boundary, size range, parameters, open only, words in the label |
 | `best_values` | for one instance: the exact energy and the best energy of each bound type, with sigma, method and reference |
 | `get_instance` | for one instance: every row |
+| `list_open_problems` | QMBL: Open Problems: the open instances with their best values, whether the verifier can measure them, their verified entries, and the systems' scores |
 
 Cite individual energies to the primary paper named on the row, not to QMBL.
 

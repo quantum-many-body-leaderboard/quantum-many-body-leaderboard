@@ -15,8 +15,9 @@
 // The targets are every instance in data/ with no exact energy, on every build. An instance
 // that gets an exact energy is solved: it leaves the targets, and its entries stay listed,
 // marked solved, outside the systems' scores. The energy to beat is read from data/ too: the
-// lowest unflagged variational energy, never an extrapolation or a projection, even where one
-// holds QMBL's record (that record is shown beside it, as an estimate). The scoring is the
+// lowest unflagged variational energy, never an extrapolation or a projection. Each target is
+// shown as QMBL shows an instance (RULES.md 6): its best variational value first, then the best
+// projected, extrapolated and approximate values where they exist. The scoring is the
 // repository's (README; op_verify.py `combine` in quantum-many-body-leaderboard/verifier),
 // recomputed here against the live target: an entry's gap is (E - E_target) / |E_target|, a
 // new record lies more than 2 sigma combined below the target (QMBL's tie rule, RULES.md 6),
@@ -29,8 +30,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { perSiteDivisor, perSiteLabel, boundLabel, methodLabel, methodDetail } from "./units.mjs";
-import { lowestOf, exactRecordOf, rowId } from "./summary.mjs";
+import { perSiteDivisor, perSiteLabel, methodLabel, methodDetail } from "./units.mjs";
+import { lowestOf, exactRecordOf, rowId, classBest } from "./summary.mjs";
 import { quote, MODELS, instanceLabel, byGeometry } from "./readme_table.mjs";
 import { openProblemsFigure, FIGURE_NAME } from "./open_problems_figure.mjs";
 
@@ -40,6 +41,8 @@ const SUBMISSIONS = "https://github.com/quantum-many-body-leaderboard/open-probl
 // The repository beside this one: ../open-problems from the repository root.
 const DEFAULT_DIR = fileURLToPath(new URL("../../open-problems/", import.meta.url));
 const RECORD_SIGMAS = 2;
+// The best values shown under the best variational one, in QMBL's order (units.mjs BEST_CLASSES).
+const OTHER_CLASSES = ["projected", "extrapolated", "approximate"];
 // metadata.yaml's ai_involvement (schema/metadata.schema.json) and how the page prints it.
 export const AI_LABELS = { ai: "AI", "human+ai": "human + AI", human: "human" };
 export const LINKS = [["code", "code"], ["checkpoint", "checkpoint"], ["paper", "paper"], ["pr", "pull request"]];
@@ -95,8 +98,10 @@ export function score(op, instances) {
   const byId = new Map(instances.map(i => [i.instance_id, i]));
   const targets = op.targets.map(t => {
     const inst = byId.get(t.instance_id);
-    const f = perSiteDivisor(inst) ?? 1, row = bestVariational(inst), rec = lowestOf(inst);
-    return { t, inst, row, estimate: rec && rec !== row ? rec : null, first: null,
+    const f = perSiteDivisor(inst) ?? 1, row = bestVariational(inst), best = classBest(inst);
+    // QMBL's other best values (summary.mjs classBest), shown under the best variational one.
+    const others = OTHER_CLASSES.map(c => [c, best[c]]).filter(([, r]) => r);
+    return { t, inst, row, others, first: null,
       energy: row ? row.energy / f : null, sigma: row ? (row.sigma ?? 0) / f : null };
   });
   const of = new Map(targets.map(x => [x.t.instance_id, x]));
@@ -141,7 +146,7 @@ const NA = '<span class="muted">n/a</span>';
 // the energies, citations and labels are written as on QMBL's Table.
 export function openProblemsPages(op, instances, site) {
   const { esc, citeHtml, energyCell, modelName, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD, CITE_TITLE, DOI, CITE_YEAR, figureSections = "",
-    searchIndex, searchWords, searchMatch, SEARCH_STOP, latticeOf, sizeBand, SIZE_BANDS } = site;
+    searchIndex, searchWords, searchMatch, SEARCH_STOP, latticeOf, sizeBand, SIZE_BANDS, codeHtml } = site;
   const { targets, entries, systems } = score(op, instances);
   const n = targets.length;
   const aiBadge = a => `<span class="badge">${AI_LABELS[a]}</span>`;
@@ -208,9 +213,9 @@ ${entriesTable}` : "";
 <span class="e"><span class="num">${quote(s.e.energy_per_site, s.e.sigma_per_site).text}</span> <span class="muted">${perSiteLabel(s.x.inst)} &middot; verified entry</span>${s.record ? '<span class="tag">new record</span>' : ""}</span>
 <span class="muted">${s.first ? "the first verified state on this instance" : `gap ${gapText(s.gap)}`}</span></div>`);
 
-  // One table per model, with the Table's names and labels. An instance links to its target row
-  // in the Table, which opens the instance there; without a variational energy, to its record row
-  // (or its lowest row). Each row carries QMBL's search index and each section its lattice and
+  // One table per model, with the Table's names and labels, one row per instance and one line per
+  // best value in it, as QMBL's README lists them. An instance links to its best variational row
+  // in the Table, which opens the instance there; without one, to its lowest row. Each row carries QMBL's search index and each section its lattice and
   // size badges, so the search bar on top filters as QMBL's Table does.
   const sections = groups.map(([model, name, group]) => {
     const lattices = [...new Set(group.map(x => latticeOf(x.inst)))].sort();
@@ -220,24 +225,30 @@ ${entriesTable}` : "";
     ${bands.length > 1 ? `<span class="muted">size</span>${bands.map(([key, , label]) => `<button type="button" data-size="${key}">${label}</button>`).join("")}` : ""}
   </div>`;
     const rows = group.map(x => {
-      const { t, inst, row, estimate, first } = x;
+      const { t, inst, row, others, first } = x;
       const linked = row ?? lowestOf(inst) ?? [...inst.rows].sort((a, b) => a.energy - b.energy)[0];
-      const beat = row ? `<td class="record">${energyCell(row, inst)}</td><td><span class="m" title="${esc(methodDetail(row))}">${esc(methodLabel(row))}</span></td><td>${citeHtml(row)}</td>`
-        : first ? `<td class="record"><span class="num">${quote(first.energy_per_site, first.sigma_per_site).text}</span></td><td>${esc(first.system)}</td><td><a href="#${entryId(first)}">first verified state</a></td>`
-        : '<td colspan="3" class="muted">no variational energy yet; the first verified state sets it</td>';
+      const line = (value, energy, method, source, code) => ({ value, energy, method, source, code });
+      // An instance with no variational energy shows no best variational line (2026-11-11).
+      const lines = [
+        ...(row ? [line("best variational", `<span class="record">${energyCell(row, inst)}</span>`, `<span class="m" title="${esc(methodDetail(row))}">${esc(methodLabel(row))}</span>`, citeHtml(row), codeHtml(row))]
+          : first ? [line("best variational", `<span class="record"><span class="num">${quote(first.energy_per_site, first.sigma_per_site).text}</span></span>`, esc(first.system), `<a href="#${entryId(first)}">verified entry</a>`, "")]
+          : []),
+        ...others.map(([c, r]) => line(`best ${c}`, energyCell(r, inst), `<span class="m" title="${esc(methodDetail(r))}">${esc(methodLabel(r))}</span>`, citeHtml(r), codeHtml(r))),
+      ];
+      const col = k => `<td${k === "code" ? ' class="code"' : ""}>${lines.map(l => `<div class="op-line">${l[k] || "&nbsp;"}</div>`).join("")}</td>`;
+      const beat = ["value", "energy", "method", "source", "code"].map(col).join("");
       const search = searchIndex(inst, name);
       return `<tr id="${targetId(inst)}" class="op-row" data-search="${esc(search.own)}" data-methods="${esc(search.methods)}" data-lattice="${esc(latticeOf(inst))}" data-size="${sizeBand(inst)}">
         <th scope="row"><a href="/instances/#${rowId(inst, linked)}">${esc(instanceLabel(inst))}</a></th>
-        ${beat}<td>${estimate ? `${energyCell(estimate, inst)} <span class="badge">${boundLabel(estimate)}</span>` : ""}</td>
-        <td class="num">${inst.rows.length}</td>
-        <td>${t.verifier.supported ? '<span class="muted">yes</span>' : `not yet <span class="muted">(${esc(t.verifier.reason)})</span>`}</td></tr>`;
+        ${beat}
+        <td class="num">${inst.rows.length}</td></tr>`;
     }).join("");
     return `<section class="targets" data-model="${model}">
   <h3 id="targets-${model.toLowerCase()}">${esc(name)}<a class="anchor" href="#targets-${model.toLowerCase()}" aria-label="Link to this section">#</a></h3>
   <p class="muted"><span class="count">${group.length} instance${group.length === 1 ? "" : "s"}</span>, energies as <code>${perSiteLabel(group[0].inst)}</code></p>
   ${badges}
   <div class="scroll"><table class="leaderboard op-wide">
-    <thead><tr><th>instance</th><th>energy to beat</th><th>method</th><th>source</th><th>record (estimate)</th><th>results</th><th>verifier</th></tr></thead>
+    <thead><tr><th>instance</th><th>value</th><th>energy</th><th>method</th><th>source</th><th>code</th><th>energies</th></tr></thead>
     <tbody>${rows}</tbody></table></div>
 </section>`;
   }).join("\n");
@@ -330,7 +341,7 @@ ${searchScript}
 ${entriesSection}
 ${cite}`;
 
-  const what = `The ${n} lattice Hamiltonians in QMBL with no exact ground-state energy, as open problems for scientists and AI systems`;
+  const what = `The ${n} Hamiltonian instances in QMBL with no exact ground-state energy, as open problems for scientists and AI systems`;
   return {
     leaderboard: { body: leaderboard, description: `${what}: the best published energies on them, by system size, Hamiltonian and cost.` },
     table: { body: table, description: `${what}: the energy to beat on each, and the verified entries.` },
@@ -384,4 +395,8 @@ section.targets h3 + p.muted { margin: 0.2rem 0 0; }
 /* On a phone the targets and entries tables keep their desktop layout, one line a row, and
    scroll sideways in their .scroll box instead of folding every cell into a tall column. */
 @media (max-width: 760px) { table.op-wide { min-width: 72rem; } }
+/* The Table: one line per best value inside each cell, aligned across the row's cells; the best
+   variational value in the record colour, as QMBL's Table marks a best. */
+.op-line { white-space: nowrap; line-height: 1.5; }
+.op-line .record .num { font-weight: 600; color: var(--record); }
 `;

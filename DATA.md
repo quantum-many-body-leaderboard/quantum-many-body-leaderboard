@@ -732,17 +732,20 @@ hand-edited, and every value is the one the site shows.
 | file | content |
 |---|---|
 | `/api/qmbl.json` | every instance and every row, one file |
-| `/api/instances.json` | one line per instance: id, label, model, lattice, `n_sites`, boundary, `params`, `has_exact`, the exact energy per site and the best energy per site of each bound type, with method and ansatz |
+| `/api/instances.json` | one line per instance: id, label, model, lattice, `n_sites`, boundary, `params`, `has_exact`, `open`, the exact energy per site and the best energy per site of each bound type, with method and ansatz |
 | `/api/models.json` | per model: instance, row, exact and open counts, lattices, boundaries, size range, parameter names, the URL of its slice |
 | `/api/m/<model>.json` | the `instances.json` lines of one model |
-| `/api/open.json` | the `instances.json` lines of the instances with no exact energy |
+| `/api/open.json` | the `instances.json` lines of the open instances |
+| `/api/open-problems.json` | QMBL: Open Problems: per open instance its best variational value, its other best values and whether the verifier can build it; every verified entry with its gap; the systems' scores |
 | `/api/i/<id>.json`, `/api/tdl/<id>.json` | one instance with all its rows and its `best` block |
 | `/api/summary.json` | the counts behind the headline numbers |
 
 The query files (`models.json`, `m/`, `open.json`) cover the finite instances, as
 `instances.json` does, and carry no deprecated `record_*` field. `has_exact`, not
 `exact_energy_per_site`, says whether an instance has an exact energy: Impurity instances have
-no per-site energy. [`mcp/`](mcp/) serves these files to AI systems as MCP tools.
+no per-site energy. `open` follows QMBL: Open Problems: an instance is open when it has no exact
+row, flagged or not, so an instance whose only exact row is flagged has neither `has_exact` nor
+`open`. [`mcp/`](mcp/) serves these files to AI systems as MCP tools.
 
 ## Units and conventions
 

@@ -29,7 +29,7 @@ import { hoursOrEdOf, costFigureName, flopsFigureName, paramsFigureName } from "
 import { FRONTIER } from "./views.mjs";
 import { energyFigures, pickerFacets, drawnRows } from "./ladders.mjs";
 import { SUB_RING, pickerSlug, formula, about, modelGlyph, latticeGlyph, heroHtml, HERO_CSS } from "./hero.mjs";
-import { loadOpenProblems, openProblemsPages, openProblemsLlms, OPEN_PROBLEMS_URL, OPEN_PROBLEMS_TABLE_URL, OPEN_PROBLEMS_NAV_CSS, OPEN_PROBLEMS_PAGE_CSS } from "./open_problems.mjs";
+import { loadOpenProblems, openProblemsPages, openProblemsLlms, score as scoreOpenProblems, OPEN_PROBLEMS_URL, OPEN_PROBLEMS_TABLE_URL, OPEN_PROBLEMS_NAV_CSS, OPEN_PROBLEMS_PAGE_CSS } from "./open_problems.mjs";
 
 const OUT = "_site";
 const REPO = "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard";
@@ -1523,16 +1523,18 @@ function llmsTxt() {
     "## How to answer a question",
     "",
     `1. https://qmbl.org/api/models.json: the ${models.length} models (${models.join(", ")}), each with its lattices, boundaries, size range and parameter names.`,
-    "2. https://qmbl.org/api/m/<model>.json: every instance of one model, one line each: id, size, boundary, parameters, `has_exact`, the exact energy per site and the best energy per site of each bound type with its method. Filter here by size, boundary or parameter. https://qmbl.org/api/open.json holds the same lines for the instances with no exact energy.",
+    "2. https://qmbl.org/api/m/<model>.json: every instance of one model, one line each: id, size, boundary, parameters, `has_exact`, `open`, the exact energy per site and the best energy per site of each bound type with its method. Filter here by size, boundary or parameter. https://qmbl.org/api/open.json holds the same lines for the open instances (no exact row, flagged or not: the Open Problems list).",
     "3. https://qmbl.org/api/i/<instance_id>.json: one instance with every published energy (sigma, method, bound type, reference, defects, cost where known) and its `best` block. Example: https://qmbl.org/api/i/J1J2/square_100_P_0.5.json.",
     "",
     "`has_exact`, not `exact_energy_per_site`, says whether an exact energy exists: Impurity instances have no per-site energy. The per-model files are up to about 300 KB; a fetch tool that summarizes or truncates pages should download them raw, or use the per-instance files, which are small.",
+    "",
+    "Open Problems: https://qmbl.org/api/open-problems.json gives each open instance with its best values and whether the verifier can measure it yet, every verified entry with its gap to the best variational value, and the systems' scores. How to enter: https://github.com/quantum-many-body-leaderboard/open-problems.",
     "",
     "Other files: https://qmbl.org/api/instances.json (every instance line, about 1.3 MB), https://qmbl.org/api/qmbl.json (every instance and row, about 30 MB), https://qmbl.org/api/summary.json (the headline counts), https://qmbl.org/api/tdl/<instance_id>.json (infinite lattices).",
     "",
     "## MCP server",
     "",
-    `A local MCP server (stdio, one Node file, no dependencies) with the tools \`list_models\`, \`search_instances\`, \`best_values\` and \`get_instance\`. To install it, download ${MCP_RAW} and register it as a local stdio MCP server named "qmbl" that runs \`node <path to server.mjs>\`. Details: ${REPO}/tree/main/mcp.`,
+    `A local MCP server (stdio, one Node file, no dependencies) with the tools \`list_models\`, \`search_instances\`, \`best_values\`, \`get_instance\` and \`list_open_problems\`. To install it, download ${MCP_RAW} and register it as a local stdio MCP server named "qmbl" that runs \`node <path to server.mjs>\`. Details: ${REPO}/tree/main/mcp.`,
     "",
     "## Pages",
     "",
@@ -1921,7 +1923,7 @@ write("rules/index.html", redirectPage(RULES, "Rules"));
 write("data/index.html", redirectPage(DATA, "Data"));
 write("contribute/index.html", contributePage());
 if (OPEN_PROBLEMS) {
-  const op = openProblemsPages(OPEN_PROBLEMS, instances, { esc, citeHtml, energyCell, modelName, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD,
+  const op = openProblemsPages(OPEN_PROBLEMS, instances, { esc, citeHtml, codeHtml, energyCell, modelName, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD,
     CITE_TITLE, DOI, CITE_YEAR: RELEASED.slice(0, 4), figureSections: opFigureSections(),
     searchIndex, searchWords, searchMatch, SEARCH_STOP, latticeOf, sizeBand, SIZE_BANDS });
   const opCss = `/open-problems.css?v=${OP_CSS_VERSION}`;
@@ -1974,6 +1976,8 @@ function indexEntry(i, { deprecated = true } = {}) {
     url: `https://qmbl.org${instUrl(i)}`, json: `https://qmbl.org${jsonUrl(i)}`,
     // has_exact, not exact_energy_per_site, says whether an exact energy exists: Impurity has no per-site energy.
     has_exact: b.exact != null,
+    // Open Problems' rule (its scripts/targets.mjs isSolved): any exact row, flagged or not, solves an instance.
+    open: !i.rows.some(r => r.bound_type === "exact"),
     exact_energy_per_site: perSiteOf(b.exact), exact_method: b.exact?.method ?? null, exact_ansatz: b.exact?.ansatz ?? null,
     ...Object.fromEntries(BEST_CLASSES.flatMap(c => [[`best_${c}_energy_per_site`, perSiteOf(b[c])], [`best_${c}_method`, b[c]?.method ?? null], [`best_${c}_ansatz`, b[c]?.ansatz ?? null]])),
     // Deprecated (DEPRECATED above).
@@ -1995,7 +1999,7 @@ write("api/models.json", JSON.stringify({ ...queryMeta, models: [...byModel].map
   const sizes = list.map(i => i.n_sites).filter(n => typeof n === "number");
   return {
     model, instances: list.length, rows: list.reduce((n, i) => n + i.rows.length, 0),
-    exact: list.filter(i => classBest(i).exact).length, open: list.filter(i => !classBest(i).exact).length,
+    exact: list.filter(i => classBest(i).exact).length, open: list.filter(i => indexEntry(i).open).length,
     lattices: [...new Set(list.map(i => i.lattice))].sort(), boundaries: [...new Set(list.map(i => i.boundary ?? null))],
     n_sites_min: sizes.length ? Math.min(...sizes) : null, n_sites_max: sizes.length ? Math.max(...sizes) : null,
     params: [...new Set(list.flatMap(i => Object.keys(i.params ?? {})))].sort(),
@@ -2004,8 +2008,32 @@ write("api/models.json", JSON.stringify({ ...queryMeta, models: [...byModel].map
 }) }, null, 2) + "\n");
 for (const [model, list] of byModel)
   write(`api/m/${model}.json`, JSON.stringify({ ...queryMeta, model, instances: list.map(i => indexEntry(i, { deprecated: false })) }, null, 2) + "\n");
-write("api/open.json", JSON.stringify({ ...queryMeta, note: `${queryMeta.note} Open: no exact energy (RULES.md section 6).`,
-  instances: instances.filter(i => !classBest(i).exact).map(i => indexEntry(i, { deprecated: false })) }, null, 2) + "\n");
+write("api/open.json", JSON.stringify({ ...queryMeta, note: `${queryMeta.note} Open: no exact row, flagged or not (the Open Problems list).`,
+  instances: instances.map(i => indexEntry(i, { deprecated: false })).filter(i => i.open) }, null, 2) + "\n");
+
+// QMBL: Open Problems as data: each target with its best values and whether the verifier can build
+// it, every verified entry scored against the live target, every system scored (open_problems.mjs
+// score, the same numbers as the pages and the Open Problems README).
+if (OPEN_PROBLEMS) {
+  const { targets, entries, systems } = scoreOpenProblems(OPEN_PROBLEMS, instances);
+  const value = (r, inst) => {
+    const f = perSiteDivisor(inst);
+    return { bound_type: r.bound_type, energy_per_site: f == null ? null : r.energy / f, sigma_per_site: f == null || r.sigma == null ? null : r.sigma / f,
+      method: r.method, ansatz: r.ansatz ?? null, reference: r.reference };
+  };
+  const entryOf = s => ({ instance_id: s.e.instance_id, system: s.e.system, team: s.e.team, ai_involvement: s.e.ai_involvement,
+    energy_per_site: s.e.energy_per_site, sigma_per_site: s.e.sigma_per_site ?? null, measured: s.e.measured ?? null,
+    gap: s.gap ?? null, new_record: !!s.record, first_state: !!s.first, solved: !!s.solved, live: !!s.live, flags: s.e.flags ?? [],
+    compute: s.e.compute ?? null, links: s.e.links ?? null });
+  write("api/open-problems.json", JSON.stringify({ ...queryMeta,
+    note: `${queryMeta.note} The bar for an entry is the best variational value; the other best values are not upper bounds. How to enter: https://github.com/quantum-many-body-leaderboard/open-problems.`,
+    targets: targets.map(x => ({ ...Object.fromEntries(Object.entries(indexEntry(x.inst, { deprecated: false })).filter(([k]) => !k.startsWith("best_") && !k.startsWith("exact_"))),
+      best_variational: x.row ? value(x.row, x.inst) : null,
+      first_state: x.first ? entryOf(entries.find(s => s.e === x.first)) : null,
+      other_best: x.others.map(([, r]) => value(r, x.inst)),
+      verifier: x.t.verifier })),
+    entries: entries.map(entryOf), systems }, null, 2) + "\n");
+}
 write("api/qmbl.json", JSON.stringify({
   name: "QMBL: the Quantum Many-Body Leaderboard",
   url: "https://qmbl.org/", repository: REPO, license: "Apache-2.0", doi: DOI,

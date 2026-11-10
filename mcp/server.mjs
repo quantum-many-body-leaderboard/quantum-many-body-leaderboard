@@ -48,11 +48,13 @@ async function indexLines({ model, open }) {
     if (open) return (await get("api/open.json")).instances;
   } catch (e) { if (!(e instanceof NotFound)) throw e; }
   const all = (await get("api/instances.json")).map(dropDeprecated);
-  return all.filter(i => (!model || i.model === model) && (!open || !hasExact(i)));
+  return all.filter(i => (!model || i.model === model) && (!open || isOpen(i)));
 }
 
 // has_exact since 2026-11-10; before it, exact_method (Impurity has no per-site energy to test).
 const hasExact = i => i.has_exact ?? i.exact_method != null;
+// Open as QMBL: Open Problems counts it: no exact row, flagged or not (`open`, since 2026-11-10).
+const isOpen = i => i.open ?? !hasExact(i);
 
 const ID = /^[A-Za-z0-9_-]+\/[A-Za-z0-9_.-]+$/;
 async function instance(id) {
@@ -91,7 +93,7 @@ const TOOLS = [
         boundary: { type: "string", description: "Boundary code as list_models gives it, e.g. P (periodic), O (open)." },
         n_sites_min: { type: "integer", description: "Smallest number of sites." },
         n_sites_max: { type: "integer", description: "Largest number of sites." },
-        open_only: { type: "boolean", description: "Only instances with no exact energy." },
+        open_only: { type: "boolean", description: "Only open instances: no exact row, flagged or not (the QMBL: Open Problems list)." },
         params: { type: "object", description: "Parameter values that must match exactly, e.g. {\"U\": 8} (Hubbard) or {\"J2\": 0.5} (J1J2); list_models gives the names per model.", additionalProperties: true },
         text: { type: "string", description: "Words that must all appear in the label or the instance id (case-insensitive)." },
         limit: { type: "integer", description: "Most results to return (default 50, at most 500).", minimum: 1, maximum: 500 },
@@ -105,11 +107,46 @@ const TOOLS = [
         && (!a.boundary || i.boundary === a.boundary)
         && (a.n_sites_min == null || (typeof i.n_sites === "number" && i.n_sites >= a.n_sites_min))
         && (a.n_sites_max == null || (typeof i.n_sites === "number" && i.n_sites <= a.n_sites_max))
-        && (!a.open_only || !hasExact(i))
+        && (!a.open_only || isOpen(i))
         && Object.entries(a.params ?? {}).every(([k, v]) => i.params?.[k] === v)
         && words.every(w => `${i.label} ${i.instance_id}`.toLowerCase().includes(w)));
       const limit = Math.min(a.limit ?? 50, 500);
       return { matches: hits.length, returned: Math.min(hits.length, limit), instances: hits.slice(0, limit), note: NOTE };
+    },
+  },
+  {
+    name: "list_open_problems",
+    description: "QMBL: Open Problems, the open instances as a benchmark: each with its best variational value (the bar an entry must beat, by more than 2 sigma combined for a new record), QMBL's other best values (projected, extrapolated, approximate; not upper bounds), whether the verifier can measure it yet, and its verified entries; plus the systems' scores. How to enter: https://github.com/quantum-many-body-leaderboard/open-problems.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        model: { type: "string", description: "Model name as list_models gives it." },
+        lattice: { type: "string", description: "Lattice, or its family before the dash (\"kagome\" matches kagome-36a)." },
+        n_sites_min: { type: "integer", description: "Smallest number of sites." },
+        n_sites_max: { type: "integer", description: "Largest number of sites." },
+        verifier_supported: { type: "boolean", description: "Only instances the verifier can measure today (true), or only those it cannot yet (false)." },
+        with_entries: { type: "boolean", description: "Only instances with at least one verified entry." },
+        text: { type: "string", description: "Words that must all appear in the label or the instance id (case-insensitive)." },
+        limit: { type: "integer", description: "Most targets to return (default 50, at most 500).", minimum: 1, maximum: 500 },
+      },
+      additionalProperties: false,
+    },
+    async run(a) {
+      let op;
+      try { op = await get("api/open-problems.json"); }
+      catch (e) { if (e instanceof NotFound) throw new UserError(`${SOURCE} has no api/open-problems.json yet`); throw e; }
+      const words = (a.text ?? "").toLowerCase().split(/\s+/).filter(Boolean);
+      const entered = new Set(op.entries.map(e => e.instance_id));
+      const hits = op.targets.filter(x =>
+        (!a.model || x.model === a.model)
+        && (!a.lattice || x.lattice === a.lattice || x.lattice?.startsWith(`${a.lattice}-`))
+        && (a.n_sites_min == null || (typeof x.n_sites === "number" && x.n_sites >= a.n_sites_min))
+        && (a.n_sites_max == null || (typeof x.n_sites === "number" && x.n_sites <= a.n_sites_max))
+        && (a.verifier_supported == null || x.verifier.supported === a.verifier_supported)
+        && (!a.with_entries || entered.has(x.instance_id))
+        && words.every(w => `${x.label} ${x.instance_id}`.toLowerCase().includes(w)));
+      const limit = Math.min(a.limit ?? 50, 500), shown = hits.slice(0, limit), ids = new Set(shown.map(x => x.instance_id));
+      return { matches: hits.length, returned: shown.length, targets: shown, entries: op.entries.filter(e => ids.has(e.instance_id)), systems: op.systems, note: op.note };
     },
   },
   {
@@ -146,7 +183,7 @@ async function handle(req) {
         protocolVersion: typeof params?.protocolVersion === "string" ? params.protocolVersion : PROTOCOL,
         capabilities: { tools: { listChanged: false } },
         serverInfo: { name: "qmbl", title: "QMBL: the Quantum Many-Body Leaderboard", version: VERSION },
-        instructions: `Read-only access to QMBL, the best published ground-state energies of quantum many-body Hamiltonian instances, from ${SOURCE}. Start with list_models, then search_instances; best_values or get_instance for one instance. ${NOTE}`,
+        instructions: `Read-only access to QMBL, the best published ground-state energies of quantum many-body Hamiltonian instances, from ${SOURCE}. Start with list_models, then search_instances; best_values or get_instance for one instance; list_open_problems for the QMBL: Open Problems benchmark. ${NOTE}`,
       } });
     case "ping":
       return isRequest && send({ id, result: {} });
