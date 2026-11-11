@@ -29,7 +29,17 @@
         "method": "ed_chain.py (code A: scipy.sparse Hamiltonian with ARPACK eigsh, true residual 2.4e-14; code B: matrix-free Lanczos with full reorthogonalisation, residual 8.1e-15), S^z = 0 space of 12,870 states, no spatial symmetry, numpy 2.5.4 and scipy 1.18.1 on an Apple M5 laptop, 2026-11-11; results in checks/heisenberg-chain-16-ed/results.txt",
         "reported_as": "-28.56918544246714 (code A) | -28.56918544246712 (code B) | -28.5691854424671194555711899928 (Bethe ansatz, checks/bethe-heisenberg-chain/bethe_xxx.py 16 P 30)",
         "note": "Pauli total; E/N = -0.446393523 in S.S units (S.S total -7.14229636062). H = sum_i S_i.S_{i+1} on the periodic chain (16 bonds). The S^z = 0 space holds a member of every spin multiplet, so its lowest level is the ground state. The same script reproduces the exact row of Heisenberg/chain_20_P to 6e-14. No published exact energy is carried for this instance; carried to 13 decimals, the agreement of the three calculations.",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "independent recomputation by Bethe ansatz (pure-python fixed-point iteration of L atan(2 lambda_j) = pi I_j + sum_k atan(lambda_j - lambda_k), M = L/2, E = L/4 - sum 2/(1+4 lambda_j^2)); no ED run on this machine (brief rule 7); script checked on L = 4 (-2 exactly) and L = 8 (-3.6510934)",
+          "location": "recomputation, not a source",
+          "reported_as": "E_SS = -7.14229636061678, E/N = -0.446393522539",
+          "conversion": "4 x -7.14229636061678 = -28.56918544246712",
+          "note": "Agrees with the stored -28.5691854424671 to 1e-14. Row is not in the group file; checked because the task asked for it.",
+          "source_entry": "RP2-heisenberg#4 (qmbl-verify 2026-11-11, instances)"
+        }
       },
       "computed_by": "qmbl",
       "artifacts": {
@@ -67,7 +77,17 @@
         "method": "source text of arXiv:2510.08430 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading (2026-11-11)",
         "reported_as": "-28.5685(3)",
         "note": "Table 2, row 'Block-layer QGT', column Energy E (the Vision Transformer with a two-layer encoder of the chain benchmark, lines 130-131, optimised with the QGT block-diagonal by network layer); sources/2510.08430.txt line 193; version read: arXiv text (sources/2510.08430.txt), checked against the arXiv v2 PDF; no journal version (arXiv metadata and Crossref, 2026-11-11) | The text writes H = sum_i S_i.S_{i+1} with S_i = σ_i / 2 on the periodic chain of L = 16 sites (lines 126-128), but Table 2's energies are in the Pauli form: the exact ground state of that H is -7.142296 (QMBL's diagonalization and Bethe ansatz, checks/heisenberg-chain-16-ed/), and -28.5685(3) read with S = σ/2 would lie four times below it, impossible for a variational energy. Read as the Pauli total (4 x S.S, RULES.md 5), the two rows lie 6.9e-4 and 1.8e-3 above the exact Pauli total -28.569185, at 2.3 and 3.0 printed sigma. Stored as printed, the Pauli total; E/N in S.S units is the printed value / 64. | variance reported as σ² = 0.008 (Table 2, column Energy Variance), not stored: convention not verified",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "arXiv:2510.08430v2 PDF (pypdf layout mode) and arXiv HTML; v1 PDF compared, Table 2 identical",
+          "location": "Table 2, row 'Block-layer QGT', column Energy E",
+          "reported_as": "-28.5685(3)",
+          "conversion": "printed value is already the Pauli total: -28.5685, sigma 0.0003 (x1); in S.S units -28.5685/4 = -7.142125, E/N = -0.44638",
+          "note": "Text writes S = sigma/2, but the exact S.S ground energy of the 16-site ring is -7.1422964 (Bethe ansatz recomputed in this check); a value of -28.5685 in S.S units would be 4x below it. In Pauli form the row lies 6.85e-4 above the exact Pauli total -28.5691854 (2.3 printed sigma), consistent with infidelity 1.6e-5. So Pauli total, stored as printed. PBC, L = 16, two-layer-encoder ViT, block-layer QGT, variational: agree. Variance 0.008 printed, units not stated, not stored (agree).",
+          "source_entry": "RP2-heisenberg#0 (qmbl-verify 2026-11-11, instances)"
+        }
       }
     },
     {
@@ -93,7 +113,17 @@
         "method": "source text of arXiv:2510.08430 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading (2026-11-11)",
         "reported_as": "-28.5674(6)",
         "note": "Table 2, row 'Full QGT', column Energy E (the same Vision Transformer optimised with the full sampled QGT, 'full SR', line 131); sources/2510.08430.txt line 194; version read: arXiv text (sources/2510.08430.txt), checked against the arXiv v2 PDF; no journal version (arXiv metadata and Crossref, 2026-11-11) | The text writes H = sum_i S_i.S_{i+1} with S_i = σ_i / 2 on the periodic chain of L = 16 sites (lines 126-128), but Table 2's energies are in the Pauli form: the exact ground state of that H is -7.142296 (QMBL's diagonalization and Bethe ansatz, checks/heisenberg-chain-16-ed/), and -28.5685(3) read with S = σ/2 would lie four times below it, impossible for a variational energy. Read as the Pauli total (4 x S.S, RULES.md 5), the two rows lie 6.9e-4 and 1.8e-3 above the exact Pauli total -28.569185, at 2.3 and 3.0 printed sigma. Stored as printed, the Pauli total; E/N in S.S units is the printed value / 64. | variance reported as σ² = 0.026 (Table 2, column Energy Variance), not stored: convention not verified",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "arXiv:2510.08430v2 PDF (pypdf layout mode) and arXiv HTML; v1 PDF compared, Table 2 identical",
+          "location": "Table 2, row 'Full QGT', column Energy E",
+          "reported_as": "-28.5674(6)",
+          "conversion": "Pauli total as printed: -28.5674, sigma 0.0006",
+          "note": "Same convention argument as the block-layer row; 1.785e-3 above the exact Pauli total (3.0 printed sigma), consistent with infidelity 8.4e-5. 'full SR' / full sampled QGT matches method_detail. Variance 0.026 not stored.",
+          "source_entry": "RP2-heisenberg#1 (qmbl-verify 2026-11-11, instances)"
+        }
       }
     }
   ],

@@ -42807,4 +42807,2090 @@ export const VERIFICATIONS = [
     "note": "The value is printed as stored. The cluster is inferred, not printed: Table I's lattice vectors for N = 36 are garbled (b2 = (0, 4 sqrt 2) is not a lattice vector), and the paper's Table II reference energy -0.43837653 per site equals the exact energy of kagome-36d (36a/b/c differ). Kept on kagome-36d, ruled 2026-11-11.",
     "source_entry": "RP2-hubbard-heisenberg-j1j2#23 (qmbl-verify 2026-11-11)"
   },
+  // qmbl-verify 2026-11-11: second reading of the rows on the instances created 2026-11-11 (sweep-rows-2026-11-11-instances).
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.2",
+      "method": "MPS (8)",
+      "energy": -199.7537
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 429; Table 3 (10 x 10, Appendix C) line 1243, column J2 = 0.2",
+    "reported_as": "-1.997537 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.997537 * 100 = -199.753700 (Pauli per site x N = stored Pauli total; S.S per site = -0.4993842)",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.2 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_100_O_0.2.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#0 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.2",
+      "method": "MPS (70)",
+      "energy": -219.1048
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 430; Table 3 (10 x 10, Appendix C) line 1244, column J2 = 0.2",
+    "reported_as": "-2.191048 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.191048 * 100 = -219.104800 (Pauli per site x N = stored Pauli total; S.S per site = -0.5477620)",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.2 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_100_O_0.2.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#1 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.2",
+      "method": "MPS (1024)",
+      "energy": -225.5633
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 431; Table 3 (10 x 10, Appendix C) line 1245, column J2 = 0.2",
+    "reported_as": "-2.255633 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.255633 * 100 = -225.563300 (Pauli per site x N = stored Pauli total; S.S per site = -0.5639082)",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.2 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_100_O_0.2.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#2 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.2",
+      "method": "PixelCNN (7-48)",
+      "energy": -222.462
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 432; Table 3 (10 x 10, Appendix C) line 1246, column J2 = 0.2",
+    "reported_as": "-2.22462(24) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.22462 * 100 = -222.462000 (Pauli per site x N = stored Pauli total; S.S per site = -0.5561550); sigma 24e-5 * 100 = 0.024",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.2 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.2.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#3 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.2",
+      "method": "EW (7-48-8)",
+      "energy": -226.034
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 433; Table 3 (10 x 10, Appendix C) line 1249, column J2 = 0.2",
+    "reported_as": "-2.26034(6) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.26034 * 100 = -226.034000 (Pauli per site x N = stored Pauli total; S.S per site = -0.5650850); sigma 6e-5 * 100 = 0.006",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.2 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); record row: lowest energy printed for this instance in the paper; no other row on the instance (data file holds only this paper's rows); no duplicate: data/J1J2/square_100_O_0.2.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#4 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.2",
+      "method": "BW (7-48-70)",
+      "energy": -225.755
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 434; Table 3 (10 x 10, Appendix C) line 1251, column J2 = 0.2",
+    "reported_as": "-2.25755(8) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.25755 * 100 = -225.755000 (Pauli per site x N = stored Pauli total; S.S per site = -0.5643875); sigma 8e-5 * 100 = 0.008",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.2 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.2.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#5 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.2",
+      "method": "PixelCNN (P) (7-48)",
+      "energy": -219.2
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 3 (10 x 10, Appendix C) line 1247, column J2 = 0.2",
+    "reported_as": "-2.1920(9) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.1920 * 100 = -219.200000 (Pauli per site x N = stored Pauli total; S.S per site = -0.5480000); sigma 9e-4 * 100 = 0.09",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.2 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); sign rule not printed for this Table 3 row; 'no sign rule' read from the paper's labelling, where (S) marks sign-rule runs (Table 1, Table 4 caption) and the Table 2 scan is 'without using the sign rule'; caption: pretraining 'using MPS result (with bond dimension the last number in parenthesis)', but the label carries no bond dimension: which MPS was used is not printed; no duplicate: data/J1J2/square_100_O_0.2.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#6 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.2",
+      "method": "PixelCNN (8-48)",
+      "energy": -223.581
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 3 (10 x 10, Appendix C) line 1248, column J2 = 0.2",
+    "reported_as": "-2.23581(14) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.23581 * 100 = -223.581000 (Pauli per site x N = stored Pauli total; S.S per site = -0.5589525); sigma 14e-5 * 100 = 0.014",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.2 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); sign rule not printed for this Table 3 row; 'no sign rule' read from the paper's labelling, where (S) marks sign-rule runs (Table 1, Table 4 caption) and the Table 2 scan is 'without using the sign rule'; no duplicate: data/J1J2/square_100_O_0.2.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#7 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.2",
+      "method": "EW (RI) (7-48-8)",
+      "energy": -225.946
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 3 (10 x 10, Appendix C) line 1250, column J2 = 0.2",
+    "reported_as": "-2.25946(6) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.25946 * 100 = -225.946000 (Pauli per site x N = stored Pauli total; S.S per site = -0.5648650); sigma 6e-5 * 100 = 0.006",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.2 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); sign rule not printed for this Table 3 row; 'no sign rule' read from the paper's labelling, where (S) marks sign-rule runs (Table 1, Table 4 caption) and the Table 2 scan is 'without using the sign rule'; no duplicate: data/J1J2/square_100_O_0.2.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#8 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.3",
+      "method": "MPS (8)",
+      "energy": -189.3753
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 429, column J2 = 0.3",
+    "reported_as": "-1.893753 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.893753 * 100 = -189.375300 (Pauli per site x N = stored Pauli total; S.S per site = -0.4734383)",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.3 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_100_O_0.3.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#9 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.3",
+      "method": "MPS (70)",
+      "energy": -206.9029
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 430, column J2 = 0.3",
+    "reported_as": "-2.069029 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.069029 * 100 = -206.902900 (Pauli per site x N = stored Pauli total; S.S per site = -0.5172573)",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.3 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_100_O_0.3.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#10 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.3",
+      "method": "MPS (1024)",
+      "energy": -213.8591
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 431, column J2 = 0.3",
+    "reported_as": "-2.138591 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.138591 * 100 = -213.859100 (Pauli per site x N = stored Pauli total; S.S per site = -0.5346477)",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.3 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_100_O_0.3.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#11 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.3",
+      "method": "PixelCNN (7-48)",
+      "energy": -212.873
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 432, column J2 = 0.3",
+    "reported_as": "-2.12873(14) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.12873 * 100 = -212.873000 (Pauli per site x N = stored Pauli total; S.S per site = -0.5321825); sigma 14e-5 * 100 = 0.014",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.3 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'PixelCNN'; the label 'PixelCNN (7-48)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_100_O_0.3.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#12 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.3",
+      "method": "EW (7-48-8)",
+      "energy": -214.45
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 433, column J2 = 0.3",
+    "reported_as": "-2.14450(4) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.14450 * 100 = -214.450000 (Pauli per site x N = stored Pauli total; S.S per site = -0.5361250); sigma 4e-5 * 100 = 0.004",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.3 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'Elementwise (8)'; the label 'EW (7-48-8)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; record row: lowest energy printed for this instance in the paper; no other row on the instance (data file holds only this paper's rows); no duplicate: data/J1J2/square_100_O_0.3.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#13 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.3",
+      "method": "BW (7-48-70)",
+      "energy": -214.152
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 434, column J2 = 0.3",
+    "reported_as": "-2.14152(8) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.14152 * 100 = -214.152000 (Pauli per site x N = stored Pauli total; S.S per site = -0.5353800); sigma 8e-5 * 100 = 0.008",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.3 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'Blockwise (70)'; the label 'BW (7-48-70)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_100_O_0.3.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#14 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.4",
+      "method": "MPS (8)",
+      "energy": -179.7675
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 429, column J2 = 0.4",
+    "reported_as": "-1.797675 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.797675 * 100 = -179.767500 (Pauli per site x N = stored Pauli total; S.S per site = -0.4494187)",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.4 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_100_O_0.4.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#15 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.4",
+      "method": "MPS (70)",
+      "energy": -195.648
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 430, column J2 = 0.4",
+    "reported_as": "-1.956480 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.956480 * 100 = -195.648000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4891200)",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.4 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_100_O_0.4.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#16 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.4",
+      "method": "MPS (1024)",
+      "energy": -203.1681
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 431, column J2 = 0.4",
+    "reported_as": "-2.031681 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.031681 * 100 = -203.168100 (Pauli per site x N = stored Pauli total; S.S per site = -0.5079202)",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.4 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_100_O_0.4.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#17 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.4",
+      "method": "PixelCNN (7-48)",
+      "energy": -202.053
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 432, column J2 = 0.4",
+    "reported_as": "-2.02053(14) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.02053 * 100 = -202.053000 (Pauli per site x N = stored Pauli total; S.S per site = -0.5051325); sigma 14e-5 * 100 = 0.014",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.4 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'PixelCNN'; the label 'PixelCNN (7-48)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_100_O_0.4.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#18 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.4",
+      "method": "EW (7-48-8)",
+      "energy": -203.727
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 433, column J2 = 0.4",
+    "reported_as": "-2.03727(7) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.03727 * 100 = -203.727000 (Pauli per site x N = stored Pauli total; S.S per site = -0.5093175); sigma 7e-5 * 100 = 0.007",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.4 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'Elementwise (8)'; the label 'EW (7-48-8)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; record row: lowest energy printed for this instance in the paper; no other row on the instance (data file holds only this paper's rows); no duplicate: data/J1J2/square_100_O_0.4.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#19 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.4",
+      "method": "BW (7-48-70)",
+      "energy": -203.319
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 434, column J2 = 0.4",
+    "reported_as": "-2.03319(10) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.03319 * 100 = -203.319000 (Pauli per site x N = stored Pauli total; S.S per site = -0.5082975); sigma 10e-5 * 100 = 0.01",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.4 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'Blockwise (70)'; the label 'BW (7-48-70)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_100_O_0.4.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#20 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "MPS (8)",
+      "energy": -173.4326
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 429; Table 3 (10 x 10, Appendix C) line 1243; Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1297, column J2 = 0.5",
+    "reported_as": "-1.734326 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.734326 * 100 = -173.432600 (Pauli per site x N = stored Pauli total; S.S per site = -0.4335815)",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#21 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "MPS (70)",
+      "energy": -186.6159
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 430; Table 3 (10 x 10, Appendix C) line 1244; Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1298, column J2 = 0.5",
+    "reported_as": "-1.866159 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.866159 * 100 = -186.615900 (Pauli per site x N = stored Pauli total; S.S per site = -0.4665397)",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#22 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "MPS (1024)",
+      "energy": -193.877
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 431; Table 3 (10 x 10, Appendix C) line 1245; Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1299, column J2 = 0.5",
+    "reported_as": "-1.938770 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.938770 * 100 = -193.877000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4846925)",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#23 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "PixelCNN (7-48)",
+      "energy": -174.098
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 432; Table 3 (10 x 10, Appendix C) line 1246; Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1300, column J2 = 0.5",
+    "reported_as": "-1.74098(29) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.74098 * 100 = -174.098000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4352450); sigma 29e-5 * 100 = 0.029",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#24 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "EW (7-48-8)",
+      "energy": -194.001
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 433; Table 3 (10 x 10, Appendix C) line 1249; Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1319, column J2 = 0.5",
+    "reported_as": "-1.94001(6) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.94001 * 100 = -194.001000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4850025); sigma 6e-5 * 100 = 0.006",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#25 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "BW (7-48-70)",
+      "energy": -193.842
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 434; Table 3 (10 x 10, Appendix C) line 1251; Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1320, column J2 = 0.5",
+    "reported_as": "-1.93842(42) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.93842 * 100 = -193.842000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4846050); sigma 42e-5 * 100 = 0.042",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#26 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "PixelCNN (P) (7-48)",
+      "energy": -164.58
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 3 (10 x 10, Appendix C) line 1247, column J2 = 0.5",
+    "reported_as": "-1.6458(10) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.6458 * 100 = -164.580000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4114500); sigma 10e-4 * 100 = 0.1",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); sign rule not printed for this Table 3 row; 'no sign rule' read from the paper's labelling, where (S) marks sign-rule runs (Table 1, Table 4 caption) and the Table 2 scan is 'without using the sign rule'; caption: pretraining 'using MPS result (with bond dimension the last number in parenthesis)', but the label carries no bond dimension: which MPS was used is not printed; no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#27 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "PixelCNN (8-48)",
+      "energy": -186.922
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 3 (10 x 10, Appendix C) line 1248; Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1301, column J2 = 0.5",
+    "reported_as": "-1.86922(16) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.86922 * 100 = -186.922000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4673050); sigma 16e-5 * 100 = 0.016",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); sign rule not printed for this Table 3 row; 'no sign rule' read from the paper's labelling, where (S) marks sign-rule runs (Table 1, Table 4 caption) and the Table 2 scan is 'without using the sign rule'; no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#28 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "EW (RI) (7-48-8)",
+      "energy": -194.03
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 3 (10 x 10, Appendix C) line 1250, column J2 = 0.5",
+    "reported_as": "-1.94030(9) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.94030 * 100 = -194.030000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4850750); sigma 9e-5 * 100 = 0.009",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); sign rule not printed for this Table 3 row; 'no sign rule' read from the paper's labelling, where (S) marks sign-rule runs (Table 1, Table 4 caption) and the Table 2 scan is 'without using the sign rule'; record row: lowest energy printed for this instance in the paper; no other row on the instance (data file holds only this paper's rows); no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#29 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "PixelCNN (9-48)",
+      "energy": -190.021
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1302, column J2 = 0.5",
+    "reported_as": "-1.90021(15) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.90021 * 100 = -190.021000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4750525); sigma 15e-5 * 100 = 0.015",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#30 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "PixelCNN (10-48)",
+      "energy": -190.44
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1303, column J2 = 0.5",
+    "reported_as": "-1.90440(14) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.90440 * 100 = -190.440000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4761000); sigma 14e-5 * 100 = 0.014",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#31 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "PixelCNN (11-48)",
+      "energy": -192.826
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1304, column J2 = 0.5",
+    "reported_as": "-1.92826(11) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.92826 * 100 = -192.826000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4820650); sigma 11e-5 * 100 = 0.011",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#32 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "PixelCNN (12-48)",
+      "energy": -192.986
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1305, column J2 = 0.5",
+    "reported_as": "-1.92986(10) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.92986 * 100 = -192.986000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4824650); sigma 10e-5 * 100 = 0.01",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#33 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "PixelCNN (15-48)",
+      "energy": -192.869
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1306, column J2 = 0.5",
+    "reported_as": "-1.92869(11) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.92869 * 100 = -192.869000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4821725); sigma 11e-5 * 100 = 0.011",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#34 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "PixelCNN (20-48)",
+      "energy": -191.537
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1307, column J2 = 0.5",
+    "reported_as": "-1.91537(13) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.91537 * 100 = -191.537000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4788425); sigma 13e-5 * 100 = 0.013",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#35 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "PixelCNN (8-72)",
+      "energy": -188.536
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1308, column J2 = 0.5",
+    "reported_as": "-1.88536(19) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.88536 * 100 = -188.536000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4713400); sigma 19e-5 * 100 = 0.019",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#36 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "PixelCNN (9-72)",
+      "energy": -189.266
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1309, column J2 = 0.5",
+    "reported_as": "-1.89266(15) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.89266 * 100 = -189.266000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4731650); sigma 15e-5 * 100 = 0.015",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#37 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "PixelCNN (10-72)",
+      "energy": -190.718
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1310, column J2 = 0.5",
+    "reported_as": "-1.90718(15) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.90718 * 100 = -190.718000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4767950); sigma 15e-5 * 100 = 0.015",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#38 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "PixelCNN (11-72)",
+      "energy": -192.965
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1311, column J2 = 0.5",
+    "reported_as": "-1.92965(13) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.92965 * 100 = -192.965000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4824125); sigma 13e-5 * 100 = 0.013",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#39 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "PixelCNN (12-72)",
+      "energy": -191.186
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1312, column J2 = 0.5",
+    "reported_as": "-1.91186(14) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.91186 * 100 = -191.186000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4779650); sigma 14e-5 * 100 = 0.014",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#40 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "PixelCNN (S) (11-48)",
+      "energy": -192.915
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1313, column J2 = 0.5",
+    "reported_as": "-1.92915(12) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.92915 * 100 = -192.915000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4822875); sigma 12e-5 * 100 = 0.012",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#41 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "PixelCNN (S) (12-48)",
+      "energy": -193.112
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1314, column J2 = 0.5",
+    "reported_as": "-1.93112(11) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.93112 * 100 = -193.112000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4827800); sigma 11e-5 * 100 = 0.011",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#42 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "PixelCNN (S) (15-48)",
+      "energy": -193.233
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1315, column J2 = 0.5",
+    "reported_as": "-1.93233(9) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.93233 * 100 = -193.233000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4830825); sigma 9e-5 * 100 = 0.009",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#43 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "PixelCNN (S) (20-48)",
+      "energy": -193.058
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1316, column J2 = 0.5",
+    "reported_as": "-1.93058(10) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.93058 * 100 = -193.058000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4826450); sigma 10e-5 * 100 = 0.01",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#44 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "PixelCNN (S) (11-72)",
+      "energy": -193.211
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1317, column J2 = 0.5",
+    "reported_as": "-1.93211(10) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.93211 * 100 = -193.211000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4830275); sigma 10e-5 * 100 = 0.01",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#45 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "PixelCNN (S) (12-72)",
+      "energy": -192.812
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 4 (10 x 10, J2 = 0.5, Appendix C) line 1318, column J2 = 0.5",
+    "reported_as": "-1.92812(12) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.92812 * 100 = -192.812000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4820300); sigma 12e-5 * 100 = 0.012",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#46 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.6",
+      "method": "MPS (8)",
+      "energy": -171.6253
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 429, column J2 = 0.6",
+    "reported_as": "-1.716253 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.716253 * 100 = -171.625300 (Pauli per site x N = stored Pauli total; S.S per site = -0.4290633)",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.6 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_100_O_0.6.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#47 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.6",
+      "method": "MPS (70)",
+      "energy": -181.6249
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 430, column J2 = 0.6",
+    "reported_as": "-1.816249 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.816249 * 100 = -181.624900 (Pauli per site x N = stored Pauli total; S.S per site = -0.4540623)",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.6 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_100_O_0.6.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#48 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.6",
+      "method": "MPS (1024)",
+      "energy": -186.5561
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 431, column J2 = 0.6",
+    "reported_as": "-1.865561 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.865561 * 100 = -186.556100 (Pauli per site x N = stored Pauli total; S.S per site = -0.4663903)",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.6 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; record row: lowest energy printed for this instance in the paper; no other row on the instance (data file holds only this paper's rows); no duplicate: data/J1J2/square_100_O_0.6.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#49 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.6",
+      "method": "PixelCNN (7-48)",
+      "energy": -171.885
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 432, column J2 = 0.6",
+    "reported_as": "-1.71885(27) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.71885 * 100 = -171.885000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4297125); sigma 27e-5 * 100 = 0.027",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.6 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'PixelCNN'; the label 'PixelCNN (7-48)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_100_O_0.6.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#50 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.6",
+      "method": "EW (7-48-8)",
+      "energy": -185.684
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 433, column J2 = 0.6",
+    "reported_as": "-1.85684(10) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.85684 * 100 = -185.684000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4642100); sigma 10e-5 * 100 = 0.01",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.6 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'Elementwise (8)'; the label 'EW (7-48-8)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_100_O_0.6.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#51 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.6",
+      "method": "BW (7-48-70)",
+      "energy": -185.27
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 434, column J2 = 0.6",
+    "reported_as": "-1.85270(12) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.85270 * 100 = -185.270000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4631750); sigma 12e-5 * 100 = 0.012",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.6 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'Blockwise (70)'; the label 'BW (7-48-70)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_100_O_0.6.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#52 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.7",
+      "method": "MPS (8)",
+      "energy": -176.8225
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 429, column J2 = 0.7",
+    "reported_as": "-1.768225 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.768225 * 100 = -176.822500 (Pauli per site x N = stored Pauli total; S.S per site = -0.4420562)",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.7 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_100_O_0.7.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#53 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.7",
+      "method": "MPS (70)",
+      "energy": -185.4296
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 430, column J2 = 0.7",
+    "reported_as": "-1.854296 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.854296 * 100 = -185.429600 (Pauli per site x N = stored Pauli total; S.S per site = -0.4635740)",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.7 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_100_O_0.7.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#54 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.7",
+      "method": "MPS (1024)",
+      "energy": -189.4371
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 431, column J2 = 0.7",
+    "reported_as": "-1.894371 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.894371 * 100 = -189.437100 (Pauli per site x N = stored Pauli total; S.S per site = -0.4735928)",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.7 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; record row: lowest energy printed for this instance in the paper; no other row on the instance (data file holds only this paper's rows); no duplicate: data/J1J2/square_100_O_0.7.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#55 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.7",
+      "method": "PixelCNN (7-48)",
+      "energy": -181.8
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 432, column J2 = 0.7",
+    "reported_as": "-1.81800(13) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.81800 * 100 = -181.800000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4545000); sigma 13e-5 * 100 = 0.013",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.7 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'PixelCNN'; the label 'PixelCNN (7-48)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_100_O_0.7.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#56 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.7",
+      "method": "EW (7-48-8)",
+      "energy": -188.643
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 433, column J2 = 0.7",
+    "reported_as": "-1.88643(7) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.88643 * 100 = -188.643000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4716075); sigma 7e-5 * 100 = 0.007",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.7 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'Elementwise (8)'; the label 'EW (7-48-8)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_100_O_0.7.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#57 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.7",
+      "method": "BW (7-48-70)",
+      "energy": -187.853
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 434, column J2 = 0.7",
+    "reported_as": "-1.87853(13) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.87853 * 100 = -187.853000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4696325); sigma 13e-5 * 100 = 0.013",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.7 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'Blockwise (70)'; the label 'BW (7-48-70)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_100_O_0.7.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#58 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.8",
+      "method": "MPS (8)",
+      "energy": -186.9871
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 429; Table 3 (10 x 10, Appendix C) line 1243, column J2 = 0.8",
+    "reported_as": "-1.869871 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.869871 * 100 = -186.987100 (Pauli per site x N = stored Pauli total; S.S per site = -0.4674678)",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.8 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_100_O_0.8.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#59 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.8",
+      "method": "MPS (70)",
+      "energy": -200.7845
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 430; Table 3 (10 x 10, Appendix C) line 1244, column J2 = 0.8",
+    "reported_as": "-2.007845 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.007845 * 100 = -200.784500 (Pauli per site x N = stored Pauli total; S.S per site = -0.5019613)",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.8 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_100_O_0.8.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#60 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.8",
+      "method": "MPS (1024)",
+      "energy": -206.273
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 431; Table 3 (10 x 10, Appendix C) line 1245, column J2 = 0.8",
+    "reported_as": "-2.062730 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.062730 * 100 = -206.273000 (Pauli per site x N = stored Pauli total; S.S per site = -0.5156825)",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.8 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; record row: lowest energy printed for this instance in the paper; no other row on the instance (data file holds only this paper's rows); no duplicate: data/J1J2/square_100_O_0.8.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#61 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.8",
+      "method": "PixelCNN (7-48)",
+      "energy": -198.331
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 432; Table 3 (10 x 10, Appendix C) line 1246, column J2 = 0.8",
+    "reported_as": "-1.98331(17) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.98331 * 100 = -198.331000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4958275); sigma 17e-5 * 100 = 0.017",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.8 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.8.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#62 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.8",
+      "method": "EW (7-48-8)",
+      "energy": -205.707
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 433; Table 3 (10 x 10, Appendix C) line 1249, column J2 = 0.8",
+    "reported_as": "-2.05707(43) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.05707 * 100 = -205.707000 (Pauli per site x N = stored Pauli total; S.S per site = -0.5142675); sigma 43e-5 * 100 = 0.043",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.8 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.8.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#63 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.8",
+      "method": "BW (7-48-70)",
+      "energy": -205.088
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (10 x 10) line 434; Table 3 (10 x 10, Appendix C) line 1251, column J2 = 0.8",
+    "reported_as": "-2.05088(14) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.05088 * 100 = -205.088000 (Pauli per site x N = stored Pauli total; S.S per site = -0.5127200); sigma 14e-5 * 100 = 0.014",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.8 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_100_O_0.8.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#64 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.8",
+      "method": "PixelCNN (P) (7-48)",
+      "energy": -194.68
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 3 (10 x 10, Appendix C) line 1247, column J2 = 0.8",
+    "reported_as": "-1.9468(6) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.9468 * 100 = -194.680000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4867000); sigma 6e-4 * 100 = 0.06",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.8 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); sign rule not printed for this Table 3 row; 'no sign rule' read from the paper's labelling, where (S) marks sign-rule runs (Table 1, Table 4 caption) and the Table 2 scan is 'without using the sign rule'; caption: pretraining 'using MPS result (with bond dimension the last number in parenthesis)', but the label carries no bond dimension: which MPS was used is not printed; no duplicate: data/J1J2/square_100_O_0.8.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#65 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.8",
+      "method": "PixelCNN (8-48)",
+      "energy": -201.093
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 3 (10 x 10, Appendix C) line 1248, column J2 = 0.8",
+    "reported_as": "-2.01093(16) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.01093 * 100 = -201.093000 (Pauli per site x N = stored Pauli total; S.S per site = -0.5027325); sigma 16e-5 * 100 = 0.016",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.8 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); sign rule not printed for this Table 3 row; 'no sign rule' read from the paper's labelling, where (S) marks sign-rule runs (Table 1, Table 4 caption) and the Table 2 scan is 'without using the sign rule'; no duplicate: data/J1J2/square_100_O_0.8.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#66 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.8",
+      "method": "EW (RI) (7-48-8)",
+      "energy": -205.125
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 3 (10 x 10, Appendix C) line 1250, column J2 = 0.8",
+    "reported_as": "-2.05125(11) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.05125 * 100 = -205.125000 (Pauli per site x N = stored Pauli total; S.S per site = -0.5128125); sigma 11e-5 * 100 = 0.011",
+    "note": "L = 10 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.8 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); sign rule not printed for this Table 3 row; 'no sign rule' read from the paper's labelling, where (S) marks sign-rule runs (Table 1, Table 4 caption) and the Table 2 scan is 'without using the sign rule'; no duplicate: data/J1J2/square_100_O_0.8.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#67 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.2",
+      "method": "MPS (8)",
+      "energy": -287.741808
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 437, column J2 = 0.2",
+    "reported_as": "-1.998207 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.998207 * 144 = -287.741808 (Pauli per site x N = stored Pauli total; S.S per site = -0.4995518)",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.2 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_144_O_0.2.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#68 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.2",
+      "method": "MPS (70)",
+      "energy": -314.650224
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 438, column J2 = 0.2",
+    "reported_as": "-2.185071 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.185071 * 144 = -314.650224 (Pauli per site x N = stored Pauli total; S.S per site = -0.5462678)",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.2 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_144_O_0.2.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#69 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.2",
+      "method": "MPS (1024)",
+      "energy": -326.028096
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 439, column J2 = 0.2",
+    "reported_as": "-2.264084 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.264084 * 144 = -326.028096 (Pauli per site x N = stored Pauli total; S.S per site = -0.5660210)",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.2 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_144_O_0.2.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#70 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.2",
+      "method": "PixelCNN (7-48)",
+      "energy": -323.00784
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 440, column J2 = 0.2",
+    "reported_as": "-2.24311(102) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.24311 * 144 = -323.007840 (Pauli per site x N = stored Pauli total; S.S per site = -0.5607775); sigma 102e-5 * 144 = 0.14688",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.2 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'PixelCNN'; the label 'PixelCNN (7-48)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_144_O_0.2.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#71 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.2",
+      "method": "EW (7-48-8)",
+      "energy": -327.52224
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 441, column J2 = 0.2",
+    "reported_as": "-2.27446(27) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.27446 * 144 = -327.522240 (Pauli per site x N = stored Pauli total; S.S per site = -0.5686150); sigma 27e-5 * 144 = 0.03888",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.2 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'Elementwise (8)'; the label 'EW (7-48-8)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; record row: lowest energy printed for this instance in the paper; no other row on the instance (data file holds only this paper's rows); no duplicate: data/J1J2/square_144_O_0.2.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#72 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.2",
+      "method": "BW (7-48-70)",
+      "energy": -325.65888
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 442, column J2 = 0.2",
+    "reported_as": "-2.26152(50) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.26152 * 144 = -325.658880 (Pauli per site x N = stored Pauli total; S.S per site = -0.5653800); sigma 50e-5 * 144 = 0.072",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.2 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'Blockwise (70)'; the label 'BW (7-48-70)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_144_O_0.2.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#73 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.3",
+      "method": "MPS (8)",
+      "energy": -271.804464
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 437, column J2 = 0.3",
+    "reported_as": "-1.887531 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.887531 * 144 = -271.804464 (Pauli per site x N = stored Pauli total; S.S per site = -0.4718828)",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.3 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_144_O_0.3.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#74 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.3",
+      "method": "MPS (70)",
+      "energy": -296.559792
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 438, column J2 = 0.3",
+    "reported_as": "-2.059443 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.059443 * 144 = -296.559792 (Pauli per site x N = stored Pauli total; S.S per site = -0.5148607)",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.3 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_144_O_0.3.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#75 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.3",
+      "method": "MPS (1024)",
+      "energy": -308.310192
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 439, column J2 = 0.3",
+    "reported_as": "-2.141043 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.141043 * 144 = -308.310192 (Pauli per site x N = stored Pauli total; S.S per site = -0.5352607)",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.3 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_144_O_0.3.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#76 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.3",
+      "method": "PixelCNN (7-48)",
+      "energy": -306.16704
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 440, column J2 = 0.3",
+    "reported_as": "-2.12616(23) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.12616 * 144 = -306.167040 (Pauli per site x N = stored Pauli total; S.S per site = -0.5315400); sigma 23e-5 * 144 = 0.03312",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.3 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'PixelCNN'; the label 'PixelCNN (7-48)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_144_O_0.3.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#77 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.3",
+      "method": "EW (7-48-8)",
+      "energy": -310.37328
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 441, column J2 = 0.3",
+    "reported_as": "-2.15537(6) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.15537 * 144 = -310.373280 (Pauli per site x N = stored Pauli total; S.S per site = -0.5388425); sigma 6e-5 * 144 = 0.00864",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.3 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'Elementwise (8)'; the label 'EW (7-48-8)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; record row: lowest energy printed for this instance in the paper; no other row on the instance (data file holds only this paper's rows); no duplicate: data/J1J2/square_144_O_0.3.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#78 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.3",
+      "method": "BW (7-48-70)",
+      "energy": -310.1688
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 442, column J2 = 0.3",
+    "reported_as": "-2.15395(7) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.15395 * 144 = -310.168800 (Pauli per site x N = stored Pauli total; S.S per site = -0.5384875); sigma 7e-5 * 144 = 0.01008",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.3 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'Blockwise (70)'; the label 'BW (7-48-70)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_144_O_0.3.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#79 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.4",
+      "method": "MPS (8)",
+      "energy": -259.312896
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 437, column J2 = 0.4",
+    "reported_as": "-1.800784 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.800784 * 144 = -259.312896 (Pauli per site x N = stored Pauli total; S.S per site = -0.4501960)",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.4 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_144_O_0.4.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#80 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.4",
+      "method": "MPS (70)",
+      "energy": -280.055808
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 438, column J2 = 0.4",
+    "reported_as": "-1.944832 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.944832 * 144 = -280.055808 (Pauli per site x N = stored Pauli total; S.S per site = -0.4862080)",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.4 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_144_O_0.4.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#81 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.4",
+      "method": "MPS (1024)",
+      "energy": -291.993984
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 439, column J2 = 0.4",
+    "reported_as": "-2.027736 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.027736 * 144 = -291.993984 (Pauli per site x N = stored Pauli total; S.S per site = -0.5069340)",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.4 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_144_O_0.4.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#82 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.4",
+      "method": "PixelCNN (7-48)",
+      "energy": -290.54592
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 440, column J2 = 0.4",
+    "reported_as": "-2.01768(21) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.01768 * 144 = -290.545920 (Pauli per site x N = stored Pauli total; S.S per site = -0.5044200); sigma 21e-5 * 144 = 0.03024",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.4 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'PixelCNN'; the label 'PixelCNN (7-48)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_144_O_0.4.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#83 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.4",
+      "method": "EW (7-48-8)",
+      "energy": -294.38928
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 441, column J2 = 0.4",
+    "reported_as": "-2.04437(7) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.04437 * 144 = -294.389280 (Pauli per site x N = stored Pauli total; S.S per site = -0.5110925); sigma 7e-5 * 144 = 0.01008",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.4 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'Elementwise (8)'; the label 'EW (7-48-8)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; record row: lowest energy printed for this instance in the paper; no other row on the instance (data file holds only this paper's rows); no duplicate: data/J1J2/square_144_O_0.4.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#84 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.4",
+      "method": "BW (7-48-70)",
+      "energy": -294.084
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 442, column J2 = 0.4",
+    "reported_as": "-2.04225(8) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.04225 * 144 = -294.084000 (Pauli per site x N = stored Pauli total; S.S per site = -0.5105625); sigma 8e-5 * 144 = 0.01152",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.4 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'Blockwise (70)'; the label 'BW (7-48-70)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_144_O_0.4.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#85 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.5",
+      "method": "MPS (8)",
+      "energy": -249.970464
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 437, column J2 = 0.5",
+    "reported_as": "-1.735906 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.735906 * 144 = -249.970464 (Pauli per site x N = stored Pauli total; S.S per site = -0.4339765)",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_144_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#86 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.5",
+      "method": "MPS (70)",
+      "energy": -266.681376
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 438, column J2 = 0.5",
+    "reported_as": "-1.851954 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.851954 * 144 = -266.681376 (Pauli per site x N = stored Pauli total; S.S per site = -0.4629885)",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_144_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#87 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.5",
+      "method": "MPS (1024)",
+      "energy": -278.098992
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 439, column J2 = 0.5",
+    "reported_as": "-1.931243 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.931243 * 144 = -278.098992 (Pauli per site x N = stored Pauli total; S.S per site = -0.4828108)",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_144_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#88 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.5",
+      "method": "PixelCNN (7-48)",
+      "energy": -250.96608
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 440, column J2 = 0.5",
+    "reported_as": "-1.74282(30) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.74282 * 144 = -250.966080 (Pauli per site x N = stored Pauli total; S.S per site = -0.4357050); sigma 30e-5 * 144 = 0.0432",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'PixelCNN'; the label 'PixelCNN (7-48)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_144_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#89 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.5",
+      "method": "EW (7-48-8)",
+      "energy": -280.34784
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 441, column J2 = 0.5",
+    "reported_as": "-1.94686(6) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.94686 * 144 = -280.347840 (Pauli per site x N = stored Pauli total; S.S per site = -0.4867150); sigma 6e-5 * 144 = 0.00864",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'Elementwise (8)'; the label 'EW (7-48-8)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; record row: lowest energy printed for this instance in the paper; no other row on the instance (data file holds only this paper's rows); no duplicate: data/J1J2/square_144_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#90 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.5",
+      "method": "BW (7-48-70)",
+      "energy": -279.78912
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 442, column J2 = 0.5",
+    "reported_as": "-1.94298(43) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.94298 * 144 = -279.789120 (Pauli per site x N = stored Pauli total; S.S per site = -0.4857450); sigma 43e-5 * 144 = 0.06192",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'Blockwise (70)'; the label 'BW (7-48-70)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_144_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#91 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.6",
+      "method": "MPS (8)",
+      "energy": -247.769136
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 437, column J2 = 0.6",
+    "reported_as": "-1.720619 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.720619 * 144 = -247.769136 (Pauli per site x N = stored Pauli total; S.S per site = -0.4301547)",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.6 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_144_O_0.6.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#92 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.6",
+      "method": "MPS (70)",
+      "energy": -260.9928
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 438, column J2 = 0.6",
+    "reported_as": "-1.812450 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.812450 * 144 = -260.992800 (Pauli per site x N = stored Pauli total; S.S per site = -0.4531125)",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.6 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_144_O_0.6.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#93 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.6",
+      "method": "MPS (1024)",
+      "energy": -267.673824
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 439, column J2 = 0.6",
+    "reported_as": "-1.858846 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.858846 * 144 = -267.673824 (Pauli per site x N = stored Pauli total; S.S per site = -0.4647115)",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.6 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; record row: lowest energy printed for this instance in the paper; no other row on the instance (data file holds only this paper's rows); no duplicate: data/J1J2/square_144_O_0.6.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#94 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.6",
+      "method": "PixelCNN (7-48)",
+      "energy": -248.59728
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 440, column J2 = 0.6",
+    "reported_as": "-1.72637(16) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.72637 * 144 = -248.597280 (Pauli per site x N = stored Pauli total; S.S per site = -0.4315925); sigma 16e-5 * 144 = 0.02304",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.6 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'PixelCNN'; the label 'PixelCNN (7-48)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_144_O_0.6.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#95 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.6",
+      "method": "EW (7-48-8)",
+      "energy": -267.03792
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 441, column J2 = 0.6",
+    "reported_as": "-1.85443(15) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.85443 * 144 = -267.037920 (Pauli per site x N = stored Pauli total; S.S per site = -0.4636075); sigma 15e-5 * 144 = 0.0216",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.6 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'Elementwise (8)'; the label 'EW (7-48-8)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_144_O_0.6.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#96 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.6",
+      "method": "BW (7-48-70)",
+      "energy": -266.65344
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 442, column J2 = 0.6",
+    "reported_as": "-1.85176(15) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.85176 * 144 = -266.653440 (Pauli per site x N = stored Pauli total; S.S per site = -0.4629400); sigma 15e-5 * 144 = 0.0216",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.6 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'Blockwise (70)'; the label 'BW (7-48-70)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_144_O_0.6.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#97 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.7",
+      "method": "MPS (8)",
+      "energy": -257.565888
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 437, column J2 = 0.7",
+    "reported_as": "-1.788652 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.788652 * 144 = -257.565888 (Pauli per site x N = stored Pauli total; S.S per site = -0.4471630)",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.7 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_144_O_0.7.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#98 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.7",
+      "method": "MPS (70)",
+      "energy": -266.9256
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 438, column J2 = 0.7",
+    "reported_as": "-1.853650 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.853650 * 144 = -266.925600 (Pauli per site x N = stored Pauli total; S.S per site = -0.4634125)",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.7 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_144_O_0.7.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#99 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.7",
+      "method": "MPS (1024)",
+      "energy": -275.541552
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 439, column J2 = 0.7",
+    "reported_as": "-1.913483 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.913483 * 144 = -275.541552 (Pauli per site x N = stored Pauli total; S.S per site = -0.4783708)",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.7 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_144_O_0.7.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#100 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.7",
+      "method": "PixelCNN (7-48)",
+      "energy": -266.74416
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 440, column J2 = 0.7",
+    "reported_as": "-1.85239(13) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.85239 * 144 = -266.744160 (Pauli per site x N = stored Pauli total; S.S per site = -0.4630975); sigma 13e-5 * 144 = 0.01872",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.7 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'PixelCNN'; the label 'PixelCNN (7-48)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_144_O_0.7.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#101 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.7",
+      "method": "EW (7-48-8)",
+      "energy": -275.60304
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 441, column J2 = 0.7",
+    "reported_as": "-1.91391(10) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.91391 * 144 = -275.603040 (Pauli per site x N = stored Pauli total; S.S per site = -0.4784775); sigma 10e-5 * 144 = 0.0144",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.7 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'Elementwise (8)'; the label 'EW (7-48-8)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; record row: lowest energy printed for this instance in the paper; no other row on the instance (data file holds only this paper's rows); no duplicate: data/J1J2/square_144_O_0.7.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#102 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.7",
+      "method": "BW (7-48-70)",
+      "energy": -274.42224
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 442, column J2 = 0.7",
+    "reported_as": "-1.90571(12) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.90571 * 144 = -274.422240 (Pauli per site x N = stored Pauli total; S.S per site = -0.4764275); sigma 12e-5 * 144 = 0.01728",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.7 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'Blockwise (70)'; the label 'BW (7-48-70)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_144_O_0.7.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#103 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.8",
+      "method": "MPS (8)",
+      "energy": -272.723904
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 437, column J2 = 0.8",
+    "reported_as": "-1.893916 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.893916 * 144 = -272.723904 (Pauli per site x N = stored Pauli total; S.S per site = -0.4734790)",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.8 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_144_O_0.8.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#104 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.8",
+      "method": "MPS (70)",
+      "energy": -292.338864
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 438, column J2 = 0.8",
+    "reported_as": "-2.030131 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.030131 * 144 = -292.338864 (Pauli per site x N = stored Pauli total; S.S per site = -0.5075327)",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.8 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_144_O_0.8.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#105 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.8",
+      "method": "MPS (1024)",
+      "energy": -301.393872
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 439, column J2 = 0.8",
+    "reported_as": "-2.093013 (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.093013 * 144 = -301.393872 (Pauli per site x N = stored Pauli total; S.S per site = -0.5232533)",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.8 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); MPS optimised with DMRG at the stated bond dimension (Table 2 caption); no error bar printed; no duplicate: data/J1J2/square_144_O_0.8.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#106 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.8",
+      "method": "PixelCNN (7-48)",
+      "energy": -292.64544
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 440, column J2 = 0.8",
+    "reported_as": "-2.03226(59) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.03226 * 144 = -292.645440 (Pauli per site x N = stored Pauli total; S.S per site = -0.5080650); sigma 59e-5 * 144 = 0.08496",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.8 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'PixelCNN'; the label 'PixelCNN (7-48)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_144_O_0.8.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#107 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.8",
+      "method": "EW (7-48-8)",
+      "energy": -301.61808
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 441, column J2 = 0.8",
+    "reported_as": "-2.09457(10) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.09457 * 144 = -301.618080 (Pauli per site x N = stored Pauli total; S.S per site = -0.5236425); sigma 10e-5 * 144 = 0.0144",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.8 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'Elementwise (8)'; the label 'EW (7-48-8)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; record row: lowest energy printed for this instance in the paper; no other row on the instance (data file holds only this paper's rows); no duplicate: data/J1J2/square_144_O_0.8.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#108 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_144_O_0.8",
+      "method": "BW (7-48-70)",
+      "energy": -301.12272
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 2 (12 x 12) line 442, column J2 = 0.8",
+    "reported_as": "-2.09113(43) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.09113 * 144 = -301.122720 (Pauli per site x N = stored Pauli total; S.S per site = -0.5227825); sigma 43e-5 * 144 = 0.06192",
+    "note": "L = 12 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.8 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); Table 2 prints this row as 'Blockwise (70)'; the label 'BW (7-48-70)' is the one Table 3 (10 x 10, same cells at J2 = 0.2/0.5/0.8) and Table 5 (12 x 12 runs) print for the same networks, and Appendix D fixes 7 layers / 48 hidden dimensions; no duplicate: data/J1J2/square_144_O_0.8.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#109 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.2",
+      "method": "RBM (NS)",
+      "energy": -125.4976
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 395, column J2 = 0.2",
+    "reported_as": "-1.9609(16) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.9609 * 64 = -125.497600 (Pauli per site x N = stored Pauli total; S.S per site = -0.4902250); sigma 16e-4 * 64 = 0.1024",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.2 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_64_O_0.2.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#110 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.2",
+      "method": "RBM (S)",
+      "energy": -140.4416
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 396, column J2 = 0.2",
+    "reported_as": "-2.1944(17) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.1944 * 64 = -140.441600 (Pauli per site x N = stored Pauli total; S.S per site = -0.5486000); sigma 17e-4 * 64 = 0.1088",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.2 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_64_O_0.2.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#111 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.2",
+      "method": "PixelCNN (NS)",
+      "energy": -141.57952
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 397, column J2 = 0.2",
+    "reported_as": "-2.21218(16) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.21218 * 64 = -141.579520 (Pauli per site x N = stored Pauli total; S.S per site = -0.5530450); sigma 16e-5 * 64 = 0.01024",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.2 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_64_O_0.2.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#112 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.2",
+      "method": "PixelCNN (S)",
+      "energy": -142.82944
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 398, column J2 = 0.2",
+    "reported_as": "-2.23171(9) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.23171 * 64 = -142.829440 (Pauli per site x N = stored Pauli total; S.S per site = -0.5579275); sigma 9e-5 * 64 = 0.00576",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.2 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_64_O_0.2.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#113 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.2",
+      "method": "Elementwise (8 NS)",
+      "energy": -143.1616
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 399, column J2 = 0.2",
+    "reported_as": "-2.23690(4) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.23690 * 64 = -143.161600 (Pauli per site x N = stored Pauli total; S.S per site = -0.5592250); sigma 4e-5 * 64 = 0.00256",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.2 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); record row: lowest energy printed for this instance in the paper; no other row on the instance (data file holds only this paper's rows); no duplicate: data/J1J2/square_64_O_0.2.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#114 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.2",
+      "method": "Elementwise (8 S)",
+      "energy": -143.16032
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 400, column J2 = 0.2",
+    "reported_as": "-2.23688(4) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.23688 * 64 = -143.160320 (Pauli per site x N = stored Pauli total; S.S per site = -0.5592200); sigma 4e-5 * 64 = 0.00256",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.2 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_64_O_0.2.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#115 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.2",
+      "method": "Blockwise (70 NS)",
+      "energy": -143.02976
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 401, column J2 = 0.2",
+    "reported_as": "-2.23484(7) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.23484 * 64 = -143.029760 (Pauli per site x N = stored Pauli total; S.S per site = -0.5587100); sigma 7e-5 * 64 = 0.00448",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.2 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_64_O_0.2.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#116 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.2",
+      "method": "Blockwise (70 S)",
+      "energy": -143.05088
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 402, column J2 = 0.2",
+    "reported_as": "-2.23517(6) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.23517 * 64 = -143.050880 (Pauli per site x N = stored Pauli total; S.S per site = -0.5587925); sigma 6e-5 * 64 = 0.00384",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.2 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_64_O_0.2.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#117 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.5",
+      "method": "RBM (NS)",
+      "energy": -96.8192
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 395, column J2 = 0.5",
+    "reported_as": "-1.5128(20) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.5128 * 64 = -96.819200 (Pauli per site x N = stored Pauli total; S.S per site = -0.3782000); sigma 20e-4 * 64 = 0.128",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_64_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#118 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.5",
+      "method": "RBM (S)",
+      "energy": -119.2
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 396, column J2 = 0.5",
+    "reported_as": "-1.8625(20) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.8625 * 64 = -119.200000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4656250); sigma 20e-4 * 64 = 0.128",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_64_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#119 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.5",
+      "method": "PixelCNN (NS)",
+      "energy": -113.31712
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 397, column J2 = 0.5",
+    "reported_as": "-1.77058(29) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.77058 * 64 = -113.317120 (Pauli per site x N = stored Pauli total; S.S per site = -0.4426450); sigma 29e-5 * 64 = 0.01856",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_64_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#120 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.5",
+      "method": "PixelCNN (S)",
+      "energy": -120.89728
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 398, column J2 = 0.5",
+    "reported_as": "-1.88902(19) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.88902 * 64 = -120.897280 (Pauli per site x N = stored Pauli total; S.S per site = -0.4722550); sigma 19e-5 * 64 = 0.01216",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_64_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#121 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.5",
+      "method": "Elementwise (8 NS)",
+      "energy": -123.53152
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 399, column J2 = 0.5",
+    "reported_as": "-1.93018(8) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.93018 * 64 = -123.531520 (Pauli per site x N = stored Pauli total; S.S per site = -0.4825450); sigma 8e-5 * 64 = 0.00512",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_64_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#122 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.5",
+      "method": "Elementwise (8 S)",
+      "energy": -123.58528
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 400, column J2 = 0.5",
+    "reported_as": "-1.93102(7) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.93102 * 64 = -123.585280 (Pauli per site x N = stored Pauli total; S.S per site = -0.4827550); sigma 7e-5 * 64 = 0.00448",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); record row: lowest energy printed for this instance in the paper; no other row on the instance (data file holds only this paper's rows); no duplicate: data/J1J2/square_64_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#123 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.5",
+      "method": "Blockwise (70 NS)",
+      "energy": -123.52
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 401, column J2 = 0.5",
+    "reported_as": "-1.93000(7) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.93000 * 64 = -123.520000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4825000); sigma 7e-5 * 64 = 0.00448",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_64_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#124 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.5",
+      "method": "Blockwise (70 S)",
+      "energy": -123.4432
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 402, column J2 = 0.5",
+    "reported_as": "-1.92880(9) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.92880 * 64 = -123.443200 (Pauli per site x N = stored Pauli total; S.S per site = -0.4822000); sigma 9e-5 * 64 = 0.00576",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.5 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_64_O_0.5.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#125 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.8",
+      "method": "RBM (NS)",
+      "energy": -112.0512
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 395, column J2 = 0.8",
+    "reported_as": "-1.7508(19) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.7508 * 64 = -112.051200 (Pauli per site x N = stored Pauli total; S.S per site = -0.4377000); sigma 19e-4 * 64 = 0.1216",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.8 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_64_O_0.8.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#126 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.8",
+      "method": "RBM (S)",
+      "energy": -46.5088
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 396, column J2 = 0.8",
+    "reported_as": "-0.7267(29) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-0.7267 * 64 = -46.508800 (Pauli per site x N = stored Pauli total; S.S per site = -0.1816750); sigma 29e-4 * 64 = 0.1856",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.8 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_64_O_0.8.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#127 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.8",
+      "method": "PixelCNN (NS)",
+      "energy": -124.048
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 397, column J2 = 0.8",
+    "reported_as": "-1.93825(16) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.93825 * 64 = -124.048000 (Pauli per site x N = stored Pauli total; S.S per site = -0.4845625); sigma 16e-5 * 64 = 0.01024",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.8 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_64_O_0.8.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#128 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.8",
+      "method": "PixelCNN (S)",
+      "energy": -117.55008
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 398, column J2 = 0.8",
+    "reported_as": "-1.83672(26) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.83672 * 64 = -117.550080 (Pauli per site x N = stored Pauli total; S.S per site = -0.4591800); sigma 26e-5 * 64 = 0.01664",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.8 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_64_O_0.8.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#129 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.8",
+      "method": "Elementwise (8 NS)",
+      "energy": -128.02304
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 399, column J2 = 0.8",
+    "reported_as": "-2.00036(16) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.00036 * 64 = -128.023040 (Pauli per site x N = stored Pauli total; S.S per site = -0.5000900); sigma 16e-5 * 64 = 0.01024",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.8 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_64_O_0.8.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#130 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.8",
+      "method": "Elementwise (8 S)",
+      "energy": -128.16768
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 400, column J2 = 0.8",
+    "reported_as": "-2.00262(11) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-2.00262 * 64 = -128.167680 (Pauli per site x N = stored Pauli total; S.S per site = -0.5006550); sigma 11e-5 * 64 = 0.00704",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.8 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); record row: lowest energy printed for this instance in the paper; no other row on the instance (data file holds only this paper's rows); no duplicate: data/J1J2/square_64_O_0.8.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#131 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.8",
+      "method": "Blockwise (70 NS)",
+      "energy": -127.45472
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 401, column J2 = 0.8",
+    "reported_as": "-1.99148(13) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.99148 * 64 = -127.454720 (Pauli per site x N = stored Pauli total; S.S per site = -0.4978700); sigma 13e-5 * 64 = 0.00832",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.8 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_64_O_0.8.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#132 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.8",
+      "method": "Blockwise (70 S)",
+      "energy": -127.51744
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "NeurIPS 2023 version of record (proceedings.neurips.cc file 01772a8b0420baec00c4d59fe2fbace6-Paper-Conference.pdf), pypdf plain and layout mode (sources/2304.01996-neurips.rp1-plain.txt); cross-checked against arXiv:2304.01996v3 PDF (sources/2304.01996v3.rp1-plain.txt) and the v3 HTML: all energy cells identical in both versions",
+    "location": "Table 1 (8 x 8) line 402, column J2 = 0.8",
+    "reported_as": "-1.99246(13) (Energy per site, Pauli sigma.sigma form of Eq. (8), J1 = 1)",
+    "conversion": "-1.99246 * 64 = -127.517440 (Pauli per site x N = stored Pauli total; S.S per site = -0.4981150); sigma 13e-5 * 64 = 0.00832",
+    "note": "L = 8 open square lattice (Sec. 6.2 'open boundary condition', the setting of all VMC tables), J1 = 1, J2 = 0.8 (column header), Pauli Eq. (8)-(9), 'Energy per site' column; bound_type variational (Sec. 6.2: 'based on the variational principle ... provides an upper bound'); no duplicate: data/J1J2/square_64_O_0.8.json holds only rows of this paper and batch",
+    "source_entry": "RP1-arxiv-2304-01996#133 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/chain_16_P",
+      "method": "Block-layer QGT (ViT)",
+      "energy": -28.5685
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2510.08430v2 PDF (pypdf layout mode) and arXiv HTML; v1 PDF compared, Table 2 identical",
+    "location": "Table 2, row 'Block-layer QGT', column Energy E",
+    "reported_as": "-28.5685(3)",
+    "conversion": "printed value is already the Pauli total: -28.5685, sigma 0.0003 (x1); in S.S units -28.5685/4 = -7.142125, E/N = -0.44638",
+    "note": "Text writes S = sigma/2, but the exact S.S ground energy of the 16-site ring is -7.1422964 (Bethe ansatz recomputed in this check); a value of -28.5685 in S.S units would be 4x below it. In Pauli form the row lies 6.85e-4 above the exact Pauli total -28.5691854 (2.3 printed sigma), consistent with infidelity 1.6e-5. So Pauli total, stored as printed. PBC, L = 16, two-layer-encoder ViT, block-layer QGT, variational: agree. Variance 0.008 printed, units not stated, not stored (agree).",
+    "source_entry": "RP2-heisenberg#0 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/chain_16_P",
+      "method": "Full QGT (ViT)",
+      "energy": -28.5674
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2510.08430v2 PDF (pypdf layout mode) and arXiv HTML; v1 PDF compared, Table 2 identical",
+    "location": "Table 2, row 'Full QGT', column Energy E",
+    "reported_as": "-28.5674(6)",
+    "conversion": "Pauli total as printed: -28.5674, sigma 0.0006",
+    "note": "Same convention argument as the block-layer row; 1.785e-3 above the exact Pauli total (3.0 printed sigma), consistent with infidelity 8.4e-5. 'full SR' / full sampled QGT matches method_detail. Variance 0.026 not stored.",
+    "source_entry": "RP2-heisenberg#1 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-10x10_300_P",
+      "method": "KagomeResNet c=n=32",
+      "energy": -522.2868
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2611.05174v1 PDF (pypdf layout and plain) and arXiv HTML, Table I identical in both",
+    "location": "Table I, row L = 10, column c = n = 32, e",
+    "reported_as": "−0.435239(4)",
+    "conversion": "-0.435239 x 4 x 300 = -522.2868; sigma 0.000004 x 1200 = 0.0048",
+    "note": "S.S per site (checked: L = 6 entry x 108 reproduces the text's E = -47.1597(6)); 300-site L x L rhombic torus along a1, a2, PBC; Gamma, Is = +1, D6; variational. Variance density 0.00506(6) printed, not stored. No other row on the instance: no duplicate.",
+    "source_entry": "RP2-heisenberg#2 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-10x10_300_P",
+      "method": "KagomeResNet c=n=40",
+      "energy": -522.5664
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2611.05174v1 PDF (pypdf layout and plain) and arXiv HTML, Table I identical in both",
+    "location": "Table I, row L = 10, column c = n = 40, e",
+    "reported_as": "−0.435472(5)",
+    "conversion": "-0.435472 x 4 x 300 = -522.5664; sigma 0.000005 x 1200 = 0.006",
+    "note": "Record row. Energy, sigma, lattice (N = 3 L^2, L = 10, rhombic torus), boundary (torus), couplings (J only), bound_type variational (Table I caption 'Variational energy density'), own computation: all agree. Variance density 0.00434(4) not stored. No duplicate on the instance.",
+    "source_entry": "RP2-heisenberg#3 (qmbl-verify 2026-11-11, instances)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/chain_16_P",
+      "method": "Exact diagonalization",
+      "energy": -28.5691854424671
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "independent recomputation by Bethe ansatz (pure-python fixed-point iteration of L atan(2 lambda_j) = pi I_j + sum_k atan(lambda_j - lambda_k), M = L/2, E = L/4 - sum 2/(1+4 lambda_j^2)); no ED run on this machine (brief rule 7); script checked on L = 4 (-2 exactly) and L = 8 (-3.6510934)",
+    "location": "recomputation, not a source",
+    "reported_as": "E_SS = -7.14229636061678, E/N = -0.446393522539",
+    "conversion": "4 x -7.14229636061678 = -28.56918544246712",
+    "note": "Agrees with the stored -28.5691854424671 to 1e-14. Row is not in the group file; checked because the task asked for it.",
+    "source_entry": "RP2-heisenberg#4 (qmbl-verify 2026-11-11, instances)"
+  },
 ];
