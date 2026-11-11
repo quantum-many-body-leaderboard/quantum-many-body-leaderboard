@@ -1,0 +1,111 @@
+{
+  "model": "Heisenberg",
+  "lattice": "chain",
+  "n_sites": 16,
+  "boundary": "P",
+  "params": {},
+  "instance_id": "Heisenberg/chain_16_P",
+  "rows": [
+    {
+      "energy": -28.5691854424671,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 16,
+      "einf": 0,
+      "v_score": null,
+      "method": "ED",
+      "ansatz": null,
+      "method_detail": "",
+      "method_as_published": "Exact diagonalization",
+      "family": "other",
+      "bound_type": "exact",
+      "bound_type_reason": "Lanczos exact diagonalization of the full S^z = 0 space, computed by QMBL; deterministic",
+      "reference": "QMBL, checks/heisenberg-chain-16-ed/ (exact diagonalization of the periodic 16-site chain, two codes)",
+      "peer_reviewed": false,
+      "source": "qmbl-verify-2026-11-11",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-11",
+        "method": "ed_chain.py (code A: scipy.sparse Hamiltonian with ARPACK eigsh, true residual 2.4e-14; code B: matrix-free Lanczos with full reorthogonalisation, residual 8.1e-15), S^z = 0 space of 12,870 states, no spatial symmetry, numpy 2.5.4 and scipy 1.18.1 on an Apple M5 laptop, 2026-11-11; results in checks/heisenberg-chain-16-ed/results.txt",
+        "reported_as": "-28.56918544246714 (code A) | -28.56918544246712 (code B) | -28.5691854424671194555711899928 (Bethe ansatz, checks/bethe-heisenberg-chain/bethe_xxx.py 16 P 30)",
+        "note": "Pauli total; E/N = -0.446393523 in S.S units (S.S total -7.14229636062). H = sum_i S_i.S_{i+1} on the periodic chain (16 bonds). The S^z = 0 space holds a member of every spin multiplet, so its lowest level is the ground state. The same script reproduces the exact row of Heisenberg/chain_20_P to 6e-14. No published exact energy is carried for this instance; carried to 13 decimals, the agreement of the three calculations.",
+        "secondary_of": null
+      },
+      "computed_by": "qmbl",
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/221f34c3/checks/heisenberg-chain-16-ed",
+        "commit": "221f34c3",
+        "script": "checks/heisenberg-chain-16-ed/",
+        "read_from": {
+          "quote": "QMBL, checks/heisenberg-chain-16-ed/ (exact diagonalization of the periodic 16-site chain, two codes)",
+          "location": "the row's reference (QMBL check directory)",
+          "checked_on": "2026-11-11",
+          "pass": "passes/code/code-links-2026-11-11.json"
+        }
+      }
+    },
+    {
+      "energy": -28.5685,
+      "sigma": 0.0003,
+      "energy_variance": null,
+      "dof": 16,
+      "einf": 0,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "ViT",
+      "method_detail": "two-layer encoder, QGT block-diagonal by network layer",
+      "method_as_published": "Block-layer QGT (ViT)",
+      "family": "transformer / ViT",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Shokry, Santini & Vicentini, When Less is More: Approximating the Quantum Geometric Tensor with Block Structures, arXiv:2510.08430 (1st Workshop on Differentiable Systems and Scientific Machine Learning @ EurIPS 2025)",
+      "peer_reviewed": false,
+      "source": "sweep-allresults-2026-11-11",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-11",
+        "method": "source text of arXiv:2510.08430 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading (2026-11-11)",
+        "reported_as": "-28.5685(3)",
+        "note": "Table 2, row 'Block-layer QGT', column Energy E (the Vision Transformer with a two-layer encoder of the chain benchmark, lines 130-131, optimised with the QGT block-diagonal by network layer); sources/2510.08430.txt line 193; version read: arXiv text (sources/2510.08430.txt), checked against the arXiv v2 PDF; no journal version (arXiv metadata and Crossref, 2026-11-11) | The text writes H = sum_i S_i.S_{i+1} with S_i = σ_i / 2 on the periodic chain of L = 16 sites (lines 126-128), but Table 2's energies are in the Pauli form: the exact ground state of that H is -7.142296 (QMBL's diagonalization and Bethe ansatz, checks/heisenberg-chain-16-ed/), and -28.5685(3) read with S = σ/2 would lie four times below it, impossible for a variational energy. Read as the Pauli total (4 x S.S, RULES.md 5), the two rows lie 6.9e-4 and 1.8e-3 above the exact Pauli total -28.569185, at 2.3 and 3.0 printed sigma. Stored as printed, the Pauli total; E/N in S.S units is the printed value / 64. | variance reported as σ² = 0.008 (Table 2, column Energy Variance), not stored: convention not verified",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -28.5674,
+      "sigma": 0.0006,
+      "energy_variance": null,
+      "dof": 16,
+      "einf": 0,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "ViT",
+      "method_detail": "two-layer encoder, full sampled QGT (SR)",
+      "method_as_published": "Full QGT (ViT)",
+      "family": "transformer / ViT",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Shokry, Santini & Vicentini, When Less is More: Approximating the Quantum Geometric Tensor with Block Structures, arXiv:2510.08430 (1st Workshop on Differentiable Systems and Scientific Machine Learning @ EurIPS 2025)",
+      "peer_reviewed": false,
+      "source": "sweep-allresults-2026-11-11",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-11",
+        "method": "source text of arXiv:2510.08430 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading (2026-11-11)",
+        "reported_as": "-28.5674(6)",
+        "note": "Table 2, row 'Full QGT', column Energy E (the same Vision Transformer optimised with the full sampled QGT, 'full SR', line 131); sources/2510.08430.txt line 194; version read: arXiv text (sources/2510.08430.txt), checked against the arXiv v2 PDF; no journal version (arXiv metadata and Crossref, 2026-11-11) | The text writes H = sum_i S_i.S_{i+1} with S_i = σ_i / 2 on the periodic chain of L = 16 sites (lines 126-128), but Table 2's energies are in the Pauli form: the exact ground state of that H is -7.142296 (QMBL's diagonalization and Bethe ansatz, checks/heisenberg-chain-16-ed/), and -28.5685(3) read with S = σ/2 would lie four times below it, impossible for a variational energy. Read as the Pauli total (4 x S.S, RULES.md 5), the two rows lie 6.9e-4 and 1.8e-3 above the exact Pauli total -28.569185, at 2.3 and 3.0 printed sigma. Stored as printed, the Pauli total; E/N in S.S units is the printed value / 64. | variance reported as σ² = 0.026 (Table 2, column Energy Variance), not stored: convention not verified",
+        "secondary_of": null
+      }
+    }
+  ],
+  "coverage": [
+    {
+      "checked_on": "2026-11-11",
+      "method": "table harvest of cached arXiv sources (match_tables.mjs --all), every matched paper read for this instance",
+      "screened": [
+        "arXiv:2510.08430"
+      ],
+      "found": 1,
+      "note": "Only papers whose tables matched the instance by size were read; not a citation screen. Energies from: arXiv:2510.08430."
+    }
+  ]
+}

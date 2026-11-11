@@ -1079,6 +1079,40 @@ for (const [lv, pows] of [["PL0", [0, 2, 4, 6, 8]], ["PL1", [0, 2, 4, 6, 8]], ["
   NAMES[`${lv}, power → ∞ (exponential fit)`] = ["Power-Lanczos", `${lv} on the d-wave RVB state, exponential fit of the energies to infinite power`, { family: "AFQMC / GFMC" }];
 }
 
+// Pass sweep-rows-2026-11-11-instances: the cells the Ketboard/tachys pass held for want of an instance.
+// arXiv:2304.01996 (NeurIPS 2023), Tables 1-4 on the open squares. PixelCNN is the gated PixelCNN of
+// Appendix D, 7 layers and 48 hidden dimensions unless the label says (layers-hidden); ANTN is that
+// PixelCNN carrying an MPS of the bond dimension in the label, in the elementwise or blockwise
+// construction, initialised from the DMRG MPS (Appendix D) unless (RI); (S) is the Marshall sign rule,
+// (NS) and every unlabelled row are without it (Sec. 6.2, Table 4 caption); (P) is a PixelCNN
+// pretrained on the MPS result (Table 3 caption). The MPS rows are DMRG at the stated bond dimension.
+{
+  const PIX = (l, h) => `${l} layers, ${h} hidden dimensions`;
+  const CNN = { family: "CNN / ResNet" }, ANTN = b => ({ bond_dimension: b, family: "tensor network" });
+  Object.assign(NAMES, {
+    "RBM (NS)": ["RBM", "no sign rule"],
+    "RBM (S)": ["RBM", "Marshall sign rule"],
+    "PixelCNN (NS)": ["PixelCNN", `${PIX(7, 48)}, no sign rule`, CNN],
+    "PixelCNN (S)": ["PixelCNN", `${PIX(7, 48)}, Marshall sign rule`, CNN],
+    "PixelCNN (P) (7-48)": ["PixelCNN", `${PIX(7, 48)}, pretrained on the MPS result, no sign rule`, CNN],
+    "Elementwise (8 NS)": ["ANTN", `elementwise, PixelCNN ${PIX(7, 48)}, no sign rule`, ANTN(8)],
+    "Elementwise (8 S)": ["ANTN", `elementwise, PixelCNN ${PIX(7, 48)}, Marshall sign rule`, ANTN(8)],
+    "Blockwise (70 NS)": ["ANTN", `blockwise, PixelCNN ${PIX(7, 48)}, no sign rule`, ANTN(70)],
+    "Blockwise (70 S)": ["ANTN", `blockwise, PixelCNN ${PIX(7, 48)}, Marshall sign rule`, ANTN(70)],
+    "EW (7-48-8)": ["ANTN", `elementwise, PixelCNN ${PIX(7, 48)}, no sign rule`, ANTN(8)],
+    "EW (RI) (7-48-8)": ["ANTN", `elementwise, PixelCNN ${PIX(7, 48)}, MPS randomly initialised, no sign rule`, ANTN(8)],
+    "BW (7-48-70)": ["ANTN", `blockwise, PixelCNN ${PIX(7, 48)}, no sign rule`, ANTN(70)],
+  });
+  for (const b of [8, 70, 1024]) NAMES[`MPS (${b})`] = ["DMRG", "", { bond_dimension: b }];
+  for (const [l, h] of [[7, 48], [8, 48], [9, 48], [10, 48], [11, 48], [12, 48], [15, 48], [20, 48], [8, 72], [9, 72], [10, 72], [11, 72], [12, 72]])
+    NAMES[`PixelCNN (${l}-${h})`] = ["PixelCNN", `${PIX(l, h)}, no sign rule`, CNN];
+  for (const [l, h] of [[11, 48], [12, 48], [15, 48], [20, 48], [11, 72], [12, 72]])
+    NAMES[`PixelCNN (S) (${l}-${h})`] = ["PixelCNN", `${PIX(l, h)}, Marshall sign rule`, CNN];
+  // arXiv:2510.08430 Table 2: one Vision Transformer (two-layer encoder) optimised two ways.
+  NAMES["Block-layer QGT (ViT)"] = ["ViT", "two-layer encoder, QGT block-diagonal by network layer"];
+  NAMES["Full QGT (ViT)"] = ["ViT", "two-layer encoder, full sampled QGT (SR)"];
+}
+
 // Systematic families of strings, matched when no exact entry exists.
 export const PATTERNS = [
   [/^DMRG \(chi = (\d+)\), QMBL cost-to-reproduce run$/, m => ["DMRG", "QMBL run", { bond_dimension: +m[1] }]],

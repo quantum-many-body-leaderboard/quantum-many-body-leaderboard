@@ -290,7 +290,22 @@ put("Hubbard/square_16_P_7_8",
     reported: "-11.868835569563833 (ed_full2.py) | -11.868835569563995 (hub_fact.py)",
     note: "Total energy, t = 1, H = -t sum (c+c + h.c.) + U sum n_up n_dn on the periodic 4x4 lattice (32 bonds), N_up = N_dn = 7; E/N = -0.741802223. No published exact energy is carried for this instance; the two codes agree to 1.6e-13.",
     source: "qmbl-verify-2026-11-10", checked: "2026-11-10", fields: { computed_by: "qmbl" } });
-console.log("batch B3: 2 exact rows computed by QMBL where none was published (J1-J2 6x6, J2 = 0.45; Hubbard 4x4 at n = 7/8, U = 8)");
+//
+// Heisenberg/chain_16_P, the periodic 16-site chain that arXiv:2510.08430 (Table 2) benchmarks with
+// two VMC rows and prints no exact energy: checks/heisenberg-chain-16-ed/ed_chain.py, two codes
+// over the whole S^z = 0 space (12,870 states) on an Apple M5 laptop, 2026-11-11; they agree to
+// 5e-15, and QMBL's Bethe solver (checks/bethe-heisenberg-chain/) gives the same energy to 1e-14.
+// The instance is created here; the VMC rows come from passes/rows/sweep-rows-2026-11-11-instances.json.
+put("Heisenberg/chain_16_P",
+  { model: "Heisenberg", lattice: "chain", n_sites: 16, boundary: "P", params: {}, dof: 16, einf: 0 },
+  { energy: -28.5691854424671, sigma: null,
+    src: { ref: "QMBL, checks/heisenberg-chain-16-ed/ (exact diagonalization of the periodic 16-site chain, two codes)", pr: false },
+    method: "Exact diagonalization", why: "Lanczos exact diagonalization of the full S^z = 0 space, computed by QMBL; deterministic",
+    read: "ed_chain.py (code A: scipy.sparse Hamiltonian with ARPACK eigsh, true residual 2.4e-14; code B: matrix-free Lanczos with full reorthogonalisation, residual 8.1e-15), S^z = 0 space of 12,870 states, no spatial symmetry, numpy 2.5.4 and scipy 1.18.1 on an Apple M5 laptop, 2026-11-11; results in checks/heisenberg-chain-16-ed/results.txt",
+    reported: "-28.56918544246714 (code A) | -28.56918544246712 (code B) | -28.5691854424671194555711899928 (Bethe ansatz, checks/bethe-heisenberg-chain/bethe_xxx.py 16 P 30)",
+    note: "Pauli total; E/N = -0.446393523 in S.S units (S.S total -7.14229636062). H = sum_i S_i.S_{i+1} on the periodic chain (16 bonds). The S^z = 0 space holds a member of every spin multiplet, so its lowest level is the ground state. The same script reproduces the exact row of Heisenberg/chain_20_P to 6e-14. No published exact energy is carried for this instance; carried to 13 decimals, the agreement of the three calculations.",
+    source: "qmbl-verify-2026-11-11", checked: "2026-11-11", fields: { computed_by: "qmbl" } });
+console.log("batch B3: 3 exact rows computed by QMBL where none was published (J1-J2 6x6, J2 = 0.45; Hubbard 4x4 at n = 7/8, U = 8; Heisenberg chain, 16 sites)");
 
 // ---------------------------------------------------------------------------------------
 // Batch C: exact diagonalization of frustrated clusters. Deterministic, so no sigma; the
