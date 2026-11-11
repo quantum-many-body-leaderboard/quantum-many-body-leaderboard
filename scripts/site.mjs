@@ -1156,7 +1156,7 @@ function apply() {
   count.textContent = q || model ? shown + " of " + total + " instances" : "";
 }
 box.addEventListener("input", apply);
-// The sticky bar under the header: the Hamiltonian in view is marked and kept in sight in the bar,
+// The bar under the header, once the badges above have scrolled away: the Hamiltonian in view is marked and kept in sight in the bar,
 // a Hamiltonian that the filters hide leaves it, and where the list runs past an edge it fades
 // out there under an arrow that scrolls it on.
 const jump = document.querySelector("nav.jump"), jumpLinks = [...jump.querySelectorAll(".jump-list a")];
@@ -1166,7 +1166,11 @@ function edges() {
   moreL.hidden = !l; moreR.hidden = !r; list.classList.toggle("fade-l", l); list.classList.toggle("fade-r", r);
 }
 list.addEventListener("scroll", edges, { passive: true });
-addEventListener("resize", edges);
+// The bar spans the window but its links line up with the table below.
+const align = () => { const m = document.querySelector("main").getBoundingClientRect(), cs = getComputedStyle(document.querySelector("main"));
+  jump.style.paddingLeft = m.left + parseFloat(cs.paddingLeft) + "px"; jump.style.paddingRight = innerWidth - m.right + parseFloat(cs.paddingRight) + "px"; };
+addEventListener("resize", () => { align(); edges(); });
+align();
 moreL.addEventListener("click", () => list.scrollBy({ left: -list.clientWidth * 0.6, behavior: "smooth" }));
 moreR.addEventListener("click", () => list.scrollBy({ left: list.clientWidth * 0.6, behavior: "smooth" }));
 function markJump() {
@@ -1181,7 +1185,9 @@ function markJump() {
     }
     a.hidden = sections.find(s => s.dataset.model === a.dataset.model).hidden;
   }
-  jump.classList.toggle("stuck", jump.getBoundingClientRect().top <= (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--hdr")) || 0) + 0.5);
+  // The bar shows only once the search box and the Hamiltonian badges have scrolled away under the header.
+  const hdr = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--hdr")) || 0;
+  jump.classList.toggle("show", document.querySelector(".quick.models").getBoundingClientRect().bottom < hdr);
   edges();
 }
 addEventListener("scroll", markJump, { passive: true });
@@ -1673,9 +1679,10 @@ td.record .num { font-weight: 600; color: var(--record); }
 
 section[data-model] h2 { font-size: 2.1rem; margin-top: 3rem; scroll-margin-top: calc(var(--hdr, 0px) + 4rem); }
 /* The table's sticky bar (instancesPage): every Hamiltonian, the one in view marked, and Top. */
-nav.jump { position: sticky; top: var(--hdr, 0px); z-index: 5; display: flex; align-items: center; gap: 0.8rem; margin: 1.2rem 0 0; padding: 0.5rem 0;
-  background: var(--bg); border-bottom: 1px solid transparent; transition: border-color .2s, box-shadow .2s; }
-nav.jump.stuck { border-bottom-color: var(--grid); box-shadow: 0 6px 12px -10px rgb(0 0 0 / 0.25); }
+nav.jump { position: fixed; top: var(--hdr, 0px); left: 0; right: 0; z-index: 15; display: flex; align-items: center; gap: 0.8rem;
+  padding: 0.5rem clamp(1rem, 4vw, 3rem); background: var(--bg); border-bottom: 1px solid var(--grid); box-shadow: 0 6px 12px -10px rgb(0 0 0 / 0.25);
+  opacity: 0; transform: translateY(-0.5rem); pointer-events: none; transition: opacity .25s ease, transform .25s ease; }
+nav.jump.show { opacity: 1; transform: none; pointer-events: auto; }
 nav.jump .jump-list { display: flex; gap: 0.3rem; overflow-x: auto; scrollbar-width: none; flex: 1; min-width: 0; }
 nav.jump .jump-list::-webkit-scrollbar { display: none; }
 nav.jump .jump-list a { flex: none; padding: 0.2rem 0.65rem; border-radius: 999px; font-size: 0.85rem; color: var(--ink2); text-decoration: none; white-space: nowrap; }
