@@ -721,6 +721,58 @@
         "confidence": "high",
         "note": "Blanket statement for all Table III (PBC) Fermi-Hubbard runs: samples = roughly 44800 MC samples per optimization step for gradients; the p=1 energies (all Table III values) are evaluated with 48000 MC samples. No parameter count is stated (tensor dimension [M,N,2,d/2,Q,d] with Q=5, d=4 is given but never multiplied out); no iteration count for the Hubbard runs. The only hardware/timing statement (2 minutes per step on 128 AMD EPYC 7742 CPU cores) is made for the 8×16 lattice run, not for these rows, so device/n_devices/wall_clock are left null. No GPU used or mentioned."
       }
+    },
+    {
+      "energy": -23.008,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 28,
+      "einf": 49,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "SJ",
+      "method_detail": "",
+      "method_as_published": "Slater-Jastrow",
+      "family": "classic VMC",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Luo & Clark, Backflow Transformations via Neural Networks for Quantum Many-Body Wave Functions, Phys. Rev. Lett. 122, 226401 (2019), arXiv:1807.10770, doi:10.1103/PhysRevLett.122.226401",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-11",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-11",
+        "method": "source text of arXiv:1807.10770 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-0.719 ± 10^-5",
+        "note": "Table III row '8x4, U/t=8, n=0.875'; version read: arXiv text (sources/1807.10770.txt); journal version (Phys. Rev. Lett. 122, 226401 (2019)) not read in this pass | Per-site; n=0.875 on 32 sites = Nf 14 per spin; periodic BC not stated for 8x4 in text (assumed as for the 4x4 exact check)",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -24.544,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 28,
+      "einf": 49,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "NNBF",
+      "method_detail": "backflow on a Slater determinant (Ψ_SN); extrapolated: variance → 0",
+      "method_as_published": "NNB variance extrapolation",
+      "family": "backflow / Pfaffian",
+      "bound_type": "extrapolated",
+      "bound_type_reason": "zero-variance or bond-dimension extrapolation; not an upper bound (assigned during source reading)",
+      "reference": "Luo & Clark, Backflow Transformations via Neural Networks for Quantum Many-Body Wave Functions, Phys. Rev. Lett. 122, 226401 (2019), arXiv:1807.10770, doi:10.1103/PhysRevLett.122.226401",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-11",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-11",
+        "method": "source text of arXiv:1807.10770 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; adversarial re-read: confirmed",
+        "reported_as": "-0.767",
+        "note": "Table III row '8x4', column NNB variance extrapolation; version read: arXiv text (sources/1807.10770.txt); journal version (Phys. Rev. Lett. 122, 226401 (2019)) not read in this pass | Per-site; boundary not printed for 8x4",
+        "secondary_of": null
+      }
     }
   ],
   "coverage": [

@@ -1,0 +1,307 @@
+      Vanishing spin gap in a competing spin-liquid phase in the kagome Heisenberg
+                                                               antiferromagnet
+
+                                     Yasir  Iqbal,          1,∗  Didier  Poilblanc,                2,†  andFederico  Becca       3,‡
+              1The  Abdus  Salam  International  Centre  for  Theoretical  Physics,  P.O.  Box  586,  I-34151  Trieste,  Italy
+        2Laboratoire  de  Physique  Th´eorique  UMR-5152,  CNRS  and  Universit´e  de  Toulouse,  F-31062  Toulouse,  France
+                       3Democritos  National  Simulation  Center,  Istituto  Oﬃcina  dei  Materiali  del  CNR  and
+                    SISSA-International  School  for  Advanced  Studies,  Via  Bonomea  265,  I-34136  Trieste,  Italy
+                                                                (Dated:  June 8, 2022)
+                   We provide strong numerical evidence, using improved variational wave functions, for a ground
+                state  with  vanishing  spin  gap  in  the  spin-1/2  quantum  Heisenberg  model  on  the  kagome  lattice.
+                Starting from  the  algebraic U(1)  Dirac spin  liquid state  proposed  by  Y. Ran  et  al.   [Phys.  Rev.
+                Lett. 98, 117205 (2007)] and iteratively applying a few Lanczos steps, we compute the lowest     S = 2
+                excitation  constructed  by  exciting  spinons  close  to  the  Dirac  nodes.   Our  results  are  compatible
+                with a vanishing spin gap in the thermodynamic limit and in consonance with a power-law decay
+                of long distance spin-spin correlations in real space.  The competition with a gapped (topological)
+                spin liquid is discussed.
+
+                PACS numbers:  75.10.Jm, 75.10.Kt, 75.40.Mg, 75.50.Ee
+
+
+   Introduction.  It is traditional wisdom that at low tem-                     step  is  to  address  the  key  issue  of  whether  the  ground
+peratures  phases  of  matter  condense  by  spontaneously                      state  has  a  ﬁnite  spin  gap  or  not.   Recent  large  scale
+breaking some symmetry and thus developing order.  The                          DMRG  calculations  claim  for  a  ﬁnite  gap  to  spin  ex-
+possibility of realizing phases which evade ordering has                        citations  in  the  thermodynamic  limit  [8–10, 38].   How-
+only  been  fruitfully  explored  in  the  recent  past  with                   ever, the estimate of the triplet spin gaps given by these
+many exotic scenarios.  Among these, the spin-1/2 quan-                         DMRG  studies  is  not  fully  consistent.   While  conven-
+tum  Heisenberg  antiferromagnet  on  frustrated  lattices                      tional  DMRG  calculations  performed  on  cylindrical ge-
+occupies  a  distinguished  position.   The  kagome  lattice                    ometries  gave  an  estimate  of  ∆   =   0.13(1)  [8, 9],  a
+represents  one  of  the  most  promising  candidates,  given                   diﬀerent  estimate  of  ∆   =   0.055(5)  was  obtained  by
+its large degeneracy of the classical ground-state mani-                        considering  “square”  clusters  with  periodic  boundaries
+fold and the strong quantum ﬂuctuations.  Several stud-                         and  preserving  all  pointlike  symmetries  [38].     More-
+ies  in  the  past  highlighted  the  diﬃculty  in  reaching  a                 over,  more  recent  grand  canonical  DMRG  calculations
+deﬁnitive understanding of its low-energy properties [1–                        on an isotropic “hexagonal” cluster gave an estimate of
+7].  Indeed, the identiﬁcation of the precise nature of the                     ∆ = 0.05(2), which emphasized the importance of consid-
+ground  state  of  the  kagome  spin-1/2  Heisenberg  model                     ering isotropic/symmetric clusters instead of cylindrical
+remains unsettled and widely debated.  Diﬀerent approx-                         geometries, and of performing a simultaneous size scaling
+imate numerical and analytical techniques have claimed
+a  variety  of  ground  states.   On  the  one  hand,  density-
+matrix  renormalization  group  (DMRG),  pseudofermion
+functional renormalization group,  and Schwinger boson
+mean-ﬁeld calculations have supported a fully gapped Z2
+topological spin-liquid ground state that does not break
+any lattice symmetry [8–15].  On the other hand, a gap-
+less (algebraic) and fully symmetric U(1) Dirac spin liq-
+uid  has  been  proposed  as  the  ground  state  and  widely
+studied using variational Monte Carlo approach [16–23].
+In  addition,  valence  bond  crystals  of  diﬀerent  unit  cell
+sizes  and  symmetries  have  been  suggested  from  other
+techniques  [24–34].    The  coupled-cluster  method  sug-
+gested a q  = 0 (uniform) state [35].  Finally,  extending
+the construction of tensor network Ans¨atze of gapped Z2                        FIG.  1.       (Color  online)  The  geometrical  unit  cell  of  the
+spin  liquids  [36],  a  recent  calculation,  based  upon  the                 kagome  lattice  is  shown  as  a  shaded  region,  along  with  the
+so-called projected entangled simplex states (PESS) [37]                        lattice vectors a1 and a2.  The mean-ﬁeld Ansatz of the U(1)
+which preserve lattice symmetries,  gave remarkably ac-                         Dirac  spin  liquid  has  zero  ﬂux  piercing  the  triangles  and π
+curate energies.                                                                ﬂux piercing the hexagons.  Hence, each geometrical unit cell
+                                                                                encloses a ﬂux π, whose implementation requires a 2× 1 ex-
+   For a precise identiﬁcation of the spin liquid, the ﬁrst                     pansion of the geometrical unit cell.
+                                                                                                                                                      2
+
+TABLE  I.  Energies  of  the U(1)  Dirac  spin  liquid  (columns  2-4)  and  its S  =  2  excited  state  (columns  5-7),  with p  =  0,  1,
+and 2 Lanczos steps on diﬀerent cluster sizes obtained by variational Monte Carlo are given.  The ground-state and S  = 2
+excited-state energies of the spin-1/2 Heisenberg model estimated by using zero-variance extrapolation of variational energies
+on diﬀerent cluster sizes are marked in bold.
+
+ Size         0-LS                 1-LS                2-LS               0-LS               1-LS               2-LS          Ground state  S = 2 state
+ 48 −0.4293510(4)−0.4352562(3)−0.436712(1)−0.417980(1)−0.425218(1)−0.427155(3) −0.437845(4) −0.43070(1)
+ 108 −0.4287665(4)−0.4341032(5)−0.435787(3)−0.425567(1)−0.431290(1)−0.433217(3) −0.437178(9) −0.43516(2)
+ 192 −0.4286749(4)−0.4334481(5)−0.435255(4)−0.427360(2)−0.432274(1)−0.434181(5) −0.43674(3)  −0.43597(3)
+ 432 −0.428656(1) −0.432519(1)       −0.428274(3)−0.432169(1)               −0.43652(4)  −0.43631(4)
+
+
+in all dimensions [10].  The message of these latter results                  ZnCu3(OH)6Cl2  point towards a gapless spin-liquid be-
+is that the spin gap (if any) may be much smaller than                        havior,  with  an  upper  bound  of  the  spin  gap  which  is
+what has been claimed by the standard DMRG.                                   estimated to be∼J/10 (if a gap exists) [43].
+  An alternative point of view is given by Gutzwiller pro-                       Model,  wave  function,  and  numerical  technique.  The
+jected fermionic wave functions that strongly support a                       Hamiltonian for the spin-1/2 quantum Heisenberg anti-
+gapless  scenario  described  by  an  algebraic U(1)  Dirac                   ferromagnetic model is
+spin liquid.  Indeed, explicit numerical calculations have                                              ˆH =J∑       ˆSi· ˆSj,                          (1)
+shown  the U(1)  Dirac  spin  liquid  to  be  stable  (locally
+and globally) with respect to dimerizing into all known                                                          ⟨ij⟩
+valence-bond crystal phases [17,19,20,22].  In addition,
+it  was  shown  that,  within  this  class  of  Gutzwiller  pro-              where J >  0  and ⟨ij⟩  denotes  the  sum  over  nearest-
+jected  wave  functions,  all  the  fully  symmetric,  gapped                 neighbor  pairs  of  sites.   The ˆSi  are  spin-1/2  operators
+Z2  spin  liquids  have  a  higher  energy  compared  to  the                 at each site i.  All energies will be given in units of J.
+U(1)  Dirac  spin  liquid  [21, 39–41].   Only  a  minor  en-                    The  variational  wave  function  is  constructed  by  pro-
+ergy gain can be obtained by fully relaxing all the varia-                    jecting a noncorrelated fermionic state:
+tional freedom of the Gutzwiller projected wave function                                             |ΨDirac⟩ =PG|ΨMF⟩,                       (2)
+(furthermore, this energy gain decreases upon increasing
+the  cluster  size)  [42].   Most  importantly,  it  was  shown               wherePG =∏
+that  upon  application  of  a  couple  of  Lanczos  steps  on                tor enforcing the one fermion per site constraint.  Here,i(1−ni,↑ni,↓) is the full Gutzwiller projec-
+theU(1) Dirac spin liquid, very competitive energies can                      |ΨMF⟩  is  the  ground  state  of  a  mean-ﬁeld  fermionic
+be achieved, without disturbing the power-law decay of
+the  long  distance  real  space  spin-spin  correlations,  i.e.,
+retaining a gapless state [23].  However, so far, a direct
+calculation of the spin gap has not been aﬀorded within
+this approach.
+  In this Rapid Communication, we compute the S = 2
+spin gap ∆2 of the Heisenberg model on the kagome lat-
+tice by considering spinon excitations around the Dirac
+nodes.  We show that the simple variational wave func-
+tion  is  gapless,  implying  that  the  Gutzwiller  projector
+does not aﬀect the mean-ﬁeld expectation.  Most impor-
+tantly,  by  applying  a  few  Lanczos  steps  onto  the  vari-
+ational  states  with S  =  0  and S  =  2,  we  can  reach  a
+reliable  estimation  of  ∆2  on  several  cluster  sizes,  so  to
+extrapolate in the thermodynamic limit.  Our results are
+compatible  with  a  gapless S  =  2  excitation,  the  upper
+bound of the gap being ∆2≃ 0.02 (leading to aS = 1 gap
+of ∆≃ 0.01, much smaller than what has been obtained
+by standard DMRG on cylindrical geometries [8,9] and                          FIG. 2.    (Color online) Finite-size scaling of the S = 2 spin
+closer to other DMRG calculations performed on square                         gap as a function of the inverse geometrical diameter (1/L).
+clusters [10,38]).                                                            Both thep = 0 andp = 2 extrapolated values give an estimate
+  On  the  experimental  front,  recent  neutron  scatter-                    which is zero (within error bars) in the thermodynamic limit.
+ing measurements on single-crystal samples of the near                        A linear ﬁt is used in both cases.  The largest size considered
+perfect  kagome  spin-1/2  Heisenberg  model  compound                        for the p = 0 case is 2352 sites.
+                                                                                                                                                     3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3.    (Color online) (a) Variational energies as a function of the variance of energy, for zero, one, and two Lanczos steps.
+The ground-stateS = 0 energy on the 48-, 108-, and 192-site clusters is estimated by extrapolating the three variational results
+to the zero-variance limit by a quadratic ﬁt, while only two points have been used for the 432-site cluster, and the method of
+extrapolation is explained in the main text.  (b) The same for the S = 2 excited state.
+
+
+Hamiltonian that contains hopping only:                                       Here  the αk’s  are  variational  parameters.   The  conver-
+                      ˆHMF =∑        χijˆc†                                   gence of|Ψp-LS⟩ to the exact ground state|Ψex⟩ is guar-
+                                          i,αˆcj,α,                      (3)  anteed for large p provided the starting state is not or-
+                               i,j,α                                          thogonal  to|Ψex⟩,  i.e.,  for⟨Ψex|ΨDirac⟩⁄=  0.   On  large
+where α  =↑,↓  and χij  = χji  (i.e.,  real  hopping).   The                  cluster  sizes,  only  a  few  steps  can  be  eﬃciently  per-
+U(1)  Dirac  state  is  deﬁned  with  nontrivial  gauge  mag-                 formed and here we implement the case with p = 1 and
+netic  ﬂuxes  piercing  the  triangles  and  hexagons  (see                   p = 2 (p = 0 corresponds to the original trial wave func-
+Fig.1[17]) We would like to emphasize that the projected                      tion).   Subsequently,  an  estimate  of  the  exact  ground-
+wave function does not contain any variational parameter                      state energy may be achieved by the method of variance
+and it is fully determined by ﬁxing the ﬂux pattern.  The                     extrapolation:  For  suﬃciently  accurate  states,  we  have
+S = 0 Ansatz is constructed by ﬁlling the lowest-energy                       that E≈ Eex + constant×σ2,  where E  =⟨ ˆH⟩/N  and
+single-particle  states  for  both  up  and  down  electrons;                 σ2 = (⟨ ˆH2⟩−⟨ ˆH⟩2)/N  are the energy and variance per
+suitable boundary conditions must be considered in or-                        site, respectively, whence, the exact ground-state energy
+der to have a unique mean-ﬁeld state. This simple Ansatz                      Eex can be extracted by ﬁttingE vsσ2 forp = 0, 1, and
+for the ground state of the kagome spin-1/2 Heisenberg                        2. The energy and its variance forp = 0, 1, and 2 Lanczos
+model gives rather good accuracy on the energy per site                       steps are obtained using the standard variational Monte
+in  the  thermodynamic  limit,  i.e., E/J  =−0.428  67(1)                     Carlo method, independently forS = 0 andS = 2 states.
+[to  be  compared  with E/J  = −0.4386(5)  obtained  by                         Results.  Our variational calculations were performed
+the  DMRG  approach  [9]  and  E/J   = −0.4364(1)  by                         on square (i.e., 3×L×L) clusters with periodic bound-
+PESS  [37]].   The   S  =  2  state  is  constructed  by  chang-              aries.  We start by computing theS = 2 gap for the Dirac
+ing boundary conditions, in order to have four spinons in                     wave  function |ΨDirac⟩.    Before  Gutzwiller  projection,
+an eightfold degenerate single-particle level at the chem-                    the  mean-ﬁeld  state |ΨMF⟩  is  gapless;  however,  given
+ical potential; a unique mean-ﬁeld state is then obtained                     the U(1)  low-energy  gauge  structure  of  the  mean-ﬁeld
+taking all these spinons with the same spin (so that the                      Ansatz, it is not obvious that this property is preserved
+total  wave  function  has S  =  2).   The S  =  2  state  has
+k = (0, 0) and is particularly simple since it can be rep-
+resented with a single Slater determinant (as the ground                           48                108          192           432  ∞ 2D limit
+state).                                                                            0.3429(7)  0.218(3)  0.147(11)  0.090(34) −0.04(6)
+  In order to have a systematic improvement of the trial
+variational wave function and approach the true ground                        TABLE II. The S = 2 gap of the spin-1/2 Heisenberg model
+state, we can apply a few Lanczos steps to|ΨDirac⟩ [44]:                      obtained  from  the  estimates  of S  =  0  and S  =  2  energies
+                          (        p∑                                         on diﬀerent cluster sizes (marked in bold in TableI) is given.
+             |Ψp-LS⟩ =      1 +       αk ˆHk)|ΨDirac⟩.            (4)         The estimate in the thermodynamic limit is zero (within error
+                                 k=1                                          bars).
+                                                                                                                                                      4
+
+after projection [45].  In fact, the  U(1) gauge ﬂuctuations                  has also been discussed in a recent work on valence-bond
+are expected to be wild, possibly leading to some insta-                      solids [48], where it has been pointed out that the long
+bility of the mean-ﬁeld Ansatz [46];  nevertheless, it has                    cylinders may turn even a true valence-bond order into
+been shown that|ΨDirac⟩ is essentially stable against all                     a disordered phase (with only short-range correlations).
+possible perturbations (only a marginal improvement has                          Summary.     We  have  reported  the S   =   2  gap  in
+been obtained by a totally unconstrained optimization of                      the kagome spin-1/2 Heisenberg antiferromagnetic model
+the pairing function [42]).  Here, we show that the  S = 2                    by using an improved variational technique based upon
+gap is vanishing in the thermodymanic limit (see Fig.2).                      Gutzwiller projected fermionic wave functions.  The ap-
+This result is interesting in itself, since it clearly shows                  plication of a few Lanczos steps on top of theU(1) Dirac
+that  the  Gutzwiller  projection  does  not  alter  the  low-                spin liquid, together with a zero-variance extrapolation,
+energy  properties  of  the  mean-ﬁeld  state;  this  outcome                 gives extremely accurate results, which strongly support
+is  compatible  with  the  fact  that  the  spin-spin  correla-               the fact that the ground state is gapless.  However, con-
+tions have a power-law decay at long distances, namely,                       troversial  claims  based  on  DMRG  [8, 9, 11]  and  tensor
+⟨ˆSr· ˆS0⟩∼ 1/r4 [18].                                                        network  methods  [36, 37]  of  a  gapped  topological  spin
+  Let us move to the central part of this work by apply-                      liquid  raise  concerns  about  the  possibility  for  the  exis-
+ing a few Lanczos steps to the original Dirac state.  In                      tence of diﬀerent basins of attraction in the energy land-
+TableIand Fig.3, we report the results for the       S  = 0                   scape.  In this picture, it would be very diﬃcult to cross
+and S  =  2  states  separately.   The  very  computation-                    over from one state to the other, requiring either a very
+ally demanding p = 2 calculations have been performed                         large number of states within DMRG and tensor network
+for 48, 108, and 192 sites, while for the 432-site cluster                    methods or a very large number of Lanczos steps in our
+only the ﬁrst Lanczos step has been considered.  In the                       approach.
+former cases, the zero-variance extrapolation can be ex-                         Acknowledgments.  We acknowledge P. A. Lee for stim-
+ploited  by  a  quadratic  ﬁt  of  the  three  points,  namely,               ulating  discussions  during  the  KITP  program  “Frus-
+E =Eex +A×σ2 +B× (σ2)2.  The zero-variance extrap-                            trated  Magnetism  and  Quantum  Spin  Liquids:   From
+olation  gives  size  consistent  results  for  the  energy  per              Theory and Models to Experiments” and S. Sorella for
+site  [47].   Indeed,  even  though  the  Lanczos  step  proce-               several  suggestions  during  the  accomplishment  of  this
+dure (with a ﬁxedp) becomes less and less eﬃcient when                        work.   This  research  was  supported  in  part  by  the  Na-
+increasing the system size,  the extrapolation procedure                      tional Science Foundation under Grant No. NSF PHY11-
+remains accurate:  This can be seen by noticing that the                      25915  and  by  PRIN  2010-11.   Partial  support  by  the
+gain  in  the  energy  and  variance  with  respect  to p  =  0               “Agence  Nationale  de  la  Recherche”  under  Grant  No.
+decreases with L, but the extrapolation is not aﬀected,                       ANR 2010 BLANC 0406-0 and by the CALMIP super-
+since the slope is essentially unchanged.  For the larger                     computer  center  (Toulouse,  France)  are  also  acknowl-
+cluster, i.e., 432 sites, we also considered a quadratic ﬁt:                  edged.
+We ﬁrst obtained an estimate of theA andB coeﬃcients
+by a size scaling of the smaller clusters and then veriﬁed
+that indeed, these values give an excellent ﬁt (i.e., least
+mean-square error) of the points for 432-site cluster.                           ∗  yiqbal@ictp.it
+  The  computation  of  the S  =  0  and S  =  2  energies                       †  didier.poilblanc@irsamc.ups-tlse.fr
+allows us to obtain the extrapolated gap for each size in-                       ‡  becca@sissa.it
+dependently,  which  is  reported  in  TableIIand  Fig.2.                      [1]P.  Lecheminant,  B.  Bernu,  C.  Lhuillier,  L.  Pierre,  and
+Here, despite having an error bar that increases with the                           P. Sindzingre,Phys. Rev. B                56, 2521 (1997).
+system  size,  we  can  reach  an  extremely  accurate  ther-                  [2]P. Sindzingre and C. Lhuillier,Europhys. Lett.             88, 27009
+modynamic extrapolation,  namely,  ∆2  =−0.04± 0.06.                                (2009).
+Therefore,  our  main  conclusion  is  that  our  competitive                  [3]H. Nakano and T. Sakai,J. Phys. Soc. Jpn.        80, 053704
+Ansatz has gapless excitations.  Our best estimate for the                          (2011).
+upper bound on the S = 2 gap is ∆2≃ 0.02, leading to                           [4]A.   M.   L¨auchli,    J.   Sudan,    and   E.   S.   Sørensen,
+a S  =  1  gap  that  would  be  approximately  half  of  this                      Phys. Rev. B 83, 212401 (2011).
+                                                                               [5]R. R. P. Singh and D. A. Huse,Phys. Rev. Lett.           68, 1766
+value,  i.e.,  ∆≃  0.01.   This  latter  result  is  much  lower                    (1992).
+than previous DMRG estimates [8,9], which were done                            [6]G.  Misguich  and  B.  Bernu,Phys.  Rev.  B       71,  014417
+by considering cylindrical geometries Lx×Ly, i.e., ﬁrst                             (2005).
+performing  the  limit Lx→∞  and  then  increasing  the                        [7]L. Balents,Nature (London)       464, 199 (2010).
+circumference Ly.  In contrast to this, it has been shown                      [8]S. Yan, D. A. Huse, and S. R. White,Science.             332, 1173
+that more isotropic lattices lead to a diﬀerent thermody-                           (2011).
+namic extrapolation, suggesting possible diﬃculties when                       [9]S.  Depenbrock,  I.  P.  McCulloch,  and  U.  Schollw¨ock,
+                                                                                    Phys. Rev. Lett. 109, 067201 (2012).
+using  large  aspect  ratios Lx ≫ Ly,  and  nonsimultane-                     [10]S.  Nishimoto,  N.  Shibata,  and  C.  Hotta,Nat.  Com-
+ous  size  scaling  of  diﬀerent  dimensions  [10].   This  fact                    mun. 4, 2287 (2013).
+                                                                                                                                                                     5
+
+[11]H.-C. Jiang, Z. Wang, and L. Balents,Nat. Phys.         8, 902                          (2011);         84, 193102 (2011).
+      (2012); H. Ju and L. Balents,Phys. Rev. B             87, 195109                [41]F. Yang and H. Yao,Phys. Rev. Lett.         109, 147209 (2012).
+      (2013).                                                                         [42]B. K. Clark, J. M. Kinder, E. Neuscamman, Garnet Kin-
+[12]R.  Suttner,   C.  Platt,   J.  Reuther,   and  R.  Thomale,                            Lic Chan, and M. J. Lawler,Phys. Rev. Lett.       111, 187205
+      arXiv:1303.0579[Phys. Rev. B (to be published)].                                      (2013).
+[13]S. Sachdev,Phys. Rev. B             45, 12377 (1992).                             [43]T.-H.   Han,   J.   S.   Helton,   S.   Chu,   D.   G.   Nocera,
+[14]F. Wang and A. Vishwanath,Phys. Rev. B              74, 174423                          J. A. Rodriguez-Rivera, C. Broholm, and Y. S. Lee,Na-
+      (2006).                                                                               ture (London) 492, 406 (2012).
+[15]L.      Messio,       B.      Bernu,       and      C.      Lhuillier,            [44]S. Sorella,Phys. Rev. B                64, 024512 (2001).
+      Phys. Rev. Lett. 108, 207204 (2012).                                            [45]X. G. Wen,Phys. Rev. B          65, 165113 (2002).
+[16]M. B. Hastings,Phys. Rev. B            63, 014413 (2000).                         [46]M. Hermele, T. Senthil, M. P. A. Fisher, P. A. Lee, N. Na-
+[17]Y.  Ran,   M.  Hermele,   P.  A.  Lee,   and  X.  G.  Wen,                              gaosa, and X. G. Wen,Phys. Rev. B     70, 214437 (2004).
+      Phys. Rev. Lett. 98, 117205 (2007).                                             [47]W.-J.   Hu,   F.   Becca,   A.   Parola,   and   S.   Sorella,
+[18]M.  Hermele,   Y.  Ran,   P.  A.  Lee,   and  X.  G.  Wen,                              Phys. Rev. B 88, 060402(R) (2013).
+      Phys. Rev. B 77, 224413 (2008).                                                 [48]A. W. Sandvik,Phys. Rev. B                 85, 134407 (2012).
+[19]O. Ma and J. B. Marston,Phys. Rev. Lett.                  101, 027204
+      (2008).
+[20]Y. Iqbal, F. Becca, and D. Poilblanc,Phys. Rev. B                 83,
+      100404(R) (2011).
+[21]Y. Iqbal, F. Becca, and D. Poilblanc,Phys. Rev. B                 84,
+      020407(R) (2011).
+[22]Y. Iqbal, F. Becca, and D. Poilblanc,New J. Phys.                 14,
+      115031 (2012).
+[23]Y.   Iqbal,   F.   Becca,   S.   Sorella,   and   D.   Poilblanc,
+      Phys. Rev. B 87, 060405(R) (2013).
+[24]J.  B.  Marston  and  C.  Zeng,J.  Appl.  Phys.              69,  5962
+      (1991).
+[25]C. Zeng and V. Elser,Phys. Rev. B        51, 8318 (1995).
+[26]A.     V.     Syromyatnikov     and     S.     V.     Maleyev,
+      Phys.   Rev.   B  66,   132408   (2002);   JETP            98,   538
+      (2004).
+[27]P.  Nikolic  and  T.  Senthil,Phys.  Rev.  B            68,  214415
+      (2003).
+[28]R.  R.  P.  Singh  and  D.  A.  Huse,Phys.  Rev.  B              76,
+      180407(R) (2007);          77, 144415 (2008).
+[29]D.    Poilblanc,    M.    Mambrini,    and    D.    Schwandt,
+      Phys.  Rev.  B  81,   180402(R)  (2010);   D.  Schwandt,
+      M. Mambrini, and D. Poilblanc, ibid. 81, 214413 (2010);
+      D. Poilblanc and A. Ralko, ibid. 82, 174424 (2010).
+[30]G. Evenbly and G. Vidal,Phys. Rev. Lett.              104, 187203
+      (2010).
+[31]Y.  Huh,  M.  Punk,  and  S.  Sachdev,Phys.  Rev.  B             84,
+      094419 (2011).
+[32]K.   Hwang,    Y.   B.   Kim,    J.   Yu,    and   K.   Park,
+      Phys. Rev. B 84, 205133 (2011).
+[33]D. Poilblanc and G. Misguich,Phys. Rev. B        84, 214401
+      (2011).
+[34]S. Capponi, V. Ravi Chandra, A. Auerbach, and M. We-
+      instein,Phys. Rev. B           87, 161118(R) (2013).
+[35]O. G¨otze, D. J. J. Farnell, R. F. Bishop, P. H. Y. Li, and
+      J. Richter,Phys. Rev. B      84, 224428 (2011).
+[36]D. Poilblanc, N. Schuch, D. P´erez-Garc´ıa, and J. I. Cirac,
+      Phys. Rev. B 86, 014404 (2012); N. Schuch, D. Poilblanc,
+      J. I. Cirac, and D. P´erez-Garc´ıa, ibid. 86, 115108 (2012);
+      D. Poilblanc and N. Schuch, ibid. 87, 140407(R) (2013);
+      N. Schuch, D. Poilblanc, J. I. Cirac, and D. P´erez-Garc´ıa,
+      Phys. Rev. Lett. 111, 090501 (2013).
+[37]Z. Y. Xie, J. Chen, J. F. Yu, X. Kong, B. Normand, and
+      T. Xiang,arXiv:1307.5696.
+[38]H.   C.   Jiang,    Z.   Y.   Weng,    and   D.   N.   Sheng,
+      Phys. Rev. Lett. 101, 117203 (2008).
+[39]Y.-M.  Lu,  Y.  Ran,  and  P.  A.  Lee,Phys.  Rev.  B            83,
+      224413 (2011).
+[40]T. Tay and O. I. Motrunich,Phys. Rev. B        84, 020404(R)

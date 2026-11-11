@@ -563,6 +563,33 @@ for (const [s, d] of [["(Lie-Trotter) beta=1.0", "Lie-Trotter, β = 1.0"], ["(Li
   ["parallel formulation (Euler) beta=3.0", "parallel formulation, Euler, β = 3.0"], ["parallel formulation (Euler) beta=4.0", "parallel formulation, Euler, β = 4.0"]])
   NAMES[`PITQS ${s}`] = ["PITQS", d, TF];
 
+// Primaries of the 2026-11-11 quoted rows. Iqbal, Becca, Sorella & Poilblanc, PRB 87, 060405 Table I and
+// Iqbal, Poilblanc & Becca, PRB 89, 020407 (S = 0 sector): the U(1) Dirac state with p Lanczos steps, by VMC
+// and by fixed-node Monte Carlo on it, and the zero-variance extrapolation over p = 0, 1, 2.
+const DIRAC = "U(1) Dirac spin liquid";
+for (const p of [0, 1, 2]) {
+  const steps = p ? `, ${LANCZOS(p)}` : "";
+  NAMES[`${DIRAC}, ${p}-LS (VMC)`] = ["VMC", `${DIRAC}${steps}`];
+  NAMES[`${DIRAC}, ${p}-LS (VMC, S=0)`] = ["VMC", `${DIRAC}, S = 0${steps}`];
+  NAMES[`${DIRAC}, ${p}-LS + FN`] = ["Fixed-node GFMC", `trial state: ${DIRAC}${steps}`, { family: "AFQMC / GFMC" }];
+}
+const NNB_SN = "backflow on a Slater determinant (Ψ_SN)";
+Object.assign(NAMES, {
+  "Zero-variance extrapolation of VMC (0,1,2 Lanczos steps)": ["VMC", `${DIRAC}; extrapolated: variance → 0 (p = 0, 1, 2)`],
+  "Zero-variance extrapolation (quadratic fit of p=0,1,2)": ["VMC", `${DIRAC}, S = 0; extrapolated: variance → 0 (quadratic fit, p = 0, 1, 2)`],
+  // Mezzacapo, Schuch, Boninsegni & Cirac, New J. Phys. 11, 083026, as "EPS" above
+  "Entangled-Plaquette States (EPS) VMC": ["EPS", "entangled-plaquette states, VMC", { family: "classic VMC" }],
+  "Entangled-Plaquette States (EPS) VMC, 2x2 plaquettes (l1 x l2 = 4 column label as printed)": ["EPS", "entangled-plaquette states, VMC, 2 × 2 plaquettes", { family: "classic VMC" }],
+  // Sandvik, PRB 56, 11678 (1997), Table I
+  "SSE QMC (beta = 8L)": ["SSE QMC", "β = 8L"],
+  // Luo & Clark, PRL 122, 226401, Table III and the text, as "NNB" above
+  "Slater-Jastrow": ["Slater-Jastrow", ""],
+  "NNB (neural network backflow, SN)": ["NNBF", NNB_SN, BF],
+  "NNB on Slater determinant, nh=8": ["NNBF", `${NNB_SN}, n_h = 8`, BF],
+  "NNB on Slater determinant, nh=256": ["NNBF", `${NNB_SN}, n_h = 256`, BF],
+  "NNB variance extrapolation": ["NNBF", `${NNB_SN}; extrapolated: variance → 0`, BF],
+});
+
 // QMBL's own cost-to-reproduce runs (checks/cost/README.md): the detail says whose
 // implementation and budget the number is, since a "ViT" row here runs QMBL's code.
 const QMBL_RUN = ", QMBL cost-to-reproduce run";

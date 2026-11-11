@@ -1,0 +1,323 @@
+         Gapless spin-liquid phase in the kagome spin- 12  Heisenberg antiferromagnet
+
+                        Yasir  Iqbal,          1, 2,∗  Federico  Becca,            3,†  Sandro  Sorella,              3,‡  andDidier  Poilblanc       2,§
+              1The  Abdus  Salam  International  Centre  for  Theoretical  Physics,  P.O.  Box  586,  I-34151  Trieste,  Italy
+        2Laboratoire  de  Physique  Th´eorique  UMR-5152,  CNRS  and  Universit´e  de  Toulouse,  F-31062  Toulouse,  France
+                       3Democritos  National  Simulation  Center,  Istituto  Oﬃcina  dei  Materiali  del  CNR  and
+                   SISSA−International  School  for  Advanced  Studies,  Via  Bonomea  265,  I-34136  Trieste,  Italy
+                                                            (Dated:  November 6, 2018)
+                   We  study  the  energy  and  the  static  spin  structure  factor  of  the  ground  state  of  the  spin-1/2
+                quantum Heisenberg antiferromagnetic model on the kagome lattice.  By the iterative application
+                of  a  few  Lanczos  steps  on  accurate  projected  fermionic  wave  functions  and  the  Green’s  function
+                Monte Carlo technique, we ﬁnd that a gapless (algebraic)U(1) Dirac spin liquid is competitive with
+                previously proposed gapped (topological) Z2 spin liquids.  By performing a ﬁnite-size extrapolation
+                of the ground-state energy, we obtain an energy per site E/J = −0.4365(2), which is equal, within
+                three error bars, to the estimates given by the density-matrix renormalization group (DMRG). Our
+                estimate  is  obtained  for  a  translationally  invariant  system,  and,  therefore,  does  not  suﬀer  from
+                boundary eﬀects, like in DMRG. Moreover, on ﬁnite toric clusters at the pure variational level, our
+                energies are lower compared to those from DMRG calculations.
+
+                PACS numbers:  75.10.Jm, 75.10.Kt, 75.40.Mg, 75.50.Ee
+
+
+   Introduction.   The  spin-1/2  quantum  Heisenberg  an-                     projected wave functions, all the fully symmetric, gapped
+tiferromagnet  (QHAF)  on  the  kagome  lattice  provides                      Z2  spin  liquids  have  a  higher  energy  compared  to  the
+a  conducive  environment  to  stabilize  a  quantum  para-                    U(1) Dirac spin liquid.19,37
+magnetic phase of matter down to zero temperature,1–3                             On   the   experimental   front,   the   kagome   spin-1/2
+a  fact  that  has  been  convincingly  established  theoreti-                 QHAF   model   is   well   reproduced   in   herbertsmithite
+cally  from  several  studies,  including  exact  diagonaliza-                 [ZnCu3(OH)6Cl2],   a  compound  with  perfect  kagome
+tion,4–8     series  expansion,9,10    quantum  Monte  Carlo,11                lattice  geometry.38–47      All  experimental  probes  on  her-
+and  analytical  techniques.12  The  question  of  the  pre-                   bertsmithite point towards a spin-liquid behavior down
+cise  nature  of the  spin-liquid  state of  the  kagome  spin-                to   20   mK   (i.e.,   four   orders   of   magnitude   smaller
+1/2 QHAF has been intensely debated on the theoreti-                           than  the  superexchange  coupling),   which  was  estab-
+cal front, albeit without any deﬁnitive conclusions.  Dif-                     lished  on  the  magnesium  version  of  herbertsmithite
+ferent  approximate  numerical  techniques  have  claimed                      [MgCu3(OH)6Cl2].48–50       Raman   spectroscopic   studies
+a  variety  of  ground  states.   On  the  one  hand,  density-                give further hints towards a gapless (algebraic) spin liq-
+matrix renormalization group (DMRG) calculations have                          uid.51
+been claimed for a fully gapped (nonchiral) Z2  topolog-                          In this Rapid Communication,  we systematically im-
+ical  spin-liquid  ground  state  that  does  not  break  any                  prove the projected fermionic wave functions of theU(1)
+point  group  symmetry.13,14      On  the  other  hand,  an  al-               Dirac and other competing spin liquids by applying a few
+gebraic and fully symmetric U(1) Dirac spin liquid has                         Lanczos steps on large clusters,  implemented stochasti-
+been  proposed  as  the  ground  state,  by  using  projected                  cally within a variational Monte Carlo method.52 We per-
+fermionic wave functions and the variational Monte Carlo                       form a zero-variance extrapolation of the energy and the
+(VMC)  approach.15–20      In  addition,  valence  bond  crys-                 static spin structure factor, which enables us to extract
+tals have been suggested from many other techniques.  In                       their  exact  values  in  the  ground  state  on  large  cluster
+particular,  a  36-site  unit  cell  valence-bond  crystal21–23                sizes and obtain an accurate estimate of the thermody-
+was  proposed  using  quantum  dimer  models,24–28      series                 namic  limit.   In  addition,  we  use  the  Green’s  function
+expansion29,30     and multiscale entanglement renormaliza-                    Monte Carlo method, with the ﬁxed-node (FN) approx-
+tion ansatz (MERA)31 techniques.  Finally, a recent cou-                       imation,53  to extract the physical properties of the true
+pled cluster method (CCM) suggested a q = 0 (uniform)                          ground state.  Our main result is to show that the U(1)
+state.32                                                                       gapless  spin  liquid  has  an  energy  quite  close  to  recent
+   On   general   theoretical   grounds,   the  Z2   spin   liq-               DMRG estimates,13,14     thus representing a very compet-
+uids  in  two  spatial  dimensions  are  known  to  be  stable                 itive state for the spin-1/2 QHAF on the kagome lattice
+phases,33–35      as compared to algebraic U(1) spin liquids,                  (if not the true ground state).
+which  are  known  to  be  only  marginally  stable.36  How-                      Model, wave functions, and numerical techniques.
+ever, explicit numerical calculations using projected wave                        The Hamiltonian for the spin-1/2 quantum Heisenberg
+functions have shown theU(1) Dirac spin liquid to be sta-                      antiferromagnetic model is
+ble (locally and globally) with respect to dimerizing into                                                ˆH =J∑       ˆSi· ˆSj,                          (1)
+all known valence-bond crystal phases.15,17,18,20            Further-
+more, it was shown that, within this class of Gutzwiller                                                          ⟨ij⟩
+                                                                                                                                                     2
+
+TABLE I. Energies of the U(1) Dirac spin liquid with p = 0, 1, and 2 Lanczos steps on diﬀerent cluster sizes obtained by
+variational and FN Monte Carlo are given.  In the penultimate column, we report the best variational DMRG energies
+(Ref.60).  The ground-state energy of the spin-1     /2 QHAF estimated by us using zero-variance extrapolation of VMC energy
+values on diﬀerent cluster sizes is marked in bold.
+
+Size         0-LS                 1-LS                2-LS           0-LS + FN      1-LS + FN     2-LS + FN   Var.  DMRG  Est.  ground state
+48   −0.4293510(4) −0.4352562(3) −0.436712(1) −0.432130(2)  −0.435834(3) −0.436942(2)    −0.4366   −0.437845(4)
+108  −0.4287665(4) −0.4341032(5) −0.435787(3) −0.431507(1)  −0.434823(2) −0.436072(1)    −0.4316   −0.437178(9)
+144  −0.4286959(5) −0.4337616(4) −0.435515(4) −0.4314455(8) −0.434544(2) −0.435839(9)              −0.43698(2)
+192  −0.4286749(4) −0.4334481(5) −0.435255(4) −0.431437(2)  −0.434325(4) −0.435633(8)              −0.43674(3)
+
+
+where J >  0  and ⟨ij⟩  denotes  the  sum  over  nearest-                     accurate states, we have that E≈ Eex + constant×σ2,
+neighbor  pairs  of  sites.   The  ˆSi  are  spin-1/2  operators              where E  =⟨ ˆH⟩/N  and σ2  = (⟨ ˆH2⟩−⟨ ˆH⟩2)/N  are the
+at each site i.  All energies will be given in units of J.                    energy  and  variance  per  site,  respectively,  whence,  the
+  The physical variational wave functions are deﬁned by                       exact  ground-state  energy Eex  can  be  extracted  by  ﬁt-
+projecting noncorrelated fermionic states:                                    ting E vs σ2 for p = 0, 1, and 2.
+  |ΨVMC(χij, ∆ij,µ,ζ)⟩ =PG|ΨMF(χij, ∆ij,µ,ζ)⟩,    (2)                            The energy, its variance, and other physical properties
+                                                                              of  the  wave  functions  corresponding  to p  =  0,  1,  and
+wherePG =∏                                                                    2  Lanczos  steps  are  obtained  using  the  standard  VMC
+                   i(1−ni,↑ni,↓) is the full Gutzwiller projec-               method.   Moreover,  the  pure  variational  approach  may
+tor enforcing the one fermion per site constraint.  Here,                     be  improved  by  using  the  FN  approach,  in  which  the
+|ΨMF(χij, ∆ij,µ,ζ)⟩ is the ground state of a mean-ﬁeld                        high-energy components of the variational wave function
+Hamiltonian constructed out of Abrikosov fermions and                         are  (partially)  ﬁltered  out.53  In  particular,  in  the  FN
+containing hopping, chemical potential, and singlet pair-                     Monte  Carlo  method,  the  ground  state  of  an  auxiliary
+ing terms:                                                                    FN Hamiltonian is obtained and the approximation con-
+           ˆHMF =∑(χij +µδij)ˆc†i,αˆcj,α                                      sists in assigning the nodal surface a priori, based upon a
+                    i,j,α                                                     given guiding wave function, which is generally the best
+                 +∑{(∆ij +ζδij)ˆc†                                            variational state.  The energies obtained in this way are
+                                           i,↑ˆc†j,↓ + H.c.},        (3)      variational,53  and  hence  we  have  a  controlled  approxi-
+                     i,j                                                      mation of the original problem.  Here, the guiding wave
+where α =↑,↓, χij  = χ∗ji,  and ∆ij  = ∆ji.  Besides the
+chemical  potential µ,  we  also  consider  real  and  imagi-
+nary components of on-site pairing, which are absorbed
+in ζ.   The  spin-liquid  phases  are  characterized  by  dif-
+ferent  patterns  of  distribution  of  the  underlying  gauge
+ﬂuxes through the plaquettes which are implemented by
+a  certain  distribution  of  the  phases  of χij  and  ∆ij  on
+the lattice links; in addition one also needs to specify the
+on-site terms µ and ζ.34,54
+  Here, we want to improve previous variational calcula-
+tions, and approach the true ground state in a systematic
+way.  This task can be achieved by the application of few
+Lanczos steps:52
+                           (        p∑
+             |Ψp−LS⟩ =       1 +       αk ˆHk)|ΨVMC⟩,           (4)
+                                  k=1
+where  the αk’s  are  additional  variational  parameters.
+The  convergence  of |Ψp-LS⟩  to  the  exact  ground  state
+|Ψex⟩ is guaranteed for largep provided the starting state
+is  not  orthogonal  to |Ψex⟩,  i.e.,  for ⟨Ψex|ΨVMC⟩ ⁄=  0.                  FIG.  1.      (Color  online)  Variational  energies  of  the  48-site
+However, on large cluster sizes, only a few steps can be                      cluster as a function of the variance of the energy,  for zero,
+eﬃciently performed and here we consider the case with                        one, and two Lanczos steps.  The ground-state energy is es-
+p  =  1  and p  =  2  (p  =  0  corresponds  to  the  original                timated by extrapolating the three variational results to the
+starting variational wave function).  Subsequently, an es-                    zero-variance limit by a quadratic ﬁt.  Three diﬀerent starting
+timate of the exact ground-state energy may be achieved                       wave functions are used.  The U(1) Dirac spin liquid has also
+by the method of variance extrapolation:  For suﬃciently                      been studied using FN approximation.
+                                                                                                                                                      3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2.   (Color online) The same as in Fig.1for the 192-site                 FIG. 3.    (Color online) The thermodynamic estimate of the
+cluster.  Here, only Z2[0,π]β andU(1) Dirac states have been                  ground-state energy obtained by a ﬁnite-size extrapolation of
+considered.                                                                   the estimated ground-state energies (see TableI). The linear
+                                                                              (solid  line)  and  quadratic  (dashed  line)  ﬁts  give  essentially
+                                                                              the same estimate.  The energy on the 36-site cluster is from
+function is obtained by optimizing the mean-ﬁeld state                        exact diagonalization.  Comparison is also made with recent
+of Eq. (2) using the method described in Refs.55and56.                        DMRG estimates.13,14
+Then, we ﬁnd the best Lanczos parametersαp and ﬁnally
+we perform the VMC and FN Monte Carlo calculations                            components of the initial wave function and get a good
+for|Ψp-LS⟩ with p = 0, 1, and 2.                                              estimation of the ground-state energy.
+  Results.  We performed our variational calculations on                         On   larger   sizes,   the   extrapolations   of U(1)   and
+toric  clusters  with  mixed  periodic-antiperiodic  bound-                   Z2[0,π]β states deviate, the former one giving a slightly
+ary conditions on the mean-ﬁeld Hamiltonian of Eq. (3),                       lower extrapolation (see Fig.2for the 192-site cluster).
+which ensure nondegenerate wave functions at half ﬁlling.                     This fact suggests that the actual ground state is better
+We ﬁrst consider the 48-site cluster (i.e., 4× 4× 3).  As                     described by a gapless algebraicU(1) Dirac state, rather
+our starting (p = 0) variational wave functions, we take                      than  a  gapped  topological Z2  spin  liquid,  as  reported
+three  diﬀerent  spin  liquids,  namely,  (i)  the U(1)  Dirac                by DMRG calculations.  In the following,  for obtaining
+spin liquid, which has a Fermi surface consisting of two                      the ground-state energies on larger clusters we used only
+points.15,16      The  structure  of  the  wave  function  is  such           the U(1) Dirac wave function as the starting variational
+that 10% of the conﬁgurations|x⟩ (in which electrons re-                      state.  In TableI, we report our best results on diﬀerent
+side on diﬀerent sites of the lattice with given spin along                   clusters (see the Supplemental Material59 for plots of the
+the z  direction) have zero weight (i.e.,⟨x|ΨVMC⟩ = 0);                       variance  extrapolations  on  108-  and  144-site  clusters).
+(ii)  the  uniform  RVB  spin  liquid,  which  consists  of  a                We would like to emphasize that our best variational en-
+large circular spinon Fermi surface,17 and has 35% of the                     ergy on a 108-site cluster is signiﬁcantly lower compared
+conﬁgurations  with  zero  weight;  and  (iii)  the Z2[0,π]β                  to the corresponding DMRG one (see TableI).
+spin  liquid,  which  is  fully  gapped57  and  has  a  negligi-                 By using the ground-state energy estimates on diﬀerent
+ble (0.001%) number of conﬁgurations with zero weight.                        cluster sizes, we performed a ﬁnite-size extrapolation (see
+The zero-weight conﬁgurations are not visited by the ran-                     Fig.3).  Our ﬁnal estimate for the energy of the inﬁnite
+dom walk in the variational Monte Carlo method.  The                          two-dimensional system is
+eﬀect  of  two  Lanczos  steps  on  these  wave  functions  is
+shown  in  Fig.1[see  also  TableIfor  the  actual  values                                           E2D∞ /J =−0.4365(2).                       (5)
+of  the  energies  of  the U(1)  Dirac  state].   Our  estimate
+of the ground-state energy on the 48-site cluster is thus                     This estimate is slightly higher (see Fig.3) compared to
+E/J  = −0.437  845(4),  which  is  comparable  with  the                      DMRG extrapolations of Refs.13and14.  However, an
+DMRG estimate on a torus.14,58     Also the best pure vari-                   energy estimate which is slightly lower by only a few er-
+ational energies are comparable within the two methods                        ror bars does not necessarily mean it is more accurate.
+(see  TableI).  We  want  to  stress  the  fact  that  the  ex-               We would like to stress that the same value for the ex-
+trapolated energy is the same (within error bars) upon                        trapolated energy is obtained by using the FN approach
+starting  from  all  three  wave  functions.   This  is  mainly               (see the Supplemental Material59).  Moreover, it is worth
+due to the fact that,  on relatively small clusters,  a few                   mentioning  that  our  energies  are  obtained  with  a  state
+Lanczos  steps  are  enough  to  ﬁlter  out  the  high-energy                 that has all the symmetries of the lattice, while DMRG
+                                                                                                                                                     4
+
+                                                                              trated on the corners of the hexagon, not very diﬀerently
+                                                                              from what is found in a recent DMRG study.14 However,
+                                                                              what really matters is the behavior of S(q) for small q
+                                                                              (namely, at long distance).  Although the application of
+                                                                              a few Lanczos steps may not be suﬃcient to change the
+                                                                              long-distance  properties  (because  the  Hamiltonian  is  a
+                                                                              local operator), our calculations show thatS(q) at small
+                                                                              q remains practically unchanged under the action of one
+                                                                              or  two  Lanczos  steps  and  the  subsequent  zero-variance
+                                                                              extrapolation (see the Supplemental Material59).
+                                                                                 Summary.     In  summary,  our  systematic  numerical
+                                                                              study shows that competitive variational wave functions
+                                                                              based upon Abrikosov fermions may be obtained. Indeed,
+                                                                              our estimation for the energy of a gapless (algebraic)U(1)
+                                                                              Dirac spin liquid is very close to the recent DMRG re-
+                                                                              sults,13,14     which supported a fully gapped Z2 topological
+                                                                              spin-liquid ground state.  In this respect, our results lend
+                                                                              support to the view that the exotic algebraic spin liquid
+                                                                              can in fact occur as a true ground state of the spin-1/2
+                                                                              QHAF  on  the  kagome  lattice.   Very  recently,  other  ap-
+                                                                              proximate approaches proposed alternative ground states
+FIG. 4.   (Color online) Intensity plot of the static spin struc-             with or without broken symmetries.61–63
+ture factor S(q) on the 192-site cluster.                                        We would like to mention that a further improvement
+                                                                              of the variational wave function would require an intro-
+                                                                              duction  of  local  monopole  ﬂuctuations  over  the  static
+states are nonuniform (due to boundary eﬀects).                               mean-ﬁeld state of Eq. (3).  On small system sizes, such
+  Let  us  now  move  to  the  calculation  of  the  spin-spin                ﬂuctuations were shown to lower the energy of the sys-
+correlations, which is deﬁned by                                              tem  within  the  Schwinger  boson  approach.64  However,
+                                                                              on  large  clusters,  it  is  extremely  diﬃcult  to  construct
+                             ∑∑                                               workable  wave  functions  with  (even  static)  topological
+               S(q) =  1               e−ıq·RSij(R),               (6)        defects.   It  is  worth  mentioning  that  the  possibility  of
+                          N   ij   R                                          another energetically competing state entering the game
+                                                                              remains  open;  this  is  a  chiral  Z2  topological  spin  liq-
+where N  is the total number of sites, i,j  = 1, 2, and 3                     uid65 which has been proposed as the ground state within
+label the three sites in the unit cell, R deﬁnes the Bravais                  a  Schwinger  boson  mean-ﬁeld  theory,66  but  whose  pro-
+lattice, andSij(R) is the real space spin-spin correlation                    jected wave-function study remains to be done on large
+function.                                                                     clusters  such  as  48  sites  so  as  to  enable  a  comparison
+                                                                              with the U(1) Dirac spin liquid.  Finally,  the projected
+  TheU(1) Dirac spin liquid is characterized by a power-                      wave functions can also be constructed for chiral valence-
+law (∼ 1/r4) decay of real-space, long-distance spin-spin                     bond crystal phases and it would be interesting to study
+correlations.16 Here, we study the evolution of its static                    their energetics, especially in light of the fact that they
+spin structure factor S(q) on the 192-site cluster under                      have been proposed as a competing ground state using
+the action of one and two Lanczos steps and zero-variance                     generalized quantum dimer models.28
+extrapolation.  Our estimate of the ground-state S(q) is                         Acknowledgments Y.I. and D.P. acknowledge support
+obtained by a zero-variance extrapolation (see the Sup-                       from  the  “Agence  Nationale  de  la  Recherche”  under
+plemental Material59).  The corresponding intensity plot                      Grant No. ANR 2010 BLANC 0406-0.  We are grateful
+of  the  extrapolated S(q)  is  shown  in  Fig.4.   One  can                  for the permission granted to access the HPC resources
+clearly see that at large q, the spectral weight is concen-                   of CALMIP under the allocation 2012-P1231.
+
+
+
+
+
+
+
+ ∗  yiqbal@ictp.it                                                             4  V. Elser,Phys. Rev. Lett.       62, 2405 (1989).
+ †  becca@sissa.it                                                             5  P.  Lecheminant,  B.  Bernu,  C.  Lhuillier,  L.  Pierre,  and
+ ‡  sorella@sissa.it                                                             P. Sindzingre,Phys. Rev. B                56, 2521 (1997).
+ §  didier.poilblanc@irsamc.ups-tlse.fr                                        6  P. Sindzingre and C. Lhuillier,EPL          88, 27009 (2009).
+ 1  P. W. Anderson,Mater. Res. Bull.               8, 153 (1973).              7  H.  Nakano  and  T.  Sakai,J.  Phys.  Soc.  Jpn.     80,  053704
+ 2  P. W. Anderson,Science.               235, 1196 (1987).                      (2011).
+ 3  L. Balents,Nature (London)    464, 199 (2010).                             8  A.    M.    L¨auchli,    J.    Sudan,    and    E.    S.    Sørensen,
+                                                                                                                                                                  5
+
+   Phys. Rev. B 83, 212401 (2011).                                                      J. Sanchez-Benitez, and A. Harrison,Phys. Rev. Lett.              100,
+ 9  R. R. P. Singh and D. A. Huse,Phys. Rev. Lett.     68, 1766                         157205 (2008).
+   (1992).                                                                          44  T. Imai, E. A. Nytko, B. M. Bartlett, M. P. Shores, and
+10  G. Misguich and B. Bernu,Phys. Rev. B   71, 014417 (2005).                          D. G. Nocera,Phys. Rev. Lett.        100, 077203 (2008).
+11  L.  Dang,  S.  Inglis,  and  R.  G.  Melko,Phys.  Rev.  B    84,                45  A.  Olariu,  P.  Mendels,  F.  Bert,  F.  Duc,  J.  C.  Trombe,
+   132409 (2011).                                                                       M.  A.  de  Vries,  and  A.  Harrison,Phys.  Rev.  Lett.              100,
+12  L.   Balents,    M.   P.   A.   Fisher,    and   S.   M.   Girvin,                  087202 (2008).
+   Phys. Rev. B 65, 224412 (2002).                                                  46  P.  Mendels  and  F.  Bert,J.  Phys.  Soc.  Jpn.        79,  011001
+13  S. Yan, D. A. Huse, and S. R. White,Science.           332, 1173                    (2010).
+   (2011).                                                                          47  T. H. Han,  J. S. Helton,  S. Chu,  A. Prodi,  D. K. Singh,
+14  S.  Depenbrock,   I.  P.  McCulloch,   and  U.  Schollw¨ock,                        C.  Mazzoli,  P.  M¨uller,  D.  G.  Nocera,  and  Y.  S.  Lee,
+   Phys. Rev. Lett. 109, 067201 (2012).                                                 Phys. Rev. B 83, 100402(R) (2011).
+15  Y.   Ran,   M.   Hermele,   P.   A.   Lee,   and   X.   G.   Wen,               48  P. Mendels, F. Bert, M. A. de Vries, A. Olariu, A. Harrison,
+   Phys. Rev. Lett. 98, 117205 (2007).                                                  F. Duc, J. C. Trombe, J. S. Lord, A. Amato, and C. Baines,
+16  M.   Hermele,   Y.   Ran,   P.   A.   Lee,   and   X.   G.   Wen,                   Phys. Rev. Lett. 98, 077204 (2007).
+   Phys. Rev. B 77, 224413 (2008).                                                  49  J.  S.  Helton,  K.  Matan,  M.  P.  Shores,  E.  A.  Nytko,
+17  O. Ma and J. B. Marston,Phys. Rev. Lett.              101, 027204                   B.   M.   Bartlett,   Y.   Yoshida,   Y.   Takano,   A.   Suslov,
+   (2008).                                                                              Y.  Qiu,  J.  H.  Chung,  D.  G.  Nocera,  and  Y.  S.  Lee,
+18  Y.  Iqbal,  F.  Becca,  and  D.  Poilblanc,Phys.  Rev.  B             83,           Phys. Rev. Lett. 98, 107204 (2007).
+   100404(R) (2011).                                                                50  E.   Kermarrec,   P.   Mendels,   F.   Bert,   R.   H.   Colman,
+19  Y.  Iqbal,  F.  Becca,  and  D.  Poilblanc,Phys.  Rev.  B             84,           A. S. Wills, P. Strobel, P. Bonville, A. Hillier, and A. Am-
+   020407(R) (2011).                                                                    ato,Phys. Rev. B      84, 100401 (2011).
+20  Y.  Iqbal,  F.  Becca,  and  D.  Poilblanc,New  J.  Phys.             14,       51  D.   Wulferding,   P.   Lemmens,   P.   Scheib,   J.   R¨oder,
+   115031 (2012).                                                                       P.    Mendels,    S.    Chu,    T.    Han,    and    Y.    S.    Lee,
+21  J. B. Marston and C. Zeng,J. Appl. Phys.        69, 5962 (1991).                    Phys. Rev. B 82, 144412 (2010).
+22  P. Nikolic and T. Senthil,Phys. Rev. B       68, 214415 (2003).                 52  S. Sorella,Phys. Rev. B     64, 024512 (2001).
+23  K.    Hwang,    Y.    B.    Kim,    J.    Yu,    and    K.    Park,             53  D.  F.  B.  ten  Haaf,  H.  J.  M.  van  Bemmel,  J.  M.  J.  van
+   Phys. Rev. B 84, 205133 (2011).                                                      Leeuwen,    W.   van   Saarloos,    and   D.   M.   Ceperley,
+24  C. Zeng and V. Elser,Phys. Rev. B         51, 8318 (1995).                          Phys. Rev. B 51, 13039 (1995).
+25  D.    Poilblanc,     M.    Mambrini,     and    D.    Schwandt,                 54  X. G. Wen,Phys. Rev. B     44, 2664 (1991).
+   Phys. Rev. B 81, 180402(R) (2010).                                               55  S. Sorella,Phys. Rev. B    71, 241103 (2005).
+26  D.    Schwandt,     M.    Mambrini,     and    D.    Poilblanc,                 56  S. Yunoki and S. Sorella,Phys. Rev. B           74, 014408 (2006).
+   Phys. Rev. B 81, 214413 (2010).                                                  57  Y. M. Lu, Y. Ran, and P. A. Lee,Phys. Rev. B       83, 224413
+27  A.  Ralko  and  D.  Poilblanc,Phys.  Rev.  B             82,  174424                (2011).
+   (2010).                                                                          58  H.    C.    Jiang,    Z.    Y.    Weng,    and    D.    N.    Sheng,
+28  D.  Poilblanc  and  G.  Misguich,Phys.  Rev.  B    84,  214401                      Phys. Rev. Lett. 101, 117203 (2008).
+   (2011).                                                                          59  See Supplemental Material at the end of the main paper for
+29  R. R. P. Singh and D. A. Huse,Phys. Rev. B        76, 180407(R)                     a ﬁgure of the kagome lattice (Fig. 5), additional ground
+   (2007).                                                                              state energy zero-variance extrapolations data for all clus-
+30  R. R. P. Singh and D. A. Huse,Phys. Rev. B         77, 144415                       ters  (Figs.  6,  7,  and  8),  ﬁxed-node  ground  state  energy
+   (2008).                                                                              extrapolation vs the diﬀerenceEVMC−EFN for all clusters
+31  G.  Evenbly  and  G.  Vidal,Phys.  Rev.  Lett.          104,  187203                (Fig. 9), available crystal momenta of the 48- and 192-site
+   (2010).                                                                              clusters (Fig. 10), zero-variance extrapolation of static spin
+32  O. G¨otze, D. J. J. Farnell, R. F. Bishop, P. H. Y. Li, and                         structure factors (Fig. 11), and the structure factors along
+   J. Richter,Phys. Rev. B      84, 224428 (2011).                                      a path in the Brillouin zone (Fig. 12).
+33  S. Sachdev,Phys. Rev. B         45, 12377 (1992).                               60  On  the  48-site  torus, E/J   =  −0.4366  corresponds  to
+34  X. G. Wen,Phys. Rev. B     65, 165113 (2002).                                       m = 3000 states in the SU(2) implementation of DMRG
+35  G.     Misguich,      D.     Serban,      and     V.     Pasquier,                  (U.  Schollw¨ock,  private  communication).  Recent  unpub-
+   Phys. Rev. Lett. 89, 137202 (2002).                                                  lished calculations by S. R. White using the U(1) imple-
+36  M. Hermele, T. Senthil, M. P. A. Fisher, P. A. Lee, N. Na-                          mentation  of  DMRG  give  an  energy  per  site  of E/J  =
+   gaosa, and X. G. Wen,Phys. Rev. B     70, 214437 (2004).                             −0.4381  for m  =  19860  states  (private  communication).
+37  F. Yang and H. Yao,Phys. Rev. Lett.     109, 147209 (2012).                         On  the  108-site  torus, E/J   =  −0.4316  corresponds  to
+38  M. P. Shores, E. A. Nytko, B. M. Bartlett, and D. G. No-                            m  =  6000  states  in  the U(1)  DMRG  of  Ref.58.  The
+   cera,J. Am. Chem. Soc.        127, 13462 (2005).                                     SU(2) DMRG withm = 1400 states givesE/J = −0.4285
+39  O.   Ofer,    A.   Keren,    E.   A.   Nytko,    M.   P.   Shores,                  (U. Schollw¨ock, private communication). The best extrap-
+   B. M. Bartlett, D. G. Nocera, C. Baines, and A. Amato,                               olated  ground-state  energy  estimate  from  DMRG  on  the
+   arXiv: 0610540 (2006) [cond.mat].                                                    48-site torus isE/J = −0.4383(2) and on the 108-site torus
+40  F.  Bert,  S.  Nakamae,  F.  Ladieu,  D.  L’Hˆote,  P.  Bonville,                   is E/J = −0.4383(3) (see Ref.14).
+   F. Duc, J.-C. Trombe, and P. Mendels,Phys. Rev. B.             76,               61  T. Tay and O. I. Motrunich,Phys. Rev. B    84, 020404(R)
+   132411 (2007).                                                                       (2011).
+41  S.  H.  Lee,   H.  Kikuchi,   Y.  Qiu,   B.  Lake,   Q.  Huang,                 62  B. K. Clark, J. M. Kinder, E. Neuscamman, G. K.-L. Chan,
+   K. Habicht, and K. Kiefer,Nat. Mater.          6, 853 (2007).                        and M. J. Lawler,arXiv: 1210.1585 (2012) [cond.mat].
+42  P. A. Lee,Science       321, 1306 (2008).                                       63  S. Capponi, V. Ravi Chandra, A. Auerbach, and M. We-
+43  M.  A.  de  Vries,  K.  V.  Kamenev,  W.  A.  Kockelmann,                           instein,arXiv: 1210.5519 (2012) [cond.mat].
+64  T.  Tay  and  O.  I.  Motrunich,Phys.  Rev.  B    84,  193102
+    (2011).
+65  K.    Yang,     L.    K.    Warman,     and    S.    M.    Girvin,
+    Phys. Rev. Lett. 70, 2641 (1993).
+66  L.      Messio,       B.      Bernu,       and      C.      Lhuillier,
+    Phys. Rev. Lett. 108, 207204 (2012).
+
+
+

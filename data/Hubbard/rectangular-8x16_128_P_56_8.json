@@ -260,6 +260,15 @@
         "wall_clock": null,
         "reported_as": "\"...led stripe[2]. The field is removed for the final 20000-step SCALE optimization atU=8. Both optimizations use 4096 walkers. The ACE state has 12 convolutional layers of width 128; SCALE uses width 256 and four site-wise nonlinear layers of...\"",
         "source": "arXiv:2611.04333, located by string match in the committed source text"
+      },
+      "artifacts": {
+        "code": "https://github.com/bytedance/laqx",
+        "read_from": {
+          "quote": "Source code, documentation, and the scripts used for the calculations in this paper are available at https://github.com/bytedance/laqx.",
+          "location": "arXiv:2611.04333 (sources/2611.04333.txt lines 1088-1090), Sec. 5; also the abstract",
+          "checked_on": "2026-11-11",
+          "pass": "passes/code/code-links-2026-11-11.json"
+        }
       }
     },
     {
@@ -295,6 +304,15 @@
           "conversion": "-0.75628 * 128 = -96.80384; sigma 3e-05 * 128 = 0.00384",
           "note": "Eq. (49) H = -t sum_<ij>,sigma (c+c + h.c.) + U sum n_up n_dn, t = 1, no shift, nearest-neighbour hopping only (matches the instance). fixed-node GFMC guided by SCALE: projected, correct. Spin sector: the paper prints only the electron count; the released example scripts (github.com/bytedance/laqx HEAD, docs/examples/hubbard/16x4_pbc_U8_ace_small.sh and 16x8_pbc_U8_scale_small.sh, fetched 2026-11-11) pass --particles 56 / 112 without --particles_up, and main.py lines 141-142 set particles_up = particles // 2, so N_up = N_dn (Sz = 0) as the instance requires; the script layers, widths, steps and the GFMC 5000 steps match Sec. 4.1. Own result of this paper; no journal version. GFMC lowers the VMC energies by 9.6e-4 and 3.2e-3 per site as printed (consistent). Duplicate check: no other row on the instance carries this number (Gu et al. Pareto-frontier ACE rows differ).",
           "source_entry": "RP2-hubbard-heisenberg-j1j2#41 (qmbl-verify 2026-11-11)"
+        }
+      },
+      "artifacts": {
+        "code": "https://github.com/bytedance/laqx",
+        "read_from": {
+          "quote": "Source code, documentation, and the scripts used for the calculations in this paper are available at https://github.com/bytedance/laqx.",
+          "location": "arXiv:2611.04333 (sources/2611.04333.txt lines 1088-1090), Sec. 5; also the abstract",
+          "checked_on": "2026-11-11",
+          "pass": "passes/code/code-links-2026-11-11.json"
         }
       }
     }

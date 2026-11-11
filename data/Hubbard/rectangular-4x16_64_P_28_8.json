@@ -1771,6 +1771,15 @@
         "wall_clock": null,
         "reported_as": "\"...led stripe[2]. The field is removed for the final 20000-step SCALE optimization atU=8. Both optimizations use 4096 walkers. The ACE state has 12 convolutional layers of width 128; SCALE uses width 256 and four site-wise nonlinear layers of...\"",
         "source": "arXiv:2611.04333, located by string match in the committed source text"
+      },
+      "artifacts": {
+        "code": "https://github.com/bytedance/laqx",
+        "read_from": {
+          "quote": "Source code, documentation, and the scripts used for the calculations in this paper are available at https://github.com/bytedance/laqx.",
+          "location": "arXiv:2611.04333 (sources/2611.04333.txt lines 1088-1090), Sec. 5; also the abstract",
+          "checked_on": "2026-11-11",
+          "pass": "passes/code/code-links-2026-11-11.json"
+        }
       }
     },
     {
@@ -1807,6 +1816,67 @@
           "note": "Eq. (49) H = -t sum_<ij>,sigma (c+c + h.c.) + U sum n_up n_dn, t = 1, no shift, nearest-neighbour hopping only (matches the instance). fixed-node GFMC guided by the ACE state (\"importance-sampling and fixed-node guiding functions\", Sec. 2.5), first 1000 of 5000 projection steps discarded: projected, correct. Spin sector: the paper prints only the electron count; the released example scripts (github.com/bytedance/laqx HEAD, docs/examples/hubbard/16x4_pbc_U8_ace_small.sh and 16x8_pbc_U8_scale_small.sh, fetched 2026-11-11) pass --particles 56 / 112 without --particles_up, and main.py lines 141-142 set particles_up = particles // 2, so N_up = N_dn (Sz = 0) as the instance requires; the script layers, widths, steps and the GFMC 5000 steps match Sec. 4.1. Own result of this paper; no journal version. GFMC lowers the VMC energies by 9.6e-4 and 3.2e-3 per site as printed (consistent). Duplicate check: no other row on the instance carries this number (Gu et al. Pareto-frontier ACE rows differ).",
           "source_entry": "RP2-hubbard-heisenberg-j1j2#39 (qmbl-verify 2026-11-11)"
         }
+      },
+      "artifacts": {
+        "code": "https://github.com/bytedance/laqx",
+        "read_from": {
+          "quote": "Source code, documentation, and the scripts used for the calculations in this paper are available at https://github.com/bytedance/laqx.",
+          "location": "arXiv:2611.04333 (sources/2611.04333.txt lines 1088-1090), Sec. 5; also the abstract",
+          "checked_on": "2026-11-11",
+          "pass": "passes/code/code-links-2026-11-11.json"
+        }
+      }
+    },
+    {
+      "energy": -46.208,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 56,
+      "einf": 98,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "SJ",
+      "method_detail": "",
+      "method_as_published": "Slater-Jastrow",
+      "family": "classic VMC",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Luo & Clark, Backflow Transformations via Neural Networks for Quantum Many-Body Wave Functions, Phys. Rev. Lett. 122, 226401 (2019), arXiv:1807.10770, doi:10.1103/PhysRevLett.122.226401",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-11",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-11",
+        "method": "source text of arXiv:1807.10770 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-0.722 ± 10^-5",
+        "note": "Table III row '16x4, U/t=8, n=0.875'; text: Slater determinant total -46.211 on 16x4 (=-0.722/site); version read: arXiv text (sources/1807.10770.txt); journal version (Phys. Rev. Lett. 122, 226401 (2019)) not read in this pass | Per-site; n=0.875 = Nf 28 per spin; periodic BC not printed but 2510.26906 quotes the same NNB -0.746 for periodic 4x16",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -48.96,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 56,
+      "einf": 98,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "NNBF",
+      "method_detail": "backflow on a Slater determinant (Ψ_SN); extrapolated: variance → 0",
+      "method_as_published": "NNB variance extrapolation",
+      "family": "backflow / Pfaffian",
+      "bound_type": "extrapolated",
+      "bound_type_reason": "zero-variance or bond-dimension extrapolation; not an upper bound (assigned during source reading)",
+      "reference": "Luo & Clark, Backflow Transformations via Neural Networks for Quantum Many-Body Wave Functions, Phys. Rev. Lett. 122, 226401 (2019), arXiv:1807.10770, doi:10.1103/PhysRevLett.122.226401",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-11",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-11",
+        "method": "source text of arXiv:1807.10770 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-0.765",
+        "note": "Table III row '16x4', column NNB variance extrapolation (text: approximately -49 total); version read: arXiv text (sources/1807.10770.txt); journal version (Phys. Rev. Lett. 122, 226401 (2019)) not read in this pass | Per-site; below catalogue best -0.76748? no, above it",
+        "secondary_of": null
       }
     }
   ],
@@ -1839,6 +1909,25 @@
       ],
       "found": 4,
       "note": "Only papers whose tables matched the instance by size were read; not a citation screen. Energies from: arXiv:2610.30321, arXiv:2611.04333, arXiv:2111.10420, arXiv:2606.00924."
+    },
+    {
+      "checked_on": "2026-11-11",
+      "method": "table harvest of cached arXiv sources (match_tables.mjs --all), every matched paper read for this instance",
+      "screened": [
+        "arXiv:2510.26906",
+        "arXiv:1807.10770",
+        "arXiv:1209.1858",
+        "arXiv:1311.5038",
+        "arXiv:2310.05715",
+        "arXiv:1304.2630",
+        "arXiv:1903.06713",
+        "arXiv:2005.14142",
+        "arXiv:0905.3898",
+        "arXiv:cond-mat/9707123",
+        "arXiv:1906.00463"
+      ],
+      "found": 2,
+      "note": "Only papers whose tables matched the instance by size were read; not a citation screen. Energies from: arXiv:2510.26906, arXiv:1807.10770."
     },
     {
       "checked_on": "2026-11-11",
