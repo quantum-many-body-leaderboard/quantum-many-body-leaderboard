@@ -62,8 +62,8 @@ const ABOUT = {
   tJ: "A doped Mott insulator: hopping without double occupancy, plus exchange J.",
   TFIsing: "Ising spins in a transverse field h.",
   Impurity: "Anderson impurity models from DMFT calculations.",
-  HEG3D: "The homogeneous electron gas (jellium) in three dimensions.",
-  HEG2D: "The homogeneous electron gas (jellium) in two dimensions.",
+  HEG3D: "The homogeneous electron gas in three dimensions.",
+  HEG2D: "The homogeneous electron gas in two dimensions.",
   Hchain: "Chains of hydrogen atoms, an ab initio benchmark (atomic units).",
   Hsheet: "A square sheet of hydrogen atoms, ab initio (atomic units).",
 };
