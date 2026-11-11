@@ -51,6 +51,11 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qmbl-dump
+          path: _site/api/qmbl.json
+          retention-days: 1
 
   deploy:
     needs: build
@@ -85,3 +90,24 @@ jobs:
             console.log(`IndexNow: ${urlList.length} pages, HTTP ${res.status}`);
             if (!res.ok) throw new Error(await res.text());
           '
+
+  # The Hugging Face mirror (scripts/hf_mirror.mjs) takes the dump this deploy published. HF_TOKEN
+  # can write to that one dataset only; without it the script uploads nothing, and a failure here
+  # never fails the deploy.
+  mirror:
+    needs: deploy
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/download-artifact@v4
+        with:
+          name: qmbl-dump
+          path: dump
+      - name: Update the Hugging Face mirror
+        run: node scripts/hf_mirror.mjs dump/qmbl.json
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
