@@ -25,7 +25,10 @@ const ijs = R(nn, O(","), I("σ"));
 const cd = (i, s) => ss(I("c"), R(I(i), I(s)), O("†")), c = (i, s) => sb(I("c"), R(I(i), I(s)));
 const SdS = R(sb(B("S"), I("i")), O("·"), sb(B("S"), I("j")));
 const hc = (...a) => R(O("("), ...a, O("+"), T("h.c."), O(")"));
-const absr = (a, b) => R(O("|"), a, O("−"), b, O("|"));
+// The bars of |r_i - r_j| as fences with no space of their own (as an operator a bar gets
+// relation spacing, which opened a gap inside the denominator).
+const BAR = '<mo fence="true" stretchy="false" lspace="0" rspace="0">|</mo>';
+const absr = (a, b) => R(BAR, a, O("−"), b, BAR);
 const r_ = i => sb(B("r"), I(i)), R_ = i => sb(B("R"), I(i));
 const kin = R(O("−"), FR(N(1), N(2)), SUM(I("i")), ss(IU("∇"), I("i"), N(2)));
 const ee = R(SUM(R(I("i"), O("<"), I("j"))), FR(N(1), absr(r_("i"), r_("j"))));

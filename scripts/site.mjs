@@ -126,6 +126,9 @@ const ETH_LOGO = `<svg class="eth-logo" viewBox="22.68 22.67 140.71 22.69" role=
 // browser, a denied permission) it goes to the citing section on the front page instead,
 // so the button never does nothing.
 const CITE_SCRIPT = `<script>
+// The sticky header's height, for the anchors and the bars that stick below it.
+{ const h = document.querySelector("header.site"), set = () => document.documentElement.style.setProperty("--hdr", h.offsetHeight + "px");
+  set(); new ResizeObserver(set).observe(h); }
 for (const b of document.querySelectorAll("button.cite-btn")) b.addEventListener("click", () => {
   const done = () => { b.classList.add("copied"); b.querySelector("span").textContent = "Copied";
     setTimeout(() => { b.classList.remove("copied"); b.querySelector("span").textContent = "Cite"; }, 2000); };
@@ -1100,6 +1103,12 @@ function instancesPage() {
 <span id="filter-count" class="muted"></span></p>
 <div class="quick models"><span class="muted">Hamiltonian</span>${MODELS.filter(([m]) => [...instances, ...tdlInstances].some(i => i.model === m))
     .map(([m, n]) => `<button type="button" data-model="${m}">${esc(n)}</button>`).join("")}</div>
+<nav class="jump" aria-label="Jump to a Hamiltonian">
+  <button class="jump-more left" type="button" aria-label="Earlier Hamiltonians" hidden>&lsaquo;</button>
+  <div class="jump-list">${MODELS.filter(([m]) => [...instances, ...tdlInstances].some(i => i.model === m))
+    .map(([m, n]) => `<a href="#${m.toLowerCase()}" data-model="${m}">${esc(n)}</a>`).join("")}</div>
+  <button class="jump-more right" type="button" aria-label="More Hamiltonians" hidden>&rsaquo;</button>
+</nav>
 ${sections}
 <script>
 const box = document.getElementById("filter");
@@ -1147,6 +1156,38 @@ function apply() {
   count.textContent = q || model ? shown + " of " + total + " instances" : "";
 }
 box.addEventListener("input", apply);
+// The sticky bar under the header: the Hamiltonian in view is marked and kept in sight in the bar,
+// a Hamiltonian that the filters hide leaves it, and where the list runs past an edge it fades
+// out there under an arrow that scrolls it on.
+const jump = document.querySelector("nav.jump"), jumpLinks = [...jump.querySelectorAll(".jump-list a")];
+const list = jump.querySelector(".jump-list"), [moreL, moreR] = jump.querySelectorAll(".jump-more");
+function edges() {
+  const l = list.scrollLeft > 2, r = list.scrollLeft + list.clientWidth < list.scrollWidth - 2;
+  moreL.hidden = !l; moreR.hidden = !r; list.classList.toggle("fade-l", l); list.classList.toggle("fade-r", r);
+}
+list.addEventListener("scroll", edges, { passive: true });
+addEventListener("resize", edges);
+moreL.addEventListener("click", () => list.scrollBy({ left: -list.clientWidth * 0.6, behavior: "smooth" }));
+moreR.addEventListener("click", () => list.scrollBy({ left: list.clientWidth * 0.6, behavior: "smooth" }));
+function markJump() {
+  const y = jump.getBoundingClientRect().bottom + 8;
+  let cur = null;
+  for (const s of sections) if (!s.hidden && s.getBoundingClientRect().top <= y) cur = s.dataset.model;
+  for (const a of jumpLinks) {
+    const on = a.dataset.model === cur;
+    if (on !== a.hasAttribute("aria-current")) {
+      a.toggleAttribute("aria-current", on);
+      if (on) a.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+    }
+    a.hidden = sections.find(s => s.dataset.model === a.dataset.model).hidden;
+  }
+  jump.classList.toggle("stuck", jump.getBoundingClientRect().top <= (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--hdr")) || 0) + 0.5);
+  edges();
+}
+addEventListener("scroll", markJump, { passive: true });
+document.addEventListener("click", e => { if (e.target.closest(".quick button")) requestAnimationFrame(markJump); });
+box.addEventListener("input", () => requestAnimationFrame(markJump));
+markJump();
 for (const b of document.querySelectorAll(".quick button")) b.addEventListener("click", () => {
   const on = b.classList.contains("on");
   const key = ["model", "lattice", "size"].find(k => k in b.dataset);
@@ -1534,7 +1575,10 @@ header.site {
   display: flex; flex-wrap: wrap; gap: 1rem 2rem; align-items: baseline;
   justify-content: space-between; padding: 1.4rem clamp(1rem, 4vw, 3rem);
   border-bottom: 1px solid var(--grid);
+  /* sticky on every page (2026-11-11); its height is --hdr (CITE_SCRIPT), for what sticks below it */
+  position: sticky; top: 0; z-index: 20; background: var(--bg);
 }
+:target { scroll-margin-top: calc(var(--hdr, 0px) + 1rem); }
 .wordmark {
   display: flex; align-items: center; gap: 0.7rem;
   font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--ink);
@@ -1627,7 +1671,25 @@ td.record .num { font-weight: 600; color: var(--record); }
 .badge.flag[title] { cursor: help; }
 .citation { max-width: none; }
 
-section[data-model] h2 { font-size: 2.1rem; margin-top: 3rem; }
+section[data-model] h2 { font-size: 2.1rem; margin-top: 3rem; scroll-margin-top: calc(var(--hdr, 0px) + 4rem); }
+/* The table's sticky bar (instancesPage): every Hamiltonian, the one in view marked, and Top. */
+nav.jump { position: sticky; top: var(--hdr, 0px); z-index: 5; display: flex; align-items: center; gap: 0.8rem; margin: 1.2rem 0 0; padding: 0.5rem 0;
+  background: var(--bg); border-bottom: 1px solid transparent; transition: border-color .2s, box-shadow .2s; }
+nav.jump.stuck { border-bottom-color: var(--grid); box-shadow: 0 6px 12px -10px rgb(0 0 0 / 0.25); }
+nav.jump .jump-list { display: flex; gap: 0.3rem; overflow-x: auto; scrollbar-width: none; flex: 1; min-width: 0; }
+nav.jump .jump-list::-webkit-scrollbar { display: none; }
+nav.jump .jump-list a { flex: none; padding: 0.2rem 0.65rem; border-radius: 999px; font-size: 0.85rem; color: var(--ink2); text-decoration: none; white-space: nowrap; }
+nav.jump .jump-list a:hover { color: var(--accent); }
+nav.jump .jump-list a[aria-current] { color: var(--bg); background: var(--accent); }
+nav.jump { gap: 0.2rem; }
+nav.jump .jump-list.fade-r { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 3rem), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 3rem), transparent); }
+nav.jump .jump-list.fade-l { -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 3rem), transparent); mask-image: linear-gradient(to left, #000 calc(100% - 3rem), transparent); }
+nav.jump .jump-list.fade-l.fade-r { -webkit-mask-image: linear-gradient(to right, transparent, #000 3rem, #000 calc(100% - 3rem), transparent); mask-image: linear-gradient(to right, transparent, #000 3rem, #000 calc(100% - 3rem), transparent); }
+nav.jump .jump-more { flex: none; width: 1.9rem; height: 1.9rem; border-radius: 50%; border: 1px solid var(--grid); background: var(--surface); color: var(--ink2); font: inherit; font-size: 1.2rem; line-height: 1; cursor: pointer; display: grid; place-items: center; padding: 0 0 0.15rem; }
+nav.jump .jump-more:hover { border-color: var(--accent); color: var(--accent); }
+nav.jump .jump-more[hidden] { display: none; }
+tr.target, tbody.inst { scroll-margin-top: calc(var(--hdr, 0px) + 4rem); }
+@media (prefers-reduced-motion: reduce) { nav.jump { transition: none; } }
 main > p.lead:first-child { margin-top: 0; }
 
 .quick { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin: 0.6rem 0 0; font-size: 0.85rem; }
