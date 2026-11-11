@@ -1,6 +1,5 @@
-// The log-log plot of the accuracy figures and its marks, shared by size_accuracy.mjs (the
-// home page's figures) and open_problems_figure.mjs (the figure on /open-problems/), so that
-// the two figures draw a result, a merged group and a flag the same way.
+// The log-log plot of the accuracy figures and its marks, used by size_accuracy.mjs (the figures
+// behind the front page's links).
 import { rowId } from "./summary.mjs";
 import { n, text, hline, dot, tri, slashed, logScale, log, pow10, rowHref, linked, onFill } from "./chart.mjs";
 
@@ -67,49 +66,12 @@ function groupMark(t, rows, x, y, color, flagged) {
   return linked(rowHref(head.inst, head.r), svg).replace('<a class="pt"', `<a class="pt" data-rows="${rows.map(p => rowId(p.inst, p.r)).join(" ")}"`);
 }
 
-// marks() for a figure whose sizes lie close together (open_problems_figure.mjs, where the home
-// figure's per-size merging left marks of neighbouring sizes covering each other): rows merge
-// whatever their size, each group holding the rows within MERGE of its best one in both
-// directions, and is drawn there, so no two marks overlap. A flagged group, which never merges
-// with sound rows, goes to the nearest place clear of the marks already drawn. Returns the marks
-// and where they sit, [x, y, half-size], so the caller can place more marks clear of them.
-const halfSize = (rows, flagged) => (flagged ? (rows > 1 ? 9 : 6.5) : rows > 1 ? COUNT_R : 5);
-export function marksAcross(t, pts, X, Y, colorOf) {
-  const order = (a, b) => (b.exact ?? false) - (a.exact ?? false) || a.shown - b.shown || b.eligible - a.eligible;
-  const groupsOf = ps => {
-    const groups = [];
-    for (const q of [...ps].sort(order).map(p => ({ p, x: X(p.inst.n_sites), y: Y(p.shown) }))) {
-      const g = groups.find(g => Math.max(Math.abs(g[0].x - q.x), Math.abs(g[0].y - q.y)) <= MERGE);
-      if (g) g.push(q); else groups.push([q]);
-    }
-    return groups;
-  };
-  const out = [], placed = [];
-  for (const [flagged, ps] of [[false, pts.filter(p => !p.flagged)], [true, pts.filter(p => p.flagged)]])
-    for (const g of groupsOf(ps)) {
-      const rows = g.map(q => q.p), h = halfSize(rows.length, flagged), y = g[0].y;
-      const x = flagged ? freeX(placed, g[0].x, y, h) : g[0].x;
-      placed.push([x, y, h]);
-      out.push([rows[0], groupMark(t, rows, x, y, colorOf(rows[0]), flagged)]);
-    }
-  return { svgs: drawOrder(out), placed };
-}
-
-// The nearest x to x0 on the line y where a mark of half-size h clears every mark in `placed`
-// by a pixel, looked for a pixel at a time, to the right first.
-export function freeX(placed, x0, y, h) {
-  const clear = x => placed.every(([px, py, ph]) => Math.max(Math.abs(px - x), Math.abs(py - y)) >= ph + h + 1);
-  for (let d = 0; d <= 200; d++) for (const x of d ? [x0 + d, x0 - d] : [x0]) if (clear(x)) return x;
-  return x0;
-}
-
 // A log-log plot area: size along x with the ticks given, distance up y on a decade scale.
 // Without `exact` the scale is inverted (y0 at the top, y1 at the bottom). With `exact` it
 // is not (y0 at the bottom, y1 at the top), a gap below y0 is placed on an "exact" line
 // EXACT_RISE below the bottom gridline, and the Y returned does so; the size labels move
 // down under that line. `lanes` names such lines, one under the other, in place of the one
-// "exact" line (open_problems_figure.mjs: "energy to beat", "estimates below it"); `lane(k)`
-// is the height of the k-th, and Y places a gap below y0 on the first.
+// "exact" line; `lane(k)` is the height of the k-th, and Y places a gap below y0 on the first.
 export const EXACT_RISE = 24;
 export function logPlot(t, parts, { left, right, top, bottom, x0, x1, y0, y1, xTicks, xLabel, yLabel, exact, lanes = exact ? ["exact"] : [] }) {
   const X = logScale(x0, x1, left, right), scale = lanes.length ? logScale(y0, y1, bottom, top) : logScale(y0, y1, top, bottom);

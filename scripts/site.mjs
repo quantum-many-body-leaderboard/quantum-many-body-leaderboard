@@ -29,7 +29,7 @@ import { hoursOrEdOf, costFigureName, flopsFigureName, paramsFigureName } from "
 import { FRONTIER } from "./views.mjs";
 import { energyFigures, pickerFacets, drawnRows } from "./ladders.mjs";
 import { SUB_RING, pickerSlug, formula, about, modelGlyph, latticeGlyph, heroHtml, HERO_CSS } from "./hero.mjs";
-import { loadOpenProblems, openProblemsPages, openProblemsLlms, score as scoreOpenProblems, OPEN_PROBLEMS_URL, OPEN_PROBLEMS_TABLE_URL, OPEN_PROBLEMS_NAV_CSS, OPEN_PROBLEMS_PAGE_CSS } from "./open_problems.mjs";
+import { loadOpenProblems, openProblemsLlms, score as scoreOpenProblems, OPEN_PROBLEMS_NAV_CSS } from "./open_problems.mjs";
 
 const OUT = "_site";
 const REPO = "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard";
@@ -682,20 +682,9 @@ const tabCss = (axes, groups, sliders, prefix = "") => [tabRules(`${prefix}cost-
   ...groups.map(([, figs], j) => tabRules(`${prefix}energy-${j}`, figs.length)), ...sliders.map(sliderRules)].join("\n");
 const TAB_CSS = tabCss(COMPUTE_AXES, ENERGY_FIGS, SLIDERS);
 
-// The same two sections on /open-problems/, for its instances: every energy figure in which
-// one of them is drawn, shown whole, solved sizes included, and the cost figures of those
-// instances. Their switches have
-// ids of their own, op-, whose rules go into that page's own stylesheet (open-problems.css).
+// The open problems (open_problems.mjs): what the menu's switch marks.
 const OPEN = new Set(OPEN_PROBLEMS?.targets.map(t => t.instance_id) ?? []);
 const isOpen = inst => OPEN.has(inst.instance_id);
-const figInstances = f => (f.group === "other" ? f.scans.flatMap(s => s.slots.flatMap(x => x.members)) : f.stops.flatMap(s => s.ladder.members));
-const OP_ENERGY_FIGS = ENERGY_FIGS.map(([group, figs]) => [group, figs.filter(f => figInstances(f).some(isOpen))]).filter(([, figs]) => figs.length);
-const OP_SLIDERS = OP_ENERGY_FIGS.flatMap(([group, figs], j) => (group === "other" ? [] : figs.map((f, k) => ({ id: `op-slide-${j}-${k}`, f }))));
-const OP_COMPUTE_AXES = COMPUTE_AXES.map(([label, figs, entry]) => [label, figs.filter(isOpen), entry]).filter(([, figs]) => figs.length);
-const OP_TAB_CSS = OPEN_PROBLEMS ? tabCss(OP_COMPUTE_AXES, OP_ENERGY_FIGS, OP_SLIDERS, "op-") : "";
-const opFigureSections = () => [energySwitcher(OP_ENERGY_FIGS, OP_SLIDERS, "op-"),
-  computeSwitcher(OP_COMPUTE_AXES, "op-", COST_FIGS.filter(isOpen).length)].join("\n");
-
 // Dark mode for an inlined figure: an attribute selector per light colour, which beats the
 // presentation attribute in the cascade. The two themes list their colours in the same
 // slots, so slot k in light becomes slot k in dark; a light colour sitting in two slots
@@ -715,7 +704,7 @@ const FIG_DARK = [...FIG_COLOURS].filter(([l, d]) => l !== d)
 // The figure's own <title> and <desc> are dropped (a tooltip over the whole chart, and an id
 // repeated per inlined figure); the entry's title and caption label it instead. Marks are
 // links but not tab stops; the table is the accessible form of the same rows. `source` is a
-// figure drawn with the page instead of read from figures/ (open_problems_figure.mjs).
+// figure drawn with the page instead of read from figures/.
 function figure([name, title, caption], cls = "", source = null) {
   const file = source == null ? `figures/${name}.svg` : `${name} (drawn with the page)`;
   if (source == null) for (const v of [name, `${name}-dark`])
@@ -1945,12 +1934,10 @@ header.site nav a.op.op-toggle[aria-pressed="true"] i::after { transform: transl
 ` : "");
 // /open-problems/'s own rules and those of its figure switches, in open-problems.css, which only
 // that page links: every page carries the menu button, but not that page's figures.
-const OP_CSS = OPEN_PROBLEMS ? OPEN_PROBLEMS_PAGE_CSS + OP_TAB_CSS + "\n" : "";
 
 // The stylesheet's URL carries a hash of its contents, so a new page never loads an old
 // stylesheet from the cache.
 const CSS_VERSION = createHash("sha1").update(CSS).digest("hex").slice(0, 10);
-const OP_CSS_VERSION = createHash("sha1").update(OP_CSS).digest("hex").slice(0, 10);
 
 // ----------------------------------------------------------------------------- output
 function write(rel, content) {

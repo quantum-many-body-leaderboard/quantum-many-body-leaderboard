@@ -113,13 +113,6 @@ export function slashed(t, x, y, color, href, base = "dot") {
   return linked(href, outline + `<path d="${d}" stroke="${t.surface}" stroke-width="3.5" stroke-linecap="round"/><path d="${d}" stroke="${color}" stroke-width="2" stroke-linecap="round"/>`);
 }
 
-// A verified entry of QMBL: Open Problems (open_problems_figure.mjs): a diamond on a surface
-// ring, of about a dot's area, so that it reads as a result of its own kind.
-export function diamond(t, x, y, color, href) {
-  const path = s => `M${n(x)} ${n(y - s)}L${n(x + s)} ${n(y)}L${n(x)} ${n(y + s)}L${n(x - s)} ${n(y)}Z`;
-  return linked(href, `<path d="${path(8.5)}" fill="${t.surface}"/><path d="${path(5.8)}" fill="${color}"/>`);
-}
-
 // A mark that stands for one row links to that row on the table page. Inert where the SVG
 // is shown as an image; on the site the figure is inlined, and site.mjs gives the link its
 // hover card from the row itself, so the file carries the target and nothing else.
