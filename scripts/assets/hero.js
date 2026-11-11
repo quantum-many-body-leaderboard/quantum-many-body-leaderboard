@@ -53,13 +53,23 @@
   addEventListener("resize", () => { measure(); place(); });
   narrow.addEventListener("change", () => { stage.querySelectorAll(".pk-node").forEach(n => { n.style.transform = ""; }); measure(); place(); });
 
+  // A formula wider than its box shrinks until it fits; one that fits keeps its size.
+  function fit(root = document) {
+    for (const box of root.querySelectorAll(".pk-f, .pk-title > div")) {
+      const m = box.querySelector("math"); if (!m) continue;
+      m.style.fontSize = "";
+      const w = box.clientWidth, s = m.getBoundingClientRect().width;
+      if (w && s > w) m.style.fontSize = `${(parseFloat(getComputedStyle(m).fontSize) * (w / s) * 0.98).toFixed(2)}px`;
+    }
+  }
+  addEventListener("resize", () => fit());
   function hover(node) {
     stage.classList.toggle("hovering", !!node);
     stage.querySelectorAll(".pk-node").forEach(n => n.classList.toggle("on", n === node));
     if (mode !== "ring") return;
     const m = node && bySlug[node.dataset.slug];
     const s = $("pk-say");
-    if (s) s.innerHTML = m ? `<b>${esc(m.name)}</b> · <span class="pk-k">${isOn() ? `${m.open} open problem${m.open === 1 ? "" : "s"}` : nE(m.energies)}</span><br>${esc(m.about)}<span class="pk-f">${m.formula}</span>` : SAY;
+    if (s) { s.innerHTML = m ? `<b>${esc(m.name)}</b> · <span class="pk-k">${isOn() ? `${m.open} open problem${m.open === 1 ? "" : "s"}` : nE(m.energies)}</span><br>${esc(m.about)}<span class="pk-f">${m.formula}</span>` : SAY; fit(s); }
   }
 
   // ---------------------------------------------------------------------------------- views
@@ -73,7 +83,7 @@
       <p class="pk-say" style="min-height:0">${esc(m.about)}<span class="pk-f">${m.formula}</span></p>
       <div class="pk-row"><a class="pk-pill" href="#h-${m.slug}@all">All ${esc(m.name)} results</a><a class="pk-link" href="#pick">← All Hamiltonians</a></div></div>` +
       m.tabs.map((t, k) => `<a class="pk-node${t.open ? "" : " pk-done"}" href="#h-${m.slug}@${tabSlug(t.label)}">${t.glyph}<span class="pk-nm pk-serif">${esc(t.label)}</span><span class="pk-ct">${nE(t.count)}</span>${t.open ? badge(t.openInst, k) : ""}</a>`).join("");
-    measure(); place();
+    measure(); place(); fit(stage);
   }
 
   const cache = new Map();
@@ -136,6 +146,7 @@ ${choosing.length || fixed.length ? `<div class="pk-filters">${choosing.map(([di
     }));
     view.querySelectorAll(".pk-chip").forEach(b => b.addEventListener("click", () => { sel[b.dataset.dim] = b.dataset.v; render(); }));
     draw(pool);
+    fit(view);
   }
 
   // ---------------------------------------------------------------------------------- chart
