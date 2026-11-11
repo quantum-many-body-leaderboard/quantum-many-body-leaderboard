@@ -16,12 +16,9 @@
 // model and then the lattice: one badge per figure rather than per ladder, as the ladders of
 // a figure differ only in boundary and couplings.
 //
-// energyFigures() is what the site shows: each figure as stops along one strip, grouped in
-// facets (a slider on the site), and one "other" figure per model for what was published at
-// a single size and shares no strip, so that nothing on the table is missing from the page.
-import { MODELS, BOUNDARY, geometry } from "./readme_table.mjs";
+// pickerFacets() splits the instances the same way for the front page's picker (hero.mjs).
+import { MODELS, BOUNDARY } from "./readme_table.mjs";
 import { groundStateExact } from "./units.mjs";
-import { W, PAD } from "./chart.mjs";
 
 // A coupling as labels print it: R to six figures (params.R holds the unrounded bond length since 2026-11-11).
 const shown = (k, v) => (k === "R" ? +(+v).toPrecision(6) : v);
@@ -135,126 +132,6 @@ export function ladderFigures(instances) {
     };
   }).sort((a, b) => MODELS.findIndex(([m]) => m === a.model) - MODELS.findIndex(([m]) => m === b.model) ||
     b.base - a.base || a.t12 - b.t12 || a.name.localeCompare(b.name));
-}
-
-// What varies between Hamiltonians published at one size: a coupling, the filling, or the
-// named variant. Each value is a string for grouping and a number (or name) for ordering.
-const SCAN = {
-  J2: { of: i => i.params?.J2, label: "J2" }, h: { of: i => i.params?.h, label: "h" },
-  U: { of: i => i.params?.U, label: "U" }, V: { of: i => i.params?.V, label: "V" },
-  // A Hubbard instance without the t12 tag has no next-nearest hopping: t2 = 0, so its ladder sits
-  // at t2 = 0 when a figure's axis is t2 (Marino et al.'s 6-leg tori at t' != 0); a t-J instance
-  // without t' likewise.
-  t2: { of: i => i.params?.t2 ?? (i.model === "Hubbard" || i.model === "tJ" ? 0 : undefined), label: "t2" },
-  t3: { of: i => i.params?.t3, label: "t3" },
-  J3: { of: i => i.params?.J3, label: "J3" }, K: { of: i => i.params?.K, label: "K" },
-  J: { of: i => i.params?.J, label: "J" }, Gamma: { of: i => i.params?.Gamma, label: "Gamma" },
-  Jd: { of: i => i.params?.Jd, label: "Jd" },
-  rs: { of: i => i.params?.rs, label: "rs" },
-  // Track 3 (RULES.md 13.5): energy per atom against the bond length R (bohr) at fixed N, boundary and basis.
-  R: { of: i => i.params?.R, label: "R (bohr)" },
-  n: { of: fillingOf, label: "filling n" }, variant: { of: i => variantsOf(i).join(", "), label: "variant" },
-};
-
-// The Hamiltonians published at one size, as panels: those sharing lattice, boundary and
-// size are one panel with the quantity that varies most between them along x, split by
-// whatever else varies. A Hamiltonian with no such neighbour is a panel of one.
-function scansOf(instances) {
-  const panels = [];
-  for (const group of Map.groupBy(instances, i => [i.lattice, i.boundary, i.n_sites].join("|")).values()) {
-    const distinct = k => new Set(group.map(i => String(SCAN[k].of(i) ?? ""))).size;
-    const varying = Object.keys(SCAN).filter(k => distinct(k) > 1).sort((a, b) => distinct(b) - distinct(a));
-    const [x, ...rest] = varying;
-    for (const ms of Map.groupBy(group, i => rest.map(k => SCAN[k].of(i)).join("|")).values()) {
-      const inst = ms[0];
-      const parts = [geometry(inst), BOUNDARY[inst.boundary]];
-      for (const k of COUPLINGS) if (k !== x && inst.params?.[k] != null) parts.push(`${k} = ${shown(k, inst.params[k])}`);
-      if (x !== "n" && fillingOf(inst) != null) parts.push(fillingLabel(inst));
-      if (x !== "variant") parts.push(...variantsOf(inst));
-      const slots = [...Map.groupBy(ms, i => String(x ? SCAN[x].of(i) ?? "" : ""))]
-        .map(([label, members]) => {
-          const at = x ? SCAN[x].of(members[0]) : 0;
-          return { label: !x ? "" : typeof at === "number" ? String(Number(at.toPrecision(3))) : label || "none", members, at };
-        })
-        .sort((a, b) => (typeof a.at === "number" ? a.at - b.at : String(a.at).localeCompare(String(b.at))));
-      panels.push({ label: parts.filter(Boolean).join(", "), x: x ? SCAN[x].label : null, slots, n_sites: inst.n_sites });
-    }
-  }
-  return panels.sort((a, b) => a.label.localeCompare(b.label, "en", { numeric: true }));
-}
-
-// The strip a slider shows above its panel (size_energy.mjs): its plot box is shared with the
-// site, which sets a badge under each stop at the stop's x. Stops sit at even spacing in their
-// own order, as the couplings of an "other" panel do, since badges placed by value (J2 = 0.4,
-// 0.45, 0.5, 0.55, 0.6) run into each other. Above the plot is room for
-// the size lines to move apart when the strip is hovered (size_energy.mjs), and above that
-// the facet labels and the legend.
-export const STRIP = { left: PAD + 56, right: W - PAD - 10, top: 92, bottom: 252, labelY: 40 };
-export const stripX = (k, count) => STRIP.left + ((k + 0.5) / count) * (STRIP.right - STRIP.left);
-
-const AXES = ["J2", "J3", "K", "J", "Gamma", "Jd", "h", "U", "V", "n", "t2", "t3", "rs", "R"];
-const slug = s => s.replace(/[^\w.]+/g, "_").replace(/^_+|_+$/g, "");
-const multiSize = L => new Set(L.members.map(i => i.n_sites)).size >= 2;
-const drawnCount = L => L.members.reduce((a, i) => a + drawnRows(i).length, 0);
-const valueLabel = at => (typeof at === "number" ? String(Number(at.toPrecision(3))) : String(at));
-
-// The figures on the site, in model order with the "other" figures last. A figure (a model
-// and lattice) is shown as facets, a facet being the ladders that differ only in the
-// figure's axis: the coupling or filling with most distinct values among the ladders drawn
-// at two sizes or more (J2 for J1-J2, U for Hubbard). On the site a figure is one slider:
-// one strip of the record at every
-// stop and size, the facets as groups along it with an empty slot between them, a badge
-// under each stop, and one panel per stop, the stop with most energies shown first. A
-// ladder published at one size is a stop like any other where its facet has a ladder with
-// sizes (J2 = 0.35 at 36 sites sits beside J2 = 0.3 and 0.4); where nothing in its facet has, it goes to the model's "other" figure, the
-// scan panels of what was published at one size. A figure without an axis is one facet per
-// ladder, each a single stop, and has no strip: its panels are stacked, each under its
-// facet's label (periodic over open); a figure of one stop has no strip either, only the
-// panel.
-export function energyFigures(instances) {
-  const figs = [], single = [];
-  for (const f of ladderFigures(instances)) {
-    const ladders = f.ladders.map(L => ({ ...L, members: L.members.filter(i => drawnRows(i).length) })).filter(L => L.members.length);
-    const sized = ladders.filter(multiSize);
-    if (!sized.length) { single.push(...ladders.flatMap(L => L.members)); continue; }
-    const distinct = (ls, k) => new Set(ls.map(L => String(SCAN[k].of(L.members[0]) ?? ""))).size;
-    const [axisKey, values] = AXES.map(k => [k, distinct(sized, k)]).sort((a, b) => b[1] - a[1])[0];
-    const axis = values > 1 ? axisKey : null;
-    const facetKey = L => { const i = L.members[0]; return [i.model === "Impurity" ? i.lattice : "", i.boundary, L.shape?.key, ...AXES.filter(k => k !== axis).map(k => SCAN[k].of(i)), i.params?.basis ?? "", ...variantsOf(i)].join("|"); }; // basis: track 3
-    const name = f.name.replace(/^size\//, "energy/");
-    const facets = [];
-    for (const group of Map.groupBy(ladders, facetKey).values()) {
-      if (!group.some(multiSize)) { single.push(...group.flatMap(L => L.members)); continue; }
-      const label = couplingLabel(group[0].members[0], { ...f.flags, shape: group[0].shape, omit: axis });
-      const base = [name, slug(label)].filter(Boolean).join("--");
-      const stops = group.map(L => {
-        const at = axis ? SCAN[axis].of(L.members[0]) : null;
-        return { at, label: axis ? valueLabel(at) : L.label, name: axis ? `${base}--${axis}_${valueLabel(at)}` : base, energies: drawnCount(L), ladder: L };
-      }).sort((a, b) => (a.at ?? 0) - (b.at ?? 0));
-      // Couplings that agree to three digits (J = 0.6772 and 0.67724 on the Shastry-Sutherland
-      // clusters) keep their full value, so each stop keeps its own label and file.
-      for (const s of stops) if (axis && typeof s.at === "number" && stops.filter(t => t.label === s.label).length > 1)
-        Object.assign(s, { label: String(s.at), name: `${base}--${axis}_${s.at}` });
-      facets.push({ label, stops });
-    }
-    // The strip's slots: the stops in facet order, an empty slot between facets, which are
-    // groups along the axis.
-    const stops = facets.flatMap(x => x.stops);
-    const total = stops.length + facets.length - 1, strip = axis && total > 1;
-    let slot = 0;
-    facets.forEach((x, g) => { if (g) slot++; for (const s of x.stops) s.x = stripX(slot++, total); });
-    const start = stops.indexOf(stops.reduce((best, s) => (s.energies > best.energies ? s : best), stops[0]));
-    figs.push({ name, model: f.model, label: f.label, title: f.title, energies: f.energies, group: f.model, axis: axis && SCAN[axis].label, facets, stops, start,
-      strip: strip ? `${name}--strip` : null, pitch: strip ? stripX(1, total) - stripX(0, total) : null });
-  }
-  const others = [...Map.groupBy(single, i => i.model)]
-    .sort(([a], [b]) => MODELS.findIndex(([m]) => m === a) - MODELS.findIndex(([m]) => m === b))
-    .map(([model, members]) => ({ name: `energy/other--${model}`, group: "other", model, label: modelName(model),
-      title: `${modelName(model)}: Hamiltonians published at one size`, energies: members.reduce((a, i) => a + drawnRows(i).length, 0), scans: scansOf(members) }));
-  // Every file once: two facets whose labels slug alike would overwrite each other.
-  const names = figs.flatMap(f => [f.strip, ...f.stops.map(s => s.name)]).filter(Boolean);
-  if (new Set(names).size !== names.length) throw new Error("ladders.mjs: two energy figures share a file name");
-  return [...figs, ...others];
 }
 
 // The front page's picker (hero.mjs): every instance with a drawn row, with the badges a reader

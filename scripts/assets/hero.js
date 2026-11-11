@@ -123,7 +123,7 @@
     view.innerHTML = `
 <div class="pk-crumb"><a href="#pick">← Pick another problem</a>${sub ? `<span>·</span><a href="#h-${m.slug}">Other ${esc(m.name)} lattices</a>` : ""}</div>
 <div class="pk-title">${m.glyph}<div><h2>${esc(m.name)}</h2>${m.formulaBlock}</div></div>
-<p class="pk-desc">${esc(m.about)} Each dot is one published result for the setting chosen below. Lower is better for variational results.</p>
+<p class="pk-desc">${esc(m.about)} Each dot is one published result for the setting chosen below.</p>
 ${data.tabs.length > 1 ? `<div class="pk-tabs" role="tablist">${data.tabs.map((t, k) => `<button class="pk-tab${t.open ? "" : " pk-done"}" role="tab" type="button" data-k="${k}" aria-selected="${k === state.tab}">${t.glyph}<span>${esc(t.label)}</span><i>${t.count}</i>${t.open ? badge(t.openInst, k) : ""}</button>`).join("")}</div>` : ""}
 ${choosing.length || fixed.length ? `<div class="pk-filters">${choosing.map(([dim, vals, c, short]) => `<div class="pk-fg"><span class="pk-lab">${esc(dim)}</span>${vals.map(v => `<button class="pk-chip" type="button" data-dim="${esc(dim)}" data-v="${esc(v)}" aria-pressed="${v === sel[dim]}"${short.get(v) !== v ? ` title="${esc(v)}"` : ""}>${esc(short.get(v))}<i>${c.get(v)}</i></button>`).join("")}</div>`).join("")}${fixed.length ? `<div class="pk-fg"><span class="pk-lab">setting</span><span class="pk-fixed">${fixed.map(([dim, v, , short]) => esc(dim === "boundary" || dim === "shape" || dim === "problem" || dim === "variant" ? v[0] : `${dim} = ${short.get(v[0])}`)).join(", ")}</span></div>` : ""}</div>` : ""}
 <div class="pk-chart" id="pk-chart"></div>

@@ -1,5 +1,5 @@
 // The drawing kit shared by every figure script (figures.mjs, size_accuracy.mjs,
-// size_energy.mjs, pareto.mjs): themes, text metrics, marks, legend, header, footnote and the SVG document.
+// pareto.mjs): themes, text metrics, marks, legend, header, footnote and the SVG document.
 //
 // Every figure is written twice, light and dark. GitHub chooses between the two with a
 // <picture> element keyed on the viewer's GitHub theme; an SVG that switched itself on

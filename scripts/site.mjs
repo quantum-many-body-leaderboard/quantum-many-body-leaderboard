@@ -27,7 +27,7 @@ import { quote, storedDigits, shorten, MODELS, BOUNDARY, instanceLabel, byGeomet
 import { logoSvg, faviconSvg, LOGO_CSS } from "./logo.mjs";
 import { hoursOrEdOf, costFigureName, flopsFigureName, paramsFigureName } from "./cost.mjs";
 import { FRONTIER } from "./views.mjs";
-import { energyFigures, pickerFacets, drawnRows } from "./ladders.mjs";
+import { pickerFacets, drawnRows } from "./ladders.mjs";
 import { SUB_RING, pickerSlug, formula, about, modelGlyph, latticeGlyph, heroHtml, HERO_CSS } from "./hero.mjs";
 import { loadOpenProblems, openProblemsLlms, score as scoreOpenProblems, OPEN_PROBLEMS_NAV_CSS } from "./open_problems.mjs";
 
@@ -592,95 +592,7 @@ function computeSwitcher(axes = COMPUTE_AXES, prefix = "", hours = COST_FIGS.len
     [esc(modelName(g[0].model)), `<div class="tabs">${computeInstances(`${prefix}cost-${a}-${m}`, g, entry)}</div>`]))}</div>`]))}
 </section>`;
 }
-// The published energies of every Hamiltonian, drawn by size_energy.mjs into figures/energy/
-// in the shape ladders.mjs gives them: per model and lattice a figure with one strip and its
-// stops, per model an "other" figure for Hamiltonians published at one size. Badges pick the
-// model and lattice; the figure is a slider of radio inputs (keyboard and no-script work),
-// a badge under each stop at the strip's x position in per cent of its width, the stop with
-// most energies shown first. A figure without an axis has no strip: its panels are stacked.
-const ENERGY_FIGS = [...Map.groupBy(energyFigures(instances)
-  .filter(f => fs.existsSync(`figures/${f.group === "other" ? f.name : f.stops[0].name}.svg`)), f => f.group)];
-const otherEntry = f => [f.name, f.title, "Energies on Hamiltonians published at one size, with the coupling or filling that differs between them along x."];
-const stopEntry = (f, facet, s) => [s.name, [f.title, facet.label, f.axis && `${f.axis} = ${s.label}`].filter(Boolean).join(", "),
-  "Energy against the number of sites. Colour shows the bound type; every result is a dot."];
-const stripEntry = f => [f.strip, `${f.title}: the lowest energy at each ${f.axis} and size`,
-  "One line per size, darker for larger sizes. The number over each stop is its count of energies; the marked stop is shown below."];
-
-// Every slider on the page with its id, so that the HTML and the stylesheet agree.
-const SLIDERS = ENERGY_FIGS.flatMap(([group, figs], j) => (group === "other" ? [] : figs.map((f, k) => ({ id: `slide-${j}-${k}`, f }))));
-
-// Slider badges (2026-10-22). The pitch between stops caps a badge's width so that none touches
-// its neighbour. Where the widest label does not fit one pitch, the badges stagger over as many
-// rows as it takes, worked out for each of the four widths the CSS knows: at the narrowest
-// window of each the strip is 920 (its maximum), 830, 570 and 328 px wide, with badges at 0.8,
-// 0.8, 0.72 and 0.7 rem. A badge keeps its side padding only where the label fits with it; class <tier>n drops
-// it, as the old dense style did. Label widths use the font's advance widths (semibold, in em).
-const BADGE_TIERS = [{ key: "w", strip: 920, font: 12.8 }, { key: "d", strip: 830, font: 12.8 }, { key: "t", strip: 570, font: 11.52 }, { key: "p", strip: 328, font: 11.2 }];
-const labelEm = s => [...String(s)].reduce((a, c) => a + (/\d/.test(c) ? 0.57 : c === "." ? 0.27 : c === "-" || c === "\u2212" ? 0.35 : 0.6), 0);
-// Rows a tier's badges need, unclamped. Past four rows at any width (the 70 R stops of the
-// hydrogen chains, 2026-10-26) the badges leave the strip: they wrap below it, one line per
-// facet (dense; slider below).
-const badgeRowsNeeded = (f, t) => Math.max(1, Math.ceil((Math.max(...f.stops.map(s => labelEm(s.label))) * t.font + 2) / (t.strip * f.pitch / W - 4.8)));
-const isDense = f => BADGE_TIERS.some(t => badgeRowsNeeded(f, t) > 4);
-function badgeClasses(f) {
-  if (isDense(f)) return "dense";
-  const widest = Math.max(...f.stops.map(s => labelEm(s.label)));
-  return BADGE_TIERS.map(t => {
-    const room = t.strip * f.pitch / W - 4.8, text = widest * t.font + 2; // + the 1 px border each side
-    const rows = Math.min(4, Math.max(1, Math.ceil(text / room)));
-    return t.key + rows + (rows === 1 && text + 16 <= room ? "" : " " + t.key + "n");
-  }).join(" ");
-}
-function badgeRows(key) {
-  const out = [`.slider.${key}n .track label { padding-left: 0; padding-right: 0; width: calc(var(--pitch) - 0.3rem); }`];
-  for (const n of [2, 3, 4]) {
-    out.push(`.slider.${key}${n} .track { padding-bottom: ${(2.5 + 1.6 * (n - 1)).toFixed(1)}rem; }`);
-    out.push(`.slider.${key}${n} .track label { width: calc(${n} * var(--pitch) - 0.3rem); max-width: none; }`);
-    for (let j = 1; j < n; j++) out.push(`.slider.${key}${n} .track label:nth-child(${n}n+${j + 1} of label) { bottom: ${(1.6 * j).toFixed(1)}rem; }`);
-  }
-  return out.join("\n");
-}
-function slider({ id, f }) {
-  if (!f.strip) return `<div class="stack">${f.facets.flatMap(x => x.stops.map(s =>
-    (f.facets.length > 1 && x.label ? `<p class="facet">${esc(x.label)}</p>` : "") + figure(stopEntry(f, x, s)))).join("\n")}</div>`;
-  const pct = x => (100 * x / W).toFixed(2);
-  const inputs = f.stops.map((s, k) => `<input type="radio" name="${id}" id="${id}-${k}"${k === f.start ? " checked" : ""}>`).join("");
-  if (isDense(f)) {
-    // Too many stops to label under the strip: the badges wrap below it, one group per facet,
-    // each led by what its stops share and the axis they step along.
-    let k = 0;
-    return `<div class="slider dense">${inputs}
-<div class="track">${figure(stripEntry(f), "strip")}</div>
-<div class="picks">${f.facets.map(x => `<div class="grp"><span class="axis">${esc([x.label, f.axis].filter(Boolean).join(", "))}</span>${x.stops.map(s => `<label for="${id}-${k++}">${esc(s.label)}</label>`).join("")}</div>`).join("")}</div>
-<div class="panels">${f.facets.flatMap(x => x.stops.map(s => figure(stopEntry(f, x, s)))).join("\n")}</div>
-</div>`;
-  }
-  return `<div class="slider ${badgeClasses(f)}" style="--pitch:${pct(f.pitch)}%">${inputs}
-<div class="track">${figure(stripEntry(f), "strip")}
-${f.facets.map(x => `<span class="axis" style="left:${pct(x.stops[0].x - f.pitch / 2)}%">${esc(f.axis)} =</span>`).join("")}${f.stops.map((s, k) => `<label for="${id}-${k}" style="left:${pct(s.x)}%">${esc(s.label)}</label>`).join("")}</div>
-<div class="panels">${f.facets.flatMap(x => x.stops.map(s => figure(stopEntry(f, x, s)))).join("\n")}</div>
-</div>`;
-}
-const sliderRules = ({ id, f }) => (f.strip ? f.stops.map((s, k) =>
-  `#${id}-${k}:checked ~ .panels > :nth-child(${k + 1}) { display: block; }
-#${id}-${k}:checked ~ .track .cur-${k} { display: inline; }
-#${id}-${k}:checked ~ .track label[for="${id}-${k}"], #${id}-${k}:checked ~ .picks label[for="${id}-${k}"] { color: var(--bg); background: var(--accent); border-color: var(--accent); }
-#${id}-${k}:focus-visible ~ .track label[for="${id}-${k}"], #${id}-${k}:focus-visible ~ .picks label[for="${id}-${k}"] { outline: 2px solid var(--accent); outline-offset: 2px; }`).join("\n") : "");
-
-function energySwitcher(groups = ENERGY_FIGS, sliders = SLIDERS, prefix = "") {
-  if (!groups.length) return "";
-  return `<section class="tabs" id="energy-by-hamiltonian">
-  <h2>The published energies, by Hamiltonian</h2>
-  ${tabs(`${prefix}energy-group`, groups.map(([group, figs], j) =>
-    [group === "other" ? "Other" : esc(modelName(group)), `<div class="tabs">${tabs(`${prefix}energy-${j}`, figs.map(f =>
-      [esc(f.label), group === "other" ? figure(otherEntry(f)) : slider(sliders.find(s => s.f === f))]))}</div>`]))}
-</section>`;
-}
-
-const tabCss = (axes, groups, sliders, prefix = "") => [tabRules(`${prefix}cost-axis`, axes.length), ...computeTabs(axes, prefix).map(([id, n]) => tabRules(id, n)),
-  tabRules(`${prefix}energy-group`, groups.length),
-  ...groups.map(([, figs], j) => tabRules(`${prefix}energy-${j}`, figs.length)), ...sliders.map(sliderRules)].join("\n");
-const TAB_CSS = tabCss(COMPUTE_AXES, ENERGY_FIGS, SLIDERS);
+const TAB_CSS = [tabRules("cost-axis", COMPUTE_AXES.length), ...computeTabs(COMPUTE_AXES).map(([id, n]) => tabRules(id, n))].join("\n");
 
 // The open problems (open_problems.mjs): what the menu's switch marks.
 const OPEN = new Set(OPEN_PROBLEMS?.targets.map(t => t.instance_id) ?? []);
@@ -738,14 +650,8 @@ const cardSource = r => { const c = citeRef(r, cache); return esc([c.text, c.als
 // floating box while its mark is hovered. A mark for several rows (`data-rows`, best first)
 // shows a list that stays beside the mark, closes 200 ms after the pointer leaves both, and
 // stays open after a click until a click elsewhere or Escape. Scrolling closes the box.
-// Clicking a stop's column in a strip checks its radio, as its badge does.
 const FIG_SCRIPT = `<script>
 (() => {
-  document.addEventListener("click", e => {
-    const c = e.target.closest && e.target.closest("figure.strip .col");
-    const r = c && c.closest(".slider").querySelectorAll(":scope > input")[+c.querySelector(".hit").dataset.stop];
-    if (r) r.checked = true;
-  });
   const cards = new Map([...document.getElementById("fig-cards").content.children].map(c => [c.dataset.row, c.innerHTML]));
   const tip = document.createElement("div");
   tip.id = "fig-tip"; tip.hidden = true; tip.setAttribute("role", "tooltip");
@@ -808,7 +714,6 @@ const FIG_SCRIPT = `<script>
       const a = e.target.closest("a.pt[data-rows]");
       if (!a) return;
       e.preventDefault();
-      if (fig.classList.contains("strip")) return;
       stay(); unrest(); on = a; pinned = true;
       show(a, e, true);
     });
@@ -1842,59 +1747,10 @@ pre.ticks { font-family: var(--mono); font-size: clamp(7px, 1.6vw, 13px); line-h
 .tab-panels > * { display: none; }
 .tab-panels > .tabs > .tab-labels { margin-top: 0; }
 .tab-labels .shared { align-self: center; color: var(--muted); margin-right: 0.2rem; }
-.stack > figure { margin-top: 0.6rem; }
-p.facet { margin: 1.4rem 0 0.2rem; font-size: 0.85rem; font-weight: 600; color: var(--ink2); }
-.slider { position: relative; max-width: 920px; }
-.slider > input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-.slider .track { position: relative; padding-bottom: 2.5rem; }
-.slider .track figure { margin: 0.6rem 0 0; }
-.slider .panels { margin-top: 1.4rem; }
-.slider .panels figure { margin: 0; }
-.slider .track .cur { display: none; }
-.slider .track label, .slider .track .axis {
-  position: absolute; bottom: 0; box-sizing: border-box; padding: 0.15rem 0.5rem; white-space: nowrap;
-  line-height: 1.2; font-size: 0.8rem; font-weight: 600; border: 1px solid transparent;
-}
-.slider .track label {
-  transform: translateX(-50%); max-width: calc(var(--pitch) - 0.3rem); overflow: hidden; text-overflow: ellipsis; text-align: center; cursor: pointer;
-  color: var(--ink2); background: var(--surface); border-color: var(--grid); border-radius: 999px;
-}
-.slider .track label:hover { border-color: var(--accent); color: var(--accent); }
-.slider .track .axis { transform: translateX(-100%); padding-right: 0.35rem; font-weight: 400; color: var(--muted); }
-.slider .panels > * { display: none; }
-.slider.dense .track { padding-bottom: 0; }
-.slider .picks { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.7rem; }
-.slider .picks .grp { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem; }
-.slider .picks .axis { font-size: 0.8rem; color: var(--muted); margin-right: 0.2rem; }
-.slider .picks label {
-  box-sizing: border-box; padding: 0.15rem 0.5rem; white-space: nowrap; line-height: 1.2; font-size: 0.8rem; font-weight: 600; cursor: pointer;
-  color: var(--ink2); background: var(--surface); border: 1px solid var(--grid); border-radius: 999px;
-}
-.slider .picks label:hover { border-color: var(--accent); color: var(--accent); }
-/* The strip's hover state (size_energy.mjs): over a group its size lines move apart; a
-   stop's column is a hit area. */
-figure.strip .ex { transition: transform 0.3s ease; }
-figure.strip .exl { opacity: 0; transition: opacity 0.3s ease; }
-figure.strip .grp:hover .ex { transform: translateY(var(--ex)); }
-figure.strip .grp:hover .exl { opacity: var(--o); }
-figure.strip .hit { cursor: pointer; }
-@media (min-width: 992px) {
-${badgeRows("w")}
-}
-@media (min-width: 901px) and (max-width: 991px) {
-${badgeRows("d")}
-}
-@media (min-width: 641px) and (max-width: 900px) {
-.slider .track label { font-size: 0.72rem; }
-${badgeRows("t")}
-}
 @media (max-width: 640px) {
-.slider .track label { font-size: 0.7rem; }
-.slider .track .axis { display: none; }
 /* An exact energy to 16 digits leaves no room for the method beside it: the method goes below. */
 .best-box table.best tr { display: grid; grid-template-columns: auto 1fr; align-items: baseline; padding-bottom: 0.5rem; }
 .best-box table.best td:last-child { grid-column: 1 / -1; }
-${badgeRows("p")}
 }
 ${TAB_CSS}
 tr.more figure.chart { margin: 0.4rem 0 0.8rem; }
