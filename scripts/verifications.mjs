@@ -41966,4 +41966,845 @@ export const VERIFICATIONS = [
     "note": "Both files state H = -t sum_<ij>,s (c+c + h.c.) + U sum n_up n_dn, t = 1, U = 8, square L = 4 PBC (32 bonds), N_up = N_dn = 7 fixed, full 130,873,600-state space, no symmetry: matches the instance. Published cross-check: Gu et al. Nat. Commun. SI Table 4 prints 'Exact Energy -0.7418' for the 4 x 4 lattice at doping 1/8 (columns [1] Luo & Clark and [5] Robledo Moreno et al.), -0.7418022 rounds to it; the two VMC rows on the instance (-11.8544, -11.86832) sit above. No duplicate.",
     "source_entry": "RP2-heg3d-hubbard-tv-heisenberg#22 (qmbl-verify 2026-11-10b)"
   },
+  // qmbl-verify 2026-11-11: second reading of the Ketboard/tachys gap pass (sweep-rows-2026-11-11-ketboard).
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_P_28_8",
+      "method": "NN-fPEPS (extrapolated)",
+      "energy": -49.10208
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2610.30321v2 PDF (also v1: identical Table S4 and text except date and acknowledgements), pypdf layout mode; no journal version exists (arXiv abs 2026-11-11, Crossref title search)",
+    "location": "Table S4 (SM p. 30), 16x4, t'=0, NN-fPEPS (extrapolated) (red row), E/N with projection column",
+    "reported_as": "-0.76722(6) per site (E/N, units of t)",
+    "conversion": "-0.76722 * 64 = -49.10208; sigma 6e-05 * 64 = 0.00384",
+    "note": "Sec. VII A: zero-variance extrapolation (ODR fit of binned training energy vs variance) of a 38M-parameter symmetry-projected NN-fPEPS, E0/N = -0.76722(6); bound_type extrapolated correct; Table S4 marks the row red (estimate of the exact energy).",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#2 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "fPEPS (extrapolated)",
+      "energy": -194.6112
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2610.30321v2 PDF (also v1: identical Table S4 and text except date and acknowledgements), pypdf layout mode; no journal version exists (arXiv abs 2026-11-11, Crossref title search)",
+    "location": "Table S4 (SM p. 30), 16x16, t'=0, fPEPS (extrapolated) (red row), E/N without projection column",
+    "reported_as": "-0.7602(14) per site (E/N, units of t)",
+    "conversion": "-0.7602 * 256 = -194.6112; sigma 0.0014 * 256 = 0.3584",
+    "note": "Sec. VI B: bootstrap extrapolation of the pure fPEPS simple-update energies D = 8..16 in the gauge weight w, E/N = -0.7602(14) (mean and sd over 10,000 bootstrap samples); main text \"estimated exact energy of E/N=-0.7602(14)\"; bound_type extrapolated correct. RECORD row (best extrapolated): reading upheld.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#13 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-6x6_108_P",
+      "method": "GNN",
+      "energy": -185.8464
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2110.06390v1 PDF (only version), pypdf layout mode, Table I cross-read in the arXiv HTML TeX annotations; no journal version found (arXiv abs has no journal-ref; Crossref title search finds none)",
+    "location": "Table IV (App. A8 b, p. 19), Kagome J2=0 N=108, GNN column",
+    "reported_as": "-0.4302(1) per spin, S.S units (<E>/N)",
+    "conversion": "4N convention: -0.4302 * 4 * 108 = -185.8464; sigma 0.0001 * 432 = 0.0432",
+    "note": "Eq. (4) H = sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j, J1 = 1, spin operators (Table II exact references, e.g. square N=36 J2=0.5 -0.503810, fix S.S per-site units); periodic boundary conditions (App. A5 a); Table I: a1=(1,0), a2=(1/2,sqrt3/2), b1=(6,0), b2=(3,3sqrt3) = 6 a1, 6 a2: the 6x6 rhombic torus of three-site cells, the kagome-6x6 instance definition; J2 = 0. Own result: \"variational energies per spin ... computed using MCMC using 2*10^5 samples from equilibrated Markov chains. The stochastic estimation error bars are marked by parenthesis around the last significant digit\" (App. A8 b). Sector not stated (lowest-energy state targeted); a variational energy bounds the global ground state either way. Duplicate check: no other row on the instance carries this number.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#25 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-6x6_108_P",
+      "method": "GNN-2",
+      "energy": -186.3648
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2110.06390v1 PDF (only version), pypdf layout mode, Table I cross-read in the arXiv HTML TeX annotations; no journal version found (arXiv abs has no journal-ref; Crossref title search finds none)",
+    "location": "Table IV (App. A8 b, p. 19), Kagome J2=0 N=108, GNN-2 column",
+    "reported_as": "-0.4314(7) per spin, S.S units (<E>/N)",
+    "conversion": "4N convention: -0.4314 * 4 * 108 = -186.3648; sigma 0.0007 * 432 = 0.3024",
+    "note": "Eq. (4) H = sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j, J1 = 1, spin operators (Table II exact references, e.g. square N=36 J2=0.5 -0.503810, fix S.S per-site units); periodic boundary conditions (App. A5 a); Table I: a1=(1,0), a2=(1/2,sqrt3/2), b1=(6,0), b2=(3,3sqrt3) = 6 a1, 6 a2: the 6x6 rhombic torus of three-site cells, the kagome-6x6 instance definition; J2 = 0. Own result: \"variational energies per spin ... computed using MCMC using 2*10^5 samples from equilibrated Markov chains. The stochastic estimation error bars are marked by parenthesis around the last significant digit\" (App. A8 b). Sector not stated (lowest-energy state targeted); a variational energy bounds the global ground state either way. Duplicate check: no other row on the instance carries this number.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#26 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-6x6_108_P",
+      "method": "ResNet",
+      "energy": -183.168
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2110.06390v1 PDF (only version), pypdf layout mode, Table I cross-read in the arXiv HTML TeX annotations; no journal version found (arXiv abs has no journal-ref; Crossref title search finds none)",
+    "location": "Table IV (App. A8 b, p. 19), Kagome J2=0 N=108, ResNet column",
+    "reported_as": "-0.424(9) per spin, S.S units (<E>/N)",
+    "conversion": "4N convention: -0.424 * 4 * 108 = -183.168; sigma 0.009 * 432 = 3.888",
+    "note": "Eq. (4) H = sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j, J1 = 1, spin operators (Table II exact references, e.g. square N=36 J2=0.5 -0.503810, fix S.S per-site units); periodic boundary conditions (App. A5 a); Table I: a1=(1,0), a2=(1/2,sqrt3/2), b1=(6,0), b2=(3,3sqrt3) = 6 a1, 6 a2: the 6x6 rhombic torus of three-site cells, the kagome-6x6 instance definition; J2 = 0. Own result: \"variational energies per spin ... computed using MCMC using 2*10^5 samples from equilibrated Markov chains. The stochastic estimation error bars are marked by parenthesis around the last significant digit\" (App. A8 b). Sector not stated (lowest-energy state targeted); a variational energy bounds the global ground state either way. Duplicate check: no other row on the instance carries this number.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#27 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_100_P",
+      "method": "ResNet",
+      "energy": -268.2
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2110.06390v1 PDF (only version), pypdf layout mode, Table I cross-read in the arXiv HTML TeX annotations; no journal version found (arXiv abs has no journal-ref; Crossref title search finds none)",
+    "location": "Table IV (App. A8 b, p. 19), Square J2=0 N=100, ResNet column",
+    "reported_as": "-0.6705(2) per spin, S.S units (<E>/N)",
+    "conversion": "4N convention: -0.6705 * 4 * 100 = -268.2; sigma 0.0002 * 400 = 0.08",
+    "note": "Eq. (4) H = sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j, J1 = 1, spin operators (Table II exact references, e.g. square N=36 J2=0.5 -0.503810, fix S.S per-site units); periodic boundary conditions (App. A5 a); Table I: b1=(10,0), b2=(0,10), periodic 10x10; J2 = 0. Own result: \"variational energies per spin ... computed using MCMC using 2*10^5 samples from equilibrated Markov chains. The stochastic estimation error bars are marked by parenthesis around the last significant digit\" (App. A8 b). Sector not stated (lowest-energy state targeted); a variational energy bounds the global ground state either way. Duplicate check: no other row on the instance carries this number.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#29 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/triangular_108_P",
+      "method": "GNN",
+      "energy": -237.9456
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2110.06390v1 PDF (only version), pypdf layout mode, Table I cross-read in the arXiv HTML TeX annotations; no journal version found (arXiv abs has no journal-ref; Crossref title search finds none)",
+    "location": "Table IV (App. A8 b, p. 19), Triangular J2=0 N=108, GNN column",
+    "reported_as": "-0.5508(8) per spin, S.S units (<E>/N)",
+    "conversion": "4N convention: -0.5508 * 4 * 108 = -237.9456; sigma 0.0008 * 432 = 0.3456",
+    "note": "Eq. (4) H = sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j, J1 = 1, spin operators (Table II exact references, e.g. square N=36 J2=0.5 -0.503810, fix S.S per-site units); periodic boundary conditions (App. A5 a); Table I: a1=(1,0), a2=(1/2,sqrt3/2), b1=(9,3sqrt3)=6a1+6a2, b2=(9,-3sqrt3)=12a1-6a2, both of length sqrt108 at 60 degrees (the standard 120-degree-compatible 108-site torus). QMBL triangular_108_P carries no cluster vectors; it is the only 108-site periodic triangular instance and its other rows (arXiv:2211.07749 Table III) compare against this paper's GNN-2 in the same column, so the match is consistent; the instance header should record these vectors; J2 = 0. Own result: \"variational energies per spin ... computed using MCMC using 2*10^5 samples from equilibrated Markov chains. The stochastic estimation error bars are marked by parenthesis around the last significant digit\" (App. A8 b). Sector not stated (lowest-energy state targeted); a variational energy bounds the global ground state either way. Duplicate check: no other row on the instance carries this number.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#30 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/triangular_108_P",
+      "method": "ResNet",
+      "energy": -235.4832
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2110.06390v1 PDF (only version), pypdf layout mode, Table I cross-read in the arXiv HTML TeX annotations; no journal version found (arXiv abs has no journal-ref; Crossref title search finds none)",
+    "location": "Table IV (App. A8 b, p. 19), Triangular J2=0 N=108, ResNet column",
+    "reported_as": "-0.5451(2) per spin, S.S units (<E>/N)",
+    "conversion": "4N convention: -0.5451 * 4 * 108 = -235.4832; sigma 0.0002 * 432 = 0.0864",
+    "note": "Eq. (4) H = sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j, J1 = 1, spin operators (Table II exact references, e.g. square N=36 J2=0.5 -0.503810, fix S.S per-site units); periodic boundary conditions (App. A5 a); Table I: a1=(1,0), a2=(1/2,sqrt3/2), b1=(9,3sqrt3)=6a1+6a2, b2=(9,-3sqrt3)=12a1-6a2, both of length sqrt108 at 60 degrees (the standard 120-degree-compatible 108-site torus). QMBL triangular_108_P carries no cluster vectors; it is the only 108-site periodic triangular instance and its other rows (arXiv:2211.07749 Table III) compare against this paper's GNN-2 in the same column, so the match is consistent; the instance header should record these vectors; J2 = 0. Own result: \"variational energies per spin ... computed using MCMC using 2*10^5 samples from equilibrated Markov chains. The stochastic estimation error bars are marked by parenthesis around the last significant digit\" (App. A8 b). Sector not stated (lowest-energy state targeted); a variational energy bounds the global ground state either way. Duplicate check: no other row on the instance carries this number.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#31 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "GNN",
+      "energy": -198.2
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2110.06390v1 PDF (only version), pypdf layout mode, Table I cross-read in the arXiv HTML TeX annotations; no journal version found (arXiv abs has no journal-ref; Crossref title search finds none)",
+    "location": "Table IV (App. A8 b, p. 19), Square J2=0.5 N=100, GNN column",
+    "reported_as": "-0.4955(4) per spin, S.S units (<E>/N)",
+    "conversion": "4N convention: -0.4955 * 4 * 100 = -198.2; sigma 0.0004 * 400 = 0.16",
+    "note": "Eq. (4) H = sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j, J1 = 1, spin operators (Table II exact references, e.g. square N=36 J2=0.5 -0.503810, fix S.S per-site units); periodic boundary conditions (App. A5 a); Table I: b1=(10,0), b2=(0,10), periodic 10x10; J2 = 0.5. Own result: \"variational energies per spin ... computed using MCMC using 2*10^5 samples from equilibrated Markov chains. The stochastic estimation error bars are marked by parenthesis around the last significant digit\" (App. A8 b). Sector not stated (lowest-energy state targeted); a variational energy bounds the global ground state either way. Duplicate check: no other row on the instance carries this number.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#32 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "GNN-2",
+      "energy": -198.4
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2110.06390v1 PDF (only version), pypdf layout mode, Table I cross-read in the arXiv HTML TeX annotations; no journal version found (arXiv abs has no journal-ref; Crossref title search finds none)",
+    "location": "Table IV (App. A8 b, p. 19), Square J2=0.5 N=100, GNN-2 column",
+    "reported_as": "-0.4960(5) per spin, S.S units (<E>/N)",
+    "conversion": "4N convention: -0.496 * 4 * 100 = -198.4; sigma 0.0005 * 400 = 0.2",
+    "note": "Eq. (4) H = sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j, J1 = 1, spin operators (Table II exact references, e.g. square N=36 J2=0.5 -0.503810, fix S.S per-site units); periodic boundary conditions (App. A5 a); Table I: b1=(10,0), b2=(0,10), periodic 10x10; J2 = 0.5. Own result: \"variational energies per spin ... computed using MCMC using 2*10^5 samples from equilibrated Markov chains. The stochastic estimation error bars are marked by parenthesis around the last significant digit\" (App. A8 b). Sector not stated (lowest-energy state targeted); a variational energy bounds the global ground state either way. Duplicate check: no other row on the instance carries this number.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#33 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "ResNet",
+      "energy": -195.2
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2110.06390v1 PDF (only version), pypdf layout mode, Table I cross-read in the arXiv HTML TeX annotations; no journal version found (arXiv abs has no journal-ref; Crossref title search finds none)",
+    "location": "Table IV (App. A8 b, p. 19), Square J2=0.5 N=100, ResNet column",
+    "reported_as": "-0.488(7) per spin, S.S units (<E>/N)",
+    "conversion": "4N convention: -0.488 * 4 * 100 = -195.2; sigma 0.007 * 400 = 2.8",
+    "note": "Eq. (4) H = sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j, J1 = 1, spin operators (Table II exact references, e.g. square N=36 J2=0.5 -0.503810, fix S.S per-site units); periodic boundary conditions (App. A5 a); Table I: b1=(10,0), b2=(0,10), periodic 10x10; J2 = 0.5. Own result: \"variational energies per spin ... computed using MCMC using 2*10^5 samples from equilibrated Markov chains. The stochastic estimation error bars are marked by parenthesis around the last significant digit\" (App. A8 b). Sector not stated (lowest-energy state targeted); a variational energy bounds the global ground state either way. Duplicate check: no other row on the instance carries this number.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#34 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.5",
+      "method": "ResNet",
+      "energy": -72.2448
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2110.06390v1 PDF (only version), pypdf layout mode, Table I cross-read in the arXiv HTML TeX annotations; no journal version found (arXiv abs has no journal-ref; Crossref title search finds none)",
+    "location": "Table IV (App. A8 b, p. 19), Square J2=0.5 N=36, ResNet column",
+    "reported_as": "-0.5017(7) per spin, S.S units (<E>/N)",
+    "conversion": "4N convention: -0.5017 * 4 * 36 = -72.2448; sigma 0.0007 * 144 = 0.1008",
+    "note": "Eq. (4) H = sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j, J1 = 1, spin operators (Table II exact references, e.g. square N=36 J2=0.5 -0.503810, fix S.S per-site units); periodic boundary conditions (App. A5 a); Table I: b1=(6,0), b2=(0,6), periodic 6x6; J2 = 0.5. Own result: \"variational energies per spin ... computed using MCMC using 2*10^5 samples from equilibrated Markov chains. The stochastic estimation error bars are marked by parenthesis around the last significant digit\" (App. A8 b). Sector not stated (lowest-energy state targeted); a variational energy bounds the global ground state either way. Duplicate check: no other row on the instance carries this number.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#35 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_108_P_0.125",
+      "method": "GNN",
+      "energy": -216
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2110.06390v1 PDF (only version), pypdf layout mode, Table I cross-read in the arXiv HTML TeX annotations; no journal version found (arXiv abs has no journal-ref; Crossref title search finds none)",
+    "location": "Table IV (App. A8 b, p. 19), Triangular J2=0.125 N=108, GNN column",
+    "reported_as": "-0.500(9) per spin, S.S units (<E>/N)",
+    "conversion": "4N convention: -0.5 * 4 * 108 = -216.0; sigma 0.009 * 432 = 3.888",
+    "note": "Eq. (4) H = sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j, J1 = 1, spin operators (Table II exact references, e.g. square N=36 J2=0.5 -0.503810, fix S.S per-site units); periodic boundary conditions (App. A5 a); Table I: a1=(1,0), a2=(1/2,sqrt3/2), b1=(9,3sqrt3)=6a1+6a2, b2=(9,-3sqrt3)=12a1-6a2, both of length sqrt108 at 60 degrees (the standard 120-degree-compatible 108-site torus). QMBL triangular_108_P carries no cluster vectors; it is the only 108-site periodic triangular instance and its other rows (arXiv:2211.07749 Table III) compare against this paper's GNN-2 in the same column, so the match is consistent; the instance header should record these vectors; J2 = 0.125. Own result: \"variational energies per spin ... computed using MCMC using 2*10^5 samples from equilibrated Markov chains. The stochastic estimation error bars are marked by parenthesis around the last significant digit\" (App. A8 b). Sector not stated (lowest-energy state targeted); a variational energy bounds the global ground state either way. Duplicate check: no other row on the instance carries this number.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#36 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_108_P_0.125",
+      "method": "ResNet",
+      "energy": -210.816
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2110.06390v1 PDF (only version), pypdf layout mode, Table I cross-read in the arXiv HTML TeX annotations; no journal version found (arXiv abs has no journal-ref; Crossref title search finds none)",
+    "location": "Table IV (App. A8 b, p. 19), Triangular J2=0.125 N=108, ResNet column",
+    "reported_as": "-0.488(9) per spin, S.S units (<E>/N)",
+    "conversion": "4N convention: -0.488 * 4 * 108 = -210.816; sigma 0.009 * 432 = 3.888",
+    "note": "Eq. (4) H = sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j, J1 = 1, spin operators (Table II exact references, e.g. square N=36 J2=0.5 -0.503810, fix S.S per-site units); periodic boundary conditions (App. A5 a); Table I: a1=(1,0), a2=(1/2,sqrt3/2), b1=(9,3sqrt3)=6a1+6a2, b2=(9,-3sqrt3)=12a1-6a2, both of length sqrt108 at 60 degrees (the standard 120-degree-compatible 108-site torus). QMBL triangular_108_P carries no cluster vectors; it is the only 108-site periodic triangular instance and its other rows (arXiv:2211.07749 Table III) compare against this paper's GNN-2 in the same column, so the match is consistent; the instance header should record these vectors; J2 = 0.125. Own result: \"variational energies per spin ... computed using MCMC using 2*10^5 samples from equilibrated Markov chains. The stochastic estimation error bars are marked by parenthesis around the last significant digit\" (App. A8 b). Sector not stated (lowest-energy state targeted); a variational energy bounds the global ground state either way. Duplicate check: no other row on the instance carries this number.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#37 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_P_28_8",
+      "method": "ACE",
+      "energy": -48.820608
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2611.04333v1 PDF (only version; SciPost Physics Codebases submission, not published), pypdf layout mode",
+    "location": "Sec. 4.1, p. 15: \"Evaluation of the final states gives energies per site of -0.762822(5) for ACE on 16x4\"",
+    "reported_as": "-0.762822(5) per site, units of t",
+    "conversion": "-0.762822 * 64 = -48.820608; sigma 5e-06 * 64 = 0.00032",
+    "note": "Eq. (49) H = -t sum_<ij>,sigma (c+c + h.c.) + U sum n_up n_dn, t = 1, no shift, nearest-neighbour hopping only (matches the instance). ACE (12 conv layers, width 128) on the periodic 16x4 lattice, N = 56 electrons (N_up = N_dn = 28), U = 8, 1/8 hole doping, 30000 MARCH steps, 4096 walkers; final-state evaluation. Spin sector: the paper prints only the electron count; the released example scripts (github.com/bytedance/laqx HEAD, docs/examples/hubbard/16x4_pbc_U8_ace_small.sh and 16x8_pbc_U8_scale_small.sh, fetched 2026-11-11) pass --particles 56 / 112 without --particles_up, and main.py lines 141-142 set particles_up = particles // 2, so N_up = N_dn (Sz = 0) as the instance requires; the script layers, widths, steps and the GFMC 5000 steps match Sec. 4.1. Own result of this paper; no journal version. GFMC lowers the VMC energies by 9.6e-4 and 3.2e-3 per site as printed (consistent). Duplicate check: no other row on the instance carries this number (Gu et al. Pareto-frontier ACE rows differ).",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#38 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_P_28_8",
+      "method": "GFMC (ACE-guided)",
+      "energy": -48.88192
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2611.04333v1 PDF (only version; SciPost Physics Codebases submission, not published), pypdf layout mode",
+    "location": "Sec. 4.1, p. 15: \"...energies per site of -0.76378(2) for ACE-guided GFMC\"",
+    "reported_as": "-0.76378(2) per site, units of t",
+    "conversion": "-0.76378 * 64 = -48.88192; sigma 2e-05 * 64 = 0.00128",
+    "note": "Eq. (49) H = -t sum_<ij>,sigma (c+c + h.c.) + U sum n_up n_dn, t = 1, no shift, nearest-neighbour hopping only (matches the instance). fixed-node GFMC guided by the ACE state (\"importance-sampling and fixed-node guiding functions\", Sec. 2.5), first 1000 of 5000 projection steps discarded: projected, correct. Spin sector: the paper prints only the electron count; the released example scripts (github.com/bytedance/laqx HEAD, docs/examples/hubbard/16x4_pbc_U8_ace_small.sh and 16x8_pbc_U8_scale_small.sh, fetched 2026-11-11) pass --particles 56 / 112 without --particles_up, and main.py lines 141-142 set particles_up = particles // 2, so N_up = N_dn (Sz = 0) as the instance requires; the script layers, widths, steps and the GFMC 5000 steps match Sec. 4.1. Own result of this paper; no journal version. GFMC lowers the VMC energies by 9.6e-4 and 3.2e-3 per site as printed (consistent). Duplicate check: no other row on the instance carries this number (Gu et al. Pareto-frontier ACE rows differ).",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#39 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-8x16_128_P_56_8",
+      "method": "SCALE",
+      "energy": -96.391552
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2611.04333v1 PDF (only version; SciPost Physics Codebases submission, not published), pypdf layout mode",
+    "location": "Sec. 4.1, p. 15: \"...and -0.753059(7) for SCALE on 16x8\"",
+    "reported_as": "-0.753059(7) per site, units of t",
+    "conversion": "-0.753059 * 128 = -96.391552; sigma 7e-06 * 128 = 0.000896",
+    "note": "Eq. (49) H = -t sum_<ij>,sigma (c+c + h.c.) + U sum n_up n_dn, t = 1, no shift, nearest-neighbour hopping only (matches the instance). SCALE (width 256, four site-wise nonlinear layers of width 512) on the periodic 16x8 lattice, N = 112 (N_up = N_dn = 56), U = 8, 1/8 doping; the stripe-pinning field of the reference stage is removed for the final 20000-step optimization. Spin sector: the paper prints only the electron count; the released example scripts (github.com/bytedance/laqx HEAD, docs/examples/hubbard/16x4_pbc_U8_ace_small.sh and 16x8_pbc_U8_scale_small.sh, fetched 2026-11-11) pass --particles 56 / 112 without --particles_up, and main.py lines 141-142 set particles_up = particles // 2, so N_up = N_dn (Sz = 0) as the instance requires; the script layers, widths, steps and the GFMC 5000 steps match Sec. 4.1. Own result of this paper; no journal version. GFMC lowers the VMC energies by 9.6e-4 and 3.2e-3 per site as printed (consistent). Duplicate check: no other row on the instance carries this number (Gu et al. Pareto-frontier ACE rows differ).",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#40 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-8x16_128_P_56_8",
+      "method": "GFMC (SCALE-guided)",
+      "energy": -96.80384
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2611.04333v1 PDF (only version; SciPost Physics Codebases submission, not published), pypdf layout mode",
+    "location": "Sec. 4.1, p. 15: \"...and -0.75628(3) for SCALE-guided GFMC\"",
+    "reported_as": "-0.75628(3) per site, units of t",
+    "conversion": "-0.75628 * 128 = -96.80384; sigma 3e-05 * 128 = 0.00384",
+    "note": "Eq. (49) H = -t sum_<ij>,sigma (c+c + h.c.) + U sum n_up n_dn, t = 1, no shift, nearest-neighbour hopping only (matches the instance). fixed-node GFMC guided by SCALE: projected, correct. Spin sector: the paper prints only the electron count; the released example scripts (github.com/bytedance/laqx HEAD, docs/examples/hubbard/16x4_pbc_U8_ace_small.sh and 16x8_pbc_U8_scale_small.sh, fetched 2026-11-11) pass --particles 56 / 112 without --particles_up, and main.py lines 141-142 set particles_up = particles // 2, so N_up = N_dn (Sz = 0) as the instance requires; the script layers, widths, steps and the GFMC 5000 steps match Sec. 4.1. Own result of this paper; no journal version. GFMC lowers the VMC energies by 9.6e-4 and 3.2e-3 per site as printed (consistent). Duplicate check: no other row on the instance carries this number (Gu et al. Pareto-frontier ACE rows differ).",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#41 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x12_48_P_21_8",
+      "method": "HB K = 0",
+      "energy": -29.0784
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2606.00924v1 (only version; no journal reference on arXiv abs page 2026-11-11), cached PDF qmbl/sources/2606.00924.pdf, pypdf layout + plain re-extraction (sources/RP3/2606.00924.layout.txt)",
+    "location": "Table IV, row 4 × 12, column K = 0",
+    "reported_as": "−0.6058 per site",
+    "conversion": "-0.6058 × 48 = -29.0784",
+    "note": "U = 8, PBC (table captions), 48 sites, nh = 0.125 -> 42 electrons, Nf = 21 per spin. Hubbard convention: Eq. (1) generic t c†c + U n n; Table III ED −0.7418 × 16 = −11.8688 agrees with the stored 4x4 exact −11.8688355696, so no constant shift. VMC energy: variational. Sigma stays null: the only error statement is table-wide ('energy sampling errors are around 0.0003', Tables II and IV captions), not a row sigma. Not a duplicate of any other row on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 1244.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#0 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x12_48_P_21_8",
+      "method": "HB K = 1",
+      "energy": -36.4704
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2606.00924v1 (only version; no journal reference on arXiv abs page 2026-11-11), cached PDF qmbl/sources/2606.00924.pdf, pypdf layout + plain re-extraction (sources/RP3/2606.00924.layout.txt)",
+    "location": "Table IV, row 4 × 12, column K = 1",
+    "reported_as": "−0.7598 per site",
+    "conversion": "-0.7598 × 48 = -36.4704",
+    "note": "U = 8, PBC (table captions), 48 sites, nh = 0.125 -> 42 electrons, Nf = 21 per spin. Hubbard convention: Eq. (1) generic t c†c + U n n; Table III ED −0.7418 × 16 = −11.8688 agrees with the stored 4x4 exact −11.8688355696, so no constant shift. VMC energy: variational. Sigma stays null: the only error statement is table-wide ('energy sampling errors are around 0.0003', Tables II and IV captions), not a row sigma. Not a duplicate of any other row on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 1264.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#1 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x12_48_P_21_8",
+      "method": "HB K = 2",
+      "energy": -36.5424
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2606.00924v1 (only version; no journal reference on arXiv abs page 2026-11-11), cached PDF qmbl/sources/2606.00924.pdf, pypdf layout + plain re-extraction (sources/RP3/2606.00924.layout.txt)",
+    "location": "Table IV, row 4 × 12, column K = 2",
+    "reported_as": "−0.7613 per site",
+    "conversion": "-0.7613 × 48 = -36.5424",
+    "note": "U = 8, PBC (table captions), 48 sites, nh = 0.125 -> 42 electrons, Nf = 21 per spin. Hubbard convention: Eq. (1) generic t c†c + U n n; Table III ED −0.7418 × 16 = −11.8688 agrees with the stored 4x4 exact −11.8688355696, so no constant shift. VMC energy: variational. Sigma stays null: the only error statement is table-wide ('energy sampling errors are around 0.0003', Tables II and IV captions), not a row sigma. Not a duplicate of any other row on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 1284.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#2 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x12_48_P_21_8",
+      "method": "RHB",
+      "energy": -36.624
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2606.00924v1 (only version; no journal reference on arXiv abs page 2026-11-11), cached PDF qmbl/sources/2606.00924.pdf, pypdf layout + plain re-extraction (sources/RP3/2606.00924.layout.txt)",
+    "location": "Table IV, row 4 × 12, column RHB",
+    "reported_as": "−0.7630 per site",
+    "conversion": "-0.7630 × 48 = -36.624",
+    "note": "U = 8, PBC (table captions), 48 sites, nh = 0.125 -> 42 electrons, Nf = 21 per spin. Hubbard convention: Eq. (1) generic t c†c + U n n; Table III ED −0.7418 × 16 = −11.8688 agrees with the stored 4x4 exact −11.8688355696, so no constant shift. VMC energy: variational. Sigma stays null: the only error statement is table-wide ('energy sampling errors are around 0.0003', Tables II and IV captions), not a row sigma. Not a duplicate of any other row on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 1304.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#3 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_7_8",
+      "method": "HB K = 1",
+      "energy": -11.792
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2606.00924v1 (only version; no journal reference on arXiv abs page 2026-11-11), cached PDF qmbl/sources/2606.00924.pdf, pypdf layout + plain re-extraction (sources/RP3/2606.00924.layout.txt)",
+    "location": "Table III (4 × 4, nh = 0.125, U = 8, PBC), column K = 1",
+    "reported_as": "−0.7370 per site",
+    "conversion": "-0.7370 × 16 = -11.792",
+    "note": "U = 8, PBC (table captions), 16 sites, nh = 0.125 -> 14 electrons, Nf = 7. Hubbard convention: Eq. (1) generic t c†c + U n n; Table III ED −0.7418 × 16 = −11.8688 agrees with the stored 4x4 exact −11.8688355696, so no constant shift. VMC energy: variational. Sigma stays null: the only error statement is table-wide ('energy sampling errors are around 0.0003', Tables II and IV captions), not a row sigma. Not a duplicate of any other row on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 1044.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#5 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_7_8",
+      "method": "HB K = 2",
+      "energy": -11.816
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2606.00924v1 (only version; no journal reference on arXiv abs page 2026-11-11), cached PDF qmbl/sources/2606.00924.pdf, pypdf layout + plain re-extraction (sources/RP3/2606.00924.layout.txt)",
+    "location": "Table III (4 × 4, nh = 0.125, U = 8, PBC), column K = 2",
+    "reported_as": "−0.7385 per site",
+    "conversion": "-0.7385 × 16 = -11.816",
+    "note": "U = 8, PBC (table captions), 16 sites, nh = 0.125 -> 14 electrons, Nf = 7. Hubbard convention: Eq. (1) generic t c†c + U n n; Table III ED −0.7418 × 16 = −11.8688 agrees with the stored 4x4 exact −11.8688355696, so no constant shift. VMC energy: variational. Sigma stays null: the only error statement is table-wide ('energy sampling errors are around 0.0003', Tables II and IV captions), not a row sigma. Not a duplicate of any other row on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 1064.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#6 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_7_8",
+      "method": "HB K = 3",
+      "energy": -11.824
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2606.00924v1 (only version; no journal reference on arXiv abs page 2026-11-11), cached PDF qmbl/sources/2606.00924.pdf, pypdf layout + plain re-extraction (sources/RP3/2606.00924.layout.txt)",
+    "location": "Table III (4 × 4, nh = 0.125, U = 8, PBC), column K = 3",
+    "reported_as": "−0.7390 per site",
+    "conversion": "-0.7390 × 16 = -11.824",
+    "note": "U = 8, PBC (table captions), 16 sites, nh = 0.125 -> 14 electrons, Nf = 7. Hubbard convention: Eq. (1) generic t c†c + U n n; Table III ED −0.7418 × 16 = −11.8688 agrees with the stored 4x4 exact −11.8688355696, so no constant shift. VMC energy: variational. Sigma stays null: the only error statement is table-wide ('energy sampling errors are around 0.0003', Tables II and IV captions), not a row sigma. Not a duplicate of any other row on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 1084.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#7 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_7_8",
+      "method": "RHB (Ndet = 5, Nneuron = 16)",
+      "energy": -11.832
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2606.00924v1 (only version; no journal reference on arXiv abs page 2026-11-11), cached PDF qmbl/sources/2606.00924.pdf, pypdf layout + plain re-extraction (sources/RP3/2606.00924.layout.txt)",
+    "location": "Table III (4 × 4, nh = 0.125, U = 8, PBC), column R(Ndet = 5, Nneuron = 16)",
+    "reported_as": "−0.7395 per site",
+    "conversion": "-0.7395 × 16 = -11.832",
+    "note": "U = 8, PBC (table captions), 16 sites, nh = 0.125 -> 14 electrons, Nf = 7. Hubbard convention: Eq. (1) generic t c†c + U n n; Table III ED −0.7418 × 16 = −11.8688 agrees with the stored 4x4 exact −11.8688355696, so no constant shift. VMC energy: variational. Sigma stays null: the only error statement is table-wide ('energy sampling errors are around 0.0003', Tables II and IV captions), not a row sigma. Not a duplicate of any other row on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 1104.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#8 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_7_8",
+      "method": "RHB (Ndet = 5, Nneuron = 100)",
+      "energy": -11.8448
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2606.00924v1 (only version; no journal reference on arXiv abs page 2026-11-11), cached PDF qmbl/sources/2606.00924.pdf, pypdf layout + plain re-extraction (sources/RP3/2606.00924.layout.txt)",
+    "location": "Table III (4 × 4, nh = 0.125, U = 8, PBC), column R(Ndet = 5, Nneuron = 100)",
+    "reported_as": "−0.7403 per site",
+    "conversion": "-0.7403 × 16 = -11.8448",
+    "note": "U = 8, PBC (table captions), 16 sites, nh = 0.125 -> 14 electrons, Nf = 7. Hubbard convention: Eq. (1) generic t c†c + U n n; Table III ED −0.7418 × 16 = −11.8688 agrees with the stored 4x4 exact −11.8688355696, so no constant shift. VMC energy: variational. Sigma stays null: the only error statement is table-wide ('energy sampling errors are around 0.0003', Tables II and IV captions), not a row sigma. Not a duplicate of any other row on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 1144.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#9 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_7_8",
+      "method": "RHB (Ndet = 5, Nneuron = 160)",
+      "energy": -11.8416
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2606.00924v1 (only version; no journal reference on arXiv abs page 2026-11-11), cached PDF qmbl/sources/2606.00924.pdf, pypdf layout + plain re-extraction (sources/RP3/2606.00924.layout.txt)",
+    "location": "Table III (4 × 4, nh = 0.125, U = 8, PBC), column R(Ndet = 5, Nneuron = 160)",
+    "reported_as": "−0.7401 per site",
+    "conversion": "-0.7401 × 16 = -11.8416",
+    "note": "U = 8, PBC (table captions), 16 sites, nh = 0.125 -> 14 electrons, Nf = 7. Hubbard convention: Eq. (1) generic t c†c + U n n; Table III ED −0.7418 × 16 = −11.8688 agrees with the stored 4x4 exact −11.8688355696, so no constant shift. VMC energy: variational. Sigma stays null: the only error statement is table-wide ('energy sampling errors are around 0.0003', Tables II and IV captions), not a row sigma. Not a duplicate of any other row on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 1164.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#10 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_7_8",
+      "method": "RHB (Ndet = 16, Nneuron = 80)",
+      "energy": -11.856
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2606.00924v1 (only version; no journal reference on arXiv abs page 2026-11-11), cached PDF qmbl/sources/2606.00924.pdf, pypdf layout + plain re-extraction (sources/RP3/2606.00924.layout.txt)",
+    "location": "Table III (4 × 4, nh = 0.125, U = 8, PBC), column R(Ndet = 16, Nneuron = 80)",
+    "reported_as": "−0.7410 per site",
+    "conversion": "-0.7410 × 16 = -11.856",
+    "note": "U = 8, PBC (table captions), 16 sites, nh = 0.125 -> 14 electrons, Nf = 7. Hubbard convention: Eq. (1) generic t c†c + U n n; Table III ED −0.7418 × 16 = −11.8688 agrees with the stored 4x4 exact −11.8688355696, so no constant shift. VMC energy: variational. Sigma stays null: the only error statement is table-wide ('energy sampling errors are around 0.0003', Tables II and IV captions), not a row sigma. Not a duplicate of any other row on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 1184.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#11 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_7_8",
+      "method": "HB K = 0",
+      "energy": -10.0352
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2606.00924v1 (only version; no journal reference on arXiv abs page 2026-11-11), cached PDF qmbl/sources/2606.00924.pdf, pypdf layout + plain re-extraction (sources/RP3/2606.00924.layout.txt)",
+    "location": "Table IV, row 4 × 4, column K = 0",
+    "reported_as": "−0.6272 per site",
+    "conversion": "-0.6272 × 16 = -10.0352",
+    "note": "U = 8, PBC (table captions), 16 sites, nh = 0.125 -> 14 electrons, Nf = 7. Hubbard convention: Eq. (1) generic t c†c + U n n; Table III ED −0.7418 × 16 = −11.8688 agrees with the stored 4x4 exact −11.8688355696, so no constant shift. VMC energy: variational. Sigma stays null: the only error statement is table-wide ('energy sampling errors are around 0.0003', Tables II and IV captions), not a row sigma. Not a duplicate of any other row on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 1204.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#12 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "HB K = 0",
+      "energy": -150.7584
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2606.00924v1 (only version; no journal reference on arXiv abs page 2026-11-11), cached PDF qmbl/sources/2606.00924.pdf, pypdf layout + plain re-extraction (sources/RP3/2606.00924.layout.txt)",
+    "location": "Main text p. 3-4: 'The ground state energies on the 16 × 16 lattice are −0.5889 (HB K = 0), −0.7510 (HB K = 1) and −0.7526 (HB K = 2)'",
+    "reported_as": "−0.5889 per site",
+    "conversion": "-0.5889 × 256 = -150.7584",
+    "note": "U = 8, PBC (table captions), 256 sites, nh = 0.125 -> 224 electrons, Nf = 112. Hubbard convention: Eq. (1) generic t c†c + U n n; Table III ED −0.7418 × 16 = −11.8688 agrees with the stored 4x4 exact −11.8688355696, so no constant shift. VMC energy: variational. Sigma stays null: the only error statement is table-wide ('energy sampling errors are around 0.0003', Tables II and IV captions), not a row sigma. Not a duplicate of any other row on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 1324.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#13 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.55",
+      "method": "A5 (c=3, k=5, b=14), LR=0.0013, seed 8",
+      "energy": -192.9276
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2606.30464v1 (only version; no journal reference), PDF pypdf layout (sources/RP3/2606.30464.layout.txt) and arXiv HTML qmbl/sources/2606.30464.html for the table cell",
+    "location": "Table II, row 'A5, LR=0.0013, seed 8', column J2/J1 = 0.55 (HTML cell checked: 'A9, LR=0.020, seed 10 | Failed after promotion | −0.483528(8)' puts the value in the 0.55 column)",
+    "reported_as": "-0.482319(10) per site",
+    "conversion": "-0.482319 × 4 × 100 = -192.9276; sigma 1e-5 × 400 = 0.004",
+    "note": "10 × 10 PBC, J2/J1 = 0.55 (Sec. III A); per-site S·S units (the paper's aCNN baselines −0.495627(6) and −0.483490(5) are the S·S values Wang et al. print and QMBL stores). Architecture labels from Table I (A5: c=3, k=5, b=14, 6538 params; A9: c=11, k=3, b=3, 6810 params). VMC, Adam, real-valued amplitude network: variational. No duplicate on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 2370.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#14 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.55",
+      "method": "A5 (c=3, k=5, b=14), LR=0.002, seed 9",
+      "energy": -193.4008
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2606.30464v1 (only version; no journal reference), PDF pypdf layout (sources/RP3/2606.30464.layout.txt) and arXiv HTML qmbl/sources/2606.30464.html for the table cell",
+    "location": "Table II, row 'A5, LR=0.002, seed 9', column J2/J1 = 0.55 (HTML cell checked: 'A9, LR=0.020, seed 10 | Failed after promotion | −0.483528(8)' puts the value in the 0.55 column)",
+    "reported_as": "-0.483502(7) per site",
+    "conversion": "-0.483502 × 4 × 100 = -193.4008; sigma 7e-6 × 400 = 0.0028",
+    "note": "10 × 10 PBC, J2/J1 = 0.55 (Sec. III A); per-site S·S units (the paper's aCNN baselines −0.495627(6) and −0.483490(5) are the S·S values Wang et al. print and QMBL stores). Architecture labels from Table I (A5: c=3, k=5, b=14, 6538 params; A9: c=11, k=3, b=3, 6810 params). VMC, Adam, real-valued amplitude network: variational. No duplicate on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 2399.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#15 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.55",
+      "method": "A5 (c=3, k=5, b=14), LR=0.001265, seed 8",
+      "energy": -193.2832
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2606.30464v1 (only version; no journal reference), PDF pypdf layout (sources/RP3/2606.30464.layout.txt) and arXiv HTML qmbl/sources/2606.30464.html for the table cell",
+    "location": "Table II, row 'A5, LR=0.001265, seed 8', column J2/J1 = 0.55 (HTML cell checked: 'A9, LR=0.020, seed 10 | Failed after promotion | −0.483528(8)' puts the value in the 0.55 column)",
+    "reported_as": "-0.483208(6) per site",
+    "conversion": "-0.483208 × 4 × 100 = -193.2832; sigma 6e-6 × 400 = 0.0024",
+    "note": "10 × 10 PBC, J2/J1 = 0.55 (Sec. III A); per-site S·S units (the paper's aCNN baselines −0.495627(6) and −0.483490(5) are the S·S values Wang et al. print and QMBL stores). Architecture labels from Table I (A5: c=3, k=5, b=14, 6538 params; A9: c=11, k=3, b=3, 6810 params). VMC, Adam, real-valued amplitude network: variational. No duplicate on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 2428.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#16 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.55",
+      "method": "A9 (c=11, k=3, b=3), LR=0.020, seed 10",
+      "energy": -193.4112
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2606.30464v1 (only version; no journal reference), PDF pypdf layout (sources/RP3/2606.30464.layout.txt) and arXiv HTML qmbl/sources/2606.30464.html for the table cell",
+    "location": "Table II, row 'A9, LR=0.020, seed 10', column J2/J1 = 0.55 (HTML cell checked: 'A9, LR=0.020, seed 10 | Failed after promotion | −0.483528(8)' puts the value in the 0.55 column)",
+    "reported_as": "-0.483528(8) per site",
+    "conversion": "-0.483528 × 4 × 100 = -193.4112; sigma 8e-6 × 400 = 0.0032",
+    "note": "10 × 10 PBC, J2/J1 = 0.55 (Sec. III A); per-site S·S units (the paper's aCNN baselines −0.495627(6) and −0.483490(5) are the S·S values Wang et al. print and QMBL stores). Architecture labels from Table I (A5: c=3, k=5, b=14, 6538 params; A9: c=11, k=3, b=3, 6810 params). VMC, Adam, real-valued amplitude network: variational. No duplicate on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 2457.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#17 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.55",
+      "method": "A9 (c=11, k=3, b=3), LR=0.0126, seed 12",
+      "energy": -193.4048
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2606.30464v1 (only version; no journal reference), PDF pypdf layout (sources/RP3/2606.30464.layout.txt) and arXiv HTML qmbl/sources/2606.30464.html for the table cell",
+    "location": "Table II, row 'A9, LR=0.0126, seed 12', column J2/J1 = 0.55 (HTML cell checked: 'A9, LR=0.020, seed 10 | Failed after promotion | −0.483528(8)' puts the value in the 0.55 column)",
+    "reported_as": "-0.483512(5) per site",
+    "conversion": "-0.483512 × 4 × 100 = -193.4048; sigma 5e-6 × 400 = 0.002",
+    "note": "10 × 10 PBC, J2/J1 = 0.55 (Sec. III A); per-site S·S units (the paper's aCNN baselines −0.495627(6) and −0.483490(5) are the S·S values Wang et al. print and QMBL stores). Architecture labels from Table I (A5: c=3, k=5, b=14, 6538 params; A9: c=11, k=3, b=3, 6810 params). VMC, Adam, real-valued amplitude network: variational. No duplicate on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 2486.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#18 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_144_O_2",
+      "method": "NAQS",
+      "energy": -346.9827168
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "Phys. Rev. Lett. 124, 020503 (2020), APS publisher PDF (sources/RP3/prl124-020503.pdf, pypdf layout) and arXiv:1902.04057v3 (latest), pypdf; identical values",
+    "location": "Table I, row Γ = 2.0 J, column NAQS Energy (PRL p. 4; same in arXiv v3)",
+    "reported_as": "−2.4096022(2) per site",
+    "conversion": "-2.4096022 × 144 = -346.9827168; sigma 2e-7 × 144 = 0.0000288",
+    "note": "H = −J Σ σzσz − Γ Σ σx (Pauli), 2D square lattice with open boundary conditions, 12 × 12 (PRL text p. 3); per-site energies; Γ = h. NAQS (PixelCNN) with exact i.i.d. autoregressive sampling: variational. No duplicate on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 2602.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#19 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_144_O_3",
+      "method": "NAQS",
+      "energy": -457.041672
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "Phys. Rev. Lett. 124, 020503 (2020), APS publisher PDF (sources/RP3/prl124-020503.pdf, pypdf layout) and arXiv:1902.04057v3 (latest), pypdf; identical values",
+    "location": "Table I, row Γ = 3.0 J, column NAQS Energy (PRL p. 4; same in arXiv v3)",
+    "reported_as": "−3.1739005(5) per site",
+    "conversion": "-3.1739005 × 144 = -457.041672; sigma 5e-7 × 144 = 0.000072",
+    "note": "H = −J Σ σzσz − Γ Σ σx (Pauli), 2D square lattice with open boundary conditions, 12 × 12 (PRL text p. 3); per-site energies; Γ = h. NAQS (PixelCNN) with exact i.i.d. autoregressive sampling: variational. No duplicate on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 2642.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#20 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_144_O_3",
+      "method": "unbiased quantum Monte Carlo (QMC)",
+      "energy": -457.03872
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "Phys. Rev. Lett. 124, 020503 (2020), APS publisher PDF (sources/RP3/prl124-020503.pdf, pypdf layout) and arXiv:1902.04057v3 (latest), pypdf; identical values",
+    "location": "Table I, row Γ = 3.0 J, column QMC Energy (PRL p. 4; same in arXiv v3)",
+    "reported_as": "−3.17388(4) per site",
+    "conversion": "-3.17388 × 144 = -457.03872; sigma 4e-5 × 144 = 0.00576",
+    "note": "H = −J Σ σzσz − Γ Σ σx (Pauli), 2D square lattice with open boundary conditions, 12 × 12 (PRL text p. 3); per-site energies; Γ = h. QMC is the authors' own ALPS run (acknowledgements: 'QMC simulations for the 2D transverse-field Ising model have been performed using the open-source ALPS Library'). No duplicate on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 2662. The paper prints no simulation temperature; the row stays exact (stochastic), ruled 2026-11-11.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#21 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_144_O_4",
+      "method": "NAQS",
+      "energy": -593.5388976
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "Phys. Rev. Lett. 124, 020503 (2020), APS publisher PDF (sources/RP3/prl124-020503.pdf, pypdf layout) and arXiv:1902.04057v3 (latest), pypdf; identical values",
+    "location": "Table I, row Γ = 4.0 J, column NAQS Energy (PRL p. 4; same in arXiv v3)",
+    "reported_as": "−4.1217979(2) per site",
+    "conversion": "-4.1217979 × 144 = -593.5388976; sigma 2e-7 × 144 = 0.0000288",
+    "note": "H = −J Σ σzσz − Γ Σ σx (Pauli), 2D square lattice with open boundary conditions, 12 × 12 (PRL text p. 3); per-site energies; Γ = h. NAQS (PixelCNN) with exact i.i.d. autoregressive sampling: variational. No duplicate on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 2682.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#23 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_144_O_4",
+      "method": "unbiased quantum Monte Carlo (QMC)",
+      "energy": -593.53632
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "Phys. Rev. Lett. 124, 020503 (2020), APS publisher PDF (sources/RP3/prl124-020503.pdf, pypdf layout) and arXiv:1902.04057v3 (latest), pypdf; identical values",
+    "location": "Table I, row Γ = 4.0 J, column QMC Energy (PRL p. 4; same in arXiv v3)",
+    "reported_as": "−4.12178(4) per site",
+    "conversion": "-4.12178 × 144 = -593.53632; sigma 4e-5 × 144 = 0.00576",
+    "note": "H = −J Σ σzσz − Γ Σ σx (Pauli), 2D square lattice with open boundary conditions, 12 × 12 (PRL text p. 3); per-site energies; Γ = h. QMC is the authors' own ALPS run (acknowledgements: 'QMC simulations for the 2D transverse-field Ising model have been performed using the open-source ALPS Library'). No duplicate on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 2702. The paper prints no simulation temperature; the row stays exact (stochastic), ruled 2026-11-11.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#24 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-6x6_108_P",
+      "method": "KagomeResNet c=n=32",
+      "energy": -188.638848
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2611.05174v1 (only version; no journal reference), PDF pypdf layout (sources/RP3/2611.05174.layout.txt)",
+    "location": "Table I, row L = 6, column c = n = 32, e; also main text 'E = −47.1597(6)' (−47.1597/108 = −0.4366639)",
+    "reported_as": "-0.436664(6) per site, S·S units",
+    "conversion": "-0.436664 × 4 × 108 = -188.638848; sigma 6e-6 × 432 = 0.002592",
+    "note": "Eq. (1) H = Σ Si·Sj (spin-1/2, J = 1, no shift); L × L torus, N = 3L² (108) with PBC; Γ point, Is = +1, D6 symmetry imposed (ground-state sector claimed); MinSR VMC raw variational energy; acceptance ≈ 0.555 reported for L = 6 (ergodic). Own computation. No duplicate on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 1344.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#26 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-6x6_108_P",
+      "method": "KagomeResNet c=n=40",
+      "energy": -188.68032
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2611.05174v1 (only version; no journal reference), PDF pypdf layout (sources/RP3/2611.05174.layout.txt)",
+    "location": "Table I, row L = 6, column c = n = 40, e",
+    "reported_as": "-0.436760(5) per site, S·S units",
+    "conversion": "-0.436760 × 4 × 108 = -188.68032; sigma 5e-6 × 432 = 0.00216",
+    "note": "Eq. (1) H = Σ Si·Sj (spin-1/2, J = 1, no shift); L × L torus, N = 3L² (108) with PBC; Γ point, Is = +1, D6 symmetry imposed (ground-state sector claimed); MinSR VMC raw variational energy; acceptance ≈ 0.555 reported for L = 6 (ergodic). Own computation. No duplicate on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 1373.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#28 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-8x8_192_P",
+      "method": "KagomeResNet c=n=32",
+      "energy": -334.72128
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2611.05174v1 (only version; no journal reference), PDF pypdf layout (sources/RP3/2611.05174.layout.txt)",
+    "location": "Table I, row L = 8, column c = n = 32, e",
+    "reported_as": "-0.435835(4) per site, S·S units",
+    "conversion": "-0.435835 × 4 × 192 = -334.72128; sigma 4e-6 × 768 = 0.003072",
+    "note": "Eq. (1) H = Σ Si·Sj (spin-1/2, J = 1, no shift); L × L torus, N = 3L² (192) with PBC; Γ point, Is = +1, D6 symmetry imposed (ground-state sector claimed); MinSR VMC raw variational energy; acceptance ≈ 0.555 reported for L = 6 (ergodic). Own computation. No duplicate on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 1422.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#30 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-8x8_192_P",
+      "method": "KagomeResNet c=n=40",
+      "energy": -334.808832
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2611.05174v1 (only version; no journal reference), PDF pypdf layout (sources/RP3/2611.05174.layout.txt)",
+    "location": "Table I, row L = 8, column c = n = 40, e",
+    "reported_as": "-0.435949(5) per site, S·S units",
+    "conversion": "-0.435949 × 4 × 192 = -334.808832; sigma 5e-6 × 768 = 0.00384",
+    "note": "Eq. (1) H = Σ Si·Sj (spin-1/2, J = 1, no shift); L × L torus, N = 3L² (192) with PBC; Γ point, Is = +1, D6 symmetry imposed (ground-state sector claimed); MinSR VMC raw variational energy; acceptance ≈ 0.555 reported for L = 6 (ergodic). Own computation. RECORD ROW: lattice, boundary, coupling, units, column (raw variational, not extrapolated) and provenance all agree; 0.0061 per site below the next row (VarBench DSL VMC −0.4298737). No duplicate on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 1451.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#32 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_144_O_2",
+      "method": "2D pRNN (single layer 2D vanilla RNN, 100 memory units)",
+      "energy": -346.98277728
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "Phys. Rev. Research 2, 023358 (2020), APS publisher PDF (sources/RP3/prr2-023358.pdf, pypdf layout+plain) and arXiv:2002.02973v4 (latest), pypdf layout; identical values and caption",
+    "location": "Table II (Appendix F, 'Tables of Results'), row h = 2, column 2DRNN; journal p. 023358-13",
+    "reported_as": "−2.40960262(9) per site (E/N)",
+    "conversion": "-2.40960262 × 144 = -346.98277728; sigma 9e-8 × 144 = 0.00001296",
+    "note": "Eq. (14) H = −Σ σzσz − h Σ σx (Pauli); Sec. III: '1D and 2D TFIM ... both with open boundary conditions' (so OBC is stated, not inferred as the first reading said); 12 × 12. Energies estimated with 2 × 10^6 samples (caption). Own computation, variational. No duplicate on the instance (the h = 2/4 DMRG rows quoted via arXiv:2606.25600 are a different method). Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 2722.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#34 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_144_O_2",
+      "method": "1D pRNN (three layers of GRUs, 100 memory units)",
+      "energy": -346.9826592
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "Phys. Rev. Research 2, 023358 (2020), APS publisher PDF (sources/RP3/prr2-023358.pdf, pypdf layout+plain) and arXiv:2002.02973v4 (latest), pypdf layout; identical values and caption",
+    "location": "Table II (Appendix F, 'Tables of Results'), row h = 2, column 1DRNN; journal p. 023358-13",
+    "reported_as": "−2.4096018(2) per site (E/N)",
+    "conversion": "-2.40960180 × 144 = -346.9826592; sigma 2e-7 × 144 = 0.0000288",
+    "note": "Eq. (14) H = −Σ σzσz − h Σ σx (Pauli); Sec. III: '1D and 2D TFIM ... both with open boundary conditions' (so OBC is stated, not inferred as the first reading said); 12 × 12. Energies estimated with 2 × 10^6 samples (caption). Own computation, variational. No duplicate on the instance (the h = 2/4 DMRG rows quoted via arXiv:2606.25600 are a different method). Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 2751.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#35 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_144_O_4",
+      "method": "2D pRNN (single layer 2D vanilla RNN, 100 memory units)",
+      "energy": -593.53892352
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "Phys. Rev. Research 2, 023358 (2020), APS publisher PDF (sources/RP3/prr2-023358.pdf, pypdf layout+plain) and arXiv:2002.02973v4 (latest), pypdf layout; identical values and caption",
+    "location": "Table II (Appendix F, 'Tables of Results'), row h = 4, column 2DRNN; journal p. 023358-13",
+    "reported_as": "−4.12179808(6) per site (E/N)",
+    "conversion": "-4.12179808 × 144 = -593.53892352; sigma 6e-8 × 144 = 0.00000864",
+    "note": "Eq. (14) H = −Σ σzσz − h Σ σx (Pauli); Sec. III: '1D and 2D TFIM ... both with open boundary conditions' (so OBC is stated, not inferred as the first reading said); 12 × 12. Energies estimated with 2 × 10^6 samples (caption). Own computation, variational. RECORD ROW: lowest of the four h = 4 columns in the paper (DMRG χ = 1024 −4.12179793 is 1.5e-7 per site higher); the paper's bold marks it as lowest. No duplicate on the instance (the h = 2/4 DMRG rows quoted via arXiv:2606.25600 are a different method). Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 2780.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#36 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_144_O_4",
+      "method": "1D pRNN (three layers of GRUs, 100 memory units)",
+      "energy": -593.5387536
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "Phys. Rev. Research 2, 023358 (2020), APS publisher PDF (sources/RP3/prr2-023358.pdf, pypdf layout+plain) and arXiv:2002.02973v4 (latest), pypdf layout; identical values and caption",
+    "location": "Table II (Appendix F, 'Tables of Results'), row h = 4, column 1DRNN; journal p. 023358-13",
+    "reported_as": "−4.1217969(3) per site (E/N)",
+    "conversion": "-4.12179690 × 144 = -593.5387536; sigma 3e-7 × 144 = 0.0000432",
+    "note": "Eq. (14) H = −Σ σzσz − h Σ σx (Pauli); Sec. III: '1D and 2D TFIM ... both with open boundary conditions' (so OBC is stated, not inferred as the first reading said); 12 × 12. Energies estimated with 2 × 10^6 samples (caption). Own computation, variational. No duplicate on the instance (the h = 2/4 DMRG rows quoted via arXiv:2606.25600 are a different method). Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 2809.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#37 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.5",
+      "method": "pure CNN, (h,l)=(32,20) (CNN-MPS with D=1)",
+      "energy": -72.5465808
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2603.14425v1 (only version; no journal reference), PDF pypdf layout+plain (sources/RP3/2603.14425.*.txt)",
+    "location": "Main text p. 3: 'For the pure CNN wave function with (h, ℓ) = (32,20), which corresponds to setting D = 1 in CNN-MPS, we obtain an energy of −0.5037957(4)'",
+    "reported_as": "−0.5037957(4) per site",
+    "conversion": "-0.5037957 × 4 × 36 = -72.5465808; sigma × 144 = 0.0000576",
+    "note": "Eq. (2) H = J1 Σ Si·Sj + J2 Σ Si·Sj (spin-1/2), PBC, J1 = 1, J2/J1 = 0.5; ED 6 × 6 quoted as −0.503810 (stored exact −0.50380965). Batch size 4096 (Table S1). MARCH-optimised VMC: variational. No duplicate on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 2515.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#38 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.5",
+      "method": "CNN-MPS, D=20",
+      "energy": -72.54826128
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2603.14425v1 (only version; no journal reference), PDF pypdf layout+plain (sources/RP3/2603.14425.*.txt)",
+    "location": "Main text p. 3: 'At D = 20, the energy reaches −0.50380737(5)'",
+    "reported_as": "−0.50380737(5) per site",
+    "conversion": "-0.50380737 × 4 × 36 = -72.54826128; sigma × 144 = 0.0000072",
+    "note": "Eq. (2) H = J1 Σ Si·Sj + J2 Σ Si·Sj (spin-1/2), PBC, J1 = 1, J2/J1 = 0.5; ED 6 × 6 quoted as −0.503810 (stored exact −0.50380965). Batch size 4096 (Table S1). MARCH-optimised VMC: variational. Not a duplicate of the LaQX row 'CNN-MPS (D = 20)' −0.5038070(2) (arXiv:2611.04333): the numbers differ by 3.7e-7 per site (1.9 of LaQX's sigma). Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 2544.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#39 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_400_P_0.5",
+      "method": "CNN-MPS, (h,D,l)=(32,15,20), 5,000 steps without imposed symmetry",
+      "energy": -794.69712
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2603.14425v1 (only version; no journal reference), PDF pypdf layout+plain (sources/RP3/2603.14425.*.txt)",
+    "location": "Main text p. 4 (near Fig. 3, L = 20): 'After 5,000 optimization steps without any imposed symmetry and a further 10,000 steps with C4v symmetry enforced, we obtain −0.4966857(7) and −0.4967987(6), respectively'",
+    "reported_as": "−0.4966857(7) per site",
+    "conversion": "-0.4966857 × 4 × 400 = -794.69712; sigma × 1600 = 0.00112",
+    "note": "Eq. (2) H = J1 Σ Si·Sj + J2 Σ Si·Sj (spin-1/2), PBC, J1 = 1, J2/J1 = 0.5; ED 6 × 6 quoted as −0.503810 (stored exact −0.50380965). Batch size 4096 (Table S1). MARCH-optimised VMC: variational. The symmetric value −0.4967987(6) is already carried as 'CNN-MPS (h,D,l)=(32,15,20)' (sweep-2026-09-13); this row is the distinct pre-symmetry number, not a duplicate. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 2573.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#40 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_100_P",
+      "method": "NQS with explicit phase ansatz (convolutional amplitude network)",
+      "energy": -268.51
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "Phys. Rev. Research 2, 033075 (2020), APS publisher PDF (sources/RP3/prr2-033075.pdf, pypdf plain) and arXiv:2002.04613v3 (latest); identical values",
+    "location": "Table I, row 'Our work', column J2 = 0; text p. 3: 'we achieved a variational energy of −0.671 275 per spin, 2.7 × 10−4 higher than the numerically exact energy given by stochastic series expansion'",
+    "reported_as": "−0.671275(5) per spin (units of J1)",
+    "conversion": "-0.671275 × 4 × 100 = -268.51; sigma 5e-6 × 400 = 0.002",
+    "note": "10 × 10 PBC, J1 = 1, J2 = 0 (text p. 3). Convention caveat: Eq. (3) is written with Pauli vectors σi·σj, yet every energy in Table I is in S·S units per site (its own 'Best' entry −0.671549(4) is Sandvik's S·S SSE value; stored exact −0.6715527 per site S·S). Read as S·S per site, as stored; a literal Pauli reading would be 4x off and contradict the table. Own VMC (explicit phase + convolutional amplitude network, 5145 parameters): variational. No duplicate on the instance (Choo's CNN −0.67135 is a different row). Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 3158.",
+    "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#42 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-36d_36_P",
+      "method": "GNN",
+      "energy": -62.496
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2110.06390v1 PDF and HTML TeX source, parsed locally; no journal version found",
+    "location": "Table I (Kagome N = 36 row) and Table II (Kagome J2 = 0, N = 36, E0)",
+    "reported_as": "-0.434(1)",
+    "conversion": "x 4 x 36 (per-site S.S to total Pauli)",
+    "note": "The value is printed as stored. The cluster is inferred, not printed: Table I's lattice vectors for N = 36 are garbled (b2 = (0, 4 sqrt 2) is not a lattice vector), and the paper's Table II reference energy -0.43837653 per site equals the exact energy of kagome-36d (36a/b/c differ). Kept on kagome-36d, ruled 2026-11-11.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#21 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-36d_36_P",
+      "method": "GNN-2",
+      "energy": -62.4672
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2110.06390v1 PDF and HTML TeX source, parsed locally; no journal version found",
+    "location": "Table I (Kagome N = 36 row) and Table II (Kagome J2 = 0, N = 36, E0)",
+    "reported_as": "-0.4338(6)",
+    "conversion": "x 4 x 36 (per-site S.S to total Pauli)",
+    "note": "The value is printed as stored. The cluster is inferred, not printed: Table I's lattice vectors for N = 36 are garbled (b2 = (0, 4 sqrt 2) is not a lattice vector), and the paper's Table II reference energy -0.43837653 per site equals the exact energy of kagome-36d (36a/b/c differ). Kept on kagome-36d, ruled 2026-11-11.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#22 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-36d_36_P",
+      "method": "ResNet",
+      "energy": -62.352
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:2110.06390v1 PDF and HTML TeX source, parsed locally; no journal version found",
+    "location": "Table I (Kagome N = 36 row) and Table II (Kagome J2 = 0, N = 36, E0)",
+    "reported_as": "-0.433(0)",
+    "conversion": "x 4 x 36 (per-site S.S to total Pauli)",
+    "note": "The value is printed as stored. The cluster is inferred, not printed: Table I's lattice vectors for N = 36 are garbled (b2 = (0, 4 sqrt 2) is not a lattice vector), and the paper's Table II reference energy -0.43837653 per site equals the exact energy of kagome-36d (36a/b/c differ). Kept on kagome-36d, ruled 2026-11-11.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#23 (qmbl-verify 2026-11-11)"
+  },
 ];

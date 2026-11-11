@@ -845,4 +845,14 @@ export const REMOVALS = [
    "ruled": "2026-10-20: of a basis-size series only the basis limit, or else the largest basis, is a row",
    "reason": "A finite-basis step of a basis-size series in arXiv:1201.4691: every basis size approximates the same ground state at a lower resolution, and the paper's result is its complete-basis-limit value, which stays."
   },
+  // qmbl-verify 2026-11-11: held rows.
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "fPEPS (D = 16)",
+      "energy": -193.152
+    },
+    "ruled": "2026-11-11: held, the energy is not an expectation value of the stated state (qmbl-verify 2026-11-11)",
+    "reason": "Table S4 of arXiv:2610.30321 prints fPEPS (D = 16) -0.7545(15) per site on 16 x 16, t' = 0. SM Sec. VI A-B: the energy is evaluated by a cluster approximation (open clusters of radius r, environment beyond in belief-propagation form) and fitted over chi = 192, 256, 384 with a convergence-in-r noise term (Eqs. S24-S25), so it is neither a strict upper bound nor one of the extrapolations RULES.md 4 names. Held until its bound type is settled; the extrapolated fPEPS row of the same table stays."
+  },
 ];

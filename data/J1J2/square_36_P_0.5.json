@@ -3235,10 +3235,10 @@
     {
       "energy": -72.548208,
       "sigma": 0.0000288,
-      "energy_variance": null,
+      "energy_variance": 0.010129536,
       "dof": 36,
       "einf": 0,
-      "v_score": null,
+      "v_score": 0.00006928491269550626,
       "method": "VMC",
       "ansatz": "CNN-MPS",
       "method_detail": "",
@@ -3257,6 +3257,20 @@
         "note": "Sec. 4.2 text; version read: arXiv 2611.04333v1 text (sources/2611.04333.txt); no journal version (arXiv metadata, 2026-11-11) | 6x6 periodic J1=1 J2=0.5; ED -0.503810 equals catalogue exact per site | variance reported as 0.000017586, not stored: convention not verified",
         "secondary_of": null
       },
+      "corrections": [
+        {
+          "field": "energy_variance",
+          "to": 0.010129536,
+          "reported_as": "local-energy variance per site sigma^2_E = 1.7586x10^-5 in units of J1^2, Eq. (55): sigma^2_E = Var(E_loc)/N_s, N_s = 36",
+          "location": "Sec. 4.2, Eq. (55) and the sentence after it; Fig. 3 caption \"sigma^2_E = Var(E_loc)/36\"",
+          "version_read": "arXiv:2611.04333v1 PDF (only version; SciPost Physics Codebases submission, not published), pypdf layout mode",
+          "conversion": "Var(H_S.S) = 1.7586e-5 * 36 = 6.33096e-4 J1^2; Pauli stored form (H_Pauli = 4 H_S.S) multiplies the variance by 16: 6.33096e-4 * 16 = 0.010129536",
+          "checked_on": "2026-11-11",
+          "reason": "The loader left the variance out (\"convention not verified\"). Eq. (55) defines it as the variance of the total local energy divided by N_s, in S.S units (energy per site -0.50381 = S.S). Stored energy_variance is the variance of the total stored (Pauli) H, so the factor is 16 N. Caution: add_allresults_rows.mjs only multiplies var_per_site by n_sites, so the pass field must already carry the factor 16.",
+          "source_entry": "RP2-hubbard-heisenberg-j1j2#42 (qmbl-verify 2026-11-11)",
+          "from": null
+        }
+      ],
       "compute": {
         "parameters": null,
         "gpu_hours": null,
@@ -3297,7 +3311,17 @@
         "method": "source text of arXiv:2603.14425 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.5037957(4)",
         "note": "Text: \"pure CNN wave function with (h,l)=(32,20) ... we obtain an energy of -0.5037957(4)\"; Supplement S3: batch size 4096; version read: arXiv 2603.14425v1 text (sources/2603.14425.txt); no journal version (arXiv metadata, 2026-11-11) | S.S per site, PBC, J2=0.5 (Table I caption); 6x6 ED matches catalogue exact",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "arXiv:2603.14425v1 (only version; no journal reference), PDF pypdf layout+plain (sources/RP3/2603.14425.*.txt)",
+          "location": "Main text p. 3: 'For the pure CNN wave function with (h, ℓ) = (32,20), which corresponds to setting D = 1 in CNN-MPS, we obtain an energy of −0.5037957(4)'",
+          "reported_as": "−0.5037957(4) per site",
+          "conversion": "-0.5037957 × 4 × 36 = -72.5465808; sigma × 144 = 0.0000576",
+          "note": "Eq. (2) H = J1 Σ Si·Sj + J2 Σ Si·Sj (spin-1/2), PBC, J1 = 1, J2/J1 = 0.5; ED 6 × 6 quoted as −0.503810 (stored exact −0.50380965). Batch size 4096 (Table S1). MARCH-optimised VMC: variational. No duplicate on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 2515.",
+          "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#38 (qmbl-verify 2026-11-11)"
+        }
       },
       "compute": {
         "parameters": null,
@@ -3333,7 +3357,17 @@
         "method": "source text of arXiv:2603.14425 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.50380737(5)",
         "note": "Text: \"At D=20, the energy reaches -0.50380737(5)\"; Fig. 2; version read: arXiv 2603.14425v1 text (sources/2603.14425.txt); no journal version (arXiv metadata, 2026-11-11) | S.S per site, PBC, J2=0.5; 6x6 ED matches catalogue exact",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "arXiv:2603.14425v1 (only version; no journal reference), PDF pypdf layout+plain (sources/RP3/2603.14425.*.txt)",
+          "location": "Main text p. 3: 'At D = 20, the energy reaches −0.50380737(5)'",
+          "reported_as": "−0.50380737(5) per site",
+          "conversion": "-0.50380737 × 4 × 36 = -72.54826128; sigma × 144 = 0.0000072",
+          "note": "Eq. (2) H = J1 Σ Si·Sj + J2 Σ Si·Sj (spin-1/2), PBC, J1 = 1, J2/J1 = 0.5; ED 6 × 6 quoted as −0.503810 (stored exact −0.50380965). Batch size 4096 (Table S1). MARCH-optimised VMC: variational. Not a duplicate of the LaQX row 'CNN-MPS (D = 20)' −0.5038070(2) (arXiv:2611.04333): the numbers differ by 3.7e-7 per site (1.9 of LaQX's sigma). Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 2544.",
+          "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#39 (qmbl-verify 2026-11-11)"
+        }
       },
       "compute": {
         "parameters": null,
@@ -3370,7 +3404,17 @@
         "method": "source text of arXiv:2110.06390 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.5017(7)",
         "note": "Table IV, Square J2=0.5 N=36, ResNet; version read: arXiv 2110.06390v1 text (sources/2110.06390.txt); no journal version (arXiv metadata, 2026-11-11) | same",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "arXiv:2110.06390v1 PDF (only version), pypdf layout mode, Table I cross-read in the arXiv HTML TeX annotations; no journal version found (arXiv abs has no journal-ref; Crossref title search finds none)",
+          "location": "Table IV (App. A8 b, p. 19), Square J2=0.5 N=36, ResNet column",
+          "reported_as": "-0.5017(7) per spin, S.S units (<E>/N)",
+          "conversion": "4N convention: -0.5017 * 4 * 36 = -72.2448; sigma 0.0007 * 144 = 0.1008",
+          "note": "Eq. (4) H = sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j, J1 = 1, spin operators (Table II exact references, e.g. square N=36 J2=0.5 -0.503810, fix S.S per-site units); periodic boundary conditions (App. A5 a); Table I: b1=(6,0), b2=(0,6), periodic 6x6; J2 = 0.5. Own result: \"variational energies per spin ... computed using MCMC using 2*10^5 samples from equilibrated Markov chains. The stochastic estimation error bars are marked by parenthesis around the last significant digit\" (App. A8 b). Sector not stated (lowest-energy state targeted); a variational energy bounds the global ground state either way. Duplicate check: no other row on the instance carries this number.",
+          "source_entry": "RP2-hubbard-heisenberg-j1j2#35 (qmbl-verify 2026-11-11)"
+        }
       }
     },
     {

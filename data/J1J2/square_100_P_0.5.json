@@ -4224,8 +4224,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -4244,7 +4244,33 @@
         "wall_clock": null,
         "reported_as": "\"....5) −0.49318(15) 44,890 β E(TQS)N p (TQS)E(PITQS)N p (PITQS) TQS (β= 2.0) −0.49652(9) 155,620 1.0−0.49593(11) 81,800−0.49596(14) 44,890 PITQS (Lie–Trotter) −0.49669(9) 44,890 2.0−0.49652(9) 155,620−0.49669(9) 44,890 PITQS (Strang) −0.49671(...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table I, row beta = 1.0, column E (TQS), Np 81 800 prints '−0.495 93(11)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49593 x 4 x 100 = -198.372 (stored -198.372); sigma 1e-4 x 400 = 0.044 (stored 0.044). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#0 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table I, row beta = 1.0, column E (TQS), Np 81 800: '−0.495 93(11)'.",
+          "source_entry": "RP1-arxiv-2602-03031#1 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.384,
@@ -4260,8 +4286,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -4280,7 +4306,33 @@
         "wall_clock": null,
         "reported_as": "\"...he number of Scheme Energy per site N p variational parametersN p for each setting. TQS (β= 0.5) −0.49318(15) 44,890 β E(TQS)N p (TQS)E(PITQS)N p (PITQS) TQS (β= 2.0) −0.49652(9) 155,620 1.0−0.49593(11) 81,800−0.49596(14) 44,890 PITQS (Lie–...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table I, row beta = 1.0, column E (PITQS), Np 44 890 (also Table V Euler and Table VI serialized) prints '−0.495 96(14)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49596 x 4 x 100 = -198.384 (stored -198.384); sigma 1e-4 x 400 = 0.056 (stored 0.056). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#2 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table I, row beta = 1.0, column E (PITQS), Np 44 890 (also Table V Euler and Table VI serialized): '−0.495 96(14)'.",
+          "source_entry": "RP1-arxiv-2602-03031#3 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.608,
@@ -4296,8 +4348,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -4316,7 +4368,33 @@
         "wall_clock": null,
         "reported_as": "\"...each setting. TQS (β= 0.5) −0.49318(15) 44,890 β E(TQS)N p (TQS)E(PITQS)N p (PITQS) TQS (β= 2.0) −0.49652(9) 155,620 1.0−0.49593(11) 81,800−0.49596(14) 44,890 PITQS (Lie–Trotter) −0.49669(9) 44,890 2.0−0.49652(9) 155,620−0.49669(9) 44,890...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table I, row beta = 2.0, column E (TQS), Np 155 620 (also Table II 'TQS (β = 2.0)' and Table IV TQS Δτ = 0.5) prints '−0.496 52(9)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49652 x 4 x 100 = -198.608 (stored -198.608); sigma 9e-5 x 400 = 0.036 (stored 0.036). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#4 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table I, row beta = 2.0, column E (TQS), Np 155 620 (also Table II 'TQS (β = 2.0)' and Table IV TQS Δτ = 0.5): '−0.496 52(9)'.",
+          "source_entry": "RP1-arxiv-2602-03031#5 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.676,
@@ -4332,8 +4410,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -4352,7 +4430,33 @@
         "wall_clock": null,
         "reported_as": "\"...he number of Scheme Energy per site N p variational parametersN p for each setting. TQS (β= 0.5) −0.49318(15) 44,890 β E(TQS)N p (TQS)E(PITQS)N p (PITQS) TQS (β= 2.0) −0.49652(9) 155,620 1.0−0.49593(11) 81,800−0.49596(14) 44,890 PITQS (Lie–...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table I, row beta = 2.0, column E (PITQS) (also Table II, Table IV Δτ = 0.5, Table V Euler, Table VI serialized) prints '−0.496 69(9)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49669 x 4 x 100 = -198.676 (stored -198.676); sigma 9e-5 x 400 = 0.036 (stored 0.036). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#6 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table I, row beta = 2.0, column E (PITQS) (also Table II, Table IV Δτ = 0.5, Table V Euler, Table VI serialized): '−0.496 69(9)'.",
+          "source_entry": "RP1-arxiv-2602-03031#7 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.624,
@@ -4368,8 +4472,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -4388,7 +4492,33 @@
         "wall_clock": null,
         "reported_as": "\"...−0.49669(9) 44,890 2.0−0.49652(9) 155,620−0.49669(9) 44,890 PITQS (Strang) −0.49671(9) 44,890 3.0−0.49656(11) 229,440−0.49676(10) 44,890 PITQS (Suzuki) −0.49697(9) 44,890 4.0−0.49651(10) 303,260−0.49696(9) 44,890 PITQS (Blanes–Moan)−0.49683...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table I, row beta = 3.0, column E (TQS), Np 229 440 prints '−0.496 56(11)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49656 x 4 x 100 = -198.624 (stored -198.624); sigma 1e-4 x 400 = 0.044 (stored 0.044). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#8 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table I, row beta = 3.0, column E (TQS), Np 229 440: '−0.496 56(11)'.",
+          "source_entry": "RP1-arxiv-2602-03031#9 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.704,
@@ -4404,8 +4534,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -4424,7 +4554,33 @@
         "wall_clock": null,
         "reported_as": "\"...he number of Scheme Energy per site N p variational parametersN p for each setting. TQS (β= 0.5) −0.49318(15) 44,890 β E(TQS)N p (TQS)E(PITQS)N p (PITQS) TQS (β= 2.0) −0.49652(9) 155,620 1.0−0.49593(11) 81,800−0.49596(14) 44,890 PITQS (Lie–...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table I, row beta = 3.0, column E (PITQS) (also Table V Euler, Table VI serialized) prints '−0.496 76(10)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49676 x 4 x 100 = -198.704 (stored -198.704); sigma 1e-4 x 400 = 0.040 (stored 0.04). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#10 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table I, row beta = 3.0, column E (PITQS) (also Table V Euler, Table VI serialized): '−0.496 76(10)'.",
+          "source_entry": "RP1-arxiv-2602-03031#11 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.604,
@@ -4440,8 +4596,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -4460,7 +4616,33 @@
         "wall_clock": null,
         "reported_as": "\"....49671(9) 44,890 3.0−0.49656(11) 229,440−0.49676(10) 44,890 PITQS (Suzuki) −0.49697(9) 44,890 4.0−0.49651(10) 303,260−0.49696(9) 44,890 PITQS (Blanes–Moan)−0.49683(7) 44,890 and approximate the LITE operator, 10×10 lattice withJ 2/J1 = 0.5...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table I, row beta = 4.0, column E (TQS), Np 303 260 prints '−0.496 51(10)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49651 x 4 x 100 = -198.604 (stored -198.604); sigma 1e-4 x 400 = 0.040 (stored 0.04). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#12 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table I, row beta = 4.0, column E (TQS), Np 303 260: '−0.496 51(10)'.",
+          "source_entry": "RP1-arxiv-2602-03031#13 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.784,
@@ -4476,8 +4658,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -4496,7 +4678,33 @@
         "wall_clock": null,
         "reported_as": "\"...he number of Scheme Energy per site N p variational parametersN p for each setting. TQS (β= 0.5) −0.49318(15) 44,890 β E(TQS)N p (TQS)E(PITQS)N p (PITQS) TQS (β= 2.0) −0.49652(9) 155,620 1.0−0.49593(11) 81,800−0.49596(14) 44,890 PITQS (Lie–...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table I, row beta = 4.0, column E (PITQS) (also Table V Euler, Table VI serialized) prints '−0.496 96(9)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49696 x 4 x 100 = -198.784 (stored -198.784); sigma 9e-5 x 400 = 0.036 (stored 0.036). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#14 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table I, row beta = 4.0, column E (PITQS) (also Table V Euler, Table VI serialized): '−0.496 96(9)'.",
+          "source_entry": "RP1-arxiv-2602-03031#15 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -197.272,
@@ -4512,8 +4720,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -4532,7 +4740,33 @@
         "wall_clock": null,
         "reported_as": "\"...he number of Scheme Energy per site N p variational parametersN p for each setting. TQS (β= 0.5) −0.49318(15) 44,890 β E(TQS)N p (TQS)E(PITQS)N p (PITQS) TQS (β= 2.0) −0.49652(9) 155,620 1.0−0.49593(11) 81,800−0.49596(14) 44,890 PITQS (Lie–...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table II, row 'TQS (β = 0.5)', Np 44 890 prints '−0.493 18(15)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49318 x 4 x 100 = -197.272 (stored -197.272); sigma 2e-4 x 400 = 0.060 (stored 0.06). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#16 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table II, row 'TQS (β = 0.5)', Np 44 890: '−0.493 18(15)'.",
+          "source_entry": "RP1-arxiv-2602-03031#17 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.684,
@@ -4548,8 +4782,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -4568,7 +4802,33 @@
         "wall_clock": null,
         "reported_as": "\"...he number of Scheme Energy per site N p variational parametersN p for each setting. TQS (β= 0.5) −0.49318(15) 44,890 β E(TQS)N p (TQS)E(PITQS)N p (PITQS) TQS (β= 2.0) −0.49652(9) 155,620 1.0−0.49593(11) 81,800−0.49596(14) 44,890 PITQS (Lie–...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table II, row 'PITQS (Strang)' (also Table IV Δτ = 0.5) prints '−0.496 71(9)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49671 x 4 x 100 = -198.684 (stored -198.684); sigma 9e-5 x 400 = 0.036 (stored 0.036). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#18 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table II, row 'PITQS (Strang)' (also Table IV Δτ = 0.5): '−0.496 71(9)'.",
+          "source_entry": "RP1-arxiv-2602-03031#19 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.788,
@@ -4584,8 +4844,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -4604,7 +4864,33 @@
         "wall_clock": null,
         "reported_as": "\"...he number of Scheme Energy per site N p variational parametersN p for each setting. TQS (β= 0.5) −0.49318(15) 44,890 β E(TQS)N p (TQS)E(PITQS)N p (PITQS) TQS (β= 2.0) −0.49652(9) 155,620 1.0−0.49593(11) 81,800−0.49596(14) 44,890 PITQS (Lie–...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table II, row 'PITQS (Suzuki)' (also Table IV Δτ = 0.5) prints '−0.496 97(9)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49697 x 4 x 100 = -198.788 (stored -198.788); sigma 9e-5 x 400 = 0.036 (stored 0.036). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#20 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table II, row 'PITQS (Suzuki)' (also Table IV Δτ = 0.5): '−0.496 97(9)'.",
+          "source_entry": "RP1-arxiv-2602-03031#21 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.732,
@@ -4620,8 +4906,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -4640,7 +4926,33 @@
         "wall_clock": null,
         "reported_as": "\"...he number of Scheme Energy per site N p variational parametersN p for each setting. TQS (β= 0.5) −0.49318(15) 44,890 β E(TQS)N p (TQS)E(PITQS)N p (PITQS) TQS (β= 2.0) −0.49652(9) 155,620 1.0−0.49593(11) 81,800−0.49596(14) 44,890 PITQS (Lie–...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table II, row 'PITQS (Blanes-Moan)' (also Table IV Δτ = 0.5) prints '−0.496 83(7)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49683 x 4 x 100 = -198.732 (stored -198.732); sigma 7e-5 x 400 = 0.028 (stored 0.028). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#22 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table II, row 'PITQS (Blanes-Moan)' (also Table IV Δτ = 0.5): '−0.496 83(7)'.",
+          "source_entry": "RP1-arxiv-2602-03031#23 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.964,
@@ -4656,8 +4968,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -4676,7 +4988,33 @@
         "wall_clock": null,
         "reported_as": "\"...- SUPPLEMENTAL MATERIAL erations are omitted for readability). We compare the PITQS (Strang) ansatz withN p = 143,010 against a standard TQS withN p = 155,620. IMPLEMENTATION OF ˆKθ AND ˆVθ 108,n h = 18,L= 8,∆τ= 0.5,N p = 143,010, optimizin...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...p = 143,010, optimizing We describe the implementation of the non-local oper- it over 10,000 iterations with 8,192 Monte Carlo samples ator ˆKθ and the local operator ˆVθ used in our numerical per iteration. To ensure a fair comparison, we...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Sec. V.D 'Scalability' (model of Fig. 3: d = 108, nh = 18, L = 8, Δτ = 0.5, Np = 143 010, 10 000 iterations, 8192 samples) prints 'E ≈−0.497 41(3)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49741 x 4 x 100 = -198.964 (stored -198.964); sigma 3e-5 x 400 = 0.012 (stored 0.012). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#24 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Sec. V.D 'Scalability' (model of Fig. 3: d = 108, nh = 18, L = 8, Δτ = 0.5, Np = 143 010, 10 000 iterations, 8192 samples): 'E ≈−0.497 41(3)'.",
+          "source_entry": "RP1-arxiv-2602-03031#25 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.48,
@@ -4692,8 +5030,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -4712,7 +5050,33 @@
         "wall_clock": null,
         "reported_as": "\"...each setting. TQS (β= 0.5) −0.49318(15) 44,890 β E(TQS)N p (TQS)E(PITQS)N p (PITQS) TQS (β= 2.0) −0.49652(9) 155,620 1.0−0.49593(11) 81,800−0.49596(14) 44,890 PITQS (Lie–Trotter) −0.49669(9) 44,890 2.0−0.49652(9) 155,620−0.49669(9) 44,890...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix D, Table IV, row TQS, column Δτ = 0.1, Np 155 620 prints '−0.496 20(11)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.4962 x 4 x 100 = -198.480 (stored -198.48); sigma 1e-4 x 400 = 0.044 (stored 0.044). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#26 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix D, Table IV, row TQS, column Δτ = 0.1, Np 155 620: '−0.496 20(11)'.",
+          "source_entry": "RP1-arxiv-2602-03031#27 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.664,
@@ -4728,8 +5092,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -4748,7 +5112,33 @@
         "wall_clock": null,
         "reported_as": "\"...each setting. TQS (β= 0.5) −0.49318(15) 44,890 β E(TQS)N p (TQS)E(PITQS)N p (PITQS) TQS (β= 2.0) −0.49652(9) 155,620 1.0−0.49593(11) 81,800−0.49596(14) 44,890 PITQS (Lie–Trotter) −0.49669(9) 44,890 2.0−0.49652(9) 155,620−0.49669(9) 44,890...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix D, Table IV, row TQS, column Δτ = 1.0, Np 155 620 prints '−0.496 66(9)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49666 x 4 x 100 = -198.664 (stored -198.664); sigma 9e-5 x 400 = 0.036 (stored 0.036). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#28 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix D, Table IV, row TQS, column Δτ = 1.0, Np 155 620: '−0.496 66(9)'.",
+          "source_entry": "RP1-arxiv-2602-03031#29 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.724,
@@ -4764,8 +5154,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -4784,7 +5174,33 @@
         "wall_clock": null,
         "reported_as": "\"...he number of Scheme Energy per site N p variational parametersN p for each setting. TQS (β= 0.5) −0.49318(15) 44,890 β E(TQS)N p (TQS)E(PITQS)N p (PITQS) TQS (β= 2.0) −0.49652(9) 155,620 1.0−0.49593(11) 81,800−0.49596(14) 44,890 PITQS (Lie–...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix D, Table IV, row PITQS (Lie-Trotter), column Δτ = 0.1 prints '−0.496 81(10)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49681 x 4 x 100 = -198.724 (stored -198.724); sigma 1e-4 x 400 = 0.040 (stored 0.04). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#30 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix D, Table IV, row PITQS (Lie-Trotter), column Δτ = 0.1: '−0.496 81(10)'.",
+          "source_entry": "RP1-arxiv-2602-03031#31 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.636,
@@ -4800,8 +5216,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -4820,7 +5236,33 @@
         "wall_clock": null,
         "reported_as": "\"...he number of Scheme Energy per site N p variational parametersN p for each setting. TQS (β= 0.5) −0.49318(15) 44,890 β E(TQS)N p (TQS)E(PITQS)N p (PITQS) TQS (β= 2.0) −0.49652(9) 155,620 1.0−0.49593(11) 81,800−0.49596(14) 44,890 PITQS (Lie–...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix D, Table IV, row PITQS (Lie-Trotter), column Δτ = 1.0 prints '−0.496 59(10)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49659 x 4 x 100 = -198.636 (stored -198.636); sigma 1e-4 x 400 = 0.040 (stored 0.04). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#32 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix D, Table IV, row PITQS (Lie-Trotter), column Δτ = 1.0: '−0.496 59(10)'.",
+          "source_entry": "RP1-arxiv-2602-03031#33 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.668,
@@ -4836,8 +5278,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -4856,7 +5298,33 @@
         "wall_clock": null,
         "reported_as": "\"...he number of Scheme Energy per site N p variational parametersN p for each setting. TQS (β= 0.5) −0.49318(15) 44,890 β E(TQS)N p (TQS)E(PITQS)N p (PITQS) TQS (β= 2.0) −0.49652(9) 155,620 1.0−0.49593(11) 81,800−0.49596(14) 44,890 PITQS (Lie–...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix D, Table IV, row PITQS (Strang), column Δτ = 0.1 (the Δτ = 1.0 cell prints the same −0.496 67(9)) prints '−0.496 67(9)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49667 x 4 x 100 = -198.668 (stored -198.668); sigma 9e-5 x 400 = 0.036 (stored 0.036). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#34 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix D, Table IV, row PITQS (Strang), column Δτ = 0.1 (the Δτ = 1.0 cell prints the same −0.496 67(9)): '−0.496 67(9)'.",
+          "source_entry": "RP1-arxiv-2602-03031#35 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.712,
@@ -4872,8 +5340,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -4892,7 +5360,33 @@
         "wall_clock": null,
         "reported_as": "\"...he number of Scheme Energy per site N p variational parametersN p for each setting. TQS (β= 0.5) −0.49318(15) 44,890 β E(TQS)N p (TQS)E(PITQS)N p (PITQS) TQS (β= 2.0) −0.49652(9) 155,620 1.0−0.49593(11) 81,800−0.49596(14) 44,890 PITQS (Lie–...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix D, Table IV, row PITQS (Suzuki), column Δτ = 0.1 prints '−0.496 78(8)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49678 x 4 x 100 = -198.712 (stored -198.712); sigma 8e-5 x 400 = 0.032 (stored 0.032). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#36 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix D, Table IV, row PITQS (Suzuki), column Δτ = 0.1: '−0.496 78(8)'.",
+          "source_entry": "RP1-arxiv-2602-03031#37 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.716,
@@ -4908,8 +5402,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -4928,7 +5422,33 @@
         "wall_clock": null,
         "reported_as": "\"...he number of Scheme Energy per site N p variational parametersN p for each setting. TQS (β= 0.5) −0.49318(15) 44,890 β E(TQS)N p (TQS)E(PITQS)N p (PITQS) TQS (β= 2.0) −0.49652(9) 155,620 1.0−0.49593(11) 81,800−0.49596(14) 44,890 PITQS (Lie–...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix D, Table IV, row PITQS (Blanes-Moan), column Δτ = 0.1 prints '−0.496 79(10)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49679 x 4 x 100 = -198.716 (stored -198.716); sigma 1e-4 x 400 = 0.040 (stored 0.04). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#38 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix D, Table IV, row PITQS (Blanes-Moan), column Δτ = 0.1: '−0.496 79(10)'.",
+          "source_entry": "RP1-arxiv-2602-03031#39 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.804,
@@ -4944,8 +5464,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -4964,7 +5484,33 @@
         "wall_clock": null,
         "reported_as": "\"...he number of Scheme Energy per site N p variational parametersN p for each setting. TQS (β= 0.5) −0.49318(15) 44,890 β E(TQS)N p (TQS)E(PITQS)N p (PITQS) TQS (β= 2.0) −0.49652(9) 155,620 1.0−0.49593(11) 81,800−0.49596(14) 44,890 PITQS (Lie–...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix D, Table IV, row PITQS (Blanes-Moan), column Δτ = 1.0 prints '−0.497 01(11)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49701 x 4 x 100 = -198.804 (stored -198.804); sigma 1e-4 x 400 = 0.044 (stored 0.044). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#40 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix D, Table IV, row PITQS (Blanes-Moan), column Δτ = 1.0: '−0.497 01(11)'.",
+          "source_entry": "RP1-arxiv-2602-03031#41 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.512,
@@ -4980,8 +5526,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -5000,7 +5546,33 @@
         "wall_clock": null,
         "reported_as": "\"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix G, Table V, row β = 1.0, column E (RK2) (Lie-Trotter scheme per the text) prints '−0.496 28(11)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49628 x 4 x 100 = -198.512 (stored -198.512); sigma 1e-4 x 400 = 0.044 (stored 0.044). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#42 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix G, Table V, row β = 1.0, column E (RK2) (Lie-Trotter scheme per the text): '−0.496 28(11)'.",
+          "source_entry": "RP1-arxiv-2602-03031#43 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.728,
@@ -5011,13 +5583,13 @@
       "v_score": null,
       "method": "VMC",
       "ansatz": "PITQS",
-      "method_detail": "RK2, β = 2.0",
-      "method_as_published": "PITQS (RK2) beta=2.0",
+      "method_detail": "Lie-Trotter, RK2, β = 2.0",
+      "method_as_published": "PITQS (Lie-Trotter, RK2) beta=2.0",
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -5036,7 +5608,45 @@
         "wall_clock": null,
         "reported_as": "\"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix G, Table V, row β = 2.0, column E (RK2) (Lie-Trotter scheme per the text) prints '−0.496 82(10)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49682 x 4 x 100 = -198.728 (stored -198.728); sigma 1e-4 x 400 = 0.040 (stored 0.04). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#44 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix G, Table V, row β = 2.0, column E (RK2) (Lie-Trotter scheme per the text): '−0.496 82(10)'.",
+          "source_entry": "RP1-arxiv-2602-03031#45 (qmbl-verify 2026-11-11)",
+          "from": false
+        },
+        {
+          "field": "method",
+          "to": "PITQS (Lie-Trotter, RK2) beta=2.0",
+          "reported_as": "'Table V reports the energies per site of the Euler and RK2 methods with the Lie-Trotter scheme.'",
+          "location": "Appendix G text and Table V",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Cosmetic: all three Table V RK2 rows are Lie-Trotter runs; the beta = 1.0 row already says 'PITQS (Lie-Trotter, RK2)', the beta = 2.0 and 4.0 rows drop the scheme, so the three read as different schemes. Low priority; the value and sigma are correct.",
+          "source_entry": "RP1-arxiv-2602-03031#46 (qmbl-verify 2026-11-11)",
+          "from": "PITQS (RK2) beta=2.0"
+        }
+      ]
     },
     {
       "energy": -198.78,
@@ -5047,13 +5657,13 @@
       "v_score": null,
       "method": "VMC",
       "ansatz": "PITQS",
-      "method_detail": "RK2, β = 4.0",
-      "method_as_published": "PITQS (RK2) beta=4.0",
+      "method_detail": "Lie-Trotter, RK2, β = 4.0",
+      "method_as_published": "PITQS (Lie-Trotter, RK2) beta=4.0",
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -5072,7 +5682,45 @@
         "wall_clock": null,
         "reported_as": "\"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix G, Table V, row β = 4.0, column E (RK2) (Lie-Trotter scheme per the text) prints '−0.496 95(8)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49695 x 4 x 100 = -198.780 (stored -198.78); sigma 8e-5 x 400 = 0.032 (stored 0.032). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#47 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix G, Table V, row β = 4.0, column E (RK2) (Lie-Trotter scheme per the text): '−0.496 95(8)'.",
+          "source_entry": "RP1-arxiv-2602-03031#48 (qmbl-verify 2026-11-11)",
+          "from": false
+        },
+        {
+          "field": "method",
+          "to": "PITQS (Lie-Trotter, RK2) beta=4.0",
+          "reported_as": "'Table V reports the energies per site of the Euler and RK2 methods with the Lie-Trotter scheme.'",
+          "location": "Appendix G text and Table V",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Cosmetic: all three Table V RK2 rows are Lie-Trotter runs; the beta = 1.0 row already says 'PITQS (Lie-Trotter, RK2)', the beta = 2.0 and 4.0 rows drop the scheme, so the three read as different schemes. Low priority; the value and sigma are correct.",
+          "source_entry": "RP1-arxiv-2602-03031#49 (qmbl-verify 2026-11-11)",
+          "from": "PITQS (RK2) beta=4.0"
+        }
+      ]
     },
     {
       "energy": -197.14,
@@ -5088,8 +5736,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -5108,7 +5756,33 @@
         "wall_clock": null,
         "reported_as": "\"...d)N p (Serialized)E(Parallel)N p (Parallel) 1.0 −0.49596(14) −0.49628(11) 1.0−0.49596(14) 44,890 −0.49285(16) 44,770 2.0 −0.49669(9) −0.49682(10) 2.0−0.49669(9) 44,890 −0.49589(11) 44,770 3.0 −0.49676(10) −0.49679(10) 3.0−0.49676(10) 44,890...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix H, Table VI, row β = 1.0, column E (parallel), Np 44 770 prints '−0.492 85(16)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49285 x 4 x 100 = -197.140 (stored -197.14); sigma 2e-4 x 400 = 0.064 (stored 0.064). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#50 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix H, Table VI, row β = 1.0, column E (parallel), Np 44 770: '−0.492 85(16)'.",
+          "source_entry": "RP1-arxiv-2602-03031#51 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.356,
@@ -5124,8 +5798,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -5144,7 +5818,33 @@
         "wall_clock": null,
         "reported_as": "\"...d)N p (Serialized)E(Parallel)N p (Parallel) 1.0 −0.49596(14) −0.49628(11) 1.0−0.49596(14) 44,890 −0.49285(16) 44,770 2.0 −0.49669(9) −0.49682(10) 2.0−0.49669(9) 44,890 −0.49589(11) 44,770 3.0 −0.49676(10) −0.49679(10) 3.0−0.49676(10) 44,890...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix H, Table VI, row β = 2.0, column E (parallel), Np 44 770 prints '−0.495 89(11)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49589 x 4 x 100 = -198.356 (stored -198.356); sigma 1e-4 x 400 = 0.044 (stored 0.044). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#52 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix H, Table VI, row β = 2.0, column E (parallel), Np 44 770: '−0.495 89(11)'.",
+          "source_entry": "RP1-arxiv-2602-03031#53 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.588,
@@ -5160,8 +5860,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -5180,7 +5880,33 @@
         "wall_clock": null,
         "reported_as": "\"...d)N p (Serialized)E(Parallel)N p (Parallel) 1.0 −0.49596(14) −0.49628(11) 1.0−0.49596(14) 44,890 −0.49285(16) 44,770 2.0 −0.49669(9) −0.49682(10) 2.0−0.49669(9) 44,890 −0.49589(11) 44,770 3.0 −0.49676(10) −0.49679(10) 3.0−0.49676(10) 44,890...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix H, Table VI, row β = 3.0, column E (parallel), Np 44 770 prints '−0.496 47(11)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49647 x 4 x 100 = -198.588 (stored -198.588); sigma 1e-4 x 400 = 0.044 (stored 0.044). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#54 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix H, Table VI, row β = 3.0, column E (parallel), Np 44 770: '−0.496 47(11)'.",
+          "source_entry": "RP1-arxiv-2602-03031#55 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.66,
@@ -5196,8 +5922,8 @@
       "family": "transformer / ViT",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031",
-      "peer_reviewed": false,
+      "reference": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+      "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-11",
       "provenance": "primary",
       "verified": {
@@ -5216,7 +5942,33 @@
         "wall_clock": null,
         "reported_as": "\"...d)N p (Serialized)E(Parallel)N p (Parallel) 1.0 −0.49596(14) −0.49628(11) 1.0−0.49596(14) 44,890 −0.49285(16) 44,770 2.0 −0.49669(9) −0.49682(10) 2.0−0.49669(9) 44,890 −0.49589(11) 44,770 3.0 −0.49676(10) −0.49679(10) 3.0−0.49676(10) 44,890...\" / \"...0.5. PUTATIONAL STABILITY OF PITQS in this Supple- mental Material. Computations were performed on two NVIDIA A100 GPUs with 40 GB of memory each for models that fit in memory, while larger models were run COMPUTATIONAL STABILITY OF PITQS o...\" / \"...−4 . We performed 10,000 optimiza- Unless otherwise stated, we report the best final en- tion iterations with 4,096 Monte Carlo samples per itera- ergy obtained after 800 iterations among five indepen- tion. The hyperparameters were set to...\"",
         "source": "arXiv:2602.03031, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix H, Table VI, row β = 4.0, column E (parallel), Np 44 770 prints '−0.496 65(10)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49665 x 4 x 100 = -198.660 (stored -198.66); sigma 1e-4 x 400 = 0.040 (stored 0.04). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+          "source_entry": "RP1-arxiv-2602-03031#56 (qmbl-verify 2026-11-11)",
+          "from": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, arXiv:2602.03031"
+        },
+        {
+          "field": "peer_reviewed",
+          "to": true,
+          "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+          "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+          "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+          "conversion": "n/a",
+          "checked_on": "2026-11-11",
+          "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix H, Table VI, row β = 4.0, column E (parallel), Np 44 770: '−0.496 65(10)'.",
+          "source_entry": "RP1-arxiv-2602-03031#57 (qmbl-verify 2026-11-11)",
+          "from": false
+        }
+      ]
     },
     {
       "energy": -198.2,
@@ -5241,7 +5993,17 @@
         "method": "source text of arXiv:2110.06390 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.4955(4)",
         "note": "Table IV, Square J2=0.5 N=100, GNN; version read: arXiv 2110.06390v1 text (sources/2110.06390.txt); no journal version (arXiv metadata, 2026-11-11) | 10x10 periodic; catalogue best -0.4988",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "arXiv:2110.06390v1 PDF (only version), pypdf layout mode, Table I cross-read in the arXiv HTML TeX annotations; no journal version found (arXiv abs has no journal-ref; Crossref title search finds none)",
+          "location": "Table IV (App. A8 b, p. 19), Square J2=0.5 N=100, GNN column",
+          "reported_as": "-0.4955(4) per spin, S.S units (<E>/N)",
+          "conversion": "4N convention: -0.4955 * 4 * 100 = -198.2; sigma 0.0004 * 400 = 0.16",
+          "note": "Eq. (4) H = sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j, J1 = 1, spin operators (Table II exact references, e.g. square N=36 J2=0.5 -0.503810, fix S.S per-site units); periodic boundary conditions (App. A5 a); Table I: b1=(10,0), b2=(0,10), periodic 10x10; J2 = 0.5. Own result: \"variational energies per spin ... computed using MCMC using 2*10^5 samples from equilibrated Markov chains. The stochastic estimation error bars are marked by parenthesis around the last significant digit\" (App. A8 b). Sector not stated (lowest-energy state targeted); a variational energy bounds the global ground state either way. Duplicate check: no other row on the instance carries this number.",
+          "source_entry": "RP2-hubbard-heisenberg-j1j2#32 (qmbl-verify 2026-11-11)"
+        }
       }
     },
     {
@@ -5267,7 +6029,17 @@
         "method": "source text of arXiv:2110.06390 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.4960(5)",
         "note": "Table IV, Square J2=0.5 N=100, GNN-2; version read: arXiv 2110.06390v1 text (sources/2110.06390.txt); no journal version (arXiv metadata, 2026-11-11) | same",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "arXiv:2110.06390v1 PDF (only version), pypdf layout mode, Table I cross-read in the arXiv HTML TeX annotations; no journal version found (arXiv abs has no journal-ref; Crossref title search finds none)",
+          "location": "Table IV (App. A8 b, p. 19), Square J2=0.5 N=100, GNN-2 column",
+          "reported_as": "-0.4960(5) per spin, S.S units (<E>/N)",
+          "conversion": "4N convention: -0.496 * 4 * 100 = -198.4; sigma 0.0005 * 400 = 0.2",
+          "note": "Eq. (4) H = sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j, J1 = 1, spin operators (Table II exact references, e.g. square N=36 J2=0.5 -0.503810, fix S.S per-site units); periodic boundary conditions (App. A5 a); Table I: b1=(10,0), b2=(0,10), periodic 10x10; J2 = 0.5. Own result: \"variational energies per spin ... computed using MCMC using 2*10^5 samples from equilibrated Markov chains. The stochastic estimation error bars are marked by parenthesis around the last significant digit\" (App. A8 b). Sector not stated (lowest-energy state targeted); a variational energy bounds the global ground state either way. Duplicate check: no other row on the instance carries this number.",
+          "source_entry": "RP2-hubbard-heisenberg-j1j2#33 (qmbl-verify 2026-11-11)"
+        }
       }
     },
     {
@@ -5293,7 +6065,17 @@
         "method": "source text of arXiv:2110.06390 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.488(7)",
         "note": "Table IV, Square J2=0.5 N=100, ResNet; version read: arXiv 2110.06390v1 text (sources/2110.06390.txt); no journal version (arXiv metadata, 2026-11-11) | same",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "arXiv:2110.06390v1 PDF (only version), pypdf layout mode, Table I cross-read in the arXiv HTML TeX annotations; no journal version found (arXiv abs has no journal-ref; Crossref title search finds none)",
+          "location": "Table IV (App. A8 b, p. 19), Square J2=0.5 N=100, ResNet column",
+          "reported_as": "-0.488(7) per spin, S.S units (<E>/N)",
+          "conversion": "4N convention: -0.488 * 4 * 100 = -195.2; sigma 0.007 * 400 = 2.8",
+          "note": "Eq. (4) H = sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j, J1 = 1, spin operators (Table II exact references, e.g. square N=36 J2=0.5 -0.503810, fix S.S per-site units); periodic boundary conditions (App. A5 a); Table I: b1=(10,0), b2=(0,10), periodic 10x10; J2 = 0.5. Own result: \"variational energies per spin ... computed using MCMC using 2*10^5 samples from equilibrated Markov chains. The stochastic estimation error bars are marked by parenthesis around the last significant digit\" (App. A8 b). Sector not stated (lowest-energy state targeted); a variational energy bounds the global ground state either way. Duplicate check: no other row on the instance carries this number.",
+          "source_entry": "RP2-hubbard-heisenberg-j1j2#34 (qmbl-verify 2026-11-11)"
+        }
       }
     },
     {

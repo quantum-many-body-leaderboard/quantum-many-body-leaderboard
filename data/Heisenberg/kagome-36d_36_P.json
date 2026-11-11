@@ -94,7 +94,17 @@
         "method": "source text of arXiv:2110.06390 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; adversarial re-read: confirmed",
         "reported_as": "-0.434(1)",
         "note": "Table IV, Kagome N=36, GNN; version read: arXiv 2110.06390v1 text (sources/2110.06390.txt); no journal version (arXiv metadata, 2026-11-11) | 36-site cluster; Table I vectors are garbled in the source ((6,-2sqrt3),(0,4sqrt2)); the paper's reference E0 for it, -0.43837653, equals catalogue 36d exactly, so 36d is inferred",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "arXiv:2110.06390v1 PDF and HTML TeX source, parsed locally; no journal version found",
+          "location": "Table I (Kagome N = 36 row) and Table II (Kagome J2 = 0, N = 36, E0)",
+          "reported_as": "-0.434(1)",
+          "conversion": "x 4 x 36 (per-site S.S to total Pauli)",
+          "note": "The value is printed as stored. The cluster is inferred, not printed: Table I's lattice vectors for N = 36 are garbled (b2 = (0, 4 sqrt 2) is not a lattice vector), and the paper's Table II reference energy -0.43837653 per site equals the exact energy of kagome-36d (36a/b/c differ). Kept on kagome-36d, ruled 2026-11-11.",
+          "source_entry": "RP2-hubbard-heisenberg-j1j2#21 (qmbl-verify 2026-11-11)"
+        }
       }
     },
     {
@@ -120,12 +130,22 @@
         "method": "source text of arXiv:2110.06390 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; adversarial re-read: confirmed",
         "reported_as": "-0.4338(6)",
         "note": "Table IV, Kagome N=36, GNN-2; version read: arXiv 2110.06390v1 text (sources/2110.06390.txt); no journal version (arXiv metadata, 2026-11-11) | same as GNN row",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "arXiv:2110.06390v1 PDF and HTML TeX source, parsed locally; no journal version found",
+          "location": "Table I (Kagome N = 36 row) and Table II (Kagome J2 = 0, N = 36, E0)",
+          "reported_as": "-0.4338(6)",
+          "conversion": "x 4 x 36 (per-site S.S to total Pauli)",
+          "note": "The value is printed as stored. The cluster is inferred, not printed: Table I's lattice vectors for N = 36 are garbled (b2 = (0, 4 sqrt 2) is not a lattice vector), and the paper's Table II reference energy -0.43837653 per site equals the exact energy of kagome-36d (36a/b/c differ). Kept on kagome-36d, ruled 2026-11-11.",
+          "source_entry": "RP2-hubbard-heisenberg-j1j2#22 (qmbl-verify 2026-11-11)"
+        }
       }
     },
     {
       "energy": -62.352,
-      "sigma": 0,
+      "sigma": null,
       "energy_variance": null,
       "dof": 36,
       "einf": 0,
@@ -146,8 +166,32 @@
         "method": "source text of arXiv:2110.06390 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; adversarial re-read: confirmed",
         "reported_as": "-0.433(0)",
         "note": "Table IV, Kagome N=36, ResNet; version read: arXiv 2110.06390v1 text (sources/2110.06390.txt); no journal version (arXiv metadata, 2026-11-11) | same as GNN row",
-        "secondary_of": null
-      }
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "arXiv:2110.06390v1 PDF and HTML TeX source, parsed locally; no journal version found",
+          "location": "Table I (Kagome N = 36 row) and Table II (Kagome J2 = 0, N = 36, E0)",
+          "reported_as": "-0.433(0)",
+          "conversion": "x 4 x 36 (per-site S.S to total Pauli)",
+          "note": "The value is printed as stored. The cluster is inferred, not printed: Table I's lattice vectors for N = 36 are garbled (b2 = (0, 4 sqrt 2) is not a lattice vector), and the paper's Table II reference energy -0.43837653 per site equals the exact energy of kagome-36d (36a/b/c differ). Kept on kagome-36d, ruled 2026-11-11.",
+          "source_entry": "RP2-hubbard-heisenberg-j1j2#23 (qmbl-verify 2026-11-11)"
+        }
+      },
+      "corrections": [
+        {
+          "field": "sigma",
+          "to": null,
+          "reported_as": "-0.433(0)",
+          "location": "Table IV (App. A8 b, p. 19), Kagome J2=0 N=36, ResNet column",
+          "version_read": "arXiv:2110.06390v1 PDF (only version), pypdf layout mode, Table I cross-read in the arXiv HTML TeX annotations; no journal version found (arXiv abs has no journal-ref; Crossref title search finds none)",
+          "conversion": "(0) in the last printed digit: the error bar is below half a unit of 1e-3 per spin, i.e. sigma < 0.5e-3 * 144 = 0.072 total; not zero",
+          "checked_on": "2026-11-11",
+          "reason": "App. A8 b: error bars are \"marked by parenthesis around the last significant digit\", so (0) means the stochastic error rounds to zero at the printed precision. A sampled MCMC energy (2*10^5 samples) cannot have sigma 0; storing 0 presents it as exact and makes it win every 2-sigma tie. Proposed: null with a note \"printed (0): sigma < 0.072 total\", or, if a ruling prefers, the half-unit bound 0.072 as an upper limit.",
+          "source_entry": "RP2-hubbard-heisenberg-j1j2#24 (qmbl-verify 2026-11-11)",
+          "from": 0
+        }
+      ]
     }
   ],
   "coverage": [

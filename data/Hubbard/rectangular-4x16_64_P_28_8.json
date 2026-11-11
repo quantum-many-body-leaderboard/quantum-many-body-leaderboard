@@ -1594,10 +1594,10 @@
     {
       "energy": -48.94784,
       "sigma": null,
-      "energy_variance": null,
+      "energy_variance": 1.088,
       "dof": 56,
       "einf": 98,
-      "v_score": null,
+      "v_score": 0.0028215679198653845,
       "method": "VMC",
       "ansatz": "NN-fPEPS",
       "method_detail": "",
@@ -1625,15 +1625,29 @@
         "wall_clock": null,
         "reported_as": "\"...ole doping, for (a–c) Pfaffian backflow withN p ≈1.2M and (d–f) NN-fPEPS withN p ≈4.6M, using 512 samples per A100 GPU. Cholesky runs in FP64, and CG and LSMR in FP32. (a), (d) Time per solve. The cross marks where the FP64 kernel exceeds t...\" / \"...s an electron hopping or a neighbor-site exchange with equal probability. The total number of samples isN s = 8192. Each VMC iteration includes 2NMCMC steps for system sizes up to 24×24, and 4NMCMC steps for the 32×32 lattice. •Energy clipp...\"",
         "source": "arXiv:2610.30321, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "energy_variance",
+          "to": 1.088,
+          "reported_as": "0.017 † (sigma^2/N = (<H^2> - E^2)/N, per site, units of t^2)",
+          "location": "Table S4 (SM p. 30), 16x4, t'=0, NN-fPEPS, sigma^2/N without projection column",
+          "version_read": "arXiv:2610.30321v2 PDF (also v1: identical Table S4 and text except date and acknowledgements), pypdf layout mode; no journal version exists (arXiv abs 2026-11-11, Crossref title search)",
+          "conversion": "Var(H) = 0.017 * 64 = 1.088",
+          "checked_on": "2026-11-11",
+          "reason": "Table S4 prints the energy variance per site sigma^2/N = (<H^2>-E^2)/N beside every own energy (caption); the row stored none, so it has no V-score. The printed variance carries the dagger like the energy: an average over the last 50-100 optimization steps, not a measurement of the final state.",
+          "source_entry": "RP2-hubbard-heisenberg-j1j2#0 (qmbl-verify 2026-11-11)",
+          "from": null
+        }
+      ]
     },
     {
       "energy": -49.05312,
       "sigma": 0.000896,
-      "energy_variance": null,
+      "energy_variance": 0.3552,
       "dof": 56,
       "einf": 98,
-      "v_score": null,
+      "v_score": 0.0009198404367993789,
       "method": "VMC",
       "ansatz": "NN-fPEPS",
       "method_detail": "projected: translations, point group (simplified), spin parity",
@@ -1661,7 +1675,21 @@
         "wall_clock": null,
         "reported_as": "\"...ole doping, for (a–c) Pfaffian backflow withN p ≈1.2M and (d–f) NN-fPEPS withN p ≈4.6M, using 512 samples per A100 GPU. Cholesky runs in FP64, and CG and LSMR in FP32. (a), (d) Time per solve. The cross marks where the FP64 kernel exceeds t...\" / \"...s an electron hopping or a neighbor-site exchange with equal probability. The total number of samples isN s = 8192. Each VMC iteration includes 2NMCMC steps for system sizes up to 24×24, and 4NMCMC steps for the 32×32 lattice. •Energy clipp...\"",
         "source": "arXiv:2610.30321, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "energy_variance",
+          "to": 0.3552,
+          "reported_as": "0.00555(9) (sigma^2/N = (<H^2> - E^2)/N, per site, units of t^2)",
+          "location": "Table S4 (SM p. 30), 16x4, t'=0, NN-fPEPS, sigma^2/N with projection column",
+          "version_read": "arXiv:2610.30321v2 PDF (also v1: identical Table S4 and text except date and acknowledgements), pypdf layout mode; no journal version exists (arXiv abs 2026-11-11, Crossref title search)",
+          "conversion": "Var(H) = 0.00555 * 64 = 0.3552",
+          "checked_on": "2026-11-11",
+          "reason": "Table S4 prints the energy variance per site sigma^2/N = (<H^2>-E^2)/N beside every own energy (caption); the row stored none, so it has no V-score.",
+          "source_entry": "RP2-hubbard-heisenberg-j1j2#1 (qmbl-verify 2026-11-11)",
+          "from": null
+        }
+      ]
     },
     {
       "energy": -49.10208,
@@ -1686,7 +1714,17 @@
         "method": "source text of arXiv:2610.30321 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.76722(6)",
         "note": "Table S4 red row; Sec. VII A zero-variance extrapolation E0/N=-0.76722(6); version read: arXiv 2610.30321v2 text (sources/2610.30321.txt); no journal version (arXiv metadata, 2026-11-11) | per site, 16x4 PBC U=8 1/8 doping",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "arXiv:2610.30321v2 PDF (also v1: identical Table S4 and text except date and acknowledgements), pypdf layout mode; no journal version exists (arXiv abs 2026-11-11, Crossref title search)",
+          "location": "Table S4 (SM p. 30), 16x4, t'=0, NN-fPEPS (extrapolated) (red row), E/N with projection column",
+          "reported_as": "-0.76722(6) per site (E/N, units of t)",
+          "conversion": "-0.76722 * 64 = -49.10208; sigma 6e-05 * 64 = 0.00384",
+          "note": "Sec. VII A: zero-variance extrapolation (ODR fit of binned training energy vs variance) of a 38M-parameter symmetry-projected NN-fPEPS, E0/N = -0.76722(6); bound_type extrapolated correct; Table S4 marks the row red (estimate of the exact energy).",
+          "source_entry": "RP2-hubbard-heisenberg-j1j2#2 (qmbl-verify 2026-11-11)"
+        }
       }
     },
     {
@@ -1712,7 +1750,17 @@
         "method": "source text of arXiv:2611.04333 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.762822(5)",
         "note": "Sec. 4.1 text, ACE on 16x4; version read: arXiv 2611.04333v1 text (sources/2611.04333.txt); no journal version (arXiv metadata, 2026-11-11) | periodic 16x4, N=56 electrons, U=8, per site",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "arXiv:2611.04333v1 PDF (only version; SciPost Physics Codebases submission, not published), pypdf layout mode",
+          "location": "Sec. 4.1, p. 15: \"Evaluation of the final states gives energies per site of -0.762822(5) for ACE on 16x4\"",
+          "reported_as": "-0.762822(5) per site, units of t",
+          "conversion": "-0.762822 * 64 = -48.820608; sigma 5e-06 * 64 = 0.00032",
+          "note": "Eq. (49) H = -t sum_<ij>,sigma (c+c + h.c.) + U sum n_up n_dn, t = 1, no shift, nearest-neighbour hopping only (matches the instance). ACE (12 conv layers, width 128) on the periodic 16x4 lattice, N = 56 electrons (N_up = N_dn = 28), U = 8, 1/8 hole doping, 30000 MARCH steps, 4096 walkers; final-state evaluation. Spin sector: the paper prints only the electron count; the released example scripts (github.com/bytedance/laqx HEAD, docs/examples/hubbard/16x4_pbc_U8_ace_small.sh and 16x8_pbc_U8_scale_small.sh, fetched 2026-11-11) pass --particles 56 / 112 without --particles_up, and main.py lines 141-142 set particles_up = particles // 2, so N_up = N_dn (Sz = 0) as the instance requires; the script layers, widths, steps and the GFMC 5000 steps match Sec. 4.1. Own result of this paper; no journal version. GFMC lowers the VMC energies by 9.6e-4 and 3.2e-3 per site as printed (consistent). Duplicate check: no other row on the instance carries this number (Gu et al. Pareto-frontier ACE rows differ).",
+          "source_entry": "RP2-hubbard-heisenberg-j1j2#38 (qmbl-verify 2026-11-11)"
+        }
       },
       "compute": {
         "parameters": null,
@@ -1748,7 +1796,17 @@
         "method": "source text of arXiv:2611.04333 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.76378(2)",
         "note": "Sec. 4.1 text; version read: arXiv 2611.04333v1 text (sources/2611.04333.txt); no journal version (arXiv metadata, 2026-11-11) | periodic 16x4, N=56, U=8; fixed-node guided GFMC",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "arXiv:2611.04333v1 PDF (only version; SciPost Physics Codebases submission, not published), pypdf layout mode",
+          "location": "Sec. 4.1, p. 15: \"...energies per site of -0.76378(2) for ACE-guided GFMC\"",
+          "reported_as": "-0.76378(2) per site, units of t",
+          "conversion": "-0.76378 * 64 = -48.88192; sigma 2e-05 * 64 = 0.00128",
+          "note": "Eq. (49) H = -t sum_<ij>,sigma (c+c + h.c.) + U sum n_up n_dn, t = 1, no shift, nearest-neighbour hopping only (matches the instance). fixed-node GFMC guided by the ACE state (\"importance-sampling and fixed-node guiding functions\", Sec. 2.5), first 1000 of 5000 projection steps discarded: projected, correct. Spin sector: the paper prints only the electron count; the released example scripts (github.com/bytedance/laqx HEAD, docs/examples/hubbard/16x4_pbc_U8_ace_small.sh and 16x8_pbc_U8_scale_small.sh, fetched 2026-11-11) pass --particles 56 / 112 without --particles_up, and main.py lines 141-142 set particles_up = particles // 2, so N_up = N_dn (Sz = 0) as the instance requires; the script layers, widths, steps and the GFMC 5000 steps match Sec. 4.1. Own result of this paper; no journal version. GFMC lowers the VMC energies by 9.6e-4 and 3.2e-3 per site as printed (consistent). Duplicate check: no other row on the instance carries this number (Gu et al. Pareto-frontier ACE rows differ).",
+          "source_entry": "RP2-hubbard-heisenberg-j1j2#39 (qmbl-verify 2026-11-11)"
+        }
       }
     }
   ],

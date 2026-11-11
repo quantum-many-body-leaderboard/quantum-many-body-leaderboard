@@ -554,7 +554,7 @@ for (const dt of ["0.1", "1.0"]) NAMES[`TQS L=4 dt=${dt}`] = ["TQS", `L = 4, dt 
 for (const [s, d] of [["(Lie-Trotter) beta=1.0", "Lie-Trotter, β = 1.0"], ["(Lie-Trotter) beta=2.0", "Lie-Trotter, β = 2.0"],
   ["(Lie-Trotter) beta=3.0", "Lie-Trotter, β = 3.0"], ["(Lie-Trotter) beta=4.0", "Lie-Trotter, β = 4.0"],
   ["(Strang) beta=2.0", "Strang, β = 2.0"], ["(Suzuki) beta=2.0", "Suzuki, β = 2.0"], ["(Blanes-Moan) beta=2.0", "Blanes-Moan, β = 2.0"],
-  ["(Lie-Trotter, RK2) beta=1.0", "Lie-Trotter, RK2, β = 1.0"], ["(RK2) beta=2.0", "RK2, β = 2.0"], ["(RK2) beta=4.0", "RK2, β = 4.0"],
+  ["(Lie-Trotter, RK2) beta=1.0", "Lie-Trotter, RK2, β = 1.0"], ["(Lie-Trotter, RK2) beta=2.0", "Lie-Trotter, RK2, β = 2.0"], ["(Lie-Trotter, RK2) beta=4.0", "Lie-Trotter, RK2, β = 4.0"],
   ["(Strang) d=108 nh=18 L=8 dt=0.5", "Strang, d = 108, nh = 18, L = 8, dt = 0.5"],
   ["(Lie-Trotter) L=4 dt=0.1", "Lie-Trotter, L = 4, dt = 0.1"], ["(Lie-Trotter) L=4 dt=1.0", "Lie-Trotter, L = 4, dt = 1.0"],
   ["(Strang) L=4 dt=0.1", "Strang, L = 4, dt = 0.1"], ["(Suzuki) L=4 dt=0.1", "Suzuki, L = 4, dt = 0.1"],

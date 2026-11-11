@@ -71,7 +71,7 @@
     },
     {
       "energy": -179.016,
-      "sigma": null,
+      "sigma": 0.072,
       "energy_variance": null,
       "dof": 64,
       "einf": 0,
@@ -103,7 +103,21 @@
         "wall_clock": null,
         "reported_as": "\"...all layers and angular momenta. We optimize our models through VMC with learning rate η = 0.001 andNsamples = 4096. Figure 2 shows the com- puted ground-state energy of theJ1-J2 model at diﬀerent ratiosJ2/J1 on a 4×4 lattice with periodic b...\"",
         "source": "arXiv:2104.14869, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "sigma",
+          "to": 0.072,
+          "reported_as": "−44.75400 ±  0.01800 (total energy, S.S units, J1 = 1)",
+          "location": "Table I (App. A) \"Results for 8x8 lattice for various J2/J1\", row ClebschTree (Ours), column J2/J1 = 1 (PRB p. 10 / arXiv v2 p. 10)",
+          "version_read": "Phys. Rev. B 104, 045123 (2021) publisher PDF (journals.aps.org, fetched 2026-11-11) and arXiv:2104.14869v2 (and v1), pypdf layout and plain mode; Table I identical in all three",
+          "conversion": "energy -44.754 * 4 = -179.016 (agrees with stored); sigma 0.018 * 4 = 0.072 (Pauli total); pass field sigma_per_site = 0.018/64 = 0.00028125",
+          "checked_on": "2026-11-11",
+          "reason": "The table prints an error bar beside every ClebschTree energy; the row stored none. The table is in total S.S units (RBM+symm -43.10268/64 = -0.673479 per site, the known 8x8 value), so the stored Pauli sigma is 4x the printed bar. QMBL already stores VarBench's ClebschTree uploads at J2 = 0.5 and 0.55 with exactly 4x the bars this table prints (0.0168 = 4*0.0042, 0.0204 = 4*0.0051), the same convention. The paper does not define the bar (App. B: 4096 samples per estimate); state that in the note. Energy, 8x8 PBC (Sec. III: \"We benchmark our method on the 8x8 lattice with PBC\"), J1 = 1, J2 and class are correct.",
+          "source_entry": "RP2-hubbard-heisenberg-j1j2#45 (qmbl-verify 2026-11-11)",
+          "from": null
+        }
+      ]
     }
   ]
 }

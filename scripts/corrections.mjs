@@ -24264,4 +24264,1317 @@ export const CORRECTIONS = [
     "reason": "J. Phys. Soc. Jpn. 83, 093707 prints no 6 x 6 energy: the number and its error bar are first printed in Table I of Iqbal, Hu, Thomale, Poilblanc & Becca, Phys. Rev. B 93, 144411 (2016), and an author of the primary paper asked that this paper be cited with the number. The source cell therefore keeps 'quoted in Iqbal et al. (2016)' visible, where other quoted rows show the note on hover. Reference, provenance, energy and sigma unchanged.",
     "source_entry": "author correspondence on the row, 2026-10-27; display change of 2026-10-28 (quoted-in note on hover)"
   },
+  // qmbl-verify 2026-11-11: second reading of the Ketboard/tachys gap pass (sweep-rows-2026-11-11-ketboard), journal versions where published; skeptic upheld every entry.
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "TQS beta=1.0",
+      "energy": -198.372
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table I, row beta = 1.0, column E (TQS), Np 81 800 prints '−0.495 93(11)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49593 x 4 x 100 = -198.372 (stored -198.372); sigma 1e-4 x 400 = 0.044 (stored 0.044). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#0 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "TQS beta=1.0",
+      "energy": -198.372
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table I, row beta = 1.0, column E (TQS), Np 81 800: '−0.495 93(11)'.",
+    "source_entry": "RP1-arxiv-2602-03031#1 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Lie-Trotter) beta=1.0",
+      "energy": -198.384
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table I, row beta = 1.0, column E (PITQS), Np 44 890 (also Table V Euler and Table VI serialized) prints '−0.495 96(14)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49596 x 4 x 100 = -198.384 (stored -198.384); sigma 1e-4 x 400 = 0.056 (stored 0.056). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#2 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Lie-Trotter) beta=1.0",
+      "energy": -198.384
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table I, row beta = 1.0, column E (PITQS), Np 44 890 (also Table V Euler and Table VI serialized): '−0.495 96(14)'.",
+    "source_entry": "RP1-arxiv-2602-03031#3 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "TQS beta=2.0",
+      "energy": -198.608
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table I, row beta = 2.0, column E (TQS), Np 155 620 (also Table II 'TQS (β = 2.0)' and Table IV TQS Δτ = 0.5) prints '−0.496 52(9)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49652 x 4 x 100 = -198.608 (stored -198.608); sigma 9e-5 x 400 = 0.036 (stored 0.036). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#4 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "TQS beta=2.0",
+      "energy": -198.608
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table I, row beta = 2.0, column E (TQS), Np 155 620 (also Table II 'TQS (β = 2.0)' and Table IV TQS Δτ = 0.5): '−0.496 52(9)'.",
+    "source_entry": "RP1-arxiv-2602-03031#5 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Lie-Trotter) beta=2.0",
+      "energy": -198.676
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table I, row beta = 2.0, column E (PITQS) (also Table II, Table IV Δτ = 0.5, Table V Euler, Table VI serialized) prints '−0.496 69(9)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49669 x 4 x 100 = -198.676 (stored -198.676); sigma 9e-5 x 400 = 0.036 (stored 0.036). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#6 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Lie-Trotter) beta=2.0",
+      "energy": -198.676
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table I, row beta = 2.0, column E (PITQS) (also Table II, Table IV Δτ = 0.5, Table V Euler, Table VI serialized): '−0.496 69(9)'.",
+    "source_entry": "RP1-arxiv-2602-03031#7 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "TQS beta=3.0",
+      "energy": -198.624
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table I, row beta = 3.0, column E (TQS), Np 229 440 prints '−0.496 56(11)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49656 x 4 x 100 = -198.624 (stored -198.624); sigma 1e-4 x 400 = 0.044 (stored 0.044). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#8 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "TQS beta=3.0",
+      "energy": -198.624
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table I, row beta = 3.0, column E (TQS), Np 229 440: '−0.496 56(11)'.",
+    "source_entry": "RP1-arxiv-2602-03031#9 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Lie-Trotter) beta=3.0",
+      "energy": -198.704
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table I, row beta = 3.0, column E (PITQS) (also Table V Euler, Table VI serialized) prints '−0.496 76(10)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49676 x 4 x 100 = -198.704 (stored -198.704); sigma 1e-4 x 400 = 0.040 (stored 0.04). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#10 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Lie-Trotter) beta=3.0",
+      "energy": -198.704
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table I, row beta = 3.0, column E (PITQS) (also Table V Euler, Table VI serialized): '−0.496 76(10)'.",
+    "source_entry": "RP1-arxiv-2602-03031#11 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "TQS beta=4.0",
+      "energy": -198.604
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table I, row beta = 4.0, column E (TQS), Np 303 260 prints '−0.496 51(10)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49651 x 4 x 100 = -198.604 (stored -198.604); sigma 1e-4 x 400 = 0.040 (stored 0.04). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#12 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "TQS beta=4.0",
+      "energy": -198.604
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table I, row beta = 4.0, column E (TQS), Np 303 260: '−0.496 51(10)'.",
+    "source_entry": "RP1-arxiv-2602-03031#13 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Lie-Trotter) beta=4.0",
+      "energy": -198.784
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table I, row beta = 4.0, column E (PITQS) (also Table V Euler, Table VI serialized) prints '−0.496 96(9)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49696 x 4 x 100 = -198.784 (stored -198.784); sigma 9e-5 x 400 = 0.036 (stored 0.036). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#14 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Lie-Trotter) beta=4.0",
+      "energy": -198.784
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table I, row beta = 4.0, column E (PITQS) (also Table V Euler, Table VI serialized): '−0.496 96(9)'.",
+    "source_entry": "RP1-arxiv-2602-03031#15 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "TQS beta=0.5",
+      "energy": -197.272
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table II, row 'TQS (β = 0.5)', Np 44 890 prints '−0.493 18(15)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49318 x 4 x 100 = -197.272 (stored -197.272); sigma 2e-4 x 400 = 0.060 (stored 0.06). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#16 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "TQS beta=0.5",
+      "energy": -197.272
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table II, row 'TQS (β = 0.5)', Np 44 890: '−0.493 18(15)'.",
+    "source_entry": "RP1-arxiv-2602-03031#17 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Strang) beta=2.0",
+      "energy": -198.684
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table II, row 'PITQS (Strang)' (also Table IV Δτ = 0.5) prints '−0.496 71(9)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49671 x 4 x 100 = -198.684 (stored -198.684); sigma 9e-5 x 400 = 0.036 (stored 0.036). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#18 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Strang) beta=2.0",
+      "energy": -198.684
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table II, row 'PITQS (Strang)' (also Table IV Δτ = 0.5): '−0.496 71(9)'.",
+    "source_entry": "RP1-arxiv-2602-03031#19 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Suzuki) beta=2.0",
+      "energy": -198.788
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table II, row 'PITQS (Suzuki)' (also Table IV Δτ = 0.5) prints '−0.496 97(9)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49697 x 4 x 100 = -198.788 (stored -198.788); sigma 9e-5 x 400 = 0.036 (stored 0.036). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#20 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Suzuki) beta=2.0",
+      "energy": -198.788
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table II, row 'PITQS (Suzuki)' (also Table IV Δτ = 0.5): '−0.496 97(9)'.",
+    "source_entry": "RP1-arxiv-2602-03031#21 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Blanes-Moan) beta=2.0",
+      "energy": -198.732
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Table II, row 'PITQS (Blanes-Moan)' (also Table IV Δτ = 0.5) prints '−0.496 83(7)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49683 x 4 x 100 = -198.732 (stored -198.732); sigma 7e-5 x 400 = 0.028 (stored 0.028). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#22 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Blanes-Moan) beta=2.0",
+      "energy": -198.732
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Table II, row 'PITQS (Blanes-Moan)' (also Table IV Δτ = 0.5): '−0.496 83(7)'.",
+    "source_entry": "RP1-arxiv-2602-03031#23 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Strang) d=108 nh=18 L=8 dt=0.5",
+      "energy": -198.964
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Sec. V.D 'Scalability' (model of Fig. 3: d = 108, nh = 18, L = 8, Δτ = 0.5, Np = 143 010, 10 000 iterations, 8192 samples) prints 'E ≈−0.497 41(3)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49741 x 4 x 100 = -198.964 (stored -198.964); sigma 3e-5 x 400 = 0.012 (stored 0.012). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#24 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Strang) d=108 nh=18 L=8 dt=0.5",
+      "energy": -198.964
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Sec. V.D 'Scalability' (model of Fig. 3: d = 108, nh = 18, L = 8, Δτ = 0.5, Np = 143 010, 10 000 iterations, 8192 samples): 'E ≈−0.497 41(3)'.",
+    "source_entry": "RP1-arxiv-2602-03031#25 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "TQS L=4 dt=0.1",
+      "energy": -198.48
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix D, Table IV, row TQS, column Δτ = 0.1, Np 155 620 prints '−0.496 20(11)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.4962 x 4 x 100 = -198.480 (stored -198.48); sigma 1e-4 x 400 = 0.044 (stored 0.044). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#26 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "TQS L=4 dt=0.1",
+      "energy": -198.48
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix D, Table IV, row TQS, column Δτ = 0.1, Np 155 620: '−0.496 20(11)'.",
+    "source_entry": "RP1-arxiv-2602-03031#27 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "TQS L=4 dt=1.0",
+      "energy": -198.664
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix D, Table IV, row TQS, column Δτ = 1.0, Np 155 620 prints '−0.496 66(9)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49666 x 4 x 100 = -198.664 (stored -198.664); sigma 9e-5 x 400 = 0.036 (stored 0.036). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#28 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "TQS L=4 dt=1.0",
+      "energy": -198.664
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix D, Table IV, row TQS, column Δτ = 1.0, Np 155 620: '−0.496 66(9)'.",
+    "source_entry": "RP1-arxiv-2602-03031#29 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Lie-Trotter) L=4 dt=0.1",
+      "energy": -198.724
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix D, Table IV, row PITQS (Lie-Trotter), column Δτ = 0.1 prints '−0.496 81(10)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49681 x 4 x 100 = -198.724 (stored -198.724); sigma 1e-4 x 400 = 0.040 (stored 0.04). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#30 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Lie-Trotter) L=4 dt=0.1",
+      "energy": -198.724
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix D, Table IV, row PITQS (Lie-Trotter), column Δτ = 0.1: '−0.496 81(10)'.",
+    "source_entry": "RP1-arxiv-2602-03031#31 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Lie-Trotter) L=4 dt=1.0",
+      "energy": -198.636
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix D, Table IV, row PITQS (Lie-Trotter), column Δτ = 1.0 prints '−0.496 59(10)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49659 x 4 x 100 = -198.636 (stored -198.636); sigma 1e-4 x 400 = 0.040 (stored 0.04). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#32 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Lie-Trotter) L=4 dt=1.0",
+      "energy": -198.636
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix D, Table IV, row PITQS (Lie-Trotter), column Δτ = 1.0: '−0.496 59(10)'.",
+    "source_entry": "RP1-arxiv-2602-03031#33 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Strang) L=4 dt=0.1",
+      "energy": -198.668
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix D, Table IV, row PITQS (Strang), column Δτ = 0.1 (the Δτ = 1.0 cell prints the same −0.496 67(9)) prints '−0.496 67(9)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49667 x 4 x 100 = -198.668 (stored -198.668); sigma 9e-5 x 400 = 0.036 (stored 0.036). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#34 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Strang) L=4 dt=0.1",
+      "energy": -198.668
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix D, Table IV, row PITQS (Strang), column Δτ = 0.1 (the Δτ = 1.0 cell prints the same −0.496 67(9)): '−0.496 67(9)'.",
+    "source_entry": "RP1-arxiv-2602-03031#35 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Suzuki) L=4 dt=0.1",
+      "energy": -198.712
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix D, Table IV, row PITQS (Suzuki), column Δτ = 0.1 prints '−0.496 78(8)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49678 x 4 x 100 = -198.712 (stored -198.712); sigma 8e-5 x 400 = 0.032 (stored 0.032). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#36 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Suzuki) L=4 dt=0.1",
+      "energy": -198.712
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix D, Table IV, row PITQS (Suzuki), column Δτ = 0.1: '−0.496 78(8)'.",
+    "source_entry": "RP1-arxiv-2602-03031#37 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Blanes-Moan) L=4 dt=0.1",
+      "energy": -198.716
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix D, Table IV, row PITQS (Blanes-Moan), column Δτ = 0.1 prints '−0.496 79(10)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49679 x 4 x 100 = -198.716 (stored -198.716); sigma 1e-4 x 400 = 0.040 (stored 0.04). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#38 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Blanes-Moan) L=4 dt=0.1",
+      "energy": -198.716
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix D, Table IV, row PITQS (Blanes-Moan), column Δτ = 0.1: '−0.496 79(10)'.",
+    "source_entry": "RP1-arxiv-2602-03031#39 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Blanes-Moan) L=4 dt=1.0",
+      "energy": -198.804
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix D, Table IV, row PITQS (Blanes-Moan), column Δτ = 1.0 prints '−0.497 01(11)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49701 x 4 x 100 = -198.804 (stored -198.804); sigma 1e-4 x 400 = 0.044 (stored 0.044). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#40 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Blanes-Moan) L=4 dt=1.0",
+      "energy": -198.804
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix D, Table IV, row PITQS (Blanes-Moan), column Δτ = 1.0: '−0.497 01(11)'.",
+    "source_entry": "RP1-arxiv-2602-03031#41 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Lie-Trotter, RK2) beta=1.0",
+      "energy": -198.512
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix G, Table V, row β = 1.0, column E (RK2) (Lie-Trotter scheme per the text) prints '−0.496 28(11)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49628 x 4 x 100 = -198.512 (stored -198.512); sigma 1e-4 x 400 = 0.044 (stored 0.044). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#42 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (Lie-Trotter, RK2) beta=1.0",
+      "energy": -198.512
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix G, Table V, row β = 1.0, column E (RK2) (Lie-Trotter scheme per the text): '−0.496 28(11)'.",
+    "source_entry": "RP1-arxiv-2602-03031#43 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (RK2) beta=2.0",
+      "energy": -198.728
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix G, Table V, row β = 2.0, column E (RK2) (Lie-Trotter scheme per the text) prints '−0.496 82(10)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49682 x 4 x 100 = -198.728 (stored -198.728); sigma 1e-4 x 400 = 0.040 (stored 0.04). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#44 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (RK2) beta=2.0",
+      "energy": -198.728
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix G, Table V, row β = 2.0, column E (RK2) (Lie-Trotter scheme per the text): '−0.496 82(10)'.",
+    "source_entry": "RP1-arxiv-2602-03031#45 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (RK2) beta=2.0",
+      "energy": -198.728
+    },
+    "field": "method",
+    "to": "PITQS (Lie-Trotter, RK2) beta=2.0",
+    "reported_as": "'Table V reports the energies per site of the Euler and RK2 methods with the Lie-Trotter scheme.'",
+    "location": "Appendix G text and Table V",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Cosmetic: all three Table V RK2 rows are Lie-Trotter runs; the beta = 1.0 row already says 'PITQS (Lie-Trotter, RK2)', the beta = 2.0 and 4.0 rows drop the scheme, so the three read as different schemes. Low priority; the value and sigma are correct.",
+    "source_entry": "RP1-arxiv-2602-03031#46 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (RK2) beta=4.0",
+      "energy": -198.78
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix G, Table V, row β = 4.0, column E (RK2) (Lie-Trotter scheme per the text) prints '−0.496 95(8)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49695 x 4 x 100 = -198.780 (stored -198.78); sigma 8e-5 x 400 = 0.032 (stored 0.032). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#47 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (RK2) beta=4.0",
+      "energy": -198.78
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix G, Table V, row β = 4.0, column E (RK2) (Lie-Trotter scheme per the text): '−0.496 95(8)'.",
+    "source_entry": "RP1-arxiv-2602-03031#48 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS (RK2) beta=4.0",
+      "energy": -198.78
+    },
+    "field": "method",
+    "to": "PITQS (Lie-Trotter, RK2) beta=4.0",
+    "reported_as": "'Table V reports the energies per site of the Euler and RK2 methods with the Lie-Trotter scheme.'",
+    "location": "Appendix G text and Table V",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Cosmetic: all three Table V RK2 rows are Lie-Trotter runs; the beta = 1.0 row already says 'PITQS (Lie-Trotter, RK2)', the beta = 2.0 and 4.0 rows drop the scheme, so the three read as different schemes. Low priority; the value and sigma are correct.",
+    "source_entry": "RP1-arxiv-2602-03031#49 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS parallel formulation (Euler) beta=1.0",
+      "energy": -197.14
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix H, Table VI, row β = 1.0, column E (parallel), Np 44 770 prints '−0.492 85(16)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49285 x 4 x 100 = -197.140 (stored -197.14); sigma 2e-4 x 400 = 0.064 (stored 0.064). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#50 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS parallel formulation (Euler) beta=1.0",
+      "energy": -197.14
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix H, Table VI, row β = 1.0, column E (parallel), Np 44 770: '−0.492 85(16)'.",
+    "source_entry": "RP1-arxiv-2602-03031#51 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS parallel formulation (Euler) beta=2.0",
+      "energy": -198.356
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix H, Table VI, row β = 2.0, column E (parallel), Np 44 770 prints '−0.495 89(11)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49589 x 4 x 100 = -198.356 (stored -198.356); sigma 1e-4 x 400 = 0.044 (stored 0.044). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#52 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS parallel formulation (Euler) beta=2.0",
+      "energy": -198.356
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix H, Table VI, row β = 2.0, column E (parallel), Np 44 770: '−0.495 89(11)'.",
+    "source_entry": "RP1-arxiv-2602-03031#53 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS parallel formulation (Euler) beta=3.0",
+      "energy": -198.588
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix H, Table VI, row β = 3.0, column E (parallel), Np 44 770 prints '−0.496 47(11)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49647 x 4 x 100 = -198.588 (stored -198.588); sigma 1e-4 x 400 = 0.044 (stored 0.044). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#54 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS parallel formulation (Euler) beta=3.0",
+      "energy": -198.588
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix H, Table VI, row β = 3.0, column E (parallel), Np 44 770: '−0.496 47(11)'.",
+    "source_entry": "RP1-arxiv-2602-03031#55 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS parallel formulation (Euler) beta=4.0",
+      "energy": -198.66
+    },
+    "field": "reference",
+    "to": "Yamazaki, Sakata, Konishi & Kawahara, Physics-inspired transformer quantum states via latent imaginary-time evolution, Phys. Rev. Research 8, 033032 (2026), arXiv:2602.03031, doi:10.1103/bjxb-8tsk",
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) ... Kimihiro Yamazaki, Itsushi Sakata, Takuya Konishi, and Yoshinobu Kawahara ... DOI: 10.1103/bjxb-8tsk",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "The paper was published in Phys. Rev. Research on 9 July 2026; the pass file states 'no journal version (arXiv metadata, 2026-11-11)', which is wrong. The six Hubbard rows of the same paper already carry this citation string (corrections.mjs, 2026-10-15 journal pass). Value check (no transcription issue): Appendix H, Table VI, row β = 4.0, column E (parallel), Np 44 770 prints '−0.496 65(10)' per site in S·S units of J1 (H = J1 Σ⟨ij⟩ Si·Sj + J2 Σ⟨⟨ij⟩⟩ Si·Sj, spin-1/2 operators, Eq. (14)); -0.49665 x 4 x 100 = -198.660 (stored -198.66); sigma 1e-4 x 400 = 0.040 (stored 0.04). Same cell in arXiv v1. 10 x 10, J2/J1 = 0.5, periodic boundary conditions (Sec. V), variational (VMC with MinSR; best final energy among five seeds, own computation). No other row on J1J2/square_100_P_0.5 carries this number from another batch (no duplicate).",
+    "source_entry": "RP1-arxiv-2602-03031#56 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PITQS parallel formulation (Euler) beta=4.0",
+      "energy": -198.66
+    },
+    "field": "peer_reviewed",
+    "to": true,
+    "reported_as": "PHYSICAL REVIEW RESEARCH 8, 033032 (2026) (Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)",
+    "location": "journal title page: 'PHYSICAL REVIEW RESEARCH 8, 033032 (2026)', '(Received 4 February 2026; accepted 10 June 2026; published 9 July 2026)', 'DOI: 10.1103/bjxb-8tsk'",
+    "version_read": "Phys. Rev. Research 8, 033032 (2026), doi:10.1103/bjxb-8tsk, publisher PDF (sha256 7c05ab41..., copied from the 2026-10-15 journal pass cache to sources/journal/prresearch8-033032.pdf), pypdf layout text (sources/journal/prresearch8-033032.rp1.layout.txt); compared with arXiv:2602.03031v1 PDF (sha256 e29c6b55..., byte-identical to qmbl/sources/2602.03031.pdf), pypdf layout text (sources/2602.03031v1.rp1.layout.txt): every J1-J2 table energy identical in both; the journal adds only a fixed-wall-clock paragraph (moving averages −0.497 350 etc., not rows)",
+    "conversion": "n/a",
+    "checked_on": "2026-11-11",
+    "reason": "Peer-reviewed journal version exists and prints the same value as arXiv v1. Journal cell: Appendix H, Table VI, row β = 4.0, column E (parallel), Np 44 770: '−0.496 65(10)'.",
+    "source_entry": "RP1-arxiv-2602-03031#57 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_P_28_8",
+      "method": "NN-fPEPS",
+      "energy": -48.94784
+    },
+    "field": "energy_variance",
+    "to": 1.088,
+    "reported_as": "0.017 † (sigma^2/N = (<H^2> - E^2)/N, per site, units of t^2)",
+    "location": "Table S4 (SM p. 30), 16x4, t'=0, NN-fPEPS, sigma^2/N without projection column",
+    "version_read": "arXiv:2610.30321v2 PDF (also v1: identical Table S4 and text except date and acknowledgements), pypdf layout mode; no journal version exists (arXiv abs 2026-11-11, Crossref title search)",
+    "conversion": "Var(H) = 0.017 * 64 = 1.088",
+    "checked_on": "2026-11-11",
+    "reason": "Table S4 prints the energy variance per site sigma^2/N = (<H^2>-E^2)/N beside every own energy (caption); the row stored none, so it has no V-score. The printed variance carries the dagger like the energy: an average over the last 50-100 optimization steps, not a measurement of the final state.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#0 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_P_28_8",
+      "method": "NN-fPEPS with symmetry projection",
+      "energy": -49.05312
+    },
+    "field": "energy_variance",
+    "to": 0.3552,
+    "reported_as": "0.00555(9) (sigma^2/N = (<H^2> - E^2)/N, per site, units of t^2)",
+    "location": "Table S4 (SM p. 30), 16x4, t'=0, NN-fPEPS, sigma^2/N with projection column",
+    "version_read": "arXiv:2610.30321v2 PDF (also v1: identical Table S4 and text except date and acknowledgements), pypdf layout mode; no journal version exists (arXiv abs 2026-11-11, Crossref title search)",
+    "conversion": "Var(H) = 0.00555 * 64 = 0.3552",
+    "checked_on": "2026-11-11",
+    "reason": "Table S4 prints the energy variance per site sigma^2/N = (<H^2>-E^2)/N beside every own energy (caption); the row stored none, so it has no V-score.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#1 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_1024_P_448_8",
+      "method": "BCS backflow",
+      "energy": -773.0176
+    },
+    "field": "energy_variance",
+    "to": 68.608,
+    "reported_as": "0.067 † (sigma^2/N = (<H^2> - E^2)/N, per site, units of t^2)",
+    "location": "Table S4 (SM p. 30), 32x32, t'=0, BCS backflow, sigma^2/N without projection column",
+    "version_read": "arXiv:2610.30321v2 PDF (also v1: identical Table S4 and text except date and acknowledgements), pypdf layout mode; no journal version exists (arXiv abs 2026-11-11, Crossref title search)",
+    "conversion": "Var(H) = 0.067 * 1024 = 68.608",
+    "checked_on": "2026-11-11",
+    "reason": "Table S4 prints the energy variance per site sigma^2/N = (<H^2>-E^2)/N beside every own energy (caption); the row stored none, so it has no V-score. The printed variance carries the dagger like the energy: an average over the last 50-100 optimization steps, not a measurement of the final state.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#3 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_1024_P_448_8",
+      "method": "BCS backflow with symmetry projection",
+      "energy": -774.31808
+    },
+    "field": "energy_variance",
+    "to": 47.104,
+    "reported_as": "0.046(10) (sigma^2/N = (<H^2> - E^2)/N, per site, units of t^2)",
+    "location": "Table S4 (SM p. 30), 32x32, t'=0, BCS backflow, sigma^2/N with projection column",
+    "version_read": "arXiv:2610.30321v2 PDF (also v1: identical Table S4 and text except date and acknowledgements), pypdf layout mode; no journal version exists (arXiv abs 2026-11-11, Crossref title search)",
+    "conversion": "Var(H) = 0.046 * 1024 = 47.104",
+    "checked_on": "2026-11-11",
+    "reason": "Table S4 prints the energy variance per site sigma^2/N = (<H^2>-E^2)/N beside every own energy (caption); the row stored none, so it has no V-score.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#4 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_1024_P_448_8",
+      "method": "NN-fPEPS",
+      "energy": -773.23264
+    },
+    "field": "energy_variance",
+    "to": 55.296,
+    "reported_as": "0.054 † (sigma^2/N = (<H^2> - E^2)/N, per site, units of t^2)",
+    "location": "Table S4 (SM p. 30), 32x32, t'=0, NN-fPEPS, sigma^2/N without projection column",
+    "version_read": "arXiv:2610.30321v2 PDF (also v1: identical Table S4 and text except date and acknowledgements), pypdf layout mode; no journal version exists (arXiv abs 2026-11-11, Crossref title search)",
+    "conversion": "Var(H) = 0.054 * 1024 = 55.296",
+    "checked_on": "2026-11-11",
+    "reason": "Table S4 prints the energy variance per site sigma^2/N = (<H^2>-E^2)/N beside every own energy (caption); the row stored none, so it has no V-score. The printed variance carries the dagger like the energy: an average over the last 50-100 optimization steps, not a measurement of the final state.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#5 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_1024_P_448_8",
+      "method": "NN-fPEPS with symmetry projection",
+      "energy": -774.93248
+    },
+    "field": "energy_variance",
+    "to": 35.4304,
+    "reported_as": "0.0346(4) (sigma^2/N = (<H^2> - E^2)/N, per site, units of t^2)",
+    "location": "Table S4 (SM p. 30), 32x32, t'=0, NN-fPEPS, sigma^2/N with projection column",
+    "version_read": "arXiv:2610.30321v2 PDF (also v1: identical Table S4 and text except date and acknowledgements), pypdf layout mode; no journal version exists (arXiv abs 2026-11-11, Crossref title search)",
+    "conversion": "Var(H) = 0.0346 * 1024 = 35.4304",
+    "checked_on": "2026-11-11",
+    "reason": "Table S4 prints the energy variance per site sigma^2/N = (<H^2>-E^2)/N beside every own energy (caption); the row stored none, so it has no V-score.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#6 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "BCS backflow",
+      "energy": -193.97632
+    },
+    "field": "energy_variance",
+    "to": 7.8848,
+    "reported_as": "0.0308(6) (sigma^2/N = (<H^2> - E^2)/N, per site, units of t^2)",
+    "location": "Table S4 (SM p. 30), 16x16, t'=0, BCS backflow, sigma^2/N without projection column",
+    "version_read": "arXiv:2610.30321v2 PDF (also v1: identical Table S4 and text except date and acknowledgements), pypdf layout mode; no journal version exists (arXiv abs 2026-11-11, Crossref title search)",
+    "conversion": "Var(H) = 0.0308 * 256 = 7.8848",
+    "checked_on": "2026-11-11",
+    "reason": "Table S4 prints the energy variance per site sigma^2/N = (<H^2>-E^2)/N beside every own energy (caption); the row stored none, so it has no V-score.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#7 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "BCS backflow with symmetry projection",
+      "energy": -194.24768
+    },
+    "field": "energy_variance",
+    "to": 6.528,
+    "reported_as": "0.0255(20) (sigma^2/N = (<H^2> - E^2)/N, per site, units of t^2)",
+    "location": "Table S4 (SM p. 30), 16x16, t'=0, BCS backflow, sigma^2/N with projection column",
+    "version_read": "arXiv:2610.30321v2 PDF (also v1: identical Table S4 and text except date and acknowledgements), pypdf layout mode; no journal version exists (arXiv abs 2026-11-11, Crossref title search)",
+    "conversion": "Var(H) = 0.0255 * 256 = 6.528",
+    "checked_on": "2026-11-11",
+    "reason": "Table S4 prints the energy variance per site sigma^2/N = (<H^2>-E^2)/N beside every own energy (caption); the row stored none, so it has no V-score.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#8 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "Pfaffian backflow",
+      "energy": -193.75616
+    },
+    "field": "energy_variance",
+    "to": 8.6272,
+    "reported_as": "0.0337(5) (sigma^2/N = (<H^2> - E^2)/N, per site, units of t^2)",
+    "location": "Table S4 (SM p. 30), 16x16, t'=0, Pfaffian backflow, sigma^2/N without projection column",
+    "version_read": "arXiv:2610.30321v2 PDF (also v1: identical Table S4 and text except date and acknowledgements), pypdf layout mode; no journal version exists (arXiv abs 2026-11-11, Crossref title search)",
+    "conversion": "Var(H) = 0.0337 * 256 = 8.6272",
+    "checked_on": "2026-11-11",
+    "reason": "Table S4 prints the energy variance per site sigma^2/N = (<H^2>-E^2)/N beside every own energy (caption); the row stored none, so it has no V-score.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#9 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "Pfaffian backflow with symmetry projection",
+      "energy": -194.08128
+    },
+    "field": "energy_variance",
+    "to": 6.6304,
+    "reported_as": "0.0259(2) (sigma^2/N = (<H^2> - E^2)/N, per site, units of t^2)",
+    "location": "Table S4 (SM p. 30), 16x16, t'=0, Pfaffian backflow, sigma^2/N with projection column",
+    "version_read": "arXiv:2610.30321v2 PDF (also v1: identical Table S4 and text except date and acknowledgements), pypdf layout mode; no journal version exists (arXiv abs 2026-11-11, Crossref title search)",
+    "conversion": "Var(H) = 0.0259 * 256 = 6.6304",
+    "checked_on": "2026-11-11",
+    "reason": "Table S4 prints the energy variance per site sigma^2/N = (<H^2>-E^2)/N beside every own energy (caption); the row stored none, so it has no V-score.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#10 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "NN-fPEPS",
+      "energy": -193.4336
+    },
+    "field": "energy_variance",
+    "to": 9.7024,
+    "reported_as": "0.0379(14) (sigma^2/N = (<H^2> - E^2)/N, per site, units of t^2)",
+    "location": "Table S4 (SM p. 30), 16x16, t'=0, NN-fPEPS, sigma^2/N without projection column",
+    "version_read": "arXiv:2610.30321v2 PDF (also v1: identical Table S4 and text except date and acknowledgements), pypdf layout mode; no journal version exists (arXiv abs 2026-11-11, Crossref title search)",
+    "conversion": "Var(H) = 0.0379 * 256 = 9.7024",
+    "checked_on": "2026-11-11",
+    "reason": "Table S4 prints the energy variance per site sigma^2/N = (<H^2>-E^2)/N beside every own energy (caption); the row stored none, so it has no V-score.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#11 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "NN-fPEPS with symmetry projection",
+      "energy": -194.17856
+    },
+    "field": "energy_variance",
+    "to": 6.5536,
+    "reported_as": "0.0256(6) (sigma^2/N = (<H^2> - E^2)/N, per site, units of t^2)",
+    "location": "Table S4 (SM p. 30), 16x16, t'=0, NN-fPEPS, sigma^2/N with projection column",
+    "version_read": "arXiv:2610.30321v2 PDF (also v1: identical Table S4 and text except date and acknowledgements), pypdf layout mode; no journal version exists (arXiv abs 2026-11-11, Crossref title search)",
+    "conversion": "Var(H) = 0.0256 * 256 = 6.5536",
+    "checked_on": "2026-11-11",
+    "reason": "Table S4 prints the energy variance per site sigma^2/N = (<H^2>-E^2)/N beside every own energy (caption); the row stored none, so it has no V-score.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#12 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8_t12_-0.2",
+      "method": "Pfaffian backflow",
+      "energy": -190.39232
+    },
+    "field": "energy_variance",
+    "to": 8.8576,
+    "reported_as": "0.0346(5) (sigma^2/N = (<H^2> - E^2)/N, per site, units of t^2)",
+    "location": "Table S4 (SM p. 30), 16x16, t'=-0.2, Pfaffian backflow, sigma^2/N without projection column",
+    "version_read": "arXiv:2610.30321v2 PDF (also v1: identical Table S4 and text except date and acknowledgements), pypdf layout mode; no journal version exists (arXiv abs 2026-11-11, Crossref title search)",
+    "conversion": "Var(H) = 0.0346 * 256 = 8.8576",
+    "checked_on": "2026-11-11",
+    "reason": "Table S4 prints the energy variance per site sigma^2/N = (<H^2>-E^2)/N beside every own energy (caption); the row stored none, so it has no V-score.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#14 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8_t12_-0.2",
+      "method": "Pfaffian backflow with symmetry projection",
+      "energy": -190.80448
+    },
+    "field": "energy_variance",
+    "to": 6.9632,
+    "reported_as": "0.0272(5) (sigma^2/N = (<H^2> - E^2)/N, per site, units of t^2)",
+    "location": "Table S4 (SM p. 30), 16x16, t'=-0.2, Pfaffian backflow, sigma^2/N with projection column",
+    "version_read": "arXiv:2610.30321v2 PDF (also v1: identical Table S4 and text except date and acknowledgements), pypdf layout mode; no journal version exists (arXiv abs 2026-11-11, Crossref title search)",
+    "conversion": "Var(H) = 0.0272 * 256 = 6.9632",
+    "checked_on": "2026-11-11",
+    "reason": "Table S4 prints the energy variance per site sigma^2/N = (<H^2>-E^2)/N beside every own energy (caption); the row stored none, so it has no V-score.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#15 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8_t12_-0.2",
+      "method": "NN-fPEPS",
+      "energy": -189.80864
+    },
+    "field": "energy_variance",
+    "to": 12.1344,
+    "reported_as": "0.0474(8) (sigma^2/N = (<H^2> - E^2)/N, per site, units of t^2)",
+    "location": "Table S4 (SM p. 30), 16x16, t'=-0.2, NN-fPEPS, sigma^2/N without projection column",
+    "version_read": "arXiv:2610.30321v2 PDF (also v1: identical Table S4 and text except date and acknowledgements), pypdf layout mode; no journal version exists (arXiv abs 2026-11-11, Crossref title search)",
+    "conversion": "Var(H) = 0.0474 * 256 = 12.1344",
+    "checked_on": "2026-11-11",
+    "reason": "Table S4 prints the energy variance per site sigma^2/N = (<H^2>-E^2)/N beside every own energy (caption); the row stored none, so it has no V-score.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#16 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8_t12_-0.2",
+      "method": "NN-fPEPS with symmetry projection",
+      "energy": -190.63552
+    },
+    "field": "energy_variance",
+    "to": 9.3952,
+    "reported_as": "0.0367(31) (sigma^2/N = (<H^2> - E^2)/N, per site, units of t^2)",
+    "location": "Table S4 (SM p. 30), 16x16, t'=-0.2, NN-fPEPS, sigma^2/N with projection column",
+    "version_read": "arXiv:2610.30321v2 PDF (also v1: identical Table S4 and text except date and acknowledgements), pypdf layout mode; no journal version exists (arXiv abs 2026-11-11, Crossref title search)",
+    "conversion": "Var(H) = 0.0367 * 256 = 9.3952",
+    "checked_on": "2026-11-11",
+    "reason": "Table S4 prints the energy variance per site sigma^2/N = (<H^2>-E^2)/N beside every own energy (caption); the row stored none, so it has no V-score.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#17 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_576_P_252_8_t12_-0.2",
+      "method": "Pfaffian backflow",
+      "energy": -428.87232
+    },
+    "field": "energy_variance",
+    "to": 20.6208,
+    "reported_as": "0.0358(4) (sigma^2/N = (<H^2> - E^2)/N, per site, units of t^2)",
+    "location": "Table S4 (SM p. 30), 24x24, t'=-0.2, Pfaffian backflow, sigma^2/N without projection column",
+    "version_read": "arXiv:2610.30321v2 PDF (also v1: identical Table S4 and text except date and acknowledgements), pypdf layout mode; no journal version exists (arXiv abs 2026-11-11, Crossref title search)",
+    "conversion": "Var(H) = 0.0358 * 576 = 20.6208",
+    "checked_on": "2026-11-11",
+    "reason": "Table S4 prints the energy variance per site sigma^2/N = (<H^2>-E^2)/N beside every own energy (caption); the row stored none, so it has no V-score.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#18 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_576_P_252_8_t12_-0.2",
+      "method": "Pfaffian backflow with symmetry projection",
+      "energy": -429.6096
+    },
+    "field": "energy_variance",
+    "to": 14.8032,
+    "reported_as": "0.0257(3) (sigma^2/N = (<H^2> - E^2)/N, per site, units of t^2)",
+    "location": "Table S4 (SM p. 30), 24x24, t'=-0.2, Pfaffian backflow, sigma^2/N with projection column",
+    "version_read": "arXiv:2610.30321v2 PDF (also v1: identical Table S4 and text except date and acknowledgements), pypdf layout mode; no journal version exists (arXiv abs 2026-11-11, Crossref title search)",
+    "conversion": "Var(H) = 0.0257 * 576 = 14.8032",
+    "checked_on": "2026-11-11",
+    "reason": "Table S4 prints the energy variance per site sigma^2/N = (<H^2>-E^2)/N beside every own energy (caption); the row stored none, so it has no V-score.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#19 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-36d_36_P",
+      "method": "ResNet",
+      "energy": -62.352
+    },
+    "field": "sigma",
+    "to": null,
+    "reported_as": "-0.433(0)",
+    "location": "Table IV (App. A8 b, p. 19), Kagome J2=0 N=36, ResNet column",
+    "version_read": "arXiv:2110.06390v1 PDF (only version), pypdf layout mode, Table I cross-read in the arXiv HTML TeX annotations; no journal version found (arXiv abs has no journal-ref; Crossref title search finds none)",
+    "conversion": "(0) in the last printed digit: the error bar is below half a unit of 1e-3 per spin, i.e. sigma < 0.5e-3 * 144 = 0.072 total; not zero",
+    "checked_on": "2026-11-11",
+    "reason": "App. A8 b: error bars are \"marked by parenthesis around the last significant digit\", so (0) means the stochastic error rounds to zero at the printed precision. A sampled MCMC energy (2*10^5 samples) cannot have sigma 0; storing 0 presents it as exact and makes it win every 2-sigma tie. Proposed: null with a note \"printed (0): sigma < 0.072 total\", or, if a ruling prefers, the half-unit bound 0.072 as an upper limit.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#24 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_100_P",
+      "method": "GNN",
+      "energy": -268.32
+    },
+    "field": "sigma",
+    "to": null,
+    "reported_as": "-0.6708(0)",
+    "location": "Table IV (App. A8 b, p. 19), Square J2=0 N=100, GNN column",
+    "version_read": "arXiv:2110.06390v1 PDF (only version), pypdf layout mode, Table I cross-read in the arXiv HTML TeX annotations; no journal version found (arXiv abs has no journal-ref; Crossref title search finds none)",
+    "conversion": "(0) in the last printed digit: the error bar is below half a unit of 1e-4 per spin, i.e. sigma < 0.5e-4 * 400 = 0.02 total; not zero",
+    "checked_on": "2026-11-11",
+    "reason": "App. A8 b: error bars are \"marked by parenthesis around the last significant digit\", so (0) means the stochastic error rounds to zero at the printed precision. A sampled MCMC energy (2*10^5 samples) cannot have sigma 0; storing 0 presents it as exact and makes it win every 2-sigma tie. Proposed: null with a note \"printed (0): sigma < 0.02 total\", or, if a ruling prefers, the half-unit bound 0.02 as an upper limit.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#28 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.5",
+      "method": "CNN-MPS (D = 20)",
+      "energy": -72.548208
+    },
+    "field": "energy_variance",
+    "to": 0.010129536,
+    "reported_as": "local-energy variance per site sigma^2_E = 1.7586x10^-5 in units of J1^2, Eq. (55): sigma^2_E = Var(E_loc)/N_s, N_s = 36",
+    "location": "Sec. 4.2, Eq. (55) and the sentence after it; Fig. 3 caption \"sigma^2_E = Var(E_loc)/36\"",
+    "version_read": "arXiv:2611.04333v1 PDF (only version; SciPost Physics Codebases submission, not published), pypdf layout mode",
+    "conversion": "Var(H_S.S) = 1.7586e-5 * 36 = 6.33096e-4 J1^2; Pauli stored form (H_Pauli = 4 H_S.S) multiplies the variance by 16: 6.33096e-4 * 16 = 0.010129536",
+    "checked_on": "2026-11-11",
+    "reason": "The loader left the variance out (\"convention not verified\"). Eq. (55) defines it as the variance of the total local energy divided by N_s, in S.S units (energy per site -0.50381 = S.S). Stored energy_variance is the variance of the total stored (Pauli) H, so the factor is 16 N. Caution: add_allresults_rows.mjs only multiplies var_per_site by n_sites, so the pass field must already carry the factor 16.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#42 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_64_P",
+      "method": "ClebschTree",
+      "energy": -172.3856
+    },
+    "field": "sigma",
+    "to": 0.0128,
+    "reported_as": "−43.09640 ±  0.00320 (total energy, S.S units, J1 = 1)",
+    "location": "Table I (App. A) \"Results for 8x8 lattice for various J2/J1\", row ClebschTree (Ours), column J2/J1 = 0 (PRB p. 10 / arXiv v2 p. 10)",
+    "version_read": "Phys. Rev. B 104, 045123 (2021) publisher PDF (journals.aps.org, fetched 2026-11-11) and arXiv:2104.14869v2 (and v1), pypdf layout and plain mode; Table I identical in all three",
+    "conversion": "energy -43.0964 * 4 = -172.3856 (agrees with stored); sigma 0.0032 * 4 = 0.0128 (Pauli total); pass field sigma_per_site = 0.0032/64 = 5e-05",
+    "checked_on": "2026-11-11",
+    "reason": "The table prints an error bar beside every ClebschTree energy; the row stored none. The table is in total S.S units (RBM+symm -43.10268/64 = -0.673479 per site, the known 8x8 value), so the stored Pauli sigma is 4x the printed bar. QMBL already stores VarBench's ClebschTree uploads at J2 = 0.5 and 0.55 with exactly 4x the bars this table prints (0.0168 = 4*0.0042, 0.0204 = 4*0.0051), the same convention. The paper does not define the bar (App. B: 4096 samples per estimate); state that in the note. Energy, 8x8 PBC (Sec. III: \"We benchmark our method on the 8x8 lattice with PBC\"), J1 = 1, J2 and class are correct.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#43 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.45",
+      "method": "ClebschTree",
+      "energy": -130.806
+    },
+    "field": "sigma",
+    "to": 0.0236,
+    "reported_as": "−32.70150 ±  0.00590 (total energy, S.S units, J1 = 1)",
+    "location": "Table I (App. A) \"Results for 8x8 lattice for various J2/J1\", row ClebschTree (Ours), column J2/J1 = 0.45 (PRB p. 10 / arXiv v2 p. 10)",
+    "version_read": "Phys. Rev. B 104, 045123 (2021) publisher PDF (journals.aps.org, fetched 2026-11-11) and arXiv:2104.14869v2 (and v1), pypdf layout and plain mode; Table I identical in all three",
+    "conversion": "energy -32.7015 * 4 = -130.806 (agrees with stored); sigma 0.0059 * 4 = 0.0236 (Pauli total); pass field sigma_per_site = 0.0059/64 = 9.21875e-05",
+    "checked_on": "2026-11-11",
+    "reason": "The table prints an error bar beside every ClebschTree energy; the row stored none. The table is in total S.S units (RBM+symm -43.10268/64 = -0.673479 per site, the known 8x8 value), so the stored Pauli sigma is 4x the printed bar. QMBL already stores VarBench's ClebschTree uploads at J2 = 0.5 and 0.55 with exactly 4x the bars this table prints (0.0168 = 4*0.0042, 0.0204 = 4*0.0051), the same convention. The paper does not define the bar (App. B: 4096 samples per estimate); state that in the note. Energy, 8x8 PBC (Sec. III: \"We benchmark our method on the 8x8 lattice with PBC\"), J1 = 1, J2 and class are correct.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#44 (qmbl-verify 2026-11-11)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_1",
+      "method": "ClebschTree",
+      "energy": -179.016
+    },
+    "field": "sigma",
+    "to": 0.072,
+    "reported_as": "−44.75400 ±  0.01800 (total energy, S.S units, J1 = 1)",
+    "location": "Table I (App. A) \"Results for 8x8 lattice for various J2/J1\", row ClebschTree (Ours), column J2/J1 = 1 (PRB p. 10 / arXiv v2 p. 10)",
+    "version_read": "Phys. Rev. B 104, 045123 (2021) publisher PDF (journals.aps.org, fetched 2026-11-11) and arXiv:2104.14869v2 (and v1), pypdf layout and plain mode; Table I identical in all three",
+    "conversion": "energy -44.754 * 4 = -179.016 (agrees with stored); sigma 0.018 * 4 = 0.072 (Pauli total); pass field sigma_per_site = 0.018/64 = 0.00028125",
+    "checked_on": "2026-11-11",
+    "reason": "The table prints an error bar beside every ClebschTree energy; the row stored none. The table is in total S.S units (RBM+symm -43.10268/64 = -0.673479 per site, the known 8x8 value), so the stored Pauli sigma is 4x the printed bar. QMBL already stores VarBench's ClebschTree uploads at J2 = 0.5 and 0.55 with exactly 4x the bars this table prints (0.0168 = 4*0.0042, 0.0204 = 4*0.0051), the same convention. The paper does not define the bar (App. B: 4096 samples per estimate); state that in the note. Energy, 8x8 PBC (Sec. III: \"We benchmark our method on the 8x8 lattice with PBC\"), J1 = 1, J2 and class are correct.",
+    "source_entry": "RP2-hubbard-heisenberg-j1j2#45 (qmbl-verify 2026-11-11)"
+  },
 ];

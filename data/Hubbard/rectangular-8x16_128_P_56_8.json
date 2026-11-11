@@ -239,7 +239,17 @@
         "method": "source text of arXiv:2611.04333 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.753059(7)",
         "note": "Sec. 4.1 text, SCALE on 16x8; version read: arXiv 2611.04333v1 text (sources/2611.04333.txt); no journal version (arXiv metadata, 2026-11-11) | periodic 16x8, N=112 electrons, U=8, per site",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "arXiv:2611.04333v1 PDF (only version; SciPost Physics Codebases submission, not published), pypdf layout mode",
+          "location": "Sec. 4.1, p. 15: \"...and -0.753059(7) for SCALE on 16x8\"",
+          "reported_as": "-0.753059(7) per site, units of t",
+          "conversion": "-0.753059 * 128 = -96.391552; sigma 7e-06 * 128 = 0.000896",
+          "note": "Eq. (49) H = -t sum_<ij>,sigma (c+c + h.c.) + U sum n_up n_dn, t = 1, no shift, nearest-neighbour hopping only (matches the instance). SCALE (width 256, four site-wise nonlinear layers of width 512) on the periodic 16x8 lattice, N = 112 (N_up = N_dn = 56), U = 8, 1/8 doping; the stripe-pinning field of the reference stage is removed for the final 20000-step optimization. Spin sector: the paper prints only the electron count; the released example scripts (github.com/bytedance/laqx HEAD, docs/examples/hubbard/16x4_pbc_U8_ace_small.sh and 16x8_pbc_U8_scale_small.sh, fetched 2026-11-11) pass --particles 56 / 112 without --particles_up, and main.py lines 141-142 set particles_up = particles // 2, so N_up = N_dn (Sz = 0) as the instance requires; the script layers, widths, steps and the GFMC 5000 steps match Sec. 4.1. Own result of this paper; no journal version. GFMC lowers the VMC energies by 9.6e-4 and 3.2e-3 per site as printed (consistent). Duplicate check: no other row on the instance carries this number (Gu et al. Pareto-frontier ACE rows differ).",
+          "source_entry": "RP2-hubbard-heisenberg-j1j2#40 (qmbl-verify 2026-11-11)"
+        }
       },
       "compute": {
         "parameters": null,
@@ -275,7 +285,17 @@
         "method": "source text of arXiv:2611.04333 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.75628(3)",
         "note": "Sec. 4.1 text; version read: arXiv 2611.04333v1 text (sources/2611.04333.txt); no journal version (arXiv metadata, 2026-11-11) | periodic 16x8, N=112, U=8; fixed-node guided GFMC",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "arXiv:2611.04333v1 PDF (only version; SciPost Physics Codebases submission, not published), pypdf layout mode",
+          "location": "Sec. 4.1, p. 15: \"...and -0.75628(3) for SCALE-guided GFMC\"",
+          "reported_as": "-0.75628(3) per site, units of t",
+          "conversion": "-0.75628 * 128 = -96.80384; sigma 3e-05 * 128 = 0.00384",
+          "note": "Eq. (49) H = -t sum_<ij>,sigma (c+c + h.c.) + U sum n_up n_dn, t = 1, no shift, nearest-neighbour hopping only (matches the instance). fixed-node GFMC guided by SCALE: projected, correct. Spin sector: the paper prints only the electron count; the released example scripts (github.com/bytedance/laqx HEAD, docs/examples/hubbard/16x4_pbc_U8_ace_small.sh and 16x8_pbc_U8_scale_small.sh, fetched 2026-11-11) pass --particles 56 / 112 without --particles_up, and main.py lines 141-142 set particles_up = particles // 2, so N_up = N_dn (Sz = 0) as the instance requires; the script layers, widths, steps and the GFMC 5000 steps match Sec. 4.1. Own result of this paper; no journal version. GFMC lowers the VMC energies by 9.6e-4 and 3.2e-3 per site as printed (consistent). Duplicate check: no other row on the instance carries this number (Gu et al. Pareto-frontier ACE rows differ).",
+          "source_entry": "RP2-hubbard-heisenberg-j1j2#41 (qmbl-verify 2026-11-11)"
+        }
       }
     }
   ],

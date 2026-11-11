@@ -135,7 +135,17 @@
         "method": "source text of arXiv:1902.04057 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-2.4096022(2)",
         "note": "Table I, Gamma=2.0J, NAQS Energy; version read: arXiv 1902.04057v3 text (sources/1902.04057.txt); journal version not read in this pass | 12x12 open boundary stated in text; Pauli, J=1, per-site, h=2",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "Phys. Rev. Lett. 124, 020503 (2020), APS publisher PDF (sources/RP3/prl124-020503.pdf, pypdf layout) and arXiv:1902.04057v3 (latest), pypdf; identical values",
+          "location": "Table I, row Γ = 2.0 J, column NAQS Energy (PRL p. 4; same in arXiv v3)",
+          "reported_as": "−2.4096022(2) per site",
+          "conversion": "-2.4096022 × 144 = -346.9827168; sigma 2e-7 × 144 = 0.0000288",
+          "note": "H = −J Σ σzσz − Γ Σ σx (Pauli), 2D square lattice with open boundary conditions, 12 × 12 (PRL text p. 3); per-site energies; Γ = h. NAQS (PixelCNN) with exact i.i.d. autoregressive sampling: variational. No duplicate on the instance. Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 2602.",
+          "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#19 (qmbl-verify 2026-11-11)"
+        }
       }
     },
     {
@@ -161,7 +171,17 @@
         "method": "source text of arXiv:2002.02973 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-2.40960262(9)",
         "note": "Appendix G, Table II (2DRNN column, h=2); version read: arXiv 2002.02973v4 text (sources/2002.02973.txt); journal version not read in this pass | 12x12 stated in Table II caption; h=2 row; Pauli E/N; matches catalogue best -2.4096026. Boundary not stated explicitly for 2D; open inferred from catalogue agreement to 1e-8 and DMRG on the snake geometry.",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "Phys. Rev. Research 2, 023358 (2020), APS publisher PDF (sources/RP3/prr2-023358.pdf, pypdf layout+plain) and arXiv:2002.02973v4 (latest), pypdf layout; identical values and caption",
+          "location": "Table II (Appendix F, 'Tables of Results'), row h = 2, column 2DRNN; journal p. 023358-13",
+          "reported_as": "−2.40960262(9) per site (E/N)",
+          "conversion": "-2.40960262 × 144 = -346.98277728; sigma 9e-8 × 144 = 0.00001296",
+          "note": "Eq. (14) H = −Σ σzσz − h Σ σx (Pauli); Sec. III: '1D and 2D TFIM ... both with open boundary conditions' (so OBC is stated, not inferred as the first reading said); 12 × 12. Energies estimated with 2 × 10^6 samples (caption). Own computation, variational. No duplicate on the instance (the h = 2/4 DMRG rows quoted via arXiv:2606.25600 are a different method). Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 2722.",
+          "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#34 (qmbl-verify 2026-11-11)"
+        }
       },
       "compute": {
         "parameters": 21000,
@@ -197,7 +217,17 @@
         "method": "source text of arXiv:2002.02973 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-2.4096018(2)",
         "note": "Table II (1DRNN column, h=2); version read: arXiv 2002.02973v4 text (sources/2002.02973.txt); journal version not read in this pass | same as 2D pRNN row",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "Phys. Rev. Research 2, 023358 (2020), APS publisher PDF (sources/RP3/prr2-023358.pdf, pypdf layout+plain) and arXiv:2002.02973v4 (latest), pypdf layout; identical values and caption",
+          "location": "Table II (Appendix F, 'Tables of Results'), row h = 2, column 1DRNN; journal p. 023358-13",
+          "reported_as": "−2.4096018(2) per site (E/N)",
+          "conversion": "-2.40960180 × 144 = -346.9826592; sigma 2e-7 × 144 = 0.0000288",
+          "note": "Eq. (14) H = −Σ σzσz − h Σ σx (Pauli); Sec. III: '1D and 2D TFIM ... both with open boundary conditions' (so OBC is stated, not inferred as the first reading said); 12 × 12. Energies estimated with 2 × 10^6 samples (caption). Own computation, variational. No duplicate on the instance (the h = 2/4 DMRG rows quoted via arXiv:2606.25600 are a different method). Row created from passes/rows/sweep-rows-2026-11-11-ketboard.json (applied by scripts/add_allresults_rows.mjs) line 2751.",
+          "source_entry": "RP3-hubbard-j1j2-tfising-heisenberg#35 (qmbl-verify 2026-11-11)"
+        }
       },
       "compute": {
         "parameters": 152000,
