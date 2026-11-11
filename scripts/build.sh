@@ -34,6 +34,10 @@ node scripts/validate.mjs
 # Track 4, the thermodynamic limit (RULES.md 14): tdl/ is rebuilt from its pass files and checked.
 node scripts/add_tdl_rows.mjs
 node scripts/validate_tdl.mjs
+# The citation cache (sources/openalex.json) for papers the rows cite and it lacks; without an
+# entry the source cell prints the bare identifier. Fetches only the missing ones; offline it
+# warns and the build goes on with the cache as it is.
+node scripts/enrich_sources.mjs | tail -n 1 || echo "enrich_sources: fetch failed, citation cache not refreshed" >&2
 # Last, and in this order: the summary counts the final tree, and the README table is
 # generated from it. Neither is ever hand-edited.
 node scripts/summary.mjs > /dev/null
