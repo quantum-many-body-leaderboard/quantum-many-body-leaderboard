@@ -423,5 +423,33 @@
         "note": "Blanket statement for all Table III (PBC) Fermi-Hubbard runs: samples = roughly 44800 MC samples per optimization step for gradients; the p=1 energies (all Table III values) are evaluated with 48000 MC samples. No parameter count is stated (tensor dimension [M,N,2,d/2,Q,d] with Q=5, d=4 is given but never multiplied out); no iteration count for the Hubbard runs. The only hardware/timing statement (2 minutes per step on 128 AMD EPYC 7742 CPU cores) is made for the 8×16 lattice run, not for these rows, so device/n_devices/wall_clock are left null. No GPU used or mentioned."
       }
     }
+  ],
+  "coverage": [
+    {
+      "checked_on": "2026-11-11",
+      "method": "table harvest of cached arXiv sources (match_tables.mjs --all), every matched paper read for this instance",
+      "screened": [
+        "arXiv:2610.30321",
+        "arXiv:2611.04333",
+        "arXiv:2111.10420",
+        "arXiv:2606.00924",
+        "arXiv:2210.05871"
+      ],
+      "found": 1,
+      "note": "Only papers whose tables matched the instance by size were read; not a citation screen. Energies from: arXiv:2606.00924."
+    },
+    {
+      "checked_on": "2026-11-11",
+      "method": "citation screen of ketboard-hubbard: citing works from OpenAlex and Semantic Scholar (scripts/cited_by.mjs)",
+      "screened": [
+        "arXiv:2610.30321",
+        "arXiv:2611.04333",
+        "arXiv:2111.10420",
+        "arXiv:2606.00924",
+        "arXiv:2210.05871"
+      ],
+      "found": 1,
+      "note": "5 citing works, 5 on arXiv, 5 fetched; 5 read in full, 0 excluded by a text filter (no energy to four decimals, or no QMBL model named). Energies from: arXiv:2606.00924."
+    }
   ]
 }

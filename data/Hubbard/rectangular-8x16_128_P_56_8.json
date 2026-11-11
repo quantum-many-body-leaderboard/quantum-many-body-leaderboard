@@ -215,6 +215,96 @@
           "pass": "passes/code/code-links-2026-10-22.json"
         }
       }
+    },
+    {
+      "energy": -96.391552,
+      "sigma": 0.000896,
+      "energy_variance": null,
+      "dof": 112,
+      "einf": 196,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "SCALE",
+      "method_detail": "",
+      "method_as_published": "SCALE",
+      "family": "CNN / ResNet",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Gu et al., LaQX: A JAX Toolkit for Neural Quantum State Simulations of Lattice Quantum Many-Body Models, arXiv:2611.04333",
+      "peer_reviewed": false,
+      "source": "sweep-allresults-2026-11-11",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-11",
+        "method": "source text of arXiv:2611.04333 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-0.753059(7)",
+        "note": "Sec. 4.1 text, SCALE on 16x8; version read: arXiv 2611.04333v1 text (sources/2611.04333.txt); no journal version (arXiv metadata, 2026-11-11) | periodic 16x8, N=112 electrons, U=8, per site",
+        "secondary_of": null
+      },
+      "compute": {
+        "parameters": null,
+        "gpu_hours": null,
+        "device": null,
+        "n_devices": null,
+        "samples": 4096,
+        "wall_clock": null,
+        "reported_as": "\"...led stripe[2]. The field is removed for the final 20000-step SCALE optimization atU=8. Both optimizations use 4096 walkers. The ACE state has 12 convolutional layers of width 128; SCALE uses width 256 and four site-wise nonlinear layers of...\"",
+        "source": "arXiv:2611.04333, located by string match in the committed source text"
+      }
+    },
+    {
+      "energy": -96.80384,
+      "sigma": 0.00384,
+      "energy_variance": null,
+      "dof": 112,
+      "einf": 196,
+      "v_score": null,
+      "method": "FN-GFMC",
+      "ansatz": "SCALE",
+      "method_detail": "",
+      "method_as_published": "GFMC (SCALE-guided)",
+      "family": "AFQMC / GFMC",
+      "bound_type": "projected",
+      "bound_type_reason": "projection (GFMC/fixed-node) on a trial state; not a strict variational bound (assigned during source reading)",
+      "reference": "Gu et al., LaQX: A JAX Toolkit for Neural Quantum State Simulations of Lattice Quantum Many-Body Models, arXiv:2611.04333",
+      "peer_reviewed": false,
+      "source": "sweep-allresults-2026-11-11",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-11",
+        "method": "source text of arXiv:2611.04333 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-0.75628(3)",
+        "note": "Sec. 4.1 text; version read: arXiv 2611.04333v1 text (sources/2611.04333.txt); no journal version (arXiv metadata, 2026-11-11) | periodic 16x8, N=112, U=8; fixed-node guided GFMC",
+        "secondary_of": null
+      }
+    }
+  ],
+  "coverage": [
+    {
+      "checked_on": "2026-11-11",
+      "method": "table harvest of cached arXiv sources (match_tables.mjs --all), every matched paper read for this instance",
+      "screened": [
+        "arXiv:2610.30321",
+        "arXiv:2611.04333",
+        "arXiv:2111.10420",
+        "arXiv:2606.00924",
+        "arXiv:2210.05871"
+      ],
+      "found": 1,
+      "note": "Only papers whose tables matched the instance by size were read; not a citation screen. Energies from: arXiv:2611.04333."
+    },
+    {
+      "checked_on": "2026-11-11",
+      "method": "citation screen of ketboard-hubbard: citing works from OpenAlex and Semantic Scholar (scripts/cited_by.mjs)",
+      "screened": [
+        "arXiv:2610.30321",
+        "arXiv:2611.04333",
+        "arXiv:2111.10420",
+        "arXiv:2606.00924",
+        "arXiv:2210.05871"
+      ],
+      "found": 1,
+      "note": "5 citing works, 5 on arXiv, 5 fetched; 5 read in full, 0 excluded by a text filter (no energy to four decimals, or no QMBL model named). Energies from: arXiv:2611.04333."
     }
   ]
 }

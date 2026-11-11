@@ -121,6 +121,190 @@
         "note": "Table 6, row DMRG (not exact); sources/2606.25600.txt line 808; version read: arXiv v1 text (sources/2606.25600.txt); every energy string checked identical in v2 (2026-10-10); no journal version (Crossref, arXiv abs page); the paper's own DMRG, labelled 'DMRG (not exact)'; no bond dimension, code or reference given; qmbl-verify 2026-10-19 SP7-heg3d-tfising#72: reference \"H. L. Dao, Two-dimensional Hyperbolic RNN Neural Quantum State, arXiv:2606.25600 (v1, 2026-06-24; v2, 2026-10-10)\" -> \"M. Hibat-Allah, M. Ganahl, L. E. Hayward, R. G. Melko & J. Carrasquilla, Recurrent neural network wave functions, Phys. Rev. Research 2, 023358 (2020), arXiv:2002.02973, doi:10.1103/PhysRevResearch.2.023358\" (Dao quotes this DMRG energy; it is Hibat-Allah et al.'s. Hibat-Allah et al. arXiv:2002.02973 (qmbl sources/2002.02973.txt line 1734-1736), Table II (App. F): 'h E/N ... DMRG' row h = 4: -4.12179793; c); qmbl-verify 2026-10-19 SP7-heg3d-tfising#73: provenance \"primary\" -> \"secondary\" (Quoted from arXiv:2002.02973 Table II (see the reference correction on this row).); qmbl-verify 2026-10-19 SP7-heg3d-tfising#74: energy -593.5389 -> -593.53890192 (Dao prints the primary value rounded to 4 decimals of the total (-593.5389); the primary prints 8 decimals per site. Carry the primary's digits (stored -593.5389 differs by 1.92e-6).); qmbl-verify 2026-10-19 SP7-heg3d-tfising#75: method \"DMRG (not exact)\" -> \"DMRG (bond dimension χ = 1024)\" (Method string of the primary source; the label 'DMRG (not exact)' is Dao v1's table label only (v2 prints 'DMRG').) | Eq. (17): H = -J sum_<ij> sigma^z sigma^z - B_x sum_i sigma^x, Pauli matrices, J = 1, open boundaries in both directions; energies are totals (they scale with N: DMRG -202.5077/64, -316.9770/100, -457.0416/144 = -3.164, -3.170, -3.174 per site); QMBL's h is B_x.",
         "secondary_of": "arXiv:2606.25600"
       }
+    },
+    {
+      "energy": -593.5388976,
+      "sigma": 0.0000288,
+      "energy_variance": null,
+      "dof": 144,
+      "einf": 0,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "NAQS",
+      "method_detail": "",
+      "method_as_published": "NAQS",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Sharir, Levine, Wies, Carleo & Shashua, Deep autoregressive models for the efficient variational simulation of many-body quantum systems, Phys. Rev. Lett. 124, 020503 (2020), arXiv:1902.04057, doi:10.1103/PhysRevLett.124.020503",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-11",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-11",
+        "method": "source text of arXiv:1902.04057 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-4.1217979(2)",
+        "note": "Table I, Gamma=4.0J, NAQS Energy; version read: arXiv 1902.04057v3 text (sources/1902.04057.txt); journal version not read in this pass | 12x12 open boundary stated in text; Pauli, J=1, per-site, h=4",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -593.53632,
+      "sigma": 0.00576,
+      "energy_variance": null,
+      "dof": 144,
+      "einf": 0,
+      "v_score": null,
+      "method": "QMC",
+      "ansatz": null,
+      "method_detail": "",
+      "method_as_published": "unbiased quantum Monte Carlo (QMC)",
+      "family": "other",
+      "bound_type": "exact",
+      "bound_type_reason": "numerically exact reference as stated by the source (assigned during source reading)",
+      "reference": "Sharir, Levine, Wies, Carleo & Shashua, Deep autoregressive models for the efficient variational simulation of many-body quantum systems, Phys. Rev. Lett. 124, 020503 (2020), arXiv:1902.04057, doi:10.1103/PhysRevLett.124.020503",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-11",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-11",
+        "method": "source text of arXiv:1902.04057 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-4.12178(4)",
+        "note": "Table I, Gamma=4.0J, QMC Energy (error bar printed); version read: arXiv 1902.04057v3 text (sources/1902.04057.txt); journal version not read in this pass | same as NAQS row; QMC provenance unnamed, own assumed",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -593.53892352,
+      "sigma": 0.00000864,
+      "energy_variance": null,
+      "dof": 144,
+      "einf": 0,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "2D RNN",
+      "method_detail": "positive, vanilla, 1 layer, 100 memory units",
+      "method_as_published": "2D pRNN (single layer 2D vanilla RNN, 100 memory units)",
+      "family": "RNN",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Hibat-Allah, Ganahl, Hayward, Melko & Carrasquilla, Recurrent Neural Network Wave Functions, Phys. Rev. Research 2, 023358 (2020), arXiv:2002.02973, doi:10.1103/PhysRevResearch.2.023358",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-11",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-11",
+        "method": "source text of arXiv:2002.02973 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-4.12179808(6)",
+        "note": "Table II (2DRNN column, h=4); version read: arXiv 2002.02973v4 text (sources/2002.02973.txt); journal version not read in this pass | same; catalogue best -4.1217979",
+        "secondary_of": null
+      },
+      "compute": {
+        "parameters": 21000,
+        "gpu_hours": null,
+        "device": null,
+        "n_devices": null,
+        "samples": null,
+        "wall_clock": null,
+        "reported_as": "\"...ze the 2D pRNN wave function with a single-layer 2D vanilla RNN cell that has 100 mem- ory units (i.e. with ∼ 21000 variational parameters) to approximate the ground state of the 2D quantum Ising model at h = 2, 3, 4. The training complexit...\"",
+        "source": "arXiv:2002.02973, located by string match in the committed source text"
+      }
+    },
+    {
+      "energy": -593.5387536,
+      "sigma": 0.0000432,
+      "energy_variance": null,
+      "dof": 144,
+      "einf": 0,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "RNN",
+      "method_detail": "positive, 3-layer GRU, 100 memory units",
+      "method_as_published": "1D pRNN (three layers of GRUs, 100 memory units)",
+      "family": "RNN",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Hibat-Allah, Ganahl, Hayward, Melko & Carrasquilla, Recurrent Neural Network Wave Functions, Phys. Rev. Research 2, 023358 (2020), arXiv:2002.02973, doi:10.1103/PhysRevResearch.2.023358",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-11",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-11",
+        "method": "source text of arXiv:2002.02973 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-4.1217969(3)",
+        "note": "Table II (1DRNN column, h=4); version read: arXiv 2002.02973v4 text (sources/2002.02973.txt); journal version not read in this pass | same",
+        "secondary_of": null
+      },
+      "compute": {
+        "parameters": 152000,
+        "gpu_hours": null,
+        "device": null,
+        "n_devices": null,
+        "samples": null,
+        "wall_clock": null,
+        "reported_as": "\"...NN wave function architecture with three layers of stacked GRU cells, each with 100 memory units (i.e., with ∼152000 variational parameters) for the same values of the magnetic ﬁeld h. In Fig. 5(c) we compare the ob- tained ground state ene...\"",
+        "source": "arXiv:2002.02973, located by string match in the committed source text"
+      }
+    }
+  ],
+  "coverage": [
+    {
+      "checked_on": "2026-11-11",
+      "method": "table harvest of cached arXiv sources (match_tables.mjs --all), every matched paper read for this instance",
+      "screened": [
+        "arXiv:2304.01996",
+        "arXiv:2611.05174",
+        "arXiv:2602.12998",
+        "arXiv:2602.03031",
+        "arXiv:2606.30464",
+        "arXiv:2603.14425",
+        "arXiv:1902.04057",
+        "arXiv:2206.14307",
+        "arXiv:2002.02973",
+        "arXiv:2110.06390",
+        "arXiv:2002.04613"
+      ],
+      "found": 2,
+      "note": "Only papers whose tables matched the instance by size were read; not a citation screen. Energies from: arXiv:1902.04057, arXiv:2002.02973."
+    },
+    {
+      "checked_on": "2026-11-11",
+      "method": "table harvest of cached arXiv sources (match_tables.mjs --all), every matched paper read for this instance",
+      "screened": [
+        "arXiv:2510.08430",
+        "arXiv:2104.14869"
+      ],
+      "found": 0,
+      "note": "Only papers whose tables matched the instance by size were read; not a citation screen."
+    },
+    {
+      "checked_on": "2026-11-11",
+      "method": "citation screen of ketboard-spins: citing works from OpenAlex and Semantic Scholar (scripts/cited_by.mjs)",
+      "screened": [
+        "arXiv:2304.01996",
+        "arXiv:2611.05174",
+        "arXiv:2602.12998",
+        "arXiv:2602.03031",
+        "arXiv:2606.30464",
+        "arXiv:2603.14425",
+        "arXiv:1902.04057",
+        "arXiv:2206.14307",
+        "arXiv:2002.02973",
+        "arXiv:2110.06390",
+        "arXiv:2002.04613"
+      ],
+      "found": 2,
+      "note": "13 citing works, 13 on arXiv, 13 fetched; 11 read in full, 2 excluded by a text filter (no energy to four decimals, or no QMBL model named). Energies from: arXiv:1902.04057, arXiv:2002.02973."
+    },
+    {
+      "checked_on": "2026-11-11",
+      "method": "citation screen of ketboardb-spins: citing works from OpenAlex and Semantic Scholar (scripts/cited_by.mjs)",
+      "screened": [
+        "arXiv:2510.08430",
+        "arXiv:2104.14869"
+      ],
+      "found": 0,
+      "note": "2 citing works, 2 on arXiv, 2 fetched; 2 read in full, 0 excluded by a text filter (no energy to four decimals, or no QMBL model named)."
     }
   ]
 }

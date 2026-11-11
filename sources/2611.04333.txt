@@ -1,0 +1,1477 @@
+ SciPost Physics Codebases                                                           Submission
+
+
+    LaQX: A JAX Toolkit for Neural Quantum State Simulations ofLattice Quantum Many-Body Models
+
+
+                Yuntian Gu1,2⋆    , Chaohui Fan1,3, Ruichen Li1, Haoxiang Chen1,4,
+                   Weizhong Fu1,4, Yixiao Chen1, Dingshun Lv1, Weiluo Ren1,
+                       Tao Xiang3†  , Liwei Wang2‡  , Mingpu Qin5§  , Xiang Li1¶
+
+                               1ByteDance Seed, Beijing 100098, China
+  2School of Intelligence Science and Technology, Peking University, Beijing 100871, China
+ 3School of Physical Sciences, University of Chinese Academy of Sciences, Beijing 100049,
+                                                     China
+                   4School of Physics, Peking University, Beijing 100871, China
+5School of Physics and Astronomy, Shanghai Jiao Tong University, Shanghai 200240, China
+
+                           ⋆guyuntian@bytedance.com,    †txiang@iphy.ac.cn
+                           ‡wanglw@pku.edu.cn,    §qinmingpu@sjtu.edu.cn
+                                    ¶lixiang.62770689@bytedance.com
+
+
+Abstract
+
+Neural quantum states provide accurate variational representations for interacting lat-
+tice fermions and spins. Turning a new ansatz into a reproducible calculation, however,
+requires coordinated implementations of the Hamiltonian, sampling, optimization, ob-
+servables, and accelerator parallelism.  We present LaQX (Lattice Quantum simulation
+based on jaX), an open-source neural quantum state library based on JAX that organizes
+these components through common functional interfaces.   Beyond ground-state vari-
+ational Monte Carlo, LaQX supports excited-state calculations, Green’s Function Monte
+Carlo refinement, adiabatic evolution, and real-time evolution with time-dependent vari-
+ational Monte Carlo. It consolidates methods developed in recent high-accuracy neural
+quantum state studies of the Hubbard model and frustrated magnets[1–3], and the pack-
+age has been used to investigate the triangular-lattice Hofstadter-Hubbard model[4]. We
+document these capabilities with reproducible calculations for Hubbard,J                    1-J 2 Heisen-
+berg,  altermagnetic  Hubbard,  and  interacting  Hofstadter  models.   Function-oriented
+modules separate the scientific components and limit the source context needed for ex-
+tensions by human developers and large language models. Source code, documentation,
+and executable examples are available athttps://github.com/bytedance/laqx.
+
+  Copyright attribution to authors.                                        Received Date
+  This work is a submission to SciPost Physics Codebases.                  Accepted Date
+  License information to appear upon publication.                          Published Date
+  Publication information to appear upon publication.
+
+
+Contents
+
+1   Introduction                                                                                            2
+
+2   Algorithms                                                                                                                   4
+    2.1    Variational Monte Carlo                                                                                    4
+
+
+                                                        1
+  SciPost Physics Codebases                                                           Submission
+
+
+
+     2.2    Neural wavefunction architectures                                                        4
+     2.3    Sampling and ground-state optimization                                              7
+     2.4    Natural Excited States                                                                                      9
+     2.5    Green’s Function Monte Carlo projection                                                10
+     2.6    Adiabatic evolution                                                                                   11
+     2.7    Time-dependent VMC and parameter-efficient evolution                         11
+
+3   Function-oriented software design                                                                 12
+     3.1    Composition of the numerical workflow                                                   12
+     3.2    Locality of changes and LLM-assisted development                            13
+
+4   Physical applications                                                                             14
+     4.1    Doped Hubbard ground states and GFMC                                                     14
+     4.2    FrustratedJ                      1-J  2 spin model                                                                           16
+     4.3    Altermagnetic Hubbard model                                                                      16
+     4.4    Hofstadter low-energy spectrum with NES                                                       17
+     4.5    Hofstadter charge pumping                                                                       17
+     4.6    Real-time tVMC                                                                                              18
+
+5   Conclusion                                                                                               19
+
+References                                                                                                                      20
+
+
+
+
+1 Introduction
+
+Lattice models connect microscopic Hamiltonians to collective quantum phenomena.  Their
+numerical  solution  is  nevertheless  difficult  because  the  Hilbert-space  dimension  grows  ex-
+ponentially with system size.  Exact diagonalization (ED) is consequently restricted to finite
+clusters[5], density-matrix renormalization group[6]and matrix product state (MPS) meth-
+ods[7]are most effective in one dimension and quasi-one-dimensional geometries, and higher-
+dimensional tensor-network contractions require additional approximations[8,9].  Quantum
+Monte Carlo[5,10–13]can reach much larger systems when a non-negative sampling weight
+is available, but frustration and fermionic statistics can produce a sign problem whose generic
+resolution is computationally hard[14,15]. Comparisons on paradigmatic models such as the
+Hubbard model[16]therefore continue to rely on complementary numerical methods with
+different controlled limits[17–19].
+     Neural quantum states (NQS) add a flexible class of variational wavefunctions to this land-
+scape. In variational Monte Carlo (VMC)[10,12], a neural network represents the many-body
+amplitude, and its parameters are optimized using stochastic estimates over the Born distribu-
+tion[20]. The field now encompasses a broad range of architectures and applications[21,22].
+Early work combined restricted Boltzmann machines with conventional fermionic pair-product
+states[23], while convolutional networks addressed frustrated magnets[24]and autoregres-
+sive recurrent networks enabled direct sampling[25].  Subsequent developments introduced
+symmetry-aware deep networks for frustrated spin systems[26], neural backflow and hidden-
+fermion constructions for lattice fermions[27–29], and variational protocols for excited states
+and dynamics[30,31].
+     Recent studies have used hidden-fermion Pfaffian states[32], Transformer backflow[1,
+
+
+                                                                 2
+  SciPost Physics Codebases                                                           Submission
+
+
+
+33], convolutional backflow[2], and symmetry-preserving pairing states[34]to investigate
+the ground states of the square-latticet-t         ′ Hubbard model. Large-scale NQS calculations have
+also examined topological superconductivity and quantum criticality in the triangular-lattice
+Hofstadter-Hubbard model[4,35].   Combining neural networks with tensor networks pro-
+vides another route to correlated variational states[3].  These studies compare energies and
+order-specific correlations across variational families to distinguish competing phases.  The
+range of fermionic, spin, excited-state, and dynamical applications motivates software that
+can accommodate new methods without duplicating the full VMC workflow.
+    Reusable software has developed alongside these methods. NetKet and jVMC provide gen-
+eral NQS and VMC infrastructure[36,37], while Quantax is a JAX package for flexible lattice
+many-body and NQS calculations[38]. In the complementary setting of first-quantized, real-
+space electronic structure, FermiNet established the accuracy of antisymmetric neural wave-
+functions[39,40],  and JaQMC provides an open JAX framework for neural-network VMC
+and  diffusion  Monte  Carlo[41,42].   Together  with  recent  GPU-vectorized  tensor-network
+VMC[43], these efforts show that accelerator performance depends not only on the cost of
+a single wavefunction evaluation, but also on batched sampling, differentiation, and linear
+algebra. They also establish the value of independent codebases with different physical scope
+and extension patterns.
+    Built on JAX[44], LaQX targets interacting lattice fermions and spins.  It provides neu-
+ral backflow and tensor-network states, symmetry projection, Metropolis-Hastings sampling,
+first-order and natural-gradient optimization, and observable evaluation. The same interfaces
+support ground-state VMC with optional Green’s Function Monte Carlo (GFMC)[45,46]re-
+finement, joint optimization of low-lying states with Natural Excited States (NES)[30], mea-
+surements on trained states,  adiabatic evolution by variational continuation,  and real-time
+evolution with time-dependent VMC (tVMC).
+    LaQX consolidates the computational framework developed for neural quantum state cal-
+culations of the doped Hubbard model, including Transformer-backflow states and the MARCH
+optimizer[1], followed by the SCALE and ACE convolutional backflow architectures[2].  It
+also incorporates architecture that combine convolutional neural networks (CNNs) with MPS,
+denoted CNN-MPS, for frustrated magnets[3].  The convolutional-backflow and CNN-MPS
+studies report variational energies among the best available for their respective fermionic and
+spin benchmarks.  LaQX has subsequently been applied to the triangular-lattice Hofstadter-
+Hubbard model, where NQS and independent projected entangled pair state (PEPS) calcula-
+tions provided complementary real-space evidence of spin-charge separation[4]. The present
+release brings these developments together in a documented package that supports multiple
+ansatz families and physical workflows.
+    The implementation is deliberately function-oriented. Wavefunctions, physical operators,
+samplers, and parameter updates are connected through small interfaces, with numerical state
+passed explicitly between them. This separation makes JAX transformations directly applicable
+and allows many scientific extensions to remain local to one component. It also supports pro-
+gramming with large language models (LLMs), including the conversational workflow known
+asvibe coding[47]. Limiting cross-component dependencies reduces the source context needed
+for an extension. Section3.2illustrates these extension paths.
+    The remainder of this paper is organized as follows. Section2defines the numerical meth-
+ods and notation. Section3describes the software architecture. Section4presents calculations
+for Hubbard,J                    1-J  2 Heisenberg, altermagnetic, and interacting Hofstadter models.
+
+
+
+
+
+
+
+                                                         3
+  SciPost Physics Codebases                                                           Submission
+
+
+2 Algorithms
+
+2.1Variational Monte Carlo
+Letn=  (n            1, . . . ,n  L)contain theLlocal occupation variables of a fermionic or spin config-
+uration,  and letψ  θ (n)be its amplitude under a variational state with parametersθ.   The
+variational total energy is
+                                                     E(θ) =  〈ψ θ|H|ψ  θ〉〈ψ θ|ψθ〉  .                                                    (1)
+
+Introducing the normalized Born distribution
+
+                                                   pθ (n) =  |ψθ (n)|       2P
+                                                                    n′|ψθ (n ′)|  2                                                   (2)
+withψ   θ (n) =〈n|ψ     θ〉givesE(θ) =〈E                          loc〉pθ , where
+
+
+                                                     Eloc(n) = 〈n|H|ψ    θ〉ψθ (n)      .                                                    (3)
+
+For real variational coordinatesθ                         a (including separate real and imaginary coordinates when
+needed), define the logarithmic derivativeO                     a(n) =∂   θa logψ  θ (n).  For a Hermitian Hamilto-
+nian independent ofθ, differentiating the total energyE(θ)gives
+                                         ∂θa E=2 Re  
+O∗              −
+O∗〈E  loc〉 .                                        (4)
+                                                                a Eloc          a
+
+2.2Neural wavefunction architectures
+
+SCALE and ACE are convolutional neural backflow states for lattice fermions[2], while CNN-
+MPS combines convolutional features with a tensor-network output for spins[3]. Their feature
+extractors use the same elementary operations: occupation embeddings, spatial convolutions,
+and site-wise multilayer perceptrons (MLPs)[48]. We define these operations first, then specify
+how each architecture constructs the many-body amplitude.
+
+Occupation embeddings and convolutional features.LetN                          s =L    x L y  denote the number
+of spatial sites, and letq      i label the local basis state at sitei. For spinful fermions,q                             i =n    i↑ +2n      i↓
+distinguishes the four states|0〉,|↑〉,|↓〉, and|↑↓〉; for a spin-1/2 or spin-polarized occupation
+basis,q            i∈{0, 1}.   A trainable, site-dependent lookup tableEmaps this discrete label to a
+feature vector withd          h channels,
+                                                       h(0)i    =E    i,q   i∈R   dh.                                                      (5)
+A convolution then mixes features at nearby sites.   For ak×kkernel with oddk,  define
+Nk ={−(k−1)/2, . . . ,(k−1)/2}                                            2 and
+
+                                                                    X       dhX
+                                       [C  (ℓ)   (h)]     iβ  =b    (ℓ)β   +    K(ℓ)δαβ  hi+δ,α     .                                     (6)
+                                                                   δ∈N      kα=1
+
+Hereℓlabels the layer,αandβlabel input and output channels, andK                                        (ℓ)   andb         (ℓ)   are the train-
+able kernel and bias shared across sites.  Indices wrap in a periodic direction, while features
+outside an open boundary are set to zero. The examples use the element-wise sigmoid linear
+unit (SiLU) activation[49],σ(x) =x/(1+e                −x   ).  A residual block adds the transformed fea-
+tures to its input,h             i+σ[C(h)                 i]. Although convolutional weights are shared, the site-dependent
+embeddings do not by themselves impose translation symmetry on the state.
+
+                                                                   4
+  SciPost Physics Codebases                                                           Submission
+
+
+
+     After the spatial blocks, an MLP acts separately on each site’s features:
+
+                                                 u(0)i    =h    (L  C)i    ,      g i =u    (L  M)i     ,
+                                             u(m+1)i        =σ W (m)   u(m)i     +b    (m) .                                            (7)
+
+LC andL        M count the convolutional and MLP layers.  The MLP widths may differ fromd          h.  Its
+weights are shared across sites, but it introduces no additional spatial mixing:  the receptive
+field, namely the input sites on whichg             i depends, is set by the convolutional stack.
+
+Determinantal backflow.   ForNfermions, an affine output map produces an orbital table
+Mθ (n)withNcolumns andn                            sNs rows, wheren             s =2 for spinful andn            s =1 for spin-polarized
+fermions:                                                    X
+                                           M(i,s),j      (n) =    W outs jµ  giµ (n) +b         outs j  .                                         (8)
+                                                              µ
+The indicess,j=1, . . . ,N, andµ=1, . . . ,d                                             g label the spin channel, orbital, and output feature
+of the MLP, respectively;d                           g  is its output width.  IfI   a(n)is theath occupied spin orbital, the
+single-determinant setting used here is
+
+                                   Φa j(n) =M         Ia(n),j     (n),  ψ   θ (n) =detΦ     θ (n).                                 (9)
+
+Thus anN×Nmatrix is obtained by selecting occupied rows from the orbital table. Unlike a
+fixed-orbital Slater determinant, each row depends on the surrounding occupations through
+the neural features, introducing backflow correlations[27]. ACE can produce complex orbitals
+by combining separate real and imaginary affine outputs.  When requested, lattice-symmetry
+projection forms a character-weighted sum of transformed amplitudes, including the fermionic
+reordering signs[26].
+
+SCALE and sparse updates.SCALE (Sparse Convolutional Ansatz for Lattice Electrons) uses
+one residual convolution without layer normalization[50],
+                                               h(1)                                   ,                                            (10)
+                                                 i    =h    (0)i    +σ C(0)   (h  (0)   )i
+
+followed by Eqs. (7)-(9). Changing a few occupations modifies only the features within their
+convolutional neighborhoods; the remaining orbital rows can be reused from a cache.  With
+consistent occupied-row labels, the updated Slater matrix isΦ ′ =Φ+UV        T, whereU,V∈C                        N×r
+andrcounts the affected rows.Uselects these rows andV                        T contains their changes. The matrix
+determinant lemma and Sherman-Morrison-Woodbury identity give
+
+                                         Br =I    r +V   TΦ−1  U,          detΦ  ′detΦ       =detB           r,
+
+                                    (Φ ′)−1   =Φ −1 −Φ −1  UB−1r   VTΦ−1  .                                                 (11)
+
+HereI           r is ther×ridentity, andTdenotes the algebraic transpose. Only anr×rmatrix must be
+factorized; updating the cached inverse costsO(N                 2r+r      3)rather than a freshO(N                   3)factoriza-
+tion. At fixed density, kernel size, and number of changed occupations,rstays bounded as the
+lattice grows. Together with local feature recomputation, this reduces the determinant-update
+cost of a sweep ofO(N)local moves fromO(N                                4)toO(N             3)[2].
+
+
+
+
+
+
+
+                                                                  5
+  SciPost Physics Codebases                                                           Submission
+
+
+
+ACE and deep convolutional features.ACE (Accurate Convolutional ansatz for lattice Elec-
+trons) replaces Eq. (10) by a deep stack,
+                                                                      
+                         h(ℓ+1)i       =LN ℓh(ℓ)i    +σ C(ℓ)   (h  (ℓ)   )i,  ℓ=0, . . . ,L         C−1.                     (12)
+
+Layer normalization[50]is applied after the residual addition, independently at each site:
+
+                              [LN ℓ(z  i)]α =γ ℓα   ziα− ¯zipvi +ε    LN+β ℓα,
+                                                      X                           X                                           (13)
+                                           ¯zi =  1dh      ziα ,       v i =  1dh     (z  iα− ¯zi)2.
+                                                       α                           α
+Here ¯zi andv        i are the mean and variance across channels at sitei;γ   ℓα andβ   ℓα are the trainable
+scale and offset.  ACE usesε         LN  =10 −4  .  Each layer enlarges the receptive field before the
+same MLP and orbital output are applied.  A sufficiently deep stack allows a local occupation
+change to affect features throughout the lattice, and the ACE implementation reevaluates the
+full network rather than using SCALE’s sparse updates. SCALE and ACE therefore trade strict
+update locality for deeper, more expressive backflow features.  The Hubbard benchmarks in
+Ref.[2]report a more favorable energy-runtime trade-off for ACE than for the Transformer-
+backflow architectures of Ref.[1]in the systems and configurations compared.
+
+CNN-MPS for spins.For spins, the local-state label isq                 i  =n    i∈{0, 1}, withn                 i  =0 and 1
+denoting spin down and spin up, respectively;n= (n                                1, . . . ,n Ns)specifies the spin configuration.
+The CNN-MPS implementation initializes its features with trainable vectorse               q,p i∈R   dh: e  q
+embeds local stateqand is shared across sites, whilep                         i encodes the position of sitei,
+
+                                                       h(0)i    =e    qi +p    i.                                                       (14)
+
+It then uses the residual convolutional stack in Eq. (12), with layer normalization at every
+site, and the site-wise MLP in Eq. (7).  In this architecture, each layer’s normalization scale
+and offset are scalars shared across channels, andε        LN =10 −5  . Letd       g be the number of output
+features of the MLP, sog     iµ (n)is componentµ=1, . . . ,d                                        g  ofg    i(n).  A tensor-valued linear
+output replaces the orbital map, producing a matrixA               (r),qi     (n)∈R          D×D     for each local spin state
+qand headr,
+                                                    dgX
+                              [A  (r),qi     (n)]     ab =T (r),qabµ   giµ (n),       a,b=1, . . . ,D.                          (15)
+                                                   µ=1
+Hereaandbare the left and right MPS bond indices, andDis the bond dimension.  The
+indexrlabels one of theN                     head  MPS heads.  The trainable output weightsT                  (r),qabµ    are shared
+across sites.  Selectingq=n                          i and contracting the bond indices with periodic MPS boundary
+conditions gives, before lattice-symmetry projection,
+                                                        NheadX      NsY             
+                                           ψθ (n) =           Tr         A(r),n       ii      (n).                                         (16)
+                                                         r=1        i=1
+The ordered matrix product followsi=x L                     y +y+1, with lattice coordinatesx=0, . . . ,L                                          x−1
+andy=0, . . . ,L                y−1; Tr contracts the last MPS bond with the first. Each head supplies a sep-
+arate set of output weights while sharing the neural features, and the contracted amplitudes
+are summed.  Because these tensors depend on occupations beyond their own site, this is a
+backflow MPS, not an ordinary MPS with fixed local tensors.  In the neural tensor-network
+interpretation of Ref.[3], the convolutional map acts as a generally nonunitary disentangler
+and the bond dimensionDcontrols the tensor-network representation of the remaining corre-
+lations.
+
+                                                                 6
+  SciPost Physics Codebases                                                           Submission
+
+
+2.3Sampling and ground-state optimization
+Metropolis-Hastings sampling.A Markov chain samples configurations fromp           θ  [51,52].
+LaQX constructs proposals from the off-diagonal terms of the Hamiltonian: an allowed hopping
+or spin-exchange term generates a candidate configurationn        ′ fromn. A proposaln         ′∼q(n  ′|n)
+is accepted with probability
+                                                                               q(n|n  ′)
+                                    a(n→n   ′) =min           1,|ψθ (n ′)|  2|ψθ (n)|       2q(n ′|n).                                  (17)
+
+Otherwise the chain remains atn.  Including the forward-reverse proposal ratio accommo-
+dates asymmetric proposals while satisfying detailed balance with the Born distribution. Local
+occupation moves preserve the sampled particle-number or magnetization sector.
+
+Stochastic  reconfiguration.LaQX  provides  Adam[53],  SPRING[54],  and  MARCH[1].
+Adam uses the energy-gradient covariance in Eq. (4) to construct adaptive first- and second-
+moment updates.  The latter two methods are derived from stochastic reconfiguration (SR)
+[55]:  instead  of  descending  in  the  Euclidean  geometry  of  the  parameters,  SR  projects  an
+imaginary-time step onto the tangent space of the variational state.
+     Letθ= (θ           1, . . . ,θ  P)contain thePreal trainable coordinates, with indicesa,b=1, . . . ,P.
+Brackets denote averages over the Born distributionp        θ, and∗denotes complex conjugation.
+     Using  the  logarithmic  derivativesO                       a  defined  above,  introduce  the  centered  quantities
+∆O    a =O    a−〈O  a〉and∆E              loc =E    loc−〈E  loc〉.  The derivative covariance matrixSand energy-
+covariance vectorFhave entries
+
+                                    Sab =〈∆O   ∗a∆O    b〉,       F   a =〈∆O   ∗a∆E    loc〉.                                  (18)
+
+At optimization stepk, letd= (d                     1, . . . ,d  P)∈R     P  be a trial parameter-update direction, with
+da specifying the change in coordinateθ                       a before step-size scaling. All averages are evaluated
+at the current parametersθ                        k. Fitting the normalized imaginary-time derivative−(H−E)|ψ             θ〉
+gives the minimizing directiond                   SR and parameter update
+                                                        (* PX                       2+               )
+                                     dSR =arg min                  ∆O    ada +∆E        loc   +λ∥d∥            22,
+                                               d∈R      P      a=1
+                    (ReS+λI              P)d  SR =−ReF,  θ              k+1     =θ    k +η    kdSR.                                         (19)
+
+The real parts arise from minimizing over real parameter changesd, even when the wavefunc-
+tion and its logarithmic derivatives are complex.  Hereλ>0 is the damping parameter,I                P is
+theP×Pidentity matrix, and∥·∥                        2 is the Euclidean norm. The step size isη   k.
+     For a batch ofBconfigurationsn             ν, with sample indexν=1, . . . ,B, let                Oa and     Edenote the
+sample means ofO    a andE        loc, respectively. Define the centered derivative matrixJand target
+vectorϵby
+                                  Jνa   = Oa(n ν)−p     Oa                          p        E
+                                                    B       ,  ϵν =−   Eloc(n ν)−B       .                               (20)
+For a real wavefunction setX=Jande=ϵ. For a complex wavefunction with real trainable
+coordinates,  stack the two components,X=  (ReJ; ImJ)ande=  (Reϵ; Imϵ).   ThenX                                                          TX
+estimates ReSandX          Teestimates−ReF. The damped SR direction has the equivalent forms
+
+                                dSR = (X  TX+λI          P)−1  XTe=X     T(X X  T +λI)  −1  e.                             (21)
+
+HereIis the identity in sample space, whose dimension isBfor real states and 2Bfor complex
+states. The matrixXhasPcolumns and one row per sample-space component, andehas the
+
+                                                                7
+  SciPost Physics Codebases                                                           Submission
+
+
+
+corresponding length. The second form reduces the solve to sample space, as in minimum-step
+stochastic reconfiguration (MinSR) and related formulations[56,57].
+     In the implementation, local energies are clipped before centering at the sample median
+plus or minus a chosen multiple of the mean absolute deviation from that median.  Real and
+imaginary parts are clipped separately.  Reported energies and energy variances per site use
+the unclipped local energies.
+
+SPRING.Subsampled Projected-Increment Natural Gradient Descent (SPRING) retains the
+preceding unscaled direction rather than selecting a minimum-norm solution independently
+for each batch[54]. SubscriptskonX                                                    k ande        k denote the sample arrays at optimization step
+k.  Letd         k−1     be the stored direction,µthe momentum decay coefficient, andm                                k =µd       k−1     the
+decayed direction. SPRING obtains the new unscaled directiond                   k by solving
+                                   dk =arg min       ∥X   kd−e      k∥2                   	 .                                 (22)
+                                            d∈R      P                2 +λ∥d−m                k∥22
+
+Its sample-space expression is
+                                dk =m    k +X   T   XkXT                   −1   (e  k−X    kmk).                             (23)
+                                                 k        k  +λI+R            k
+Thus the new batch corrects the part of the previous direction inconsistent with the current
+imaginary-time target; this differs from simply adding momentum to an independent SR up-
+date. The extra stabilizer isR    k =∥T      k∥FΠ0, whereT             k =X    kXTk  is the sample-space Gram matrix
+and∥·∥        F is the Frobenius norm. For real states,Π              0 =1    B1TB/Bprojects onto the constant sam-
+ple vector, with1          B the length-Bvector of ones. For complex states it projects separately onto
+the constant vectors of the real and imaginary sample blocks. Centering givesX        Tk Π0 =0 and
+Π0ek =0, so this term does not change the exact-arithmetic solution of Eq. (22); it stabilizes
+the numerical solve in these null directions.
+
+MARCH.The Moment-Adaptive ReConfiguration Heuristic (MARCH) extends this construc-
+tion by weighting parameter directions according to a second-moment accumulator[1].  In
+the notation of Eq. (20), the minimization objective is
+                                         § 1                                                          “
+                       dk =arg min          λ∥X   kd−e      k∥22 +diag(v           k−1    )1/4   (d−m        k)22.                    (24)
+                                 d∈R      P
+Herem          k =µd       k−1    is the decayed previous direction andv        k−1    is the second-moment accumula-
+tor, with one positive component per parameter. The operation diag(v)places the components
+ofvon a diagonal matrix, and its fourth root acts on those entries. Large accumulator compo-
+nents increase the penalty for changing the corresponding parameters.  The implementation
+optionally rescales the accumulator toevk−1     and adds a small positiveεto form the diagonal
+penalty metricD              k:
+                             ¤pP vk−1 /∥v     k−1 ∥2,    with accumulator normalization,
+                   evk−1     =  vk−1   ,                       without accumulator normalization,                          (25)
+                                   ˘              
+                      Dk =diag          evk−1    +ε  .
+
+Square roots act component-wise, and accumulator normalization is enabled by default. With
+the penalty in Eq. (24) evaluated as(d−m                    k)TDk(d−m        k), the update is
+                              δk =D −1           XkD−1                      −1   (e  k−X    kmk),
+                                       k  XTk          k  XTk  +λI+R            k
+                              dk =m    k +δ    k,       v k =β    2evk−1    +δ    k⊙δ    k.                                        (26)
+
+
+                                                               8
+  SciPost Physics Codebases                                                           Submission
+
+
+
+Hereδ          k is the correction to the decayed direction,β                     2 is the accumulator decay coefficient, and
+⊙denotes component-wise multiplication.  The stabilizer isR       k =∥X       kD−1k  XTk∥FΠ0.  The initial
+direction is zero and the initial accumulator has equal positive entries.
+     Both implementations stored           k  before step-length normalization.   Withℓ      k  denoting the
+scheduled Euclidean length of the parameter change, they apply
+
+                                                    θk+1     =θ    k +ℓ    k   dk∥d   k∥2 .                                                 (27)
+
+Letℓ       base be the base step length. The schedules are
+
+                                ℓSPRINGk         = ℓbase1+k/k           0 ,
+                                                           §  k                                     “                            (28)
+                                ℓMARCHk         =ℓ    base minkw ,                 11+max(k−k                        s, 0)/k       0.
+
+Herek          0 is the decay timescale,k                     w the warmup duration, andk        s the decay-start step.
+
+2.4Natural Excited States
+
+The natural excited states (NES) method turns the calculation of the lowestKstates into a
+ground-state variational problem on the tensor product ofKreplicas of the physical Hilbert
+space[30].  LetN= (n                                  1, . . . ,n K)contain one many-body configuration per replica.  GivenK
+trainable state functionsψ                    a, define the matrix with replica indexblabeling rows and state
+indexalabeling columns, wherea,b=1, . . . ,K,
+
+                                    Mba(N) =ψ          a(n  b),     Ψ(N) =detM(N).                                (29)
+
+The expanded Hamiltonian is the Kronecker sum ofKcopies of the physical HamiltonianH,
+
+                                                           KM          KX
+                                                  H=           H=          H(b)   ,                                              (30)
+                                                         b=1          b=1
+                                               H(b)    =I ⊗(b−1)  ⊗H⊗I   ⊗(K−b)        .
+
+HereL denotes the Kronecker sum,⊗the tensor product, andIthe identity on one replica,
+withI   ⊗0    =1.  ThusH                (b)    acts only on replicab.  The determinant makesΨantisymmetric
+under exchange of replicas.  IfE   1≤E    2≤··· are the eigenvalues ofH, the lowest eigenvalue
+ofHin this antisymmetric sector is the sum of the lowestKphysical energies. The variational
+objective is therefore
+                                                                            KX
+                                                   E= 〈Ψ|H|Ψ〉〈Ψ|Ψ〉   ≥          Ea.                                                (31)
+                                                                           a=1
+Linearly dependent state functions make the determinant identically zero, excluding collapse
+onto fewer thanKindependent states without pairwise orthogonality penalties.
+     LaQX samplesp                 NES(N)  =|detM|                      2/PN′|detM(N    ′)|  2.  A Metropolis-Hastings proposal
+changes one replica and uses the ratio of these determinants in Eq. (17).  Define the matrix
+Bba(N) = (Hψ            a)(n    b).  Acting withH             (b)    replaces rowbofMby the corresponding row ofB;
+summing these row replacements gives
+
+                                         Eloc(N) =M   −1  B,     E=〈TrE               loc〉pNES ,
+                                      (HΨ)(N)
+                                        Ψ(N)            =TrE      loc(N).                                                                   (32)
+
+
+                                                                   9
+  SciPost Physics Codebases                                                           Submission
+
+
+
+Consequently, the same energy-gradient and optimizer formulas apply to logΨand the scalar
+trace. ACE-NES supplies the individual functions using a shared ACE feature extractor andK
+state-resolved orbital outputs. Eachψ          a is itself a fermionic determinant over occupied orbitals;
+the additional determinant in Eq. (29) acts on whole many-body states,  not on individual
+particles.
+     After optimization, the full energy matrix is accumulated rather than only its trace.  Let
+Gab =〈ψ      a|ψ  b〉andH          ab =〈ψ      a|H|ψ       b〉.  For linearly independent functions, its exact expecta-
+tion satisfies[30]
+                                                E=〈E         loc〉pNES =G −1  H,
+                                            Ec   a =E    aca ⇐⇒Hc         a =E    aGca.                                          (33)
+Diagonalizing the mean matrix gives the Ritz energiesE                  a  and coefficient vectorsc               a  for the
+corresponding statesPb(c  a)bψb.
+
+2.5Green’s Function Monte Carlo projection
+
+Lattice fixed-node Green’s Function Monte Carlo (GFMC) uses imaginary-time propagation to
+find the ground state of an effective HamiltonianH                           FN constructed from a guiding state[45,46].
+The neural parameters remain fixed and a weighted walker population represents the evolving
+state. On configurations whereψ             G is nonzero, introduce the importance-sampled matrix
+
+                                     hn′n =ψG(n ′)ψG(n)     Hn′n,       H n′n =〈n  ′|H|n〉.                                  (34)
+
+The imaginary-time distribution isf(n,τ)  =ψ                  G(n)ψ(n,τ).   Off-diagonalh                                         n′n >0 would
+produce negative transition weights in a short-time propagator.  The fixed-node construction
+removes these transitions and transfers their contributions to the diagonal[58]:
+                                        hn′n,                               n′̸=n, h        n′n<0,
+
+                              eHFN         0,                                 n ′̸=n, h        n′n≥0,X                          (35)
+                                n′n =   
+                                           Hnn +          max(h           mn, 0),  n  ′ =n.
+                                                    m̸=n
+The matrix eHFN  representsH                      FN  after importance sampling.  The fixed-node correction pre-
+serves the guiding-state local energy, so the walker weights and mixed energy estimate use
+
+                                        EGloc(n) =     (H  FNψG)(n)ψG(n)          = (Hψ      G)(n)ψG(n)       .                                     (36)
+
+Together with the positive semidefiniteness ofH     FN−H, this gives the variational bound[58]
+
+                                  E0≤E    FN0 ≤E[ψ         G],       E[ψ        G] =〈ψ  G|H|ψ      G〉〈ψ  G|ψ G〉  .                              (37)
+
+HereE          0 andE        FN0   are the ground-state energies ofHandH                FN, respectively. The fixed-node bias
+vanishes when the guiding function is an exact ground state.
+     For a sufficiently small uniform step∆τ, the nonnegative linear propagator is
+                                                  eG=I−∆τ(      eHFN−E    T I),                                               (38)
+
+whereE             T  is a reference energy andIis the identity in configuration space.  LaQX limits the
+step at each walker to avoid a negative diagonal entry.  Writingd           n = eHFNnn  and denoting the
+requested step by∆τ         0, the implemented rule is
+                                               ¤(d  n−E    T )−1  ,   d n−E    T>1/∆τ             0,
+                                     ∆τ    n =    ∆τ    0,               otherwise.                                             (39)
+
+
+                                                                 10
+  SciPost Physics Codebases                                                           Submission
+
+
+
+For each walker, the transition and weight update are then eHFN                        ,
+                                       eGn′n =δ    n′n−∆τ       nX   n′n−E    Tδn′n
+                                      b(n) =          eGn′n =1+∆τ              nET−E    G
+                                                                                       loc(n)  ,
+                                                  n′
+                                  p(n ′|n) =  eGn′n/b(n),       w    ′ =w b(n).                                         (40)
+Hereδis the Kronecker delta,bis the column sum, andwandw             ′  are the walker weights
+before and after propagation. This update samples a propagator column directly, including its
+diagonal stay-put contribution.  ForN    w walkers with configurationsn                               p  and weightsw                 p, the
+mixed energy estimate is                                  PNw
+                                                Emix =        p=1    wpEGPNwloc(n  p).                                              (41)
+
+                                                                   p=1    wp
+
+2.6Adiabatic evolution
+
+Adiabatic evolution is approximated by a sequence of variational optimizations for nearby
+HamiltoniansH(ϕ                                   j), wherejlabels successive values of a control parameterϕ. Starting from
+a prepared state, the optimized parameters atϕ     j initialize the calculation atϕ     j+1   :
+                                          θj+1    =arg min     〈ψ θ|H(ϕ       j+1   )|ψ θ〉
+
+                                                      θ←θ        j    〈ψ θ|ψθ〉       .                                       (42)
+
+The arrow denotes initialization atθ     j.   Small parameter increments and a fixed symmetry
+sector allow the optimization to follow a continuous low-energy branch.
+     In the charge-pumping application[59],ϕis a boundary twist increased from zero to 2π.
+In the Hofstadter implementation, thex-direction hopping takes the uniform-gauge formX    
+
+                                     Hx(ϕ) =−               eiϕ/L    x c†x+1,y      cx,y   +H.c..                                   (43)
+                                                      x,y
+Thus hopping in the positivexdirection carriese                                 iϕ/L    x , and reverse hopping carries its complex
+conjugate.  The accumulated phase around the periodicxdirection ise                       iϕ , so increasingϕ
+by 2πinserts one flux quantum through the torus.  Each step is followed by a polarization
+measurement.   Continuing the low-energy momentum sectors separately gives the charge-
+pumping response described in Sec.4.5.
+
+2.7Time-dependent VMC and parameter-efficient evolution
+ACE-PEFT.   Parameter-efficient fine-tuning (PEFT) restricts time evolution to the final affine
+orbital map of a prepared ACE state, adapting the neural-basis tVMC principle of Ref.[60].
+Letd       g be the number of features ing    i from Eq. (7). Define  egi0  =1 to include the output bias
+andegiµ  =g    iµ  forµ=1, . . . ,d               g, so that
+
+                                                             dgX
+                                       M(i,s),j      (n,t) =     Ws jµ (t) egiµ (n;η      0),
+                                                            µ=0                                                               (44)
+                                           ψW(t)     (n) =det  MIa(n),j     (n,t)  Na,j=1      .
+
+Herei,s, andjlabel the site, spin channel, and orbital, andI                                 a(n)selects the occupied spin
+orbitals as in Eq. (9).  The embedding, convolutional, layer-normalization, and MLP parame-
+tersη        0 remain fixed. Only the complex coefficientsW(t), including the bias coefficientsW                                                          s j0 ,
+evolve. Freezing the nonlinear feature extractor reduces the number of dynamical parameters
+while retaining its configuration-dependent correlations.
+
+                                                                11
+  SciPost Physics Codebases                                                           Submission
+
+
+
+Projected real-time dynamics.Time-dependent VMC approximatesi∂                                                      t|ψ〉=H|ψ〉, with
+ħh=1, by evolution within a variational manifold[31,61].  Collect thePevolved coefficients
+ofWintoθ∈C                       P.  The ACE-PEFT amplitude is holomorphic in these coefficients, and its log-
+arithmic derivativesO                       a =∂ θa logψ  θ,a=1, . . . ,P, are evaluated by automatic differentiation.
+With the centered quantities and Born-distribution averages of Sec.2.3, the time-dependent
+variational principle (TDVP) determines the parameter velocity  ˙θ=dθ/dtby
+                                                         *PX                         2+
+                                        ˙θ=arg min                ∆O    ava +i∆E         loc   .                                    (45)
+                                                v∈C      P   a=1
+
+Herevis a trial complex parameter velocity. Minimization gives
+
+                                                        PX
+                                                            Sab ˙θb =−iF        a,                                                    (46)
+                                                       b=1
+
+whereSandFhave the covariance form of Eq. (18), evaluated with the complex-coordinate
+derivatives.
+
+Regularization and integration.To regularize small eigenvalues of the sampled covariance
+matrix, LaQX either solves(S+λI                         P) ˙θ=−iFby Cholesky factorization, with dampingλ>0
+andP×PidentityI                                  P, or diagonalizesS=Vdiag(s                ν)V   † and uses
+
+                                      ˙θ=−iVdiag[f(s         ν)]V   †F,
+                                              1              1
+                                                                                                                                (47)
+                                f(s ν) =      sν 1+ (c/|s   ν/s  max|) 6 , |s ν/s  max|>ε eig,
+                                              0,                                  otherwise.
+
+Heres   ν are the eigenvalues,ν=1, . . . ,P, the columns ofVare the corresponding orthonormal
+eigenvectors, and † denotes the Hermitian conjugate.  The largest eigenvalue iss   max,cis the
+smooth relative cutoff, andε        eig =10 −14   is the numerical threshold.
+     Writing the regularized velocity asV(θ,t)andθ                          t  =θ(t), the fourth-order Runge-Kutta
+(RK4) update[62]over a time step∆tuses four stage velocitiesk                                                           1, . . . ,k 4:
+
+                                            k1 =V(θ         t,t),
+                                            k2 =V(θ         t + ∆t2 k1,t+    ∆t2  ),
+                                            k3 =V(θ         t + ∆t2 k2,t+    ∆t2  ),
+                                            k4 =V(θ         t +∆tk        3,t+∆t),
+
+                                        θt+∆t       =θ    t + ∆t6  (k  1 +2k      2 +2k      3 +k    4).                                    (48)
+
+At each stage, walkers sample the intermediate wavefunction andSandFare reestimated.
+Observables are averaged over the stages with weights(1, 2, 2, 1)/6.
+
+
+3 Function-oriented software design
+
+3.1Composition of the numerical workflow
+
+In LaQX, a complete calculation is divided into four scientific components:  the variational
+state, the Hamiltonian and observables, the sampling procedure, and the parameter-update
+
+
+                                                                  12
+ SciPost Physics Codebases                                                           Submission
+
+
+
+  Extension                 Required scientific definition    Reused components
+  Variational state       Initialization and amplitudes    Hamiltonians, sampling, and
+                                                                  optimization
+  Hamiltonian or           Connected configurations               Variational states and update
+  observable               and matrix elements                    methods
+  Optimization             Update from stochastic                 State and operator definitions
+  method                   estimators
+  Physical                 Composition of established             States, operators, and numerical
+  workflow                 components                             kernels
+
+               Table 1: Locality of the principal scientific extension paths in LaQX.
+
+
+rule.  Each component is exposed through a small functional interface, so a complete work-
+flow is assembled by composition rather than through a hierarchy of stateful solver objects.
+Numerical state is passed explicitly between components.  This design permits compilation,
+vectorization, automatic differentiation, and device parallelism to be applied to the assembled
+numerical update[44].
+    The state layer implements the architectures described in Sec.2.2, together with the ACE-
+NES and ACE-PEFT specializations of Secs.2.4and2.7.  Independently, the operator layer
+represents Hamiltonians and observables through the configurations and matrix elements con-
+nected to each sampled occupation vector. Sampling and optimization then act on these com-
+mon representations without depending on the internal construction of a particular ansatz or
+model.
+    This separation also determines the parallelization strategy. Batches of sampled configura-
+tions are distributed across accelerator devices, while the variational parameters and update
+state are shared. Ground-state optimization methods reuse the same outer VMC workflow, and
+measurement, projection, excited-state, and dynamical calculations reuse the same state and
+operator interfaces.  The architecture therefore separates physical definitions from sampling,
+optimization, and distributed execution while preserving a common numerical core.
+
+3.2Locality of changes and LLM-assisted development
+
+Small functional interfaces also support LLM-assisted programming.  Reconstructing a large
+inheritance hierarchy or tracing implicit mutable state across many files consumes additional
+context and tokens, increasing the cost of a change.  In LaQX, many extensions require only
+the relevant scientific component and its interface to be included in the context.
+    Table1summarizes this locality at the level of scientific concepts. A new Hamiltonian de-
+fines its connected configurations and matrix elements, after which the existing local-energy
+and sampling machinery can be reused.  A new ansatz supplies initialization and amplitude
+evaluation without changing the Hamiltonian or optimization methods.  Likewise, a new up-
+date rule can operate on the common stochastic estimators without depending on the con-
+struction of the state.
+    The example of the altermagnetic Hubbard model in Sec.4.3provides a concrete measure
+of this locality.
+
+
+
+
+
+
+
+                                                       13
+  SciPost Physics Codebases                                                           Submission
+
+
+4 Physical applications
+
+We now specify the example physical problems used to exercise the code. They cover fermionic
+and spin ground states, one-body observables, many-body topological responses, low-energy
+manifolds, and real-time dynamics. Reproducible input specifications and documentation ac-
+company each example in the library.
+     The square-lattice Hubbard Hamiltonian[16]is defined as
+                                                 X                                 X
+                                HHub =−t                c†iσ cjσ  +c    †jσ ciσ+U          ni↑ ni↓ .                             (49)
+                                               〈i,j〉,σ                                 i
+
+Herec           †iσ  creates a fermion of spinσat sitei,n                       iσ  =c    †iσ ciσ ,n i =n    i↑  +n    i↓ , and〈i,j〉denotes
+nearest-neighbor bonds.  We sett =1 and consider only nearest-neighbor hopping in this
+benchmark. Extensions with next-nearest-neighbor hoppingt     ′ are used in studies of compet-
+ing stripe and superconducting orders[32–34].
+     The frustrated spin benchmark uses the square-lattice spin-1/2J                  1-J  2 Heisenberg Hamilto-
+nian                                                   X                    X
+                                        HJ1J2 =J    1       Si·S  j +J    2       Si·S  j.                                      (50)
+                                                       〈i,j〉               〈〈i,j〉〉
+HereS          i  is the spin operator at sitei, and〈〈i,j〉〉denotes next-nearest-neighbor bonds.  The
+calculation uses a fixed-magnetization sector.
+     The interacting Hofstadter examples[59,63]use
+                                   X                                                            X
+                     HHof =−              c†x+1,y      cx,y   +e    2πiαx      c†x,y+1     cx,y   +h.c.+Vninj,                 (51)
+                                   x,y                                                            〈i,j〉
+
+Herec           x,y    annihilates a spin-polarized fermion at site(x,y),n                   i  =c    †i ci, and h.c. denotes the
+Hermitian conjugate. The magnetic flux per plaquette isαin units of the flux quantum, andV
+is the nearest-neighbor density interaction; the hopping amplitude is set to unity. A boundary
+twistϕthrough the periodicxdirection replaces thex-direction hopping by Eq. (43).
+     The altermagnetic Hubbard model adds sublattice- and direction-dependent diagonal hop-
+ping to Eq. (49)[64]:                                       X            c†
+                                     Halt =H    Hub−               t(2)i j iσ cjσ  +H.c.  .                                   (52)
+                                                         〈〈i,j〉〉,σ
+Letr       i = (x  i,y i)be the integer coordinates of sitei, with A and B denoting sites with odd and
+evenx          i +y    i, respectively. The real hopping amplitudet                        (2)i j   depends on the sublattice of sitei
+and the bond displacementr                             j−r    i:
+
+                                                          (1, 1)    (1,−1)
+                                                     A      t−          t+                                                    (53)
+                                                     B      t+          t−
+
+Opposite bond orientations have the same amplitude,t                         (2)ji   =t     (2)i j  , and each undirected diagonal
+bond is counted once in Eq. (52).
+     The resulting set of calculations is summarized in Table2.
+
+4.1Doped Hubbard ground states and GFMC
+
+Large fermionic ansatzes are initialized through a sequence of variational states and Hamil-
+tonians[1,65]. The reference state is a determinant constructed directly from trainable local
+
+
+                                                                14
+  SciPost Physics Codebases                                                           Submission
+
+
+
+  Protocol                 Physics target                         Variational state     Main output
+  Hubbard                 Ground-state VMC and                        ACE, SCALE           Energy traces and
+                             GFMC                                                                projected energy
+  Spin                       FrustratedJ                      1-J  2 model           CNN-MPS               Energy and variance
+                                                                                                 per site
+  Altermagnet           Spin-resolved momentum                        ACE                        Density matrix and
+                             structure                                                           〈n  kσ〉
+  NES                        Low-lying Hofstadter                     ACE-NES                Energy matrix and
+                             states                                                              spectrum
+  Charge pumping    Hofstadter topological                            ACE                        Momentum sectors
+                             response                                                            and polarization
+  tVMC                      Real-time density                         ACE-PEFT              Density time series
+                             dynamics
+
+      Table 2:  Physical systems, variational states, and measured quantities in the docu-
+      mented LaQX calculations.
+
+
+orbital embeddings,
+                                         M ref(i,s),j      (n) =A         i,q   i,s,j   ,
+                                                                              N
+                                         ψref(n;A) =det          M refIa(n),j     (n)a,j=1      .                                        (54)
+
+Hereq          i =n    i↑ +2n      i↓  labels the local occupation,sis the spin channel,jis the orbital index, and
+Ia(n)labels the occupied spin orbitals as in Eq. (9). The entriesA                          i,q   i,s,j    are optimized directly,
+with no convolutional or MLP layers.
+     Both Hubbard calculations use 1/8 hole doping. For the periodic 16×4 lattice withN=56
+electrons, this reference state is first optimized atU=4 with Adam. It then initializes an ACE
+state, optimized for 30000 MARCH steps atU=8. For the periodic 16×8 lattice withN=112,
+the reference stage includes a stripe-pinning field of strength 0.05 and charge period eight,
+targeting a filled stripe[2]. The field is removed for the final 20000-step SCALE optimization
+atU=8. Both optimizations use 4096 walkers. The ACE state has 12 convolutional layers of
+width 128; SCALE uses width 256 and four site-wise nonlinear layers of width 512, following
+the architecture families of Ref.[2].
+     The local observables in Fig.2show the hole densityh                          i =1−〈n         i↑ +n    i↓〉through site colors
+and the spin polarization〈S                            zi〉=〈n        i↑−n    i↓〉/2 through vertical arrows. Both states exhibit filled
+stripes[66]with a charge-density-wave wavelength of eight sites along the long direction and
+an antiphase modulation of the staggered magnetizationm                               i = (−1)         xi+y    i〈S  zi〉.
+     Evaluation of the final states gives energies per site of−0.762822(5)for ACE on 16×4 and
+−0.753059(7)for SCALE on 16×8. Both states are subsequently used as importance-sampling
+and fixed-node guiding functions for the GFMC algorithm of Sec.2.5, with the Hamiltonians
+and boundary conditions held fixed.  Discarding the first 1000 of 5000 projection steps gives
+energies per site of−0.76378(2)for ACE-guided GFMC and−0.75628(3)for SCALE-guided
+GFMC. These estimates lower the respective VMC energies by approximately 9.6×10   −4   and
+3.2×10   −3   per site.
+
+
+
+
+
+
+
+                                                               15
+  SciPost Physics Codebases                                                           Submission
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      Figure 1: VMC energy traces for the doped square-lattice Hubbard model. Left: ACE
+      on a periodic 16×4 lattice withN=56 electrons.   Right:  SCALE on a periodic
+      16×8 lattice withN=112 electrons.  Both final optimizations useU=8 and the
+      staged initialization described in the text. Total energies are divided by 64 and 128,
+      respectively, and the curves show trailing 300-step averages.
+
+
+4.2FrustratedJ                               1-J  2 spin model
+For the spin benchmark we consider the periodic 6×6J         1-J  2  Heisenberg model defined in
+Eq. (50) atJ            1 =1 andJ            2 =0.5, in the zero-magnetization sector. The variational state is CNN-
+MPS with MPS bond dimensionD=20[3]: the convolutional feature map first reorganizes the
+correlations of the sampled spin configuration, after which a periodic backflow MPS contracts
+the configuration-dependent tensors as in Eq. (16). The calculation applies the Marshall sign
+transformation[67]and projection onto theD                                                4 lattice-symmetry sector. The optimization uses
+15000 MARCH steps without second-moment accumulator normalization, corresponding to
+evk−1     =v    k−1    in Eq. (25). The step-length normalization in Eq. (27) remains active. In addition
+to the energy, we report the local-energy variance per site,
+
+                             σ2E = Var(E      loc)Ns       =〈|E loc|2〉−|〈E   loc〉|2Ns             ,       N s =36.                           (55)
+
+     Independent evaluation of the final state gives an energy per site ofe=−0.5038070(2)
+and a local-energy variance per site ofσ    2E =1.7586×10      −5   in units ofJ     21 . The measured energy
+lies approximately 3×10  −6   per site above the rounded ED reference in Fig.3.
+
+4.3Altermagnetic Hubbard model
+
+The altermagnetic calculation tests both a nonstandard kinetic term and an observable beyond
+the total energy.  The diagonal hopping amplitudes in Eq. (53) aret                +  =0.4 andt   −  =0.  A
+half-filled periodic 12×12 system is first optimized atU=3 using the reference determinant
+ansatz in Eq. (54).  This occupation-dependent reference state initializes the subsequent ACE
+optimization atU=8.  The trained state is then sampled to obtain the fermionic one-body
+density matrix.            P
+     Letc      kσ   =N −1/2s   j e−ik·r         j cjσ  annihilate a fermion of momentumkand spinσ, wherer                                                      j is
+the position of sitej. The measured momentum distribution is
+                                                                  X
+                                  〈n  kσ〉=〈c        †kσ  ckσ〉=   1Ns   eik·(r       i−r    j)〈c  †iσ cjσ〉.                                (56)
+                                                                   i,j
+
+Figure4shows the difference〈n                                      k↑〉−〈n  k↓〉, highlighting the anisotropic spin-dependent mo-
+mentum structure obtained from this estimator.
+
+                                                               16
+  SciPost Physics Codebases                                                           Submission
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      Figure 2: Local stripe profiles in the final Hubbard variational states atU=8: ACE
+      on 16×4 (left) and SCALE on 16×8 (right).  Circle colors encode the hole density
+      hi  =1−〈n         i〉.  Vertical arrows encode the unstaggered spin polarization〈S                              zi〉, with
+      direction indicating its sign and length proportional to its magnitude within each
+      panel;  very small moments are rendered as dots.  Both panels use the same color
+      scale, but arrow lengths are scaled separately so that the maximum absolute spin
+      polarization in each panel has the same displayed arrow length. Each reference arrow
+      is labeled with the corresponding maximum absolute spin polarization.  No spatial
+      smoothing or symmetry averaging is applied.
+
+
+4.4Hofstadter low-energy spectrum with NES
+The NES calculation uses a 12×4 interacting Hofstadter system withN=4 spin-polarized
+particles,α=0.25, andV=2.  Four state-resolved determinant outputs share the nonlinear
+ACE feature extractor and are optimized jointly through the auxiliary determinant in Eq. (29),
+under either open or periodic boundary conditions. Sampling after optimization gives the 4×4
+energy matrix; its Monte Carlo mean is diagonalized to resolve the energies represented in the
+learned subspace. Figure5compares these eigenvalues with ED.
+     The open-boundary NES energies are approximately−10.5473,−10.4485,−10.4265, and
+−10.4066, with deviations from ED ranging from 4.6×10    −5   to 1.0×10   −4  . The finite cluster
+has a nondegenerate ground state separated from the first excitation by approximately 0.099.
+     For periodic boundaries, the energies are approximately−11.1322,−11.1295,−11.1295,
+and−11.0665. The lowest three states form a closely spaced group, while the fourth lies about
+0.063 above the third.  The first three deviations from ED are below 6.1×10   −4  , whereas the
+fourth is about 4.5×10   −3  , indicating a less accurate representation of that state.  At filling
+ν=N/(αN                  s) =1/3, this three-state manifold is consistent with the torus ground-state struc-
+ture of a fractional quantum Hall phase[59].  Section4.5examines the associated fractional
+charge-pumping response.
+
+4.5Hofstadter charge pumping
+Following the charge-pumping formulation of Ref.[59], Eq. (51) is defined on a periodic 12×8
+lattice withN=8 spin-polarized particles,α=0.25, andV=2.  In this gauge, the magnetic
+unit cell spans four sites alongx. The integersK                                x =0, 1, 2 andK            y =0, . . . , 7 label momentum
+sectors for translations by one magnetic unit cell alongxand one site alongy, respectively.
+For a translation by(4m,n)sites, the symmetry-projection phase is
+                                              Kx m             
+              χKx,K  y (m,n) =exp        2πi       3    + Kyn8       ,       m=0, 1, 2, n=0, . . . , 7.          (57)
+
+     The sector scan identifies three low-energy states at(K      x,K  y) = (0, 4),(1, 4), and(2, 4), as
+
+                                                             17
+  SciPost Physics Codebases                                                           Submission
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      Figure 3:  CNN-MPS optimization of the periodic 6×6J         1-J  2 model atJ    2/J  1 =0.5,
+      using MARCH without second-moment accumulator normalization.  Left:  late-stage
+      convergence of the energy per sitee=〈H                J1J2〉/36, with the rounded ED reference
+      eED =−0.503810[3,68].  Right:  local-energy variance per siteσ                                                 2E  =Var(E          loc)/36.
+      Training curves are trailing 200-step averages.
+
+
+shown in Fig.6(left).  Their measured total energies are−21.85505(9),−21.84695(9), and
+−21.84713(9), respectively; the next level in the scanned sectors lies at−21.81715(8), about
+0.030 above the top of this manifold.  The finite variational splitting within the manifold is
+approximately 0.0081. Separate adiabatic-continuation calculations follow these three states
+using the protocol of Sec.2.6. The boundary twistϕincreases from 0 to 2π, inserting one flux
+quantum.
+    At each flux value, they-direction Resta polarization is measured[69],
+                                           X            
+                        ˆZy =exp       2πi       y ˆnx,y    ,       P  y(ϕ) =       1
+                                        L y  x,y                                2π  Im log〈     ˆZy〉ϕ.                     (58)
+
+The measured phase is unwrapped before division by 2π.  Separate linear fits ofP           y  against
+ϕ/(2π)give slopes 0.334, 0.335, and 0.330 for the three continued states (Fig.6, right). Each
+branch therefore pumps approximately one third of a particle per inserted flux quantum, with
+a combined response of approximately one particle. This fractional response is consistent with
+flux insertion connecting states within a topological ground-state manifold[59].
+    LaQX was also used in a recent study of the triangular-lattice Hofstadter-Hubbard model
+[4].   There,  LaQX-based NQS and independent PEPS calculations provided complementary
+evidence of spin-charge separation from spin pumping and real-time spin and charge dynamics.
+This application is distinct from the spin-polarized charge-pumping example documented here,
+but it demonstrates that the Hofstadter workflows extend to interacting spinful fermions and
+cross-method validation.
+
+4.6Real-time tVMC
+
+The real-time calculation considers the density response to the removal of a local potential.
+An ACE reference state is first optimized for an open 8×6 Hofstadter lattice withN=4 spin-
+polarized particles,V=2,α=0.25, and the pinning termh                                                vn0 withh          v =−4.  Att=0, the
+pinning term is removed and the optimized state initializes the ACE-PEFT evolution.
+    The ACE-PEFT variant applies Eq. (44): the convolutional and site-wise nonlinear layers of
+the optimized reference state define a fixed, configuration-dependent neural basis, and only
+
+
+
+                                                            18
+  SciPost Physics Codebases                                                           Submission
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Figure 4:  Spin-channel difference〈n                      k↑〉−〈n  k↓〉for the half-filled periodic 12×12
+     altermagnetic Hubbard model atU=8. Both momentum distributions are obtained
+     from the sampled one-body density matrix.
+
+
+its complex final orbital map evolves.  The calculation uses RK4 integration with time step
+2×10  −3  , 40960 walkers, and the eigendecomposition solver with smooth cutoff 10−8  .
+    The density snapshots and time series in Fig.7track the redistribution of the initially
+pinned charge and reproduce the main features of the ED response.
+
+
+5 Conclusion
+
+We have introduced LaQX, a JAX implementation of neural quantum state methods for interact-
+ing lattice fermions and spins. The code combines Metropolis-Hastings sampling, several vari-
+ational ansatz families, first-order and natural-gradient optimization, observables, stochastic
+projection, excited states, adiabatic continuation, and real-time evolution through a common
+set of functional interfaces.  The doped Hubbard and frustratedJ                     1-J  2 Heisenberg model cal-
+culations connect the release to methods that have achieved high variational accuracy[1–3].
+The Hofstadter-Hubbard applications encompass many-body charge pumping[59]and NQS
+calculations of spin-charge separation[4].  The altermagnetic, excited-state, and dynamical
+examples test the same interfaces on one-body observables, low-energy states, and real-time
+evolution.
+    The library separates scientific components through explicit functional interfaces.  Wave-
+functions, physical operators, and update rules can therefore be extended through local source
+changes.  This locality is useful for conventional development and for LLM-assisted program-
+ming, where unnecessary cross-file dependencies consume a finite context window.  Source
+code, documentation, and the scripts used for the calculations in this paper are available at
+https://github.com/bytedance/laqx.
+
+
+Acknowledgements
+
+We thank ByteDance Seed for inspiration and encouragement.
+
+
+
+                                                        19
+  SciPost Physics Codebases                                                           Submission
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Figure 5:  Low-energy spectrum obtained with four-state ACE-NES for a 12×4 in-
+     teracting Hofstadter model with four spin-polarized particles,α=0.25, andV=2,
+     compared with ED. Left:  open boundaries.  Right:  periodic boundaries.  The NQS
+     energies are the eigenvalues of the Monte Carlo-averaged energy matrix; eigenvalue
+     error bars are omitted because the stored data do not include the matrix covariances
+     required for uncertainty propagation.
+
+References
+
+ [1]Y. Gu, W. Li, H. Lin, B. Zhan, R. Li, Y. Huang, D. He, Y. Wu, T. Xiang, M. Qin, L. Wang and
+       D. Lv, Solving the Hubbard model with neural quantum states,  Nature Communications
+       17(1), 7838 (2026), doi:10.1038/s41467-026-74028-6.
+
+ [2]Y. Gu, Z. Han, W. Li, Z. Xiao, T. Xiang, M. Qin, L. Wang and D. Lv,Pareto frontier of neu-
+       ral quantum states: Scalable, affordable, and accurate convolutional backflow for strongly
+       correlated lattice fermions(2026),2604.25775.
+
+ [3]C. Fan, B. Zhan, Y. Gu, T. Liu, Y. Wu, M. Qin, D. Lv and T. Xiang,Disentangling tensor
+       network states with deep neural network(2026),2603.14425.
+
+ [4]Y.  Gu,  H.  Yang,  Z.  Dai  and  Y.  Wu, Spin-charge  separation  in  the  triangular-lattice
+       Hofstadter–Hubbard model, doi:10.48550/arXiv.2608.02727(2026),2608.02727.
+
+ [5]A. W. Sandvik,Computational studies of quantum spin systems, InLectures on the Physics
+       of Strongly Correlated Systems XIV, vol. 1297 ofAIP Conference Proceedings, pp. 135–338.
+       AIP, doi:10.1063/1.3518900(2010).
+
+ [6]S. R. White,Density matrix formulation for quantum renormalization groups,  Physical
+       Review Letters69(19), 2863 (1992), doi:10.1103/PhysRevLett.69.2863.
+
+ [7]U. Schollwoeck,The density-matrix renormalization group in the age of matrix product
+       states, Annals of Physics326(1), 96 (2011), doi:10.1016/j.aop.2010.09.012.
+
+ [8]J. I. Cirac, D. Perez-Garcia, N. Schuch and F. Verstraete,Matrix product states and projected
+       entangled pair states: Concepts, symmetries, theorems, Reviews of Modern Physics93(4),
+       045003 (2021), doi:10.1103/RevModPhys.93.045003.
+
+ [9]T. Xiang,Density Matrix and Tensor Network Renormalization,   Cambridge University
+       Press (2023).
+
+[10]W.  M.  C.  Foulkes,   L.  Mitas,   R.  J.  Needs  and  G.  Rajagopal,Quantum  monte
+       carlo   simulations   of   solids,        Reviews   of   Modern   Physics73(1),   33   (2001),
+       doi:10.1103/RevModPhys.73.33.
+
+                                                         20
+  SciPost Physics Codebases                                                           Submission
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      Figure 6:  Charge pumping in the interacting Hofstadter model on a 12×8 torus.
+      Left:  spectrum resolved by the integer momentum-sector labels(K               x,K  y)defined in
+      Eq. (57), with the three lowest states in(0, 4),(1, 4), and(2, 4).  Energy bars show
+      nominal standard errors without an autocorrelation correction.  Right:  unwrapped
+      dimensionless polarizationP                          y and separate linear fits versusϕ/(2π)for each contin-
+      ued state;cdenotes the fitted slope.
+
+
+[11]F. Assaad and H. Evertz,World-line and Determinantal Quantum Monte Carlo Methods
+       for Spins, Phonons and Electrons, In H. Fehske, R. Schneider and A. Weiße, eds.,Compu-
+       tational Many-Particle Physics, vol. 739, pp. 277–356. Springer Berlin Heidelberg,  ISBN
+       978-3-540-74685-0, doi:10.1007/978-3-540-74686-7_10(2008).
+
+[12]F. Becca and S. Sorella,Quantum Monte Carlo Approaches for Correlated Systems,  Cam-
+       bridge University Press (2017).
+
+[13]S.  Zhang,Auxiliary-field  quantum  monte  carlo  for  correlated  electron  systems,     In
+       E. Pavarini, E. Koch and U. Schollwöck, eds.,Emergent Phenomena in Correlated Matter:
+       Modeling and Simulation, vol. 3. Verlag des Forschungszentrums Jülich, Jülich (2013).
+
+[14]E. Y. Loh, J. E. Gubernatis, R. T. Scalettar, S. R. White, D. J. Scalapino and R. L. Sugar,
+       Sign problem in the numerical simulation of many-electron systems,   Physical Review B
+       41(13), 9301 (1990), doi:10.1103/PhysRevB.41.9301.
+
+[15]M. Troyer and U.-J. Wiese,Computational complexity and fundamental limitations to
+       fermionic quantum Monte Carlo simulations,   Physical Review Letters94(17), 170201
+       (2005), doi:10.1103/PhysRevLett.94.170201.
+
+[16]J.  Hubbard,Electron  correlations  in  narrow  energy  bands,   Proceedings  of  the  Royal
+       Society of London. Series A. Mathematical and Physical Sciences276(1365), 238 (1963),
+       doi:10.1098/rspa.1963.0204.
+
+[17]J.  P.  F.  LeBlanc,  A.  E.  Antipov,  F.  Becca,  I.  W.  Bulik,  G.  K.-L.  Chan,  C.-M.  Chung,
+       Y.  Deng,  M.  Ferrero,  T.  M.  Henderson,  C.  A.  Jimenez-Hoyos,  E.  Kozik,  X.-W.  Liu
+       et  al.,    Solutions  of  the  two-dimensional  Hubbard  model:   Benchmarks  and  results
+       from a wide range of numerical algorithms,   Physical Review X5(4),  041041 (2015),
+       doi:10.1103/PhysRevX.5.041041.
+
+[18]M. Qin, T. Schäfer, S. Andergassen, P. Corboz and E. Gull,The Hubbard Model:  A Com-
+       putational Perspective,  Annual Review of Condensed Matter Physics13(1), 275 (2022),
+       doi:10.1146/annurev-conmatphys-090921-033948.
+
+                                                          21
+  SciPost Physics Codebases                                                           Submission
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Figure  7:   Density  dynamics  following  a  local  quench  in  the  8×6,  four-particle
+     Hofstadter model.  Left:  local-density snapshots from ED and tVMC at the nearest
+     recorded  times  tot =0, 2.5, 5, 7.5, 10.   Right:  ED  and  tVMC  density  time  series
+     at sites(0, 0)and(0, 1).  No additional temporal smoothing is applied.  The stored
+     tVMC observables are weighted averages over the four RK4 stages and are plotted at
+     the corresponding step midpoints.  Only the final affine orbital map of ACE-PEFT is
+     evolved.
+
+
+[19]D. P. Arovas, E. Berg, S. A. Kivelson and S. Raghu,The Hubbard Model, Annual Review of
+       Condensed Matter Physics13, 239 (2022),  doi:10.1146/annurev-conmatphys-031620-
+       102024.
+
+[20]G. Carleo and M. Troyer, Solving the quantum many-body problem with artificial neural
+       networks, Science355(6325), 602 (2017), doi:10.1126/science.aag2302.
+
+[21]H. Lange, A. Van de Walle, A. Abedinnia and A. Bohrdt,From architectures to applica-
+       tions: A review of neural quantum states, Quantum Science and Technology9(4), 040501
+       (2024), doi:10.1088/2058-9565/ad7168.
+
+[22]M.   Medvidovic   and   J.   Robledo   Moreno,Neural-network   quantum   states   for
+       many-body  physics,       The  European  Physical  Journal  Plus139(7),   631  (2024),
+       doi:10.1140/epjp/s13360-024-05311-y.
+
+[23]Y. Nomura,  A. S. Darmawan,  Y. Yamaji and M. Imada,Restricted-boltzmann-machine
+       learning  for  solving  strongly  correlated  quantum  systems,    Physical  Review  B96(20),
+       205152 (2017), doi:10.1103/PhysRevB.96.205152.
+
+[24]K.  Choo,  T.  Neupert  and  G.  Carleo,Two-dimensional  frustrated  j                         1–j2  model  studied
+       with  neural  network  quantum  states,    Physical  Review  B100(12),  125124  (2019),
+       doi:10.1103/PhysRevB.100.125124.
+
+[25]M.  Hibat-Allah,  M.  Ganahl,  L.  E.  Hayward,  R.  G.  Melko  and  J.  Carrasquilla,Recur-
+       rent neural network wave functions,   Physical Review Research2(2),  023358 (2020),
+       doi:10.1103/PhysRevResearch.2.023358.
+
+[26]C. Roth, A. Szabo and A. H. MacDonald,High-accuracy variational Monte Carlo for frus-
+       trated magnets with deep neural networks,  Physical Review B108(5), 054410 (2023),
+       doi:10.1103/PhysRevB.108.054410.
+
+[27]D.  Luo  and  B.  K.  Clark,Backflow  transformations  via  neural  networks  for  quan-
+       tum  many-body  wave  functions,    Physical  Review  Letters122(22),  226401  (2019),
+       doi:10.1103/PhysRevLett.122.226401.
+
+                                                         22
+  SciPost Physics Codebases                                                           Submission
+
+
+
+[28]J. Robledo Moreno, G. Carleo, A. Georges and J. Stokes,Fermionic wave functions from
+       neural-network constrained hidden states,  Proceedings of the National Academy of Sci-
+       ences119(32), e2122059119 (2022), doi:10.1073/pnas.2122059119.
+
+[29]Z. Liu and B. K. Clark,Unifying view of fermionic neural network quantum states:  From
+       neural network backflow to hidden fermion determinant states, Physical Review B110(11),
+       115124 (2024), doi:10.1103/PhysRevB.110.115124.
+
+[30]D. Pfau, S. Axelrod, H. Sutterud, I. von Glehn and J. S. Spencer, Accurate computation
+       of quantum excited states with neural networks,  Science385(6711), eadn0137 (2024),
+       doi:10.1126/science.adn0137.
+
+[31]M.   Schmitt   and   M.   Heyl,Quantum   many-body   dynamics   in   two   dimensions
+       with  artificial  neural  networks,     Physical  Review  Letters125(10),  100503  (2020),
+       doi:10.1103/PhysRevLett.125.100503.
+
+[32]C. Roth, A. Chen, A. Sengupta and A. Georges,Superconductivity in the two-dimensional
+       Hubbard  model  revealed  by  neural  quantum  states,    doi:10.48550/arXiv.2511.07566
+       (2025),2511.07566.
+
+[33]L.   L.   Viteritti,   R.   Rende,   C.   Roth,   A.   Sengupta,   G.   Carleo   and   A.   Georges,
+       Beyond   variational   bias:     Resolving   intertwined   orders   in   the   Hubbard   model,
+       doi:10.48550/arXiv.2604.21978(2026),2604.21978.
+
+[34]R. Rende, L. L. Viteritti and A. Georges,Superconductivity in the t–t        ′ Hubbard model from
+       symmetry-preserving  neural-network  quantum  states,    doi:10.48550/arXiv.2608.12465
+       (2026),2608.12465.
+
+[35]C. Roth,  A. Millis and T. Soejima,Large-scale neural quantum states reveal the inter-
+       play between superconductivity and quantum criticality in the Hofstadter–Hubbard model,
+       doi:10.48550/arXiv.2608.02753(2026),2608.02753.
+
+[36]F.  Vicentini,  D.  Hofmann,  A.  Szabó,  D.  Wu,  C.  Roth,  C.  Giuliani,  G.  Pescia,  J.  Nys,
+       V.  Vargas-Calderón,  N.  Astrakhantsev  and  G.  Carleo,NetKet  3:   Machine  learning
+       toolbox  for  many-body  quantum  systems,     SciPost  Physics  Codebases  p.  7  (2022),
+       doi:10.21468/SciPostPhysCodeb.7.
+
+[37]M. Schmitt and M. Reh,jVMC: Versatile and performant variational Monte Carlo leveraging
+       automated differentiation and GPU acceleration,  SciPost Physics Codebases p. 2 (2022),
+       doi:10.21468/SciPostPhysCodeb.2.
+
+[38]A. Chen and C. Roth,Quantax: Flexible neural quantum states in JAX(2024).
+
+[39]D. Pfau, J. S. Spencer, A. G. D. G. Matthews and W. M. C. Foulkes,Ab initio solution of the
+       many-electron Schrödinger equation with deep neural networks, Physical Review Research
+       2(3), 033429 (2020), doi:10.1103/PhysRevResearch.2.033429.
+
+[40]J. S. Spencer,  D. Pfau,  A. Botev and W. M. C. Foulkes,Better,  faster fermionic neural
+       networks(2020),2011.07125.
+
+[41]W.  Ren,  W.  Fu,  X.  Wu  and  J.  Chen,Towards  the  ground  state  of  molecules  via  diffu-
+       sion  Monte  Carlo  on  neural  networks,   Nature  Communications14(1),  1860  (2023),
+       doi:10.1038/s41467-023-37609-3.
+
+[42]ByteDance Seed,JaQMC: JAX-accelerated quantum Monte Carlo(2026).
+
+
+                                                         23
+  SciPost Physics Codebases                                                           Submission
+
+
+
+[43]S.-J.   Du,   J.   Gray,   A.   Chen   and   G.   K.-L.   Chan,Vectorized   symmetric   and
+       fermionic tensor network implementations for GPU-accelerated variational Monte Carlo,
+       doi:10.48550/arXiv.2608.27861(2026),2608.27861.
+
+[44]J. Bradbury, R. Frostig, P. Hawkins, M. J. Johnson, C. Leary, D. Maclaurin, G. Necula,
+       A. Paszke, J. VanderPlas, S. Wanderman-Milne and Q. Zhang,JAX: Composable transfor-
+       mations of Python+NumPy programs(2018).
+
+[45]N.  Trivedi  and  D.  M.  Ceperley,   Ground-state  correlations  of  quantum  antiferromag-
+       nets:   A  green-function  monte  carlo  study,    Physical  Review  B41(7),  4552  (1990),
+       doi:10.1103/PhysRevB.41.4552.
+
+[46]S. Sorella,Green function Monte Carlo with stochastic reconfiguration,  Physical Review
+       Letters80(20), 4558 (1998), doi:10.1103/PhysRevLett.80.4558.
+
+[47]A. Sarkar and I. Drosos,Vibe coding:  Programming through conversation with artificial
+       intelligence, InProceedings of the 36th Annual Conference of the Psychology of Programming
+       Interest Group, doi:10.48550/arXiv.2506.23253(2025),2506.23253.
+
+[48]D. E. Rumelhart,  G. E. Hinton and R. J. Williams,Learning representations by back-
+       propagating errors, Nature323, 533 (1986), doi:10.1038/323533a0.
+
+[49]S. Elfwing,  E. Uchibe and K. Doya,Sigmoid-weighted linear units for neural network
+       function  approximation  in  reinforcement  learning,    Neural  Networks107,  3  (2018),
+       doi:10.1016/j.neunet.2017.12.012.
+
+[50]J. L. Ba, J. R. Kiros and G. E. Hinton,Layer normalization(2016),1607.06450.
+
+[51]N. Metropolis, A. W. Rosenbluth, M. N. Rosenbluth, A. H. Teller and E. Teller, Equation
+       of state calculations by fast computing machines, The Journal of Chemical Physics21(6),
+       1087 (1953), doi:10.1063/1.1699114.
+
+[52]W. K. Hastings,Monte carlo sampling methods using Markov chains and their applications,
+       Biometrika57(1), 97 (1970), doi:10.1093/biomet/57.1.97.
+
+[53]D. P. Kingma and J. Ba,Adam: A method for stochastic optimization, In3rd International
+       Conference on Learning Representations(2015),1412.6980.
+
+[54]G. Goldshlager, N. Abrahamsen and L. Lin,A Kaczmarz-inspired approach to accelerate
+       the optimization of neural network wavefunctions, Journal of Computational Physics516,
+       113351 (2024), doi:10.1016/j.jcp.2024.113351,2401.10190.
+
+[55]S. Sorella,Generalized lanczos algorithm for variational quantum monte carlo,  Physical
+       Review B64(2), 024512 (2001), doi:10.1103/PhysRevB.64.024512.
+
+[56]A. Chen and M. Heyl,Empowering deep neural quantum states through efficient optimiza-
+       tion, Nature Physics20(9), 1476 (2024), doi:10.1038/s41567-024-02566-1.
+
+[57]R. Rende, L. L. Viteritti, L. Bardone, F. Becca and S. Goldt,A simple linear algebra identity
+       to optimize large-scale neural network quantum states,  Communications Physics7, 260
+       (2024), doi:10.1038/s42005-024-01732-4.
+
+[58]D. F. B. ten Haaf, H. J. M. van Bemmel, J. M. J. van Leeuwen, W. van Saarloos and D. M.
+       Ceperley,Proof for an upper bound in fixed-node monte carlo for lattice fermions, Physical
+       Review B51(19), 13039 (1995), doi:10.1103/PhysRevB.51.13039.
+
+
+                                                         24
+  SciPost Physics Codebases                                                           Submission
+
+
+
+[59]H. Chen, Y. Qian, W. Ren, X. Li and J. Chen,Topological invariant of periodic many body
+       wavefunction from charge pumping simulation(2026),2604.08702.
+
+[60]W. Fu, Z. Li, Y. Qian, R. Li, W. Ren and J. Chen,Towards stable and accurate electron
+       dynamics via neural network based time-dependent variational monte carlo(2026),2606.
+       05850.
+
+[61]G. Carleo, F. Becca, M. Schiró and M. Fabrizio,Localization and glassy dynamics of many-
+       body quantum systems, Scientific Reports2, 243 (2012), doi:10.1038/srep00243.
+
+[62]J. C. Butcher,A history of Runge–Kutta methods, Applied Numerical Mathematics20(3),
+       247 (1996), doi:10.1016/0168-9274(95)00108-5.
+
+[63]D.   R.   Hofstadter,      Energy   levels   and   wave   functions   of   Bloch   electrons   in   ra-
+       tional  and  irrational  magnetic  fields,       Physical  Review  B14(6),   2239  (1976),
+       doi:10.1103/PhysRevB.14.2239.
+
+[64]P.  Das,  V.  Leeb,  J.  Knolle  and  M.  Knap,Realizing  altermagnetism  in  fermi-hubbard
+       models  with  ultracold  atoms,      Physical  Review  Letters132(26),  263402  (2024),
+       doi:10.1103/PhysRevLett.132.263402.
+
+[65]A. Chen, Z.-Q. Wan, A. Sengupta, A. Georges and C. Roth,Neural network-augmented
+       pfaffian  wave-functions  for  scalable  simulations  of  interacting  fermions(2025),2507.
+       10705.
+
+[66]B.-X. Zheng, C.-M. Chung, P. Corboz, G. Ehlers, M.-P. Qin, R. M. Noack, H. Shi, S. R. White,
+       S. Zhang and G. K.-L. Chan,Stripe order in the underdoped region of the two-dimensional
+       Hubbard model, Science358(6367), 1155 (2017), doi:10.1126/science.aam7127.
+
+[67]W.   Marshall,Antiferromagnetism,         Proceedings   of   the   Royal   Society   of
+       London.   Series   A.   Mathematical   and   Physical   Sciences232(1188),   48   (1955),
+       doi:10.1098/rspa.1955.0200.
+
+[68]H. J. Schulz, T. A. L. Ziman and D. Poilblanc,Magnetic order and disorder in the frustrated
+       quantum Heisenberg antiferromagnet in two dimensions, Journal de Physique I6(5), 675
+       (1996), doi:10.1051/jp1:1996236.
+
+[69]R. Resta,Quantum-mechanical position operator in extended systems,  Physical Review
+       Letters80(9), 1800 (1998), doi:10.1103/PhysRevLett.80.1800.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                          25

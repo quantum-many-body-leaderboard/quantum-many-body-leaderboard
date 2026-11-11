@@ -258,6 +258,103 @@
           "from": "Approaching the Thermodynamic Limit with Neural-Network Quantum States, arXiv:2602.02665"
         }
       ]
+    },
+    {
+      "energy": -794.69712,
+      "sigma": 0.00112,
+      "energy_variance": null,
+      "dof": 400,
+      "einf": 0,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "CNN-MPS",
+      "method_detail": "h = 32, l = 20, 5,000 steps",
+      "method_as_published": "CNN-MPS, (h,D,l)=(32,15,20), 5,000 steps without imposed symmetry",
+      "family": "tensor network",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Fan et al., Disentangling Tensor Network States with Deep Neural Network, arXiv:2603.14425",
+      "peer_reviewed": false,
+      "source": "sweep-allresults-2026-11-11",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-11",
+        "method": "source text of arXiv:2603.14425 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-0.4966857(7)",
+        "note": "Text near Fig. 3: \"After 5,000 optimization steps without any imposed symmetry ... we obtain -0.4966857(7)\"; version read: arXiv 2603.14425v1 text (sources/2603.14425.txt); no journal version (arXiv metadata, 2026-11-11) | S.S per site, PBC, J2=0.5; L=20 torus = 400 sites",
+        "secondary_of": null
+      },
+      "compute": {
+        "parameters": null,
+        "gpu_hours": null,
+        "device": null,
+        "n_devices": null,
+        "samples": 4096,
+        "wall_clock": null,
+        "reported_as": "\"...λ= 0.001 Imaginary time step length τ= 0.1 on a bipartite lattice, such as the square lattice, the Batch size 4096 ground-state wave function satisfies the Marshall sign Learning rate lr= 0.15 for CNN-MPS rule [10]. If the lattice is partit...\" || method string: \"CNN-MPS, (h,D,l)=(32,15,20), 5,000 steps without imposed symmetry\"",
+        "source": "arXiv:2603.14425, located by string match in the committed source text",
+        "bond_dimension": 15
+      }
+    }
+  ],
+  "coverage": [
+    {
+      "checked_on": "2026-11-11",
+      "method": "table harvest of cached arXiv sources (match_tables.mjs --all), every matched paper read for this instance",
+      "screened": [
+        "arXiv:2304.01996",
+        "arXiv:2611.05174",
+        "arXiv:2602.12998",
+        "arXiv:2602.03031",
+        "arXiv:2606.30464",
+        "arXiv:2603.14425",
+        "arXiv:1902.04057",
+        "arXiv:2206.14307",
+        "arXiv:2002.02973",
+        "arXiv:2110.06390",
+        "arXiv:2002.04613"
+      ],
+      "found": 1,
+      "note": "Only papers whose tables matched the instance by size were read; not a citation screen. Energies from: arXiv:2603.14425."
+    },
+    {
+      "checked_on": "2026-11-11",
+      "method": "table harvest of cached arXiv sources (match_tables.mjs --all), every matched paper read for this instance",
+      "screened": [
+        "arXiv:2510.08430",
+        "arXiv:2104.14869"
+      ],
+      "found": 0,
+      "note": "Only papers whose tables matched the instance by size were read; not a citation screen."
+    },
+    {
+      "checked_on": "2026-11-11",
+      "method": "citation screen of ketboard-spins: citing works from OpenAlex and Semantic Scholar (scripts/cited_by.mjs)",
+      "screened": [
+        "arXiv:2304.01996",
+        "arXiv:2611.05174",
+        "arXiv:2602.12998",
+        "arXiv:2602.03031",
+        "arXiv:2606.30464",
+        "arXiv:2603.14425",
+        "arXiv:1902.04057",
+        "arXiv:2206.14307",
+        "arXiv:2002.02973",
+        "arXiv:2110.06390",
+        "arXiv:2002.04613"
+      ],
+      "found": 1,
+      "note": "13 citing works, 13 on arXiv, 13 fetched; 11 read in full, 2 excluded by a text filter (no energy to four decimals, or no QMBL model named). Energies from: arXiv:2603.14425."
+    },
+    {
+      "checked_on": "2026-11-11",
+      "method": "citation screen of ketboardb-spins: citing works from OpenAlex and Semantic Scholar (scripts/cited_by.mjs)",
+      "screened": [
+        "arXiv:2510.08430",
+        "arXiv:2104.14869"
+      ],
+      "found": 0,
+      "note": "2 citing works, 2 on arXiv, 2 fetched; 2 read in full, 0 excluded by a text filter (no energy to four decimals, or no QMBL model named)."
     }
   ]
 }

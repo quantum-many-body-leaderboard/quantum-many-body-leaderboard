@@ -36,6 +36,78 @@
         "note": "TABLE I (Ground-state variational energies and variances per site, PBC, t'=-0.2, U=8, delta=1/8), 24x24 / SBP; sources/2608.12465.txt line 300; version read: arXiv v1 (sources/2608.12465.txt); no journal version (Crossref, arXiv abs page); qmbl-verify 2026-10-19 SP8-heg3d-hubbard-heg2d-heisenberg#147: energy_variance null -> 31.104 (Energy -0.74397(1) and sigma right (-0.74397 x 576 = -428.52672 (stored -428.52672); sigma 0.00001 x 576 = 0.00576 (stored 0.00576)); Eq. (1) H = -t sum_<ij> - t' sum_<<ij>> + U sum n n, L×L PBC, N_e ) | Eq. (1): H = -t sum_<ij> - t' sum_<<ij>> + U sum n_up n_dn, t' = -0.2, U = 8, doping 1/8, L x L periodic; Table I: energies and variances per site.",
         "secondary_of": null
       }
+    },
+    {
+      "energy": -428.87232,
+      "sigma": 0.01152,
+      "energy_variance": null,
+      "dof": 504,
+      "einf": 882,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "Pfaffian backflow",
+      "method_detail": "",
+      "method_as_published": "Pfaffian backflow",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Chen, Gray, Du & Chan, Extreme competition between stripes and superconductivity in the hole-doped Hubbard model, arXiv:2610.30321",
+      "peer_reviewed": false,
+      "source": "sweep-allresults-2026-11-11",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-11",
+        "method": "source text of arXiv:2610.30321 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; adversarial re-read: confirmed",
+        "reported_as": "-0.74457(2)",
+        "note": "Table S4, 24x24 t'=-0.2, no-projection column; version read: arXiv 2610.30321v2 text (sources/2610.30321.txt); no journal version (arXiv metadata, 2026-11-11) | per site, PBC, U=8, 1/8 doping, t'=-0.2",
+        "secondary_of": null
+      },
+      "compute": {
+        "parameters": null,
+        "gpu_hours": null,
+        "device": "NVIDIA A100 GPUs",
+        "n_devices": null,
+        "samples": 8192,
+        "wall_clock": null,
+        "reported_as": "\"...ole doping, for (a–c) Pfaffian backflow withN p ≈1.2M and (d–f) NN-fPEPS withN p ≈4.6M, using 512 samples per A100 GPU. Cholesky runs in FP64, and CG and LSMR in FP32. (a), (d) Time per solve. The cross marks where the FP64 kernel exceeds t...\" / \"...s an electron hopping or a neighbor-site exchange with equal probability. The total number of samples isN s = 8192. Each VMC iteration includes 2NMCMC steps for system sizes up to 24×24, and 4NMCMC steps for the 32×32 lattice. •Energy clipp...\"",
+        "source": "arXiv:2610.30321, located by string match in the committed source text"
+      }
+    },
+    {
+      "energy": -429.6096,
+      "sigma": 0.00576,
+      "energy_variance": null,
+      "dof": 504,
+      "einf": 882,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "Pfaffian backflow",
+      "method_detail": "projected: translations, point group (simplified), spin parity",
+      "method_as_published": "Pfaffian backflow with symmetry projection",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Chen, Gray, Du & Chan, Extreme competition between stripes and superconductivity in the hole-doped Hubbard model, arXiv:2610.30321",
+      "peer_reviewed": false,
+      "source": "sweep-allresults-2026-11-11",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-11",
+        "method": "source text of arXiv:2610.30321 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; adversarial re-read: confirmed",
+        "reported_as": "-0.74585(1)",
+        "note": "Table S4, 24x24 t'=-0.2, projection column; version read: arXiv 2610.30321v2 text (sources/2610.30321.txt); no journal version (arXiv metadata, 2026-11-11) | per site, PBC, U=8, 1/8 doping, t'=-0.2",
+        "secondary_of": null
+      },
+      "compute": {
+        "parameters": null,
+        "gpu_hours": null,
+        "device": "NVIDIA A100 GPUs",
+        "n_devices": null,
+        "samples": 8192,
+        "wall_clock": null,
+        "reported_as": "\"...ole doping, for (a–c) Pfaffian backflow withN p ≈1.2M and (d–f) NN-fPEPS withN p ≈4.6M, using 512 samples per A100 GPU. Cholesky runs in FP64, and CG and LSMR in FP32. (a), (d) Time per solve. The cross marks where the FP64 kernel exceeds t...\" / \"...s an electron hopping or a neighbor-site exchange with equal probability. The total number of samples isN s = 8192. Each VMC iteration includes 2NMCMC steps for system sizes up to 24×24, and 4NMCMC steps for the 32×32 lattice. •Energy clipp...\"",
+        "source": "arXiv:2610.30321, located by string match in the committed source text"
+      }
     }
   ]
 }

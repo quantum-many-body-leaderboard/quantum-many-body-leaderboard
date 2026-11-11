@@ -508,6 +508,61 @@ export const FAMILY = {
   "CNN": "CNN / ResNet", "2D RNN": "RNN", "RNN": "RNN", "HFPS": "backflow / Pfaffian", "ClebschTree": "other NQS", "NAQS": "other NQS",
 };
 
+// Pass sweep-rows-2026-11-11-ketboard: papers behind lattice results another leaderboard lists.
+const PROJ_TMZ = "projected: translations, point group (simplified), spin parity"; // arXiv:2610.30321: translations x mirrors M_x, M_y x spin inversion Z
+const BF = { family: "backflow / Pfaffian" }, TF = { family: "transformer / ViT" };
+Object.assign(NAMES, {
+  "ResNet": ["ResNet", "", { family: "CNN / ResNet" }],
+  "KagomeResNet c=n=32": ["KagomeResNet", "c = n = 32", { family: "CNN / ResNet" }],
+  "KagomeResNet c=n=40": ["KagomeResNet", "c = n = 40", { family: "CNN / ResNet" }],
+  "NQS with explicit phase ansatz (convolutional amplitude network)": ["CNN", "convolutional amplitude network, explicit phase ansatz"],
+  "A5 (c=3, k=5, b=14), LR=0.0013, seed 8": ["ResNet", "A5 (c = 3, k = 5, b = 14), learning rate 0.0013, seed 8", { family: "CNN / ResNet" }],
+  "A5 (c=3, k=5, b=14), LR=0.002, seed 9": ["ResNet", "A5 (c = 3, k = 5, b = 14), learning rate 0.002, seed 9", { family: "CNN / ResNet" }],
+  "A5 (c=3, k=5, b=14), LR=0.001265, seed 8": ["ResNet", "A5 (c = 3, k = 5, b = 14), learning rate 0.001265, seed 8", { family: "CNN / ResNet" }],
+  "A9 (c=11, k=3, b=3), LR=0.020, seed 10": ["ResNet", "A9 (c = 11, k = 3, b = 3), learning rate 0.020, seed 10", { family: "CNN / ResNet" }],
+  "A9 (c=11, k=3, b=3), LR=0.0126, seed 12": ["ResNet", "A9 (c = 11, k = 3, b = 3), learning rate 0.0126, seed 12", { family: "CNN / ResNet" }],
+  "CNN-MPS (D = 20)": ["CNN-MPS", "", { bond_dimension: 20 }],
+  "CNN-MPS, D=20": ["CNN-MPS", "", { bond_dimension: 20 }],
+  "CNN-MPS, (h,D,l)=(32,15,20), 5,000 steps without imposed symmetry": ["CNN-MPS", "h = 32, l = 20, 5,000 steps", { bond_dimension: 15 }],
+  "pure CNN, (h,l)=(32,20) (CNN-MPS with D=1)": ["CNN", "h = 32, l = 20 (CNN-MPS at D = 1)"],
+  "2D pRNN (single layer 2D vanilla RNN, 100 memory units)": ["2D RNN", "positive, vanilla, 1 layer, 100 memory units"],
+  "1D pRNN (three layers of GRUs, 100 memory units)": ["RNN", "positive, 3-layer GRU, 100 memory units"],
+  "unbiased quantum Monte Carlo (QMC)": ["QMC", ""],
+  "HB K = 3": ["Hierarchical backflow", "K = 3"],
+  "RHB": ["Residual hierarchical backflow", "", BF],
+  "RHB (Ndet = 5, Nneuron = 16)": ["Residual hierarchical backflow", "5 determinants, 16 neurons", BF],
+  "RHB (Ndet = 5, Nneuron = 100)": ["Residual hierarchical backflow", "5 determinants, 100 neurons", BF],
+  "RHB (Ndet = 5, Nneuron = 160)": ["Residual hierarchical backflow", "5 determinants, 160 neurons", BF],
+  "RHB (Ndet = 16, Nneuron = 80)": ["Residual hierarchical backflow", "16 determinants, 80 neurons", BF],
+  "ACE": ["ACE", ""],
+  "SCALE": ["SCALE", ""],
+  "GFMC (ACE-guided)": ["Fixed-node GFMC", "trial state: ACE", { family: "AFQMC / GFMC" }],
+  "GFMC (SCALE-guided)": ["Fixed-node GFMC", "trial state: SCALE", { family: "AFQMC / GFMC" }],
+  "NN-fPEPS": ["NN-fPEPS", "", { family: "tensor network" }],
+  "NN-fPEPS with symmetry projection": ["NN-fPEPS", PROJ_TMZ, { family: "tensor network" }],
+  "NN-fPEPS (extrapolated)": ["NN-fPEPS", "extrapolated: variance → 0", { family: "tensor network" }],
+  "BCS backflow": ["BCS backflow", "", BF],
+  "BCS backflow with symmetry projection": ["BCS backflow", PROJ_TMZ, BF],
+  "Pfaffian backflow": ["Pfaffian backflow", "", BF],
+  "Pfaffian backflow with symmetry projection": ["Pfaffian backflow", PROJ_TMZ, BF],
+  // arXiv:2610.30321 SM Sec. VII: "The pure fPEPS rows are the simple-update" calculations, contracted on finite clusters.
+  "fPEPS (D = 16)": ["fPEPS", "simple update", { bond_dimension: 16, family: "tensor network" }],
+  "fPEPS (extrapolated)": ["fPEPS", "simple update; extrapolated: χ → ∞ (D → ∞)", { family: "tensor network" }],
+});
+for (const b of ["0.5", "1.0", "2.0", "3.0", "4.0"]) NAMES[`TQS beta=${b}`] = ["TQS", `β = ${b}`, TF];
+for (const dt of ["0.1", "1.0"]) NAMES[`TQS L=4 dt=${dt}`] = ["TQS", `L = 4, dt = ${dt}`, TF];
+for (const [s, d] of [["(Lie-Trotter) beta=1.0", "Lie-Trotter, β = 1.0"], ["(Lie-Trotter) beta=2.0", "Lie-Trotter, β = 2.0"],
+  ["(Lie-Trotter) beta=3.0", "Lie-Trotter, β = 3.0"], ["(Lie-Trotter) beta=4.0", "Lie-Trotter, β = 4.0"],
+  ["(Strang) beta=2.0", "Strang, β = 2.0"], ["(Suzuki) beta=2.0", "Suzuki, β = 2.0"], ["(Blanes-Moan) beta=2.0", "Blanes-Moan, β = 2.0"],
+  ["(Lie-Trotter, RK2) beta=1.0", "Lie-Trotter, RK2, β = 1.0"], ["(RK2) beta=2.0", "RK2, β = 2.0"], ["(RK2) beta=4.0", "RK2, β = 4.0"],
+  ["(Strang) d=108 nh=18 L=8 dt=0.5", "Strang, d = 108, nh = 18, L = 8, dt = 0.5"],
+  ["(Lie-Trotter) L=4 dt=0.1", "Lie-Trotter, L = 4, dt = 0.1"], ["(Lie-Trotter) L=4 dt=1.0", "Lie-Trotter, L = 4, dt = 1.0"],
+  ["(Strang) L=4 dt=0.1", "Strang, L = 4, dt = 0.1"], ["(Suzuki) L=4 dt=0.1", "Suzuki, L = 4, dt = 0.1"],
+  ["(Blanes-Moan) L=4 dt=0.1", "Blanes-Moan, L = 4, dt = 0.1"], ["(Blanes-Moan) L=4 dt=1.0", "Blanes-Moan, L = 4, dt = 1.0"],
+  ["parallel formulation (Euler) beta=1.0", "parallel formulation, Euler, β = 1.0"], ["parallel formulation (Euler) beta=2.0", "parallel formulation, Euler, β = 2.0"],
+  ["parallel formulation (Euler) beta=3.0", "parallel formulation, Euler, β = 3.0"], ["parallel formulation (Euler) beta=4.0", "parallel formulation, Euler, β = 4.0"]])
+  NAMES[`PITQS ${s}`] = ["PITQS", d, TF];
+
 // QMBL's own cost-to-reproduce runs (checks/cost/README.md): the detail says whose
 // implementation and budget the number is, since a "ViT" row here runs QMBL's code.
 const QMBL_RUN = ", QMBL cost-to-reproduce run";
@@ -1134,7 +1189,7 @@ function tnAlgorithm(name, detail) {
   // Gradient optimisation first: "gradient optimization after simple update" is VMC from a
   // simple-update start.
   if (/gradient optimi[sz]ation|^finite$/.test(detail)) return ["VMC", detail];
-  if (/simple update$/.test(detail)) return ["simple update", detail.replace(/,? ?simple update$/, "")];
+  if (/simple update(?=;|$)/.test(detail)) return ["simple update", detail.replace(/,? ?simple update(?:; |$)/, "")];
   if (/^trial state of PEPS-GFMC/.test(detail)) return ["AD optimisation", detail];
   throw new Error(`tensor network ${name} "${detail}": no algorithm known; read the source`);
 }

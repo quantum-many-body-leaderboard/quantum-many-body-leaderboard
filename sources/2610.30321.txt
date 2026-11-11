@@ -1,0 +1,2065 @@
+      Extreme competition between stripes and superconductivity in the hole-doped
+                                                             Hubbard model
+
+                       Ao Chen,1, 2,∗  Johnnie Gray,1, 2  Si-Jing Du,3, 2  and Garnet Kin-Lic Chan1, 2,†
+                                           1Division  of  Chemistry  and  Chemical  Engineering,
+                                California  Institute  of  Technology,  Pasadena,  California  91125,  USA
+       2Marcus Center for Theoretical Chemistry, California Institute of Technology, Pasadena, California 91125, USA
+     3Division of Engineering and Applied Science, California Institute of Technology, Pasadena, California 91125, USA
+                                                          (Dated:  October 28, 2026)
+                  The two-dimensional Hubbard model was originally proposed as the minimal model of uniform
+                d-wave superconductivity in the cuprate high-temperature superconductors, but recent calculations
+                with relevant parameters in a realistic doping regime have often found other ground states. Further,
+                uncertainty  remains  over  such  results  due  to  the  intrinsic  bias  of  different  computational  meth-
+                ods.  Here we address this uncertainty through state-of-the-art neural tensor network and neural
+                backflow state simulations,  enabled by large-scale GPU computation,  that together reach an un-
+                precedented  variational  accuracy  on  lattices  with  up  to  1024  sites.   At  1/8  doping  in  the  pure
+                Hubbard model, as well as with next-nearest-neighbor hopping relevant to the hole-doped cuprates,
+                we reveal a near degeneracy among a low-energy uniformd-wave state, superconducting stripes, and
+                non-superconducting stripe states on the milli-tenergy scale.  Our work rebalances the narrative
+                that the Hubbard model supports a single dominant order in relevant parameter regimes towards a
+                picture of extreme competition between stripes and superconductivity.
+
+
+
+
+                                                           I.    INTRODUCTION
+
+  The Hubbard model is a paradigmatic model of strongly correlated electrons [1,2]. Despite its simple form, the two-
+dimensional (2D) Hubbard model is believed to capture the essential physics of high-temperature superconductivity
+(SC) [3,4], and can be realized directly by ultracold fermionic atoms in optical lattices [5–8]. In the cuprate materials
+that the Hubbard model aims to describe,  uniformd-wave superconductivity is found at optimal doping,  while in
+certain cuprates other low-temperature orders can also be observed [9,10].  For example, there is evidence for various
+unidirectional orders such as spin-density waves (SDW), charge-density waves (CDW), stripes (with intertwined spin
+and charge modulations), and even more exotic orders such as pair-density waves in several materials at low doping [9,
+10], and these have been argued to either coexist with, be intertwined with, or compete with superconductivity.
+  Numerical studies of the hole-doped Hubbard model find different ordered ground states at the same point in the
+phase diagram.  We summarize some recent results here, which can be roughly categorized as shown in Fig.1(a).  For
+the pure Hubbard model, multiple methods such as the density matrix renormalization group (DMRG), projected
+entangled pair states (PEPS), density matrix embedding theory (DMET), constrained-path (CP-) and variational (V)
+auxiliary-field quantum Monte Carlo (AFQMC), and neural network backflow (NNBF) states all find a filled stripe at
+U= 8 and 1/8 doping [11–15], while Ref. [13] also saw an energetically competitive uniformd-wave superconducting
+state at that point.  With a next-nearest-neighbor hoppingt            ′ ≈ −0.2 relevant to the hole-doped cuprates [16,17], the
+conclusions are more varied. Again at 1/8 doping, robust superconductivity coexisting with partially filled stripes has
+been reported in a DMRG/CP-AFQMC study [18] and a neural Pfaffian study [15], whereas other simulations using
+infinite PEPS [19] and other NNBF states [20,21] have found non-superconducting stripes,  while a DMRG study
+found only a CDW with short-range pairing [22].
+  The diversity of observations can be traced to the sensitivity of the Hubbard model ground state to biases of the
+numerical  simulations.   While  it  is  possible  to  make  progress  through  the  consensus  of  different  techniques  which
+individually have uncertainties larger than the energy scale of competing orders—for example, the study of stripes
+in Ref. [11] involved an energy spread across methods of roughly 0.01t, larger than the energy difference between
+competing stripe wavelengths—the only way to eliminate this uncertainty is to improve the absolute accuracy of the
+simulations. To this end, we employ variational wavefunctions that can in principle be improved to arbitrary accuracy
+and that in practice we push to the precision of a few milli-ton lattices with up to 1024 sites. We employ two variants
+of NNBF [23], which have recently demonstrated high accuracy in Hubbard model studies [15,20,21,24–26], as well
+as a newly introduced neural tensor network state [27], namely the neural-network fermionic PEPS (NN-fPEPS). The
+
+
+
+
+∗ chenao.phys@gmail.com
+† gkc1000@gmail.com
+                                                                                                                                                             2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1.     Low-energy competing states of the Hubbard model and illustrative biases of each variational wavefunction.  (a)
+The Hubbard model with nearest-neighbor hoppingt, next-nearest-neighbor hoppingt                          ′, and on-site repulsionU, along with
+three common candidate ground states at 1/8 hole doping.  Recent studies report the stripe (including SDW, CDW, and their
+coexistence) att   ′ = 0 [11–15,20–22] andt                        ′ =−0.2 [19–22], the stripe + SC att                     ′ =−0.2 [15,18], and the uniformd-wave SC
+att   ′ = 0 [13].  (b) The structure that carries the fermionic correlations in each ansatz (left) and, schematically, the relative
+variational energies of the three ansatzes for the three states in (a) (right).
+
+
+rationale for using multiple variational forms is that each relies on an underlying fermionic ansatz that may impose
+a bias in the calculation.  The Bardeen–Cooper–Schrieffer (BCS) [28] and Pfaffian NNBF states have been argued to
+favor paired states [29], while the fermionic PEPS (fPEPS) [30–33] underlying the NN-fPEPS wavefunction favors
+low  entanglement,  a  very  different  starting  point.   In  each  case,  through  intensive  optimization  of  the  underlying
+computational infrastructure, as well as through deploying large-scale graphics processing unit (GPU) computation,
+we push each variational form to the practical limits of accuracy.  As we shall detail below, this leads to new findings
+and insights regarding the ground-state order in the hole-doped Hubbard model.
+
+
+
+
+                                     II.    HUBBARD MODEL AND COMPETING ORDERS
+
+   The Hamiltonian of the Hubbard model is
+
+                              H=−t        X        c†iσcjσ + H.c.      −t   ′  X        c†iσcjσ + H.c.      +U   Xni↑ ni↓ ,                             (1)
+                                         ⟨i,j⟩,σ                            ⟨⟨i,j⟩⟩,σ                               i
+
+wherec         †iσ (c  iσ) creates (annihilates) an electron with spinσ∈ {↑,↓}on sitei,n                             iσ =c   †iσciσ,⟨i, j⟩and⟨⟨i, j⟩⟩denote
+nearest- and next-nearest-neighbor bonds with hopping amplitudestandt                 ′, H.c.  denotes the Hermitian conjugate,
+andUis the on-site repulsion.   In this work,  we taket= 1 as the unit of energy and focus on square lattices of
+N=L×Lsites with periodic boundary conditions (PBC) at 1/8 hole doping andU= 8, for which there have been
+many recent studies [11–13,15,18,20,21,26,29].
+   We characterize the ground state by two order parameters, thed-wave pairing ∆         2SC and the stripe orderM           2str, which
+compete in this regime.  The pairing order parameter is extracted from the long-distance behavior of the pair-pair
+                                                                                                                                                                     3
+
+correlation function
+                                                    Cp(r) =⟨∆       †0∆r⟩ − N0,r  ,
+                                                                    X     hη
+                                                        ∆†r = 14         √2      c†r↑ c†r+η,↓    −c   †r↓ c†r+η,↑,                                                    (2)
+                                                                     η
+
+whererlabels lattice sites,ηruns over the four nearest-neighbor vectors, the form factorh                                   η = +1 (−1) on horizontal
+(vertical) bonds selects thed      x2−y   2 channel in the convention of Refs. [12,18,26], andN                         0,r   removes the disconnected
+normal-state  contribution,  namely  the  products  of  one-body  correlators⟨c                  †c⟩⟨c    †c⟩in  the  Wick  decomposition  of
+⟨∆ †0∆r⟩[15].  Thed-wave order parameter is
+                                                                 ∆2SC =   1         X       Cp(r),                                                                (3)
+                                                                            M    |r|≥r        max
+
+which  averagesC           p(r)  over  theMvectors  with|r| ≥r                                max,  wherer            max  is  half  the  largest  distance  on  the  PBC
+lattice [26].  The stripe order parameter is defined through the spin structure factorS(k) =              Pr eik·r   ⟨S  0 ·S r⟩as
+
+                                                                                      4X
+                                                                   M 2str =   14N        S(k    α),                                                                  (4)
+                                                                                    α=1
+whereS           r  is the spin operator at siterandk               α ∈ {(π±q, π),(π, π±q)}are the four peak wavevectors of the stripe
+order [29]. Apart from the SDW represented byM         2str, the stripes also carry a CDW, which coexists with the SDW but
+appears to be much weaker in our calculations, and is discussed in Sec. VIII of the Supplementary Materials (SM) [34].
+   The two order parameters can be used to distinguish three candidate ground states, namely the stripe state with
+M 2str  >0  and  ∆    2SC  =  0,  the  uniformd-wave  superconductor  with  ∆                2SC  >0  andM            2str  =  0,  and  a  stripedd-wave
+superconductor where both orders are nonzero.  Both order parameters must be extrapolated to the thermodynamic
+limit  (TDL).  Since  each  of  them  breaks  a  continuous  symmetry,  they  are  associated  with  gapless  modes,  such  as
+the  phase  mode  of  the  superconductor  and  the  spin  waves  of  the  stripe,  which  make  correlations  approach  their
+long-distance value with a correction∝1/|r|, as in the Heisenberg antiferromagnet [35].  Hence the leading finite-size
+corrections to ∆2SC  andM        2str  are linear in 1/L, and we extrapolate both by straight lines in 1/L.  This linear form
+ofM    2str  against 1/Lassumes long-range order.  In a state without stripe order,  the spin correlations decay over a
+finite correlation lengthξ, so that forL≫ξthe structure factorS(k                                           α) no longer grows with the system size and
+M 2str ∝1/N=  1/L            2.   We therefore extrapolate the stripe order of states whoseS(k               α) saturates with the size by
+M 2str =a+b/L          2.  We evaluate these orders for the three types of wavefunctions introduced in Sec.III, for the pure
+Hubbard model att   ′ = 0 (Sec.IV A) and for thet–t                  ′ Hubbard model att   ′ =−0.2 (Sec.IV B).
+
+
+                                III.    NEURAL AND TENSOR NETWORK WAVEFUNCTIONS
+
+   In variational Monte Carlo (VMC) simulations [36,37] of the Hubbard model with neural quantum states (NQS) [38],
+the variational state is usually expanded in the occupation basis as|Ψ⟩=       Pn ψ(n)|n⟩, where the configuration space
+of each site isn   i ∈ {0,↑,↓,↑↓}.  The NNBF wavefunctions we use are based on the symmetry-preserving backflow
+pairing state of Ref. [26].  We refer to the specific pairing form in Ref. [26] as the BCS backflow state, and we further
+generalize it to a Pfaffian pairing form [39–41], the Pfaffian backflow state, which allows for general orbital coefficients
+and pairing among theN      e electrons.  Its amplitude is
+
+                                                                                                      dX
+                               ψPf-BF(n) = pf   n ⋆ f(n)⋆ n     ,       fσσ′ij   (n) =p        ij      W σσ′i−j,α    yσiα(n)y      σ′jα(n),                            (5)
+                                                                                                    α=1
+
+wheref(n)  is  an  antisymmetric  2N×2Npairing  matrix  whose  elementf                                  σσ′ij   (n)  connects  the  spin-orbitals  (i, σ)
+and  (j, σ  ′),  andn ⋆ f(n)⋆ ndenotes  itsN                      e ×N   e  submatrix  obtained  by  retaining  only  the  rows  and  columns  of
+occupied spin-orbitals.  The backflow featuresy               σi (n) ared-dimensional vectors generated by a residual convolutional
+neural network (CNN) detailed in SM Sec. I [34], withy            ↑ andy      ↓ given by the two halves of its output channels, and
+pij ∝e   −λd(i,j)           is a normalized envelope that decays with the distanced(i, j) between the two sites at a trainable
+rateλ.  The pairing weightsW              σσ′i−j,α     depend only on the displacementi−j, soψ             Pf-BF(n) is translation invariant by
+construction without any symmetry projection, andW        σ′σ−r     =−W       σσ′r     so thatf(n) is exactly antisymmetric for the
+symmetric envelopep  ij =p   ji.
+                                                                                                                                                              4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  2.      NN-fPEPS  ansatz  and  optimization  loop.   (a)  A  neural  network  (middle,  much  deeper  in  practice)  maps  the
+configurationn(bottom)  to  the  local  tensorsT                                            [i]  (n)  of  the  fPEPS  (top),  whose  higher-order  tensor  renormalization  group
+(HOTRG) contraction givesψ    NN-fPEPS(n).  The backflow states replace the fPEPS by the Pfaffian or determinant [Eqs. (5)
+and (6)].  (b) Monte Carlo sampling of the NQSψ             θ(n) yieldsEand∇E, from which the optimization updates the variational
+parametersθ.  Zoomed-in boxes show other important computational components:  custom GPU kernels, symmetry projection
+of the states,  the adaptive moment stochastic reconfiguration (AdamSR) optimizer combining momentum with the natural
+gradient, and the Cholesky or least-squares minimal residual (LSMR) solver used at every iteration.
+
+
+   The BCS backflow state is a special case of the Pfaffian backflow state in Eq. (5) with same-spin weightsW       ↑↑ =
+W↓↓  =  0.   The  pairing  is  then  restricted  to  opposite  spins  and  the  Pfaffian  reduces  to  a  determinant  up  to  a
+configuration-independent sign,
+                                                       ψBCS-BF(n) = det   n↑ ⋆ f↑↓(n)⋆ n     ↓,                                                        (6)
+wheren         ↑ ⋆ f↑↓(n)⋆ n     ↓ retains the rows of occupied spin-up sites and the columns of occupied spin-down sites of the
+N×Nblockf           ↑↓(n).  The two forms share the same network architecture, and the Pfaffian backflow only adds the
+same-spin weights.  In our reimplementation of the BCS backflow, the Transformer backbone of Ref. [26] is replaced
+by the same residual CNN.
+   Our NN-fPEPS is instead built on the fPEPS [30–32], whose amplitude is given by
+                                                            ψfPEPS(n) =   X        YT [i]
+                                                                                          ni,{α   i},                                                              (7)
+                                                                              {α}    i
+
+whereT            [i]    is  the  local  tensor  at  sitei,  the  subscriptn                         i  gives  the  physical  index  slice  of  the  tensor  at  the  local
+configuration, and{α         i}denotes the set of its four virtual indices of bond dimensionD, each shared with a nearest
+neighbor and traced out by the sum over all virtual indices{α}.  The tensors areZ                            2-graded such that the contraction
+automatically generates the minus signs required by fermionic anticommutation [30–33]. Variational fPEPS, optimized
+either by simple update or by gradient optimization, have previously been shown to deliver good accuracy at large
+Din simulations of the Hubbard model [14].  Below we will use variational fPEPS, with PBC and bond dimension
+extrapolation, to give an independent estimate of the exact ground-state energy on the 16×16 lattice att          ′ = 0 (see
+SM Sec. VI [34] for details on the pure fPEPS PBC contraction and energy evaluation strategy).
+   Building on Ref. [27], which introduced a neural parametrization (neuralization) of tensor networks [27,42,43] for
+fermions,  we promote the fPEPS to an NN-fPEPS by generating all local tensors with a neural network,  and the
+amplitude becomes
+                                                                                   Y
+                                                        ψNN-fPEPS(n) =   X              T [i]ni,{α   i}(n).                                                         (8)
+                                                                              {α}    i
+                                                                                                                                                      5
+
+As in the backflow form, the configurationnenters the amplitude in two distinct ways.  The argument (n) indicates
+that the tensor elements are generated by the neural network from the global configuration, while the subscriptn                 i
+slices the physical index of each tensor in the contraction, as in Eq. (7) and in analogy with the selection of occupied
+spin-orbitals byn ⋆ f(n)⋆ nin Eq. (5).  The NN-fPEPS architecture is illustrated in Fig.2(a), and, as in our backflow
+states, the tensors are generated by a residual CNN (SM Sec. I [34]).
+  The  tensor  contraction  in  Eq. (8)  is  performed  approximately  by  the  higher-order  tensor  renormalization  group
+(HOTRG) [44,45], which repeatedly merges pairs of adjacent rows, compresses the doubled bonds back to dimension
+χby applying oblique projectors, and is naturally compatible with PBC (SM Sec. II [34]). By keeping the same (set of)
+contraction path(s) for every configurationn, the approximate HOTRG contraction ensures strict variationality [46]
+for anyD, χ,  and can be easily parallelized [47].  Its time complexity per amplitude isO(Nχ                    7),  orO(N) at fixed
+Dandχ.  To avoid the high cost of largeDandχ,  we chooseD=χ= 4 throughout this work and rely on the
+neural network rather than the tensor network to increase the expressivity.  To further restore the strict translation
+symmetry [26] broken by HOTRG, we expressψ                     NN-fPEPS(n) as a superposition of a set of contraction paths, which
+leads to a slightly higher computational complexity ofO(NlogN) (SM Sec. III [34]).  The NN-fPEPS thus avoids the
+O(N      3) cost of the Pfaffian and the determinant in the backflow calculations at large system sizes.
+  The NN-fPEPS and the backflow wavefunctions retain different inductive biases arising from how the fermionic
+sign structure is enforced, as illustrated in Fig.1(b).  The BCS and Pfaffian backflow states capture pairing through
+the mean-field wavefunction and have been shown to reach high accuracy if the ground state is indeed a BCS su-
+perconductor  [24, 26].   Empirically,  however,  it  has  been  argued  that  these  reference  forms  bias  the  state  toward
+superconductivity [29].  In addition, Sec.IVincludes the determinant backflow state (ACE) of Ref. [21], which poten-
+tially favors stripes over superconductivity [29].  The fPEPS in the NN-fPEPS, in contrast to backflow wavefunctions,
+favors locally entangled (area-law) ground states [48,49].  A priori, this feature favors neither stripes nor supercon-
+ductivity, although specific stripe or superconducting states may carry different amounts of entanglement.
+  Our simulations are implemented inQuantax[50], which is built onJax[51] andEquinox[52], and the fPEPS
+contraction relies onquimb[53, 54] andsymmray[33, 55].  In Fig.2(b),  we illustrate the techniques used in our
+VMC optimization.  All parts of the computational graph have been intensively optimized to achieve high throughput
+on GPUs, including custom kernels for the HOTRG contraction and for the batched determinants and Pfaffians [56].
+Several symmetries, including mirror reflections and spin inversion, are imposed by a symmetry projection for better
+accuracy (SM Sec. III [34]).  During the VMC optimization, the variational parameters are trained by an adaptive
+moment  stochastic  reconfiguration  (AdamSR)  optimizer,  which  combines  Adam  [57]  with  common  optimizers  for
+NQS [20,58–62] for better efficiency and stability.  Apart from the common Cholesky solver, we further utilize the
+iterative least-squares minimal residual (LSMR) linear solver [63] in AdamSR to achieve efficient parallelization on up
+to 1024 GPUs.  The optimizers and solvers are detailed in SM Sec. IV [34], and a careful analysis of the time cost is
+included in SM Sec. V [34]. Unless otherwise specified, all simulations are performed with 32-bit floating-point (FP32)
+precision and TensorFloat-32 (TF32) tensor cores for convolutions and matrix multiplications.
+
+
+
+                                                                 IV.    RESULTS
+
+  We now compare the results of the three classes of wavefunctions,  namely the BCS backflow state,  the Pfaffian
+backflow state, and the NN-fPEPS, at 1/8 doping andU= 8, first att               ′ = 0 and then att   ′ =−0.2.  The variational
+energies and variances of all our states before and after symmetry projection, together with those of previous studies,
+are listed in SM Sec. VII [34]. The real-space spin, charge, and pair-pair correlation functions of all symmetry-projected
+states are shown in SM Sec. VIII [34].
+
+
+
+                                                         A.    Pure Hubbard model
+
+  We begin with the pure Hubbard model att   ′ = 0 and 1/8 doping, where the physics has been more extensively
+studied  than  att   ′  =−0.2.   As  presented  in  Fig.3(a),  we  reach  the  lowest  variational  energies  reported  so  far  on
+both the 16×16 and 32×32 PBC lattices,  below those of the convolutional determinant backflow forms used in
+ACE and SCALE [21], of the hidden fermion Pfaffian state (HFPS) [15], and of the VAFQMC stripe state [13,64]
+listed in SM Sec. VII [34].  On the 16×16 lattice, extrapolating a pure fPEPS simple-update calculation with PBC
+gives an estimated exact energy ofE/N=−0.7602(14) (SM Sec. VI [34]),  shown in Fig.3(a).  The energies of all
+our variational wavefunctions lie within 0.002tper site (0.3%) of this estimate, and the lowest one (BCS backflow)
+lies 0.0014tabove it.  This accuracy is consistent with that of the NN-fPEPS on the small 16×4 lattice, where an
+accurate benchmark energy is known (SM Sec. VII [34]).
+                                                                                                                                                            6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3.   Energies and orders of the symmetry-projected states in the pure Hubbard model att   ′ = 0 and 1/8 doping with PBC.
+(a) Variational energy per siteE/Nagainst the system size. For reference, we include the variational energies of the determinant
+backflow ACE (red) and SCALE in Ref. [21], obtained without symmetry projection, and the hidden fermion Pfaffian state
+(HFPS) in Ref. [15].  We also show an estimated exact energy obtained by extrapolation of a pure fPEPS calculation with PBC
+(SM Sec. VI [34]).  (b) Pair-pair correlation functionC                    p(|r|) as defined in Eq. (2) on the 16×16 lattice.  For the determinant
+backflow state, open circles show|C    p|whereC            p <0, and the normal-state contributionN                      0,r   is not subtracted.  The shaded
+region is the averaging window|r| ≥r          max  = 4√2 of Eq. (3) and the dashed lines are the resulting ∆    2SC.  (c)d-wave pairing
+order parameter ∆2SC as defined in Eq. (3), multiplied by 10, and stripe order parameterM                         2str as defined in Eq. (4), against the
+inverse linear size 1/L.  The dotted and dashed lines are linear fits of ∆        2SC ×10 andM            2str in 1/L, respectively, and the markers
+at 1/L= 0 are the extrapolated values.  The stripe order of the BCS backflow state is instead fitted in 1/L          2, as appropriate
+when there is no long-range order.  All uncertainties not shown in (c) are below 3×10     −4  .
+
+
+   In Fig.3(b), the pair-pair correlations of the BCS and Pfaffian backflow states saturate at nearly the same plateau
+at long distances,C                  p ≈1.3×10          −3  , which signals long-range superconducting correlations.  The NN-fPEPS and the
+determinant backflow state instead show exponentially decaying correlations, as expected for a pure stripe without
+pairing, which is also the state found in the large-DfPEPS calculation.  These ansatzes therefore converge to two
+qualitatively different competing states, a superconductor and a stripe.  As indicated by the energies in Fig.3(a), the
+NN-fPEPS energy lies below that of the Pfaffian backflow state but slightly above that of the BCS backflow state on
+the 16×16 lattice, by 3×10           −4   tper site, while on the 32×32 lattice its energy is clearly lower than that of the BCS
+backflow state, by 6×10     −4   tper site.  This trend indicates that the NN-fPEPS captures the striped ground state of
+large lattices, whereas the superconducting state seen in the BCS and Pfaffian backflow ansatzes is a competing state
+at higher energy in the TDL.
+   The order parameters are further analyzed in Fig.3(c) as a function of lattice size.  On the 16×16 lattice, the BCS
+backflow state has ∆2SC = 0.00135(1) andM            2str = 0.009415(3), the weakest stripe order among the three states.  Its
+pairing  strength  exceeds  even  that  of  the  BCS  backflow  result  att   ′  =−0.2  (Sec.IV B),  where  superconductivity
+has  been  previously  reported  and  argued  to  be  stronger  than  att   ′  =  0.   On  the  32×32  lattice  its  pairing  is
+essentially unchanged, ∆2SC = 0.00141(3), and extrapolated linearly in 1/Lit stays finite with ∆           2SC = 0.00146(6), i.e.,
+∆SC = 0.0382(8).  Its stripe order, in contrast, drops by a factor of 4.4 toM            2str = 0.002145(4), and its extrapolation in
+1/L  2 givesM    2str =−0.0003, consistent with a vanishing stripe order in the TDL. The BCS backflow wavefunction thus
+describes a uniformd-wave superconductor in the TDL, and its weak stripe signal on finite lattices is a finite-size effect.
+Although the Pfaffian backflow state has more variational freedom, it behaves similarly, and its order parameters are
+comparable to those obtained by the BCS backflow state on the 16×16 lattice.
+   The NN-fPEPS, in contrast, gives a filled stripe withq=π/8, i.e., a spin period of 16, with the extrapolated stripe
+orderM           2str = 0.0082, while its exponentially decaying pair-pair correlation is consistent with vanishing superconducting
+order.  The NN-fPEPS and the BCS backflow solutions therefore realize two distinct candidate states in the TDL,
+a filled stripe without pairing as the ground state and a uniformd-wave superconductor as a low-energy competing
+state.  Our striped ground state agrees with the filled stripes without superconductivity found by a broad range of
+previous studies atU= 8 and 1/8 doping [11–13,15].  The uniformd-wave superconductor expressed by the backflow
+states has not been commonly seen in recent numerical work, but its low energy matches the energetically competitive
+uniformd-wave state that VAFQMC finds within 0.001tper site of the stripe [13].  This is a much lower energy
+                                                                                                                                                         7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 4.   Energies and orders of the symmetry-projected states in thet–t        ′ Hubbard model, the same as Fig.3but witht               ′ =−0.2
+(1/8 doping).  The BCS backflow data are extracted from Ref. [26].  In (c), the CP-AFQMC result is from Ref. [18], and the
+stripe order of the BCS backflow state is fitted in 1/L  2.
+
+
+scale of competition than seen in early DMET and infinite PEPS studies, which stabilized a uniformd-wave state in
+constrained 2×2 unit cells at energies of about 0.01tper site above the stripe [11].  This indicates the importance
+of long-range fluctuations in stabilizing the uniformd-wave state.  We note that in the closely relatedt–Jmodel, a
+uniformd-wave state has likewise been reported to be among the low-energy states [65,66].
+
+
+
+                                                            B.t–t       ′ Hubbard model
+
+   We now apply a similar analysis to thet–t        ′ Hubbard model att   ′ =−0.2 and 1/8 doping, shown in Fig.4.  For this
+model, we take the BCS backflow state energies from the recent study in Ref. [26] and reanalyze the order parameters
+of these states. As presented in Fig.4(a), our wavefunctions again reach the lowest variational energies reported so far,
+and the Pfaffian backflow state achieves the lowest energies on all lattice sizes from 16×16 to 32×32. Unlike att                ′ = 0,
+the pair-pair correlations of the NN-fPEPS, BCS backflow, and Pfaffian backflow states in Fig.4(b) saturate at a finite
+plateau, so all three states carry superconducting correlations on finite lattices. While their short-distance correlations
+are similar in magnitude, the plateau of the BCS backflow state is 2.4 times higher than that of the Pfaffian backflow
+state and 4.6 times higher than that of the NN-fPEPS. In contrast,  the determinant backflow state has vanishing
+long-ranged-wave pairing.  The ansatzes differ even more in the strength of their stripe order, shown in Fig.4(c).
+For the BCS backflow state, the structure factor peaks atq=π/6 on both the 12×12 and 24×24 lattices, where
+M 2str = 0.0125 and 0.0030, the latter being already 3.3 times weaker than the 0.00998(1) order of the Pfaffian backflow
+on the same lattice.  Its peakS(k           α) hardly changes between the two sizes, so the spin correlations are short-ranged,
+and the extrapolation in 1/L  2  givesM    2str =−0.0001.  We note that our extrapolation, which starts from the small
+12×12 lattice, is subject to strong finite-size effects and may thus not be entirely reliable.  Nevertheless, since the
+stripe order is much weaker than that of the other two variational states, we regard the BCS backflow state as evidence
+of a (nearly) uniform low-energy state in the TDL. The Pfaffian backflow state and the NN-fPEPS instead form a
+pronounced stripe order withq=π/4, i.e., a spin period of 8, whoseM                              2str extrapolates to 0.0100 for the NN-fPEPS
+and 0.0070 for the Pfaffian backflow, indicating a striped state in the TDL. Similarly, the determinant backflow state
+also shows a strong stripe order withq=π/4 [21].  Independent of this consensus between these different ansatzes,
+the low energy achieved by the Pfaffian backflow wavefunction lends further support to a non-uniform ground state
+in the TDL.
+   The extrapolation of the superconducting pairing order is shown in Fig.4(c).  Extrapolating ∆          2SC, we find that the
+BCS backflow state of Ref. [26] retains a sizable ∆      SC = 0.019(4) in the TDL, slightly below the value 0.022(1) obtained
+in  Ref.  [26]  by  extrapolating  ∆      SC  itself.   Since,  as  discussed  above,  its  stripe  order  is  very  weak  (and  potentially
+vanishes  in  a  TDL  extrapolation),  we  reinterpret  this  as  evidence  of  a  (nearly)  uniformd-wave  superconducting
+low-energy state in the TDL, rather than the striped superconducting state originally discussed in Ref. [26].  The
+Pfaffian  backflow  state  and  the  NN-fPEPS  give  much  weaker  pairing  in  the  TDL.  For  the  NN-fPEPS,  the  linear
+                                                                                                                                                  8
+
+fit through the 16×16 and 32×32 lattices yields ∆                 SC  = 0.007(2).  For the Pfaffian backflow, the result depends
+on the fit.  The linear 1/Lfit overL= 16,  24,  and 32 in Fig.4(c) gives ∆                         SC  consistent with zero,  with an upper
+bound of 0.006 at one standard deviation.  A fit through the 24×24 and 32×32 lattices alone gives a small but
+finite ∆SC  =  0.010(3).   Either way,  the extrapolated pairing gives ∆    SC ≲0.010,  i.e.,  a striped ground state with
+weak or absent superconductivity.  This stands in contrast to the striped superconducting ground state with a longer
+wavelength and a larger ∆SC = 0.017(3) proposed by CP-AFQMC [18].  Taken together, these results thus point to
+stripes with weaker or absent superconductivity, stripes with robust superconductivity, and a uniformd-wave state,
+all existing in competition near the ground state.
+
+
+                                               V.    CONCLUSION AND OUTLOOK
+
+  We have studied the competition between stripes and superconductivity in the hole-doped Hubbard model with
+U= 8 and 1/8 doping using three classes of variational states:  BCS backflow states, Pfaffian backflow states, and
+NN-fPEPS. On the lattices considered,  from 16×16 up to 32×32 sites,  the accuracy of our variational energies
+exceeds that of all prior studies of this model. In the pure Hubbard model att   ′ = 0, our work lends further support to
+the long-standing proposal of a non-superconducting striped ground state [11,12].  Att           ′ =−0.2, we find evidence for
+weak or vanishing superconductivity with strong stripe order in the ground state, which is different from recent studies
+that saw a robustd-wave striped superconducting ground state [15,18], although the latter could still represent a
+different low-lying state [11].   Both with and withoutt                 ′,  we find at this doping that an ordered stripe suppresses
+superconductivity, so that the ground state is either not superconducting or only weakly superconducting.  However,
+at both values oft   ′, we also find a strongly superconducting uniformd-wave state nearby on a milli-tenergy scale,
+resembling the proposal in Ref. [13].
+  Beyond the physical findings,  our work highlights and advances two aspects of current simulation methodology.
+First, despite being highly parametrized, modern neural wavefunctions retain biases that are not overcome in training.
+They must therefore be cross-validated using different techniques, as done here, in order to identify the qualitative
+nature of the ground state.  Second,  the neural tensor networks,  improved here from Ref. [27],  now offer state-of-
+the-art performance in large-scale simulations of a strongly correlated electron system,  without using a mean-field
+reference.   Taken  together,  these  two  aspects  suggest  a  new  framework  where  neural  wavefunctions  with  different
+fermionic references are combined for reliable studies.
+  We now discuss prospects for future definitive simulations of superconductivity in the Hubbard model ground state.
+A finite lattice can resolve the pairing only once the gap ∆ exceeds the mean spacing of the single-particle levels,
+roughly the bandwidth 8tof the square lattice divided byN, which requiresN≳8t/∆.  For ∆                                        SC ∼0.02 comparable
+to the uniformd-wave superconductors in this work and previous estimates att                 ′ =−0.2 [18,26], and taking ∆≈∆                              SCt
+from BCS theory, eliminating the finite-size effects on the pairing requiresN≳400 sites, a number that is expected
+to be further reduced in the strong-coupling limit [67,68].  Running on up to 1024 GPUs, we simulatedN≈1000
+sites  and  thus  have  reached  a  regime  where  finite-size  errors  arguably  no  longer  dominate  the  physics  and  TDL
+extrapolation is reliable.  On the other hand, the condensation energy relative to a hypothetical paramagnetic normal
+state is estimated to be<10    −3   t[69].  If the mechanism driving superconductivity is related to the formation of the
+striped state,  we may expect a competing stripe state to gain some of this energy,  and thus to compete with the
+superconducting state at the milli-tscale or below, which is what we see in our work.  The overall picture is that
+stripes, striped superconductivity, and uniform superconductivity all exist in extreme competition in the hole-doped
+Hubbard model, and resolving this competition requires an extreme level of accuracy.  Our work presents a concrete
+step in this direction.
+
+
+                                                        ACKNOWLEDGMENTS
+
+  This work was supported by the U.S. Department of Energy, Office of Science, through Award No. DE-SC0018140.
+Most computations were performed using the facilities of the National Energy Research Scientific Computing Cen-
+ter (NERSC), a U.S. Department of Energy Office of Science User Facility located at Lawrence Berkeley National
+Laboratory, under NERSC Award No. ERCAP0023924.  This research used resources of NERSC under Contract No.
+DE-AC02-05CH11231 using NERSC award DDR-ERCAP0038682.   Some computations were also performed using
+the facilities of the Caltech Resnick High Performance Computing Center.  We acknowledge Yuntian Gu, Christopher
+Roth,  Riccardo  Rende,  and  Antoine  Georges  for  useful  discussions  about  their  earlier  results.   We  thank  Yuntian
+Gu and Yufei Chen for sharing the determinant backflow data of Ref. [21] and Riccardo Rende for sharing the BCS
+backflow data of Ref. [26].  We would like to thank the NVIDIA Corporation for technical support.  We are especially
+grateful to Linsey Rodenbach, Nicola Pancotti, and other members of the NVIDIA Quantum Applied Research team,
+                                                                                                                                                         9
+
+as well as Katie Klymko (NERSC), for supporting this project.  Claude Code, an AI coding assistant developed by
+Anthropic, was used to write parts of the simulation code, to submit and monitor part of the computations on the
+high-performance computing clusters, and to draft parts of this manuscript.  All code, computations, and text were
+reviewed and verified by the authors, who take full responsibility for the content.
+
+
+
+
+                                                   DATA AND CODE AVAILABILITY
+
+   The trained wavefunctions, the code to evaluate and measure them, and the data and scripts behind all figures and
+tables are available at Ref. [70].
+
+
+
+
+
+ [1]D. P. Arovas, E. Berg, S. A. Kivelson, and S. Raghu, The Hubbard model,Annual Review of Condensed Matter Physics
+     13, 239 (2022).
+ [2]M. Qin, T. Sch¨afer, S. Andergassen, P. Corboz, and E. Gull, The Hubbard model:  A computational perspective,Annual
+     Review of Condensed Matter Physics13, 275 (2022).
+ [3]J. G. Bednorz and K. A. M¨uller, Possible high-T        c superconductivity in the Ba-La-Cu-O system,Zeitschrift f¨ur Physik B
+     Condensed Matter64, 189 (1986).
+ [4]P. A. Lee, N. Nagaosa, and X.-G. Wen, Doping a Mott insulator:  Physics of high-temperature superconductivity,Rev.
+     Mod. Phys.78, 17 (2006).
+ [5]T. Esslinger, Fermi-Hubbard physics with atoms in an optical lattice,Annual Review of Condensed Matter Physics1, 129
+     (2010).
+ [6]L. Tarruell and L. Sanchez-Palencia, Quantum simulation of the Hubbard model with ultracold fermions in optical lattices,
+     Comptes Rendus Physique19, 365 (2018).
+ [7]A.  Mazurenko,  C.  S.  Chiu,  G.  Ji,  M.  F.  Parsons,  M.  Kan´asz-Nagy,  R.  Schmidt,  F.  Grusdt,  E.  Demler,  D.  Greif,  and
+     M. Greiner, A cold-atom Fermi–Hubbard antiferromagnet,Nature545, 462 (2017).
+ [8]T. Hartke, B. Oreg, C. Turnbaugh, N. Jia, and M. Zwierlein, Direct observation of nonlocal fermion pairing in an attractive
+     Fermi-Hubbard gas,Science381, 82 (2023).
+ [9]B. Keimer, S. A. Kivelson, M. R. Norman, S. Uchida, and J. Zaanen, From quantum matter to high-temperature super-
+     conductivity in copper oxides,Nature518, 179 (2015).
+[10]E. Fradkin, S. A. Kivelson, and J. M. Tranquada, Colloquium:  Theory of intertwined orders in high temperature super-
+     conductors,Rev. Mod. Phys.87, 457 (2015).
+[11]B.-X. Zheng, C.-M. Chung, P. Corboz, G. Ehlers, M.-P. Qin, R. M. Noack, H. Shi, S. R. White, S. Zhang, and G. K.-L.
+     Chan, Stripe order in the underdoped region of the two-dimensional Hubbard model,Science358, 1155 (2017).
+[12]M. Qin, C.-M. Chung, H. Shi, E. Vitali, C. Hubig, U. Schollw¨ock, S. R. White, and S. Zhang (Simons Collaboration on
+     the Many-Electron Problem), Absence of superconductivity in the pure two-dimensional Hubbard model,Phys. Rev. X
+     10, 031016 (2020).
+[13]S.  Sorella,  Systematically  improvable  mean-field  variational  ansatz  for  strongly  correlated  systems:  Application  to  the
+     Hubbard model,Phys. Rev. B107, 115133 (2023).
+[14]W.-Y. Liu, H. Zhai, R. Peng, Z.-C. Gu, and G. K.-L. Chan, Accurate simulation of the Hubbard model with finite fermionic
+     projected entangled pair states,Phys. Rev. Lett.134, 256502 (2025).
+[15]C. Roth, A. Chen, A. Sengupta, and A. Georges,Superconductivity in the two-dimensional Hubbard model revealed by
+     neural quantum states(2025),arXiv:2511.07566 [cond-mat.supr-con].
+[16]O. K. Andersen, A. I. Liechtenstein, O. Jepsen, and F. Paulsen, LDA energy bands, low-energy Hamiltonians,t                           ′,t ′′,t ⊥(k),
+     andJ      ⊥,J. Phys. Chem. Solids56, 1573 (1995).
+[17]E. Pavarini, I. Dasgupta, T. Saha-Dasgupta, O. Jepsen, and O. K. Andersen, Band-structure trend in hole-doped cuprates
+     and correlation withT        cmax ,Phys. Rev. Lett.87, 047003 (2001).
+[18]H. Xu, C.-M. Chung, M. Qin, U. Schollw¨ock, S. R. White, and S. Zhang, Coexistence of superconductivity with partially
+     filled stripes in the Hubbard model,Science384, eadh7691 (2024).
+[19]B. Ponsioen, S. S. Chung, and P. Corboz, Period 4 stripe in the extended two-dimensional Hubbard model,Phys. Rev. B
+     100, 195141 (2019).
+[20]Y. Gu, W. Li, H. Lin, B. Zhan, R. Li, Y. Huang, D. He, Y. Wu, T. Xiang, M. Qin, L. Wang, and D. Lv, Solving the
+     Hubbard model with neural quantum states,Nature Communications17, 7838 (2026),arXiv:2507.02644 [cond-mat.str-el].
+[21]Y. Gu, Z. Han, W. Li, Z. Xiao, T. Xiang, M. Qin, L. Wang, and D. Lv, Pareto frontier of neural quantum states: Scalable,
+     affordable, and accurate convolutional backflow for strongly correlated lattice fermions,PRX Intelligence1, 023001 (2026).
+[22]H.-C. Jiang, T. P. Devereaux, and S. A. Kivelson, Competition between charge-density-wave and superconducting orders
+     on eight-leg square Hubbard cylinders,npj Quantum Materials11, 80 (2026),arXiv:2511.18644 [cond-mat.str-el].
+[23]D. Luo and B. K. Clark, Backflow transformations via neural networks for quantum many-body wave functions,Phys.
+     Rev. Lett.122, 226401 (2019).
+                                                                                                                                                           10
+
+[24]A.  Chen,  Z.-Q.  Wan,  A.  Sengupta,  A.  Georges,  and  C.  Roth,  Neural  network–augmented  Pfaffian  wave-functions  for
+     scalable simulations of interacting fermions,Proceedings of the National Academy of Sciences123, e2535288123 (2026).
+[25]K. Loehr and B. K. Clark,Enhancing neural network backflow(2025),arXiv:2510.26906 [cond-mat.str-el].
+[26]R. Rende, L. L. Viteritti, and A. Georges,Superconductivity in thet-t                          ′ Hubbard model from symmetry-preserving neural-
+     network quantum states(2026),arXiv:2608.12465 [cond-mat.str-el].
+[27]S.-J. Du, A. Chen, and G. K.-L. Chan, Neuralized fermionic tensor networks for quantum many-body systems,Phys. Rev.
+     B113, 085134 (2026),arXiv:2506.08329 [cond-mat.dis-nn].
+[28]J. Bardeen, L. N. Cooper, and J. R. Schrieffer, Microscopic theory of superconductivity,Phys. Rev.106, 162 (1957).
+[29]L. L. Viteritti, R. Rende, C. Roth, A. Sengupta, G. Carleo, and A. Georges,Beyond variational bias: Resolving intertwined
+     orders in the Hubbard model(2026),arXiv:2604.21978 [cond-mat.str-el].
+[30]P. Corboz, R. Or´us, B. Bauer, and G. Vidal, Simulation of strongly correlated fermions in two spatial dimensions with
+     fermionic projected entangled-pair states,Phys. Rev. B81, 165104 (2010).
+[31]C. V. Kraus, N. Schuch, F. Verstraete, and J. I. Cirac, Fermionic projected entangled pair states,Phys. Rev. A81, 052338
+     (2010).
+[32]Q.  Mortier,  L.  Devos,  L.  Burgelman,  B.  Vanhecke,  N.  Bultinck,  F.  Verstraete,  J.  Haegeman,  and  L.  Vanderstraeten,
+     Fermionic tensor network methods,SciPost Phys.18, 012 (2025).
+[33]Y. Gao, H. Zhai, J. Gray, R. Peng, G. Park, W.-Y. Liu, E. F. Kjønstad, and G. K.-L. Chan, Fermionic tensor network
+     contraction for arbitrary geometries,Phys. Rev. Res.7, 023193 (2025).
+[34]See Supplementary Materials for details on the network architecture, the HOTRG contraction, the symmetry projection,
+     the optimization method, the time cost, the pure fPEPS reference calculations, the energy benchmarks, and the real-space
+     correlations.
+[35]A. W. Sandvik, Finite-size scaling of the ground-state parameters of the two-dimensional Heisenberg model,Phys. Rev. B
+     56, 11678 (1997).
+[36]W. L. McMillan, Ground state of liquid He       4,Phys. Rev.138, A442 (1965).
+[37]F. Becca and S. Sorella,Quantum Monte Carlo Approaches for Correlated Systems(Cambridge University Press, 2017).
+[38]G.  Carleo  and  M.  Troyer,  Solving  the  quantum  many-body  problem  with  artificial  neural  networks,Science355,  602
+     (2017).
+[39]J. P. Bouchaud, A. Georges, and C. Lhuillier, Pair wave functions for strongly correlated fermions and their determinantal
+     representation,J. Phys. France49, 553 (1988).
+[40]M. Bajdich, L. Mitas, G. Drobn´y, L. K. Wagner, and K. E. Schmidt, Pfaffian pairing wave functions in electronic-structure
+     quantum Monte Carlo simulations, Phys. Rev. Lett.96, 130201 (2006).
+[41]M. Bajdich, L. Mitas, L. K. Wagner, and K. E. Schmidt, Pfaffian pairing and backflow wavefunctions for electronic structure
+     quantum Monte Carlo methods, Phys. Rev. B77, 115112 (2008).
+[42]Z. Chen,  L. Newhouse,  E. Chen,  D. Luo, and M. Soljaˇci´c, ANTN: Bridging autoregressive neural networks and tensor
+     networks for quantum many-body simulation, Advances in Neural Information Processing Systems36, 450 (2023).
+[43]C. Fan, B. Zhan, Y. Gu, T. Liu, Y. Wu, M. Qin, D. Lv, and T. Xiang,Disentangling tensor network states with deep
+     neural network(2026),arXiv:2603.14425 [cond-mat.str-el].
+[44]Z. Y. Xie,  J. Chen,  M. P. Qin,  J. W. Zhu,  L. P. Yang, and T. Xiang, Coarse-graining renormalization by higher-order
+     singular value decomposition,Phys. Rev. B86, 045139 (2012).
+[45]S. Iino, S. Morita, and N. Kawashima, Boundary tensor renormalization group,Phys. Rev. B100, 035449 (2019).
+[46]W.-Y. Liu, S.-J. Du, R. Peng, J. Gray, and G. K.-L. Chan, Tensor network computations that capture strict variationality,
+     volume law behavior, and the efficient representation of neural network states,Phys. Rev. Lett.133, 260404 (2024).
+[47]S.-J. Du, J. Gray, A. Chen, and G. K.-L. Chan,Vectorized symmetric and fermionic tensor network implementations for
+     GPU-accelerated variational Monte Carlo(2026),arXiv:2608.27861 [physics.comp-ph].
+[48]F. Verstraete, V. Murg, and J. I. Cirac, Matrix product states, projected entangled pair states, and variational renormal-
+     ization group methods for quantum spin systems,Advances in Physics57, 143 (2008).
+[49]J. Eisert, M. Cramer, and M. B. Plenio, Colloquium:  Area laws for the entanglement entropy,Rev. Mod. Phys.82, 277
+     (2010).
+[50]A. Chen and C. Roth,Quantax:  Flexible neural quantum states in JAX(2024).
+[51]J.  Bradbury,  R.  Frostig,  P.  Hawkins,  M.  J.  Johnson,  C.  Leary,  D.  Maclaurin,  G.  Necula,  A.  Paszke,  J.  VanderPlas,
+     S. Wanderman-Milne, and Q. Zhang,JAX: composable transformations of Python+NumPy programs(2018).
+[52]P.  Kidger  and  C.  Garcia,Equinox:  neural  networks  in  JAX  via  callable  PyTrees  and  filtered  transformations(2021),
+     arXiv:2111.00254 [cs.LG].
+[53]J. Gray, quimb: A python package for quantum information and many-body calculations,Journal of Open Source Software
+     3, 819 (2018).
+[54]J. Gray and G. K.-L. Chan, Hyperoptimized approximate contraction of tensor networks with arbitrary geometry,Phys.
+     Rev. X14, 011009 (2024).
+[55]J. Gray, symmray:  A minimal library for block sparse symmetric and fermionic arrays,https://github.com/jcmgray/
+     symmray(2025).
+[56]A. Chen, fermix:  Fast batched determinants and Pfaffians in JAX,https://github.com/ChenAo-Phys/fermix(2026).
+[57]D.  P.  Kingma  and  J.  Ba,  Adam:  A  method  for  stochastic  optimization,  in3rd  International  Conference  on  Learning
+     Representations (ICLR)(2015)arXiv:1412.6980 [cs.LG].
+[58]S. Sorella, Green function Monte Carlo with stochastic reconfiguration,Phys. Rev. Lett.80, 4558 (1998).
+[59]S. Sorella, Generalized Lanczos algorithm for variational quantum Monte Carlo,Phys. Rev. B64, 024512 (2001).
+                                                                                                                                                          11
+
+[60]A. Chen and M. Heyl, Empowering deep neural quantum states through efficient optimization,Nature Physics20, 1476
+     (2024).
+[61]R. Rende,  L. L. Viteritti,  L. Bardone,  F. Becca, and S. Goldt, A simple linear algebra identity to optimize large-scale
+     neural network quantum states,Communications Physics7, 260 (2024).
+[62]G.  Goldshlager,  N.  Abrahamsen,  and  L.  Lin,  A  Kaczmarz-inspired  approach  to  accelerate  the  optimization  of  neural
+     network wavefunctions,Journal of Computational Physics516, 113351 (2024).
+[63]D. C.-L. Fong and M. Saunders, LSMR: An iterative algorithm for sparse least-squares problems,SIAM Journal on Scientific
+     Computing33, 2950 (2011).
+[64]D. Wu, R. Rossi, F. Vicentini, N. Astrakhantsev, F. Becca, X. Cao, J. Carrasquilla, F. Ferrari, A. Georges, M. Hibat-Allah,
+     M. Imada, A. M. L¨auchli, G. Mazzola, A. Mezzacapo, A. Millis, J. R. Moreno, T. Neupert, Y. Nomura, J. Nys, O. Parcollet,
+     R. Pohle, I. Romero, M. Schmid, J. M. Silvester, S. Sorella, L. F. Tocchio, L. Wang, S. R. White, A. Wietek, Q. Yang,
+     Y. Yang, S. Zhang, and G. Carleo, Variational benchmarks for quantum many-body problems,Science386, 296 (2024).
+[65]P. Corboz, T. M. Rice, and M. Troyer, Competing states in thet-Jmodel: Uniformd-wave state versus stripe state,Phys.
+     Rev. Lett.113, 046402 (2014).
+[66]G. Yu and Z. Zhu,Uniform-charge-densityd-wave superconductivity in the puret-Jmodel at 1/8 doping on an infinite
+     cylinder(2026),arXiv:2609.37191 [cond-mat.str-el].
+[67]F.  C.  Zhang,  C.  Gros,  T.  M.  Rice,  and  H.  Shiba,  A  renormalised  Hamiltonian  approach  to  a  resonant  valence  bond
+     wavefunction,Supercond. Sci. Technol.1, 36 (1988).
+[68]A. Paramekanti, M. Randeria, and N. Trivedi, Projected wave functions and high temperature superconductivity,Phys.
+     Rev. Lett.87, 217002 (2001).
+[69]E. Gull and A. J. Millis, Energetics of superconductivity in the two-dimensional Hubbard model,Phys. Rev. B86, 241106
+     (2012).
+[70]A.  Chen,  J.  Gray,  S.-J.  Du,  and  G.  K.-L.  Chan,  NeuralHubbard:  Trained  states,  code,  and  data  for  “Extreme  com-
+     petition between stripes and superconductivity in the hole-doped Hubbard model”,https://github.com/ChenAo-Phys/
+     NeuralHubbard(2026).
+[71]K. He, X. Zhang, S. Ren, and J. Sun, Deep residual learning for image recognition, inProceedings of the IEEE Conference
+     on Computer Vision and Pattern Recognition (CVPR)(2016).
+[72]K. He, X. Zhang, S. Ren, and J. Sun, Identity mappings in deep residual networks, inComputer Vision – ECCV 2016
+     (2016) pp. 630–645.
+[73]D. Hendrycks and K. Gimpel,Gaussian error linear units (GELUs)(2023),arXiv:1606.08415 [cs.LG].
+[74]B. Zhang and R. Sennrich, Root mean square layer normalization, inAdvances in Neural Information Processing Systems,
+     Vol. 32 (2019).
+[75]Y. LeCun, L. Bottou, G. B. Orr, and K.-R. M¨uller, Efficient BackProp, inNeural Networks:  Tricks of the Trade, Lecture
+     Notes in Computer Science, Vol. 1524 (Springer, 1998) pp. 9–50.
+[76]H.-J. Liao, J.-G. Liu, L. Wang, and T. Xiang, Differentiable programming tensor networks,Phys. Rev. X9, 031041 (2019).
+[77]D. Tahara and M. Imada, Variational Monte Carlo method combined with quantum-number projection and multi-variable
+     optimization,Journal of the Physical Society of Japan77, 114701 (2008).
+[78]Y. Nomura, Helping restricted Boltzmann machines with quantum-state representation by restoring symmetry,Journal of
+     Physics:  Condensed Matter33, 174003 (2021).
+[79]T. Misawa, S. Morita, K. Yoshimi, M. Kawamura, Y. Motoyama, K. Ido, T. Ohgoe, M. Imada, and T. Kato, mVMC—open-
+     source software for many-variable variational Monte Carlo method,Computer Physics Communications, 447 (2019)235            .
+[80]J. R. Shewchuk, An introduction to the conjugate gradient method without the agonizing pain (1994).
+[81]E. Neuscamman, C. J. Umrigar, and G. K.-L. Chan, Optimizing large parameter sets in variational quantum Monte Carlo,
+     Phys. Rev. B85, 045103 (2012),arXiv:1108.0900.
+[82]F. Vicentini, D. Hofmann, A. Szab´o, D. Wu, C. Roth, C. Giuliani, G. Pescia, J. Nys, V. Vargas-Calderon, N. Astrakhantsev,
+     and G. Carleo, NetKet 3: Machine learning toolbox for many-body quantum systems,SciPost Physics Codebases , 7 (2022),
+     arXiv:2112.10526 [quant-ph].
+[83]J.  Rader,  T.  Lyons,  and  P.  Kidger,Lineax:  unified  linear  solves  and  linear  least-squares  in  JAX  and  Equinox(2023),
+     arXiv:2311.17283 [cs.MS].
+[84]P. C. Hansen,Rank-Deficient and Discrete Ill-Posed Problems:  Numerical Aspects of Linear Inversion(Society for Indus-
+     trial and Applied Mathematics, 1998).
+[85]J. Tutt and R. Wiersema, JAXMg:  A multi-GPU linear solver in JAX,https://github.com/flatironinstitute/jaxmg
+     (2026).
+[86]H. C. Jiang, Z. Y. Weng, and T. Xiang, Accurate determination of tensor network state of quantum lattice models in two
+     dimensions,Phys. Rev. Lett.101, 090603 (2008).
+[87]G. Vidal, Classical simulation of infinite-size quantum lattice systems in one spatial dimension,Phys. Rev. Lett.98, 070201
+     (2007).
+[88]Z.-C. Gu, F. Verstraete, and X.-G. Wen,Grassmann tensor network states and its renormalization for strongly correlated
+     fermionic and bosonic states(2010),arXiv:1004.2563 [cond-mat.str-el].
+[89]S. Singh, R. N. C. Pfeifer, and G. Vidal, Tensor network decompositions in the presence of a global symmetry,Phys. Rev.
+     A82, 050301(R) (2010).
+[90]S. Singh, R. N. C. Pfeifer, and G. Vidal, Tensor network states and algorithms in the presence of a global U(1) symmetry,
+     Phys. Rev. B83, 115125 (2011).
+                                                                                                                                                             12
+
+[91]B. Bauer, P. Corboz, R. Or´us, and M. Troyer, Implementing global Abelian symmetries in projected entangled-pair state
+     algorithms,Phys. Rev. B83, 125106 (2011).
+[92]R. Alkabetz and I. Arad, Tensor networks contraction and the belief propagation algorithm,Phys. Rev. Res.3, 023073
+     (2021).
+[93]J. Tindall and M. Fishman, Gauging tensor networks with belief propagation,SciPost Phys.15, 222 (2023).
+[94]R. M. Milbradt, S. Sun, C. B. Mendl, J. Gray, and G. K.-L. Chan,Efficient application of tensor network operators to
+     tensor network states through successive deterministic compression(2026),arXiv:2601.19650 [quant-ph].
+[95]P.  Corboz,  Improved  energy  extrapolation  with  infinite  projected  entangled-pair  states  applied  to  the  two-dimensional
+     Hubbard model,Phys. Rev. B93, 045116 (2016).
+                                                                                                                                                                    13
+
+                                                           Supplementary Materials
+
+                                                                          CONTENTS
+
+                              I.  Neural network architecture                                                        13
+
+                            II.  HOTRG contraction                                                                    15
+                                 A.  HOTRG overview                                                                     15
+                                 B.  HOTRG step                                                                                15
+                                 C.  Implementation                                                                          16
+
+                           III.  Symmetry                                                                                17
+                                 A.  Symmetry in fermion systems                                                  17
+                                 B.  Translation symmetry in NN-fPEPS                                   18
+
+                           IV.  Optimizer                                                                                 19
+                                 A.  AdamSR                                                                               19
+                                 B.  Solving linear equations                                                             20
+                                 C.  Hyperparameters and details                                                     21
+
+                            V.  Time cost                                                                                               22
+                                 A.  Amplitude evaluation                                                             22
+                                 B.  VMC step                                                                                     24
+
+                           VI.  Pure fPEPS reference                                                                 25
+                                 A.  Simple update and cluster contraction                                    25
+                                 B.  Extrapolation                                                                           26
+
+                          VII.  Energy benchmarks                                                                       28
+                                 A.  Zero-variance extrapolation                                                      28
+                                 B.  Variational energy                                                                     28
+
+                         VIII.  Real-space correlations                                                           30
+
+
+
+                                                I.    NEURAL NETWORK ARCHITECTURE
+
+   Both the neural-network fermionic projected entangled pair state (NN-fPEPS) and the Bardeen–Cooper–Schrieffer
+(BCS) and Pfaffian backflow states (here, we use ‘backflows’ for short) generate their configuration-dependent features
+with a residual convolutional neural network (CNN), sketched in Fig.S1with its settings in TableS1.   A learned
+embedding maps the local state of each site to aC-dimensional vectorx              i =e   ni, with the same tableeon every site
+to preserve translation symmetry, followed by pre-activation residual blocks [71,72].  The two networks differ in the
+residual block,  which is the bottleneck block in the NN-fPEPS and the normal block in the backflows.   Since the
+convolutions share their weights across sites, the same network applies to every system size, enabling weight transfer
+from small to large lattices.
+   The network of the NN-fPEPS mapsnto the elements of all local tensorsT                            [i]  (n).  AZ        2-graded site tensor has a
+physical index of dimension 4, with{|0⟩,|↑↓⟩}even and{|↑⟩,|↓⟩}odd, and four virtual indices of dimensionD, each
+withD/2 even andD/2 odd basis states. Parity conservation removes half of its 4D                        4 elements, so the network outputs
+C= 2D      4 real channels per site,C= 512 at the bond dimensionD= 4 used in this work. Slicing the physical index at
+ni gives the tensors contracted by the higher-order tensor renormalization group (HOTRG) of Sec.II. This width is
+fixed byDand far wider than the networks typically used in variational Monte Carlo (VMC), so the NN-fPEPS stacks
+bottleneck blocks [71].  A residual block at full width would carry 9C         2 ≈2.4×10             6 weights in its 3×3 convolution
+alone, 8.5 times the parameters and floating-point operations (FLOP) of a bottleneck block.  The widthC= 64 of
+the backflows is a free choice rather than being fixed by the bond dimensionD, so they need no bottleneck.
+                                                                                                                                                                                               14
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S1.    Neural network architectures.  The configurationnis embedded into aC-channel feature map and passes through
+pre-activation residual blocks to yield the site tensorsT(n) in the NN-fPEPS or the featuresy(n) in the backflows.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                   TABLE S1.   Settings of the two residual CNNs of Fig.S1.
+
+                                               NN-fPEPS                                                    BCS and Pfaffian backflows
+Output per site     C= 2D             4 elements ofT(n)                                   y          ↑(n) andy      ↓(n) of dimensiond
+Residual block                         bottleneck                                                                    normal
+WidthC                                    512                                                                             64
+Bottleneck widthc                      128                                                                             —
+Weights per block           2Cc+ 9c       2 ≈2.8×10             5                                                 2×9C         2 ≈7.4×10             4
+ParametersN                  p                            4.5 M                                                                         1.2 M
+Receptive field                           33×33                                                                      65×65
+Number of blocks                                                                                    16
+Convolutions                      3×3 with circular padding for periodic boundary conditions (PBC), 1×1 in the bottleneck
+Nonlinearityϕ                                                           Gaussian error linear unit (GELU) [73]
+NormalizationN                        RMSNorm [74] over all channels and sites, without learnable affine parameters
+Initialization                                                                               LeCun normal [75]
+Arithmetic                    real-valued, single precision with TensorFloat-32 (TF32) in convolutions and matrix multiplications
+                                                                                                                                                                                       15
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                         FIG. S2.   The HOTRG contraction scheme of the NN-fPEPS amplitude, illustrated forL     y = 16.  Dangling legs are connected
+                         periodically.  HOTRG steps along theydirection successively halveL          y down toL    y = 4, while all bond dimensions are kept no
+                         larger thanχ.  The red boxes mark a pair of adjacent rows and the single row of the coarser lattice into which it is merged.
+                         Each column of the finalL        x ×4 network is then contracted into a transfer matrixM                i, and the amplitude follows exactly from
+                         Eq. (S1).
+
+
+
+                                                                                  II.    HOTRG CONTRACTION
+
+
+                                                                                         A.    HOTRG overview
+
+                            For  a  given  configurationn,  the  amplitudeψ                                   NN-fPEPS(n)  is  the  contraction  of  a  single-layerL        x ×L   y  fermionic
+                         projected entangled pair state (fPEPS) of four-leg tensors on a torus.  All tensors areZ      2-graded fermionic arrays [30–
+                         32], so every operation acts blockwise on the two fermion-parity sectors of each index and generates the fermionic
+                         signs automatically.
+                            We  contract  the  network  by  HOTRG  steps  [44, 45]  alongy(Fig.S2),  a  fixed  path  that  suits  the  regular  torus
+                         and the batched evaluation of Monte Carlo samples better than the hyperoptimized schemes designed for arbitrary
+                         geometries [54].  The coarse-graining stops atL         y = 4, a width that allows for exact contraction atD=χ= 4, and
+                         the four tensors of each remaining column are contracted exactly into a transfer matrixM    i of dimensionχ                    4 = 256.
+                         The exact contraction of these transfer matrices gives
+
+                                                                                       ψ(n) = tr (M         1M2 ···M Lx).                                                             (S1)
+
+                         AtD=χeach HOTRG step costsO(χ                           7) per merged pair and the lattice halves at every step, so the contraction costs
+                         O(Nχ     7) forN=L            xLy sites. Becauseχis fixed and no singular-value cutoff is applied, every configuration follows the
+                         same sequence of dense linear algebra with static shapes, which is evaluated for a whole Monte Carlo batch in one call
+                         on the graphics processing unit (GPU) and keeps the sampled energy strictly variational [46].  The contraction runs
+                         in single precision, with TF32 in the final exact contraction, and gradients are obtained by automatic differentiation.
+
+
+
+
+                                                                                             B.    HOTRG step
+
+                            A  step  merges  every  pair  ofy-adjacent  tensorsT                     [i,2j]       andT        [i,2j+1]     ,  uniformly  across  the  periodic  lattice.   The
+                         merged tensor inherits thexlegs of both parents, and each doubledxbond is compressed back to dimensionχby a
+                         pair of oblique projectorsP            LPR ≈11 [45].  The projectors on the bond between the coarse sites (i, j) and (i+ 1, j) are
+                         computed from the 2×2 patch of the two pairsA               L andA       R (dashed boxes), with all bond dimensions set toχ,
+
+
+
+
+                                                                                                 ≈                                                .                                    (S2)
+
+
+
+
+
+
+
+
+
+                       χ
+AL    AL                 AR          AR
+
+                PL          PR
+                                                                                                                                                                                             16
+
+                               QR and LQ factorizations ofA   L  andA       R, viewed as matrices between their four open legs and the doubled bond,
+                               expose the isometriesQ                   L/R,
+
+
+                                                                                   =                       ,                    =                       ,                                   (S3)
+
+
+                               and a truncated singular value decomposition (SVD) of the coreB≡R              LRR keeps the largestχ/2 singular values of
+                               each parity sector,
+
+
+                                                                                                        ≈                                  ,                                                  (S4)
+
+
+
+                               so thatQ        LUχSχV †χQR is the optimal rank-χapproximation of the patch. RequiringA                               LPL =Q   LUχS1/2χ    andP       RAR =
+                               S1/2χ   V †χQR gives the projectors
+
+
+
+                                                                        =                                 ,                     =                                  ,                       (S5)
+
+
+
+                               which satisfyP            LPR =11 without truncation.  Each pairA              [i,j]     is then contracted with its two neighboring projectors
+                               into the coarse tensorT          ′[i,j]     ,
+
+
+
+                                                                                          ≈                                       =                     ,                                    (S6)
+
+
+
+
+                               whereP            [i,j]L/R are given by Eqs. (S2)–(S5) withA                        L =A    [i,j]     andA       R =A    [i+1,j]       .
+                                  The complexity of each step is summarized in TableS2.
+
+
+                                                                                                C.    Implementation
+
+                                  A direct evaluation of Eqs. (S3)–(S5) is not optimal on GPUs. The triangular inverses in Eq. (S5) are ill-conditioned,
+                               and dense QR and SVD routines parallelize poorly and complicate automatic differentiation.  Followingquimb[53],
+                               we therefore replace every stage by matrix products, Cholesky factorizations, and Hermitian eigendecompositions, as
+                               summarized in TableS2and described below in the order of the algorithm. All matrices are block diagonal in fermion
+                               parity, so each factorization acts on two blocks of half the size, batched together with the doubled bonds and the
+                               Monte Carlo samples in a single call. AtD=χ= 4 these blocks are only 8×8, a size at which generic fermionic tensor
+                               libraries [33,55] are bound by memory latency rather than arithmetic.  The performance-critical stages therefore run
+                               as custom fused GPU kernels, each passing over the tensor data once instead of streaming it through a long chain
+                               of small library calls.  These kernels were prepared with the assistance of Claude Code, as acknowledged in the main
+                               text.
+                                  The first stage computes the triangular factorsR             L/R of Eq. (S3).  The projectors need only these factors and never
+                               the isometriesQ                  L/R, so we use the faster Cholesky QR algorithm instead of a full QR factorization. The factors follow
+                               from the Gram matricesM                L =A   †LAL =R   †LRL andM       R =A   RA†R =R   RR†R, which are contracted directly as tensor
+                               networks of each pair with its own conjugate, so thatA    L/R is never formed explicitly.  Forming and factorizing the
+                               Gram matrices costsO(χ               6), compared withO(χ              8) for a dense QR factorization ofA   L/R.  The Cholesky factorization
+                               requires a positive-definite input, whereasM               L/R is only positive semidefinite and has the squared condition number
+                               ofA   L/R.  We therefore regularize it by the relative diagonal shift
+
+                                                                                                 M→M+ϵtr(M)11,                                                                 (S7)
+
+
+
+           A[i,j]
+
+
+
+   χ2       T′       χ
+           R−1RRARRLALLQLQRRRRL  R−1R
+P [i−1,j]R S1/2UχPLPRP [i,j]LUχSχV †S1/2V †
+             χ              χ   χχ
+                                                                                                                                                                              17
+
+
+TABLE S2.   Implementation of the HOTRG contraction.  Each row replaces the direct evaluation of a stage by GPU-friendly
+operations,  with  the  costs  atD=χ.   The  fused  kernels  evaluate  the  whole  contraction  3  to  4  times  faster  than  a  direct
+implementation.
+
+Stage                                       Direct evaluation                                 Implementation                                                    Cost
+FactorsR           L/R                           QR and LQ ofA   L/R,O(χ       8)                Cholesky ofM   L/R,ϵ= 10  −4                            O(χ     6)
+Truncated SVD                       SVD ofB, Eq. (S4)                              eigendecomposition, Eq. (S8),ϵ= 10                    −6               O(χ     6)
+Projectors                     R          −1L/R, Eq. (S5)                                     matrix products, Eq. (S9)                             O(χ                     5)
+Merge                                      Eq. (S6)                                               fused kernel                                         O(χ                      7)
+Final contraction                     Eq. (S1)                                               fused kernel                                                         —
+Gradient of Eq. (S8)                1/(λ            k −λ   l)                                          (λ  k −λ   l)/[(λ       k −λ   l)2 +ε    2] [76]                            —
+
+
+withϵ= 10        −4  .
+   The second stage computes the truncated SVD of the coreB=R              LRR in Eq. (S4).  As the SVD is slow on GPUs,
+we use the Hermitian eigendecomposition of the Gram matrix ofB,
+
+                                                  B†B=VΛV           †,       Sχ = Λ1/2χ   ,       Uχ =BV   χS−1χ  ,                                           (S8)
+
+where Λχ andV       χ contain theχ/2 largest eigenpairs of each parity sector.  The Gram matrixB                    †Bis regularized by
+Eq. (S7) withϵ= 10             −6  , which keeps the retained singular values away from zero, so that the inverse powers ofS    χ
+here and in Eq. (S9) stay well conditioned.
+   The third stage assembles the projectors.   InsertingR              −1L   =R   RB−1  , R −1R   =B   −1  RL,  andB      −1    =V S   −1  U†  into
+Eq. (S5) gives the robust projectors
+
+                                                         PL =R   RVχS−1/2χ     ,       PR =S   −1/2χ     U†χRL.                                                  (S9)
+
+They are mathematically equivalent to Eq. (S5), but the triangular inverses are replaced by matrix products.  The
+only remaining inverse,S   −1/2χ     , involves only the retained singular values, which the shift above keeps bounded away
+from zero.
+   The fourth stage merges each pairA        [i,j]     with its two neighboring projectors as in Eq. (S6) with a dominant cost of
+O(χ     7), and it runs as a fused kernel.
+   After the last HOTRG step, the final contraction evaluates Eq. (S1).  A fused kernel builds the transfer matrices
+Mi  directly  in  their  parity-blocked  layout.   Finally,  the  VMC  optimization  differentiatesψ(n)  through  the  entire
+contraction.  The reverse-mode gradient of the eigendecomposition in Eq. (S8) contains denominators 1/(λ            k −λ   l) that
+diverge for nearly degenerate eigenvalues.  We replace them by the broadened form (λ  k −λ   l)/[(λ       k −λ   l)2 +ε    2] with a
+smallεproportional to the spectral radius [76], which keeps the gradients stable throughout the optimization.
+
+
+                                                                         III.    SYMMETRY
+
+                                                            A.    Symmetry in fermion systems
+
+   Projecting  a  variational  state  onto  an  irreducible  representation  of  the  symmetry  groupGof  the  Hamiltonian
+typically lowers its variational energy [77,78], but for fermions the permutation of modes generates a sign that has to
+be tracked explicitly [24,79].  A symmetryg∈Gpermutes the single-particle modesx, comprising site and spin, as
+ˆg c  †x ˆg  −1   =c   †gx with ˆg|0⟩=|0⟩.  On the Fock state|n⟩=c                             †x1 ···c †xNe|0⟩withx              1 <···< x     Ne  in a fixed reference order,
+it acts as
+
+                                                           ˆg|n⟩=c           †gx1 ···c †gxNe|0⟩= Π(n, g)|gn⟩,                                                   (S10)
+
+where  Π(n, g)  =±1  is  the  signature  of  the  permutation  that  sortsgx                  1, . . . , gxNe  back  into  the  reference  order.
+On a spinless four-site ring,  for instance,  ˆT1c†2c†4|0⟩=c       †3c†1|0⟩=−|1,0,1,0⟩,  where Π(n, g)  =−1.   The projection
+|Ψ symm⟩=|G|        −1  Pg ω∗g ˆg|Ψ⟩onto the representation with charactersω                           g then has the amplitudes
+                                                                                     X
+                                                            ψsymm(n) =      1|G|           Π(n, g)ω         g ψ(gn).                                                   (S11)
+                                                                                     g∈G
+                                                                                                                                                                     18
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S3.   Sharing of HOTRG steps among translations, illustrated on one column ofL    y = 8 sites.  Circles are the site tensors
+of the translated configurationT                        tn, labeled by their original site indices, red boxes mark the fixed pairs merged by the step,
+and each coarse tensor is labeled by the original sites it contains.  (a) In the first step,t         y = 2 merges the same pairs of tensors
+ast    y = 0, so its output chain is a cyclic roll of thet      y = 0 output and requires no new computation, whereast               y = 1 merges new
+pairs.  (b) In the second step, which acts on the chains produced by the first step,t         y = 4 is a roll oft   y = 0, whereast               y = 2
+must be computed.  In general, two translations whoset           y differ by a multiple of 2k enter thek-th step as rolls of each other, so
+this step has to be computed only for 2k representative translations, one for each value oft   y mod 2k, and all others follow by
+rolling.
+
+
+We project onto the trivial representation,ω            g = 1, of the group generated by theNtranslationsT                               t and
+
+                                                            P={1, M          x} × {1, M    y} × {1, Z},                                                      (S12)
+
+whereM           x : (x, y)7→(−x, y) andM                        y : (x, y)7→(x,−y) are the mirrors about the lattice axes andZexchanges the
+two spin species.  Each element ofPcosts one more network evaluation and contraction, a size-independent factor of
+8.
+
+
+                                                    B.    Translation symmetry in NN-fPEPS
+
+   The circular convolutions make the network translation covariant,
+
+                                                                     T [r]  (T  tn) =T       [r+t]     (n),                                                               (S13)
+
+so an exact contraction would give translation-symmetric amplitudes.  HOTRG merges the fixed pairs (2j,2j+ 1),
+however, so configurations translated alongyare truncated differently, andψof Eq. (S1) keeps only the translation
+symmetry alongx.  We restore it by the zero-momentum projection
+                                                           ψtrans(n) =      1    X    Π(n,T         t)ψ(T      tn),                                                      (S14)
+                                                                             N     t
+
+which naively costsNcontractions,O(N                                       2χ7) per configuration.  Instead, the network runs once, since by Eq. (S13)
+all translated tensor grids are rolls of the same grid, and the HOTRG steps are shared among the translations, as
+presented in Fig.S3.  Thek-th step is evaluated for 2                     k representatives on a lattice ofN/2      k tensors, so that
+
+                                             log2(L y/4)X
+                                                                 2k|{z}     × O Nχ7/2  k|{z   }  =O   Nχ7 logN     ,                                      (S15)
+                                                 k=1      representatives      cost of one step
+
+and the final exact contraction, performed once per representative, does not change this scaling.
+   The groupPin Eq. (S12) is then applied as an outer loop,
+                                                        ψsymm(n) =      1       X    Π(n, p)ψ          trans(p n),                                                  (S16)
+                                                                          |P|   p∈P
+
+which realizes Eq. (S11) for the full group.  All results are obtained withψ                  symm(n) unless otherwise specified.
+                                                                                                                                                                           19
+
+                                                                        IV.    OPTIMIZER
+
+                                                                            A.    AdamSR
+
+
+Algorithm S1.AdamSR
+Require:momentum factorsµ= 0.95 andβ= 0.995, norm-constrained step sizeγ                                                   t of Eq. (S18) or Eq. (S19)
+ 1:m   0 ←0,  v        0 ←0
+ 2:fort= 1,2, . . . do
+ 3:     sample configurationsn                             s from|ψ(n)|                    2 and construct  ¯Oand ¯ϵin Eq. (S17)
+ 4:     g   t ←  ¯O+¯ϵ                                                                                                                    ▷plain MinSR solution
+ 5:     m   t ←µ m    t−1    + (1−µ)g           t,     ˆm  t ←m    t/(1−µ         t)                                                           ▷Adam first moment
+ 6:     v   t ←β v    t−1    + (1−β)|g            t|2,     ˆv  t ←v    t/(1−β         t)                                                         ▷Adam second moment
+ 7:     V   t ←diag    ˆv  t1/4    + 10−8   11                                                                                     ▷diagonal preconditioner  ¯OV −1t+ ¯ϵ−     ¯Oˆm     t                                              ▷momentum + preconditioned correction
+ 8:     δθ   t ←ˆm      t +V    −1t
+ 9:     θ   t ←θ    t−1   −γ   t ∥δθ  t∥ δθt                                                                                      ▷norm-constrained update
+10:end for
+
+   The variational parametersθare optimized by stochastic reconfiguration (SR) [58,59], which realizes imaginary-
+time evolution projected onto the variational manifold.  At every iteration,N                 s  configurationsn                          s  are sampled from
+|ψ(n)|           2 by Markov-chain Monte Carlo (MCMC), and the update  ˙θof theN        p parameters solves
+
+                                      ¯O ˙θ=−¯ϵ ,                 ¯Osk = Ok(n  s)− ⟨O   k⟩√                           √
+                                                                                Ns        ,       ¯ϵ   s = Eloc(n  s)− ⟨E    loc⟩Ns          ,                             (S17)
+
+withO        k(n) =∂lnψ(n)/∂θ                      k, the local energyE             loc(n) =   Pn′ ⟨n|H|n        ′⟩ψ(n     ′)/ψ(n), and⟨·⟩the sample average.
+   SinceN          s ≪N    p, Eq. (S17) is underdetermined and has infinitely many solutions.  This freedom lets the solver carry
+the first and second moments of the update, which accelerate and stabilize first-order optimizers such as Adam [57],
+without giving up the SR equation. In previous works, SPRING [62] incorporates the first moment, and MARCH [20]
+further  includes  the  second  moment.   In  this  work,  we  introduce  the  adaptive  moment  stochastic  reconfiguration
+(AdamSR) as presented in AlgorithmS1, which keeps both ingredients but estimates the moments more robustly.
+The price is a second pseudoinverse per iteration, which roughly doubles the solver cost of plain SR.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S4.     Benchmark of optimizers of the stochastic reconfiguration (SR) family on the 8×8 Hubbard model atU=  8,
+t′ =−0.2, and 1/8 hole doping, using the BCS backflow.  Each curve is the best run over the scannedC                  0  and Monte Carlo
+sweep lengths,C                0 = 1 for SR and AdamSR andC       0 = 0.5 for SPRING and MARCH, averaged over bins of 50 iterations.
+                                                                                                                                                           20
+
+   The norm-constrained step sizeγ     t, also following MARCH, preserves the update direction and either clips the norm
+ofδθ   t atC    0,
+
+                                                         γt ∥δθ  t∥ =γmin           1,     C0∥δθ  t∥,                                                        (S18)
+
+or regulates it to a scheduled targetc           t,
+
+                                     γt ∥δθ  t∥ = min        1,     ct∥δθ  t∥,       ct =               C01 + max(t−t                0,0)/T     ,                                 (S19)
+
+which  the  raw  step  norm  typically  exceeds,  so  that  the  realized  step  norm  isc   t  itself.   We  use  Eq. (S18)  for  the
+NN-fPEPS and Eq. (S19) for the backflows, and observe no significant difference between the two.  In the benchmark
+of Fig.S4performed on the BCS backflow, AdamSR tolerates a largerC                        0 than SPRING and MARCH and converges
+fastest.   Its  advantage  is  even  clearer  for  the  NN-fPEPS,  which  SR,  SPRING,  and  MARCH  fail  to  train  to  good
+convergence in our numerical experiments.
+
+
+                                                          B.    Solving linear equations
+
+   Lines4and8of AlgorithmS1solve
+
+                                                               Ax=b ,       x=A                +b ,                                                               (S20)
+
+whereAhas theN                    s ×N   p shape of  ¯O, is distributed acrossN              d devices along the sample axis, and is given in single
+precision together withb.  SinceN                    s ≪N    p, Eq. (S20) is consistent and massively underdetermined.  We compare three
+solvers.  The Cholesky solver evaluates the minimum-step SR (MinSR) solution [60,61], which inverts the kernel in
+sample space by a Cholesky factorization,
+
+                                                              x=A     †  AA† +λ11     −1   b .                                                             (S21)
+
+The conjugate gradient (CG) method [80–82] solves the normal equation
+
+                                                                      A†A x=A     †b                                                                      (S22)
+
+through  the  productsA        †(Av).   The  least-squares  minimal  residual  (LSMR)  method  [63],  as  implemented  inlin-
+eax[83], is a Krylov iteration on Eq. (S20) itself through the Golub–Kahan bidiagonalization ofA(which reducesA
+to bidiagonal form, i.e., nonzero only on the diagonal and first subdiagonal).  Neither Krylov solver carries a diagonal
+shift.   Starting fromx=  0,  both approach the minimum-norm solution within a Krylov space that grows by one
+direction per iteration, so the stopping criterion alone sets the accuracy and acts as the regularizer [84].
+   The Cholesky solver relies on a matrix factorization, whereas CG and LSMR are iterative, and the two classes differ
+in three respects.
+    •Precision.The Cholesky solver formsAA                     †, whose condition number is the square of that ofA, and therefore
+       needs  double  precision  (FP64).   Both  Krylov  solvers  run  in  single  precision  (FP32),  where  the  error  floor  is
+       set by accumulating the matrix–vector products overN    p terms,ϵ             32pNp ∼10   −4    for the FP32 machine epsilon
+       ϵ32 ≈1.2×10          −7  , rather than by the squared condition number.  This also suits hardware with reduced or no
+       double-precision throughput, such as the NVIDIA B300 GPU and Google TPUs.
+
+    •Parallelism.A Krylov iteration accessesAonly throughAvandA                                                 †u, so it distributes over many nodes with a
+       fixed memory footprint per device.  The factorization needs the wholeN           s ×N   s kernel, which is either replicated
+       on every device or factorized across devices at a substantial communication cost, as inJAXMg[85].
+
+    •Accuracy.The cost of a factorization does not depend on the shift, so the Cholesky solver reaches an arbitrarily
+       small residual simply by loweringλ.  A Krylov solver can only approach its target by adding iterations.
+   Fig.S5compares the three solvers in wall-clock time, in-sample residualη=∥Ax−b∥/∥b∥, and step norm∥x∥.  For
+the Pfaffian backflow withN        p ≈1.2M, the Cholesky solver is four to six times faster than the Krylov solvers at every
+Ns where its kernel fits in memory, even though it reaches a ten times smaller residual.  This is because the spectrum
+ofAA   † decays quickly for the Pfaffian backflow state, so the Krylov solvers need more iterations (six to eight times
+more iterations than for the NN-fPEPS). For the NN-fPEPS with the largerN           p ≈4.6M, the Cholesky solver is faster
+                                                                                                                                                    21
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S5.    Linear solvers on the 8×8 Hubbard model atU= 8,t             ′ =−0.2, and 1/8 hole doping, for (a–c) Pfaffian backflow
+withN        p ≈1.2M and (d–f) NN-fPEPS withN               p ≈4.6M, using 512 samples per A100 GPU. Cholesky runs in FP64, and CG and
+LSMR in FP32.  (a), (d) Time per solve.  The cross marks where the FP64 kernel exceeds the GPU memory.  (b), (e) In-sample
+residual, fixed at∼0.1 for CG, with LSMR run for the same number of iterations as CG, and at 0.01 for Cholesky by tuning
+λ.  (c), (f) Step norm.
+
+
+up toN    s = 4096, and the Krylov solvers take over fromN         s ≈8×10          3 on.  At the same number of iterations, LSMR
+leaves a residual 1.3 times that of CG but returns a step norm 1.1 times smaller, indicating less overfitting to the
+finite sample, at nearly the same time cost.
+  These results suggest choosing the solver by the network size and the degree of parallelism.  The Cholesky solver
+is the better choice for networks with up to a few million parameters trained on a small number of GPUs,  where
+theN      s ×N   s  kernel  fits  in  device  memory  and  its  factorization  remains  cheap.   CG  and  LSMR  are  better  suited
+to larger networks distributed over many GPUs, whereN           s  grows with the number of devices and the factorization
+becomes prohibitive in both cost and memory, while each Krylov iteration only requires matrix–vector products that
+parallelize across devices with modest communication. In this work, we therefore use LSMR for the large-scale parallel
+simulations of the NN-fPEPS and the Cholesky solver in all other cases.
+
+
+                                                    C.    Hyperparameters and details
+
+  For completeness, we collect here the settings shared by most production runs of this work.
+
+    •Sampling.We employ a mixed sampler that proposes an electron hopping or a neighbor-site exchange with
+       equal probability.  The total number of samples isN   s = 8192.  Each VMC iteration includes 2NMCMC steps
+       for system sizes up to 24×24, and 4NMCMC steps for the 32×32 lattice.
+
+    •Energy  clipping.For robustness against heavy-tailed fluctuations, the local energies entering ¯ϵare clipped to
+       ⟨E  loc⟩ ±5σ, withσ                  2 the sampled energy variance [20], while the reported energy and variance are unclipped.
+
+    •Optimizer.In AdamSR,µ= 0.95 andβ= 0.995.  The NN-fPEPS runs adopt the clipped step size of Eq. (S18)
+       withC         0 = 200 and the learning rateγ= max(2.56/N,10                       −3  ), while the backflow runs adopt the scheduled step
+                                                                                                                                                       22
+
+       norm of Eq. (S19) withC                  0 = 1, reduced toC    0 = 0.5 in most runs continued from trained weights,t         0 = 1000,
+       andT= 4000.
+    •Linear solver.When the Cholesky solver is used, the diagonal shift isλ= 10                −6   for the NN-fPEPS andλ= 10        −3
+       for the backflows.  When LSMR is used, the relative tolerance passed tolineaxis 10               −4  .
+    •Numerical precision.The Cholesky solver uses FP64, and the HOTRG steps and the LSMR solver use FP32
+       without TF32.  Other computations are performed in FP32 with TF32 employed whenever possible.
+    •Weight transfer.The NN-fPEPS is first trained on the 16×4 lattice (t                    ′ = 0) or the 8×8 lattice (t      ′ =−0.2). For
+       larger systems, the trained weights are transferred from smaller systems in the following order—16×4/8×8→
+       16×8→16×16→32×32.  Backflows are cold-started at 16×16, and then transferred to 24×24 and 32×32.
+    •Total iterations.On the 16×16 lattice, each state is trained for∼5000 steps with translation symmetry but
+       without the symmetry projection of Eq. (S16), followed by another∼1000–5000 steps with the projection.  On
+       the 32×32 lattice, this is reduced to∼1000 steps without projection and∼300–1000 steps with projection.
+
+
+                                                                V.    TIME COST
+
+   All times are measured on NVIDIA A100-SXM4-80GB GPUs, at batch sizes that saturate the GPU, on the Perl-
+mutter  supercomputer  at  the  National  Energy  Research  Scientific  Computing  Center  (NERSC)  with  4  GPUs  per
+node, except for the determinant and Pfaffian rows of TableS3, which are taken from the benchmarks of thefermix
+library [56] on the same GPU model.  The efficiency is quoted as the model FLOPs utilization
+
+                                                                    MFU =  Ft P ,                                                                      (S23)
+
+withFthe number of floating-point operations executed by the timed implementation,tthe wall-clock time, andP
+the A100 peak throughput, 156, 19.5, and 52 TFLOP/s for TF32, FP32, and 3×TF32, the emulation of FP32 matrix
+products by three TF32 products.  For rows that mix several arithmetic types,t Pis replaced by the sum oft           iPi over
+the parts.
+
+
+                                                          A.    Amplitude evaluation
+
+   TableS3and  Fig.S6give  the  cost  of  one  evaluation  of  each  component  of  the  ansatzes  on  a  single  GPU.  An
+NN-fPEPS amplitude combines the bottleneck CNN with the fPEPS (trans), with comparable shares at every size.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S6.    Wall-clock time per amplitude evaluation as a function of the lattice sizeN=L×L, for a Slater determinant, a
+Pfaffian, an fPEPS withD=χ= 4 at half filling, and the translation-restored fPEPS (trans) of Sec.III B, taken from TableS3.
+Gray guide lines beside the curves indicate theO(N            3) scaling of the determinant and the Pfaffian, theO(N) scaling of the
+fPEPS, and theO(NlogN) scaling of the fPEPS (trans).
+                                                                                                                                                                                                                23
+
+
+TABLE S3.    Cost of one amplitude evaluation on one A100-80GB GPU, for the four lattice sizes, with the wall-clock time
+t, the floating-point operation countF, the achieved throughputF/t, the arithmetic type, and the MFU of Eq. (S23).  The
+fPEPS hasD=χ= 4, and the fPEPS (trans) is the translation-restored contraction of Sec.III B. The gray rows split an fPEPS
+evaluation into the HOTRG steps of Sec.II Band the final exact contraction of the remainingL×4 torus in Eq. (S1), and the
+bottleneck and normal CNNs are the networks of Fig.S1.
+
+                                                                     t(µs)            F(MFLOP)        F/t(TFLOP/s)            Arithmetic           MFU
+                                                                                                8×8 lattice
+Determinant                                            0.293                     0.175                           0.60                       3×TF32             1.1%
+Pfaffian                                                   0.322                    0.0874                          0.27                       3×TF32             0.52%
+fPEPS                                                      4.24                       58.1                            13.7                         mixed                13%
+     HOTRG steps                              1.50                   2.75                        1.83                      FP32        9.4%
+     Final exact contraction                 2.73                   55.3                          20.2                       TF32        13%
+fPEPS (trans)                                          8.32                       116                            14.0                         mixed                13%
+     HOTRG steps                              2.86                   5.49                        1.92                      FP32        9.9%
+     Final exact contraction                 5.44                    111                       20.4                       TF32        13%
+Bottleneck CNN                                       14.9                       579                            39.0                         TF32                25%
+Normal CNN                                            4.28                       152                            35.6                         TF32                23%
+                                                                                              16×16 lattice
+Determinant                                             3.64                       11.2                            3.07                       3×TF32             5.9%
+Pfaffian                                                    3.39                       5.59                            1.65                       3×TF32             3.2%
+fPEPS                                                      14.4                       144                            10.0                         mixed                14%
+     HOTRG steps                              8.74                   16.5                          1.89                      FP32        9.7%
+     Final exact contraction                 5.62                    127                       22.7                       TF32        15%
+fPEPS (trans)                                          44.6                       554                            12.4                         mixed                14%
+     HOTRG steps                              22.6                     43.9                          1.95                      FP32        10%
+     Final exact contraction                  22.1                     510                       23.0                       TF32        15%
+Bottleneck CNN                                       57.1                      2316                           40.6                         TF32                26%
+Normal CNN                                            16.0                       609                            38.1                         TF32                24%
+                                                                                              32×32 lattice
+Determinant                                             128                        716                            5.61                       3×TF32              11%
+Pfaffian                                                     109                        358                            3.27                       3×TF32             6.3%
+fPEPS                                                      51.7                       349                            6.75                         mixed                14%
+     HOTRG steps                              40.3                     76.9                          1.91                      FP32        9.8%
+     Final exact contraction                 11.4                     272                       23.8                       TF32        15%
+fPEPS (trans)                                           223                       2438                           10.9                         mixed                15%
+     HOTRG steps                               134                  264                       1.96                      FP32        10%
+     Final exact contraction                  89.9                     2174                    24.2                       TF32        15%
+Bottleneck CNN                                       219                       9263                           42.3                         TF32                27%
+Normal CNN                                            52.4                      2437                           46.5                         TF32                30%
+                                                                                              64×64 lattice
+Determinant                                            6469                  4.58×10            4                       7.08                       3×TF32              14%
+Pfaffian                                                    5281                  2.29×10            4                       4.34                       3×TF32             8.3%
+fPEPS                                                      194                        892                            4.60                         mixed                13%
+     HOTRG steps                               171                  330                       1.93                      FP32        9.9%
+     Final exact contraction                 23.4                     560                       23.9                       TF32        15%
+fPEPS (trans)                                          1093                  1.04×10            4                       9.49                         mixed                15%
+     HOTRG steps                               735                  1407                    1.91                      FP32        9.8%
+     Final exact contraction                   365                  8964                    24.6                       TF32        16%
+Bottleneck CNN                                       868                  3.71×10            4                       42.7                         TF32                27%
+Normal CNN                                            206                       9749                           47.4                         TF32                30%
+                                                                                                                                                  24
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S7.    Weak (a, b) and strong (c, d) scaling of one VMC step of the NN-fPEPS on the 16×16 lattice.  (a, c) Wall-clock
+time of the four parts of a step and of the whole step.  (b, d) Aggregate throughputF/tover all GPUs, with the dashed line
+its ideal linear scaling through the first point, and the MFU of Eq. (S23) on the right axis.
+
+
+A  Pfaffian  backflow  amplitude  combines  the  normal  CNN  with  the  Pfaffian,  apart  from  the  untimed  assembly  of
+the pairing matrix, and is dominated by the normal CNN up to 16×16 and by the Pfaffian from 32×32 on.  The
+determinant and Pfaffian rows use our batched GPU kernels for the blocked LU and Parlett–Reid factorizations of
+thefermixlibrary [56].  All rows are measured at half filling.
+
+
+
+                                                                B.    VMC step
+
+  Fig.S7shows the weak and strong scaling of one optimization step of the 16×16 NN-fPEPS production runs at
+U= 8 andt        ′  =−0.2.  A step consists of one sweep of 2NMetropolis updates per sample, the local energies with
+about 2Namplitudesψ(n                         ′) per sample, and the Jacobian at twice the cost of a forward pass, all evaluated with the 8
+elements of the symmetry groupPin one call. The number of LSMR iterations is fixed at 100 for a direct comparison,
+although it may need to grow withN        s to keep the residual errorηunchanged.  The tests stop at 512 GPUs due to
+the limited number of A100-80GB nodes on Perlmutter.  The 1024-GPU runs in this work use A100-40GB nodes.
+                                                                                                                                                        25
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S8.   Periodic PEPS calculations with the ‘cluster boundary’ method.  (a) An initial periodic PEPS with bond dimension
+D, physical legs denoted by zigzags.  (b) After SU gauging, each bond carries a bond weightλ     b.  (c) A rectangular cluster of
+tensors is cut out up torsites in each direction from the target sites (orange), herer= 2.  Every bond, including those on the
+boundary, gets a bond weight.  (d) The bond weights are absorbed to yield a single tensor per site.  (e) We form the partial
+trace network, with the environment beyond the cluster now equivalent to the belief propagation approximation.  (f) We form
+left and right environments (hatched blue and purple tensors) parallel to the target sites, truncating to bond dimensionχ.  (g)
+Each environment gets compressed with a single inward layer of ket tensors.  (h) Each environment then gets compressed with
+the corresponding bra layer of tensors.  For largerr, steps (f)–(h) are repeated until each environment is adjacent to the target
+sites.  (i) Finally,  the left environment is compressed with the ket layer of the target column,  and the right environment is
+compressed with the bra layer.  (j) This gives a ladder-like tensor network, which can be contracted exactly withO(D               3χ3) cost
+to yield the reduced density matrixρof the target sites.  Steps (c)–(j) are repeated for each target reduced density matrix.
+
+
+
+                                                    VI.    PURE FPEPS REFERENCE
+
+   We estimate the exact ground-state energy of the 16×16 PBC lattice att          ′  = 0 with pure fPEPS optimized by
+simple update (SU) [86,87], evaluated by contracting finite clusters embedded in a belief-propagation environment,
+and extrapolated to infinite bond dimension.
+
+
+
+                                               A.    Simple update and cluster contraction
+
+   The fPEPS use the local fermionic encoding [32,33,88] withU(1) symmetry [89–91].  The initial product state is a
+period-8 stripe, with antiferromagnetic order on columns 1–7 and 9–15, aπphase shift between the two domains, and
+empty columns 8 and 16 that hold the 32 holes of 1/8 doping.  We first converge SU at bond dimensionD= 6 and
+then continue from this state directly at each target bond dimensionD= 8,10,12,14,16.  All runs use a second-order
+                                                                                                                                                     26
+
+Trotter decomposition with the imaginary time stepτ= 0.5D             −3/2     .  All calculations are performed on CPUs with
+quimb[53] and thesymmrayarray backend [55].
+  To evaluate observables of the SU states on the torus, we first gauge each state by running SU without applying
+any  gates,  which  is  equivalent  to  belief  propagation  (BP)  [92, 93].   This  yields  a  bond  weightλ             b  on  each  of  the
+Nb = 2L  2 = 512 bonds, shown in Fig.S8(a)–(b).
+  For each nearest-neighbor term, acting on sites (i, j) and (i, j+ 1) or (i, j) and (i+ 1, j), we build a rectangular
+cluster that extendsrsites in every direction from the two target sites.  A horizontal term thus has aC                  x ×C   y = 4×3
+cluster atr= 1 and a 16×15 cluster, which covers nearly the whole lattice, at the largest radiusr= 7.  We cut the
+bonds along the cluster boundary and place the weightsλ   b on every bond of the cluster, including the dangling bonds
+at its edges.  When the cluster spans the full lattice in one direction,C x = 16 orC    y  = 16, its two far edges meet,
+and both ends of the cut bond between them carryλ          b.  This amounts to approximating the environment beyond the
+cluster by its BP form.  This process is shown in Fig.S8(b)–(d).
+  Each cluster is a PEPS with open boundary conditions, which we partially trace by boundary contraction to obtain
+an approximate reduced density matrix of the two target sites, as shown in Fig.S8(e). The two boundary environments
+start from the cluster edges parallel to the target bond and sweep inwards, with the ket and bra layers absorbed in
+two separate steps and the environments compressed to bond dimensionχafter each step. Once the two environments
+are adjacent to the target site column, one environment is compressed with the ket tensors, and the other with the
+bra tensors.  See Fig.S8(f)–(i).  The compression is a variant of successive deterministic compression [94].  A sketching
+sweep with randomized low-rank SVDs first compresses the environment to the oversampled bond dimension 1.5χ,
+truncating every charge sector in proportion, and a final direct SVD then truncates it toχby ranking the singular
+values across all charge sectors.  The contraction thus costsO(D                3χ3), remains accurate, and is compatible withU(1)
+fermionic tensor networks.  Each reduced density matrix is normalized individually.
+  The results for the energy per site,E/N, as a function ofD, r, andχare shown in Fig.S9.  We also show the
+energies calculated by full boundary contraction, i.e., without the cluster approximation. These are more expensive to
+compute, with a cost ofO(D         5χ3), and converge more noisily, so we do not use them to estimate energies. Nonetheless,
+they appear to be consistent with the cluster boundary approximation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S9. Convergence of the pure fPEPS energy in bond dimensionD. Green lines with circles: energy calculations with respect
+to boundary bond dimensionχand cluster radiusr.  Blue line with crosses:  energy calculated with full periodic boundary
+contraction.  Orange lines:r= 7 linear and quadratic fits of cluster boundary estimates.  Orange marker:  bootstrap estimated
+energy perD, including error accounting for uncertainty of fit and convergence inr.  Error bars show one standard deviation.
+
+
+
+
+                                                               B.    Extrapolation
+
+  The procedure above gives the energy per site as a function of the PEPS bond dimensionD, the cluster radiusr,
+and the boundary bond dimensionχ, which we extrapolate by bootstrapping.
+  For eachD, we fit the energies at the largest radiusr= 7 and the three largest boundary dimensionsχ= 192, 256,
+and 384 to
+
+                                                              E(χ) =E         ∞ +aχ   −p   ,                                                                (S24)
+                                                                                                                                                               27
+
+with the exponentp∈ {1,2}drawn at random.  The cluster approximation error is accounted for by adding Gaussian
+noise toE   ∞ with the standard deviation
+
+                                                 σr =|E(r= 7, χ= 384)−E(r= 6, χ= 384)|.                                            (S25)
+
+Individual estimates forE/Nat eachDare shown in Figs.S9andS10.  Note that these do not enter the overall
+bootstrap procedure.
+   To extrapolate inD,  we use a proxy for the SU discarded weight.   The gauge weight of bondbis the smallest
+normalized squared singular value
+
+                                                                     wb = mink λ2b[k]P
+                                                                                 k λ2b[k]     ,                                                                   (S26)
+wherekruns over the singular values in all charge sectors, and the gauge weight of a state is the geometric mean over
+all bondsw= (       Qb wb)1/N  b.  We then extract the energyE             0 from the linear fit
+
+                                                                    E(w) =E            0 +c w .                                                                  (S27)
+
+Note that the quantitywand the fitting form here differ slightly from those in, e.g., Ref. [95].
+   A single bootstrap sample drawspand the cluster noise for eachD= 8,10,12,14,16, keeps or drops theD= 8
+point  with  equal  probability,  and  fits  Eq. (S27)  to  the  remaining  points.   The  mean  and  standard  deviation  over
+10,000 bootstrap samples giveE/N=−0.7602(14).  Fig.S10shows this estimate with 100 fitted line samples, and
+the separate individual estimates for eachD, as a function ofw.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S10.  Bootstrap extrapolation of theD=∞energyE                                0 in the gauge weightw.  Orange markers show individual bootstrap
+energy estimates for eachD.  Gray lines show a sample of 100 fitted bootstrap lines.  The pink marker shows the mean value
+of all 10,000 extrapolated bootstrap samples, with standard deviation.
+                                                                                                                                                        28
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S11.  Zero-variance extrapolation on the 16×4 lattice att          ′ = 0.  (a) Energy against variance of the training curve in bins
+of 50 steps between steps 4000 and 10,000, colored by the step, with the fitted line (dashed) and the extrapolatedE                  0  of (b)
+(red).  A few bins with variance spikes lie outside the plotted range but remain in the fit.  (b) Intercepts of the fits with the
+windows (horizontal axis) and bin sizes (colors).
+
+
+                                                     VII.    ENERGY BENCHMARKS
+
+                                                      A.    Zero-variance extrapolation
+
+   Close to an eigenstate, the energy of a variational state approaches the exact energy linearly in its energy variance,
+E≈E       0 +kσ    2 [37,59].  The states along a VMC optimization therefore fall on a straight line in the (σ              2, E) plane,
+whose intercept atσ    2 = 0 estimates the exact ground-state energyE             0.
+   This technique is used to estimate an accurate ground-state energy on the 16×4 lattice att          ′ = 0 using an NN-fPEPS
+withN        p ≈38M, much larger than that of TableS1. The symmetry projection of Eq. (S16) is also used during training
+for better accuracy.  This state serves only for the extrapolation and the variational energy is not listed in TableS4.
+We bin the energy and variance of its training curve and fit a straight line by orthogonal distance regression, which
+accounts for the statistical errors of both (Fig.S11(a)).  Repeating the fit over a grid of step windows and bin sizes
+(Fig.S11(b)), we obtainE                              0/N=−0.76722(6).
+
+
+                                                             B.    Variational energy
+
+   TableS4lists the variational energies and energy variances of all states in this work, before and after the symmetry
+projection, together with selected variational energies in existing literature.  All our states except the pure fPEPS are
+translation invariant,  and each projected state continues the optimization of the unprojected one under Eq. (S16).
+The projected energies in Figs. 3(a) and 4(a) of the main text are taken from this table.
+                                                                                                                                                                                         29
+
+
+TABLE S4.   Variational energy per siteE/Nand energy variance per siteσ                  2/N= (⟨H        2⟩ −E    2)/Nof the Hubbard model at
+U= 8 and 1/8 doping onL            x ×L   y  lattices with PBC, without and with the symmetry projection.  Rows with a reference are
+taken from the literature, including the hidden fermion Pfaffian state (HFPS) and variational auxiliary-field quantum Monte
+Carlo (VAFQMC), and all other rows are our own states.  Our projection is onto the mirror and spin-inversion groupPof
+Eq. (S12), and that of Ref. [26] onto the point groupC                          4v  .  On the 16×4 lattice, HFPS, ACE, and the neural network backflow
+(NNBF) are projected onto the full mirror, translation, and spin-inversion symmetry.  The pure fPEPS rows are the simple-
+update states of Sec.VI. The rows marked red are extrapolations that estimate the exact energy, the zero-variance extrapolation
+of Sec.VII Aon 16×4 and the pure fPEPS extrapolation of Sec.VI Bon 16×16.  Values marked with†are averages over the
+last 50 to 100 optimization steps instead of measurements.  For each lattice andt      ′, the lowest variational energy and the lowest
+variance are shown in bold.
+                                                                                      Without projection                                   With projection
+Lattice            Ansatz                                                          E/N                     σ2/N                        E/N                         σ2/N
+                                                                                          t′ = 0
+16×4             Transformer det backflow [20]                                  −0.76298                    —                             —                              —
+                      HFPS [24]                                                      —                         —              −0.76413(3)                   0.0313
+                      ACE (det backflow) [21]                                 −0.76464(1)                  —              −0.76623(1)                      —
+                      NNBF (det backflow) [25]                                       —                         —              −0.766073(6)                     —
+                      NN-fPEPS                                                 −0.76481      †                0.017   †         −0.766455(14)          0.00555(9)
+                      NN-fPEPS (extrapolated)                                        —                      —              −0.76722(6)         —
+16×16           Transformer det backflow [20]                                    −0.7563                     —                             —                              —
+                      HFPS [15]                                                      —                         —               −0.7515(1)                    0.0638
+                      SCALE (det backflow) [21]                                  −0.7529                     —                             —                              —
+                      ACE (det backflow) [21]                                    −0.7573                     —                             —                              —
+                      VAFQMC [13,64]                                          −0.75865(3)0.0059(8)         —                              —
+                      fPEPS (D= 16)                                           −0.7545(15)                  —                             —                              —
+                      BCS backflow                                            −0.75772(1)            0.0308(6)  −0.75878(2)0.0255(20)
+                      Pfaffian backflow                                       −0.75686(2)            0.0337(5)   −0.75813(1)                 0.0259(2)
+                      NN-fPEPS                                                −0.75560(4)           0.0379(14) −0.75851(2)                 0.0256(6)
+                      fPEPS (extrapolated)                                    −0.7602(14)    —                         —                          —
+32×32           SCALE (det backflow) [21]                                        −0.7501                     —                             —                              —
+                      BCS backflow                                             −0.75490      †                0.067   †               −0.75617(1)                 0.046(10)
+                      NN-fPEPS                                                 −0.75511      †                0.054   †           −0.75677(1)             0.0346(4)
+                                                                                       t′ =−0.2
+12×12           Transformer det backflow [20]                                    −0.7414                     —                             —                              —
+                      BCS backflow [26]                                              —                         —          −0.74425(1)              0.035(1)
+16×16           HFPS [15]                                                            —                         —               −0.7360(1)                    0.0762
+                      SCALE (det backflow) [21]                                  −0.7373                     —                             —                              —
+                      ACE (det backflow) [21]                                    −0.7430                     —                             —                              —
+                      BCS backflow [26]                                              —                         —              −0.74411(1)                 0.037(1)
+                      Pfaffian backflow                                       −0.74372(1)            0.0346(5)  −0.74533(1)             0.0272(5)
+                      NN-fPEPS                                                −0.74144(4)            0.0474(8)   −0.74467(2)                0.0367(31)
+20×20           BCS backflow [26]                                                    —                         —          −0.74382(1)              0.041(1)
+24×24           BCS backflow [26]                                                    —                         —              −0.74397(1)                 0.054(1)
+                      Pfaffian backflow                                       −0.74457(2)            0.0358(4)  −0.74585(1)             0.0257(3)
+32×32           Pfaffian backflow                                              −0.74453      †                0.048   †           −0.74569(1)             0.0294(5)
+                      NN-fPEPS                                                 −0.74032      †                0.081   †               −0.74257(2)                 0.0502(7)
+                                                                                                                                                                30
+
+                                                   VIII.    REAL-SPACE CORRELATIONS
+
+   Figs.S12–S21show the real-space correlations of all our symmetry-projected states on lattices of 16×16 sites and
+larger, along the two lattice axes.  Besides the pair-pair correlationC                    p(r) of Eq. (2) of the main text, they include the
+spin and charge correlations
+
+                                             Cs(r) =⟨S         0 ·S r⟩,       C  c(r) =⟨(n           0 −¯n) (n          r −¯n)⟩,                                         (S28)
+
+with ¯n= 7/8.  To improve visibility of the correlation data, the charge correlationC                             c(r) and the pair-pair correlation
+Cp(r) are multiplied by 50 and 100, respectively, to bring them to the same level as the spin correlationC                        s(r).
+   Att ′ = 0, the NN-fPEPS forms a filled stripe with a spin-density wave (SDW) of period 16 and a charge-density wave
+(CDW) of period 8, whose spin and charge correlations persist to the largest distance while its pair-pair correlation
+decays.  The BCS and Pfaffian backflow states instead have short-ranged spin and charge correlations and a saturated
+pair-pair correlation.  Att ′ =−0.2, the Pfaffian backflow and the NN-fPEPS both form a half-filled stripe with an
+SDW of period 8 and a CDW of period 4, coexisting with a finite pair-pair correlation that becomes weaker when the
+system size increases.  The BCS backflow result att   ′ =−0.2 is from Ref. [26] instead of this work.  As the correlations
+were not provided in the work, we do not show them here.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S12.   Spin correlationC                    s(r), charge correlationC           c(r) of Eq. (S28), and pair correlationC                           p(r) of Eq. (2) of the main text
+for the projected BCS backflow state on the 16×16 lattice att         ′ = 0, along (a)r= (r,0) and (b)r= (0, r).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              FIG. S13.   Same as Fig.S12, for the projected Pfaffian backflow state on the 16×16 lattice att                     ′ = 0.
+                                                                                                                                                              31
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          FIG. S14.   Same as Fig.S12, for the projected NN-fPEPS on the 16×16 lattice att                     ′ = 0.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    FIG. S15.   Same as Fig.S12, for the projected BCS backflow state on the 32×32 lattice att                 ′ = 0.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S16.   Same as Fig.S12, for the projected NN-fPEPS on the 32×32 lattice att                     ′ = 0, withoutC              p(r).
+                                                                                                                                                                     32
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S17.   Same as Fig.S12, for the projected Pfaffian backflow state on the 16×16 lattice att                   ′ =−0.2.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        FIG. S18.   Same as Fig.S12, for the projected NN-fPEPS on the 16×16 lattice att                     ′ =−0.2.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S19.   Same as Fig.S12, for the projected Pfaffian backflow state on the 24×24 lattice att                   ′ =−0.2.
+                                                                                                                                                                    33
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. S20.   Same as Fig.S12, for the projected Pfaffian backflow state on the 32×32 lattice att                   ′ =−0.2.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        FIG. S21.   Same as Fig.S12, for the projected NN-fPEPS on the 32×32 lattice att                     ′ =−0.2.

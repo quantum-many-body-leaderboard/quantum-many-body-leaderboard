@@ -3233,6 +3233,147 @@
       }
     },
     {
+      "energy": -72.548208,
+      "sigma": 0.0000288,
+      "energy_variance": null,
+      "dof": 36,
+      "einf": 0,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "CNN-MPS",
+      "method_detail": "",
+      "method_as_published": "CNN-MPS (D = 20)",
+      "family": "tensor network",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Gu et al., LaQX: A JAX Toolkit for Neural Quantum State Simulations of Lattice Quantum Many-Body Models, arXiv:2611.04333",
+      "peer_reviewed": false,
+      "source": "sweep-allresults-2026-11-11",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-11",
+        "method": "source text of arXiv:2611.04333 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-0.5038070(2)",
+        "note": "Sec. 4.2 text; version read: arXiv 2611.04333v1 text (sources/2611.04333.txt); no journal version (arXiv metadata, 2026-11-11) | 6x6 periodic J1=1 J2=0.5; ED -0.503810 equals catalogue exact per site | variance reported as 0.000017586, not stored: convention not verified",
+        "secondary_of": null
+      },
+      "compute": {
+        "parameters": null,
+        "gpu_hours": null,
+        "device": null,
+        "n_devices": null,
+        "samples": null,
+        "wall_clock": null,
+        "cpu_core_hours": null,
+        "bond_dimension": 20,
+        "iterations": null,
+        "reported_as": "method string: \"CNN-MPS (D = 20)\"",
+        "source": "the row's published method string (scripts/method_names.mjs, 2026-09-17)",
+        "scope": "row",
+        "confidence": "high",
+        "note": "Only the numbers the method string states; nothing else about this run's cost is recorded."
+      }
+    },
+    {
+      "energy": -72.5465808,
+      "sigma": 0.0000576,
+      "energy_variance": null,
+      "dof": 36,
+      "einf": 0,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "CNN",
+      "method_detail": "h = 32, l = 20 (CNN-MPS at D = 1)",
+      "method_as_published": "pure CNN, (h,l)=(32,20) (CNN-MPS with D=1)",
+      "family": "CNN / ResNet",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Fan et al., Disentangling Tensor Network States with Deep Neural Network, arXiv:2603.14425",
+      "peer_reviewed": false,
+      "source": "sweep-allresults-2026-11-11",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-11",
+        "method": "source text of arXiv:2603.14425 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-0.5037957(4)",
+        "note": "Text: \"pure CNN wave function with (h,l)=(32,20) ... we obtain an energy of -0.5037957(4)\"; Supplement S3: batch size 4096; version read: arXiv 2603.14425v1 text (sources/2603.14425.txt); no journal version (arXiv metadata, 2026-11-11) | S.S per site, PBC, J2=0.5 (Table I caption); 6x6 ED matches catalogue exact",
+        "secondary_of": null
+      },
+      "compute": {
+        "parameters": null,
+        "gpu_hours": null,
+        "device": null,
+        "n_devices": null,
+        "samples": 4096,
+        "wall_clock": null,
+        "reported_as": "\"...λ= 0.001 Imaginary time step length τ= 0.1 on a bipartite lattice, such as the square lattice, the Batch size 4096 ground-state wave function satisfies the Marshall sign Learning rate lr= 0.15 for CNN-MPS rule [10]. If the lattice is partit...\"",
+        "source": "arXiv:2603.14425, located by string match in the committed source text"
+      }
+    },
+    {
+      "energy": -72.54826128,
+      "sigma": 0.0000072,
+      "energy_variance": null,
+      "dof": 36,
+      "einf": 0,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "CNN-MPS",
+      "method_detail": "",
+      "method_as_published": "CNN-MPS, D=20",
+      "family": "tensor network",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Fan et al., Disentangling Tensor Network States with Deep Neural Network, arXiv:2603.14425",
+      "peer_reviewed": false,
+      "source": "sweep-allresults-2026-11-11",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-11",
+        "method": "source text of arXiv:2603.14425 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-0.50380737(5)",
+        "note": "Text: \"At D=20, the energy reaches -0.50380737(5)\"; Fig. 2; version read: arXiv 2603.14425v1 text (sources/2603.14425.txt); no journal version (arXiv metadata, 2026-11-11) | S.S per site, PBC, J2=0.5; 6x6 ED matches catalogue exact",
+        "secondary_of": null
+      },
+      "compute": {
+        "parameters": null,
+        "gpu_hours": null,
+        "device": null,
+        "n_devices": null,
+        "samples": 4096,
+        "wall_clock": null,
+        "reported_as": "\"...λ= 0.001 Imaginary time step length τ= 0.1 on a bipartite lattice, such as the square lattice, the Batch size 4096 ground-state wave function satisfies the Marshall sign Learning rate lr= 0.15 for CNN-MPS rule [10]. If the lattice is partit...\" || method string: \"CNN-MPS, D=20\"",
+        "source": "arXiv:2603.14425, located by string match in the committed source text",
+        "bond_dimension": 20
+      }
+    },
+    {
+      "energy": -72.2448,
+      "sigma": 0.1008,
+      "energy_variance": null,
+      "dof": 36,
+      "einf": 0,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "ResNet",
+      "method_detail": "",
+      "method_as_published": "ResNet",
+      "family": "CNN / ResNet",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Kochkov, Pfaff, Sanchez-Gonzalez, Battaglia & Clark, Learning ground states of quantum Hamiltonians with graph networks, arXiv:2110.06390",
+      "peer_reviewed": false,
+      "source": "sweep-allresults-2026-11-11",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-11",
+        "method": "source text of arXiv:2110.06390 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-0.5017(7)",
+        "note": "Table IV, Square J2=0.5 N=36, ResNet; version read: arXiv 2110.06390v1 text (sources/2110.06390.txt); no journal version (arXiv metadata, 2026-11-11) | same",
+        "secondary_of": null
+      }
+    },
+    {
       "energy": -71.99452962217384,
       "sigma": null,
       "energy_variance": null,
@@ -3899,6 +4040,64 @@
       ],
       "found": 1,
       "note": "Only papers whose tables matched the instance by size were read; not a citation screen. Energies from: arXiv:2510.02051."
+    },
+    {
+      "checked_on": "2026-11-11",
+      "method": "table harvest of cached arXiv sources (match_tables.mjs --all), every matched paper read for this instance",
+      "screened": [
+        "arXiv:2304.01996",
+        "arXiv:2611.05174",
+        "arXiv:2602.12998",
+        "arXiv:2602.03031",
+        "arXiv:2606.30464",
+        "arXiv:2603.14425",
+        "arXiv:1902.04057",
+        "arXiv:2206.14307",
+        "arXiv:2002.02973",
+        "arXiv:2110.06390",
+        "arXiv:2002.04613"
+      ],
+      "found": 3,
+      "note": "Only papers whose tables matched the instance by size were read; not a citation screen. Energies from: arXiv:2603.14425, arXiv:2206.14307, arXiv:2110.06390."
+    },
+    {
+      "checked_on": "2026-11-11",
+      "method": "table harvest of cached arXiv sources (match_tables.mjs --all), every matched paper read for this instance",
+      "screened": [
+        "arXiv:2510.08430",
+        "arXiv:2104.14869"
+      ],
+      "found": 0,
+      "note": "Only papers whose tables matched the instance by size were read; not a citation screen."
+    },
+    {
+      "checked_on": "2026-11-11",
+      "method": "citation screen of ketboard-spins: citing works from OpenAlex and Semantic Scholar (scripts/cited_by.mjs)",
+      "screened": [
+        "arXiv:2304.01996",
+        "arXiv:2611.05174",
+        "arXiv:2602.12998",
+        "arXiv:2602.03031",
+        "arXiv:2606.30464",
+        "arXiv:2603.14425",
+        "arXiv:1902.04057",
+        "arXiv:2206.14307",
+        "arXiv:2002.02973",
+        "arXiv:2110.06390",
+        "arXiv:2002.04613"
+      ],
+      "found": 3,
+      "note": "13 citing works, 13 on arXiv, 13 fetched; 11 read in full, 2 excluded by a text filter (no energy to four decimals, or no QMBL model named). Energies from: arXiv:2603.14425, arXiv:2206.14307, arXiv:2110.06390."
+    },
+    {
+      "checked_on": "2026-11-11",
+      "method": "citation screen of ketboardb-spins: citing works from OpenAlex and Semantic Scholar (scripts/cited_by.mjs)",
+      "screened": [
+        "arXiv:2510.08430",
+        "arXiv:2104.14869"
+      ],
+      "found": 0,
+      "note": "2 citing works, 2 on arXiv, 2 fetched; 2 read in full, 0 excluded by a text filter (no energy to four decimals, or no QMBL model named)."
     }
   ]
 }

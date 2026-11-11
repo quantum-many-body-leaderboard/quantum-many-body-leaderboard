@@ -1,0 +1,767 @@
+                              Fermi surface change andd-wave superconductivity
+                                   in the square lattice Kondo-Heisenberg model
+
+    Alexander Nikolaenko,1,∗  Riccardo Rende,2,∗  Luciano Loris Viteritti,3 Subir Sachdev,2, 1 and Ya-Hui Zhang4
+                              1Department  of  Physics,  Harvard  University,  Cambridge  MA  02138,  USA
+            2Center for Computational Quantum Physics, Flatiron Institute, 162 5th Avenue, New York, NY 10010
+           3Institute of Physics,  ´Ecole Polytechnique F´ed´erale de Lausanne (EPFL), CH-1015 Lausanne, Switzerland
+             4Department of Physics and Astronomy, Johns Hopkins University, Baltimore, Maryland 21218, USA
+                                                              (Dated:  June 24, 2026)
+                   We study the two-dimensional Kondo–Heisenberg model on a square lattice, with the conduction
+                electrons away from half-filling, using neural network quantum states.  Mapping the ground-state
+                phase diagram as a function of the Kondo and Heisenberg couplings, we identify (i) at weak Kondo
+                coupling, antiferromagnetic N´eel order with a Fermi surface whose enclosed area counts only the
+                conduction electrons and is insensitive to the N´eel order, and (ii) at strong coupling, a heavy Fermi
+                liquid with a Fermi surface whose enclosed area counts both the conduction electrons and the spins.
+                In the crossover between these regimes, we findd       x2−y   2 superconductivity, evidenced by off-diagonal
+                long-range  order  in  the  pair–pair  correlations  and  a  pairing-amplitude  dome  that  coexists  with
+                the  underlying  magnetic  phase.   Our  results  establish  Fermi  volume  change  and  unconventional
+                superconductivity as intrinsic features of the two-dimensional Kondo–Heisenberg model.
+
+
+   Introduction.A  wide  variety  of  ‘heavy  fermion’  in-
+termetallic compounds are well described by Kondo lat-
+tice  Hamiltonians,  which  have  mobile  conducting  elec-
+trons exchange-coupled to a separate band of stationary
+spins. These materials have long been of interest for their
+subtle many-body quantum correlations, leading to large
+electronic  quasiparticle  effective  masses  and  unconven-
+tional  superconductivity.   Doniach  [1]  argued  that  the
+ground  state  is  either  an  antiferromagnetic  metal  or  a
+heavy Fermi liquid state,  depending on the strength of
+the Kondo coupling between the localized spins and con-
+ducting  electrons.   Over  the  years,  the  theory  behind
+the  heavy  Fermi  liquid  state  was  put  on  a  more  rigor-
+ous  footing,  largely  owing  to  large-Napproaches  [2, 3]
+and Oshikawa’s theorem [4].   Many attempts were also
+made both to understand the quantum phase transition
+between the two competing phases [5–9], and to investi-                        FIG. 1.  Ground-state phase diagram of the two-dimensional
+gate the superconducting instabilities in the vicinity of                      Kondo-Heisenberg model [see Eq. (1)] on a square lattice with
+the critical point [10–12].                                                    periodic boundary conditions, shown in the (J  K, J) plane (in
+   Experimentally,  the  quantum  critical  points  in  vari-                  units oft) at hole dopingδ= 1/4.  We identify an antiferro-
+ous heavy fermion materials were extensively studied by                        magnetic N´eel phase (AF), a stripe magnetic phase (Stripe),
+varying pressure and the magnetic field [13–15], and the                       a heavy Fermi liquid (HFL), and ad-wave superconducting
+enhancement of superconductivity near the critical point                       phase (d-wave SC) that coexists with the underlying phase.
+was widely recognized [16–18].  A particularly well stud-                      Markers denote the phase assigned to each simulated param-
+ied  example  is  CeCoIn5  [19–25],  which  has  a  relatively                 eter point.
+simple layered square lattice structure and exhibits su-
+perconductivity near an interesting quantum phase tran-
+sition in its normal state.
+   Despite this strong experimental and theoretical mo-
+tivation, an unbiased numerical study of the doped two-                        Auxiliary-field quantum Monte Carlo is free of the sign
+dimensional  model  has  remained  out  of  reach  because                     problem only at half-filling, where particle-hole symme-
+each  established  method  runs  into  a  different  problem.                  try protects the simulation;  however, the Fermi surface
+                                                                               is  generically  unstable  [26, 27];  doping  the  conduction
+                                                                               band brings the sign problem back and rules out exactly
+                                                                               the regime of interest.  The density-matrix renormaliza-
+∗ These  authors  contributed  equally.     Correspondence  should             tion group works well in one dimension [28–30] and on
+  be    addressed    to    rrende@flatironinstitute.org    and    oniko-       narrow  ladders  or  cylinders  [31, 32],  but  the  entangle-
+  laienko@g.harvard.edu                                                        ment of a truly two-dimensional metal, and in particular
+                                                                                                                                                            2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2.  Static spin structure factorS(k) (top row, panelsa–d) and conduction-electron momentum distributionn(k) (bottom
+row, panelse–h) in the first Brillouin zone, at fixedJ= 0.5 and four representative values of the Kondo coupling:J                                                 K = 0.5
+(panelsa,e),J                      K = 2.0 (panelsb,f),J                        K = 3.0 (panelsc,g), andJ                             K = 4.0 (panelsd,h).
+
+
+
+
+of  a  heavy  Fermi  liquid  with  a  large  Fermi  surface,  is                     Model.The Kondo-Heisenberg model is described by:
+too large for tensor-network states to handle in practice.                          ˆH=−t       X                         ˆSi· ˆSj +J   K X    ˆSi·ˆsi . (1)
+Dynamical  mean-field  [33, 34],  variational  cluster  [35],                                         ˆc  †i,σˆc  j,σ +J   X
+and  parton/large-Nmean-field  [36, 37]  approaches  do                                       ⟨i,j⟩,σ                ⟨i,j⟩                  i
+reach two dimensions and generally point to unconven-
+tional  (d-wave  or  related)  pairing,  but  they  are  all  ap-                The operators ˆc  †i,σ and ˆc  i,σ create and annihilate, respec-
+proximate and prone to bias,  so none can treat,  on an                          tively, a conduction electron with spinσ={↑,↓}at site
+equal  footing,  the  antiferromagnetic,  superconducting,                       i, while   ˆSi denotes the localized spin-1/2 operator.  TheP
+and heavy-Fermi-liquid states that compete and coexist                           conduction-electron   spin   is   ˆsi =  1
+in this model.                                                                   withτbeing the vector of Pauli matrices. The coupling2 σσ′ ˆc  †Ji,στ σσ′ˆc  i,σ′,
+
+   Neural-network  quantum  states  (NQS)  [38–40]  get                          is the nearest-neighbor superexchange between localized
+around  all  of  these  problems  at  once.   A  single,  highly                 moments, whereasJ               K  couples each localized moment to
+expressive  ansatz  is  optimized  variationally,  free  of  the                 the local conduction-electron spin density; the sum⟨i, j⟩
+sign problem and away from half-filling, on truly periodic                       denotes nearest-neighbor pairs.  We sett= 1 and treatJ
+two-dimensional square clusters:  the antiferromagnetic,                         andJ       K  as independent tuning parameters.
+heavy-Fermi-liquid,  and  superconductive  states  can  all                          Results.Our main result is the ground-state phase di-
+be  described  within  the  same  wave  function,  and  the                      agram  in  the  (J  K, J)  plane,  shown  in  Fig.1,  obtained
+ground  state  is  picked  out  byunbiased energy  mini-                         on theL= 8 lattice at a fixed numberN            e of conduction
+mization  rather  than  assumed  [41].   The  composite  lo-                     electrons,  corresponding  to  a  densityn=N        e/L2  and
+cal Hilbert space is handled by a transformer architec-                          hole dopingδ= 1−n= 1/4.  At weak Kondo coupling,
+ture designed for such spaces [39], while a Pfaffian out-                        the local moments order antiferromagnetically (AF), as
+put layer [41] encodes magnetic and pairing correlations                         expected from the dominant superexchange and RKKY
+on  the  same  footing.   Our  results  show  a  transforma-                     interactions.   At  strong  Kondo  coupling,  the  moments
+tion in the electronic Fermi surface, from a ‘small’ Fermi                       are  screened  and  a  heavy  Fermi  liquid  (HFL)  emerges.
+surface involving only the conduction electrons at small                         The HFL, while accessible at the mean-field level (see be-
+Kondo  couplingJ                K,  to  a  ‘large’  Fermi  surface  involv-      low), is notoriously difficult to stabilize in two dimensions
+ing both the conduction electrons and spin at largeJ         K.                  with other variational methods, such as tensor networks,
+Although the small Fermi surface regime also has antifer-                        owing to geometric constraints.  Here, it is obtained di-
+romagnetic order, this does not significantly modify the                         rectly from an unbiased variational optimization.  In the
+Fermi surface because it lies within the antiferromagnetic                       crossover  between  these  two  regimes,  we  find  ad  x2−y   2
+Brillouin zone boundary. At intermediateJ                    K, our results      superconducting region that coexists with the underlying
+also show clear evidence ofd-wave superconductivity. In-                         magnetic order.  Away from half-filling, superconductiv-
+terestingly,  most of the superconducting phase coexists                         ity in this model had previously been suggested only by
+with the antiferromagnetic order.                                                exact-diagonalization and DMRG studies on quasi-one-
+                                                                                                                                                                     3
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                      FIG.  4.     Left:    squared  staggered  magnetizationm                               2s   =
+                                                                                      S(π, π)/Nof the local moments as a function ofJ               K atJ= 0.5,
+                                                                                      with  QMC  data  [43]  atJ         K  =  0.0  for  comparison.   The  in-
+                                                                                      set shows the conduction-electron magnetizationm                               2e.  Right:
+                                                                                      pairing order parameter ∆ as a function ofJ   K along the same
+FIG. 3. Connectedd                   x2−y   2 pair–pair correlatorC(r) as a func-     cut.
+tion of distancer=|r|atJ= 0.5, forJ                                       K = 1.0, 2.0, 2.8, and
+3.3.
+
+                                                                                      number  of  vectors  satisfying|r| ≥r                         max.   ForL=  8,
+                                                                                      we setr     max  =  4.   Fig.3showsC(r) for representative
+dimensional clusters [31]; here we establish it on a gen-                             values ofJ   K.  ForJ    K ≃1.0–3.1, the correlator saturates
+uinely two-dimensional lattice.  A collinear stripe phase                             to  a  finite  plateau  at  large  distances,  the  signature  of
+also appears atJ= 0 (see End Matter); we do not inves-                                off-diagonal long-range order.  In contrast, it decays for
+tigate its extent in this work.                                                       JK ≲1, deep in the AF phase, and again forJ        K ≳3.1,
+   We characterize the phases through the local-momentP                               once the system has entered the HFL.
+structure factorS(q) =                     1Nij eiq·(R      i−R   j)⟨ˆSi · ˆSj⟩and       Fig.4summarizes the evolution of the two order pa-
+the conduction-electron momentum distributionP       n(k) =                           rameters along the cutJ= 0.5.  The squared staggered
+1                                                                                     magnetizationm                           2s =S(π, π)/N(left panel) remains finite
+2     σ⟨ˆc   †kσ  ˆc  kσ  ⟩.  Their evolution along theJ= 0.5 cut is
+shown in Fig.2.  AtJ           K  = 0.5,S(q) is sharply peaked                        up toJ    K ≃2.8 and then drops to zero across the transi-
+at  (π, π),  reflecting  antiferromagnetic  ordering  tenden-                         tion to the HFL; the inset shows the conduction-electron
+cies, andn(k) encloses a small Fermi surface of conduc-                               magnetizationm                           2e,  which is much weaker.  The pairing
+tion  electrons  alone.   AsJ     K  increases,  the  (π, π)  peak                    order  parameter  ∆  (right  panel)  is  essentially  zero  for
+broadens while the Fermi surface hybridizes with its im-                              JK ≲0.5, grows as Kondo screening weakens the antifer-
+age  shifted  by  (π, π).   ByJ         K  ≃3.0,  the  magnetic  or-                  romagnetic order, reaches a maximum ∆≃3.5×10             −2   at
+der  is  strongly  suppressed  and  the  system  crosses  into                        JK ≃2.8, and vanishes byJ         K ≳3.5. The resulting dome
+the HFL. Crucially, the structure factor is still peaked at                           is peaked between the two non-superconducting phases in
+(π, π) andn(k) is strongly smeared.  AtJ                   K  = 4.0, the              the window where magnetic order and Kondo screening
+moments are fully screened andn(k) traces a large Fermi                               compete most strongly.
+surface whose volume counts both the conduction elec-                                    Together,   the   long-distance   plateau   ofC(r)   and
+trons and the local moments, consistent with Luttinger’s                              the  dome  shape  of  ∆(J     K)  provide  direct  evidence  for
+theorem [4].  The structure factor is peaked at 2k      F  as a                       dx2−y   2 superconductivity in the two-dimensional Kondo–
+result  of  the  Kohn  anomaly  [42].   The  pattern  ofS(q)                          Heisenberg  model.    The  pairing  is  strongest  precisely
+from NQS atJ    K  = 4.0 in Fig.2(d) can be successfully                              where antiferromagnetic order is partially suppressed but
+reproduced by the mean field theory of the HFL (see be-                               the  moments  are  not  yet  fully  screened,  and  its  max-
+low).                                                                                 imum  coincides  with  the  collapse  of  magnetic  order  at
+  PTo probe pairing, we introduce thed      x2−y   2  field  ˆ∆r =                    the quantum critical point.  This behavior is consistent
+1                             h       r,η    = +1 (−1) on horizontal                  with the phenomenology of heavy-fermion superconduc-
+4     η hr,η   ˆc  r↑  ˆc  r+η↓      , with                                           tors and is substantiated by the parton mean-field anal-
+(vertical)  bonds,  and  measure  the  connected  correlator                          ysis presented in the Supplementary material.
+C(r) =⟨         ˆ∆†0 ˆ∆r⟩ − N0,r   , whereN           0,r    removes the discon-         For future reference and to enable direct comparisons
+nected single-particle contribution:                                                  with  other  variational  methods,  in  TableI we  report
+                 X                   h                                                the  converged  variational  energy  per  sitee=⟨           ˆH⟩/N
+N0,r     =   116                      ⟨ˆc   †r,↑   ˆc  0,↑  ⟩⟨ˆc   †r+η          ′,↓ ˆc  0+η,↓     ⟩and  the  corresponding  energy  variance  per  siteσ       2  =
+                 η,η       ′ h0,η   hr,η      ′
+                                                                              i         ⟨ ˆH2⟩ − ⟨ ˆH⟩    2  /Nfor representative values of the Kondo
+                                       − ⟨ˆc   †r,↑   ˆc  0+η,↓     ⟩⟨ˆc   †r+η          ′,↓ ˆc  0,↑  ⟩.coupling along theJ= 0.5 cut analyzed in the main text.
+                                                                            (2)       The variance per site provides an intrinsic,  observable-
+The long-distance average ofC(r) defines the order pa-P                               independent measure of the accuracy of the variational
+rameter  ∆  =  [  1M          |r|≥r        max C(r)]       1/2   ,  whereMis  the     state, vanishing for an exact eigenstate.
+                                                                                                                                                           4
+
+
+JK                          Energy                          Variance
+0.5                   −1.908883(4)                         0.00068(1)
+2.0                    −2.08019(2)                            0.012(1)
+3.0                    −2.37980(3)                            0.041(1)
+4.0                    −2.84616(2)                            0.015(1)
+
+
+TABLE  I.  Variational  energy  per  site  and  energy  variance
+per site for the Kondo-Heisenberg model on the 8×8, at hole
+dopingδ= 1/4 andJ= 0.5, for the four values ofJ                                  K  shown
+in Fig.2.  Statistical Monte Carlo errors on the last digit are
+given in parentheses.
+
+
+   Mean-field  results.We complement the NQS simula-
+tions with a mean-field analysis of the Kondo-Heisenberg
+model.  The mean-field treatment reproduces the proper-                          FIG. 5.  Mean field local-moment structure factorS(k) (top
+ties of the antiferromagnetic metal and the heavy Fermi                          row)  and  conduction-electron  momentum  distributionn(k)
+liquid  obtained  from  NQS,  providing  an  independent                         (bottom row) in the first Brillouin zone, at fixedJ= 0.5 and
+check on the NQS method.  It is less successful for the                          three representative values of the Kondo coupling:J                 K = 2.0
+superconducting  state;  therefore,  in  the  main  text,  we                    (left, panelsa,c) andJ                    K = 4.0 (right, panelsb,d).
+restrict the mean-field comparison to the normal state.
+Given the extensive literature on mean-field approaches
+to Kondo lattice models (see [44] for a historical review                        the Kohn anomaly.  Importantly, the mean-field results
+and  [25, 45]  for  recent  developments),  we  relegate  the                    closely match the NQS predictions (cf.  Fig.2).
+technical details to the End Matter and Supplementary                               Conclusions.We have mapped the ground-state phase
+Material and present only the main results here.                                 diagram of the doped two-dimensional Kondo-Heisenberg
+   Our  phase  diagram  from  the  mean  field  theory  (see                     model  using  neural-network  quantum  states.   At  weak
+Fig.7in the End Matter) is in qualitative agreement with                         Kondo coupling, the local moments order antiferromag-
+that from the NQS method in Fig.1, except that there is                          netically,  and  the  conduction  electrons  form  a  small
+a first-order transition between the two metallic phases,                        Fermi surface that is insensitive to the magnetic order.
+which is presumably an artifact of the mean field treat-                         At  strong  coupling,  the  moments  are  screened  into  a
+ment.   At  smallJ          K,  we  also  find  an  antiferromagnetic            heavy  Fermi  liquid  with  a  large  Fermi  surface  satisfy-
+phase characterized by an ordering vectorQ= (π, π) and                           ing Luttinger’s theorem.  Both phases are well described
+staggered  order  parametersm                     e  andm       s  in  the  electronwithin the mean-field framework, with good qualitative
+and local moment layers.  The conduction electron mag-                           agreement.  In the intermediate regime, where magnetic
+netizationm                  e ∝ −J   Kms grows linearly with Kondo cou-         order  and  Kondo  screening  compete  most  strongly,  we
+plingJ         K, while local moment magnetization saturates at                  find  robustd            x2−y   2  superconductivity,  signaled  by  off-
+ms = 1/2.  The structure factor becomes sharply peaked                           diagonal  long-range  order  in  the  pair-pair  correlations
+at the ordering momentumS(k)=Nm                    2sδk,Q    (see Fig.5          and  a  pairing  dome  peaked  at  the  collapse  of  antifer-
+(a)), which is exactly the same as Fig.2(a)(b)) from NQS.                        romagnetic order.
+In  Fig.5(c)  we  show  the  momentum  distributionn(k)                             The dome structure, centered near the quantum crit-
+from  the  mean  field.   We  can  see  the  electron  pocket                    ical  point  and  vanishing  deep  in  the  heavy  Fermi  liq-
+around the Γ point, as in the free fermion level, and its                        uid phase, together with thed-wave symmetry of the su-
+copy  atM=  (π, π)  connected  by  the  Neel  order  mo-                         perconducting order parameter, indicates that pairing is
+mentumQ= (π, π).  This copied pocket aroundMhas                                  mediated by the residual short-range antiferromagnetic
+smaller spectral weight and is also visible in fig.2(f) from                     correlations of the local moments.  This phenomenology
+NQS, which has less resolution due to the small system                           closely parallels that observed in layered heavy-fermion
+size.  Actually, the agreement becomes even better if we                         compounds  such  as  CeCoIn5  [19, 25],  and  our  results
+restrict the mean field also to the system sizeL= 8 (see                         establish  that  it  emerges  already  in  the  minimal  two-
+the Supplementary).                                                              dimensional Kondo-Heisenberg model, without invoking
+   At largeJ         K, there is a first-order transition to a heavy             band-structure details or additional interactions.  On the
+Fermi liquid phase with finite hybridization and vanish-                         methodological side, our results demonstrate that neural-
+ing magnetic order parameters,m                      s =m   e = 0.  The local    network quantum states can resolve the delicate compe-
+moments are absorbed into the Luttinger volume, and the                          tition between magnetic,  striped,  superconducting,  and
+Fermi surface becomes large, with hole pockets centered                          heavy Fermi liquid states in a genuinely two-dimensional
+at (π, π) [see Fig.5(d)].  The structure factor in Fig.5(b)                      Kondo lattice – a regime that has remained out of reach
+shows a broad peak at momentum 2k  F , associated with                           for sign-problem-free quantum Monte Carlo and is chal-
+                                                                                                                                                           5
+
+lenging for tensor-network methods.  Natural extensions                          National  Science  Foundation  grant  No.   DMR-2245246
+of this work include a systematic finite-size scaling of the                     and  by  the  Simons  Collaboration  on  Ultra-Quantum
+pairing order parameter,  the doping dependence of the                           Matter  which  is  a  grant  from  the  Simons  Foundation
+superconducting dome, and the nature of the transition                           (651440, S.S.).  YHZ was supported by the National Sci-
+between  the  antiferromagnet  and  the  heavy  Fermi  liq-                      ence Foundation under Grant No.  DMR-2237031.  The
+uid in the presence of frustrating exchange interactions,                        Flatiron Institute is a division of the Simons Foundation.
+where the possible existence of deconfined criticality or                        The  simulations  presented  in  this  work  required  a  to-
+fractionalized intermediate phases [7–9] remains a central                       tal computational budget of approximately 30 000 GPU
+open question in heavy-fermion physics.                                          hours on NVIDIA H200 GPUs.
+
+
+                   ACKNOWLEDGMENTS
+
+   We thank Antoine Georges and Shiwei Zhang for useful
+discussions.  A.N. and S.S. were supported by the U.S.
+
+
+
+
+
+ [1]S. Doniach, The Kondo lattice and weak antiferromag-                              critical  point  from  the  Fermi-surface  reconstruction  in
+     netism,Physica B+C91, 231 (1977).                                                YbRh2Si2, Nature Physics5, 465 (2009).
+ [2]N.  Read  and  D.  M.  Newns,  On  the  solution  of  the                    [15]L.  Jiao,  Y.  Chen,  Y.  Kohama,  D.  Graf,  E.  D.  Bauer,
+     Coqblin-Schreiffer Hamiltonian by the large-Nexpansion                           J.  Singleton,  J.-X.  Zhu,  Z.  Weng,  G.  Pang,  T.  Shang,
+     technique,Journal of Physics C: Solid State Physics16,                           J. Zhang, H.-O. Lee, T. Park, M. Jaime, J. D. Thomp-
+     3273 (1983).                                                                     son,  F. Steglich,  Q. Si, and H. Q. Yuan, Fermi surface
+ [3]P. Coleman, Mixed valence as an almost broken symme-                              reconstruction  and  multiple  quantum  phase  transitions
+     try,Phys. Rev. B35, 5072 (1987).                                                 in the antiferromagnet CeRhIn5,Proceedings of the Na-
+ [4]M. Oshikawa, Topological Approach to Luttinger’s The-                             tional Academy of Sciences112, 673 (2015).
+     orem and the Fermi Surface of a Kondo Lattice,Phys.                         [16]H. Hegger, C. Petrovic, E. G. Moshopoulou, M. F. Hund-
+     Rev. Lett.84, 3370 (2000).                                                       ley, J. L. Sarrao, Z. Fisk, and J. D. Thompson, Pressure-
+ [5]J. A. Hertz, Quantum critical phenomena,Phys. Rev. B                              Induced Superconductivity in Quasi-2D CeRhIn5,Phys.
+     14, 1165 (1976).                                                                 Rev. Lett.84, 4986 (2000).
+ [6]A. J. Millis, Effect of a nonzero temperature on quantum                     [17]T.  Park,  F.  Ronning,  H.  Q.  Yuan,  M.  B.  Salamon,
+     critical points in itinerant fermion systems,Phys. Rev. B                        R. Movshovich, J. L. Sarrao, and J. D. Thompson, Hid-
+     48, 7183 (1993).                                                                 den  magnetism  and  quantum  criticality  in  the  heavy
+ [7]Q.  Si,  S.  Rabello,  K.  Ingersent,  and  J.  L.  Smith,  Lo-                   fermion superconductor CeRhIn5, Nature440, 65 (2006).
+     cally critical quantum phase transitions in strongly cor-                   [18]C. Pfleiderer, Superconducting phases off-electron com-
+     related  metals,Nature413,  804  (2001), arXiv:cond-                             pounds,Rev. Mod. Phys.81, 1551 (2009).
+     mat/0011477 [cond-mat.str-el].                                              [19]C. Petrovic,  R. Movshovich,  M. Jaime,  P. G. Pagliuso,
+ [8]T.  Senthil,  S.  Sachdev,  and  M.  Vojta,  Fractionalized                       M. F. Hundley, J. L. Sarrao, Z. Fisk, and J. D. Thomp-
+     Fermi Liquids,Phys. Rev. Lett.90, 216403 (2003),cond-                            son, A new heavy-fermion superconductor CeCoIn5:  A
+     mat/0209144.                                                                     relative of the cuprates?,J. Phys.:  Condens. Matter13,
+ [9]T. Senthil, M. Vojta, and S. Sachdev, Weak magnetism                              L337 (2001).
+     and non-Fermi liquids near heavy-fermion critical points,                   [20]Y.  Kohori,  Y.  Yamato,  Y.  Iwamoto,  T.  Kohara,  E.  D.
+     Phys. Rev. B69, 035111 (2004),cond-mat/0305193.                                  Bauer, M. B. Maple, and J. L. Sarrao, NMR and NQR
+[10]K.   Miyake,   S.   Schmitt-Rink,   and   C.   M.   Varma,                        studies of the heavy fermion superconductors CeTIn5 (T
+     Spin-fluctuation-mediated even-parity pairing in heavy-                          = Co and Ir),Phys. Rev. B64, 134526 (2001).
+     fermion  superconductors,Phys.  Rev.  B34,  6554(R)                         [21]M. P. Allan, F. Massee, D. K. Morr, J. Van Dyke, A. W.
+     (1986).                                                                          Rost,  A.  P.  Mackenzie,  C.  Petrovic,  and  J.  C.  Davis,
+[11]D. J. Scalapino, E. Loh, and J. E. Hirsch,d-wave pairing                          Imaging Cooper pairing of heavy fermions in CeCoIn5,
+     near  a  spin-density-wave  instability, Phys.  Rev.  B34,                       Nature  Physics9,  468  (2013), arXiv:1303.4416  [cond-
+     8190(R) (1986).                                                                  mat.supr-con].
+[12]M.  T.  B´eal-Monod,  C.  Bourbonnais,  and  V.  J.  Emery,                  [22]B.  B.  Zhou,  S.  Misra,  E.  H.  da  Silva  Neto,  P.  Ayna-
+     Possible  superconductivity  in  nearly  antiferromagnetic                       jian,  R.  E.  Baumbach,  J.  D.  Thompson,  E.  D.  Bauer,
+     itinerant fermion systems,Phys. Rev. B34, 7716 (1986).                           and A. Yazdani, Visualizing nodal heavy fermion super-
+[13]S.  Paschen,   T.  L¨uhmann,   S.  Wirth,   P.  Gegenwart,                        conductivity in CeCoIn5,Nature Physics9, 474 (2013),
+     O.  Trovarelli,  C.  Geibel,  F.  Steglich,  P.  Coleman,  and                   arXiv:1307.3787 [cond-mat.supr-con].
+     Q. Si, Hall-effect evolution across a heavy-fermion quan-                   [23]J. S. Van Dyke, F. Massee, M. P. Allan, J. C. S. Davis,
+     tum critical point,Nature432, 881 (2004).                                        C. Petrovic, and D. K. Morr, Direct evidence for a mag-
+[14]S. Friedemann, T. Westerkamp, M. Brando, N. Oeschler,                             neticf-electron-mediated  pairing  mechanism  of  heavy-
+     S.  Wirth,  P.  Gegenwart,  C.  Krellner,  C.  Geibel,  and                      fermion  superconductivity  in  CeCoIn5, Proceedings  of
+     F.  Steglich,  Detaching  the  antiferromagnetic  quantum                        the  National  Academy  of  Science111,  11663  (2014),
+                                                                                                                                                                6
+
+     arXiv:1405.5883 [cond-mat.supr-con].                                                tion to the Ancilla Layer Model (2026),arXiv:2603.02316
+[24]N. Maksimovic, D. H. Eilbott, T. Cookmeyer, F. Wan,                                  [cond-mat.str-el].
+     J. Rusz, V. Nagarajan, S. C. Haley, E. Maniv, A. Gong,                        [40]Y. Gu, W. Li, H. Lin, B. Zhan, R. Li, Y. Huang, D. He,
+     S. Faubel, I. M. Hayes, A. Bangura, J. Singleton, J. C.                             Y. Wu, T. Xiang, M. Qin, L. Wang, and D. Lv,Solving
+     Palmstrom,  L.  Winter,  R.  McDonald,  S.  Jang,  P.  Ai,                          the Hubbard model with Neural Quantum States(2025),
+     Y. Lin, S. Ciocys, J. Gobbo, Y. Werman, P. M. Oppeneer,                             arXiv:2507.02644 [cond-mat.str-el].
+     E.  Altman,  A.  Lanzara,  and  J.  G.  Analytis,  Evidence                   [41]L. L. Viteritti, R. Rende, C. Roth, A. Sengupta, G. Car-
+     for  a  delocalization  quantum  phase  transition  without                         leo,  and  A.  Georges,  Beyond  Variational  Bias:  Resolv-
+     symmetry breaking in CeCoIn5,Science375, 76 (2022).                                 ing  Intertwined  Orders  in  the  Hubbard  Model  (2026),
+[25]P. Park, S.-S. Zhang, P. M. Bonetti, A. A. Podlesnyak,                               arXiv:2604.21978 [cond-mat.str-el].
+     D. M. Pajerowski,  M. B. Stone,  C. Petrovic,  C. Stock,                      [42]W. Kohn, Image of the Fermi Surface in the Vibration
+     S. Sachdev, C. D. Batista, and A. D. Christianson, Su-                              Spectrum of a Metal,Phys. Rev. Lett.2, 393 (1959).
+     perconductivity and fractionalized magnetic excitations                       [43]A. W. Sandvik, Finite-size scaling of the ground-state pa-
+     in CeCoIn5 (2026),arXiv:2604.02481.                                                 rameters of the two-dimensional Heisenberg model,Phys.
+[26]F.   F.   Assaad,   Quantum   Monte   Carlo   Simulations                            Rev. B56, 11678 (1997).
+     of   the   Half-Filled   Two-Dimensional   Kondo   Lattice                    [44]P.  Coleman,  Heavy  Fermions:   electrons  at  the  edge
+     Model,Phys.  Rev.  Lett.83,  796  (1999), arXiv:cond-                               of  magnetism  (2007),arXiv:cond-mat/0612006  [cond-
+     mat/9904178 [cond-mat.str-el].                                                      mat.str-el].
+[27]S.  Capponi  and  F.  F.  Assaad,  Spin  and  charge  dy-                      [45]Y.  Liu,  H.  Li,  G.-M.  Zhang,  and  L.  Yu,d-wave  super-
+     namics of the ferromagnetic and antiferromagnetic two-                              conductivity  induced  by  short-range  antiferromagnetic
+     dimensional half-filled Kondo lattice model,Phys. Rev.                              correlations in the two-dimensional Kondo lattice model,
+     B63,  155114  (2001), arXiv:cond-mat/0010393  [cond-                                Phys. Rev. B86, 024526 (2012),arXiv:1204.1434 [cond-
+     mat.str-el].                                                                        mat.str-el].
+[28]A. E. Sikkema, I. Affleck, and S. R. White, Spin Gap in                        [46]L. L. Viteritti, R. Rende, and F. Becca, Transformer vari-
+     a Doped Kondo Chain,Phys. Rev. Lett.79, 929 (1997).                                 ational wave functions for frustrated quantum spin sys-
+[29]I.  Khait,   P.  Azaria,   C.  Hubig,   U.  Schollw¨ock,  and                        tems,Phys. Rev. Lett., 236401 (2023).130
+     A. Auerbach, Doped Kondo chain, a heavy Luttinger liq-                        [47]R.  Rende  and  L.  Loris  Viteritti,  Are  queries  and  keys
+     uid,Proceedings  of  the  National  Academy  of  Sciences                           always  relevant?    A  case  study  on  transformer  wave
+     115, 5140 (2018).                                                                   functions,Machine Learning:  Science and Technology6,
+[30]A. Nikolaenko and Y.-H. Zhang, Numerical signatures of                               010501 (2025).
+     ultra-local criticality in a one dimensional Kondo lattice                    [48]R.  Rende,  F.  Gerace,  A.  Laio,  and  S.  Goldt,  Mapping
+     model,SciPost Phys.17, 034 (2024).                                                  of  attention  mechanisms  to  a  generalized  Potts  model,
+[31]J. C. Xavier and E. Dagotto, Robustd-Wave Pairing Cor-                               Phys. Rev. Res.6, 023057 (2024).
+     relations in the Heisenberg Kondo Lattice Model,Phys.                         [49]L.  L.  Viteritti,  R.  Rende,  A.  Parola,  S.  Goldt,  and
+     Rev.  Lett.100,  146403  (2008), arXiv:0803.1486  [cond-                            F. Becca, Transformer wave function for two dimensional
+     mat.str-el].                                                                        frustrated magnets:  Emergence of a spin-liquid phase in
+[32]A.   Gleis,   J.-W.   Li,   and   J.   von   Delft,   Controlled                     the Shastry-Sutherland model,Phys. Rev. B111, 134411
+     Bond  Expansion  for  Density  Matrix  Renormalization                              (2025).
+     Group Ground State Search at Single-Site Costs,Phys.                          [50]L.  L.  Viteritti,  R.  Rende,  S.  Sachdev,  and  G.  Carleo,
+     Rev. Lett.130, 246402 (2023),arXiv:2207.14712 [cond-                                Approaching  the  Thermodynamic  Limit  with  Neural-
+     mat.str-el].                                                                        Network   Quantum   States   (2026),arXiv:2602.02665
+[33]O.  Bodensiek,   R.        ˇZitko,   M.  Vojta,   M.  Jarrell,  and                  [cond-mat.str-el].
+     T. Pruschke, Unconventional superconductivity from lo-                        [51]S. Sorella, Green Function Monte Carlo with Stochastic
+     cal spin fluctuations in the kondo lattice,Phys. Rev. Lett.                         Reconfiguration,Phys. Rev. Lett.80, 4558 (1998).
+     110, 146406 (2013).                                                           [52]R.  Rende,  L.  L.  Viteritti,  L.  Bardone,  F.  Becca,  and
+[34]S. Hoshino and Y. Kuramoto, Superconductivity of com-                                S.  Goldt,  A  simple  linear  algebra  identity  to  optimize
+     posite particles in a two-channel kondo lattice,Phys. Rev.                          large-scale neural network quantum states,Communica-
+     Lett.112, 167204 (2014).                                                            tions Physics7, 260 (2024).
+[35]B. Lenz, R. Gezzi, and S. R. Manmana, Variational clus-                        [53]A. Chen and M. Heyl, Empowering deep neural quantum
+     ter approach to superconductivity and magnetism in the                              states through efficient optimization,Nature Physics20,
+     kondo lattice model,Phys. Rev. B96, 155119 (2017).                                  1476 (2024).
+[36]L. Yu, Z. Guang-Ming, and Y. Lu, Pairing symmetry of
+     heavy fermion superconductivity in the two-dimensional
+     kondo–heisenberg  lattice  model,Chin.  Phys.  Lett.31,
+     087102 (2014).
+[37]F. Liu and Z. Han, Pair density wave ands±idsuper-
+     conductivity in a strongly coupled lightly doped kondo
+     insulator,Phys. Rev. B109, L121101 (2024).
+[38]G.  Carleo  and  M.  Troyer,  Solving  the  quantum  many-
+     body  problem  with  artificial  neural  networks,Science
+     355, 602–606 (2017).
+[39]R.  Rende,  A.  Nikolaenko,  L.  L.  Viteritti,  S.  Sachdev,
+     and Y.-H. Zhang, Transformer Neural-Network Quantum
+     States for lattice models of spins and fermions:  Applica-
+                                                                                                                                                             7
+
+                          END MATTER
+
+      I.    WAVE FUNCTION AND OPTIMIZER
+
+   We   parametrize   the   variational   state   using   the
+Transformer-based  neural-network  quantum  state  for
+composite  local  Hilbert  spaces  introduced  in  Ref.  [39].
+In the Kondo-Heisenberg Hamiltonian, each site carries
+a conduction electron and a localized spin-1/2 moment,
+so the local configurations                        i = (n  i↑ , ni↓ , Szi ) spans a space
+of dimensionV= 8,  which we tokenize into integer la-
+belst     i and embed into vectorsx           i ∈R   d.  The sequence is
+processed byn  l  transformer layers with factored atten-
+tion  [46–49]  and  a  distance-dependent  spatial  bias  [50]
+that encodes the square-lattice geometry.   The outputs
+yi ∈R   d define configuration-dependent backflow orbitals                        FIG. 6.  Local density⟨ˆn      i⟩(colour) and moment orientation
+Φiσα = Pβ yiβWiσαβ, withW∈R               N×2×2N×d               a tensor of      (arrows) for the stripe state atJ= 0 andJ             K = 1.4.
+trainable parameters; collectingr= (i, σ), these form a
+matrixϕ            rα ∈R   2N×2N         (see Ref. [39]).
+   To describe superconductive states efficiently, we anti-
+symmetrize with a Pfaffian output layer [41],                                     unidirectional modulation: lines of reduced density sepa-
+               Ψθ(s) = Pf   n ⋆ ϕ(s)A ϕ(s)              T ⋆ n ,            (3)  rate magnetic domains in which the order reverses phase,
+                                                                                  so that the density minima coincide with antiphase do-
+whereA∈R                 2N×2N         is a trainable antisymmetric matrix        main  walls.   This  is  the  same  stripe  order  reported  for
+andn ⋆ ϕselects the occupied rows.  Unlike a Slater de-                           thet–t        ′  Hubbard model att   ′  =−0.2,U= 8, and hole
+terminant, the Pfaffian encodes magnetic and supercon-                            doping 1/8 [40,41].  This stripe state is not confined to
+ducting channels simultaneously at the mean-field level,                          J=  0:  for  finiteJit  is  also  obtained  as  a  metastable
+avoiding  a  bias  against  pairing  given  by  determinant                       solution to which some optimization seeds converge, but
+backflows [41].                                                                   its variational energy is always higher than that of the
+                                                                                  antiferromagnetic-plus-superconducting  solution,  which
+   In  the  superconducting  region  of  the  phase  diagram,                     we therefore take as the ground state.  We do not study
+optimizations  of  Eq.  (3)  can  remain  trapped  in  the                        the extent of the stripe region in the phase diagram in
+metastable  stripe  solutions  discussed  below.   To  avoid                      this work.
+this,   we  seed  the  pairing  channel  by  replacing  the
+pairing  matrix  withϕ(s)A ϕ(s)                      T  + Φd,  where  Φd  is  a
+configuration-independent matrix.  Its only nonzero ele-                                          III.    MEAN-FIELD DETAILS
+ments connect opposite spins on nearest-neighbor bonds,
+(Φd)(r↑),(r+η↓)               = ∆d hr,η   , with ∆d a single trainable pa-           The  localized  spins  are  represented  using  fermionic
+rameter  andh      r,η    =  +1  (−1)  forη=±             ˆx(±    ˆy).   This     spinons
+is the standard singletd            x2−y   2  pairing function, and the
+limit ∆d →0 recovers Eq. (3) exactly.                                                                               X
+   The hyperparameters of the transformer architecture                                                   Si = 1          f†
+are chosen to ben  l = 4 layers,h= 12 heads, andd= 72;                                                           2        iατ αβfiβ,                     (4)
+see  Ref.  [49]  for  their  description.   The  state  is  opti-                                                    αβ
+mized  by  Variational  Monte  Carlo  with  Stochastic  Re-                       subject to the single-occupancy constraint P
+configuration [51] using the linear algebra identity [52,53]                      1.    At  the  mean-field  level,  the  dominant  competingσ f†iσfiσ  =
+and the MARCH optimizer [40], over 20,000 steps with                              channels are described by the spinon hopping amplitude
+M= 8192 samples per iteration and a learning rate of                              χij  =⟨f     †                               V                  i  =⟨c    †
+τ= 0.005 annealed over time.  The optimization is per-                            and the staggered antiferromagnetic order parametersiσfjσ⟩,  the Kondo hybridizationiσfiσ⟩,
+formed by fixing the total spin projectionS             z = 0 [39].
+                                                                                                ⟨S  zi ⟩=m     seiQ·R     i,  ⟨s   zi⟩=m     eeiQ·R     i,          (5)
+
+                      II.    STRIPE ORDER                                         with ordering vectorQ= (π, π).  The saddle-point pa-
+                                                                                  rameters  (χ, V, λ, m  s, me)  are  obtained  by  solving  self-
+   AtJ= 0, the conduction electrons develop stripe or-                            consistent equations.
+der, shown in Fig.6forJ               K  = 1.4.  The snapshot of the                 Assuming a  uniform  saddle point,χ   ij  =χ, V       i  =V,
+local density⟨ˆn      i⟩and the moment orientation displays a                     andλ       i =λ, the mean-field Hamiltonian can be written
+                                                                                                                                                                8
+
+
+
+                                                                                                                    X
+                                                                                                        χ=     1Nz       Γ(k)⟨f         †kσfkσ⟩,               (12)
+                                                                                                                     k,σ
+                                                                                                        V=    1    X⟨c †
+                                                                                                               N          kσfkσ⟩,                         (13)
+                                                                                                                   k,σ
+
+                                                                                   wherez=  4  is  the  coordination  number  of  the  square
+                                                                                   lattice and Γ(k) = 2(cosk                x + cosk      y).  Finally, the stag-
+                                                                                   gered  magnetizations  in  both  layers  are  determined  by
+                                                                                   hybridization betweenkandk+Qstates
+                                                                                                 X                                        X
+FIG.  7.   Mean-field  phase  diagram  of  the  two-dimensional                    ms =   12N          σ⟨f    †k+Q,σ    fkσ⟩, m  e =   12N     σ⟨c   †k+Q,σ    ckσ⟩.
+Kondo-Heisenberg model in the (J  K, J) plane.  Two phases                                        k,σ                                     k,σ
+are identified:  an antiferromagnetic N´eel phase (AF) and a                                                                                                (14)
+heavy Fermi liquid (HFL).                                                          All the averages are computed by diagonalizing the mean-
+                                                                                   field Hamiltonian in Eq. (7) and taking thermal averages
+                                                                                   atT= 0.01 for all calculations.
+                                                                                      The free energy is obtained from the quasiparticle spec-
+in the reduced Brillouin zone as                                                   trum of the Hamiltonian:
+
+                   HMF =   X             Ψ†                                                        F=E      0 −T   Xln        1 +e   −E   kn/T   ,          (15)
+                                           kσHkσΨkσ,                (6)                                             k,n
+                              k∈RBZ,σ
+                                                                                      whereE           kn  are  the  eigenvalues  ofH   kσ  andTis  the
+where ΨTkσ = (c  kσ, ck+Q,σ    , fkσ, fk+Q,σ    ) and                              temperature.  The constant term is given by
+                            ϵck    σ∆  c     ϕ     0      
+                        σ∆  c  ϵck+Q        0      ϕ    .           (7)    E0/N=−λ+           zJ
+              Hkσ =          ϕ     0     ϵ     f                                                        4  χ2+JK2  V 2+zJ2  m2s−J   Kmsme+µ(1−p).           (16)
+                                               k    σ∆  f
+                             0     ϕ     σ∆     f   ϵfk+Q                          We note that self-consistency equations can be alterna-
+                                                                                   tively derived from the free energy, since the solution cor-
+   The dispersions of the two layers are given by                                  responds to the local minima∂F/∂x              i = 0. For a given set
+                                                                                   of parameters (J, J  K, p, T), the self-consistent solution is
+            ϵck =−tΓ(k)−µ,    ϵ                    f                               obtained by solving the above equations simultaneously.
+                                         k =λ−      J2 χΓ(k),         (8)          When multiple solutions exist, the physical state is iden-
+                                                                                   tified as the one with the lowest free energy.
+with lattice form factor Γ(k) = 2(cosk                x + cosk      y).  The          At smallJ          K we find the AF solution to have the lowest
+parameterϕ=−J                            KV/2 describes Kondo hybridization,       energy, while at largeJ         K the heavy Fermi liquid solution
+while                                                                              dominates, see Fig.7.  The phase boundaries match very
+                                                                                   well  with  the  full  numerical  solution,  cf.   Fig.1.   The
+          ∆c = JK2  ms,       ∆ f =−   zJ2  ms + JK2  me       (9)                 transition between the two phases is of first order.
+
+describe the staggered magnetic order.
+   The first two self-consistency equations are given by
+                                      X
+                      1−p=        1N      ⟨c †kσckσ⟩,                  (10)
+                                      k,σ
+                            1 =  1    X⟨f  †
+                                  N          kσfkσ⟩,                  (11)
+                                      k,σ
+
+whereNis  the  number  of  discretized  points  which  we
+take to beN= 120×120 for most of the numerical simu-
+lations.  The equations fix the density of conduction elec-
+trons and satisfy the spinon single-occupancy constraint.
+The spinon hopping amplitude and hybridization are
+                                                                                                                                                                       9
+
+                                                        Appendix A: FL∗ and SC mean-field
+
+   While the previous mean-field ansatz naturally explains the transition between the antiferromagnetic state and the
+heavy Fermi liquid, it does not capture the superconducting tendencies observed near the quantum critical region.
+To  describe  this  competing  phase,  we  consider  an  alternative  parton  construction  with  an  emergentSU(2)  gauge
+symmetry,  in  which  the  local  moments  form  a  quantum  spin  liquid.   The  localized  moments  are  represented  by
+fermionic spinons, subject to the local constraint, see Eq.4.  The spin-liquid mean-field ansatz in the spin layer is
+written as
+                                                             ˆHMF          X
+                                                               f    = J            F†i UijFj + h.c.       ,                                                        (A1)
+                                                                         4  ⟨ij⟩
+
+, where we introduce the Nambu spinorsF             i = (f  i↑ , f†i↓ )T  andC       i = (c  i↑ , c†i↓ )T ,with
+                                                                               !                  (
+                                                 Uij =         χ     eij∆f        ,       eij =      +1,   ij∥x,
+                                                            eij∆f    −χ                              −1,   ij∥y.                                                       (A2)
+
+The sign structure ofe   ij  corresponds tod-wave spinon pairing.  We also introduce a bosonic chargon matrix that
+couples the two layers
+                                                                                               !
+                                                                    Bi =       B1,i     B2,i      .                                                                 (A3)
+                                                                               B∗2,i   −B   ∗1,i
+
+At the mean-field level, the Kondo term becomes
+                                                             ˆHMF            X
+                                                              K   = JK              F†i BiCi + h.c.        .                                                        (A4)
+                                                                         4     i
+
+   Assuming a uniform saddle point, the momentum-space mean-field Hamiltonian takes the Bogoliubov-de Gennes
+form
+                                                                 ˆHMF =E   0 + X         Ψ†kHkΨk,                                                             (A5)
+
+                                                                                      k
+
+where the basis vector Ψk = (c  k↑  , c†−k↓    , fk↑  , f†−k↓    )T  and the corresponding mean-field matrix is
+                                                                                                   
+                                                                        ξck    0     Φ     0     .                                                            (A6)
+                                                               Hk =         0 −ξ      ck    0  −Φ
+                                                                           Φ     0   ξ  fk    ∆fk
+                                                                            0 −Φ  ∆     fk  −ξ    fk
+
+Hereξ         fk  =λ−        Jχ2 Γ(k), ∆         fk  =   J∆  f2   Γd(k), with  the  lattice  form  factors  Γ(k)  =  2(cosk                       x + cosk      y)  and  Γd(k)  =
+2(cosk          x −cosk         y).Note that Γ   d(k) automatically incorporatesd-wave symmetry since the order parameter vanishes
+on the diagonal.  We further assume thatB        2,i   = 0 and thus Φ =  JK4  B1.
+   So far, we have omitted the presence of antiferromagnetic order. It could be naturally incorporated in the mean-field
+theory by extending the basis to ΨAFk    = (c  k↑  , c†−k↓    , fk↑  , f†−k↓    , ck+Q↑      , c†−k−Q↓        , fk+Q↑      , f†−k−Q↓        )T , whereQ= (π, π) is the
+ordering vector.  In block form, the Hamiltonian becomes
+                                                                                                !
+                                                                   HAFk    =     Hk     V          ,                                                                (A7)
+                                                                                  V†  Hk+Q
+
+   where the staggered field matrix is given by
+                                                                   ∆AFc        0       0       0      
+                                                                     0     ∆AFc        0       0    .                                                         (A8)
+                                                             V=          0       0     ∆AFf       0
+
+                                                                         0       0       0     ∆AFf
+                                                                                                                                                                  10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      FIG. 8.  Free energy of different mean-field ansatzes as a function ofJ   K  at fixedJ= 0.5 and temperatureT= 0.01.
+
+
+
+
+As previously, the staggered fields are expressed in terms of magnetizations:
+
+                                                  ∆AFc    = JK2  ms,       ∆ AFf    =−   zJ2  ms + JK2  me.                                               (A9)
+
+After introducing the mean-field Hamiltonian, we turn our attention to writing the self-consistency equations.  The
+spinon constraint and the conduction electron density are described by the same Eq. (10,11).
+   The spinon hopping and pairing equations are
+
+                                                                               X
+                                                                  χ=     1Nz        Γ(k)⟨        ˆf†kσ ˆfkσ⟩,                                                         (A10)
+                                                                               k,σ
+                                                             ∆f =   1       X    Γd(k)⟨     ˆf−k↓     ˆfk↑ ⟩,                                                         (A11)
+                                                                      Nz     k
+
+   The chargon equation is
+                                                                    X    h                                i
+                                                        B1 =  1N           ⟨ ˆf†k↑  ˆc  k↑ ⟩+⟨     ˆf−k↓    ˆc  †−k↓   ⟩.                                                   (A12)
+                                                                      k
+   Finally, the antiferromagnetic order parameters satisfy
+                                                      X                                             X
+                                       ms =   12N          σ⟨f    †k+Q,σ    fkσ⟩,       m  e =   12N      σ⟨c   †k+Q,σ    ckσ⟩.                                 (A13)
+                                                      k,σ                                            k,σ
+
+                                                                                                           8X    h
+                             F=E      0 +  X           ξck +ξ    ck+Q     +ξ    fk +ξ    fk+Q−T    X          ln   1 +e   −E   kn/Ti  .                      (A14)
+                                            k∈RBZ                                               k∈RBZ    n=1
+whereE           kn are the eigenvalues ofH   k and the summation overkhappens in the reduced Brillouin zone.  The Second
+term corresponds to the vacuum energy shift, typical in Bogoliubov-de Gennes formalism.  The constant term is
+                                 E0/N=−λ+z             J    χ2 + ∆2f + JK
+                                                        4                      8  B21 −zJm   2s −J   Kmsme +µ(1−p).                          (A15)
+   At  smallJ          K,  we  find  a  decoupled  phase  withB         1  =  0  and  no  magnetic  order,  while  the  spinon  sector  forms  a
+paired Dirac spin liquid with ∆f =χ.Such a state corresponds to a fractionalized Fermi liquid, denoted FL      ∗.  In this
+phase, the conduction electrons form a small Fermi surface while the local moments remain fractionalized into neutral
+spinons.
+                                                                                                                                                                11
+
+   AsJ     K  increases,  the  chargon  field  condenses  and  induces  superconducting  order.   The  resulting  SC  phase  has
+d-wave pairing symmetry, consistent with NQS results.  At largerJ    K, the magnetizations become nonzero, and the
+superconducting state coexists with antiferromagnetic order until it transitions to a heavy Fermi liquid, see Fig.8.
+   We  note  that  within  the  present  mean-field  treatment  the  N´eel  antiferromagnetic  state  always  has  a  lower  free
+energy than either the FL∗ or superconducting solutions.  This result should be interpreted with caution, since mean-
+field  approximations  are  known  to  overestimate  the  stability  of  long-range  ordered  phases  and  underestimate  the
+role of quantum fluctuations.  Overall,  it is encouraging that the same mean-field framework naturally produces a
+superconducting solution in close proximity to the antiferromagnetic state, consistent with NQS simulations.
+
+
+                                                           Appendix B: Structure factor
+
+   In this appendix, we compute equal-time structure factor in the heavy Fermi liquid regime and compare it to the
+NQS simulations. We focus on the regime where the antiferromagnetic order is absent, and the mean-field Hamiltonian
+is given by:
+                                                                                                   !         !
+                                                  ˆHMF =E   0 + X          ˆc  †           ϵck   ϕ       ˆc  kσˆfkσ.                                              (B1)
+                                                                            kσ   ˆf†kσ      ϕ   ϵfk
+                                                                    k,σ
+
+   As previously, the dispersions in the electron and spin layers are given byϵ  ck  =−tΓ(k)−µ,    ϵ                    fk  =λ−       J2 χΓ(k),
+.  The lattice form factor Γ(k) = 2(cosk                x + cosk      y) and the parameterϕ=−J                            KV/2 describes Kondo hybridization.
+The mean-field Hamiltonian is diagonalizable with the dispersion
+                                                                               vuut            !2
+
+                                                                         k           ϵck −ϵ   fk
+                                                       E±k  = ϵck +ϵ   f2     ±          2          +ϕ   2.                                                     (B2)
+
+
+   The equal time Green’s functions are expressed in terms of coherence factors as
+
+                                                         Gcc(k) =⟨c       †kσckσ⟩=u     2kn+k  +v    2kn−k ,                                                       (B3)
+
+
+                                                        Gff(k) =⟨f        †kσfkσ⟩=v     2kn+k  +u   2kn−k ,                                                      (B4)
+
+                                                      Gcf(k) =⟨c       †                                  .                                                    (B5)
+                                                                       kσfkσ⟩=u     kvk  n+k −n   −k
+
+, wheren         ±k  =n   F (E  ±k ),andn          F (ϵ) = 1/(1 +e           ϵ/T ) is the Fermi-Dirac distribution.  The coherence factors are
+                                                                                                                             
+                               u2k = 1    1 +          ϵck −ϵ   fqk         ,    v2k = 1   1−            ϵck −ϵ   fqk         .                           (B6)
+                                       2             (ϵ  ck −ϵ   f                         2             (ϵ  ck −ϵ   f
+                                                              k)2 + 4ϕ  2                                         k)2 + 4ϕ  2
+   The structure factors can be represented in terms of equal time Green’s functions as
+                                                                       X                   h               i
+                                                     Se(q) =      32N       Gcc(k+q)        1−G     cc(k)   ,                                                   (B7)
+                                                                        k
+
+                                                                      X                   h                i
+                                                     S(q) =         32N    Gff(k+q)         1−G     ff(k)    ,                                                   (B8)
+                                                                       k
+   Fig.9shows  the  evolution  of  the  structure  factor  within  the  heavy  Fermi  liquid  phase  as  we  increase  Kondo
+hybridization.  At smallϕ,  the structure factor is peaked atQ= (π, π),  which is a consequence of nesting in the
+spinon Fermi surface.  The hole-like regions are centered across the diagonal, see Fig.9(a,b).  This regime is close to
+the critical region, see Fig.2(c,g), where the structure factor is similarly peaked atQ= (π, π) despite the lack of the
+long-range order and the Fermi surface remains small.
+   Atϕ≈0.74, there is a Lifshitz transition, the hybridized bands are reconstructed, and a hole pocket appears at
+Q= (π, π).  The structure factor becomes peaked at 2k          F  which is the result of the Kohn anomaly.
+                                                                                                                                                          12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 9.   Top row (a,b,c,d):  the hybridized bands at zero energy.  Bottom row(e,f,g,h):  mean-field static structure factors
+of  localized  spins,S(k).   From  left  to  right,  the  panels  correspond  to  Kondo  hybridizationsϕ=  0.23,0.57,  0.82,  and  1.54,
+respectively.
+
+
+
+
+                                                     Appendix C: Finite size mean-field
+
+   To further compare the NQS simulations with the mean-field results, we compute the mean-field static spin structure
+factorS(k) and the conduction-electron momentum distributionn(k) on a finiteN= 8×8 lattice, as shown in Fig.10.
+The conduction-electron momentum distribution exhibits a transition from a small to a large Fermi surface and agrees
+quantitatively with the NQS results shown in Fig.2(f,h).  The spin structure factor in the antiferromagnetic phase
+displays a pronounced peak atQ= (π, π).  Its magnitude is larger than that obtained in the corresponding NQS
+simulations,  indicating  that  the  mean-field  theory  overestimates  the  strength  of  the  antiferromagnetic  order.   At
+JK = 4, the structure factor develops a peak at 2k  F , in agreement with Fig.2(d).
+                                                                                                                                                                                   13
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  10.   Mean  field  local-moment  structure  factorS(k)  (top  row)  and  conduction-electron  momentum  distributionn(k)
+(bottom row) for 8×8 lattice, at fixedJ= 0.5 and three representative values of the Kondo coupling:J                                    K = 2.0 (left, panels
+a,c) andJ             K = 4.0 (right, panelsb,d).

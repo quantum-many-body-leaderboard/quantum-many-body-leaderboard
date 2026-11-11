@@ -1,0 +1,1288 @@
+Evidence for a Dirac Spin Liquid in the Kagome Heisenberg Antiferromagnet from High-Precision
+                                                      Neural-Network Quantum States
+
+                                Zheng-Hang Sun,1  Christopher Roth,2, 3  Ao Chen,4,∗  and Markus Heyl1, 5,†
+                                    1Theoretical Physics III, Center for Electronic Correlations and Magnetism,
+                                       Institute of Physics,  University of Augsburg,  86135 Augsburg,  Germany
+                 2Stewart Blusson Quantum Matter Institute, University of British Columbia, Vancouver, BC V6T 1Z4, Canada
+                  3Center for Computational Quantum Physics, Flatiron Institute, 162 5th Avenue, New York, NY 10010, USA
+           4Division of Chemistry and Chemical Engineering, California Institute of Technology, Pasadena, California 91125, USA
+                                          5Centre for Advanced Analytics and Predictive Sciences (CAAPS),
+                                      University of Augsburg,  Universitätsstr.   12a,  86159 Augsburg,  Germany
+                 The spin-1/2 kagome Heisenberg antiferromagnet is a central model in the study of quantum spin liquids, yet
+                 its ground-state  properties remain unresolved.   We perform large-scale  variational Monte-Carlo calculations
+                 using neural-network quantum states (NQSs) with kagome-geometry-aware message-passing convolution on
+                 two-dimensional tori containing up to 300 spins,  and achieve exceptionally low variational energies for the
+                 kagome model.   The spin and dimer structure factors show no evidence of magnetic or valence-bond long-
+                 range order. Moreover, the dominant symmetry-resolved spin and dimer correlations exhibit a common scaling
+                 behavior consistent with the emergentSO(6)monopole multiplet of the Dirac spin liquid. Finally, the fidelity
+                 of the optimized NQSs with Gutzwiller-projected mean-field states increasingly favors the Dirac state over the
+                 competingZ                  2 candidates as the system size grows. Together, these complementary results provide evidence for
+                 aU(1)Dirac spin-liquid ground state in the kagome Heisenberg antiferromagnet.
+
+
+   Introduction.–Quantum  spin  liquids  (QSLs)  represent  a                       mean-field  ansatz.   Neural-network  quantum  states  (NQSs)
+fundamental  class  of  quantum  phases  beyond  the  Landau                        provide a variational framework that can be directly applied to
+symmetry-breaking  paradigm,  exhibiting  fractionalized  ex-                       large two-dimensional lattices with periodic boundary condi-
+citations,   long-ranged  quantum  entanglement,   and  emer-                       tions, thereby allowing studies on torus rather than quasi-one-
+gent  gauge  fields  [1–4].   Understanding  the  nature  of  such                  dimensional cylinders.  Moreover, NQSs can represent com-
+phases  of  matter  has  become  one  of  the  central  questions                   plex many-body correlations and sign structures without being
+in condensed-matter physics.  The long-standing experimen-                          constrained to a specific parton mean-field manifold [26–28].
+tal search for QSLs has placed kagome antiferromagnets at                           Recent NQS-based studies have achieved ground-state energy
+the  forefront  of  two-dimensional  quantum  magnetism,  with                      estimates competitive with the best available results forJ     1−J   2
+prominent candidate materials including herbertsmithite [5–                         square-lattice and triangular Heisenberg models [29–33],  as
+8],   Zn-barlowite  [9–11],   and  Y-based  kagome  antiferro-                      well as two-dimensional Fermi-Hubbard models [34–37].
+magnets  [12–14].   The  spin-1/2  kagome  Heisenberg  model                           The  group  convolutional  neural-network  (G-CNN)  archi-
+with  nearest-neighbour  interactions  has  become  the  mini-                      tecture of NQS has been applied to the kagome Heisenberg an-
+mal  canonical  model  for  kagome  antiferromagnets,  yet  the                     tiferromagnet, suggesting an evidence of spinon pair-density-
+nature  of  its  ground  state  remains  elusive.    Early  density-                wave (SPDW) ground state [38]. However, a subsequent anal-
+matrix renormalization-group (DMRG) calculations provided                           ysis  reveals  that  the  unusually  low  variational  energies  re-
+evidence  for  aZ  2  gapped  QSL  [15–17].   However,  subse-                      ported in Ref. [38] are artifacts induced by nonergodic Monte
+quent calculations based on infinite projected entangled sim-                       Carlo  sampling  [39],  and  the  signatures  of  SPDW  require
+plex  states  found  scaling  behaviour  consistent  with  a  gap-                  a  further  demonstration.   These  deficiencies  leave  the  NQS
+less state [18], and flux-threaded infinite-cylinder DMRG re-                       study of the kagome Heisenberg ground state unresolved and
+vealed Dirac-cone signatures [19]. Alongside tensor-network                         demand a rigorous reassessment based on reliable sampling.
+simulations,  variational  Monte  Carlo  (VMC)  studies  based                         In this work, we study ground-state properties of spin-1/2
+on Gutzwiller-projected fermionic mean-field ansätze initially                      kagome Heisenberg antiferromagnet using deep neural quan-
+identified theπ-flux U(1) Dirac QSL as a leading variational                        tum  states  whose architecture  is  tailored  to the  kagome  ge-
+candidate [20–24],  although further optimizations have also                        ometry.   Our  variational  ansatz  extends  the  residual  convo-
+revealed closely competingZ                   2 states [25].                        lutional network architecture developed in Ref. [30–32], i.e.,
+   Despite   the   aforementioned   numerical   progress,   both                    the ResNet, to the kagome model by replacing conventional
+DMRG and VMC face intrinsic limitations. DMRG is largely                            grid-based  kernels  with  message-passing  convolutions  that
+restricted to quasi-one-dimensional cylinders, with a cost that                     propagate features along the nearest-neighbour bonds while
+grows  rapidly  with  circumference,  whereas  VMC  is  con-                        retaining  an  explicit  representation  of  the  three  sublattices
+strained by the bias and limited expressivity of the underlying                     in  each  unit  cell  (see  Fig.1a-c).    We  benchmark  that  the
+                                                                                    ResNet  with  geometry-aware  message-passing  convolutions
+                                                                                    (KagomeResNet) outperforms its standard-convolution coun-
+                                                                                    terparts.   To the best of our knowledge,  the resulting varia-
+∗ chenao.phys@gmail.com                                                             tional energies for large system sizes on a torus achieve the
+† markus.heyl@uni-a.de
+                                                                                    lowest raw energies, apart from the disputed G-CNN results
+                                                                                                                                                                                     2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1.The kagome-geometry-aware neural quantum state and variational energy optimization forL=6.  a, Input encoding.  A spin
+configurations∈{±1}                                 N  on the kagome lattice, withN=3L                2  sites (shown forL=4as an example), is reshaped into a tensor of shape
+(1,3, L, L). The three sublattice sitesA,BandCwithin each unit cell form threeL×Lfeature maps indexed along the primitive vectorsa                                                                 1
+anda      2 of the underlying triangular Bravais lattice. Periodic boundary conditions are implemented through cyclic shifts of the Bravais-lattice
+indices.b, Kagome message-passing convolution (KagomeConv). Each site receives messages from its four nearest neighbors and from itself,
+illustrated for anA-sublattice site as an example. Each directed nearest-neighbor bond class carries an independent kernelW               e ∈R  c×c    , withc
+being the number of feature channels. Here we plotW       1,2,3,4         for anA-site as an example, and there are 12 bond classes in total for a unit cell.
+Each sublatticeαhas its own on-site kernelS                           α and bias.c, Network architecture of KagomeResNet.  The input is processed bynresidual
+blocks, each consisting of normalization (Norm), GELU activations, and two layers of KagomeConv connected by a residual shortcut. After a
+final normalization, the pair-complex activation combines real channels into complex outputs, which are summed to yield the wave-function
+amplitudeψ(s). d,  Variational-energy optimization forL=6in theΓ-point sector.   After optimization with translational symmetry,  the
+spin-inversion symmetryI                 s =+1and theD             6 point-group symmetry are imposed at the arrow-marked iteration.  The inset shows the Monte
+Carlo acceptance rateR      acc in the final 500 steps of the symmetry-projected stage. For comparison, we highlight the raw energies obtained by
+projected VMC based onU(1)Dirac QSLE≃−46.307[22,23], DMRGE≃−46.613[16,22], and conventional ResNetE≃−47.105(see
+the Supplementary Material) by dashed lines.e, Variational-energy optimization forL=6in the odd spin-inversion sectorI                                 s =−1at theM             3
+andΓpoints. The corresponding little-group symmetries,C                              2v   andD      6, are imposed at the iteration marked by the arrows. The dashed red line
+marks the optimized variational energyE≃−47.160in theΓ-point sector withI                                       s =+1.
+
+
+of Ref. [38]. More importantly, based on the analysis of static                               the Hilbert space is spanned by thez-basis spin configurations
+structure factors, correlation functions, and projections of the                              ∣s⟩=∣s        1, ..., sN⟩withs         i =±1.  The NQS parameterized byθ
+optimized NQS onto manifolds of Gutzwiller-projected mean-                                    can map each spin configurationsto a complex wave-function
+field states, we provide consistent evidence for a Dirac QSL                                  amplitudeψ                  θ(s).   To  provide  a  phase  prior  for  the  ground
+ground state in the spin-1/2 kagome Heisenberg antiferromag-                                  state  of  Hamiltonian  (1)„  we  incorporate  a  fixed  reference
+net.                                                                                          phase corresponding to a coplanarq=0three-sublattice pat-
+   Model and variational wave function.–The Hamiltonian of                                    ternϕ       q=0  (s)into the wave-function parametrization, thereby
+kagome Heisenberg antiferromagnet studied in this work is                                     defining  the  variational  state∣Ψ         θ⟩=  ∑s ψθ(s)ϕ      q=0  (s)∣s⟩.
+                                                                                              Within  variational  Monte  Carlo,  the  parametersθare  opti-
+                              H=   ∑       Si⋅S j                                   (1)       mized using MinSR [31], to minimize the variational energy
+                                     ⟨i,j⟩                                                    Eθ =⟨Ψ    θ∣H∣Ψ      θ⟩/⟨Ψ     θ∣Ψ θ⟩. We emphasize that the complex-
+withS        i =(S    xi , Sy                                                                 valued networkψ      θ(s)can learn additional phase corrections
+                       i , Szi )being the spin-1/2 operators, and⟨i, j⟩                       beyond the reference factorϕ         q=0  (s). More details of the opti-
+indicating pairs of nearest-neighbor sites on a kagome lattice                                mization are provided in the Supplemental Material.
+shown in Fig.1a.  Here, we consider the periodic boundary
+condition of the model,  i.e.,  the torus,  and the system sizes                                  The architecture of our NQS, the KagomeResNet, is plotted
+L=6,8and10, with number of sitesN=108,192and300,                                              in Fig.1a-c.  First, the spin configurations                                     i is reshaped into
+respectively (N=L×L×3).                                                                       threeL×Lmatrices associated with theA,B, andCsublat-
+   In  the  NQS  approach  of  training  the  ground  state  ofH,                             tices of the kagome lattice.  Then, as a key operation for our
+a neural network provides a compact parametrization of the                                    NQS, we perform message passing directly along the nearest-
+many-body wave function. For a spin-1/2 system withNsites,                                    neighbor  kagome  connectivity.   Specifically,  in  Fig.1b,  we
+                                                                                                                                                                           3
+
+show the operation for anA-sublattice site as an example, i.e.,                          TABLE I.  Variational energy densityeand energy-variance density
+yA,i =S  AxA,i+W   1xB,j1+W   2xB,j2+W   3xC,j3+W   4xC,j4,(2)                           σ2 for KagomeResNet with different system and network sizes.
+wherex          α,i  andy      α,i  are the input and output feature vectors                                c=n=32                          c=n=40
+at siteiof sublatticeα,  respectively.   The matricesS                                         A  andL             e                   σ2                   e                   σ2
+W1,...,                                                                                    6   −0.436664(6)  0.00350(4)  −0.436760(5)  0.00312(3)
+   4        represent trainable transformations for the central site                       8   −0.435835(4)  0.00519(5)  −0.435949(5)  0.00444(4)
+and its four directed nearest-neighbor bonds.   Similar oper-                             10−0.435239(4)  0.00506(6)  −0.435472(5)  0.00434(4)
+ations  are  performed  for  theBandCsublattices,  and  thus
+there are 12 nearest-neighbor message-passing channels in a
+complete  kagome  convolutional  (KagomeConv)  layer.   The                              in stark contrast to Ref. [38], which reported a change of the
+full structure of KagomeResNet is shown in Fig.1c. Thel-th                               ground-state sector to theMpoint withI                 s =−1forL=6.
+residual block acts onx    l ∈R  3×L×L×c            , wherecis the channel               We therefore find no evidence for the size-driven change of
+dimension, and maps it tox   l+1    via two KagomeConv layers                            ground-state quantum numbers that underlies the SPDW in-
+with GELU activations and a residual connection. We provide                              terpretation of Ref. [38].
+more details for the KagomeResNet and conventional ResNet                                    In  TableI,  we  systematically  represent  the  energy  den-
+in the Supplementary Material. The network containsnresid-                               sitye=E/Nand the energy density varianceσ                                2  obtained
+ual blocks, and the output is finally converted by normaliza-                            from  KagomeResNet  withn=c=32andn=c=40
+tion and a pair-complex activation into the wave-function am-                            for  the  kagome  model  (1)  withL=6, 8and10at  theΓ
+plitudeψ             θ(s).                                                               point  withI        s =+1.   For  theL=8torus,  previous  refer-
+   Benchmarks.–We   now   benchmark   the   performance   of                             ences of the raw energy density includee=−0.4286749(4)
+KagomeResNet for training the ground state of the Hamilto-                               and−0.428783(1)for the projected mean-field VMC based
+nian (1) withL=6in theΓ-point sector.  We first perform                                  onU(1)Dirac [22,23] andZ                               2 [25] QSLs, respectively, and
+104  optimization  steps  imposing  only  translational  symme-                          e∼−0.4349for the symmetric projected entangled-pair states
+try, and subsequently for 1800 steps including the even spin-                            calculations [41].   Our variational energies are substantially
+inversion sectorI          s =+1andD              6  point-group symmetry.  In           lower  than  the  aforementioned  benchmarks,  improving  the
+Fig.1d,  for the KagomeResNet withc=n=32,  we show                                       best known estimate for the energy densityeto the third dec-
+the final 1000 iterations of the translationally symmetric op-                           imal place.
+timization, followed by the full 1800-step optimization after                                Ground-state correlation functions.– To study the ground-
+the additional symmetry projections are imposed, and demon-                              state properties of the Hamiltonian (1), for the trained NQS
+strate that the converged value of the ground-state energy is                            withn=c=40, we first calculate the spin structure factors
+E=−47.1597(6), which is highly competitive with the previ-
+ously reported raw variational energies [16,22,23], and also
+lower  than  the  conventional  ResNet  comparable  number  of                                         Szzf (q)=       1N ∑
+variational parameters (see Supplemental Material).                                                                       m,n eiq⋅(r       m−r  n)⟨S  zmSzn⟩,                (3)
+   Recent work using a G-CNN ansatz for the kagome model                                 withq=(q              x, qy)the wave vector in the Cartesian reciprocal-
+(1) suggests that non-ergodic Monte Carlo sampling can in-
+duce  low  energy  during  the  optimization,  and  reportsE≃                            space coordinates, and the dimer structure factors
+−45.6for G-CNN with ergodic sampling [39]. In the inset of
+Fig.1d, we show the acceptance rateR                        acc ≃0.555over the fi-                    SDf (q)=       1
+nal 500 iterations with full symmeries, demonstrating that our                                                     N  ∑m,n,k,l eiq⋅(r       mk−r  nl)Dmk,nl               (4)
+Monte Carlo sampling is ergodic. The acceptance rate is mon-
+itored throughout all subsequent optimizations in this work to                           with the sum running over pairs of nearest-neighbor bonds,
+ensure that the Monte Carlo sampling remains ergodic.                                    rmk =(r    m+r   k)/2being the midpoint of bond(m, k), and
+   We then benchmark the low-lying energies in the odd spin-                             Dmk,nl =⟨B    mkBnl⟩−⟨B      mk⟩⟨B   nl⟩, whereB            mk =S  m⋅S k is
+inversion sectorI          s =−1. ForL=4, the exact diagonalization                      the nearest-neighbor bond-energy operator.
+study shows that the lowest-energy withI        s =−1lies in the                             In Fig.2a, we plot the spin structure factorS                    zzf (q)in an ex-
+M-point sector, while the lowestΓ-point energy is nearly de-                             tended Brillouin zone.  We show that no sharp peak develops
+generate, only∼6.8×10         −3   higher in energy [40].  In Fig.1e,                    inside the first Brillouin zone, while the maxima occur at the
+we plot  the final  1000 iterations  of the  translationally sym-                        reciprocal-lattice imagesGofΓ. SinceGdiffers fromΓonly
+metric  optimization  withI        s =−1for  bothMandΓ-point                             by  a  reciprocal-lattice  vector,  the  corresponding  real-space
+sectors, followed by1800additional iterations imposing their                             correlations  characterize  a  zero-Bravais-momentum  three-
+respective little-group symmetriesD                    6  andC      2v  .  Our results   sublattice fluctuation pattern repeated across unit cells, rather
+show that, different from theL=4case, the lowest-energy                                  than a distinct finite-momentum modulation.  The nontrivial
+state within the odd spin-inversion sectorI          s =−1occurs at                      structure  resides  within  the  unit  cell,  where  theA, B,  and
+theΓpoint  forL=6.   More  importantly,  upon  comparing                                 Csublattice components form predominantly the nonuniform
+both spin-inversion sectors, we find the overall ground state at                         Γ−E     2 sector through the kagome sublattice form factor (see
+theΓpoint withI               s =+1. This restores the same ground-state                 Supplemental Material). As shown in Fig.2b, the normalized
+quantum numbers as found by exact diagonalization forL=4,                                peak values of spin structure factorsS          zzmax/Ntend to 0 with
+                                                                                                                                                                                  4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2.Structure factors and symmetry-resolved correlations.  a, Spin structure factorS              zzf (q)forL=10over an extended Brillouin
+zone.  The dashed hexagon marks the first Brillouin zone.  The maxima lie at the reciprocal-lattice imagesGofΓprobe the nonuniform
+Γ-E    2 spin channel.b, Finite-size scaling of the normalized maximaS                              zzmax/Nandλ            1[K  conn(M)]/N.  Dashed lines are linear fits through
+the origin.c, Largest eigenvalueλ                    1[K  conn(q)]of the connected bond-correlation matrix forL=10. The strongest dimer fluctuations occur
+at the three symmetry-relatedMpoints.d, Correlation between the symmetry-resolvedM-F                                                          2 dimer correlationC                  DF2(r)and theΓ-E               2 spin
+correlationC                  zzΓ−E     2(r)forL=6,8,10and different separationsr.  The dashed line denotesC                                                            DF2 =AC   zzΓ−E     2  withA≃2.52.  The inset shows
+the symmetry-resolvedM-point dimer modes, with theF              2 sector dominant for all system sizes.
+
+
+N→∞, indicating the absence of long-range magnetic or-                                       the inset of Fig.2d, theF                 2 sector is dominant for allL.  To-
+der.  We also provide the data ofS    Df (q)and its normalized                               gether  with  Fig.2a,  this  identifies  theM-F                      2  dimer  andΓ-
+maximaS              Dmax  in  the  Supplementary  Material,  showing  that                  E2  spin  channels  as  the  dominant  symmetry-resolved  fluc-
+SDmax/N→0with increasingN, which rules out the valence-                                      tuations.  To further examine the relation between these two
+bond-solid (VBS) order.  Additionally, the dramatically large                                channels, we compare the real-space correlations in the afore-
+value ofS    Dmax ∼87.37forL=6reported by Ref. [38] is not                                   mentioned two dominant symmetry channels.  We define the
+reproduced in our calculations.  Instead,S              Dmax  systematically                 sublattice-resolved spin and bond correlations as
+decreases with increasingL.  Thus, we argue that the signa-
+tures of an SPDW ground state reported for Hamiltonian (1)                                                Czzαβ(r)=        1N ∑
+in Ref. [38] require further validation,  in particular through                                                                 R ⟨Szα(R)S        zβ(R+r)      ⟩ ,
+explicit checks of the ergodicity of the Monte Carlo sampling.                                            CDαβ(r)=        1
+   The dimer structure factors (4) consider a particular bond                                                               N ∑R ⟨δB  α(R)δB       β(R+r)⟩,         (6)
+form  factor  fixed  by  the  bond-center  positions.   To  resolve
+the full bond-correlation structure, we then focus on the con-                               whereα, β=A, B, Cfor the spin correlations, whileα, β=
+nected bond-correlation matrix                                                               1, . . . ,6label the nearest-neighbor bonds for the dimer corre-
+                                                                                             lations defined above.  TheΓ-E           2 spin correlation is obtained
+    Kconnα,β (q)=       1                                                                    by projecting the three-sublattice correlation matrix onto the
+                      N  ∑R,R    ′ eiq⋅(R−R            ′)⟨δB  α(R)δB       β(R ′)⟩,    (5)   E2  sector,  i.e.,C       zzΓ−E      2(r)=         12 ∑α,β=A,B,C    (P  E2)αβCzzαβ(r)
+                                                                                             withP        E2 =I−uu         † andu=            1√3(1,1,1)           T .  Similarly, we de-
+whereB          α(R)is the nearest-neighbor bond-energy operator,                                                                                † CD(r)v     (i)
+α=1, . . . ,6labels the complete set of six nearest-neighbor                                 fineC       DF2(r)=        13 ∑3i=1   e−iM    i⋅r [v  (i)F2]      F2 ,  where the
+bonds associated with each Bravais unit cell, andδB      α(R)=                               explicitF           2 bond vectors and their symmetry construction are
+Bα(R)−⟨B            α(R)⟩. In Fig.2c, we plot the largest eigenvalue                         given in the Supplemental Material.
+of the matrixK               connα,β (q), i.e.,λ             1[K   conn(q)], which quantifies   In theN     f =4QED     3 description of theU(1)Dirac QSL of
+the strongest connected dimer fluctuation at the momentum                                    the kagome Heisenberg antiferromagnet, theM-F           2 dimer and
+q.  It is seen thatλ         1[K   conn(q)]is maximal at theMpoints.                         Γ-E    2 spin channels carry the quantum numbers of spin-singlet
+In real space, the dominantM-point dimer fluctuations cor-                                   and spin-triplet minimal monopoles, respectively [42]. These
+respond to period-doubled bond modulations, with the bond                                    monopoles are components of the same emergentSO(6)mul-
+pattern alternating under translations along one or both prim-                               tiplet and thus share a common scaling dimension [42,43]. In
+itive  Bravais-lattice  directions.   The  threeMpoints  repre-                              Fig.2d, we directly compareC                          DF2(r)andC            zzΓ−E      2(r)for dif-
+sent the three symmetry-related orientations of this modula-                                 ferent distancesrand system sizesL.  Remarkably, all data
+tion. Condensation in theM-point dimer channel implies bro-                                  collapse onto a proportional functionC               DF2(r)≃A C        zzΓ−E      2(r)
+ken lattice-translation symmetry, whileλ          1[K   conn(M)]/N→                          withA≃2.52.   This is precisely the behavior expected for
+0with  increasingNprecludes  long-range  VBS  order  (see                                    different components of the same emergentSO(6)monopole
+Fig.2b).                                                                                     multiplet,  showing  that  the  symmetry-resolved  correlations
+   Next,   we  resolve  theM-point  dimer  fluctuations  into                                obtained from our NQS calculations are consistent with the
+symmetry-adapted sectors of the kagome space group, includ-                                  emergent monopole structure of the kagomeU(1)Dirac QSL.
+ingF      2,B 2, andF      1 (see Supplemental Material for their ex-                           Overlap of ground state with candidate QSLs.–  Previous
+plicit  construction  and  symmetry  projectors).   As  shown  in                            studies of projected mean-field VMC for the kagome model
+                                                                                                                                                                     5
+
+(1)  cannot  unambiguously  distinguish  between  the  between
+Z2 and the U(1) Dirac spin-liquid states because their varia-
+tional energies are nearly degenerate [21,25]. Our NQS is not
+biased toward either of the competing parton mean-field an-
+sätze, providing an independent and more accurate represen-
+tation of the ground-state wave function of the Hamiltonian
+(1). This motivates us to assess whether the optimized NQS is
+closer to the U(1) Dirac orZ    2 spin-liquid manifold.
+   For this assessment, we use the following procedure.  We
+determine the fidelity between our optimized NQS∣Ψ             optθ ⟩with
+representative   Gutzwiller-projected   fermionic   states   from
+these competing variational families∣Φ             µ,ν⟩withµandνla-
+beling the variational family and spinon boundary sector, re-                         FIG.  3. Fidelity  with  Gutzwiller-projected  spin-liquid  refer-
+spectively. The fidelity is given by                                                  ence states.  a, The maximum fidelityF                     maxµ     between the optimized
+                                                                                      KagomeResNet NQS withµ=Dirac andµ=Z            ∗2  as a function of
+                                                                                      system sizeL.  The inset shows the ratio between the two fidelities
+                 Fµ,ν =     ∣⟨Ψ   optθ ∣Φ µ,ν⟩∣2                                      F maxDirac/F   max                                                     µ     with
+                                                                                                Z∗2   as a function ofL. b, The maximum fidelityF                     max
+                           ⟨Ψ  optθ ∣Ψ optθ ⟩⟨Φ   µ,ν∣Φ µ,ν⟩,                    (7)  µ=Z     2.   Error bars indicate Monte Carlo statistical uncertainties.
+and  can  be  evaluated  by  Monte  Carlo  sampling  configura-                       Dashed lines connecting data points are guides to the eye.
+tions  from  the  NQS  probability  distribution.   We  adopt  ap-
+proximately3×10                          5  Monte Carlo samples to obtain fidelity    that the optimized NQS is substantially closer to this refer-
+estimates  with  small  statistical  uncertainties.   As  the  Dirac                  ence with Dirac-like spin properties.  Combined with the di-
+spin-liquid reference (µ=Dirac), we employ the optimized                              rect fidelity preference for the Dirac reference atL=8and10
+extendedU(1)Dirac  state  in  Ref.  [21],  as  one  of  the  low-                     (Fig.3a), these results support a Dirac spin-liquid interpreta-
+est projected-mean-field variational energies reported for the                        tion of the NQS ground state.
+Dirac state. ForZ    2 candidates, we consider two complemen-                            Discussion.– We have studied the ground-state properties
+tary references.  The first (µ=Z       2) is obtained by introduc-                    of spin-1/2 kagome Heisenberg antiferromagnet with nearest-
+ing a finite perturbation away from the Dirac state considered                        neighbor interactions using the KagomeResNet, an NQS ar-
+in Ref. [21], without producing any detectable change in the                          chitecture developed in this work, featuring message-passing
+variational  energy.   The  second  (µ=Z   ∗2 )  is  the  fully  opti-                convolutions tailored to the geometry of kagome lattice.   In
+mizedZ           2  resonating-valence-bond state in Ref. [25], whose                 stark  contrast  to  the  results  in  Ref.  [38],  we  show  that  the
+variational energy lies slightly below that of their optimized                        ground state lies in theΓinstead ofMpoint and no evidence
+U(1)state.   Following the boundary conditions used in the                            of SPDW states can be identified. The analysis of symmetry-
+original VMC studies, we restrictνto the two mixed periodic-                          resolved  spin  and  dimer  correlations  and  the  wave-function
+antiperiodic spinon sectors.  For the Dirac state, only nonde-                        fidelity comparisons support theU(1)Dirac QSL nature for
+generate closed-shell sectors are considered, however for the                         the ground state of the kagome model (1).
+Z2 states, both mixed sectors are retained.  Finally, we com-                            Future work can extend the application of KagomeResNet
+pare the maximum fidelityF                 maxµ     over all admissible boundary      to explore the ground-state properties of other kagome sys-
+sectors for differentµ.  More details of the parametrizations                         tems, such as the long-rangeXYkagome model, which can
+and boundary conditions for the chosen mean-field states are                          be realized by dipolar Rydberg atoms [44–46].  In addition,
+given in the Supplemental Material.                                                   we have demonstrated  that the KagomeResNet outperforms
+   The   results   ofF      maxµ       for   the   aforementioned   three             the conventional ResNet, suggesting that the geometry-aware
+Gutzwiller-projected  mean-field  states  and  the  optimized                         message-passing convolutions can play a key role in the NQS
+KagomeResNet  NQS  withn=c=40are  displayed  in                                       architecture.  This can motivate the design of NQS for solv-
+Fig.3. Although the variational energies for the Dirac andZ                2          ing the ground states of models with more complex geome-
+(µ=Dirac andZ             2) reference states in Ref. [21] are indistin-              try, including the spin-1/2 Heisenberg antiferromagnet on the
+guishable,F                        maxZ2   is significantly smaller thanF           maxDirac. Moreover,shuriken lattice [47,48] and maple-leaf lattice [49].
+for a more competitiveZ  2  reference (µ=Z   ∗2 ) in Ref. [25]
+with lower variational energy,F  maxZ∗2   is close toF     maxDirac atL=6,
+while it becomes systematically smaller thanF           maxDirac  with in-                                    ACKNOWLEDGMENTS
+creasingL. The relative separation is highlighted by the ratio
+F maxDirac/F   maxZ∗2  , which increases linearly withL(see the inset of                 The NQS simulations are performed usingQuantax[50]
+Fig.3a).                                                                              based  onJAX[51]  andEquinox[52].   We  gratefully  ac-
+   We emphasize that although both theZ     2 andZ   ∗2  reference                    knowledge the scientific support and high-performance com-
+states originate from gappedZ           2  mean-field ansätze,  the lat-              puting  resources  provided  by  the  Erlangen  National  High
+ter, after Gutzwiller projection, exhibits properties resembling                      Performance  Computing  Center  (NHR)  of  the  Friedrich-
+those of a Dirac QSL, such as a gapless spin excitation spec-                         Alexander-Universität Erlangen-Nürnberg (NHR Project No.
+trum  [25].   The  much  larger  fidelityF                   maxZ∗2  ≫F     maxZ2     showsnqsQuMat), and by the Jülich Booster (JUPITER Booster) at
+                                                                                                                                                                              6
+
+the Jülich Supercomputing Centre, Forschungszentrum Jülich                                 360).    C.R.  acknowledges  support  from  the  Stewart  Blus-
+(project neuquass).  This work was supported by the German                                 son  Quantum  Matter  Institute  at  the  University  of  British
+Research  Foundation  (DFG)  via  project  492547816  (TRR                                 Columbia.
+
+
+
+
+
+ [1]Leon Balents, “Spin liquids in frustrated magnets,”Nature464,                                antiferromagnet,”Nature Physics20, 1097–1102 (2024).
+      199–208 (2010).                                                                      [15]Simeng   Yan,   David   A.   Huse,      and   Steven   R.   White,
+ [2]Lucile Savary and Leon Balents, “Quantum spin liquids:  a re-                                “Spin-liquid  ground  state  of  theS=1/2kagome  heisen-
+      view,”Reports on Progress in Physics80, 016502 (2016).                                     berg   antiferromagnet,”  Science332,   1173–1176   (2011),
+ [3]Yi  Zhou,  Kazushi  Kanoda,   and  Tai-Kai  Ng,  “Quantum  spin                              https://www.science.org/doi/pdf/10.1126/science.1201080.
+      liquid states,”Rev. Mod. Phys.89, 025003 (2017).                                     [16]Stefan Depenbrock, Ian P. McCulloch,  and Ulrich Schollwöck,
+ [4]C. Broholm, R. J. Cava, S. A. Kivelson, D. G. Nocera, M. R.                                  “Nature of the spin-liquid ground state of theS=1/2heisen-
+      Norman,  and T. Senthil, “Quantum spin liquids,”Science367,                                berg model on the kagome lattice,”Phys. Rev. Lett.109, 067201
+      eaay0668 (2020).                                                                           (2012).
+ [5]M. R. Norman, “Colloquium:  Herbertsmithite and the search                             [17]Hong-Chen Jiang, Zhenghan Wang,  and Leon Balents, “Iden-
+      for  the  quantum  spin  liquid,”Rev.  Mod.  Phys.88,  041002                              tifying  topological  order  by  entanglement  entropy,”Nature
+      (2016).                                                                                    Physics8, 902–905 (2012).
+ [6]Matthew  P.  Shores,  Emily  A.  Nytko,  Bart  M.  Bartlett,    and                    [18]H. J. Liao, Z. Y. Xie, J. Chen, Z. Y. Liu, H. D. Xie, R. Z. Huang,
+      Daniel  G.  Nocera,  “A  structurally  perfectS=1/2kagomé                                  B. Normand,  and T. Xiang, “Gapless spin-liquid ground state
+      antiferromagnet,”Journal  of  the  American  Chemical  Society                             in theS=1/2kagome antiferromagnet,”Phys. Rev. Lett.118,
+      127,  13462–13463  (2005), https://pubs.acs.org/jacsat/article-                            137202 (2017).
+      pdf/127/39/13462/38928456/ja053891p.pdf.                                             [19]Yin-Chen He, Michael P. Zaletel, Masaki Oshikawa,  and Frank
+ [7]J.  S.  Helton,  K.  Matan,  M.  P.  Shores,  E.  A.  Nytko,  B.  M.                         Pollmann,  “Signatures  of  dirac  cones  in  a  dmrg  study  of  the
+      Bartlett, Y. Yoshida, Y. Takano, A. Suslov, Y. Qiu, J.-H. Chung,                           kagome heisenberg model,”Phys. Rev. X7, 031020 (2017).
+      D. G. Nocera,  and Y. S. Lee, “Spin dynamics of the spin-1/2                         [20]Ying Ran, Michael Hermele, Patrick A. Lee,   and Xiao-Gang
+      kagome  lattice  antiferromagnetzncu                            3(OH)         6cl2,”Phys.  Rev.Wen,  “Projected-wave-function  study  of  the  spin-1/2heisen-
+      Lett.98, 107204 (2007).                                                                    berg model on the kagomé lattice,”Phys. Rev. Lett.98, 117205
+ [8]Tian-Heng Han, Joel S. Helton, Shaoyan Chu, Daniel G. No-                                    (2007).
+      cera, Jose A. Rodriguez-Rivera, Collin Broholm,  and Young S.                        [21]Yasir Iqbal, Federico Becca,  and Didier Poilblanc, “Projected
+      Lee,  “Fractionalized  excitations  in  the  spin-liquid  state  of  a                     wave function study ofZ    2 spin liquids on the kagome lattice for
+      kagome-lattice antiferromagnet,”Nature492, 406–410 (2012).                                 the spin- 12  quantum heisenberg antiferromagnet,”Phys. Rev. B
+ [9]Zili Feng, Zheng Li, Xin Meng, Wei Yi, Yuan Wei, Jun Zhang,                                  84, 020407(R) (2011).
+      Yan-Cheng Wang, Wei Jiang, Zheng Liu, Shiyan Li, Feng Liu,                           [22]Yasir Iqbal, Federico Becca, Sandro Sorella,   and Didier Poil-
+      Jianlin  Luo,  Shiliang  Li,  Guo-qing  Zheng,  Zi  Yang  Meng,                            blanc, “Gapless spin-liquid phase in the kagome spin- 12 heisen-
+      Jia-Wei  Mei,   and  Youguo  Shi,  “Gapped  spin-1/2  spinon  ex-                          berg antiferromagnet,”Phys. Rev. B87, 060405(R) (2013).
+      citations  in  a  new  kagome  quantum  spin  liquid  compound                       [23]Yasir Iqbal, Didier Poilblanc,  and Federico Becca, “Vanishing
+      cu3zn(oh)6fbr*,”Chinese Physics Letters34, 077502 (2017).                                  spin gap in a competing spin-liquid phase in the kagome heisen-
+[10]Jiaming  Wang,  Weishi  Yuan,  Philip  M.  Singer,  Rebecca  W.                              berg antiferromagnet,”Phys. Rev. B89, 020407(R) (2014).
+      Smaha, Wei He, Jiajia Wen, Young S. Lee,  and Takashi Imai,                          [24]Yasir  Iqbal,  Francesco  Ferrari,  Aishwarya  Chauhan,  Alberto
+      “Emergence of spin singlets with inhomogeneous gaps in the                                 Parola, Didier Poilblanc,  and Federico Becca, “Gutzwiller pro-
+      kagome  lattice  heisenberg  antiferromagnets  zn-barlowite  and                           jected states for theJ     1 −J   2 heisenberg model on the kagome
+      herbertsmithite,”Nature Physics17, 1109–1113 (2021).                                       lattice:  Achievements and pitfalls,”Phys. Rev. B104, 144406
+[11]Aaron T. Breidenbach, Arthur C. Campello, Jiajia Wen, Hong-                                  (2021).
+      Chen Jiang,  Daniel M. Pajerowski,  Rebecca W. Smaha,   and                          [25]Chun  Zhang  and  Tao  Li,  “Variational  study  of  the  ground
+      Young S. Lee, “Identifying universal spin excitations in candi-                            state  and  spin  dynamics  of  the  spin- 12  kagome  antiferromag-
+      date spin-1/2 kagome quantum spin liquid materials,”Nature                                 netic heisenberg model and its implication for herbertsmithite
+      Physics21, 1957–1964 (2025).                                                               zncu3(OH)         6cl2,”Phys. Rev. B102, 195106 (2020).
+[12]Xiao-Hui Chen,  Ya-Xi Huang,  Yuanming Pan,   and Jin-Xiao                             [26]Giuseppe      Carleo      and      Matthias      Troyer,      “Solving
+      Mi, “Quantum spin liquid candidate ycu3(oh)6br2[brx(oh)1−x]                                the      quantum      many-body      problem      with      artificial
+      (x≈0.51):  With an almost perfect kagomé layer,”Journal of                                 neural      networks,”    Science355,      602–606      (2017),
+      Magnetism and Magnetic Materials512, 167066 (2020).                                        https://www.science.org/doi/pdf/10.1126/science.aag2302.
+[13]Sungmin  Jeon,  Dirk  Wulferding,  Youngsu  Choi,  Seungyeol                           [27]Dong-Ling Deng, Xiaopeng Li,  and S. Das Sarma, “Quantum
+      Lee,  Kiwan Nam,  Kee Hoon Kim,  Minseong Lee,  Tae-Hwan                                   entanglement in neural network states,”Phys. Rev. X7, 021021
+      Jang, Jae-Hoon Park, Suheon Lee, Sungkyun Choi, Chanhyeon                                  (2017).
+      Lee, Hiroyuki Nojiri,  and Kwang-Yong Choi, “One-ninth mag-                          [28]Xun Gao and Lu-Ming Duan, “Efficient representation of quan-
+      netization plateau stabilized by spin entanglement in a kagome                             tum  many-body  states  with  deep  neural  networks,”Nature
+      antiferromagnet,”Nature Physics20, 435–441 (2024).                                         Communications8, 662 (2017).
+[14]Zhenyuan Zeng, Chengkang Zhou, Honglin Zhou, Lankun Han,                               [29]Yusuke Nomura and Masatoshi Imada, “Dirac-type nodal spin
+      Runze Chi, Kuo Li, Maiko Kofu, Kenji Nakajima, Yuan Wei,                                   liquid  revealed  by  refined  quantum  many-body  solver  using
+      Wenliang Zhang, Daniel G. Mazzone, Zi Yang Meng,  and Shil-                                neural-network wave function, correlation ratio, and level spec-
+      iang Li, “Spectral evidence for dirac spinons in a kagome lattice                          troscopy,”Phys. Rev. X11, 031034 (2021).
+                                                                                                                                                                               7
+
+[30]Christopher  Roth,  Attila  Szabó,    and  Allan  H.  MacDonald,                       [42]Xue-Yang Song, Chong Wang, Ashvin Vishwanath,   and Yin-
+      “High-accuracy variational monte carlo for frustrated magnets                               Chen  He,  “Unifying  description  of  competing  orders  in  two-
+      with deep neural networks,”Phys. Rev. B108, 054410 (2023).                                  dimensional  quantum  magnets,”Nature  Communications10,
+[31]Ao Chen and Markus Heyl, “Empowering deep neural quantum                                      4254 (2019).
+      states through efficient optimization,”Nature Physics20, 1476–                       [43]Urban  F.  P.  Seifert,  Josef  Willsher,  Markus  Drescher,  Frank
+      1481 (2024).                                                                                Pollmann,   and  Johannes  Knolle,  “Spin-peierls  instability  of
+[32]Ao Chen, Vighnesh Dattatraya Naik,  and Markus Heyl, “Con-                                    the u(1) dirac spin liquid,”Nature Communications15, 7110
+      volutional  transformer  wave  functions,”Phys.  Rev.  Res.8,                               (2024).
+      L022040 (2026).                                                                      [44]N. Y. Yao, M. P. Zaletel, D. M. Stamper-Kurn,   and A. Vish-
+[33]Luciano Loris Viteritti,  Riccardo Rende,  Subir Sachdev,   and                               wanath, “A quantum dipolar spin liquid,”Nature Physics14,
+      Giuseppe Carleo,“Approaching the thermodynamic limit with                                   405–410 (2018).
+      neural-network  quantum  states,”   (2026),arXiv:2602.02665                          [45]Marcus  Bintz,  Vincent  S.  Liu,  Johannes  Hauschild,  Ahmed
+      [cond-mat.str-el].                                                                          Khalifa,  Shubhayu  Chatterjee,  Michael  P.  Zaletel,   and  Nor-
+[34]Ao   Chen,   Zhou-Quan   Wan,   Anirvan   Sengupta,   Antoine                                 man  Y.  Yao,“Dirac  spin  liquid  in  quantum  dipole  arrays,”
+      Georges,         and    Christopher    Roth,    “Neural    network–                         (2024),arXiv:2406.00098 [cond-mat.str-el].
+      augmented   pfaffian   wave-functions   for   scalable   simula-                     [46]Guillaume  Bornet,  Marcus  Bintz,  Cheng  Chen,  Gabriel  Em-
+      tions   of   interacting   fermions,” Proceedings   of   the   Na-                          perauger,  Mu  Qiao,  Romain  Martin,  Daniel  Barredo,  Shub-
+      tional   Academy   of   Sciences123,   e2535288123   (2026),                                hayu  Chatterjee,  Vincent  S.  Liu,  Thierry  Lahaye,  Michael  P.
+      https://www.pnas.org/doi/pdf/10.1073/pnas.2535288123.                                       Zaletel, Norman Y. Yao,   and Antoine Browaeys,“Dirac spin
+[35]Christopher  Roth,  Ao  Chen,  Anirvan  Sengupta,     and  An-                                liquid  candidate  in  a  rydberg  quantum  simulator,”  (2026),
+      toine Georges,“Superconductivity in the two-dimensional hub-                                arXiv:2602.14323 [cond-mat.quant-gas].
+      bard  model  revealed  by  neural  quantum  states,”   (2025),                       [47]Nikita Astrakhantsev, Francesco Ferrari, Nils Niggemann, To-
+      arXiv:2511.07566 [cond-mat.supr-con].                                                       bias  Müller,  Aishwarya  Chauhan,  Augustine  Kshetrimayum,
+[36]Yuntian Gu, Wenrui Li, Heng Lin, Bo Zhan, Ruichen Li, Yifei                                   Pratyay Ghosh,  Nicolas Regnault,  Ronny Thomale,  Johannes
+      Huang,  Di  He,  Yantao  Wu,  Tao  Xiang,  Mingpu  Qin,  Liwei                              Reuther,  Titus  Neupert,   and  Yasir  Iqbal,  “Pinwheel  valence
+      Wang,  and Dingshun Lv, “Solving the hubbard model with neu-                                bond  crystal  ground  state  of  the  spin- 12  heisenberg  antiferro-
+      ral quantum states,”Nature Communications17, 7838 (2026).                                   magnet  on  the  shuriken  lattice,”Phys.  Rev.  B104,  L220408
+[37]Riccardo   Rende,   Luciano   Loris   Viteritti,      and   Antoine                           (2021).
+      Georges,“Superconductivity  in  thet-t        ′  hubbard  model  from                [48]Philipp Schmoll, Augustine Kshetrimayum, Jan Naumann, Jens
+      symmetry-preserving neural-network quantum states,”(2026),                                  Eisert,   and Yasir Iqbal, “Tensor network study of the spin- 12
+      arXiv:2608.12465 [cond-mat.str-el].                                                         heisenberg antiferromagnet on the shuriken lattice,”Phys. Rev.
+[38]Tanja Ðuri       ´c, Jia Hui Chung, Bo Yang,   and Pinaki Sengupta,                           B107, 064406 (2023).
+      “Spin-1/2kagome heisenberg antiferromagnet: Machine learn-                           [49]Paul L. Ebert, Yasir Iqbal,   and Alexander Wietek,“Compet-
+      ing  discovery  of  the  spinon  pair-density-wave  ground  state,”                         ing paramagnetic phases in the maple-leaf heisenberg antifer-
+      Phys. Rev. X15, 011047 (2025).                                                              romagnet,”(2026),arXiv:2601.05308 [cond-mat.str-el].
+[39]Helia Kamal, Dominik Kufel, DinhDuy Vu, Chris R. Laumann,                              [50]Ao  Chen  and  Christopher  Roth,“Quantax:   Flexible  neural
+      and Norman Y. Yao,“Comment on "spin-1/2 kagome heisen-                                      quantum states in jax,”(2024).
+      berg antiferromagnet: Machine learning discovery of the spinon                       [51]James Bradbury, Roy Frostig, Peter Hawkins, Matthew James
+      pair-density-wave  ground  state",”  (2026),arXiv:2605.28861                                Johnson,    Yash   Katariya,    Chris   Leary,    Dougal   Maclau-
+      [cond-mat.str-el].                                                                          rin,  George  Necula,  Adam  Paszke,  Jake  VanderPlas,  Skye
+[40]Andreas  M.  Läuchli,  Julien  Sudan,   and  Roderich  Moessner,                              Wanderman-Milne,  and Qiao Zhang,“JAX: composable trans-
+      “s=       12  kagome  heisenberg  antiferromagnet  revisited,”Phys.                         formations of Python+NumPy programs,”(2018).
+      Rev. B100, 155142 (2019).                                                            [52]Patrick Kidger and Cristian Garcia,“Equinox: neural networks
+[41]Shenghan Jiang, Panjin Kim, Jung Hoon Han,  and Ying Ran,                                     in jax via callable pytrees and filtered transformations,”(2021),
+      “Competing spin liquid phases in the s= 12  heisenberg model on                             arXiv:2111.00254 [cs.LG].
+      the kagome lattice,”SciPost Phys.7, 006 (2019).
+       Supplementary Materials for “Evidence for a Dirac Spin Liquid in the Kagome Heisenberg
+                        Antiferromagnet from High-Precision Neural-Network Quantum States"
+
+                                      Zheng-Hang Sun,1  Christopher Roth,2  Ao Chen,3  and Markus Heyl1, 4
+                                        1Theoretical Physics III, Center for Electronic Correlations and Magnetism,
+                                          Institute of Physics,  University of Augsburg,  86135 Augsburg,  Germany
+                    2Center for Computational Quantum Physics, Flatiron Institute, 162 5th Avenue, New York, NY 10010, USA
+            3Division of Chemistry and Chemical Engineering, California Institute of Technology, Pasadena, California 91125, USA
+                                              4Centre for Advanced Analytics and Predictive Sciences (CAAPS),
+                                          University of Augsburg,  Universitätssr.   12a,  86135 Augsburg,  Germany
+
+
+
+   I.    DETAILS OF NETWORK ARCHITECTURE AND RESULTS FOR CONVENTIONAL RESIDUAL CONVOLUTIONAL
+                                                                                 NETWORK
+
+   In this section, we present the details of the conventional residual convolutional network ResNet, which is employed as a
+baseline for comparison with KagomeResNet considered in the main text.
+   As shown in Fig.1a, the kagome lattice is regarded as a Bravais lattice with three sublattice sitesA,B, andCin each unit
+cell.  For anL×Lsystem, the total number of spins isN=3L                        2, and a spin configuration can be written ass={s          α(i, j)}
+withα=A, B, C,,s               α(i, j)=±1, and(i, j)labelling the unit cell along the two primitive vectorsa                                    1 anda      2.  The conventional
+ResNet treats the three spins within each unit cell as a single local degree of freedom. Specifically, we first introduce the binary
+variablesb             α(i, j)=       sα(i,j)+12   ∈{0,1}and encode the local spin configuration by the integer
+
+                                                            k(i, j)=b          A(i, j)+2b          B(i, j)+4b          C(i, j),                                                               (1)
+
+withk(i, j)∈{0, . . . ,7}. Therefore, the2                                 3 =8possible spin configurations of a kagome unit cell are represented as eight local
+states.
+   A trainable embedding matrixE∈R                c×8    then maps each local state to ac-dimensional feature vector,
+
+                                                                X(0)µ,i,j =E  µ,k(i,j)        ,       µ=1, . . . , c.                                                                  (2)
+
+The resulting input to the convolutional network therefore has shapeX        (0)  ∈R  c×L×L       .  After the embedding layer, all spatial
+transformations are performed by standard two-dimensional convolutions on the Bravais-cell grid, as illustrated in Fig.1b. For
+a hidden feature tensorX∈R                c×L×L       , a convolutional layer can be written as
+
+                                                                                 c       1
+                                                    [C(X)]         µ,i,j =b  µ+ ∑       ∑          µν      Xν,i+δ     1,j+δ     2,                                                      (3)
+                                                                                ν=1  δ1,δ2=−1    W(δ  1,δ2)
+
+where
+
+                                                                              W(δ  1,δ2) ∈R  c×c                                                                                        (4)
+
+is the weight matrix associated with the cell displacementδ=(δ                              1, δ2).  For periodic boundary conditions, the cell indices in
+Eq. (3) are understood moduloL, corresponding to the circular padding used in the implementation. The3×3stencil contains
+nine Bravais-cell positions, including the central cellδ=(0,0). On the Bravais lattice, six of the eight surrounding cells,(±1,0),
+(0,±1),(1,−1), and(−1,1)are nearest-neighbour Bravais cells, whereas(1,1)and(−1,−1)are next-nearest-neighbour Bravais
+cells. Hence, the standard3×3convolution treats these cell-index displacements as independent learnable kernel components.
+   Figure1cshows the entire ResNet architecture.   Starting from the embedded tensorX                          0 =X  (0)   ,  the network containsn
+residual blocks.  Each block consists of two standard convolutions with GELU nonlinearities and an identity shortcut.  For the
+lth residual block (l=0, . . . , n−1), the transformation implemented in our calculations is
+
+                                                                       ̃Xl =    Xl√
+                                                                                 l+1    ,                                                                                                 (5)
+                                                                       Yl =Conv  (1)l  [GELU(       ̃Xl)] ,                                                                       (6)
+                                                                       Zl =Conv  (2)l  [GELU(Y                l)],                                                                        (7)
+                                                                   Xl+1  =X  l+Z   l.                                                                                                (8)
+                                                                                                                                                                                  2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1.Conventional residual convolutional network (ResNet) applied directly to the kagome model. a, Input embedding. The kagome
+lattice is represented as a triangular Bravais lattice with three sitesA,B, andCin each unit cell.  For a spin configurations∈{±1}                                                        N , the
+three spins(s          A, sB, sC)∈{±1}           3  within each unit cell (shaded) are encoded as one of 8 local states.  A trainable embedding table maps
+each local state to ac-dimensional feature vector, producing a feature tensor of shape(c, L, L), wherecis the number of feature channels.
+The three-sublattice structure of the kagome lattice is therefore absorbed into the local embedding.b, Conventional3×3convolution.  The
+subsequent convolutional layers operate on the Bravais-cell indices using a standard3×3stencil with periodic (circular) padding.  Each of
+the nine offsetsδ∈{−1,0,1}                          2 is associated with a weight matrixW        δ ∈R  c×c    , including the central weightW            0,0   .  On the Bravais lattice, the
+stencil covers the six nearest-neighbour cells and two additional next-nearest-neighbour cells atδ=±(1,1).  Thus, although the local three-
+spin configuration is retained through the embedding, the convolution itself acts on the Bravais-cell grid and does not explicitly encode the
+microscopic nearest-neighbour connectivity of the kagome lattice.c, Network architecture of ResNet. The embedded input is processed byn
+residual blocks, each consisting of normalization (Norm), GELU activations, and two standard3×3convolution layers connected by a residual
+shortcut. After a final normalization, the pair-complex activation combines real channels into complex outputs, which are summed to yield the
+wave-function amplitudeψ(s). d, Variational-energy optimization with ResNet forL=6in theΓ-point sector.  The energy trajectory of the
+conventional ResNet is shown over the final 1,800 optimization iterations, with both calculations imposingI               s =+1and theD             6 point-group
+symmetry in comparison with the KagomeResNet studied in the main text.
+
+
+Here, the “Norm” operation shown in Fig.1cis therefore a deterministic rescaling by1/          √l+1. All residual blocks preserve both
+the number of feature channelscand the spatial dimensionsL×L.  Both convolutions in each residual block contain trainable
+biases, except for the second convolution in the final residual block, for which the bias is omitted.
+   After the final residual block, the feature tensor is rescaled once more,
+
+                                                                               Xn→    Xn√n+1     .                                                                                    (9)
+
+The variational parameters of the convolutional network are real.  When a complex-valued wave function is required, thecreal
+output channels are divided into two equal sets and combined pairwise according to
+
+                                                       Zµ,i,j =X  µ,i,j+iX   µ+c/2,i,j       ,       µ=1, . . . , c/2,                                                       (10)
+
+which corresponds to the “Pair complex” operation in Fig.1c.  We therefore choose an even number of channelscwhenever a
+complex output is used. The complex features are subsequently passed through the default exponential output activation,
+
+                                                                          Zµ,i,j→exp(Z            µ,i,j),                                                                            (11)
+
+which is evaluated in the code using a numerically stabilized scaled representation to avoid overflow.   Finally,  the output is
+aggregated over the feature channels and symmetrized with respect to lattice translations. For the default translationally invariant
+sector, the final layer implements the zero-momentum projection, yielding the variational wave-function amplitudeψ(s).
+                                                                                                                                                                           3
+
+   We note that the KagomeResNet considered in the main text follows the same overall residual architecture as the conventional
+ResNet shown in Fig.1c. The two differences lie in the input representation and the convolution operator. In the following, we
+provide more details of KagomeResNet.
+   The first difference from the conventional ResNet concerns the representation of the spin configuration. As discussed above,
+the conventional ResNet groups the three spins within each kagome unit cell into one of eight local states and subsequently maps
+this state to ac-dimensional trainable embedding. In contrast, as shown in the Fig. 1aof the main text, KagomeResNet does not
+employ such an embedding layer. Instead, the microscopic kagome structure is retained explicitly throughout the network. For a
+kagome lattice withN=3L                2 spins, the input spin configurations={s                             α(i, j)}withα=A, B, C,is directly reshaped according
+to
+                                                                s∈R    3L  2/leftr⫯g⊸tl⫯ne→X   (0)  ∈R  1×3×L×L          ,                                                                     (12)
+withX       (0)1,α,i,j  =s  α(i, j).  Here, the first dimension denotes the feature-channel index, while the second dimension explicitly
+labels the three kagome sublatticesA,B, andC.  The remaining two indices(i, j)specify the Bravais unit cell.  The reshape
+operation contains no trainable parameters and preserves the original spin variabless             α(i, j)=±1without coarse graining the
+three sites of a unit cell into a single local state.  Consequently, whereas the conventional ResNet represents the kagome lattice
+by a tensor of shape(c, L, L)after the embedding layer, KagomeResNet starts from a tensor of shape(1,3, L, L), and retains
+the explicit sublattice dimension throughout all convolutional layers.  The feature-channel dimension is expanded from1toc
+only by the first kagome convolution.
+   The  second,  and  more  important,  difference  is  the  convolution  operator.   As  shown  in  the  Fig.  1bof  the  main  text,  in-
+stead of applying a standard3×3convolution on the Bravais-cell grid, KagomeResNet employs a geometry-aware convolution
+that performs message passing directly along the microscopic nearest-neighbour bonds of the kagome lattice.   For an input
+tensorX∈R                cin×3×L×L         , the kagome convolution producesY∈R                    cout×3×L×L         , while preserving the explicitA,B, andCsub-
+lattice axis.  The nearest-neighbour connectivity is encoded by a fixed set of directed bond classes.  Using the sublattice labels
+(A, B, C)≡(0,1,2)and the Bravais-cell displacementδ=(δ                                                    1, δ2), the six undirected nearest-neighbour bond classes used in
+the implementation are
+                                                                (A, B,−1,0),    (A, B,0,0),
+                                                                (A, C,0,−1),    (A, C,0,0),                                                                            (13)
+                                                                (B, C,0,0),    (B, C,1,−1).
+Each  tuple(α, β, δ           1, δ2)denotes  a  bond  connecting  sublatticeαin  one  unit  cell  to  sublatticeβin  a  unit  cell  displaced  by
+δ=δ     1a1 +δ   2a2.  Both directions of every bond are included in the message-passing operation, resulting in twelve directed
+nearest-neighbour channels per unit cell. For every directed bonde=(α→β,δ), KagomeResNet associates a learnable matrix
+                                                                            We ∈R  cout×c  in,                                                                                  (14)
+which transforms the feature vector on the source site before it is accumulated on the target site.
+   For a directed bond classe=(α, β,δ), withδ=δ                                 1a1+δ   2a2, the contribution from sublatticeαin unit cellrto sublatticeβ
+in unit cellr+δis defined as
+                                                                                    cin
+                                                             ∆Y    (e)µ,β(r+δ)=     ∑
+                                                                                    ν=1  (W  e)µνXν,α(r),                                                                (15)
+whereW          e ∈R  cout×c  in is the trainable weight matrix associated with the directed bond classe. The output feature on each target
+site is obtained by summing the contributions from all directed nearest-neighbour bond classes terminating at that site, together
+with the corresponding on-site contribution. The same matrixW           e is shared over all lattice translations of a given directed bond
+class, thereby preserving translational equivariance while explicitly encoding the microscopic connectivity of the kagome lattice.
+   In Fig.1d, we directly compare the energy trajectory of the final 1,800 optimization iterations after imposingI                           s =+1and the
+D6 point-group symmetry for both the conventional ResNet and KagomeResNet.  Here, we consider the conventional ResNet
+withn=32,c=42and3×3kernel, whose number of trainable parameters isN                                           para =1019046, which is slightly larger than
+Npara =974208for the KagomeResNet withn=c=32considered in our main text. It is seen that KagomeResNet outperforms
+conventional ResNet.
+
+
+                                                   II.    DETAILS OF VARIATIONAL OPTIMIZATION
+
+   For both the conventional ResNet and the KagomeResNet, we supplement the complex network outputψ           θ(s)with a fixed
+three-sublattice phase factor associated with a coplanar pattern,
+                                                          ⎡⎢⎢⎢⎣N  1−s     j        ⎤⎥⎥⎥⎦
+                                     ϕq=0  (s)=exp         i ∑       2    φα(j)      ,    (φ   A, φB, φC)=(0,        2π3 , 4π3 ),                                     (16)
+                                                             j=1
+                                                                                                                                                                             4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2.Spin and dimer structure factors in reciprocal-lattice coordinates.  a-c, Static spin structure factorS                 zzf (q)forL=6,8, and
+10, respectively. d-f, Dimer structure factorS                   Df (q)fforL=6,8, and10, respectively.  The momentum is expressed in reciprocal-lattice
+coordinates(q                      1, q2).
+
+
+wheres          j =±1andα(j)∈{A, B, C}labels the sublattice of sitej.  Each down spin contributes the phase associated with its
+sublattice.  This factor has unit modulus and is held fixed throughout training.  The complex-valued networkψ      θ(s)can learn
+additional configuration-dependent phase corrections.  Thus, the reference phase provides a prior without fixing the full phase
+structure of the variational state.
+   We initially optimize the neural-network quantum state (NQS) with translational invariance imposed. After10         4 optimization
+steps, we additionally impose spin-flip symmetry and the spatial symmetries appropriate to the target symmetry sector, and con-
+tinue training from the previously optimized network parameters. For the optimization method, we adopt AdamSR in Quantax,
+which combines MinSR [1] with Adam-type momentum and adaptive rescaling. We adopt the training rate is10   −3  .
+
+
+                               III.    ADDITIONAL DATA FOR THE SPIN AND DIMER STRUCTURE FACTORS
+
+   In the main text, we present the spin structure factor forL=10as a function of the wave vectorq=(q                              x, qy)expressed in
+Cartesian reciprocal-space coordinates (see Fig. 2aof the main text).  For a direct comparison with Ref. [2], we additionally
+present the structure factors using the reciprocal-lattice coordinates(q                      1, q2)employed therein. We emphasize thatq         1 andq      2 are
+not Cartesian components of the momentum, but dimensionless coefficients with respect to the two primitive reciprocal-lattice
+vectors.                                                                                    √
+   Using  the  real-space  primitive  vectorsa           1 =(1,0), a             2 =(   1     3
+                                                                                        2,   2 ),  the  corresponding  reciprocal-lattice  vectors  areb        1 =
+2π(1,−            1√3),b   2 =2π(0,              2√3),  which satisfya             i ⋅b j =2πδ    ij.   The two momentum representations are therefore related by
+q=q     1b1+q   2b2. For anL×Ltorus, the momenta in the first reciprocal unit cell are quantized as
+
+                                                     q1 = n1L ,       q2 = n2L ,       n1, n2 =0, . . . , L−1.                                                      (17)
+
+Momentum points in an extended-zone representation are obtained by reciprocal lattice translations,
+                                                      (q  1, q2)→(q        1+m   1, q2+m   2),       m  1, m2 ∈Z,                                                       (18)
+                                                                                                                                                                                5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3.Additional data of structure factors and largest eigenvalues of bond-correlation matrix. a-b, Static spin structure factorS                 zzf (q)
+in Cartesian reciprocal-space coordinatesq=(q                          x, qy)forL=6and8, respectively.c-d, Largest eigenvalue of the connected bond-correction
+matrixλ           1[K   conn(q)]in the coordinatesq=(q                                  x, qy)forL=6and8, respectively.
+
+
+which corresponds in Cartesian coordinates toq→q+m               1b1+m   2b2.
+   Figure2shows the corresponding spin and dimer structure factors forL=6,8, and10in the(q                                                1, q2)representation.  For
+L=6, Ref. [2] reported a dramatic enhancement ofS               Df (q)relative to theL=4result. In particular, while the maximum value
+forL=4was approximately0.933, the reported maximum increased toS                                                  Dmax ≃87.37forN=108, accompanied by numerous
+pronounced peaks throughout the extended reciprocal space. This strong enhancement was interpreted in Ref. [2] as a signature
+of the proposed spinon pair-density-wave state and its associated secondary orders.  We do not observe such behavior.  Already
+for the sameL=6(N=108) torus (Fig.2d), the dimer structure factor remains of order unity and exhibits no anomalously
+enhanced peaks. Upon increasing the system size toL=8andL=10(Figs.2eandf), no growth analogous to that reported in
+Ref. [2] develops.  Instead, the maximum valueS           Dmax decreases with increasingL, whileS                 Dmax/Nextrapolates toward zero, as
+shown in Fig. 2bof the main text. The absence of any size-enhanced dimer peak is therefore inconsistent with the anomalously
+large dimer response reported in Ref. [2] and provides no support for the associated SPDW-induced dimer ordering tendency.
+   In the Fig. 2 of the main text, we present the data of spin structure factorsS          zzf (q)and largest eigenvalue of the connected
+bond-correction matrixλ           1[K   conn(q)]in Cartesian reciprocal-space coordinatesq=(q                                   x, qy)withL=10.   Here,  in Fig.3,
+we also display the results ofS    zzf (q)andλ             1[K   conn(q)](q=(q                x, qy)) with other two system sizes,  i.e.,L=6and8For
+all three system sizes, the maxima ofS    zzf (q)occur at the reciprocal-lattice imagesGof theΓpoint, whereas the maxima of
+λ1[K  conn(q)]are located at theMpoints.  The locations of these dominant spin and dimer fluctuations are therefore robust
+against changes in system size.
+
+
+                                        IV.    SYMMETRY-RESOLVED SPIN AND DIMER CORRELATIONS
+
+   In this section, we provide the symmetry construction underlying theΓ-E          2 spin andM-F            2 dimer correlations discussed in
+Fig. 2 of the main text. The purpose of this analysis is to go beyond the momentum dependence of the scalar structure factors and
+resolve the internal sublattice or bond structure of the dominant fluctuations. As we show below, the spin maxima at reciprocal-
+lattice images ofΓpredominantly probe the nonuniformE                           2 sublattice sector, whereas the dominant dimer fluctuations at the
+threeMpoints belong to theF                  2 bond sector. These are precisely the symmetry channels that can be compared with the monopole
+operator content of theN     f =4QED     3 description of the kagome Dirac spin liquid (DSL).
+
+
+                                                                         A.Γ-E        2 spin channel
+
+   We first consider the spin correlations. For sublatticesα, β=A, B, C, we define the3×3real-space correlation matrix
+
+                                                              Czzαβ(r)=       1N ∑
+                                                                                  R ⟨Szα(R)S        zβ(R+r)      ⟩ ,                                                                (19)
+
+whereRlabels the Bravais cells andN=3L                             2. Correspondingly, the sublattice-resolved momentum-space correlation matrix is
+obtained by Fourier transformingC                      zzαβ(r).
+   The physical spin structure factor defined in the main text contains, in addition, the kagome sublattice form factor. Denoting
+the position of sublatticeαinside the unit cell byρ                       α, it can be written as
+
+                                                                 Szzf (q)=    ∑                             q),                                                                   (20)
+                                                                               α,β eiq⋅(ρ      α−ρ  β) Szzαβ(
+                                                                                                                                                                                  6
+
+where    qdenotes the momentum folded back into the first Brillouin zone. This expression also explains why the physical structure
+factor of a non-Bravais lattice is not generally periodic underq→q+G: although                                         qis unchanged, the sublattice form factors
+eiG⋅ρ      α need not be uniform.
+   At theΓpoint, the three-dimensional sublattice space decomposes into the uniform one-dimensional component and its two-
+dimensional orthogonal complement. The normalized uniform vector is
+
+                                                                                            ⎛1⎞
+                                                                                u=     1√3  ⎜1⎟,                                                                                   (21)
+                                                                                            ⎝1⎠
+
+with projector
+
+                                                                                 PA1 =uu   †.                                                                                     (22)
+
+The complementary two-dimensional subspace transforms as theE     2 representation and is selected by
+
+                                                                       PE2 =I−P       A1 =I−uu         †.                                                                         (23)
+
+For example, an orthonormal basis of this subspace can be chosen as
+
+                                                                            ⎛  1  ⎞                        ⎛  1  ⎞
+                                                               e1 =   1√2   ⎜−1   ⎟,      e 2 =   1√6      ⎜  1  ⎟,                                                                (24)
+                                                                            ⎝  0  ⎠                        ⎝−2   ⎠
+
+such thatP      E2 =e  1e†1+e   2e†2.
+   We therefore define the symmetry-resolvedΓ-E        2 correlation used in the main text as
+
+                                                           CzzΓ−E     2(r)=      12   ∑
+                                                                                 α,β=A,B,C    (P  E2)αβCzzαβ(r).                                                            (25)
+
+The factor1/2averages over the two components of theE                    2 representation. In contrast, contraction withP        A1 gives the uniform
+Γ-point spin channel.
+   Equation (20) provides the connection to Fig. 2aof the main text.  At a reciprocal-lattice imageq=GofΓ, the Bravais
+momentum is againΓ, but the vector of sublattice form factors
+
+                                                                 f(G)=      (eiG⋅ρ      A, eiG⋅ρ      B, eiG⋅ρ      C)T                                                                    (26)
+
+contains a nonuniform component in theE     2 subspace.  Consequently, the pronouncedG-point maxima ofS                           zzf (q)probe pre-
+dominantly the nonuniformΓ-E                         2  fluctuations rather than a distinct finite-momentum magnetic mode.  The persistence of the
+same momentum and sublattice structure forL=6,8, and10, shown in Figs.2and3of the Supplemental Material and Fig. 2 of
+the main text, identifiesΓ-E                    2 as the dominant symmetry-resolved spin channel.
+   This identification also has a direct field-theory interpretation. For the kagomeU(1)DSL, Ref. [3] shows that the spin-triplet
+minimal monopoles carry zero crystal momentum and angular momentuml=2under the sixfold lattice rotation. On the kagome
+lattice these quantum numbers correspond precisely to theΓ-E          2 sector. Thus,C          zzΓ−E     2 provides a microscopic lattice observable
+sensitive to the spin-triplet monopole channel of the DSL.
+
+
+                                                       B.M-point bond space and symmetry projectors
+
+   We then resolve the dimer correlations. Since a kagome unit cell contains six nearest-neighbour bonds, retaining the complete
+internal bond structure requires a six-dimensional bond basis.   We use the same bond convention in the measurements and
+throughout the analysis:
+
+                                                               B1(R)=S          A(R)⋅S        B(R),
+                                                               B2(R)=S          A(R)⋅S        B(R−a        1),
+                                                               B3(R)=S          A(R)⋅S        C(R),
+                                                               B4(R)=S          A(R)⋅S        C(R−a        2),
+                                                               B5(R)=S          B(R)⋅S        C(R),
+                                                               B6(R)=S          B(R)⋅S        C(R+a        1−a   2).                                                                (27)
+                                                                                                                                                                                    7
+
+We denoteδB           α(R)=B          α(R)−⟨B            α⟩and collect these operators into the vectorδB(R)=              (δB1, . . . , δB6)T .  The connected
+real-space bond-correlation matrix is
+
+                                                             CDαβ(r)=       1N ∑
+                                                                                  R ⟨δB  α(R)δB       β(R+r)⟩,                                                             (28)
+whose Fourier transform gives the connected matrixK            connαβ  (q)defined in the main text.
+   The  strongest  eigenvalue  ofK    conn(q)occurs  at  the  three  symmetry-relatedMpoints.   In  the  reduced  reciprocal-lattice
+coordinates introduced in Sec. II, we chooseM            1 = ( 12,0 ),M 2 = (0,   12), andM      3 = ( 12, 12).
+   The three momenta form theMstar under theD               6 point group.
+   At an individualM           i, the little co-group isC   2v  . We take its generators to be a twofold rotationC              2 about a hexagon center and a
+reflectionτ                i whose axis leavesM    i invariant. A lattice symmetry acts not only by permuting the six bonds but, whenever a bond
+is mapped to a neighbouring reference unit cell, also generates the corresponding Bloch phase atM   i.  We denote the resulting
+six-dimensional bond-space representation byD    Mi(g).
+   For a one-dimensional irreducible representationλof the little group, the symmetry projector is
+
+                                                                  P(i)λ  =    1∣C 2v ∣  ∑    χ∗λ(g)D      Mi(g),                                                                   (29)
+                                                                                     g∈C    2v
+whereχ          λ(g)is the corresponding character.  Equivalently, labeling a one-dimensional sector by its eigenvaluesη               2 =±1and
+ητ =±1underC                 2 andτ      i, respectively, Eq. (29) becomes
+
+                                              P(i)η2,ητ = 14[I+η     2DMi(C  2)+η    τDMi(τ  i)+η     2ητDMi(C  2τi)].                                             (30)
+
+This construction includes the momentum-dependent phases and therefore classifies the full microscopic bond patterns, rather
+than only their orientations inside one unit cell.
+   For our six-bond basis, the representation at a representativeMpoint decomposes as
+                                                                     BM =2A     1⊕A   2⊕B   1⊕2B     2.                                                                      (31)
+
+In theM-star notation used in the main text, theA               1  andA      2  sectors generate theF     1  andF      2  bond modes, respectively.  The
+leading eigenmode ofK    conn(M  i)belongs to the one-dimensional, mirror-oddA          2 sector, i.e. theF     2 sector. The next modes are
+classified analogously by applying the projectors in Eq. (30); the dominant sectors displayed in the inset of Fig. 2dof the main
+text areF     2,B 2, andF      1.
+
+
+                                                                       C.    ExplicitF              2 bond vectors
+
+   With the bond ordering in Eq. (27), a normalized choice of theF           2 vectors at the three members of theMstar is
+
+                                                           ⎛−1   ⎞
+                                                           ⎜⎜⎜⎜⎜⎜⎜1⎟⎟⎟⎟⎟⎟⎟
+                                              v(1)            0     ,                                            M1 =(  1
+                                                F2 = 12       0                                                               2,0),
+                                                           ⎝  1  ⎠
+                                                              1
+
+                                                           ⎛  0  ⎞
+                                                           ⎜⎜⎜⎜⎜⎜⎜0⎟⎟⎟⎟⎟⎟⎟
+                                              v(2)            1     ,                                            M2 =(0,      1
+                                                F2 = 12      −1                                                                  2),
+                                                           ⎝−1   ⎠
+                                                              1
+
+                                                           ⎛−1   ⎞
+                                                           ⎜⎜⎜⎜⎜⎜⎜−1⎟⎟⎟⎟⎟⎟⎟
+                                              v(3)            1     ,                                            M3 =(  1
+                                                F2 = 12       1                                                               2, 12).                                            (32)
+                                                           ⎝  0  ⎠
+                                                              0
+                                                                                                                                                                         8
+
+The three vectors are related by theC     6 lattice rotations that permute the members of theMstar, including the Bloch phases
+associated with bonds crossing the unit-cell boundary.  Their overall signs are conventional and have no physical consequence,
+since all projected correlations involve the rank-one projectors
+
+                                                                        P(i)F2 =v  (i)F2[v (i)F2]†.                                                                               (33)
+
+   TheF       2 contribution to the connected bond covariance at a givenM    i is therefore
+
+                                                             λF2(M  i)=[v     (i)F2]†Kconn(M  i)v  (i)F2 .                                                                  (34)
+
+Numerically, the leading eigenvector ofK    conn(M  i)has essentially unit overlap with this symmetry sector for all three system
+sizes. The ordering of the leading symmetry-resolved eigenvalues,F          2 >B  2 >F  1, also remains unchanged fromL=6toL=10.
+Thus, the identification of the dominantM-point fluctuation withF                             2 is not a consequence of a particular system size or of an
+unconstrained numerical eigenvector, but follows from a fixed symmetry projector.
+   To compare this finite-momentum dimer fluctuation directly with theΓ-point spin channel, we remove the oscillatingM-point
+phase and average over the three members of theMstar. This gives the real-space correlation used in the main text,
+
+                                                                           3
+                                                         CDF2(r)=      13 ∑                F2]†CD(r)v     (i)F2 .                                                             (35)
+                                                                          i=1   e−iM    i⋅r [v (i)
+   The symmetry analysis above identifies the microscopic structure underlying Fig. 2c,dof the main text.  The dominant bond
+fluctuations are centered at theMstar and exhibit an internal six-bond pattern that lies overwhelmingly in the mirror-oddF                  2
+sector.
+
+
+                                                      D.    Connection to the QED3 monopole multiplet
+
+   Next, we discuss why the two symmetry channels singled out above are particularly relevant for the Dirac-spin-liquid inter-
+pretation.  The low-energy theory of the kagomeU(1)DSL isN                         f =4QED     3.  The six lowest charge-one monopole operators
+transform in the antisymmetric representation6of SU(4), or equivalently as a vector of the emergent SO(6) symmetry.  They
+decompose into three spin-singlet and three spin-triplet components. Their lattice quantum numbers on the kagome lattice were
+clarified in Ref. [3].  In particular, the spin-triplet monopoles have zero crystal momentum and angular momentuml=2under
+C6, identifying them with theΓ-E          2 spin sector considered above.
+   The spin-singlet monopoles instead carry the translation quantum numbers of the threeMpoints and correspond to VBS fluc-
+tuations. Matching the translation and little-group transformation laws in the Table 3 of Ref. [3] to the bond-space representation
+constructed above identifies the mirror-odd component with theM-F           2 sector. This observation is useful because the symmetry
+resolution separates the physical dimer response into operators with different continuum quantum numbers, which are mixed
+together in the scalar dimer structure factorS         Df (q).
+   A central consequence of the emergent SO(6) structure is that all six components of the minimal-monopole multiplet have the
+same scaling dimension∆                  Φ. In the continuum theory their leading two-point function takes the form
+
+                                                      ⟨Φ†a(x)Φ      b(0)  ⟩∝    δab∣x∣    2∆Φ ,       a, b=1, . . . ,6,                                                         (36)
+
+as discussed in Refs. [3,4]. The microscopic spin and dimer operators generally have different nonuniversal overlaps with their
+corresponding continuum monopole operators. Consequently, their long-distance correlations need not have the same amplitude,
+but they are expected to share the same scaling dependence,
+
+                                                                      CzzΓ−E     2(r)≃A        s r−2∆  Φ,
+                                                                         CDF2(r)≃A        d r−2∆  Φ,                                                                            (37)
+
+up to subleading lattice and finite-size corrections. It follows that in the regime controlled by the common monopole operator,
+
+                                                            CDF2(r)≃A C        zzΓ−E     2(r),       A=        AdAs ,                                                                (38)
+
+whereAis nonuniversal. This is the motivation for the comparison in Fig. 2dof the main text. Across different separations and
+the three system sizesL=6,8, and10, the two independently constructed symmetry-resolved correlations collapse approxi-
+mately onto a common proportional relation.
+                                                                                                                                                                                  9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 4.Real-space spin and dimer correlations and their effective scaling behavior forL=10. a, Symmetry-unresolved spin correlation
+Czzraw(r), shown on a signed symmetric-logarithmic y-axis scale.b,c, Symmetry-resolvedΓ-E                             2 spin correlationC                  zzΓ−E     2(r)fitted to a power-
+law formAr    −p   and an exponential formA    ′e−r/ξ     , respectively.  The fits use the axial separationsr=2,4,6,8,10and yieldp=3.13with
+R2 =0.99997for the power-law fit andξ=0.94withR                                           2 =0.99943for the exponential fit.d,  Symmetry-unresolved connected dimer
+correlationC                  Draw(r), also shown on a signed symmetric-logarithmic scale.e,f, Symmetry-resolvedM-F                              2  dimer correlationC                  DF2(r)fitted
+to the same power-law and exponential forms, givingp=2.98withR                            2 =0.99984andξ=1.01withR                                           2 =0.99862, respectively.  The raw
+spin and dimer correlations use physical site and bond-midpoint separations, respectively, whereas the symmetry-resolved correlations use
+Bravais-cell displacements.
+
+
+                                                E.    Additional data for spin and dimer correlation functions
+
+   For comparison with the symmetry-resolved channels, here we define the raw real-space spin correlation by averaging over
+all physical site pairs belonging to the same periodic-boundary-condition distance shell,
+
+                                                                Czzraw(r)=         1          ∑         ⟨S  zi Szj⟩,                                                                 (39)
+                                                                                N(s)r          i,j
+                                                                                         dPBC(i,j)=r
+
+whereN         (s)r     denotes the number of site pairs in the shell at distancer.  We also define the raw connected dimer correlation
+by averaging over all physical nearest-neighbour bond pairs with the same periodic-boundary-condition distance between their
+bond midpoints,
+
+                                                   CDraw(r)=         1N(b)r        ∑           [⟨B   bBb′⟩−⟨B      b⟩⟨B   b′⟩],                                                  (40)
+                                                                                  b,b′
+                                                                           dPBC(r  b,r b′)=r
+
+wherer          b denotes the midpoint of bondb, andN              (b)r    is the number of bond pairs in the corresponding distance shell.
+   The raw spin and dimer correlations are shown in Figs.4aandd, respectively.  Both quantities exhibit pronounced oscilla-
+tions between positive and negative values as a function of distancer, together with an overall decrease in magnitude toward
+longer distances.  Such behavior reflects the superposition of different internal sublattice or bond-symmetry components in the
+symmetry-unresolved correlators, and the raw correlations therefore do not exhibit a clear scaling form.
+   To further examine the scaling behavior of the correlation functions,  we now consider the symmetry-resolved correlation
+functionsC                zzΓ−E     2(r)andC            DF2(r)defined by Eq. (25) and (35), respectively.  The results ofC                     zzΓ−E     2(r)forL=10are shown in
+Figs.4bandc, with the power-law, i.e., Eq. (37), and expotential fits, respectively.  We emphasize that for the fitting analysis,
+we restrict ourselves to the axialr=2,4,6,8and10, which correspond to displacements by one to five Bravais unit cells along
+the principal lattice directions. Since the primitive Bravais vectors have length2in units of the nearest-neighbor spacing, these
+are precisely the nonzero axial separations available on theL=10torus up to the half-system distance.  Restricting the fits
+to these axial shells allows us to compare the distance dependence along a fixed crystallographic direction and avoids mixing
+inequivalent lattice directions, which can exhibit different finite-size and short-distance corrections.
+                                                                                                                                                                               10
+
+   As shown in Figs.4bandc, the power-law form provides the better fit.  Similarly, based on the results ofC                         DF2(r)shown in
+Figs.4eandf, the power-law form describes the dimer correlation function better than the exponential form within the same
+fitting window.  For the power-law fits, the decay rates ofC    zzΓ−E     2(r)andC            DF2(r)are2∆           Φ =3.13and2.98, respectively, which
+are close to one another.
+
+
+             V.    GUTZWILLER-PROJECTED SPIN-LIQUID REFERENCE STATES AND WAVE-FUNCTION FIDELITY
+
+   In this section, we provide the explicit construction of the three Gutzwiller-projected fermionic reference states used in Fig. 3
+of the main text and describe the evaluation of their fidelities with the optimized KagomeResNet wave functions. Following the
+notation of the main text, the three reference states are labeled by
+                                                               µ=Dirac,       µ=Z                     2,       µ=Z   ∗2 .                                                                 (41)
+Here,µ=Diracdenotes the optimized extendedU(1)Dirac state of Ref. [5];µ=Z                                                            2 denotes a finite-pairingZ                       2[0, π]βstate
+obtained  by  perturbing  the  same  Dirac  state  as  considered  in  Ref.  [5];  andµ=Z        ∗2  denotes  the  fully  optimizedZ                  2[0, π]β
+resonating-valence-bond (RVB) state of Ref. [6].  The auxiliary-spinon boundary condition is denoted byν, so that the corre-
+sponding projected reference state is written as∣Φ     µ,ν⟩.
+
+
+                                                             A.    Unified fermionic parent Hamiltonian
+
+   We use the fermionic parton representation
+
+                                                                            Si = 12f †iασαβfiβ,                                                                               (42)
+
+subject to the local single-occupancy constraint
+                                                                                ni↑ +n   i↓ =1.                                                                                    (43)
+All three reference states in Eq. (41) can be generated from the same general real singlet-BCS parent Hamiltonian,
+                                                         Hpar = ∑             iσfjσ
+                                                                    ij,σ tijf †
+                                                                                                                                                                             (44)
+                                                                    + 12 ∑               i↑ f †j↓ −f    †i↓ f †j↑ )+H.c.     ] ,
+                                                                          ij [∆ij (f †
+wheret          ij =t  ji  and∆      ij =∆  ji  are  real  in  the  gauges  considered  below.   The  casei=jis  included,  allowing  for  on-site
+particle-hole and pairing terms.
+   Introducing the Nambu spinor
+
+                                                                                 ψi =(  fi↑f †
+                                                                                            i↓ ),                                                                                     (45)
+the parent Hamiltonian may equivalently be expressed in terms of matrices
+                                                                            Uij =t  ijτ3+∆   ijτ1                                                                                (46)
+in theτ     1–τ  3 plane of the SU(2) gauge space.
+   For a given reference familyµand auxiliary-spinon boundary conditionν, we denote the mean-field ground state of Eq. (44)
+by∣Ψ    (µ,ν)MF  ⟩. The physical reference state entering the fidelity calculation is
+
+                                                                          ∣Φ µ,ν⟩=P    G∣Ψ (µ,ν)MF  ⟩,                                                                             (47)
+where
+                                                                            PG =∏
+                                                                                      i  δni↑ +n  i↓ ,1                                                                                  (48)
+projects onto exactly one spinon per kagome site.
+   Equation (44) provides a common parent-Hamiltonian framework for all three reference states.  The specific hopping and
+pairing amplitudes, however, must be implemented in the gauge convention of the corresponding literature Ansatz. In particular,
+the parametrization of Ref. [6] should not be obtained by directly identifying its parameters with those of Ref. [5];  the two
+Ansätze use different bond sign conventions and the former additionally contains third-neighbour RVB amplitudes.
+                                                                                                                                                                                      11
+
+                                                                   B.    Dirac reference state:µ=Dirac
+
+   Forµ=Dirac, we use the optimized extendedU(1)Dirac state of Ref. [5].  In the gauge used therein, the NN and second-
+neighbour mean-field matrices are
+
+                                                                                 U(1)ij  =s  ijχ1τ3,
+                                                                                 U(2)ij  =ν   Iijχ2τ3,                                                                                 (49)
+
+wheres          ij =±1andν              Iij =±1follow the bond-sign convention of Fig. 1 of Ref. [5]. The Ansatz has zero gauge flux through the
+elementary triangles andπflux through the hexagons.
+   The NN hopping defines the overall energy scale,
+
+                                                                                       χ1 =1.                                                                                        (50)
+
+The optimized extended Dirac state reported in Ref. [5] has
+
+                                                  χ2 =−0.0186(2),       µ                       I =−0.5124(5),       ∆                         2 =ζ=0,                                                (51)
+
+whereµ           I  denotes  the  uniform  on-site  chemical  potential  of  the  mean-field  Hamiltonian.   We  use  the  subscript  “I”  here  to
+distinguish this parameter from the reference-state labelµemployed throughout the main text.
+   Because  the  state  is  number  conserving  and  the  projected  wave  function  is  constructed  at  fixed  half  filling,  the  uniform
+chemical-potential term does not change the occupied single-particle orbitals.  The projected reference state is therefore fully
+determined by the hopping Ansatz in Eq. (49) at half filling.
+   Ref. [5] performed the variational calculation on a432-site cluster with mixed periodic-antiperiodic spinon boundary condi-
+tions and obtained
+                                                                           EDirac      (1)J.                                                                          (52)
+                                                                              N   =−0.42872
+
+
+                                                             C.    Finite-pairingZ                          2 reference state:µ=Z               2
+
+   The reference state denoted byµ=Z         2 in the main text is a finite-pairingZ                       2[0, π]βstate in the immediate variational neigh-
+bourhood of the Dirac state of Ref. [5]. Its mean-field matrices are
+
+                                                                         U(0)ii  =µ  Iτ3+ζτ   1,
+                                                                         U(1)ij  =s  ijχ1τ3,
+                                                                         U(2)ij  =ν   Iij (χ  2τ3+∆   2τ1),
+                                                                         U(3)ij  =0.                                                                                                     (53)
+
+A nonzero∆              2 generates noncommuting SU(2) fluxes and breaks the emergentU(1)gauge structure of the Dirac Ansatz down
+toZ   2.
+   The specific finite-pairing reference used in Fig. 3 is defined by
+
+                                                                                  χ1 =1,
+                                                                                  χ2 =−0.0186,
+                                                                                   µI =−0.5124,                                                                                     (54)
+                                                                                  ∆2 =0.05,
+                                                                                    ζ=0.1780.
+
+For∆    2 =0.05, Ref. [5] reports the corresponding optimized on-site pairingζ=0.1780(2).  Within the statistical resolution of
+the VMC calculation, introducing this finite pairing produces no detectable change in the variational energy relative to the Dirac
+state. Therefore, on the sameN=432cluster,
+                                                                            EZ2      (1)J,                                                                            (55)
+                                                                              N  ≃−0.42872
+                                                                                                                                                                                           12
+
+
+              TABLE I. Parameters of theZ   ∗2  reference state, corresponding to the finite-size optimizedZ                 2[0, π]βAnsatz of Ref. [6].
+ L                         µZ                            ρ                             η                            ϕ1                           ϕ2                           ϕ3
+ 6                           0.4884                          0.3126                          0.3428                          2.0412                          2.8204                          2.8421
+ 8                           0.5534                          0.3577                          0.3920                          2.5210                          2.9475                          2.9692
+10                          0.5739                          0.3788                          0.4137                          2.6851                          3.0009                          3.0246
+
+
+where Ref. [5] does not quote a separate independent energy value for this particular finite-pairing point.
+   We stress that the state defined by Eq. (54) is not the fully optimized minimum of theZ           2[0, π]βvariational family.  Upon
+complete stochastic-reconfiguration optimization, Ref. [5] finds∆            2, ζ→0, such that the optimized state returns to theU(1)
+Dirac state. We retain the finite-pairing state as an independent reference in order to test whether the optimized NQS shows an
+enhanced affinity to an explicitU(1)→Z                        2 pairing perturbation whose energy is nearly indistinguishable from that of the Dirac
+state.
+
+
+                                                                 D.    OptimizedZ                   2 reference state:µ=Z        ∗2
+
+   For the secondZ            2 reference, denoted byµ=Z     ∗2 , we use the fully optimizedZ                  2[0, π]βRVB state of Ref. [6]. This Ansatz is
+defined in a different gauge from that of Ref. [5] and contains RVB amplitudes up to third-neighbour bonds.
+   Following Ref. [6], we introduce
+
+                                                                              nϕ =(sinϕ,0,cosϕ),                                                                             (56)
+
+such that
+
+                                                                           nϕ⋅τ=sinϕ τ           1+cosϕ τ       3.                                                                        (57)
+
+With the NN amplitude fixed to unity, the parent matrices are
+
+                                                                                 ⎧⎪⎪⎪⎪⎪⎪⎪⎪⎨⎪⎪⎪⎪⎪⎪⎪⎪⎩−µ   Z nϕ1⋅τ,     i=j,
+                                                                        Uij =       −s   Zijτ3,        ⟨ij⟩      1,                                                                     (58)
+                                                                                    −s   Zijρn  ϕ2⋅τ,  ⟨ij⟩          2,
+                                                                                    −s   Zijηn  ϕ3⋅τ,  ⟨ij⟩          3.
+
+Heres         Zij =±1follows the six-site spinon-unit-cell gauge shown in Fig. 1 of Ref. [6].  The spinon unit cell is doubled alonga                     1
+and therefore contains six kagome sites.
+   In terms of the hopping and pairing amplitudes of the unified parent Hamiltonian in Eq. (44), the second- and third-neighbour
+terms are
+
+                                             tii =−µ     Z cosϕ      1,                                            ∆ ii =−µ     Z sinϕ     1,
+                                           t(2)ij =−s     Zijρcosϕ        2,                                        ∆ (2)ij =−s     Zijρsinϕ        2,
+                                           t(3)ij =−s     Zijηcosϕ        3,                                        ∆ (3)ij =−s     Zijηsinϕ        3.                                       (59)
+
+Thus,ηis the magnitude of the third-neighbour RVB parameter and should not be identified with the on-site pairingζin Eq. (53).
+Similarly,ρcannot be identified directly with the Iqbal parameterχ                     2 without an explicit gauge transformation of the complete
+bond-sign structure.
+   For the three system sizes studied in the present work, we use the finite-size optimized parameters shown in Fig. 3 of Ref. [6].
+The values used in our numerical implementation are The optimized parameters are presented graphically rather than tabulated
+numerically in Ref. [6];  the values in TableIwere therefore obtained by digitizing the published Fig. 3.  The retained digits
+are used only to define the numerical reference states reproducibly and should not be interpreted as table-level precision of the
+original publication.
+   The corresponding variational energies reported directly in Table I of Ref. [6] are TheL=18cluster is the largest size for
+which Ref. [6] reports well-converged optimized RVB parameters.  At this size, the corresponding optimizedU(1)state has
+energy density−0.428719(1)J, while the optimizedZ                                                          2 state has−0.428737(1)J. Thus, within this projected-RVB variational
+family, theZ     2 state lies slightly below the optimizedU(1)state in energy.
+                                                                                                                                                                                                 13
+
+
+                                 TABLE II. Variational energy density of the optimizedZ         ∗2  reference state reported in Ref. [6].
+ L                                                                           N=3L        2                                                                                 EZ∗2/N
+ 6                                                                                               108                                                                        −0.428899(1)J
+ 8                                                                                               192                                                                        −0.428783(1)J
+10                                                                                              300                                                                        −0.428753(1)J
+18                                                                                              972                                                                        −0.428737(1)J
+
+
+
+                      TABLE III. Closed-shell structure of the two mixed spinon boundary conditions for the Dirac reference state.
+ L                                                                                                PA                                                                                                         AP
+ 6                                                                                              open shell                                                                                             closed shell
+ 8                                                                                             closed shell                                                                                            closed shell
+10                                                                                             open shell                                                                                             closed shell
+
+
+   The three reference states used in Fig. 3 are therefore complementary.  The stateµ=Diracprovides an optimized extended
+U(1)Dirac  reference;µ=Z                                2  probes  an  explicit  finite-pairing  perturbation  in  the  immediate  neighbourhood  of  this  Dirac
+state; andµ=Z      ∗2  provides an independently optimized and energetically competitiveZ  2[0, π]βreference with additional third-
+neighbour variational freedom.
+
+
+                                                                   E.    Auxiliary-spinon boundary conditions
+
+   The physical kagome Heisenberg Hamiltonian and the KagomeResNet NQS are always defined with periodic boundary con-
+ditions. The boundary conditions discussed here apply only to the auxiliary fermions used to construct the Gutzwiller-projected
+reference states.
+   For anL×Ltorus, we define
+
+                                                                     fr+La       1 =e  iθ1fr,       fr+La       2 =e  iθ2fr,                                                                (60)
+
+withθ        1,2  =0orπ. We denote periodic and antiperiodic boundary conditions by P and A, respectively.
+   Following the mixed periodic-antiperiodic boundary conditions used in the original VMC calculations Refs. [5,6], the fidelity
+comparison in the main text is restricted to
+
+                                                                                       ν∈{PA,AP}.                                                                                  (61)
+
+Here, the first and second letters refer to the spinon boundary conditions alonga          1 anda      2, respectively.
+   Forµ=Dirac, the number-conserving mean-field state is used only when the half-filled spinon spectrum forms a nondegener-
+ate closed shell. For the system sizes considered here, the two mixed sectors satisfy An open-shell sector is excluded because the
+degenerate single-particle level at the Fermi energy does not define a unique half-filled Slater determinant without an additional
+prescription for the zero-mode occupations.
+   For the paired referencesµ=Z                       2 andµ=Z      ∗2 , the BdG ground state is well defined in both mixed sectors, and both PA and AP
+are retained. Consequently, the quantity reported in Fig. 3 of the main text is
+
+                                                                                  F maxµ   = max
+                                                                                               ν∈B    µ(L)    Fµ,ν,                                                                             (62)
+
+whereB          µ(L)denotes the admissible set of mixed boundary sectors for reference stateµ.  Forµ=Dirac,B                                     µ(L)contains only
+nondegenerate closed-shell sectors; forµ=Z          2 andZ   ∗2 , both mixed sectors are included.
+
+
+                                                F.    Projected amplitudes and Monte Carlo evaluation of the fidelity
+
+   For the number-conserving referenceµ=Dirac, the mean-field ground state is obtained by filling the lowestN/2single-
+particle orbitals for each spin species. For a spin configurationswith sets of up- and down-spin sitesUandD, respectively, the
+Gutzwiller-projected amplitude can be expressed as the product of the corresponding Slater determinants,
+
+                                                                ΦDirac,ν     (s)∝(−1)                P(s)     detM     (ν)U   detM     (ν)D  ,                                                          (63)
+                                                                                                                                                                               14
+
+where(−1)                 P(s)      accounts for the fermionic reordering required to express the projected state in the spin-configuration basis used
+for the NQS.
+   Forµ=Z         2 andZ   ∗2 , diagonalization of the corresponding BdG Hamiltonian yields the BCS pair matrixF          (µ,ν)      . After projec-
+tion toN    ↑ =N   ↓ =N/2, the amplitude is
+
+                                                      Φµ,ν(s)∝(−1)                P(s)     detF     (µ,ν)U,D     ,       µ=Z     2, Z∗2 .                                                       (64)
+
+Thus, all three projected references and the optimized NQS are evaluated in exactly the same physical spin basis.
+   For each admissible pair(µ, ν), the normalized squared many-body fidelity is
+
+                                                                 Fµ,ν =      ∣⟨Ψ  optθ  ∣Φ µ,ν⟩∣2
+                                                                            ⟨Ψ  optθ  ∣Ψ optθ  ⟩⟨Φ  µ,ν∣Φ µ,ν⟩.                                                                   (65)
+
+This is the same quantity defined in the main text.
+   We evaluate Eq. (65) using configurations sampled from the optimized NQS probability distribution
+
+                                                                         pθ(s)=     ∣Ψ optθ  (s)∣    2
+                                                                                     ⟨Ψ  optθ  ∣Ψ optθ  ⟩.                                                                             (66)
+
+For each reference state, we define the amplitude ratio
+
+                                                                          Rµ,ν(s)=      Φµ,ν(s)Ψopt
+                                                                                             θ  (s)   .                                                                              (67)
+It then follows that
+
+                                                                       ⟨R  µ,ν⟩pθ = ⟨Ψ  optθ  ∣Φ µ,ν⟩
+                                                                                        ⟨Ψ  optθ  ∣Ψ optθ  ⟩,                                                                          (68)
+
+and
+
+                                                                     ⟨∣R µ,ν∣2⟩pθ = ⟨Φ  µ,ν∣Φ µ,ν⟩⟨Ψ  opt
+                                                                                             θ  ∣Ψ optθ  ⟩.                                                                        (69)
+Therefore,
+
+                                                                                                    2
+                                                                           Fµ,ν = ∣⟨R   µ,ν⟩pθ∣⟨∣R   µ,ν∣2⟩pθ.                                                                              (70)
+
+Neither the NQS nor the projected reference state therefore needs to be normalized explicitly.
+   The fidelity provides information complementary to the symmetry-resolved correlation functions discussed in the preceding
+section. Whereas the latter probe selected long-distance operators,F                 µ,ν compares the complete many-body amplitude and phase
+structure of the optimized NQS with a given projected spin-liquid reference state.
+   As shown in Fig. 3 of the main text, the finite-pairing stateµ=Z             2 has a substantially smaller maximum fidelity thanµ=Dirac,
+despite the two reference states having indistinguishable variational energies at the resolution reported in Ref. [5].  The more
+competitive referenceµ=Z           ∗2  has a fidelity close to that of the Dirac state forL=6, but itsF                 maxZ∗2     becomes systematically
+smaller thanF        maxDirac with increasing system size.  Importantly, theZ   ∗2  reference was found in Ref. [6] to have a slightly lower
+projected-VMC energy than the corresponding optimizedU(1)state.  The fidelity comparison is therefore not simply tracking
+the variational-energy ordering within the projected-fermion family, but provides an independent wave-function-level diagnostic
+supporting the Dirac interpretation of the optimized KagomeResNet ground state.
+
+
+
+
+
+[1]Ao Chen and Markus Heyl, “Empowering deep neural quantum states through efficient optimization,”Nature Physics20, 1476–1481
+     (2024).
+[2]Tanja Ðuri     ´c, Jia Hui Chung, Bo Yang,  and Pinaki Sengupta, “Spin-1/2kagome heisenberg antiferromagnet: Machine learning discovery
+     of the spinon pair-density-wave ground state,”Phys. Rev. X15, 011047 (2025).
+                                                                                                                                                                               15
+
+[3]Xue-Yang Song, Chong Wang, Ashvin Vishwanath,   and Yin-Chen He, “Unifying description of competing orders in two-dimensional
+     quantum magnets,”Nature Communications10, 4254 (2019).
+[4]Urban F. P. Seifert, Josef Willsher, Markus Drescher, Frank Pollmann,  and Johannes Knolle, “Spin-peierls instability of the u(1) dirac spin
+     liquid,”Nature Communications15, 7110 (2024).
+[5]Yasir Iqbal, Federico Becca,  and Didier Poilblanc, “Projected wave function study ofZ         2 spin liquids on the kagome lattice for the spin- 12
+     quantum heisenberg antiferromagnet,”Phys. Rev. B84, 020407(R) (2011).
+[6]Chun Zhang and Tao Li, “Variational study of the ground state and spin dynamics of the spin-      12  kagome antiferromagnetic heisenberg
+     model and its implication for herbertsmithitezncu                          3(OH)         6cl2,”Phys. Rev. B102, 195106 (2020).
