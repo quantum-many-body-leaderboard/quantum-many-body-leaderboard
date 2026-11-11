@@ -269,6 +269,32 @@ python ed_full2.py --model hubbard --lattice square --L 4 --nup 7 --ndn 7 --U 8 
 python hub_fact.py --lattice square --L 4 --n 7 --U 8 --threads 4 --k 1 --ncv 12 --instance Hubbard/square_16_P_7_8 --out Hubbard__square_16_P_7_8__A.json
 ```
 
+## `heisenberg-chain-16-ed/`: the exact ground state of the periodic 16-site Heisenberg chain
+
+**Question.** arXiv:2510.08430 (Table 2) prints two VMC energies of the periodic 16-site chain and no
+exact energy. `Heisenberg/chain_16_P` was created for them (2026-11-11) and needs its exact row.
+
+**Design.** `ed_chain.py`: H = sum_i S_i.S_{i+1} on the periodic chain in the S^z = 0 space (12,870
+states, no spatial symmetry), which holds a member of every spin multiplet. Code A builds the sparse
+matrix and calls ARPACK (scipy `eigsh`, tol 1e-14); code B is a separate matrix-free Lanczos with full
+reorthogonalisation. numpy 2.5.4, scipy 1.18.1, an Apple M5 laptop, 2026-11-11, 5 s and well under
+1 GB. QMBL's Bethe solver (`bethe-heisenberg-chain/`) is the third calculation.
+
+**Result** (`results.txt`). -28.56918544246714 (code A, residual 2.4e-14) and -28.56918544246712 (code B,
+residual 8.1e-15) in the Pauli form; the Bethe ansatz gives -28.5691854424671195. E/N = -0.446393523 in
+S.S units. The same script at N = 20 gives -35.61754611950573 and -35.617546119505775, the exact row
+of `Heisenberg/chain_20_P` (-35.61754611950579) to 6e-14. The two VMC rows of arXiv:2510.08430,
+-28.5685(3) and -28.5674(6), lie 6.9e-4 (2.3 sigma) and 1.8e-3 (3.0 sigma) above it.
+
+**Conclusion.** An exact row computed by QMBL (`scripts/add_exact_rows.mjs` batch B3).
+
+**Reproduce.**
+
+```bash
+uv run --with numpy --with scipy python -I checks/heisenberg-chain-16-ed/ed_chain.py 16
+uv run --with numpy --with mpmath python -I checks/bethe-heisenberg-chain/bethe_xxx.py 16 P 30
+```
+
 ## `exact-recompute-2026-09/`: which printed exact energies are QMBL's value rounded?
 
 **Question.** Several exact rows carry an energy printed to 6 or 9 digits. Where the printed value
