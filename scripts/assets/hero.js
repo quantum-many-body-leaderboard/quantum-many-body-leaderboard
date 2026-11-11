@@ -9,6 +9,13 @@
   const bySlug = Object.fromEntries(M.models.map(m => [m.slug, m]));
   const $ = id => document.getElementById(id);
   const stage = $("pk-stage"), hero = $("pick"), view = $("pk-view"), more = $("pk-more-wrap"), say = $("pk-say");
+  // The Open Problems switch (?open): only instances with no exact energy, and only the
+  // Hamiltonians that have one; the "What is" box speaks for QMBL: Open Problems.
+  const OPEN = new URLSearchParams(location.search).has("open"), Q = OPEN ? "?open" : "";
+  if (OPEN) {
+    for (const n of stage.querySelectorAll(".pk-node")) if (!bySlug[n.dataset.slug].open) n.remove();
+    const head = say.querySelector(".pk-head"); head.textContent = say.dataset.op;
+  }
   const RING = stage.innerHTML, SAY = say.innerHTML;
   const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   const tabSlug = s => s.replace(/[^\w]+/g, "-").replace(/^-|-$/g, "").toLowerCase();
@@ -49,7 +56,7 @@
     if (mode !== "ring") return;
     const m = node && bySlug[node.dataset.slug];
     const s = $("pk-say");
-    if (s) s.innerHTML = m ? `<b>${esc(m.name)}</b> · <span class="pk-k">${nE(m.energies)}</span><br>${esc(m.about)}<span class="pk-f">${m.formula}</span>` : SAY;
+    if (s) s.innerHTML = m ? `<b>${esc(m.name)}</b> · <span class="pk-k">${OPEN ? `${m.open} open problem${m.open === 1 ? "" : "s"}` : nE(m.energies)}</span><br>${esc(m.about)}<span class="pk-f">${m.formula}</span>` : SAY;
   }
 
   // ---------------------------------------------------------------------------------- views
@@ -62,7 +69,7 @@
     stage.innerHTML = `<div class="pk-center">${m.glyphBig}<h1>${esc(m.name)}: which lattice?</h1>
       <p class="pk-say" style="min-height:0">${esc(m.about)}<span class="pk-f">${m.formula}</span></p>
       <div class="pk-row"><a class="pk-pill" href="#h-${m.slug}@all">All ${esc(m.name)} results</a><a class="pk-link" href="#pick">← All Hamiltonians</a></div></div>` +
-      m.tabs.map(t => `<a class="pk-node" href="#h-${m.slug}@${tabSlug(t.label)}">${t.glyph}<span class="pk-nm pk-serif">${esc(t.label)}</span><span class="pk-ct">${nE(t.count)}</span></a>`).join("");
+      m.tabs.filter(t => !OPEN || t.open).map(t => `<a class="pk-node" href="#h-${m.slug}@${tabSlug(t.label)}">${t.glyph}<span class="pk-nm pk-serif">${esc(t.label)}</span><span class="pk-ct">${nE(OPEN ? t.open : t.count)}</span></a>`).join("");
     measure(); place();
   }
 
@@ -75,8 +82,10 @@
     scrollTo({ top: 0 });
     const data = await load(m.slug);
     const tabs = data.tabs.map(t => t.label);
-    const k = tabs.findIndex(t => tabSlug(t) === tab);
-    state = { m, data, tab: k >= 0 ? k : 0, sel: {} };
+    const live = k => !OPEN || data.tabs[k].open > 0;
+    let k = tabs.findIndex(t => tabSlug(t) === tab);
+    if (k < 0 || !live(k)) k = data.tabs.findIndex((t, j) => live(j));
+    state = { m, data, tab: Math.max(0, k), sel: {} };
     render();
     scrollTo({ top: 0 });
   }
@@ -85,7 +94,7 @@
   // its choice where it can, else takes the value with most energies.
   function resolve() {
     const { data, sel } = state;
-    let pool = data.inst.filter(i => i.t === state.tab);
+    let pool = data.inst.filter(i => i.t === state.tab && (!OPEN || i.o));
     const rows = [];
     for (const dim of data.dims) {
       const val = i => i.d[dim] || ["—", ""];
@@ -113,11 +122,11 @@
 <div class="pk-crumb"><a href="#pick">← Pick another problem</a>${sub ? `<span>·</span><a href="#h-${m.slug}">Other ${esc(m.name)} lattices</a>` : ""}</div>
 <div class="pk-title">${m.glyph}<div><h2>${esc(m.name)}</h2>${m.formulaBlock}</div></div>
 <p class="pk-desc">${esc(m.about)} Each dot is one published result for the setting chosen below. Lower is better for variational results.</p>
-${data.tabs.length > 1 ? `<div class="pk-tabs" role="tablist">${data.tabs.map((t, k) => `<button class="pk-tab" role="tab" type="button" data-k="${k}" aria-selected="${k === state.tab}">${t.glyph}<span>${esc(t.label)}</span><i>${t.count}</i></button>`).join("")}</div>` : ""}
+${data.tabs.filter(t => !OPEN || t.open).length > 1 ? `<div class="pk-tabs" role="tablist">${data.tabs.map((t, k) => !OPEN || t.open ? `<button class="pk-tab" role="tab" type="button" data-k="${k}" aria-selected="${k === state.tab}">${t.glyph}<span>${esc(t.label)}</span><i>${OPEN ? t.open : t.count}</i></button>` : "").join("")}</div>` : ""}
 ${choosing.length || fixed.length ? `<div class="pk-filters">${choosing.map(([dim, vals, c, short]) => `<div class="pk-fg"><span class="pk-lab">${esc(dim)}</span>${vals.map(v => `<button class="pk-chip" type="button" data-dim="${esc(dim)}" data-v="${esc(v)}" aria-pressed="${v === sel[dim]}"${short.get(v) !== v ? ` title="${esc(v)}"` : ""}>${esc(short.get(v))}<i>${c.get(v)}</i></button>`).join("")}</div>`).join("")}${fixed.length ? `<div class="pk-fg"><span class="pk-lab">setting</span><span class="pk-fixed">${fixed.map(([dim, v, , short]) => esc(dim === "boundary" || dim === "shape" || dim === "problem" || dim === "variant" ? v[0] : `${dim} = ${short.get(v[0])}`)).join(", ")}</span></div>` : ""}</div>` : ""}
 <div class="pk-chart" id="pk-chart"></div>
 <div class="pk-lgd" id="pk-lgd"></div>
-<p class="pk-cap">${pool.length} instance${pool.length === 1 ? "" : "s"}, ${nE(pool.reduce((a, i) => a + i.r.length, 0))}. Horizontal: number of sites N, log scale. Vertical: ${esc(data.unit)}. Point at a dot to preview it; click it to open its table entry. <a href="/instances/#${m.slug}">All ${esc(m.name)} rows in the table</a>.</p>`;
+<p class="pk-cap">${pool.length} instance${pool.length === 1 ? "" : "s"}, ${nE(pool.reduce((a, i) => a + i.r.length, 0))}. Horizontal: number of sites N, log scale. Vertical: ${esc(data.unit)}. Point at a dot to preview it; click it to open its table entry. <a href="/instances/${Q}#${m.slug}">All ${esc(m.name)} ${OPEN ? "open problems" : "rows"} in the table</a>.</p>`;
     view.querySelectorAll(".pk-tab").forEach(b => b.addEventListener("click", () => {
       state.tab = +b.dataset.k; state.sel = {};
       history.replaceState(null, "", `#h-${m.slug}@${tabSlug(data.tabs[state.tab].label)}`);
@@ -163,7 +172,7 @@ ${choosing.length || fixed.length ? `<div class="pk-filters">${choosing.map(([di
       const mark = `<circle cx="${f(x)}" cy="${f(y)}" r="6.5" fill="var(--surface)"/>` + (p.flagged
         ? `<circle cx="${f(x)}" cy="${f(y)}" r="4" fill="none" stroke="${c}" stroke-width="2"/><path d="${d}" stroke="var(--surface)" stroke-width="3.5" stroke-linecap="round"/><path d="${d}" stroke="${c}" stroke-width="2" stroke-linecap="round"/>`
         : p.filled ? `<circle cx="${f(x)}" cy="${f(y)}" r="4.5" fill="${c}"/>` : `<circle cx="${f(x)}" cy="${f(y)}" r="4" fill="var(--surface)" stroke="${c}" stroke-width="2"/>`);
-      s += `<a class="pk-pt" href="/instances/#${p.id}" data-k="${k}">${mark}</a>`;
+      s += `<a class="pk-pt" href="/instances/${Q}#${p.id}" data-k="${k}">${mark}</a>`;
     });
     chart.innerHTML = s + "</svg>";
     const kinds = new Set(pts.filter(p => !p.flagged).map(p => p.kind));
@@ -189,12 +198,15 @@ ${choosing.length || fixed.length ? `<div class="pk-filters">${choosing.map(([di
   addEventListener("hashchange", route);
 
   // ------------------------------------------------------------------------ the rest of the hero
-  const about = $("pk-about"), whatis = $("pk-whatis");
+  const about = $(OPEN ? "pk-about-op" : "pk-about"), whatis = $("pk-whatis");
+  if (OPEN) { whatis.lastChild.textContent = "What is QMBL: Open Problems?"; whatis.setAttribute("aria-controls", "pk-about-op"); }
   const toggle = open => { about.hidden = !open; whatis.setAttribute("aria-expanded", open); };
   whatis.addEventListener("click", () => toggle(about.hidden));
-  $("pk-about-x").addEventListener("click", () => toggle(false));
+  about.querySelector(".pk-x").addEventListener("click", () => toggle(false));
   addEventListener("keydown", e => { if (e.key === "Escape") toggle(false); });
-  const links = [...document.querySelectorAll(".pk-more-l")];
+  // With the switch on, the size figure goes: it draws only instances with an exact energy.
+  if (OPEN) document.querySelector('.pk-more-l[aria-controls="pk-p-size"]').hidden = true;
+  const links = [...document.querySelectorAll(".pk-more-l:not([hidden])")];
   links.forEach(b => b.addEventListener("click", () => {
     const open = b.getAttribute("aria-expanded") !== "true";
     links.forEach(o => { o.setAttribute("aria-expanded", "false"); $(o.getAttribute("aria-controls")).hidden = true; });

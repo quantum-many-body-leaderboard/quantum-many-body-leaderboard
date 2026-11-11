@@ -77,7 +77,25 @@ const NAV = [
 ];
 // Open Problems is a button at the very right of the menu, after Cite.
 const opButton = url => (OPEN_PROBLEMS
-  ? `<a href="${OPEN_PROBLEMS_URL}" class="op"${url.startsWith(OPEN_PROBLEMS_URL) ? ' aria-current="page"' : ""}>Open Problems</a>` : "");
+  ? `<a href="/?open" class="op">Open Problems</a>` : "");
+
+// With JavaScript the button is a switch (2026-11-11): ?open in the address keeps only the open
+// problems on every page (the table, the picker), the button shows pressed, and every link to
+// another page of the site carries ?open along. Without JavaScript it leads to /open-problems/.
+const OP_SWITCH_SCRIPT = `<script>
+(() => {
+  const on = new URLSearchParams(location.search).has("open"), b = document.querySelector("header.site a.op");
+  document.documentElement.classList.toggle("op-on", on);
+  if (!b) return;
+  b.setAttribute("aria-pressed", String(on)); b.removeAttribute("aria-current");
+  b.title = on ? "Show every problem again" : "Show only the open problems: the instances with no exact energy";
+  b.href = location.pathname + (on ? "" : "?open") + location.hash;
+  addEventListener("hashchange", () => { b.href = location.pathname + (on ? "" : "?open") + location.hash; });
+  if (on) for (const a of document.querySelectorAll('a[href^="/"]')) if (a !== b && !/[?]/.test(a.getAttribute("href"))) {
+    const [path, hash] = a.getAttribute("href").split("#"); a.setAttribute("href", path + "?open" + (hash ? "#" + hash : ""));
+  }
+})();
+</script>`;
 
 // GitHub's mark (octicon mark-github, MIT), inline so it takes the nav's colour.
 const GITHUB_MARK = `<svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>`;
@@ -161,6 +179,7 @@ ${body}
   <p class="developed-at">Developed at <a href="https://ethz.ch" title="ETH Zurich">${ETH_LOGO}</a></p>
 </footer>
 ${CITE_SCRIPT}
+${OPEN_PROBLEMS ? OP_SWITCH_SCRIPT : ""}
 </html>
 `;
 }
@@ -168,7 +187,7 @@ ${CITE_SCRIPT}
 // ---------------------------------------------------------------------- redirects
 // /rules/ and /data/ forward to RULES.md and DATA.md on GitHub, fragment included, so a link
 // to a section lands on that section.
-function redirectPage(target, title) {
+function redirectPage(target, title, note = `${title} is on GitHub`) {
   return `<!doctype html>
 <html lang="en">
 <meta charset="utf-8">
@@ -177,7 +196,7 @@ function redirectPage(target, title) {
 <link rel="canonical" href="${target}">
 <title>${title} &middot; QMBL</title>
 <script>location.replace("${target}" + location.hash);</script>
-<p>${title} is on GitHub: <a href="${target}">${target}</a></p>
+<p>${note}: <a href="${target}">${target}</a></p>
 </html>
 `;
 }
@@ -805,14 +824,15 @@ let pickerCache = null;
 const picker = () => pickerCache ??= MODELS.filter(([m]) => PICKS.has(m)).map(([model, name]) => {
   const picks = PICKS.get(model);
   const drawn = picks.reduce((a, p) => a + drawnRows(p.inst).length, 0);
-  const tabs = [...Map.groupBy(picks, p => p.tab)].map(([label, ps]) => ({ label, count: ps.reduce((a, p) => a + drawnRows(p.inst).length, 0) }))
+  const tabs = [...Map.groupBy(picks, p => p.tab)].map(([label, ps]) => ({ label, count: ps.reduce((a, p) => a + drawnRows(p.inst).length, 0),
+    open: ps.filter(p => isOpen(p.inst)).reduce((a, p) => a + drawnRows(p.inst).length, 0) }))
     .sort((a, b) => b.count - a.count);
   const dims = [...new Set(picks.flatMap(p => p.dims.map(d => d[0])))];
   const cards = {};
   const inst = picks.map(({ inst: i, tab, dims: d }) => {
     const div = perSiteDivisor(i) ?? 1, b = classBest(i);
     return {
-      t: tabs.findIndex(x => x.label === tab), N: i.n_sites, d: Object.fromEntries(d.map(([k, l, o]) => [k, [l, o]])),
+      t: tabs.findIndex(x => x.label === tab), N: i.n_sites, o: +isOpen(i), d: Object.fromEntries(d.map(([k, l, o]) => [k, [l, o]])),
       r: drawnRows(i).map(r => {
         const id = rowId(i, r), flagged = !!r.defect || b.below.includes(r);
         cards[id] = rowCard(r, i);
@@ -824,7 +844,8 @@ const picker = () => pickerCache ??= MODELS.filter(([m]) => PICKS.has(m)).map(([
   return {
     file: { model, name, unit: perSiteLabel(picks[0].inst), tabs: tabs.map(x => ({ ...x, glyph: latticeGlyph(model, x.label) })), dims, inst, cards },
     info: { model, slug, name, about: about(model), formula: formula(model), formulaBlock: formula(model, true), glyph: modelGlyph(model), glyphBig: modelGlyph(model, "pk-glyph pk-big"),
-      energies: picks.reduce((a, p) => a + p.inst.rows.length, 0), drawn, tabs: tabs.map(x => ({ ...x, glyph: latticeGlyph(model, x.label) })) },
+      energies: picks.reduce((a, p) => a + p.inst.rows.length, 0), drawn,
+      open: picks.filter(p => isOpen(p.inst)).length, tabs: tabs.map(x => ({ ...x, glyph: latticeGlyph(model, x.label) })) },
   };
 });
 const HERO_SCRIPT = fs.readFileSync("scripts/assets/hero.js", "utf8");
@@ -841,9 +862,9 @@ function homePage() {
     .map(r => `<div data-row="${rowId(inst, r)}">${rowCard(r, inst)}</div>`));
   if (cards.length !== linked.size) throw new Error(`figures link ${linked.size} rows, ${cards.length} found in data/: a figure is older than the data`);
   const models = picker().map(p => p.info);
-  const data = { sub: [...SUB_RING], models };
+  const data = { sub: [...SUB_RING], models, open: OPEN.size };
   const body = `
-${heroHtml({ models, energies: instances.reduce((a, i) => a + i.rows.length, 0) })}
+${heroHtml({ models, energies: instances.reduce((a, i) => a + i.rows.length, 0), open: OPEN.size })}
 <script type="application/json" id="pk-data">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>
 <div class="pk-tip-host"><div id="pk-tip" role="tooltip" hidden></div></div>
 <div class="pk-more-wrap" id="pk-more-wrap">
@@ -1139,7 +1160,7 @@ function instancesPage() {
       const tr = lines.map(([tag, r], k) => `<tr class="line${k === lines.length - 1 ? " last" : ""}">${k ? "" : `
         <th scope="row" class="span"${span}><button type="button" aria-expanded="false" aria-controls="${id}">${esc(label)}</button></th>`}
         <td class="kind">${tag}</td><td class="record">${energyCell(r, inst)}</td><td>${methodCell(r)}</td><td>${citeHtml(r)}</td><td class="code">${codeHtml(r)}</td>${k ? "" : `<td class="num span"${span}>${inst.rows.length}</td>`}</tr>`).join("");
-      return `<tbody class="inst" data-search="${esc(search.own)}" data-methods="${esc(search.methods)}" data-lattice="${esc(latticeOf(inst))}" data-size="${sizeBand(inst)}">${tr}
+      return `<tbody class="inst"${isOpen(inst) ? ' data-open="1"' : ""} data-search="${esc(search.own)}" data-methods="${esc(search.methods)}" data-lattice="${esc(latticeOf(inst))}" data-size="${sizeBand(inst)}">${tr}
       <tr class="more" id="${id}" hidden><td colspan="7">${allRows(inst)}</td></tr></tbody>`;
     });
     const lattices = [...new Set(group.map(latticeOf))].sort();
@@ -1169,7 +1190,10 @@ ${sections}
 const box = document.getElementById("filter");
 const count = document.getElementById("filter-count");
 const sections = [...document.querySelectorAll("section[data-model]")];
-const total = document.querySelectorAll("tbody.inst").length;
+// The Open Problems switch (?open, see OP_SWITCH_SCRIPT): only the instances with no exact energy.
+const OPEN_ONLY = new URLSearchParams(location.search).has("open");
+const total = document.querySelectorAll(OPEN_ONLY ? "tbody.inst[data-open]" : "tbody.inst").length;
+if (OPEN_ONLY) document.querySelector("main h1").textContent = "Table of open problems";
 
 // The words of the text box against each instance's index; see searchIndex in scripts/site.mjs.
 const searchWords = ${searchWords};
@@ -1196,7 +1220,8 @@ function apply() {
     for (const row of rows) {
       const hit = !outside && (!words.length || searchMatch(index.get(row), words))
         && (!lattice || row.dataset.lattice === lattice)
-        && (!size || row.dataset.size === size);
+        && (!size || row.dataset.size === size)
+        && (!OPEN_ONLY || row.dataset.open === "1");
       row.hidden = !hit;
       const more = row.querySelector("tr.more");
       if (!hit) { more.hidden = true; row.querySelector("button").setAttribute("aria-expanded", "false"); }
@@ -1204,11 +1229,26 @@ function apply() {
     }
     shown += n;
     section.hidden = outside || (!n && !lattice && !size);
-    section.querySelector(".count").textContent = (n === rows.length ? "" : n + " of ") + rows.length + " instances";
+    const all = OPEN_ONLY ? rows.filter(r => r.dataset.open === "1").length : rows.length;
+    if (OPEN_ONLY && !all) section.hidden = true;
+    section.querySelector(".count").textContent = (n === all ? "" : n + " of ") + all + (OPEN_ONLY ? " open problems" : " instances");
   }
-  count.textContent = q || model ? shown + " of " + total + " instances" : "";
+  count.textContent = q || model ? shown + " of " + total + (OPEN_ONLY ? " open problems" : " instances") : "";
 }
 box.addEventListener("input", apply);
+// With the switch on, a badge that would show no open problem is not offered.
+if (OPEN_ONLY) {
+  for (const section of sections) {
+    const open = [...section.querySelectorAll("tbody.inst[data-open]")];
+    for (const b of section.querySelectorAll(".quick button")) {
+      const key = "lattice" in b.dataset ? "lattice" : "size";
+      b.hidden = !open.some(r => r.dataset[key] === b.dataset[key]);
+    }
+    const badge = document.querySelector('.models button[data-model="' + section.dataset.model + '"]');
+    if (badge) badge.hidden = !open.length;
+  }
+  apply();
+}
 for (const b of document.querySelectorAll(".quick button")) b.addEventListener("click", () => {
   const on = b.classList.contains("on");
   const key = ["model", "lattice", "size"].find(k => k in b.dataset);
@@ -1883,7 +1923,11 @@ button.qn.open::after, button.qn:focus-visible:not(.shut)::after {
   font-family: var(--sans); font-size: 0.8rem; line-height: 1.35; color: var(--ink);
   background: var(--surface); border: 1px solid var(--grid); border-radius: 4px;
   padding: 0.3rem 0.5rem; box-shadow: 0 2px 8px rgb(0 0 0 / 0.12); }
-` + LOGO_CSS + HERO_CSS + (OPEN_PROBLEMS ? OPEN_PROBLEMS_NAV_CSS : "");
+` + LOGO_CSS + HERO_CSS + (OPEN_PROBLEMS ? OPEN_PROBLEMS_NAV_CSS + `
+/* the Open Problems switch (OP_SWITCH_SCRIPT) while on */
+header.site nav a.op[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); }
+header.site nav a.op[aria-pressed="true"]::before { content: "\\2713"; margin-right: 0.4em; }
+` : "");
 // /open-problems/'s own rules and those of its figure switches, in open-problems.css, which only
 // that page links: every page carries the menu button, but not that page's figures.
 const OP_CSS = OPEN_PROBLEMS ? OPEN_PROBLEMS_PAGE_CSS + OP_TAB_CSS + "\n" : "";
@@ -1922,14 +1966,11 @@ for (const inst of tdlInstances)
 write("rules/index.html", redirectPage(RULES, "Rules"));
 write("data/index.html", redirectPage(DATA, "Data"));
 write("contribute/index.html", contributePage());
+// Open Problems is a switch on QMBL's own pages since 2026-11-11 (OP_SWITCH_SCRIPT): its old
+// addresses, linked from the Open Problems README and papers, forward to the switched views.
 if (OPEN_PROBLEMS) {
-  const op = openProblemsPages(OPEN_PROBLEMS, instances, { esc, citeHtml, codeHtml, energyCell, modelName, figure, rowCard, FIG_SCRIPT, GITHUB_MARK, CITE_HEAD,
-    CITE_TITLE, DOI, CITE_YEAR: RELEASED.slice(0, 4), figureSections: opFigureSections(),
-    searchIndex, searchWords, searchMatch, SEARCH_STOP, latticeOf, sizeBand, SIZE_BANDS });
-  const opCss = `/open-problems.css?v=${OP_CSS_VERSION}`;
-  write("open-problems/index.html", page({ url: OPEN_PROBLEMS_URL, title: "Open Problems", ogTitle: "QMBL: Open Problems", wide: true, css: opCss, ...op.leaderboard }));
-  write("open-problems/table/index.html", page({ url: OPEN_PROBLEMS_TABLE_URL, title: "Open Problems: Table", wide: true, css: opCss, ...op.table }));
-  write("open-problems.css", OP_CSS);
+  write("open-problems/index.html", redirectPage("/?open", "Open Problems", "QMBL: Open Problems is QMBL with the Open Problems switch on"));
+  write("open-problems/table/index.html", redirectPage("/instances/?open", "Open Problems: Table", "The open problems are QMBL's table with the Open Problems switch on"));
 }
 write("404.html", notFoundPage());
 write("style.css", CSS);
@@ -2042,7 +2083,7 @@ write("api/qmbl.json", JSON.stringify({
   summary: apiSummary, instances: instances.map(apiInstance),
 }, null, 2) + "\n");
 
-const urls = ["/", "/instances/", "/contribute/", ...(OPEN_PROBLEMS ? [OPEN_PROBLEMS_URL, OPEN_PROBLEMS_TABLE_URL] : []), ...instances.map(instUrl)];
+const urls = ["/", "/instances/", "/contribute/", ...instances.map(instUrl)];
 write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(u => `  <url><loc>https://qmbl.org${u}</loc><lastmod>${BUILT}</lastmod></url>`).join("\n")}

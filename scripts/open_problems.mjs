@@ -350,8 +350,8 @@ ${cite}`;
 
 // Two lines for llms.txt.
 export const openProblemsLlms = op => [
-  `- [Open Problems](https://qmbl.org${OPEN_PROBLEMS_URL}): the best published energies on the ${op.targets.length} instances with no exact ground-state energy, open problems for scientists and AI systems, in the home page's figures.`,
-  `- [Open Problems table](https://qmbl.org${OPEN_PROBLEMS_TABLE_URL}): the energy to beat on each of them, and the verified entries.`,
+  `- [Open Problems](https://qmbl.org/?open): QMBL's pages with the Open Problems switch on, showing only the ${op.targets.length} instances with no exact ground-state energy; the same data, with the verified entries, is in https://qmbl.org/api/open-problems.json.`,
+  `- [Open Problems table](https://qmbl.org/instances/?open): the table with the switch on (the filtering needs JavaScript; agents read the JSON above).`,
 ];
 
 // The menu button, last in the menu (site.mjs) on every page, so its rules go into the site's

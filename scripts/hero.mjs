@@ -11,6 +11,7 @@ import { MODELS } from "./readme_table.mjs";
 // tabs above the chart.
 export const SUB_RING = new Set(["Hubbard", "Heisenberg"]);
 export const pickerSlug = model => model.toLowerCase();
+const OP_README = "https://github.com/quantum-many-body-leaderboard/open-problems/blob/main/README.md";
 
 // ------------------------------------------------------------------------- formulas (MathML)
 const I = s => `<mi>${s}</mi>`, IU = s => `<mi mathvariant="normal">${s}</mi>`, B = s => `<mi mathvariant="bold">${s}</mi>`;
@@ -121,7 +122,7 @@ export function latticeGlyph(model, tab, cls) {
 }
 
 // --------------------------------------------------------------------------------- markup
-export function heroHtml({ models, energies }) {
+export function heroHtml({ models, energies, open }) {
   const nodes = models.map(m => `<a class="pk-node" href="#h-${pickerSlug(m.model)}" data-slug="${pickerSlug(m.model)}">${modelGlyph(m.model)}<span class="pk-nm">${m.name}</span></a>`).join("\n");
   return `<section class="pk-hero" id="pick">
   <button class="pk-whatis" type="button" id="pk-whatis" aria-expanded="false" aria-controls="pk-about"><span>?</span>What is QMBL?</button>
@@ -134,9 +135,19 @@ export function heroHtml({ models, energies }) {
     <p>Anyone can add a result.</p>
     <p><a href="/rules/">Read the rules</a> &middot; <a href="/contribute/">Add a result</a></p>
   </div>
+  <div class="pk-about" id="pk-about-op" hidden>
+    <button class="pk-x" type="button" aria-label="Close">&times;</button>
+    <h2>What is QMBL: Open Problems?</h2>
+    <p>QMBL: Open Problems is a live record book of the state of the art in quantum many-body simulation for problems with no exact ground-state energy. Browse through the figures interactively or look at the pure data in the <a href="/instances/?open">table</a>.</p>
+    <p>Scientists and AI systems should use the shared results to build on each other's work more efficiently and advance frontier science.</p>
+    <p>The record value is the bar to beat. Submit a trained state, and QMBL re-measures it with its own verifier before it is listed.</p>
+    <p>Simulation code is linked if available.</p>
+    <p>Anyone can enter.</p>
+    <p><a href="${OP_README}#how-to-enter">How to enter</a> &middot; <a href="${OP_README}#scoring">Scoring</a> &middot; <a href="${OP_README}#use-qmbl-open-problems-with-your-agent">For agents</a></p>
+  </div>
   <div class="pk-stage" id="pk-stage">
     <div class="pk-center"><h1>Pick your quantum problem</h1>
-      <p class="pk-say" id="pk-say" aria-live="polite">${models.length} Hamiltonians, ${energies.toLocaleString("en")} energies.<br><span class="pk-k">Point at one to read it, click to see its results.</span></p></div>
+      <p class="pk-say" id="pk-say" aria-live="polite" data-op="${models.filter(m => m.open).length} Hamiltonians, ${(open ?? 0).toLocaleString("en")} open problems."><span class="pk-head">${models.length} Hamiltonians, ${energies.toLocaleString("en")} energies.</span><br><span class="pk-k">Point at one to read it, click to see its results.</span></p></div>
 ${nodes}
   </div>
   <noscript><p class="pk-noscript">The picker needs JavaScript. Every energy is in the <a href="/instances/">table</a>.</p></noscript>
