@@ -1,15 +1,15 @@
 // The front page's picker (2026-11-10): "Pick your quantum problem" with the Hamiltonians on a
 // slowly drifting ring, each drawn as a small hairline sketch of its lattice; a click opens
 // that Hamiltonian's chart (scripts/assets/hero.js) drawn from _site/picker/<model>.json.
-// Hubbard and Heisenberg first open a second ring of their lattices. Formulas follow the
+// Hubbard, Heisenberg and the electron gas first open a second ring of their lattices. Formulas follow the
 // Wikipedia pages of each model (Hubbard, J1-J2, transverse-field Ising, t-J, Anderson impurity,
 // jellium, the molecular Hamiltonian in atomic units), with the couplings named as data/ stores
 // them (h, Jd, K/J/Gamma). Names are MODELS' (readme_table.mjs), never the data codes.
 import { MODELS } from "./readme_table.mjs";
 
-// Hamiltonians whose lattice is asked on a second ring; every other one shows its lattices as
-// tabs above the chart.
-export const SUB_RING = new Set(["Hubbard", "Heisenberg"]);
+// Hamiltonians whose lattice (or simulation cell) is asked on a second ring first; every other
+// one opens on its lattice with most results, the others as tabs above the chart.
+export const SUB_RING = new Set(["Hubbard", "Heisenberg", "HEG3D", "HEG2D"]);
 export const pickerSlug = model => model.toLowerCase();
 const OP_README = "https://github.com/quantum-many-body-leaderboard/open-problems/blob/main/README.md";
 
@@ -104,8 +104,9 @@ const G = {
 };
 // One sketch per lattice tab; the model's own sketch where a lattice has none.
 const LATTICE = {
-  square: m => m === "Hubbard" ? sqLines() + neel() : m === "J1J2" ? G.J1J2() : m === "ShastrySutherland" ? G.ShastrySutherland() : m === "tJ" ? G.tJ() : sqLines() + neel(),
-  triangular: () => near([[14, [10, 26, 42]], [30, [18, 34, 50]], [46, [10, 26, 42]]].flatMap(([y, xs]) => xs.map(x => [x, y])), 19),
+  // The electron gas's "lattices" are simulation cells: the cell's outline with electrons in it.
+  square: m => m === "HEG2D" ? G.HEG2D() : m === "Hubbard" ? sqLines() + neel() : m === "J1J2" ? G.J1J2() : m === "ShastrySutherland" ? G.ShastrySutherland() : m === "tJ" ? G.tJ() : sqLines() + neel(),
+  triangular: m => m === "HEG2D" ? (() => { const r = rng(5); let s = `<path class="g-l" d="M6 48 H34 L54 12 H26 Z"/>`; for (let i = 0; i < 12; i++) { const u = r(), v = r(); s += D(+(10 + u * 24 + v * 18).toFixed(1), +(46 - v * 32).toFixed(1), 1.8); } return s; })() : near([[14, [10, 26, 42]], [30, [18, 34, 50]], [46, [10, 26, 42]]].flatMap(([y, xs]) => xs.map(x => [x, y])), 19),
   honeycomb: m => m === "Kitaev" ? G.Kitaev() : near([...hexRing(20, 20, 10), ...hexRing(40, 20, 10), ...hexRing(30, 37.3, 10)].filter((p, i, a) => a.findIndex(q => Math.hypot(q[0] - p[0], q[1] - p[1]) < 1) === i), 10.5),
   kagome: () => near([[10, 14], [30, 14], [50, 14], [20, 30], [40, 30], [10, 46], [30, 46], [50, 46], [0, 30], [60, 30]].filter(([x]) => x > 0 && x < 60), 21),
   chain: () => L(6, 30, 54, 30) + [10, 20, 30, 40, 50].map((x, i) => A(x, 30, i % 2 ? 180 : 0, 6)).join(""),
