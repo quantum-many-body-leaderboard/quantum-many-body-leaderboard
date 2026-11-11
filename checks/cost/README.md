@@ -229,7 +229,7 @@ versions it ran with, under `software`. For example, the GCNN row on the triangu
 36-site torus:
 
 ```
-git checkout 51fa6e2                    # software.commit c0fcfee, see below
+git checkout 364f4ed                    # software.commit c0fcfee, see below
 pip install netket==3.22.4 jax==0.8.3 flax==0.12.6
 python checks/cost/run_nqs.py --instance Heisenberg/triangular_36_P --model gcnn --out gcnn-tri-36.json
 ```

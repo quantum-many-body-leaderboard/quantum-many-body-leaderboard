@@ -371,7 +371,7 @@ console.log(`batch C: ${added - beforeC[0]} exact rows (${created - beforeC[1]} 
 // Hu & Muller, Computers in Physics 12, 565 (1998), arXiv:cond-mat/9809163, Eqs. (6)-(9) (periodic);
 // Mei & Bolech, Phys. Rev. E 95, 032127 (2017), arXiv:1609.08045, Eqs. (11)-(12) (open).
 const BETHE = { code: "https://github.com/Uni20-dev/bethe", commit: "5909c21" };
-const BETHE_CHECK = "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/1ca5cbf4/checks/bethe-heisenberg-chain";
+const BETHE_CHECK = "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/9289be7c/checks/bethe-heisenberg-chain";
 for (const [bc, name, prog, method, sent, pauli, ours, dmrg, gap] of [
   ["O", "open", "bethe-xxx-obc", "Bethe ansatz (Mei & Bolech 2017)", "-88.44155556950091289093195216050812503118715776351299", "-353.76622227800365156372780864203250012474863105405196", "-353.76622227800365156372780864203250012474863105405", "-353.766222278", "3.7e-12"],
   ["P", "periodic", "bethe-xxx-pbc", "Bethe ansatz (Karbach, Hu & Muller 1998)", "-88.6335532522416202610829833054283564902576889217038", "-354.5342130089664810443319332217134259610307556868152", "-354.53421300896648104433193322171342596103075568681", "-354.534213002", "7.0e-9"],
@@ -405,7 +405,7 @@ for (const [bc, name, prog, method, sent, pauli, ours, dmrg, gap] of [
 // arXiv:2505.08635 (checks/hchain-fci/comparison.md). Carried to 10 decimals, the convergence
 // tolerance. TenCirChem's energy minus its printed error agrees with these within the rounding of the
 // two columns (0.01 mHa) except at H10, where it is 0.03 mHa lower; the rows here are not changed by it.
-const HCHAIN_FCI = "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/d1019579/checks/hchain-fci";
+const HCHAIN_FCI = "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/e0917e54/checks/hchain-fci";
 for (const [N, full, enuc, s2, uccsd, err] of [
   [4, "-2.1675605441340533", "2.86637655915", "1.3e-31", "-2,167.55", "0.01"],
   [6, "-3.2044118794841108", "5.754802168754997", "1.0e-30", "-3,204.14", "0.27"],

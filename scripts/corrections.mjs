@@ -24181,7 +24181,7 @@ export const CORRECTIONS = [
     "conversion": "none",
     "checked_on": "2026-10-27",
     "reason": "A direct reading (ruling 2026-10-27, as on the Choo rows): the row cites the paper that produced the number and the value is printed there (Nat. Commun. 17, 7838 (2026), SI Table 5, and arXiv:2507.02644v2 Fig. 4(A): −0.7563; verified.journal_read and the reference correction of 2026-09-29), so it is not a quote and secondary_of becomes null. It held a table-row label, \"ACE Table 1 row 'Transformer [13]' = arXiv:2507.02644\", for where the first reading of 2026-09-10 (verified.note) took the value: Table I of arXiv:2604.25775, row 'Transformer [21]', column 't′ = 0, PBC', which prints the same digits. Reference, provenance and energy unchanged.",
-    "source_entry": "quoted-in follow-up of 2026-10-27 to the source-cell change ea7c8dd5 (every quoted row says where its number was read)"
+    "source_entry": "quoted-in follow-up of 2026-10-27 to the source-cell change 58ccfa79 (every quoted row says where its number was read)"
   },
   {
     "match": {
@@ -24198,7 +24198,7 @@ export const CORRECTIONS = [
     "conversion": "none",
     "checked_on": "2026-10-27",
     "reason": "A direct reading (ruling 2026-10-27, as on the Choo rows): the row cites the paper that produced the number and the value is printed there (arXiv:2511.07566v1, Table 5, t′ = 0.0, Filled Stripe: -0.7515(1); the reference correction of 2026-09-29), so it is not a quote and secondary_of becomes null. It held a table-row label, \"ACE Table 1 row 'HFPS+sym [31]'\", for where the first reading of 2026-09-10 (verified.note) took the value: Table I of arXiv:2604.25775, row 'HFPS+sym [24]', column 't′ = 0, PBC', which prints the same digits. Reference, provenance and energy unchanged.",
-    "source_entry": "quoted-in follow-up of 2026-10-27 to the source-cell change ea7c8dd5 (every quoted row says where its number was read)"
+    "source_entry": "quoted-in follow-up of 2026-10-27 to the source-cell change 58ccfa79 (every quoted row says where its number was read)"
   },
   {
     "match": {
@@ -24215,7 +24215,7 @@ export const CORRECTIONS = [
     "conversion": "none",
     "checked_on": "2026-10-27",
     "reason": "The number is D. Poilblanc's unpublished exact diagonalization, printed in Table I of Sorella, Phys. Rev. B 64, 024512 (2001), and read there; that paper is the quoting work, as before. secondary_of named it by its old-style arXiv id, which identify() does not read, while the reference names it by its DOI, so the citation code took Sorella's paper for the row's own: the source cell read 'Sorella (2001)' with no quote, as if Sorella had produced the number. secondary_of now names the paper by the DOI the reference carries, and cite.mjs cites a person's unpublished number printed in a paper as that person, unpublished, quoted in the paper, linked to the paper (ruling 2026-10-27): the cell reads 'D. Poilblanc (unpublished), quoted in Sorella (2001)'. Lugas, Spanu, Becca & Sorella, Phys. Rev. B 74, 165122 (2006), Table II prints the same digits in its Lanczos column without naming a source; the row was not read there and does not cite it. Reference, provenance and energy unchanged.",
-    "source_entry": "quoted-in follow-up of 2026-10-27 to the source-cell change ea7c8dd5 (every quoted row says where its number was read)"
+    "source_entry": "quoted-in follow-up of 2026-10-27 to the source-cell change 58ccfa79 (every quoted row says where its number was read)"
   },
   {
     "match": {
@@ -24232,7 +24232,7 @@ export const CORRECTIONS = [
     "conversion": "none",
     "checked_on": "2026-10-27",
     "reason": "The number is D. Poilblanc's unpublished exact diagonalization, printed in Table I of Sorella, Phys. Rev. B 64, 024512 (2001), and read there; that paper is the quoting work, as before. secondary_of named it by its old-style arXiv id, which identify() does not read, while the reference names it by its DOI, so the citation code took Sorella's paper for the row's own: the source cell read 'Sorella (2001)' with no quote, as if Sorella had produced the number. secondary_of now names the paper by the DOI the reference carries, and cite.mjs cites a person's unpublished number printed in a paper as that person, unpublished, quoted in the paper, linked to the paper (ruling 2026-10-27): the cell reads 'D. Poilblanc (unpublished), quoted in Sorella (2001)'. Lugas, Spanu, Becca & Sorella, Phys. Rev. B 74, 165122 (2006), Table II prints the same digits in its Lanczos column without naming a source; the row was not read there and does not cite it. Reference, provenance and energy unchanged.",
-    "source_entry": "quoted-in follow-up of 2026-10-27 to the source-cell change ea7c8dd5 (every quoted row says where its number was read)"
+    "source_entry": "quoted-in follow-up of 2026-10-27 to the source-cell change 58ccfa79 (every quoted row says where its number was read)"
   },
   {
     "match": {
@@ -24249,7 +24249,7 @@ export const CORRECTIONS = [
     "conversion": "none",
     "checked_on": "2026-10-27",
     "reason": "The number is D. Poilblanc's unpublished exact diagonalization, printed in Table I of Sorella, Phys. Rev. B 64, 024512 (2001), and read there; that paper is the quoting work, as before. secondary_of named it by its old-style arXiv id, which identify() does not read, while the reference names it by its DOI, so the citation code took Sorella's paper for the row's own: the source cell read 'Sorella (2001)' with no quote, as if Sorella had produced the number. secondary_of now names the paper by the DOI the reference carries, and cite.mjs cites a person's unpublished number printed in a paper as that person, unpublished, quoted in the paper, linked to the paper (ruling 2026-10-27): the cell reads 'D. Poilblanc (unpublished), quoted in Sorella (2001)'. Lugas, Spanu, Becca & Sorella, Phys. Rev. B 74, 165122 (2006), Table II prints the same digits in its Lanczos column without naming a source; the row was not read there and does not cite it. Reference, provenance and energy unchanged.",
-    "source_entry": "quoted-in follow-up of 2026-10-27 to the source-cell change ea7c8dd5 (every quoted row says where its number was read)"
+    "source_entry": "quoted-in follow-up of 2026-10-27 to the source-cell change 58ccfa79 (every quoted row says where its number was read)"
   },
   // The quoted-in note moves to hover on the site (2026-10-28); this row keeps it in the cell.
   {
