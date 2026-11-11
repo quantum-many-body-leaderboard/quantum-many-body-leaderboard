@@ -178,8 +178,8 @@ ${choosing.length || fixed.length ? `<div class="pk-filters">${choosing.map(([di
       s += `<a class="pk-pt${p.solved ? " pk-solved" : ""}" style="--pk-k:${KIND[p.kind]}" href="/instances/${isOn() ? "?open" : ""}#${p.id}" data-k="${k}">${mark}</a>`;
     });
     chart.innerHTML = s + "</svg>";
-    const kinds = new Set(pts.filter(p => !p.flagged).map(p => p.kind));
-    $("pk-lgd").innerHTML = LEGEND.map((t, k) => kinds.has(k) ? `<span style="--c:${KIND[k]}">${t}</span>` : "").join("") + (pts.some(p => p.flagged) ? `<span class="pk-fl">Flagged, see the row</span>` : "") + (pts.some(p => p.solved) ? `<span class="pk-lg-solved" style="--c:var(--grid)">Solved: the instance has an exact energy</span>` : "");
+    const kinds = new Set(pts.filter(p => !p.flagged).map(p => p.kind)), openKinds = new Set(pts.filter(p => !p.flagged && !p.solved).map(p => p.kind));
+    $("pk-lgd").innerHTML = LEGEND.map((t, k) => kinds.has(k) ? `<span${openKinds.has(k) ? "" : ` class="pk-lg-only-solved"`} style="--c:${KIND[k]}">${t}</span>` : "").join("") + (pts.some(p => p.flagged) ? `<span class="pk-fl">Flagged, see the row</span>` : "") + (pts.some(p => p.solved) ? `<span class="pk-lg-solved" style="--c:var(--grid)">Solved: the instance has an exact energy</span>` : "");
     const tip = $("pk-tip"), cards = state.data.cards;
     const follow = e => { const w = tip.offsetWidth, h = tip.offsetHeight; let x = e.clientX + 14, y = e.clientY + 14; if (x + w > innerWidth - 8) x = e.clientX - w - 14; if (y + h > innerHeight - 8) y = e.clientY - h - 14; tip.style.left = `${x}px`; tip.style.top = `${y}px`; };
     chart.querySelectorAll(".pk-pt").forEach(a => {
@@ -208,6 +208,15 @@ ${choosing.length || fixed.length ? `<div class="pk-filters">${choosing.map(([di
   boxes.forEach(b => b.querySelector(".pk-x").addEventListener("click", () => toggle(false)));
   addEventListener("qmbl:open", () => toggle(false));
   addEventListener("keydown", e => { if (e.key === "Escape") toggle(false); });
+  // The badges pop in clockwise from whichever Hamiltonian is at the top of the ring right now.
+  function stagger() {
+    const box = stage.getBoundingClientRect(), cx = box.left + box.width / 2, cy = box.top + box.height / 2;
+    [...stage.querySelectorAll(".pk-node")].map(n => {
+      const r = n.getBoundingClientRect(), a = Math.atan2(r.left + r.width / 2 - cx, cy - (r.top + r.height / 2));
+      return [n, (a + 2 * Math.PI) % (2 * Math.PI)];
+    }).sort((x, y) => x[1] - y[1]).forEach(([n], k) => n.querySelector(".pk-badge")?.style.setProperty("--i", k));
+  }
+  addEventListener("qmbl:open", stagger);
   const links = [...document.querySelectorAll(".pk-more-l")];
   links.forEach(b => b.addEventListener("click", () => {
     const open = b.getAttribute("aria-expanded") !== "true";

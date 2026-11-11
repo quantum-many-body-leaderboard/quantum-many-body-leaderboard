@@ -210,6 +210,7 @@ export const HERO_CSS = `
 .op-on .pk-pt.pk-solved { --pk-c: var(--grid); }
 .pk-lgd .pk-lg-solved { opacity: 0; transition: opacity .45s ease; }
 .op-on .pk-lgd .pk-lg-solved { opacity: 1; }
+.op-on .pk-lgd .pk-lg-only-solved { display: none; }
 /* the size figure draws only exactly solved instances: not offered while marking open problems */
 .op-on .pk-more-l[aria-controls="pk-p-size"], .op-on #pk-p-size { display: none; }
 .pk-noscript { text-align: center; color: var(--ink2); }
