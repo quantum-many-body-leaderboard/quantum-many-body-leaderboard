@@ -763,6 +763,12 @@ loader, never by hand.
 | Impurity | total energy | no meaningful per-site energy |
 | HEG2D, HEG3D (track 2) | total energy, Hartree, Ewald sum with the Madelung term (RULES.md 12.2) | per electron: divide by N (`n_sites` holds N) |
 | Hchain, Hsheet (track 3) | total energy, Hartree, nuclear repulsion included; periodic cells Ewald-summed (RULES.md 13.2) | per atom: divide by N (`n_sites` holds N) |
+| Holstein, Hubbard-Holstein, Kondo-Heisenberg, Bose-Hubbard, Z₂ gauge theory | total energy in units of t, couplings normalised to t = 1 ([RULES.md §2.1](RULES.md#21-instance-names), §5) | per site: divide by `n_sites`; in units of ω, J or U: the loader converts |
+| SU(2) gauge theory | total energy in units of 1/a (lattice spacing 1) | per site: divide by `n_sites` |
+| Atom, Molecule (track 3) | total energy, Hartree, nuclear repulsion included (RULES.md 13.2) | the total; kcal/mol, eV and mHa converted by the loader |
+| Solid (track 3) | total energy of the cell, Hartree, Ewald-summed (RULES.md 13.2) | per atom: divide by N (`n_sites` holds N) |
+| FQH (track 4) | total energy in e²/(εℓ_B), unrescaled ℓ_B, background included; with mixing, minus N_e ħω_c/2 (RULES.md 15.2) | per electron: divide by N_e (`n_sites` holds N_e) |
+| QDot2D (track 5) | total energy, effective Hartree (RULES.md 16.2) | the total, or in units of ħω: the loader converts |
 
 An instance on a cluster that its source defines (the honeycomb, Shastry-Sutherland and t-J
 families, and the 4 × 4 and 6 × 6 kagome tori, `scripts/add_clusters.mjs`) carries a `cluster`
@@ -774,12 +780,28 @@ or a t-J source in units of J) carries `normalised`: `{ factor, source_couplings
 loader has divided the printed energy by `factor`.
 
 `dof` is the spin count for spin models, `N_up + N_dn` for Hubbard and t-J, and the particle
-count for **spinless** t-V; for the electron gas and the hydrogen chains and sheets it is N. `einf`
-is `0` for traceless spin Hamiltonians and `U * N_up * N_dn / n_sites` for the plain Hubbard
-model; tracks 2 and 3 have none.
+count for **spinless** t-V and for the families of 2026-11-11 (electrons, bosons or matter
+particles); for tracks 2 to 5 it is the number of electrons. `einf` is `0` for traceless spin
+Hamiltonians and `U * N_up * N_dn / n_sites` for the plain Hubbard model; the families of
+2026-11-11 and tracks 2 to 5 have none.
 
 A track-3 instance (`Hchain`, `Hsheet`) carries `params` { N_up, N_dn, R (bohr), basis (as the source
 names it, or `none`), twist on a periodic cell }.
+
+The models added on 2026-11-11 carry these `params` (RULES.md §2.1, §13, §15, §16):
+
+- `Holstein`: { t: 1, w, g, spinless (true for `f<N>`), N (or N_up, N_dn) }; `HubbardHolstein` adds U.
+  A row read from a source that couples to (n − ρ) or writes the zero-point energy carries
+  `converted`: { from, shift, note }, the constant the loader added.
+- `KondoHeisenberg`: { t: 1, J, JK, N_c }. `BoseHubbard`: { t: 1, U, N_b }.
+- `Z2LGT`: { t: 1, h, J, matter (`hcb` or `f`), N_m, gauss: +1 }. `SU2LGT`: { g2, lam, m, t, N_f,
+  gauss: 0 }.
+- `Atom`, `Molecule`, `Solid`: { charge, N_up, N_dn, basis, variant (`fc`, a pseudopotential, or
+  none), geometry: [{ element, Z, xyz (bohr) }], geometry_source }; `Solid` adds the cell vectors
+  (bohr) and the twist. `dof` is the electron count.
+- `FQH`: { geometry (`sphere` or the torus shape), N_e, 2Q or N_phi, LL, interaction, pseudopotentials
+  for a model Hamiltonian, N_up, N_dn (spinful only), thickness model and w, kappa }.
+- `QDot2D`: { N_up, N_dn, w }.
 
 Two Hubbard instances carry further couplings. VarBench names them by suffix, and `params`
 states them in the form of VarBench's Eq. (S6).

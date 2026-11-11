@@ -5,20 +5,31 @@ release. Each accept or reject of a row cites a clause of this file.
 
 ## 1. Scope
 
-Track 1 covers ground-state energies of lattice Hamiltonians computed by any method, on finite
-clusters and on the infinite lattice (the thermodynamic limit, §14).
-Track 2 covers ground-state energies of the homogeneous electron gas in a periodic cell, in
-two and three dimensions (§12). Track 3 covers ground-state energies of hydrogen chains and
-square hydrogen sheets, in a stated basis set or basis-free (§13). A row is a claim about one
-(Hamiltonian instance, method) pair.
+QMBL has five tracks. Each covers ground-state energies computed by any method.
 
-Out of scope for now: real-time dynamics, finite temperature, molecules other than the
-hydrogen chains and sheets of track 3, atoms, quantum dots and other continuum systems with
-an external potential. Each needs its own instance definition (§12 is the pattern), and none
-opened before track 2 had its first verification pass. That pass is done: the second reading
-of the passes of 2026-10-16 to 2026-10-19, four of them electron-gas passes (1079 rows;
-SWEEP.md). Track 3, defined in §13 on 2026-10-20, opened on 2026-10-25. Tracks 2 and 3 rank by energy like
-track 1 and compute no V-score (§12.2, §13.2).
+- Track 1: lattice Hamiltonians, on finite clusters and on the infinite lattice (the
+  thermodynamic limit, §14). Since 2026-11-11 it includes the electron-phonon, Kondo, boson and
+  lattice gauge theory families of §2.1.
+- Track 2: the homogeneous electron gas in a periodic cell, in two and three dimensions (§12).
+- Track 3: atoms, molecules and solids: the hydrogen chains and square hydrogen sheets, atoms,
+  molecules at fixed geometry and periodic solids, each in a stated basis set or basis-free (§13).
+  Basis-free (continuum) atoms and molecules are in scope since 2026-11-11.
+- Track 4: the fractional quantum Hall effect: electrons in a Landau level on the sphere and the
+  torus (§15, 2026-11-11).
+- Track 5: electrons in a two-dimensional harmonic trap, the 2D quantum dot (§16, 2026-11-11).
+
+A row is a claim about one (Hamiltonian instance, method) pair.
+
+Out of scope for now: real-time dynamics, finite temperature, continuum models of moiré
+materials, active-space model Hamiltonians given as integral files (FCIDUMP), relativistic
+Hamiltonians, multi-layer FQH systems, screened FQH interactions, Landau-level mixing above the
+lowest level (§15.1), and quantum dots in a magnetic field or in a potential other than the
+harmonic trap. Each needs its own instance definition (§12 is the pattern). Tracks 2 to 5 rank
+by energy like track 1 and compute no V-score (§12.2, §13.2, §15.2, §16.2).
+
+Track 2 opened on 2026-10-16 and track 3 on 2026-10-25 (hydrogen chains and sheets; §13
+defined on 2026-10-20). The families of §2.1 dated 2026-11-11, track 3's atoms, molecules and
+solids, and tracks 4 and 5 were defined on 2026-11-11.
 
 ## 2. Instances
 
@@ -113,6 +124,97 @@ spins, bosons) is not in the family. Zero holes is the Heisenberg model, not a t
 - Not rows: energies per hole relative to the undoped cluster (e_h = [E(N_h) - E(0)] / N_h),
   binding energies, extrapolations to infinite size, and sector minima other than the ground state
   (§6).
+
+The electron-phonon, Kondo, boson and lattice gauge theory families (2026-11-11):
+
+These families follow the pattern of the t-J family. The hopping is normalised to t = 1, so every
+other coupling in the id is a ratio to t. A source in other units (ω, J or U) has a Hamiltonian that
+is the instance's times a factor; the loader divides its energies, error bars and variances by that
+factor and the row keeps it in `normalised` (§2.1, above). Sources name the couplings with
+different letters (the Bose-Hubbard hopping is often J); a coupling is mapped by the term it
+multiplies, never by its letter. Clusters, boundaries and twists follow the t-J family: a cluster
+or boundary the source does not state creates no instance. Each id carries the particle number,
+because these families are compared at fixed particle number.
+
+- **Holstein** (`Holstein`), electrons coupled to one dispersionless phonon mode per site:
+
+  `H = -t sum_<ij>,s (c+_is c_js + h.c.) + w sum_i b+_i b_i + g sum_i n_i (b+_i + b_i)`
+
+  - Id: `Holstein/<lattice>_N_<b>_<particles>_w<w>_g<g>`. `<particles>` is `f<N>` for N spinless
+    fermions (drop the spin index s above) and `e<N>` for N spin-1/2 electrons with N_up = N_dn, or
+    N_up = N_dn + 1 for odd N. Examples: `Holstein/chain_4_A_f2_w1_g1.5`,
+    `Holstein/chain_16_P_e2_w1_g1`. One electron is the same problem with or without spin; it is a
+    spinless instance (`f1`).
+  - The key is g, never a dimensionless λ: sources define λ as g²/(2tω), 2g²/ω and g²/(2ω). The
+    loader converts a printed λ with the definition the source states, and a source that states
+    none gives no row until its definition is found.
+  - The coupling is to n_i. A source that couples to (n_i − ρ), as many write with ρ = 1/2, has a
+    Hamiltonian unitarily equivalent to the instance's up to a constant (displace b_i by gρ/ω):
+    E_instance = E_source − 2g²ρN_e/ω + g²ρ²N/ω. The displacement maps every state, truncated or
+    not, so a variational energy stays variational. The loader applies it.
+  - The phonon term is ω b+b, with no zero-point energy. A source that writes ω(b+b + 1/2) is
+    shifted by −ωN/2.
+- **Hubbard-Holstein** (`HubbardHolstein`): the Holstein Hamiltonian with spin plus
+  U sum_i n_i,up n_i,dn. Id: `HubbardHolstein/<lattice>_N_<b>_e<N>_U<U>_w<w>_g<g>`. The coupling
+  conventions are the Holstein ones. One electron is a Holstein instance, since U drops out.
+- **Kondo-Heisenberg** (`KondoHeisenberg`), conduction electrons and a lattice of localized
+  spins 1/2, one of each per site:
+
+  `H = -t sum_<ij>,s (c+_is c_js + h.c.) + J sum_<ij> S_i.S_j + JK sum_i S_i.s_i`
+
+  - S_i is the localized spin, S = σ/2, and s_i = (1/2) sum_ab c+_ia τ_ab c_ib is the conduction
+    spin. The Kondo lattice is J = 0.
+  - Id: `KondoHeisenberg/<lattice>_N_<b>_e<N_c>_J<J>_JK<JK>`, with N_c conduction electrons, for
+    example `KondoHeisenberg/square_64_P_e48_J0.5_JK2`; the Kondo lattice is `_J0`.
+  - A source that writes JK' σ_i.τ_i (Pauli matrices on both) has JK = 4 JK'; one that writes
+    JK S_i.σ_i has JK = 2 × its coupling. The loader converts by the form the source states.
+- **Bose-Hubbard** (`BoseHubbard`):
+
+  `H = -t sum_<ij> (b+_i b_j + h.c.) + (U/2) sum_i n_i (n_i − 1)`
+
+  - Id: `BoseHubbard/<lattice>_N_<b>_b<N_b>_U<U>`, for example `BoseHubbard/square_64_P_b64_U8.5`.
+  - A source that writes U sum n_i(n_i − 1) without the 1/2 has U = 2 × its coupling. A
+    chemical-potential term −μ N_b is a constant at fixed N_b; the loader removes it where the
+    source states μ.
+- **Z₂ lattice gauge theory** (`Z2LGT`), matter on the sites and a Z₂ gauge field on the links:
+
+  `H = -t sum_<ij> (a+_i σz_ij a_j + h.c.) − h sum_<ij> σx_ij − J sum_plaquettes prod σz`
+
+  - The matter a_i is hard-core bosons (`hcb`) or spinless fermions (`f`). The instance is the
+    sector with Gauss's law G_j = (−1)^n_j prod_(links at j) σx = +1 at every site (no static
+    charges). Another sector is another instance and gets a name when a source needs one.
+  - Id: `Z2LGT/<lattice>_N_<b>_<matter><N_m>_h<h>[_J<J>]`, J written only when it is not zero, for
+    example `Z2LGT/square_36_P_hcb8_h0.1` and `Z2LGT/rectangular-5x4_20_PO_hcb8_h0.3` (VarBench's
+    rectangular naming, periodic along the second side).
+  - A model without matter is not in the family yet.
+- **SU(2) lattice gauge theory** (`SU2LGT`), the Kogut-Susskind Hamiltonian with staggered
+  fermions of two colours, in the form of arXiv:2607.26131:
+
+  `H = (g²/2) sum_links E^a E^a − (λ/2) sum_plaquettes Tr U_P + m sum_n (−1)^(n_x+n_y) ψ+_n ψ_n − (i t/2) sum_n,k (ψ+_n U_n,k ψ_n+k η_n,k − h.c.)`
+
+  - E^a E^a is the quadratic Casimir of the link, U_P the plaquette product and η the staggered
+    phases. The lattice spacing is 1, and λ = 4/g² unless the id gives it.
+  - The instance is the sector with Gauss's law G^a_n = 0 at every site and N_f fermions.
+  - Id: `SU2LGT/<lattice>_N_<b>_f<N_f>_gsq<g²>_m<m>_t<t>[_lam<λ>]`, for example
+    `SU2LGT/square_16_P_f16_gsq20_m1_t0.5`. Here t is not normalised to 1, since the gauge coupling
+    sets the scale: the energy unit is 1/a.
+  - A source that writes the magnetic term as λ sum (1 − Tr U_P/2) has a constant λN_P more; the
+    loader removes it.
+
+What is a row and its `bound_type`, for these families:
+
+- A truncated boson space (a phonon cutoff, a maximum boson occupation, a maximum link
+  representation j_max) is a subspace of the instance's Hilbert space. Exact diagonalization or any
+  other variational method in it is `variational`, and the truncation goes in `method_detail`. An
+  extrapolation in the truncation is `extrapolated`. Exact diagonalization whose truncation removes
+  no state (a maximum boson occupation of N_b) is `exact`.
+- Exact diagonalization of the Z₂ family in its gauge-invariant sector is `exact`: its Hilbert space
+  is finite.
+- Sign-problem-free QMC (determinant QMC for the Holstein model with spin, QMC for the half-filled
+  Kondo lattice, SSE or worm QMC for the Bose-Hubbard model) is `exact (stochastic)` where the source
+  establishes that it is sign-free and converged (§4).
+- Not rows: polaron and bipolaron binding energies, energies relative to another particle number,
+  and polaron energies on an infinite lattice, which name no site count.
 
 ## 3. Required fields
 
@@ -229,6 +331,13 @@ Stored conventions follow VarBench and are asserted per instance, not per row:
   - Γ′, a third-neighbour coupling, or unequal Kx, Ky, Kz in the Kitaev family;
   - XXZ anisotropy;
   - four-spin or extra second-neighbour terms in the Shastry-Sutherland model.
+- The Holstein, Hubbard-Holstein, Kondo-Heisenberg, Bose-Hubbard and Z₂ families (§2.1,
+  2026-11-11) are stored as total energies in units of t, with the couplings normalised to t = 1.
+  The SU(2) family is stored as the total energy in units of 1/a. Papers quote per site, as totals,
+  or in units of ω, J or U; the loader converts each. `dof` is the particle count: N for Holstein
+  and Hubbard-Holstein, N_c for Kondo-Heisenberg, N_b for Bose-Hubbard, N_m for Z₂ and N_f for
+  SU(2). None of them defines `einf` (the boson spaces are infinite, and no source states E_inf),
+  so they compute no V-score.
 
 Any submitted number is converted by the loader, never by hand. The conventions of every
 model are listed in [DATA.md](DATA.md#units-and-conventions).
@@ -740,93 +849,170 @@ Section 4 applies unchanged. The recurring cases:
 Track 2 has its own section and tables. Its figures plot energy per electron against `rs` at
 fixed N and cell, and against N at fixed `rs`, each result a dot.
 
-## 13. Track 3: hydrogen chains and sheets
+## 13. Track 3: atoms, molecules and solids
 
 Sections 2 to 11 apply to track 3 as to track 1. This section states what differs. The
-conventions date from 2026-10-20. The track opened on 2026-10-25 (§1).
+conventions for hydrogen chains and sheets date from 2026-10-20 (the track opened on
+2026-10-25); atoms, molecules and solids were added on 2026-11-11 (§1).
 
 ### 13.1 Instance
 
-An instance is fixed by its geometry, the number of atoms N, the bond length R (bohr), the
-boundary and the basis set.
+An instance is fixed by its nuclei and their positions, the charge, the spin sector, the boundary
+(open, or a periodic cell), the Hamiltonian variant and the basis set. Four models share the track:
 
-- Geometry: `chain` (N equally spaced protons on a line, spacing R) or `sheet` (N = L × L
-  protons on a square grid of spacing R). A dimerised, relaxed or otherwise distorted geometry
-  is not one of these instances.
-- Charge and spin: the neutral system with N electrons, `S_z = 0` for even N and `S_z = 1/2`
-  for odd N, unless the source states another sector. A row from another sector moves to that
-  sector's instance (§2).
-- Boundary: `O` (open: a finite molecule) or `P` (periodic: N atoms in the repeated cell; a
-  chain is periodic along its axis, a sheet in its plane). A periodic instance carries a twist
-  as in §12.1: `Gamma` unless stated; a fixed twist with a stated vector is its own instance;
-  a twist average is not a row.
-- Basis: each basis set is its own instance, named as the source names it (`STO-6G`,
-  `cc-pVDZ`, ...). STO-6G is the main one: for H10 in STO-6G, full CI, DMRG and AFQMC agree
-  (Motta et al., PRX 7, 031059 (2017)). An energy in a basis is a claim about the Hamiltonian
-  projected onto that basis, and full CI in it is that instance's exact energy.
-- Basis-free energies go on a separate instance with `basis = none`: continuum,
-  Born–Oppenheimer, all-electron energies with point protons, from DMC, VMC and real-space
-  neural-network states (FermiNet and its relatives). A complete-basis-set extrapolation is
-  an `extrapolated` row on the `basis = none` instance (§13.4). A pseudopotential changes the
-  Hamiltonian, so its energy is not a `basis = none` row.
+- `Hchain` and `Hsheet`: hydrogen chains and square hydrogen sheets.
+- `Atom`: one nucleus.
+- `Molecule`: two or more nuclei in free space (open boundary).
+- `Solid`: nuclei in a periodic cell.
+
+What is common to all four:
+
+- Nuclei are fixed point charges (Born–Oppenheimer). A row with nuclear motion, or with finite
+  nuclear size, is not a row of this track.
+- Charge and spin: the id gives the charge (`q0` neutral, `q1` cation, `q-1` anion) and
+  N_up − N_dn (`s<N_up − N_dn>`). The instance's energy is the lowest at that charge and N_up − N_dn.
+  A source that names a multiplicity 2S + 1 and targets its lowest state gives a row on `s<2S>`;
+  the reader checks that no state of higher spin lies below it, from the source's own statements.
+  A row from another sector moves to that sector's instance (§2). The hydrogen chains and sheets keep
+  their default (the neutral system, N_up − N_dn = 0 or 1) and carry no `q` or `s` in the id.
+- Basis: each basis set is its own instance, named as the source names it (`STO-3G`, `6-31G`,
+  `cc-pVDZ`, ...). An energy in a basis is a claim about the Hamiltonian projected onto that basis,
+  and full CI in it is that instance's exact energy. Basis-free energies (continuum: real-space VMC
+  and DMC, neural-network states such as FermiNet and PauliNet, explicitly correlated wave functions)
+  go on a separate instance with `basis = none`. A complete-basis-set extrapolation is an
+  `extrapolated` row on the `basis = none` instance (§13.4). In ids the basis is in lower case
+  without punctuation (`sto3g`, `631g`, `ccpvdz`, `augccpvtz`, `none`).
+- Hamiltonian variants: all-electron and non-relativistic unless the id says otherwise.
+  - A pseudopotential (effective core potential) replaces the core electrons and changes the
+    Hamiltonian, so its energies go on an instance whose id ends in the potential's name in lower
+    case without punctuation (`_ccecp`, `_bfd`). Such an instance can be basis-free.
+  - A frozen core (the core orbitals kept doubly occupied in their Hartree-Fock form) changes the
+    Hamiltonian projected onto the basis, so frozen-core energies go on an instance with `_fc`: the
+    standard chemical core (1s for Li to Ne, 1s2s2p for Na to Ar, and so on). A source that freezes
+    another set states it, and the instance is `_fc<n>` with n frozen spatial orbitals.
+  - Relativistic Hamiltonians are not in scope yet (§1).
+- Geometry: positions are in bohr; the loader converts ångström from the printed value, never
+  rounded first (1 Å = 1/0.52917721092 bohr), and stores the unrounded value.
+- Two geometries are one instance only if they agree to 1e-4 bohr in every interatomic distance,
+  with the same element at each nucleus. Rotations and translations do not matter. A source that
+  prints a molecule's name with no coordinates, and cites no geometry file or set that gives them,
+  creates no instance; its rows wait until the geometry is found (as for clusters, §2.1).
 - Thermodynamic-limit (N → ∞) values are not rows, as twist averages are not in §12.
-- Id: `Hchain/chain_<N>_<boundary>_R<R>_<basis>` for chains and
-  `Hsheet/square_<N>_<boundary>_R<R>_<basis>` for sheets. R is in bohr without trailing
-  zeros. The basis is in lower case without punctuation (`sto6g`, `ccpvdz`, `augccpvtz`,
-  `631g`, `none`). Examples: `Hchain/chain_10_O_R1.8_sto6g`, `Hchain/chain_10_O_R1.8_none`,
-  `Hsheet/square_16_P_R1.8_sto6g`. A twist other than Gamma adds `_tw<label>` as in §12.1.
+
+Each model:
+
+- `Hchain` and `Hsheet`. Geometry: `chain` (N equally spaced protons on a line, spacing R) or `sheet`
+  (N = L × L protons on a square grid of spacing R). A dimerised, relaxed or otherwise distorted
+  geometry is a `Molecule` (open) or a `Solid` (periodic), not one of these. Boundary: `O` (open: a
+  finite molecule) or `P` (periodic: N atoms in the repeated cell; a chain is periodic along its
+  axis, a sheet in its plane). A periodic instance carries a twist as in §12.1: `Gamma` unless
+  stated; a fixed twist with a stated vector is its own instance; a twist average is not a row.
+  STO-6G is the main basis: for H10 in STO-6G, full CI, DMRG and AFQMC agree (Motta et al., PRX 7,
+  031059 (2017)). Id: `Hchain/chain_<N>_<boundary>_R<R>_<basis>` and
+  `Hsheet/square_<N>_<boundary>_R<R>_<basis>`, R in bohr without trailing zeros. Examples:
+  `Hchain/chain_10_O_R1.8_sto6g`, `Hchain/chain_10_O_R1.8_none`, `Hsheet/square_16_P_R1.8_sto6g`. A
+  twist other than Gamma adds `_tw<label>` as in §12.1. Any source's linear, equally spaced H_N goes
+  on `Hchain`, and its open square H_4 on `Hsheet/square_4_O`, never on `Molecule`.
+- `Atom`. Id: `Atom/<element>_q<charge>_s<N_up − N_dn>_<basis>[_<variant>]`, for example
+  `Atom/Fe_q0_s4_none`, `Atom/C_q1_s1_none`, `Atom/Co_q0_s3_none_ccecp`.
+- `Molecule`. Id: `Molecule/<formula>-<geometry>_q<charge>_s<N_up − N_dn>_<basis>[_fc][_<variant>]`.
+  The formula is written in Hill order (C first, H second, then alphabetical; without C,
+  alphabetical). The geometry label is:
+  - for a diatomic, `R<R>` with R in bohr without trailing zeros: `Molecule/N2-R2.068_q0_s0_none`,
+    `Molecule/BeO-R3.515_q0_s2_none`;
+  - for a geometry taken from a published set or scan, the set's short name and the point:
+    `g3` (the G3 set), `s22`, `bh76`, `bbmep07` (point 7 of a scan), `tors30` (a torsion angle of
+    30°): `Molecule/CH4-g3_q0_s0_none`, `Molecule/C2H6-bbmep07_q0_s0_none`. The instance's
+    `geometry_source` names the set and where its coordinates are;
+  - otherwise `g<hash>`, the first six hexadecimal digits of a hash of the sorted interatomic
+    distances with their elements, rounded to 1e-4 bohr: `Molecule/H2O-g7c1a2e_q0_s0_sto3g`.
+  So one molecule label with several geometries gives several instances: the three full-CI values
+  printed for "H2O in STO-3G" in three papers sit on three instances if their geometries differ.
+  The instance stores every nucleus and its position (`params.geometry`, bohr).
+- `Solid`. Id: `Solid/<formula>-<structure>-<supercell>_<N>_P_<parameter>_<basis>[_<variant>][_tw<label>]`,
+  with N the number of atoms in the cell and the parameter `rs<rs>` (hydrogen) or `a<a>` (the
+  lattice constant in bohr), for example `Solid/H-bcc-2x2x2_16_P_rs1.31_none` and
+  `Solid/LiH-rocksalt-2x2x2_64_P_a7.6_none`. A cell that no named structure and single parameter
+  fix (a dimerised hydrogen chain, a relaxed cell) is `Solid/<formula>-g<hash>_<N>_P_<basis>`, the
+  hash taken as for `Molecule` over the cell vectors and every nucleus. The twist is as in §12.1.
+  The instance stores the cell vectors and every nucleus.
 
 ### 13.2 Hamiltonian, units and storage
 
-`H = -1/2 Σ_i ∇_i² - Σ_{i,I} 1/|r_i - R_I| + Σ_{i<j} 1/|r_i - r_j| + Σ_{I<J} 1/|R_I - R_J|`,
-in Hartree atomic units, with fixed protons of charge 1 at the positions R_I. On a basis
-instance, H is projected onto the basis. The nuclear repulsion is a constant and stays in.
+`H = -1/2 Σ_i ∇_i² - Σ_{i,A} Z_A/|r_i - R_A| + Σ_{i<j} 1/|r_i - r_j| + Σ_{A<B} Z_A Z_B/|R_A - R_B|`,
+in Hartree atomic units, with fixed nuclei of charge Z_A at the positions R_A. On a basis instance,
+H is projected onto the basis. On a pseudopotential instance, Z_A is the valence charge and each
+nucleus adds its potential. The nuclear repulsion is a constant and stays in.
 
 - Stored as the total energy in Hartree, nuclear repulsion included. Tables and the site show
-  Hartree per atom.
-- Periodic instances: the Coulomb sums run over all images, Ewald-summed, as for the electron
-  gas (§12.2). The stored energy is that of one repeated cell of N atoms. The treatment of the
-  exchange divergence (a Madelung-type constant, or none) changes a periodic energy at finite
-  N. The row states the source's treatment, and the loader converts from a stated convention.
-  A source that states none is `needs_review` until it is found (§10).
-- The loader converts, never a person by hand: per atom to total (× N); an electronic energy
-  printed without the nuclear repulsion (the loader adds it, computed from N, R and the
-  geometry); an energy per cell of another size. A source that prints an energy per atom
-  without N names no instance and gives no row.
-- `dof` is N. No `einf` is defined, so no V-score is computed; `Var(E)/N` is stored where
-  printed (§9).
+  Hartree per atom for `Hchain`, `Hsheet` and `Solid`, and the total for `Atom` and `Molecule`.
+- Periodic instances: the Coulomb sums run over all images, Ewald-summed, as for the electron gas
+  (§12.2). The stored energy is that of one repeated cell. The treatment of the exchange divergence
+  (a Madelung-type constant, or none) changes a periodic energy at finite N. The row states the
+  source's treatment, and the loader converts from a stated convention. A source that states none is
+  `needs_review` until it is found (§10).
+- The loader converts, never a person by hand: per atom to total (× N); an electronic energy printed
+  without the nuclear repulsion (the loader adds it, from the geometry); an energy per cell of
+  another size; kcal/mol, eV and millihartree. A source that prints an energy per atom without N
+  names no instance and gives no row.
+- `dof` is the number of electrons. No `einf` is defined, so no V-score is computed; `Var(E)` is
+  stored where printed (§9).
 
 ### 13.3 What is a row
 
-A finite-N energy at the instance's geometry, R, boundary, twist and basis. Not rows:
-thermodynamic-limit values from any extrapolation or embedding, finite-size-corrected
-energies, twist averages, energies at a dimerised or relaxed geometry, and values read from a
-figure (§8). A correlation energy is a row only where the source prints the reference energy
-it is measured from, on the same instance. The row then stores the sum and keeps the printed
-value as `reported_as`.
+A total energy at the instance's nuclei, geometry, charge, spin sector, boundary, twist,
+Hamiltonian variant and basis. Not rows:
+
+- thermodynamic-limit values from any extrapolation or embedding, finite-size-corrected energies
+  and twist averages;
+- energy differences: atomisation, ionisation, reaction and interaction energies, barrier heights,
+  dissociation curves given relative to a reference point;
+- energies at a geometry the source does not give;
+- reference energies assembled from experiment (estimated non-relativistic energies built from
+  measured ionisation energies with relativistic and other corrections removed): they are not the
+  result of a calculation on the instance's Hamiltonian;
+- values read from a figure (§8).
+
+A correlation energy is a row only where the source prints the reference energy it is measured
+from, on the same instance. The row then stores the sum and keeps the printed value as
+`reported_as`.
 
 ### 13.4 `bound_type`
 
 Section 4 applies unchanged. The recurring cases:
 
-- Full CI in the instance's basis: `exact`. DMRG at a stated bond dimension, CASSCF, MRCI,
-  restricted and unrestricted Hartree-Fock, VMC and neural-network states: `variational`.
-  DMRG extrapolated in the truncation error, and selected CI extrapolated in its perturbative
-  correction: `extrapolated`.
-- Phaseless or constrained-path AFQMC, fixed-node and lattice-regularised DMC, coupled cluster
-  (CCSD and higher), MRCI with the Davidson correction (MRCI+Q), and embedding methods that
-  converge with the fragment or active space (DMET, SEET): `projected`.
-- Finite-order perturbation theory (MP2, NEVPT2, GF2), GW, RPA and density functionals:
-  `approximate`. In track 3, CCSD(T) and other perturbative corrections to coupled cluster
-  are `approximate` too, for now (2026-10-21); §4 is unchanged.
-- A complete-basis-set extrapolation: `extrapolated`, on the `basis = none` instance. A method
-  on the `approximate` list stays `approximate` there, as in §12.4.
+- Full CI in the instance's basis: `exact`. DMRG at a stated bond dimension, selected CI without its
+  perturbative correction, CASSCF, MRCI, restricted and unrestricted Hartree-Fock, VMC and
+  neural-network states: `variational`. DMRG extrapolated in the truncation error, and selected CI
+  extrapolated in its perturbative correction: `extrapolated`.
+- Basis-free: real-space VMC with any trial state (Slater-Jastrow, backflow, FermiNet, PauliNet,
+  Psiformer and other neural networks) and explicitly correlated wave functions (Hylleraas,
+  explicitly correlated Gaussians): `variational`. Fixed-node DMC and lattice-regularised DMC:
+  `projected`. Nothing basis-free is `exact` except a closed-form energy (a one-electron species),
+  which the validator evaluates (§14.4 is the pattern).
+- Phaseless or constrained-path AFQMC, coupled cluster (CCSD and higher), MRCI with the Davidson
+  correction (MRCI+Q), and embedding methods that converge with the fragment or active space (DMET,
+  SEET): `projected`.
+- Finite-order perturbation theory (MP2, NEVPT2, CASPT2, GF2), GW, RPA and density functionals:
+  `approximate`. In track 3, CCSD(T) and other perturbative corrections to coupled cluster are
+  `approximate` too, for now (2026-10-21); §4 is unchanged.
+- A complete-basis-set extrapolation: `extrapolated`, on the `basis = none` instance. A method on the
+  `approximate` list stays `approximate` there, as in §12.4.
 - Not settled, `null` until read case by case (§4): free-projection AFQMC.
+
+QMBL computes its own exact row (`computed_by: "qmbl"`, DATA.md) by full CI on every basis
+instance small enough for it, as it did for the hydrogen chains.
 
 ### 13.5 Site
 
-Track 3 has its own section and tables. Its figures plot energy per atom against R at fixed
-N, boundary and basis, and against N at fixed R, each result a dot.
+Track 3 has its own section and tables. The figures plot, with each result a dot:
+
+- hydrogen chains and sheets: energy per atom against R at fixed N, boundary and basis, and against N
+  at fixed R;
+- molecules: the energy against R for a diatomic, and against the scan point for a geometry scan; one
+  column of dots per instance otherwise;
+- atoms: one column of dots per atom and basis;
+- solids: energy per atom against the cell size at fixed structure and parameter.
 
 ## 14. The thermodynamic limit
 
@@ -895,3 +1081,153 @@ The Table lists an infinite-lattice instance in its model's section after the la
 the same lattice, with its exact energy and the best value of each bound type (§6); the size
 filter "infinite" selects them. Its API file is under `/api/tdl/`. The figures, which plot
 against the site count, leave them out.
+
+## 15. Track 4: the fractional quantum Hall effect
+
+Sections 2 to 11 apply to track 4 as to track 1. This section states what differs. It dates from
+2026-11-11. Published FQH energies are hard to compare because sources differ in three ways: the
+background term, the shift (the flux at a given particle number) and Landau-level mixing. Each is
+fixed here before any row is read.
+
+### 15.1 Instance
+
+An instance is fixed by the geometry, the number of electrons N_e, the number of flux quanta, the
+Landau level, the interaction and the Landau-level mixing.
+
+- Geometry: `sphere` (Haldane's sphere, flux 2Q through it, radius √Q ℓ_B) or a torus with its shape:
+  `torus-r<L1/L2>` for a rectangle with side ratio L1/L2, `torus-hex` for the hexagonal torus, and a
+  torus of another shape named by its modular parameter τ (`torus-tau<re>,<im>`).
+- Flux and shift: on the sphere 2Q = ν⁻¹ N_e − 𝒮, where 𝒮 is the shift. The id gives 2Q, not ν and
+  𝒮, so a state of one filling at two shifts sits on two instances. On the torus the id gives N_φ.
+- Spin: without `_s` the electrons are fully spin-polarized. `_s<N_up − N_dn>` is the spinful
+  system in that sector, as in track 3 (§13.1): its energy is the lowest at that N_up − N_dn, for
+  example `FQH/sphere_6_O_2Q9_coul_LL0_s0` (ν = 2/3). The Zeeman energy is left out; at fixed
+  N_up − N_dn it is a constant, and the loader removes it where the source includes it. Multi-layer
+  systems are not in scope yet.
+- Landau level: `LL<n>`, the index of the partially filled level (0 is the lowest); the levels below
+  it are filled and inert.
+- Interaction:
+  - `coul`: the Coulomb interaction e²/(εr), with the chord distance on the sphere. A source that
+    writes the Coulomb interaction through its Haldane pseudopotentials gives a row of `coul`.
+  - Model Hamiltonians: `V1` (only the V1 pseudopotential), `V1V3`, `3body` (the three-body
+    projector whose zero-energy state is the Moore-Read state), named after their terms. Each is its
+    own instance; the pseudopotential values are in `params`.
+  - Finite thickness: the Coulomb interaction softened by the extent of the electron layer, named by
+    its model and width w in units of ℓ_B: `_zds<w>` for the Zhang–Das Sarma form e²/(ε√(r² + w²))
+    and `_sqw<w>` for an infinite square well of width w with the electrons in its lowest subband.
+    Another profile gets a short name when a source needs one, with its definition in `params`.
+    Each model and width is its own instance, for example `FQH/sphere_10_O_2Q27_coul_LL0_zds1`.
+  - A screened interaction is not in scope yet.
+- Landau-level mixing: κ = (e²/εℓ_B)/(ħω_c). Without `_k`, κ = 0: the Hamiltonian is the interaction
+  projected onto the level, and only the interaction energy counts. `_k<κ>` is the Hamiltonian with
+  every level and the kinetic energy at that κ. It is defined on `LL0` only: mixing in a higher
+  level is not in scope yet, since sources differ on whether the filled levels below mix.
+- The instance's energy is the lowest state at its N_e and flux, over all angular momenta (sphere)
+  or all momenta (torus). A lowest energy within one sector is a row only where that sector holds the
+  ground state (§6); other sector minima go to the instance's `spectrum`.
+- Id: `FQH/sphere_<N_e>_O_2Q<2Q>_<interaction>_LL<n>[_s<N_up − N_dn>][_<thickness><w>][_k<κ>]` and
+  `FQH/torus-<shape>_<N_e>_P_Nphi<N_φ>_<interaction>_LL<n>[_s…][_<thickness><w>][_k<κ>]`, for example
+  `FQH/sphere_12_O_2Q33_coul_LL0` (ν = 1/3, 𝒮 = 3) and `FQH/torus-hex_10_P_Nphi30_coul_LL0`.
+
+### 15.2 Units and storage
+
+- Units: e²/(εℓ_B), with the unrescaled magnetic length. Sources that rescale ℓ_B to
+  ℓ' = √(2Qν/N_e) ℓ_B (used to speed the extrapolation to N_e → ∞) print energies times
+  √(2Qν/N_e); the loader divides the factor out where the source states it.
+- Background: the stored energy includes the neutralizing background. On the sphere that is the
+  electron-background and background-background energy, −N_e²/(2√Q) in total; on the torus the
+  Coulomb sum is Ewald-summed with the Madelung term, as in §12.2. A source that leaves the
+  background out (most pseudopotential calculations do) is converted by the loader; one that does
+  not say whether it is in is `needs_review` (§10). The check that fixes a convention is the exact
+  energy QMBL computes for a small instance, compared with the source's value.
+- With finite thickness, the background is computed with the same softened interaction as the
+  electrons. A source that uses another background states it, and the loader converts.
+- Model Hamiltonians have no background: their energies are stored as computed, in the units of the
+  pseudopotential coefficients.
+- With Landau-level mixing (`_k`), the stored energy is the total minus the kinetic energy of the
+  filled lowest level, N_e ħω_c/2 = N_e/(2κ) in units of e²/(εℓ_B), so the κ → 0 limit is the
+  projected instance's energy.
+- Stored as the total energy; tables and the site show the energy per electron. `dof` is N_e. No
+  `einf` is defined, so no V-score is computed.
+
+### 15.3 What is a row
+
+A finite-N_e energy on the instance. Not rows: extrapolations to N_e → ∞, gaps (neutral or charged),
+energies per particle relative to another state, overlaps, and energies read from a figure (§8).
+
+### 15.4 `bound_type`
+
+Section 4 applies unchanged. The recurring cases:
+
+- Without mixing (κ = 0) the Hilbert space of the level is finite. Exact diagonalization in it is
+  `exact`. QMBL computes its own exact row (`computed_by: "qmbl"`) on every instance small enough for
+  it.
+- DMRG at a stated bond dimension, composite-fermion wave functions (projected into the level by any
+  scheme, the projection being part of the state) and neural-network states: `variational`.
+- With mixing (`_k`): exact diagonalization or DMRG in a truncated set of levels is `variational`
+  (the levels kept go in `method_detail`); fixed-phase DMC is `projected`. An energy of an effective
+  Hamiltonian that treats mixing perturbatively (two- and three-body corrections to the
+  pseudopotentials) is `approximate`, since it is not the energy of a state of the instance's
+  Hamiltonian.
+- An extrapolation in the number of levels or in the bond dimension is `extrapolated`.
+
+### 15.5 Site
+
+Track 4 has its own section and tables. Its figures plot the energy per electron against 1/N_e at
+fixed filling, geometry, interaction and κ, each result a dot; instances at different N_e are
+different Hamiltonians, so no line joins them.
+
+## 16. Track 5: two-dimensional quantum dots
+
+Sections 2 to 11 apply to track 5 as to track 1. This section states what differs. It dates from
+2026-11-11.
+
+### 16.1 Instance
+
+An instance is fixed by the electron numbers N_up and N_dn and the trap frequency ω.
+
+- The electrons move in a plane, in the harmonic trap ½ ω² r², with the Coulomb interaction 1/r of
+  a strictly two-dimensional system. No magnetic field. A finite thickness, a softened interaction,
+  an anisotropic or non-harmonic trap, or a magnetic field is another Hamiltonian and not in scope
+  yet (§1).
+- The instance's energy is the lowest at its N_up and N_dn, over all angular momenta L. A source that
+  fixes L gives a row only where that L holds the ground state (§6).
+- Id: `QDot2D/harmonic_<N>_O_<N_up>_<N_dn>_w<ω>`, ω in effective Hartree without trailing zeros,
+  for example `QDot2D/harmonic_6_O_3_3_w0.28`.
+
+### 16.2 Hamiltonian, units and storage
+
+`H = Σ_i (−½ ∇_i² + ½ ω² r_i²) + Σ_{i<j} 1/|r_i − r_j|`, in effective atomic units (ħ = m* = e²/ε = 1;
+the effective Hartree is m*/ε² Hartree).
+
+- Stored as the total energy in effective Hartree.
+- The loader converts, never a person by hand: energies in units of ħω (× ω); sources that set the
+  interaction strength λ = 1/√ω with ħω = 1 (× ω, at ω = 1/λ²); sources in meV for a stated material
+  (from the m* and ε they state; a source that states none gives no row until they are found); a
+  trap written ω² r² without the ½, or ω r².
+- `dof` is N. No `einf` is defined, so no V-score is computed; `Var(E)` is stored where printed (§9).
+
+### 16.3 What is a row
+
+A total energy on the instance. Not rows: addition energies and chemical potentials (differences
+between particle numbers), excitation energies, extrapolations in N, and values read from a figure
+(§8).
+
+### 16.4 `bound_type`
+
+Section 4 applies unchanged. The recurring cases:
+
+- Two electrons: the centre of mass separates (its energy is ω) and the relative motion is a
+  one-dimensional radial equation. QMBL solves it to full precision and stores the result as an
+  `exact` row (`computed_by: "qmbl"`) on every two-electron instance. Closed-form energies at special
+  ω are `exact` and checked by the validator.
+- Configuration interaction (exact diagonalization) in a finite one-particle basis (Fock-Darwin or
+  harmonic-oscillator orbitals): `variational`, since the basis spans a subspace; the basis size goes
+  in `method_detail`. An extrapolation in the basis size is `extrapolated`.
+- VMC and neural-network states: `variational`. Fixed-node DMC: `projected`. Coupled cluster:
+  `projected`, as in §12.4. Hartree-Fock: `variational`. MP2 and density functionals: `approximate`.
+
+### 16.5 Site
+
+Track 5 has its own section and tables. Its figures plot the energy against ω at fixed N_up and
+N_dn, and against N at fixed ω, each result a dot.

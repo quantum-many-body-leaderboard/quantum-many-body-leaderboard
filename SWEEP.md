@@ -348,7 +348,7 @@ The family was opened on a branch and ported onto `main` on 2026-10-24.
 
 ### Track 3: hydrogen chains and sheets
 
-Track 3 ([RULES.md §13](RULES.md#13-track-3-hydrogen-chains-and-sheets)) opened on 2026-10-25 (§1). Its
+Track 3 ([RULES.md §13](RULES.md#13-track-3-atoms-molecules-and-solids)) opened on 2026-10-25 (§1). Its
 passes sit in `passes/track3/`; `scripts/add_track3_rows.mjs` loads the rows file in every build (totals in Hartree,
 nuclear repulsion included; `dof` = N; no `einf` or V-score), with the corrections, notes, verifications and code
 links the generator has written on each row. The generators are in `scripts/track3/`; `sh scripts/track3/build.sh`, run from the repo root, rewrites the three pass files below byte for

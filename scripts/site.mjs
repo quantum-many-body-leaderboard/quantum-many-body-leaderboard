@@ -1402,7 +1402,7 @@ ${bestBox}
     ? `Stored as a total energy in Hartree (<a href="${RULES}#12-track-2-the-homogeneous-electron-gas">rules &sect;12</a>); quoted here as
     <code>${perSiteLabel(inst)}</code>, the energy per electron`
     : H_MODELS.has(inst.model)
-    ? `Stored as a total energy in Hartree, nuclear repulsion included (<a href="${RULES}#13-track-3-hydrogen-chains-and-sheets">rules &sect;13</a>); quoted here as
+    ? `Stored as a total energy in Hartree, nuclear repulsion included (<a href="${RULES}#13-track-3-atoms-molecules-and-solids">rules &sect;13</a>); quoted here as
     <code>${perSiteLabel(inst)}</code>, the energy per atom`
     : `Stored as a total energy; quoted here as
     <code>${perSiteLabel(inst)}</code>, which is what the papers report`}
