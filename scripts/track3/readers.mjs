@@ -79,7 +79,9 @@ for (const f of fs.readdirSync(READDIR).filter(f => /^result-\d+\.json$/.test(f)
     }
     const indep = ex ? INDEPENDENT_EXACT[c.arxiv].replace("Motta et al.'s", `the ${ex.method} of arXiv:${ex.arxiv}`) : null;
     rows.push({
-      instance_id: id, create: createHeader(inst), eps, sigma_per_site: c.sampled && sig != null ? +sig.toPrecision(6) : null, tol: 5e-7, origin: "own",
+      // The id keeps R to six figures; params.R carries the bond length as printed, converted unrounded
+      // (2026-11-11: the verifier builds the Hamiltonian at params.R, and the rounding moved FCI energies by up to 1.5e-7).
+      instance_id: id, create: createHeader({ ...inst, R: c.R_unit === "angstrom" ? +c.R_as_printed * BOHR_PER_ANG : R }), eps, sigma_per_site: c.sampled && sig != null ? +sig.toPrecision(6) : null, tol: 5e-7, origin: "own",
       arxiv: c.arxiv, reference: refs[c.arxiv]?.reference || `arXiv:${c.arxiv}`, peer_reviewed: refs[c.arxiv]?.peer_reviewed ?? null,
       method: c.method_as_published, method_detail: trial, bound_type: /\(T\)/.test(c.method_as_published) ? "approximate" : ["exact", "variational", "projected", "extrapolated", "approximate"].includes(c.bound_type) ? c.bound_type : null,
       bound_type_reason: c.bound_reason, sampled: !!c.sampled,

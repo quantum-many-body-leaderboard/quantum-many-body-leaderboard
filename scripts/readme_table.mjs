@@ -113,7 +113,7 @@ export function instanceLabel(inst) {
       ...(p.twist && p.twist !== "Gamma" ? [`twist ${p.twist}`] : [])].join(", ");
   // Track 3: the bond length R in bohr and the basis set ("basis-free" for basis = none).
   if (inst.model === "Hchain" || inst.model === "Hsheet")
-    return [geometry(inst), BOUNDARY[inst.boundary] ?? "periodic", `R = ${p.R}`, p.basis === "none" ? "basis-free" : p.basis,
+    return [geometry(inst), BOUNDARY[inst.boundary] ?? "periodic", `R = ${+(+p.R).toPrecision(6)}`, p.basis === "none" ? "basis-free" : p.basis,
       ...(p.twist && p.twist !== "Gamma" ? [`twist ${p.twist}`] : [])].join(", ");
   const parts = [geometry(inst)];
   if (BOUNDARY[inst.boundary]) parts.push(BOUNDARY[inst.boundary]);

@@ -23,6 +23,8 @@ import { MODELS, BOUNDARY, geometry } from "./readme_table.mjs";
 import { groundStateExact } from "./units.mjs";
 import { W, PAD } from "./chart.mjs";
 
+// A coupling as labels print it: R to six figures (params.R holds the unrounded bond length since 2026-11-11).
+const shown = (k, v) => (k === "R" ? +(+v).toPrecision(6) : v);
 const COUPLINGS = ["J2", "J3", "K", "J", "Gamma", "Jd", "h", "U", "V", "t2", "t3", "rs", "R", "basis"]; // t2: the t12 variants at more than one t2; J, t3: t-J; R, basis: track 3
 
 // Particles per site: Hubbard files carry Nf = N_up = N_dn, t-V is spinless.
@@ -69,7 +71,7 @@ function couplingLabel(inst, { boundary, lattice, shape, omit, t12 }) {
   if (lattice) parts.push(inst.lattice);
   if (boundary) parts.push(BOUNDARY[inst.boundary] ?? "periodic");
   if (shape) parts.push(shape.label);
-  for (const k of COUPLINGS) if (k !== omit && inst.params?.[k] != null) parts.push(k === "basis" && inst.params[k] === "none" ? "basis-free" : `${k} = ${inst.params[k]}`);
+  for (const k of COUPLINGS) if (k !== omit && inst.params?.[k] != null) parts.push(k === "basis" && inst.params[k] === "none" ? "basis-free" : `${k} = ${shown(k, inst.params[k])}`);
   if (omit !== "n" && fillingOf(inst) != null) parts.push(fillingLabel(inst));
   return [...parts, ...variantsOf(inst).filter(v => !(t12 && v === "t12"))].join(", ");
 }
@@ -166,7 +168,7 @@ function scansOf(instances) {
     for (const ms of Map.groupBy(group, i => rest.map(k => SCAN[k].of(i)).join("|")).values()) {
       const inst = ms[0];
       const parts = [geometry(inst), BOUNDARY[inst.boundary]];
-      for (const k of COUPLINGS) if (k !== x && inst.params?.[k] != null) parts.push(`${k} = ${inst.params[k]}`);
+      for (const k of COUPLINGS) if (k !== x && inst.params?.[k] != null) parts.push(`${k} = ${shown(k, inst.params[k])}`);
       if (x !== "n" && fillingOf(inst) != null) parts.push(fillingLabel(inst));
       if (x !== "variant") parts.push(...variantsOf(inst));
       const slots = [...Map.groupBy(ms, i => String(x ? SCAN[x].of(i) ?? "" : ""))]
@@ -269,7 +271,7 @@ export function pickerFacets(instances) {
     if (i.model === "Impurity") dims.push(["problem", i.lattice, i.lattice]);
     for (const k of COUPLINGS) {
       const v = i.params?.[k];
-      if (v != null) dims.push([k === "R" ? "R (bohr)" : k, k === "basis" && v === "none" ? "basis-free" : String(v), v]);
+      if (v != null) dims.push([k === "R" ? "R (bohr)" : k, k === "basis" && v === "none" ? "basis-free" : String(shown(k, v)), v]);
     }
     const f = fillingOf(i);
     if (f != null) dims.push([zetaOf(i) != null ? "ζ" : "filling n", String(f), f]);

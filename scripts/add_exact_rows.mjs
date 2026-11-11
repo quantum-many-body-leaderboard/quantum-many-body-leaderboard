@@ -418,7 +418,7 @@ for (const [N, full, enuc, s2, uccsd, err] of [
   const energy = +(+full).toFixed(10);
   const vqe = +uccsd.replace(",", "") / 1000, implied = (+uccsd.replace(",", "") - +err).toFixed(2);
   put(`Hchain/chain_${N}_O_R1.51178_sto3g`,
-    { model: "Hchain", lattice: "chain", n_sites: N, boundary: "O", params: { N_up: N / 2, N_dn: N / 2, R: 1.51178, basis: "STO-3G" }, dof: N, einf: null },
+    { model: "Hchain", lattice: "chain", n_sites: N, boundary: "O", params: { N_up: N / 2, N_dn: N / 2, R: 0.8 / 0.52917721092, basis: "STO-3G" }, dof: N, einf: null },
     { energy, sigma: null,
       src: { ref: `QMBL, checks/hchain-fci/ (full CI of the open H${N} chain in STO-3G at R = 0.8 Å, PySCF)`, pr: false },
       method: "FCI", why: "full configuration interaction in the instance's basis, computed by QMBL; deterministic (RULES.md 13.4)",
