@@ -79,21 +79,41 @@ const NAV = [
 const opButton = url => (OPEN_PROBLEMS
   ? `<a href="/?open" class="op">Open Problems</a>` : "");
 
-// With JavaScript the button is a switch (2026-11-11): ?open in the address keeps only the open
-// problems on every page (the table, the picker), the button shows pressed, and every link to
-// another page of the site carries ?open along. Without JavaScript it leads to /open-problems/.
+// With JavaScript the button is a switch, "Mark open problems" (2026-11-11): ?open in the address
+// sets html.op-on, which marks the open problems (the instances with no exact energy) on every
+// page that knows them: count badges on the picker, solved Hamiltonians faded, solved instances
+// grey in the charts and the table. A page that marks them through CSS (data-op-live: the picker,
+// the table) switches in place, so the change animates; any other page reloads. Links to other
+// pages of the site carry ?open along. Without JavaScript the button leads to /?open.
+const OP_EARLY_SCRIPT = `<script>if (/[?&]open(&|=|$)/.test(location.search)) document.documentElement.classList.add("op-on");</script>`;
 const OP_SWITCH_SCRIPT = `<script>
 (() => {
-  const on = new URLSearchParams(location.search).has("open"), b = document.querySelector("header.site a.op");
-  document.documentElement.classList.toggle("op-on", on);
+  const root = document.documentElement, b = document.querySelector("header.site a.op");
   if (!b) return;
-  b.setAttribute("aria-pressed", String(on)); b.removeAttribute("aria-current");
-  b.title = on ? "Show every problem again" : "Show only the open problems: the instances with no exact energy";
-  b.href = location.pathname + (on ? "" : "?open") + location.hash;
-  addEventListener("hashchange", () => { b.href = location.pathname + (on ? "" : "?open") + location.hash; });
-  if (on) for (const a of document.querySelectorAll('a[href^="/"]')) if (a !== b && !/[?]/.test(a.getAttribute("href"))) {
-    const [path, hash] = a.getAttribute("href").split("#"); a.setAttribute("href", path + "?open" + (hash ? "#" + hash : ""));
-  }
+  b.classList.add("op-toggle"); b.innerHTML = '<i aria-hidden="true"></i>Mark open problems'; b.removeAttribute("aria-current");
+  const links = on => { for (const a of document.querySelectorAll('a[href^="/"]')) {
+    if (a === b) continue;
+    const [path, hash] = a.getAttribute("href").split("#"), bare = path.replace(/[?]open$/, "");
+    if (bare.includes("?")) continue;
+    a.setAttribute("href", bare + (on ? "?open" : "") + (hash != null ? "#" + hash : ""));
+  } };
+  const set = on => {
+    root.classList.toggle("op-on", on);
+    b.setAttribute("aria-pressed", String(on));
+    b.title = on ? "Stop marking the open problems" : "Mark the open problems: the instances with no exact energy";
+    b.href = location.pathname + (on ? "" : "?open") + location.hash;
+    links(on);
+  };
+  set(new URLSearchParams(location.search).has("open"));
+  b.addEventListener("click", e => {
+    if (!root.hasAttribute("data-op-live")) return;
+    e.preventDefault();
+    const on = !root.classList.contains("op-on");
+    history.replaceState(history.state, "", location.pathname + (on ? "?open" : "") + location.hash);
+    set(on);
+    dispatchEvent(new CustomEvent("qmbl:open", { detail: on }));
+  });
+  addEventListener("hashchange", () => { b.href = location.pathname + (root.classList.contains("op-on") ? "" : "?open") + location.hash; });
 })();
 </script>`;
 
@@ -155,7 +175,7 @@ function page({ url, title, description, body, wide = false, jsonld = null, css 
 <title>${head}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="https://qmbl.org${url}">
-<link rel="stylesheet" href="/style.css?v=${CSS_VERSION}">${css ? `\n<link rel="stylesheet" href="${css}">` : ""}
+<link rel="stylesheet" href="/style.css?v=${CSS_VERSION}">${OPEN_PROBLEMS ? OP_EARLY_SCRIPT : ""}${css ? `\n<link rel="stylesheet" href="${css}">` : ""}
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any">
 <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -825,6 +845,7 @@ const picker = () => pickerCache ??= MODELS.filter(([m]) => PICKS.has(m)).map(([
   const picks = PICKS.get(model);
   const drawn = picks.reduce((a, p) => a + drawnRows(p.inst).length, 0);
   const tabs = [...Map.groupBy(picks, p => p.tab)].map(([label, ps]) => ({ label, count: ps.reduce((a, p) => a + drawnRows(p.inst).length, 0),
+    openInst: ps.filter(p => isOpen(p.inst)).length,
     open: ps.filter(p => isOpen(p.inst)).reduce((a, p) => a + drawnRows(p.inst).length, 0) }))
     .sort((a, b) => b.count - a.count);
   const dims = [...new Set(picks.flatMap(p => p.dims.map(d => d[0])))];
@@ -862,9 +883,9 @@ function homePage() {
     .map(r => `<div data-row="${rowId(inst, r)}">${rowCard(r, inst)}</div>`));
   if (cards.length !== linked.size) throw new Error(`figures link ${linked.size} rows, ${cards.length} found in data/: a figure is older than the data`);
   const models = picker().map(p => p.info);
-  const data = { sub: [...SUB_RING], models, open: OPEN.size };
+  const data = { sub: [...SUB_RING], models, open: OPEN.size, instances: instances.length };
   const body = `
-${heroHtml({ models, energies: instances.reduce((a, i) => a + i.rows.length, 0), open: OPEN.size })}
+${heroHtml({ models, energies: instances.reduce((a, i) => a + i.rows.length, 0), open: OPEN.size, instances: instances.length })}
 <script type="application/json" id="pk-data">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>
 <div class="pk-tip-host"><div id="pk-tip" role="tooltip" hidden></div></div>
 <div class="pk-more-wrap" id="pk-more-wrap">
@@ -1190,10 +1211,9 @@ ${sections}
 const box = document.getElementById("filter");
 const count = document.getElementById("filter-count");
 const sections = [...document.querySelectorAll("section[data-model]")];
-// The Open Problems switch (?open, see OP_SWITCH_SCRIPT): only the instances with no exact energy.
-const OPEN_ONLY = new URLSearchParams(location.search).has("open");
-const total = document.querySelectorAll(OPEN_ONLY ? "tbody.inst[data-open]" : "tbody.inst").length;
-if (OPEN_ONLY) document.querySelector("main h1").textContent = "Table of open problems";
+const total = document.querySelectorAll("tbody.inst").length;
+// The Open Problems switch (OP_SWITCH_SCRIPT) marks this page through CSS: solved instances grey.
+document.documentElement.setAttribute("data-op-live", "");
 
 // The words of the text box against each instance's index; see searchIndex in scripts/site.mjs.
 const searchWords = ${searchWords};
@@ -1220,8 +1240,7 @@ function apply() {
     for (const row of rows) {
       const hit = !outside && (!words.length || searchMatch(index.get(row), words))
         && (!lattice || row.dataset.lattice === lattice)
-        && (!size || row.dataset.size === size)
-        && (!OPEN_ONLY || row.dataset.open === "1");
+        && (!size || row.dataset.size === size);
       row.hidden = !hit;
       const more = row.querySelector("tr.more");
       if (!hit) { more.hidden = true; row.querySelector("button").setAttribute("aria-expanded", "false"); }
@@ -1229,26 +1248,11 @@ function apply() {
     }
     shown += n;
     section.hidden = outside || (!n && !lattice && !size);
-    const all = OPEN_ONLY ? rows.filter(r => r.dataset.open === "1").length : rows.length;
-    if (OPEN_ONLY && !all) section.hidden = true;
-    section.querySelector(".count").textContent = (n === all ? "" : n + " of ") + all + (OPEN_ONLY ? " open problems" : " instances");
+    section.querySelector(".count").textContent = (n === rows.length ? "" : n + " of ") + rows.length + " instances";
   }
-  count.textContent = q || model ? shown + " of " + total + (OPEN_ONLY ? " open problems" : " instances") : "";
+  count.textContent = q || model ? shown + " of " + total + " instances" : "";
 }
 box.addEventListener("input", apply);
-// With the switch on, a badge that would show no open problem is not offered.
-if (OPEN_ONLY) {
-  for (const section of sections) {
-    const open = [...section.querySelectorAll("tbody.inst[data-open]")];
-    for (const b of section.querySelectorAll(".quick button")) {
-      const key = "lattice" in b.dataset ? "lattice" : "size";
-      b.hidden = !open.some(r => r.dataset[key] === b.dataset[key]);
-    }
-    const badge = document.querySelector('.models button[data-model="' + section.dataset.model + '"]');
-    if (badge) badge.hidden = !open.length;
-  }
-  apply();
-}
 for (const b of document.querySelectorAll(".quick button")) b.addEventListener("click", () => {
   const on = b.classList.contains("on");
   const key = ["model", "lattice", "size"].find(k => k in b.dataset);
@@ -1927,6 +1931,17 @@ button.qn.open::after, button.qn:focus-visible:not(.shut)::after {
 /* the Open Problems switch (OP_SWITCH_SCRIPT) while on */
 header.site nav a.op[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); }
 header.site nav a.op[aria-pressed="true"]::before { content: "\\2713"; margin-right: 0.4em; }
+header.site nav a.op.op-toggle, header.site nav a.op.op-toggle:hover { background: none; border: 0; padding: 0.3rem 0; color: var(--ink2); gap: 0.5rem; font-size: 0.92rem; }
+header.site nav a.op.op-toggle::before { content: none; }
+header.site nav a.op.op-toggle i { width: 34px; height: 20px; border-radius: 999px; background: var(--grid); position: relative; transition: background .2s; flex: none; }
+header.site nav a.op.op-toggle i::after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--surface); box-shadow: 0 1px 2px rgb(0 0 0 / 0.3); transition: transform .2s; }
+header.site nav a.op.op-toggle[aria-pressed="true"] { color: var(--ink); }
+header.site nav a.op.op-toggle[aria-pressed="true"] i { background: var(--flag); }
+header.site nav a.op.op-toggle[aria-pressed="true"] i::after { transform: translateX(14px); }
+/* the table while marking: a solved instance greys out */
+.leaderboard tbody.inst { transition: opacity .5s ease; }
+.op-on .leaderboard tbody.inst:not([data-open]) { opacity: 0.35; }
+@media (prefers-reduced-motion: reduce) { header.site nav a.op.op-toggle i, header.site nav a.op.op-toggle i::after, .leaderboard tbody.inst { transition: none; } }
 ` : "");
 // /open-problems/'s own rules and those of its figure switches, in open-problems.css, which only
 // that page links: every page carries the menu button, but not that page's figures.

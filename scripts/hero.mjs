@@ -122,10 +122,10 @@ export function latticeGlyph(model, tab, cls) {
 }
 
 // --------------------------------------------------------------------------------- markup
-export function heroHtml({ models, energies, open }) {
+export function heroHtml({ models, energies, open, instances }) {
   const nodes = models.map(m => `<a class="pk-node" href="#h-${pickerSlug(m.model)}" data-slug="${pickerSlug(m.model)}">${modelGlyph(m.model)}<span class="pk-nm">${m.name}</span></a>`).join("\n");
   return `<section class="pk-hero" id="pick">
-  <button class="pk-whatis" type="button" id="pk-whatis" aria-expanded="false" aria-controls="pk-about"><span>?</span>What is QMBL?</button>
+  <button class="pk-whatis" type="button" id="pk-whatis" aria-expanded="false" aria-controls="pk-about"><span>?</span><b class="pk-wi-all">What is QMBL?</b><b class="pk-wi-op">What is QMBL: Open Problems?</b></button>
   <div class="pk-about" id="pk-about" hidden>
     <button class="pk-x" type="button" id="pk-about-x" aria-label="Close">&times;</button>
     <h2>What is QMBL?</h2>
@@ -147,7 +147,7 @@ export function heroHtml({ models, energies, open }) {
   </div>
   <div class="pk-stage" id="pk-stage">
     <div class="pk-center"><h1>Pick your quantum problem</h1>
-      <p class="pk-say" id="pk-say" aria-live="polite" data-op="${models.filter(m => m.open).length} Hamiltonians, ${(open ?? 0).toLocaleString("en")} open problems."><span class="pk-head">${models.length} Hamiltonians, ${energies.toLocaleString("en")} energies.</span><br><span class="pk-k">Point at one to read it, click to see its results.</span></p></div>
+      <p class="pk-say" id="pk-say" aria-live="polite"><span class="pk-heads"><span class="pk-h-all">${models.length} Hamiltonians, ${energies.toLocaleString("en")} energies.</span><span class="pk-h-op">${models.length} Hamiltonians, ${(open ?? 0).toLocaleString("en")} of ${(instances ?? 0).toLocaleString("en")} instances still open.</span></span><br><span class="pk-k">Point at one to read it, click to see its results.</span></p></div>
 ${nodes}
   </div>
   <noscript><p class="pk-noscript">The picker needs JavaScript. Every energy is in the <a href="/instances/">table</a>.</p></noscript>
@@ -189,6 +189,29 @@ export const HERO_CSS = `
 .pk-nm.pk-serif { font-family: var(--serif); font-size: 0.98rem; letter-spacing: 0; }
 .pk-node .pk-ct { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); }
 .pk-node.on .pk-nm { color: var(--accent); }
+/* The Open Problems switch (html.op-on, set in place by OP_SWITCH_SCRIPT): the count badges pop in
+   one after another, what has no open problem fades, solved instances grey out in the chart. */
+@property --pk-c { syntax: "<color>"; inherits: true; initial-value: #898781; }
+.pk-badge { position: absolute; top: 0; right: calc(50% - 46px); min-width: 1.5rem; padding: 0 0.35rem; border-radius: 999px; background: var(--flag); color: #fff; font-family: var(--mono); font-size: 0.66rem; line-height: 1.25rem; text-align: center; box-shadow: 0 0 0 2px var(--bg); pointer-events: none;
+  transform: scale(0); opacity: 0; transition: transform .5s cubic-bezier(.34,1.56,.64,1) calc(var(--i, 0) * 30ms), opacity .25s ease calc(var(--i, 0) * 30ms); }
+.op-on .pk-badge { transform: scale(1); opacity: 1; }
+.pk-done .pk-glyph, .pk-done .pk-nm, .pk-done .pk-ct, .pk-tab { transition: opacity .5s ease, border-color .3s, transform .3s cubic-bezier(.2,.7,.2,1); }
+.op-on .pk-done .pk-glyph, .op-on .pk-done .pk-nm, .op-on .pk-done .pk-ct, .op-on .pk-tab.pk-done { opacity: 0.3; }
+.pk-tab { position: relative; }
+.pk-tab .pk-badge { top: -0.55rem; right: -0.4rem; }
+.pk-heads { display: inline-grid; }
+.pk-heads > span { grid-area: 1 / 1; transition: opacity .45s ease; }
+.pk-h-op, .op-on .pk-h-all { opacity: 0; }
+.op-on .pk-h-op { opacity: 1; }
+.pk-whatis b { font-weight: inherit; }
+.pk-wi-op, .op-on .pk-wi-all { display: none; }
+.op-on .pk-wi-op { display: inline; }
+.pk-pt { --pk-c: var(--pk-k); transition: --pk-c .5s ease; }
+.op-on .pk-pt.pk-solved { --pk-c: var(--grid); }
+.pk-lgd .pk-lg-solved { opacity: 0; transition: opacity .45s ease; }
+.op-on .pk-lgd .pk-lg-solved { opacity: 1; }
+/* the size figure draws only exactly solved instances: not offered while marking open problems */
+.op-on .pk-more-l[aria-controls="pk-p-size"], .op-on #pk-p-size { display: none; }
 .pk-noscript { text-align: center; color: var(--ink2); }
 .g-l { stroke: var(--ink2); stroke-width: 1; fill: none; }
 .g-d { fill: var(--ink); }
@@ -254,12 +277,12 @@ export const HERO_CSS = `
   .pk-stage::before { display: none; }
   .pk-center { position: static; transform: none; width: auto; grid-column: 1 / -1; margin-bottom: 0.6rem; }
   .pk-say { min-height: 0; }
-  .pk-node { position: static; transform: none !important; border: 1px solid var(--grid); border-radius: 10px; background: var(--surface); padding: 0.6rem 0.4rem; }
+  .pk-node { position: relative; transform: none !important; border: 1px solid var(--grid); border-radius: 10px; background: var(--surface); padding: 0.6rem 0.4rem; }
   .pk-node .pk-glyph { width: 56px; height: 56px; padding: 4px; border: 0; }
   .pk-stage.hovering .pk-node:not(.on) .pk-glyph, .pk-stage.hovering .pk-node:not(.on) .pk-nm { opacity: 1; }
   .pk-lab { width: 100%; }
   .pk-stage > .pk-node:last-child:nth-child(even) { grid-column: 1 / -1; }
   .pk-more-wrap { margin-top: 3rem; }
 }
-@media (prefers-reduced-motion: reduce) { .pk-node .pk-glyph, .pk-nm, .pk-more-l::after { transition: none !important; } }
+@media (prefers-reduced-motion: reduce) { .pk-node .pk-glyph, .pk-nm, .pk-more-l::after, .pk-badge, .pk-tab, .pk-ct, .pk-heads > span, .pk-pt, .pk-lg-solved { transition: none !important; } }
 `;

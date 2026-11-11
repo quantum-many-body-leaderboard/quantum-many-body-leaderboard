@@ -9,13 +9,16 @@
   const bySlug = Object.fromEntries(M.models.map(m => [m.slug, m]));
   const $ = id => document.getElementById(id);
   const stage = $("pk-stage"), hero = $("pick"), view = $("pk-view"), more = $("pk-more-wrap"), say = $("pk-say");
-  // The Open Problems switch (?open): only instances with no exact energy, and only the
-  // Hamiltonians that have one; the "What is" box speaks for QMBL: Open Problems.
-  const OPEN = new URLSearchParams(location.search).has("open"), Q = OPEN ? "?open" : "";
-  if (OPEN) {
-    for (const n of stage.querySelectorAll(".pk-node")) if (!bySlug[n.dataset.slug].open) n.remove();
-    const head = say.querySelector(".pk-head"); head.textContent = say.dataset.op;
-  }
+  // The Open Problems switch (OP_SWITCH_SCRIPT, site.mjs) marks the open problems in place: it
+  // sets html.op-on without a reload. What it shows is drawn always and revealed by that class in
+  // CSS, so the count badges pop in, fully solved Hamiltonians fade and solved instances grey out.
+  const root = document.documentElement, isOn = () => root.classList.contains("op-on");
+  root.setAttribute("data-op-live", "");
+  const badge = (n, k = 0) => `<span class="pk-badge" style="--i:${k}" title="${n} open problem${n === 1 ? "" : "s"}">${n}</span>`;
+  stage.querySelectorAll(".pk-node").forEach((n, k) => {
+    const m = bySlug[n.dataset.slug];
+    if (m.open) n.insertAdjacentHTML("beforeend", badge(m.open, k)); else n.classList.add("pk-done");
+  });
   const RING = stage.innerHTML, SAY = say.innerHTML;
   const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   const tabSlug = s => s.replace(/[^\w]+/g, "-").replace(/^-|-$/g, "").toLowerCase();
@@ -56,7 +59,7 @@
     if (mode !== "ring") return;
     const m = node && bySlug[node.dataset.slug];
     const s = $("pk-say");
-    if (s) s.innerHTML = m ? `<b>${esc(m.name)}</b> · <span class="pk-k">${OPEN ? `${m.open} open problem${m.open === 1 ? "" : "s"}` : nE(m.energies)}</span><br>${esc(m.about)}<span class="pk-f">${m.formula}</span>` : SAY;
+    if (s) s.innerHTML = m ? `<b>${esc(m.name)}</b> · <span class="pk-k">${isOn() ? `${m.open} open problem${m.open === 1 ? "" : "s"}` : nE(m.energies)}</span><br>${esc(m.about)}<span class="pk-f">${m.formula}</span>` : SAY;
   }
 
   // ---------------------------------------------------------------------------------- views
@@ -69,7 +72,7 @@
     stage.innerHTML = `<div class="pk-center">${m.glyphBig}<h1>${esc(m.name)}: which lattice?</h1>
       <p class="pk-say" style="min-height:0">${esc(m.about)}<span class="pk-f">${m.formula}</span></p>
       <div class="pk-row"><a class="pk-pill" href="#h-${m.slug}@all">All ${esc(m.name)} results</a><a class="pk-link" href="#pick">← All Hamiltonians</a></div></div>` +
-      m.tabs.filter(t => !OPEN || t.open).map(t => `<a class="pk-node" href="#h-${m.slug}@${tabSlug(t.label)}">${t.glyph}<span class="pk-nm pk-serif">${esc(t.label)}</span><span class="pk-ct">${nE(OPEN ? t.open : t.count)}</span></a>`).join("");
+      m.tabs.map((t, k) => `<a class="pk-node${t.open ? "" : " pk-done"}" href="#h-${m.slug}@${tabSlug(t.label)}">${t.glyph}<span class="pk-nm pk-serif">${esc(t.label)}</span><span class="pk-ct">${nE(t.count)}</span>${t.open ? badge(t.openInst, k) : ""}</a>`).join("");
     measure(); place();
   }
 
@@ -82,9 +85,7 @@
     scrollTo({ top: 0 });
     const data = await load(m.slug);
     const tabs = data.tabs.map(t => t.label);
-    const live = k => !OPEN || data.tabs[k].open > 0;
-    let k = tabs.findIndex(t => tabSlug(t) === tab);
-    if (k < 0 || !live(k)) k = data.tabs.findIndex((t, j) => live(j));
+    const k = tabs.findIndex(t => tabSlug(t) === tab);
     state = { m, data, tab: Math.max(0, k), sel: {} };
     render();
     scrollTo({ top: 0 });
@@ -94,14 +95,15 @@
   // its choice where it can, else takes the value with most energies.
   function resolve() {
     const { data, sel } = state;
-    let pool = data.inst.filter(i => i.t === state.tab && (!OPEN || i.o));
+    let pool = data.inst.filter(i => i.t === state.tab);
     const rows = [];
     for (const dim of data.dims) {
       const val = i => i.d[dim] || ["—", ""];
-      const counts = new Map(), order = new Map();
-      for (const i of pool) { const [l, o] = val(i); counts.set(l, (counts.get(l) || 0) + i.r.length); order.set(l, o); }
+      const counts = new Map(), order = new Map(), open = new Map();
+      for (const i of pool) { const [l, o] = val(i); counts.set(l, (counts.get(l) || 0) + i.r.length); order.set(l, o); open.set(l, (open.get(l) || 0) + (i.o ? i.r.length : 0)); }
       if (!counts.size) continue;
-      if (!counts.has(sel[dim])) sel[dim] = [...counts].sort((a, b) => b[1] - a[1])[0][0];
+      // Marking the open problems, a setting starts where most of them are.
+      if (!counts.has(sel[dim])) sel[dim] = [...counts].sort((a, b) => (isOn() ? open.get(b[0]) - open.get(a[0]) : 0) || b[1] - a[1])[0][0];
       const vals = [...counts.keys()].sort((a, b) => { const x = order.get(a), y = order.get(b); return typeof x === "number" && typeof y === "number" ? x - y : String(x).localeCompare(String(y), "en", { numeric: true }); });
       // Couplings print to four digits (7.74263683 -> 7.743), in full where two would then read alike;
       // a badge whose order is a number but whose label is a word (boundary, shape) keeps its label.
@@ -122,11 +124,11 @@
 <div class="pk-crumb"><a href="#pick">← Pick another problem</a>${sub ? `<span>·</span><a href="#h-${m.slug}">Other ${esc(m.name)} lattices</a>` : ""}</div>
 <div class="pk-title">${m.glyph}<div><h2>${esc(m.name)}</h2>${m.formulaBlock}</div></div>
 <p class="pk-desc">${esc(m.about)} Each dot is one published result for the setting chosen below. Lower is better for variational results.</p>
-${data.tabs.filter(t => !OPEN || t.open).length > 1 ? `<div class="pk-tabs" role="tablist">${data.tabs.map((t, k) => !OPEN || t.open ? `<button class="pk-tab" role="tab" type="button" data-k="${k}" aria-selected="${k === state.tab}">${t.glyph}<span>${esc(t.label)}</span><i>${OPEN ? t.open : t.count}</i></button>` : "").join("")}</div>` : ""}
+${data.tabs.length > 1 ? `<div class="pk-tabs" role="tablist">${data.tabs.map((t, k) => `<button class="pk-tab${t.open ? "" : " pk-done"}" role="tab" type="button" data-k="${k}" aria-selected="${k === state.tab}">${t.glyph}<span>${esc(t.label)}</span><i>${t.count}</i>${t.open ? badge(t.openInst, k) : ""}</button>`).join("")}</div>` : ""}
 ${choosing.length || fixed.length ? `<div class="pk-filters">${choosing.map(([dim, vals, c, short]) => `<div class="pk-fg"><span class="pk-lab">${esc(dim)}</span>${vals.map(v => `<button class="pk-chip" type="button" data-dim="${esc(dim)}" data-v="${esc(v)}" aria-pressed="${v === sel[dim]}"${short.get(v) !== v ? ` title="${esc(v)}"` : ""}>${esc(short.get(v))}<i>${c.get(v)}</i></button>`).join("")}</div>`).join("")}${fixed.length ? `<div class="pk-fg"><span class="pk-lab">setting</span><span class="pk-fixed">${fixed.map(([dim, v, , short]) => esc(dim === "boundary" || dim === "shape" || dim === "problem" || dim === "variant" ? v[0] : `${dim} = ${short.get(v[0])}`)).join(", ")}</span></div>` : ""}</div>` : ""}
 <div class="pk-chart" id="pk-chart"></div>
 <div class="pk-lgd" id="pk-lgd"></div>
-<p class="pk-cap">${pool.length} instance${pool.length === 1 ? "" : "s"}, ${nE(pool.reduce((a, i) => a + i.r.length, 0))}. Horizontal: number of sites N, log scale. Vertical: ${esc(data.unit)}. Point at a dot to preview it; click it to open its table entry. <a href="/instances/${Q}#${m.slug}">All ${esc(m.name)} ${OPEN ? "open problems" : "rows"} in the table</a>.</p>`;
+<p class="pk-cap">${pool.length} instance${pool.length === 1 ? "" : "s"}, ${nE(pool.reduce((a, i) => a + i.r.length, 0))}. Horizontal: number of sites N, log scale. Vertical: ${esc(data.unit)}. Point at a dot to preview it; click it to open its table entry. <a href="/instances/${isOn() ? "?open" : ""}#${m.slug}">All ${esc(m.name)} rows in the table</a>.</p>`;
     view.querySelectorAll(".pk-tab").forEach(b => b.addEventListener("click", () => {
       state.tab = +b.dataset.k; state.sel = {};
       history.replaceState(null, "", `#h-${m.slug}@${tabSlug(data.tabs[state.tab].label)}`);
@@ -147,7 +149,7 @@ ${choosing.length || fixed.length ? `<div class="pk-filters">${choosing.map(([di
   }
   function draw(pool) {
     const W = 920, H = 420, mg = { l: 72, r: 20, t: 16, b: 46 };
-    const pts = pool.flatMap(i => i.r.map(r => ({ N: i.N, e: r[0], kind: r[2], filled: r[3], flagged: r[4], id: r[5] })));
+    const pts = pool.flatMap(i => i.r.map(r => ({ N: i.N, e: r[0], kind: r[2], filled: r[3], flagged: r[4], id: r[5], solved: !i.o })));
     const chart = $("pk-chart");
     if (!pts.length) { chart.innerHTML = `<p class="pk-cap">No results for this setting.</p>`; return; }
     let x0 = Math.min(...pts.map(p => p.N)), x1 = Math.max(...pts.map(p => p.N));
@@ -165,18 +167,19 @@ ${choosing.length || fixed.length ? `<div class="pk-filters">${choosing.map(([di
     for (const v of xticks) s += `<text class="pk-tk" x="${X(v).toFixed(1)}" y="${H - mg.b + 18}" text-anchor="middle">${v}</text>`;
     s += `<text class="pk-axl" x="${(W + mg.l) / 2}" y="${H - 8}" text-anchor="middle">sites N</text>`;
     // flagged outlines last, over what they coincide with; exact dots over the bounds
-    pts.sort((a, b) => a.flagged - b.flagged || a.filled - b.filled || (a.kind === 3) - (b.kind === 3));
+    pts.sort((a, b) => b.solved - a.solved || a.flagged - b.flagged || a.filled - b.filled || (a.kind === 3) - (b.kind === 3));
     pts.forEach((p, k) => {
-      const x = X(p.N), y = Y(p.e), c = KIND[p.kind], f = n => n.toFixed(1);
+      // Colour through --pk-c, so that a solved instance can grey out in a transition (hero.mjs).
+      const x = X(p.N), y = Y(p.e), c = "var(--pk-c)", f = n => n.toFixed(1);
       const d = `M${f(x - 5.5)} ${f(y + 5.5)}L${f(x + 5.5)} ${f(y - 5.5)}`;
       const mark = `<circle cx="${f(x)}" cy="${f(y)}" r="6.5" fill="var(--surface)"/>` + (p.flagged
         ? `<circle cx="${f(x)}" cy="${f(y)}" r="4" fill="none" stroke="${c}" stroke-width="2"/><path d="${d}" stroke="var(--surface)" stroke-width="3.5" stroke-linecap="round"/><path d="${d}" stroke="${c}" stroke-width="2" stroke-linecap="round"/>`
         : p.filled ? `<circle cx="${f(x)}" cy="${f(y)}" r="4.5" fill="${c}"/>` : `<circle cx="${f(x)}" cy="${f(y)}" r="4" fill="var(--surface)" stroke="${c}" stroke-width="2"/>`);
-      s += `<a class="pk-pt" href="/instances/${Q}#${p.id}" data-k="${k}">${mark}</a>`;
+      s += `<a class="pk-pt${p.solved ? " pk-solved" : ""}" style="--pk-k:${KIND[p.kind]}" href="/instances/${isOn() ? "?open" : ""}#${p.id}" data-k="${k}">${mark}</a>`;
     });
     chart.innerHTML = s + "</svg>";
     const kinds = new Set(pts.filter(p => !p.flagged).map(p => p.kind));
-    $("pk-lgd").innerHTML = LEGEND.map((t, k) => kinds.has(k) ? `<span style="--c:${KIND[k]}">${t}</span>` : "").join("") + (pts.some(p => p.flagged) ? `<span class="pk-fl">Flagged, see the row</span>` : "");
+    $("pk-lgd").innerHTML = LEGEND.map((t, k) => kinds.has(k) ? `<span style="--c:${KIND[k]}">${t}</span>` : "").join("") + (pts.some(p => p.flagged) ? `<span class="pk-fl">Flagged, see the row</span>` : "") + (pts.some(p => p.solved) ? `<span class="pk-lg-solved" style="--c:var(--grid)">Solved: the instance has an exact energy</span>` : "");
     const tip = $("pk-tip"), cards = state.data.cards;
     const follow = e => { const w = tip.offsetWidth, h = tip.offsetHeight; let x = e.clientX + 14, y = e.clientY + 14; if (x + w > innerWidth - 8) x = e.clientX - w - 14; if (y + h > innerHeight - 8) y = e.clientY - h - 14; tip.style.left = `${x}px`; tip.style.top = `${y}px`; };
     chart.querySelectorAll(".pk-pt").forEach(a => {
@@ -198,15 +201,14 @@ ${choosing.length || fixed.length ? `<div class="pk-filters">${choosing.map(([di
   addEventListener("hashchange", route);
 
   // ------------------------------------------------------------------------ the rest of the hero
-  const about = $(OPEN ? "pk-about-op" : "pk-about"), whatis = $("pk-whatis");
-  if (OPEN) { whatis.lastChild.textContent = "What is QMBL: Open Problems?"; whatis.setAttribute("aria-controls", "pk-about-op"); }
-  const toggle = open => { about.hidden = !open; whatis.setAttribute("aria-expanded", open); };
-  whatis.addEventListener("click", () => toggle(about.hidden));
-  about.querySelector(".pk-x").addEventListener("click", () => toggle(false));
+  // "What is": QMBL's box, or QMBL: Open Problems' while the switch is on.
+  const whatis = $("pk-whatis"), boxes = [$("pk-about"), $("pk-about-op")];
+  const toggle = open => { const box = boxes[+isOn()]; boxes.forEach(b => { b.hidden = b !== box || !open; }); whatis.setAttribute("aria-controls", box.id); whatis.setAttribute("aria-expanded", open); };
+  whatis.addEventListener("click", () => toggle(boxes.every(b => b.hidden)));
+  boxes.forEach(b => b.querySelector(".pk-x").addEventListener("click", () => toggle(false)));
+  addEventListener("qmbl:open", () => toggle(false));
   addEventListener("keydown", e => { if (e.key === "Escape") toggle(false); });
-  // With the switch on, the size figure goes: it draws only instances with an exact energy.
-  if (OPEN) document.querySelector('.pk-more-l[aria-controls="pk-p-size"]').hidden = true;
-  const links = [...document.querySelectorAll(".pk-more-l:not([hidden])")];
+  const links = [...document.querySelectorAll(".pk-more-l")];
   links.forEach(b => b.addEventListener("click", () => {
     const open = b.getAttribute("aria-expanded") !== "true";
     links.forEach(o => { o.setAttribute("aria-expanded", "false"); $(o.getAttribute("aria-controls")).hidden = true; });
