@@ -1174,9 +1174,16 @@ align();
 moreL.addEventListener("click", () => list.scrollBy({ left: -list.clientWidth * 0.6, behavior: "smooth" }));
 moreR.addEventListener("click", () => list.scrollBy({ left: list.clientWidth * 0.6, behavior: "smooth" }));
 function markJump() {
-  const y = jump.getBoundingClientRect().bottom + 8;
+  // A section counts as in view once its heading reaches the line where a jump lands it
+  // (scroll-margin-top of the headings: the header and 4rem), a few pixels of slack below.
+  const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const y = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--hdr")) || 0) + 4 * rem + 12;
   let cur = null;
-  for (const s of sections) if (!s.hidden && s.getBoundingClientRect().top <= y) cur = s.dataset.model;
+  for (const s of sections) if (!s.hidden && s.querySelector("h2").getBoundingClientRect().top <= y) cur = s.dataset.model;
+  // At the bottom of the page a short last section can't scroll up to that line: the lowest
+  // heading in view counts then.
+  if (innerHeight + scrollY >= document.documentElement.scrollHeight - 2)
+    for (const s of sections) if (!s.hidden && s.querySelector("h2").getBoundingClientRect().top < innerHeight) cur = s.dataset.model;
   for (const a of jumpLinks) {
     const on = a.dataset.model === cur;
     if (on !== a.hasAttribute("aria-current")) {
