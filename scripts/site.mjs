@@ -38,6 +38,15 @@ const DATA = `${REPO}/blob/main/DATA.md`;
 const DOI = "10.5281/zenodo.22753734";
 const ARXIV = "2610.22387";
 const BUILT = new Date().toISOString().slice(0, 10);
+// lastmod.json is the previous deploy's hash and date per page; the Pages workflow downloads it
+// from qmbl.org into PREV_LASTMOD. A page whose hash is unchanged keeps its date, any other gets
+// today's (write() below). Without the file (a local build, a failed download) every page is
+// dated today. After the deploy, the workflow sends the pages dated today to IndexNow (Bing and
+// others) under INDEXNOW_KEY, which IndexNow checks against /<key>.txt.
+const PAGE_DATE = "@@PAGE_DATE@@";
+const INDEXNOW_KEY = "732aa1d2970e26cea792f2bbc5865642";
+let prevDates = {};
+try { prevDates = JSON.parse(fs.readFileSync(process.env.PREV_LASTMOD ?? "", "utf8")).pages ?? {}; } catch {}
 
 // The citation the Cite button copies and the front page prints is the paper; the data is
 // cited by the concept DOI. The release year comes from CITATION.cff.
@@ -155,15 +164,37 @@ function datasetLd() {
     description: `Published ground-state energies: ${summary.rows} energies on ${summary.instances} Hamiltonian instances. Each row gives method, bound type, error bar where published, and its primary paper.`,
     url: "https://qmbl.org/", sameAs: [`https://doi.org/${DOI}`, `https://arxiv.org/abs/${ARXIV}`, REPO], identifier: `https://doi.org/${DOI}`,
     license: "https://www.apache.org/licenses/LICENSE-2.0",
-    isAccessibleForFree: true, dateModified: BUILT,
+    isAccessibleForFree: true, dateModified: PAGE_DATE,
     keywords: ["ground-state energy", "quantum many-body", "variational Monte Carlo", "neural quantum states", "DMRG", "quantum Monte Carlo", "Hubbard model", "J1-J2 model", "Heisenberg model", "benchmark"],
     creator: [
       { "@type": "Person", givenName: "Tristan", familyName: "Zerweck", name: "Tristan Zerweck" },
       { "@type": "Person", givenName: "Juan", familyName: "Carrasquilla", name: "Juan Carrasquilla" },
     ],
+    version: VERSION,
+    citation: { "@type": "ScholarlyArticle", name: CITE_TITLE, url: `https://arxiv.org/abs/${ARXIV}` },
+    variableMeasured: ["ground-state energy", "ground-state energy per site", "statistical error (sigma)", "energy variance", "V-score"],
+    measurementTechnique: ["variational Monte Carlo", "neural quantum states", "DMRG", "tensor networks", "quantum Monte Carlo", "exact diagonalization"],
     distribution: [
       { "@type": "DataDownload", encodingFormat: "application/json", contentUrl: "https://qmbl.org/api/qmbl.json" },
+      { "@type": "DataDownload", encodingFormat: "application/json", contentUrl: "https://qmbl.org/api/instances.json" },
     ],
+  };
+}
+
+// One instance as a schema.org Dataset, part of QMBL's, for Google Dataset Search and for
+// crawlers that read JSON-LD rather than the page.
+function instanceLd(inst, label, lede) {
+  const papers = [...new Map(inst.rows.map(r => citeRef(r, cache)).filter(r => r.url).map(r => [r.url, r])).values()];
+  return {
+    "@context": "https://schema.org", "@type": "Dataset",
+    name: `Ground-state energy, ${label}`, description: lede,
+    url: `https://qmbl.org${instUrl(inst)}`,
+    isPartOf: { "@type": "Dataset", name: CITE_TITLE, url: "https://qmbl.org/", identifier: `https://doi.org/${DOI}` },
+    license: "https://www.apache.org/licenses/LICENSE-2.0", isAccessibleForFree: true, dateModified: PAGE_DATE,
+    keywords: ["ground-state energy", `${modelName(inst.model)} model`, inst.lattice, "benchmark"],
+    variableMeasured: "ground-state energy",
+    citation: papers.map(r => ({ "@type": "CreativeWork", name: r.text, url: r.url })),
+    distribution: [{ "@type": "DataDownload", encodingFormat: "application/json", contentUrl: `https://qmbl.org${jsonUrl(inst)}` }],
   };
 }
 
@@ -186,6 +217,11 @@ function page({ url, title, description, body, wide = false, jsonld = null, css 
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://qmbl.org${url}">
+<meta property="og:image" content="https://qmbl.org/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="QMBL: the Quantum Many-Body Leaderboard">
+<meta name="twitter:card" content="summary_large_image">
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld).replace(/</g, "\\u003c")}</script>\n` : ""}<header class="site">
   <a class="wordmark" href="/">${logoSvg()}<b>QMBL<span class="tagline">the quantum many-body leaderboard</span></b></a>
   <nav>${NAV.map(([href, label]) =>
@@ -1282,6 +1318,7 @@ const modelName = model => MODELS.find(([m]) => m === model)?.[1] ?? model;
 function instancePage(inst) {
   const label = `${modelName(inst.model)} ${instanceLabel(inst)}`;
   const shown = shownBest(inst);
+  const lede = ledeText(inst, shown);
   const ham = hamiltonian(inst);
   const variant = variantNote(inst), relabel = relabelNote(inst);
   const sorted = [...inst.rows].sort((a, b) => a.energy - b.energy);
@@ -1344,6 +1381,7 @@ function instancePage(inst) {
   const body = `
 <p class="crumbs"><a href="/instances/">All instances</a> / <a href="/instances/#${inst.model.toLowerCase()}">${esc(modelName(inst.model))}</a></p>
 <h1>${esc(label)}</h1>
+<p class="lede">${lede}</p>
 
 ${bestBox}
 
@@ -1401,7 +1439,31 @@ ${verified ? `<section><h2>How these numbers were read</h2>
 
   const recText = shown.length ? `${shown.map(([tag, r]) => `${tag === "exact" ? "Exact" : tag[0].toUpperCase() + tag.slice(1)} ${quoteRow(r, inst).text} by ${shorten(methodLabel(r), 40)}`).join("; ")} (${perSiteLabel(inst)}).` : "No row is shown as a best value.";
   return page({ url: instUrl(inst), title: `Ground-state energy, ${label}`, body, wide: true,
+    jsonld: instanceLd(inst, label, lede.replace(/<[^>]+>/g, "").replace(/&[a-z]+;/g, " ")),
     description: `${label}: ${inst.rows.length} published ground-state energies. ${recText}` });
+}
+
+// The answer to "what is the ground-state energy of ...", in one sentence of full names, first on
+// the page: what a search snippet or a language model quotes. The model as people search for it,
+// the boundary said even when periodic, then the values the instance shows (RULES.md 6).
+const MODEL_PHRASE = {
+  Heisenberg: "the spin-1/2 Heisenberg antiferromagnet", J1J2: "the J1-J2 Heisenberg model", Kitaev: "the Kitaev (K-J-&Gamma;) model",
+  ShastrySutherland: "the Shastry-Sutherland model", Hubbard: "the Hubbard model", tV: "the spinless t-V model", tJ: "the t-J model",
+  TFIsing: "the transverse-field Ising model", Impurity: "the impurity model", HEG3D: "the 3D homogeneous electron gas",
+  HEG2D: "the 2D homogeneous electron gas", Hchain: "the hydrogen chain", Hsheet: "the hydrogen sheet",
+};
+function ledeText(inst, shown) {
+  const lattice = !/^HEG|^H(chain|sheet)$|^Impurity$/.test(inst.model);
+  const where = esc(instanceLabel(inst)) + (lattice && !BOUNDARY[inst.boundary] ? ", periodic boundaries" : "");
+  const n = inst.rows.length;
+  const said = ([tag, r]) => {
+    const c = citeRef(r, cache);
+    return `${tag === "exact" ? (stochasticExact(r) ? "exact energy (stochastic)" : "exact energy") : `${tag} energy`} is ${quoteRow(r, inst).text}, by ${esc(shorten(methodLabel(r), 40))} in ${esc(c.text)}`;
+  };
+  const values = shown.length
+    ? `The ${shown.map(said).join("; the ").replace(/; the (?!.*; the )/, "; and the ")}.${shown[0][0] === "exact" ? "" : " QMBL has no exact energy for this instance."} Energies as ${perSiteLabel(inst)}.`
+    : `None of them is a best value: ${esc(noRecordReason(inst))}.`;
+  return `QMBL lists ${n} published ground-state energ${n === 1 ? "y" : "ies"} for ${MODEL_PHRASE[inst.model] ?? esc(modelName(inst.model))} (${where}). ${values}`;
 }
 
 // --------------------------------------------------------------------- contribute page
@@ -1769,6 +1831,7 @@ table.next tr.target > td:first-child, .rows tr:target > td:first-child { box-sh
 .big .unit { font-family: var(--sans); font-size: 0.8rem; font-weight: 400; color: var(--muted); margin-left: 0.5rem; }
 
 .crumbs { font-size: 0.85rem; color: var(--muted); margin: 0 0 0.6rem; }
+.lede { max-width: 46rem; margin: 0 0 1.2rem; }
 .crumbs a { color: var(--muted); }
 .formula {
   font-family: var(--mono); font-size: 1.05rem; background: var(--surface);
@@ -1872,7 +1935,20 @@ header.site nav a.op.op-toggle[aria-pressed="true"] i::after { transform: transl
 const CSS_VERSION = createHash("sha1").update(CSS).digest("hex").slice(0, 10);
 
 // ----------------------------------------------------------------------------- output
+// A page's date is the day its content last changed, not the build's: write() hashes the page
+// with PAGE_DATE where the date goes and without the stylesheet version, which changes on every
+// build, keeps the previous deploy's date where the hash is the same (prevDates, from
+// lastmod.json; see the sitemap below) and puts that date in. The sitemap's lastmod and the
+// JSON-LD's dateModified are that date.
+const pageDates = {};
 function write(rel, content) {
+  if (rel.endsWith("index.html")) {
+    const u = "/" + rel.replace(/index\.html$/, "");
+    const hash = createHash("sha1").update(content.replaceAll(CSS_VERSION, "")).digest("hex").slice(0, 16);
+    const prev = prevDates[u];
+    pageDates[u] = { hash, date: prev && prev.hash === hash ? prev.date : BUILT };
+    content = content.replaceAll(PAGE_DATE, pageDates[u].date);
+  }
   const file = path.join(OUT, rel);
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, content);
@@ -1910,7 +1986,7 @@ write("404.html", notFoundPage());
 write("style.css", CSS);
 write("favicon.svg", faviconSvg());
 // Rendered once from favicon.svg (scripts/assets/); Safari and share sheets do not take SVG icons.
-for (const png of ["apple-touch-icon.png", "favicon-32.png"])
+for (const png of ["apple-touch-icon.png", "favicon-32.png", "og.png"])
   fs.copyFileSync(path.join("scripts/assets", png), path.join(OUT, png));
 fs.mkdirSync(path.join(OUT, "figures"), { recursive: true });
 for (const [name] of FIGURES) for (const v of [name, `${name}-dark`])
@@ -2018,9 +2094,11 @@ write("api/qmbl.json", JSON.stringify({
 }, null, 2) + "\n");
 
 const urls = ["/", "/instances/", "/contribute/", ...instances.map(instUrl)];
+write(`${INDEXNOW_KEY}.txt`, INDEXNOW_KEY);
+write("lastmod.json", JSON.stringify({ built: BUILT, indexnow_key: INDEXNOW_KEY, pages: Object.fromEntries(urls.map(u => [u, pageDates[u]])) }) + "\n");
 write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map(u => `  <url><loc>https://qmbl.org${u}</loc><lastmod>${BUILT}</lastmod></url>`).join("\n")}
+${urls.map(u => `  <url><loc>https://qmbl.org${u}</loc><lastmod>${pageDates[u].date}</lastmod></url>`).join("\n")}
 </urlset>
 `);
 

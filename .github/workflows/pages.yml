@@ -38,10 +38,15 @@ jobs:
           node-version: '22'
       - name: Validate the data
         run: node scripts/validate.mjs
+      # The previous deploy's page hashes and dates: a page that has not changed keeps its date in
+      # sitemap.xml (scripts/site.mjs, lastmod.json). Without them every page is dated today.
+      - name: Fetch the previous page dates
+        run: curl -fsS "https://qmbl.org/lastmod.json?v=$GITHUB_SHA" -o "$RUNNER_TEMP/lastmod.json" || echo "no previous lastmod.json; every page is dated today"
       - name: Build the site
         run: node scripts/site.mjs
         env:
           OPEN_PROBLEMS_DIR: open-problems
+          PREV_LASTMOD: ${{ runner.temp }}/lastmod.json
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
@@ -56,3 +61,27 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+      # The pages this deploy changed (dated today in lastmod.json) go to IndexNow, which passes
+      # them to Bing and the other engines that take part. The query string gets past the CDN's
+      # cached copy; a failure here never fails the deploy.
+      - name: Send the changed pages to IndexNow
+        continue-on-error: true
+        run: |
+          node --input-type=module -e '
+            const today = new Date().toISOString().slice(0, 10);
+            let lm;
+            for (let i = 0; i < 6; i++) {
+              lm = await (await fetch(`https://qmbl.org/lastmod.json?v=${process.env.GITHUB_SHA}-${i}`)).json();
+              if (lm.built === today) break;
+              await new Promise(r => setTimeout(r, 30000));
+            }
+            if (lm.built !== today) throw new Error(`lastmod.json is from ${lm.built}, not this deploy`);
+            const urlList = Object.entries(lm.pages).filter(([, p]) => p.date === today).map(([u]) => `https://qmbl.org${u}`);
+            if (!urlList.length) { console.log("no page changed"); process.exit(0); }
+            const res = await fetch("https://api.indexnow.org/indexnow", {
+              method: "POST", headers: { "content-type": "application/json; charset=utf-8" },
+              body: JSON.stringify({ host: "qmbl.org", key: lm.indexnow_key, keyLocation: `https://qmbl.org/${lm.indexnow_key}.txt`, urlList }),
+            });
+            console.log(`IndexNow: ${urlList.length} pages, HTTP ${res.status}`);
+            if (!res.ok) throw new Error(await res.text());
+          '
