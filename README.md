@@ -1606,9 +1606,9 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square cell, N = 114, rs = 50, unpolarized | best variational | -0.019648(2) | VMC (SJ) [Tanatar & Ceperley (1989)](https://doi.org/10.1103/physrevb.39.5005) |  |
 | triangular cell, N = 16, rs = 30, polarized | best variational | -0.031990687(3) | VMC (Fermi Sets) [Li et al. (2026)](https://doi.org/10.48550/arxiv.2607.25872) |  |
 |  | best projected | -0.03199636(7) | FP-DMC (Fermi Sets) [Li et al. (2026)](https://doi.org/10.48550/arxiv.2607.25872) |  |
-| triangular cell, N = 91, rs = 30, polarized | best variational | -0.03193763(3) | VMC (self-attention) [Gaggioli et al. (2026)](https://doi.org/10.48550/arxiv.2607.08616) |  |
+| triangular cell, N = 91, rs = 30, polarized | best variational | -0.0319429(1) | VMC (TorFormer) [Dai et al. (2026)](https://doi.org/10.48550/arxiv.2609.10186) |  |
 |  | best projected | -0.0319370(1) | FN-DMC (SJB) [Gaggioli et al. (2026)](https://doi.org/10.48550/arxiv.2607.08616) |  |
-| triangular cell, N = 91, rs = 40, polarized | best variational | -0.02443814(2) | VMC (self-attention) [Gaggioli et al. (2026)](https://doi.org/10.48550/arxiv.2607.08616) |  |
+| triangular cell, N = 91, rs = 40, polarized | best variational | -0.02444202(8) | VMC (TorFormer) [Dai et al. (2026)](https://doi.org/10.48550/arxiv.2609.10186) |  |
 |  | best projected | -0.0244377(2) | FN-DMC (SJB) [Gaggioli et al. (2026)](https://doi.org/10.48550/arxiv.2607.08616) |  |
 | triangular cell, N = 169, rs = 30, polarized | best variational | -0.03192077(3) | VMC (self-attention) [Gaggioli et al. (2026)](https://doi.org/10.48550/arxiv.2607.08616) |  |
 |  | best projected | -0.0319197(1) | FN-DMC (SJB) [Gaggioli et al. (2026)](https://doi.org/10.48550/arxiv.2607.08616) |  |

@@ -746,6 +746,7 @@ Object.assign(NAMES, {
   "SJB-VMC (Slater-Jastrow-backflow)": ["Slater-Jastrow-backflow", ""],
   "SJB-DMC (fixed-node DMC on the SJB nodes)": ["Fixed-node DMC", "trial state: Slater-Jastrow-backflow; extrapolated: Δτ → 0", { family: "DMC" }],
   "NN-VMC (self-attention wave function)": ["Self-attention NQS", "spatially weighted particle attention", { family: "transformer / ViT" }],
+  "VMC (TorFormer, translation-equivariant neural network, total momentum K = 0)": ["TorFormer", "edge-attention (EVE) backbone, 4 layers; symmetric: momentum", { family: "transformer / ViT" }], // arXiv:2609.10186 Secs. II-III
   "Fermi Sets VMC (2.5e4 parameters)": ["Fermi Sets", "4 determinants, 2.5e4 parameters", { family: "other NQS" }],
   "Fermi Sets fixed-phase DMC (2.5e4 parameters)": ["Fixed-phase DMC", "trial state: Fermi Sets, 2.5e4 parameters", { family: "DMC" }],
   "Fermi Sets VMC (3.7e4 parameters)": ["Fermi Sets", "4 determinants, 3.7e4 parameters", { family: "other NQS" }],

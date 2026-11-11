@@ -1,0 +1,60 @@
+[
+ {
+  "instance_id": "HEG2D/triangular_91_P_91_0_30",
+  "eps": -0.0319428958,
+  "tol": 3.1e-8,
+  "sigma_per_site": 1.217e-7,
+  "var_per_site": null,
+  "arxiv": "2609.10186",
+  "peer_reviewed": false,
+  "origin": "own",
+  "bound_type": "variational",
+  "method": "VMC (TorFormer, translation-equivariant neural network, total momentum K = 0)",
+  "reference": "D. D. Dai, Y.-T. Lin & M. Soljačić, Fast, Accurate, and Scalable Fermionic Neural Networks via Translation Equivariance, arXiv:2609.10186",
+  "evidence": "Table I, N = 91, rs = 30, row TorFormer; sources/2609.10186.txt line 265; printed as (E − E_Mad)/N × rs^(3/2) in Ha",
+  "convention_check": "Eq. (1) with Ewald summation and a neutralizing background; N = 91 spin-polarized electrons (Sec. II), triangular simulation cell with a1, a2 of equal length at 60° (Sec. III), closed shell, run at K = 0. E_Mad is the classical triangular Wigner-crystal energy, -1.10610258672/rs Ha per electron (QMBL Ewald, checks/heg-hf/hf.mjs madelung() on the one-electron primitive cell); the loader adds it back after dividing by rs^(3/2). Check: the same conversion of the paper's quoted SJB+DMC and Psiformer+SWPA values (Table I, from arXiv:2607.08616) reproduces QMBL's rows from 2607.08616 on both instances to every printed digit. Twist: Gamma (the K = 0 sector of the periodic cell; no twist stated, and the comparison rows from 2607.08616 are Gamma).",
+  "reported_as": "0.809 62(2)",
+  "confidence": "high",
+  "verified_by": "single reading",
+  "compute": {
+   "parameters": 212000,
+   "gpu_hours": null,
+   "device": null,
+   "n_devices": null,
+   "samples": 2048,
+   "wall_clock": null,
+   "iterations": 8000,
+   "reported_as": "\"Our 212K-parameter TorFormer already has lower energy after 1K steps, and it continues improving over 8K steps.\" \"Training uses a batch size of 2048 and 10K steps for the medium-scale experiments and 8K steps for the large-scale ones.\" Devices: \"eight V100 GPUs, four L40S GPUs, or four H200 GPUs\", not stated per run.",
+   "source": "arXiv:2609.10186 Sec. III"
+  }
+ },
+ {
+  "instance_id": "HEG2D/triangular_91_P_91_0_40",
+  "eps": -0.0244420227,
+  "tol": 2e-8,
+  "sigma_per_site": 7.906e-8,
+  "var_per_site": null,
+  "arxiv": "2609.10186",
+  "peer_reviewed": false,
+  "origin": "own",
+  "bound_type": "variational",
+  "method": "VMC (TorFormer, translation-equivariant neural network, total momentum K = 0)",
+  "reference": "D. D. Dai, Y.-T. Lin & M. Soljačić, Fast, Accurate, and Scalable Fermionic Neural Networks via Translation Equivariance, arXiv:2609.10186",
+  "evidence": "Table I, N = 91, rs = 40, row TorFormer; sources/2609.10186.txt line 268; printed as (E − E_Mad)/N × rs^(3/2) in Ha",
+  "convention_check": "Eq. (1) with Ewald summation and a neutralizing background; N = 91 spin-polarized electrons (Sec. II), triangular simulation cell with a1, a2 of equal length at 60° (Sec. III), closed shell, run at K = 0. E_Mad is the classical triangular Wigner-crystal energy, -1.10610258672/rs Ha per electron (QMBL Ewald, checks/heg-hf/hf.mjs madelung() on the one-electron primitive cell); the loader adds it back after dividing by rs^(3/2). Check: the same conversion of the paper's quoted SJB+DMC and Psiformer+SWPA values (Table I, from arXiv:2607.08616) reproduces QMBL's rows from 2607.08616 on both instances to every printed digit. Twist: Gamma (the K = 0 sector of the periodic cell; no twist stated, and the comparison rows from 2607.08616 are Gamma).",
+  "reported_as": "0.812 21(2)",
+  "confidence": "high",
+  "verified_by": "single reading",
+  "compute": {
+   "parameters": 212000,
+   "gpu_hours": null,
+   "device": null,
+   "n_devices": null,
+   "samples": 2048,
+   "wall_clock": null,
+   "iterations": 8000,
+   "reported_as": "\"Our 212K-parameter TorFormer already has lower energy after 1K steps, and it continues improving over 8K steps.\" \"Training uses a batch size of 2048 and 10K steps for the medium-scale experiments and 8K steps for the large-scale ones.\" Devices: \"eight V100 GPUs, four L40S GPUs, or four H200 GPUs\", not stated per run.",
+   "source": "arXiv:2609.10186 Sec. III"
+  }
+ }
+]

@@ -118,6 +118,43 @@
           "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#69"
         }
       }
+    },
+    {
+      "energy": -2.9068035178,
+      "sigma": 0.0000110747,
+      "energy_variance": null,
+      "dof": 91,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "TorFormer",
+      "method_detail": "edge-attention (EVE) backbone, 4 layers; symmetric: momentum",
+      "method_as_published": "VMC (TorFormer, translation-equivariant neural network, total momentum K = 0)",
+      "family": "transformer / ViT",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "D. D. Dai, Y.-T. Lin & M. Soljačić, Fast, Accurate, and Scalable Fermionic Neural Networks via Translation Equivariance, arXiv:2609.10186",
+      "peer_reviewed": false,
+      "source": "sweep-allresults-2026-11-11",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-11",
+        "method": "source text of arXiv:2609.10186 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "0.809 62(2)",
+        "note": "Table I, N = 91, rs = 30, row TorFormer; sources/2609.10186.txt line 265; printed as (E − E_Mad)/N × rs^(3/2) in Ha | Eq. (1) with Ewald summation and a neutralizing background; N = 91 spin-polarized electrons (Sec. II), triangular simulation cell with a1, a2 of equal length at 60° (Sec. III), closed shell, run at K = 0. E_Mad is the classical triangular Wigner-crystal energy, -1.10610258672/rs Ha per electron (QMBL Ewald, checks/heg-hf/hf.mjs madelung() on the one-electron primitive cell); the loader adds it back after dividing by rs^(3/2). Check: the same conversion of the paper's quoted SJB+DMC and Psiformer+SWPA values (Table I, from arXiv:2607.08616) reproduces QMBL's rows from 2607.08616 on both instances to every printed digit. Twist: Gamma (the K = 0 sector of the periodic cell; no twist stated, and the comparison rows from 2607.08616 are Gamma).",
+        "secondary_of": null
+      },
+      "compute": {
+        "parameters": 212000,
+        "gpu_hours": null,
+        "device": null,
+        "n_devices": null,
+        "samples": 2048,
+        "wall_clock": null,
+        "iterations": 8000,
+        "reported_as": "\"Our 212K-parameter TorFormer already has lower energy after 1K steps, and it continues improving over 8K steps.\" \"Training uses a batch size of 2048 and 10K steps for the medium-scale experiments and 8K steps for the large-scale ones.\" Devices: \"eight V100 GPUs, four L40S GPUs, or four H200 GPUs\", not stated per run.",
+        "source": "arXiv:2609.10186 Sec. III"
+      }
     }
   ]
 }
