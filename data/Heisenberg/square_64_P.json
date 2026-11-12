@@ -486,7 +486,17 @@
         "method": "source text of arXiv:0905.3898 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.6724(3)",
         "note": "Table II row 8, column This work (L x L, PBC); version read: arXiv text (sources/0905.3898.txt); journal version (New J. Phys. 11, 083026 (2009)) not read in this pass | 8x8 PBC from caption; SSE column -0.673487(4) agrees with instance exact -0.67349005; ours above it",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "New J. Phys. 11, 083026 (2009) publisher PDF (iopscience, open access, pypdf layout mode) and arXiv:0905.3898v4 PDF (layout mode, identical to sources/0905.3898.txt); the two versions print the same values",
+          "location": "Table 2 (Heisenberg, L x L square, PBC), row L = 8, column This work",
+          "reported_as": "-0.6724(3) per site, units of J1 (S.S)",
+          "conversion": "-0.6724(3) x 4 x 64 = -172.1344; sigma 3e-04 x 256 = 0.0768",
+          "note": "Value, sigma, lattice, boundary, J2 agree; journal and arXiv identical. H = J1 sum S_i.S_j + J2 sum S_i.S_j (Eq. 6), spin-1/2 operators (Heisenberg = hard-core bosons with V = 2t; SSE comparison column in S.S units); per site in units of J1; stored = 4N E/N. EPS VMC is variational; own computation. Plaquette size per row not printed.",
+          "source_entry": "RP1-heisenberg-j1j2#25"
+        }
       }
     },
     {
@@ -512,8 +522,54 @@
         "method": "source text of arXiv:cond-mat/9707123 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "0.673487(4)",
         "note": "Table II, L=8; version read: arXiv text (sources/cond-mat-9707123.txt); journal version (Phys. Rev. B 56, 11678 (1997)) not read in this pass | matches instance exact -0.67349005 within about 3e-6",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "arXiv:cond-mat/9707123v1 PDF (only version; pypdf layout mode, identical to sources/cond-mat-9707123.txt); journal PRB 56, 11678 not reachable (journals.aps.org HTTP 401 from this machine on 2026-11-11)",
+          "location": "Table II, row L = 8, column -E",
+          "reported_as": "0.673487(4) (column header '-E', per spin, S.S units)",
+          "conversion": "-E = 0.673487(4) -> E/N = -0.673487; x 4 x 64 = -172.412672; sigma 4e-06 x 256 = 0.001024",
+          "note": "Value, sigma, lattice, PBC agree. H = J sum_<ij> S_i.S_j (Eq. 1), per spin. SSE at beta = 8L (Table II caption; 'All results discussed here are for beta = 8L'); the paper states beta = 4L and 8L agree within errors and estimates the excited-state error at ~1e-7 relative for L = 16: a ground-state estimate, exact (stochastic) like the other Sandvik SSE rows; Sz = 0 canonical ensemble. Own computation. Not a duplicate: the instance's other SSE row is Sandvik's 2026 run (arXiv:2601.20189, exact-2026-09-15), an independent calculation.",
+          "source_entry": "RP1-heisenberg-j1j2#39"
+        }
       }
+    },
+    {
+      "energy": -172.371,
+      "sigma": 0.002,
+      "energy_variance": null,
+      "dof": 64,
+      "einf": 0,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "CNN",
+      "method_detail": "",
+      "method_as_published": "CNN (Choo et al.)",
+      "family": "CNN / ResNet",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Choo, Neupert & Carleo, CNN energies on the 8 x 8 lattice provided to and first printed by Vieijra & Nys, Many-Body Quantum States with Exact Conservation of Non-Abelian and Lattice Symmetries through Variational Monte Carlo, Phys. Rev. B 104, 045123 (2021), arXiv:2104.14869, doi:10.1103/PhysRevB.104.045123 (Table I, row 'CNN [23]'; acknowledgements: 'We thank Y. Nomura and K. Choo for providing results from their models on the 8x8 lattice'); method of Choo, Neupert & Carleo, Phys. Rev. B 100, 125124 (2019), arXiv:1903.06713, which prints 6 x 6 and 10 x 10 only",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-12",
+      "provenance": "secondary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2104.14869 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading (held-quote search 2026-11-11) and a check of the table line by the applying session (2026-11-12)",
+        "reported_as": "-43.09275 ± 0.00050",
+        "note": "Table I 'Results for 8x8 lattice for various J2/J1', row 'CNN [23]', column J2/J1 = 0; [23] is Choo, Neupert & Carleo, PRB 100, 125124; acknowledgements thank Nomura and Choo for providing results on the 8x8 lattice. Choo et al.'s own text (arXiv:1903.06713v1, only version) has no 8 x 8 table. Version read: arXiv:2104.14869v2 text (sources/2104.14869.txt); journal version not reached (APS HTTP 401, 2026-11-11). Ruling 2026-11-12: added citing the first print, quoted-in note shown in the source cell. | Table I prints totals in S.S units (the ClebschTree row of the same table, -31.90850, is QMBL's -127.634 / 4 on J1J2/square_64_P_0.5); per site = total / 64, stored = 4 x total. Printed bars are multiples of 0.00025 and kept as printed.",
+        "secondary_of": "arXiv:2104.14869"
+      },
+      "corrections": [
+        {
+          "field": "quote_shown",
+          "to": "cell",
+          "checked_on": "2026-11-12",
+          "reason": "Choo, Neupert & Carleo print no 8 x 8 energy: the number and its bar are first printed in Table I of Vieijra & Nys, Phys. Rev. B 104, 045123 (2021), whose acknowledgements say Choo provided them. The source cell therefore keeps the 'quoted in' note visible, as for the 6 x 6 triangular row of 2026-10-28. Reference, provenance, energy and sigma unchanged.",
+          "source_entry": "held quote of the Ketboard/tachys pass, ruling 2026-11-12"
+        }
+      ],
+      "quote_shown": "cell"
     },
     {
       "energy": -172.406982422,
@@ -647,8 +703,8 @@
         "arXiv:cond-mat/9707123",
         "arXiv:1906.00463"
       ],
-      "found": 2,
-      "note": "Only papers whose tables matched the instance by size were read; not a citation screen. Energies from: arXiv:0905.3898, arXiv:cond-mat/9707123."
+      "found": 3,
+      "note": "Only papers whose tables matched the instance by size were read; not a citation screen. Energies from: arXiv:1903.06713, arXiv:0905.3898, arXiv:cond-mat/9707123."
     },
     {
       "checked_on": "2026-11-11",

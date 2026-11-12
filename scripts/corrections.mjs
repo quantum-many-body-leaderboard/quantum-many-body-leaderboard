@@ -25577,4 +25577,196 @@ export const CORRECTIONS = [
     "reason": "The table prints an error bar beside every ClebschTree energy; the row stored none. The table is in total S.S units (RBM+symm -43.10268/64 = -0.673479 per site, the known 8x8 value), so the stored Pauli sigma is 4x the printed bar. QMBL already stores VarBench's ClebschTree uploads at J2 = 0.5 and 0.55 with exactly 4x the bars this table prints (0.0168 = 4*0.0042, 0.0204 = 4*0.0051), the same convention. The paper does not define the bar (App. B: 4096 samples per estimate); state that in the note. Energy, 8x8 PBC (Sec. III: \"We benchmark our method on the 8x8 lattice with PBC\"), J1 = 1, J2 and class are correct.",
     "source_entry": "RP2-hubbard-heisenberg-j1j2#45 (qmbl-verify 2026-11-11)"
   },
+  // qmbl-verify 2026-11-11 (quoted): second reading of the primaries of the quoted Ketboard/tachys rows (sweep-rows-2026-11-11-quoted), journal versions where reachable; rulings of 2026-11-12.
+  {
+    "match": {
+      "instance": "Heisenberg/square_16_P",
+      "method": "Entangled-Plaquette States (EPS) VMC, 2x2 plaquettes (l1 x l2 = 4 column label as printed)",
+      "energy": -44.9024
+    },
+    "field": "method",
+    "to": "Entangled-Plaquette States (EPS) VMC",
+    "reported_as": "-0.7016(1)",
+    "location": "Table 2 (Heisenberg, L x L square, PBC), row L = 4, column This work",
+    "version_read": "New J. Phys. 11, 083026 (2009) publisher PDF (iopscience, open access, pypdf layout mode) and arXiv:0905.3898v4 PDF (layout mode, identical to sources/0905.3898.txt); the two versions print the same values",
+    "conversion": "-0.7016(1) x 4 x 16 = -44.9024; sigma 1e-04 x 64 = 0.0064",
+    "checked_on": "2026-11-12",
+    "reason": "The '2x2 plaquettes (l1 x l2 = 4 column label as printed)' is a text-extraction artefact: in the arXiv two-column layout the x-axis label 'l1 x l2' of Fig. 1 (ticks 2x2 ... 4x4) sits on the same line as Table II row 'L = 4'. The journal Table 2 prints only 'L = 4 | -0.7016(1)'; 4 is the lattice side, and the paper never states the plaquette size used for this row ('In a typical calculation, we start with 2 x 2 plaquettes; once the energy has converged, the size of the plaquettes is increased'). The value, sigma and bound_type are correct. The derived method_detail 'entangled-plaquette states, VMC, 2 x 2 plaquettes' should lose '2 x 2 plaquettes' as well.",
+    "source_entry": "RP1-heisenberg-j1j2#23"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_7_8",
+      "method": "Slater-Jastrow",
+      "energy": -11.232
+    },
+    "field": "sigma",
+    "to": 0.00016,
+    "reported_as": "−0.702 ± 10−5",
+    "location": "PRL SM Table II 'Finite size effect study of Neural Network Backflow' (= arXiv v2 Table III), row '4 × 4, U/t=8, n=0.875', column 'Slater-Jastrow'",
+    "version_read": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+    "conversion": "1e-5 per site x 16 = 1.6e-4 total",
+    "checked_on": "2026-11-12",
+    "reason": "The table prints a statistical bar for this cell (same table whose 8 x 4 and 16 x 4 NNB bars are already stored as sigma). Value -0.702 x 16 = -11.232 agrees; Table I (5.4 ± 2e-3)% vs the stored ED -11.8688355696/16 = -0.741802 gives -0.70174, consistent. Note: the printed value is rounded to 1e-3 per site, so the rounding (±8e-3 total) dominates the bar. Exact -11.868 quoted in the main text (Fig. 2 caption) equals the stored periodic ED, so PBC, Nf = 7 per spin (n = 0.875 x 16 = 14), U = 8 are settled.",
+    "source_entry": "RP2-arxiv-1807-10770#0"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x8_32_P_14_8",
+      "method": "Slater-Jastrow",
+      "energy": -23.008
+    },
+    "field": "sigma",
+    "to": 0.00032,
+    "reported_as": "−0.719 ± 10−5",
+    "location": "PRL SM Table II 'Finite size effect study of Neural Network Backflow' (= arXiv v2 Table III), row '8 × 4, U/t=8, n=0.875', column 'Slater-Jastrow'",
+    "version_read": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+    "conversion": "-0.719 x 32 = -23.008 (agrees); 1e-5 x 32 = 3.2e-4",
+    "checked_on": "2026-11-12",
+    "reason": "Printed statistical bar for the cell; value, n = 0.875 -> 28 electrons = Nf 14 per spin, U = 8 agree. Boundary: neither the PRL nor its SM states the boundary of the L x 4 runs; periodic in both directions inferred as accepted on 2026-10-03 (ruling D1 of the 2026-09-29 pass) for this paper's 4 x L runs; the same group's arXiv:2510.26906 quotes the 4 x 16 NNB -0.746 per site for the periodic model. Bar is far below the 1e-3 rounding of the printed value. Not a duplicate: the instance's other Luo & Clark row (index 6, NNB -24.16) is a different column.",
+    "source_entry": "RP2-arxiv-1807-10770#3"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x12_48_P_21_8",
+      "method": "Slater-Jastrow",
+      "energy": -34.656
+    },
+    "field": "sigma",
+    "to": 0.00096,
+    "reported_as": "−0.722 ± 2 × 10−5",
+    "location": "PRL SM Table II 'Finite size effect study of Neural Network Backflow' (= arXiv v2 Table III), row '12 × 4, U/t=8, n=0.875', column 'Slater-Jastrow'",
+    "version_read": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+    "conversion": "-0.722 x 48 = -34.656 (agrees); 2e-5 x 48 = 9.6e-4",
+    "checked_on": "2026-11-12",
+    "reason": "Printed statistical bar; n = 0.875 x 48 = 42 electrons = Nf 21 per spin, U = 8 agree. Boundary: neither the PRL nor its SM states the boundary of the L x 4 runs; periodic in both directions inferred as accepted on 2026-10-03 (ruling D1 of the 2026-09-29 pass) for this paper's 4 x L runs; the same group's arXiv:2510.26906 quotes the 4 x 16 NNB -0.746 per site for the periodic model.",
+    "source_entry": "RP2-arxiv-1807-10770#5"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x12_48_P_21_8",
+      "method": "NNB",
+      "energy": -35.808
+    },
+    "field": "sigma",
+    "to": 0.0024,
+    "reported_as": "−0.746 ± 5 × 10−5",
+    "location": "PRL SM Table II 'Finite size effect study of Neural Network Backflow' (= arXiv v2 Table III), row '12 × 4, U/t=8, n=0.875', column 'NNB'",
+    "version_read": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+    "conversion": "-0.746 x 48 = -35.808 (agrees); 5e-5 x 48 = 2.4e-3",
+    "checked_on": "2026-11-12",
+    "reason": "Printed statistical bar (ΨSN, SM Sec. IV (ii)); neuron count for 12 x 4 not printed. Boundary: neither the PRL nor its SM states the boundary of the L x 4 runs; periodic in both directions inferred as accepted on 2026-10-03 (ruling D1 of the 2026-09-29 pass) for this paper's 4 x L runs; the same group's arXiv:2510.26906 quotes the 4 x 16 NNB -0.746 per site for the periodic model.",
+    "source_entry": "RP2-arxiv-1807-10770#6"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_P_28_8",
+      "method": "Slater-Jastrow",
+      "energy": -46.208
+    },
+    "field": "energy",
+    "to": -46.211,
+    "reported_as": "'the energy decreases from -46.211 (for the optimized Slater determinant) to -47.745 (nh = 64)' (SM Sec. IV); Table II '−0.722 ± 10−5'",
+    "location": "PRL SM Sec. IV 'Neural network backflow on various systems', 16 × 4 paragraph; PRL SM Table II 'Finite size effect study of Neural Network Backflow' (= arXiv v2 Table III), row '16 × 4, U/t=8, n=0.875', column 'Slater-Jastrow'",
+    "version_read": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+    "conversion": "-46.211 total as printed; -46.211/64 = -0.722046875 per site, which rounds to the table's -0.722; the stored -46.208 is -0.722 x 64 and loses the printed digits",
+    "checked_on": "2026-11-12",
+    "reason": "The same paper prints the total with 3 more significant figures. 'Optimized Slater determinant' is the paper's name for the Slater-Jastrow column: ΨS0 carries the charge Jastrow v_ij (main Table I; 'we always use a charge Jastrow'), and the 12 × 8 text '6.3% for the optimized Slater determinant' is the Table I 'Slater-Jastrow' cell. Table I 16 x 4 SJ (5.9 ± 2e-3)% vs AFQMC -49.088 is consistent with both. Sigma: Table II 1e-5 per site x 64 = 6.4e-4 (stored null). Boundary: neither the PRL nor its SM states the boundary of the L x 4 runs; periodic in both directions inferred as accepted on 2026-10-03 (ruling D1 of the 2026-09-29 pass) for this paper's 4 x L runs; the same group's arXiv:2510.26906 quotes the 4 x 16 NNB -0.746 per site for the periodic model.",
+    "source_entry": "RP2-arxiv-1807-10770#8"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_P_28_8",
+      "method": "Slater-Jastrow",
+      "energy": -46.208
+    },
+    "field": "sigma",
+    "to": 0.00064,
+    "reported_as": "−0.722 ± 10−5",
+    "location": "PRL SM Table II 'Finite size effect study of Neural Network Backflow' (= arXiv v2 Table III), row '16 × 4', column 'Slater-Jastrow'",
+    "version_read": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+    "conversion": "1e-5 x 64 = 6.4e-4",
+    "checked_on": "2026-11-12",
+    "reason": "Printed statistical bar; same table as the stored 16 x 4 NNB sigma 0.00384 (row 12).",
+    "source_entry": "RP2-arxiv-1807-10770#9"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_7_8",
+      "method": "NNB (neural network backflow, SN)",
+      "energy": -11.68
+    },
+    "field": "sigma",
+    "to": 0.000128,
+    "reported_as": "−0.730 ± 8 × 10−6",
+    "location": "PRL SM Table II, row '4 × 4, U/t=8, n=0.875', column 'NNB'",
+    "version_read": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+    "conversion": "8e-6 x 16 = 1.28e-4",
+    "checked_on": "2026-11-12",
+    "reason": "The printed bar, missing from the pass row, as for the other cells of the same table.",
+    "source_entry": "RP2-arxiv-1807-10770#1"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_7_8",
+      "method": "NNB (neural network backflow, SN)",
+      "energy": -11.68
+    },
+    "field": "method",
+    "to": "NNB",
+    "reported_as": "column 'NNB'",
+    "location": "PRL SM Table II, column 'NNB'",
+    "version_read": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+    "checked_on": "2026-11-12",
+    "reason": "The printed column name is 'NNB', as for the other sizes of the same table; 'neural network backflow, SN' was the reader's gloss (SM Sec. IV says the SN form was optimized on these systems).",
+    "source_entry": "RP2-arxiv-1807-10770#1"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_64_P",
+      "method": "CNN (Choo et al.)",
+      "energy": -172.371
+    },
+    "field": "quote_shown",
+    "to": "cell",
+    "checked_on": "2026-11-12",
+    "reason": "Choo, Neupert & Carleo print no 8 x 8 energy: the number and its bar are first printed in Table I of Vieijra & Nys, Phys. Rev. B 104, 045123 (2021), whose acknowledgements say Choo provided them. The source cell therefore keeps the 'quoted in' note visible, as for the 6 x 6 triangular row of 2026-10-28. Reference, provenance, energy and sigma unchanged.",
+    "source_entry": "held quote of the Ketboard/tachys pass, ruling 2026-11-12"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.45",
+      "method": "CNN (Choo et al.)",
+      "energy": -130.594
+    },
+    "field": "quote_shown",
+    "to": "cell",
+    "checked_on": "2026-11-12",
+    "reason": "Choo, Neupert & Carleo print no 8 x 8 energy: the number and its bar are first printed in Table I of Vieijra & Nys, Phys. Rev. B 104, 045123 (2021), whose acknowledgements say Choo provided them. The source cell therefore keeps the 'quoted in' note visible, as for the 6 x 6 triangular row of 2026-10-28. Reference, provenance, energy and sigma unchanged.",
+    "source_entry": "held quote of the Ketboard/tachys pass, ruling 2026-11-12"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "CNN (Choo et al.)",
+      "energy": -127.078
+    },
+    "field": "quote_shown",
+    "to": "cell",
+    "checked_on": "2026-11-12",
+    "reason": "Choo, Neupert & Carleo print no 8 x 8 energy: the number and its bar are first printed in Table I of Vieijra & Nys, Phys. Rev. B 104, 045123 (2021), whose acknowledgements say Choo provided them. The source cell therefore keeps the 'quoted in' note visible, as for the 6 x 6 triangular row of 2026-10-28. Reference, provenance, energy and sigma unchanged.",
+    "source_entry": "held quote of the Ketboard/tachys pass, ruling 2026-11-12"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.55",
+      "method": "CNN (Choo et al.)",
+      "energy": -123.954
+    },
+    "field": "quote_shown",
+    "to": "cell",
+    "checked_on": "2026-11-12",
+    "reason": "Choo, Neupert & Carleo print no 8 x 8 energy: the number and its bar are first printed in Table I of Vieijra & Nys, Phys. Rev. B 104, 045123 (2021), whose acknowledgements say Choo provided them. The source cell therefore keeps the 'quoted in' note visible, as for the 6 x 6 triangular row of 2026-10-28. Reference, provenance, energy and sigma unchanged.",
+    "source_entry": "held quote of the Ketboard/tachys pass, ruling 2026-11-12"
+  },
 ];

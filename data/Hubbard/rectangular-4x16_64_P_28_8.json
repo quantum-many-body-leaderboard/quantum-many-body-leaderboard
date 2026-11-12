@@ -1828,8 +1828,8 @@
       }
     },
     {
-      "energy": -46.208,
-      "sigma": null,
+      "energy": -46.211,
+      "sigma": 0.00064,
       "energy_variance": null,
       "dof": 56,
       "einf": 98,
@@ -1851,7 +1851,33 @@
         "reported_as": "-0.722 ± 10^-5",
         "note": "Table III row '16x4, U/t=8, n=0.875'; text: Slater determinant total -46.211 on 16x4 (=-0.722/site); version read: arXiv text (sources/1807.10770.txt); journal version (Phys. Rev. Lett. 122, 226401 (2019)) not read in this pass | Per-site; n=0.875 = Nf 28 per spin; periodic BC not printed but 2510.26906 quotes the same NNB -0.746 for periodic 4x16",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "energy",
+          "to": -46.211,
+          "reported_as": "'the energy decreases from -46.211 (for the optimized Slater determinant) to -47.745 (nh = 64)' (SM Sec. IV); Table II '−0.722 ± 10−5'",
+          "location": "PRL SM Sec. IV 'Neural network backflow on various systems', 16 × 4 paragraph; PRL SM Table II 'Finite size effect study of Neural Network Backflow' (= arXiv v2 Table III), row '16 × 4, U/t=8, n=0.875', column 'Slater-Jastrow'",
+          "version_read": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+          "conversion": "-46.211 total as printed; -46.211/64 = -0.722046875 per site, which rounds to the table's -0.722; the stored -46.208 is -0.722 x 64 and loses the printed digits",
+          "checked_on": "2026-11-12",
+          "reason": "The same paper prints the total with 3 more significant figures. 'Optimized Slater determinant' is the paper's name for the Slater-Jastrow column: ΨS0 carries the charge Jastrow v_ij (main Table I; 'we always use a charge Jastrow'), and the 12 × 8 text '6.3% for the optimized Slater determinant' is the Table I 'Slater-Jastrow' cell. Table I 16 x 4 SJ (5.9 ± 2e-3)% vs AFQMC -49.088 is consistent with both. Sigma: Table II 1e-5 per site x 64 = 6.4e-4 (stored null). Boundary: neither the PRL nor its SM states the boundary of the L x 4 runs; periodic in both directions inferred as accepted on 2026-10-03 (ruling D1 of the 2026-09-29 pass) for this paper's 4 x L runs; the same group's arXiv:2510.26906 quotes the 4 x 16 NNB -0.746 per site for the periodic model.",
+          "source_entry": "RP2-arxiv-1807-10770#8",
+          "from": -46.208
+        },
+        {
+          "field": "sigma",
+          "to": 0.00064,
+          "reported_as": "−0.722 ± 10−5",
+          "location": "PRL SM Table II 'Finite size effect study of Neural Network Backflow' (= arXiv v2 Table III), row '16 × 4', column 'Slater-Jastrow'",
+          "version_read": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+          "conversion": "1e-5 x 64 = 6.4e-4",
+          "checked_on": "2026-11-12",
+          "reason": "Printed statistical bar; same table as the stored 16 x 4 NNB sigma 0.00384 (row 12).",
+          "source_entry": "RP2-arxiv-1807-10770#9",
+          "from": null
+        }
+      ]
     },
     {
       "energy": -48.96,
@@ -1876,7 +1902,17 @@
         "method": "source text of arXiv:1807.10770 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.765",
         "note": "Table III row '16x4', column NNB variance extrapolation (text: approximately -49 total); version read: arXiv text (sources/1807.10770.txt); journal version (Phys. Rev. Lett. 122, 226401 (2019)) not read in this pass | Per-site; below catalogue best -0.76748? no, above it",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+          "location": "PRL SM Table II 'Finite size effect study of Neural Network Backflow' (= arXiv v2 Table III), row '16 × 4, U/t=8, n=0.875', column 'NNB variance extrapolation'; SM Sec. IV 'The variance extrapolated energy is approximately -49'",
+          "reported_as": "-0.765 (energy per site, no error bar)",
+          "conversion": "-0.765 x 64 = -48.96",
+          "note": "Value agrees in PRL SM and arXiv v2. SM Table I variance-extrapolated 0.209% vs the twist-averaged AFQMC -49.088 gives -48.9854 (-0.76540 per site), consistent with -0.765 at its printed digits; the row keeps the printed table value. bound_type extrapolated right. Nf 28 per spin (n = 0.875 x 64 = 56), U = 8. Boundary: neither the PRL nor its SM states the boundary of the L x 4 runs; periodic in both directions inferred as accepted on 2026-10-03 (ruling D1 of the 2026-09-29 pass) for this paper's 4 x L runs; the same group's arXiv:2510.26906 quotes the 4 x 16 NNB -0.746 per site for the periodic model. The AFQMC comparison value is twist-averaged, so it does not itself fix the boundary. Not a duplicate: row 12 (NNB -47.745, nh = 64) is a different column; no other extrapolated row carries -0.765.",
+          "source_entry": "RP2-arxiv-1807-10770#10"
+        }
       }
     }
   ],

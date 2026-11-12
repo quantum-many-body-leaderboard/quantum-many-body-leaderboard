@@ -834,6 +834,42 @@
         "confidence": "high",
         "note": "Only the numbers the method string states; nothing else about this run's cost is recorded."
       }
+    },
+    {
+      "energy": -123.954,
+      "sigma": 0.006,
+      "energy_variance": null,
+      "dof": 64,
+      "einf": 0,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "CNN",
+      "method_detail": "",
+      "method_as_published": "CNN (Choo et al.)",
+      "family": "CNN / ResNet",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Choo, Neupert & Carleo, CNN energies on the 8 x 8 lattice provided to and first printed by Vieijra & Nys, Many-Body Quantum States with Exact Conservation of Non-Abelian and Lattice Symmetries through Variational Monte Carlo, Phys. Rev. B 104, 045123 (2021), arXiv:2104.14869, doi:10.1103/PhysRevB.104.045123 (Table I, row 'CNN [23]'; acknowledgements: 'We thank Y. Nomura and K. Choo for providing results from their models on the 8x8 lattice'); method of Choo, Neupert & Carleo, Phys. Rev. B 100, 125124 (2019), arXiv:1903.06713, which prints 6 x 6 and 10 x 10 only",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-12",
+      "provenance": "secondary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2104.14869 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading (held-quote search 2026-11-11) and a check of the table line by the applying session (2026-11-12)",
+        "reported_as": "-30.98850 ± 0.00150",
+        "note": "Table I 'Results for 8x8 lattice for various J2/J1', row 'CNN [23]', column J2/J1 = 0.55; [23] is Choo, Neupert & Carleo, PRB 100, 125124; acknowledgements thank Nomura and Choo for providing results on the 8x8 lattice. Choo et al.'s own text (arXiv:1903.06713v1, only version) has no 8 x 8 table. Version read: arXiv:2104.14869v2 text (sources/2104.14869.txt); journal version not reached (APS HTTP 401, 2026-11-11). Ruling 2026-11-12: added citing the first print, quoted-in note shown in the source cell. | Table I prints totals in S.S units (the ClebschTree row of the same table, -31.90850, is QMBL's -127.634 / 4 on J1J2/square_64_P_0.5); per site = total / 64, stored = 4 x total. Printed bars are multiples of 0.00025 and kept as printed.",
+        "secondary_of": "arXiv:2104.14869"
+      },
+      "corrections": [
+        {
+          "field": "quote_shown",
+          "to": "cell",
+          "checked_on": "2026-11-12",
+          "reason": "Choo, Neupert & Carleo print no 8 x 8 energy: the number and its bar are first printed in Table I of Vieijra & Nys, Phys. Rev. B 104, 045123 (2021), whose acknowledgements say Choo provided them. The source cell therefore keeps the 'quoted in' note visible, as for the 6 x 6 triangular row of 2026-10-28. Reference, provenance, energy and sigma unchanged.",
+          "source_entry": "held quote of the Ketboard/tachys pass, ruling 2026-11-12"
+        }
+      ],
+      "quote_shown": "cell"
     }
   ],
   "coverage": [
@@ -879,8 +915,8 @@
         "arXiv:cond-mat/9707123",
         "arXiv:1906.00463"
       ],
-      "found": 2,
-      "note": "Only papers whose tables matched the instance by size were read; not a citation screen. Energies from: arXiv:1304.2630, arXiv:2005.14142."
+      "found": 3,
+      "note": "Only papers whose tables matched the instance by size were read; not a citation screen. Energies from: arXiv:1304.2630, arXiv:1903.06713, arXiv:2005.14142."
     }
   ]
 }

@@ -429,7 +429,7 @@
     },
     {
       "energy": -11.232,
-      "sigma": null,
+      "sigma": 0.00016,
       "energy_variance": null,
       "dof": 14,
       "einf": 24.5,
@@ -451,11 +451,25 @@
         "reported_as": "-0.702 ± 10^-5",
         "note": "Table III row '4x4, U/t=8, n=0.875', column Slater-Jastrow (Slater-Jastrow rel. error 5.4% in Table II consistent); version read: arXiv text (sources/1807.10770.txt); journal version (Phys. Rev. Lett. 122, 226401 (2019)) not read in this pass | Per-site; exact -11.868/16 = instance exact; relative error 5.4% consistent with -0.702",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "sigma",
+          "to": 0.00016,
+          "reported_as": "−0.702 ± 10−5",
+          "location": "PRL SM Table II 'Finite size effect study of Neural Network Backflow' (= arXiv v2 Table III), row '4 × 4, U/t=8, n=0.875', column 'Slater-Jastrow'",
+          "version_read": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+          "conversion": "1e-5 per site x 16 = 1.6e-4 total",
+          "checked_on": "2026-11-12",
+          "reason": "The table prints a statistical bar for this cell (same table whose 8 x 4 and 16 x 4 NNB bars are already stored as sigma). Value -0.702 x 16 = -11.232 agrees; Table I (5.4 ± 2e-3)% vs the stored ED -11.8688355696/16 = -0.741802 gives -0.70174, consistent. Note: the printed value is rounded to 1e-3 per site, so the rounding (±8e-3 total) dominates the bar. Exact -11.868 quoted in the main text (Fig. 2 caption) equals the stored periodic ED, so PBC, Nf = 7 per spin (n = 0.875 x 16 = 14), U = 8 are settled.",
+          "source_entry": "RP2-arxiv-1807-10770#0",
+          "from": null
+        }
+      ]
     },
     {
       "energy": -11.68,
-      "sigma": null,
+      "sigma": 0.000128,
       "energy_variance": null,
       "dof": 14,
       "einf": 24.5,
@@ -463,7 +477,7 @@
       "method": "VMC",
       "ansatz": "NNBF",
       "method_detail": "backflow on a Slater determinant (Ψ_SN)",
-      "method_as_published": "NNB (neural network backflow, SN)",
+      "method_as_published": "NNB",
       "family": "backflow / Pfaffian",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
@@ -476,8 +490,43 @@
         "method": "source text of arXiv:1807.10770 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.730 ± 8x10^-6",
         "note": "Table III row '4x4, U/t=8, n=0.875', column NNB; version read: arXiv text (sources/1807.10770.txt); journal version (Phys. Rev. Lett. 122, 226401 (2019)) not read in this pass | Per-site. Caution: Table II gives NNB relative error 1.156% which implies about -0.733, not -0.730; likely different nh or a table inconsistency",
-        "secondary_of": null
-      }
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-12",
+          "scope": "value",
+          "method": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+          "location": "PRL SM Table II 'Finite size effect study of Neural Network Backflow', row '4 × 4, U/t=8, n=0.875', column 'NNB'",
+          "reported_as": "−0.730 ± 8 × 10−6",
+          "conversion": "-0.730 x 16 = -11.68; sigma 8e-6 x 16 = 1.28e-4",
+          "note": "Kept as printed (ruling 2026-11-12). The same paper's SM Table I prints the NNB relative error on this system as (1.156 ± 2 × 10−3)%, which against the exact -11.868 implies -0.7332 per site; -0.730 corresponds to 1.591%. One of the two cells is a misprint and the source does not say which; the discrepancy, 0.0032 per site, is 400 times the printed bar. Identical in arXiv:1807.10770v2 and the published SM.",
+          "source_entry": "RP2-arxiv-1807-10770#1 (qmbl-verify 2026-11-11, quoted; ambiguous, kept)"
+        }
+      },
+      "corrections": [
+        {
+          "field": "sigma",
+          "to": 0.000128,
+          "reported_as": "−0.730 ± 8 × 10−6",
+          "location": "PRL SM Table II, row '4 × 4, U/t=8, n=0.875', column 'NNB'",
+          "version_read": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+          "conversion": "8e-6 x 16 = 1.28e-4",
+          "checked_on": "2026-11-12",
+          "reason": "The printed bar, missing from the pass row, as for the other cells of the same table.",
+          "source_entry": "RP2-arxiv-1807-10770#1",
+          "from": null
+        },
+        {
+          "field": "method",
+          "to": "NNB",
+          "reported_as": "column 'NNB'",
+          "location": "PRL SM Table II, column 'NNB'",
+          "version_read": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+          "checked_on": "2026-11-12",
+          "reason": "The printed column name is 'NNB', as for the other sizes of the same table; 'neural network backflow, SN' was the reader's gloss (SM Sec. IV says the SN form was optimized on these systems).",
+          "source_entry": "RP2-arxiv-1807-10770#1",
+          "from": "NNB (neural network backflow, SN)"
+        }
+      ]
     },
     {
       "energy": -11.744,
@@ -502,7 +551,17 @@
         "method": "source text of arXiv:1807.10770 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.734",
         "note": "Table III row '4x4, U/t=8, n=0.875', column NNB variance extrapolation; version read: arXiv text (sources/1807.10770.txt); journal version (Phys. Rev. Lett. 122, 226401 (2019)) not read in this pass | Per-site; Table II variance-extrapolated error 1.101% consistent with -0.734",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+          "location": "PRL SM Table II 'Finite size effect study of Neural Network Backflow' (= arXiv v2 Table III), row '4 × 4, U/t=8, n=0.875', column 'NNB variance extrapolation'",
+          "reported_as": "-0.734 (energy per site, no error bar)",
+          "conversion": "-0.734 x 16 = -11.744",
+          "note": "Value agrees in PRL SM and arXiv v2. SM Table I variance-extrapolated relative error 1.101% gives -0.73363, consistent. bound_type extrapolated correct (energy vs variance extrapolation of ΨSN, SM Fig. 5/10 right panels). PBC settled by the exact -11.868 comparison; Nf 7, U 8. Not a duplicate: no other extrapolated row on the instance.",
+          "source_entry": "RP2-arxiv-1807-10770#2"
+        }
       }
     }
   ],

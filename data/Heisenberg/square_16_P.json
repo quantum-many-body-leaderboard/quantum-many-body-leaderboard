@@ -228,8 +228,8 @@
       "v_score": null,
       "method": "VMC",
       "ansatz": "EPS",
-      "method_detail": "entangled-plaquette states, VMC, 2 × 2 plaquettes",
-      "method_as_published": "Entangled-Plaquette States (EPS) VMC, 2x2 plaquettes (l1 x l2 = 4 column label as printed)",
+      "method_detail": "entangled-plaquette states, VMC",
+      "method_as_published": "Entangled-Plaquette States (EPS) VMC",
       "family": "classic VMC",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
@@ -243,7 +243,21 @@
         "reported_as": "-0.7016(1)",
         "note": "Table II, L x L PBC, row 4, column This work; version read: arXiv text (sources/0905.3898.txt); journal version (New J. Phys. 11, 083026 (2009)) not read in this pass | L=4 PBC fixed by Table II caption; value near exact -0.7018 in same table",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "method",
+          "to": "Entangled-Plaquette States (EPS) VMC",
+          "reported_as": "-0.7016(1)",
+          "location": "Table 2 (Heisenberg, L x L square, PBC), row L = 4, column This work",
+          "version_read": "New J. Phys. 11, 083026 (2009) publisher PDF (iopscience, open access, pypdf layout mode) and arXiv:0905.3898v4 PDF (layout mode, identical to sources/0905.3898.txt); the two versions print the same values",
+          "conversion": "-0.7016(1) x 4 x 16 = -44.9024; sigma 1e-04 x 64 = 0.0064",
+          "checked_on": "2026-11-12",
+          "reason": "The '2x2 plaquettes (l1 x l2 = 4 column label as printed)' is a text-extraction artefact: in the arXiv two-column layout the x-axis label 'l1 x l2' of Fig. 1 (ticks 2x2 ... 4x4) sits on the same line as Table II row 'L = 4'. The journal Table 2 prints only 'L = 4 | -0.7016(1)'; 4 is the lattice side, and the paper never states the plaquette size used for this row ('In a typical calculation, we start with 2 x 2 plaquettes; once the energy has converged, the size of the plaquettes is increased'). The value, sigma and bound_type are correct. The derived method_detail 'entangled-plaquette states, VMC, 2 x 2 plaquettes' should lose '2 x 2 plaquettes' as well.",
+          "source_entry": "RP1-heisenberg-j1j2#23",
+          "from": "Entangled-Plaquette States (EPS) VMC, 2x2 plaquettes (l1 x l2 = 4 column label as printed)"
+        }
+      ]
     },
     {
       "energy": -44.913728,
@@ -268,7 +282,17 @@
         "method": "source text of arXiv:cond-mat/9707123 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "0.701777(7)",
         "note": "Table II, L=4, column -E (also Table I E1); version read: arXiv text (sources/cond-mat-9707123.txt); journal version (Phys. Rev. B 56, 11678 (1997)) not read in this pass | sign fixed by column header '-E'; Table I Eexact -0.701780",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "arXiv:cond-mat/9707123v1 PDF (only version; pypdf layout mode, identical to sources/cond-mat-9707123.txt); journal PRB 56, 11678 not reachable (journals.aps.org HTTP 401 from this machine on 2026-11-11)",
+          "location": "Table II, row L = 4, column -E (same value as Table I row E1)",
+          "reported_as": "0.701777(7) (column header '-E', per spin, S.S units)",
+          "conversion": "-E = 0.701777(7) -> E/N = -0.701777; x 4 x 16 = -44.913728; sigma 7e-06 x 64 = 0.000448",
+          "note": "Value, sigma, lattice, PBC agree. H = J sum_<ij> S_i.S_j (Eq. 1), per spin. SSE at beta = 8L (Table II caption; 'All results discussed here are for beta = 8L'); the paper states beta = 4L and 8L agree within errors and estimates the excited-state error at ~1e-7 relative for L = 16: a ground-state estimate, exact (stochastic) like the other Sandvik SSE rows; Sz = 0 canonical ensemble. Own computation. Not a duplicate: the instance's other SSE row is Sandvik's 2026 run (arXiv:2601.20189, exact-2026-09-15), an independent calculation. L = 4 vs exact: E1 = -0.701777(7) lies 0.4 sigma above the exact -0.701780 (Table I, quoted ED; instance ED row -0.7017802). It is an independent stochastic calculation (RULES 6: every published calculation of the exact energy is a row), not a copy of the ED row: not a duplicate.",
+          "source_entry": "RP1-heisenberg-j1j2#37"
+        }
       }
     }
   ],

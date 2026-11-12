@@ -724,7 +724,7 @@
     },
     {
       "energy": -23.008,
-      "sigma": null,
+      "sigma": 0.00032,
       "energy_variance": null,
       "dof": 28,
       "einf": 49,
@@ -746,7 +746,21 @@
         "reported_as": "-0.719 ± 10^-5",
         "note": "Table III row '8x4, U/t=8, n=0.875'; version read: arXiv text (sources/1807.10770.txt); journal version (Phys. Rev. Lett. 122, 226401 (2019)) not read in this pass | Per-site; n=0.875 on 32 sites = Nf 14 per spin; periodic BC not stated for 8x4 in text (assumed as for the 4x4 exact check)",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "sigma",
+          "to": 0.00032,
+          "reported_as": "−0.719 ± 10−5",
+          "location": "PRL SM Table II 'Finite size effect study of Neural Network Backflow' (= arXiv v2 Table III), row '8 × 4, U/t=8, n=0.875', column 'Slater-Jastrow'",
+          "version_read": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+          "conversion": "-0.719 x 32 = -23.008 (agrees); 1e-5 x 32 = 3.2e-4",
+          "checked_on": "2026-11-12",
+          "reason": "Printed statistical bar for the cell; value, n = 0.875 -> 28 electrons = Nf 14 per spin, U = 8 agree. Boundary: neither the PRL nor its SM states the boundary of the L x 4 runs; periodic in both directions inferred as accepted on 2026-10-03 (ruling D1 of the 2026-09-29 pass) for this paper's 4 x L runs; the same group's arXiv:2510.26906 quotes the 4 x 16 NNB -0.746 per site for the periodic model. Bar is far below the 1e-3 rounding of the printed value. Not a duplicate: the instance's other Luo & Clark row (index 6, NNB -24.16) is a different column.",
+          "source_entry": "RP2-arxiv-1807-10770#3",
+          "from": null
+        }
+      ]
     },
     {
       "energy": -24.544,
@@ -771,7 +785,17 @@
         "method": "source text of arXiv:1807.10770 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; adversarial re-read: confirmed",
         "reported_as": "-0.767",
         "note": "Table III row '8x4', column NNB variance extrapolation; version read: arXiv text (sources/1807.10770.txt); journal version (Phys. Rev. Lett. 122, 226401 (2019)) not read in this pass | Per-site; boundary not printed for 8x4",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+          "location": "PRL SM Table II 'Finite size effect study of Neural Network Backflow' (= arXiv v2 Table III), row '8 × 4, U/t=8, n=0.875', column 'NNB variance extrapolation'",
+          "reported_as": "-0.767 (energy per site, no error bar)",
+          "conversion": "-0.767 x 32 = -24.544",
+          "note": "Value agrees in PRL SM and arXiv v2; bound_type extrapolated correct (SM Fig. 10 right: ΨSN energy per site vs variance). Boundary: neither the PRL nor its SM states the boundary of the L x 4 runs; periodic in both directions inferred as accepted on 2026-10-03 (ruling D1 of the 2026-09-29 pass) for this paper's 4 x L runs; the same group's arXiv:2510.26906 quotes the 4 x 16 NNB -0.746 per site for the periodic model. Not a duplicate (row 6 is the NNB column, -0.755).",
+          "source_entry": "RP2-arxiv-1807-10770#4"
+        }
       }
     }
   ],

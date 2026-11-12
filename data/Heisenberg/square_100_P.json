@@ -1405,7 +1405,17 @@
         "method": "source text of arXiv:0905.3898 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.6699(3)",
         "note": "Table II row 10, column This work; version read: arXiv text (sources/0905.3898.txt); journal version (New J. Phys. 11, 083026 (2009)) not read in this pass | 10x10 PBC from caption; SSE -0.671549(4) matches instance exact -0.67155266; ours above",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "New J. Phys. 11, 083026 (2009) publisher PDF (iopscience, open access, pypdf layout mode) and arXiv:0905.3898v4 PDF (layout mode, identical to sources/0905.3898.txt); the two versions print the same values",
+          "location": "Table 2 (Heisenberg, L x L square, PBC), row L = 10, column This work",
+          "reported_as": "-0.6699(3) per site, units of J1 (S.S)",
+          "conversion": "-0.6699(3) x 4 x 100 = -267.96; sigma 3e-04 x 400 = 0.12",
+          "note": "Value, sigma, lattice, boundary, J2 agree; journal and arXiv identical. H = J1 sum S_i.S_j + J2 sum S_i.S_j (Eq. 6), spin-1/2 operators (Heisenberg = hard-core bosons with V = 2t; SSE comparison column in S.S units); per site in units of J1; stored = 4N E/N. EPS VMC is variational; own computation. Plaquette size per row not printed.",
+          "source_entry": "RP1-heisenberg-j1j2#22"
+        }
       }
     },
     {
@@ -1431,7 +1441,17 @@
         "method": "source text of arXiv:cond-mat/9707123 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "0.671549(4)",
         "note": "Table II, L=10; version read: arXiv text (sources/cond-mat-9707123.txt); journal version (Phys. Rev. B 56, 11678 (1997)) not read in this pass | instance exact -0.67155266 differs by 4e-6 (about 1 sigma)",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-11",
+          "scope": "value",
+          "method": "arXiv:cond-mat/9707123v1 PDF (only version; pypdf layout mode, identical to sources/cond-mat-9707123.txt); journal PRB 56, 11678 not reachable (journals.aps.org HTTP 401 from this machine on 2026-11-11)",
+          "location": "Table II, row L = 10, column -E",
+          "reported_as": "0.671549(4) (column header '-E', per spin, S.S units)",
+          "conversion": "-E = 0.671549(4) -> E/N = -0.671549; x 4 x 100 = -268.6196; sigma 4e-06 x 400 = 0.0016",
+          "note": "Value, sigma, lattice, PBC agree. H = J sum_<ij> S_i.S_j (Eq. 1), per spin. SSE at beta = 8L (Table II caption; 'All results discussed here are for beta = 8L'); the paper states beta = 4L and 8L agree within errors and estimates the excited-state error at ~1e-7 relative for L = 16: a ground-state estimate, exact (stochastic) like the other Sandvik SSE rows; Sz = 0 canonical ensemble. Own computation. Not a duplicate: the instance's other SSE row is Sandvik's 2026 run (arXiv:2601.20189, exact-2026-09-15), an independent calculation.",
+          "source_entry": "RP1-heisenberg-j1j2#35"
+        }
       }
     }
   ],

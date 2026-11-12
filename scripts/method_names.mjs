@@ -198,6 +198,7 @@ export const NAMES = {
 
   // ---------------------------------------------------------------- CNN / ResNet
   "CNN": ["CNN", ""],
+  "CNN (Choo et al.)": ["CNN", ""], // 8 x 8 values of Choo, Neupert & Carleo, first printed in arXiv:2104.14869 Table I
   "CNN (Li et al. 2022, sunway supercomputer)": ["CNN", ""],
   "CNN1": ["CNN", `CNN1, ${LANCZOS(1)}`], // Liang et al., MLST 4, 015035, Table 1 caption: "achieved by CNN1 with 106 529 parameters ... the Lanczos step with p = 1"
   "CNN NQS with symmetry projections": ["CNN", "projected: unspecified"],

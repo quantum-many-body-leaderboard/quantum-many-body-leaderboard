@@ -44893,4 +44893,680 @@ export const VERIFICATIONS = [
     "note": "Agrees with the stored -28.5691854424671 to 1e-14. Row is not in the group file; checked because the task asked for it.",
     "source_entry": "RP2-heisenberg#4 (qmbl-verify 2026-11-11, instances)"
   },
+  // qmbl-verify 2026-11-11 (quoted): second reading of the primaries of the quoted Ketboard/tachys rows (sweep-rows-2026-11-11-quoted), journal versions where reachable; rulings of 2026-11-12.
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-4x4_48_P",
+      "method": "U(1) Dirac spin liquid, 0-LS (VMC)",
+      "energy": -82.435392
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:1209.1858v4 PDF (pypdf layout mode, identical to the project cache sources/1209.1858.txt), main text and Supplementary Material pp. 7-10; journal PRB 87, 060405(R) not reachable (journals.aps.org returned HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table I, row Size 48, column 0-LS",
+    "reported_as": "-0.4293510(4) per site, units of J (S.S)",
+    "conversion": "-0.4293510(4) x 4 x 48 = -82.435392; sigma 4e-07 x 192 = 7.68e-05",
+    "note": "Value, sigma, bound_type agree. H = J sum_<ij> S_i.S_j (Eq. 1), energies per site in J; stored = 4N E/N. Spin Hamiltonian periodic; mixed periodic-antiperiodic BCs only on the spinon mean-field Hamiltonian (boundary P correct). Own computation. Cluster: '48-site cluster (i.e., 4 x 4 x 3)' = instance kagome-4x4 rhombic torus.",
+    "source_entry": "RP1-heisenberg-j1j2#0"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-4x4_48_P",
+      "method": "U(1) Dirac spin liquid, 1-LS (VMC)",
+      "energy": -83.5691904
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:1209.1858v4 PDF (pypdf layout mode, identical to the project cache sources/1209.1858.txt), main text and Supplementary Material pp. 7-10; journal PRB 87, 060405(R) not reachable (journals.aps.org returned HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table I, row Size 48, column 1-LS",
+    "reported_as": "-0.4352562(3) per site, units of J (S.S)",
+    "conversion": "-0.4352562(3) x 4 x 48 = -83.5691904; sigma 3e-07 x 192 = 5.76e-05",
+    "note": "Value, sigma, bound_type agree. H = J sum_<ij> S_i.S_j (Eq. 1), energies per site in J; stored = 4N E/N. Spin Hamiltonian periodic; mixed periodic-antiperiodic BCs only on the spinon mean-field Hamiltonian (boundary P correct). Own computation. Cluster: '48-site cluster (i.e., 4 x 4 x 3)' = instance kagome-4x4 rhombic torus.",
+    "source_entry": "RP1-heisenberg-j1j2#1"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-4x4_48_P",
+      "method": "U(1) Dirac spin liquid, 2-LS (VMC)",
+      "energy": -83.848704
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:1209.1858v4 PDF (pypdf layout mode, identical to the project cache sources/1209.1858.txt), main text and Supplementary Material pp. 7-10; journal PRB 87, 060405(R) not reachable (journals.aps.org returned HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table I, row Size 48, column 2-LS",
+    "reported_as": "-0.436712(1) per site, units of J (S.S)",
+    "conversion": "-0.436712(1) x 4 x 48 = -83.848704; sigma 1e-06 x 192 = 0.000192",
+    "note": "Value, sigma, bound_type agree. H = J sum_<ij> S_i.S_j (Eq. 1), energies per site in J; stored = 4N E/N. Spin Hamiltonian periodic; mixed periodic-antiperiodic BCs only on the spinon mean-field Hamiltonian (boundary P correct). Own computation. Cluster: '48-site cluster (i.e., 4 x 4 x 3)' = instance kagome-4x4 rhombic torus.",
+    "source_entry": "RP1-heisenberg-j1j2#2"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-4x4_48_P",
+      "method": "U(1) Dirac spin liquid, 0-LS + FN",
+      "energy": -82.96896
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:1209.1858v4 PDF (pypdf layout mode, identical to the project cache sources/1209.1858.txt), main text and Supplementary Material pp. 7-10; journal PRB 87, 060405(R) not reachable (journals.aps.org returned HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table I, row Size 48, column 0-LS + FN",
+    "reported_as": "-0.432130(2) per site, units of J (S.S)",
+    "conversion": "-0.432130(2) x 4 x 48 = -82.96896; sigma 2e-06 x 192 = 0.000384",
+    "note": "Value, sigma, bound_type agree. H = J sum_<ij> S_i.S_j (Eq. 1), energies per site in J; stored = 4N E/N. Spin Hamiltonian periodic; mixed periodic-antiperiodic BCs only on the spinon mean-field Hamiltonian (boundary P correct). Own computation. Fixed-node MC with the p-LS state as guiding function; the paper calls FN energies variational (rigorous bound), QMBL class projected per RULES 4: unchanged. Cluster: '48-site cluster (i.e., 4 x 4 x 3)' = instance kagome-4x4 rhombic torus.",
+    "source_entry": "RP1-heisenberg-j1j2#3"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-4x4_48_P",
+      "method": "U(1) Dirac spin liquid, 1-LS + FN",
+      "energy": -83.680128
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:1209.1858v4 PDF (pypdf layout mode, identical to the project cache sources/1209.1858.txt), main text and Supplementary Material pp. 7-10; journal PRB 87, 060405(R) not reachable (journals.aps.org returned HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table I, row Size 48, column 1-LS + FN",
+    "reported_as": "-0.435834(3) per site, units of J (S.S)",
+    "conversion": "-0.435834(3) x 4 x 48 = -83.680128; sigma 3e-06 x 192 = 0.000576",
+    "note": "Value, sigma, bound_type agree. H = J sum_<ij> S_i.S_j (Eq. 1), energies per site in J; stored = 4N E/N. Spin Hamiltonian periodic; mixed periodic-antiperiodic BCs only on the spinon mean-field Hamiltonian (boundary P correct). Own computation. Fixed-node MC with the p-LS state as guiding function; the paper calls FN energies variational (rigorous bound), QMBL class projected per RULES 4: unchanged. Cluster: '48-site cluster (i.e., 4 x 4 x 3)' = instance kagome-4x4 rhombic torus.",
+    "source_entry": "RP1-heisenberg-j1j2#4"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-4x4_48_P",
+      "method": "U(1) Dirac spin liquid, 2-LS + FN",
+      "energy": -83.892864
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:1209.1858v4 PDF (pypdf layout mode, identical to the project cache sources/1209.1858.txt), main text and Supplementary Material pp. 7-10; journal PRB 87, 060405(R) not reachable (journals.aps.org returned HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table I, row Size 48, column 2-LS + FN",
+    "reported_as": "-0.436942(2) per site, units of J (S.S)",
+    "conversion": "-0.436942(2) x 4 x 48 = -83.892864; sigma 2e-06 x 192 = 0.000384",
+    "note": "Value, sigma, bound_type agree. H = J sum_<ij> S_i.S_j (Eq. 1), energies per site in J; stored = 4N E/N. Spin Hamiltonian periodic; mixed periodic-antiperiodic BCs only on the spinon mean-field Hamiltonian (boundary P correct). Own computation. Fixed-node MC with the p-LS state as guiding function; the paper calls FN energies variational (rigorous bound), QMBL class projected per RULES 4: unchanged. Cluster: '48-site cluster (i.e., 4 x 4 x 3)' = instance kagome-4x4 rhombic torus.",
+    "source_entry": "RP1-heisenberg-j1j2#5"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-4x4_48_P",
+      "method": "Zero-variance extrapolation of VMC (0,1,2 Lanczos steps)",
+      "energy": -84.06624
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:1209.1858v4 PDF (pypdf layout mode, identical to the project cache sources/1209.1858.txt), main text and Supplementary Material pp. 7-10; journal PRB 87, 060405(R) not reachable (journals.aps.org returned HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table I, row Size 48, column Est. ground state (bold)",
+    "reported_as": "-0.437845(4) per site, units of J (S.S)",
+    "conversion": "-0.437845(4) x 4 x 48 = -84.06624; sigma 4e-06 x 192 = 0.000768",
+    "note": "Value, sigma, bound_type agree. H = J sum_<ij> S_i.S_j (Eq. 1), energies per site in J; stored = 4N E/N. Spin Hamiltonian periodic; mixed periodic-antiperiodic BCs only on the spinon mean-field Hamiltonian (boundary P correct). Own computation. Zero-variance extrapolation (quadratic fit of p = 0, 1, 2) of VMC energies: extrapolated, not a bound. Cluster: '48-site cluster (i.e., 4 x 4 x 3)' = instance kagome-4x4 rhombic torus.",
+    "source_entry": "RP1-heisenberg-j1j2#6"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_100_O",
+      "method": "Entangled-Plaquette States (EPS) VMC",
+      "energy": -250.32
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "New J. Phys. 11, 083026 (2009) publisher PDF (iopscience, open access, pypdf layout mode) and arXiv:0905.3898v4 PDF (layout mode, identical to sources/0905.3898.txt); the two versions print the same values",
+    "location": "Section 3 text: 'Calculations carried out with open boundary conditions (OBC) ... we obtain E = -0.6258(1) for L = 10'",
+    "reported_as": "-0.6258(1) per site, units of J1 (S.S)",
+    "conversion": "-0.6258(1) x 4 x 100 = -250.32; sigma 1e-04 x 400 = 0.04",
+    "note": "Value, sigma, lattice, boundary, J2 agree; journal and arXiv identical. H = J1 sum S_i.S_j + J2 sum S_i.S_j (Eq. 6), spin-1/2 operators (Heisenberg = hard-core bosons with V = 2t; SSE comparison column in S.S units); per site in units of J1; stored = 4N E/N. EPS VMC is variational; own computation. Plaquette size per row not printed.",
+    "source_entry": "RP1-heisenberg-j1j2#21"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_100_P",
+      "method": "Entangled-Plaquette States (EPS) VMC",
+      "energy": -267.96
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "New J. Phys. 11, 083026 (2009) publisher PDF (iopscience, open access, pypdf layout mode) and arXiv:0905.3898v4 PDF (layout mode, identical to sources/0905.3898.txt); the two versions print the same values",
+    "location": "Table 2 (Heisenberg, L x L square, PBC), row L = 10, column This work",
+    "reported_as": "-0.6699(3) per site, units of J1 (S.S)",
+    "conversion": "-0.6699(3) x 4 x 100 = -267.96; sigma 3e-04 x 400 = 0.12",
+    "note": "Value, sigma, lattice, boundary, J2 agree; journal and arXiv identical. H = J1 sum S_i.S_j + J2 sum S_i.S_j (Eq. 6), spin-1/2 operators (Heisenberg = hard-core bosons with V = 2t; SSE comparison column in S.S units); per site in units of J1; stored = 4N E/N. EPS VMC is variational; own computation. Plaquette size per row not printed.",
+    "source_entry": "RP1-heisenberg-j1j2#22"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_64_O",
+      "method": "Entangled-Plaquette States (EPS) VMC",
+      "energy": -157.61152
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "New J. Phys. 11, 083026 (2009) publisher PDF (iopscience, open access, pypdf layout mode) and arXiv:0905.3898v4 PDF (layout mode, identical to sources/0905.3898.txt); the two versions print the same values",
+    "location": "Table 5 (J1-J2, square lattice, OBC, 64 sites), row J2/J1 = 0.0, column This work (printed -0.615 67(8))",
+    "reported_as": "-0.61567(8) per site, units of J1 (S.S)",
+    "conversion": "-0.61567(8) x 4 x 64 = -157.61152; sigma 8e-05 x 256 = 0.02048",
+    "note": "Value, sigma, lattice, boundary, J2 agree; journal and arXiv identical. H = J1 sum S_i.S_j + J2 sum S_i.S_j (Eq. 6), spin-1/2 operators (Heisenberg = hard-core bosons with V = 2t; SSE comparison column in S.S units); per site in units of J1; stored = 4N E/N. EPS VMC is variational; own computation. Plaquette size per row not printed.",
+    "source_entry": "RP1-heisenberg-j1j2#24"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_64_P",
+      "method": "Entangled-Plaquette States (EPS) VMC",
+      "energy": -172.1344
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "New J. Phys. 11, 083026 (2009) publisher PDF (iopscience, open access, pypdf layout mode) and arXiv:0905.3898v4 PDF (layout mode, identical to sources/0905.3898.txt); the two versions print the same values",
+    "location": "Table 2 (Heisenberg, L x L square, PBC), row L = 8, column This work",
+    "reported_as": "-0.6724(3) per site, units of J1 (S.S)",
+    "conversion": "-0.6724(3) x 4 x 64 = -172.1344; sigma 3e-04 x 256 = 0.0768",
+    "note": "Value, sigma, lattice, boundary, J2 agree; journal and arXiv identical. H = J1 sum S_i.S_j + J2 sum S_i.S_j (Eq. 6), spin-1/2 operators (Heisenberg = hard-core bosons with V = 2t; SSE comparison column in S.S units); per site in units of J1; stored = 4N E/N. EPS VMC is variational; own computation. Plaquette size per row not printed.",
+    "source_entry": "RP1-heisenberg-j1j2#25"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.1",
+      "method": "Entangled-Plaquette States (EPS) VMC",
+      "energy": -91.8288
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "New J. Phys. 11, 083026 (2009) publisher PDF (iopscience, open access, pypdf layout mode) and arXiv:0905.3898v4 PDF (layout mode, identical to sources/0905.3898.txt); the two versions print the same values",
+    "location": "Table 4 (J1-J2, square lattice, PBC, 36 sites), row J2/J1 = 0.1, column This work",
+    "reported_as": "-0.6377(1) per site, units of J1 (S.S)",
+    "conversion": "-0.6377(1) x 4 x 36 = -91.8288; sigma 1e-04 x 144 = 0.0144",
+    "note": "Value, sigma, lattice, boundary, J2 agree; journal and arXiv identical. H = J1 sum S_i.S_j + J2 sum S_i.S_j (Eq. 6), spin-1/2 operators (Heisenberg = hard-core bosons with V = 2t; SSE comparison column in S.S units); per site in units of J1; stored = 4N E/N. EPS VMC is variational; own computation. Plaquette size per row not printed.",
+    "source_entry": "RP1-heisenberg-j1j2#26"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.2",
+      "method": "Entangled-Plaquette States (EPS) VMC",
+      "energy": -86.184
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "New J. Phys. 11, 083026 (2009) publisher PDF (iopscience, open access, pypdf layout mode) and arXiv:0905.3898v4 PDF (layout mode, identical to sources/0905.3898.txt); the two versions print the same values",
+    "location": "Table 4 (J1-J2, square lattice, PBC, 36 sites), row J2/J1 = 0.2, column This work",
+    "reported_as": "-0.5985(1) per site, units of J1 (S.S)",
+    "conversion": "-0.5985(1) x 4 x 36 = -86.184; sigma 1e-04 x 144 = 0.0144",
+    "note": "Value, sigma, lattice, boundary, J2 agree; journal and arXiv identical. H = J1 sum S_i.S_j + J2 sum S_i.S_j (Eq. 6), spin-1/2 operators (Heisenberg = hard-core bosons with V = 2t; SSE comparison column in S.S units); per site in units of J1; stored = 4N E/N. EPS VMC is variational; own computation. Plaquette size per row not printed.",
+    "source_entry": "RP1-heisenberg-j1j2#27"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.3",
+      "method": "Entangled-Plaquette States (EPS) VMC",
+      "energy": -80.8704
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "New J. Phys. 11, 083026 (2009) publisher PDF (iopscience, open access, pypdf layout mode) and arXiv:0905.3898v4 PDF (layout mode, identical to sources/0905.3898.txt); the two versions print the same values",
+    "location": "Table 4 (J1-J2, square lattice, PBC, 36 sites), row J2/J1 = 0.3, column This work",
+    "reported_as": "-0.5616(1) per site, units of J1 (S.S)",
+    "conversion": "-0.5616(1) x 4 x 36 = -80.8704; sigma 1e-04 x 144 = 0.0144",
+    "note": "Value, sigma, lattice, boundary, J2 agree; journal and arXiv identical. H = J1 sum S_i.S_j + J2 sum S_i.S_j (Eq. 6), spin-1/2 operators (Heisenberg = hard-core bosons with V = 2t; SSE comparison column in S.S units); per site in units of J1; stored = 4N E/N. EPS VMC is variational; own computation. Plaquette size per row not printed.",
+    "source_entry": "RP1-heisenberg-j1j2#28"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.4",
+      "method": "Entangled-Plaquette States (EPS) VMC",
+      "energy": -75.9888
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "New J. Phys. 11, 083026 (2009) publisher PDF (iopscience, open access, pypdf layout mode) and arXiv:0905.3898v4 PDF (layout mode, identical to sources/0905.3898.txt); the two versions print the same values",
+    "location": "Table 4 (J1-J2, square lattice, PBC, 36 sites), row J2/J1 = 0.4, column This work",
+    "reported_as": "-0.5277(1) per site, units of J1 (S.S)",
+    "conversion": "-0.5277(1) x 4 x 36 = -75.9888; sigma 1e-04 x 144 = 0.0144",
+    "note": "Value, sigma, lattice, boundary, J2 agree; journal and arXiv identical. H = J1 sum S_i.S_j + J2 sum S_i.S_j (Eq. 6), spin-1/2 operators (Heisenberg = hard-core bosons with V = 2t; SSE comparison column in S.S units); per site in units of J1; stored = 4N E/N. EPS VMC is variational; own computation. Plaquette size per row not printed.",
+    "source_entry": "RP1-heisenberg-j1j2#29"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.6",
+      "method": "Entangled-Plaquette States (EPS) VMC",
+      "energy": -69.984
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "New J. Phys. 11, 083026 (2009) publisher PDF (iopscience, open access, pypdf layout mode) and arXiv:0905.3898v4 PDF (layout mode, identical to sources/0905.3898.txt); the two versions print the same values",
+    "location": "Table 4 (J1-J2, square lattice, PBC, 36 sites), row J2/J1 = 0.6, column This work",
+    "reported_as": "-0.4860(2) per site, units of J1 (S.S)",
+    "conversion": "-0.4860(2) x 4 x 36 = -69.984; sigma 2e-04 x 144 = 0.0288",
+    "note": "Value, sigma, lattice, boundary, J2 agree; journal and arXiv identical. H = J1 sum S_i.S_j + J2 sum S_i.S_j (Eq. 6), spin-1/2 operators (Heisenberg = hard-core bosons with V = 2t; SSE comparison column in S.S units); per site in units of J1; stored = 4N E/N. EPS VMC is variational; own computation. Plaquette size per row not printed.",
+    "source_entry": "RP1-heisenberg-j1j2#30"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.7",
+      "method": "Entangled-Plaquette States (EPS) VMC",
+      "energy": -75.672
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "New J. Phys. 11, 083026 (2009) publisher PDF (iopscience, open access, pypdf layout mode) and arXiv:0905.3898v4 PDF (layout mode, identical to sources/0905.3898.txt); the two versions print the same values",
+    "location": "Table 4 (J1-J2, square lattice, PBC, 36 sites), row J2/J1 = 0.7, column This work",
+    "reported_as": "-0.5255(1) per site, units of J1 (S.S)",
+    "conversion": "-0.5255(1) x 4 x 36 = -75.672; sigma 1e-04 x 144 = 0.0144",
+    "note": "Value, sigma, lattice, boundary, J2 agree; journal and arXiv identical. H = J1 sum S_i.S_j + J2 sum S_i.S_j (Eq. 6), spin-1/2 operators (Heisenberg = hard-core bosons with V = 2t; SSE comparison column in S.S units); per site in units of J1; stored = 4N E/N. EPS VMC is variational; own computation. Plaquette size per row not printed.",
+    "source_entry": "RP1-heisenberg-j1j2#31"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.8",
+      "method": "Entangled-Plaquette States (EPS) VMC",
+      "energy": -84.1392
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "New J. Phys. 11, 083026 (2009) publisher PDF (iopscience, open access, pypdf layout mode) and arXiv:0905.3898v4 PDF (layout mode, identical to sources/0905.3898.txt); the two versions print the same values",
+    "location": "Table 4 (J1-J2, square lattice, PBC, 36 sites), row J2/J1 = 0.8, column This work",
+    "reported_as": "-0.5843(1) per site, units of J1 (S.S)",
+    "conversion": "-0.5843(1) x 4 x 36 = -84.1392; sigma 1e-04 x 144 = 0.0144",
+    "note": "Value, sigma, lattice, boundary, J2 agree; journal and arXiv identical. H = J1 sum S_i.S_j + J2 sum S_i.S_j (Eq. 6), spin-1/2 operators (Heisenberg = hard-core bosons with V = 2t; SSE comparison column in S.S units); per site in units of J1; stored = 4N E/N. EPS VMC is variational; own computation. Plaquette size per row not printed.",
+    "source_entry": "RP1-heisenberg-j1j2#32"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.9",
+      "method": "Entangled-Plaquette States (EPS) VMC",
+      "energy": -92.9232
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "New J. Phys. 11, 083026 (2009) publisher PDF (iopscience, open access, pypdf layout mode) and arXiv:0905.3898v4 PDF (layout mode, identical to sources/0905.3898.txt); the two versions print the same values",
+    "location": "Table 4 (J1-J2, square lattice, PBC, 36 sites), row J2/J1 = 0.9, column This work",
+    "reported_as": "-0.6453(1) per site, units of J1 (S.S)",
+    "conversion": "-0.6453(1) x 4 x 36 = -92.9232; sigma 1e-04 x 144 = 0.0144",
+    "note": "Value, sigma, lattice, boundary, J2 agree; journal and arXiv identical. H = J1 sum S_i.S_j + J2 sum S_i.S_j (Eq. 6), spin-1/2 operators (Heisenberg = hard-core bosons with V = 2t; SSE comparison column in S.S units); per site in units of J1; stored = 4N E/N. EPS VMC is variational; own computation. Plaquette size per row not printed.",
+    "source_entry": "RP1-heisenberg-j1j2#33"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_1",
+      "method": "Entangled-Plaquette States (EPS) VMC",
+      "energy": -102.1104
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "New J. Phys. 11, 083026 (2009) publisher PDF (iopscience, open access, pypdf layout mode) and arXiv:0905.3898v4 PDF (layout mode, identical to sources/0905.3898.txt); the two versions print the same values",
+    "location": "Table 4 (J1-J2, square lattice, PBC, 36 sites), row J2/J1 = 1.0, column This work",
+    "reported_as": "-0.7091(1) per site, units of J1 (S.S)",
+    "conversion": "-0.7091(1) x 4 x 36 = -102.1104; sigma 1e-04 x 144 = 0.0144",
+    "note": "Value, sigma, lattice, boundary, J2 agree; journal and arXiv identical. H = J1 sum S_i.S_j + J2 sum S_i.S_j (Eq. 6), spin-1/2 operators (Heisenberg = hard-core bosons with V = 2t; SSE comparison column in S.S units); per site in units of J1; stored = 4N E/N. EPS VMC is variational; own computation. Plaquette size per row not printed.",
+    "source_entry": "RP1-heisenberg-j1j2#34"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_100_P",
+      "method": "SSE QMC (beta = 8L)",
+      "energy": -268.6196
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:cond-mat/9707123v1 PDF (only version; pypdf layout mode, identical to sources/cond-mat-9707123.txt); journal PRB 56, 11678 not reachable (journals.aps.org HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table II, row L = 10, column -E",
+    "reported_as": "0.671549(4) (column header '-E', per spin, S.S units)",
+    "conversion": "-E = 0.671549(4) -> E/N = -0.671549; x 4 x 100 = -268.6196; sigma 4e-06 x 400 = 0.0016",
+    "note": "Value, sigma, lattice, PBC agree. H = J sum_<ij> S_i.S_j (Eq. 1), per spin. SSE at beta = 8L (Table II caption; 'All results discussed here are for beta = 8L'); the paper states beta = 4L and 8L agree within errors and estimates the excited-state error at ~1e-7 relative for L = 16: a ground-state estimate, exact (stochastic) like the other Sandvik SSE rows; Sz = 0 canonical ensemble. Own computation. Not a duplicate: the instance's other SSE row is Sandvik's 2026 run (arXiv:2601.20189, exact-2026-09-15), an independent calculation.",
+    "source_entry": "RP1-heisenberg-j1j2#35"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_144_P",
+      "method": "SSE QMC (beta = 8L)",
+      "energy": -386.31456
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:cond-mat/9707123v1 PDF (only version; pypdf layout mode, identical to sources/cond-mat-9707123.txt); journal PRB 56, 11678 not reachable (journals.aps.org HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table II, row L = 12, column -E",
+    "reported_as": "0.670685(5) (column header '-E', per spin, S.S units)",
+    "conversion": "-E = 0.670685(5) -> E/N = -0.670685; x 4 x 144 = -386.31456; sigma 5e-06 x 576 = 0.00288",
+    "note": "Value, sigma, lattice, PBC agree. H = J sum_<ij> S_i.S_j (Eq. 1), per spin. SSE at beta = 8L (Table II caption; 'All results discussed here are for beta = 8L'); the paper states beta = 4L and 8L agree within errors and estimates the excited-state error at ~1e-7 relative for L = 16: a ground-state estimate, exact (stochastic) like the other Sandvik SSE rows; Sz = 0 canonical ensemble. Own computation. Not a duplicate: the instance's other SSE row is Sandvik's 2026 run (arXiv:2601.20189, exact-2026-09-15), an independent calculation.",
+    "source_entry": "RP1-heisenberg-j1j2#36"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_16_P",
+      "method": "SSE QMC (beta = 8L)",
+      "energy": -44.913728
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:cond-mat/9707123v1 PDF (only version; pypdf layout mode, identical to sources/cond-mat-9707123.txt); journal PRB 56, 11678 not reachable (journals.aps.org HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table II, row L = 4, column -E (same value as Table I row E1)",
+    "reported_as": "0.701777(7) (column header '-E', per spin, S.S units)",
+    "conversion": "-E = 0.701777(7) -> E/N = -0.701777; x 4 x 16 = -44.913728; sigma 7e-06 x 64 = 0.000448",
+    "note": "Value, sigma, lattice, PBC agree. H = J sum_<ij> S_i.S_j (Eq. 1), per spin. SSE at beta = 8L (Table II caption; 'All results discussed here are for beta = 8L'); the paper states beta = 4L and 8L agree within errors and estimates the excited-state error at ~1e-7 relative for L = 16: a ground-state estimate, exact (stochastic) like the other Sandvik SSE rows; Sz = 0 canonical ensemble. Own computation. Not a duplicate: the instance's other SSE row is Sandvik's 2026 run (arXiv:2601.20189, exact-2026-09-15), an independent calculation. L = 4 vs exact: E1 = -0.701777(7) lies 0.4 sigma above the exact -0.701780 (Table I, quoted ED; instance ED row -0.7017802). It is an independent stochastic calculation (RULES 6: every published calculation of the exact energy is a row), not a copy of the ED row: not a duplicate.",
+    "source_entry": "RP1-heisenberg-j1j2#37"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_196_P",
+      "method": "SSE QMC (beta = 8L)",
+      "energy": -525.454048
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:cond-mat/9707123v1 PDF (only version; pypdf layout mode, identical to sources/cond-mat-9707123.txt); journal PRB 56, 11678 not reachable (journals.aps.org HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table II, row L = 14, column -E",
+    "reported_as": "0.670222(7) (column header '-E', per spin, S.S units)",
+    "conversion": "-E = 0.670222(7) -> E/N = -0.670222; x 4 x 196 = -525.454048; sigma 7e-06 x 784 = 0.005488",
+    "note": "Value, sigma, lattice, PBC agree. H = J sum_<ij> S_i.S_j (Eq. 1), per spin. SSE at beta = 8L (Table II caption; 'All results discussed here are for beta = 8L'); the paper states beta = 4L and 8L agree within errors and estimates the excited-state error at ~1e-7 relative for L = 16: a ground-state estimate, exact (stochastic) like the other Sandvik SSE rows; Sz = 0 canonical ensemble. Own computation. Not a duplicate: the instance's other SSE row is Sandvik's 2026 run (arXiv:2601.20189, exact-2026-09-15), an independent calculation.",
+    "source_entry": "RP1-heisenberg-j1j2#38"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_64_P",
+      "method": "SSE QMC (beta = 8L)",
+      "energy": -172.412672
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "arXiv:cond-mat/9707123v1 PDF (only version; pypdf layout mode, identical to sources/cond-mat-9707123.txt); journal PRB 56, 11678 not reachable (journals.aps.org HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table II, row L = 8, column -E",
+    "reported_as": "0.673487(4) (column header '-E', per spin, S.S units)",
+    "conversion": "-E = 0.673487(4) -> E/N = -0.673487; x 4 x 64 = -172.412672; sigma 4e-06 x 256 = 0.001024",
+    "note": "Value, sigma, lattice, PBC agree. H = J sum_<ij> S_i.S_j (Eq. 1), per spin. SSE at beta = 8L (Table II caption; 'All results discussed here are for beta = 8L'); the paper states beta = 4L and 8L agree within errors and estimates the excited-state error at ~1e-7 relative for L = 16: a ground-state estimate, exact (stochastic) like the other Sandvik SSE rows; Sz = 0 canonical ensemble. Own computation. Not a duplicate: the instance's other SSE row is Sandvik's 2026 run (arXiv:2601.20189, exact-2026-09-15), an independent calculation.",
+    "source_entry": "RP1-heisenberg-j1j2#39"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_7_8",
+      "method": "NNB variance extrapolation",
+      "energy": -11.744
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+    "location": "PRL SM Table II 'Finite size effect study of Neural Network Backflow' (= arXiv v2 Table III), row '4 × 4, U/t=8, n=0.875', column 'NNB variance extrapolation'",
+    "reported_as": "-0.734 (energy per site, no error bar)",
+    "conversion": "-0.734 x 16 = -11.744",
+    "note": "Value agrees in PRL SM and arXiv v2. SM Table I variance-extrapolated relative error 1.101% gives -0.73363, consistent. bound_type extrapolated correct (energy vs variance extrapolation of ΨSN, SM Fig. 5/10 right panels). PBC settled by the exact -11.868 comparison; Nf 7, U 8. Not a duplicate: no other extrapolated row on the instance.",
+    "source_entry": "RP2-arxiv-1807-10770#2"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x8_32_P_14_8",
+      "method": "NNB variance extrapolation",
+      "energy": -24.544
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+    "location": "PRL SM Table II 'Finite size effect study of Neural Network Backflow' (= arXiv v2 Table III), row '8 × 4, U/t=8, n=0.875', column 'NNB variance extrapolation'",
+    "reported_as": "-0.767 (energy per site, no error bar)",
+    "conversion": "-0.767 x 32 = -24.544",
+    "note": "Value agrees in PRL SM and arXiv v2; bound_type extrapolated correct (SM Fig. 10 right: ΨSN energy per site vs variance). Boundary: neither the PRL nor its SM states the boundary of the L x 4 runs; periodic in both directions inferred as accepted on 2026-10-03 (ruling D1 of the 2026-09-29 pass) for this paper's 4 x L runs; the same group's arXiv:2510.26906 quotes the 4 x 16 NNB -0.746 per site for the periodic model. Not a duplicate (row 6 is the NNB column, -0.755).",
+    "source_entry": "RP2-arxiv-1807-10770#4"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x12_48_P_21_8",
+      "method": "NNB variance extrapolation",
+      "energy": -36.96
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+    "location": "PRL SM Table II 'Finite size effect study of Neural Network Backflow' (= arXiv v2 Table III), row '12 × 4, U/t=8, n=0.875', column 'NNB variance extrapolation'",
+    "reported_as": "-0.770 (energy per site, no error bar)",
+    "conversion": "-0.770 x 48 = -36.96",
+    "note": "RECORD ROW, read hardest. Value identical in the published SM and arXiv v2 (absent in v1). Own computation: SM Sec. IV 'we have optimized ΨSN in various systems: ... (ii) 8 × 4, 12 × 4, 16 × 4 Hubbard model with n = 0.875 and U/t = 8', variance extrapolation of ΨSN energy vs variance (SM Fig. 11 left, 12 × 4). Column is the extrapolated one, so bound_type extrapolated is right (not an upper bound; -0.770 lies below the best variational row HFPS+GCNN -0.76608 and below the 4 × ∞ DMRG -0.7659 the paper cites, which is allowed for an extrapolation). Hamiltonian Eq. (7) H = -t Σ (c†iσ ci+1σ + h.c.) + U Σ ni↑ni↓, U/t = 8, no constant shift. n = 0.875 -> Nf 21 per spin; sector not otherwise stated. No error bar printed, sigma null is right. Boundary: neither the PRL nor its SM states the boundary of the L x 4 runs; periodic in both directions inferred as accepted on 2026-10-03 (ruling D1 of the 2026-09-29 pass) for this paper's 4 x L runs; the same group's arXiv:2510.26906 quotes the 4 x 16 NNB -0.746 per site for the periodic model. Not a duplicate: the only extrapolated row on the instance, and no other batch carries this number.",
+    "source_entry": "RP2-arxiv-1807-10770#7"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_P_28_8",
+      "method": "NNB variance extrapolation",
+      "energy": -48.96
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+    "location": "PRL SM Table II 'Finite size effect study of Neural Network Backflow' (= arXiv v2 Table III), row '16 × 4, U/t=8, n=0.875', column 'NNB variance extrapolation'; SM Sec. IV 'The variance extrapolated energy is approximately -49'",
+    "reported_as": "-0.765 (energy per site, no error bar)",
+    "conversion": "-0.765 x 64 = -48.96",
+    "note": "Value agrees in PRL SM and arXiv v2. SM Table I variance-extrapolated 0.209% vs the twist-averaged AFQMC -49.088 gives -48.9854 (-0.76540 per site), consistent with -0.765 at its printed digits; the row keeps the printed table value. bound_type extrapolated right. Nf 28 per spin (n = 0.875 x 64 = 56), U = 8. Boundary: neither the PRL nor its SM states the boundary of the L x 4 runs; periodic in both directions inferred as accepted on 2026-10-03 (ruling D1 of the 2026-09-29 pass) for this paper's 4 x L runs; the same group's arXiv:2510.26906 quotes the 4 x 16 NNB -0.746 per site for the periodic model. The AFQMC comparison value is twist-averaged, so it does not itself fix the boundary. Not a duplicate: row 12 (NNB -47.745, nh = 64) is a different column; no other extrapolated row carries -0.765.",
+    "source_entry": "RP2-arxiv-1807-10770#10"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-4x4_48_P",
+      "method": "NNB on Slater determinant, nh=8",
+      "energy": -82.7712
+    },
+    "checked_on": "2026-11-11",
+    "scope": "value",
+    "method": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+    "location": "PRL SM Sec. IV, kagome paragraph",
+    "reported_as": "'The associated energies ranges from −0.4311 (nh = 8) to −0.4339 (nh = 256)'",
+    "conversion": "-0.4311 x 192 = -82.7712",
+    "note": "Kagome: SM Sec. IV (iv) '4 × 4 × 3 Kagome Heisenberg model with J = 1'; energies per site in S·S units, inferred from the exact comparison: 'the exact answer of -0.4387 [8]' (Läuchli, Sudan & Moessner) equals the stored ED -84.231148254/192 = -0.43870390; 4x4 unit cells x 3 = 48 sites; periodic not stated, inferred from that agreement. Stored as Pauli total: E/N x 4N = E/N x 192. No error bar printed for nh = 8 (SM Fig. 9 shows bars only graphically), sigma null right. Variational, ΨSN (NNB on the Slater determinant with charge Jastrow). Not a duplicate.",
+    "source_entry": "RP2-arxiv-1807-10770#11"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-6x6_108_P",
+      "method": "U(1) Dirac spin liquid, 0-LS (VMC)",
+      "energy": -185.227128
+    },
+    "checked_on": "2026-11-12",
+    "scope": "value",
+    "method": "arXiv:1209.1858v4 PDF (pypdf layout mode, identical to the project cache sources/1209.1858.txt), main text and Supplementary Material pp. 7-10; journal PRB 87, 060405(R) not reachable (journals.aps.org returned HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table I, row Size 108, column 0-LS",
+    "reported_as": "-0.4287665(4) per site, units of J (S.S)",
+    "conversion": "-0.4287665(4) x 4 x 108 = -185.227128; sigma 4e-07 x 432 = 0.0001728",
+    "note": "Value, sigma and bound_type agree with the printed cell. Cluster inferred, not printed: the paper names the 108-site cluster by its site count only (only the 48-site cluster is named 4 x 4 x 3); sizes 48, 108 and 192 follow N = 3L^2, so the row sits on the 6 x 6 rhombic torus with the other rows of this lineage (ruling 2026-11-12).",
+    "source_entry": "RP1-heisenberg-j1j2#7 (qmbl-verify 2026-11-11, quoted; ambiguous, kept)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-6x6_108_P",
+      "method": "U(1) Dirac spin liquid, 1-LS (VMC)",
+      "energy": -187.5325824
+    },
+    "checked_on": "2026-11-12",
+    "scope": "value",
+    "method": "arXiv:1209.1858v4 PDF (pypdf layout mode, identical to the project cache sources/1209.1858.txt), main text and Supplementary Material pp. 7-10; journal PRB 87, 060405(R) not reachable (journals.aps.org returned HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table I, row Size 108, column 1-LS",
+    "reported_as": "-0.4341032(5) per site, units of J (S.S)",
+    "conversion": "-0.4341032(5) x 4 x 108 = -187.5325824; sigma 5e-07 x 432 = 0.000216",
+    "note": "Value, sigma and bound_type agree with the printed cell. Cluster inferred, not printed: the paper names the 108-site cluster by its site count only (only the 48-site cluster is named 4 x 4 x 3); sizes 48, 108 and 192 follow N = 3L^2, so the row sits on the 6 x 6 rhombic torus with the other rows of this lineage (ruling 2026-11-12).",
+    "source_entry": "RP1-heisenberg-j1j2#8 (qmbl-verify 2026-11-11, quoted; ambiguous, kept)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-6x6_108_P",
+      "method": "U(1) Dirac spin liquid, 2-LS (VMC)",
+      "energy": -188.259984
+    },
+    "checked_on": "2026-11-12",
+    "scope": "value",
+    "method": "arXiv:1209.1858v4 PDF (pypdf layout mode, identical to the project cache sources/1209.1858.txt), main text and Supplementary Material pp. 7-10; journal PRB 87, 060405(R) not reachable (journals.aps.org returned HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table I, row Size 108, column 2-LS",
+    "reported_as": "-0.435787(3) per site, units of J (S.S)",
+    "conversion": "-0.435787(3) x 4 x 108 = -188.259984; sigma 3e-06 x 432 = 0.001296",
+    "note": "Value, sigma and bound_type agree with the printed cell. Cluster inferred, not printed: the paper names the 108-site cluster by its site count only (only the 48-site cluster is named 4 x 4 x 3); sizes 48, 108 and 192 follow N = 3L^2, so the row sits on the 6 x 6 rhombic torus with the other rows of this lineage (ruling 2026-11-12).",
+    "source_entry": "RP1-heisenberg-j1j2#9 (qmbl-verify 2026-11-11, quoted; ambiguous, kept)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-6x6_108_P",
+      "method": "U(1) Dirac spin liquid, 0-LS + FN",
+      "energy": -186.411024
+    },
+    "checked_on": "2026-11-12",
+    "scope": "value",
+    "method": "arXiv:1209.1858v4 PDF (pypdf layout mode, identical to the project cache sources/1209.1858.txt), main text and Supplementary Material pp. 7-10; journal PRB 87, 060405(R) not reachable (journals.aps.org returned HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table I, row Size 108, column 0-LS + FN",
+    "reported_as": "-0.431507(1) per site, units of J (S.S)",
+    "conversion": "-0.431507(1) x 4 x 108 = -186.411024; sigma 1e-06 x 432 = 0.000432",
+    "note": "Value, sigma and bound_type agree with the printed cell. Cluster inferred, not printed: the paper names the 108-site cluster by its site count only (only the 48-site cluster is named 4 x 4 x 3); sizes 48, 108 and 192 follow N = 3L^2, so the row sits on the 6 x 6 rhombic torus with the other rows of this lineage (ruling 2026-11-12).",
+    "source_entry": "RP1-heisenberg-j1j2#10 (qmbl-verify 2026-11-11, quoted; ambiguous, kept)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-6x6_108_P",
+      "method": "U(1) Dirac spin liquid, 1-LS + FN",
+      "energy": -187.843536
+    },
+    "checked_on": "2026-11-12",
+    "scope": "value",
+    "method": "arXiv:1209.1858v4 PDF (pypdf layout mode, identical to the project cache sources/1209.1858.txt), main text and Supplementary Material pp. 7-10; journal PRB 87, 060405(R) not reachable (journals.aps.org returned HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table I, row Size 108, column 1-LS + FN",
+    "reported_as": "-0.434823(2) per site, units of J (S.S)",
+    "conversion": "-0.434823(2) x 4 x 108 = -187.843536; sigma 2e-06 x 432 = 0.000864",
+    "note": "Value, sigma and bound_type agree with the printed cell. Cluster inferred, not printed: the paper names the 108-site cluster by its site count only (only the 48-site cluster is named 4 x 4 x 3); sizes 48, 108 and 192 follow N = 3L^2, so the row sits on the 6 x 6 rhombic torus with the other rows of this lineage (ruling 2026-11-12).",
+    "source_entry": "RP1-heisenberg-j1j2#11 (qmbl-verify 2026-11-11, quoted; ambiguous, kept)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-6x6_108_P",
+      "method": "U(1) Dirac spin liquid, 2-LS + FN",
+      "energy": -188.383104
+    },
+    "checked_on": "2026-11-12",
+    "scope": "value",
+    "method": "arXiv:1209.1858v4 PDF (pypdf layout mode, identical to the project cache sources/1209.1858.txt), main text and Supplementary Material pp. 7-10; journal PRB 87, 060405(R) not reachable (journals.aps.org returned HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table I, row Size 108, column 2-LS + FN",
+    "reported_as": "-0.436072(1) per site, units of J (S.S)",
+    "conversion": "-0.436072(1) x 4 x 108 = -188.383104; sigma 1e-06 x 432 = 0.000432",
+    "note": "Value, sigma and bound_type agree with the printed cell. Cluster inferred, not printed: the paper names the 108-site cluster by its site count only (only the 48-site cluster is named 4 x 4 x 3); sizes 48, 108 and 192 follow N = 3L^2, so the row sits on the 6 x 6 rhombic torus with the other rows of this lineage (ruling 2026-11-12).",
+    "source_entry": "RP1-heisenberg-j1j2#12 (qmbl-verify 2026-11-11, quoted; ambiguous, kept)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-6x6_108_P",
+      "method": "Zero-variance extrapolation of VMC (0,1,2 Lanczos steps)",
+      "energy": -188.860896
+    },
+    "checked_on": "2026-11-12",
+    "scope": "value",
+    "method": "arXiv:1209.1858v4 PDF (pypdf layout mode, identical to the project cache sources/1209.1858.txt), main text and Supplementary Material pp. 7-10; journal PRB 87, 060405(R) not reachable (journals.aps.org returned HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table I, row Size 108, column Est. ground state (bold)",
+    "reported_as": "-0.437178(9) per site, units of J (S.S)",
+    "conversion": "-0.437178(9) x 4 x 108 = -188.860896; sigma 9e-06 x 432 = 0.003888",
+    "note": "Value, sigma and bound_type agree with the printed cell. Cluster inferred, not printed: the paper names the 108-site cluster by its site count only (only the 48-site cluster is named 4 x 4 x 3); sizes 48, 108 and 192 follow N = 3L^2, so the row sits on the 6 x 6 rhombic torus with the other rows of this lineage (ruling 2026-11-12).",
+    "source_entry": "RP1-heisenberg-j1j2#13 (qmbl-verify 2026-11-11, quoted; ambiguous, kept)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-8x8_192_P",
+      "method": "U(1) Dirac spin liquid, 0-LS (VMC)",
+      "energy": -329.2223232
+    },
+    "checked_on": "2026-11-12",
+    "scope": "value",
+    "method": "arXiv:1209.1858v4 PDF (pypdf layout mode, identical to the project cache sources/1209.1858.txt), main text and Supplementary Material pp. 7-10; journal PRB 87, 060405(R) not reachable (journals.aps.org returned HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table I, row Size 192, column 0-LS",
+    "reported_as": "-0.4286749(4) per site, units of J (S.S)",
+    "conversion": "-0.4286749(4) x 4 x 192 = -329.2223232; sigma 4e-07 x 768 = 0.0003072",
+    "note": "Value, sigma and bound_type agree with the printed cell. Cluster inferred, not printed: the paper names the 192-site cluster by its site count only (only the 48-site cluster is named 4 x 4 x 3); sizes 48, 108 and 192 follow N = 3L^2, so the row sits on the 8 x 8 rhombic torus with the other rows of this lineage (ruling 2026-11-12).",
+    "source_entry": "RP1-heisenberg-j1j2#14 (qmbl-verify 2026-11-11, quoted; ambiguous, kept)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-8x8_192_P",
+      "method": "U(1) Dirac spin liquid, 1-LS (VMC)",
+      "energy": -332.8881408
+    },
+    "checked_on": "2026-11-12",
+    "scope": "value",
+    "method": "arXiv:1209.1858v4 PDF (pypdf layout mode, identical to the project cache sources/1209.1858.txt), main text and Supplementary Material pp. 7-10; journal PRB 87, 060405(R) not reachable (journals.aps.org returned HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table I, row Size 192, column 1-LS",
+    "reported_as": "-0.4334481(5) per site, units of J (S.S)",
+    "conversion": "-0.4334481(5) x 4 x 192 = -332.8881408; sigma 5e-07 x 768 = 0.000384",
+    "note": "Value, sigma and bound_type agree with the printed cell. Cluster inferred, not printed: the paper names the 192-site cluster by its site count only (only the 48-site cluster is named 4 x 4 x 3); sizes 48, 108 and 192 follow N = 3L^2, so the row sits on the 8 x 8 rhombic torus with the other rows of this lineage (ruling 2026-11-12).",
+    "source_entry": "RP1-heisenberg-j1j2#15 (qmbl-verify 2026-11-11, quoted; ambiguous, kept)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-8x8_192_P",
+      "method": "U(1) Dirac spin liquid, 2-LS (VMC)",
+      "energy": -334.27584
+    },
+    "checked_on": "2026-11-12",
+    "scope": "value",
+    "method": "arXiv:1209.1858v4 PDF (pypdf layout mode, identical to the project cache sources/1209.1858.txt), main text and Supplementary Material pp. 7-10; journal PRB 87, 060405(R) not reachable (journals.aps.org returned HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table I, row Size 192, column 2-LS",
+    "reported_as": "-0.435255(4) per site, units of J (S.S)",
+    "conversion": "-0.435255(4) x 4 x 192 = -334.27584; sigma 4e-06 x 768 = 0.003072",
+    "note": "Value, sigma and bound_type agree with the printed cell. Cluster inferred, not printed: the paper names the 192-site cluster by its site count only (only the 48-site cluster is named 4 x 4 x 3); sizes 48, 108 and 192 follow N = 3L^2, so the row sits on the 8 x 8 rhombic torus with the other rows of this lineage (ruling 2026-11-12).",
+    "source_entry": "RP1-heisenberg-j1j2#16 (qmbl-verify 2026-11-11, quoted; ambiguous, kept)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-8x8_192_P",
+      "method": "U(1) Dirac spin liquid, 0-LS + FN",
+      "energy": -331.343616
+    },
+    "checked_on": "2026-11-12",
+    "scope": "value",
+    "method": "arXiv:1209.1858v4 PDF (pypdf layout mode, identical to the project cache sources/1209.1858.txt), main text and Supplementary Material pp. 7-10; journal PRB 87, 060405(R) not reachable (journals.aps.org returned HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table I, row Size 192, column 0-LS + FN",
+    "reported_as": "-0.431437(2) per site, units of J (S.S)",
+    "conversion": "-0.431437(2) x 4 x 192 = -331.343616; sigma 2e-06 x 768 = 0.001536",
+    "note": "Value, sigma and bound_type agree with the printed cell. Cluster inferred, not printed: the paper names the 192-site cluster by its site count only (only the 48-site cluster is named 4 x 4 x 3); sizes 48, 108 and 192 follow N = 3L^2, so the row sits on the 8 x 8 rhombic torus with the other rows of this lineage (ruling 2026-11-12).",
+    "source_entry": "RP1-heisenberg-j1j2#17 (qmbl-verify 2026-11-11, quoted; ambiguous, kept)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-8x8_192_P",
+      "method": "U(1) Dirac spin liquid, 1-LS + FN",
+      "energy": -333.5616
+    },
+    "checked_on": "2026-11-12",
+    "scope": "value",
+    "method": "arXiv:1209.1858v4 PDF (pypdf layout mode, identical to the project cache sources/1209.1858.txt), main text and Supplementary Material pp. 7-10; journal PRB 87, 060405(R) not reachable (journals.aps.org returned HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table I, row Size 192, column 1-LS + FN",
+    "reported_as": "-0.434325(4) per site, units of J (S.S)",
+    "conversion": "-0.434325(4) x 4 x 192 = -333.5616; sigma 4e-06 x 768 = 0.003072",
+    "note": "Value, sigma and bound_type agree with the printed cell. Cluster inferred, not printed: the paper names the 192-site cluster by its site count only (only the 48-site cluster is named 4 x 4 x 3); sizes 48, 108 and 192 follow N = 3L^2, so the row sits on the 8 x 8 rhombic torus with the other rows of this lineage (ruling 2026-11-12).",
+    "source_entry": "RP1-heisenberg-j1j2#18 (qmbl-verify 2026-11-11, quoted; ambiguous, kept)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-8x8_192_P",
+      "method": "U(1) Dirac spin liquid, 2-LS + FN",
+      "energy": -334.566144
+    },
+    "checked_on": "2026-11-12",
+    "scope": "value",
+    "method": "arXiv:1209.1858v4 PDF (pypdf layout mode, identical to the project cache sources/1209.1858.txt), main text and Supplementary Material pp. 7-10; journal PRB 87, 060405(R) not reachable (journals.aps.org returned HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table I, row Size 192, column 2-LS + FN",
+    "reported_as": "-0.435633(8) per site, units of J (S.S)",
+    "conversion": "-0.435633(8) x 4 x 192 = -334.566144; sigma 8e-06 x 768 = 0.006144",
+    "note": "Value, sigma and bound_type agree with the printed cell. Cluster inferred, not printed: the paper names the 192-site cluster by its site count only (only the 48-site cluster is named 4 x 4 x 3); sizes 48, 108 and 192 follow N = 3L^2, so the row sits on the 8 x 8 rhombic torus with the other rows of this lineage (ruling 2026-11-12).",
+    "source_entry": "RP1-heisenberg-j1j2#19 (qmbl-verify 2026-11-11, quoted; ambiguous, kept)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-8x8_192_P",
+      "method": "Zero-variance extrapolation of VMC (0,1,2 Lanczos steps)",
+      "energy": -335.41632
+    },
+    "checked_on": "2026-11-12",
+    "scope": "value",
+    "method": "arXiv:1209.1858v4 PDF (pypdf layout mode, identical to the project cache sources/1209.1858.txt), main text and Supplementary Material pp. 7-10; journal PRB 87, 060405(R) not reachable (journals.aps.org returned HTTP 401 from this machine on 2026-11-11)",
+    "location": "Table I, row Size 192, column Est. ground state (bold)",
+    "reported_as": "-0.43674(3) per site, units of J (S.S)",
+    "conversion": "-0.43674(3) x 4 x 192 = -335.41632; sigma 3e-05 x 768 = 0.02304",
+    "note": "Value, sigma and bound_type agree with the printed cell. Cluster inferred, not printed: the paper names the 192-site cluster by its site count only (only the 48-site cluster is named 4 x 4 x 3); sizes 48, 108 and 192 follow N = 3L^2, so the row sits on the 8 x 8 rhombic torus with the other rows of this lineage (ruling 2026-11-12).",
+    "source_entry": "RP1-heisenberg-j1j2#20 (qmbl-verify 2026-11-11, quoted; ambiguous, kept)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_7_8",
+      "method": "NNB (neural network backflow, SN)",
+      "energy": -11.68
+    },
+    "checked_on": "2026-11-12",
+    "scope": "value",
+    "method": "Phys. Rev. Lett. 122, 226401 (2019) published PDF + Supplemental Material (cached qmbl-runs/qmbl-verify-2026-09-29/sources/journal/, ETH subscription copy of 2026-10-03; the APS PDF/SM URLs return HTTP 401 from this machine on 2026-11-11), pypdf layout mode, re-extracted into the run's sources/ as Luo-Clark-PRL-122-226401{,-SM}.layout.txt; arXiv:1807.10770v2 (2019-06-12) pypdf layout mode; arXiv v1 (2018-07-27) has no SM tables (all these numbers first appear in v2)",
+    "location": "PRL SM Table II 'Finite size effect study of Neural Network Backflow', row '4 × 4, U/t=8, n=0.875', column 'NNB'",
+    "reported_as": "−0.730 ± 8 × 10−6",
+    "conversion": "-0.730 x 16 = -11.68; sigma 8e-6 x 16 = 1.28e-4",
+    "note": "Kept as printed (ruling 2026-11-12). The same paper's SM Table I prints the NNB relative error on this system as (1.156 ± 2 × 10−3)%, which against the exact -11.868 implies -0.7332 per site; -0.730 corresponds to 1.591%. One of the two cells is a misprint and the source does not say which; the discrepancy, 0.0032 per site, is 400 times the printed bar. Identical in arXiv:1807.10770v2 and the published SM.",
+    "source_entry": "RP2-arxiv-1807-10770#1 (qmbl-verify 2026-11-11, quoted; ambiguous, kept)"
+  },
 ];
