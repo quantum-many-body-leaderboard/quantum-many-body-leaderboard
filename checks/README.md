@@ -269,6 +269,44 @@ python ed_full2.py --model hubbard --lattice square --L 4 --nup 7 --ndn 7 --U 8 
 python hub_fact.py --lattice square --L 4 --n 7 --U 8 --threads 4 --k 1 --ncv 12 --instance Hubbard/square_16_P_7_8 --out Hubbard__square_16_P_7_8__A.json
 ```
 
+## `hubbard-4x4-open-ed/`: the exact ground states of the open 4x4 Hubbard lattice at n = 7/8 and 1, U = 8
+
+**Question.** `Hubbard/square_16_O_7_8` (N_up = N_dn = 7) and `Hubbard/square_16_O_8_8` (N_up = N_dn = 8),
+both U = 8 with open boundaries, carry fPEPS and DMRG rows of Liu et al. (arXiv:2502.13454) and no exact
+energy. Their fixed-(n, n) spaces hold 130,873,600 and 165,636,900 states, the sizes the torus checks above
+already diagonalised.
+
+**Design.** The two codes of `hubbard-4x4-half-filling-ed/`, copied with one change: a `--obc` flag that
+builds the 24 open bonds instead of the 32 torus bonds (`ed_full2.py` md5 e0af5089, `hub_fact.py` 09696c9e,
+`ed_check.py` unchanged, 81c0682f). Without the flag both are the originals. Validation, 2026-11-12, on the
+AMD EPYC 9654 server (`validation/`): at U = 0 and 3 + 3 both codes give the free-fermion energy of the
+open grid, -15.416407864998742, to 8e-14; at U = 8 and 4 + 4 on the open lattice they agree to 1e-14; and
+code B without `--obc` reproduces the stored torus value at 4 + 4, U = 8, to 4e-14. The (7, 7) space holds
+the S^z = 0 member of every multiplet at 14 electrons; at half filling Lieb's theorem puts the unique
+singlet in (8, 8).
+
+**Result.**
+
+| instance | code B (Lanczos) | code A (ARPACK) | apart | E/N |
+|---|---|---|---|---|
+| `square_16_O_7_8` | -10.12189369559474 (residual 8.8e-11, 335 iterations, 9 min, 4.1 GB) | -10.121893695594185 (residual 9.7e-12, 752 matvecs, 64 min, 20.7 GB) | 5.6e-13 | -0.632618356 |
+| `square_16_O_8_8` | -6.80841446644252 (residual 7.0e-11, 190 iterations, 6 min, 5.2 GB) | -6.808414466441927 (residual 4.1e-12, 344 matvecs, 38 min, 26.2 GB) | 5.9e-13 | -0.425525904 |
+
+Liu et al.'s largest variational DMRG runs (SU(2), m = 2500) lie above, by 9.0e-7 at n = 7/8 and 6.6e-8 at
+half filling. Their energies extrapolated in the truncated weight lie below: -10.121904 (sigma 1.6e-6) by 1.0e-5
+and -6.80841536 (sigma 1.6e-7) by 8.9e-7, 6.4 and 5.6 sigma. The best fPEPS rows (D = 16,
+gradient optimisation) lie 4.5e-3 and 1.1e-4 above.
+
+**Conclusion.** Exact rows computed by QMBL (`scripts/add_exact_rows.mjs` batch B3).
+
+**Reproduce.** Code B in about 10 min and 5 GB on 32 threads, code A in about 1 h and 26 GB on 8 threads,
+with numpy, scipy and numba (`production.sh`, `validate.sh`):
+
+```bash
+python ed_full2.py --model hubbard --lattice square --L 4 --nup 7 --ndn 7 --U 8 --obc --instance Hubbard/square_16_O_7_8 --out Hubbard__square_16_O_7_8__B.json --tol 1e-10
+python hub_fact.py --lattice square --L 4 --n 7 --U 8 --obc --threads 8 --k 1 --ncv 12 --instance Hubbard/square_16_O_7_8 --out Hubbard__square_16_O_7_8__A.json
+```
+
 ## `heisenberg-chain-16-ed/`: the exact ground state of the periodic 16-site Heisenberg chain
 
 **Question.** arXiv:2510.08430 (Table 2) prints two VMC energies of the periodic 16-site chain and no

@@ -1,0 +1,31 @@
+{
+ "instance": "val",
+ "code": "out/VE-exact-recompute/code/hub_fact.py + ed_check.py (qmbl checks/hubbard-u-labels, unchanged copy)",
+ "ed_check_md5": "81c0682f3b8bb28694c5601936a4b66f",
+ "hamiltonian": "-t sum_<ij>,s (c+_is c_js + h.c.) + U sum_i n_i,up n_i,dn, t=1, U=0.0",
+ "geometry": "square L=4 obc (24 bonds, hub_fact.py open bond list)",
+ "sector": "N_up = N_dn = 3, no spatial symmetry",
+ "dim": 313600,
+ "per_species_dim": 560,
+ "solver": "arpack",
+ "eigsh": {
+  "k": 1,
+  "ncv": 12,
+  "tol": 1e-12,
+  "which": "SA",
+  "eigenvalues": [
+   -15.416407864998728
+  ]
+ },
+ "lanczos": null,
+ "E0": -15.416407864998728,
+ "E_rayleigh": -15.416407864998739,
+ "residual": 9.288893573363783e-12,
+ "matvecs": 68,
+ "seconds_eigsh": 1.0,
+ "seconds": 1.0,
+ "peak_rss_GB": 0.13,
+ "host": "99problems",
+ "threads": 8,
+ "command": "hub_fact.py --lattice square --L 4 --n 3 --U 0 --obc --threads 8 --k 1 --ncv 12 --instance val --out validation/obc_n3_U0_A.json"
+}
