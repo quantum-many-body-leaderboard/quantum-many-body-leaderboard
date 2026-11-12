@@ -305,7 +305,30 @@ put("Heisenberg/chain_16_P",
     reported: "-28.56918544246714 (code A) | -28.56918544246712 (code B) | -28.5691854424671194555711899928 (Bethe ansatz, checks/bethe-heisenberg-chain/bethe_xxx.py 16 P 30)",
     note: "Pauli total; E/N = -0.446393523 in S.S units (S.S total -7.14229636062). H = sum_i S_i.S_{i+1} on the periodic chain (16 bonds). The S^z = 0 space holds a member of every spin multiplet, so its lowest level is the ground state. The same script reproduces the exact row of Heisenberg/chain_20_P to 6e-14. No published exact energy is carried for this instance; carried to 13 decimals, the agreement of the three calculations.",
     source: "qmbl-verify-2026-11-11", checked: "2026-11-11", fields: { computed_by: "qmbl" } });
-console.log("batch B3: 3 exact rows computed by QMBL where none was published (J1-J2 6x6, J2 = 0.45; Hubbard 4x4 at n = 7/8, U = 8; Heisenberg chain, 16 sites)");
+//
+// Hubbard/square_16_O_7_8 and Hubbard/square_16_O_8_8, the open 4x4 lattice (24 bonds) at U = 8 with
+// N_up = N_dn = 7 and 8: the two codes of checks/hubbard-4x4-half-filling-ed/ with one added --obc flag
+// (checks/hubbard-4x4-open-ed/), over the whole fixed-(n, n) space on an AMD EPYC 9654 server, 2026-11-12;
+// they agree to 6e-13. Liu et al.'s DMRG extrapolations lie about 6 sigma below both (checks/README.md).
+put("Hubbard/square_16_O_7_8",
+  { model: "Hubbard", lattice: "square", n_sites: 16, boundary: "O", params: { Nf: 7, U: 8 }, dof: 14, einf: (8 * 7 * 7) / 16 },
+  { energy: -10.1218936956, sigma: null,
+    src: { ref: "QMBL, checks/hubbard-4x4-open-ed/ (exact diagonalization of the open 4x4 lattice at N_up = N_dn = 7, two codes)", pr: false },
+    method: "Exact diagonalization", why: "Lanczos exact diagonalization of the full (N_up, N_dn) = (7, 7) space, computed by QMBL; deterministic",
+    read: "ed_full2.py --obc (code B: plain Lanczos, Hubbard kernel with fixed N_up = N_dn = 7, 130,873,600 states, true residual 8.8e-11) and hub_fact.py --obc (code A: the factorised matvec T x 1 + 1 x T + U D of checks/hubbard-u-labels/ed_check.py with ARPACK, residual 9.7e-12), an AMD EPYC 9654 server, 2026-11-12",
+    reported: "-10.12189369559474 (ed_full2.py) | -10.121893695594185 (hub_fact.py)",
+    note: "Total energy, t = 1, H = -t sum (c+c + h.c.) + U sum n_up n_dn on the open 4x4 lattice (24 bonds), N_up = N_dn = 7; E/N = -0.632618356. No published exact energy is carried for this instance; the two codes agree to 5.6e-13. Liu et al.'s DMRG extrapolated in the truncated weight, -10.121904 (sigma 1.6e-6), lies 1.0e-5 below, 6.4 sigma.",
+    source: "qmbl-verify-2026-11-12", checked: "2026-11-12", fields: { computed_by: "qmbl" } });
+put("Hubbard/square_16_O_8_8",
+  { model: "Hubbard", lattice: "square", n_sites: 16, boundary: "O", params: { Nf: 8, U: 8 }, dof: 16, einf: (8 * 8 * 8) / 16 },
+  { energy: -6.8084144664, sigma: null,
+    src: { ref: "QMBL, checks/hubbard-4x4-open-ed/ (exact diagonalization of the open 4x4 lattice at half filling, two codes)", pr: false },
+    method: "Exact diagonalization", why: "Lanczos exact diagonalization of the full (N_up, N_dn) = (8, 8) space, computed by QMBL; deterministic",
+    read: "ed_full2.py --obc (code B: plain Lanczos, Hubbard kernel with fixed N_up = N_dn = 8, 165,636,900 states, true residual 7.0e-11) and hub_fact.py --obc (code A: the factorised matvec T x 1 + 1 x T + U D of checks/hubbard-u-labels/ed_check.py with ARPACK, residual 4.1e-12), an AMD EPYC 9654 server, 2026-11-12",
+    reported: "-6.80841446644252 (ed_full2.py) | -6.808414466441927 (hub_fact.py)",
+    note: "Total energy, t = 1, H = -t sum (c+c + h.c.) + U sum n_up n_dn on the open 4x4 lattice (24 bonds), N_up = N_dn = 8 (half filling; Lieb's theorem puts the unique singlet in this sector); E/N = -0.425525904. No published exact energy is carried for this instance; the two codes agree to 5.9e-13. Liu et al.'s DMRG extrapolated in the truncated weight, -6.80841536 (sigma 1.6e-7), lies 8.9e-7 below, 5.6 sigma.",
+    source: "qmbl-verify-2026-11-12", checked: "2026-11-12", fields: { computed_by: "qmbl" } });
+console.log("batch B3: 5 exact rows computed by QMBL where none was published (J1-J2 6x6, J2 = 0.45; Hubbard 4x4 at n = 7/8, U = 8; Heisenberg chain, 16 sites; open Hubbard 4x4 at n = 7/8 and 1, U = 8)");
 
 // ---------------------------------------------------------------------------------------
 // Batch C: exact diagonalization of frustrated clusters. Deterministic, so no sigma; the

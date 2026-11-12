@@ -10,6 +10,44 @@
   "instance_id": "Hubbard/square_16_O_7_8",
   "rows": [
     {
+      "energy": -10.1218936956,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 14,
+      "einf": 24.5,
+      "v_score": null,
+      "method": "ED",
+      "ansatz": null,
+      "method_detail": "",
+      "method_as_published": "Exact diagonalization",
+      "family": "other",
+      "bound_type": "exact",
+      "bound_type_reason": "Lanczos exact diagonalization of the full (N_up, N_dn) = (7, 7) space, computed by QMBL; deterministic",
+      "reference": "QMBL, checks/hubbard-4x4-open-ed/ (exact diagonalization of the open 4x4 lattice at N_up = N_dn = 7, two codes)",
+      "peer_reviewed": false,
+      "source": "qmbl-verify-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "ed_full2.py --obc (code B: plain Lanczos, Hubbard kernel with fixed N_up = N_dn = 7, 130,873,600 states, true residual 8.8e-11) and hub_fact.py --obc (code A: the factorised matvec T x 1 + 1 x T + U D of checks/hubbard-u-labels/ed_check.py with ARPACK, residual 9.7e-12), an AMD EPYC 9654 server, 2026-11-12",
+        "reported_as": "-10.12189369559474 (ed_full2.py) | -10.121893695594185 (hub_fact.py)",
+        "note": "Total energy, t = 1, H = -t sum (c+c + h.c.) + U sum n_up n_dn on the open 4x4 lattice (24 bonds), N_up = N_dn = 7; E/N = -0.632618356. No published exact energy is carried for this instance; the two codes agree to 5.6e-13. Liu et al.'s DMRG extrapolated in the truncated weight, -10.121904 (sigma 1.6e-6), lies 1.0e-5 below, 6.4 sigma.",
+        "secondary_of": null
+      },
+      "computed_by": "qmbl",
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/62a788fc/checks/hubbard-4x4-open-ed",
+        "commit": "62a788fc",
+        "script": "checks/hubbard-4x4-open-ed/",
+        "read_from": {
+          "quote": "QMBL, checks/hubbard-4x4-open-ed/ (exact diagonalization of the open 4x4 lattice at N_up = N_dn = 7, two codes)",
+          "location": "the row's reference (QMBL check directory)",
+          "checked_on": "2026-11-12",
+          "pass": "passes/code/code-links-2026-11-12.json"
+        }
+      }
+    },
+    {
       "energy": -8.7952,
       "sigma": 0.0096,
       "energy_variance": null,
