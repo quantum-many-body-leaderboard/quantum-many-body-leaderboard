@@ -1,0 +1,573 @@
+       Persistence of the gapless spin liquid in the breathing kagome Heisenberg antiferromagnet
+
+                                 Yasir Iqbal,1,∗  Didier Poilblanc,2  Ronny Thomale,3  and Federico Becca4
+                             1Department of Physics, Indian Institute of Technology Madras, Chennai 600036, India
+                2Laboratoire de Physique Th´eorique UMR-5152, CNRS and Universit´e de Toulouse, F-31062, Toulouse, France
+3Institute for Theoretical Physics and Astrophysics, Julius-Maximilian’s University of W¨urzburg, Am Hubland, D-97074 W¨urzburg, Germany
+                               4Democritos National Simulation Center, Istituto Ofﬁcina dei Materiali del CNR and
+                            SISSA-International School for Advanced Studies, Via Bonomea 265, I-34136 Trieste, Italy
+                                                                   (Dated: March 16, 2018)
+                    The nature of the ground state of the spinS = 1/2 Heisenberg antiferromagnet on the kagome lattice with
+                 breathing anisotropy (i.e., with different superexchange couplingsJ∆ andJ▽ within elementary up- and down-
+                 pointing triangles) is investigated within the framework of Gutzwiller projected fermionic wave functions and
+                 Monte Carlo methods.  We analyze the stability of the U(1) Dirac spin liquid with respect to the presence of
+                 fermionic pairing that leads to a gapped Z2 spin liquid.  For several values of the ratioJ▽/J∆, the size scaling
+                 of the energy gain due to the pairing ﬁelds and the variational parameters are reported. Our results show that the
+                 energy gain of the gapped spin liquid with respect to the gapless state either vanishes for large enough system
+                 size or scales to zero in the thermodynamic limit.   Similarly,  the optimized pairing amplitudes (responsible
+                 for opening the spin gap) are shown to vanish in the thermodynamic limit.  Our outcome is corroborated by
+                 the application of one and two Lanczos steps to the gapless and gapped wave functions, for which no energy
+                 gain of the gapped state is detected when improving the quality of the variational states.  Finally, we discuss
+                 the competition with the “simplex” Z2 resonating-valence-bond spin liquid, valence-bond crystal, and nematic
+                 states in the strongly anisotropic regime, i.e.,J▽ ≪J∆.
+
+
+                         I.    INTRODUCTION                                          functions [18–21],  DMRG [22,23],  and tensor network ap-
+                                                                                     proaches [24] provide strong evidence in favor of a gapless
+   In the past two decades,  considerable effort has been de-                        spin liquid with signatures of Dirac cones in the spinon spec-
+voted towards understanding the properties of the S  =  1/2                          trum.
+Heisenberg model on the kagome lattice, which represents the                            In  order  to  reach  a  consensus  on  the  low-energy  proper-
+purest  example  of  geometric  frustration  in  two  dimensions.                    ties  of  the S  =  1/2  Heisenberg  model  on  the  kagome  lat-
+This is reﬂected in the fact that the ground state fails to de-                      tice, and the possibility of it describing the experimental fea-
+velop long-range magnetic order, thus potentially realizing a                        tures observed in ZnCu3(OH)6Cl2, it proves enlightening to
+quantum spin liquid phase [1], which features high entangle-                         look at variations of the model arising from distortions of the
+ment,  low-energy  excitations  with  fractional  quantum  num-                      geometrically perfect kagome lattice.  On a more conceptual
+bers, and possibly topological order [2–4].  Even though in-                         level,  it  is  a  recurrent  motif  in  theoretical  physics  to  intro-
+vestigations of the Heisenberg model on the kagome lattice                           duce interpolation parameters in order to facilitate the model
+started  in  the  1990s  [5–7],  a  considerable  boost  was  given                  analysis of a particular parameter limit.  As it has been sug-
+by the discovery of Herbertsmithite [ZnCu3(OH)6Cl2], which                           gested early on that the nearest neighbor S  =  1/2 Heisen-
+proves to be an excellent embodiment of the nearest-neighbor                         berg model might be located close to a ﬁrst order phase tran-
+S = 1/2 Heisenberg model on the structurally perfect kagome                          sition,  it  appears  useful  to  introduce  a  geometric  distortion
+lattice,  with  only  minor  longer-range  super-exchange  cou-                      parameter,  and study the model family as it approaches the
+plings [8–11].  Experimental investigations have revealed the                        isotropic limit.  Concretely, it may offer an alternative route
+absence of long-range magnetic order or frozen magnetic mo-                          for the study of quantum spin liquids.  One example is given
+ments;  however, in the resulting quantum spin liquid, it has                        by Volborthite [Cu3V2O7(OH)2· 2H2O], where the elemen-
+been particularly challenging to reach a deﬁnite conclusion as                       tary triangles that build up the kagome lattice are no longer
+to the presence/absence of a spin gap in the excitation spec-                        equilateral  but  isosceles,  leading  to  different  antiferromag-
+trum  which  is  expected  to  be  tiny  [12–14].   Similarly,  the-                 netic couplings along short and long bonds. In this case, there
+oretical approaches have long wrestled with the question of                          is  some  evidence  for  a  magnetic  ground  state,  even  though
+the nature of the ground state and properties of its low-energy                      unusually slow spin ﬂuctuations persist down to low tempera-
+excitations, which turn out to be particularly elusive and re-                       tures [25–33]. Another interesting deformation is one leading
+main perplexing.   Indeed,  early density-matrix renormaliza-                        to alternately sized equilateral triangles, dubbed the trimerized
+tion group (DMRG) calculations reported the presence of a                            or breathing kagome lattice [34], in analogy to the breathing
+ﬁnite S  =  1 gap [15,16],  suggestive of a topologically or-                        pyrochlores  [35].   Correspondingly,  the  kagome  lattice  fea-
+dered Z2  spin  liquid  ground  state  [17].   In  contrast,  recent                 tures an alternation of interactions, with the triangles pointing
+calculations based upon Gutzwiller projected fermionic wave                          up (having a superexchange couplingJ∆) and those pointing
+                                                                                     down (withJ▽) [36]; see Fig.1.  Originally, this model was
+                                                                                     considered by Mila [37,38], in order to explain the large num-
+                                                                                     ber of singlet excitations at low energies detected within ex-
+∗ yiqbal@physics.iitm.ac.in
+                                                                                     act diagonalizations on small clusters for the isotropic limit
+                                                                                                                                                                2
+
+                                                                                   J∆≪J▽), the massive degeneracy is expected to be partially
+                                                                                   or completely lifted.  A perturbative treatment around the un-
+                                                                                   coupled limit,  unfortunately,  gives rise to a complicated ef-
+                                                                                   fective model [37], which contains both spin and pseudospin
+                                                                                   degrees of freedom and whose solution cannot be obtained in
+                                                                                   a straightforward manner.
+                                                                                       Recently, the Heisenberg model on the breathing kagome
+                                                                                   lattice   has   been   investigated   theoretically   by   using   a
+                                                                                   projective-symmetry group (PSG) analysis supplemented by
+                                                                                   Monte Carlo simulations of variational wave functions [42]
+                                                                                   and by DMRG calculations [43].   The latter one pointed to
+                                                                                   the existence of an extended gapless spin liquid phase which
+                                                                                   shows  signatures  of  Dirac  cones,  similar  to  what  has  been
+                                                                                   found at the isotropic point [22]. In the limit of strong breath-
+FIG. 1.    Breathing kagome lattice is deﬁned with nearest-neighbor                ing anisotropy J▽ ≪ J∆,  the existence of a lattice-nematic
+superexchange  coupling J∆  on  up-pointing  triangles  (thick  solid              state,  i.e.,  a  state  with  inequivalent  nearest-neighbor  spin-
+lines)  and J▽  on  down-pointing  triangles  (thin  solid  lines).    A           spin  correlations,  was  claimed  for  in  the  regime J▽/J∆  ≲
+schematic illustration of the Z2[0,π]β∗ spin liquid Ansatz (Ref. [42])             0.13.  In contrast, the variational Monte Carlo study claimed
+is also shown.  The auxiliary (spinon) Hamiltonian requires a 2×1                  that a gapped Z2  spin liquid ground state is obtained within
+doubling  of  the  three-site  geometrical  unit  cell.   Nearest-neighbor         Gutzwiller projected fermionic wave functions. However, this
+(next-nearest-neighbor) bonds are shown by solid (dashed) lines. The               conclusion  was  based  only  upon  a  calculation  of  the  varia-
+green (blue) bonds representsij  = νij  = +1 (sij  = νij  = −1) in                 tional parameters and energies for a few system sizes without
+Eq. (2). The fact that the hopping and pairing amplitudes on nearest-              a ﬁnite-size-scaling analysis.
+neighbor bonds belonging to up- and down-pointing triangles are al-
+lowed to be different is represented by a difference in the thickness                  In this paper, we report a high-accuracy systematic study of
+of bonds.                                                                          both the U(1) Dirac state and the gapped Z2 state that is ob-
+                                                                                   tained from the U(1) Dirac state by an inclusion of a fermionic
+with J∆   = J▽  [7].    Remarkably,  vanadium  oxyﬂuoride                          pairing term.  By performing calculations on very large sys-
+(NH4)2[C7H14N][V7O6F18] (DQVOF) provides a realization                             tem sizes (up toN = 2352 sites), we show that the variational
+of the breathing kagome lattice withJ▽/J∆  = 0.55(4) [39].                         parameters that are responsible for a ﬁnite spin gap are van-
+An earlier muon spin resonance (µSR) study [40] and a more                         ishing in the thermodynamic limit and, therefore, the energy
+recent nuclear magnetic resonance (NMR) study revealed no                          gain  of  the  gapped Z2  state  with  respect  to  the  U(1)  Dirac
+magnetic order, with the latter pointing to an essentially gap-                    state scales to zero for N →∞.  Moreover, in the strongly
+less excitation spectrum [39,41]. These results have provided                      anisotropic limitJ▽≪J∆, we show that the U(1) Dirac spin
+a renewed impetus to understand whether a gapless spin liquid                      liquid undergoes a dimer instability, giving way to a valence-
+may be stabilized in realistic spin models with SU(2) symme-                       bond crystal (VBC) ground state for 0 < J▽/J∆ ≲ 0.25.  In
+try.                                                                               addition, in this regime, a “simplex” Z2  resonating-valence-
+   The Hamiltonian for the breathing kagome lattice is given                       bond (RVB) spin liquid is found to have an energy between
+by                                                                                 the U(1) Dirac state and the VBC state.
+                        ∑                        ∑                                     The paper is organized as follows:  in Sec.II, we describe
+             ˆH =J∆            ˆSi· ˆSj +J▽             ˆSi· ˆSj,           (1)    the variational wave functions that are used in this work (and
+                       ⟨ij⟩∈∆                   ⟨ij⟩∈▽                             also the simplex RVB state that is constructed and used within
+                                                                                   a tensor-network approach); in Sec.III, we present our results;
+where ˆSi  =  ( ˆSxi, ˆSyi, ˆSzi ) is the S  =  1/2 operator on a site             ﬁnally, in Sec.IV, we draw our conclusions.
+i and⟨ij⟩ indicate nearest-neighbor pairs of sitesi andj that
+belong to up-pointing (⟨ij⟩∈ ∆) or down-pointing (⟨ij⟩∈ ▽)
+triangles.   The  crystallographic  unit  cell  of  this  lattice  con-
+sists of three sites located at (0, 0), (1, 0),  and (1/2,√3/2)
+(forming  an  up-pointing  triangle);  the  primitive  vectors  are                             II.    VARIATIONAL WAVE FUNCTIONS
+a1  =  (2, 0)  and a2  =  (1,√3).   For  our  calculations,  we
+consider  toric  clusters  that  are  deﬁned  by T1  = La1  and                                       A.    Gutzwiller projected Ans¨atze
+T2 =La2, and thus consist ofN = 3L2 sites. Notice that, for
+J▽  = 0 (orJ∆  = 0) the Hamiltonian corresponds to uncou-
+pled up-pointing (or down-pointing) triangles. At this special                         The  variational  wave  functions  are  written  in  terms  of
+point,  the  ground  state  is  highly  degenerate,  since  each  in-              Abrikosov fermions [44]. In the following, the noninteracting
+teracting triangle has a doubly degenerate ground state with                       state,  deﬁned in the fermionic Hilbert space,  is obtained by
+an energy per triangleE∆  =−3/4J∆ (E▽  =−3/4J▽) and                                taking the ground state|Φ0⟩ of the following auxiliary Hamil-
+spin S  =  1/2.  In the weakly coupled limits J▽ ≪ J∆  (or                         tonian, which has the form of a generalized Bardeen-Cooper-
+                                                                                                                                                               3
+
+Schrieffer (BCS) Hamiltonian:
+          ˆHaux{Z2[0,π]β∗} =χ∆              ∑       sijˆc†
+                                                         i,αˆcj,α
+                                         ⟨ij⟩∈∆,α
+                           ∑
+      + ∑        sij{χ▽         ˆc†i,αˆcj,α + ∆▽(ˆc†i,↑ˆc†j,↓ + h.c.)}
+         ⟨ij⟩∈▽             α
+      + ∑       νij{χ2   ∑    ˆc†
+                                i,αˆcj,α + ∆2(ˆc†i,↑ˆc†j,↓ + h.c.)}
+         ⟨⟨ij⟩⟩           α
+      +∑{µ∑            ˆc†i,αˆci,α +ζ(ˆc†i,↑ˆc†i,↓ + h.c.)};                 (2)
+           i       α
+
+Here,⟨ij⟩ ∈  ∆  and⟨ij⟩ ∈  ▽  denote  sums  over  pairs  of
+nearest-neighbor  sites  belonging  to  up-  and  down-pointing
+triangles,  respectively,  while⟨⟨ij⟩⟩  denote  sums  over  pairs
+of  next-nearest-neighbor  sites;  sij  and νij  encode  the  sign
+structure  of  the  nearest-  and  next-nearest-neighbor  pairs  of
+sites,  as  depicted  in  Fig.1.   The  variational  wave  function
+thus obtained  contains six  variational parameters  (upon ﬁx-
+ingχ∆ = 1 as the overall energy scale), namely, the nearest-
+neighbor  hopping  (χ▽)  and  pairing  (∆▽)  on  down-pointing
+triangles, the next-nearest-neighbor hopping (χ2) and pairing
+(∆2), the onsite chemical potential (µ), and real on-site pair-
+ing (ζ).  In order to have a nondegenerate ground state of the                     FIG. 2.    (a) Local tensors deﬁning the RVB PEPS on the kagome
+auxiliary  Hamiltonian,  we  choose  antiperiodic  and  periodic                   lattice.  Straight (wiggly) lines denote virtual (physical) degrees of
+boundary conditions along a1 and a2, respectively.                                 freedom, spanning a Hilbert space of dimensionD = 3 (d = 2). In
+   The form of this Ansatz is dictated by the PSG classiﬁca-                       the simplex RVB, one applies the operator I −αP3/2  on the three
+tion [42], and it describes both the gapless U(1) Dirac state                      wiggly lines. (b) After grouping the three sites of the up triangle, one
+(when all the fermionic pairing terms ∆▽, ∆2, andζ are iden-                       obtains a rank-5 four-coordinated tensor.
+tically zero) and a generalization of the so-called Z2[0,π]β
+state that was obtained for the isotropic limit [45] (when at                      obtain accurate estimations of the variational parameters con-
+least one pairing amplitude is nonzero),  and hereafter is re-                     tained in Eq. (2) [46,47].
+ferred to as the Z2[0,π]β∗ spin liquid.  In total, the PSG ap-                        We  would  like  to  mention  that  the  Gutzwiller  projected
+proach for the breathing kagome lattice allows for six differ-                     wave function,  with only χ∆  =  1 (or χ▽  =  1) and all the
+ent Z2 Ans¨atze [42]. However, two of them do not allow any                        other parameters equal to zero, gives the exact energy in the
+amplitudes on nearest-neighbor pairs of sites nor any on-site                      limit of decoupled triangles with J▽  =  0 (or J∆  =  0) and
+(chemical potential and pairing) terms, thus making the varia-                     represents, in the general case, an excellent approximation for
+tional Ansatz unplausible for a model withJ∆⁄= 0 andJ▽⁄=                           the isotropic case withJ▽ =J∆ [48].
+0; for another two Ans¨atze, the on site and nearest-neighbor                         The accuracy of the variational wave functions can be easily
+pairings are not allowed, which again renders them energeti-                       improved by applying a few Lanczos steps on the variational
+cally unfavorable; ﬁnally, among the remaining two options,                        state [49]:
+one has the uniform ﬂux structure with sij =νij = +1, which                                                      (         p∑         )
+gives a rather high variational energy, while the last one (the                                   |Ψp−LS⟩ =         1 +       αk ˆHk     |ΨSL⟩,              (4)
+Z2[0,π]β∗ spin liquid) is parametrized by the Hamiltonian of                                                             k=1
+Eq. (2).
+   A bona ﬁde spin liquid wave function, which lives in the                        where{αk} is a set of variational parameters.  On large clus-
+correct Hilbert space with one fermion per site (corresponding                     ter sizes, only a few steps can be efﬁciently implemented, and
+to the physical Hilbert space of the spin model), is obtained by                   here we consider the case withp = 1 andp = 2 (p = 0 corre-
+applying the Gutzwiller projector to the noninteracting state                      sponds to the original trial wave function). In addition, an esti-
+|Φ0⟩:                                                                              mate of the exact ground-state energy may be achieved by the
+                                                                                   method of variance extrapolation.  In fact, for sufﬁciently ac-
+                           |ΨSL⟩ =PG|Φ0⟩,                              (3)         curate states, we have thatE−Eex≈σ2, whereE =⟨ ˆH⟩/N
+                                                                                   andσ2  = (⟨ ˆH2⟩−⟨ ˆH⟩2)/N  are the energy and variance per
+wherePG  = ∏i (ˆni,↑− ˆni,↓),  ˆni,α  =  ˆc†i,αˆci,α  being  the                   site, respectively; therefore, the exact ground-state energyEex
+fermionic  density  per  spin α  on  the  site i.   The  variational               can be extracted by ﬁttingE vsσ2 forp = 0, 1, and 2. Also, in
+energy  and  correlation  functions  over|ΨSL⟩  can  be  calcu-                    the presence of a few Lanczos steps the energy and its variance
+lated in a straightforward manner by using Monte Carlo sam-                        can be obtained using the standard variational Monte Carlo
+pling [46]. In addition, a stochastic optimization is possible to                  method.
+                                                                                                                                                                  4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3.  For different values of the breathing anisotropyJ▽/J∆, we show the ﬁnite-size scaling of the energy gain of the Z2[0,π]β∗ spin liquid
+with respect to the U(1) Dirac spin liquid, i.e.,E(Z2) −E(U(1)) (ﬁrst row). The ﬁnite-size scaling of ∆▽, ∆2, ζ, the variational parameters
+responsible for opening a gap, are also shown (second row).  Here, lines are quadratic ﬁts [50] of the results.  The largest cluster considered
+corresponds toL = 28 and has 2352 sites. The results for the isotropic limitJ▽/J∆ = 1 are also reported for comparison.
+
+
+   B.    The simplex RVB as a Projected Entangled Pair State                         gles.  More precisely,As2,s  = Ass,2  = 1, and zero otherwise,
+                                                                                     andR2,2,2  = 1, andRλ,µ,ν  = ϵλ,µ,ν  otherwise, withϵλ,µ,ν
+   Other  types  of  spin  liquids  can  be  constructed  using  the                 being the antisymmetric tensor.   Note that the RVB state is
+framework of projected-entangled pair states (PEPS) [51,52].                         also  equivalent  to  a  projected  BCS  wave  function  [56]  and
+On a kagome lattice, a PEPS can be deﬁned in terms of rank-3                         is  perfectly  (spatially)  isotropic.   It  has  been  studied  in  de-
+tensors (i)Asλ,µ on the sites and (ii)R∆λ,µ,ν  andR▽λ,µ,ν  in the                    tail in Ref. [55] and its energy density was found to be rather
+center  of  the  up-  and  down-pointing  triangles,  respectively,                  poor  compared  to  variational  wave  functions  or  DMRG.  In
+where s  =  0, 1 are qubits representing the two Sz  =±1/2                           fact, the NN RVB wave function has a ﬁxed proportion (1/4)
+spin components and λ,µ,ν ∈{0, 1,...,D} are virtual in-                              of “defect triangles” with no singlet bonds (characterized by
+dices, as shown in Fig.2(a) [53].  One can then group three                          λ  = µ  = ν  =  2  on  the  three  bonds  of  the  correspond-
+sites on each unit cell (for example,  on the up-pointing tri-                       ing PEPSR tensor), equally distributed between the up- and
+angles) to obtain a rank-5 tensor (of new physical dimension                         down-pointing triangles. In the isotropic caseJ▽ =J∆, defect
+23 = 8) connected on an effective square lattice, as shown in                        triangles are energetically costly. However, in the regime with
+Fig.2(b).  The amplitudes of the PEPS in the local    Sz  basis                      strong  anisotropy,  i.e., J▽ ≪ J∆,  placing  defects  predom-
+are then obtained by contracting all virtual indices.                                inantly  on  the  down-pointing  triangles  will  be  energetically
+   The original nearest-neighbor (NN) RVB state [54] deﬁned                          very favorable [38].  Such an improvement can be performed
+as an equal weight (and equal sign) summation of all NN sin-                         easily within the PEPS formalism.  Choosing the up-pointing
+glet coverings (NN singlets are all oriented clockwise on all                        triangles as the three-site units, one then acts with the opera-
+the triangles) also belongs to the class of short-ranged (topo-                      tor I−αP3/2 on every unit (where I is the identity operator,
+logically ordered) Z2 spin liquids. Such a state can in fact be                      P3/2 is the projector on the fully symmetric subspace of three
+                                                                                     spins 1/2,  and α  is a variational parameter [57]).   As a re-
+represented as a PEPS with bond dimensionD = 3 [53,55]                               sult of this projection, we expect longer range singlet bonds
+and  involving  the  above  rank-3  tensors, Asλ,µ  on  the  sites,                  to appear in the RVB state,  with a nontrivial sign structure.
+and R∆λ,µ,ν  = R▽λ,µ,ν  = Rλ,µ,ν  in  the  center  of  the  trian-
+                                                                                                                                                             5
+
+Whenα = 1, one projects exactly onto the (two-dimensional)
+S = 1/2 manifolds of all up-pointing triangles.
+
+
+                            III.    RESULTS
+
+ A.    Competition between the U(1) Dirac and gapped Z2 spin
+                                  liquids
+
+   Our main results are shown in Fig.3.  Here, we report the
+ﬁnite-size scaling of the on-siteζ, nearest-neighbor ∆▽, and
+next-nearest-neighbor ∆2  pairing  terms  for J▽/J∆  =  0.1,
+0.3, 0.5, 0.7, and 0.9; the isotropic case J▽/J∆  =  1 is also
+reported for comparison.  For all ratios ofJ▽/J∆, we consid-
+ered clusters for which L  =  4n with n ranging from 1 to 7
+(the largest cluster thus hasN  = 2352 sites), except for the
+isotropic point, where the maximum isn = 4, since already
+for n  =  3 the pairing terms are vanishing.  In addition,  we                    FIG. 4.   ForJ▽/J∆ = 0.5, the Lanczos step extrapolation (employ-
+also report the energy gain of the Z2[0,π]β∗ state due to the                     ing a quadratic ﬁt) of the ground-state energy for the U(1) Dirac and
+presence of these pairing variational parameters with respect                     the Z2[0,π]β∗ states on the 48- and 192-site clusters.
+to the U(1) Dirac state that contains only hopping terms, i.e.,
+the gain ∆E =E(Z2)−E(U(1)) [see Supplemental Material
+(Ref. [58]) for values of energies of the U(1) and     Z2[0,π]β∗                  the opening of a (topological) gap leading to the formation of
+spin liquids].
+   We ﬁnd that for all values ofJ▽/J∆ the pairing amplitudes                      a Z2 state is not an artifact of the variational approach. In or-
+scale to zero (within error bars) in the thermodynamic limit                      der to prove this statement, we have performed one and two
+indicating that the Z2 spin liquid is not stable in the Heisen-                   Lanczos steps on both the gapless U(1) and gapped Z2 states
+berg model on the breathing kagome lattice, and that its oc-                      forL = 4 and 8 clusters at a givenJ▽/J∆  = 0.5, also per-
+currence,  as reported in a previous variational Monte Carlo                      forming the zero-variance extrapolation that allows us to get
+study [42], is a ﬁnite-size artifact.  We emphasize that, in the                  a (nonvariational) estimation of the exact ground-state energy.
+isotropic case, the pairing terms are essentially vanishing for                   The results are shown in Fig.4[see also the Supplemental Ma-
+L >  12, as already reported in Refs. [48,59].  Correspond-                       terial (Ref. [58])] and a few aspects should be stressed. First of
+ingly,  the  thermodynamic  extrapolation  of ∆E  is  found  to                   all, we must emphasize that the ﬁnite-size energy gain of the
+be vanishing forJ▽/J∆ > 0.3 (within the error bar) and for                        Z2 Ansatz decreases fromp = 0 top = 2, suggesting the fact
+J▽/J∆  = 0.1 (within two error bars).  In the latter case, the                    that the fermionic pairing does not reﬂect the correct way to
+extrapolated result is tiny anyway, i.e., ∆E = 0.00002(1).                        improve the original U(1) state.  Moreover, the zero-variance
+   At this point, we would like to make a brief comment on                        extrapolated estimate of the energy for the U(1) Dirac state is
+the optimization procedure, which is particularly relevant for                    slightly lower compared to the Z2[0,π]β∗ state on the 48-site
+the isotropic point.  In particular,  it has been suggested that                  cluster, and this difference in energy increases on the 192-site
+ﬁnite pairing amplitudes are obtained up to large system sizes                    cluster, implying that the Z2[0,π]β∗ wave function performs
+and in the thermodynamic limit [60], in contrast to what we                       worse with increasing system size.  Even though an accurate
+have previously obtained [48,59].  Indeed, on each size, it is                    extrapolation to the thermodynamic limit of the zero-variance
+possible to stabilize ﬁnite values of the pairing terms (ζ  and                   energy is beyond the goals of the present work, we are conﬁ-
+∆2), whenever the chemical potentialµ does not correspond                         dent that these results will be important for future comparisons
+to the one of the Dirac state.   However,  once µ is correctly                    that employ complementary numerical methods.
+placed (i.e., within the highest occupied and the lowest unoc-
+cupied levels of the Dirac spectrum on each ﬁnite cluster), all
+the pairing amplitudes optimize to zero (within the error bar)
+forL > 12.  In any case, also when the chemical potential is
+misplaced (and ﬁnite values of the pairings are obtained), the                                   B.    Strong breathing anisotropy limit
+energy gain ∆E is still negligibly small on any ﬁnite system
+and scales to zero (within error bars) in the thermodynamic
+limit.  Therefore, for understanding whether a gap opens up                          For completeness, we now focus on the strong anisotropy
+or not in reality,  it is not sufﬁcient to analyze the size scal-                 limitJ▽≪J∆ where other states compete with the U(1) spin
+ing of the variational parameters alone, but rather a complete                    liquid. In particular, we shall investigate (i) the simplex topo-
+study of the energy gain on large ﬁnite systems together with                     logical RVB liquid (which can be written as a simple PEPS)
+a thermodynamic extrapolation must be afforded.                                   and (ii) a VBC that is adiabatically connected to the projected
+   The stability of the U(1) Dirac spin liquid with respect to                    U(1) state.
+                                                                                                                                                                  6
+
+
+
+
+
+
+
+
+                                                                                    FIG. 6.    Schematic illustration of nearest-neighbor hopping ampli-
+                                                                                    tudes of the auxiliary Hamiltonian [Eq. (2)] for (a) VBC and (b) ne-
+                                                                                    matic states (no pairing terms are considered here):  maroon (green)
+                                                                                    bonds within the up-pointing (down-pointing) triangles are stronger
+                                                                                    compared to the black (gray) bonds within the same triangles.
+
+
+
+                                                                                                       2.    Evidence of a VBC ground state
+
+                                                                                        Now, we address the issue of the stability of the U(1) Dirac
+                                                                                    spin liquid towards dimerizing into a VBC. For simplicity, we
+                                                                                    choose a VBC with a unit cell of six-sites, i.e., composed of
+FIG. 5.     (a) Coefﬁcient c1  (extracted from the energy at α  =  1                two geometrical unit cells, and impose a chosen pattern of am-
+of inﬁnitely long cylinders of ﬁnite circumferenceL) plotted versus                 plitude modulation of nearest-neighbor hoppings on top of the
+1/L.  To minimize ﬁnite size effects, we consider the average over                  uniform U(1) state; see Fig.6(a).  This dimer pattern breaks
+the two topological sectors.  The error bars represent the energy dif-              both the translational and the threefold rotational symmetry
+ference (in units ofJ▽) between strong and weak bonds in the down                   of the lattice, but preserves the reﬂection symmetry about an
+triangles (nematicity), giving a tight bracketing of the extrapolation.             axis perpendicular to the primitive lattice vector a1.  There-
+(b) Energy (per site) in units ofJ∆  vsJ▽/J∆  of (i) the U(1) wave                  fore, the VBC wave function has two different hopping am-
+function, (ii) the simplex RVB at ﬁxedα = 1, and (iii) the optimal                  plitudes within up-pointing triangles, i.e., the maroon (strong)
+VBC state.  Fits up to second and third order inJ▽/J∆ are used for                  and  black  (weak)  bonds,  and  also  down-pointing  triangles,
+the U(1) (dashed line) and the VBC (full line) states to extract the re-            i.e., green (strong) and gray (weak) bonds.  This results in an
+spectivec1 andc2 parameters (with error bars). The VBC has lower                    enlarged variational parameter space and hence allows for po-
+energy up toJ▽/J∆ ≈ 0.25.                                                           tential lowering of energy.  We optimize the VBC wave func-
+
+                                                                                    tion  for  various  values  of  the  breathing  anisotropy  and  ﬁnd
+             1.    Competition with the simplex RVB liquid                          that, starting from the isotropic limit down toJ▽/J∆≈ 0.25,
+                                                                                    the optimization yields back the uniform U(1) spin liquid as
+                                                                                    the lowest energy state.  Then, for J▽/J∆ ≲  0.25, the opti-
+   Here, we consider the simplex RVB written as a PEPS [57]                         mization of the VBC wave function yields an energy which
+and consider a Taylor expansion of the energy per site (in units
+ofJ∆) in the strong anisotropy limit:
+            E                                  (J▽   )2
+            J∆  =−0.25 +c1J▽J∆ +c2               J∆       +··· .          (5)
+
+
+The constant−0.25 and the coefﬁcientc1  of the linear term
+are  captured  by  setting α  =  1  appearing  in  the  operator
+I− αP3/2  acting  on  the  up-pointing  triangles  (hence  pro-
+jecting exactly on the S  =  1/2 manifold of all up-pointing
+triangles).  Note, however, that an optimization over the pa-
+rameter α would be required at ﬁnite J▽  (and to get higher
+order terms  in the  Taylor expansion).   From the  energy per
+site E  = −0.25J∆ +c1(L)J▽  that  is  obtained  for α  =  1
+on  inﬁnitely  long  (vertical)  cylinders  of  perimeter L  =  4,
+6,  and 8 unit cells (in each even or odd topological sector),
+we  can  extract  the  coefﬁcient c1(L).   Then,  by  performing
+the extrapolation L→∞ as shown in Fig.5(a),  we obtain
+c1 ≃ −0.1243(3).   Instead,  a ﬁt  of the energy  of the  U(1)
+state  gives c1 ≃ −0.119(1),  deﬁnitely  above  the  value  of                      FIG. 7.     For different values of the breathing anisotropy J▽/J∆,
+the simplex RVB; see Fig.5(b).   This implies that the sim-                         the ﬁnite-size scaling of the energy gain (in units ofJ▽) of the six-
+plex RVB has a lower energy than the U(1) wave function at a                        site unit-cell VBC with respect to the U(1) Dirac spin liquid,  i.e.,
+sufﬁciently small value of the couplingJ▽/J∆, whatever the                          [E(VBC)−E(U(1))]/J▽.  The clusters considered areL = 8, 12,
+respective values of the coefﬁcientc2 of the quadratic term.                        16, and 20.
+                                                                                                                                                            7
+
+is signiﬁcantly lower compared to the U(1) Dirac state [see                      kagome  lattice  employing  Gutzwiller  projected  wave  func-
+Fig.7and the Supplemental Material (Ref. [58])]; therefore,                      tions analyzed with variational Monte Carlo methods.  Based
+the resulting wave function is characterized by a strong dimer-                  on high-accuracy and large-scale calculations, supplemented
+ization of the hopping amplitudes, with the maroon and green                     by a ﬁnite-size scaling analysis, we showed that the true ther-
+bonds [in Fig.6(a)] being considerably stronger compared to                      modynamic ground state is a U(1) Dirac spin liquid for a wide
+the black and gray bonds.  Most importantly, we ﬁnd that the                     span of breathing anisotropies, starting from (and including)
+gain in the energy of the VBC with respect to the U(1) Dirac                     the  isotropic  point J▽/J∆  =  1  down  to  large  anisotropies
+state, i.e.,E(VBC)−E(U(1)), stays essentially constant with                      J▽/J∆≈ 0.25.  Our ﬁndings concerning the remarkable sta-
+increasing system size from L  =  8 to L  =  20 (see Fig.7)                      bility,  robustness,  and  extent  of  the  U(1)  Dirac  spin  liquid
+pointing to the fact that the VBC wave function does not lose                    are in excellent agreement with those from a recent DMRG
+accuracy  as N → ∞,  i.e.,  it  is  size  consistent  (unlike  the               study [43].  The results are of direct relevance to the breath-
+gapped Z2  spin liquid).   The variational energy of the opti-                   ing  kagome  material  vanadium  oxyﬂuoride  DQVOF,  as  the
+mal VBC state is also slightly lower than the simplex RVB                        strength of breathing anisotropy estimated using series expan-
+state that is constructed by using PEPS; see the analysis on                     sion isJ▽/J∆ = 0.55(4) [39], which securely places DQVOF
+the Taylor expansion of Eq. (5) reported in Fig.5(b).  These                     inside the regime of stability of the U(1) Dirac state.  Our re-
+results thus provide strong evidence for a VBC ground state                      sults are thus consistent with the gapless spin liquid behavior
+of the model in the regime 0<J▽/J∆ ≲ 0.25.                                       observed in spin-lattice (T1) measurements [39] and lend sup-
+   We would like to mention that consideration of VBCs with                      port to the view that spin liquid behavior observed in DQVOF
+larger unit cell with 12 or 36 sites, as deﬁned in Refs. [61,62],                is likely to be intrinsic to the breathing kagome lattice. In ad-
+and their optimization could possibly lead to further lower-                     dition, our results would suggest that couplings between the
+ing  of  energy  due  to  the  enlargement  of  variational  space;              S = 1/2 V4+ ions within the breathing kagome planes to the
+nonetheless, the fact that already for a six-site unit-cell VBC                  inter-layer S  =  1 V3+  ions is not a necessary ingredient to
+we obtain an appreciable and size-consistent energy gain is                      generate spin liquid behavior.
+conclusive  proof  enough  of  a  VBC  ordered  ground  state  in                   In the regime of strong breathing anisotropyJ▽≪J∆, we
+this parameter regime.                                                           revealed the presence of a phase transition whereby the U(1)
+                                                                                 Dirac spin liquid undergoes a dimer instability and gives way
+                                                                                 to a VBC ground state forJ▽/J∆ ≲ 0.25.  This ﬁnding is at
+                     3.    Search for nematic order                              variance with that from DMRG [43],  which claimed a pure
+                                                                                 lattice-nematic state that preserves translations.  Nonetheless,
+   We  ﬁnally  consider  the  case  of  a  lattice-nematic  state,               the remarkable agreement between the conclusions obtained
+which  only  breaks  the  threefold  lattice  rotational  symmetry               from variational Monte Carlo and DMRG on the nature and
+but preserves the translational symmetry;  see Fig.6(b).   By                    extent of the ground state in a wide span of parameter space
+optimizing  such  a  case  for  various  values  of  the  breathing              represents a milestone which hitherto could not be foreseen.
+anisotropy and starting from different points in variational pa-                 It also highlights the quantitative and qualitative accuracy of
+rameter space (i.e., having different hopping amplitude mod-                     projected  fermionic  wave  functions  (while  only  involving  a
+ulations),  we ﬁnd that the optimization always returns back                     few parameters) for spin models hosting a spin liquid ground
+to the uniform U(1) Dirac state as the lowest energy one.  In                    state.
+particular,  in the regime of strong anisotropy,  this points to
+the fact that in order to gain energy with respect to the U(1)
+spin liquid, it is crucial to break translational symmetry along                                        ACKNOWLEDGMENTS
+with rotations.  This fact is in contrast to the results obtained
+by the DMRG approach in Ref. [43], which claimed a pure
+lattice-nematic without any translational symmetry breaking.                        We thank M. Mambrini and F. Mila for helpful discussions.
+We  want  to  stress  that  the  simplex  RVB  wave  function  ob-               We acknowledge the kind hospitality and stimulating environ-
+tained  within  PEPS  also  showed  nematicity  [see  Fig.5(a)];                 ment of the Centro de Ciencias de Benasque Pedro Pascual,
+however, this is an artifact induced by ﬁnite-perimeter cylin-                   Benasque,  during  the  workshop  “Entanglement  in  Strongly
+ders (manifesting itself in the spatial anisotropy of spin-spin                  Correlated Systems” where this project was initiated. Y.I. and
+correlations) and drops off with increasing perimeter.  In ad-                   R.T. gratefully acknowledge the Gauss Centre for Supercom-
+dition, there is no further energy gain by allowing a nematic                    puting e.V. for funding this project by providing computing
+bias in theR∆ tensor.                                                            time on the GCS Supercomputer SuperMUC at Leibniz Su-
+                                                                                 percomputing Centre (LRZ). D.P. acknowledges support from
+                                                                                 the French Research Council (ANR) under the NQPTP ANR-
+                        IV.    CONCLUSIONS                                       0406-01  grant  and  CALMIP  (Toulouse)  for  CPU  time  on
+                                                                                 the EOS Supercomputer. R.T. acknowledges support through
+   We  have  investigated  the  nature  of  the  ground  state  of               ERC-StG-TOPOLECTRICS-336012,  DFG  SFB  1170,  and
+the S  =  1/2  Heisenberg  antiferromagnet  on  the  breathing                   DFG SPP 1666.
+                                                                                                                                                                                        8
+
+
+
+
+
+ [1]I. Pomeranchuk, Zh. Eksp. Teor. Fiz.     11, 226 (1941).                                           and K. Held,Phys. Rev. Lett.         117, 037206 (2016).
+ [2]L. Balents,Nature (London)                 464, 199 (2010).                                 [32]L. E. Chern, K. Hwang, T. Mizoguchi, Y. Huh,  and Y. B. Kim,
+ [3]L. Savary and L. Balents,Rep. Prog. Phys.                 80, 016502 (2017).                       Phys. Rev. B 96, 035118 (2017).
+ [4]Y. Zhou, K. Kanoda,  and T.-K. Ng,Rev. Mod. Phys.           89, 025003                      [33]L. E. Chern, R. Schaffer, S. Sorn,  and Y. B. Kim,Phys. Rev. B
+      (2017).                                                                                          96, 165117 (2017).
+ [5]C. Zeng and V. Elser,Phys. Rev. B      42, 8436 (1990).                                     [34]F. H. Aidoudi, D. W. Aldous, R. J. Goff, S. M. Z., J. P. Attﬁeld,
+ [6]S. Sachdev,Phys. Rev. B      45, 12377 (1992).                                                     R. E. Morris,  and P. Lightfoot,Nat. Chem.                3, 801 (2011).
+ [7]P. Lecheminant, B. Bernu, C. Lhuillier, L. Pierre,  and P. Sindz-                           [35]Y. Okamoto,  G. J. Nilsen,  J. P. Attﬁeld,   and Z. Hiroi,Phys.
+      ingre,Phys. Rev. B          56, 2521 (1997).                                                     Rev. Lett. 110, 097203 (2013).
+ [8]M. P. Shores, E. A. Nytko, B. M. Bartlett,  and D. G. Nocera,J.                             [36]K. Essaﬁ, L. D. C. Jaubert,   and M. Udagawa,J. Phys.:  Con-
+      Am. Chem. Soc. 127, 13462 (2005).                                                                dens. Matter 29, 315802 (2017).
+ [9]P. Mendels,  F. Bert,  M. A. de Vries,  A. Olariu,  A. Harrison,                            [37]F. Mila,Phys. Rev. Lett.               81, 2356 (1998).
+      F. Duc,  J. C. Trombe,  J. S. Lord,  A. Amato,   and C. Baines,                           [38]M. Mambrini and F. Mila,Eur. Phys. J. B               17, 651 (2000).
+      Phys. Rev. Lett. 98, 077204 (2007).                                                       [39]J.-C.  Orain,  B.  Bernu,  P.  Mendels,  L.  Clark,  F.  H.  Aidoudi,
+[10]J.  S.  Helton,  K.  Matan,  M.  P.  Shores,  E.  A.  Nytko,  B.  M.                               P. Lightfoot, R. E. Morris,   and F. Bert,Phys. Rev. Lett.         118,
+      Bartlett, Y. Yoshida, Y. Takano, A. Suslov, Y. Qiu, J.-H. Chung,                                 237203 (2017).
+      D.  G.  Nocera,    and  Y.  S.  Lee,Phys.  Rev.  Lett.        98,  107204                 [40]J.  C.  Orain,  L.  Clark,  F.  Bert,  P.  Mendels,  P.  Attﬁeld,  F.  H.
+      (2007).                                                                                          Aidoudi, R. E. Morris, P. Lightfoot, A. Amato,  and C. Baines,
+[11]R. Suttner, C. Platt, J. Reuther,  and R. Thomale,Phys. Rev. B                                     J. Phys.: Conf. Ser. 551, 012004 (2014).
+      89, 020408 (2014).                                                                        [41]L. Clark, J. C. Orain, F. Bert, M. A. De Vries, F. H. Aidoudi,
+[12]A.  Olariu,  P.  Mendels,  F.  Bert,  F.  Duc,  J.  C.  Trombe,  M.  A.                            R.  E.  Morris,   P.  Lightfoot,   J.  S.  Lord,   M.  T.  F.  Telling,
+      de Vries,  and A. Harrison,Phys. Rev. Lett.               100, 087202 (2008).                    P. Bonville, J. P. Attﬁeld, P. Mendels,   and A. Harrison,Phys.
+[13]T.-H. Han, J. S. Helton, S. Chu, D. G. Nocera, J. A. Rodriguez-                                    Rev. Lett. 110, 207208 (2013).
+      Rivera, C. Broholm,  and Y. S. Lee,Nature (London)        492, 406                        [42]R. Schaffer, Y. Huh, K. Hwang,  and Y. B. Kim,Phys. Rev. B
+      (2012).                                                                                          95, 054410 (2017).
+[14]M. Fu,  T. Imai,  T.-H. Han,   and Y. S. Lee,Science              350, 655                  [43]C.  Repellin,  Y.-C.  He,    and  F.  Pollmann,Phys.  Rev.  B                       96,
+      (2015).                                                                                          205124 (2017).
+[15]H. C. Jiang, Z. Y. Weng,  and D. N. Sheng,Phys. Rev. Lett.                 101,             [44]A. A. Abrikosov,Physics        2, 5 (1965).
+      117203 (2008).                                                                            [45]Y.-M.  Lu,  Y.  Ran,   and  P.  A.  Lee,Phys.  Rev.  B              83,  224413
+[16]S. Yan, D. A. Huse,  and S. R. White,Science                 332, 1173 (2011).                     (2011).
+[17]S.  Depenbrock,  I.  P.  McCulloch,   and  U.  Schollw       ¨ock,Phys.                     [46]F. Becca and S. Sorella,        Quantum Monte Carlo Approaches for
+      Rev. Lett. 109, 067201 (2012).                                                                   Correlated Systems (Cambridge University Press, 2017).
+[18]Y. Ran, M. Hermele, P. A. Lee,  and X.-G. Wen,Phys. Rev. Lett.                              [47]S. Sorella,Phys. Rev. B                   71, 241103 (2005).
+      98, 117205 (2007).                                                                        [48]Y. Iqbal, F. Becca,  and D. Poilblanc,Phys. Rev. B                      84, 020407
+[19]Y. Iqbal, F. Becca, S. Sorella,  and D. Poilblanc,Phys. Rev. B                                     (2011).
+      87, 060405 (2013).                                                                        [49]F.  Becca,  W.-J.  Hu,  Y.  Iqbal,  A.  Parola,  D.  Poilblanc,    and
+[20]Y. Iqbal, D. Poilblanc,  and F. Becca,Phys. Rev. B                 89, 020407                      S. Sorella,J. Phys.: Conf. Ser.            640, 012039 (2015).
+      (2014).                                                                                   [50]We  have  employed  a  quadratic  ﬁt  with  relative  weighting  by
+[21]Y. Iqbal, D. Poilblanc,  and F. Becca,Phys. Rev. B                 91, 020402                      1/X2,  which  weights  the  points  at  the  left  part  of  the  graph
+      (2015).                                                                                          more than points to the right. Hence, the nonlinear regression
+[22]Y.-C. He, M. P. Zaletel, M. Oshikawa,  and F. Pollmann,Phys.                                       minimizes the quantity∑(Ydata −Ycurve)2/X2curve instead of
+      Rev. X 7, 031020 (2017).                                                                         the∑(Ydata −Ycurve)2. The choice of the weight factor 1/X2
+[23]W. Zhu, X. Chen, Y.-C. He,   and W. Witczak-Krempa, ArXiv                                          is determined by the fact that it minimizes the sum of the abso-
+      e-prints  (2018),arXiv:1801.06177 [cond-mat.str-el].                                             lute values of the relative errors.
+[24]H. J. Liao, Z. Y. Xie, J. Chen, Z. Y. Liu, H. D. Xie, R. Z. Huang,                          [51]F.  Verstraete  and  J.  I.  Cirac,  eprint  arXiv:cond-mat/0407066
+      B.  Normand,    and  T.  Xiang,Phys.  Rev.  Lett.            118,  137202                        (2004),cond-mat/0407066.
+      (2017).                                                                                   [52]N. Schuch,  M. M. Wolf,  F. Verstraete,   and J. I. Cirac,Phys.
+[25]F. Bert, D. Bono, P. Mendels, F. Ladieu, F. Duc, J.-C. Trombe,                                     Rev. Lett. 98, 140506 (2007).
+      and P. Millet,Phys. Rev. Lett.           95, 087203 (2005).                               [53]N. Schuch, D. Poilblanc, J. I. Cirac,  and D. P       ´erez-Garc´ıa,Phys.
+[26]T.  Yavors’kii,  W.  Apel,   and  H.-U.  Everts,Phys.  Rev.  B              76,                    Rev. B 86, 115108 (2012).
+      064430 (2007).                                                                            [54]P. Anderson,Mater. Res. Bull.                       8, 153  (1973).
+[27]F.  Wang,  A.  Vishwanath,   and  Y.  B.  Kim,Phys.  Rev.  B               76,              [55]D. Poilblanc, N. Schuch, D. P       ´erez-Garc´ıa,  and J. I. Cirac,Phys.
+      094421 (2007).                                                                                   Rev. B 86, 014404 (2012).
+[28]M. Yoshida, M. Takigawa, H. Yoshida, Y. Okamoto,  and Z. Hi-                                [56]F. Yang and H. Yao,Phys. Rev. Lett.            109, 147209 (2012).
+      roi,Phys. Rev. Lett.      103, 077207 (2009).                                             [57]D. Poilblanc and N. Schuch,Phys. Rev. B                   87, 140407 (2013).
+[29]O. Janson, J. Richter, P. Sindzingre,  and H. Rosner,Phys. Rev.                             [58]See Supplemental Material at end of the main paper for the ta-
+      B 82, 104434 (2010).                                                                             bles of energies of competing states.
+[30]G.  J.  Nilsen,  F.  C.  Coomer,  M.  A.  de  Vries,  J.  R.  Stewart,                      [59]Y. Iqbal, D. Poilblanc,   and F. Becca, ArXiv e-prints   (2016),
+      P. P. Deen, A. Harrison,  and H. M. Rønnow,Phys. Rev. B  84,                                     arXiv:1606.02255 [cond-mat.str-el].
+      172401 (2011).                                                                            [60]T. Li, ArXiv e-prints  (2016),arXiv:1601.02165 [cond-mat.str-
+[31]O. Janson, S. Furukawa, T. Momoi, P. Sindzingre, J. Richter,                                       el].
+[61]Y. Iqbal, F. Becca,  and D. Poilblanc,New J. Phys.                      14, 115031
+       (2012).
+[62]Y. Iqbal, F. Becca,  and D. Poilblanc,Phys. Rev. B                      83, 100404
+       (2011).
+                                          —Supplemental Material—
+
+
+
+J▽/J∆             48                        192                       432                       768                     1200                   1768                   2352
+1.0     −0.4293926(15)   −0.4287314(23)   −0.4287114(3)    −0.4287160(6)    −0.4287168(27) −0.428717(7)    −0.428708(9)
+0.9     −0.4081210(5)    −0.4074947(7)    −0.4074783(7)    −0.407480(1)     −0.407487(2)    −0.407492(3)    −0.407492(4)
+0.7     −0.3669648(5)    −0.3664411(5)    −0.3664274(7)    −0.3664297(10)   −0.3664373(15) −0.3664426(25) −0.3664442(35)
+0.5     −0.3282543(4)    −0.3278732(4)    −0.3278664(5)    −0.3278714(9)    −0.3278738(13) −0.327876(2)    −0.327881(3)
+0.4     −0.3101170(3)    −0.3098222(4)    −0.3098184(9)    −0.309822(2)     −0.309826(3)
+0.35    −0.3014232(3)    −0.3011736(4)    −0.3011720(9)    −0.3011782(16)   −0.301181(3)
+0.3     −0.2930111(3)    −0.2928055(3)    −0.2928074(4)    −0.2928122(6)    −0.2928132(9)   −0.2928167(15) −0.2928176(20)
+0.25    −0.2849048(2)    −0.2847442(4)    −0.2847466(10)   −0.284751(2)     −0.284760(3)
+0.2     −0.2771349(2)    −0.2770175(3)    −0.2770210(8)    −0.2770233(15)   −0.277021(2)
+0.15    −0.2697295(2)    −0.2696521(3)    −0.2696563(7)    −0.2696576(13)   −0.2696626(21)
+0.1     −0.26271957(11) −0.26267520(13) −0.26267882(13) −0.26268176(23) −0.2626831(4)   −0.2626840(6)   −0.2626847(8)
+0.05    −0.25613379(5)   −0.25611611(8)   −0.2561187(2)    −0.2561202(3)    −0.2561216(5)
+
+TABLE S1.  For various values of the breathing anisotropyJ▽/J∆, the variational ground-state energies per siteE/J∆ of the gaplessU(1)
+Dirac spin liquid on different cluster sizes (labelled by the total number of sites) is given.   The U(1) Dirac spin liquid Ansatz employed
+includes both the nearest-neighbor and optimized next-nearest-neighbor hopping. The calculations are done using mixed boundary conditions,
+i.e., anti-periodic along a1 and periodic along a2. All the clusters are of the type 3×L×L, and do not explicitly break lattice symmetries.
+
+
+
+ J▽/J∆             48                        192                     432                    768                    1200                   1768                   2352
+ 1.0     −0.4295356(12)   −0.4287638(23)   −0.4287266(4) −0.4287204(7)   −0.4287177(37) −0.428725(10)   −0.428711(12)
+ 0.9     −0.4082574(4)    −0.4075283(5)    −0.4074916(9) −0.4074900(12) −0.4074925(14) −0.407491(2)    −0.407493(3)
+ 0.7     −0.36708095(33) −0.3664724(5)    −0.3664417(8) −0.3664408(11) −0.3664425(13) −0.366440(2)    −0.366437(3)
+ 0.5     −0.32834733(26) −0.3279079(3)    −0.3278864(7) −0.3278839(10) −0.3278842(10) −0.3278835(15) −0.3278794(26)
+ 0.3     −0.29309867(26) −0.2928537(3)    −0.2928370(5) −0.2928321(7)   −0.2928300(6)   −0.2928278(11) −0.2928240(14)
+ 0.1     −0.26283227(10) −0.26275058(10) −0.2627398(3) −0.2627301(2)   −0.2627241(5)   −0.2627230(6)   −0.2627147(7)
+
+TABLE S2. For various values of the breathing anisotropyJ▽/J∆, the variational ground-state energies per siteE/J∆ of the gapped Z2[0,π]β∗
+spin liquid on different cluster sizes (labelled by the total number of sites) is given. The calculations are done using mixed boundary conditions,
+i.e., anti-periodic along a1 and periodic along a2. All the clusters are of the type 3×L×L, and do not explicitly break lattice symmetries.
+
+
+
+
+ Size         0-LS                   1-LS                   2-LS                   0-LS                    1-LS                   2-LS      U(1)σ2=0     Z2[0,π]β∗σ2=0
+ 48   −0.3282543(4) −0.33174706(30) −0.3328861(9) −0.32834733(26) −0.33175460(23) −0.3328805(9) −0.334835(30) −0.334702(27)
+ 192  −0.3278732(4) −0.3307906(6)    −0.331946(4)   −0.3279079(3)    −0.3308047(6)    −0.331947(3)   −0.334564(78) −0.334167(83)
+
+TABLE S3. AtJ▽/J∆ = 0.5, the variational ground-state energies of theU(1) Dirac spin liquid (columns 2−4) and the Z2[0,π]β∗ spin liquid
+(columns 5−7), withp = 0, 1, and 2 Lanczos steps on different cluster sizes obtained by VMC are given.  The (non-variational) estimate of
+the ground-state energy of theS = 1/2 Heisenberg model on different cluster sizes obtained from a zero-variance extrapolation (employing a
+quadratic ﬁt) of the 0, 1, and 2 Lanczos step energies of both theU(1) and Z2[0,π]β∗ spin liquid Ans¨atze is given in columns 8−9.
+
+
+
+                         J▽/J∆            48                       192                     432                   768                  1200
+                         0.05    −0.25640035(4) −0.25640896(11) −0.2564084(5) −0.2564069(5) −0.2564057(7)
+                         0.1     −0.26305787(9) −0.2630934(2)    −0.2630934(6) −0.263081(2)   −0.263088(1)
+                         0.15    −0.2699562(1)   −0.2700349(3)    −0.2700379(7) −0.270037(1)   −0.270030(2)
+                         0.2     −0.2771352(2)   −0.2772260(4)    −0.277236(1)   −0.277230(1)   −0.277222(2)
+
+TABLE S4. For various values of the breathing anisotropyJ▽/J∆ inside the valance-bond crystal ordered phase, the variational ground-state
+energies per siteE/J∆ of the 6-site unit-cell valence-bond crystal on different cluster sizes (labelled by the total number of sites) is given. The
+valence-bond crystal is obtained by dimerizing the nearest-neighbor hopping amplitudes of theU(1) Dirac spin liquid, whereas the second-
+nearest neighbor hoppings are not dimerized.  The calculations are done using mixed boundary conditions, i.e., anti-periodic along a1  and
+periodic along a2. All the clusters are of the type 3×L×L, and do not explicitly break lattice symmetries.
+
+
+
+
+
+
+
+                                                                                 1

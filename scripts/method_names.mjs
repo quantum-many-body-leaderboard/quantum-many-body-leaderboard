@@ -1080,6 +1080,33 @@ for (const [lv, pows] of [["PL0", [0, 2, 4, 6, 8]], ["PL1", [0, 2, 4, 6, 8]], ["
   NAMES[`${lv}, power → ∞ (exponential fit)`] = ["Power-Lanczos", `${lv} on the d-wave RVB state, exponential fit of the energies to infinite power`, { family: "AFQMC / GFMC" }];
 }
 
+// Pass sweep-rows-2026-11-12-frustrated (scripts/frustrated_2026_11_12.mjs): Gutzwiller-projected
+// fermionic states by VMC on kagome, pyrochlore and shuriken tori. Flux labels as printed: kagome
+// [triangle, hexagon; n.n.n. triangles] (arXiv:1011.3954, 1105.0341), pyrochlore flux triads
+// (arXiv:0807.2036 Table I), shuriken (Φ_Δ, Φ_⊿, Φ_□) and the two dimer states (arXiv:2110.08198 Table I).
+Object.assign(NAMES, {
+  "Zero-variance extrapolation of VMC (0,1 Lanczos steps)": ["VMC", `${DIRAC}; extrapolated: variance → 0 (two points, p = 0, 1)`],
+  "U(1) Dirac SL (NN)": ["VMC", `${DIRAC}, [0,π] flux, n.n. hopping`],
+  "uniform RVB SL [0, 0] (NN)": ["VMC", "uniform RVB spin liquid, [0,0] flux, n.n. hopping"],
+  "U(1) Dirac state [0, π] (n.n.)": ["VMC", `${DIRAC}, [0,π] flux, n.n. hopping`],
+  "uniform PFS [0, 0] (n.n.)": ["VMC", "uniform projected Fermi sea, [0,0] flux, n.n. hopping"],
+  "extended Dirac [0, π; 0, π] (n.n.n. hopping)": ["VMC", `${DIRAC}, [0,π;0,π] flux, n.n.n. hopping`],
+  "extended uniform PFS [0, 0; π, π] (n.n.n. hopping)": ["VMC", "uniform projected Fermi sea, [0,0;π,π] flux, n.n.n. hopping"],
+  // arXiv:1712.04579 Tables S1, S2 at J▽/J∆ = 1
+  "U(1) Dirac spin liquid with n.n.n. hopping (VMC)": ["VMC", `${DIRAC}, n.n.n. hopping`],
+  "gapped Z2[0,π]β* spin liquid (VMC)": ["VMC", "gapped Z2[0,π]β* spin liquid"],
+});
+for (const f of ["[0, 0, 0]", "[π/2, π/2, 0]", "[π/2, −π/2, 0]", "[0, 0, π]"])
+  NAMES[`VMC, ${f} flux state`] = ["VMC", `projected fermionic state, ${f.replace(/ /g, "")} flux${/π\/2/.test(f) ? " (chiral)" : ""}`];
+for (const f of ["FS (0, 0, 0)", "FS (0, 0, π)", "FS (π, 0, π)", "Chiral (π/2, π/2, π)", "Chiral (π/2, −π/2, 0)", "Chiral (π/2, −π/2, π)"])
+  NAMES[`Gutzwiller projected ${f}`] = ["VMC", `U(1) spin liquid, ${f.startsWith("FS") ? "non-chiral (FS ansatz)" : "chiral"}, ${f.replace(/^\w+ /, "").replace(/ /g, "")} flux`];
+NAMES["Gutzwiller projected L6-VBC"] = ["VMC", "loop-six valence-bond crystal (L6-VBC)"];
+NAMES["Gutzwiller projected PW-VBC"] = ["VMC", "pinwheel valence-bond crystal (PW-VBC)"];
+// arXiv:1405.3259 Tables VI-VIII (transverse-field Ising, open squares) and arXiv:2510.20063 Table 2.
+for (const D of [2, 3, 4]) NAMES[`finite PEPS, full update, D = ${D}`] = ["PEPS", "finite PEPS, full update", { bond_dimension: D, family: "tensor network" }];
+for (const D of [2, 3, 4, 5, 6, 7]) NAMES[`finite PEPS, simple update, D = ${D}`] = ["PEPS", "finite PEPS, simple update", { bond_dimension: D, family: "tensor network" }];
+NAMES["block MPS alternating optimization (reference, bond dimension up to 5000)"] = ["DMRG", "block MPS alternating optimization, bond dimension up to 5000"];
+
 // Pass sweep-rows-2026-11-11-instances: the cells the Ketboard/tachys pass held for want of an instance.
 // arXiv:2304.01996 (NeurIPS 2023), Tables 1-4 on the open squares. PixelCNN is the gated PixelCNN of
 // Appendix D, 7 layers and 48 hidden dimensions unless the label says (layers-hidden); ANTN is that
@@ -1253,6 +1280,8 @@ function tnAlgorithm(name, detail) {
   // simple-update start.
   if (/gradient optimi[sz]ation|^finite$/.test(detail)) return ["VMC", detail];
   if (/simple update(?=;|$)/.test(detail)) return ["simple update", detail.replace(/,? ?simple update(?:; |$)/, "")];
+  // Full-update imaginary-time evolution of a finite PEPS (arXiv:1405.3259 Tables VI and VII).
+  if (/full update(?=;|$)/.test(detail)) return ["full update", detail.replace(/,? ?full update(?:; |$)/, "")];
   if (/^trial state of PEPS-GFMC/.test(detail)) return ["AD optimisation", detail];
   throw new Error(`tensor network ${name} "${detail}": no algorithm known; read the source`);
 }

@@ -1,0 +1,267 @@
+ Projected wave function study of Z2 spin liquids on the kagome lattice for the spin- 12
+                                          quantum Heisenberg antiferromagnet
+
+                                    Yasir  Iqbal,          1,∗  Federico  Becca,            2,†  andDidier  Poilblanc       1,‡
+              1Laboratoire  de  Physique  Th´eorique  UMR-5152,  CNRS  and  Universit´e  de  Toulouse,  F-31062  France
+                  2Democritos  National  Simulation  Center,  Istituto  Oﬃcina  dei  Materiali  del  CNR  and  Scuola
+                  Internazionale  Superiore  di  Studi  Avanzati  (SISSA),  Via  Bonomea  265,  I-34136  Trieste,  Italy
+                                                           (Dated:  October 25, 2018)
+                   Motivated by recent density-matrix renormalization group (DMRG) calculations [Yan, Huse, and
+                White,Science           332, 1173 (2011)], which claimed that the ground state of the nearest-neighbor spin-
+                1/2 Heisenberg antiferromagnet on the kagome lattice geometry is a fully gapped spin liquid with
+                numerical signatures of Z2 gauge structure, and a further theoretical work [Lu, Ran, and Lee,Phys.
+                Rev.   B  83,  224413  (2011)],  which  gave  a  classiﬁcation  of  all  Schwinger-fermion  mean-ﬁeld  fully
+                symmetric Z2 spin liquids on the kagome lattice, we have thoroughly studied Gutzwiller-projected
+                fermionic wave functions by using quantum variational Monte Carlo techniques, hence implementing
+                exactly the constraint of one fermion per site.  In particular, we investigated the energetics of all
+                Z2  candidates (gapped and gapless) that lie in the neighborhood of the energetically competitive
+                U(1) gapless spin liquids.  By using a state-of-the-art optimization method, we were able to conclu-
+                sively show that the U(1) Dirac state is remarkably stable with respect to all Z2 spin liquids in its
+                neighborhood, and in particular for opening a gap toward the so-called Z2[0,π]β  state, which was
+                conjectured to describe the ground state obtained by the DMRG method.  Finally, we also consid-
+                ered the addition of a small second nearest-neighbor exchange coupling of both antiferromagnetic
+                and ferromagnetic type, and obtained similar results, namely, a U(1) Dirac spin-liquid ground state.
+
+                PACS numbers:  75.10.Kt, 75.10.Jm, 75.40.Mg
+
+
+  Introduction.     The  nearest-neighbor  (NN)  spin-1/2                     Schwinger-fermion mean-ﬁeld theory, resulting in an enu-
+quantum  Heisenberg  antiferromagnet  (QHAF)  on  the                         meration  of  a  total  of  20 Z2  mean-ﬁeld  states.   Their
+kagome  lattice  provides  ideal  conditions  for  the  ampli-                main result was the identiﬁcation of a unique gapped Z2
+ﬁcation  of  quantum  ﬂuctuations  and  a  consequent  sta-                   SL  (called  the Z2[0,π]β  state)  in  the  neighborhood  of
+bilization  of  an  exotic  magnetically  disordered  ground                  the U(1) Dirac state.  Since the U(1) Dirac SL state has
+state, which may be a valence-bond crystal (VBC)1–5    or                     the best variational energy among the class of U(1) gap-
+a spin liquid (SL) with fractionalized excitations.6–8    Re-                 less  SLs,  in  Ref.  [21],  it  has  been  conjectured  that  the
+cent experiments have unanimously pointed toward a SL                         Z2[0,π]β  state  may  describe  the  ground  state  that  has
+behavior;9–16    in particular, Raman spectroscopic data on                   been numerically observed in the DMRG study.8
+a nearly perfect spin-1/2 kagome compound with Heisen-                           In this paper, we thoroughly investigate the possibil-
+berg couplings (the so-called Herbertsmithite) suggested                      ity of any of these Z2 SLs being stabilized as the ground
+a  gapless  (algebraic)  SL.17  On  the  theoretical  side,  the              state of the NN spin-1/2 QHAF, with a particular em-
+question  is  still  wide  open  and  intensely  debated.   On                phasis  on  the Z2[0,π]β  state.   In  practice,  we  compute
+the  one  hand,  series  expansion  provided  evidence  that                  the energy of optimized variational wave functions that
+a  VBC  with  a  36-site  unit  cell  has  lower  energy  than                are constructed by applying the Gutzwiller projector to
+other proposed competing states.4 On the other hand, it                       diﬀerent states obtained from mean-ﬁeld Hamiltonians of
+was shown that, within the class of Gutzwiller-projected                      Schwinger fermions.  In this respect,  by an exact treat-
+fermionic wave functions, a particular algebraic SL, the                      ment of the full projector that ensures the one-fermion
+so-called U(1) Dirac state, has a competing energy.18 Its                     per site constraint, we go much beyond the simple mean-
+properties were studied in detail in Ref. [19] and it was                     ﬁeld approach of Ref. [21].  We calculate the energies of
+argued that it can be a stable SL state.  However, a re-                      all Z2 SLs which can be realized up to 3rd NN in mean
+cent DMRG study8 has challenged the above results, and                        ﬁeld Ansatz and have a non-vanishing 1st NN mean-ﬁeld
+proposed that the ground state can be a fully gapped Z2                       bond.   Only  12  of  the  20 Z2  SLs  satisfy  these  criteria,
+SL with a substantially lower energy as compared to both                      and all of them are continuously connected to some U(1)
+the above estimates.                                                          gapless SL.21  Our main result is that, contrary to what
+
+  The Z2 SLs have the nice property that they are stable                      has  been  proposed  in  Ref.  [21],  the     Z2[0,π]β  state  has
+mean ﬁeld states and can survive quantum ﬂuctuations.                         a  higher  energy  than  the  gapless  U(1)  Dirac  SL,  or  in
+Hence, they are more likely to occur as real physical SLs,                    other words the U(1) Dirac SL is remarkably stable with
+and  one  can  safely  use  the  projective  symmetry  group                  respect to opening of a gap and consequently destabiliz-
+classiﬁcation  of Z2  SLs  beyond  mean-ﬁeld  level.20  This                  ing into the Z2[0,π]β state.  We also ﬁnd that all gapped
+complete classiﬁcation of fully symmetric Z2 SLs on the                       Z2 SLs in the neighborhood of another competing gapless
+kagome lattice was recently done in Ref. [21] within the                      state, the uniform resonating-valence bond (RVB) state,
+                                                                                                                                                      2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1.  The Z2[0,π]β  SL ansatz; black (grey) bonds denote
+1st NN real hopping (2nd NN real hopping and real spinon                      FIG. 2.  (Color online) A typical variational Monte Carlo op-
+pairing) terms; solid (dashed) black bonds have sij = 1 (−1),                 timization run for the Z2[0,π]β wave function: (a) variational
+solid (dashed) grey bonds haveνij = 1 (−1), see Eq. (4).  The                 parameters ∆2, χ2, µ, and ζR  and (b) energy, as a function
+1st NN (2nd NN) mean ﬁeld Ansatz is written as U⟨ij⟩ = ±σ3                    of SR iterations.  In (a), the initialized parameter values are:
+(U⟨⟨ij⟩⟩  = ±(χ2σ3 + ∆2σ1)).   The  SU(2)  ﬂux  (P ),  through                ∆2  = χ2  = 1, µ = −0.8,  and ζR  = 0.3.  The U(1) 2nd NN
+elementary triangles (e.g., 123) isP123 =σ3, and that through                 [0,π; 0,π] Dirac SL corresponds to ∆2 = 0, χ2 = −0.0186(2),
+triangles formed by two 1st NN and one 2nd NN bonds (e.g.,                    ζR = 0, as found in Ref.26.  The optimized parameter values
+234) is P234  = −(χ2σ3 + ∆2σ1).  Their commutator is non-                     are obtained by averaging over a much larger number of con-
+zero, [P123,P234] = (−2iσ2)∆2.  Hence, a ﬁnite ∆2 breaks the                  verged SR iterations than shown above.  In (c), the variation
+U(1)  gauge  structure  down  to Z2,  and  opens  up  an  energy              in energy upon addition of a small ∆2 (both for ζR = 0, and
+gap via the Anderson-Higgs mechanism.20,23                                    optimized ζR for each value of ∆2) upon the [0,π; 0,π] Dirac
+                                                                              SL is shown, the increase in energy is apparent.
+
+have higher energies.  Moreover, we ﬁnd that all Z2 SLs
+have higher energy than the gapless SL states in whose                        (i.e., through Schwinger bosons), has been also used re-
+neighborhoods they lie.                                                       cently.22 In the latter case, however, the bosonic nature of
+  Model and wave function.  The Hamiltonian for the NN                        quasi-particle operators implies that one has to deal with
+spin-1/2 Heisenberg model is                                                  permanents instead of determinants, which makes the nu-
+                                                                              merical calculations much heavier than in our fermionic
+                          ˆH =J ∑     ˆSi· ˆSj,                          (1)  case.
+                                  ⟨ij⟩                                           Diﬀerent  SL  phases  correspond  to  diﬀerent  patterns
+                                                                              of distribution of χij  and ∆ij  on the lattice links, along
+where⟨ij⟩ denote sums over NN sites and ˆSi is the spin-                      with the speciﬁcation of the on-site termsµ andζ.  Then,
+1/2 operator at site i.  All energies will be given in units                  a  complete  speciﬁcation  of  a  SL  state  up  to nth  NN
+of J.                                                                         amounts  to  specifying  the  SU(2)  ﬂux  through  closed
+  The variational wave functions are deﬁned by project-                       loops along with the optimized hopping and pairing pa-
+ing noncorrelated fermionic states:                                           rameters  at  each  geometrical  distance.20,23      These  pa-
+                                                                              rameters  are  the  Ans¨atze  of  a  given  state  and  serve  as
+   |ΨVMC(χij, ∆ij,µ,ζ)⟩ =PG|ΨMF(χij, ∆ij,µ,ζ)⟩,    (2)                        the  variational  parameters  in  the  physical  wave  func-
+                                                                              tion  that  are  optimized  within  the  variational  Monte
+wherePG = ∏i(1−ni,↑ni,↓) is the full Gutzwiller projec-                       Carlo  scheme  to  ﬁnd  the  energetically  best  state.   It  is
+tor enforcing the one fermion per site constraint.  Here,                     worth mentioning that we use a sophisticated implemen-
+|ΨMF(χij, ∆ij,µ,ζ)⟩  is  the  ground  state  of  mean-ﬁeld                    tation  of  the  stochastic  reconﬁguration  (SR)  optimiza-
+Hamiltonian containing chemical potential, hopping, and                       tion method,24,25     which allows us to obtain an extremely
+singlet pairing terms:                                                        accurate  determination  of  variational  parameters.   In-
+                                                                              deed,  small  energy  diﬀerences  are  eﬀectively  computed
+          HMF = ∑(χij +µδij)c†i,αcj,α                                         by using a correlated sampling, which makes it possible
+                     i,j,α                                                    to  strongly  reduce  statistical  ﬂuctuations.   The  current
+                  + ∑{(∆ij +ζδij)c†                                           problem of the study of the instability of a U(1) Dirac
+                                           i,↑c†j,↓ +h.c.},         (3)       SL state toward the Z2[0,π]β  state will clearly demon-
+                      i,j
+                                                                              strate the power of this method to capture the essential
+where χij  = χ∗ji  and  ∆ij  =  ∆ji.   Besides  the  chemi-                   subtleties.
+cal potential µ, we will also consider real and imaginary                        Results.    We  performed  our  variational  calculations
+components of on-site pairing, which are absorbed in ζ.                       on  a  432-site  cluster  with  mixed  periodic-antiperiodic
+We  brieﬂy  mention  that  a  somewhat  similar  approach,                    boundary conditions which ensures nondegenerate wave
+based upon a bosonic representation of the spin operators                     functions at half-ﬁlling.  The large size of the cluster en-
+                                                                                                                                                   3
+
+sures  that  the  spatial  modulations  induced  in  the  ob-                values much later than the energy (see Fig.2).  This fact
+servables  by  breaking  of  rotational  symmetry  (due  to                  is  possible  because,  in  the  energy  minimization,  forces
+mixed boundary conditions) remain smaller than the un-                       are calculated through the correlated sampling and not
+certainty in the Monte Carlo simulations.                                    by  energy  diﬀerences.24  Our  result  shows  that  the  en-
+  Among  the  class  of  NN  fully  symmetric  and  gapless                  ergy landscape along the manifold connecting the U(1)
+SLs, the U(1) Dirac state has the lowest energy.  Its en-                    Dirac SL to the Z2[0,π]β SL is very ﬂat close to the U(1)
+ergy  per  site  is E/J  =−0.42863(2),  and  its  Ansatz  is                 Dirac  SL  [see  Fig.2(c)  for  the  case    ζR{∆2}].   Conse-
+given  by  the  sign  convention  for  NN  bonds  in  Fig.1.                 quently, a small perturbation around the U(1) Dirac SL,
+Due  to  the  U(1)  ﬂux ϕ  being  0  and π  [exp (iϕ)   =                    e.g., by setting ∆2 = 0.05 along with the corresponding
+∏                                                                            optimized value ofζR = 0.1780(2) will not lead to any de-
+  plaquetteχij]  through  triangles  and  hexagons,  respec-
+tively, it is denoted as [0,π].  Another competing state,                    tectable change in energy.  Hence, one cannot unambigu-
+the NN uniform RVB state has zero ﬂux through any pla-                       ously conclude anything about the stability of the U(1)
+quette and is therefore denoted as [0, 0];  its energy per                   Dirac SL by solely computing the energy of the perturbed
+site is E/J =−0.41216(1).18,19                                               wave function with ﬁxed parameters, point by point lo-
+  The  study  in  Ref.  [21]  identiﬁed  four     Z2  SLs  in  the           cally.  Only by performing an accurate SR optimization
+neighborhood  of  the  [0,π]  state;  only  one  of  them,  the              method24  can one successfully optimize the parameters
+Z2[0,π]β state, was found to be gapped (via the 2nd NN                       and transparently show that ∆2 = 0 corresponds to the
+spinon  pairing  term).   Its  Ansatz  up  to  2nd  NN  mean-                actual minimum of the variational energy.  This fact im-
+ﬁeld bond is reproduced in Fig.1.          21 In a suitable gauge,           plies that the U(1) gauge structure is kept intact and the
+its mean-ﬁeld Ansatz is speciﬁed by ﬁve real parameters.                     Dirac SL state is locally and globally stable with respect
+These parameters are the 1st NN real hopping (χ1), 2nd                       to destabilizing into the Z2[0,π]β state.  We veriﬁed this
+NN real hopping (χ2), 2nd NN real spinon pairing (∆2),                       result  by  doing  many  optimization  runs  starting  from
+and  two  onsite  terms,  one  for  the  chemical  potential µ               diﬀerent random initial values of the parameters in the
+and the other for the real on-site pairing ζR.  The mean                     four-dimensional variational space.27
+ﬁeld  Hamiltonian  can  be  then  conveniently  cast  in  the                   Regarding  the  remaining  three  gapless  Z2   SLs  in
+following form:                                                              the  neighborhood  of  the  U(1)  Dirac  SL,  namely,  the
+         HMF{Z2[0,π]β} =χ1            ∑     sijc†                            Z2[0,π]α, Z2[0,π]γ,  and Z2[0,π]δ  states of Ref.21,  our
+                                                i,αcj,α                      study reveals the same result as for the Z2[0,π]β  state.
+                                     ⟨ij⟩,α                                  That is, all three of these SLs return back exactly to the
+                        ∑                                                    gapless U(1) Dirac SL state, with the value of the param-
+      + ∑      νij{χ2        c†i,αcj,α + ∆2(c†i,↑c†j,↓ +h.c.)}               eter  responsible  for  breaking  the  U(1)  gauge  structure
+         ⟨⟨ij⟩⟩          α
+      + ∑{µ∑c†                                                               down to Z2 exactly vanishing upon optimization.  Thus,
+                       i,αci,α +ζR(c†i,↑c†i,↓ +h.c.)},            (4)        we can convincingly conclude that the Z2 neighborhood
+           i      α                                                          of  the  U(1)  Dirac  state  does  not  contain  the  presumed
+where⟨ij⟩ and  ⟨⟨ij⟩⟩ denote sums over 1st and 2nd NN                        fully gapped Z2 SL found by the DMRG study.
+sites, respectively.  sij  and νij  encode the sign structure                   This conclusion forces us to shift our focus to the Z2
+of the 1st and 2nd NN bonds, respectively, as shown in                       neighborhood of another fully symmetric (and energeti-
+Fig.1.  The 1st NN real hopping (   χ1) will be taken as a                   cally competing) gapless SL, called the uniform RVB or
+reference, and hence set to unity hereafter.  The physical                   the [0, 0] SL. Despite having a slightly higher energy, it
+variational wave function of this SL state then depends                      has the promising feature that all four Z2 SLs in its neigh-
+on four variational parameters,|ΨVMC(χ2, ∆2,µ,ζR)⟩ =                         borhood are gapped, thereby opening up the possibility,
+PG|ΨMF(χ2, ∆2,µ,ζR)⟩.                                                        albeit a slim one, that opening a gap might lead to a large
+  For  a  generic  unbiased  starting  point  in  the  four-                 gain  in  energy  so  as  to  make  one  of  these  four  states
+dimensional  variational  space,  the  variation  of  parame-                go  lower  than  the  U(1)  Dirac  SL,  near  to  the  DMRG
+ters and energy in the SR optimization is shown in Fig.2.                    value of E/J  =−0.4379(3) per site.  These gapped SLs
+As one can clearly see, the energy converges neatly [see                     are  referred  to  in  Ref.  [21]  as  the     Z2[0, 0]A,  Z2[0, 0]B,
+point B in Fig.2(b)] to the reference value of the suit-                     Z2[0, 0]C, and Z2[0, 0]D states; for their Ans¨atze, see Ta-
+ably extended 2nd NN U(1) Dirac SL, the [0,π; 0,π] state                     ble  I  in  Ref.  [21]  and  also  the  supplementary  material.
+[see point A in Fig.2(b)],  with small but ﬁnite    χ2  [see                 Our  simulations  show  that  all  four  of  these  SLs  return
+Fig.2(a)] previously computed by us.          26  For the present            upon optimization to the gapless uniform RVB SL, with
+cluster,  these  values  are E/J  = −0.42872(1)  per  site,                  optimizedχn.  In particular, case by case we see that:  for
+and χ2 =−0.0186(2), µ =−0.5124(5).  Also, it is man-                         the Z2[0, 0]A SL, the 2nd NN spinon pairing term goes to
+ifest that (∆2, ζR)→ 0, becoming exactly zero (within                        zero along with the on-site pairing term, thus returning
+the error bars) after averaging over a suﬃcient number                       back to the 2nd NN uniform RVB SL, the [0, 0;π,π] state
+of converged Monte Carlo steps.  Here,  we bring atten-                      given by optimized χ2  =−0.032(1);26  for the Z2[0, 0]B
+tion to the important fact that, despite the energy having                   SL,  the  NN  spinon  pairing  term  goes  to  zero  upon  op-
+converged after≈ 400 iterations, the parameters did not                      timization,  thus  giving  back  the  NN  uniform  RVB  SL;
+converge and were still varying, converging to their ﬁnal                    the Z2[0, 0]C  SL  upon  optimizing  ﬂows  to  the  3rd  NN
+                                                                                                                                                      4
+
+uniform  RVB  SL  with  optimized χ2  and χ′3s,  with  the                    and E/J =−0.43200(2) per site; for J′/J =−0.10, this
+spinon  pairing  term  at  3rd  NN  becoming  zero;  and  ﬁ-                  is the [0,π; 0,π] state with optimized χ2  =−0.1066(2),
+nally,  the Z2[0, 0]D  SL  ﬂows  back  to  the  2nd  NN  uni-                 and E/J =−0.42898(2).26
+form RVB SL. The results showing how the energies of
+these extended gapless uniform RVB SLs increase as the                           In summary, we investigated the possibility of stabiliz-
+U(1)→ Z2  gauge breaking parameter is tuned on from                           ing gapped Z2 SLs in the NN and next-nearest-neighbor
+zero  to  a  small  ﬁnite  value  are  reported  in  the  supple-             (NNN) spin-1/2 QHAF on a kagome lattice.  We found
+mentary material (at the end of the article).                                 that  none  of  the  ﬁve  gapped Z2  SLs  [one  connected  to
+  For  reasons  of  completeness,  we  mention  that  there                   the  U(1)  Dirac  state  and  the  other  four  connected  to
+are two more gapless U(1) SLs in whose neighborhoods                          the uniform RVB state] can occur as ground states.  In
+the  remaining  four Z2  SLs  (all  gapless)  lie.21  However,                particular, the most promising gapped SL conjectured to
+these U(1) SLs suﬀer from a macroscopic degeneracy at                         describe the ground state, the Z2[0,π]β  state, is always
+half-ﬁlling which leads to an open shell.  This degeneracy                    higher  in  energy  than  the  U(1)  Dirac  SL.  Our  system-
+being macroscopic cannot be removed by using any of the                       atic numerical results bring us to the conclusion that, at
+four real boundary condition possibilities.  Hence,  their                    least within the Schwinger fermion approach of the spin
+energy can only be computed approximately in the limit                        model,  the  U(1)  Dirac  SL  has  the  best  variational  en-
+by inserting an additionalθ ﬂux through the triangle mo-                      ergy  for  the  NN  and  NNN  spin-1/2  QHAF  on  kagome
+tifs and consequently removing π− 2θ through hexagon                          lattice.  The conﬂict of our results, which point toward a
+motifs, and then taking the limit θ→ 0.  The energy of                        gapless ground state, and the ones by recent DMRG cal-
+the SL-[π,π] computed in this way isE/J≃−0.38372(1)                           culations, which instead suggested the presence of a fully
+per site, which is much higher than those of other gapless                    gapped spectrum, remains open and deserves further in-
+U(1) states.  Hence, we did not carry out an analysis of                      vestigations.  One possible direction would be to consider
+Z2 SLs in these two neighborhoods.                                            further improvements of our variational wave functions,
+  Finally, we also investigated the possibility of stabiliza-                 based  upon  the  application  of  few  Lanczos  steps  or  an
+tion of the Z2[0,π]β  state upon addition of a small 2nd                      approximated (ﬁxed-node) projection technique,  which,
+NN exchange coupling (J′) of both antiferromagnetic and                       e.g., gives an energy of E/J =−0.431453(2) per site for
+ferromagnetic type in the NN spin-1/2 QHAF. In both                           the NN U(1) Dirac SL, and E/J =−0.431443(2) for the
+cases, on optimization we found that (∆2, ζR)→ 0, be-                         NNN [0,π; 0,π] state.  Another possible direction would
+coming  exactly zero  (within  error bars)  after averaging                   be to explore the energetics of gapped Z2 SLs which break
+over a suﬃcient number of converged Monte Carlo iter-                         some symmetries such as time-reversal.  The possibility
+ations.  Thus, we recover the suitably extended, gapless                      that the fully gapped SL found by the DMRG study pos-
+2nd NN U(1) Dirac SL. In particular,  for J′/J  = 0.10,                       sesses a diﬀerent low energy gauge structure other than
+this is the [0,π;π, 0] state with optimizedχ2 = 0.0924(2),                    Z2 also remains open.
+
+
+
+
+
+
+
+ ∗  yasir.iqbal@irsamc.ups-tlse.fr                                                Phys. Rev. Lett. 98, 077204 (2007).
+ †  becca@sissa.it                                                            12  T. Imai, E. A. Nytko, B. M. Bartlett, M. P. Shores, and
+ ‡  didier.poilblanc@irsamc.ups-tlse.fr                                           D. G. Nocera,Phys. Rev. Lett.        100, 077203 (2008).
+ 1  J. B. Marston and C. Zeng,J. Appl. Phys.         69, 5962  (1991).        13  O.   Ofer,    A.   Keren,    E.   A.   Nytko,    M.   P.   Shores,
+ 2  M. B. Hastings,Phys. Rev. B.               63, 014413  (2000).                B. M. Bartlett, D. G. Nocera, C. Baines, and A. Amato,
+ 3  P. Nikolic and T. Senthil,Phys. Rev. B.       68, 214415 (2003).              e-printarXiv:cond-mat/0610540 (2006).
+ 4  R.  R.  P.  Singh  and  D.  A.  Huse,Phys.  Rev.  B.           76,        14  J. S. Helton, K. Matan, M. P. Shores, E. A. Nytko, B. M.
+   180407(R) (2007).                                                              Bartlett, Y. Yoshida, Y. Takano, A. Suslov, Y. Qiu, J.-H.
+ 5  D. Poilblanc, M. Mambrini, and D. Schwandt,Phys. Rev.                         Chung, D. G. Nocera, and Y. S. Lee,Phys. Rev. Lett.       98,
+   B. 81, 180402(R) (2010); D. Schwandt, M. Mambrini, and                         107204 (2007).
+   D. Poilblanc, ibid. 81, 214413 (2010).                                     15  S.-H.  Lee,   H.  Kikuchi,   Y.  Qiu,   B.  Lake,   Q.  Huang,
+ 6  P. W. Anderson,Mater. Res. Bull.                 8, 153  (1973).              K. Habicht, and K. Kiefer,Nature Materials           6, 853 (2007).
+ 7  P. W. Anderson,Science.                 235, 1196  (1987).                16  M.  A.  de  Vries,  K.  V.  Kamenev,  W.  A.  Kockelmann,
+ 8  S. Yan, D. A. Huse, and S. R. White,Science            332, 1173              J. Sanchez-Benitez, and A. Harrison,Phys. Rev. Lett.               100,
+   (2011).                                                                        157205 (2008).
+ 9  A.  Olariu,  P.  Mendels,  F.  Bert,  F.  Duc,  J.  C.  Trombe,           17  D.   Wulferding,   P.   Lemmens,   P.   Scheib,   J.   R¨oder,
+   M.  A.  de  Vries,  and  A.  Harrison,Phys.  Rev.  Lett.                100,   P.  Mendels,  S.  Chu,  T.  Han,  and  Y.  S.  Lee,Phys.  Rev.
+   087202 (2008).                                                                 B 82, 144412 (2010).
+10  F.  Bert,  S.  Nakamae,  F.  Ladieu,  D.  L’Hˆote,  P.  Bonville,         18  Y. Ran, M. Hermele, P. A. Lee, and X.-G. Wen,Phys. Rev.
+   F. Duc, J.-C. Trombe, and P. Mendels,Phys. Rev. B               76,            Lett. 98, 117205 (2007).
+   132411 (2007).                                                             19  M. Hermele, Y. Ran, P. A. Lee, and X.-G. Wen,Phys. Rev.
+11  P. Mendels, F. Bert, M. de Vries, A. Olariu, A. Harrison,                     B. 77, 224413 (2008).
+   F.  Duc,  J.  Trombe,  J.  Lord,  A.  Amato,  and  C.  Baines,             20  Xiao-Gang Wen,Phys. Rev. B      65, 165113 (2002).
+21  Y.-M. Lu, Y. Ran, and P. A. Lee,Phys. Rev. B.       83, 224413
+   (2011).
+22  T. Tay and O. I. Motrunich,Phys. Rev. B.    84, 020404(R)
+   (2011).
+23  X. G. Wen,Phys. Rev. B      44, 2664 (1991).
+24  S. Sorella,Phys. Rev. B     71, 241103(R) (2005).
+25  S. Yunoki and S. Sorella,Phys. Rev. B            74, 014408 (2006).
+26  Y.  Iqbal,  F.  Becca  and  D.  PoilblancPhys.  Rev.  B              83,
+   100404(R) (2011).
+27  We also veriﬁed the same, by using the original non gauge
+   transformed  representation  of  the  Z2[0,π]β   Ansatz,  as
+   given in Table I of Ref. [21].
+

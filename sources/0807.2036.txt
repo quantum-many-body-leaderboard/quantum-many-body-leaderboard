@@ -1,0 +1,253 @@
+                           Chiral  spin  states  in the  pyrochlore Heisenberg  magnet
+
+                                                Jung  Hoon  Kim1  and  Jung  Hoon  Han1, ∗
+                                        1Department  of  Physics,  BK21  Physics  Research  Division,
+                                             Sungkyunkwan  University,  Suwon  440-746,  Korea
+                   Fermionic mean-ﬁeld theory and variational Monte Carlo calculations are employed to shed light
+                on  the  possible  uniform  ground  states  of  the  Heisenberg  model  on  the  pyrochlore  lattice.   Among
+                the  various  ﬂux  conﬁgurations,  we  ﬁnd  the  chiral  spin  states  carrying  ±π/2  ﬂux  through  each
+                triangular  face  to  be  the  most  stable,  both  within  the  mean-ﬁeld  theory  and  the  projected  wave
+                function studies.  Properties of the spin-spin correlation  function and the chirality order parameter
+                are calculated for the projected wave functions.  Mean-ﬁeld band structures are examined.
+
+                PACS numbers:  75.10.Jm,75.50.Ee
+
+
+   Introduction:  The  question of  the  quantum ground                        case  ⟨f +i fi⟩  =  1/2.    The  summation  over  all  nearest-
+state of spin-1/2 Heisenberg Hamiltonian                                       neighbor  sites j  with  respect to i  is  indicated  by  ∑j∈i.
+                                                                               To  set  up  the  coordinates,  we  place  the  four  corners
+                         H = ∑       Si · Sj                                  (1)of  a  single  “up”  tetrahedron  (uT)  at  (0, 0, 0),  (1, 0, 0),
+                                ⟨ij⟩                                           (1/2, √3/2, 0),  (1/2, 1/2√3, √2/3),  then  displace  it  by
+on  the  pyrochlore  lattice  has  prompted  active  research                  integer  combinations  of  ˆe1  =  (2, 0, 0),  ˆe2  =  (1, √3, 0),
+for nearly two decades1–6.  A popular scheme, employed                         and ˆe3 = (1, 1/√3, √8/3) to generate the pyrochlore lat-
+in Refs.  1–4, was to solve the isolated tetrahedron prob-                     tice: n1ˆe1 +n2ˆe2 +n3ˆe3, ni=integers.   Each  uT  is  met
+lem exactly and to couple the nearby disjoint tetrahedra                       at four corners by  down tetrahedra (dT) and vice versa
+in  the  weak  exchange  energy J ′.   A  non-magnetic  state                  as  shown  in  Fig.   1.   The  self-consistent  mean-ﬁeld  cal-
+with exponentially short correlation length was identiﬁed                      culations were run for L ×L ×L ≡ L3  lattice with 4L3
+in Ref.  1, and Refs.  2–4 noted the dimer instability in the                  lattice  sites. L  refers  to  the  number  of  uT’s  along  each
+ground state.  A similar dimer instability was discovered                      ˆeα direction.  The lattice contains an equal number of uT
+in the large-N approach in Ref.  5.  While Refs.  2–4 begin                    and dT blocks.
+with  the  dimer  basis  of  a  single  tetrahedron solution  to                  A  completely  unrestricted  minimization  of  ⟨HMF⟩  re-
+carry out perturbation in J ′, Ref.  5 starts with a trans-                    sulted  in  the  ground  state  with  each  site  paired  into  a
+lationally invariant solution and ﬁnds  that dimerization                      dimer while all dimers are disconnected from one another,
+occurs as a spontaneous symmetry breaking.                                     in accordance with Rokhsar’s general observation10.  The
+   In  this  paper,  we  adopt  the  fermionic  mean-ﬁeld  fol-                extensive  degeneracy  of  the  dimer  ground  state  will  be
+lowed  by  variational  Monte  Carlo  (VMC)  treatment  to                     lifted  at  higher  orders  in  1/N  in  a  large-N  expansion
+address this issue.  Prior work in the same spirit for the                     to  give  rise  to  a  ground  state  with  (possibly)  restored
+Kagome lattice can be found in Ref. 7.  We ﬁnd chiral spin                     translational  symmetry.   Furthermore,  the  fully  dimer-
+states8 with non-zero averages of the three-spin operator                      ized  state  carries  an  energy  of  −0.375  per  site,  much
+⟨Si · Sj × Sk⟩ for the elementary triangular unit formed                       higher  than  some  of  the  uniform  states  we  consider  in
+by ⟨ijk⟩ sites to be the likely non-magnetic ground state                      this  paper.   Therefore,  we  move  with  the  idea  that  the
+of  the  Heisenberg  model  realized  on  pyrochlore  lattice,                 true  ground  state  of  Eq.   (1)  is  better  captured  by  the
+under the assumption of uniform nearest-neighbor bond                          uniform  amplitude  ansatz  |χij|   = χ,   but  with  arbi-
+amplitudes |⟨Si · Sj⟩|.  The ﬂux through the triangles are                     trary  phases: χij  = χeiφij .   For  a  single  tetrahedron,
+found to be ±π/2 at the mean-ﬁeld level, but reached a                         such  a  search  yielded  solutions  where  the  ﬂux  through
+smaller value after the Gutzwiller projection was carried                      the  four  triangular  faces  are  all  equal  to  Φ  =  +π/2  or
+out.                                                                           Φ = −π/2.  The ﬂux is deﬁned from the directed product
+   Mean-ﬁeld  Theory:  In  rewriting  the  spin  operator                      eiΦ =ei[φij+φjk+φki]  as the three sites of a triangle ⟨ijk⟩
+as a fermion bilinear and introducing the mean-ﬁeld vari-                      are  traversed  in  a  counterclockwise  manner  as  viewed
+able χij  = ⟨f +i fj⟩,  one arrives at the  mean-ﬁeld Hamil-                   from  outside  the  tetrahedron.   For  the  lattice  problem
+tonian                                                                         with uniform |χij|, the mean-ﬁeld ground state is found
+                                                                               to  be  the  one  with  staggered chirality:  Φ  = π/2  for  all
+                      ∑                                                        the  uT’s  and  Φ  =  −π/2  for  all  the  dT’s,  or  vice  versa.
+   HMF = − ∑              χ∗ijf +i fj + ∑λi(f +i fi − 1/2),     (2)            No solutions were found where diﬀerent faces of a given
+                  i   j∈i                 i                                    tetrahedron, either up or down, carried diﬀerent amounts
+                                                                               of  ﬂux,  or  ﬂux  other  than  ±π/2.  The  ﬂux  through  the
+with the Lagrange multiplierλi enforcing the occupation                        hexagons  of  the  pyrochlore  lattice  were  all  zero.    The
+constraint at each site.  In doing the mean-ﬁeld calcula-                      mean-ﬁeld  ground  state  solution  is  in  complete  confor-
+tion we drop the spin index and work with the half-ﬁlled                       mity  with  the  “Rokhsar  rule”11  of  the  ﬂux  for  diﬀerent
+                                                                                                                                                           2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1:  (color online)χij bond conﬁgurations producing (a) [ π2,  π2, 0], (b) [ π2, − π2, 0] and (c) [0, 0,π] ﬂux states.  Setting |χij| = 1,
+the direction  of the arrows  indicates χij  = +i going from i to j.  The shaded bonds are lying on the back sides.  Independent
+sites are labeled  1 through 4 (one up tetrahedron in a unit cell) in (a) and 1 through 16 (four up tetrahedra in a unit cell) in
+(b) and (c).  In (c), the thick(dotted) lines represent bonds with χij  = 1(−1).
+
+
+types of polygons.
+   Variational Monte Carlo Calculation:  Variational
+Monte  Carlo (VMC)  calculations of the  energies of sev-                                  ∑
+eral  mean-ﬁeld  ansatz  states  were  carried  out  including                   ⟨ ˆX⟩ =     ∑s⟨ψMF|s⟩⟨s| ˆX|ψMF⟩                 P (s)⟨s| ˆX|ψMF⟩
+the  one  found  in  the  mean-ﬁeld calculation.  The  states                                   s⟨ψMF|s⟩⟨s|ψMF⟩    = ∑s                   ⟨s|ψMF⟩ , (3)
+are labeled by [uT,dT,H], where the three numbers uT ,
+dT , and H  refer to the ﬂux through the triangles of the                        whereP (s) = |⟨s|ψMF|2/ ∑
+up  tetrahedra,  down  tetrahedra,  and  the  hexagons,  re-                     weight used in the Monte Carlo procedure12.s |⟨s|ψMF⟩|2 is the probability
+spectively.  We examine four such states, (i) [0, 0, 0], (ii)
+[ π2,  π2, 0], (iii) [ π2, − π2, 0], (iv) [0, 0,π].  The mean ﬁeld re-              The  unit  cell  includes  a  single  tetrahedron  for  the
+sult  corresponds  to  case  (iii).   For  future  reference,  we                [0,0,0] and [ π2,  π2, 0] states, and 2×2×1 tetrahedra for the
+denote (ii) and (iii) as uniform and staggered ﬂux states.                       [ π2, − π2, 0]  and  [0, 0,π] states.  Periodic boundary  condi-
+The  other  two  states,  (i)  and  (iv),  do  not  break  time                  tions (PBC) generate degenerate states at the Fermi level
+reversal symmetry.  The choice of the trial states are mo-                       for  the  [0, 0, 0]  and  [ π2,  π2, 0]  cases,  which  can  be  lifted
+tivated  by  and parallels those  in  Ref. 7  for  the Kagome                    by  applying  anti-periodic  boundary  conditions  (aPBC)
+lattice.  The χij  bond patterns  that  generate each state                      along one of the directions, e.g.  ˆe1, for [0, 0, 0], and along
+at  the  mean-ﬁeld  level  are  shown  in  Fig.  1.   With χij’s                 two  directions,  e.g.   ˆe1  and  ˆe2,  for  [ π2,  π2, 0].  In  the  case
+given in Fig.  1  as  input  to  Eq.  (2) one can diagonalize                    of  [ π2, − π2, 0]  and  [0, 0,π]  the  unit  cell  includes  four  up
+HMF  to  obtain  the  mean-ﬁeld  ground  state  |ψMF⟩  as  a                     tetrahedra,  two  in  the  ˆe1-direction  and  two  in  the  ˆe3-
+Slater  determinant.   The  evaluation  of  the  energy  and                     direction,  for  the χij  patterns  shown  in  Fig.  1(b)  and
+other operators  ˆX  are carried out in the projected space                      (c).  PBC suﬃces in both these cases since no degeneracy
+|s⟩ (|s⟩ spans all the states with one spin per site) by                         occurs at the Fermi level.
+
+
+
+
+   The  VMC  energies  of  the  trial  states  we  propose  are                  lation  ⟨Si · Sj⟩  =  (3/4)⟨σziσzj ⟩  due  to  the  spin  isotropy
+listed in Table I.  Several independent Monte Carlo simu-                        of the ground state.  Table II displays the spin-spin cor-
+lations were made with each simulation consisting of over                        relations  obtained  for  all  four  ﬂux  conﬁgurations  as  a
+105  steps  (each  step  means  one  sweep  of  the  whole  lat-                 function of the distance for L = 4.  We measure the cor-
+tice size) for each state to obtain reliable estimates of the                    relation along the six directions, ˆe1, ˆe2, ˆe3, ˆe1−ˆe2, ˆe2−ˆe3,
+energy.  Due to the rapid increase of the system size with                       ˆe3 − ˆe1,  and  take  averages.  The  results  for  any  one  di-
+L, the calculation is currently limited toL = 4.  ForL up                        rection is consistent with those taken along any other.  It
+to  4,  the  two  chiral states  turn  out  to  have much  lower                 was diﬃcult to reach a large enough size to discriminate
+energies than the two non-chiral states.  The energies of                        an algebraic decay of the correlation against an exponen-
+the two chiral states are very close.                                            tial  one.   The  sign  of  ⟨Si · Sj⟩  alternated  with  distance
+   Spin-spin  Correlation  and  Chirality:   The  spin-                          as expected in an antiferromagnetically correlated state,
+spin correlation function can be  computed using the re-                         except for [0, 0,π] where the signs of the second- and the
+                                                                                                                                                             3
+
+TABLE  I:  Energy  per  site  of  various  states  obtained  from                 in Fig. 2.  The two states |s+ ⟩ and |s− ⟩ are obtained as
+VMC  depending  on  the  number  of  up  tetrahedra L  in  each                   CCW and CW rotations by one lattice site of the original
+direction.    The  two  chiral  states  have  much  lower  energies               spin  conﬁguration  |s⟩  with  the  rotation  axis  chosen  to
+than the non-chiral states.  Statistical uncertainties lie below                  point out of the triangular faces of the tetrahedra.  When
+the digits shown.  Boundary conditions, aPBC  or PBC,  used                       the  state  |s⟩  contains  all  three  spins  up  or  all  down  for
+in the calculation are listed.                                                    a given triangle, the  chirality operation gives zero.  The
+              L  [0, 0, 0]  [ π                                                   average ⟨ˆχ123⟩ is obtained from
+                             2,  π2, 0]  [ π2, − π2, 0]  [0, 0,π]
+                  aPBC    aPBC        PBC        PBC                                                                       [⟨s−|ψ⟩ − ⟨s+|ψ⟩]
+              2   -0.372    -0.478       -0.466      -0.374
+              4   -0.374    -0.459       -0.456      -0.375                                   ⟨ˆχ123⟩ =i × ∑P (s)                    ⟨s|ψ⟩            .      (5)
+                                                                                                                 s
+
+third-neighbor  correlations  are  reversed  (See  Table  II).                    Here P (s)  is  the  statistical  weight  |⟨s|ψ⟩|2/ ∑s |⟨s|ψ⟩|2
+The  fast  decay  of  the  spin-spin  correlation is  consistent                  for a given mean-ﬁeld state |ψ⟩.  Following the usual man-
+with  an  earlier  ﬁnding  of  Ref.   1  based  on  the  cluster                  ner of updating the conﬁguration by Monte Carlo meth-
+perturbation method.                                                              ods, one has to calculate the ratio (⟨s−|ψ⟩−⟨s+|ψ⟩)/⟨s|ψ⟩
+                                                                                  for each state |s⟩.
+
+TABLE  II:  The  spin-spin  correlation  function  ⟨Si · Sj⟩  with                TABLE  III:  The  real  and  imaginary  parts  of  the  averages
+respect to distance for the four ﬂux states.  Five independent                    of  ⟨s+|ψ⟩/⟨s|ψ⟩  and  the  ﬂux  (in  units  of π/2)  through  the
+105  MC steps were used for each data point.                                      triangle for [ π
+                                                                                                  2,  π2, 0] (left three columns) and [ π2, − π2, 0] (right
+    |i−j|      [0, 0, 0]         [ π2,  π2, 0]      [ π2, − π2, 0]       [0, 0,π] three columns)
+      1      -0.1249(2)    -0.1533(1)    -0.1522(1)    -0.1250(1)                             L   η123   |χ123|  |Φ123|    η123   |χ123|  |Φ123|
+      2     +0.0088(3)  +0.0194(2)  +0.0122(1)   -0.0054(3)                                    2  0.376  0.356   0.483    0.368  0.325   0.461
+      3      -0.0027(1)    -0.0129(1)    -0.0024(3)   +0.0012(2)                               4  0.314  0.358   0.542    0.312  0.358   0.544
+      4     +0.0007(2)  +0.0060(2)  +0.0006(3)  +0.0001(6)
+   Both  the  mean-ﬁeld  search and  the  VMC  calculation                           In    the    VMC    calculation    we    take    averages    of
+suggest that the chiral states with spontaneously broken                          ⟨s−|ψ⟩/⟨s|ψ⟩   and   ⟨s+|ψ⟩/⟨s|ψ⟩   separately.     The   two
+time-reversal symmetry (T ) is vital in the understanding                         quantities  turn  out  to  be  complex  conjugates  with  ex-
+of the  ground state correlation of the Heisenberg model                          tremely  high  accuracy,  so  one  can  denote  the  averaged
+on the pyrochlore lattice.  We develop below an extension                         ⟨s+|ψ⟩/⟨s|ψ⟩  and  ⟨s−|ψ⟩/⟨s|ψ⟩  as  ⟨ˆη123⟩/2 ±i⟨ˆχ123⟩/2,
+of the VMC method which allows the calculation of the                             respectively.  The ﬂux Φ123  is deduced from tan(Φ123) =
+chirality and evaluate it for the chiral states.                                  ⟨ˆχ123⟩/⟨ˆη123⟩.  The  signs of the  ﬂux  after the  projection
+                                                                                  turned  out  to  be  in  perfect  accord  with  the  mean-ﬁeld
+                                                                                  predictions.  On the other hand, the amount of ﬂux is re-
+                                                                                  duced from the mean-ﬁeld valueπ/2 after the projection
+                                                                                  (See  Table  III).   The  chirality  was  zero  within  a  statis-
+                                                                                  tical error for the non-chiral states, [0, 0, 0] and [0, 0,π].
+                                                                                  The  increase of the  average ﬂux  Φ with the  system size
+                                                                                  is  consistent  with  the  scenario  of  a  long-range  ordering
+FIG.  2:   (color  online)  The  two  states,  |s+ ⟩  and  |s− ⟩,  pro-           of the chirality in the ground state.
+duced by the chirality operation on a state |s⟩.                                     Band  Structure:   The  band  structures  of  the  four
+                                                                                  ﬂux  conﬁgurations  in  Fig.  1  have  been  analyzed  along
+   The scalar chirality  ˆχ123 = ⟨S1 · S2 × S3⟩ is equivalent                     the three orthogonal directionskx,ky,kz  as well as along
+to8                                                                               kα deﬁned to lie along the three ˆeα directions,α = 1, 2, 3.
+                                                                                  The relations between the two sets of momenta are k1 =
+                                                                                  kx,k2 =kx/2+√3ky/2, andk3 =kx/2+√3ky/6+√6kz/3.
+    1                                                                             Flat  bands  lying  exactly  at EF   were  observed  in  the
+    2 Im(⟨ˆχ12 ˆχ23 ˆχ31⟩) =  ⟨ˆχ12 ˆχ23 ˆχ31 − ˆχ13 ˆχ32 ˆχ21⟩2i        .     (4)[0, 0, 0] and [ π2,  π2, 0] states, and aboveEF  for the [0, 0,π]
+                                                                                  state.  No ﬂat bands exist for [ π2, − π2, 0].  We describe the
+with  ˆχij  =  ∑σf +iσfjσ.   It  is  the  diﬀerence  of  the  cyclic              respective band structures in more detail.  (i) [0, 0, 0]:  A
+permutation  of  the  spins  done  in  the  counterclockwise                      two-fold degenerate ﬂat band lies exactly atEF  for each
+(CCW)  and  clockwise  (CW)  directions.   Unlike  in  the                        kα  direction.  The other two non-degenerate bands lying
+evaluation  of  the  spin-spin  correlation where  the  action                    below EF  are  dispersive.   (ii)  [ π2,  π2, 0]:   A  two-fold  de-
+ofσziσzj  on a given basis state |s⟩ is diagonal, the outcome                     generate ﬂat band at EF  = 0 was observed along the kz
+of  ˆχ123|s⟩  is  not  proportional  to  |s⟩  itself.   Instead,  we              direction, kx  = ky  = 0.  The  other  two  bands  are  given
+obtain the relation  ˆχ123 |s⟩ =i(|s+ ⟩ − |s− ⟩), as depicted                     by  ∼  ± cos(√2/3kz).   Along  each  of  the kα  directions,
+                                                                                                                                                         4
+
+the  uppermost  and  the  lowermost bands  (which  are  re-                     π/2.  We observed that the introduction of nonzeroλ did
+lated by particle-hole symmetry) are ﬂat, and the other                         not  decrease  the  variational  energy.   Rather  there  was
+two dispersive bands cross atEF  askα equals a multiple                         an  increase  in  the  third  signiﬁcant  digit  of  the  energy
+of π.   There  is  no  gap  for  this,  or  the  [0, 0, 0]  ﬂux  con-           value for λ/χ up to 0.1 and by 2.7% at λ/χ = 0.2.  The
+ﬁguration.   This  explains  the  existence  of  a  Fermi  level                slow dependence of the overall energy is partly due to the
+degeneracy  in  the  ﬁnite-size  mean-ﬁeld  energy  spectra.                    boundary conditions used, which already opened the gap
+(iii)  [ π2, − π2, 0]:  Four  doubly-degenerate bands  lie  below               in the ﬁnite-size single-particle spectra.  Another  reason
+the  Fermi  level  and  the  others  lie  above  it,  separated                 for the lack of dependence may be that the degeneracy is
+by  an  energy  gap.   Dispersion  along  the kα  directions                    conﬁned to a linear segment of the Brillouin zone, so that
+are  displayed  in  Fig.  3.   (iv)  [0, 0,π]:  Of  the  16  bands,             not enough states  are  aﬀected  by  the  degeneracy-lifting
+the uppermost band lying aboveEF  is 8-fold degenerate                          mechanism.  On the other hand, the gapful nature of the
+and ﬂat along each of the kα  directions.  The remaining                        band structures for [ π2, − π2, 0] will guarantee stability of
+ones  are  the  four,  2-fold  degenerate  bands  lying  below                  the Gutzwiller-projected state against small ﬂuctuations.
+the Fermi level, and separated by a gap from the upper-                         At  the  moment  we  believe  both  types  of  ﬂux  states  to
+most one.  A gap separates the occupied from the empty                          have a chance to represent the uniform ground states of
+bands  for  the  [ π2, − π2, 0]  and  [0, 0,π]  ﬂux  states,  which             Eq.  (1).
+also explains the  absence of a Fermi level degeneracy in                          Discussion:  We ﬁnd that the combined search using
+an earlier mean-ﬁeld calculation.                                               the  fermionic  mean-ﬁeld  theory  and  Gutzwiller  projec-
+  0.5                     0.5                      0.5                          tion  yields  chiral  spin  liquid  states  (both  uniform  and
+                                                                                staggered ﬂux types) with ordered chiralities as the likely
+ -0.5                    -0.5                     -0.5                          ground states  of  the S  =  1/2  Heisenberg  spin  Hamilto-
+
+ -1.5                    -1.5                     -1.5                          nian on the pyrochlore lattice.  Previous theories based on
+ -2.5                    -2.5                     -2.5                          the perturbative expansion around the single-tetrahedron
+                                                                                solution1–5 did not ﬁnd such chiral spin states.  Given the
+ -3.5 0       1        2 -3.5 0        1       2  -3.5 0       1        2       past claims of dimer instability, a simultaneous search for
+            k1/π                    k2/π                    k3/π                a pronounced chirality and dimer correlations in the ex-
+                                                                                act diagonalization of Eq.  (1) will be valuable in sorting
+                                                                                out the contending perspectives.  The Fermi level degen-
+FIG. 3:  Mean-ﬁeld energy bands for the [ π2, − π2, 0] state along              eracy one ﬁnds in the uniform ﬂux state may have inter-
+kα = k·eα directions, 0 ≤kα< 2π.  Each band is two-fold de-                     esting  consequences  that  will  need  to  be  explored  more
+generate.  The occupied bands shown here are symmetric with                     carefully in the future.
+the upper, unoccupied bands due to particle-hole  symmetry.                        Note added:  After the submission of this article, there
+The  horizontal  line EF   =  0  is  the  Fermi  level.   Dispersion            appeared  a  preprint9  (arXiv:0809.0528v1) pertaining  to
+along other directions (not shown) also show a full gap.                        the chiral spin state on pyrochlore lattice.  Their conclu-
+                                                                                sions overlap with ours.
+   The presence of ﬂat bands in the [0, 0, 0] and [ π2,  π2, 0]
+ﬂux  states  over  a  linear  segment  of  the  Brillouin  zone
+suggests that an instability might play a role.  In the case                                            Acknowledgments
+of  the  uniform  ﬂux  state,  the  degeneracy-lifting  terms
+are given by the modulation of the bond amplitudes for
+triangles lying in the plane spanned by ˆe1 and ˆe2 vectors.                       H.J.H.  thanks  Dung-Hai  Lee and Ashvin  Vishwanath
+Speciﬁcally it corresponds to iχ →i(χ+λ) for the (123)                          for  discussions.    This  work  was  supported  by  the  Ko-
+triangle  of  the  up  tetrahedron,  and iχ  → i(χ −λ)  for                     rea Research Foundation Grant (KRF-2008-521-C00085,
+the (123) corners of the down tetrahedron shown in Fig.                         KRF-2008-314-C00101) and  in  part  by  the  Asia  Paciﬁc
+1  (a).   The  ﬂux  through  the  triangles  remain  ﬁxed  at                   Center for Theoretical Physics.
+
+
+
+
+
+
+
+ ∗  Electronic address: hanjh@skku.edu                                             B 73, 094430 (2006).
+ 1  B.  Canals  and  C.  Lacroix,   Phys.  Rev.  Lett.  80,   2933               6  R. Shankar, F. J. Burnell, and S. L. Sondhi, Ann. Phys. In
+   (1998); Phys. Rev. B 61, 1149 (2000).                                           press  (2008).
+ 2  A. B.  Harris,  J. Berlinsky,  and  C.  Bruder,  J.  Appl. Phys.             7  Ying   Ran,    Michael    Hermele,    Patrick    A.   Lee,    and
+   69, 5200 (1991).                                                                Xiao-Gang   Wen,   Phys.  Rev.  Lett.  98,   117205   (2007);
+ 3  H.  Tsunetsugu,  J.  Phys.  Soc.  Jpn.  70,  640  (2001);  Phys.               arXiv:0803.1150v2  [cond-mat.str-el] (2008).
+   Rev. B 65, 024415 (2001).                                                     8  X. G. Wen, Frank Wilczek, and A. Zee, Phys. Rev. B 39,
+ 4  E.  Berg,  E.  Altman,  and  A.  Auerbach,  Phys.  Rev.  Lett.                 11413 (1989).
+   90, 147204 (2003).                                                            9  F.  J.  Burnell,   Shoibal  Chakravarty,  and  S.  L.  Sondhi,
+ 5  R. Moessner, S. L. Sondhi, and M. O. Goerbig, Phys. Rev.                       arXiv:0809.0528v1  [cond-mat.str-el].
+                                                                                                                                                          5
+
+
+10  Daniel S. Rokhsar, Phys. Rev. B 42, 2526 (1990).                            12  C. Gros, Ann. Phys. 189, 53 (1989).
+11  Daniel S. Rokhsar, Phys. Rev. Lett. 65, 1506 (1990).

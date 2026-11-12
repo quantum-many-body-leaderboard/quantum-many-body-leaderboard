@@ -1,0 +1,1121 @@
+  Computing excited states with isometric tensor networks in two-dimensions
+
+
+                           Alec Dektora,∗ , Runze Chib, Roel Van Beeumena, Chao Yanga
+
+  aApplied Mathematics & Computational Research Division, Lawrence Berkeley National Laboratory, Berkeley, California
+                                                           94720, USA.
+  bDivision of Chemistry and Chemical Engineering, California Institute of Technology, Pasadena, California 91125, USA
+
+
+
+
+Abstract
+We present a new subspace iteration method for computing low-lying eigenpairs (excited states) of high-
+dimensional quantum many-body Hamiltonians with nearest neighbor interactions on two-dimensional lat-
+tices. The method is based on a new block isometric projected entangled pair state (block-isoPEPS) ansatz
+that generalizes the block matrix product state (MPS) framework, widely used for Hamiltonians defined
+on one-dimensional chains, to two-dimensions. The proposed block-isoPEPS ansatz offers several attractive
+features for PEPS-based algorithms, including exact block orthogonalization, controlled local truncation via
+singular value decompositions, and efficient evaluation of observables. We demonstrate the proposed inexact
+subspace iteration for block-isoPEPS by computing excitations of the two-dimensional transverse-field Ising
+and Heisenberg models and compare our results with existing PEPS methods. Our results demonstrate that
+blockisometrictensornetworksprovideascalableframeworkforstudyingexcitationsinquantummany-body
+systems beyond one dimension.
+Keywords:tensor networks, projected entangled pair state, eigenvalue problem, subspace iteration
+
+
+1.  Introduction
+
+    We consider the problem of computing a few of the algebraically smallest eigenpairs, i.e., ground and
+excited states, of Hamiltonians with pairwise interactions
+
+                               H=     X         Hj1Hj2,       Hj =I   ⊗(j−1)      ⊗M   j ⊗I   ⊗(L−j)                         (1)
+                                      (j  1,j2)∈S
+
+whereS⊂ {1, . . . , L} × {1, . . . , L}specifies the interacting pairs onLlocald-dimensional vector spaces
+(referred to as sites), eachM  j  ∈C   d×d   is a Hermitian matrix, andIdenotes thed×didentity matrix.
+Hamiltonians of the form (1) appear in model quantum many-body systems such as spin chains and lattices
+with nearest-neighbor interactions. The number of entries in the matrix (1) grows exponentially fast with
+the parameterLmaking classical methods for finding eigenpairs too expensive for problems of interest.
+    Tensor networks are a powerful framework for computing eigenvectors of (1) using a reasonable number
+of degrees of freedom determined by an auxiliary parameter called the bond-dimension. For instance, when
+(1) represents a Hamiltonian describing a quantum spin chain with nearest-neighbor interactions, i.e.,S
+contains only pairs of the form(j, j+ 1), and has separated eigenvalues, the eigenvectors corresponding
+to the algebraically smallest eigenvalues admit accurate matrix product state (MPS) approximations with
+small bond-dimension [1]. Several MPS algorithms have been developed to compute eigenvectors [2, 3, 4,
+5, 6, 7, 8, 9, 10] of (1). These algorithms enable practitioners to routinely compute accurate eigenvector
+approximations of (quasi) one-dimensional quantum many-body Hamiltonians (1) withL >100.
+    However, duetotheone-dimensionalconnectivityoftheMPStensornetwork, thesemethodsareoftennot
+suitable for quantum many-body systems with nearest-neighbor interactions in two-dimensional geometries
+such as rectangular lattices.  In this case the setSof interacting pairs contains(j                      1, j2)withj             1  ≪j      2
+which induces long-range interactions in the MPS, leading to prohibitively large bond-dimensions in MPS
+
+
+
+   ∗Corresponding author
+    Email address:adektor@lbl.gov(Alec Dektor)
+Figure 1: Tensor network diagrams for representing three tensors. The block MPS network, shown here with 3 sites, provides
+a compact representation of states with limited entanglement in 1D geometries. In this paper we propose the block (isometric)
+PEPS ansatz, shown here with 9 sites, as a compact representation of several states with limited entanglement in 2D geometries.
+
+
+eigenvectorapproximations. Theselimitationshavemotivatedthedevelopmentofalgorithmsbasedontensor
+networks with additional connectivity designed to efficiently capture the entanglement structure of quantum
+many-body systems defined on two- and higher-dimensional geometries.
+    Projected entangled pair states (PEPS) are a class of tensor networks with connectivity designed to
+efficiently capture entanglement in two-dimensional geometries [11]. Their connectivity makes PEPS signifi-
+cantly more demanding than MPS in terms of algorithmic design and computational resources. For example,
+exact contraction (required for computing norms, inner products, and observables) of PEPS networks has
+computational cost scaling exponentially with the 2D system size, whereas the corresponding contraction
+for MPS scales linearly with 1D system size (and polynomially with the bond-dimension). To mitigate the
+exponential scaling of PEPS contraction, several approximate schemes have been developed that trade ac-
+curacy for reduced cost [12]. While these methods avoid exponential scaling, they remain computationally
+expensive, often scaling as high powers of the PEPS bond-dimensionχ, e.g.,O(χ                                                       10).
+    An alternative strategy for obtaining computationally efficient PEPS algorithms is to impose isometric
+constraints on the tensors in the PEPS network, so that contracting large regions of the network is trivial.
+Imposing sufficient isometric constraints yields an isometric PEPS (isoPEPS) [13] with an orthogonality
+center similar to canonical forms of MPS (which are central to many MPS algorithms). However unlike
+MPS, the orthogonality center cannot be moved around the PEPS without either increasing bond-dimension
+or introducing error. As such, the set of isoPEPS with fixed bond dimensionχis a strict subset of all PEPS
+with bond-dimensionχ. While the variational power of isoPEPS is still not fully understood, recent work
+has identified classes of physical states isoPEPS can represent exactly or efficiently [14] and has established
+complexity-theoretic limits on their contraction and sampling [15]. The computational cost of many isoPEPS
+algorithms scale asO(χ           7)[16], offering a favorable alternative to theO(χ                10)scaling of many generic PEPS
+algorithms. Several isoPEPS algorithms have been recently developed for computing a single algebraically
+smallesteigenpair, i.e., theground-state, andreal-timeevolutionofnearestneighbortwo-dimensionalsystems
+[13, 17, 18, 19, 20, 21]. However, methods for computing several of the algebraically smallest eigenpairs, i.e.,
+excited states, with isoPEPS remain unexplored.
+    In this paper, we introduce a new block-isoPEPS tensor network ansatz shown in fig. 1 (right) for
+computing several eigenpairs of nearest neighbor two-dimensional quantum many-body systems. Our ap-
+proach generalizes the state averaged MPS (or block tensor train) framework [22, 23, 24, 25] fig. 1 (left),
+a well-established tensor network ansatz for computing several eigenpairs in one-dimensional systems, to
+two dimensions. The block-isoPEPS ansatz offers several desirable properties for handling nearest-neighbor
+Hamiltonians in two-dimensions. It retains the properties of isoPEPS, providing direct control over trun-
+cation errors through singular values and enabling efficient computation of local observables. Additionally,
+the isometric constraints enable exact and efficient orthogonalization of a block of tensor network states.
+To move the orthogonality center and block index around the tensor network we present the block Moses
+Move, an extension of the Moses Move introduced in [13]. Using the block Moses Move we propose a new
+isoPEPS subspace iteration method for computing several eigenpairs with computational complexity scaling
+asO(χ           7). Our approach differs from existing PEPS methods [26, 27, 28, 29], which do not impose orthog-
+onality constraints during the optimization. One common strategy is to construct the excitation ansatz in
+the tangent space of an optimized ground state and then solve the effective Hamiltonian problem within
+
+
+                                                                  2
+this non-orthogonal subspace to extract excitation energies. Due to the restricted form of the ansatz, such
+approaches can only capture local excitations above the ground state. Alternatively, one can avoid these
+special excitation ansatz by directly optimizing the functional defined by the inverse norm matrix multiplied
+by the Hamiltonian matrix [29] within the variational space. We benchmark the proposed block-isoPEPS
+subspace iteration method on the two-dimensional transverse field Ising and Heisenberg models, demonstrat-
+ing its accuracy, scalability, and ability to capture low-lying excitations across various parameter regimes.
+We also compare the proposed method with existing PEPS tangent space excitation methods and show that
+the proposed method is capable of capturing excitations that are not captured in the tangent space of the
+PEPS ground state with small bond dimension.
+    The remainder of this paper is organized as follows. In section 2, we review isometric tensor networks
+in one-dimension, i.e., the canonical forms of MPS, and block-MPS for representing multiple tensors. In
+section 3, we introduce the block-isoPEPS ansatz which generalizes the block-MPS framework to two-
+dimensions. We also present the block Moses Move algorithm for moving the block site and orthogonality
+center through the network. In section 4 we describe a subspace iteration algorithm for block-isoPEPS based
+on Trotter splitting of the matrix exponential. In section 5 we demonstrate the block-isoPEPS subspace it-
+eration on the transverse field Ising and Heisenberg models. We summarize our main findings and discuss
+future directions in section 6.
+
+
+2.  Isometric tensor networks in 1D
+    The operator (1) acts on vectors inC    dL, which can be naturally identified with the tensor spaceC          d×···×d
+through reshaping. We therefore represent states as tensorsT(σ        1, . . . , σL)with indicesσ              j ∈ {1, . . . , d}. The
+number of entries inTgrows exponentially with the number of sitesLwhich makes computing and storingT
+directly prohibitively expensive. Many tensors of interest can be computed and stored efficiently as a tensor
+network, which is a factorization ofTinto low-dimensional tensors.
+
+2.1.  Matrix Product States (MPS)
+    A tensorTis a matrix product state (MPS) if it is expressed as
+
+                                     T(σ     1, . . . , σL) =A   σ11  Aσ22  ···A σLL
+                                                       =                                                                            (2)
+
+
+
+Here, eachA  σii  is a matrix associated with the indexσ          i. Fori= 2, . . . , L−1, theA                      σii  areχ×χmatrices, while
+the boundary tensorsA             σ11  andA       σLL  are of size1×χandχ×1, respectively. The parameterχ, known as the
+bond dimension, quantifies the amount of entanglement in the quantum state corresponding to the tensorT.
+In (2) we have also used tensor diagram notation to the MPS where each tensor is depicted as a shape, and
+its indices (or dimensions) are shown as legs emanating from that shape. Connected legs between tensors
+represents a contraction over the shared indices. We have included labels for indicesσ             i in (2), however below
+we often do not label these indices as they can be inferred from the tensors they are attached to.
+
+2.2.  MPS canonical forms
+    The tensors in the MPS representation (2) are not unique and many MPS algorithms rely on MPS tensors
+satisfying isometry constraints. The tensors in the MPS (2) can be made isometries by performing QR or
+LQ decompositions on reshapings of the three-dimensional tensorsA             i into matrices, e.g.,
+
+
+                                                                                                                                    (3)
+
+
+In this diagrammatic notation isometries are indicated with arrows so that contracting a tensor with its
+conjugate over all indices with incoming arrows yields the identity operator in the space of all indices with
+outgoing arrows. Performing a sequence of QR decompositions and absorbing theR  i into neighboring tensors
+
+
+                                                                   3
+onA      1, . . . , Aj−1   and LQ decompositions and absorbing theL      i into neighboring tensors onA     L, . . . , Aj+1 the
+MPS (2) is brought into thejth canonical (or isometric) form
+
+                                  T(σ     1, . . . , σL) =                                                                             (4)
+
+
+whereA           j is referred to as the center of orthogonality. The computational cost of transforming a MPS into
+isometric form with QR-decomposition scales asO(dLχ         3).
+
+2.3.  Block MPS
+    The MPS format in equation (2) representing a single state can be extended to represent a block of states
+by introducing an additional index on one tensor
+
+                                         Tα =A   σ11  ···A σjj,α ···A σLL
+
+                                                                                                                                       (5)
+                                             =
+
+whereα= 1,2, . . . , pindexes the block ofpstates. It is convenient to work with block-MPS in canonical form
+where the center of orthogonality carries the block indexα. In this case, the inner product of two states
+Tα, Tβ in the block is exactly the inner product of the low-dimensional tensorsA             σjj,α, Aσjj,β.  This enables
+efficient and exact orthogonalization of the state block, e.g., by performing Gram-Schmidt on thepMPS
+tensorsA             σjj,α.
+    The block index and orthogonality center can be moved through the MPS network using a similar QR-
+decomposition (or LQ-decomposition) in (3) where the QR is performed so that the block index is passed to
+theRfactor
+
+                                                                                                                                       (6)
+
+
+Then the block index is passed to MPS tensori+ 1whenR                  i is absorbed into its right neighborA    i+1
+
+
+                                                                                                                                       (7)
+
+
+The computational cost of this move scales asO(dLpχ            3). In the algorithms presented in this paper, the
+block indexαis never contracted over and hence it is not important that it has an isometry arrow.
+
+
+3.  Isometric tensor networks in 2D
+
+    Projected Entangled Pair State (PEPS) is a natural generalization of Matrix Product State (MPS) with
+additional connectivity between tensors enabling them to efficiently capture entanglement in quantum states
+defined on 2D geometries.  To describe PEPS further, let us assume that thed-dimensional local vector
+spaces on which theM      j in (1) act are arranged in a rectangular lattice withL        x sites in the vertical direction
+(number of rows) andL       y sites in the horizontal direction (number of columns), for a total ofL=L          x ·L y
+sites.  Just like in section 2 we consider tensors except this time with the indices labeled to reflect the
+
+
+
+
+
+
+
+
+
+
+                                                                    4
+two-dimensional lattice geometryT(σ                            11, . . . , σLxLy)∈C     d×···×d     . A tensorTis a PEPS if it is expressed as
+
+
+
+
+
+                                                                                                                                  (8)
+                     T(σ     11, . . . , σLxLy) =F  Aσ1111  , . . . , AσLxLyLxLy=
+
+
+
+
+
+where each interior tensorA           ij has 5 legs and 4 neighbors.  Due to the additional connectivity, it is not
+straightforward to write the PEPS as a product of matrices like with MPS in (2). Instead, we letFdenote
+the tensor contraction over the connected legs in the tensor network diagram shown in (8). As mentioned in
+section 1, a computational challenge of PEPS is that the cost of computing inner products exactly, such as
+those required for observables, scales exponentially with the system size. To circumvent this challenge, we
+restrict to a subclass of PEPS where most tensors in the network are isometries as was done in [13]. This
+approach can be considered a generalization of MPS canonical form (4) to PEPS. However unlike MPS, the
+orthogonality center of PEPS cannot be moved around the network without introducing errors or increasing
+bond-dimension. To move the orthogonality center in PEPS one can decompose a column into the product
+of an isometric column and a non-isometric column without physical indices using the so-called Moses Move
+
+
+
+
+
+
+                                                                                                                                  (9)
+
+
+
+
+
+
+which plays the role of the QR-decomposition (3) used to move the orthogonality center in MPS. Variational
+and greedy algorithms for performing the approximate decomposition were proposed in [13]. After obtaining
+the column decomposition (9) the non-isometric column can be absorbed into the neighbor column.  By
+grouping indices appropriately this product can be viewed as a product of matrix product operators (MPOs)
+for which several algorithms are available. The Moses Move can also be applied to decompose rows of a
+PEPS. After performing a suitable sequence of Moses Moves, any PEPS can be approximated by an isometric
+PEPS with orthogonality center in the bottom left corner
+
+
+
+
+
+
+                                      T(σ     11, . . . , σLL)≈                                                                  (10)
+
+
+
+
+
+
+We refer to PEPS with a center of orthogonality such as (10) as isometric PEPS (isoPEPS). It is important to
+note that unlike in MPS, the orthogonality center of a isoPEPS cannot be shifted exactly without increasing
+
+                                                                  5
+the bond dimension.  This implies that the set of isoPEPS with a fixed bond dimension forms a proper
+subset of generic PEPS. The error introduced when moving the orthogonality center depends on the specific
+algorithmused, suchasthesequentialMosesMove[13]. Whilevariationalalgorithmshavealsobeenproposed
+for this task, the greedy approach of the sequential Moses Move has been shown to achieve comparable
+accuracy with a lower computational cost.
+
+3.1.  Block isometric PEPS (block-isoPEPS)
+    Next we introduce block-isoPEPS, an extension of isoPEPS for representing several tensors. Similar to
+block-MPSin(5), block-isoPEPSaddsanadditionalblockindexαtothetensoratthecenteroforthogonality
+to represent several tensors that share the surrounding isometric tensors
+
+
+
+
+
+                                                                                                                               (11)
+             Tα(σ  11, . . . , σLxLy) =F    Qσ1111  , . . . , Aσijij,α, . . . , QσLxLyLxLy=
+
+
+
+
+
+
+whereA           ij,α (in this casei=L            x andj= 1) carries the block indexα= 1, . . . , p. To enable optimization and
+time evolution with block-isoPEPS, we extend the algorithms for shifting the orthogonality center introduced
+in [13] to also move the block index around the isoPEPS network. We adopt the greedy strategy known as
+the sequential Moses Move [13, 16, 21].
+
+3.1.1.  Block sequential Moses Move
+    We describe the block sequential Moses Move on thejth columnC                     j of an isoPEPS assuming the orthog-
+onality center and block index are positioned at the bottom of the column
+
+
+
+
+
+
+
+                                                        Cj =                                                                   (12)
+
+
+
+
+
+
+The move begins by decomposing the bottom tensorA           Lxj into a tensor ring [30] consisting of three tensors
+with isometric constraints
+
+
+
+
+
+
+                                                                                                                               (13)
+where indices are grouped into three dimensions as shown. The user prescribes a maximum vertical bond-
+dimensionηand a maximum horizontal bond-dimensionχfor the tensor ring decomposition (13). Details
+
+
+
+
+                                                                 6
+on computing the isometric tensor ring decomposition are provided in section 3.1.2. Then theU      Lxj tensor
+is absorbed into its above neighbor  ˜Q(L x−1)j    which yields
+
+
+
+
+
+
+
+
+
+
+
+From here we proceed recursively fori=L          x −1, . . . ,2performing an isometric tensor ring decomposition of
+Aij
+
+
+
+
+
+
+                                                                                                                                          (14)
+once again with maximum vertical bond-dimensionηand horizontal bond-dimensionχ, and then absorbing
+theU      ij tensor to its upper neighbor  ˜Qi−1j   to form
+
+
+
+
+
+
+
+
+
+
+
+Once we have reachedi= 2and formedA                              11, we decomposeA       11 using a truncated SVD
+
+
+
+
+                                                                                                                                          (15)
+
+with maximum horizontal bond-dimensionχ, whereR                                                    1j  absorbs the singular values. The end result of the
+block sequential Moses Move is an approximation of the original column (12) as a product of an isometric
+column and a non-isometric column without physical indices just as with the sequential Moses Move (9)
+
+
+
+
+
+
+                                              Cj =                                                                                        (16)
+
+
+
+
+
+
+
+where the vertical and horizontal bond-dimensions are less thanηandχ, respectively. In addition, the block
+index has been shifted to theR        11 tensor. The computational cost of the tensor ring decomposition (14) scales
+
+
+                                                                      7
+asO(χ           3η4d2p+χ       2η5p2)(see section 3.1.2 for cost of isometric tensor ring), which dominates one step of the
+block sequential Moses Move. We performL       x of these steps for a total cost ofO(L         x(χ  3η4d2p+χ       2η5p2))to
+split columnC              j in (16).
+    Once the columnC              j has been split as in (16), the column containing theR      ij tensors are contracted into
+the neighboring columnC              j+1  making the top core of thej+ 1column the orthogonality center with the
+block index
+
+
+
+
+
+                                          Cj+1  =                                                                                (17)
+
+
+
+
+
+
+Duringthistensorcontractionthehorizontalbond-dimensionistruncatedsothatitisnolargerthanη. There
+are several possible algorithms one can employ to perform this contraction and truncation. If the contraction
+ofR   ij into its neighboring column is done naively, then the vertical bond dimension of the new column
+will be equal to the product of the vertical bond dimension ofR    ij and the vertical bond dimension of the
+neighboringcolumnbeforecontracting. TheSVDtruncationfollowingsuchnaivecontractioncostsO(χ                  5η3p).
+This cost can be reduced toO(χ           4η3p)by adapting techniques designed for MPO-MPS multiplication such
+as variational method, zip-up method [31], or randomized SVD, which limit bond-dimension growth by
+performing approximations during the contraction procedure.
+    Inournumericalexperimentsweemploythezip-upmethodwhichcontrolsthegrowthoftheverticalbond-
+dimension during contraction. Because the tensor network is not maintained in canonical form during this
+process, these local truncations are not globally optimal. To mitigate the resulting uncontrolled truncation
+errors, we first orthogonalize theRcolumn from top to bottom, thereby placing the isometric center at the
+bottom of theRcolumn. In our experience the zip-up algorithm with an appropriately chosen singular value
+truncation threshold provides a substantial computational speedup compared to direct contraction methods
+without introducing significant error. The total cost of shifting the orthogonality center and block tensor
+with block-sequential Moses Move and zip-up method isO(L        x(χ  3η4d2p+χ       2η5p2)).
+
+3.1.2.  Isometric tensor ring decomposition
+    A key subroutine and main source of error in the (block) sequential Moses Move is the decomposition of
+a three-dimensional tensor
+
+
+
+
+into a tensor ring [30] with isometric constraints and maximum vertical and horizontal bond-dimensionsη
+andχas in (13) and (14). We follow the greedy method proposed in [13], which uses a sequence of two
+truncated SVDs. In between these two SVDs, one can optimize a unitary disentangler [32] to reduce the
+error in the second truncated SVD.
+    The first SVD is used to separate the left index from the up and right indices
+
+
+
+
+                                                                                                                                 (18)
+
+with the singular values absorbed into  ˜V. The maximum bond-dimension of the new bond isηχ. Then the
+new bond is split into two bonds, one with maximum dimensionηand one with maximum dimensionχby
+
+
+
+                                                                  8
+reshaping  ˜Qand    ˜V
+
+
+
+                                                                                                                                     (19)
+At this point the isometric tensor ring can be completed by performing a truncated SVD on  ˜Vthat separates
+the bonds on either side of the dashed line below
+
+
+
+
+
+
+                                                                                                                                     (20)
+
+using maximum bond-dimensionηwith the singular values absorbed into                          ˜U. However instead of performing
+an SVD on  ˜Vthe truncation error can be reduced by optimizing a unitary operatorDreferred to as a
+disentangler to obtain
+
+
+
+                                                                                                                                     (21)
+where the objective of optimizingDis to reduce the error of the truncated SVD
+
+
+
+
+
+
+
+                                                                                                                                     (22)
+
+For more details on the numerical optimization of disentanglers see [32]. Finally setting
+
+
+
+                                                                                                                                     (23)
+
+completes the isometric tensor ring decomposition
+
+
+
+
+
+
+                                                                                                                                     (24)
+
+    To improve the accuracy of the isometric tensor ring decomposition one can proceed to optimize the
+tensor cores several times using an alternating least squares (ALS) approach. However in our experience we
+found that ALS does not significantly improve the accuracy of the greedy approach using two SVDs and a
+disentangler.
+    To estimate the computational cost of the greedy isometric tensor ring decomposition algorithm we
+assume the dimension of the left, up, right indices ofBaren                1, n2, n3, respectively. The first SVD (18) costs
+O(n       21n2n3), assumingn                        21 ≤(n      2n3)2. Optimizing the disentangler (21) and computing the final SVD (22)
+costsO((ηχ)                        3 + (ηχ)      2n2n3 + (ηn  2)2χn3).
+
+
+
+
+
+                                                                    9
+4.  Subspace iteration for nearest-neighbor Hamiltonians in 2D
+
+    We now present an inexact subspace iteration based on block-isoPEPS for (1) with nearest-neighbor
+interactions on anL     x ×L   y lattice. Using two-dimensional site indices, (1) can be rewritten as
+
+                                             Lx−1X   LyX                     LxX Ly−1X
+                                       H=                H(i,j),(i+1,j)               + H(i,j),(i,j+1)                            (25)
+                                               i=1  j=1                      i=1  j=1
+
+whereH              (i,j),(i+1,j)        acts on the vertical pair of sites(i, j)and(i+1, j), andH                                              (i,j),(i,j+1)      acts on the horizontal
+pair(i, j)and(i, j+ 1).
+    A standard approach for computing the eigenvector corresponding to the algebraically smallest eigenvalue
+of (1) is to apply the power method to the matrix exponentiale     −H . Directly evaluating the full matrix
+exponential is computationally intractable. Instead, we considere            −τH  for a small time stepτ  >0, which
+is more amenable to computation due to the structure of (25). Using the Suzuki–Trotter decomposition we
+obtain a first order approximation
+
+                                             Lx−1Y  LyY                     LxY Ly−1Y
+                                  e−τH   ≈              e−τH    (i,j),(i+1,j)         e−τH    (i,j),(i,j+1)         ,                     (26)
+                                              i=1  j=1                     i=1   j=1
+
+that can be conveniently applied to a block-isoPEPS. Repeated application of (26) to a starting vector is
+an inexact power iteration referred to as imaginary time evolution in the physics literature. We apply (26)
+to evolve a subspace spanned bypbasis tensors represented as a block-isoPEPS (11). To ensure the basis
+tensors converge to different eigenvectors we orthogonalize the tensors in the block after each application of
+the split matrix exponential (26).
+
+4.1.  Applying the split matrix exponential
+    We follow the TEBD2 algorithm proposed in [13]. Each factor in the product (26) is ad  L ×d   L matrix
+that acts non-trivially on only two sites. Its action on a tensor can be computed by contracting ad×d×d×d
+gate tensor to the corresponding pair of tensor indices. To simplify our presentation we assume that all gate
+tensors are identical and denote them byG, although in practice they can differ. To apply the first-order
+approximation (26) to a block-isoPEPST                    α we assume that the orthogonality center and block index are
+located at site(1,1)
+
+
+
+
+
+                                                  Tα =                                                                                    (27)
+
+
+
+
+
+
+We apply the vertical nearest-neighbor gates recursively forj= 1,2, . . . , L            y. To apply the gates in column
+jwe proceed recursively over the rowsi= 1,2, . . . , L              x −1. For each of these nearest-neighbor gates we
+perform the tensor contraction
+
+
+
+
+
+                                                                                                                                          (28)
+Then we reshape the resulting tensorA           i:(i+1),j      so that the block index is grouped with the bottom indices
+and perform a truncated SVD with maximum bond-dimensionηto separate the indices on either side of the
+
+
+                                                                      10
+dashed line
+
+
+
+
+
+                                                                                                                                     (29)
+absorbing the singular values intoA     (i+1)1 .  Repeating this procedure fori=  1, . . . , L         x −1produces an
+updated columnC              j in the isometric form shown in (12) with all relevant vertical nearest-neighbor gates
+applied. Next we use the block-sequential Moses Move (12)-(17) to shift the orthogonality center and block
+index to the top of thej+ 1, preparingC                            j+1  for the application of the columnj+ 1vertical gates. This
+process is repeated recursively forj= 1, . . . , L      y at which point all vertical gates have been applied. After
+applying the vertical gates to the final column, we move the orthogonality center to the top of the isoPEPS
+using a sequence of QR-decompositions. To apply the horizontal gates we rotate the block-isoPEPS counter-
+clockwise by ninety degrees and then reuse the above implementation on columns. The computational cost
+of applying a vertical or horizontal gate followed by truncation is dominated by the SVD in (29) which has
+computational cost scaling asO(χ            6η3d3p)for interior PEPS tensors.
+    This cost can be significantly reduced using a technique known as the reduced update [33, 34]. The idea
+is to first decrease the size of the tensors to which the gate is applied by performing QR decompositions
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                                                     (30)
+
+and then applying the two-site gate and truncated SVD to the smaller tensors
+
+
+
+
+
+
+
+                                                            ,                                                                        (31)
+
+Assuming the horizontal bond-dimensions areχand vertical bond-dimensions areη, the computational cost
+of QR-decomposition for the upper core carrying the block index isO(χ          4η3dp)and for the bottom core the
+cost isO(χ          4η3d). These QR-decompositions dominate the cost of the reduced update.
+
+4.2.  Orthogonalizing the tensor block
+    To ensure that the tensors represented by the block-isoPEPS (11) converge to distinct eigenvectors, we
+orthogonalize the tensors in the block after each application of the split matrix exponential. Owing to the
+isometric structure of the PEPS tensors, the inner product between two tensorsT             α andT       β can be computed
+efficiently and exactly from the inner products of the corresponding low-dimensional tensorsA             ij,α andA       ij,β.
+Consequently, orthogonalizing the block amounts to orthogonalizing the small tensorsA             ij,α at the center of
+orthogonality in the block-isoPEPS. This is accomplished using the Gram–Schmidt procedure.
+
+
+
+
+
+                                                                   11
+4.3.  Calculating eigenvalues and observables
+    The subspace iteration described above yields approximate eigenvectors of (25), however it does not
+produce approximations to the eigenvalues.  To compute approximate eigenvalues from a block-isoPEPS
+approximationT                α of a block of eigenvectors, we compute approximations of the Rayleigh quotients
+
+                         Eα = ⟨T  α, HTα⟩∥T  α∥
+
+                                 Lx−1X  LyX  
+Tα, H(i,j),(i+1,j)              TαLxXLy−1X
+Tα, H(i,j),(i,j+1)          Tα              (32)
+                              =                        ∥T  α∥             +                      ∥T  α∥            .
+                                  i=1   j=1                                 i=1  j=1
+
+To accomplish this, we follow exactly the same procedure described in section 4.1, however instead of
+applying the gate tensorGas in (28), we compute one of the terms in the sum (32) by performing the tensor
+contraction
+
+
+
+
+
+                 
+Tα, H(i,1),(i+1,1)             Tα =                      ,     ∥T   α∥2 =                                           (33)
+
+
+
+
+
+
+Other observable can be computed in a similar fashion.
+
+4.4.  Errors and computational cost
+    In all block-isoPEPS algorithms discussed above, truncated SVDs are applied to tensors at the orthog-
+onality center of the PEPS. This design ensures that the error introduced by each truncation is directly
+controlled by the discarded singular values. Note that this is not the case when truncating bonds in a gen-
+eral PEPS. In the subspace iteration algorithm the sources of truncation error are the SVD after applying
+the two-site gates (28), and the two truncated SVDs in the block-sequential Moses Move (18) and (22)
+used to construct the isometric tensor ring decomposition. There is alsoO(τ                2)error due to the splitting of
+the matrix exponential (26). Note that this splitting error can be reduced by using higher order splitting
+algorithms for the matrix exponential.
+    The cost of a single iteration of block-isoPEPS subspace iteration is dominated by applying the split
+matrix exponential. To estimate the computational cost we assume a square latticeL            x =L   y. Application
+of each(L    x −1)    2 gate followed by truncation costsO(χ                  4η3dp)when using the reduced update (30)-(31)
+for a total cost ofO(L           2xχ4η3dp). In addition we perform(L                    x −1)    2 block sequential Moses Moves each of
+which costO(L            x(χ  3η4d2p+χ       2η5p2))for a total cost ofO(L               2x(χ  3η4d2p+χ       2η5p2)). The computational cost
+of applying the split matrix exponential is thusO(L            2x(χ  4η3dp+χ          3η4d2p+χ       2η5p2)), which scales as the
+seventh power of the bond dimension,O(χ               4η3 +χ    3η4 +χ    2η5). This scaling with respect to bond-dimension
+is substantially lower than theO(χ              10)scaling of excited-state algorithms based on generic PEPS, such as
+the tangent-space method summarized in Appendix A. However because isoPEPS is less expressive, it may
+require a larger bond dimension than generic PEPS to represent the same tensor.
+
+
+5.  Numerical experiments
+
+    In this section, we present numerical demonstrations of the proposed block-isoPEPS subspace iteration
+algorithm. We computed ground and low-lying excited states for the transverse-field Ising (TFI) model
+
+                                                  HTFI =−   X        σzi σzj −g   X   σxi ,                              (34)
+                                                                ⟨i,j⟩              i
+
+
+                                                                    12
+Figure 2: Relative eigenvalue error for the 2D transverse field Ising (TFI) model withg= 3.5on a6×6lattice. Eigenvalues
+were computed using the block-isoPEPS subspace iteration algorithm with bond dimensionsχ=  8andη=  16. Results are
+shown for block sizesp= 1,2, and3.
+
+                              g= 3.5                                                                    g= 3.0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 3: Relative eigenvalue error for the transverse field Ising (TFI) model (34) withg=  3.5andg=  3.0as a function of
+lattice side lengthL           x. Approximate eigenvalues were computed using50iterations of block iso-PEPS subspace iteration with
+bond dimensionsχ= 12andη= 20andτ= 0.1. Results are shown for block sizesp= 1andp= 2.
+
+
+and the Heisenberg model
+                                                 Hheis = X       σxi σxj  +σ   yi σyj +σ   zi σzj ,                            (35)
+                                                           ⟨i,j⟩
+on a two-dimensional square lattice of side lengthL            x  =L   y (L=L          2x total sites) with open boundary
+conditions. The operatorsσ             ai (a∈x, y, z) denote Pauli matrices acting on sitei, and⟨i, j⟩indicates nearest-
+neighbor pairs.
+    To benchmark the block-isoPEPS method, reference eigenvaluesE         α,ref   for the TFI model (34) were
+computed using the block MPS alternating optimization algorithm described in [23].  The indexα=  0
+corresponds to the ground state (the algebraically smallest eigenvalue), whileα=  1,2, . . .label the first
+several excited states. With a maximum bond dimension of5000, reference energies for the TFI model were
+obtained with relative accuracy of order10        −6  forL     x ≤8and10          −4  forL     x  >8. We also considered the
+antiferromagnetic Heisenberg model, with reference energies obtained using quantum number–conserving
+DMRG in ITensor [35]. The ground state belongs to theS      z = 0symmetry sector and the first excited state
+belongs to theS      z = 1sector. We used a maximum MPS bond-dimension of1000and the DMRG truncation
+error was on the order of10   −5 .
+    To move the orthogonality center within the block-isoPEPS, we employed the block-sequential Moses
+Move described in section 3.1.1. For the column containing the orthogonality center, we used a maximum
+bond dimensionη, while the surrounding isometric tensors used a bond dimensionχ≤η, following [13, 18].
+To compute a disentangler [32] for each isometric tensor ring decomposition we minimized the Reny-1/2
+entropy using a Riemannian Conjugate Gradient method with a maximum of30iterations. After performing
+the block-sequential Moses Move, we contracted theRcolumn into its neighbor using the zip-up algorithm
+with a singular value tolerance of10   −6 . To evaluate the accuracy of the block-isoPEPS approximation, we
+
+
+                                                                     13
+                                                                    p= 1  p= 2
+                                                      Lx = 4        00:02   00:05
+                                                      Lx = 6        00:38   01:44
+                                                      Lx = 8        03:29   09:32
+                                                      Lx = 10       10:28   25:22
+                                                      Lx = 12       21:49   46:40
+
+Table 1: Average CPU time (mm:ss) for a single iteration of isoPEPS subspace iteration applied to the TFI model withg= 3.5,
+using bond dimensions(χ, η) = (12,20)and block sizesp= 1,2on square lattices with side lengthsL                                                          x = 4,6,8,10,12.
+
+
+used the relative eigenvalue error                                                 ,                                 (36)
+                                                       ∆E    α =   Eα −E   α,ref
+                                                                       Eα,ref
+whereE           α is the approximate energy computed with the proposed block-isoPEPS method.
+    We first studied the 2D TFI model (34) withg= 3.5on a6×6lattice. In this case, the first three
+eigenvalues corresponding toα= 0,1,2, i.e., the ground state and first two excited state energies, are non-
+degenerate. We ran the isoPEPS subspace iteration withτ=  0.1, bond dimensionsχ=  8andη=  16,
+and varied the block sizep= 1,2,3. We compared the computed eigenvalues with reference results from
+block-MPS DMRG and display the relative error (36) of the eigenvalues in fig. 2 versus iteration. We observe
+that the approximation error increases with block sizep, which is expected as more vectors are represented
+using a block isometric tensor network. Increasing the block size fromp= 1top= 2increases the final error
+by nearly an order of magnitude, from approximately10             −4  to10   −3 . Further increasing the block sizep= 2
+top= 3results in a smaller increase, with the errors forp= 3remaining close to10                 −3 . We also observe in
+fig. 2 that larger block sizes can require more iterations to reach convergence.
+    Next, we fixed the bond dimensions toχ= 12,η= 20, and considered block sizesp= 1,2. We then
+applied the isoPEPS subspace iteration algorithm with time stepτ= 0.1to compute the ground state and
+first excited state of (34) withg= 3.5on lattices of increasing sizeL                       x = 4,6,8,10,12. We ran 50 iterations
+for each simulation and in table 1 report the average CPU-time for a iteration. We ran the same experiment
+withg= 3.0, closer to the critical pointg                 c ≈3.04of the TFI (34). In fig. 3, we display the relative errors
+(36) of the first two eigenvalues as a function ofL    x for bothg= 3.5andg= 3.0. The left panel shows the
+error scaling forp= 1, corresponding to an isoPEPS representing only the ground state. The right panel
+shows the error forp= 2, corresponding to a block-isoPEPS representing both the ground and first excited
+state. We observe that fromL         x = 4toL      x = 6, the error of thep= 2block-isoPEPS increases more than
+that of thep= 1isoPEPS. However, fromL                   x = 6toL      x = 8, the errors for bothp= 1andp= 2increase at
+a similar rate and fromL         x = 8toL      x = 12the error ofp= 1isoPEPS increases at a faster rate thanp= 2
+isoPEPS. Overall we find that, for bothg= 3.5andg= 3.0, computing the first excited state of the TFI
+model does not dramatically impact the error when directly compared to the isoPEPS computation of the
+ground state only.
+    To further assess the isoPEPS results in relation to existing PEPS-based approaches, we applied the
+tangent-space method to finite PEPS for theL      x  = 4TFI model across different phases. More details on
+the PEPS tangent-space method are provided in Appendix A. The comparison between isoPEPS with block
+index2and the PEPS tangent-space method is summarized in Table 2. We consider different values of the
+transverse fieldgto cover both the polarized phase (g > g            c) and the symmetry-broken phase (g < g  c). For
+isoPEPS withχ= 4, the errors remain uniform at the level of10             −3  across both phases, with higher accuracy
+deep in the symmetry-broken regime (e.g.,g= 1.0). The accuracy can be systematically improved by at
+least one order of magnitude when the bond dimension is increased toχ= 12.
+    In contrast, the PEPS tangent-space method withχ= 2achieves better accuracy in the polarized phase
+(e.g.,g= 3.5) but performs worse in the symmetry-broken regime. Starting from the ground state, we find
+that the ansatz fails to capture the first excited state atχ= 2forg= 1.0and it performs worse in describing
+the first excitation atg= 2.0. This can be understood from the structure of the ansatz: in the symmetry-
+broken phase, the first excited state becomes degenerate with the ground state in the thermodynamic limit.
+In a finite system, this manifests as a small gap that decreases withg, as indicated by the reference energies
+listed in Table 2. For such small energy gaps, a PEPS ansatz with limited bond dimension can approximate
+the ground state only as a superposition of the true ground state and the first excited state. Consequently,
+
+
+                                                                     14
+   g      α         reference     isoPEPSχ= 12, η= 20isoPEPSχ= 4, η= 8 PEPSχ= 2 PEPSχ= 4
+  3.5     0     −57.82436977             1.17×10                −4                       9.85×10         −4               9.68×10         −6        2.73×10         −9
+          1     −54.38401656             1.57×10                −4                       7.44×10         −4               4.77×10         −6        7.39×10         −9
+  3.0     0     −50.18662388             9.85×10                −5                       1.07×10         −3               5.28×10         −3        2.51×10         −9
+          1     −47.80516396             1.65×10                −4                       1.23×10         −3               4.47×10         −3        6.19×10         −9
+  2.0     0     −35.90725762             1.11×10                −4                       1.10×10         −3               8.68×10         −3        2.42×10         −7
+          1     −35.52133640             1.97×10                −4                       1.01×10         −3               3.48×10         −2        2.70×10         −7
+  1.0     0     −26.86050464             2.62×10                −5                       1.38×10         −4               1.10×10         −3        1.45×10         −6
+          1     −26.86046483             2.46×10                −5                       1.76×10         −4
+
+Table 2: Reference energies and relative eigenvalue errors of PEPS approximations for the first two eigenvalues (α=  0,1,
+corresponding to the ground state and first excited state) of the4×4TFI model (34) at several values ofg. We compare
+block-isoPEPS withp= 2at bond dimensionsχ= 4, η= 8andχ= 12, η= 20against standard PEPS with bond dimensions
+χ= 2andχ= 4.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 4: Relative eigenvalue error for the Heisenberg model (35) versus lattice side lengthL           x. Approximate eigenvalues were
+computed using50iterations of block iso-PEPS subspace iteration with bond dimensionsχ=  12andη=  36andτ=  0.1.
+Results are shown for block sizesp= 1(left) andp= 2(right).
+
+
+local excitations constructed on top of this approximate, symmetry-broken ground state cannot reach the
+other symmetry sector and therefore fail to reproduce the first excited state. This limitation can be mitigated
+by increasingχ, withχ= 4, the description of the ground state and the first excited state becomes equally
+accurate atg= 2. In contrast, atg= 1, one of the states is still not recovered.
+    This behavior stands in contrast to the block-isoPEPS method. In block-isoPEPS, the environment of the
+local tensor with block index is optimized simultaneously for both the ground state and the excited states,
+whereas in the tangent-space method the environment is fixed to that of the ground-state tensor. Conse-
+quently, nearly degenerate states are captured more accurately in block-isoPEPS, highlighting a potential
+advantage of employing block environments. For those states that can be described by the tangent-space
+ansatz, we further observe that increasingχyields larger improvements in accuracy for PEPS than increas-
+ingχ, ηin isoPEPS. However, the computational cost of PEPS grows more rapidly, scaling asO(χ                      14)or
+O(χ       10)when restricting to a subspace of the tangent space, compared to isoPEPS, which scales asO(χ              7).
+A more detailed study of the trade-off between accuracy and computational cost for PEPS and isometric
+PEPS methods is left for future investigation.
+    We also considered the antiferromagnetic Heisenberg model (35). We computed (block) isoPEPS approx-
+imations of the ground state and first excited state using block sizesp= 1andp= 2with bond dimensions
+χ= 12andη= 36. We ran50iterations of the isoPEPS subspace iteration algorithm withτ= 0.1, and
+compared the results with reference energies obtained from DMRG. In fig. 4, we show the relative error for
+lattices of side lengthL            x  = 4,6,8. Compared to the transverse-field Ising model, the ground and excited
+states of the Heisenberg model are significantly more challenging to represent using tensor networks, due to
+their higher entanglement. Increasing the block size in the isoPEPS representation fromp= 1top= 2does
+not significantly increase the error.
+
+
+
+
+
+                                                                            15
+6.  Conclusions
+
+    We introduced a block isometric tensor network method for computing excited states of two-dimensional
+quantum many-body systems via subspace iteration. Our approach extends the block (or state-averaged)
+MPStensornetworkansatz,widelyusedforexcited-statecalculationsinonedimension,tothetwo-dimensional
+setting using projected entangled pair state tensor network with isometric constraints. Numerical experi-
+ments on the transverse field Ising and Heisenberg models demonstrate that the block-isoPEPS subspace
+iteration scales favorably with system size and can accurately capture low-energy excited states of spin
+systems across different parameter regimes. Furthermore, we demonstrated that the proposed method is
+capable of capturing excitations in systems where existing PEPS approaches based on the tangent space of
+the ground state are ineffective.
+    Lookingahead, theblock-isoPEPSmethodpresentedinthispaperstandstobenefitfromseveralpotential
+extensions.  These include incorporating symmetries and employing DMRG-based algorithms specifically
+tailoredtoisometricPEPS[36,16], whichmayyieldimprovedconvergence. Anotheravenueoffutureresearch
+is extending block isometric tensor networks to three dimensions leveraging recent developments in 3D
+isometric tensor network algorithms [37]. Finally, in future work we plan to focus on parallel implementation
+and GPU acceleration to enhance computational efficiency and scalability of the proposed algorithms.
+
+Acknowledgments
+
+    This material is based in part upon work supported by the U.S. Department of Energy, Office of Science,
+Office of Advanced Scientific Computing Research, Scientific Discovery through Advanced Computing (Sci-
+DAC) program through the FASTMath Institute and in part by the U.S. Department of Energy, Office of
+Science, Office of Advanced Scientific Computing Research’s Applied Mathematics Competitive Portfolios
+programunderU.S.DepartmentofEnergyContractNo. DE-AC02-05CH11231. Thisresearchusedresources
+of the National Energy Research Scientific Computing Center, a DOE Office of Science User Facility sup-
+ported by the Office of Science of the U.S. Department of Energy under Contract No. DE-AC02-05CH11231
+using NERSC award ASCR-ERCAPm1027. R.C. was supported by the US Department of Energy, Office
+of Science, Office of Advanced Scientific Computing Research, under Award Number DE-SC0025572. The
+authors thank Garnet Kin-Lic Chan for useful discussions.
+
+References
+
+ [1]M.B.Hastings, Anarealawforone-dimensionalquantumsystems, J.Stat.Mech.TheoryExp.2007(08)
+     (2007) P08024.
+ [2]S. R. White, Density-matrix algorithms for quantum renormalization groups, Phys. Rev. B 48 (14)
+     (1993) 10345.
+ [3]U. Schollwöck, The density-matrix renormalization group in the age of matrix product states, Ann.
+     Phys. 326 (1) (2011) 96–192.
+
+ [4]V. Zauner-Stauber, L. Vanderstraeten, M. T. Fishman, F. Verstraete, J. Haegeman, Variational opti-
+     mization algorithms for uniform matrix product states, Phys. Rev. B 97 (4) (2018) 045145.
+ [5]J. Motruk, M. P. Zaletel, R. S. Mong, F. Pollmann, Density matrix renormalization group on a cylinder
+     in mixed real and momentum space, Phys. Rev. B 93 (15) (2016) 155139.
+
+ [6]N. Chepiga, F. Mila, Excitation spectrum and density matrix renormalization group iterations, Phys.
+     Rev. B 96 (5) (2017) 054425.
+ [7]E. M. Stoudenmire, S. R. White, Studying two-dimensional systems with the density matrix renormal-
+     ization group, Annu. Rev. Condens. Matter Phys. 3 (1) (2012) 111–128.
+
+ [8]V. Zauner-Stauber, L. Vanderstraeten, J. Haegeman, I. McCulloch, F. Verstraete, Topological nature
+     of spinons and holons: Elementary excitations from matrix product states with conserved symmetries,
+     Phys. Rev. B 97 (23) (2018) 235155.
+
+                                                              16
+ [9]A. Dektor, P. DelMastro, E. Ye, R. Van Beeumen, C. Yang, Inexact subspace projection methods for
+     low-rank tensor eigenvalue problems, arXiv:2502.19578 (2025).
+
+[10]P. E. Dargel, A. Wöllert, A. Honecker, I. P. McCulloch, U. Schollwöck, T. Pruschke, Lanczos algorithm
+     with matrix product states for dynamical correlation functions, Phys. Rev. B 85 (2012) 205119.
+
+[11]R. Orús, A practical introduction to tensor networks: Matrix product states and projected entangled
+     pair states, Ann. Phys. 349 (2014) 117–158.
+
+[12]M. Lubasch, J. I. Cirac, M.-C. Banuls, Unifying projected entangled pair state contractions, New J.
+     Phys. 16 (3) (2014) 033014.
+
+[13]M. P. Zaletel, F. Pollmann, Isometric tensor network states in two dimensions, Phys. Rev. Lett. 124 (3)
+     (2020) 037201.
+
+[14]T. Soejima, K. Siva, N. Bultinck, S. Chatterjee, F. Pollmann, M. P. Zaletel, Isometric tensor network
+     representation of string-net liquids, Phys. Rev. B 101 (8) (2020) 085117.
+
+[15]D. Malz, R. Trivedi, Computational complexity of isometric tensor-network states, PRX Quantum 6 (2)
+     (2025) 020310.
+
+[16]S.-H. Lin, M. P. Zaletel, F. Pollmann, Efficient simulation of dynamics in two-dimensional quantum
+     spin systems with isometric tensor networks, Phys. Rev. B 106 (24) (2022) 245102.
+
+[17]R. Haghshenas, M. J. O’Rourke, G. K.-L. Chan, Conversion of projected entangled pair states into a
+     canonical form, Phys. Rev. B 100 (5) (2019) 054404.
+
+[18]W. Kadow, F. Pollmann, M. Knap, Isometric tensor network representations of two-dimensional thermal
+     states, Phys. Rev. B 107 (20) (2023) 205106.
+
+[19]Y. Wu, Z. Dai, S. Anand, S.-H. Lin, Q. Yang, L. Wang, F. Pollmann, M. P. Zaletel, Alternating and
+     gaussian fermionic isometric tensor network states, arXiv:2502.10695 (2025).
+
+[20]B. Sappler, M. Kawano, M. P. Zaletel, F. Pollmann, Diagonal isometric form for tensor product states
+     in two dimensions, arXiv:2507.08080 (2025).
+
+[21]Z. Dai, Y. Wu, T. Wang, M. P. Zaletel, Fermionic isometric tensor network states in two dimensions,
+     Phys. Rev. Lett. 134 (2) (2025) 026502.
+
+[22]I. Pižorn, F. Verstraete, Variational numerical renormalization group: Bridging the gap between NRG
+     and density matrix renormalization group, Phys. Rev. Lett. 108 (6) (2012) 067202.
+
+[23]S.V.Dolgov, B.N.Khoromskij, I.V.Oseledets, D.V.Savostyanov, Computationofextremeeigenvalues
+     in higher dimensions using block tensor train format, Comput. Phys. Commun. 185 (4) (2014) 1207–
+     1216.
+
+[24]D. Kressner, M. Steinlechner, A. Uschmajew, Low-rank tensor methods with subspace correction for
+     symmetric eigenvalue problems, SIAM J. Sci. Comput. 36 (5) (2014) A2346–A2368.
+
+[25]X. Li, Z. Zhou, G. Xu, R. Chi, Y. Guo, T. Liu, H. Liao, T. Xiang, Accurate determination of low-energy
+     eigenspectra with multitarget matrix product states, Phys. Rev. B 109 (4) (2024) 045115.
+
+[26]L. Vanderstraeten, M. Mariën, F. Verstraete, J. Haegeman, Excitations and the tangent space of pro-
+     jected entangled-pair states, Phys. Rev. B 92 (2015) 201111.
+
+[27]L. Vanderstraeten, J. Haegeman, F. Verstraete, Simulating excitation spectra with projected entangled-
+     pair states, Phys. Rev. B 99 (16) (2019) 165121.
+
+[28]W.-L. Tu, L. Vanderstraeten, N. Schuch, H.-Y. Lee, N. Kawashima, J.-Y. Chen, Generating function
+     for projected entangled-pair states, PRX Quantum 5 (2024) 010335.
+
+
+                                                                17
+[29]S.-X. Zhang, L. Wang, A unified variational framework for quantum excited states, arXiv:2504.21459
+     (2025).
+
+[30]O. Mickelin, S. Karaman, On algorithms for and computing with the tensor ring decomposition, Numer.
+     Linear Algebra Appl. 27 (3) (2020) e2289.
+
+[31]E. Stoudenmire, S. R. White, Minimally entangled typical thermal state algorithms, New J. Phys. 12 (5)
+     (2010) 055026.
+
+[32]J. Wei, A. Dektor, C. Shen, Z. Wen, C. Yang, Numerical optimization for tensor disentanglement,
+     arXiv:2508.19409 (2025).
+
+[33]P. Corboz, J. Jordan, G. Vidal, Simulation of fermionic lattice models in two dimensions with projected
+     entangled-pair states: Next-nearest neighbor hamiltonians, Phys. Rev. B 82 (24) (2010) 245119.
+
+[34]M. Lubasch, J. I. Cirac, M.-C. Banuls, Algorithms for finite projected entangled pair states, Phys. Rev.
+     B 90 (6) (2014) 064425.
+
+[35]M. Fishman, S. White, E. M. Stoudenmire, The itensor software library for tensor network calculations,
+     SciPost Phys. Codebases (2022) 004.
+
+[36]K. Hyatt, E. M. Stoudenmire, DMRG approach to optimizing two-dimensional tensor networks (2020).
+
+[37]M. S. Tepaske, D. J. Luitz, Three-dimensional isometric tensor networks, Phys. Rev. Research 3 (2)
+     (2021) 023236.
+[38]S. Östlund, S. Rommer, Thermodynamic limit of density matrix renormalization, Phys. Rev. Lett. 75
+     (1995) 3537–3540.
+
+[39]J. Haegeman, B. Pirvu, D. J. Weir, J. I. Cirac, T. J. Osborne, H. Verschelde, F. Verstraete, Variational
+     matrix product ansatz for dispersion relations, Phys. Rev. B 85 (2012) 100408.
+
+[40]B. Ponsioen, F. F. Assaad, P. Corboz, Automatic differentiation applied to excitations with projected
+     entangled pair states, SciPost Phys. 12 (2022) 006.
+
+
+Appendix A.  Finite PEPS tangent-space excitation method
+
+    The tangent-space formalism was originally introduced for matrix product states (MPS) by Östlund and
+Rommer [38], and subsequently generalized to infinite MPS by Haegeman et al. [39]. Its extension to infinite
+PEPS was later developed by Vanderstraeten et al. [26].  The tangent-space method is most commonly
+employed in the context of translation-invariant system, where the excitation ansatz is explicitly constructed
+as an eigenstate of the translation operator. In order to facilitate a meaningful comparison with finite-size
+isoPEPS calculations, we adapt this framework to the finite-system setting.
+    We begin with a fully optimized ground state represented by a PEPS (8). The tangent space of this
+ground state is spanned by tensorsT               r(B  r), defined by replacing a single tensor at lattice positionr= (i, j)
+in the ground-state PEPSTwith another tensorB                            r. For convenience, we relabel these basis vectors as
+T(B    m), where the indexmencodes the site coordinate. This set of tensors is overcomplete and mutually
+non-orthogonal. The corresponding Gram matrix is
+
+                                                   Nmn =⟨T(B         m), T(B      n)⟩,                               (A.1)
+
+and the projected Hamiltonian matrix is given by
+
+                                                  Hmn =⟨T(B         m), HT(B      n)⟩,                              (A.2)
+
+where⟨•,•⟩denotes the Frobenius inner product of tensors obtained by contracting over all shared physical
+indices.
+
+
+
+                                                                 18
+    SinceT(B              n)is a linear function ofB     n, bothN      mn andH       mn take the form of quadratic expressions inB    n
+
+                                                           Nmn =B   ∗mNB    n,
+                                                           Hmn =B   ∗mHB    n,                                   (A.3)
+
+whereNandHare independent of the particular choice of basis tensorB                                    n. This structure implies that
+the elements of the effective Gram matrixN             mn can be computed by first deriving the vector formNB            n
+and then contracting it withB       ∗m asN    mn =B   ∗m(NB     n), with an analogous expression holding forH       mn. The
+corresponding matrix–vector products can be expressed as
+                                                       NB    n =    ∂    B∗nNB    n
+                                                                  ∂B∗n                                                                (A.4)
+                                                       HB    n =    ∂    B∗nHB    n.
+                                                                  ∂B∗n
+
+These derivatives can be efficiently evaluated using automatic differentiation, as discussed in Ref. [40]. Once
+the effective HamiltonianH  mn and norm matrixN            mn are obtained, the excitation spectrum is determined
+by solving the generalized eigenvalue problem
+                                                  X                       X
+                                                       Hmnvnp =E   p           Nmnvnp.                             (A.5)
+                                                    n                      n
+It is important to note that, because the basis is overcomplete due to the gauge invariance of PEPS,N            mn
+contains zero modes.  These must be projected out prior to solving the eigenvalue problem, which may
+otherwise lead to numerical instabilities.  In contrast, in the isoPEPS construction the block states are
+orthogonal by design, and this issue does not arise.
+    The main computational cost of the tangent-space algorithm lies in evaluating the elements ofH    mn, each
+of which requires a tensor contraction scaling asO(L         xLyχ10)for every basis state. Since the number of basis
+states scales asO(L         xLyχ4), the overall complexity isO(L            2xL2yχ14). This cost can be reduced by restricting
+to a finite subsetMof basis states in the tangent space, yielding a scaling ofO(ML                        xLyχ10), although it
+still remains higher.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                     19
