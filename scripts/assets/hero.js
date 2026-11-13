@@ -29,12 +29,28 @@
   let phase = 0, speed = 1, last = 0, paused = false, geo = null;
   const still = matchMedia("(prefers-reduced-motion: reduce)"), narrow = matchMedia("(max-width: 720px)");
   const measure = () => { geo = { W: stage.clientWidth, H: stage.clientHeight }; };
+  // The nodes sit at equal steps along the ellipse, not at equal angles: on a wide ellipse equal
+  // angles crowd the nodes at its left and right ends, where a label then runs into the next node.
+  // arc holds the length along the ellipse from angle 0 at 720 angles, rebuilt when the size changes.
+  let arc = null;
+  function arcAngle(rx, ry, f) {
+    if (!arc || arc.rx !== rx || arc.ry !== ry) {
+      const len = [0];
+      for (let i = 1; i <= 720; i++) { const a = Math.PI * i / 360, b = Math.PI * (i - 1) / 360; len.push(len[i - 1] + Math.hypot(rx * (Math.cos(a) - Math.cos(b)), ry * (Math.sin(a) - Math.sin(b)))); }
+      arc = { rx, ry, len };
+    }
+    const { len } = arc, s = (f - Math.floor(f)) * len[720];
+    let lo = 0, hi = 720;
+    while (hi - lo > 1) { const m = (lo + hi) >> 1; if (len[m] <= s) lo = m; else hi = m; }
+    return Math.PI * (lo + (s - len[lo]) / (len[hi] - len[lo])) / 360;
+  }
   function place() {
     if (narrow.matches || hero.hidden) return;
     if (!geo || !geo.W) measure();
     const nodes = stage.querySelectorAll(".pk-node"), rx = geo.W * 0.39, ry = geo.H * 0.38;
     nodes.forEach((n, k) => {
-      const a = -Math.PI / 2 + phase + 2 * Math.PI * k / nodes.length;
+      // The top of the ellipse is three quarters of the way round from angle 0.
+      const a = arcAngle(rx, ry, 0.75 + phase / (2 * Math.PI) + k / nodes.length);
       n.style.transform = `translate3d(${(geo.W / 2 + rx * Math.cos(a) - n.offsetWidth / 2).toFixed(2)}px, ${(geo.H / 2 + ry * Math.sin(a) - n.offsetHeight / 2).toFixed(2)}px, 0)`;
     });
   }

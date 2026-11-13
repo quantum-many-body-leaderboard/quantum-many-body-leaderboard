@@ -194,7 +194,7 @@ export const HERO_CSS = `
 .pk-node .pk-glyph { background: var(--surface); border: 1px solid var(--grid); border-radius: 50%; padding: 7px; width: 78px; height: 78px; transition: border-color .3s, transform .3s cubic-bezier(.2,.7,.2,1), opacity .3s; }
 .pk-node.on .pk-glyph { border-color: var(--accent); transform: scale(1.08); }
 .pk-stage.hovering .pk-node:not(.on) .pk-glyph, .pk-stage.hovering .pk-node:not(.on) .pk-nm { opacity: 0.45; }
-.pk-nm { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.02em; max-width: 10em; text-align: center; line-height: 1.25; transition: opacity .3s, color .3s; }
+.pk-nm { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.02em; max-width: 12em; text-align: center; line-height: 1.25; transition: opacity .3s, color .3s; }
 .pk-nm.pk-serif { font-family: var(--serif); font-size: 0.98rem; letter-spacing: 0; }
 .pk-node .pk-ct { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); }
 .pk-node.on .pk-nm { color: var(--accent); }
@@ -291,6 +291,14 @@ export const HERO_CSS = `
 .pk-panel { margin-top: 1.4rem; }
 .pk-panel > .tabs > h2:first-child { display: none; }
 
+/* Between the phone grid and a wide window the ring is short of room: a taller stage and smaller nodes keep the labels clear of their neighbours. */
+@media (min-width: 721px) and (max-width: 1100px) {
+  .pk-stage { height: 740px; }
+  .pk-node .pk-glyph { width: 62px; height: 62px; padding: 5px; }
+  .pk-node .pk-badge { right: calc(50% - 38px); }
+  .pk-nm { font-size: 0.72rem; }
+}
+@media (min-width: 721px) and (max-width: 860px) { .pk-stage { height: 820px; } }
 @media (max-width: 720px) {
   .pk-stage { height: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; padding-top: 3rem; }
   .pk-stage::before { display: none; }
