@@ -12,7 +12,7 @@
 //
 // Ladders sharing model and lattice are one lattice tab on the picker (an impurity problem's
 // lattice is its first two words); the ladders of a tab differ only in boundary and couplings.
-import { BOUNDARY, molParts, molGeometry, coreLabel, speciesLabel } from "./readme_table.mjs";
+import { BOUNDARY, molParts, molGeometry, coreLabel, speciesLabel, conventionalFormula } from "./readme_table.mjs";
 import { groundStateExact } from "./units.mjs";
 
 // A coupling as labels print it: R to six figures (params.R holds the unrounded bond length since 2026-11-11).
@@ -81,7 +81,7 @@ export function pickerFacets(instances) {
     // core; a diatomic's bond lengths are the horizontal axis instead (site.mjs, the picker's x).
     if (i.model === "Atom" || i.model === "Molecule") {
       const m = molParts(i);
-      const dims = [["species", i.model === "Molecule" ? speciesLabel(m.species) : m.species, m.species]];
+      const dims = [["species", i.model === "Molecule" ? speciesLabel(m.species) : m.species, i.model === "Molecule" ? conventionalFormula(m.species).replace(/[()]/g, "") : m.species]];
       if (m.geometry && !/^R[\d.]+$/.test(m.geometry)) dims.push(["geometry", [i.params?.name && !/^[a-z0-9]+$/.test(i.params.name) && !/^[A-Z][A-Za-z0-9+]*$/.test(i.params.name) ? i.params.name : null, molGeometry(m.geometry, i)].filter(Boolean).join(", "), m.geometry]);
       if (m.charge) dims.push(["charge", (m.charge > 0 ? "+" : "") + m.charge, m.charge]);
       dims.push(["N↑ − N↓", String(m.sz), m.sz], ["basis", m.basis === "none" ? "basis-free" : String(i.params?.basis ?? m.basis), m.basis === "none" ? "" : m.basis],

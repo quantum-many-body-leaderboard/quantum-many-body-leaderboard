@@ -107,9 +107,12 @@ const COMMON = { NH3: "ammonia", CH4: "methane", H2O: "water", C6H6: "benzene", 
   CO: "carbon monoxide", HCN: "hydrogen cyanide", HCl: "hydrogen chloride", HF: "hydrogen fluoride", F2: "fluorine", O2: "oxygen", H2S: "hydrogen sulfide",
   SiH4: "silane", PH3: "phosphine", LiH: "lithium hydride", BH3: "borane", HN3: "hydrazoic acid", HNO: "nitroxyl" };
 const SUB = d => d.replace(/\d/g, c => "₀₁₂₃₄₅₆₇₈₉"[c]);
+// The formula leads every label and the common name follows, so a list of them reads in one
+// pattern and sorts by what it shows (conventionalFormula, the picker's order).
+export const conventionalFormula = hill => CONVENTIONAL[hill] ?? hill;
 export function speciesLabel(hill) {
-  const f = CONVENTIONAL[hill] ?? hill;
-  return COMMON[f] ? `${COMMON[f]} (${SUB(f)})` : SUB(f);
+  const f = conventionalFormula(hill);
+  return COMMON[f] ? `${SUB(f)} (${COMMON[f]})` : SUB(f);
 }
 // Where a geometry comes from, in words, for a label that is a hash in the id.
 export function geometryFrom(inst) {
