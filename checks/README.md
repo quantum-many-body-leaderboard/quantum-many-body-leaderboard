@@ -307,6 +307,31 @@ python ed_full2.py --model hubbard --lattice square --L 4 --nup 7 --ndn 7 --U 8 
 python hub_fact.py --lattice square --L 4 --n 7 --U 8 --obc --threads 8 --k 1 --ncv 12 --instance Hubbard/square_16_O_7_8 --out Hubbard__square_16_O_7_8__A.json
 ```
 
+## `tfising-4x4-open-ed/`: the exact ground states of the open 4x4 transverse-field Ising square
+
+**Question.** arXiv:2510.20063 (Table 2) prints block-MPS reference energies of the open 4x4
+transverse-field Ising model at g = 1, 2, 3 and 3.5 and no exact energy. `TFIsing/square_16_O_<h>`
+were created for them (2026-11-12) and need their exact rows.
+
+**Design.** `ed_tfim_4x4.py`: H = - sum_<ij> sz_i sz_j - h sum_i sx_i (Pauli matrices) on the open 4x4
+lattice (24 bonds), on the full 2^16 = 65,536-state space with no symmetry. Code A builds the sparse
+matrix and calls ARPACK (scipy `eigsh`, tol 1e-14); code B is a separate matrix-free Lanczos with full
+reorthogonalisation. numpy 2.5.3, scipy 1.18.1, an AMD EPYC 9654 server, 2026-11-13, seconds.
+
+**Result** (`results.txt`). Totals (code A; code B agrees to 1.6e-13 or better, residuals below 2e-13):
+h = 1: -26.86050463952785; h = 2: -35.907257620408934; h = 3: -50.18662388277763; h = 3.5:
+-57.8243697764037. The block-MPS references of arXiv:2510.20063 agree to their eight printed decimals:
+-50.18662388 lies 2.8e-9 above at h = 3, -57.82436977 6.4e-9 above at h = 3.5, -35.90725762 4.1e-10
+above at h = 2, and -26.86050464 3.5e-10 below at h = 1, inside its last printed digit.
+
+**Conclusion.** Exact rows computed by QMBL (`scripts/add_exact_rows.mjs` batch B3).
+
+**Reproduce.**
+
+```bash
+uv run --with numpy --with scipy python -I checks/tfising-4x4-open-ed/ed_tfim_4x4.py 1 2 3 3.5
+```
+
 ## `heisenberg-chain-16-ed/`: the exact ground state of the periodic 16-site Heisenberg chain
 
 **Question.** arXiv:2510.08430 (Table 2) prints two VMC energies of the periodic 16-site chain and no
