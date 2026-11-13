@@ -131,8 +131,8 @@
     const rows = [];
     for (const dim of data.dims) {
       const val = i => i.d[dim] || ["—", ""];
-      const counts = new Map(), order = new Map(), open = new Map();
-      for (const i of pool) { const [l, o] = val(i); counts.set(l, (counts.get(l) || 0) + i.r.length); order.set(l, o); open.set(l, (open.get(l) || 0) + (i.o ? i.r.length : 0)); }
+      const counts = new Map(), order = new Map(), open = new Map(), note = new Map();
+      for (const i of pool) { const [l, o] = val(i); counts.set(l, (counts.get(l) || 0) + i.r.length); order.set(l, o); open.set(l, (open.get(l) || 0) + (i.o ? i.r.length : 0)); if (i.n?.[dim]) note.set(l, i.n[dim]); }
       if (!counts.size) continue;
       // Marking the open problems, a setting starts where most of them are.
       if (!counts.has(sel[dim])) sel[dim] = [...counts].sort((a, b) => (isOn() ? open.get(b[0]) - open.get(a[0]) : 0) || b[1] - a[1])[0][0];
@@ -142,7 +142,7 @@
       const short = new Map(vals.map(v => { const o = order.get(v); return [v, typeof o === "number" && String(o) === v ? String(Number(o.toPrecision(4))) : v]; }));
       const seen = [...short.values()];
       for (const [v, s] of short) if (seen.filter(x => x === s).length > 1) short.set(v, v);
-      rows.push([dim, vals, counts, short]);
+      rows.push([dim, vals, counts, short, note]);
       pool = pool.filter(i => val(i)[0] === sel[dim]);
     }
     return { pool, rows };
@@ -151,15 +151,16 @@
   // A chip row longer than 12 (the atom and molecule species) shows the 8 values with most energies and the chosen
   // one; "+N more" opens the whole row, with a field that narrows it by name or formula.
   const MANY = 12;
-  const chip = (dim, v, c, short) => `<button class="pk-chip" type="button" data-dim="${esc(dim)}" data-v="${esc(v)}" aria-pressed="${v === state.sel[dim]}"${short.get(v) !== v ? ` title="${esc(v)}"` : ""}>${esc(short.get(v))}<i>${c.get(v)}</i></button>`;
-  function chipRow([dim, vals, c, short]) {
+  // A chip's hover text: why it exists beside a near twin (an instance split at a rounded coupling), else its full value.
+  const chip = (dim, v, c, short, note) => { const t = note?.get(v) ?? (short.get(v) !== v ? v : ""); return `<button class="pk-chip" type="button" data-dim="${esc(dim)}" data-v="${esc(v)}" aria-pressed="${v === state.sel[dim]}"${t ? ` title="${esc(t)}"` : ""}>${esc(short.get(v))}<i>${c.get(v)}</i></button>`; };
+  function chipRow([dim, vals, c, short, note]) {
     const lab = `<span class="pk-lab">${esc(dim)}</span>`, sel = state.sel[dim];
-    if (vals.length <= MANY) return `<div class="pk-fg">${lab}${vals.map(v => chip(dim, v, c, short)).join("")}</div>`;
+    if (vals.length <= MANY) return `<div class="pk-fg">${lab}${vals.map(v => chip(dim, v, c, short, note)).join("")}</div>`;
     const open = state.open?.[dim];
     let shown = [...vals].sort((a, b) => c.get(b) - c.get(a)).slice(0, 8);
     if (!shown.includes(sel)) shown = [...shown.slice(0, 7), sel];
     const list = open ? vals : vals.filter(v => shown.includes(v));
-    return `<div class="pk-fg">${lab}${list.map(v => chip(dim, v, c, short)).join("")}<button class="pk-chipmore" type="button" data-more="${esc(dim)}" aria-expanded="${!!open}">${open ? "Show fewer" : `+${vals.length - list.length} more`}</button>${open ? `<input class="pk-find" data-find="${esc(dim)}" placeholder="Find by name or formula" aria-label="Find a ${esc(dim)}">` : ""}</div>`;
+    return `<div class="pk-fg">${lab}${list.map(v => chip(dim, v, c, short, note)).join("")}<button class="pk-chipmore" type="button" data-more="${esc(dim)}" aria-expanded="${!!open}">${open ? "Show fewer" : `+${vals.length - list.length} more`}</button>${open ? `<input class="pk-find" data-find="${esc(dim)}" placeholder="Find by name or formula" aria-label="Find a ${esc(dim)}">` : ""}</div>`;
   }
 
   function render() {

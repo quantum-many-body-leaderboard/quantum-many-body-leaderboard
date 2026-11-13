@@ -890,6 +890,15 @@ const KIND = { variational: 0, projected: 1, extrapolated: 2, approximate: 2, ex
 // A diatomic molecule's bond length in bohr, from its id (RULES.md 13.1, R<R>); its picker axis.
 const diatomicR = i => i.model === "Molecule" ? (i.instance_id.match(/^Molecule\/[A-Za-z0-9]+-R([\d.]+)_/)?.[1] ?? null) : null;
 const PICKS = Map.groupBy(pickerFacets(instances), p => p.inst.model);
+// An instance split off at a rounded coupling (DATA.md, Relabels) reads as a duplicate badge next to
+// the grid value; its badge says why on hover, per coupling that differs from the instance it split from.
+const BY_ID = new Map(instances.map(i => [i.instance_id, i]));
+const splitNote = i => {
+  const to = i.split && BY_ID.get(i.split.to);
+  if (!to) return null;
+  const keys = Object.keys(i.params ?? {}).filter(k => i.params[k] !== to.params?.[k] && typeof i.params[k] === "number");
+  return keys.length ? Object.fromEntries(keys.map(k => [k, `Results run at ${k} = ${i.params[k]}, as the upstream file name gives it. ${k} = ${to.params[k]}, the coupling that name stands for, has its own badge.`])) : null;
+};
 // Built on first use: rowCard needs helpers defined further down.
 let pickerCache = null;
 const picker = () => pickerCache ??= MODELS.filter(([m]) => PICKS.has(m)).map(([model, name]) => {
@@ -904,7 +913,7 @@ const picker = () => pickerCache ??= MODELS.filter(([m]) => PICKS.has(m)).map(([
   const inst = picks.map(({ inst: i, tab, dims: d }) => {
     const div = perSiteDivisor(i) ?? 1, b = classBest(i);
     return {
-      t: tabs.findIndex(x => x.label === tab), N: i.n_sites, ...(diatomicR(i) != null ? { x: diatomicR(i) } : {}), o: +isOpen(i), d: Object.fromEntries(d.map(([k, l, o]) => [k, [l, o]])),
+      t: tabs.findIndex(x => x.label === tab), N: i.n_sites, ...(diatomicR(i) != null ? { x: diatomicR(i) } : {}), o: +isOpen(i), d: Object.fromEntries(d.map(([k, l, o]) => [k, [l, o]])), ...(splitNote(i) ? { n: splitNote(i) } : {}),
       r: drawnRows(i).map(r => {
         const id = rowId(i, r), flagged = !!r.defect || b.below.includes(r);
         cards[id] = rowCard(r, i);
