@@ -1424,8 +1424,16 @@ function instancePage(inst) {
         Every row is still listed below.</p>
       </div>`;
 
+  // A long word-valued parameter (a molecule's geometry source, a variant) is prose: it takes its
+  // own line and wraps. A molecule's nuclei (RULES.md 13, bohr) fold into a list under their count.
+  const nuclei = g => `<details><summary>${g.length} nuclei, positions in bohr</summary><pre class="nuclei">${g.map(({ el, r }) =>
+    `${el.padEnd(3)}${r.map(x => x.toFixed(6).padStart(13)).join("")}`).join("\n")}</pre></details>`;
   const params = Object.entries(inst.params ?? {})
-    .map(([k, v]) => `<div><dt>${esc(k)}</dt><dd class="num">${esc(v)}</dd></div>`).join("");
+    .map(([k, v]) => k === "geometry" && Array.isArray(v)
+      ? `<div class="long"><dt>${esc(k)}</dt><dd>${nuclei(v)}</dd></div>`
+      : typeof v === "string" && v.length > 40
+      ? `<div class="long"><dt>${esc(k.replace(/_/g, " "))}</dt><dd>${esc(v)}</dd></div>`
+      : `<div><dt>${esc(k.replace(/_/g, " "))}</dt><dd class="num">${esc(v)}</dd></div>`).join("");
 
   const body = `
 <p class="crumbs"><a href="/instances/">All instances</a> / <a href="/instances/#${inst.model.toLowerCase()}">${esc(modelName(inst.model))}</a></p>
@@ -1442,7 +1450,7 @@ ${bestBox}
   ${relabel ? `<p>${relabel}</p>` : ""}
   <dl class="facts">
     <div><dt>${/^HEG/.test(inst.model) ? "cell" : H_MODELS.has(inst.model) ? "geometry" : "lattice"}</dt><dd>${esc(inst.lattice)}</dd></div>
-    <div><dt>${/^HEG/.test(inst.model) ? "electrons" : H_MODELS.has(inst.model) ? "atoms" : "sites"}</dt><dd class="num">${inst.n_sites}</dd></div>
+    <div><dt>${/^HEG/.test(inst.model) ? "electrons" : H_MODELS.has(inst.model) || MOL_MODELS.has(inst.model) ? "atoms" : "sites"}</dt><dd class="num">${inst.n_sites}</dd></div>
     <div><dt>boundary</dt><dd>${inst.boundary ? esc(BOUNDARY[inst.boundary] ?? "periodic") : "&mdash;"}</dd></div>
     ${params}
     <div><dt>energies</dt><dd class="num">${inst.rows.length}</dd></div>
@@ -1764,7 +1772,8 @@ figure.chart a.pt:hover > :nth-child(2) { transform: scale(1.45); }
 #fig-tip .card > b, #fig-tip .card > span { display: block; }
 #fig-tip a.card:hover { background: var(--grid); }
 
-.scroll { overflow-x: auto; margin: 1.2rem 0; }
+/* Positioned, so a table's screen-reader text (.sr, absolute) is clipped with it rather than widening the page. */
+.scroll { overflow-x: auto; margin: 1.2rem 0; position: relative; }
 table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
 th, td { text-align: left; vertical-align: top; padding: 0.55rem 0.8rem 0.55rem 0; border-bottom: 1px solid var(--grid); }
 thead th {
@@ -1893,6 +1902,10 @@ table.next tr.target > td:first-child, .rows tr:target > td:first-child { box-sh
 dl.facts { display: flex; flex-wrap: wrap; gap: 0.4rem 2rem; margin: 1rem 0; }
 dl.facts dt { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
 dl.facts dd { margin: 0; }
+dl.facts .long { flex-basis: 100%; }
+dl.facts .long dd { overflow-wrap: anywhere; max-width: 70ch; }
+dl.facts summary { cursor: pointer; color: var(--accent); }
+pre.nuclei { font-family: var(--mono); font-size: 0.8rem; margin: 0.4rem 0 0; overflow-x: auto; }
 
 section.bound { margin: 1.8rem 0; }
 section.bound h3 { margin-bottom: 0.2rem; }
