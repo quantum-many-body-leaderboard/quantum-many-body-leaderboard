@@ -328,7 +328,29 @@ put("Hubbard/square_16_O_8_8",
     reported: "-6.80841446644252 (ed_full2.py) | -6.808414466441927 (hub_fact.py)",
     note: "Total energy, t = 1, H = -t sum (c+c + h.c.) + U sum n_up n_dn on the open 4x4 lattice (24 bonds), N_up = N_dn = 8 (half filling; Lieb's theorem puts the unique singlet in this sector); E/N = -0.425525904. No published exact energy is carried for this instance; the two codes agree to 5.9e-13. Liu et al.'s DMRG extrapolated in the truncated weight, -6.80841536 (sigma 1.6e-7), lies 8.9e-7 below, 5.6 sigma.",
     source: "qmbl-verify-2026-11-12", checked: "2026-11-12", fields: { computed_by: "qmbl" } });
-console.log("batch B3: 5 exact rows computed by QMBL where none was published (J1-J2 6x6, J2 = 0.45; Hubbard 4x4 at n = 7/8, U = 8; Heisenberg chain, 16 sites; open Hubbard 4x4 at n = 7/8 and 1, U = 8)");
+//
+// TFIsing/square_16_O_<h>, h = 1, 2, 3, 3.5: the open 4x4 transverse-field Ising squares that
+// arXiv:2510.20063 (Table 2) benchmarks with block-MPS reference energies and prints no exact energy:
+// checks/tfising-4x4-open-ed/ed_tfim_4x4.py, two codes over the full 2^16-state space on an AMD EPYC
+// 9654 server, 2026-11-13; they agree to 1.6e-13. The block-MPS rows (passes/rows/
+// sweep-rows-2026-11-12-frustrated.json) agree with them to their eight printed decimals. The
+// instances are created here with the cluster the pass states.
+const TFI4 = { "1": ["-26.86050463952785", "-26.860504639527853", "2.80e-14", "2.89e-14", "3.55e-15", "−26.86050464", "3.5e-10 below (inside its printed digits; the first excited level, −26.86046483 in the same table, lies 4.0e-5 above)"],
+  "2": ["-35.907257620408934", "-35.9072576204089", "5.02e-14", "4.59e-14", "3.55e-14", "−35.90725762", "4.1e-10 above"],
+  "3": ["-50.18662388277763", "-50.18662388277779", "1.49e-13", "6.09e-14", "1.56e-13", "−50.18662388", "2.8e-9 above"],
+  "3.5": ["-57.8243697764037", "-57.82436977640359", "1.16e-13", "8.69e-14", "1.07e-13", "−57.82436977", "6.4e-9 above"] };
+for (const [h, [ea, eb, ra, rb, dab, mps, rel]] of Object.entries(TFI4))
+  put(`TFIsing/square_16_O_${h}`,
+    { model: "TFIsing", lattice: "square", n_sites: 16, boundary: "O", params: { h: +h }, dof: 16, einf: 0,
+      cluster: "4 x 4 square lattice, open boundaries in both directions (arXiv:2510.20063: 'a two-dimensional square lattice of side length Lx = Ly (L = Lx^2 total sites) with open boundary conditions', Table 2: 'the 4×4 TFI model')" },
+    { energy: +(+ea).toPrecision(15), sigma: null,
+      src: { ref: `QMBL, checks/tfising-4x4-open-ed/ (exact diagonalization of the open 4x4 transverse-field Ising square at h = ${h}, two codes)`, pr: false },
+      method: "Exact diagonalization", why: "Lanczos exact diagonalization of the full 2^16-state space, computed by QMBL; deterministic",
+      read: `ed_tfim_4x4.py (code A: scipy.sparse Hamiltonian with ARPACK eigsh, true residual ${ra}; code B: matrix-free Lanczos with full reorthogonalisation, residual ${rb}), full space of 65,536 states, no symmetry, numpy 2.5.3 and scipy 1.18.1 on an AMD EPYC 9654 server, 2026-11-13; results in checks/tfising-4x4-open-ed/results.txt`,
+      reported: `${ea} (code A) | ${eb} (code B)`,
+      note: `Total energy, H = - sum_<ij> sz_i sz_j - h sum_i sx_i (Pauli matrices) on the open 4x4 lattice (24 bonds), h = ${h}; E/N = ${(+ea / 16).toPrecision(10)}. No published exact energy is carried for this instance; the two codes agree to ${dab}. The block-MPS reference of Dektor et al. (Table 2), ${mps}, lies ${rel}.`,
+      source: "qmbl-verify-2026-11-13", checked: "2026-11-13", fields: { computed_by: "qmbl" } });
+console.log("batch B3: 9 exact rows computed by QMBL where none was published (J1-J2 6x6, J2 = 0.45; Hubbard 4x4 at n = 7/8, U = 8; Heisenberg chain, 16 sites; open Hubbard 4x4 at n = 7/8 and 1, U = 8; open 4x4 transverse-field Ising at h = 1, 2, 3, 3.5)");
 
 // ---------------------------------------------------------------------------------------
 // Batch C: exact diagonalization of frustrated clusters. Deterministic, so no sigma; the

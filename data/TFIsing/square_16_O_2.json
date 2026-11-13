@@ -10,6 +10,44 @@
   "instance_id": "TFIsing/square_16_O_2",
   "rows": [
     {
+      "energy": -35.9072576204089,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 16,
+      "einf": 0,
+      "v_score": null,
+      "method": "ED",
+      "ansatz": null,
+      "method_detail": "",
+      "method_as_published": "Exact diagonalization",
+      "family": "other",
+      "bound_type": "exact",
+      "bound_type_reason": "Lanczos exact diagonalization of the full 2^16-state space, computed by QMBL; deterministic",
+      "reference": "QMBL, checks/tfising-4x4-open-ed/ (exact diagonalization of the open 4x4 transverse-field Ising square at h = 2, two codes)",
+      "peer_reviewed": false,
+      "source": "qmbl-verify-2026-11-13",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-13",
+        "method": "ed_tfim_4x4.py (code A: scipy.sparse Hamiltonian with ARPACK eigsh, true residual 5.02e-14; code B: matrix-free Lanczos with full reorthogonalisation, residual 4.59e-14), full space of 65,536 states, no symmetry, numpy 2.5.3 and scipy 1.18.1 on an AMD EPYC 9654 server, 2026-11-13; results in checks/tfising-4x4-open-ed/results.txt",
+        "reported_as": "-35.907257620408934 (code A) | -35.9072576204089 (code B)",
+        "note": "Total energy, H = - sum_<ij> sz_i sz_j - h sum_i sx_i (Pauli matrices) on the open 4x4 lattice (24 bonds), h = 2; E/N = -2.244203601. No published exact energy is carried for this instance; the two codes agree to 3.55e-14. The block-MPS reference of Dektor et al. (Table 2), −35.90725762, lies 4.1e-10 above.",
+        "secondary_of": null
+      },
+      "computed_by": "qmbl",
+      "artifacts": {
+        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/4d76524a/checks/tfising-4x4-open-ed",
+        "commit": "4d76524a",
+        "script": "checks/tfising-4x4-open-ed/",
+        "read_from": {
+          "quote": "QMBL, checks/tfising-4x4-open-ed/ (exact diagonalization of the open 4x4 transverse-field Ising square at h = 2, two codes)",
+          "location": "the row's reference (QMBL check directory)",
+          "checked_on": "2026-11-13",
+          "pass": "passes/code/code-links-2026-11-13.json"
+        }
+      }
+    },
+    {
       "energy": -35.90725762,
       "sigma": null,
       "energy_variance": null,
