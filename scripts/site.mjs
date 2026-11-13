@@ -1279,6 +1279,7 @@ addEventListener("load", reveal);
 reveal();
 </script>`;
   return page({ url: "/instances/", title: "Table", body, wide: true,
+    ogTitle: "QMBL: the Quantum Many-Body Leaderboard",
     description: `Every Hamiltonian instance in QMBL: ${summary.instances} instances across ${MODELS.filter(([m]) => instances.some(i => i.model === m)).length} models, with the exact energy and the best of each bound type for each.` });
 }
 
@@ -1559,7 +1560,7 @@ function llmsTxt() {
   const lines = [
     "# QMBL: the Quantum Many-Body Leaderboard",
     "",
-    `> The best published ground-state energies for ${summary.instances} Hamiltonian instances: lattice models, hydrogen chains and the electron gas (${summary.rows} energies, ${summary.best.exact} of the instances solved exactly). Read-only, generated from the repository's data/ directory, Apache-2.0.`,
+    `> The best published ground-state energies for ${summary.instances} Hamiltonian instances: lattice models, hydrogen chains and sheets, the electron gas, atoms and molecules (${summary.rows} energies, ${summary.best.exact} of the instances solved exactly). Read-only, generated from the repository's data/ directory, Apache-2.0.`,
     "",
     "## What a row means",
     "",

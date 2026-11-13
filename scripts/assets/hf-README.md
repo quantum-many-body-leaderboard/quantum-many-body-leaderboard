@@ -23,7 +23,7 @@ configs:
 
 # QMBL: the Quantum Many-Body Leaderboard
 
-Published ground-state energies for finite quantum many-body systems: lattice models (Heisenberg, J1-J2, Hubbard, t-J, t-V, Shastry-Sutherland, Kitaev, transverse-field Ising, impurity models), hydrogen chains and sheets, and the 2D and 3D homogeneous electron gas. Every energy cites the primary paper that produced it.
+Published ground-state energies for finite quantum many-body systems: lattice models (Heisenberg, J1-J2, Hubbard, t-J, t-V, Shastry-Sutherland, Kitaev, transverse-field Ising, impurity models), hydrogen chains and sheets, the 2D and 3D homogeneous electron gas, atoms and molecules. Every energy cites the primary paper that produced it.
 
 This is a mirror of the data on [qmbl.org](https://qmbl.org/). The source of truth is the [GitHub repository](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard); each release is archived on Zenodo, [doi:10.5281/zenodo.22753734](https://doi.org/10.5281/zenodo.22753734).
 

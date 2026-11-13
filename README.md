@@ -7,7 +7,7 @@
 [![License: Apache 2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
 [![agents: API · MCP](https://img.shields.io/badge/agents-API%20%C2%B7%20MCP-8A2BE2)](#use-qmbl-with-your-agent)
 
-**A live record of SOTA published ground-state energies for lattice models, hydrogen chains and the electron gas.**
+**A live record of SOTA published ground-state energies for lattice models, hydrogen chains and sheets, the electron gas, atoms and molecules.**
 
 Organised literature for fellow researchers and AI systems. So that we can see the works of the wider research community at one glance, build on each other's work more efficiently and advance frontier science together.
 
