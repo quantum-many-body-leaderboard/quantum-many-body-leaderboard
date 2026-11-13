@@ -174,7 +174,7 @@ ${data.tabs.length > 1 ? `<div class="pk-tabs" role="tablist">${data.tabs.map((t
 ${choosing.length || fixed.length ? `<div class="pk-filters">${choosing.map(chipRow).join("")}${fixed.length ? `<div class="pk-fg"><span class="pk-lab">setting</span><span class="pk-fixed">${fixed.map(([dim, v, , short]) => esc(dim === "boundary" || dim === "shape" || dim === "problem" || dim === "variant" ? v[0] : `${dim} = ${short.get(v[0])}`)).join(", ")}</span></div>` : ""}</div>` : ""}
 <div class="pk-chart" id="pk-chart"></div>
 <div class="pk-lgd" id="pk-lgd"></div>
-<p class="pk-cap">${pool.length} instance${pool.length === 1 ? "" : "s"}, ${nE(pool.reduce((a, i) => a + i.r.length, 0))}. Horizontal: ${pool.length && pool.every(i => i.x != null) ? "bond length R in bohr" : data.xLabel ? `${data.xLabel}` : "number of sites N, log scale"}. Vertical: ${esc(data.unit)}. Point at a dot to preview it; click it to open its table entry. <a href="/instances/${isOn() ? "?open" : ""}#${m.slug}">All ${esc(m.name)} rows in the table</a>.</p>`;
+<p class="pk-cap">${pool.length} instance${pool.length === 1 ? "" : "s"}, ${nE(pool.reduce((a, i) => a + i.r.length, 0))}. ${pool.length && pool.every(i => i.x != null) ? "Horizontal: bond length R in bohr. " : data.xLabel ? "" : "Horizontal: number of sites N, log scale. "}Vertical: ${esc(data.unit)}. Point at a dot to preview it; click it to open its table entry. <a href="/instances/${isOn() ? "?open" : ""}#${m.slug}">All ${esc(m.name)} rows in the table</a>.</p>`;
     view.querySelectorAll(".pk-tab").forEach(b => b.addEventListener("click", () => {
       state.tab = +b.dataset.k; state.sel = {};
       history.replaceState(null, "", `#h-${m.slug}@${tabSlug(data.tabs[state.tab].label)}`);
@@ -215,16 +215,44 @@ ${choosing.length || fixed.length ? `<div class="pk-filters">${choosing.map(chip
     let x0 = Math.min(...pts.map(p => p.N)), x1 = Math.max(...pts.map(p => p.N));
     if (byR || strip) { const px = (x1 - x0 || 0.5) * 0.08 + (strip ? 0.5 : 0); x0 -= px; x1 += px; }
     else if (x0 === x1) { x0 /= 1.6; x1 *= 1.6; } else { x0 /= 1.2; x1 *= 1.2; }
-    let y0 = Math.min(...pts.map(p => p.e)), y1 = Math.max(...pts.map(p => p.e));
-    const py = (y1 - y0 || Math.abs(y0) * 0.02 || 0.01) * 0.08; y0 -= py; y1 += py;
+    // A column of atom or molecule results whose energies fall in two groups far apart (a Hartree-Fock
+    // limit over the correlated results) breaks its vertical axis between them: each group gets its own
+    // scale, the smaller one a short band, so neither is pressed into a line.
+    const es = [...new Set(pts.map(p => p.e))].sort((a, b) => b - a);
+    let cut = 0;
+    if (strip && es.length >= 4) {
+      let g = 0;
+      for (let i = 1; i < es.length; i++) if (es[i - 1] - es[i] > g) { g = es[i - 1] - es[i]; cut = i; }
+      if (g <= 0.75 * (es[0] - es.at(-1))) cut = 0;
+    }
+    const lane = (vals, t, b, ref) => {
+      const lo = Math.min(...vals), hi = Math.max(...vals), p = (hi - lo || ref * 0.25 || Math.abs(lo) * 0.02 || 0.01) * 0.08;
+      return { y0: lo - p, y1: hi + p, t, b, min: lo };
+    };
+    const lanes = [];
+    if (!cut) lanes.push(lane(es, mg.t, H - mg.b, 0));
+    else {
+      const hi = es.slice(0, cut), lo = es.slice(cut), gap = 18, P = H - mg.t - mg.b - gap, sh = Math.max(48, P * 0.2);
+      const hh = hi.length <= lo.length ? sh : P - sh, span = v => Math.max(...v) - Math.min(...v);
+      lanes.push(lane(hi, mg.t, mg.t + hh, span(lo)), lane(lo, mg.t + hh + gap, H - mg.b, span(hi)));
+    }
     const X = byR || strip ? v => mg.l + (v - x0) / (x1 - x0) * (W - mg.l - mg.r) : v => mg.l + (Math.log(v) - Math.log(x0)) / (Math.log(x1) - Math.log(x0)) * (W - mg.l - mg.r);
-    const Y = v => H - mg.b - (v - y0) / (y1 - y0) * (H - mg.t - mg.b);
+    const laneOf = v => lanes.length > 1 && v < lanes[0].min ? lanes[1] : lanes[0];
+    const Y = v => { const L = laneOf(v); return L.b - (v - L.y0) / (L.y1 - L.y0) * (L.b - L.t); };
     const xt = [];
     for (let k = Math.floor(Math.log10(x0)); k <= Math.ceil(Math.log10(x1)); k++) for (const s of [1, 2, 5]) { const v = s * 10 ** k; if (v >= x0 && v <= x1) xt.push(v); }
     const sizes = [...new Set(pts.map(p => p.N))].sort((a, b) => a - b);
     const xticks = byR ? niceTicks(x0, x1, nt) : xt.length >= 2 ? (narrow ? xt.filter(v => /^[15]/.test(String(v))) : xt) : sizes;
     let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Energy against the number of sites">`;
-    for (const v of niceTicks(y0, y1, nt)) s += `<line class="pk-ax" x1="${mg.l}" x2="${W - mg.r}" y1="${Y(v).toFixed(1)}" y2="${Y(v).toFixed(1)}"/><text class="pk-tk" x="${mg.l - 8}" y="${(Y(v) + 4).toFixed(1)}" text-anchor="end">${+v.toPrecision(6)}</text>`;
+    for (const L of lanes) {
+      const short = L.b - L.t < 90, ticks = niceTicks(L.y0, L.y1, short ? 1 : nt);
+      for (const v of ticks.length ? ticks : [L.min]) s += `<line class="pk-ax" x1="${mg.l}" x2="${W - mg.r}" y1="${Y(v).toFixed(1)}" y2="${Y(v).toFixed(1)}"/><text class="pk-tk" x="${mg.l - 8}" y="${(Y(v) + 4).toFixed(1)}" text-anchor="end">${+v.toPrecision(6)}</text>`;
+    }
+    // The break: a pair of slashes on each edge of the plot, between the two bands.
+    if (lanes.length > 1) {
+      const y = (lanes[0].b + lanes[1].t) / 2;
+      for (const x of [mg.l, W - mg.r]) s += `<path class="pk-brk" d="M${x - 6} ${(y + 1).toFixed(1)}l12 -6M${x - 6} ${(y + 6).toFixed(1)}l12 -6"/>`;
+    }
     if (byR || !state.data.xLabel) for (const v of xticks) s += `<text class="pk-tk" x="${X(v).toFixed(1)}" y="${H - mg.b + 18}" text-anchor="middle">${v}</text>`;
     s += `<text class="pk-axl" x="${(W + mg.l) / 2}" y="${H - 8}" text-anchor="middle">${byR ? "bond length R (bohr)" : state.data.xLabel || "sites N"}</text>`;
     // flagged outlines last, over what they coincide with; exact dots over the bounds

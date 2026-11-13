@@ -266,6 +266,7 @@ export const HERO_CSS = `
 .pk-chart svg { width: 100%; height: auto; display: block; border: 1px solid var(--grid); border-radius: 3px; background: var(--surface); }
 .pk-ax { stroke: var(--grid); }
 .pk-tk { fill: var(--muted); font-family: var(--mono); font-size: 11px; }
+.pk-brk { stroke: var(--muted); stroke-width: 1.3; fill: none; }
 .pk-axl { fill: var(--ink2); font-size: 12px; }
 .pk-pt { cursor: pointer; }
 .pk-pt:hover circle:last-of-type { stroke: var(--ink); }
