@@ -565,7 +565,7 @@ const FIGURES = [
 // longer than TAB_MANY shows the 8 heaviest and the first. A checked badge among the rest stays
 // in sight when the row closes again (tabRules).
 const TAB_MANY = 12;
-function tabs(id, items, lead = "", weights = null) {
+function tabs(id, items, lead = "", weights = null, facets = null) {
   let extra = new Set();
   if (weights && items.length > TAB_MANY) {
     let shown = items.map((_, k) => k).sort((a, b) => weights[b] - weights[a] || a - b).slice(0, 8);
@@ -574,9 +574,68 @@ function tabs(id, items, lead = "", weights = null) {
   }
   const more = weights ? `<label class="tab-more-l" for="${id}-more"${extra.size ? "" : " hidden"}><span>+${extra.size} more</span><span>Show fewer</span></label><input class="tab-find" type="search" placeholder="Find by lattice, size or coupling" aria-label="Find an instance" autocomplete="off" spellcheck="false">` : "";
   return `${items.map((_, k) => `<input type="radio" name="${id}" id="${id}-${k}"${k ? "" : " checked"}>`).join("")}${weights ? `<input type="checkbox" class="tab-more" id="${id}-more">` : ""}
-  <div class="tab-labels"${weights ? " data-fit" : ""}>${lead}${items.map(([label], k) => `<label for="${id}-${k}"${weights ? ` data-w="${weights[k]}"` : ""}${extra.has(k) ? ' class="extra"' : ""}>${label}</label>`).join("")}${more}</div>
+  <div class="tab-labels"${weights ? " data-fit" : ""}>${lead}${items.map(([label], k) => `<label for="${id}-${k}"${weights ? ` data-w="${weights[k]}"` : ""}${facets?.[k] ? ` data-f="${esc(JSON.stringify(facets[k]))}"` : ""}${extra.has(k) ? ' class="extra"' : ""}>${label}</label>`).join("")}${more}</div>
   <div class="tab-panels">${items.map(([, html]) => html).join("\n")}</div>`;
 }
+// The cost figures in the picker's rows: where every badge of a fitted row carries its facets, the row
+// gives way to one chip row per facet that varies (lattice, size, couplings, boundary), each narrowing
+// the next as in the picker (scripts/assets/hero.js, resolve), and the choice checks the matching
+// badge's radio, which shows its figure. A row over 12 chips shows its 8 heaviest and the chosen one,
+// with "+N more" and a find field. Without the script the badge row stays.
+const COST_FACET_SCRIPT = `(() => {
+  const root = document.currentScript.parentElement;
+  const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  const WORD = new Set(["lattice", "size", "boundary", "shape", "variant", "problem"]);
+  for (const row of root.querySelectorAll(".tab-labels[data-fit]")) {
+    const labels = [...row.querySelectorAll("label[data-w]")];
+    if (labels.length < 2 || labels.some(l => !l.dataset.f)) continue;
+    const items = labels.map(l => ({ l, w: +l.dataset.w, f: JSON.parse(l.dataset.f) }));
+    const dims = [...new Set(items.flatMap(it => it.f.map(d => d[0])))];
+    const val = (it, d) => it.f.find(x => x[0] === d) || [d, "—", ""];
+    const box = document.createElement("div");
+    box.className = "pk-filters cost-filters";
+    row.before(box);
+    row.style.display = "none";
+    // Each row starts on its value with most energies, as the picker's do.
+    const sel = {}, open = {};
+    const chip = (d, v, c, short) => '<button class="pk-chip" type="button" data-d="' + esc(d) + '" data-v="' + esc(v) + '" aria-pressed="' + (v === sel[d]) + '"' + (short.get(v) !== v ? ' title="' + esc(v) + '"' : "") + ">" + esc(short.get(v)) + "<i>" + c.get(v) + "</i></button>";
+    function render() {
+      let pool = items;
+      const rows = [], fixed = [];
+      for (const d of dims) {
+        const c = new Map(), o = new Map();
+        for (const it of pool) { const [, l, k] = val(it, d); c.set(l, (c.get(l) || 0) + it.w); o.set(l, k); }
+        if (!c.has(sel[d])) sel[d] = [...c].sort((a, b) => b[1] - a[1])[0][0];
+        const vals = [...c.keys()].sort((a, b) => { const x = o.get(a), y = o.get(b); return typeof x === "number" && typeof y === "number" ? x - y : String(x).localeCompare(String(y), "en", { numeric: true }); });
+        // A coupling prints to four digits, in full where two would then read alike (hero.js).
+        const short = new Map(vals.map(v => { const k = o.get(v); return [v, typeof k === "number" && String(k) === v ? String(Number(k.toPrecision(4))) : v]; }));
+        for (const [v, t] of short) if ([...short.values()].filter(x => x === t).length > 1) short.set(v, v);
+        if (vals.length > 1) rows.push([d, vals, c, short]);
+        else if (vals[0] !== "—") fixed.push(WORD.has(d) ? vals[0] : d + " = " + vals[0]);
+        pool = pool.filter(it => val(it, d)[1] === sel[d]);
+      }
+      document.getElementById(pool[0].l.htmlFor).checked = true;
+      box.innerHTML = rows.map(([d, vals, c, short]) => {
+        let list = vals, more = "";
+        if (vals.length > 12) {
+          let top = [...vals].sort((a, b) => c.get(b) - c.get(a)).slice(0, 8);
+          if (!top.includes(sel[d])) top = [...top.slice(0, 7), sel[d]];
+          if (!open[d]) list = vals.filter(v => top.includes(v));
+          more = '<button class="pk-chipmore" type="button" data-more="' + esc(d) + '">' + (open[d] ? "Show fewer" : "+" + (vals.length - list.length) + " more") + "</button>"
+            + (open[d] ? '<input class="pk-find" data-find="' + esc(d) + '" placeholder="Find a value" aria-label="Find a ' + esc(d) + '">' : "");
+        }
+        return '<div class="pk-fg"><span class="pk-lab">' + esc(d) + "</span>" + list.map(v => chip(d, v, c, short)).join("") + more + "</div>";
+      }).join("") + (fixed.length ? '<div class="pk-fg"><span class="pk-lab">setting</span><span class="pk-fixed">' + esc(fixed.join(", ")) + "</span></div>" : "");
+      box.querySelectorAll(".pk-chip").forEach(b => b.addEventListener("click", () => { sel[b.dataset.d] = b.dataset.v; render(); }));
+      box.querySelectorAll(".pk-chipmore").forEach(b => b.addEventListener("click", () => { open[b.dataset.more] = !open[b.dataset.more]; render(); }));
+      box.querySelectorAll(".pk-find").forEach(inp => inp.addEventListener("input", () => {
+        const q = inp.value.trim().toLowerCase();
+        inp.closest(".pk-fg").querySelectorAll(".pk-chip").forEach(b => { b.hidden = !!q && !b.firstChild.textContent.toLowerCase().includes(q); });
+      }));
+    }
+    render();
+  }
+})();`;
 // One line per fitted row: badges in order of checked, then weight, each that still fits.
 // It runs again when the row's width changes, which includes the row first being shown.
 const TAB_FIT_SCRIPT = `(() => {
@@ -646,6 +705,14 @@ const computeModels = figs => MODELS.map(([m]) => figs.filter(inst => inst.model
 // An instance's label as parts, the lattice split off its size: "square 8x8, J2 = 0.5"
 // is ["square", "8x8", "J2 = 0.5"].
 const labelParts = inst => instanceLabel(inst).split(", ").flatMap((p, k) => (k ? [p] : p.match(/^([a-z-]+) (\d.*)$/)?.slice(1) ?? [p]));
+// An instance's badges as the picker gives them (pickerFacets), with its lattice and size in front,
+// so COST_FACET_SCRIPT can offer the cost figures in the picker's rows: [name, label, order] each.
+function costFacets(inst) {
+  const p = pickerFacets([inst])[0];
+  if (!p) return null;
+  const size = labelParts(inst)[1];
+  return [["lattice", p.tab, p.tab], ["size", /^\d/.test(size ?? "") ? size : `${inst.n_sites} sites`, inst.n_sites], ...p.dims];
+}
 function computeInstances(id, group, entry) {
   const parts = group.map(labelParts);
   const shared = group.length > 1 ? parts[0].filter(p => parts.every(q => q.includes(p))) : [];
@@ -653,7 +720,9 @@ function computeInstances(id, group, entry) {
   // The lattice and the size read as one part again when both are left: "square 6x6".
   const label = ps => ps.map((p, k) => (k === 1 && !shared.includes(ps[0]) && !shared.includes(p) && /^\d+x\d/.test(p) ? " " : k ? ", " : "") + p)
     .filter((p, k) => !shared.includes(ps[k])).join("").replace(/^, /, "");
-  return tabs(id, group.map((inst, k) => [esc(label(parts[k])), figure(entry(inst))]), lead, group.map(inst => inst.rows.length));
+  // A badge's weight is the number of energies its figure draws.
+  const figs = group.map(inst => figure(entry(inst)));
+  return tabs(id, group.map((inst, k) => [esc(label(parts[k])), figs[k]]), lead, figs.map(f => (f.match(/<a class="pt"/g) ?? []).length), group.map(costFacets));
 }
 // `axes`, `prefix` and `hours` let /open-problems/ show the same section for its instances.
 const computeTabs = (axes, prefix = "") => axes.flatMap(([, figs], a) => [[`${prefix}cost-${a}`, computeModels(figs).length],
@@ -674,7 +743,8 @@ function computeSwitcher(axes = COMPUTE_AXES, prefix = "", hours = COST_FIGS.len
   <p class="muted">Cost on ${COUNT_WORDS[axes.length]} ${axes.length === 1 ? "axis" : "axes"}: ${list}.${flops}</p>
   ${tabs(`${prefix}cost-axis`, axes.map(([label, figs, entry], a) => [label, `<div class="tabs">${tabs(`${prefix}cost-${a}`, computeModels(figs).map((g, m) =>
     [esc(modelName(g[0].model)), `<div class="tabs">${computeInstances(`${prefix}cost-${a}-${m}`, g, entry)}</div>`]))}</div>`]))}
-  <script>${TAB_FIT_SCRIPT}</script>
+  <script>${TAB_FIT_SCRIPT}
+${COST_FACET_SCRIPT}</script>
 </section>`;
 }
 const TAB_CSS = [tabRules("cost-axis", COMPUTE_AXES.length), ...computeTabs(COMPUTE_AXES).map(([id, n]) => tabRules(id, n))].join("\n");
