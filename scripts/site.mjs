@@ -808,7 +808,7 @@ const HERO_SCRIPT = fs.readFileSync("scripts/assets/hero.js", "utf8");
 
 function homePage() {
   const [overview, byFamily] = FIGURES;
-  const panels = [["size", "All published energies sorted by system size", figure(overview)],
+  const panels = [["size", "All published energies on instances with an exact reference solution", figure(overview)],
     ["family", "Best energies by method family", figure(byFamily)],
     ["cost", "Best published energies by cost", computeSwitcher()]];
   const figures = panels.map(([, , html]) => html).join("\n");
