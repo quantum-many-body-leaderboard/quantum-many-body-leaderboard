@@ -559,14 +559,59 @@ const FIGURES = [
 // one showing its panel, so the switch works without the script and the inputs stay in the
 // keyboard order. The first badge is checked. The stylesheet is written before any page, so
 // the rules for each switch come from tabRules() at module level, into TAB_CSS.
-function tabs(id, items, lead = "") {
-  return `${items.map((_, k) => `<input type="radio" name="${id}" id="${id}-${k}"${k ? "" : " checked"}>`).join("")}
-  <div class="tab-labels">${lead}${items.map(([label], k) => `<label for="${id}-${k}">${label}</label>`).join("")}</div>
+// Given a weight per item (its energies), the row keeps to one line: TAB_FIT_SCRIPT shows the
+// heaviest badges that fit, the checked one first, and a "+N more" checkbox opens the rest with
+// a field that narrows them by name, like the picker's chip rows. Without the script a row
+// longer than TAB_MANY shows the 8 heaviest and the first. A checked badge among the rest stays
+// in sight when the row closes again (tabRules).
+const TAB_MANY = 12;
+function tabs(id, items, lead = "", weights = null) {
+  let extra = new Set();
+  if (weights && items.length > TAB_MANY) {
+    let shown = items.map((_, k) => k).sort((a, b) => weights[b] - weights[a] || a - b).slice(0, 8);
+    if (!shown.includes(0)) shown = [0, ...shown.slice(0, 7)];
+    extra = new Set(items.map((_, k) => k).filter(k => !shown.includes(k)));
+  }
+  const more = weights ? `<label class="tab-more-l" for="${id}-more"${extra.size ? "" : " hidden"}><span>+${extra.size} more</span><span>Show fewer</span></label><input class="tab-find" type="search" placeholder="Find by lattice, size or coupling" aria-label="Find an instance" autocomplete="off" spellcheck="false">` : "";
+  return `${items.map((_, k) => `<input type="radio" name="${id}" id="${id}-${k}"${k ? "" : " checked"}>`).join("")}${weights ? `<input type="checkbox" class="tab-more" id="${id}-more">` : ""}
+  <div class="tab-labels"${weights ? " data-fit" : ""}>${lead}${items.map(([label], k) => `<label for="${id}-${k}"${weights ? ` data-w="${weights[k]}"` : ""}${extra.has(k) ? ' class="extra"' : ""}>${label}</label>`).join("")}${more}</div>
   <div class="tab-panels">${items.map(([, html]) => html).join("\n")}</div>`;
 }
+// One line per fitted row: badges in order of checked, then weight, each that still fits.
+// It runs again when the row's width changes, which includes the row first being shown.
+const TAB_FIT_SCRIPT = `(() => {
+  const root = document.currentScript.parentElement;
+  const radio = l => document.getElementById(l.htmlFor);
+  function fit(row) {
+    const box = row.previousElementSibling, more = row.querySelector(".tab-more-l");
+    if (box.checked || !row.offsetWidth) return;
+    const labels = [...row.querySelectorAll("label[data-w]")];
+    const order = [...labels].sort((a, b) => radio(b).checked - radio(a).checked || b.dataset.w - a.dataset.w);
+    const count = () => { const n = labels.filter(l => l.classList.contains("extra") && !radio(l).checked).length; more.firstChild.textContent = "+" + n + " more"; more.hidden = !n; };
+    const wraps = () => { const vis = [...row.children].filter(e => e.offsetParent); const first = vis[0].getBoundingClientRect(); return vis.some(e => e.getBoundingClientRect().top >= first.bottom - 1); };
+    labels.forEach(l => l.classList.add("extra"));
+    for (const l of order) {
+      l.classList.remove("extra"); count();
+      if (wraps()) { l.classList.add("extra"); count(); }
+    }
+  }
+  for (const row of root.querySelectorAll(".tab-labels[data-fit]")) {
+    const box = row.previousElementSibling, find = row.querySelector(".tab-find");
+    let width = 0;
+    new ResizeObserver(() => { if (row.offsetWidth !== width) { width = row.offsetWidth; requestAnimationFrame(() => fit(row)); } }).observe(row);
+    box.addEventListener("change", () => {
+      if (box.checked) return;
+      find.value = ""; row.querySelectorAll("label[data-w]").forEach(l => l.style.display = ""); fit(row);
+    });
+    find.addEventListener("input", () => {
+      const q = find.value.trim().toLowerCase();
+      row.querySelectorAll("label[data-w]").forEach(l => l.style.display = !q || l.textContent.toLowerCase().includes(q) ? "" : "none");
+    });
+  }
+})();`;
 const tabRules = (id, count) => [...Array(count).keys()].map(k =>
   `#${id}-${k}:checked ~ .tab-panels > :nth-child(${k + 1}) { display: block; }
-#${id}-${k}:checked ~ .tab-labels > label[for="${id}-${k}"] { color: var(--bg); background: var(--accent); border-color: var(--accent); }
+#${id}-${k}:checked ~ .tab-labels > label[for="${id}-${k}"] { display: inline-block; color: var(--bg); background: var(--accent); border-color: var(--accent); }
 #${id}-${k}:focus-visible ~ .tab-labels > label[for="${id}-${k}"] { outline: 2px solid var(--accent); outline-offset: 2px; }`).join("\n");
 
 // The cost figures: one per instance with enough energies costed in hours, drawn by
@@ -608,7 +653,7 @@ function computeInstances(id, group, entry) {
   // The lattice and the size read as one part again when both are left: "square 6x6".
   const label = ps => ps.map((p, k) => (k === 1 && !shared.includes(ps[0]) && !shared.includes(p) && /^\d+x\d/.test(p) ? " " : k ? ", " : "") + p)
     .filter((p, k) => !shared.includes(ps[k])).join("").replace(/^, /, "");
-  return tabs(id, group.map((inst, k) => [esc(label(parts[k])), figure(entry(inst))]), lead);
+  return tabs(id, group.map((inst, k) => [esc(label(parts[k])), figure(entry(inst))]), lead, group.map(inst => inst.rows.length));
 }
 // `axes`, `prefix` and `hours` let /open-problems/ show the same section for its instances.
 const computeTabs = (axes, prefix = "") => axes.flatMap(([, figs], a) => [[`${prefix}cost-${a}`, computeModels(figs).length],
@@ -629,6 +674,7 @@ function computeSwitcher(axes = COMPUTE_AXES, prefix = "", hours = COST_FIGS.len
   <p class="muted">Cost on ${COUNT_WORDS[axes.length]} ${axes.length === 1 ? "axis" : "axes"}: ${list}.${flops}</p>
   ${tabs(`${prefix}cost-axis`, axes.map(([label, figs, entry], a) => [label, `<div class="tabs">${tabs(`${prefix}cost-${a}`, computeModels(figs).map((g, m) =>
     [esc(modelName(g[0].model)), `<div class="tabs">${computeInstances(`${prefix}cost-${a}-${m}`, g, entry)}</div>`]))}</div>`]))}
+  <script>${TAB_FIT_SCRIPT}</script>
 </section>`;
 }
 const TAB_CSS = [tabRules("cost-axis", COMPUTE_AXES.length), ...computeTabs(COMPUTE_AXES).map(([id, n]) => tabRules(id, n))].join("\n");
@@ -1889,6 +1935,13 @@ pre.ticks { font-family: var(--mono); font-size: clamp(7px, 1.6vw, 13px); line-h
 .tab-panels > * { display: none; }
 .tab-panels > .tabs > .tab-labels { margin-top: 0; }
 .tab-labels .shared { align-self: center; color: var(--muted); margin-right: 0.2rem; }
+.tab-more:not(:checked) ~ .tab-labels > label.extra { display: none; }
+.tab-labels label.tab-more-l, .tab-labels label.tab-more-l:hover { border-color: transparent; background: none; color: var(--accent); }
+.tab-more:checked ~ .tab-labels > .tab-more-l > :first-child, .tab-more:not(:checked) ~ .tab-labels > .tab-more-l > :last-child { display: none; }
+.tab-more:focus-visible ~ .tab-labels > .tab-more-l { outline: 2px solid var(--accent); outline-offset: 2px; }
+.tab-labels .tab-find { display: none; font: inherit; padding: 0.15rem 0.6rem; border: 1px solid var(--grid); border-radius: 999px;
+  background: var(--surface); color: var(--ink); min-width: 17rem; max-width: 100%; }
+.tab-more:checked ~ .tab-labels > .tab-find { display: inline-block; }
 @media (max-width: 640px) {
 /* An exact energy to 16 digits leaves no room for the method beside it: the method goes below. */
 .best-box table.best tr { display: grid; grid-template-columns: auto 1fr; align-items: baseline; padding-bottom: 0.5rem; }
