@@ -1743,6 +1743,8 @@ footer.site svg.eth-logo { height: 1.1rem; width: auto; display: block; }
 
 figure { margin: 2.2rem 0 0; }
 figure.chart svg { display: block; width: 100%; max-width: 920px; height: auto; border: 1px solid var(--grid); border-radius: 3px; background: var(--surface); }
+/* A figure is drawn 920 wide; on a phone it keeps 720 of that, so its text stays readable, and scrolls sideways in its box. */
+@media (max-width: 640px) { figure.chart { overflow-x: auto; } figure.chart svg { min-width: 720px; } }
 figure.chart a.pt { cursor: pointer; }
 figure.chart a.pt > :nth-child(2) { transform-box: fill-box; transform-origin: center; transition: transform 80ms; }
 figure.chart a.pt:hover > :nth-child(2) { transform: scale(1.45); }
